@@ -10,6 +10,7 @@ import tilda.types.*;
 import tilda.utils.*;
 import tilda.utils.pairs.*;
 
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -50,7 +51,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive          SRCSCHEMANAME= new Type_StringPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "srcSchemaName", 0/*0*/, "The result value.");
+     public static Type_StringPrimitive        SRCSCHEMANAME= new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "srcSchemaName", 0/*0*/, "The result value.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.DependencyDDLDummyTable.srcTVName -> TILDA.DependencyDDLDummyTable."srcTVName"
@@ -69,7 +70,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive          SRCTVNAME    = new Type_StringPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "srcTVName"    , 1/*1*/, "The result value.");
+     public static Type_StringPrimitive        SRCTVNAME    = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "srcTVName"    , 1/*1*/, "The result value.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.DependencyDDLDummyTable.seq -> TILDA.DependencyDDLDummyTable."seq"
@@ -87,7 +88,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerPrimitive         SEQ          = new Type_IntegerPrimitive        (SCHEMA_LABEL, TABLENAME_LABEL, "seq"          , 2/*2*/, "The blah");
+     public static Type_IntegerPrimitive       SEQ          = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "seq"          , 2/*2*/, "The blah");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.DependencyDDLDummyTable.depSchemaName -> TILDA.DependencyDDLDummyTable."depSchemaName"
@@ -106,7 +107,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive          DEPSCHEMANAME= new Type_StringPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "depSchemaName", 3/*3*/, "The result value.");
+     public static Type_StringPrimitive        DEPSCHEMANAME= new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "depSchemaName", 3/*3*/, "The result value.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.DependencyDDLDummyTable.depViewName -> TILDA.DependencyDDLDummyTable."depViewName"
@@ -125,7 +126,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive          DEPVIEWNAME  = new Type_StringPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "depViewName"  , 4/*4*/, "The result value.");
+     public static Type_StringPrimitive        DEPVIEWNAME  = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "depViewName"  , 4/*4*/, "The result value.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.DependencyDDLDummyTable.restoreScript -> TILDA.DependencyDDLDummyTable."restoreScript"
@@ -144,7 +145,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive          RESTORESCRIPT= new Type_StringPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "restoreScript", 5/*5*/, "The result value.");
+     public static Type_StringPrimitive        RESTORESCRIPT= new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "restoreScript", 5/*5*/, "The result value.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.DependencyDDLDummyTable.created -> TILDA.DependencyDDLDummyTable."created"
@@ -169,7 +170,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive        CREATED      = new Type_DatetimePrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "created"      , 6/*6*/, "The timestamp for when the record was created. (TILDA.DependencyDDLDummyTable)");
+     public static Type_DatetimePrimitive      CREATED      = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"      , 6/*6*/, "The timestamp for when the record was created. (TILDA.DependencyDDLDummyTable)");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.DependencyDDLDummyTable.lastUpdated -> TILDA.DependencyDDLDummyTable."lastUpdated"
@@ -194,7 +195,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive        LASTUPDATED  = new Type_DatetimePrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"  , 7/*7*/, "The timestamp for when the record was last updated. (TILDA.DependencyDDLDummyTable)");
+     public static Type_DatetimePrimitive      LASTUPDATED  = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"  , 7/*7*/, "The timestamp for when the record was last updated. (TILDA.DependencyDDLDummyTable)");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.DependencyDDLDummyTable.deleted -> TILDA.DependencyDDLDummyTable."deleted"
@@ -212,7 +213,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull    DELETED      = new Type_DatetimePrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"      , 8/*8*/, "The timestamp for when the record was deleted. (TILDA.DependencyDDLDummyTable)");
+     public static Type_DatetimePrimitiveNull  DELETED      = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"      , 8/*8*/, "The timestamp for when the record was deleted. (TILDA.DependencyDDLDummyTable)");
 ;
    }
 

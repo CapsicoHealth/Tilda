@@ -16,6 +16,7 @@ public class ColumnMeta
         _Name = _NameOriginal.toLowerCase();
         _Nullable = RS.getInt("NULLABLE");
         _Size = RS.getInt("COLUMN_SIZE");
+        _Scale = RS.getInt("DECIMAL_DIGITS");
         _TypeName = RS.getString("TYPE_NAME");
         _Type = RS.getInt("DATA_TYPE");
         _Descr = RS.getString("REMARKS");
@@ -31,6 +32,7 @@ public class ColumnMeta
     public final String     _NameOriginal;
     public final int        _Nullable;
     public final int        _Size;
+    public final int        _Scale;
     public final int        _Type;
     public final ColumnType _TildaType;
     public final String     _TypeSql;

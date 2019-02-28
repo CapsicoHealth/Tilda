@@ -7,6 +7,7 @@ import tilda.enums.*;
 import tilda.types.*;
 import tilda.utils.*;
 
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -46,7 +47,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive            REFNUM        = new Type_LongPrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"        , 0/*0*/, "The primary key for this record");
+     public static Type_LongPrimitive          REFNUM        = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"        , 0/*0*/, "The primary key for this record");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing3Realized.name -> TILDA.Testing3Realized."name"
@@ -65,7 +66,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull      NAME          = new Type_StringPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "name"          , 1/*1*/, "Medical system unique enterprise id");
+     public static Type_StringPrimitiveNull    NAME          = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "name"          , 1/*1*/, "Medical system unique enterprise id");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing3Realized.a8bTZ -> TILDA.Testing3Realized."a8bTZ"
@@ -84,7 +85,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull      A8BTZ         = new Type_StringPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a8bTZ"         , 2/*2*/, "Generated helper column to hold the time zone ID for 'a8b'.");
+     public static Type_StringPrimitiveNull    A8BTZ         = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a8bTZ"         , 2/*2*/, "Generated helper column to hold the time zone ID for 'a8b'.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing3Realized.a8b -> TILDA.Testing3Realized."a8b"
@@ -102,7 +103,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull    A8B           = new Type_DatetimePrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a8b"           , 3/*3*/, "The blah");
+     public static Type_DatetimePrimitiveNull  A8B           = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "a8b"           , 3/*3*/, "The blah");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing3Realized.lastUpdated -> TILDA.Testing3Realized."lastUpdated"
@@ -127,7 +128,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull    LASTUPDATED   = new Type_DatetimePrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"   , 4/*4*/, "The timestamp for when the record was last updated. (TILDA.Testing)");
+     public static Type_DatetimePrimitiveNull  LASTUPDATED   = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"   , 4/*4*/, "The timestamp for when the record was last updated. (TILDA.Testing)");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing3Realized.xxxLastUpdated -> TILDA.Testing3Realized."xxxLastUpdated"
@@ -152,7 +153,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull    XXXLASTUPDATED= new Type_DatetimePrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "xxxLastUpdated", 5/*5*/, "The timestamp for when the record was last updated. (TILDA.Testing)");
+     public static Type_DatetimePrimitiveNull  XXXLASTUPDATED= new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "xxxLastUpdated", 5/*5*/, "The timestamp for when the record was last updated. (TILDA.Testing)");
 ;
    }
 

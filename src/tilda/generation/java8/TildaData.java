@@ -82,15 +82,21 @@ public class TildaData implements CodeGenTildaData
         Out.println();
         Out.println("import org.apache.logging.log4j.LogManager;");
         Out.println("import org.apache.logging.log4j.Logger;");
-        for (Column C : O._Columns)
-          if (C._JsonSchema != null)
-            {
-              Out.println();
-              Out.println("import com.google.gson.Gson;");
-              Out.println("import com.google.gson.GsonBuilder;");
-              Out.println("import com.google.gson.annotations.SerializedName;");
-              break;
-            }
+        for (Column C : O._Columns) 
+          {
+            if (C._JsonSchema != null)
+              {
+                Out.println();
+                Out.println("import com.google.gson.Gson;");
+                Out.println("import com.google.gson.GsonBuilder;");
+                Out.println("import com.google.gson.annotations.SerializedName;");
+              }
+            if(C.getType() == ColumnType.NUMERIC)
+              {
+                Out.println();
+                Out.println("import java.math.BigDecimal;");
+              }            
+          }
         Out.println();
       }
 
@@ -191,11 +197,14 @@ public class TildaData implements CodeGenTildaData
                   case DOUBLE:
                   case FLOAT:
                   case INTEGER:
-                  case SHORT:  
+                  case SHORT: 
                   case LONG:
                     Out.print("= SystemValues.EVIL_VALUE");
                     break;
-                  case DATETIME:
+                  case NUMERIC: 
+                    Out.print("= new BigDecimal(SystemValues.EVIL_VALUE)");
+                    break;
+                  case DATETIME:  
                   case STRING:
                   case JSON:
                     break;
@@ -583,6 +592,7 @@ public class TildaData implements CodeGenTildaData
                 case LONG:
                 case SHORT:
                 case INTEGER:
+                case NUMERIC:  
                   if (C.isSet() == true)
                     Out.println("       if (_" + C.getName() + ".contains(v) == false)");
                   else if (C.isList() == true)
@@ -868,6 +878,9 @@ public class TildaData implements CodeGenTildaData
               case SHORT:
                 Out.println("       _" + C.getName() + "=0;");
                 break;
+              case NUMERIC:
+                Out.println("       _" + C.getName() + "=BigDecimal.ZERO;");
+                break;                
               case DATETIME:
               case DATE:
               case STRING:
@@ -975,6 +988,7 @@ public class TildaData implements CodeGenTildaData
                   case SHORT:
                   case LONG:
                   case STRING:
+                  case NUMERIC:
                     Out.println(" V.append(" + Helper.getSupportClassFullName(O._ParentSchema) + "._COMMAQUESTION);  }");
                     break;
                   default:
@@ -1036,6 +1050,7 @@ public class TildaData implements CodeGenTildaData
                   case DOUBLE:
                   case INTEGER:
                   case SHORT:
+                  case NUMERIC:
                   case LONG:
                   case STRING:
                     if (C._DefaultUpdateValue == null)
@@ -1106,6 +1121,7 @@ public class TildaData implements CodeGenTildaData
                   case DOUBLE:
                   case FLOAT:
                   case SHORT:
+                  case NUMERIC:
                   case INTEGER:
                   case LONG:
                   case CHAR:
@@ -1341,7 +1357,8 @@ public class TildaData implements CodeGenTildaData
                   case DOUBLE:
                   case FLOAT:
                   case INTEGER:
-                  case SHORT:  
+                  case SHORT:
+                  case NUMERIC:  
                   case LONG:
                   case BINARY:
                   case BITFIELD:

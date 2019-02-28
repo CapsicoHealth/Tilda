@@ -93,13 +93,13 @@ public class Sql extends PostgreSQL implements CodeGenSql
     @Override
     public String getColumnType(Column C)
       {
-        return getColumnType(C.getType(), C._Size, C._Mode, C.isCollection());
+        return getColumnType(C.getType(), C._Size, C._Mode, C.isCollection(), C._Precision, C._Scale);
       }
 
     @Override
     public String getColumnType(Column C, ColumnType AggregateType)
       {
-        return getColumnType(AggregateType, C._Size, C._Mode, C.isCollection());
+        return getColumnType(AggregateType, C._Size, C._Mode, C.isCollection(), C._Precision, C._Scale);
       }
 
     @Override
@@ -921,7 +921,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
           {
             if (F == null)
               continue;
-            String FormulaType = getColumnType(F.getType(), 8192, null, false);
+            String FormulaType = getColumnType(F.getType(), 8192, null, false, F._Precision, F._Scale);
             b.append("     -- ").append(String.join("\n     -- ", F._Description)).append("\n");
             if (First == true)
               First = false;
@@ -1021,7 +1021,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         if (TextUtil.isNullOrEmpty(VPV._Expression) == false)
           Expr = VPV._Expression.replace("?", Expr);
         if (VPV._Type != null)
-          Expr = "(" + Expr + ")::" + getColumnType(VPV._Type.getType(), VPV._Type._Size, ColumnMode.NORMAL, VPV._Type.isCollection());
+          Expr = "(" + Expr + ")::" + getColumnType(VPV._Type.getType(), VPV._Type._Size, ColumnMode.NORMAL, VPV._Type.isCollection(), VPV._Precision, VPV._Scale);
         return "\n     , " + Expr + " as \"" + A.makeName(VPV) + "\"";
       }
 
@@ -1378,7 +1378,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 for (Formula F2 : ParentView._Formulas)
                   if (s.equals(F2._Name) == true && s.equals(F._Name) == false)
                     {
-                      String FormulaType = getColumnType(F2.getType(), F2._Size, null, false);
+                      String FormulaType = getColumnType(F2.getType(), F2._Size, null, false, F2._Precision, F2._Scale);
                       M.appendReplacement(Str, "(" + genFormulaCode(ParentView, F2) + ")::" + FormulaType);
                       break;
                     }

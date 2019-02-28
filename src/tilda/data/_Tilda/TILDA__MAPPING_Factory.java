@@ -10,6 +10,7 @@ import tilda.types.*;
 import tilda.utils.*;
 import tilda.utils.pairs.*;
 
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -50,7 +51,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive          TYPE       = new Type_StringPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "type"       , 0/*0*/, "The type this mapping is for");
+     public static Type_StringPrimitive        TYPE       = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "type"       , 0/*0*/, "The type this mapping is for");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Mapping.src -> TILDA.Mapping."src"
@@ -69,7 +70,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive          SRC        = new Type_StringPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "src"        , 1/*1*/, "The source value for this mapping");
+     public static Type_StringPrimitive        SRC        = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "src"        , 1/*1*/, "The source value for this mapping");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Mapping.dst -> TILDA.Mapping."dst"
@@ -88,7 +89,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive          DST        = new Type_StringPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "dst"        , 2/*2*/, "The the destination (mapped) value for this mapping.");
+     public static Type_StringPrimitive        DST        = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "dst"        , 2/*2*/, "The the destination (mapped) value for this mapping.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Mapping.created -> TILDA.Mapping."created"
@@ -113,7 +114,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive        CREATED    = new Type_DatetimePrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "created"    , 3/*3*/, "The timestamp for when the record was created. (TILDA.Mapping)");
+     public static Type_DatetimePrimitive      CREATED    = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"    , 3/*3*/, "The timestamp for when the record was created. (TILDA.Mapping)");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Mapping.lastUpdated -> TILDA.Mapping."lastUpdated"
@@ -138,7 +139,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive        LASTUPDATED= new Type_DatetimePrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated", 4/*4*/, "The timestamp for when the record was last updated. (TILDA.Mapping)");
+     public static Type_DatetimePrimitive      LASTUPDATED= new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated", 4/*4*/, "The timestamp for when the record was last updated. (TILDA.Mapping)");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Mapping.deleted -> TILDA.Mapping."deleted"
@@ -156,7 +157,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull    DELETED    = new Type_DatetimePrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"    , 5/*5*/, "The timestamp for when the record was deleted. (TILDA.Mapping)");
+     public static Type_DatetimePrimitiveNull  DELETED    = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"    , 5/*5*/, "The timestamp for when the record was deleted. (TILDA.Mapping)");
 ;
    }
 

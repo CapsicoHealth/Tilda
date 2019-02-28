@@ -117,6 +117,13 @@ public class TildaFactory implements CodeGenTildaFactory
         if (O._LC != ObjectLifecycle.READONLY)
           Out.println("import tilda.utils.pairs.*;");
         Out.println();
+        for (Column C : O._Columns)         
+          if(C.getType() == ColumnType.NUMERIC)
+            {
+              Out.println();
+              Out.println("import java.math.BigDecimal;");
+            }            
+        Out.println(); 
         Out.println("import org.apache.logging.log4j.LogManager;");
         Out.println("import org.apache.logging.log4j.Logger;");
         Out.println();

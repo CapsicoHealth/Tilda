@@ -16,11 +16,13 @@
 
 package tilda;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.logging.log4j.Level;
@@ -61,10 +63,10 @@ public class DBTest
             // Test2(C);
             // Test3(C);
             // Test4(C);
-            // Test5(C);
+             Test5(C);
 //            Test_Batch0(C);
-            Test_Batch2(C);
-            Test_Batch1(C);
+            //Test_Batch2(C);
+            //Test_Batch1(C);
             // Test_Batch3(C);
           }
         catch (Exception E)
@@ -287,9 +289,9 @@ public class DBTest
           throw new Exception("Bad stuff!");
         C.commit();
 
-        D = Testing_Factory.LookupByPrimaryKey(D.getRefnum());
-        if (D.Read(C) == false)
-          throw new Exception("Bad stuff!");
+//        D = Testing_Factory.LookupByPrimaryKey(D.getRefnum());
+//        if (D.Read(C) == false)
+//          throw new Exception("Bad stuff!");
         LOG.debug("A9: " + D.getA9());
         LOG.debug("A9b: " + TextUtil.Print(D.getA9b()));
         LOG.debug("A9bTZ: " + TextUtil.Print(D.getA9bTZ()));
@@ -303,7 +305,26 @@ public class DBTest
         if (D.Write(C) == false)
           throw new Exception("Bad stuff!");
 
-        C.commit();
+        D.setA11(new BigDecimal(11111.1234));
+        
+        List<BigDecimal> a11b = new ArrayList<BigDecimal>();
+        a11b.add(new BigDecimal(1234.568));
+        a11b.add(new BigDecimal(12345.689));
+        a11b.add(new BigDecimal(123456.8999));
+        D.setA11b(a11b);
+        
+        D.setA11c(new BigDecimal(1111111111.0000));
+        
+        if (D.Write(C) == false)
+          throw new Exception("Bad stuff!");
+ 
+        C.commit();        
+        
+        LOG.debug("A11: " + TextUtil.Print(D.getA11().toString(), "Bad"));
+        D = Testing_Factory.LookupByPrimaryKey(D.getRefnum());
+        if (D.Read(C) == false)
+          throw new Exception("Bad stuff!");
+        
       }
 
     private static void Test4(Connection C)

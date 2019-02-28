@@ -16,6 +16,8 @@
 
 package tilda.parsing.parts;
 
+import java.math.BigDecimal;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -127,31 +129,31 @@ public class TypeDef
                   PS.AddError(What + " is defined as a '" + _Type + "' but doesn't define a size >= 2.");
               }
           }       
-//        else if (_Type == ColumnType.NUMERIC)
-//          {
-//            
-//              if(_Scale != null && _Precision == null)
-//                {
-//                  PS.AddError(What + " is defined as a '" + _Type + "' and has defined a Scale without a Precision. This is not allowed per Standard SQL.");
-//                }
-//              else if(_Precision != null && _Scale != null && _Scale > _Precision)
-//                {
-//                  PS.AddError(What + " is defined as a '" + _Type + "' and has Scale that is greater than the Precision. This is not allowed per Standard SQL.");
-//                }
-//              else if (_Precision == null || _Precision == 0)
-//                {
-//                  if (StringSizeOptional == false)
-//                    PS.AddError(What + " is defined as a '" + _Type + "' but doesn't define a Precision.");
-//                }
-//              else if(_Precision != null && _Precision < 0)
-//                {
-//                  PS.AddError(What + " is defined as a '" + _Type + "' and has Precision that is less than 0. This is not allowed per Standard SQL.");
-//                }
-//              else if(_Scale != null && _Scale < 0)
-//                {
-//                  PS.AddError(What + " is defined as a '" + _Type + "' and has Scale that is less than 0. This is not allowed per Standard SQL.");
-//                }             
-//          }               
+        else if (_Type == ColumnType.NUMERIC)
+          {
+            
+              if(_Scale != null && _Precision == null)
+                {
+                  PS.AddError(What + " is defined as a '" + _Type + "' and has defined a Scale without a Precision. This is not allowed per Standard SQL.");
+                }
+              else if(_Precision != null && _Scale != null && _Scale > _Precision)
+                {
+                  PS.AddError(What + " is defined as a '" + _Type + "' and has Scale that is greater than the Precision. This is not allowed per Standard SQL.");
+                }
+              else if (_Precision == null || _Precision == 0)
+                {
+                  if (StringSizeOptional == false)
+                    PS.AddError(What + " is defined as a '" + _Type + "' but doesn't define a Precision.");
+                }
+              else if(_Precision != null && _Precision < 0)
+                {
+                  PS.AddError(What + " is defined as a '" + _Type + "' and has Precision that is less than 0. This is not allowed per Standard SQL.");
+                }
+              else if(_Scale != null && _Scale < 0)
+                {
+                  PS.AddError(What + " is defined as a '" + _Type + "' and has Scale that is less than 0. This is not allowed per Standard SQL.");
+                }             
+          }               
         else
           {
             if (_Size != null && _Size > 0)
@@ -204,10 +206,10 @@ public class TypeDef
               if (ParseUtil.parseFloat(Value, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
                 return PS.AddError(What + " has a value '" + Value + "' which is invalid for type '" + _Type + "'.");
               break;
-//            case NUMERIC:
-//              if (ParseUtil.parseNumeric(Value, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
-//                return PS.AddError(What + " has a value '" + Value + "' which is invalid for type '" + _Type + "'.");
-//              break;              
+            case NUMERIC:
+              if (ParseUtil.parseBigDecimal(Value, new BigDecimal(SystemValues.EVIL_VALUE)) == new BigDecimal(SystemValues.EVIL_VALUE))
+                return PS.AddError(What + " has a value '" + Value + "' which is invalid for type '" + _Type + "'.");
+              break;              
             case SHORT:
               if (ParseUtil.parseShort(Value, (short)SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
                 return PS.AddError(What + " has a value '" + Value + "' which is invalid for type '" + _Type + "'.");

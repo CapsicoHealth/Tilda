@@ -262,6 +262,13 @@ public class MSSQL implements DBType
       }
 
     @Override
+    public boolean alterTableAlterColumnNumericSize(Connection connection, ColumnMeta colMeta, Column col)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }    
+
+    @Override
     public boolean alterTableAlterColumnStringSize(Connection Con, ColumnMeta ColMeta, Column Col)
     throws Exception
       {
@@ -374,7 +381,7 @@ public class MSSQL implements DBType
       }
 
     @Override
-    public void getColumnType(StringBuilder Str, ColumnType T, Integer S, ColumnMode M, boolean Collection)
+    public void getColumnType(StringBuilder Str, ColumnType T, Integer S, ColumnMode M, boolean Collection, Integer Precision, Integer Scale)
       {
         throw new UnsupportedOperationException();        
       }

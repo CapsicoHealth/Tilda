@@ -16,40 +16,34 @@
 
 package tilda.migration.actions;
 
-import tilda.data.ZoneInfo_Factory;
 import tilda.db.Connection;
 import tilda.db.metadata.ColumnMeta;
-import tilda.enums.ColumnType;
 import tilda.migration.MigrationAction;
 import tilda.parsing.parts.Column;
 
-public class ColumnAlterType extends MigrationAction
+public class ColumnAlterNumericSize extends MigrationAction
   {
-    public ColumnAlterType(Connection C, ColumnMeta CMeta, Column Col)
+    public ColumnAlterNumericSize(ColumnMeta ColMeta, Column Col)
       {
         super(Col._ParentObject._ParentSchema._Name, Col._ParentObject._Name, false);
         _Col = Col;
-        _CMeta = CMeta;
-        StringBuilder Str = new StringBuilder();
-        C.getColumnType(Str, Col.getType(), Col._Size, Col._Mode, Col.isCollection(), Col._Precision, Col._Scale);
-        _ColTypeStr = Str.toString();
+        _ColMeta = ColMeta;
       }
 
     protected Column _Col;
-    protected String _ColTypeStr;
-    protected ColumnMeta _CMeta;
+    protected ColumnMeta _ColMeta;
 
     public boolean process(Connection C)
     throws Exception
       {
-        return C.alterTableAlterColumnType(_CMeta, _Col, ZoneInfo_Factory.getEnumerationById("UTC"));
+        return C.alterTableAlterColumnNumericSize(_ColMeta, _Col);
       }
 
     @Override
     public String getDescription()
       {
         return "Alter table "+_Col._ParentObject.getFullName()
-              +" alter column "+_Col.getName()+" type from "+_CMeta._TypeSql+(_CMeta._TildaType == ColumnType.STRING &&  _CMeta._Size > 0 ? "("+_CMeta._Size+")":"")
-              +" to "+_ColTypeStr;
+              +(_Col._Size == _ColMeta._Size ? " numeric column is " + _Col._Size : (_Col._Size > _ColMeta._Size ? " expanding" : " shrinking")+" numeric column "+_Col.getName()+" precision from "+_ColMeta._Size+" to "+_Col._Size)
+              +(_Col._Scale != null ? (_Col._Scale == _ColMeta._Scale ? " and scale is " + _Col._Scale : (_Col._Scale > _ColMeta._Scale ? " and expanding" : " and shrinking")+" scale from "+_ColMeta._Scale+" to "+_Col._Scale) : "");
       }
   }

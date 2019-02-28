@@ -205,6 +205,13 @@ public class IBMDB2 implements DBType
         : Size < 4096 ? DBStringType.VARCHAR
         : DBStringType.TEXT;
       }
+    
+    @Override
+    public boolean alterTableAlterColumnNumericSize(Connection connection, ColumnMeta colMeta, Column col)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }    
 
     @Override
     public boolean alterTableAlterColumnStringSize(Connection Con, ColumnMeta ColMeta, Column Col)
@@ -252,7 +259,7 @@ public class IBMDB2 implements DBType
       }
 
     @Override
-    public void getColumnType(StringBuilder Str, ColumnType T, Integer S, ColumnMode M, boolean Collection)
+    public void getColumnType(StringBuilder Str, ColumnType T, Integer S, ColumnMode M, boolean Collection, Integer Precision, Integer Scale)
       {
         throw new UnsupportedOperationException();        
       }

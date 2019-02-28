@@ -18,6 +18,12 @@ import tilda.utils.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.math.BigDecimal;
+
+import java.math.BigDecimal;
+
+import java.math.BigDecimal;
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
@@ -105,7 +111,7 @@ This Table contains the following columns:<BLOCKQUOTE>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>7&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-a4_DIV' class='columns'>a4</B>&nbsp;&nbsp;</TD>
-<TD>double&nbsp;/&nbsp;double&nbsp;&nbsp;</TD>
+<TD>double&nbsp;/&nbsp;double precision&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -115,7 +121,7 @@ This Table contains the following columns:<BLOCKQUOTE>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>8&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-a4b_DIV' class='columns'>a4b</B>&nbsp;&nbsp;</TD>
-<TD>List<Double> List<>&nbsp;/&nbsp;double[]&nbsp;&nbsp;</TD>
+<TD>List<Double> List<>&nbsp;/&nbsp;double precision[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -214,6 +220,36 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>18&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2Realized-a11_DIV' class='columns'>a11</B>&nbsp;&nbsp;</TD>
+<TD>BigDecimal&nbsp;/&nbsp;numeric&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>19&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2Realized-a11b_DIV' class='columns'>a11b</B>&nbsp;&nbsp;</TD>
+<TD>List<BigDecimal> List<>&nbsp;/&nbsp;numeric[]&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah</TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>20&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2Realized-a11c_DIV' class='columns'>a11c</B>&nbsp;&nbsp;</TD>
+<TD>BigDecimal&nbsp;/&nbsp;numeric&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>21&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-description_DIV' class='columns'>description</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(250)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -222,8 +258,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The title for a person, i.e., Mr, Miss, Mrs...</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>19&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>22&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-desc2_DIV' class='columns'>desc2</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(3000)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -232,8 +268,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The title for a person, i.e., Mr, Miss, Mrs...</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>20&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>23&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-desc3_DIV' class='columns'>desc3</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;text&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -242,8 +278,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The title for a person, i.e., Mr, Miss, Mrs...</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>21&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>24&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-desc4_DIV' class='columns'>desc4</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;text&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -252,8 +288,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The title for a person, i.e., Mr, Miss, Mrs...</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>22&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>25&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-desc5_DIV' class='columns'>desc5</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;text&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -262,8 +298,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The title for a person, i.e., Mr, Miss, Mrs...</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>23&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>26&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-desc6_DIV' class='columns'>desc6</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;text&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -279,8 +315,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 </BLOCKQUOTE>
 </TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>24&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>27&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-a3_DIV' class='columns'>a3</B>&nbsp;&nbsp;</TD>
 <TD>boolean&nbsp;/&nbsp;boolean&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -289,8 +325,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Formula column '<B>Not A3</B>'<BR>&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing2View-a3_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a3</A></TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>25&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>28&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-bastille_DIV' class='columns'>bastille</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -299,8 +335,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Formula column '<B>Bastille Day</B>'<BR>&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing2View-bastille_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>bastille</A></TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>26&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>29&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-toto_DIV' class='columns'>toto</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -309,58 +345,58 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Formula column '<B>Last Updated</B>'<BR>&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing2View-toto_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>toto</A></TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>27&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>30&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-desc2_Cat1_DIV' class='columns'>desc2_Cat1</B>&nbsp;&nbsp;</TD>
-<TD>double&nbsp;/&nbsp;double&nbsp;&nbsp;</TD>
+<TD>double&nbsp;/&nbsp;double precision&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Formula column '<B>desc2_Cat1 Title</B>'<BR>&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing2View-desc2_Cat1_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>desc2_Cat1</A></TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>28&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>31&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-desc2_Cat2_DIV' class='columns'>desc2_Cat2</B>&nbsp;&nbsp;</TD>
-<TD>double&nbsp;/&nbsp;double&nbsp;&nbsp;</TD>
+<TD>double&nbsp;/&nbsp;double precision&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Formula column '<B>desc2_Cat2 Title</B>'<BR>&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing2View-desc2_Cat2_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>desc2_Cat2</A></TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>29&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>32&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-desc2_Cat3_DIV' class='columns'>desc2_Cat3</B>&nbsp;&nbsp;</TD>
-<TD>double&nbsp;/&nbsp;double&nbsp;&nbsp;</TD>
+<TD>double&nbsp;/&nbsp;double precision&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Formula column '<B>desc2_Cat3 Title</B>'<BR>&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing2View-desc2_Cat3_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>desc2_Cat3</A></TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>30&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>33&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-a7_Cat4_DIV' class='columns'>a7_Cat4</B>&nbsp;&nbsp;</TD>
-<TD>double&nbsp;/&nbsp;double&nbsp;&nbsp;</TD>
+<TD>double&nbsp;/&nbsp;double precision&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Formula column '<B>a7_Cat4 Title</B>'<BR>&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing2View-a7_Cat4_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a7_Cat4</A></TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>31&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>34&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-a7_Cat5_DIV' class='columns'>a7_Cat5</B>&nbsp;&nbsp;</TD>
-<TD>double&nbsp;/&nbsp;double&nbsp;&nbsp;</TD>
+<TD>double&nbsp;/&nbsp;double precision&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Formula column '<B>a7_Cat5 Title</B>'<BR>&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing2View-a7_Cat5_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a7_Cat5</A></TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>32&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>35&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-a5_null_DIV' class='columns'>a5_null</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -369,8 +405,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Formula column '<B>Null a5</B>'<BR>&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing2View-a5_null_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a5_null</A></TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>33&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>36&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-a6_null_DIV' class='columns'>a6_null</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -379,8 +415,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Formula column '<B>Null a6</B>'<BR>&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing2View-a6_null_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a6_null</A></TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>34&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>37&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-a7_null_DIV' class='columns'>a7_null</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -389,8 +425,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Formula column '<B>Null a7</B>'<BR>&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing2View-a7_null_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a7_null</A></TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>35&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>38&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-a8_null_DIV' class='columns'>a8_null</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -686,6 +722,57 @@ This Table contains the following columns:<BLOCKQUOTE>
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
 <td><a href='TILDA___Docs.TILDA.html#Testing2Realized_DIV'>Testing2Realized</a></td>
 <td><a href='TILDA___Docs.TILDA.html#Testing2Realized-a10b_DIV'>a10b</a> -- SHORT[]</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='Testing2Realized-a11_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('Testing2Realized-a11_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Testing2Realized_DIV'>Testing2Realized</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Testing2Realized-a11_DIV'>a11</a> -- NUMERIC</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='Testing2Realized-a11b_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('Testing2Realized-a11b_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Testing2Realized_DIV'>Testing2Realized</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Testing2Realized-a11b_DIV'>a11b</a> -- NUMERIC[]</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='Testing2Realized-a11c_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('Testing2Realized-a11c_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Testing2Realized_DIV'>Testing2Realized</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Testing2Realized-a11c_DIV'>a11c</a> -- NUMERIC</td>
 </tr>
 </table>
 </DIV></DIV>
@@ -1877,7 +1964,7 @@ This is the null setter for:<BR>
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a4 of type double</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a4 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a4 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
@@ -1896,7 +1983,7 @@ This is the definition for:<BR>
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a4 of type double</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a4 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a4 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
@@ -1916,7 +2003,7 @@ This is the getter for:<BR>
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a4 of type double</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a4 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a4 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
@@ -1936,7 +2023,7 @@ This is the isNull for:<BR>
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a4 of type double</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a4 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a4 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
@@ -1967,7 +2054,7 @@ This is the setter for:<BR>
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a4 of type double</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a4 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a4 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
@@ -2001,7 +2088,7 @@ This is the null setter for:<BR>
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a4b of type List<Double></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a4b of type double[]</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a4b of type double precision[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
@@ -2020,7 +2107,7 @@ This is the definition for:<BR>
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a4b of type List<Double></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a4b of type double[]</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a4b of type double precision[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
@@ -2044,7 +2131,7 @@ This is the getter for:<BR>
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a4b of type List<Double></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a4b of type double[]</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a4b of type double precision[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
@@ -2064,7 +2151,7 @@ This is the isNull for:<BR>
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a4b of type List<Double></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a4b of type double[]</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a4b of type double precision[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
@@ -2139,7 +2226,7 @@ This is the setter for:<BR>
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a4b of type List<Double></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a4b of type double[]</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a4b of type double precision[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
@@ -3444,6 +3531,426 @@ This is the null setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2Realized.a11 -> TILDA.Testing2Realized."a11"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a11 of type BigDecimal</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a11 of type numeric</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   BigDecimal _a11= new BigDecimal(SystemValues.EVIL_VALUE);
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2Realized.a11 -> TILDA.Testing2Realized."a11"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a11 of type BigDecimal</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a11 of type numeric</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final BigDecimal getA11()
+      { return _a11; }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2Realized.a11 -> TILDA.Testing2Realized."a11"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the isNull for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a11 of type BigDecimal</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a11 of type numeric</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final boolean isNullA11()
+     { return __Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A11._Mask); }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2Realized.a11 -> TILDA.Testing2Realized."a11"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a11 of type BigDecimal</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a11 of type numeric</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+    void setA11(BigDecimal v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (v != _a11)
+        {
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+           throw new Exception("Cannot set field 'tilda.data.TILDA.Testing2Realized.a11' that is invariant, or part of a read-only or pre-existing WORM object.");
+          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A11._Mask);
+          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A11._Mask);
+       _a11 = v;
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2Realized.a11 -> TILDA.Testing2Realized."a11"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the null setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a11 of type BigDecimal</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a11 of type numeric</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+    void setNullA11()
+     {
+       long T0 = System.nanoTime();
+       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A11._Mask) == true) // already NULL
+        return;
+       __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A11._Mask);
+       __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A11._Mask);
+       _a11=BigDecimal.ZERO;
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2Realized.a11b -> TILDA.Testing2Realized."a11b"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a11b of type List<BigDecimal></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a11b of type numeric[]</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   List<BigDecimal> _a11b;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2Realized.a11b -> TILDA.Testing2Realized."a11b"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a11b of type List<BigDecimal></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a11b of type numeric[]</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final BigDecimal[] getA11bAsArray()
+      { return _a11b==null? null : _a11b.toArray(new BigDecimal[_a11b.size()]); }
+   public final Iterator<BigDecimal> getA11b()
+      { return _a11b==null? null : _a11b.iterator(); }
+   public final boolean hasA11b(BigDecimal v)
+      { return _a11b==null? false : _a11b.contains(v); }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2Realized.a11b -> TILDA.Testing2Realized."a11b"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the isNull for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a11b of type List<BigDecimal></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a11b of type numeric[]</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final boolean isNullA11b()
+     { return __Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A11B._Mask); }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2Realized.a11b -> TILDA.Testing2Realized."a11b"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a11b of type List<BigDecimal></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a11b of type numeric[]</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+    void setA11b(List<BigDecimal> v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+        throw new Exception("Cannot set field 'tilda.data.TILDA.Testing2Realized.a11b' that is invariant, or part of a read-only or pre-existing WORM object.");
+       if (v == null  || v.isEmpty() == true)
+        setNullA11b();
+       else if (CollectionUtil.equals(v, _a11b) == false)
+        {
+          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A11B._Mask);
+          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A11B._Mask);
+          if (_a11b == null)
+           {
+             _a11b = new ArrayList<BigDecimal>();
+           }
+          else
+           {
+             _a11b.clear();
+           }
+          for (BigDecimal i : v)
+           {
+             _a11b.add(i);
+           }
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+    void addToA11b(int pos, BigDecimal v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (_a11b == null)
+        _a11b = new ArrayList<BigDecimal>();
+       if (pos >= _a11b.size() || _a11b.get(pos).equals(v) == false)
+        {
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+           throw new Exception("Cannot set field 'tilda.data.TILDA.Testing2Realized.a11b' that is invariant, or part of a read-only or pre-existing WORM object.");
+          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A11B._Mask);
+          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A11B._Mask);
+          _a11b.add(pos, v);
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+    void removeFromA11b(BigDecimal v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (_a11b.remove(v) == true)
+          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A11B._Mask);
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+    void removeFromA11b(int pos) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (_a11b.remove(pos) != null)
+        {
+          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A11B._Mask);
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2Realized.a11b -> TILDA.Testing2Realized."a11b"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the null setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a11b of type List<BigDecimal></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a11b of type numeric[]</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+    void setNullA11b()
+     {
+       long T0 = System.nanoTime();
+       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A11B._Mask) == true) // already NULL
+        return;
+       __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A11B._Mask);
+       __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A11B._Mask);
+       _a11b=null;
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2Realized.a11c -> TILDA.Testing2Realized."a11c"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a11c of type BigDecimal</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a11c of type numeric</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   BigDecimal _a11c= new BigDecimal(SystemValues.EVIL_VALUE);
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2Realized.a11c -> TILDA.Testing2Realized."a11c"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a11c of type BigDecimal</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a11c of type numeric</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final BigDecimal getA11c()
+      { return _a11c; }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2Realized.a11c -> TILDA.Testing2Realized."a11c"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the isNull for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a11c of type BigDecimal</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a11c of type numeric</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final boolean isNullA11c()
+     { return __Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A11C._Mask); }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2Realized.a11c -> TILDA.Testing2Realized."a11c"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a11c of type BigDecimal</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a11c of type numeric</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+    void setA11c(BigDecimal v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (v != _a11c)
+        {
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+           throw new Exception("Cannot set field 'tilda.data.TILDA.Testing2Realized.a11c' that is invariant, or part of a read-only or pre-existing WORM object.");
+          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A11C._Mask);
+          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A11C._Mask);
+       _a11c = v;
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2Realized.a11c -> TILDA.Testing2Realized."a11c"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the null setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a11c of type BigDecimal</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a11c of type numeric</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+    void setNullA11c()
+     {
+       long T0 = System.nanoTime();
+       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A11C._Mask) == true) // already NULL
+        return;
+       __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A11C._Mask);
+       __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A11C._Mask);
+       _a11c=BigDecimal.ZERO;
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing2Realized.description -> TILDA.Testing2Realized."description"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
@@ -4723,7 +5230,7 @@ This is the null setter for:<BR>
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.desc2_Cat1 of type double</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.desc2_Cat1 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.desc2_Cat1 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>desc2_Cat1 Title</B>'</TD></TR>
@@ -4742,7 +5249,7 @@ This is the definition for:<BR>
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.desc2_Cat1 of type double</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.desc2_Cat1 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.desc2_Cat1 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>desc2_Cat1 Title</B>'</TD></TR>
@@ -4762,7 +5269,7 @@ This is the getter for:<BR>
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.desc2_Cat1 of type double</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.desc2_Cat1 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.desc2_Cat1 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>desc2_Cat1 Title</B>'</TD></TR>
@@ -4782,7 +5289,7 @@ This is the isNull for:<BR>
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.desc2_Cat1 of type double</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.desc2_Cat1 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.desc2_Cat1 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>desc2_Cat1 Title</B>'</TD></TR>
@@ -4813,7 +5320,7 @@ This is the setter for:<BR>
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.desc2_Cat1 of type double</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.desc2_Cat1 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.desc2_Cat1 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>desc2_Cat1 Title</B>'</TD></TR>
@@ -4847,7 +5354,7 @@ This is the null setter for:<BR>
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.desc2_Cat2 of type double</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.desc2_Cat2 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.desc2_Cat2 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>desc2_Cat2 Title</B>'</TD></TR>
@@ -4866,7 +5373,7 @@ This is the definition for:<BR>
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.desc2_Cat2 of type double</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.desc2_Cat2 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.desc2_Cat2 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>desc2_Cat2 Title</B>'</TD></TR>
@@ -4886,7 +5393,7 @@ This is the getter for:<BR>
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.desc2_Cat2 of type double</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.desc2_Cat2 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.desc2_Cat2 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>desc2_Cat2 Title</B>'</TD></TR>
@@ -4906,7 +5413,7 @@ This is the isNull for:<BR>
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.desc2_Cat2 of type double</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.desc2_Cat2 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.desc2_Cat2 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>desc2_Cat2 Title</B>'</TD></TR>
@@ -4937,7 +5444,7 @@ This is the setter for:<BR>
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.desc2_Cat2 of type double</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.desc2_Cat2 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.desc2_Cat2 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>desc2_Cat2 Title</B>'</TD></TR>
@@ -4971,7 +5478,7 @@ This is the null setter for:<BR>
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.desc2_Cat3 of type double</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.desc2_Cat3 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.desc2_Cat3 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>desc2_Cat3 Title</B>'</TD></TR>
@@ -4990,7 +5497,7 @@ This is the definition for:<BR>
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.desc2_Cat3 of type double</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.desc2_Cat3 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.desc2_Cat3 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>desc2_Cat3 Title</B>'</TD></TR>
@@ -5010,7 +5517,7 @@ This is the getter for:<BR>
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.desc2_Cat3 of type double</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.desc2_Cat3 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.desc2_Cat3 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>desc2_Cat3 Title</B>'</TD></TR>
@@ -5030,7 +5537,7 @@ This is the isNull for:<BR>
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.desc2_Cat3 of type double</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.desc2_Cat3 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.desc2_Cat3 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>desc2_Cat3 Title</B>'</TD></TR>
@@ -5061,7 +5568,7 @@ This is the setter for:<BR>
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.desc2_Cat3 of type double</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.desc2_Cat3 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.desc2_Cat3 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>desc2_Cat3 Title</B>'</TD></TR>
@@ -5095,7 +5602,7 @@ This is the null setter for:<BR>
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a7_Cat4 of type double</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a7_Cat4 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a7_Cat4 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>a7_Cat4 Title</B>'</TD></TR>
@@ -5114,7 +5621,7 @@ This is the definition for:<BR>
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a7_Cat4 of type double</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a7_Cat4 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a7_Cat4 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>a7_Cat4 Title</B>'</TD></TR>
@@ -5134,7 +5641,7 @@ This is the getter for:<BR>
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a7_Cat4 of type double</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a7_Cat4 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a7_Cat4 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>a7_Cat4 Title</B>'</TD></TR>
@@ -5154,7 +5661,7 @@ This is the isNull for:<BR>
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a7_Cat4 of type double</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a7_Cat4 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a7_Cat4 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>a7_Cat4 Title</B>'</TD></TR>
@@ -5185,7 +5692,7 @@ This is the setter for:<BR>
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a7_Cat4 of type double</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a7_Cat4 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a7_Cat4 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>a7_Cat4 Title</B>'</TD></TR>
@@ -5219,7 +5726,7 @@ This is the null setter for:<BR>
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a7_Cat5 of type double</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a7_Cat5 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a7_Cat5 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>a7_Cat5 Title</B>'</TD></TR>
@@ -5238,7 +5745,7 @@ This is the definition for:<BR>
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a7_Cat5 of type double</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a7_Cat5 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a7_Cat5 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>a7_Cat5 Title</B>'</TD></TR>
@@ -5258,7 +5765,7 @@ This is the getter for:<BR>
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a7_Cat5 of type double</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a7_Cat5 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a7_Cat5 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>a7_Cat5 Title</B>'</TD></TR>
@@ -5278,7 +5785,7 @@ This is the isNull for:<BR>
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a7_Cat5 of type double</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a7_Cat5 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a7_Cat5 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>a7_Cat5 Title</B>'</TD></TR>
@@ -5309,7 +5816,7 @@ This is the setter for:<BR>
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a7_Cat5 of type double</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a7_Cat5 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a7_Cat5 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>a7_Cat5 Title</B>'</TD></TR>
@@ -5875,6 +6382,9 @@ This is the null setter for:<BR>
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2Realized", "a8b");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2Realized", "a10");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2Realized", "a10b");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2Realized", "a11");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2Realized", "a11b");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2Realized", "a11c");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2Realized", "description");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2Realized", "desc2");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2Realized", "desc3");
@@ -5971,6 +6481,9 @@ This is the null setter for:<BR>
                                _a8b            = ProcessZDT(_a8bTZ           , "tilda.data.TILDA.Testing2Realized.a8b"           , RS, ++i, TILDA__TESTING2REALIZED_Factory.COLS.A8B           , TILDA__TESTING2REALIZED_Factory.COLS.A8BTZ           ); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A8B._Mask           );
                                _a10            =                              RS.getShort     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A10._Mask           );
                                _a10b = (List<Short>) C.getArray(RS, ++i, TILDA__TESTING2REALIZED_Factory.COLS.A10B._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A10B._Mask          );
+                               _a11            =                              RS.getBigDecimal(++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A11._Mask           );
+                               _a11b = (List<BigDecimal>) C.getArray(RS, ++i, TILDA__TESTING2REALIZED_Factory.COLS.A11B._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A11B._Mask          );
+                               _a11c           =                              RS.getBigDecimal(++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A11C._Mask          );
                                _description    = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.DESCRIPTION._Mask   );
                                _desc2          = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.DESC2._Mask         );
                                _desc3          = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.DESC3._Mask         );
@@ -6036,6 +6549,9 @@ This is the null setter for:<BR>
                + "; a8b"              + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8B._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getA8b           ()))
                + "; a10"              + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A10._Mask) == true ? ": NULL" : ": " +                                   getA10           () )
                + "; a10b"             + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A10B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA10b          ()))
+               + "; a11"              + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A11._Mask) == true ? ": NULL" : ": " +                                   getA11           () )
+               + "; a11b"             + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A11B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA11b          ()))
+               + "; a11c"             + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A11C._Mask) == true ? ": NULL" : ": " +                                   getA11c          () )
                + "; description"      + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.DESCRIPTION._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDescription   ()))
                + "; desc2"            + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.DESC2._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDesc2         ()))
                + "; desc3"            + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.DESC3._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDesc3         ()))

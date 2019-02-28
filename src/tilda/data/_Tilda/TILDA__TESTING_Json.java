@@ -14,6 +14,12 @@ import tilda.utils.*;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.math.BigDecimal;
+
+import java.math.BigDecimal;
+
+import java.math.BigDecimal;
+
 
 @SuppressWarnings({ "unused" })
 public class TILDA__TESTING_Json
@@ -63,6 +69,9 @@ public class TILDA__TESTING_Json
    @SerializedName("a9d"        ) public List<LocalDate>  _a9d        ;
    @SerializedName("a10"        ) public Short  _a10        ;
    @SerializedName("a10b"       ) public List<Short>  _a10b       ;
+   @SerializedName("a11"        ) public BigDecimal  _a11        ;
+   @SerializedName("a11b"       ) public List<BigDecimal>  _a11b       ;
+   @SerializedName("a11c"       ) public BigDecimal  _a11c       ;
    /*@formatter:on*/
 
    public tilda.data.Testing_Data Write(Connection C) throws Exception
@@ -148,6 +157,9 @@ public class TILDA__TESTING_Json
       if (_a9d        != null) Obj.setA9d        (_a9d        );
       if (_a10        != null) Obj.setA10        (_a10        );
       if (_a10b       != null) Obj.setA10b       (_a10b       );
+      if (_a11        != null) Obj.setA11        (_a11        );
+      if (_a11b       != null) Obj.setA11b       (_a11b       );
+      if (_a11c       != null) Obj.setA11c       (_a11c       );
     }
 
    public String toString()
@@ -188,6 +200,9 @@ public class TILDA__TESTING_Json
          + "; a9d"        + (_a9d         == null ? ": NULL" : ": " + _a9d        )
          + "; a10"        + (_a10         == null ? ": NULL" : ": " + _a10        )
          + "; a10b"       + (_a10b        == null ? ": NULL" : ": " + _a10b       )
+         + "; a11"        + (_a11         == null ? ": NULL" : ": " + _a11        )
+         + "; a11b"       + (_a11b        == null ? ": NULL" : ": " + _a11b       )
+         + "; a11c"       + (_a11c        == null ? ": NULL" : ": " + _a11c       )
          + ";";
     }
 

@@ -156,7 +156,7 @@ public class ViewRealize
                 if (C._Type == ColumnType.STRING && C._Size != null && C._Size <= 8)
                  C._Size = 10;
 //              Column newCol = new Column(C._Name, C._TypeStr, C._Size, true, C._Mode, C._Invariant, C._Protect, C._Description);
-                Column newCol = new Column(C._Name, C._TypeStr, C._Size, C._Description);
+                Column newCol = new Column(C._Name, C._TypeStr, C._Size, C._Description, C._Precision, C._Scale);
                 newCol._Nullable = O.isUniqueIndexColumn(C._Name) == false && O.isPrimaryKey(C._Name) == false;
                 newCol._Invariant = O.isPrimaryKey(C._Name)==true;
                 newCol._FCT = C._FCT;

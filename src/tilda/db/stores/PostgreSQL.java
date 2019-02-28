@@ -270,7 +270,7 @@ public class PostgreSQL implements DBType
             if (RP.getResult() > 0)
               throw new Exception("Cannot add new 'not null' column '" + Col.getFullName() + "' to a table without a default value. Add a default value in the model, or manually migrate your database.");
           }
-        String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ADD COLUMN \"" + Col.getName() + "\" " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection());
+        String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ADD COLUMN \"" + Col.getName() + "\" " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection(), Col._Precision, Col._Scale);
         if (Col._Nullable == false && DefaultValue != null)
           {
             Q += " not null DEFAULT " + ValueHelper.printValue(Col.getName(), Col.getType(), DefaultValue);
@@ -345,12 +345,12 @@ public class PostgreSQL implements DBType
       }
 
     @Override
-    public void getColumnType(StringBuilder Str, ColumnType T, Integer S, ColumnMode M, boolean Collection)
+    public void getColumnType(StringBuilder Str, ColumnType T, Integer S, ColumnMode M, boolean Collection, Integer Precision, Integer Scale)
       {
-        Str.append(getColumnType(T, S, M, Collection));
+        Str.append(getColumnType(T, S, M, Collection, Precision, Scale));
       }
 
-    public String getColumnType(ColumnType T, Integer S, ColumnMode M, boolean Collection)
+    public String getColumnType(ColumnType T, Integer S, ColumnMode M, boolean Collection, Integer Precision, Integer Scale)
       {
         if (T == ColumnType.STRING && M != ColumnMode.CALCULATED)
           {
@@ -359,7 +359,10 @@ public class PostgreSQL implements DBType
             : getDBStringType(S) == DBStringType.VARCHAR ? PostgresType.STRING._SQLType + "(" + S + ")"
             : "text";
           }
-        return PostgresType.get(T)._SQLType + (T != ColumnType.JSON && Collection == true ? "[]" : "");
+
+        return PostgresType.get(T)._SQLType 
+               + (T == ColumnType.NUMERIC && Precision != null ? "("+ Precision + (Scale != null ? "," + Scale : "") + ")" : "") 
+               + (T != ColumnType.JSON && Collection == true ? "[]" : "");
       }
 
     @Override
@@ -396,10 +399,63 @@ public class PostgreSQL implements DBType
         // if (ColMetaT == DBStringType.CHARACTER && ColT != DBStringType.CHARACTER)
         // Using = " USING rtrim(\"" + Col.getName() + "\")";
         String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName() + "\" TYPE "
-        + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection()) + Using + ";";
+        + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection(), Col._Precision, Col._Scale) + Using + ";";
         return Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
       }
 
+    @Override
+    public boolean alterTableAlterColumnNumericSize(Connection Con, ColumnMeta ColMeta, Column Col)
+    throws Exception
+      {
+        // Is precision shrinking?
+        if (Col._Size < ColMeta._Size)
+          {
+            String Q = "SELECT length(max(\"" + Col.getName() + "\")::varchar) from " + Col._ParentObject.getShortName();
+            ScalarRP RP = new ScalarRP();
+            Con.ExecuteSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, RP);
+            if (RP.getResult() > Col._Size+1) //add 1 because varchar conversion includes the decimal in length
+              {
+                Q = "select \"" + Col.getName() + "\" || '  (' || length(\"" + Col.getName() + "\"::varchar) || ')' as _x from " + Col._ParentObject.getShortName()
+                + " group by \"" + Col.getName() + "\""
+                + " order by length(\"" + Col.getName() + "\"::varchar) desc"
+                + " limit 10";
+                StringListRP SLRP = new StringListRP();
+                Con.ExecuteSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, SLRP);
+                LOG.error("Column sample:");
+                for (String s : SLRP.getResult())
+                  LOG.error("   - " + s);
+                throw new Exception("Cannot alter Numeric column '" + Col.getFullName() + "' from precision " + ColMeta._Size + " down to " + Col._Size + " because there are values with precision lengths up to " + RP.getResult()
+                + " that would cause errors. You need to manually migrate your database.");
+              }
+          }
+        
+        // Is scale expanding?
+        if (Col._Scale > ColMeta._Scale)
+          {            
+            String Q = "SELECT length((max(\"" + Col.getName() + "\")::int)::varchar)) from " + Col._ParentObject.getShortName();
+            ScalarRP RP = new ScalarRP();
+            Con.ExecuteSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, RP);
+            if (RP.getResult() > (Col._Precision - Col._Scale)) //digits available for before the decimal
+              {
+                Q = "select \"" + Col.getName() + "\" || '  (' || length((max(\"" + Col.getName() + "\")::int)::varchar) || ')' as _x from " + Col._ParentObject.getShortName()
+                + " group by \"" + Col.getName() + "\""
+                + " order by length(\"" + Col.getName() + "\"::varchar) desc"
+                + " limit 10";
+                StringListRP SLRP = new StringListRP();
+                Con.ExecuteSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, SLRP);
+                LOG.error("Column sample:");
+                for (String s : SLRP.getResult())
+                  LOG.error("   - " + s);
+                throw new Exception("Cannot alter Numeric column '" + Col.getFullName() + "' from scale " + Col._Scale + " up to " + ColMeta._Scale + " because there are pre-decimal value lengths up to " + RP.getResult()
+                + " that would cause errors. You need to manually migrate your database.");
+              }
+          }        
+
+        String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName() + "\" TYPE "
+        + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection(), Col._Precision, Col._Scale) + ";";
+        return Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
+      }    
+    
 
     @Override
     public boolean alterTableAlterColumnType(Connection Con, ColumnMeta ColMeta, Column Col, ZoneInfo_Data defaultZI)
@@ -410,15 +466,15 @@ public class PostgreSQL implements DBType
             if (Col.getType() == ColumnType.INTEGER || Col.getType() == ColumnType.LONG || Col.getType() == ColumnType.FLOAT || Col.getType() == ColumnType.DOUBLE || Col.getType() == ColumnType.DATE)
               {
                 String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName()
-                + "\" TYPE " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection())
-                + " USING (trim(\"" + Col.getName() + "\")::" + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection()) + ");";
+                + "\" TYPE " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection(), Col._Precision, Col._Scale)
+                + " USING (trim(\"" + Col.getName() + "\")::" + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection(), Col._Precision, Col._Scale) + ");";
                 return Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
               }
             else if (Col.getType() == ColumnType.DATETIME)
               {
                 String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName()
-                + "\" TYPE " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection())
-                + " USING (trim(\"" + Col.getName() + "\")::" + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection()) + ");";
+                + "\" TYPE " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection(), Col._Precision, Col._Scale)
+                + " USING (trim(\"" + Col.getName() + "\")::" + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection(), Col._Precision, Col._Scale) + ");";
 
                 if (Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) == false)
                   return false;
@@ -445,7 +501,7 @@ public class PostgreSQL implements DBType
           }
 
         String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName()
-        + "\" TYPE " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection()) + Using + ";";
+        + "\" TYPE " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection(), Col._Precision, Col._Scale) + Using + ";";
         return Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
       }
 
@@ -751,7 +807,7 @@ public class PostgreSQL implements DBType
             case java.sql.Types.NCHAR        : TypeSql = "NCHAR"        ; TildaType = Size==1 ? ColumnType.CHAR : ColumnType.STRING; break;
             case java.sql.Types.NCLOB        : TypeSql = "NCLOB"        ; TildaType = ColumnType.STRING; break;
             case java.sql.Types.NULL         : TypeSql = "NULL"         ; TildaType = null; break;
-            case java.sql.Types.NUMERIC      : TypeSql = "NUMERIC"      ; TildaType = ColumnType.BIGDECIMAL; break;
+            case java.sql.Types.NUMERIC      : TypeSql = "NUMERIC"      ; TildaType = ColumnType.NUMERIC; break;
             case java.sql.Types.NVARCHAR     : TypeSql = "NVARCHAR"     ; TildaType = ColumnType.STRING; break;
             case java.sql.Types.OTHER        :
               if (TypeName != null && TypeName.equalsIgnoreCase("jsonb") == true)
@@ -805,7 +861,7 @@ public class PostgreSQL implements DBType
               TildaType = ColumnType.DOUBLE;
               break;
             case "_numeric":
-              TildaType = ColumnType.BIGDECIMAL;
+              TildaType = ColumnType.NUMERIC;
               break;              
             case "_bpchar":
               TildaType = ColumnType.CHAR;
@@ -1120,5 +1176,4 @@ public class PostgreSQL implements DBType
       {
         return 63;
       }
-
   }

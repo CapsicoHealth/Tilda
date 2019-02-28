@@ -440,7 +440,7 @@ public class ParseUtil
      * NUMERICS (BigDecimal)
      ************************************************************************************************************************/   
     
-    public static BigDecimal parseNumeric(String Val, BigDecimal Default)
+    public static BigDecimal parseBigDecimal(String Val, BigDecimal Default)
       {
         if (TextUtil.isNullOrEmpty(Val) == false)
           try
@@ -460,12 +460,12 @@ public class ParseUtil
      * @param Errors
      * @return
      */
-    public static BigDecimal parseNumeric(String Name, boolean Mandatory, String Value, List<StringStringPair> Errors)
+    public static BigDecimal parseBigDecimal(String Name, boolean Mandatory, String Value, List<StringStringPair> Errors)
       {
         if (ParseUtil.parseString(Name, Mandatory, Value, Errors) == null)
          return new BigDecimal(SystemValues.EVIL_VALUE);
         
-        BigDecimal v = ParseUtil.parseNumeric(Value, new BigDecimal(SystemValues.EVIL_VALUE));
+        BigDecimal v = ParseUtil.parseBigDecimal(Value, new BigDecimal(SystemValues.EVIL_VALUE));
         if (v == new BigDecimal(SystemValues.EVIL_VALUE) && Mandatory == true)
           {
             LOG.error("Invalid value '" + Value + "' for parameter '" + Name + "'.");
@@ -483,7 +483,7 @@ public class ParseUtil
      * @param Errors
      * @return
      */
-    public static BigDecimal[] parseNumeric(String Name, boolean Mandatory, String[] Values, List<StringStringPair> Errors)
+    public static BigDecimal[] parseBigDecimal(String Name, boolean Mandatory, String[] Values, List<StringStringPair> Errors)
       {
         if (Values == null || Values.length == 0)
           {
@@ -498,7 +498,7 @@ public class ParseUtil
         for (int i = 0; i < Values.length; ++i)
           {
             String v = Values[i];
-            BigDecimal r = ParseUtil.parseNumeric(v, new BigDecimal(SystemValues.EVIL_VALUE));
+            BigDecimal r = ParseUtil.parseBigDecimal(v, new BigDecimal(SystemValues.EVIL_VALUE));
             if (r == new BigDecimal(SystemValues.EVIL_VALUE))
               {
                 LOG.error("Invalid value '" + v + "' for parameter '" + Name + "'.");
@@ -518,9 +518,9 @@ public class ParseUtil
      * @param Errors
      * @return
      */
-    public static BigDecimal[] BigDecimal(String Name, boolean Mandatory, String Values, String Separator, List<StringStringPair> Errors)
+    public static BigDecimal[] parseBigDecimal(String Name, boolean Mandatory, String Values, String Separator, List<StringStringPair> Errors)
       {
-        return parseNumeric(Name, Mandatory, Values == null ? null : Values.split(Separator), Errors);
+        return parseBigDecimal(Name, Mandatory, Values == null ? null : Values.split(Separator), Errors);
       }
     
     

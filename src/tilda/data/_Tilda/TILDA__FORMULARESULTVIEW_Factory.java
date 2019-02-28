@@ -7,6 +7,7 @@ import tilda.enums.*;
 import tilda.types.*;
 import tilda.utils.*;
 
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -46,7 +47,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive            FORMULAREFNUM= new Type_LongPrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "formulaRefnum", 0/*0*/, "The parent formula.");
+     public static Type_LongPrimitive          FORMULAREFNUM= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "formulaRefnum", 0/*0*/, "The parent formula.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.FormulaResultView.value -> TILDA.FormulaResultView."value"
@@ -65,7 +66,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive          VALUE        = new Type_StringPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "value"        , 1/*1*/, "The result value.");
+     public static Type_StringPrimitive        VALUE        = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "value"        , 1/*1*/, "The result value.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.FormulaResultView.description -> TILDA.FormulaResultView."description"
@@ -84,7 +85,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive          DESCRIPTION  = new Type_StringPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "description"  , 2/*2*/, "The description of the result value.");
+     public static Type_StringPrimitive        DESCRIPTION  = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "description"  , 2/*2*/, "The description of the result value.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.FormulaResultView.location -> TILDA.FormulaResultView."location"
@@ -103,7 +104,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive          LOCATION     = new Type_StringPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "location"     , 3/*3*/, "The name of the primary table/view this formula is defined in.");
+     public static Type_StringPrimitive        LOCATION     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "location"     , 3/*3*/, "The name of the primary table/view this formula is defined in.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.FormulaResultView.name -> TILDA.FormulaResultView."name"
@@ -122,7 +123,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive          NAME         = new Type_StringPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "name"         , 4/*4*/, "The name of the formula/column.");
+     public static Type_StringPrimitive        NAME         = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "name"         , 4/*4*/, "The name of the formula/column.");
 ;
    }
 

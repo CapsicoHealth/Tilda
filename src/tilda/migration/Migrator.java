@@ -44,6 +44,7 @@ import tilda.enums.ObjectMode;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.migration.actions.ColumnAdd;
 import tilda.migration.actions.ColumnAlterNull;
+import tilda.migration.actions.ColumnAlterNumericSize;
 import tilda.migration.actions.ColumnAlterStringSize;
 import tilda.migration.actions.ColumnAlterType;
 import tilda.migration.actions.ColumnComment;
@@ -287,6 +288,10 @@ public class Migrator
 
         for (Object Obj : S._Objects)
           {
+            ///////////TESTING
+            if(Obj._Name.equals("Testing"))
+              LOG.debug(Obj._Name);
+            
             if (Obj == null)
               continue;
             if (Obj._FST == FrameworkSourcedType.VIEW || Obj._Mode == ObjectMode.CODE_ONLY == true)
@@ -302,6 +307,11 @@ public class Migrator
                   Actions.add(new TableComment(Obj));
                 for (Column Col : Obj._Columns)
                   {
+                    
+                    ///////////TESTING
+                    if(Col.getName().equals("a11"))
+                      LOG.debug("a11");
+                    
                     if (Col == null || Col._Mode == ColumnMode.CALCULATED)
                       continue;
 
@@ -328,6 +338,20 @@ public class Migrator
                             Actions.add(new ColumnAlterType(C, CMeta, Col));
                             NeedsDdlDependencyManagement = true;
                           }
+                        
+                        if(Col.getType() == ColumnType.NUMERIC)
+                          {
+                            LOG.debug("object: "+ Obj._Name +" --- name: " + Col.getName() + " --- precision: " + Col._Precision + " --- scale: " + Col._Scale);                            
+                          }
+                        
+                        
+//                        if (Col.isCollection() == false && Col.getType() == ColumnType.NUMERIC
+//                        && (CMeta._Size != Col._Precision && CMeta._Scale != Col._Scale))
+//                          {
+//                            Actions.add(new ColumnAlterNumericSize(CMeta, Col));
+//                            NeedsDdlDependencyManagement = true;
+//                          }
+                        
 
                         // We have to check if someone changed goal-posts for VARCHAR and CLOG thresholds.
                         // The case here is that we have a CHAR(10) in the database, and the model still says

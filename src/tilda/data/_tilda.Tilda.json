@@ -418,12 +418,12 @@
         { "name": "a9c"          , "type": "DATE"       ,                                                       "description": "The blah"},
         { "name": "a9d"          , "type": "DATE[]"     ,                                                       "description": "The blah"},
         { "name": "a10"          , "type": "SHORT"      ,                                                       "description": "The blah"},
-        { "name": "a10b"         , "type": "SHORT[]"    ,                                                       "description": "The blah"}
+        { "name": "a10b"         , "type": "SHORT[]"    ,                                                       "description": "The blah"},
         
- /*       { "name": "a11"          , "type": "NUMERIC"    , "precision":10, "scale":2,                             "description": "The blah"},
+        { "name": "a11"          , "type": "NUMERIC"    , "precision":10, "scale":2,                             "description": "The blah"},
         { "name": "a11b"         , "type": "NUMERIC[]"  , "precision":10, "scale":2,                             "description": "The blah"},
-        { "name": "a11c"         , "type": "NUMERIC"    , "precision":10,                                        "description": "The blah"},
-        { "name": "a11d"         , "type": "NUMERIC"    ,                                                        "description": "The blah"} */
+        { "name": "a11c"         , "type": "NUMERIC"    , "precision":10,                                        "description": "The blah"}
+       /* { "name": "a11d"         , "type": "NUMERIC"    ,                                                        "description": "The blah"}*/ 
       ],
       "primary": { "autogen": true, "keyBatch": 25000 },
       "indices":[ 

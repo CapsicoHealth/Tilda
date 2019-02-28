@@ -10,6 +10,7 @@ import tilda.types.*;
 import tilda.utils.*;
 import tilda.utils.pairs.*;
 
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -49,7 +50,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatePrimitive            INVALIDDATE= new Type_DatePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "invalidDate", 0/*0*/, "The invalid date");
+     public static Type_DatePrimitive          INVALIDDATE= new Type_DatePrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "invalidDate", 0/*0*/, "The invalid date");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.DateLimitDim.minDate -> TILDA.DateLimitDim."minDate"
@@ -67,7 +68,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatePrimitive            MINDATE    = new Type_DatePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "minDate"    , 1/*1*/, "The min date");
+     public static Type_DatePrimitive          MINDATE    = new Type_DatePrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "minDate"    , 1/*1*/, "The min date");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.DateLimitDim.maxDate -> TILDA.DateLimitDim."maxDate"
@@ -85,7 +86,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatePrimitive            MAXDATE    = new Type_DatePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "maxDate"    , 2/*2*/, "The max date");
+     public static Type_DatePrimitive          MAXDATE    = new Type_DatePrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "maxDate"    , 2/*2*/, "The max date");
 ;
    }
 

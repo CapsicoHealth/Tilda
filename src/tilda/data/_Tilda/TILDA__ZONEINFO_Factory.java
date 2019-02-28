@@ -10,6 +10,7 @@ import tilda.types.*;
 import tilda.utils.*;
 import tilda.utils.pairs.*;
 
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -50,7 +51,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive          ID           = new Type_StringPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "id"           , 0/*0*/, "The id for this enumeration.");
+     public static Type_StringPrimitive        ID           = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "id"           , 0/*0*/, "The id for this enumeration.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.ZoneInfo.value -> TILDA.ZoneInfo."value"
@@ -69,7 +70,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive          VALUE        = new Type_StringPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "value"        , 1/*1*/, "The value for this enumeration.");
+     public static Type_StringPrimitive        VALUE        = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "value"        , 1/*1*/, "The value for this enumeration.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.ZoneInfo.label -> TILDA.ZoneInfo."label"
@@ -88,7 +89,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>ABSOLUTE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive          LABEL        = new Type_StringPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "label"        , 2/*2*/, "The label for this enumeration.");
+     public static Type_StringPrimitive        LABEL        = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "label"        , 2/*2*/, "The label for this enumeration.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.ZoneInfo.deactivatedTZ -> TILDA.ZoneInfo."deactivatedTZ"
@@ -107,7 +108,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull      DEACTIVATEDTZ= new Type_StringPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "deactivatedTZ", 3/*3*/, "Generated helper column to hold the time zone ID for 'deactivated'.");
+     public static Type_StringPrimitiveNull    DEACTIVATEDTZ= new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "deactivatedTZ", 3/*3*/, "Generated helper column to hold the time zone ID for 'deactivated'.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.ZoneInfo.deactivated -> TILDA.ZoneInfo."deactivated"
@@ -125,7 +126,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull    DEACTIVATED  = new Type_DatetimePrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "deactivated"  , 4/*4*/, "The label for this enumeration.");
+     public static Type_DatetimePrimitiveNull  DEACTIVATED  = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deactivated"  , 4/*4*/, "The label for this enumeration.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.ZoneInfo.created -> TILDA.ZoneInfo."created"
@@ -150,7 +151,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive        CREATED      = new Type_DatetimePrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "created"      , 5/*5*/, "The timestamp for when the record was created. (TILDA.ZoneInfo)");
+     public static Type_DatetimePrimitive      CREATED      = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"      , 5/*5*/, "The timestamp for when the record was created. (TILDA.ZoneInfo)");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.ZoneInfo.lastUpdated -> TILDA.ZoneInfo."lastUpdated"
@@ -175,7 +176,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive        LASTUPDATED  = new Type_DatetimePrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"  , 6/*6*/, "The timestamp for when the record was last updated. (TILDA.ZoneInfo)");
+     public static Type_DatetimePrimitive      LASTUPDATED  = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"  , 6/*6*/, "The timestamp for when the record was last updated. (TILDA.ZoneInfo)");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.ZoneInfo.deleted -> TILDA.ZoneInfo."deleted"
@@ -193,7 +194,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull    DELETED      = new Type_DatetimePrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"      , 7/*7*/, "The timestamp for when the record was deleted. (TILDA.ZoneInfo)");
+     public static Type_DatetimePrimitiveNull  DELETED      = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"      , 7/*7*/, "The timestamp for when the record was deleted. (TILDA.ZoneInfo)");
 ;
    }
 

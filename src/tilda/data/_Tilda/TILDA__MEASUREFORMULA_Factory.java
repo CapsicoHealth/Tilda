@@ -10,6 +10,7 @@ import tilda.types.*;
 import tilda.utils.*;
 import tilda.utils.pairs.*;
 
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -49,7 +50,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive            MEASUREREFNUM= new Type_LongPrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "measureRefnum", 0/*0*/, "The measure.");
+     public static Type_LongPrimitive          MEASUREREFNUM= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "measureRefnum", 0/*0*/, "The measure.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.MeasureFormula.formulaRefnum -> TILDA.MeasureFormula."formulaRefnum"
@@ -67,7 +68,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive            FORMULAREFNUM= new Type_LongPrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "formulaRefnum", 1/*1*/, "The parent formula.");
+     public static Type_LongPrimitive          FORMULAREFNUM= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "formulaRefnum", 1/*1*/, "The parent formula.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.MeasureFormula.created -> TILDA.MeasureFormula."created"
@@ -92,7 +93,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive        CREATED      = new Type_DatetimePrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "created"      , 2/*2*/, "The timestamp for when the record was created. (TILDA.MeasureFormula)");
+     public static Type_DatetimePrimitive      CREATED      = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"      , 2/*2*/, "The timestamp for when the record was created. (TILDA.MeasureFormula)");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.MeasureFormula.lastUpdated -> TILDA.MeasureFormula."lastUpdated"
@@ -117,7 +118,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive        LASTUPDATED  = new Type_DatetimePrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"  , 3/*3*/, "The timestamp for when the record was last updated. (TILDA.MeasureFormula)");
+     public static Type_DatetimePrimitive      LASTUPDATED  = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"  , 3/*3*/, "The timestamp for when the record was last updated. (TILDA.MeasureFormula)");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.MeasureFormula.deleted -> TILDA.MeasureFormula."deleted"
@@ -135,7 +136,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull    DELETED      = new Type_DatetimePrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"      , 4/*4*/, "The timestamp for when the record was deleted. (TILDA.MeasureFormula)");
+     public static Type_DatetimePrimitiveNull  DELETED      = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"      , 4/*4*/, "The timestamp for when the record was deleted. (TILDA.MeasureFormula)");
 ;
    }
 

@@ -86,16 +86,16 @@ public class Column extends TypeDef
 
       }
 
-    public Column(String Name, String TypeStr, Integer Size, String Description)
+    public Column(String Name, String TypeStr, Integer Size, String Description, Integer Precision, Integer Scale)
       {
-        super(TypeStr, Size, Size, Size);
+        super(TypeStr, Size, Precision, Scale);
         _Name = Name;
         _Description = Description;
       }
 
-    public Column(String Name, String TypeStr, Integer Size, boolean Nullable, ColumnMode Mode, boolean Invariant, ProtectionType Protect, String Description)
+    public Column(String Name, String TypeStr, Integer Size, boolean Nullable, ColumnMode Mode, boolean Invariant, ProtectionType Protect, String Description, Integer Precision, Integer Scale)
       {
-        super(TypeStr, Size, Size, Size);
+        super(TypeStr, Size, Precision, Scale);
         _Name = Name;
         _Nullable = Nullable;
         _ModeStr = Mode == null ? null : Mode.name();

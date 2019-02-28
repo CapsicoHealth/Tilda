@@ -8,6 +8,13 @@ import tilda.enums.*;
 import tilda.types.*;
 import tilda.utils.*;
 
+
+import java.math.BigDecimal;
+
+import java.math.BigDecimal;
+
+import java.math.BigDecimal;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -47,7 +54,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive            REFNUM     = new Type_LongPrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"     , 0/*0*/, "The primary key for this record");
+     public static Type_LongPrimitive          REFNUM     = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"     , 0/*0*/, "The primary key for this record");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing4View.name -> TILDA.Testing4View."name"
@@ -66,7 +73,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive          NAME       = new Type_StringPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "name"       , 1/*1*/, "Medical system unique enterprise id");
+     public static Type_StringPrimitive        NAME       = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "name"       , 1/*1*/, "Medical system unique enterprise id");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing4View.a1 -> TILDA.Testing4View."a1"
@@ -84,7 +91,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_BitfieldPrimitiveNull    A1         = new Type_BitfieldPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a1"         , 2/*2*/, "The blah");
+     public static Type_BitfieldPrimitiveNull  A1         = new Type_BitfieldPrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "a1"         , 2/*2*/, "The blah");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing4View.a3b -> TILDA.Testing4View."a3b"
@@ -102,7 +109,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_BooleanCollectionNull    A3B        = new Type_BooleanCollectionNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a3b"        , 3/*3*/, "The blah");
+     public static Type_BooleanCollectionNull  A3B        = new Type_BooleanCollectionNull (SCHEMA_LABEL, TABLENAME_LABEL, "a3b"        , 3/*3*/, "The blah");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing4View.a4 -> TILDA.Testing4View."a4"
@@ -111,7 +118,7 @@ This is the column definition for:<BR>
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4View.a4 of type double</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4View.a4 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4View.a4 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
@@ -120,7 +127,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DoublePrimitiveNull      A4         = new Type_DoublePrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a4"         , 4/*4*/, "The blah");
+     public static Type_DoublePrimitiveNull    A4         = new Type_DoublePrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a4"         , 4/*4*/, "The blah");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing4View.a4b -> TILDA.Testing4View."a4b"
@@ -129,7 +136,7 @@ This is the column definition for:<BR>
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4View.a4b of type List<Double></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4View.a4b of type double[]</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4View.a4b of type double precision[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
@@ -138,7 +145,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DoubleCollectionNull     A4B        = new Type_DoubleCollectionNull    (SCHEMA_LABEL, TABLENAME_LABEL, "a4b"        , 5/*5*/, "The blah");
+     public static Type_DoubleCollectionNull   A4B        = new Type_DoubleCollectionNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a4b"        , 5/*5*/, "The blah");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing4View.a5 -> TILDA.Testing4View."a5"
@@ -156,7 +163,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_FloatPrimitiveNull       A5         = new Type_FloatPrimitiveNull      (SCHEMA_LABEL, TABLENAME_LABEL, "a5"         , 6/*6*/, "The blah");
+     public static Type_FloatPrimitiveNull     A5         = new Type_FloatPrimitiveNull    (SCHEMA_LABEL, TABLENAME_LABEL, "a5"         , 6/*6*/, "The blah");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing4View.a5b -> TILDA.Testing4View."a5b"
@@ -174,7 +181,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_FloatCollectionNull      A5B        = new Type_FloatCollectionNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a5b"        , 7/*7*/, "The blah");
+     public static Type_FloatCollectionNull    A5B        = new Type_FloatCollectionNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a5b"        , 7/*7*/, "The blah");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing4View.a7 -> TILDA.Testing4View."a7"
@@ -192,7 +199,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerPrimitiveNull     A7         = new Type_IntegerPrimitiveNull    (SCHEMA_LABEL, TABLENAME_LABEL, "a7"         , 8/*8*/, "The blah");
+     public static Type_IntegerPrimitiveNull   A7         = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a7"         , 8/*8*/, "The blah");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing4View.a7b -> TILDA.Testing4View."a7b"
@@ -210,7 +217,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerCollectionNull    A7B        = new Type_IntegerCollectionNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a7b"        , 9/*9*/, "The blah");
+     public static Type_IntegerCollectionNull  A7B        = new Type_IntegerCollectionNull (SCHEMA_LABEL, TABLENAME_LABEL, "a7b"        , 9/*9*/, "The blah");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing4View.a8 -> TILDA.Testing4View."a8"
@@ -228,7 +235,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_BinaryPrimitiveNull      A8         = new Type_BinaryPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a8"         , 10/*10*/, "The blah");
+     public static Type_BinaryPrimitiveNull    A8         = new Type_BinaryPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a8"         , 10/*10*/, "The blah");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing4View.a8bTZ -> TILDA.Testing4View."a8bTZ"
@@ -247,7 +254,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull      A8BTZ      = new Type_StringPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a8bTZ"      , 11/*11*/, "Generated helper column to hold the time zone ID for 'a8b'.");
+     public static Type_StringPrimitiveNull    A8BTZ      = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a8bTZ"      , 11/*11*/, "Generated helper column to hold the time zone ID for 'a8b'.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing4View.a8b -> TILDA.Testing4View."a8b"
@@ -265,7 +272,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull    A8B        = new Type_DatetimePrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a8b"        , 12/*12*/, "The blah");
+     public static Type_DatetimePrimitiveNull  A8B        = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "a8b"        , 12/*12*/, "The blah");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing4View.a10 -> TILDA.Testing4View."a10"
@@ -283,7 +290,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_ShortPrimitiveNull       A10        = new Type_ShortPrimitiveNull      (SCHEMA_LABEL, TABLENAME_LABEL, "a10"        , 13/*13*/, "The blah");
+     public static Type_ShortPrimitiveNull     A10        = new Type_ShortPrimitiveNull    (SCHEMA_LABEL, TABLENAME_LABEL, "a10"        , 13/*13*/, "The blah");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing4View.a10b -> TILDA.Testing4View."a10b"
@@ -301,7 +308,61 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_ShortCollectionNull      A10B       = new Type_ShortCollectionNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a10b"       , 14/*14*/, "The blah");
+     public static Type_ShortCollectionNull    A10B       = new Type_ShortCollectionNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a10b"       , 14/*14*/, "The blah");
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing4View.a11 -> TILDA.Testing4View."a11"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the column definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4View.a11 of type BigDecimal</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4View.a11 of type numeric</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+     public static Type_NumericPrimitiveNull   A11        = new Type_NumericPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a11"        , 15/*15*/, "The blah");
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing4View.a11b -> TILDA.Testing4View."a11b"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the column definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4View.a11b of type List<BigDecimal></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4View.a11b of type numeric[]</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+     public static Type_NumericCollectionNull  A11B       = new Type_NumericCollectionNull (SCHEMA_LABEL, TABLENAME_LABEL, "a11b"       , 16/*16*/, "The blah");
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing4View.a11c -> TILDA.Testing4View."a11c"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the column definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4View.a11c of type BigDecimal</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4View.a11c of type numeric</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+     public static Type_NumericPrimitiveNull   A11C       = new Type_NumericPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a11c"       , 17/*17*/, "The blah");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing4View.description -> TILDA.Testing4View."description"
@@ -320,7 +381,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull      DESCRIPTION= new Type_StringPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "description", 15/*15*/, "The title for a person, i.e., Mr, Miss, Mrs...");
+     public static Type_StringPrimitiveNull    DESCRIPTION= new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "description", 18/*18*/, "The title for a person, i.e., Mr, Miss, Mrs...");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing4View.desc2 -> TILDA.Testing4View."desc2"
@@ -339,7 +400,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull      DESC2      = new Type_StringPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "desc2"      , 16/*16*/, "The title for a person, i.e., Mr, Miss, Mrs...");
+     public static Type_StringPrimitiveNull    DESC2      = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "desc2"      , 19/*19*/, "The title for a person, i.e., Mr, Miss, Mrs...");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing4View.desc3 -> TILDA.Testing4View."desc3"
@@ -358,7 +419,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull      DESC3      = new Type_StringPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "desc3"      , 17/*17*/, "The title for a person, i.e., Mr, Miss, Mrs...");
+     public static Type_StringPrimitiveNull    DESC3      = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "desc3"      , 20/*20*/, "The title for a person, i.e., Mr, Miss, Mrs...");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing4View.desc4 -> TILDA.Testing4View."desc4"
@@ -377,7 +438,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull      DESC4      = new Type_StringPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "desc4"      , 18/*18*/, "The title for a person, i.e., Mr, Miss, Mrs...");
+     public static Type_StringPrimitiveNull    DESC4      = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "desc4"      , 21/*21*/, "The title for a person, i.e., Mr, Miss, Mrs...");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing4View.desc5 -> TILDA.Testing4View."desc5"
@@ -396,7 +457,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull      DESC5      = new Type_StringPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "desc5"      , 19/*19*/, "The title for a person, i.e., Mr, Miss, Mrs...");
+     public static Type_StringPrimitiveNull    DESC5      = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "desc5"      , 22/*22*/, "The title for a person, i.e., Mr, Miss, Mrs...");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing4View.desc6 -> TILDA.Testing4View."desc6"
@@ -423,7 +484,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_StringPrimitiveNull      DESC6      = new Type_StringPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "desc6"      , 20/*20*/, "The title for a person, i.e., Mr, Miss, Mrs...");
+     public static Type_StringPrimitiveNull    DESC6      = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "desc6"      , 23/*23*/, "The title for a person, i.e., Mr, Miss, Mrs...");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing4View.bastille -> TILDA.Testing4View."bastille"
@@ -441,7 +502,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull    BASTILLE   = new Type_DatetimePrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "bastille"   , 21/*21*/, "Formula column '<B>Bastille Day</B>'");
+     public static Type_DatetimePrimitiveNull  BASTILLE   = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "bastille"   , 24/*24*/, "Formula column '<B>Bastille Day</B>'");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing4View.toto -> TILDA.Testing4View."toto"
@@ -459,7 +520,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull    TOTO       = new Type_DatetimePrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "toto"       , 22/*22*/, "Formula column '<B>Last Updated</B>'");
+     public static Type_DatetimePrimitiveNull  TOTO       = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "toto"       , 25/*25*/, "Formula column '<B>Last Updated</B>'");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing4View.desc2_Cat1 -> TILDA.Testing4View."desc2_Cat1"
@@ -468,7 +529,7 @@ This is the column definition for:<BR>
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4View.desc2_Cat1 of type double</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4View.desc2_Cat1 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4View.desc2_Cat1 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>desc2_Cat1 Title</B>'</TD></TR>
@@ -477,7 +538,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DoublePrimitiveNull      DESC2_CAT1 = new Type_DoublePrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "desc2_Cat1" , 23/*23*/, "Formula column '<B>desc2_Cat1 Title</B>'");
+     public static Type_DoublePrimitiveNull    DESC2_CAT1 = new Type_DoublePrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "desc2_Cat1" , 26/*26*/, "Formula column '<B>desc2_Cat1 Title</B>'");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing4View.desc2_Cat2 -> TILDA.Testing4View."desc2_Cat2"
@@ -486,7 +547,7 @@ This is the column definition for:<BR>
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4View.desc2_Cat2 of type double</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4View.desc2_Cat2 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4View.desc2_Cat2 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>desc2_Cat2 Title</B>'</TD></TR>
@@ -495,7 +556,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DoublePrimitiveNull      DESC2_CAT2 = new Type_DoublePrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "desc2_Cat2" , 24/*24*/, "Formula column '<B>desc2_Cat2 Title</B>'");
+     public static Type_DoublePrimitiveNull    DESC2_CAT2 = new Type_DoublePrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "desc2_Cat2" , 27/*27*/, "Formula column '<B>desc2_Cat2 Title</B>'");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing4View.desc2_Cat3 -> TILDA.Testing4View."desc2_Cat3"
@@ -504,7 +565,7 @@ This is the column definition for:<BR>
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4View.desc2_Cat3 of type double</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4View.desc2_Cat3 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4View.desc2_Cat3 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>desc2_Cat3 Title</B>'</TD></TR>
@@ -513,7 +574,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DoublePrimitiveNull      DESC2_CAT3 = new Type_DoublePrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "desc2_Cat3" , 25/*25*/, "Formula column '<B>desc2_Cat3 Title</B>'");
+     public static Type_DoublePrimitiveNull    DESC2_CAT3 = new Type_DoublePrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "desc2_Cat3" , 28/*28*/, "Formula column '<B>desc2_Cat3 Title</B>'");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing4View.a7_Cat4 -> TILDA.Testing4View."a7_Cat4"
@@ -522,7 +583,7 @@ This is the column definition for:<BR>
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4View.a7_Cat4 of type double</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4View.a7_Cat4 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4View.a7_Cat4 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>a7_Cat4 Title</B>'</TD></TR>
@@ -531,7 +592,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DoublePrimitiveNull      A7_CAT4    = new Type_DoublePrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a7_Cat4"    , 26/*26*/, "Formula column '<B>a7_Cat4 Title</B>'");
+     public static Type_DoublePrimitiveNull    A7_CAT4    = new Type_DoublePrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a7_Cat4"    , 29/*29*/, "Formula column '<B>a7_Cat4 Title</B>'");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing4View.a7_Cat5 -> TILDA.Testing4View."a7_Cat5"
@@ -540,7 +601,7 @@ This is the column definition for:<BR>
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4View.a7_Cat5 of type double</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4View.a7_Cat5 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4View.a7_Cat5 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>a7_Cat5 Title</B>'</TD></TR>
@@ -549,7 +610,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DoublePrimitiveNull      A7_CAT5    = new Type_DoublePrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a7_Cat5"    , 27/*27*/, "Formula column '<B>a7_Cat5 Title</B>'");
+     public static Type_DoublePrimitiveNull    A7_CAT5    = new Type_DoublePrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a7_Cat5"    , 30/*30*/, "Formula column '<B>a7_Cat5 Title</B>'");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing4View.a5_null -> TILDA.Testing4View."a5_null"
@@ -567,7 +628,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerPrimitiveNull     A5_NULL    = new Type_IntegerPrimitiveNull    (SCHEMA_LABEL, TABLENAME_LABEL, "a5_null"    , 28/*28*/, "Formula column '<B>Null a5</B>'");
+     public static Type_IntegerPrimitiveNull   A5_NULL    = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a5_null"    , 31/*31*/, "Formula column '<B>Null a5</B>'");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing4View.a6_null -> TILDA.Testing4View."a6_null"
@@ -585,7 +646,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerPrimitiveNull     A6_NULL    = new Type_IntegerPrimitiveNull    (SCHEMA_LABEL, TABLENAME_LABEL, "a6_null"    , 29/*29*/, "Formula column '<B>Null a6</B>'");
+     public static Type_IntegerPrimitiveNull   A6_NULL    = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a6_null"    , 32/*32*/, "Formula column '<B>Null a6</B>'");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing4View.a7_null -> TILDA.Testing4View."a7_null"
@@ -603,7 +664,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerPrimitiveNull     A7_NULL    = new Type_IntegerPrimitiveNull    (SCHEMA_LABEL, TABLENAME_LABEL, "a7_null"    , 30/*30*/, "Formula column '<B>Null a7</B>'");
+     public static Type_IntegerPrimitiveNull   A7_NULL    = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a7_null"    , 33/*33*/, "Formula column '<B>Null a7</B>'");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing4View.a8_null -> TILDA.Testing4View."a8_null"
@@ -621,7 +682,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerPrimitiveNull     A8_NULL    = new Type_IntegerPrimitiveNull    (SCHEMA_LABEL, TABLENAME_LABEL, "a8_null"    , 31/*31*/, "Formula column '<B>Null a8</B>'");
+     public static Type_IntegerPrimitiveNull   A8_NULL    = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a8_null"    , 34/*34*/, "Formula column '<B>Null a8</B>'");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing4View.a3 -> TILDA.Testing4View."a3"
@@ -639,7 +700,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_BooleanPrimitiveNull     A3         = new Type_BooleanPrimitiveNull    (SCHEMA_LABEL, TABLENAME_LABEL, "a3"         , 32/*32*/, "Formula column '<B>Always True</B>'");
+     public static Type_BooleanPrimitiveNull   A3         = new Type_BooleanPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a3"         , 35/*35*/, "Formula column '<B>Always True</B>'");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing4View.lastUpdated -> TILDA.Testing4View."lastUpdated"
@@ -657,11 +718,11 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull    LASTUPDATED= new Type_DatetimePrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated", 33/*33*/, "Formula column '<B>Always True</B>'");
+     public static Type_DatetimePrimitiveNull  LASTUPDATED= new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated", 36/*36*/, "Formula column '<B>Always True</B>'");
 ;
    }
 
-   public static final ColumnDefinition[] COLUMNS = { COLS.REFNUM,COLS.NAME,COLS.A1,COLS.A3B,COLS.A4,COLS.A4B,COLS.A5,COLS.A5B,COLS.A7,COLS.A7B,COLS.A8,COLS.A8BTZ,COLS.A8B,COLS.A10,COLS.A10B,COLS.DESCRIPTION,COLS.DESC2,COLS.DESC3,COLS.DESC4,COLS.DESC5,COLS.DESC6,COLS.BASTILLE,COLS.TOTO,COLS.DESC2_CAT1,COLS.DESC2_CAT2,COLS.DESC2_CAT3,COLS.A7_CAT4,COLS.A7_CAT5,COLS.A5_NULL,COLS.A6_NULL,COLS.A7_NULL,COLS.A8_NULL,COLS.A3,COLS.LASTUPDATED };
+   public static final ColumnDefinition[] COLUMNS = { COLS.REFNUM,COLS.NAME,COLS.A1,COLS.A3B,COLS.A4,COLS.A4B,COLS.A5,COLS.A5B,COLS.A7,COLS.A7B,COLS.A8,COLS.A8BTZ,COLS.A8B,COLS.A10,COLS.A10B,COLS.A11,COLS.A11B,COLS.A11C,COLS.DESCRIPTION,COLS.DESC2,COLS.DESC3,COLS.DESC4,COLS.DESC5,COLS.DESC6,COLS.BASTILLE,COLS.TOTO,COLS.DESC2_CAT1,COLS.DESC2_CAT2,COLS.DESC2_CAT3,COLS.A7_CAT4,COLS.A7_CAT5,COLS.A5_NULL,COLS.A6_NULL,COLS.A7_NULL,COLS.A8_NULL,COLS.A3,COLS.LASTUPDATED };
 
    public static final ColumnDefinition[] COLUMNS_PRIMARY = {  };
 
@@ -752,6 +813,9 @@ This is the column definition for:<BR>
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing4View", "a8b");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing4View", "a10");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing4View", "a10b");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing4View", "a11");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing4View", "a11b");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing4View", "a11c");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing4View", "description");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing4View", "desc2");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing4View", "desc3");
