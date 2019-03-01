@@ -518,6 +518,12 @@ public class JSONUtil
         Out.write("]");
       }
 
+    /**
+     * Starts the standard JSON header for payload
+     * @param Out
+     * @param openObjectOrArray A character for '{' or '[' depending on whether an object is output, or an array of objects.
+     * @throws IOException
+     */
     public static void startOK(Writer Out, char openObjectOrArray)
     throws IOException
       {

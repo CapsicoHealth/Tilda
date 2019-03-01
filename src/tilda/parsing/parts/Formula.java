@@ -44,7 +44,7 @@ public class Formula extends TypeDef
     @SerializedName("values"     ) public Value[] _Values;
     /*@formatter:on*/
 
-    protected transient View      _ParentView;
+    public transient View      _ParentView;
     public boolean                _FormulaTemplate = false;
 
     public Formula()
