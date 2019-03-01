@@ -249,7 +249,9 @@ public class Docs
               FieldType = FieldType + " realized" + FieldType;
             Out.println("  <TR valign=\"top\" bgcolor=\"" + (i % 2 == 0 ? "#FFFFFF" : "#DFECF8") + "\">");
             Out.println("    <TD>" + i + "&nbsp;&nbsp;</TD>");
+/*
             if (C.getSingleColFK() != null
+ 
             || (view != null && C._SameAsObj != null)
             || (view != null && view.getPivotWithValue(C.getName()) != null)
             || (view != null && view.getFormula(C.getName()) != null))
@@ -258,8 +260,9 @@ public class Docs
               }
             else
               {
-                Out.println("<TD align=\"right\"><B id='" + O._Name + "-" + C.getName() + "_DIV' class='" + FieldType + "'>" + C.getName() + "</B>&nbsp;&nbsp;</TD>");
-              }
+*/
+            Out.println("<TD align=\"right\"><B id='" + O._Name + "-" + C.getName() + "_DIV' class='" + FieldType + "'>" + C.getName() + "</B>&nbsp;&nbsp;</TD>");
+//              }
 
             Out.print("<TD>");
             if (O._Mode != ObjectMode.DB_ONLY)
@@ -369,6 +372,7 @@ public class Docs
 
         Out.println("</TABLE></BLOCKQUOTE>");
 
+/*        
         for (Column C : O._Columns)
           {
             Out.println("<DIV id='" + O._Name + "-" + C.getName() + "_MODAL' class='modal'>");
@@ -387,7 +391,7 @@ public class Docs
             Out.println("</table>");
             Out.println("</DIV></DIV>");
           }
-
+*/
         Out.println("</DIV>");
       }
 
@@ -851,7 +855,8 @@ public class Docs
             Out.println("<TR bgcolor=\"DFECF8\">");
             if (!FormulaMatches.isEmpty() || !ColumnMatches.isEmpty())
               {
-                Out.println("<TD style=\"text-align:left !important;\" colspan=\"2\"><B>Term</B> <B onclick=\"onModalShowClicked('" + TName + "-" + F._Name + "')\" id='" + TName + "-" + F._Name + "_DIV' class='formula dotted_underline cursor_pointer'>" + F._Name + "</B>" + (TextUtil.isNullOrEmpty(F._Id) == true ? "" : (" &nbsp;&nbsp;&nbsp; (#" + F._Id + ")")) + "</TD>");
+//                Out.println("<TD style=\"text-align:left !important;\" colspan=\"2\"><B>Term</B> <B onclick=\"onModalShowClicked('" + TName + "-" + F._Name + "')\" id='" + TName + "-" + F._Name + "_DIV' class='formula dotted_underline cursor_pointer'>" + F._Name + "</B>" + (TextUtil.isNullOrEmpty(F._Id) == true ? "" : (" &nbsp;&nbsp;&nbsp; (#" + F._Id + ")")) + "</TD>");
+                Out.println("<TD style=\"text-align:left !important;\" colspan=\"2\"><B>Term</B> <B id='" + TName + "-" + F._Name + "_DIV' class='formula'>" + F._Name + "</B>" + (TextUtil.isNullOrEmpty(F._Id) == true ? "" : (" &nbsp;&nbsp;&nbsp; (#" + F._Id + ")")) + "</TD>");
               }
             else
               {
