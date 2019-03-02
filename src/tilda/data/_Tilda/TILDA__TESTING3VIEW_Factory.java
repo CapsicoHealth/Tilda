@@ -75,9 +75,9 @@ This is the column definition for:<BR>
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing3View.a8bTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing3View.a8bTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing3View.a8bTZ of type varchar(10)</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a8b'.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
