@@ -28,7 +28,6 @@ import com.google.gson.annotations.SerializedName;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
-import tilda.enums.DBStringType;
 import tilda.enums.DefaultType;
 import tilda.enums.FrameworkColumnType;
 import tilda.enums.MultiType;

@@ -18,7 +18,9 @@ package tilda.utils;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,7 +40,42 @@ public class TextUtilTest
 //        Test4();
 //        Test_Perf_toString_type_vs_cast();
 //          Test_FindLikeElement();
-          Test_Perf_endsWith_vs_charAt();
+//          Test_Perf_endsWith_vs_charAt();
+          Test_isNullOrEmpty();
+      }
+
+    private static void Test_isNullOrEmpty()
+      {
+        String S0 = null;
+        String S1 = "";
+        String S2 = "    ";
+        
+        String[] A0 = null;
+        String[] A1 = new String[0];
+        String[] A2 = new String[1];
+        String[] A3 = new String[] {S0};
+        String[] A4 = new String[] {S1};
+        String[] A5 = new String[] {S0, S1, S2};
+        String[] A6 = new String[] {S0, S1, S2, "aaa"};
+        
+        List<String> L0 = CollectionUtil.toList(A0);
+        List<String> L1 = CollectionUtil.toList(A1);
+        List<String> L2 = CollectionUtil.toList(A2);
+        List<String> L3 = CollectionUtil.toList(A3);
+        List<String> L4 = CollectionUtil.toList(A4);
+        List<String> L5 = CollectionUtil.toList(A5);
+        List<String> L6 = CollectionUtil.toList(A6);
+        
+        if (TextUtil.isNullOrEmpty(L0) == false) LOG.error("L0 is not null or empty!");
+        if (TextUtil.isNullOrEmpty(L1) == false) LOG.error("L1 is not null or empty!");
+        if (TextUtil.isNullOrEmpty(L2) == false) LOG.error("L2 is not null or empty!");
+        if (TextUtil.isNullOrEmpty(L3) == false) LOG.error("L3 is not null or empty!");
+        if (TextUtil.isNullOrEmpty(L4) == false) LOG.error("L4 is not null or empty!");
+        if (TextUtil.isNullOrEmpty(L5) == false) LOG.error("L5 is not null or empty!");
+        if (TextUtil.isNullOrEmpty(L6) == true) LOG.error("L6 is null or empty!");
+        
+        LOG.debug("Tests for isNullOrEmpty all passed");
+        
       }
 
     private static void Test_Perf_endsWith_vs_charAt()
