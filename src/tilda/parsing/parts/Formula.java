@@ -127,7 +127,9 @@ public class Formula extends TypeDef
             String s = M.group(1);
             if (Names.add(s) == false)
               continue;
-            L.add(getParentView().getViewColumn(s));
+            ViewColumn vc = getParentView().getViewColumn(s);
+            if (vc != null)
+             L.add(vc);
           }
         return L;
       }
@@ -144,7 +146,9 @@ public class Formula extends TypeDef
             String s = M.group(1);
             if (Names.add(s) == false)
               continue;
-            L.add(getParentView().getFormula(s));
+            Formula f = getParentView().getFormula(s);
+            if (f != null)
+              L.add(f);
           }
         return L;
       }
