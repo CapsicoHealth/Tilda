@@ -32,7 +32,7 @@ import tilda.utils.TextUtil;
 
 public class Formula extends TypeDef
   {
-    protected static final Logger LOG = LogManager.getLogger(Formula.class.getName());
+    protected static final Logger LOG              = LogManager.getLogger(Formula.class.getName());
 
     /*@formatter:off*/
     @SerializedName("name"       ) public String   _Name       ;
@@ -44,7 +44,7 @@ public class Formula extends TypeDef
     @SerializedName("values"     ) public Value[] _Values;
     /*@formatter:on*/
 
-    public transient View      _ParentView;
+    public transient View         _ParentView;
     public boolean                _FormulaTemplate = false;
 
     public Formula()
@@ -87,12 +87,12 @@ public class Formula extends TypeDef
         if (TextUtil.isNullOrEmpty(_Name) == true)
           PS.AddError("View " + _ParentView.getShortName() + " is defining a formula without a name.");
         else if (_Name.length() > PS._CGSql.getMaxColumnNameSize())
-          PS.AddError("View " + _ParentView.getShortName() + " is defining a formula '" + _Name + "' with a name that's too long: max allowed by your database is "+PS._CGSql.getMaxColumnNameSize()+" vs "+_Name.length()+" for this identifier.");
+          PS.AddError("View " + _ParentView.getShortName() + " is defining a formula '" + _Name + "' with a name that's too long: max allowed by your database is " + PS._CGSql.getMaxColumnNameSize() + " vs " + _Name.length() + " for this identifier.");
 
-//        if (TextUtil.isNullOrEmpty(_TypeStr) == true)
-//          PS.AddError("View " + _ParentView.getShortName() + " is defining a formula '" + _Name + "' without a type.");
-//        else if ((_Type = ColumnType.parse(_TypeStr)) == null)
-//          PS.AddError("View " + _ParentView.getShortName() + " defined a formula '" + _Name + "' with an invalid type '" + _TypeStr + "'.");
+        // if (TextUtil.isNullOrEmpty(_TypeStr) == true)
+        // PS.AddError("View " + _ParentView.getShortName() + " is defining a formula '" + _Name + "' without a type.");
+        // else if ((_Type = ColumnType.parse(_TypeStr)) == null)
+        // PS.AddError("View " + _ParentView.getShortName() + " defined a formula '" + _Name + "' with an invalid type '" + _TypeStr + "'.");
 
         if (_FormulaStrs == null || _FormulaStrs.length == 0)
           PS.AddError("View " + _ParentView.getShortName() + " is defining a formula '" + _Name + "' without a formula.");
@@ -127,7 +127,9 @@ public class Formula extends TypeDef
             String s = M.group(1);
             if (Names.add(s) == false)
               continue;
-            L.add(getParentView().getViewColumn(s));
+            ViewColumn vc = getParentView().getViewColumn(s);
+            if (vc != null)
+              L.add(vc);
           }
         return L;
       }
@@ -144,7 +146,9 @@ public class Formula extends TypeDef
             String s = M.group(1);
             if (Names.add(s) == false)
               continue;
-            L.add(getParentView().getFormula(s));
+            Formula f = getParentView().getFormula(s);
+            if (f != null)
+              L.add(f);
           }
         return L;
       }
