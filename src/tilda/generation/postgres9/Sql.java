@@ -1152,7 +1152,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 String[] VCNames = new String[L.size()];
                 for (int i = 0; i < L.size(); ++i)
                   {
-                    VCNames[i] = L.get(i)._ParentView.getShortName() + "." + L.get(i)._Name;
+                    VCNames[i] =  L.get(i)._ParentView.getShortName() + "." + L.get(i)._Name;
                   }
                 OutFinal.print(", ARRAY[" + TextUtil.EscapeSingleQuoteForSQL(VCNames, true) + "]");
               }
