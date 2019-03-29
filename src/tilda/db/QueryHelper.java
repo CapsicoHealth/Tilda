@@ -663,6 +663,19 @@ public abstract class QueryHelper
         return this;
       }
 
+/*
+    public QueryHelper join(String SchemaName, String TableName, String JoinType, SelectQuery On)
+    throws Exception
+      {
+        if (_Froms.size() != 1)
+         throw new Exception("Cannot do join when you have already done multiple Froms.");
+        if (_Section != S.FROM)
+         throw new Exception("Cannot do a join unless it immediately follows a from.");
+        
+        return this;
+      }
+*/
+
     public QueryHelper tableSample(float Percentage, boolean Repeatable)
     throws Exception
       {
