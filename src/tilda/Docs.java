@@ -18,6 +18,7 @@ package tilda;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -25,7 +26,11 @@ import java.util.Set;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.generation.GeneratorSession;
+import tilda.generation.html.DocGen;
 import tilda.parsing.Loader;
+import tilda.parsing.Parser;
+import tilda.parsing.ParserSession;
 import tilda.parsing.parts.Schema;
 import tilda.utils.AsciiArt;
 import tilda.utils.FileUtil;
@@ -63,11 +68,14 @@ public class Docs
                   if (S != null && S._Name.equalsIgnoreCase(a) == true)
                     S.getFullDependencies(TildaList, SchemaFilter);
               }
+            List<Schema> SelectedSchemas = new ArrayList<Schema>();
+            GeneratorSession G = new GeneratorSession("java", 8, -1, "postgres", 9, -1);
+            ParserSession PS = Parser.init(G.getSql(), TildaList);
             for (Schema S : TildaList)
               {
                 if (S==null || SchemaFilter.isEmpty() == false && SchemaFilter.contains(S._Name) == false)
                  continue;
-                
+                SelectedSchemas.add(S);
                 String Name = FileUtil.getBasePathFromFileOrResource(S._ResourceName) + "_Tilda/TILDA___Docs." + S._Name.toUpperCase() + ".html";
                 LOG.debug("Extracting Tilda documentation " + Name);
                 PrintWriter Out = FileUtil.getBufferedPrintWriter(Args[0] + File.separator + "TILDA___Docs." + S._Name.toUpperCase() + ".html", false);
@@ -80,6 +88,7 @@ public class Docs
                 FileUtil.copyFileContentsIntoAnotherFile(Name, Out);
                 Out.close();
               }
+            DocGen.GenMasterIndex(Args[0] + File.separator, SelectedSchemas);
           }
         catch (Exception E)
           {

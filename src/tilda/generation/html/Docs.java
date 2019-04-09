@@ -71,12 +71,17 @@ public class Docs
         return TextUtil.SearchReplace(Name, ".", "<B>&nbsp;&#8226;&nbsp;</B>");
       }
 
-    protected static String makeObjectLink(Object O)
+    public static String makeSchemaLink(Schema S)
+      {
+        return "<A href=\"TILDA___Docs." + S.getShortName() + ".html\">" + coolPrint(S.getShortName()) + "</A>";
+      }
+
+    public static String makeObjectLink(Object O)
       {
         return "<A href=\"TILDA___Docs." + O.getSchema().getShortName() + ".html#" + O._Name + "_CNT\">" + coolPrint(O.getShortName()) + "</A>";
       }
 
-    protected static String makeColumnLink(Column C)
+    public static String makeColumnLink(Column C)
       {
         return "<A href=\"TILDA___Docs." + C._ParentObject.getSchema().getShortName() + ".html#"
         + C._ParentObject._Name + "-" + C.getName() + "_DIV\">" + coolPrint(C.getShortName()) + "</A>";

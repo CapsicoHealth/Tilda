@@ -1,7 +1,9 @@
 package tilda.generation.html;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -14,6 +16,7 @@ import tilda.enums.FrameworkSourcedType;
 import tilda.generation.GeneratorSession;
 import tilda.generation.graphviz.GraphvizUtil;
 import tilda.parsing.ParserSession;
+import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
@@ -28,7 +31,8 @@ public class DocGen
 
     GeneratorSession              G;
 
-    public DocGen(Schema schema, GeneratorSession G) throws ParserConfigurationException
+    public DocGen(Schema schema, GeneratorSession G)
+      throws ParserConfigurationException
       {
         this.schema = schema;
         this.builder = factory.newDocumentBuilder();
@@ -204,7 +208,7 @@ public class DocGen
           writer.println("</BLOCKQUOTE>");
       }
 
-    public void writeSearchHTML(PrintWriter writer)
+    public static void writeSearchHTML(PrintWriter writer)
       {
 
         writer.println("<BR><BR>");
@@ -217,6 +221,46 @@ public class DocGen
         writer.println("</TD></TR></TABLE></DIV>");
         // writer.println("<SCRIPT>registerStickyHeader(\"__SEARCH_BOX__\");</SCRIPT>");
         // hideIfEsc(event, '__SEARCH_BOX_RESULTS__');
+      }
+
+    public static void GenMasterIndex(String Path, List<Schema> selectedSchemas)
+    throws IOException
+      {
+        LOG.debug("Generating master index file");
+        PrintWriter writer = FileUtil.getBufferedPrintWriter(Path + "index.html", false);
+        writer.println("<HTML><HEAD>");
+        String CSS = FileUtil.getFileOfResourceContents("tilda/generation/html/TildaDocs.css");
+        String JS = FileUtil.getFileOfResourceContents("tilda/generation/html/TildaDocs.js");
+        writer.println(
+        "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=ISO-8859-1\"/>\n"
+        + "<title>Master Database Index</title>\n"
+        + "<STYLE>\n"
+        + CSS
+        + "</STYLE>\n"
+        + "<SCRIPT>\n"
+        + JS
+        + "</SCRIPT>\n"
+        + "</HEAD>\n"
+        + "<BODY>\n");
+        writer.println("<H1>Master Database Index</H1>");
+        writeSearchHTML(writer); // Add Search Box
+        writer.println("<BR><BR><TABLE class=\"Rowed\">");
+        for (Schema S : selectedSchemas)
+          {
+            writer.println("<TR><TD>" + Docs.makeSchemaLink(S) + "</TD></TR>");
+            for (Object O : S._Objects)
+              if (O != null)
+                {
+                  writer.println("<TR><TD style=\"padding-left: 40px;\">" + Docs.makeObjectLink(O) + "</TD></TR>");
+                  for (Column C : O._Columns)
+                    if (C != null)
+                      writer.println("<TR><TD style=\"padding-left: 80px;\">" + Docs.makeColumnLink(C) + "</TD></TR>");
+                }
+          }
+        writer.println("</TABLE>");
+        writer.println("</BODY>");
+        writer.println("</HTML>");
+        writer.close();
       }
 
   }
