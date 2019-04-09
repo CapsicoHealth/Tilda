@@ -477,8 +477,6 @@ public class ConnectionPool
 
         for (Schema S : TildaList)
           {
-            if (S._Name.equalsIgnoreCase("LDAP") == true)
-              LOG.error("XXX");
             CodeGenSql Sql = C.getSQlCodeGen();
             ParserSession PS = new ParserSession(S, Sql);
             if (S._Dependencies != null)

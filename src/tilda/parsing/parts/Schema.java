@@ -117,7 +117,7 @@ public class Schema
         for (Object O : _Objects)
           {
             if (O == null)
-             continue;
+              continue;
             if (Str.length() != 0)
               Str.append(", ");
             Str.append(O.getFullName());
@@ -210,7 +210,7 @@ public class Schema
               O.Validate(PS, this);
             }
 
-//        boolean hasFormulas = false;
+        // boolean hasFormulas = false;
         Map<String, Formula> Measures = new HashMap<String, Formula>();
         for (View V : _Views)
           if (V != null)
@@ -220,171 +220,172 @@ public class Schema
               V.Validate(PS, this);
               if (V._Formulas != null && V._Formulas.isEmpty() == false)
                 {
-//                  hasFormulas = true;
+                  // hasFormulas = true;
                   for (Formula F : V._Formulas)
                     if (F != null && F._Measure == true)
                       {
                         Formula F2 = Measures.put(F._Title, F);
                         if (F2 != null)
-                         PS.AddError("Schema '" + getFullName() + "' is defining measure '" + F._Title + "' multiple times: '" + F.getShortName()+ "' and '" + F2.getShortName()+ "'.");
+                          PS.AddError("Schema '" + getFullName() + "' is defining measure '" + F._Title + "' multiple times: '" + F.getShortName() + "' and '" + F2.getShortName() + "'.");
                       }
                 }
             }
 
-/*        
-        if (hasFormulas == true)
-         CreateFormulaDocumentationTables(PS);
-*/        
+        /*
+         * if (hasFormulas == true)
+         * CreateFormulaDocumentationTables(PS);
+         */
         _Validated = Errs == PS.getErrorCount();
         return _Validated;
       }
-    
-/*
-    private void CreateFormulaDocumentationTables(ParserSession PS)
-      {
-        Object O = new Object();
-        O._ModeStr = ObjectMode.DB_ONLY.toString();
-        O._Name = "TildaFormula";
-        O._Description = "DEPRECATED: DO NOT USE! Generated table to hold documentation meta-data about formulas defined in this schema";
-        O._LCStr = ObjectLifecycle.READONLY.name();
-        O._OCC = true;
-       
-        Column C = new Column("viewName", ColumnType.STRING.name(), 64, false, null, true, null, "DEPRECATED: DO NOT USE! The name of the view this formula is defined in");
-        O._Columns.add(C);
-        C = new Column("realizedTableName", ColumnType.STRING.name(), 64, true, null, true, null, "DEPRECATED: DO NOT USE! The name of the realized table, if appropriate");
-        O._Columns.add(C);
-        C = new Column("name", ColumnType.STRING.name(), 64, false, null, true, null, "DEPRECATED: DO NOT USE! The name of the formula/column");
-        O._Columns.add(C);
-        C = new Column("title", ColumnType.STRING.name(), 128, false, null, true, null, "DEPRECATED: DO NOT USE! The title of the formula/column");
-        O._Columns.add(C);
-        C = new Column("description", ColumnType.STRING.name(), 8192, false, null, true, null, "DEPRECATED: DO NOT USE! The description of the formula/column");
-        O._Columns.add(C);
-        C = new Column("formula", ColumnType.STRING.name(), 8192, false, null, true, null, "DEPRECATED: DO NOT USE! The formula");
-        O._Columns.add(C);
-        C = new Column("html", ColumnType.STRING.name(), 16384, false, null, true, null, "DEPRECATED: DO NOT USE! A pre-rendered html fragment with the full documentation for this formula");
-        O._Columns.add(C);
 
-        O._PrimaryKey = new PrimaryKey();
-        O._PrimaryKey._Columns = new String[] { "viewName", "name"};
-        
-        O._Indices = new ArrayList<Index>();
-        Index I = new Index();
-        I._Name = "ViewName";
-        I._Columns = new String[] { "viewName" };
-        I._OrderBy = new String[] { "name asc" };
-        I._Db = false;
-        O._Indices.add(I);
-        
-        O._OutputMaps = new ArrayList<OutputMapping>();
-        OutputMapping OM = new OutputMapping();
-        OM._Name = "";
-        OM._OutputTypeStrs = new String[] {"JSON"};
-        OM._Columns = new String[] { "viewName", "realizedTableName", "name", "title", "description", "formula", "html", "created", "lastUpdated"}; 
-        O._OutputMaps.add(OM);
+    /*
+     * private void CreateFormulaDocumentationTables(ParserSession PS)
+     * {
+     * Object O = new Object();
+     * O._ModeStr = ObjectMode.DB_ONLY.toString();
+     * O._Name = "TildaFormula";
+     * O._Description = "DEPRECATED: DO NOT USE! Generated table to hold documentation meta-data about formulas defined in this schema";
+     * O._LCStr = ObjectLifecycle.READONLY.name();
+     * O._OCC = true;
+     * 
+     * Column C = new Column("viewName", ColumnType.STRING.name(), 64, false, null, true, null, "DEPRECATED: DO NOT USE! The name of the view this formula is defined in");
+     * O._Columns.add(C);
+     * C = new Column("realizedTableName", ColumnType.STRING.name(), 64, true, null, true, null, "DEPRECATED: DO NOT USE! The name of the realized table, if appropriate");
+     * O._Columns.add(C);
+     * C = new Column("name", ColumnType.STRING.name(), 64, false, null, true, null, "DEPRECATED: DO NOT USE! The name of the formula/column");
+     * O._Columns.add(C);
+     * C = new Column("title", ColumnType.STRING.name(), 128, false, null, true, null, "DEPRECATED: DO NOT USE! The title of the formula/column");
+     * O._Columns.add(C);
+     * C = new Column("description", ColumnType.STRING.name(), 8192, false, null, true, null, "DEPRECATED: DO NOT USE! The description of the formula/column");
+     * O._Columns.add(C);
+     * C = new Column("formula", ColumnType.STRING.name(), 8192, false, null, true, null, "DEPRECATED: DO NOT USE! The formula");
+     * O._Columns.add(C);
+     * C = new Column("html", ColumnType.STRING.name(), 16384, false, null, true, null,
+     * "DEPRECATED: DO NOT USE! A pre-rendered html fragment with the full documentation for this formula");
+     * O._Columns.add(C);
+     * 
+     * O._PrimaryKey = new PrimaryKey();
+     * O._PrimaryKey._Columns = new String[] { "viewName", "name"};
+     * 
+     * O._Indices = new ArrayList<Index>();
+     * Index I = new Index();
+     * I._Name = "ViewName";
+     * I._Columns = new String[] { "viewName" };
+     * I._OrderBy = new String[] { "name asc" };
+     * I._Db = false;
+     * O._Indices.add(I);
+     * 
+     * O._OutputMaps = new ArrayList<OutputMapping>();
+     * OutputMapping OM = new OutputMapping();
+     * OM._Name = "";
+     * OM._OutputTypeStrs = new String[] {"JSON"};
+     * OM._Columns = new String[] { "viewName", "realizedTableName", "name", "title", "description", "formula", "html", "created", "lastUpdated"};
+     * O._OutputMaps.add(OM);
+     * 
+     * _Objects.add(O);
+     * O.Validate(PS, this);
+     * 
+     * 
+     * O = new Object();
+     * O._ModeStr = ObjectMode.DB_ONLY.toString();
+     * O._Name = "TildaFormulaValue";
+     * O._Description = "DEPRECATED: DO NOT USE! Generated table to hold documentation meta-data about the values for the formulas defined in this schema";
+     * O._LCStr = ObjectLifecycle.READONLY.name();
+     * O._OCC = true;
+     * 
+     * C = new Column("viewName", ColumnType.STRING.name(), 64, false, null, true, null, "DEPRECATED: DO NOT USE! The name of the view this formula value is defined in");
+     * O._Columns.add(C);
+     * C = new Column("formulaName", ColumnType.STRING.name(), 64, false, null, true, null, "DEPRECATED: DO NOT USE! The name of the formula/column this value is defined for");
+     * O._Columns.add(C);
+     * C = new Column("value", ColumnType.STRING.name(), 64, false, null, true, null, "DEPRECATED: DO NOT USE! The value");
+     * O._Columns.add(C);
+     * C = new Column("description", ColumnType.STRING.name(), 4096, false, null, true, null, "DEPRECATED: DO NOT USE! The description of the value");
+     * O._Columns.add(C);
+     * 
+     * O._PrimaryKey = new PrimaryKey();
+     * O._PrimaryKey._Columns = new String[] { "viewName", "formulaName", "value"};
+     * 
+     * O._ForeignKeys = new ArrayList<ForeignKey>();
+     * ForeignKey FK = new ForeignKey();
+     * FK._Name = "Formula";
+     * FK._DestObject = "TildaFormula";
+     * FK._SrcColumns= new String[] { "viewName", "formulaName" };
+     * 
+     * O._Indices = new ArrayList<Index>();
+     * I = new Index();
+     * I._Name = "ViewFormula";
+     * I._Columns = new String[] { "viewName", "formulaName" };
+     * I._OrderBy = new String[] { "value asc" };
+     * I._Db = false;
+     * O._Indices.add(I);
+     * 
+     * O._OutputMaps = new ArrayList<OutputMapping>();
+     * OM = new OutputMapping();
+     * OM._Name = "";
+     * OM._OutputTypeStrs = new String[] {"JSON"};
+     * OM._Columns = new String[] { "viewName", "formulaName", "value", "description", "created", "lastUpdated"};
+     * O._OutputMaps.add(OM);
+     * 
+     * _Objects.add(O);
+     * O.Validate(PS, this);
+     * 
+     * O = new Object();
+     * O._ModeStr = ObjectMode.DB_ONLY.toString();
+     * O._Name = "TildaFormulaReference";
+     * O._Description = "DEPRECATED: DO NOT USE! Generated table to hold documentation meta-data about the columns and other formulas referenced by a formula";
+     * O._LCStr = ObjectLifecycle.READONLY.name();
+     * O._OCC = true;
+     * 
+     * C = new Column("viewName", ColumnType.STRING.name(), 64, false, null, true, null, "DEPRECATED: DO NOT USE! The name of the view this formula references is defined in");
+     * O._Columns.add(C);
+     * C = new Column("formulaName", ColumnType.STRING.name(), 64, false, null, true, null, "DEPRECATED: DO NOT USE! The name of the formula/column this value is defined for");
+     * O._Columns.add(C);
+     * C = new Column("referenceName", ColumnType.STRING.name(), 64, false, null, true, null, "DEPRECATED: DO NOT USE! The name of the column or other formula refence");
+     * O._Columns.add(C);
+     * C = new Column("referenceType", ColumnType.STRING.name(), 4, false, null, true, null, "DEPRECATED: DO NOT USE! The type of the refence");
+     * C._Values = new ColumnValue[2];
+     * C._Values[0] = new ColumnValue();
+     * C._Values[0]._Name = "Column";
+     * C._Values[0]._Value = "CLMN";
+     * C._Values[0]._Description = "A referenced column";
+     * C._Values[1] = new ColumnValue();
+     * C._Values[1]._Name = "formula";
+     * C._Values[1]._Value = "FRML";
+     * C._Values[1]._Description = "A referenced Formula";
+     * O._Columns.add(C);
+     * C = new Column("description", ColumnType.STRING.name(), 4096, false, null, true, null, "DEPRECATED: DO NOT USE! The description of the reference");
+     * O._Columns.add(C);
+     * 
+     * O._PrimaryKey = new PrimaryKey();
+     * O._PrimaryKey._Columns = new String[] { "viewName", "formulaName", "referenceName", "referenceType"};
+     * 
+     * O._ForeignKeys = new ArrayList<ForeignKey>();
+     * FK = new ForeignKey();
+     * FK._Name = "Formula";
+     * FK._DestObject = "TildaFormula";
+     * FK._SrcColumns= new String[] { "viewName", "formulaName" };
+     * 
+     * O._Indices = new ArrayList<Index>();
+     * I = new Index();
+     * I._Name = "ViewFormula";
+     * I._Columns = new String[] { "viewName", "formulaName" };
+     * I._OrderBy = new String[] { "referenceName asc" };
+     * I._Db = false;
+     * O._Indices.add(I);
+     * 
+     * O._OutputMaps = new ArrayList<OutputMapping>();
+     * OM = new OutputMapping();
+     * OM._Name = "";
+     * OM._OutputTypeStrs = new String[] {"JSON"};
+     * OM._Columns = new String[] { "viewName", "formulaName", "referenceName", "referenceType", "description", "created", "lastUpdated"};
+     * O._OutputMaps.add(OM);
+     * 
+     * _Objects.add(O);
+     * O.Validate(PS, this);
+     * }
+     */
 
-        _Objects.add(O);
-        O.Validate(PS, this);
-        
-
-        O = new Object();
-        O._ModeStr = ObjectMode.DB_ONLY.toString();
-        O._Name = "TildaFormulaValue";
-        O._Description = "DEPRECATED: DO NOT USE! Generated table to hold documentation meta-data about the values for the formulas defined in this schema";
-        O._LCStr = ObjectLifecycle.READONLY.name();
-        O._OCC = true;
-       
-        C = new Column("viewName", ColumnType.STRING.name(), 64, false, null, true, null, "DEPRECATED: DO NOT USE! The name of the view this formula value is defined in");
-        O._Columns.add(C);
-        C = new Column("formulaName", ColumnType.STRING.name(), 64, false, null, true, null, "DEPRECATED: DO NOT USE! The name of the formula/column this value is defined for");
-        O._Columns.add(C);
-        C = new Column("value", ColumnType.STRING.name(), 64, false, null, true, null, "DEPRECATED: DO NOT USE! The value");
-        O._Columns.add(C);
-        C = new Column("description", ColumnType.STRING.name(), 4096, false, null, true, null, "DEPRECATED: DO NOT USE! The description of the value");
-        O._Columns.add(C);
-        
-        O._PrimaryKey = new PrimaryKey();
-        O._PrimaryKey._Columns = new String[] { "viewName", "formulaName", "value"};
-        
-        O._ForeignKeys = new ArrayList<ForeignKey>();
-        ForeignKey FK = new ForeignKey();
-        FK._Name = "Formula";
-        FK._DestObject = "TildaFormula";
-        FK._SrcColumns= new String[] { "viewName", "formulaName" };
-        
-        O._Indices = new ArrayList<Index>();
-        I = new Index();
-        I._Name = "ViewFormula";
-        I._Columns = new String[] { "viewName", "formulaName" };
-        I._OrderBy = new String[] { "value asc" };
-        I._Db = false;
-        O._Indices.add(I);
-        
-        O._OutputMaps = new ArrayList<OutputMapping>();
-        OM = new OutputMapping();
-        OM._Name = "";
-        OM._OutputTypeStrs = new String[] {"JSON"};
-        OM._Columns = new String[] { "viewName", "formulaName", "value", "description", "created", "lastUpdated"}; 
-        O._OutputMaps.add(OM);
-
-        _Objects.add(O);
-        O.Validate(PS, this);
-
-        O = new Object();
-        O._ModeStr = ObjectMode.DB_ONLY.toString();
-        O._Name = "TildaFormulaReference";
-        O._Description = "DEPRECATED: DO NOT USE! Generated table to hold documentation meta-data about the columns and other formulas referenced by a formula";
-        O._LCStr = ObjectLifecycle.READONLY.name();
-        O._OCC = true;
-       
-        C = new Column("viewName", ColumnType.STRING.name(), 64, false, null, true, null, "DEPRECATED: DO NOT USE! The name of the view this formula references is defined in");
-        O._Columns.add(C);
-        C = new Column("formulaName", ColumnType.STRING.name(), 64, false, null, true, null, "DEPRECATED: DO NOT USE! The name of the formula/column this value is defined for");
-        O._Columns.add(C);
-        C = new Column("referenceName", ColumnType.STRING.name(), 64, false, null, true, null, "DEPRECATED: DO NOT USE! The name of the column or other formula refence");
-        O._Columns.add(C);
-        C = new Column("referenceType", ColumnType.STRING.name(), 4, false, null, true, null, "DEPRECATED: DO NOT USE! The type of the refence");
-        C._Values = new ColumnValue[2];
-        C._Values[0] = new ColumnValue();
-        C._Values[0]._Name = "Column";
-        C._Values[0]._Value = "CLMN";
-        C._Values[0]._Description = "A referenced column";
-        C._Values[1] = new ColumnValue();
-        C._Values[1]._Name = "formula";
-        C._Values[1]._Value = "FRML";
-        C._Values[1]._Description = "A referenced Formula";
-        O._Columns.add(C);
-        C = new Column("description", ColumnType.STRING.name(), 4096, false, null, true, null, "DEPRECATED: DO NOT USE! The description of the reference");
-        O._Columns.add(C);
-        
-        O._PrimaryKey = new PrimaryKey();
-        O._PrimaryKey._Columns = new String[] { "viewName", "formulaName", "referenceName", "referenceType"};
-
-        O._ForeignKeys = new ArrayList<ForeignKey>();
-        FK = new ForeignKey();
-        FK._Name = "Formula";
-        FK._DestObject = "TildaFormula";
-        FK._SrcColumns= new String[] { "viewName", "formulaName" };
-        
-        O._Indices = new ArrayList<Index>();
-        I = new Index();
-        I._Name = "ViewFormula";
-        I._Columns = new String[] { "viewName", "formulaName" };
-        I._OrderBy = new String[] { "referenceName asc" };
-        I._Db = false;
-        O._Indices.add(I);
-        
-        O._OutputMaps = new ArrayList<OutputMapping>();
-        OM = new OutputMapping();
-        OM._Name = "";
-        OM._OutputTypeStrs = new String[] {"JSON"};
-        OM._Columns = new String[] { "viewName", "formulaName", "referenceName", "referenceType", "description", "created", "lastUpdated"}; 
-        O._OutputMaps.add(OM);
-
-        _Objects.add(O);
-        O.Validate(PS, this);
-      }
-*/
-    
     public Documentation getDocumentation()
       {
         if (_Documentation == null)
@@ -412,7 +413,7 @@ public class Schema
           {
             Schema S = L.get(i);
             // LOG.info("Checking out " + S._Name + ".");
-            //Tilda and TildaTmp are special internal schemas, so we do the ordering manually.
+            // Tilda and TildaTmp are special internal schemas, so we do the ordering manually.
             if (S._Name.equals("TILDA") == true)
               {
                 L.add(L.get(0)._Name.equals("TILDATMP") ? 1 : 0, L.remove(i));
@@ -474,8 +475,8 @@ public class Schema
           {
             LOG.info("   " + X._Name);
             if (recurse == true)
-             for (Object O : X._Objects)
-              LOG.info("       " + O._Name +": "+TextUtil.Print(O.getColumnNames()));
+              for (Object O : X._Objects)
+                LOG.info("       " + O._Name + ": " + TextUtil.Print(O.getColumnNames()));
           }
       }
 
@@ -517,6 +518,26 @@ public class Schema
           if (V._Realize != null)
             return true;
         return false;
+      }
+
+    public void getFullDependencies(List<Schema> TildaList, Set<String> SchemaNames)
+      {
+        SchemaNames.add(_Name);
+        if (TildaList == null)
+          {
+            for (Schema S : _DependencySchemas)
+              if (S != null)
+                S.getFullDependencies(TildaList, SchemaNames);
+          }
+        else if (_Dependencies != null)
+          for (String n : _Dependencies)
+            if (TextUtil.isNullOrEmpty(n) == false)
+              for (Schema S : TildaList)
+                if (S != null && S._ResourceName.equals(n) == true)
+                  {
+                    S.getFullDependencies(TildaList, SchemaNames);
+                    break;
+                  }
       }
 
   }
