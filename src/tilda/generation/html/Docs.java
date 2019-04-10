@@ -81,10 +81,14 @@ public class Docs
         return "<A href=\"TILDA___Docs." + O.getSchema().getShortName() + ".html#" + O._Name + "_CNT\">" + coolPrint(O.getShortName()) + "</A>";
       }
 
+    public static String makeColumnHref(Column C)
+      {
+        return "TILDA___Docs." + C._ParentObject.getSchema().getShortName() + ".html#"+ C._ParentObject._Name + "-" + C.getName() + "_DIV";
+      }
+
     public static String makeColumnLink(Column C)
       {
-        return "<A href=\"TILDA___Docs." + C._ParentObject.getSchema().getShortName() + ".html#"
-        + C._ParentObject._Name + "-" + C.getName() + "_DIV\">" + coolPrint(C.getShortName()) + "</A>";
+        return "<A href=\""+makeColumnHref(C)+"\">" + coolPrint(C.getShortName()) + "</A>";
       }
     protected static String makeFormulaLink(Formula F)
       {

@@ -305,3 +305,103 @@ function checkSticky()
 }
 
 window.onscroll = checkSticky;
+
+
+function getAncestorNode(e, nodeName)
+ {
+   while (e != null && e.nodeName != nodeName)
+     e=e.parentNode;
+   return e;
+ }
+function selectRow(e, styleClass)
+ {
+   var Table = getAncestorNode(e, 'TABLE');
+   for (var i = 0; i < Table.rows.length; ++i)
+     Table.rows[i].classList.remove(styleClass);
+   var TR = getAncestorNode(e, 'TR');
+   if (TR != null)
+    TR.classList.add(styleClass);
+ }
+
+var MasterIndex = {
+  paintSchemas: function(id, dbMeta)
+   {
+     var Str = '<TABLE class="Rowed Selectable" onClick="MasterIndex.paintObjects(event, \''+id+'\')" border=\"0px\" cellspacing=\"0px\" cellpadding=\"3px\">\n';
+     for (var i = 0; i < dbMeta.length; ++i)
+       {
+         var s = dbMeta[i];
+         Str+='<TR><TD>'+s.name+'</TD></TR>\n';
+       }
+     Str+='</TABLE><BR><BR>\n';
+     document.getElementById(id+'_SCHEMAS').innerHTML=Str;
+   }
+
+ ,selectedSchema: null
+ ,selectedObject: null
+ ,paintObjects: function(event, id)
+   {
+     var selected = event.target.innerText;
+     selectRow(event.target, "Selected");     
+     for (var i = 0; i < dbMeta.length; ++i)
+       if (dbMeta[i].name == selected)
+         {
+           this.selectedSchema = dbMeta[i];
+           break;
+         }
+     if (this.selectedSchema == null)
+       {
+         console.log("unknown selected schema '"+selected+"'.");
+         return;
+       }
+     var Str = '<TABLE class="Rowed Selectable offScreenOpacity0" onClick="MasterIndex.paintColumns(event, \''+id+'\')" border=\"0px\" cellspacing=\"0px\" cellpadding=\"3px\">\n';
+     this.selectedObject = null; 
+     if (this.selectedSchema.objs == null || this.selectedSchema.objs.length == 0)
+       {
+         Str+="<TR><TD>NO OBJECTS DEFINED</TD></TR>";
+       }
+     else for (var i = 0; i < this.selectedSchema.objs.length; ++i)
+      {
+        var o = this.selectedSchema.objs[i];
+        Str+='<TR><TD>'+o.name+'</TD></TR>\n';
+      }
+     Str+='</TABLE><BR><BR>';
+     document.getElementById(id+'_COLUMNS').innerHTML='';
+     var e = document.getElementById(id+'_OBJECTS');
+     e.innerHTML=Str;
+     setTimeout(function() { e.childNodes[0].classList.add("fadeInSlideTo0"); }, 10);
+   }
+
+ ,paintColumns: function(event, id)
+   {
+     var selected = event.target.innerText;
+     selectRow(event.target, "Selected");
+     for (var i = 0; i < this.selectedSchema.objs.length; ++i)
+       if (this.selectedSchema.objs[i].name == selected)
+         {
+           this.selectedObject = this.selectedSchema.objs[i];
+           break;
+         }
+     if (this.selectedObject == null)
+       {
+         console.log("unknown selected object '"+selected+"'.");
+         return;
+       }
+
+     var Str = '<TABLE class="Rowed offScreenOpacity0" border=\"0px\" cellspacing=\"0px\" cellpadding=\"3px\">\n';
+     if (this.selectedObject.cols == null || this.selectedObject.cols.length == 0)
+       {
+         Str+="<TR><TD>NO COLUMNS DEFINED</TD></TR>";
+       }
+     else for (var i = 0; i < this.selectedObject.cols.length; ++i)
+       {
+         var c = this.selectedObject.cols[i];
+         Str+='<TR><TD><A href="'+c.url+'" target="_other">'+c.name+'</A></TD><TD>'+c.type+'</TD><TD>'+(c.nullable==false ? "not null" : "nullable")+'<\TD></TR>\n';
+       }
+     Str+='</TABLE><BR><BR>';
+     var e = document.getElementById(id+'_COLUMNS');
+     e.innerHTML=Str;
+     setTimeout(function() { e.childNodes[0].classList.add("fadeInSlideTo0"); }, 10);
+     document.getElementById(id+'_COLUMNS').innerHTML=Str;
+   }
+};
+

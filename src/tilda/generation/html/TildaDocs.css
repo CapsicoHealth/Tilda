@@ -123,6 +123,15 @@ input[type=text]:focus {
 .Rowed TR:nth-child(even) TD {
    background-color:#FFFFFF;
  }
+.Selectable TR:hover {
+   cursor: pointer;   
+}
+.Selectable TR:hover TD {
+   background-color:#fff6d6;
+}
+.Selected TD {
+   background-color:#FFC837 !important;
+}
 .RowedSection TD {
    border-top: 2px #666 solid;
 }
@@ -153,3 +162,13 @@ input[type=text]:focus {
 .sticky .BackToDetails {
    display: inline;
  }
+
+ 
+.offScreenOpacity0 {
+    opacity: 0;
+    transition: 0.66s;
+}
+
+.fadeInSlideTo0 {
+    opacity: 1;
+}
