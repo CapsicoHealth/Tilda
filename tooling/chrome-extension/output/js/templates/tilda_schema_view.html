@@ -1,7 +1,7 @@
 <div class="container-fluid">
   
   <div class="row">
-    <button class="col-md-12" name="schema-file" style="padding: 0px">Open folder </button>
+    <button class="btn btn-block btn-default" name="schema-file" style="">Open folder </button>
     <span class="col-md-2 col-md-offset-10 hideContent" style="cursor: pointer;text-align: right;">Toggle Actions</span>
   </div>
   
@@ -35,9 +35,35 @@
       </div>
     </div>
     <div class="fName" style="padding: 5px"></div>
+
     <div class="row">
-      <div class="col-md-12 rendered_objects" style="border: 1px solid gray;border-left: none;border-right: none;">
-        <div id='robj' style="height: 15vh;width: 100%;overflow: auto"></div>
+      <div class="col-md-12">
+        <input placeholder="Search" class="form-control" id="input_search"/>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12" style="max-height: 20vh; overflow: auto;">
+        <table id="hidden_objects" class="table table-condensed table-bordered">
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Hidden REFRESH button -->
+    <div class="row" style="display: block;">
+      <div class="col-md-4">
+        <button id="button_refresh" class="btn btn-default">Refresh</button>
+      </div>
+    </div>
+
+    <hr/>
+
+    <!-- Hidden view -->
+    <div class="row">
+      <div style="display: none;">
+        <div class="col-md-12 rendered_objects" style="border: 1px solid gray;border-left: none;border-right: none;">
+          <div id='robj' style="height: 15vh;width: 100%;overflow: auto"></div>
+        </div>
       </div>
     </div>
   </div>

@@ -21,6 +21,24 @@ define(["lodash", "jquery"], function(_, $){
 
     findWhere: function(attrs, options) {
       return this.where(attrs, true, options);
+    },
+
+    getAll: function() {
+      return this['filter'](function(model) {
+        return true;
+      })
+    },
+
+    searchName: function(searchText) {
+      if (searchText == null || searchText.length < 1)
+        return this.getAll();
+
+      return this['filter'](function(model) {
+        return (
+            model.get("name").match(new RegExp(searchText, "i"))
+            || model.get("schemaName").match(new RegExp(searchText, "i"))
+          )
+      })
     }
   })
   return ObjectCollection;

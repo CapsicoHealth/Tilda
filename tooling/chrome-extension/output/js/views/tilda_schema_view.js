@@ -108,6 +108,9 @@ define(['text!../templates/tilda_schema_view.html'
     schemaEntries: {},
     excludeRegex: null,
     events: {
+      'keyup input#input_search': 'onSearchTextChanged',
+      'click .hidden_object': 'onHiddenObjectClicked',
+      'click #button_refresh': "onRefreshClicked",
       'click button[name="schema-file"]': 'handleFileInput',
       'click .saveSchema': 'saveSchema',
       'change select.add-view-holder': "togglePapers",
@@ -125,6 +128,50 @@ define(['text!../templates/tilda_schema_view.html'
         $("#new_canvas").val(1);
         $('#createCanvasD').modal('show');
       }
+    },
+    onSearchTextChanged: function(event) {
+      event.preventDefault();
+      var that = this;
+      // TODO: Find cleaner solution
+      document.getElementById("button_refresh").click();
+    },
+    onHiddenObjectClicked: function(event) {
+      event.preventDefault();
+      var that = this;
+      // Find clicked Id
+      let clickedId = event.target.dataset.id;
+      that.schemaParser_object.renderCellOnGraph(clickedId);
+      // Remove from hidden list
+      let obj = that.schemaParser_object.hiddenObjects.findWhere({friendlyName: clickedId}, {caseInsensitive: true});
+      that.schemaParser_object.hiddenObjects.remove(obj);
+      // TODO: Find cleaner solution
+      document.getElementById("button_refresh").click();
+    },
+    redrawHiddenObjects: function(hiddenObjects) {
+      let str = "<tbody><tr>", counter = 0;
+      for(let i=0; i<hiddenObjects.length;i++) {
+        if(counter%4 == 0)
+          str += "</tr><tr>"
+        name = [hiddenObjects[i].get("schemaName"), hiddenObjects[i].get("name")].join(".")
+        str += "<td class='hidden_object' data-id='"+hiddenObjects[i].get("friendlyName")+"'>"+name+"</td>"
+        counter++
+      }
+      str += "</tr></tbody>"
+      $("#hidden_objects").html(str)
+      // let table = document.getElementById("hidden_objects")
+      // if (table)
+      //   table.innerHTML = str;
+    },
+    onRefreshClicked: function(event) {
+      event.preventDefault()
+      $("#hidden_object").html("")
+      var that = this;
+      if (that.schemaParser_object == null)
+        return;
+
+      let searchText = document.getElementById("input_search").value;
+      let hiddenObjects = that.schemaParser_object.hiddenObjects.searchName(searchText);
+      that.redrawHiddenObjects(hiddenObjects);
     },
     hideActions: function()
     {
@@ -283,11 +330,12 @@ define(['text!../templates/tilda_schema_view.html'
           var reader = new FileReader();
           reader.onload = function(e) {
             try {
-            var schema = JSON.parseWithComments(e.target.result);
-            that.schema = schema;
-            populateSVGHTML(tildaCache.canvases, schemaFname, schema.package);
-            that.$el.find("#obj_c").html("");
-            $("#robj").html('');
+              var schema = JSON.parseWithComments(e.target.result);
+              that.schema = schema;
+              populateSVGHTML(tildaCache.canvases, schemaFname, schema.package);
+              that.$el.find("#obj_c").html("");
+              $("#robj").html('');
+              that.redrawHiddenObjects([])
              }
             catch (e)
              {
@@ -319,6 +367,7 @@ define(['text!../templates/tilda_schema_view.html'
     togglePapers: function(event){
       var that = this;
       var currentScale = 1
+      this.redrawHiddenObjects([])
       if(that.schemaParser_object != null)
       {
         currentScale = that.schemaParser_object.currentScale;
@@ -515,7 +564,7 @@ define(['text!../templates/tilda_schema_view.html'
             fileWriter.onwriteend = function(e) {
               this.truncate(blob.size);
               fileWriter.onwriteend = null; // stop looping
-              console.log('Export to '+fileDisplayPath+' completed');
+              console.log('Export to '+fileName+' completed');
             };
             fileWriter.onerror = function(e) {
               console.error('Export failed: '+e.toString());
@@ -534,7 +583,7 @@ define(['text!../templates/tilda_schema_view.html'
           fileWriter.onwriteend = function(e) {
             this.truncate(blob.size);
             fileWriter.onwriteend = null; // stop looping
-            console.log('Export to '+fileDisplayPath+' completed');
+            console.log('Export to '+fileName+' completed');
           };
           fileWriter.onerror = function(e) {
             console.error('Export failed: '+e.toString());
@@ -544,6 +593,7 @@ define(['text!../templates/tilda_schema_view.html'
       });
     },
     resetView: function(event){
+      document.getElementById("button_refresh").click();
       if(this.schemaParser_object){
         this.schemaParser_object.resetAll();
       }
