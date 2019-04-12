@@ -439,7 +439,7 @@ This is the setter for:<BR>
    public void setSeq(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _seq)
+       if (__Init == InitMode.CREATE || v != _seq)
         {
           __Changes.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SEQ._Mask);
           __Nulls.andNot(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SEQ._Mask);

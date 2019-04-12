@@ -128,6 +128,15 @@ input[type=text]:focus {
 .Rowed TR:nth-child(even) TD {
    background-color:#FFFFFF;
  }
+.Selectable TR:hover {
+   cursor: pointer;   
+}
+.Selectable TR:hover TD {
+   background-color:#fff6d6;
+}
+.Selected TD {
+   background-color:#FFC837 !important;
+}
 .RowedSection TD {
    border-top: 2px #666 solid;
 }
@@ -158,6 +167,16 @@ input[type=text]:focus {
 .sticky .BackToDetails {
    display: inline;
  }
+
+ 
+.offScreenOpacity0 {
+    opacity: 0;
+    transition: 0.66s;
+}
+
+.fadeInSlideTo0 {
+    opacity: 1;
+}
 </STYLE>
 <SCRIPT>
 var onModalCloseClicked = function(modalId)
@@ -467,6 +486,106 @@ function checkSticky()
 }
 
 window.onscroll = checkSticky;
+
+
+function getAncestorNode(e, nodeName)
+ {
+   while (e != null && e.nodeName != nodeName)
+     e=e.parentNode;
+   return e;
+ }
+function selectRow(e, styleClass)
+ {
+   var Table = getAncestorNode(e, 'TABLE');
+   for (var i = 0; i < Table.rows.length; ++i)
+     Table.rows[i].classList.remove(styleClass);
+   var TR = getAncestorNode(e, 'TR');
+   if (TR != null)
+    TR.classList.add(styleClass);
+ }
+
+var MasterIndex = {
+  paintSchemas: function(id, dbMeta)
+   {
+     var Str = '<TABLE class="Rowed Selectable" onClick="MasterIndex.paintObjects(event, \''+id+'\')" border=\"0px\" cellspacing=\"0px\" cellpadding=\"3px\">\n';
+     for (var i = 0; i < dbMeta.length; ++i)
+       {
+         var s = dbMeta[i];
+         Str+='<TR><TD>'+s.name+'</TD></TR>\n';
+       }
+     Str+='</TABLE><BR><BR>\n';
+     document.getElementById(id+'_SCHEMAS').innerHTML=Str;
+   }
+
+ ,selectedSchema: null
+ ,selectedObject: null
+ ,paintObjects: function(event, id)
+   {
+     var selected = event.target.innerText;
+     selectRow(event.target, "Selected");     
+     for (var i = 0; i < dbMeta.length; ++i)
+       if (dbMeta[i].name == selected)
+         {
+           this.selectedSchema = dbMeta[i];
+           break;
+         }
+     if (this.selectedSchema == null)
+       {
+         console.log("unknown selected schema '"+selected+"'.");
+         return;
+       }
+     var Str = '<TABLE class="Rowed Selectable offScreenOpacity0" onClick="MasterIndex.paintColumns(event, \''+id+'\')" border=\"0px\" cellspacing=\"0px\" cellpadding=\"3px\">\n';
+     this.selectedObject = null; 
+     if (this.selectedSchema.objs == null || this.selectedSchema.objs.length == 0)
+       {
+         Str+="<TR><TD>NO OBJECTS DEFINED</TD></TR>";
+       }
+     else for (var i = 0; i < this.selectedSchema.objs.length; ++i)
+      {
+        var o = this.selectedSchema.objs[i];
+        Str+='<TR><TD>'+o.name+'</TD></TR>\n';
+      }
+     Str+='</TABLE><BR><BR>';
+     document.getElementById(id+'_COLUMNS').innerHTML='';
+     var e = document.getElementById(id+'_OBJECTS');
+     e.innerHTML=Str;
+     setTimeout(function() { e.childNodes[0].classList.add("fadeInSlideTo0"); }, 10);
+   }
+
+ ,paintColumns: function(event, id)
+   {
+     var selected = event.target.innerText;
+     selectRow(event.target, "Selected");
+     for (var i = 0; i < this.selectedSchema.objs.length; ++i)
+       if (this.selectedSchema.objs[i].name == selected)
+         {
+           this.selectedObject = this.selectedSchema.objs[i];
+           break;
+         }
+     if (this.selectedObject == null)
+       {
+         console.log("unknown selected object '"+selected+"'.");
+         return;
+       }
+
+     var Str = '<TABLE class="Rowed offScreenOpacity0" border=\"0px\" cellspacing=\"0px\" cellpadding=\"3px\">\n';
+     if (this.selectedObject.cols == null || this.selectedObject.cols.length == 0)
+       {
+         Str+="<TR><TD>NO COLUMNS DEFINED</TD></TR>";
+       }
+     else for (var i = 0; i < this.selectedObject.cols.length; ++i)
+       {
+         var c = this.selectedObject.cols[i];
+         Str+='<TR><TD><A href="'+c.url+'" target="_other">'+c.name+'</A></TD><TD>'+c.type+'</TD><TD>'+(c.nullable==false ? "not null" : "nullable")+'<\TD></TR>\n';
+       }
+     Str+='</TABLE><BR><BR>';
+     var e = document.getElementById(id+'_COLUMNS');
+     e.innerHTML=Str;
+     setTimeout(function() { e.childNodes[0].classList.add("fadeInSlideTo0"); }, 10);
+     document.getElementById(id+'_COLUMNS').innerHTML=Str;
+   }
+};
+
 </SCRIPT>
 
 </HEAD>
@@ -2054,39 +2173,39 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TABLE></BLOCKQUOTE>
 </DIV>
 <BR><BR><BR><BR><BR><BR>
-<TABLE id="Jobs_DIV" class="tables">
-<SCRIPT>registerStickyHeader("Jobs_DIV");</SCRIPT>
-<TR valign="top"><TD><H2>Jobs&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 70%;"><SPAN class="BackToDetails"><A href="#Jobs_CNT">details</A>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><A href="#">top</A></SUP></H2></TD><TD align="right"></TD></TR>
+<TABLE id="Job_DIV" class="tables">
+<SCRIPT>registerStickyHeader("Job_DIV");</SCRIPT>
+<TR valign="top"><TD><H2>Job&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 70%;"><SPAN class="BackToDetails"><A href="#Job_CNT">details</A>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><A href="#">top</A></SUP></H2></TD><TD align="right"></TD></TR>
 </TABLE>
-<DIV id="Jobs_CNT" class="content">
-The Table TILDA.Jobs:<UL>
-<LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>Jobs_Factory</B>, <B>Jobs_Data</B> in the package <B>tilda.data</B>.
+<DIV id="Job_CNT" class="content">
+The Table TILDA.Job:<UL>
+<LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>Job_Factory</B>, <B>Job_Data</B> in the package <B>tilda.data</B>.
 <LI>Is configured for normal <B>read/write</B> access.</LI>
 <LI>Is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
 <LI>Defines foreign key(s) to <A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A> </LI>
-<LI>Has the following identity:<UL><LI>Unique Index: Id</LI>
+<LI>Has the following identity:<UL><LI>Primary Key: refnum</LI>
 </UL></LI>
 </UL>
-<B>Description</B>: Jobs<BR>
+<B>Description</B>: Jobs details<BR>
 <BR>
 This Table contains the following columns:<BLOCKQUOTE>
- <TABLE id="Jobs_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
+ <TABLE id="Job_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
    <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Jobs-Id_DIV' class='columns'>Id</B>&nbsp;&nbsp;</TD>
-<TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Job-refnum_DIV' class='columns'>refnum</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Id</TD>
+<TD>The primary key for this record</TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>2&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Jobs-Name_DIV' class='columns'>Name</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;/&nbsp;varchar(120)&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Job-name_DIV' class='columns'>name</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(250)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
@@ -2094,21 +2213,21 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>3&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Jobs-StartTimeTZ_DIV' class='columns'>StartTimeTZ</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Job-startTZ_DIV' class='columns'>startTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Generated helper column to hold the time zone ID for 'StartTime'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
+<TD>Generated helper column to hold the time zone ID for 'start'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
 </TABLE>
 </TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>4&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Jobs-StartTime_DIV' class='columns'>StartTime</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Job-start_DIV' class='columns'>start</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
@@ -2116,19 +2235,19 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>5&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Jobs-EndTimeTZ_DIV' class='columns'>EndTimeTZ</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Job-endTZ_DIV' class='columns'>endTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Generated helper column to hold the time zone ID for 'EndTime'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
+<TD>Generated helper column to hold the time zone ID for 'end'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
 </TABLE>
 </TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>6&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Jobs-EndTime_DIV' class='columns'>EndTime</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Job-end_DIV' class='columns'>end</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -2138,110 +2257,102 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>7&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Jobs-TotalRecords_DIV' class='columns'>TotalRecords</B>&nbsp;&nbsp;</TD>
-<TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>TotalRecords</TD>
-</TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>8&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Jobs-Status_DIV' class='columns'>Status</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;/&nbsp;varchar(200)&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Job-status_DIV' class='columns'>status</B>&nbsp;&nbsp;</TD>
+<TD>boolean&nbsp;/&nbsp;boolean&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Status</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>9&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Jobs-Error_DIV' class='columns'>Error</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;/&nbsp;varchar(1000)&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>8&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Job-msg_DIV' class='columns'>msg</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;text&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Error</TD>
+<TD>Message details</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>9&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Job-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The timestamp for when the record was created. (TILDA.Job)</TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>10&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Jobs-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Job-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The timestamp for when the record was created. (TILDA.Jobs)</TD>
+<TD>The timestamp for when the record was last updated. (TILDA.Job)</TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>11&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Jobs-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
-<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The timestamp for when the record was last updated. (TILDA.Jobs)</TD>
-</TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>12&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Jobs-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Job-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The timestamp for when the record was deleted. (TILDA.Jobs)</TD>
+<TD>The timestamp for when the record was deleted. (TILDA.Job)</TD>
 </TR>
 </TABLE></BLOCKQUOTE>
 </DIV>
 <BR><BR><BR><BR><BR><BR>
-<TABLE id="Job_Detail_DIV" class="tables">
-<SCRIPT>registerStickyHeader("Job_Detail_DIV");</SCRIPT>
-<TR valign="top"><TD><H2>Job_Detail&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 70%;"><SPAN class="BackToDetails"><A href="#Job_Detail_CNT">details</A>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><A href="#">top</A></SUP></H2></TD><TD align="right"></TD></TR>
+<TABLE id="JobPart_DIV" class="tables">
+<SCRIPT>registerStickyHeader("JobPart_DIV");</SCRIPT>
+<TR valign="top"><TD><H2>JobPart&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 70%;"><SPAN class="BackToDetails"><A href="#JobPart_CNT">details</A>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><A href="#">top</A></SUP></H2></TD><TD align="right"></TD></TR>
 </TABLE>
-<DIV id="Job_Detail_CNT" class="content">
-The Table TILDA.Job_Detail:<UL>
-<LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>Job_Detail_Factory</B>, <B>Job_Detail_Data</B> in the package <B>tilda.data</B>.
+<DIV id="JobPart_CNT" class="content">
+The Table TILDA.JobPart:<UL>
+<LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>JobPart_Factory</B>, <B>JobPart_Data</B> in the package <B>tilda.data</B>.
 <LI>Is configured for normal <B>read/write</B> access.</LI>
 <LI>Is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
-<LI>Defines foreign key(s) to <A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A> </LI>
-<LI>Has the following identity:<UL><LI>Unique Index: Id, Job_Id</LI>
+<LI>Defines foreign key(s) to <A href="TILDA___Docs.TILDA.html#Job_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>Job</A>, <A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A> </LI>
+<LI>Has the following identity:<UL><LI>Primary Key: refnum</LI>
 </UL></LI>
 </UL>
-<B>Description</B>: Job Detail<BR>
+<B>Description</B>: Job party details<BR>
 <BR>
 This Table contains the following columns:<BLOCKQUOTE>
- <TABLE id="Job_Detail_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
+ <TABLE id="JobPart_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
    <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Job_Detail-Id_DIV' class='columns'>Id</B>&nbsp;&nbsp;</TD>
-<TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPart-refnum_DIV' class='columns'>refnum</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Id</TD>
+<TD>The primary key for this record</TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>2&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Job_Detail-Job_Id_DIV' class='columns'>Job_Id</B>&nbsp;&nbsp;</TD>
-<TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPart-jobRefnum_DIV' class='columns'>jobRefnum</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Job Id</TD>
+<TD>Parent Job Refnum<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Job_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>Job</A>: refnum</TD></TR>
+</TABLE>
+</TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>3&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Job_Detail-FileName_DIV' class='columns'>FileName</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPart-name_DIV' class='columns'>name</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(200)&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
@@ -2249,7 +2360,51 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>4&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Job_Detail-FileRecords_DIV' class='columns'>FileRecords</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPart-startTZ_DIV' class='columns'>startTZ</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Generated helper column to hold the time zone ID for 'start'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
+</TABLE>
+</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>5&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPart-start_DIV' class='columns'>start</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>FileProcessStartTime</TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>6&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPart-endTZ_DIV' class='columns'>endTZ</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Generated helper column to hold the time zone ID for 'end'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
+</TABLE>
+</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>7&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPart-end_DIV' class='columns'>end</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>FileProcessEndTime</TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>8&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPart-recordsCount_DIV' class='columns'>recordsCount</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -2258,53 +2413,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD>FileRecords</TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
-    <TD>5&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Job_Detail-FileProcessStartTimeTZ_DIV' class='columns'>FileProcessStartTimeTZ</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Generated helper column to hold the time zone ID for 'FileProcessStartTime'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
-</TABLE>
-</TD>
-</TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>6&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Job_Detail-FileProcessStartTime_DIV' class='columns'>FileProcessStartTime</B>&nbsp;&nbsp;</TD>
-<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>FileProcessStartTime</TD>
-</TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>7&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Job_Detail-FileProcessEndTimeTZ_DIV' class='columns'>FileProcessEndTimeTZ</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Generated helper column to hold the time zone ID for 'FileProcessEndTime'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
-</TABLE>
-</TD>
-</TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>8&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Job_Detail-FileProcessEndTime_DIV' class='columns'>FileProcessEndTime</B>&nbsp;&nbsp;</TD>
-<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>FileProcessEndTime</TD>
-</TR>
-  <TR valign="top" bgcolor="#DFECF8">
     <TD>9&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Job_Detail-Status_DIV' class='columns'>Status</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;/&nbsp;varchar(200)&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPart-status_DIV' class='columns'>status</B>&nbsp;&nbsp;</TD>
+<TD>boolean&nbsp;/&nbsp;boolean&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -2313,43 +2424,43 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>10&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Job_Detail-Error_DIV' class='columns'>Error</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;/&nbsp;varchar(1000)&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPart-msg_DIV' class='columns'>msg</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;text&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Error</TD>
+<TD>Message details</TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>11&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Job_Detail-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPart-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The timestamp for when the record was created. (TILDA.Job_Detail)</TD>
+<TD>The timestamp for when the record was created. (TILDA.JobPart)</TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>12&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Job_Detail-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPart-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The timestamp for when the record was last updated. (TILDA.Job_Detail)</TD>
+<TD>The timestamp for when the record was last updated. (TILDA.JobPart)</TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>13&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Job_Detail-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPart-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The timestamp for when the record was deleted. (TILDA.Job_Detail)</TD>
+<TD>The timestamp for when the record was deleted. (TILDA.JobPart)</TD>
 </TR>
 </TABLE></BLOCKQUOTE>
 </DIV>

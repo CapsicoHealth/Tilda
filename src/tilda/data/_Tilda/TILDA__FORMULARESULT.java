@@ -205,7 +205,7 @@ This is the setter for:<BR>
    protected void setFormulaRefnum(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _formulaRefnum)
+       if (__Init == InitMode.CREATE || v != _formulaRefnum)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.FormulaResult.formulaRefnum' that is invariant, or part of a read-only or pre-existing WORM object.");

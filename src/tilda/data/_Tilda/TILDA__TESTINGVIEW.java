@@ -313,7 +313,7 @@ This is the setter for:<BR>
     void setRefnum(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _refnum)
+       if (__Init == InitMode.CREATE || v != _refnum)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.TestingView.refnum' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -409,7 +409,7 @@ This is the setter for:<BR>
     void setA2Min(char v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a2Min)
+       if (__Init == InitMode.CREATE || v != _a2Min)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.TestingView.a2Min' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -533,7 +533,7 @@ This is the setter for:<BR>
     void setA2Max(char v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a2Max)
+       if (__Init == InitMode.CREATE || v != _a2Max)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.TestingView.a2Max' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -1243,7 +1243,7 @@ This is the setter for:<BR>
     void setA6First(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a6First)
+       if (__Init == InitMode.CREATE || v != _a6First)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.TestingView.a6First' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -1367,7 +1367,7 @@ This is the setter for:<BR>
     void setA6Last(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a6Last)
+       if (__Init == InitMode.CREATE || v != _a6Last)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.TestingView.a6Last' that is invariant, or part of a read-only or pre-existing WORM object.");

@@ -8,14 +8,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
-This is the application class <B>Data_JOBS</B> mapped to the table <B>TILDA.JOBS</B>.
-@see tilda.data._Tilda.TILDA__JOBS
+This is the application class <B>Data_JobPart</B> mapped to the table <B>TILDA.JobPart</B>.
+@see tilda.data._Tilda.TILDA__JOBPART
 */
-public class Jobs_Json extends tilda.data._Tilda.TILDA__JOBS_Json
+public class JobPart_Json extends tilda.data._Tilda.TILDA__JOBPART_Json
  {
-   protected static final Logger LOG = LogManager.getLogger(Jobs_Json.class.getName());
+   protected static final Logger LOG = LogManager.getLogger(JobPart_Json.class.getName());
 
-   protected Jobs_Json() { }
+   protected JobPart_Json() { }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -1097,7 +1097,7 @@ This is the setter for:<BR>
    public void setSelectNano(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _selectNano)
+       if (__Init == InitMode.CREATE || v != _selectNano)
         {
           __Changes.or(TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask);
           __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask);
@@ -1258,7 +1258,7 @@ This is the setter for:<BR>
    public void setSelectCount(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _selectCount)
+       if (__Init == InitMode.CREATE || v != _selectCount)
         {
           __Changes.or(TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask);
           __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask);
@@ -1419,7 +1419,7 @@ This is the setter for:<BR>
    public void setSelectRecords(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _selectRecords)
+       if (__Init == InitMode.CREATE || v != _selectRecords)
         {
           __Changes.or(TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask);
           __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask);
@@ -1580,7 +1580,7 @@ This is the setter for:<BR>
    public void setInsertNano(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _insertNano)
+       if (__Init == InitMode.CREATE || v != _insertNano)
         {
           __Changes.or(TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask);
           __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask);
@@ -1741,7 +1741,7 @@ This is the setter for:<BR>
    public void setInsertCount(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _insertCount)
+       if (__Init == InitMode.CREATE || v != _insertCount)
         {
           __Changes.or(TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask);
           __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask);
@@ -1902,7 +1902,7 @@ This is the setter for:<BR>
    public void setInsertRecords(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _insertRecords)
+       if (__Init == InitMode.CREATE || v != _insertRecords)
         {
           __Changes.or(TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask);
           __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask);
@@ -2063,7 +2063,7 @@ This is the setter for:<BR>
    public void setUpdateNano(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _updateNano)
+       if (__Init == InitMode.CREATE || v != _updateNano)
         {
           __Changes.or(TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask);
           __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask);
@@ -2224,7 +2224,7 @@ This is the setter for:<BR>
    public void setUpdateCount(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _updateCount)
+       if (__Init == InitMode.CREATE || v != _updateCount)
         {
           __Changes.or(TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask);
           __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask);
@@ -2385,7 +2385,7 @@ This is the setter for:<BR>
    public void setUpdateRecords(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _updateRecords)
+       if (__Init == InitMode.CREATE || v != _updateRecords)
         {
           __Changes.or(TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask);
           __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask);
@@ -2546,7 +2546,7 @@ This is the setter for:<BR>
    public void setDeleteNano(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _deleteNano)
+       if (__Init == InitMode.CREATE || v != _deleteNano)
         {
           __Changes.or(TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask);
           __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask);
@@ -2707,7 +2707,7 @@ This is the setter for:<BR>
    public void setDeleteCount(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _deleteCount)
+       if (__Init == InitMode.CREATE || v != _deleteCount)
         {
           __Changes.or(TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask);
           __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask);
@@ -2868,7 +2868,7 @@ This is the setter for:<BR>
    public void setDeleteRecords(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _deleteRecords)
+       if (__Init == InitMode.CREATE || v != _deleteRecords)
         {
           __Changes.or(TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask);
           __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask);
