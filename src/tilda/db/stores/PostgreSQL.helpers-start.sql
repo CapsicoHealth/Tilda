@@ -608,6 +608,122 @@ $$ LANGUAGE plpgsql;
 
 
 
+
+
+-- Return size information per quarter on a specific tables, or all tables in a specific schema
+-- schema_name: the name of the schema
+-- table_name: the name of the table, or NULL if all tables in the schema are to be analyzed
+-- created_col_name: the name of the date or timestamp column to use for quarterly grouping
+-- start_date: the date the analysis should start from (based on the created_col_name names)
+create or replace function Tilda.getSizing(schema_name varchar, table_name varchar, created_col_name varchar, start_date date) 
+returns TABLE ("schemaName" varchar, "tableName" varchar, q date, "totalCount" bigint, "qCount" bigint, "totalSize" bigint, "totalSizepretty" text
+             , "qSize" numeric, "qSizepretty" text, "qPercent" numeric) as $$
+declare
+  v_curr record;
+  v_rec record;
+  v_query text;
+  v_count integer;
+begin
+  v_query:='with T as ('||E'\n';
+  v_count:=-1;
+  for v_curr in (
+    SELECT
+     schemaname as s,
+     relname as t,
+     columns.column_name as col,
+     pg_total_relation_size(relid) As tsize
+    FROM pg_catalog.pg_statio_user_tables
+      LEFT join information_schema.columns on columns.table_schema=schemaname and columns.table_name=relname and lower(columns.column_name)=lower($3)
+    WHERE ($1 is null OR lower($1)=lower(schemaname))
+      AND ($2 is null OR lower($2)=lower(relname   ))
+    ORDER BY pg_total_relation_size(relid) DESC
+   ) LOOP
+     v_count:=v_count+1;
+     IF v_curr.col is not null
+      THEN v_query:=v_query||(case when v_count> 0 then E'UNION\n' else '' end)
+         ||'  select '''||v_curr.s||'''::VARCHAR as "schemaName", '''||v_curr.t||'''::VARCHAR as "tableName", '||v_curr.tsize||'::BIGINT as "totalSize"'||E'\n'
+         ||'       , "totalCount", date_trunc(''quarter'', '||$3||')::DATE as q'||E'\n'
+         ||'       , count(*) as "qCount"'||E'\n'
+         ||'    from '||v_curr.s||'.'||v_curr.t||E'\n'
+         ||'       join (select count(*) as "totalCount" from '||v_curr.s||'.'||v_curr.t||') as T on 1=1'||E'\n'
+         ||'   where '||$3||' >= '''||$4||''''||E'\n'
+         ||'   group by 4, 5'||E'\n'
+         ;
+      ELSE v_query:=v_query||(case when v_count> 0 then E'UNION\n' else '' end)
+         ||'  select '''||v_curr.s||'''::VARCHAR as "schemaName", '''||v_curr.t||'''::VARCHAR as "tableName", '||v_curr.tsize||'::BIGINT as "totalSize"'||E'\n'
+         ||'       , "totalCount", null::DATE as q'||E'\n'
+         ||'       , count(*) as "qCount"'||E'\n'
+         ||'    from '||v_curr.s||'.'||v_curr.t||E'\n'
+         ||'       join (select count(*) as "totalCount" from '||v_curr.s||'.'||v_curr.t||') as T on 1=1'||E'\n'
+         ||'   group by 4, 5'||E'\n'
+         ; 
+      END IF;
+  END LOOP;
+  v_query:=v_query||')'||E'\n'
+         ||'select "schemaName", "tableName", q, "totalCount", "qCount"'||E'\n'
+         ||'     , "totalSize" , pg_size_pretty("totalSize") as "totalSizePretty"'||E'\n'
+         ||'     , round(1.0*"totalSize"*"qCount"/"totalCount",2) as "qSize"'||E'\n'
+         ||'     , pg_size_pretty(1.0*"totalSize"*"qCount"/"totalCount") as "qSizePretty"'||E'\n'
+         ||'     , round(100.0*"qCount"/"totalCount",2) as "qPercent"'||E'\n'
+         ||' from T'||E'\n'
+         ;
+  RETURN QUERY EXECUTE v_query;
+end;
+$$
+LANGUAGE plpgsql;
+
+
+
+
+-- returns an list of schemas, with the aggregate storage sizes of all of their tables, ordered by their sizes, with a running total.
+create or replace function Tilda.getSchemaSizes() 
+returns TABLE ("schemaName" varchar, "totalSize" numeric, "totalSizePretty" text, "totalSizeExternal" numeric, "totalSizeExternalPretty" text
+             , "runningTotalSize" numeric, "runningTotalSizePretty" text) as $$
+with T as (
+SELECT
+   schemaname::VARCHAR as "schemaName",
+   sum(pg_total_relation_size(relid)) As "totalSize",
+   pg_size_pretty(sum(pg_total_relation_size(relid))) As "totalSizePretty",
+   sum(pg_total_relation_size(relid)) - sum(pg_relation_size(relid)) as "totalSizeExternal",
+   pg_size_pretty(sum(pg_total_relation_size(relid)) - sum(pg_relation_size(relid))) as "totalSizeExternalPretty"
+  FROM pg_catalog.pg_statio_user_tables
+  group by 1
+  ORDER BY 2 DESC
+)
+select "schemaName", "totalSize", "totalSizePretty", "totalSizeExternal", "totalSizeExternalPretty"
+                   , sum("totalSize") over(order by "totalSize" desc) as "runningTotalSize"
+                   , pg_size_pretty(sum("totalSize") over(order by "totalSize" desc)) as "runningTotalSizePretty"
+  from T
+group by 1, 2, 3, 4, 5
+$$ LANGUAGE SQL;
+
+
+
+-- returns an list of tables, with their storage sizes, ordered by their sizes, with a running total.
+create or replace function Tilda.getTableSizes() 
+returns TABLE ("schemaName" varchar, "tableName" varchar, "totalSize" numeric, "totalSizePretty" text, "totalSizeExternal" numeric, "totalSizeExternalPretty" text
+             , "runningTotalSize" numeric, "runningTotalSizePretty" text) as $$
+with T as (
+SELECT
+   schemaname::VARCHAR as "schemaName",
+   relname::VARCHAR as "tableName",
+   pg_total_relation_size(relid)::numeric As "totalSize",
+   pg_size_pretty(pg_total_relation_size(relid)) As "totalSizePretty",
+   (pg_total_relation_size(relid) - pg_relation_size(relid))::numeric as "totalSizeExternal",
+   pg_size_pretty(pg_total_relation_size(relid) - pg_relation_size(relid)) as "totalSizeExternalPretty"
+  FROM pg_catalog.pg_statio_user_tables
+  ORDER BY pg_total_relation_size(relid) DESC
+)
+select "schemaName", "tableName", "totalSize", "totalSizePretty", "totalSizeExternal", "totalSizeExternalPretty"
+                   , sum("totalSize") over(order by "totalSize" desc) as "runningTotalSize"
+                   , pg_size_pretty(sum("totalSize") over(order by "totalSize" desc)) as "runningTotalSizePretty"
+  from T
+group by 1, 2, 3, 4, 5, 6
+$$ LANGUAGE SQL;
+
+
+
+
 -- Get the list of tables and columns that have a foreign key to a target table.
 /*
 SELECT tc.table_schema, tc.table_name, tc.constraint_name, kcu.column_name, ccu.table_schema AS foreign_schema_name, ccu.table_name AS foreign_table_name, ccu.column_name AS foreign_column_name
