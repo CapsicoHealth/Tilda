@@ -191,6 +191,34 @@ END; $$
 LANGUAGE PLPGSQL;
 
 
+-- Function to check dynamically if a table exists. It can also be used as an SQL-Injection
+-- check when another function needs to create some dynamic SQL and received table/schema names
+-- as strings
+CREATE OR REPLACE FUNCTION TILDA.existsTable(schemaName varchar, tableName varchar) RETURNS boolean
+IMMUTABLE LANGUAGE SQL AS
+  'SELECT true FROM information_schema.tables WHERE lower(tables.table_schema)=lower($1) and lower(tables.table_name)=lower($2);'
+;
+
+
+-- Updates the key in TILDA.Key to match the max(
+CREATE OR REPLACE FUNCTION TILDA.updateMaxKey(schemaName varchar, tableName varchar) RETURNS bigint AS $$
+DECLARE
+  val bigint;
+  q text;
+BEGIN
+  IF (SELECT TILDA.existsTable($1,$2)) is distinct from true THEN -- test for table and schema existence.. and doubles as SQL injection barier.
+   return null;
+  END IF;
+  q:='SELECT coalesce(max(refnum),0) from '||schemaName||'.'||tableName;
+  EXECUTE q into val;
+  val:=val+1;
+  q:='update TILDA.Key set max='||val||' where name='''||upper(schemaName||'.'||tableName)||'''';
+  EXECUTE q;
+  return val;
+END; $$
+LANGUAGE PLPGSQL;
+
+
 
 -----------------------------------------------------------------------------------------------------------------
 -- TILDA String-to-Array conversion for automated array support, mostly from ETL platforms
@@ -642,11 +670,11 @@ begin
      IF v_curr.col is not null
       THEN v_query:=v_query||(case when v_count> 0 then E'UNION\n' else '' end)
          ||'  select '''||v_curr.s||'''::VARCHAR as "schemaName", '''||v_curr.t||'''::VARCHAR as "tableName", '||v_curr.tsize||'::BIGINT as "totalSize"'||E'\n'
-         ||'       , "totalCount", date_trunc(''quarter'', '||$3||')::DATE as q'||E'\n'
+         ||'       , "totalCount", date_trunc(''quarter'', '||quote_ident($3)||')::DATE as q'||E'\n'
          ||'       , count(*) as "qCount"'||E'\n'
          ||'    from '||v_curr.s||'.'||v_curr.t||E'\n'
          ||'       join (select count(*) as "totalCount" from '||v_curr.s||'.'||v_curr.t||') as T on 1=1'||E'\n'
-         ||'   where '||$3||' >= '''||$4||''''||E'\n'
+         ||'   where '||quote_ident($3)||' >= '''||$4||''''||E'\n'
          ||'   group by 4, 5'||E'\n'
          ;
       ELSE v_query:=v_query||(case when v_count> 0 then E'UNION\n' else '' end)
