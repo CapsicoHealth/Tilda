@@ -1,7 +1,12 @@
 package tilda.generation.html;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -14,10 +19,14 @@ import tilda.enums.FrameworkSourcedType;
 import tilda.generation.GeneratorSession;
 import tilda.generation.graphviz.GraphvizUtil;
 import tilda.parsing.ParserSession;
+import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
+import tilda.utils.CollectionUtil;
 import tilda.utils.FileUtil;
+import tilda.utils.JSONUtil;
+import tilda.utils.TextUtil;
 
 public class DocGen
   {
@@ -28,7 +37,8 @@ public class DocGen
 
     GeneratorSession              G;
 
-    public DocGen(Schema schema, GeneratorSession G) throws ParserConfigurationException
+    public DocGen(Schema schema, GeneratorSession G)
+      throws ParserConfigurationException
       {
         this.schema = schema;
         this.builder = factory.newDocumentBuilder();
@@ -204,7 +214,7 @@ public class DocGen
           writer.println("</BLOCKQUOTE>");
       }
 
-    public void writeSearchHTML(PrintWriter writer)
+    public static void writeSearchHTML(PrintWriter writer)
       {
 
         writer.println("<BR><BR>");
@@ -217,6 +227,88 @@ public class DocGen
         writer.println("</TD></TR></TABLE></DIV>");
         // writer.println("<SCRIPT>registerStickyHeader(\"__SEARCH_BOX__\");</SCRIPT>");
         // hideIfEsc(event, '__SEARCH_BOX_RESULTS__');
+      }
+
+    public static void GenMasterIndex(String Path, List<Schema> selectedSchemas)
+    throws IOException
+      {
+        LOG.debug("Generating master index file");
+        PrintWriter writer = FileUtil.getBufferedPrintWriter(Path + "index.html", false);
+        writer.println("<HTML><HEAD>");
+        String CSS = FileUtil.getFileOfResourceContents("tilda/generation/html/TildaDocs.css");
+        String JS = FileUtil.getFileOfResourceContents("tilda/generation/html/TildaDocs.js");
+        writer.println(
+        "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=ISO-8859-1\"/>\n"
+        + "<title>Master Database Index</title>\n"
+        + "<STYLE>\n"
+        + CSS
+        + "</STYLE>\n"
+        + "<SCRIPT>\n"
+        + JS
+        + "</SCRIPT>\n"
+        + "</HEAD>\n"
+        + "<BODY>\n");
+        writer.println("<H1>Master Database Index</H1>");
+        writeSearchHTML(writer); // Add Search Box
+        writer.println("<BR><BR><TABLE border=\"0px\" cellspacing=\"0px\" cellpadding=\"10px\"><TR valign=\"top\"><TD id='MI_SCHEMAS'></TD><TD id='MI_OBJECTS'></TD><TD id='MI_COLUMNS'></TD></TR></TABLE>");
+        writer.println("<SCRIPT>");
+        writer.println("var dbMeta=[");
+        int s = -1;
+        for (Schema S : selectedSchemas)
+          {
+            writer.print(++s == 0 ?  "    {" : "   ,{");
+            JSONUtil.Print(writer, "name", true, S.getShortName());
+            JSONUtil.Print(writer, "docs", false, S.getDocumentation()._Description==null ? null : String.join(" ", S.getDocumentation()._Description));
+            Set<String> deps = new HashSet<String>();
+            S.getFullDependencies(selectedSchemas, deps);
+            JSONUtil.Print(writer, "deps", false, CollectionUtil.toStringArray(deps));
+            writer.println(", \"objs\":[ ");
+            int o = -1;
+            S._Objects.sort(new Comparator<Object>()
+              {
+                @Override
+                public int compare(Object o1, Object o2)
+                  {
+                    return o1==null || o2==null ? 0 : o1._Name.compareTo(o2._Name);
+                  }
+              });
+            for (Object O : S._Objects)
+              if (O != null)
+                {
+                  writer.print(++o == 0 ?  "        {" : "       ,{");
+                  JSONUtil.Print(writer, "name", true, O.getBaseName());
+                  JSONUtil.Print(writer, "docs", false, O._Description == null ? null : String.join(" ", O._Description));
+                  writer.println(", \"cols\":[ ");
+                  int c = -1;
+                  O._Columns.sort(new Comparator<Column>()
+                    {
+                      @Override
+                      public int compare(Column c1, Column c2)
+                        {
+                          return c1==null || c2==null ? 0 : c1.getName().compareTo(c2.getName());
+                        }
+                    });
+                  for (Column C : O._Columns)
+                    if (C != null)
+                      {
+                        writer.print(++c == 0 ?  "            {" : "           ,{");
+                        JSONUtil.Print(writer, "name", true, C.getName());
+                        JSONUtil.Print(writer, "type", false, C._Size == null ? C._TypeStr : C._TypeStr+"("+C._Size+")");
+                        JSONUtil.Print(writer, "nullable", false, C._Nullable);
+                        JSONUtil.Print(writer, "docs", false, String.join(" ", C._Description));
+                        JSONUtil.Print(writer, "url", false, Docs.makeColumnHref(C));
+                        writer.println(" }");
+                      }
+                  writer.println("        ]}");
+                }
+            writer.println("      ]}");
+          }
+        writer.print("];");
+        writer.println("MasterIndex.paintSchemas('MI', dbMeta);");
+        writer.println("</SCRIPT>");
+        writer.println("</BODY>");
+        writer.println("</HTML>");
+        writer.close();
       }
 
   }

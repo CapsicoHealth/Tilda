@@ -470,7 +470,7 @@ This is the setter for:<BR>
    public void setEpoch(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _epoch)
+       if (__Init == InitMode.CREATE || v != _epoch)
         {
           __Changes.or(TILDA__DATEDIM_Factory.COLS.EPOCH._Mask);
           __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.EPOCH._Mask);
@@ -738,7 +738,7 @@ This is the setter for:<BR>
    public void setDayOfWeek(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _dayOfWeek)
+       if (__Init == InitMode.CREATE || v != _dayOfWeek)
         {
           __Changes.or(TILDA__DATEDIM_Factory.COLS.DAYOFWEEK._Mask);
           __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.DAYOFWEEK._Mask);
@@ -880,7 +880,7 @@ This is the setter for:<BR>
    public void setDayOfMonth(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _dayOfMonth)
+       if (__Init == InitMode.CREATE || v != _dayOfMonth)
         {
           __Changes.or(TILDA__DATEDIM_Factory.COLS.DAYOFMONTH._Mask);
           __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.DAYOFMONTH._Mask);
@@ -1022,7 +1022,7 @@ This is the setter for:<BR>
    public void setDayOfQuarter(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _dayOfQuarter)
+       if (__Init == InitMode.CREATE || v != _dayOfQuarter)
         {
           __Changes.or(TILDA__DATEDIM_Factory.COLS.DAYOFQUARTER._Mask);
           __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.DAYOFQUARTER._Mask);
@@ -1164,7 +1164,7 @@ This is the setter for:<BR>
    public void setDayOfYear(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _dayOfYear)
+       if (__Init == InitMode.CREATE || v != _dayOfYear)
         {
           __Changes.or(TILDA__DATEDIM_Factory.COLS.DAYOFYEAR._Mask);
           __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.DAYOFYEAR._Mask);
@@ -1306,7 +1306,7 @@ This is the setter for:<BR>
    public void setWeekOfMonth(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _weekOfMonth)
+       if (__Init == InitMode.CREATE || v != _weekOfMonth)
         {
           __Changes.or(TILDA__DATEDIM_Factory.COLS.WEEKOFMONTH._Mask);
           __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.WEEKOFMONTH._Mask);
@@ -1448,7 +1448,7 @@ This is the setter for:<BR>
    public void setWeekOfYear(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _weekOfYear)
+       if (__Init == InitMode.CREATE || v != _weekOfYear)
         {
           __Changes.or(TILDA__DATEDIM_Factory.COLS.WEEKOFYEAR._Mask);
           __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.WEEKOFYEAR._Mask);
@@ -1590,7 +1590,7 @@ This is the setter for:<BR>
    public void setMonthOfYear(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _monthOfYear)
+       if (__Init == InitMode.CREATE || v != _monthOfYear)
         {
           __Changes.or(TILDA__DATEDIM_Factory.COLS.MONTHOFYEAR._Mask);
           __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.MONTHOFYEAR._Mask);
@@ -2040,7 +2040,7 @@ This is the setter for:<BR>
    public void setQuarterOfYear(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _quarterOfYear)
+       if (__Init == InitMode.CREATE || v != _quarterOfYear)
         {
           __Changes.or(TILDA__DATEDIM_Factory.COLS.QUARTEROFYEAR._Mask);
           __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.QUARTEROFYEAR._Mask);
@@ -2336,7 +2336,7 @@ This is the setter for:<BR>
    public void setYear(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _year)
+       if (__Init == InitMode.CREATE || v != _year)
         {
           __Changes.or(TILDA__DATEDIM_Factory.COLS.YEAR._Mask);
           __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.YEAR._Mask);
@@ -2940,7 +2940,7 @@ This is the setter for:<BR>
    public void setIsWeekend(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _isWeekend)
+       if (__Init == InitMode.CREATE || v != _isWeekend)
         {
           __Changes.or(TILDA__DATEDIM_Factory.COLS.ISWEEKEND._Mask);
           __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.ISWEEKEND._Mask);
@@ -3082,7 +3082,7 @@ This is the setter for:<BR>
    public void setIsBusinessDay(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _isBusinessDay)
+       if (__Init == InitMode.CREATE || v != _isBusinessDay)
         {
           __Changes.or(TILDA__DATEDIM_Factory.COLS.ISBUSINESSDAY._Mask);
           __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.ISBUSINESSDAY._Mask);
@@ -3224,7 +3224,7 @@ This is the setter for:<BR>
    public void setIsHoliday(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _isHoliday)
+       if (__Init == InitMode.CREATE || v != _isHoliday)
         {
           __Changes.or(TILDA__DATEDIM_Factory.COLS.ISHOLIDAY._Mask);
           __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.ISHOLIDAY._Mask);

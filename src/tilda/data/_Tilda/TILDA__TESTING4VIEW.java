@@ -571,7 +571,7 @@ This is the setter for:<BR>
     void setRefnum(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _refnum)
+       if (__Init == InitMode.CREATE || v != _refnum)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4View.refnum' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -750,7 +750,7 @@ This is the setter for:<BR>
     void setA1(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a1)
+       if (__Init == InitMode.CREATE || v != _a1)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4View.a1' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -1046,7 +1046,7 @@ This is the setter for:<BR>
     void setA4(double v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a4)
+       if (__Init == InitMode.CREATE || v != _a4)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4View.a4' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -1342,7 +1342,7 @@ This is the setter for:<BR>
     void setA5(float v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a5)
+       if (__Init == InitMode.CREATE || v != _a5)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4View.a5' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -1638,7 +1638,7 @@ This is the setter for:<BR>
     void setA7(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a7)
+       if (__Init == InitMode.CREATE || v != _a7)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4View.a7' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -3472,7 +3472,7 @@ This is the setter for:<BR>
     void setDesc2_Cat1(double v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _desc2_Cat1)
+       if (__Init == InitMode.CREATE || v != _desc2_Cat1)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4View.desc2_Cat1' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -3596,7 +3596,7 @@ This is the setter for:<BR>
     void setDesc2_Cat2(double v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _desc2_Cat2)
+       if (__Init == InitMode.CREATE || v != _desc2_Cat2)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4View.desc2_Cat2' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -3720,7 +3720,7 @@ This is the setter for:<BR>
     void setDesc2_Cat3(double v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _desc2_Cat3)
+       if (__Init == InitMode.CREATE || v != _desc2_Cat3)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4View.desc2_Cat3' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -3844,7 +3844,7 @@ This is the setter for:<BR>
     void setA7_Cat4(double v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a7_Cat4)
+       if (__Init == InitMode.CREATE || v != _a7_Cat4)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4View.a7_Cat4' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -3968,7 +3968,7 @@ This is the setter for:<BR>
     void setA7_Cat5(double v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a7_Cat5)
+       if (__Init == InitMode.CREATE || v != _a7_Cat5)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4View.a7_Cat5' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -4092,7 +4092,7 @@ This is the setter for:<BR>
     void setA5_null(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a5_null)
+       if (__Init == InitMode.CREATE || v != _a5_null)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4View.a5_null' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -4216,7 +4216,7 @@ This is the setter for:<BR>
     void setA6_null(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a6_null)
+       if (__Init == InitMode.CREATE || v != _a6_null)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4View.a6_null' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -4340,7 +4340,7 @@ This is the setter for:<BR>
     void setA7_null(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a7_null)
+       if (__Init == InitMode.CREATE || v != _a7_null)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4View.a7_null' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -4464,7 +4464,7 @@ This is the setter for:<BR>
     void setA8_null(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a8_null)
+       if (__Init == InitMode.CREATE || v != _a8_null)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4View.a8_null' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -4588,7 +4588,7 @@ This is the setter for:<BR>
     void setA3(boolean v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a3)
+       if (__Init == InitMode.CREATE || v != _a3)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4View.a3' that is invariant, or part of a read-only or pre-existing WORM object.");

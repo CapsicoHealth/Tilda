@@ -619,7 +619,7 @@ This is the setter for:<BR>
    public void setTimeCreateMs(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _timeCreateMs)
+       if (__Init == InitMode.CREATE || v != _timeCreateMs)
         {
           __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMECREATEMS._Mask);
           __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMECREATEMS._Mask);
@@ -713,7 +713,7 @@ This is the setter for:<BR>
    public void setTimeIndexMs(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _timeIndexMs)
+       if (__Init == InitMode.CREATE || v != _timeIndexMs)
         {
           __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMEINDEXMS._Mask);
           __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMEINDEXMS._Mask);
@@ -807,7 +807,7 @@ This is the setter for:<BR>
    public void setTimeAnalyzeMs(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _timeAnalyzeMs)
+       if (__Init == InitMode.CREATE || v != _timeAnalyzeMs)
         {
           __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMEANALYZEMS._Mask);
           __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMEANALYZEMS._Mask);
@@ -901,7 +901,7 @@ This is the setter for:<BR>
    public void setTimeTotalMs(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _timeTotalMs)
+       if (__Init == InitMode.CREATE || v != _timeTotalMs)
         {
           __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMETOTALMS._Mask);
           __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMETOTALMS._Mask);
@@ -995,7 +995,7 @@ This is the setter for:<BR>
    public void setColumnsMs(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _columnsMs)
+       if (__Init == InitMode.CREATE || v != _columnsMs)
         {
           __Changes.or(TILDA__REFILLPERF_Factory.COLS.COLUMNSMS._Mask);
           __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.COLUMNSMS._Mask);
