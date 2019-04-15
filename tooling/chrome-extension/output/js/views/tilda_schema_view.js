@@ -147,20 +147,27 @@ define(['text!../templates/tilda_schema_view.html'
       // TODO: Find cleaner solution
       document.getElementById("button_refresh").click();
     },
+    sortObjects: function(hiddenObjects) {
+      hiddenObjects.sort(function(one, two) {
+        if (one.get("searchableName") < two.get("searchableName"))
+          return -1
+        else if (one.get("searchableName") > two.get("searchableName"))
+          return 1
+        else 
+          return 0
+      })
+    },
     redrawHiddenObjects: function(hiddenObjects) {
-      let str = "<tbody><tr>", counter = 0;
-      for(let i=0; i<hiddenObjects.length;i++) {
-        if(counter%4 == 0)
+      this.sortObjects(hiddenObjects);
+      let str = "<tbody><tr>"
+      for(let i=0; i<hiddenObjects.length; i++) {
+        if(i%5 == 0)
           str += "</tr><tr>"
         name = [hiddenObjects[i].get("schemaName"), hiddenObjects[i].get("name")].join(".")
         str += "<td class='hidden_object' data-id='"+hiddenObjects[i].get("friendlyName")+"'>"+name+"</td>"
-        counter++
       }
       str += "</tr></tbody>"
       $("#hidden_objects").html(str)
-      // let table = document.getElementById("hidden_objects")
-      // if (table)
-      //   table.innerHTML = str;
     },
     onRefreshClicked: function(event) {
       event.preventDefault()
