@@ -89,6 +89,20 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
       // TODO: Find cleaner solution
       document.getElementById("button_refresh").click();
     }
+    this.renderAllLinks = function(){
+      _.each(that.objects, function(object, i){
+        var object = that.objects.at(i);
+        var key = object.get("_type");
+        var objFn = renderObjectRelations[key]
+        if(objFn != null ){
+          objFn(graph, object, that.pKey);
+        }
+      })
+      // TODO: Find cleaner solution
+      setTimeout(function() {
+        document.getElementById("button_refresh").click();
+      }, 500)
+    }
     this.renderCellOnGraph = function(friendlyName) {
       var that = this;
       var obj = that.objects.findWhere({friendlyName: friendlyName}, {caseInsensitive: true});
@@ -132,21 +146,6 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
         currentPos.x = currentPos.x+300;
       }
       return currentPos;
-    }
-    this.renderAllLinks = function(){
-      var that = this;
-      _.each(that.objects, function(object, i){
-        var object = that.objects.at(i);
-        var key = object.get("_type");
-        var objFn = renderObjectRelations[key]
-        if(objFn != null && object.get('hidden') != true ){
-          objFn(graph, object, that.pKey);
-        }
-      })
-      // TODO: Find cleaner solution
-      setTimeout(function() {
-        document.getElementById("button_refresh").click();
-      }, 500)
     }
     this.render = function(what) {
       var that = this;

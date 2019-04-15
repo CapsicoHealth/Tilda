@@ -7,7 +7,6 @@
   
   <div class="hideableContent">
     <div class="row actions">
-      <hr/>
       <div class="col-md-4">
         <select class="form-control schemas"></select>
       </div>
@@ -34,10 +33,13 @@
         </form>
       </div>
     </div>
-    <div class="fName" style="padding: 5px"></div>
+    <div class="fName" style=""></div>
 
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-1">
+        <button id="button_refresh" class="btn btn-block btn-default">Refresh</button>
+      </div>
+      <div class="col-md-11">
         <input placeholder="Search" class="form-control" id="input_search"/>
       </div>
     </div>
@@ -46,13 +48,6 @@
         <table id="hidden_objects" class="table table-condensed table-bordered">
           <tbody></tbody>
         </table>
-      </div>
-    </div>
-
-    <!-- Hidden REFRESH button -->
-    <div class="row" style="display: block;">
-      <div class="col-md-4">
-        <button id="button_refresh" class="btn btn-default">Refresh</button>
       </div>
     </div>
 
