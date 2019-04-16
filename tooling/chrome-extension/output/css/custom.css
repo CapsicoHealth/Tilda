@@ -8,3 +8,8 @@
 .inline{
   float: left
 }
+
+td:hover { 
+  background-color: silver;
+  cursor: pointer;
+}
