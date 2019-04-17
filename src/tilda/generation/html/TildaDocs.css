@@ -61,6 +61,10 @@
    overflow-y: auto; /* Enable scroll if needed */ 
    overflow-x: hidden;
  }
+.search_results.Selectable TR:hover TD {
+   background-color:#c0fdd0;
+}
+
 .search_results .scrollLock { 
    overflow: hidden;
  }
@@ -172,3 +176,28 @@ input[type=text]:focus {
 .fadeInSlideTo0 {
     opacity: 1;
 }
+
+
+#MI {
+  position: fixed;
+  top: 9em;
+  bottom: 30px;
+}
+
+#MI_SCHEMAS, #MI_OBJECTS, #MI_COLUMNS {
+   float: left;
+   height: 98%;
+   margin-top: 30px;
+   padding-left: 20px;
+   padding-right: 10px;
+   overflow-y: auto;
+   overflow-x: hidden;
+   scrollbar-width: thin;
+   min-width: 150px;
+}
+
+#FILTER_SCHEMAS, #FILTER_OBJECTS, #FILTER_COLUMNS {
+   position: absolute;
+   top: 0px;
+}
+
