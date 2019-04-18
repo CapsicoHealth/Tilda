@@ -98,7 +98,7 @@ public class DocGen
           for (String str : schema._Documentation._Description)
             writer.println(str);
 
-        writeSearchHTML(writer); // Add Search Box
+        writeSearchHTML(writer, true); // Add Search Box
 
         if (f.exists())
           {
@@ -214,16 +214,20 @@ public class DocGen
           writer.println("</BLOCKQUOTE>");
       }
 
-    public static void writeSearchHTML(PrintWriter writer)
+    public static void writeSearchHTML(PrintWriter writer, boolean includeFields)
       {
 
-        writer.println("<BR><BR>");
+        writer.println("<BR>");
         writer.println("<DIV id=\"__SEARCH_BOX_BASE__\"><TABLE id=\"__SEARCH_BOX__\" border=\"0px\" cellspacing=\"0px\" cellpadding=\"0px\"><TR valign=\"top\"><TD width=\"1px\" style=\"font-size: 125%; font-weight:bold;\">SEARCH</TD><TD>");
         writer.println("<input type=\"text\" onfocus=\"showSearchResults(true);eventListener()\" oninput=\"eventListener()\", id=\"search_input\" placeholder=\"Search Tables/Views, Fields, Formulae\" autocomplete=\"off\">");
-        writer.println("&nbsp;&nbsp;&nbsp;&nbsp;<label><input type=\"checkbox\" oninput=\"eventListener()\", id=\"cols_check\" checked>&nbsp;Fields</label>");
-        writer.println("&nbsp;&nbsp;&nbsp;&nbsp;<label><input type=\"checkbox\" oninput=\"eventListener()\", id=\"formulas_check\" checked>&nbsp;Formulas</label>");
-        writer.println("&nbsp;&nbsp;&nbsp;&nbsp;<label><input type=\"checkbox\" oninput=\"eventListener()\", id=\"realized_check\">&nbsp;Realized</label></TD></TR>");
-        writer.println("<TR><TD colspan=\"2\"><table id=\"__SEARCH_BOX_RESULTS__\" class=\"search_results\" border=\"0px\" cellspacing=\"0px\"></table>");
+        if (includeFields == true)
+          {
+            writer.println("&nbsp;&nbsp;&nbsp;&nbsp;<label><input type=\"checkbox\" oninput=\"eventListener()\", id=\"cols_check\" checked>&nbsp;Fields</label>");
+            writer.println("&nbsp;&nbsp;&nbsp;&nbsp;<label><input type=\"checkbox\" oninput=\"eventListener()\", id=\"formulas_check\" checked>&nbsp;Formulas</label>");
+            writer.println("&nbsp;&nbsp;&nbsp;&nbsp;<label><input type=\"checkbox\" oninput=\"eventListener()\", id=\"realized_check\">&nbsp;Realized</label>");
+          }
+        writer.println("</TD></TR>");
+        writer.println("<TR><TD colspan=\"2\"><table id=\"__SEARCH_BOX_RESULTS__\" class=\"search_results Selectable\" border=\"0px\" cellspacing=\"0px\"></table>");
         writer.println("</TD></TR></TABLE></DIV>");
         // writer.println("<SCRIPT>registerStickyHeader(\"__SEARCH_BOX__\");</SCRIPT>");
         // hideIfEsc(event, '__SEARCH_BOX_RESULTS__');
@@ -249,16 +253,17 @@ public class DocGen
         + "</HEAD>\n"
         + "<BODY>\n");
         writer.println("<H1>Master Database Index</H1>");
-        writeSearchHTML(writer); // Add Search Box
-        writer.println("<BR><BR><TABLE border=\"0px\" cellspacing=\"0px\" cellpadding=\"10px\"><TR valign=\"top\"><TD id='MI_SCHEMAS'></TD><TD id='MI_OBJECTS'></TD><TD id='MI_COLUMNS'></TD></TR></TABLE>");
+        writeSearchHTML(writer, false); // Add Search Box
+        writer.println("<BR>");
+        writer.println("<DIV id='MI'><DIV id='MI_SCHEMAS'></DIV><DIV id='MI_OBJECTS'></DIV><DIV id='MI_COLUMNS'></DIV></DIV>");
         writer.println("<SCRIPT>");
         writer.println("var dbMeta=[");
         int s = -1;
         for (Schema S : selectedSchemas)
           {
-            writer.print(++s == 0 ?  "    {" : "   ,{");
+            writer.print(++s == 0 ? "    {" : "   ,{");
             JSONUtil.Print(writer, "name", true, S.getShortName());
-            JSONUtil.Print(writer, "docs", false, S.getDocumentation()._Description==null ? null : String.join(" ", S.getDocumentation()._Description));
+            JSONUtil.Print(writer, "docs", false, S.getDocumentation()._Description == null ? null : String.join(" ", S.getDocumentation()._Description));
             Set<String> deps = new HashSet<String>();
             S.getFullDependencies(selectedSchemas, deps);
             JSONUtil.Print(writer, "deps", false, CollectionUtil.toStringArray(deps));
@@ -269,13 +274,13 @@ public class DocGen
                 @Override
                 public int compare(Object o1, Object o2)
                   {
-                    return o1==null || o2==null ? 0 : o1._Name.compareTo(o2._Name);
+                    return o1 == null || o2 == null ? 0 : o1._Name.compareTo(o2._Name);
                   }
               });
             for (Object O : S._Objects)
               if (O != null)
                 {
-                  writer.print(++o == 0 ?  "        {" : "       ,{");
+                  writer.print(++o == 0 ? "        {" : "       ,{");
                   JSONUtil.Print(writer, "name", true, O.getBaseName());
                   JSONUtil.Print(writer, "docs", false, O._Description == null ? null : String.join(" ", O._Description));
                   writer.println(", \"cols\":[ ");
@@ -285,15 +290,15 @@ public class DocGen
                       @Override
                       public int compare(Column c1, Column c2)
                         {
-                          return c1==null || c2==null ? 0 : c1.getName().compareTo(c2.getName());
+                          return c1 == null || c2 == null ? 0 : c1.getName().compareTo(c2.getName());
                         }
                     });
                   for (Column C : O._Columns)
                     if (C != null)
                       {
-                        writer.print(++c == 0 ?  "            {" : "           ,{");
+                        writer.print(++c == 0 ? "            {" : "           ,{");
                         JSONUtil.Print(writer, "name", true, C.getName());
-                        JSONUtil.Print(writer, "type", false, C._Size == null ? C._TypeStr : C._TypeStr+"("+C._Size+")");
+                        JSONUtil.Print(writer, "type", false, C._Size == null ? C._TypeStr : C._TypeStr + "(" + C._Size + ")");
                         JSONUtil.Print(writer, "nullable", false, C._Nullable);
                         JSONUtil.Print(writer, "docs", false, String.join(" ", C._Description));
                         JSONUtil.Print(writer, "url", false, Docs.makeColumnHref(C));
@@ -304,7 +309,9 @@ public class DocGen
             writer.println("      ]}");
           }
         writer.print("];");
-        writer.println("MasterIndex.paintSchemas('MI', dbMeta);");
+        writer.println("MasterIndex._baseId='MI';");
+        writer.println("MasterIndex.paintSchemas(dbMeta);");
+        writer.println("eventListener = eventListener_master;");
         writer.println("</SCRIPT>");
         writer.println("</BODY>");
         writer.println("</HTML>");

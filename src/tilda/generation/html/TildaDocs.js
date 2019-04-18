@@ -32,6 +32,22 @@ document.onkeydown = function(evt)
     }
 };
 
+function fireEvent(e, eventName)
+{
+  if (typeof e == 'string')
+   e = this.getElement(e);
+  if (e.fireEvent != null)
+    e.fireEvent("on"+eventName);
+  else if ("createEvent" in document)
+   {
+     var evt = document.createEvent("HTMLEvents");
+     evt.initEvent(eventName, false, true);
+     e.dispatchEvent(evt);
+   }
+  else
+   console.log("No support to fire events.");    
+};
+
 var closeAllModals = function()
 {
   var modals = document.getElementsByClassName("modal");
@@ -159,6 +175,67 @@ var eventListener = function()
   searchResultsDiv.innerHTML = tempElementBody;
 }
 
+
+var eventListener_master = function()
+{
+  if (searchInput == null || searchInput == undefined)
+    {
+      searchInput = document.getElementById('search_input');
+    }
+  var searchInputText = searchInput.value;
+  showSearchResults(searchInputText != null && searchInputText != '');
+  var regex = new RegExp(searchInputText, 'gi');
+
+  var Str = "";
+  var ps = null;
+  var pt = null;
+  for (var si = 0; si < dbMeta.length; ++si)
+    {
+      var s = dbMeta[si];
+      if (regex.test(s.name) == true)
+        {
+          Str += '<TR><TD colspan="3">&nbsp;<A href="javascript:MasterIndex.paintResult(\''+s.name+'\', null, null);">'+s.name+'</A></TD></TR>';
+          ps=s;
+        }
+      for (var ti = 0; ti < s.objs.length; ++ti)
+        {
+          var t = s.objs[ti];
+          if (regex.test(t.name) == true)
+           {
+             Str += '<TR><TD colspan="1">'+(ps==s?'':'&nbsp;<A href="javascript:MasterIndex.paintResult(\''+s.name+'\', null, null);">'+s.name+'</A>')+'</TD>'
+                       +'<TD colspan="2">&nbsp;<A href="javascript:MasterIndex.paintResult(\''+s.name+'\', \''+t.name+'\', null);">'+t.name+'</A></TD>'
+                   +'</TR>';
+             ps=s;
+             pt=t;
+           }
+          for (var ci = 0; ci < t.cols.length; ++ci)
+            {
+              var c = t.cols[ci];
+              if (regex.test(c.name) == true)
+               {
+                 Str += '<TR><TD>'+(ps==s?'':'&nbsp;<A href="javascript:MasterIndex.paintResult(\''+s.name+'\', null, null);">'+s.name+'</A>')+'</TD>'
+                           +'<TD>'+(pt==t?'':'&nbsp;<A href="javascript:MasterIndex.paintResult(\''+s.name+'\', \''+t.name+'\', null);">'+t.name+'</A>')+'</TD>'
+                           +'<TD>&nbsp;<A href="javascript:MasterIndex.paintResult(\''+s.name+'\', \''+t.name+'\', \''+c.name+'\');">'+c.name+'</A></TD>'
+                       +'</TR>';
+                 ps=s;
+                 pt=t;
+               }
+            }
+        }
+    }
+  if (Str=="")
+    Str += "<TR><td colspan=\"2\">No Results Found</td></TR>";
+  else
+    Str = "<TR><th align='left'>&nbsp;Schema</th><th align='left'>&nbsp;Table/View</th><th align='left'>Field</th><TH>&nbsp;&nbsp;&nbsp;<A href=\"javascript:showSearchResults(false);\">X</A>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TH></TR>"+Str;
+
+  if (searchResultsDiv == null || searchResultsDiv == undefined)
+    {
+      searchResultsDiv = document.getElementById('__SEARCH_BOX_RESULTS__');
+    }
+  searchResultsDiv.innerHTML = Str;
+}
+
+
 // Helper Methods
 var sortFilteredResults = function(results)
 {
@@ -249,6 +326,8 @@ var getData = function(type)
   return divIds;
 }
 
+
+
 Object.extend = function(source1, source2, destination)
 {
   for ( var key in source1)
@@ -324,21 +403,22 @@ function selectRow(e, styleClass)
  }
 
 var MasterIndex = {
-  paintSchemas: function(id, dbMeta)
+  _baseId: null
+ ,paintSchemas: function(dbMeta, regex)
    {
-     var Str = '<TABLE class="Rowed Selectable" onClick="MasterIndex.paintObjects(event, \''+id+'\')" border=\"0px\" cellspacing=\"0px\" cellpadding=\"3px\">\n';
+     var Str = '<INPUT type="text" id="FILTER_SCHEMAS" placeholder="filter schemas" oninput="MasterIndex.filter(\'S\')"><TABLE class="Rowed Selectable" onClick="MasterIndex.paintObjects(event)" border=\"0px\" cellspacing=\"0px\" cellpadding=\"3px\">\n';
      for (var i = 0; i < dbMeta.length; ++i)
        {
          var s = dbMeta[i];
          Str+='<TR><TD>'+s.name+'</TD></TR>\n';
        }
      Str+='</TABLE><BR><BR>\n';
-     document.getElementById(id+'_SCHEMAS').innerHTML=Str;
+     document.getElementById(this._baseId+'_SCHEMAS').innerHTML=Str;
    }
 
  ,selectedSchema: null
  ,selectedObject: null
- ,paintObjects: function(event, id)
+ ,paintObjects: function(event)
    {
      var selected = event.target.innerText;
      selectRow(event.target, "Selected");     
@@ -353,7 +433,7 @@ var MasterIndex = {
          console.log("unknown selected schema '"+selected+"'.");
          return;
        }
-     var Str = '<TABLE class="Rowed Selectable offScreenOpacity0" onClick="MasterIndex.paintColumns(event, \''+id+'\')" border=\"0px\" cellspacing=\"0px\" cellpadding=\"3px\">\n';
+     var Str = '<INPUT type="text" id="FILTER_OBJECTS" placeholder="filter Tables/Views" oninput="MasterIndex.filter(\'O\')"><TABLE class="Rowed Selectable offScreenOpacity0" onClick="MasterIndex.paintColumns(event)" border=\"0px\" cellspacing=\"0px\" cellpadding=\"3px\">\n';
      this.selectedObject = null; 
      if (this.selectedSchema.objs == null || this.selectedSchema.objs.length == 0)
        {
@@ -365,13 +445,13 @@ var MasterIndex = {
         Str+='<TR><TD>'+o.name+'</TD></TR>\n';
       }
      Str+='</TABLE><BR><BR>';
-     document.getElementById(id+'_COLUMNS').innerHTML='';
-     var e = document.getElementById(id+'_OBJECTS');
+     document.getElementById(this._baseId+'_COLUMNS').innerHTML='';
+     var e = document.getElementById(this._baseId+'_OBJECTS');
      e.innerHTML=Str;
-     setTimeout(function() { e.childNodes[0].classList.add("fadeInSlideTo0"); }, 10);
+     setTimeout(function() { e.childNodes[1].classList.add("fadeInSlideTo0"); }, 10);
    }
 
- ,paintColumns: function(event, id)
+ ,paintColumns: function(event)
    {
      var selected = event.target.innerText;
      selectRow(event.target, "Selected");
@@ -387,7 +467,7 @@ var MasterIndex = {
          return;
        }
 
-     var Str = '<TABLE class="Rowed offScreenOpacity0" border=\"0px\" cellspacing=\"0px\" cellpadding=\"3px\">\n';
+     var Str = '<INPUT type="text" id="FILTER_COLUMNS" placeholder="filter columns" oninput="MasterIndex.filter(\'C\')"><TABLE class="Rowed offScreenOpacity0 Selectable" onClick="MasterIndex.selectColumn(event)" border=\"0px\" cellspacing=\"0px\" cellpadding=\"3px\">\n';
      if (this.selectedObject.cols == null || this.selectedObject.cols.length == 0)
        {
          Str+="<TR><TD>NO COLUMNS DEFINED</TD></TR>";
@@ -398,10 +478,79 @@ var MasterIndex = {
          Str+='<TR><TD><A href="'+c.url+'" target="_other">'+c.name+'</A></TD><TD>'+c.type+'</TD><TD>'+(c.nullable==false ? "not null" : "nullable")+'<\TD></TR>\n';
        }
      Str+='</TABLE><BR><BR>';
-     var e = document.getElementById(id+'_COLUMNS');
+     var e = document.getElementById(this._baseId+'_COLUMNS');
      e.innerHTML=Str;
-     setTimeout(function() { e.childNodes[0].classList.add("fadeInSlideTo0"); }, 10);
-     document.getElementById(id+'_COLUMNS').innerHTML=Str;
+     setTimeout(function() { e.childNodes[1].classList.add("fadeInSlideTo0"); }, 10);
+     document.getElementById(this._baseId+'_COLUMNS').innerHTML=Str;
    }
+ ,selectColumn: function(event)
+   {
+     selectRow(event.target, "Selected");
+   }
+ ,paintResult: function(schemaName, tableName, columnName)
+   {
+     showSearchResults(false);
+     
+     var e = document.getElementById(this._baseId+'_SCHEMAS');
+     if (e != null && e.childNodes != null && e.childNodes[1] != null && e.childNodes[1].rows != null)
+      {
+        e = e.childNodes[1];
+        for (var i = 0; i < e.rows.length; ++i)
+         if (e.rows[i].innerText==schemaName)
+          {
+            var cell = e.rows[i].cells[0];
+            MasterIndex.paintObjects({target: cell});
+            cell.scrollIntoView();
+            break;
+          }
+      }
+     if (tableName != null)
+       {
+         e = document.getElementById(this._baseId+'_OBJECTS');
+         if (e != null && e.childNodes != null && e.childNodes[1] != null && e.childNodes[1].rows != null)
+           {
+             e = e.childNodes[1];
+             for (var i = 0; i < e.rows.length; ++i)
+               if (e.rows[i].innerText==tableName)
+                {
+                  var cell = e.rows[i].cells[0];
+                  MasterIndex.paintColumns({target: cell});
+                  cell.scrollIntoView();
+                  break;
+                }
+           }
+       }
+     if (columnName != null)
+       {
+         e = document.getElementById(this._baseId+'_COLUMNS');
+         if (e != null && e.childNodes != null && e.childNodes[1] != null && e.childNodes[1].rows != null)
+           {
+             e = e.childNodes[1];
+             for (var i = 0; i < e.rows.length; ++i)
+               if (e.rows[i].cells[0].innerText==columnName)
+                {
+                  var cell = e.rows[i].cells[0];
+                  MasterIndex.selectColumn({target: cell});
+                  cell.scrollIntoView();
+                  break;
+                }
+           }
+       }
+    }
+  ,filter: function(type)
+    {
+      var mark = type=='S'?'_SCHEMAS':type=='O'?'_OBJECTS':'_COLUMNS';
+      var val = document.getElementById('FILTER'+mark).value.toLowerCase();
+      var e = document.getElementById(this._baseId+mark);
+      if (e != null && e.childNodes != null && e.childNodes[1] != null && e.childNodes[1].rows != null)
+        {
+          e = e.childNodes[1];
+          for (var i = 0; i < e.rows.length; ++i)
+            if (e.rows[i].innerText.toLowerCase().indexOf(val) == -1)
+              e.rows[i].style.display="none";
+            else
+              e.rows[i].style.display="";
+        }
+    }
 };
 
