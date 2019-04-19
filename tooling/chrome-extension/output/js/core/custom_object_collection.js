@@ -29,14 +29,21 @@ define(["lodash", "jquery"], function(_, $){
       })
     },
 
-    searchName: function(searchText) {
-      if (searchText == null || searchText.length < 1)
+    searchableName: function(text_arr, selectedName=null) {
+      if (text_arr == null || text_arr.length < 1)
         return this.getAll();
 
+      if(typeof(selectedName) == "string")
+        selectedName = selectedName.toLowerCase();
+      regexStr = text_arr.join("|");
+
       return this['filter'](function(model) {
+        let references = model.get("references")
+        let ref_names = references.map(item => item.get("searchableName").toLowerCase());
+
         return (
-            model.get("name").match(new RegExp(searchText, "i"))
-            || model.get("schemaName").match(new RegExp(searchText, "i"))
+          model.get("searchableName").match(new RegExp(regexStr, "i"))
+          || ref_names.includes(selectedName)
           )
       })
     }

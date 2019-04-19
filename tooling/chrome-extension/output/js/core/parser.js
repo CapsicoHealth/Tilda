@@ -1,5 +1,5 @@
 define(["jointjs", "./parser_element",
- "./custom_element_view", "./helpers", 
+ "./custom_element_view", "./helpers",
  "./relation_renderer", "./custom_object_collection"],
 function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
   function offsetToLocalPoint(paper, x, y) {
@@ -152,7 +152,7 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
 
       var graph = new joint.dia.Graph;
       var dock_graph = new joint.dia.Graph;
-      
+
       dock_graph.set("docket_view", true);
       var paper = new joint.dia.Paper({
         el: $("#"+this.eleId),
@@ -237,6 +237,32 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
       paper.on('cell:pointerup blank:pointerup', function(cellView, x, y) {
         dragStartPosition = null;
       });
+      paper.on('cell:pointerdblclick', function(cellView) {
+        let isSelected = cellView.model.get("highlighted")
+        var cell = cellView.model;
+        if (cell == null || cell.get("type") != 'basic.Rect')
+          return;
+
+        var id = cell.get('customId');
+        var obj = that.objects.findWhere({friendlyName: id}, {caseInsensitive: true});
+        if(obj == null) {
+          obj = that.collection.findWhere({friendlyName: id}, {caseInsensitive: true});
+        }
+        if(obj == null || obj.get("references").length < 1)
+          return;
+
+        if (isSelected == true) {
+          window.selected_entity = obj.get("searchableName");
+          window.selected_references = obj.get("references").map(item => item.get("searchableName"));
+        }
+        else {
+          window.selected_entity = null;
+          window.selected_references = null;
+        }
+
+        // TODO: Find cleaner solution
+        document.getElementById("button_refresh").click();
+      });
       paper.$el.mousemove(function(event) {
         if (dragStartPosition != null){
           paper.setOrigin(event.offsetX - dragStartPosition.x, event.offsetY - dragStartPosition.y);
@@ -279,6 +305,8 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
       that.renderAllLinks();
       dock_paper.scale(that.currentScale);
       paper.scale(that.currentScale);
+
+
     }
     try{
       this.render();

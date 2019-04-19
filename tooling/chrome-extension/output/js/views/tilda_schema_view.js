@@ -149,13 +149,21 @@ define(['text!../templates/tilda_schema_view.html'
     },
     sortObjects: function(hiddenObjects) {
       hiddenObjects.sort(function(one, two) {
-        if (one.get("searchableName") < two.get("searchableName"))
+        let lcOne = one.get("searchableName").toLowerCase();
+        let lcTwo = two.get("searchableName").toLowerCase();
+        if (lcOne < lcTwo)
           return -1
-        else if (one.get("searchableName") > two.get("searchableName"))
+        else if (lcOne > lcTwo)
           return 1
-        else 
+        else
           return 0
       })
+    },
+    toMatrix: function(array, width) {
+      return array.reduce(function (rows, key, index) {
+        return (index % width == 0 ? rows.push([key])
+          : rows[rows.length-1].push(key)) && rows;
+      }, []);
     },
     redrawHiddenObjects: function(hiddenObjects) {
       this.sortObjects(hiddenObjects);
@@ -164,7 +172,7 @@ define(['text!../templates/tilda_schema_view.html'
         if(i%5 == 0)
           str += "</tr><tr>"
         name = [hiddenObjects[i].get("schemaName"), hiddenObjects[i].get("name")].join(".")
-        str += "<td class='hidden_object' data-id='"+hiddenObjects[i].get("friendlyName")+"'>"+name+"</td>"
+        str += "<td class='hidden_object "+hiddenObjects[i].get("_type")+"' data-id='"+hiddenObjects[i].get("friendlyName")+"'>"+name+"</td>"
       }
       str += "</tr></tbody>"
       $("#hidden_objects").html(str)
@@ -176,8 +184,10 @@ define(['text!../templates/tilda_schema_view.html'
       if (that.schemaParser_object == null)
         return;
 
-      let searchText = document.getElementById("input_search").value;
-      let hiddenObjects = that.schemaParser_object.hiddenObjects.searchName(searchText);
+      let input_text = document.getElementById("input_search").value;
+      let search_arr = window.selected_references ? window.selected_references : [input_text];
+      let hiddenObjects = that.schemaParser_object.hiddenObjects
+                            .searchableName(search_arr, window.selected_entity);
       that.redrawHiddenObjects(hiddenObjects);
     },
     hideActions: function()
@@ -293,7 +303,7 @@ define(['text!../templates/tilda_schema_view.html'
       }
       $select.val(name);
       // $(".showObj").val(name);
-      $('#createCanvasD').modal('hide');      
+      $('#createCanvasD').modal('hide');
       $("#canvas_title").val('');
       $("#new_canvas").val(1);
       olderViewName = name;
@@ -332,7 +342,6 @@ define(['text!../templates/tilda_schema_view.html'
           })
 
           var schemaFname = fName;
-          that.$el.find(".fName").html("<h4>loaded <i>"+schemaFname+"</i></h4>")
           that.$el.find("#obj_c").html("");
           var reader = new FileReader();
           reader.onload = function(e) {
@@ -445,7 +454,7 @@ define(['text!../templates/tilda_schema_view.html'
             that.excludeRegex = new RegExp(value, "i");
             that.$el.find('.regex-f').val(value);
           }
-        });        
+        });
       } else {
         that.excludeRegex = new RegExp("\/bin\/*", "i"); // default filter
       }
@@ -562,7 +571,7 @@ define(['text!../templates/tilda_schema_view.html'
                 blobArr.push(value.svg);
                 blobArr.push("</fieldset>");
                 blobArr.push("<br/>\n");
-                blobArr.push("<br/>\n");                
+                blobArr.push("<br/>\n");
               }
             });
             blobArr.push("\n</div>\n");

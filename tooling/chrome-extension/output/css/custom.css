@@ -10,6 +10,22 @@
 }
 
 td:hover { 
-  background-color: silver;
+  background-color: whitesmoke !important;
   cursor: pointer;
+}
+
+td.Mapper {
+  background-color: #F8CBAD;
+}
+
+td.Enumeration {
+  background-color: #FBE5D6;
+}
+
+td.Object {
+  background-color: #A6C9E8;
+}
+
+td.View {
+  background-color: #A9D18E;
 }
