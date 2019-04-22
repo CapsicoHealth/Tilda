@@ -29,22 +29,30 @@ define(["lodash", "jquery"], function(_, $){
       })
     },
 
-    searchableName: function(text_arr, selectedName=null) {
-      if (text_arr == null || text_arr.length < 1)
-        return this.getAll();
-
-      if(typeof(selectedName) == "string")
-        selectedName = selectedName.toLowerCase();
-      regexStr = text_arr.join("|");
+    searchByEntity: function(selectedEntity, selectedReferences, searchText) {
+      selectedEntity      = selectedEntity.toLowerCase();
+      selectedReferences  = selectedReferences.map(item => item.toLowerCase());
 
       return this['filter'](function(model) {
         let references = model.get("references")
         let ref_names = references.map(item => item.get("searchableName").toLowerCase());
 
-        return (
-          model.get("searchableName").match(new RegExp(regexStr, "i"))
-          || ref_names.includes(selectedName)
-          )
+        result = (model.get("searchableName").match(new RegExp(searchText, "i"))
+                  && (selectedReferences.includes(model.get("searchableName").toLowerCase())
+                      || ref_names.includes(selectedEntity))
+                  )
+
+        return result;
+      })
+
+    },
+
+    searchByName: function(searchText) {
+      if (searchText == null || searchText.length < 1)
+        return this.getAll();
+
+      return this['filter'](function(model) {
+        return model.get("searchableName").match(new RegExp(searchText, "i"))
       })
     }
   })

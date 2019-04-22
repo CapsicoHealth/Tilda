@@ -166,16 +166,30 @@ define(['text!../templates/tilda_schema_view.html'
       }, []);
     },
     redrawHiddenObjects: function(hiddenObjects) {
+      let tableRows = 3
       this.sortObjects(hiddenObjects);
-      let str = "<tbody><tr>"
-      for(let i=0; i<hiddenObjects.length; i++) {
-        if(i%5 == 0)
-          str += "</tr><tr>"
-        name = [hiddenObjects[i].get("schemaName"), hiddenObjects[i].get("name")].join(".")
-        str += "<td class='hidden_object "+hiddenObjects[i].get("_type")+"' data-id='"+hiddenObjects[i].get("friendlyName")+"'>"+name+"</td>"
+
+      let objectsMatrix = this.toMatrix(hiddenObjects, tableRows);
+      var str = ""
+      for(let i=0; i<tableRows; i++) {
+        str += "<tr>"
+        for(let j=0; j<objectsMatrix.length; j++) {
+          let element = objectsMatrix[j][i];
+          if (element != null)
+            str += "<td class='hidden_object "+ element.get("_type") +"' data-id='"+ element.get("friendlyName") +"'>"+ element.get("searchableName") + "</td>"
+        }
+        str += "</tr>"
       }
-      str += "</tr></tbody>"
-      $("#hidden_objects").html(str)
+      $("#hidden_objects").html("<tbody>"+str+"</tbody>")
+      // let str = "<tbody><tr>"
+      // for(let i=0; i<hiddenObjects.length; i++) {
+      //   if(i%5 == 0)
+      //     str += "</tr><tr>"
+      //   name = [hiddenObjects[i].get("schemaName"), hiddenObjects[i].get("name")].join(".")
+      //   str += "<td class='hidden_object "+hiddenObjects[i].get("_type")+"' data-id='"+hiddenObjects[i].get("friendlyName")+"'>"+name+"</td>"
+      // }
+      // str += "</tr></tbody>"
+      // $("#hidden_objects").html(str)
     },
     onRefreshClicked: function(event) {
       event.preventDefault()
@@ -184,11 +198,15 @@ define(['text!../templates/tilda_schema_view.html'
       if (that.schemaParser_object == null)
         return;
 
+      let filteredList = null;
       let input_text = document.getElementById("input_search").value;
-      let search_arr = window.selected_references ? window.selected_references : [input_text];
-      let hiddenObjects = that.schemaParser_object.hiddenObjects
-                            .searchableName(search_arr, window.selected_entity);
-      that.redrawHiddenObjects(hiddenObjects);
+
+      if(window.selected_entity)
+        filteredList = that.schemaParser_object.hiddenObjects
+            .searchByEntity(window.selected_entity, window.selected_references, input_text);
+      else
+        filteredList = that.schemaParser_object.hiddenObjects.searchByName(input_text);
+      that.redrawHiddenObjects(filteredList);
     },
     hideActions: function()
     {
