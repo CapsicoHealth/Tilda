@@ -401,6 +401,13 @@ function selectRow(e, styleClass)
    if (TR != null)
     TR.classList.add(styleClass);
  }
+function printDocs(type, what)
+ {
+   return '<fieldset><legend>'+type+': '+what.name+'</legend>'
+         +(what.docs==null?'No documentation available':what.docs)
+         +'</fieldset>'
+         ;
+ }
 
 var MasterIndex = {
   _baseId: null
@@ -449,6 +456,10 @@ var MasterIndex = {
      var e = document.getElementById(this._baseId+'_OBJECTS');
      e.innerHTML=Str;
      setTimeout(function() { e.childNodes[1].classList.add("fadeInSlideTo0"); }, 10);
+
+     var d = document.getElementById(this._baseId+'_DOCS');
+     d.innerHTML=printDocs('Schema', this.selectedSchema);
+//     setTimeout(function() { e.classList.add("fadeInSlideTo0"); }, 10);     
    }
 
  ,paintColumns: function(event)
@@ -475,17 +486,37 @@ var MasterIndex = {
      else for (var i = 0; i < this.selectedObject.cols.length; ++i)
        {
          var c = this.selectedObject.cols[i];
-         Str+='<TR><TD><A href="'+c.url+'" target="_other">'+c.name+'</A></TD><TD>'+c.type+'</TD><TD>'+(c.nullable==false ? "not null" : "nullable")+'<\TD></TR>\n';
+         Str+='<TR><TD><A href="'+c.url+'" target="_other">'+c.name+'</A></TD><TD>'+c.type+'</TD></TR>\n';
        }
      Str+='</TABLE><BR><BR>';
      var e = document.getElementById(this._baseId+'_COLUMNS');
      e.innerHTML=Str;
      setTimeout(function() { e.childNodes[1].classList.add("fadeInSlideTo0"); }, 10);
-     document.getElementById(this._baseId+'_COLUMNS').innerHTML=Str;
+     
+     var d = document.getElementById(this._baseId+'_DOCS');
+     d.innerHTML=printDocs('Schema', this.selectedSchema)+printDocs('Object', this.selectedObject);
    }
  ,selectColumn: function(event)
    {
      selectRow(event.target, "Selected");
+     var e = getAncestorNode(event.target, 'TR');
+     if (e == null)
+       return;
+     selected = e.cells[0].innerText;
+     for (var i = 0; i < this.selectedObject.cols.length; ++i)
+       if (this.selectedObject.cols[i].name == selected)
+         {
+           this.selectedColumn = this.selectedObject.cols[i];
+           break;
+         }
+     if (this.selectedColumn == null)
+       {
+         console.log("unknown selected column '"+selected+"'.");
+         return;
+       }
+
+     var d = document.getElementById(this._baseId+'_DOCS');
+     d.innerHTML=printDocs('Schema', this.selectedSchema)+printDocs('Object', this.selectedObject)+printDocs('Column', this.selectedColumn);
    }
  ,paintResult: function(schemaName, tableName, columnName)
    {

@@ -171,6 +171,22 @@ public class Schema
         return null;
       }
 
+    public ViewColumn getSourceViewColumn(Column C)
+      {
+        View V = getSourceView(C._ParentObject);
+        if (V == null)
+          return null;
+        return V.getViewColumn(C._Name);
+      }
+
+    public Formula getSourceFormula(Column C)
+      {
+        View V = getSourceView(C._ParentObject);
+        if (V == null)
+          return null;
+        return V.getFormula(C._Name, true);
+      }
+    
     public Mapper getMapper(String Name)
       {
         for (Mapper M : _Mappers)
