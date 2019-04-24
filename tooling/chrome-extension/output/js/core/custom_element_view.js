@@ -191,6 +191,6 @@ joint.shapes.basic.CustomRect = joint.shapes.basic.Rect.extend({
       }
     }
   })
-  
+
   return { CustomLinkView: CustomLinkView, CustomElementView: CustomElementView }
 })
