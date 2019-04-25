@@ -816,42 +816,11 @@ public class Docs
      * }
      */
 
-    private static void PrintFormulaDetails(PrintWriter Out, View V, String TName, Formula F, boolean headerRow)
+    public static void PrintFormulaDetails(PrintWriter Out, View V, String TName, Formula F, boolean headerRow)
       {
-        StringBuffer Str = new StringBuffer();
         SortedSet<String> ColumnMatches = new TreeSet<String>();
-        Matcher M = F.getParentView()._ViewColumnsRegEx.matcher(String.join("\n", F._FormulaStrs));
-        while (M.find() == true)
-          {
-            String s = M.group(1);
-            ViewColumn VC = V.getViewColumn(s);
-            if (VC != null)
-              {
-                M.appendReplacement(Str, "<B style=\"color:#00AA00;\">" + s + "</B>");
-                ColumnMatches.add(s);
-              }
-          }
-        M.appendTail(Str);
-
         SortedSet<String> FormulaMatches = new TreeSet<String>();
-        if (F.getParentView()._FormulasRegEx != null)
-          {
-            M = F.getParentView()._FormulasRegEx.matcher(Str.toString());
-            Str.setLength(0);
-            while (M.find() == true)
-              {
-                String s = M.group(1);
-                for (Formula F2 : V._Formulas)
-                  if (s.equals(F2._Name) == true)
-                    {
-                      M.appendReplacement(Str, "<B style=\"color:#0000AA;\">" + s + "</B>");
-                      FormulaMatches.add(s);
-                      break;
-                    }
-              }
-            M.appendTail(Str);
-          }
-        String FormulaStr = Str.toString();
+        String FormulaStr = printFormulaCodeHTML(F, ColumnMatches, FormulaMatches);
 
         // Start Table
         Out.println("<TABLE border=\"1px\" style=\"border-collapse:collapse; border: 1px solid #AAA;\" cellspacing=\"0px\" cellpadding=\"2px\" width=\"98%\">");
@@ -938,6 +907,42 @@ public class Docs
             Out.println("</table>");
             Out.println("</DIV></DIV>");
           }
+      }
+
+    public static String printFormulaCodeHTML(Formula F, SortedSet<String> ColumnMatches, SortedSet<String> FormulaMatches)
+      {
+        StringBuffer Str = new StringBuffer();
+
+        Matcher M = F.getParentView()._ViewColumnsRegEx.matcher(String.join("\n", F._FormulaStrs));
+        while (M.find() == true)
+          {
+            String s = M.group(1);
+            ViewColumn VC = F._ParentView.getViewColumn(s);
+            if (VC != null)
+              {
+                M.appendReplacement(Str, "<B style=\"color:#00AA00;\">" + s + "</B>");
+                ColumnMatches.add(s);
+              }
+          }
+        M.appendTail(Str);
+        if (F.getParentView()._FormulasRegEx != null)
+          {
+            M = F.getParentView()._FormulasRegEx.matcher(Str.toString());
+            Str.setLength(0);
+            while (M.find() == true)
+              {
+                String s = M.group(1);
+                for (Formula F2 : F._ParentView._Formulas)
+                  if (s.equals(F2._Name) == true)
+                    {
+                      M.appendReplacement(Str, "<B style=\"color:#0000AA;\">" + s + "</B>");
+                      FormulaMatches.add(s);
+                      break;
+                    }
+              }
+            M.appendTail(Str);
+          }
+        return Str.toString();
       }
 
     protected static class DependencyPrinter implements Graph.Visitor<View.DepWrapper>

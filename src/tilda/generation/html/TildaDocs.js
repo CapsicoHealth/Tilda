@@ -176,7 +176,7 @@ var eventListener = function()
 }
 
 
-var eventListener_master = function()
+var eventListener_master = function(event)
 {
   if (searchInput == null || searchInput == undefined)
     {
@@ -233,6 +233,8 @@ var eventListener_master = function()
       searchResultsDiv = document.getElementById('__SEARCH_BOX_RESULTS__');
     }
   searchResultsDiv.innerHTML = Str;
+  event.preventDefault();
+  event.stopPropagation();
 }
 
 
@@ -392,21 +394,32 @@ function getAncestorNode(e, nodeName)
      e=e.parentNode;
    return e;
  }
+function unselectRow(e, styleClass)
+{
+  var Table = getAncestorNode(e, 'TABLE');
+  for (var i = 0; i < Table.rows.length; ++i)
+    Table.rows[i].classList.remove(styleClass);
+}
 function selectRow(e, styleClass)
  {
-   var Table = getAncestorNode(e, 'TABLE');
-   for (var i = 0; i < Table.rows.length; ++i)
-     Table.rows[i].classList.remove(styleClass);
+   unselectRow(e, styleClass);
    var TR = getAncestorNode(e, 'TR');
    if (TR != null)
     TR.classList.add(styleClass);
+ }
+function printDocs(type, what)
+ {
+   return '<fieldset><legend>'+type+': <B>'+what.name+'</B></legend>'
+         +(what.docs==null?'No documentation available':what.docs)
+         +'</fieldset>'
+         ;
  }
 
 var MasterIndex = {
   _baseId: null
  ,paintSchemas: function(dbMeta, regex)
    {
-     var Str = '<INPUT type="text" id="FILTER_SCHEMAS" placeholder="filter schemas" oninput="MasterIndex.filter(\'S\')"><TABLE class="Rowed Selectable" onClick="MasterIndex.paintObjects(event)" border=\"0px\" cellspacing=\"0px\" cellpadding=\"3px\">\n';
+     var Str = '<INPUT type="text" id="FILTER_SCHEMAS" placeholder="filter schemas" onkeyup="MasterIndex.filter(event, \'S\')"><TABLE class="Rowed Selectable" onClick="MasterIndex.paintObjects(event)" border=\"0px\" cellspacing=\"0px\" cellpadding=\"3px\">\n';
      for (var i = 0; i < dbMeta.length; ++i)
        {
          var s = dbMeta[i];
@@ -433,7 +446,7 @@ var MasterIndex = {
          console.log("unknown selected schema '"+selected+"'.");
          return;
        }
-     var Str = '<INPUT type="text" id="FILTER_OBJECTS" placeholder="filter Tables/Views" oninput="MasterIndex.filter(\'O\')"><TABLE class="Rowed Selectable offScreenOpacity0" onClick="MasterIndex.paintColumns(event)" border=\"0px\" cellspacing=\"0px\" cellpadding=\"3px\">\n';
+     var Str = '<INPUT type="text" id="FILTER_OBJECTS" placeholder="filter Tables/Views" onkeyup="MasterIndex.filter(event, \'O\')"><TABLE class="Rowed Selectable offScreenOpacity0" onClick="MasterIndex.paintColumns(event)" border=\"0px\" cellspacing=\"0px\" cellpadding=\"3px\">\n';
      this.selectedObject = null; 
      if (this.selectedSchema.objs == null || this.selectedSchema.objs.length == 0)
        {
@@ -445,10 +458,17 @@ var MasterIndex = {
         Str+='<TR><TD>'+o.name+'</TD></TR>\n';
       }
      Str+='</TABLE><BR><BR>';
-     document.getElementById(this._baseId+'_COLUMNS').innerHTML='';
      var e = document.getElementById(this._baseId+'_OBJECTS');
      e.innerHTML=Str;
      setTimeout(function() { e.childNodes[1].classList.add("fadeInSlideTo0"); }, 10);
+
+     document.getElementById(this._baseId+'_COLUMNS').innerHTML='';
+     this.selectedColumn=null;
+     this.selectedObject=null;
+
+     var d = document.getElementById(this._baseId+'_DOCS');
+     d.innerHTML=printDocs('Schema', this.selectedSchema);
+//     setTimeout(function() { e.classList.add("fadeInSlideTo0"); }, 10);     
    }
 
  ,paintColumns: function(event)
@@ -467,7 +487,7 @@ var MasterIndex = {
          return;
        }
 
-     var Str = '<INPUT type="text" id="FILTER_COLUMNS" placeholder="filter columns" oninput="MasterIndex.filter(\'C\')"><TABLE class="Rowed offScreenOpacity0 Selectable" onClick="MasterIndex.selectColumn(event)" border=\"0px\" cellspacing=\"0px\" cellpadding=\"3px\">\n';
+     var Str = '<INPUT type="text" id="FILTER_COLUMNS" placeholder="filter columns" onkeyup="MasterIndex.filter(event, \'C\')"><TABLE class="Rowed offScreenOpacity0 Selectable" onClick="MasterIndex.selectColumn(event)" border=\"0px\" cellspacing=\"0px\" cellpadding=\"3px\">\n';
      if (this.selectedObject.cols == null || this.selectedObject.cols.length == 0)
        {
          Str+="<TR><TD>NO COLUMNS DEFINED</TD></TR>";
@@ -475,36 +495,60 @@ var MasterIndex = {
      else for (var i = 0; i < this.selectedObject.cols.length; ++i)
        {
          var c = this.selectedObject.cols[i];
-         Str+='<TR><TD><A href="'+c.url+'" target="_other">'+c.name+'</A></TD><TD>'+c.type+'</TD><TD>'+(c.nullable==false ? "not null" : "nullable")+'<\TD></TR>\n';
+         Str+='<TR><TD><A href="'+c.url+'" target="_other">'+c.name+'</A></TD><TD>'+c.type+'</TD></TR>\n';
        }
      Str+='</TABLE><BR><BR>';
      var e = document.getElementById(this._baseId+'_COLUMNS');
      e.innerHTML=Str;
      setTimeout(function() { e.childNodes[1].classList.add("fadeInSlideTo0"); }, 10);
-     document.getElementById(this._baseId+'_COLUMNS').innerHTML=Str;
+     
+     var d = document.getElementById(this._baseId+'_DOCS');
+     d.innerHTML=printDocs('Schema', this.selectedSchema)+printDocs('Object', this.selectedObject);
    }
  ,selectColumn: function(event)
    {
      selectRow(event.target, "Selected");
+     var e = getAncestorNode(event.target, 'TR');
+     if (e == null)
+       return;
+     selected = e.cells[0].innerText;
+     for (var i = 0; i < this.selectedObject.cols.length; ++i)
+       if (this.selectedObject.cols[i].name == selected)
+         {
+           this.selectedColumn = this.selectedObject.cols[i];
+           break;
+         }
+     if (this.selectedColumn == null)
+       {
+         console.log("unknown selected column '"+selected+"'.");
+         return;
+       }
+
+     var d = document.getElementById(this._baseId+'_DOCS');
+     d.innerHTML=printDocs('Schema', this.selectedSchema)+printDocs('Object', this.selectedObject)+printDocs(this.selectedColumn.formula==true?'Formula':'Column', this.selectedColumn);
    }
  ,paintResult: function(schemaName, tableName, columnName)
    {
      showSearchResults(false);
      
-     var e = document.getElementById(this._baseId+'_SCHEMAS');
-     if (e != null && e.childNodes != null && e.childNodes[1] != null && e.childNodes[1].rows != null)
-      {
-        e = e.childNodes[1];
-        for (var i = 0; i < e.rows.length; ++i)
-         if (e.rows[i].innerText==schemaName)
+     if (this.selectedSchema == null || this.selectedSchema.name != schemaName)
+       {
+         var e = document.getElementById(this._baseId+'_SCHEMAS');
+         if (e != null && e.childNodes != null && e.childNodes[1] != null && e.childNodes[1].rows != null)
           {
-            var cell = e.rows[i].cells[0];
-            MasterIndex.paintObjects({target: cell});
-            cell.scrollIntoView();
-            break;
+            e = e.childNodes[1];
+            for (var i = 0; i < e.rows.length; ++i)
+             if (e.rows[i].innerText==schemaName)
+              {
+                var cell = e.rows[i].cells[0];
+                MasterIndex.paintObjects({target: cell});
+                cell.scrollIntoView();
+                break;
+              }
           }
-      }
-     if (tableName != null)
+       }
+     
+     if (tableName != null && (this.selectedObject == null || this.selectedObject.name != tableName))
        {
          e = document.getElementById(this._baseId+'_OBJECTS');
          if (e != null && e.childNodes != null && e.childNodes[1] != null && e.childNodes[1].rows != null)
@@ -520,7 +564,14 @@ var MasterIndex = {
                 }
            }
        }
-     if (columnName != null)
+     else if (tableName == null && this.selectedObject != null)
+       {
+         unselectRow(document.getElementById(this._baseId+'_OBJECTS').childNodes[1], 'Selected');
+         document.getElementById(this._baseId+'_COLUMNS').innerHTML='';
+         this.selectedObject=null;
+       }
+
+     if (columnName != null && (this.selectedColumn == null || this.selectedColumn.name != columnName))
        {
          e = document.getElementById(this._baseId+'_COLUMNS');
          if (e != null && e.childNodes != null && e.childNodes[1] != null && e.childNodes[1].rows != null)
@@ -536,8 +587,13 @@ var MasterIndex = {
                 }
            }
        }
+     else if (columnName == null && this.selectedColumn != null)
+       {
+         unselectRow(document.getElementById(this._baseId+'_COLUMNS').childNodes[1], 'Selected');
+         this.selectedColumn = null;
+       }
     }
-  ,filter: function(type)
+  ,filter: function(event, type)
     {
       var mark = type=='S'?'_SCHEMAS':type=='O'?'_OBJECTS':'_COLUMNS';
       var val = document.getElementById('FILTER'+mark).value.toLowerCase();
@@ -551,6 +607,104 @@ var MasterIndex = {
             else
               e.rows[i].style.display="";
         }
+      event.preventDefault();
+      event.stopPropagation();
     }
+  ,keyup: function(event)
+    {
+      switch(event.which)
+       {
+         case 37: // left
+              if (this.selectedColumn != null)
+                {
+                  this.paintResult(this.selectedSchema.name, this.selectedObject.name, null);
+                  break
+                }
+              else if (this.selectedObject != null)
+                {
+                  this.paintResult(this.selectedSchema.name, null, null);
+                  break
+                }
+              return;
+         case 38: // up
+               if (this.selectedColumn != null)
+                 {
+                   var i = this.selectedObject.cols.indexOf(this.selectedColumn);
+                   if (i > 0)
+                    {
+                      this.paintResult(this.selectedSchema.name, this.selectedObject.name, this.selectedObject.cols[i-1].name);
+                      break
+                    }
+                 }
+               else if (this.selectedObject != null)
+                 {
+                   var i = this.selectedSchema.objs.indexOf(this.selectedObject);
+                   if (i > 0)
+                    {
+                      this.paintResult(this.selectedSchema.name, this.selectedSchema.objs[i-1].name, null);
+                      break
+                    }
+                 }
+               else if (this.selectedSchema != null)
+                 {
+                   var i = dbMeta.indexOf(this.selectedSchema);
+                   if (i > 0)
+                    {
+                      this.paintResult(dbMeta[i-1].name, null, null);
+                      break
+                    }
+                 }
+              return;
+         case 39: // right
+              if (this.selectedColumn != null)
+               ;
+              else if (this.selectedObject != null)
+                {
+                  this.paintResult(this.selectedSchema.name, this.selectedObject.name, this.selectedObject.cols[0].name);
+                  break
+                }
+              else if (this.selectedSchema != null)
+                {
+                  this.paintResult(this.selectedSchema.name, this.selectedSchema.objs[0].name, null);
+                  break
+                }
+              return;
+         case 40: // down
+              if (this.selectedColumn != null)
+                {
+                  var i = this.selectedObject.cols.indexOf(this.selectedColumn);
+                  if (i != -1 && i < this.selectedObject.cols.length-1)
+                   {
+                     this.paintResult(this.selectedSchema.name, this.selectedObject.name, this.selectedObject.cols[i+1].name);
+                     break
+                   }
+                }
+              else if (this.selectedObject != null)
+                {
+                  var i = this.selectedSchema.objs.indexOf(this.selectedObject);
+                  if (i != -1 && i < this.selectedSchema.objs.length-1)
+                   {
+                     this.paintResult(this.selectedSchema.name, this.selectedSchema.objs[i+1].name, null);
+                     break
+                   }
+                }
+              else if (this.selectedSchema != null)
+                {
+                  var i = dbMeta.indexOf(this.selectedSchema);
+                  if (i != -1 && i < dbMeta.length-1)
+                   {
+                     this.paintResult(dbMeta[i+1].name, null, null);
+                     break
+                   }
+                }
+              return;
+         default: return;
+       }
+      event.stopPropagation();
+      event.preventDefault(); 
+   }
 };
+
+
+
 

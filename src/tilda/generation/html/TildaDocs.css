@@ -182,14 +182,14 @@ input[type=text]:focus {
   position: fixed;
   top: 9em;
   bottom: 30px;
+  width: 100%;
 }
 
-#MI_SCHEMAS, #MI_OBJECTS, #MI_COLUMNS {
+#MI_SCHEMAS, #MI_OBJECTS, #MI_COLUMNS, #MI_DOCS {
    float: left;
    height: 98%;
    margin-top: 30px;
-   padding-left: 20px;
-   padding-right: 10px;
+   padding-right: 20px;
    overflow-y: auto;
    overflow-x: hidden;
    scrollbar-width: thin;
@@ -201,3 +201,39 @@ input[type=text]:focus {
    top: 0px;
 }
 
+#MI_DOCS {
+   position: absolute;
+   right: 20px;
+   overflow-x: auto;
+   background-color: #FFF;
+   top: -2em;
+   max-width: 50%;
+}
+
+
+fieldset {
+  border: 0px;
+  border-top: 2px solid #aef;
+  margin-bottom: 30px;
+  padding-top: 10px;
+  padding-left: 25px;
+  width: 95%;
+}
+fieldset legend {
+   font-size:125%;
+   padding-left: 10px;
+   padding-right: 10px;
+   margin-left: -10px;
+}
+
+.Measure {
+   color: #6688AA;
+}
+.Measure:after {
+   content: 'MEASURE';
+}
+.Measure:hover::after {
+   font-variant: normal;
+   content: 'THIS FORMULA IS CATALOGUED AS A MEASURE.';
+   color: #EE5577;
+}

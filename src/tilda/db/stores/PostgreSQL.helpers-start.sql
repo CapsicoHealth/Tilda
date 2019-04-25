@@ -173,8 +173,7 @@ RETURNS TABLE (min_key_inclusive bigint, max_key_exclusive bigint) AS $$
 DECLARE
   val bigint;
 BEGIN
-  UPDATE TILDA.Key set "max"="max"+c where "name"=t;
-  SELECT "max" into val from TILDA.Key where "name"=t;
+  UPDATE TILDA.Key set "max"="max"+c where "name"=t returning "max" into val;
   return query select val-c as min_key_inclusive, val as max_key_exclusive;
 END; $$
 LANGUAGE PLPGSQL;
@@ -184,8 +183,7 @@ CREATE OR REPLACE FUNCTION TILDA.getKeyBatchAsMaxExclusive(t text, c integer) RE
 DECLARE
   val bigint;
 BEGIN
-  UPDATE TILDA.Key set "max"="max"+c where "name"=t;
-  SELECT "max" into val from TILDA.Key where "name"=t;
+  UPDATE TILDA.Key set "max"="max"+c where "name"=t returning "max" into val;
   return val;
 END; $$
 LANGUAGE PLPGSQL;
