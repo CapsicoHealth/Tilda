@@ -226,3 +226,14 @@ fieldset legend {
    margin-left: -10px;
 }
 
+.Measure {
+   color: #6688AA;
+}
+.Measure:after {
+   content: 'MEASURE';
+}
+.Measure:hover::after {
+   font-variant: normal;
+   content: 'THIS FORMULA IS CATALOGUED AS A MEASURE.';
+   color: #EE5577;
+}

@@ -409,7 +409,7 @@ function selectRow(e, styleClass)
  }
 function printDocs(type, what)
  {
-   return '<fieldset><legend>'+type+': '+what.name+'</legend>'
+   return '<fieldset><legend>'+type+': <B>'+what.name+'</B></legend>'
          +(what.docs==null?'No documentation available':what.docs)
          +'</fieldset>'
          ;
@@ -525,7 +525,7 @@ var MasterIndex = {
        }
 
      var d = document.getElementById(this._baseId+'_DOCS');
-     d.innerHTML=printDocs('Schema', this.selectedSchema)+printDocs('Object', this.selectedObject)+printDocs('Column', this.selectedColumn);
+     d.innerHTML=printDocs('Schema', this.selectedSchema)+printDocs('Object', this.selectedObject)+printDocs(this.selectedColumn.formula==true?'Formula':'Column', this.selectedColumn);
    }
  ,paintResult: function(schemaName, tableName, columnName)
    {
