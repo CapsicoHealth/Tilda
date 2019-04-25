@@ -221,12 +221,12 @@ public class DocGen
 
         writer.println("<BR>");
         writer.println("<DIV id=\"__SEARCH_BOX_BASE__\"><TABLE id=\"__SEARCH_BOX__\" border=\"0px\" cellspacing=\"0px\" cellpadding=\"0px\"><TR valign=\"top\"><TD width=\"1px\" style=\"font-size: 125%; font-weight:bold;\">SEARCH</TD><TD>");
-        writer.println("<input type=\"text\" onfocus=\"showSearchResults(true);eventListener()\" oninput=\"eventListener()\", id=\"search_input\" placeholder=\"Search Tables/Views, Fields, Formulae\" autocomplete=\"off\">");
+        writer.println("<input type=\"text\" onfocus=\"showSearchResults(true);eventListener(event)\" onkeyup=\"eventListener(event)\", id=\"search_input\" placeholder=\"Search Tables/Views, Fields, Formulae\" autocomplete=\"off\">");
         if (includeFields == true)
           {
-            writer.println("&nbsp;&nbsp;&nbsp;&nbsp;<label><input type=\"checkbox\" oninput=\"eventListener()\", id=\"cols_check\" checked>&nbsp;Fields</label>");
-            writer.println("&nbsp;&nbsp;&nbsp;&nbsp;<label><input type=\"checkbox\" oninput=\"eventListener()\", id=\"formulas_check\" checked>&nbsp;Formulas</label>");
-            writer.println("&nbsp;&nbsp;&nbsp;&nbsp;<label><input type=\"checkbox\" oninput=\"eventListener()\", id=\"realized_check\">&nbsp;Realized</label>");
+            writer.println("&nbsp;&nbsp;&nbsp;&nbsp;<label><input type=\"checkbox\" oninput=\"eventListener(event)\", id=\"cols_check\" checked>&nbsp;Fields</label>");
+            writer.println("&nbsp;&nbsp;&nbsp;&nbsp;<label><input type=\"checkbox\" oninput=\"eventListener(event)\", id=\"formulas_check\" checked>&nbsp;Formulas</label>");
+            writer.println("&nbsp;&nbsp;&nbsp;&nbsp;<label><input type=\"checkbox\" oninput=\"eventListener(event)\", id=\"realized_check\">&nbsp;Realized</label>");
           }
         writer.println("</TD></TR>");
         writer.println("<TR><TD colspan=\"2\"><table id=\"__SEARCH_BOX_RESULTS__\" class=\"search_results Selectable\" border=\"0px\" cellspacing=\"0px\"></table>");
@@ -253,7 +253,7 @@ public class DocGen
         + JS
         + "</SCRIPT>\n"
         + "</HEAD>\n"
-        + "<BODY>\n");
+        + "<BODY onkeyup=\"MasterIndex.keyup(event);\">\n");
         writer.println("<H1>Master Database Index</H1>");
         writeSearchHTML(writer, false); // Add Search Box
         writer.println("<BR>");
