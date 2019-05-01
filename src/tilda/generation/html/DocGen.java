@@ -29,6 +29,7 @@ import tilda.parsing.parts.View;
 import tilda.utils.CollectionUtil;
 import tilda.utils.FileUtil;
 import tilda.utils.JSONUtil;
+import tilda.utils.TextUtil;
 
 public class DocGen
   {
@@ -235,7 +236,7 @@ public class DocGen
         // hideIfEsc(event, '__SEARCH_BOX_RESULTS__');
       }
 
-    public static void GenMasterIndex(String Path, List<Schema> selectedSchemas)
+    public static void GenMasterIndex(String Path, List<Schema> selectedSchemas, tilda.Docs.MasterConfig MC)
     throws IOException
       {
         LOG.debug("Generating master index file");
@@ -254,72 +255,86 @@ public class DocGen
         + "</SCRIPT>\n"
         + "</HEAD>\n"
         + "<BODY onkeyup=\"MasterIndex.keyup(event);\">\n");
-        writer.println("<H1>Master Database Index</H1>");
+        writer.println("<H1>"+TextUtil.Print(MC._Title, "Master Database Documentation")+"</H1>");
+        writer.println(String.join("\n", MC._Descriptions)+"<BR>");
         writeSearchHTML(writer, false); // Add Search Box
         writer.println("<BR>");
         writer.println("<DIV id='MI'><DIV id='MI_SCHEMAS'></DIV><DIV id='MI_OBJECTS'></DIV><DIV id='MI_COLUMNS'></DIV><DIV id='MI_DOCS'></DIV></DIV>");
         writer.println("<SCRIPT>");
         writer.println("var dbMeta=[");
-        int s = -1;
-        for (Schema S : selectedSchemas)
+        int g = -1;
+        for (tilda.Docs.MasterConfig.Group G : MC._Groups)
           {
-            writer.print(++s == 0 ? "    {" : "   ,{");
-            JSONUtil.Print(writer, "name", true, S.getShortName());
-            JSONUtil.Print(writer, "docs", false, S.getDocumentation()._Description == null ? null : String.join("<BR>\n", S.getDocumentation()._Description));
-            Set<String> deps = new HashSet<String>();
-            S.getFullDependencies(selectedSchemas, deps);
-            JSONUtil.Print(writer, "deps", false, CollectionUtil.toStringArray(deps));
-            writer.println(", \"objs\":[ ");
-            int o = -1;
-            S._Objects.sort(new Comparator<Object>()
+            writer.print(++g == 0 ? "  {" : " ,{");
+            JSONUtil.Print(writer, "name", true, G._Name);
+            JSONUtil.Print(writer, "docs", false, G._Descriptions == null ? null : String.join("<BR>\n", G._Descriptions));
+            writer.println(", \"schemas\":[ ");
+            int s = -1;
+            for (Schema S : selectedSchemas)
               {
-                @Override
-                public int compare(Object o1, Object o2)
+                tilda.Docs.MasterConfig.Group.SchemaType ST = G.getSchemaType(S._Name);
+                if (ST == null || S._Objects.isEmpty() == true)
+                  continue;
+                writer.print(++s == 0 ? "    {" : "   ,{");
+                JSONUtil.Print(writer, "name", true, S.getShortName());
+                JSONUtil.Print(writer, "docs", false, S.getDocumentation()._Description == null ? null : String.join("<BR>\n", S.getDocumentation()._Description));
+                JSONUtil.Print(writer, "explicit", false, ST == tilda.Docs.MasterConfig.Group.SchemaType.PRIMARY);
+                Set<String> deps = new HashSet<String>();
+                S.getFullDependencies(selectedSchemas, deps);
+                JSONUtil.Print(writer, "deps", false, CollectionUtil.toStringArray(deps));
+                writer.println(", \"objs\":[ ");
+                int o = -1;
+                S._Objects.sort(new Comparator<Object>()
                   {
-                    return o1 == null || o2 == null ? 0 : o1._Name.compareTo(o2._Name);
-                  }
-              });
-            for (Object O : S._Objects)
-              if (O != null)
-                {
-                  writer.print(++o == 0 ? "        {" : "       ,{");
-                  JSONUtil.Print(writer, "name", true, O.getBaseName());
-                  JSONUtil.Print(writer, "docs", false, O._Description == null ? null : O._Description);
-                  writer.println(", \"cols\":[ ");
-                  int c = -1;
-                  O._Columns.sort(new Comparator<Column>()
-                    {
-                      @Override
-                      public int compare(Column c1, Column c2)
-                        {
-                          return c1 == null || c2 == null ? 0 : c1.getName().compareTo(c2.getName());
-                        }
-                    });
-                  for (Column C : O._Columns)
-                    if (C != null)
+                    @Override
+                    public int compare(Object o1, Object o2)
                       {
-                        writer.print(++c == 0 ? "            {" : "           ,{");
-                        JSONUtil.Print(writer, "name", true, C.getName());
-                        JSONUtil.Print(writer, "type", false, C._Size == null ? C._TypeStr : C._TypeStr + "(" + C._Size + ")");
-                        JSONUtil.Print(writer, "nullable", false, C._Nullable);
-                        // if (C.getName().equals("isReferral") == true)
-                        // LOG.debug("xxx");
-                        Formula F = O._ParentSchema.getSourceFormula(C);
-                        if (F == null)
-                          JSONUtil.Print(writer, "docs", false, C._Description);
-                        else
-                          {
-                            SortedSet<String> ColumnMatches = new TreeSet<String>();
-                            SortedSet<String> FormulaMatches = new TreeSet<String>();
-                            JSONUtil.Print(writer, "formula", false, true);
-                            JSONUtil.Print(writer, "docs", false, F._Title+(F._Measure==false?"":"&nbsp;<SUP class=\"Measure\"></SUP>")+"<BR><BR>"+String.join(" ", F._Description) + "<PRE style=\"padding-top: 3px;\">" + Docs.printFormulaCodeHTML(F, ColumnMatches, FormulaMatches)+"</PRE>");
-                          }
-                        JSONUtil.Print(writer, "url", false, Docs.makeColumnHref(C));
-                        writer.println(" }");
+                        return o1 == null || o2 == null ? 0 : o1._Name.compareTo(o2._Name);
                       }
-                  writer.println("        ]}");
-                }
-            writer.println("      ]}");
+                  });
+                for (Object O : S._Objects)
+                  if (O != null)
+                    {
+                      writer.print(++o == 0 ? "        {" : "       ,{");
+                      JSONUtil.Print(writer, "name", true, O.getBaseName());
+                      JSONUtil.Print(writer, "docs", false, O._Description == null ? null : O._Description);
+                      writer.println(", \"cols\":[ ");
+                      int c = -1;
+                      O._Columns.sort(new Comparator<Column>()
+                        {
+                          @Override
+                          public int compare(Column c1, Column c2)
+                            {
+                              return c1 == null || c2 == null ? 0 : c1.getName().compareTo(c2.getName());
+                            }
+                        });
+                      for (Column C : O._Columns)
+                        if (C != null)
+                          {
+                            writer.print(++c == 0 ? "            {" : "           ,{");
+                            JSONUtil.Print(writer, "name", true, C.getName());
+                            JSONUtil.Print(writer, "type", false, C._Size == null ? C._TypeStr : C._TypeStr + "(" + C._Size + ")");
+                            JSONUtil.Print(writer, "nullable", false, C._Nullable);
+                            // if (C.getName().equals("isReferral") == true)
+                            // LOG.debug("xxx");
+                            Formula F = O._ParentSchema.getSourceFormula(C);
+                            if (F == null)
+                              JSONUtil.Print(writer, "docs", false, C._Description);
+                            else
+                              {
+                                SortedSet<String> ColumnMatches = new TreeSet<String>();
+                                SortedSet<String> FormulaMatches = new TreeSet<String>();
+                                JSONUtil.Print(writer, "formula", false, true);
+                                JSONUtil.Print(writer, "docs", false, F._Title + (F._Measure == false ? "" : "&nbsp;<SUP class=\"Measure\"></SUP>") + "<BR><BR>" + String.join(" ", F._Description) + "<PRE style=\"padding-top: 3px;\">" + Docs.printFormulaCodeHTML(F, ColumnMatches, FormulaMatches) + "</PRE>");
+                              }
+                            JSONUtil.Print(writer, "url", false, Docs.makeColumnHref(C));
+                            writer.println(" }");
+                          }
+                      writer.println("        ]}");
+                    }
+                writer.println("      ]}");
+              }
+            writer.println("    ]}");
           }
         writer.print("];");
         writer.println("MasterIndex._baseId='MI';");
