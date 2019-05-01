@@ -18,7 +18,9 @@ package tilda;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -26,13 +28,17 @@ import java.util.Set;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.SerializedName;
+
 import tilda.generation.GeneratorSession;
 import tilda.generation.html.DocGen;
 import tilda.parsing.Loader;
 import tilda.parsing.Parser;
-import tilda.parsing.ParserSession;
 import tilda.parsing.parts.Schema;
 import tilda.utils.AsciiArt;
+import tilda.utils.CollectionUtil;
 import tilda.utils.FileUtil;
 import tilda.utils.TextUtil;
 
@@ -40,41 +46,115 @@ public class Docs
   {
     static final Logger LOG = LogManager.getLogger(Docs.class.getName());
 
+    static public class MasterConfig
+      {
+        /*@formatter:off*/
+        @SerializedName("title"         ) public String      _Title = null;
+        @SerializedName("description"   ) public String[]    _Descriptions = new String[] { };
+        @SerializedName("groups"        ) public List<Group> _Groups=new ArrayList<Group>();
+        /*@formatter:on*/
+
+        static public class Group
+          {
+            /*@formatter:off*/
+            @SerializedName("name"          ) public String      _Name = null;
+            @SerializedName("description"   ) public String[]    _Descriptions  = new String[] { };
+            @SerializedName("schemas"       ) public String[]    _Schemas;
+            /*@formatter:on*/
+
+            transient public String[] _SchemasAuto  = new String[] {};
+
+            public static enum SchemaType
+              {
+              PRIMARY, AUTO
+              };
+
+            public SchemaType getSchemaType(String SchemaName)
+              {
+                if (CollectionUtil.indexOfIgnoreCase(_Schemas, SchemaName) != -1)
+                  return SchemaType.PRIMARY;
+                if (CollectionUtil.indexOfIgnoreCase(_SchemasAuto, SchemaName) != -1)
+                  return SchemaType.AUTO;
+                return null;
+              }
+          }
+
+        public static MasterConfig load(String fileResourceName)
+        throws Exception
+          {
+            Reader R = null;
+            try
+              {
+                R = FileUtil.getReaderFromFileOrResource(fileResourceName);
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                MasterConfig MC = gson.fromJson(R, MasterConfig.class);
+                if (MC.validate() == false)
+                  throw new Exception("Cannot validate the tilda.master.config file/resource " + fileResourceName + ".");
+                return MC;
+              }
+            catch (Exception E)
+              {
+                LOG.error("An error occurred while parsing the tilda.master.config file/resource " + fileResourceName + ".\n", E);
+                throw E;
+              }
+          }
+
+        public static MasterConfig load(String[] Schemas)
+          {
+            MasterConfig MC = new MasterConfig();
+            Group G = new Group();
+            G._Schemas = Schemas;
+            MC._Groups.add(G);
+            return MC;
+          }
+
+        protected boolean validate()
+          {
+            for (int i = 0; i < _Groups.size(); ++i)
+              if (_Groups.get(i)._Schemas.length == 0)
+                {
+                  _Groups.remove(i);
+                  --i;
+                }
+            return true;
+          }
+      }
+
+
     public static void main(String[] Args)
       {
         LOG.info("");
         LOG.info("Tilda documentation utility");
         LOG.info("  - Takes one mandatory parameter, a folder, where to put the documentation files from active Tilda schemas in the classpath.");
-        LOG.info("  - Takes additional optional parameters of schemas to extract documentation for.");
+        LOG.info("  - Takes optionally the path to a tilda.master.xxx.json file, or a list of schema names to extract documentation for.");
         LOG.info("");
         if (Args.length < 1)
           {
             LOG.error("You must specify at least one parameter, a folder where to put the documentation files from active Tilda schemas in the classpath.");
             return;
           }
+
         try
           {
+            MasterConfig MC;
+            if (Args.length == 2 && Args[1].matches(".*tilda\\.master\\..+\\.json") == true)
+              MC = MasterConfig.load(Args[1]);
+            else
+              MC = MasterConfig.load(Arrays.copyOfRange(Args, 1, Args.length));
+
             List<Schema> TildaList = Loader.LoadTildaResources();
             if (TildaList == null)
               throw new Exception("We didn't find the necessary Tilda resources.");
 
             Set<String> SchemaFilter = new HashSet<String>();
-            for (int i = 1; i < Args.length; ++i)
-              {
-                String a = Args[i];
-                if (TextUtil.isNullOrEmpty(a) == true)
-                  continue;
-                for (Schema S : TildaList)
-                  if (S != null && S._Name.equalsIgnoreCase(a) == true)
-                    S.getFullDependencies(TildaList, SchemaFilter);
-              }
+            loadSchemaDependencies(MC, TildaList, SchemaFilter);
             List<Schema> SelectedSchemas = new ArrayList<Schema>();
             GeneratorSession G = new GeneratorSession("java", 8, -1, "postgres", 9, -1);
-            ParserSession PS = Parser.init(G.getSql(), TildaList);
+            Parser.init(G.getSql(), TildaList);
             for (Schema S : TildaList)
               {
-                if (S==null || SchemaFilter.isEmpty() == false && SchemaFilter.contains(S._Name) == false)
-                 continue;
+                if (S == null || SchemaFilter.isEmpty() == false && SchemaFilter.contains(S._Name) == false)
+                  continue;
                 SelectedSchemas.add(S);
                 String Name = FileUtil.getBasePathFromFileOrResource(S._ResourceName) + "_Tilda/TILDA___Docs." + S._Name.toUpperCase() + ".html";
                 LOG.debug("Extracting Tilda documentation " + Name);
@@ -88,7 +168,7 @@ public class Docs
                 FileUtil.copyFileContentsIntoAnotherFile(Name, Out);
                 Out.close();
               }
-            DocGen.GenMasterIndex(Args[0] + File.separator, SelectedSchemas);
+            DocGen.GenMasterIndex(Args[0] + File.separator, SelectedSchemas, MC);
           }
         catch (Exception E)
           {
@@ -107,5 +187,36 @@ public class Docs
         + "\n"
         + "              All Tilda code, migration scripts and documentation was generated succesfully.    \n"
         + "          ======================================================================================");
+      }
+
+
+    private static void loadSchemaDependencies(MasterConfig MC, List<Schema> TildaList, Set<String> SchemaFilter)
+      {
+        for (MasterConfig.Group g : MC._Groups)
+          {
+            Set<String> Current = new HashSet<String>(SchemaFilter);
+            for (String schemaName : g._Schemas)
+              {
+                Current.add(schemaName.toUpperCase());
+                if (TextUtil.isNullOrEmpty(schemaName) == true)
+                  continue;
+                for (Schema S : TildaList)
+                  if (S != null && S._Name.equalsIgnoreCase(schemaName) == true)
+                    S.getFullDependencies(TildaList, SchemaFilter);
+              }
+            // Checking what new schemas were added through dependencies that weren't there before and adding them automatically to list.
+            // The issue is that we have no idea how to group schemas in a higher order concept except at DOC time, so this allows the utility to function
+            // properly, yet give feedback to the user as to which dependencies were added. The user can then decide to leave them as is, i.e., as part of the group
+            // or declare them explicitly in the master config file in some other group.
+            List<String> Missing = new ArrayList<String>();
+            for (String s : SchemaFilter)
+              if (Current.contains(s) == false)
+                Missing.add(s);
+            if (Missing.isEmpty() == false)
+              {
+                g._SchemasAuto = CollectionUtil.toStringArray(Missing);
+                LOG.warn("Group " + g._Name + " is missing schemas: " + TextUtil.Print(g._SchemasAuto) + ". Adding to automatic dependencies list for that group");
+              }
+          }
       }
   }

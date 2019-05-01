@@ -143,6 +143,12 @@ input[type=text]:focus {
    border-bottom: 0px;
    background-color: none;
 }
+.NoSelection TD {
+   cursor: auto;
+   background-color: #eee !important;;
+   font-size: 125%;
+}
+
 .BackToDetails {
    display: none;
  }
