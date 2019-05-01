@@ -44,6 +44,7 @@ public class Object extends Base
     /*@formatter:off*/
     @SerializedName("occ"           ) public boolean              _OCC        = true ;
     @SerializedName("dbOnly"        ) public Boolean              _DBOnly_DEPRECATED;
+    @SerializedName("tzFk"          ) public Boolean              _TZFK       = true;
     @SerializedName("mode"          ) public String               _ModeStr    ;
     @SerializedName("etl"           ) public boolean              _ETL        = false;
     @SerializedName("lc"            ) public String               _LCStr      ;
@@ -187,10 +188,9 @@ public class Object extends Base
                         TZCol.Validate(PS, this);
                         if (ColumnNames.add(TZCol.getName().toUpperCase()) == false)
                           PS.AddError("Generated column '" + TZCol.getFullName() + "' conflicts with another column already named the same in Object '" + getFullName() + "'.");
-                        if (C.isCollection() == false)
+                        if (C.isCollection() == false && _TZFK==true)
                           {
-                            addForeignKey(C.getName(), new String[] { TZCol.getName()
-                            }, "tilda.data.TILDA.ZONEINFO");
+                            addForeignKey(C.getName(), new String[] { TZCol.getName()}, "tilda.data.TILDA.ZONEINFO");
                           }
                       }
                   }
