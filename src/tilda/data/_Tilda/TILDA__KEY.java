@@ -133,164 +133,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD>The timestamp for when the record was deleted.</TD>
 </TR>
 </TABLE></BLOCKQUOTE>
-<DIV id='Key-refnum_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Key-refnum_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Key_DIV'>Key</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Key-refnum_DIV'>refnum</a> -- LONG</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Key-name_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Key-name_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Key_DIV'>Key</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Key-name_DIV'>name</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Key-max_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Key-max_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Key_DIV'>Key</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Key-max_DIV'>max</a> -- LONG</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Key-count_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Key-count_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Key_DIV'>Key</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Key-count_DIV'>count</a> -- INTEGER</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Key-created_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Key-created_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Key_DIV'>Key</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Key-created_DIV'>created</a> -- DATETIME</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Key-createdETL_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Key-createdETL_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Key_DIV'>Key</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Key-createdETL_DIV'>createdETL</a> -- DATETIME</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Key-lastUpdated_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Key-lastUpdated_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Key_DIV'>Key</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Key-lastUpdated_DIV'>lastUpdated</a> -- DATETIME</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Key-lastUpdatedETL_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Key-lastUpdatedETL_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Key_DIV'>Key</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Key-lastUpdatedETL_DIV'>lastUpdatedETL</a> -- DATETIME</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Key-deleted_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Key-deleted_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Key_DIV'>Key</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Key-deleted_DIV'>deleted</a> -- DATETIME</td>
-</tr>
-</table>
-</DIV></DIV>
 </DIV>
 
- @author   Tilda code gen for Java 8/PostgreSQL
- @version  Tilda 1.0
- @generated Dec 27 2018, 10:36:33EST
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__KEY implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
@@ -389,7 +233,7 @@ This is the setter for:<BR>
    protected void setRefnum(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _refnum)
+       if (__Init == InitMode.CREATE || v != _refnum)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Key.refnum' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -570,7 +414,7 @@ This is the setter for:<BR>
    public void setMax(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _max)
+       if (__Init == InitMode.CREATE || v != _max)
         {
           __Changes.or(TILDA__KEY_Factory.COLS.MAX._Mask);
           __Nulls.andNot(TILDA__KEY_Factory.COLS.MAX._Mask);
@@ -664,7 +508,7 @@ This is the setter for:<BR>
    public void setCount(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _count)
+       if (__Init == InitMode.CREATE || v != _count)
         {
           __Changes.or(TILDA__KEY_Factory.COLS.COUNT._Mask);
           __Nulls.andNot(TILDA__KEY_Factory.COLS.COUNT._Mask);

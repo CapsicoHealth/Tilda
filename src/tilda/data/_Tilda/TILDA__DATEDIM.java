@@ -292,436 +292,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD>The timestamp for when the record was deleted. (TILDA.DateDim)</TD>
 </TR>
 </TABLE></BLOCKQUOTE>
-<DIV id='DateDim-dt_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('DateDim-dt_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim-dt_DIV'>dt</a> -- DATE</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='DateDim-epoch_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('DateDim-epoch_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim-epoch_DIV'>epoch</a> -- LONG</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='DateDim-dayName_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('DateDim-dayName_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim-dayName_DIV'>dayName</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='DateDim-dayOfWeek_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('DateDim-dayOfWeek_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim-dayOfWeek_DIV'>dayOfWeek</a> -- INTEGER</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='DateDim-dayOfMonth_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('DateDim-dayOfMonth_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim-dayOfMonth_DIV'>dayOfMonth</a> -- INTEGER</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='DateDim-dayOfQuarter_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('DateDim-dayOfQuarter_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim-dayOfQuarter_DIV'>dayOfQuarter</a> -- INTEGER</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='DateDim-dayOfYear_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('DateDim-dayOfYear_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim-dayOfYear_DIV'>dayOfYear</a> -- INTEGER</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='DateDim-weekOfMonth_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('DateDim-weekOfMonth_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim-weekOfMonth_DIV'>weekOfMonth</a> -- INTEGER</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='DateDim-weekOfYear_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('DateDim-weekOfYear_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim-weekOfYear_DIV'>weekOfYear</a> -- INTEGER</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='DateDim-monthOfYear_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('DateDim-monthOfYear_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim-monthOfYear_DIV'>monthOfYear</a> -- INTEGER</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='DateDim-monthName_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('DateDim-monthName_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim-monthName_DIV'>monthName</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='DateDim-monthNameShort_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('DateDim-monthNameShort_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim-monthNameShort_DIV'>monthNameShort</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='DateDim-quarterOfYear_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('DateDim-quarterOfYear_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim-quarterOfYear_DIV'>quarterOfYear</a> -- INTEGER</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='DateDim-quarterName_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('DateDim-quarterName_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim-quarterName_DIV'>quarterName</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='DateDim-year_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('DateDim-year_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim-year_DIV'>year</a> -- INTEGER</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='DateDim-mmyyyy_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('DateDim-mmyyyy_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim-mmyyyy_DIV'>mmyyyy</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='DateDim-mmddyyyy_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('DateDim-mmddyyyy_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim-mmddyyyy_DIV'>mmddyyyy</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='DateDim-yyyymmdd_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('DateDim-yyyymmdd_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim-yyyymmdd_DIV'>yyyymmdd</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='DateDim-isWeekend_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('DateDim-isWeekend_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim-isWeekend_DIV'>isWeekend</a> -- INTEGER</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='DateDim-isBusinessDay_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('DateDim-isBusinessDay_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim-isBusinessDay_DIV'>isBusinessDay</a> -- INTEGER</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='DateDim-isHoliday_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('DateDim-isHoliday_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim-isHoliday_DIV'>isHoliday</a> -- INTEGER</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='DateDim-holidayName_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('DateDim-holidayName_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim-holidayName_DIV'>holidayName</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='DateDim-created_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('DateDim-created_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim-created_DIV'>created</a> -- DATETIME</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='DateDim-lastUpdated_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('DateDim-lastUpdated_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim-lastUpdated_DIV'>lastUpdated</a> -- DATETIME</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='DateDim-deleted_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('DateDim-deleted_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateDim-deleted_DIV'>deleted</a> -- DATETIME</td>
-</tr>
-</table>
-</DIV></DIV>
 </DIV>
 
- @author   Tilda code gen for Java 8/PostgreSQL
- @version  Tilda 1.0
- @generated Dec 27 2018, 10:36:33EST
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__DATEDIM implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
@@ -898,7 +470,7 @@ This is the setter for:<BR>
    public void setEpoch(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _epoch)
+       if (__Init == InitMode.CREATE || v != _epoch)
         {
           __Changes.or(TILDA__DATEDIM_Factory.COLS.EPOCH._Mask);
           __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.EPOCH._Mask);
@@ -1166,7 +738,7 @@ This is the setter for:<BR>
    public void setDayOfWeek(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _dayOfWeek)
+       if (__Init == InitMode.CREATE || v != _dayOfWeek)
         {
           __Changes.or(TILDA__DATEDIM_Factory.COLS.DAYOFWEEK._Mask);
           __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.DAYOFWEEK._Mask);
@@ -1308,7 +880,7 @@ This is the setter for:<BR>
    public void setDayOfMonth(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _dayOfMonth)
+       if (__Init == InitMode.CREATE || v != _dayOfMonth)
         {
           __Changes.or(TILDA__DATEDIM_Factory.COLS.DAYOFMONTH._Mask);
           __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.DAYOFMONTH._Mask);
@@ -1450,7 +1022,7 @@ This is the setter for:<BR>
    public void setDayOfQuarter(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _dayOfQuarter)
+       if (__Init == InitMode.CREATE || v != _dayOfQuarter)
         {
           __Changes.or(TILDA__DATEDIM_Factory.COLS.DAYOFQUARTER._Mask);
           __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.DAYOFQUARTER._Mask);
@@ -1592,7 +1164,7 @@ This is the setter for:<BR>
    public void setDayOfYear(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _dayOfYear)
+       if (__Init == InitMode.CREATE || v != _dayOfYear)
         {
           __Changes.or(TILDA__DATEDIM_Factory.COLS.DAYOFYEAR._Mask);
           __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.DAYOFYEAR._Mask);
@@ -1734,7 +1306,7 @@ This is the setter for:<BR>
    public void setWeekOfMonth(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _weekOfMonth)
+       if (__Init == InitMode.CREATE || v != _weekOfMonth)
         {
           __Changes.or(TILDA__DATEDIM_Factory.COLS.WEEKOFMONTH._Mask);
           __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.WEEKOFMONTH._Mask);
@@ -1876,7 +1448,7 @@ This is the setter for:<BR>
    public void setWeekOfYear(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _weekOfYear)
+       if (__Init == InitMode.CREATE || v != _weekOfYear)
         {
           __Changes.or(TILDA__DATEDIM_Factory.COLS.WEEKOFYEAR._Mask);
           __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.WEEKOFYEAR._Mask);
@@ -2018,7 +1590,7 @@ This is the setter for:<BR>
    public void setMonthOfYear(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _monthOfYear)
+       if (__Init == InitMode.CREATE || v != _monthOfYear)
         {
           __Changes.or(TILDA__DATEDIM_Factory.COLS.MONTHOFYEAR._Mask);
           __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.MONTHOFYEAR._Mask);
@@ -2468,7 +2040,7 @@ This is the setter for:<BR>
    public void setQuarterOfYear(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _quarterOfYear)
+       if (__Init == InitMode.CREATE || v != _quarterOfYear)
         {
           __Changes.or(TILDA__DATEDIM_Factory.COLS.QUARTEROFYEAR._Mask);
           __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.QUARTEROFYEAR._Mask);
@@ -2764,7 +2336,7 @@ This is the setter for:<BR>
    public void setYear(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _year)
+       if (__Init == InitMode.CREATE || v != _year)
         {
           __Changes.or(TILDA__DATEDIM_Factory.COLS.YEAR._Mask);
           __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.YEAR._Mask);
@@ -3368,7 +2940,7 @@ This is the setter for:<BR>
    public void setIsWeekend(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _isWeekend)
+       if (__Init == InitMode.CREATE || v != _isWeekend)
         {
           __Changes.or(TILDA__DATEDIM_Factory.COLS.ISWEEKEND._Mask);
           __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.ISWEEKEND._Mask);
@@ -3510,7 +3082,7 @@ This is the setter for:<BR>
    public void setIsBusinessDay(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _isBusinessDay)
+       if (__Init == InitMode.CREATE || v != _isBusinessDay)
         {
           __Changes.or(TILDA__DATEDIM_Factory.COLS.ISBUSINESSDAY._Mask);
           __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.ISBUSINESSDAY._Mask);
@@ -3652,7 +3224,7 @@ This is the setter for:<BR>
    public void setIsHoliday(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _isHoliday)
+       if (__Init == InitMode.CREATE || v != _isHoliday)
         {
           __Changes.or(TILDA__DATEDIM_Factory.COLS.ISHOLIDAY._Mask);
           __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.ISHOLIDAY._Mask);
@@ -4849,7 +4421,7 @@ This is the hasChanged for:<BR>
           switch (__LookupId)
            {
              case 0:
-               PS.setDate(++i, new java.sql.Date(_dt.getYear(), _dt.getMonthValue(), _dt.getDayOfMonth()));
+               PS.setDate(++i, new java.sql.Date(_dt.getYear()-1900, _dt.getMonthValue()-1, _dt.getDayOfMonth()));
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -4959,7 +4531,7 @@ This is the hasChanged for:<BR>
           switch (__LookupId)
            {
              case 0:
-               PS.setDate(++i, new java.sql.Date(_dt.getYear(), _dt.getMonthValue(), _dt.getDayOfMonth()));
+               PS.setDate(++i, new java.sql.Date(_dt.getYear()-1900, _dt.getMonthValue()-1, _dt.getDayOfMonth()));
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");

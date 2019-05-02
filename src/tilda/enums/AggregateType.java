@@ -97,7 +97,15 @@ public enum AggregateType
               throw new Error("Incomplete Switch statment: unknown ColumnType " + this.name() + ";");
           }
       }
-    
+
+    public AggregateType getComposedAggregate()
+      {
+        if (isComposable() == false)
+          return null;
+
+        return this == COUNT ? SUM : this;
+      }
+
     public boolean isOrderable()
       {
         switch (this)
@@ -118,6 +126,5 @@ public enum AggregateType
               throw new Error("Incomplete Switch statment: unknown ColumnType " + this.name() + ";");
           }
       }
-    
 
   }

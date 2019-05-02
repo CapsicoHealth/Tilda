@@ -128,6 +128,14 @@ public class TextUtil
               EscapeSingleQuoteForSQL(X, s);
             }
       }
+    public static final String EscapeSingleQuoteForSQL(String[] S, boolean First)
+      {
+        StringBuilder Str = new StringBuilder();
+        EscapeSingleQuoteForSQL(Str, S, First);
+        return Str.toString();
+      }
+    
+    
 
     public static void EscapeSingleQuoteForSQL(StringBuilder X, char[] S, boolean First)
       {

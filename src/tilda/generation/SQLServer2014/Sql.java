@@ -509,4 +509,10 @@ public class Sql extends MSSQL implements CodeGenSql
         throw new UnsupportedOperationException();
       }
 
+    @Override
+    public String getDDLMetadataVersion()
+      {
+        throw new UnsupportedOperationException();
+      }
+
   }

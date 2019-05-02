@@ -64,7 +64,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>3&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('ObjectPerf-startPeriodTZ')" align="right"><B id='ObjectPerf-startPeriodTZ_DIV' class='columns dotted_underline cursor_pointer'>startPeriodTZ</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='ObjectPerf-startPeriodTZ_DIV' class='columns'>startPeriodTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
@@ -86,7 +86,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>5&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('ObjectPerf-endPeriodTZ')" align="right"><B id='ObjectPerf-endPeriodTZ_DIV' class='columns dotted_underline cursor_pointer'>endPeriodTZ</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='ObjectPerf-endPeriodTZ_DIV' class='columns'>endPeriodTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
@@ -329,380 +329,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD>The timestamp for when the record was deleted. (TILDA.ObjectPerf)</TD>
 </TR>
 </TABLE></BLOCKQUOTE>
-<DIV id='ObjectPerf-schemaName_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('ObjectPerf-schemaName_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#ObjectPerf_DIV'>ObjectPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#ObjectPerf-schemaName_DIV'>schemaName</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='ObjectPerf-objectName_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('ObjectPerf-objectName_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#ObjectPerf_DIV'>ObjectPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#ObjectPerf-objectName_DIV'>objectName</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='ObjectPerf-startPeriodTZ_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('ObjectPerf-startPeriodTZ_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#ObjectPerf_DIV'>ObjectPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#ObjectPerf-startPeriodTZ_DIV'>startPeriodTZ</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#ZoneInfo_DIV'>ZoneInfo</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#ZoneInfo-id_DIV'>id</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='ObjectPerf-startPeriod_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('ObjectPerf-startPeriod_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#ObjectPerf_DIV'>ObjectPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#ObjectPerf-startPeriod_DIV'>startPeriod</a> -- DATETIME</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='ObjectPerf-endPeriodTZ_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('ObjectPerf-endPeriodTZ_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#ObjectPerf_DIV'>ObjectPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#ObjectPerf-endPeriodTZ_DIV'>endPeriodTZ</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#ZoneInfo_DIV'>ZoneInfo</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#ZoneInfo-id_DIV'>id</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='ObjectPerf-endPeriod_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('ObjectPerf-endPeriod_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#ObjectPerf_DIV'>ObjectPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#ObjectPerf-endPeriod_DIV'>endPeriod</a> -- DATETIME</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='ObjectPerf-selectNano_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('ObjectPerf-selectNano_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#ObjectPerf_DIV'>ObjectPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#ObjectPerf-selectNano_DIV'>selectNano</a> -- LONG</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='ObjectPerf-selectCount_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('ObjectPerf-selectCount_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#ObjectPerf_DIV'>ObjectPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#ObjectPerf-selectCount_DIV'>selectCount</a> -- INTEGER</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='ObjectPerf-selectRecords_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('ObjectPerf-selectRecords_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#ObjectPerf_DIV'>ObjectPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#ObjectPerf-selectRecords_DIV'>selectRecords</a> -- INTEGER</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='ObjectPerf-insertNano_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('ObjectPerf-insertNano_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#ObjectPerf_DIV'>ObjectPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#ObjectPerf-insertNano_DIV'>insertNano</a> -- LONG</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='ObjectPerf-insertCount_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('ObjectPerf-insertCount_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#ObjectPerf_DIV'>ObjectPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#ObjectPerf-insertCount_DIV'>insertCount</a> -- INTEGER</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='ObjectPerf-insertRecords_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('ObjectPerf-insertRecords_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#ObjectPerf_DIV'>ObjectPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#ObjectPerf-insertRecords_DIV'>insertRecords</a> -- INTEGER</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='ObjectPerf-updateNano_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('ObjectPerf-updateNano_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#ObjectPerf_DIV'>ObjectPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#ObjectPerf-updateNano_DIV'>updateNano</a> -- LONG</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='ObjectPerf-updateCount_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('ObjectPerf-updateCount_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#ObjectPerf_DIV'>ObjectPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#ObjectPerf-updateCount_DIV'>updateCount</a> -- INTEGER</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='ObjectPerf-updateRecords_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('ObjectPerf-updateRecords_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#ObjectPerf_DIV'>ObjectPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#ObjectPerf-updateRecords_DIV'>updateRecords</a> -- INTEGER</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='ObjectPerf-deleteNano_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('ObjectPerf-deleteNano_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#ObjectPerf_DIV'>ObjectPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#ObjectPerf-deleteNano_DIV'>deleteNano</a> -- LONG</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='ObjectPerf-deleteCount_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('ObjectPerf-deleteCount_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#ObjectPerf_DIV'>ObjectPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#ObjectPerf-deleteCount_DIV'>deleteCount</a> -- INTEGER</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='ObjectPerf-deleteRecords_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('ObjectPerf-deleteRecords_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#ObjectPerf_DIV'>ObjectPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#ObjectPerf-deleteRecords_DIV'>deleteRecords</a> -- INTEGER</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='ObjectPerf-created_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('ObjectPerf-created_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#ObjectPerf_DIV'>ObjectPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#ObjectPerf-created_DIV'>created</a> -- DATETIME</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='ObjectPerf-lastUpdated_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('ObjectPerf-lastUpdated_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#ObjectPerf_DIV'>ObjectPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#ObjectPerf-lastUpdated_DIV'>lastUpdated</a> -- DATETIME</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='ObjectPerf-deleted_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('ObjectPerf-deleted_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#ObjectPerf_DIV'>ObjectPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#ObjectPerf-deleted_DIV'>deleted</a> -- DATETIME</td>
-</tr>
-</table>
-</DIV></DIV>
 </DIV>
 
- @author   Tilda code gen for Java 8/PostgreSQL
- @version  Tilda 1.0
- @generated Dec 27 2018, 10:36:33EST
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__OBJECTPERF implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
@@ -1469,7 +1097,7 @@ This is the setter for:<BR>
    public void setSelectNano(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _selectNano)
+       if (__Init == InitMode.CREATE || v != _selectNano)
         {
           __Changes.or(TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask);
           __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask);
@@ -1630,7 +1258,7 @@ This is the setter for:<BR>
    public void setSelectCount(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _selectCount)
+       if (__Init == InitMode.CREATE || v != _selectCount)
         {
           __Changes.or(TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask);
           __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask);
@@ -1791,7 +1419,7 @@ This is the setter for:<BR>
    public void setSelectRecords(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _selectRecords)
+       if (__Init == InitMode.CREATE || v != _selectRecords)
         {
           __Changes.or(TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask);
           __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask);
@@ -1952,7 +1580,7 @@ This is the setter for:<BR>
    public void setInsertNano(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _insertNano)
+       if (__Init == InitMode.CREATE || v != _insertNano)
         {
           __Changes.or(TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask);
           __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask);
@@ -2113,7 +1741,7 @@ This is the setter for:<BR>
    public void setInsertCount(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _insertCount)
+       if (__Init == InitMode.CREATE || v != _insertCount)
         {
           __Changes.or(TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask);
           __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask);
@@ -2274,7 +1902,7 @@ This is the setter for:<BR>
    public void setInsertRecords(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _insertRecords)
+       if (__Init == InitMode.CREATE || v != _insertRecords)
         {
           __Changes.or(TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask);
           __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask);
@@ -2435,7 +2063,7 @@ This is the setter for:<BR>
    public void setUpdateNano(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _updateNano)
+       if (__Init == InitMode.CREATE || v != _updateNano)
         {
           __Changes.or(TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask);
           __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask);
@@ -2596,7 +2224,7 @@ This is the setter for:<BR>
    public void setUpdateCount(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _updateCount)
+       if (__Init == InitMode.CREATE || v != _updateCount)
         {
           __Changes.or(TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask);
           __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask);
@@ -2757,7 +2385,7 @@ This is the setter for:<BR>
    public void setUpdateRecords(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _updateRecords)
+       if (__Init == InitMode.CREATE || v != _updateRecords)
         {
           __Changes.or(TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask);
           __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask);
@@ -2918,7 +2546,7 @@ This is the setter for:<BR>
    public void setDeleteNano(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _deleteNano)
+       if (__Init == InitMode.CREATE || v != _deleteNano)
         {
           __Changes.or(TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask);
           __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask);
@@ -3079,7 +2707,7 @@ This is the setter for:<BR>
    public void setDeleteCount(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _deleteCount)
+       if (__Init == InitMode.CREATE || v != _deleteCount)
         {
           __Changes.or(TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask);
           __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask);
@@ -3240,7 +2868,7 @@ This is the setter for:<BR>
    public void setDeleteRecords(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _deleteRecords)
+       if (__Init == InitMode.CREATE || v != _deleteRecords)
         {
           __Changes.or(TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask);
           __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask);

@@ -44,6 +44,7 @@ public class Object extends Base
     /*@formatter:off*/
     @SerializedName("occ"           ) public boolean              _OCC        = true ;
     @SerializedName("dbOnly"        ) public Boolean              _DBOnly_DEPRECATED;
+    @SerializedName("tzFk"          ) public Boolean              _TZFK       = true;
     @SerializedName("mode"          ) public String               _ModeStr    ;
     @SerializedName("etl"           ) public boolean              _ETL        = false;
     @SerializedName("lc"            ) public String               _LCStr      ;
@@ -62,6 +63,7 @@ public class Object extends Base
     public transient boolean              _HasUniqueIndex;
     public transient boolean              _HasUniqueQuery;
     public transient FrameworkSourcedType _FST         = FrameworkSourcedType.NONE;
+    public transient View                 _SourceView  = null; // For tables such as Realized tables generated out of views.
     public transient ObjectLifecycle      _LC;
     public transient ObjectMode           _Mode;
 
@@ -186,10 +188,9 @@ public class Object extends Base
                         TZCol.Validate(PS, this);
                         if (ColumnNames.add(TZCol.getName().toUpperCase()) == false)
                           PS.AddError("Generated column '" + TZCol.getFullName() + "' conflicts with another column already named the same in Object '" + getFullName() + "'.");
-                        if (C.isCollection() == false)
+                        if (C.isCollection() == false && _TZFK==true)
                           {
-                            addForeignKey(C.getName(), new String[] { TZCol.getName()
-                            }, "tilda.data.TILDA.ZONEINFO");
+                            addForeignKey(C.getName(), new String[] { TZCol.getName()}, "tilda.data.TILDA.ZONEINFO");
                           }
                       }
                   }
@@ -531,6 +532,27 @@ public class Object extends Base
         if (Queries != null)
           for (SubWhereClause SWC : Queries)
             addQuery(SWC);
+      }
+
+    /**
+     * Returns the list of columns that represent the first identity of the object. If a PK is defined,
+     * the columns defined for it will be returned. Otherwise, the columns for the first defined unique index
+     * will be returned. Null is returned otherwise, that that should never happen because all Objects are required
+     * to have at least one identity.<BR>
+     * <BR>
+     * This method should only be called <B>AFTER</B> {@link Object#Validate(ParserSession, Schema)} has been called first.
+     * 
+     * @return
+     */
+    public List<Column> getFirstIdentityColumns()
+      {
+        if (_PrimaryKey != null)
+          return _PrimaryKey._ColumnObjs;
+        if (_Indices != null)
+          for (Index I : _Indices)
+            if (I._Unique == true)
+              return I._ColumnObjs;
+        return null;
       }
 
   }

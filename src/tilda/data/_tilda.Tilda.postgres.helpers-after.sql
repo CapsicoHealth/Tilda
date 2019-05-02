@@ -105,3 +105,20 @@ CREATE OR REPLACE FUNCTION Tilda.isInvalidDate("dt" TIMESTAMP WITH TIME ZONE)
     'select date_trunc(''day'', dt) = ''2017-07-14'';'
   LANGUAGE sql IMMUTABLE;
 
+
+CREATE OR REPLACE VIEW Tilda.FormulaDependencyFullView as
+with recursive R("formulaRefnum", "formulaLocation", "formulaName", "formulaDependencies", "columnDependencies") as (
+select FormulaDependencyView."formulaRefnum", "location" as "formulaLocation", "name" as "formulaName", ARRAY["dependentFormulaLocation"||'.'||"dependentFormulaName"] as "formulaDependencies", "referencedColumns" as "columnDependencies"
+  from Tilda.FormulaDependencyView
+UNION
+select FormulaDependencyView."formulaRefnum", "location" as "formulaLocation", "name" as "formulaName", ARRAY["dependentFormulaLocation"||'.'||"dependentFormulaName"] || R."formulaDependencies", "dependentReferencedColumns"||R."columnDependencies"
+  from Tilda.FormulaDependencyView
+     join R on R."formulaRefnum" = FormulaDependencyView."dependencyRefnum"
+)
+select distinct * 
+  from R
+;
+ 
+
+drop table if exists tilda.job_detail;
+drop table if exists tilda.jobs;

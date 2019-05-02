@@ -44,7 +44,7 @@ This Table contains the following columns:<BLOCKQUOTE>
    <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('DateLimitDim-invalidDate')" align="right"><B id='DateLimitDim-invalidDate_DIV' class='columns dotted_underline cursor_pointer'>invalidDate</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='DateLimitDim-invalidDate_DIV' class='columns'>invalidDate</B>&nbsp;&nbsp;</TD>
 <TD>LocalDate&nbsp;/&nbsp;date&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -56,7 +56,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>2&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('DateLimitDim-minDate')" align="right"><B id='DateLimitDim-minDate_DIV' class='columns dotted_underline cursor_pointer'>minDate</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='DateLimitDim-minDate_DIV' class='columns'>minDate</B>&nbsp;&nbsp;</TD>
 <TD>LocalDate&nbsp;/&nbsp;date&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -68,7 +68,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>3&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('DateLimitDim-maxDate')" align="right"><B id='DateLimitDim-maxDate_DIV' class='columns dotted_underline cursor_pointer'>maxDate</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='DateLimitDim-maxDate_DIV' class='columns'>maxDate</B>&nbsp;&nbsp;</TD>
 <TD>LocalDate&nbsp;/&nbsp;date&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -79,80 +79,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TD>
 </TR>
 </TABLE></BLOCKQUOTE>
-<DIV id='DateLimitDim-invalidDate_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('DateLimitDim-invalidDate_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateLimitDim_DIV'>DateLimitDim</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateLimitDim-invalidDate_DIV'>invalidDate</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#DateDim-dt_DIV'>dt</a> -- DATE</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='DateLimitDim-minDate_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('DateLimitDim-minDate_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateLimitDim_DIV'>DateLimitDim</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateLimitDim-minDate_DIV'>minDate</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#DateDim-dt_DIV'>dt</a> -- DATE</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='DateLimitDim-maxDate_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('DateLimitDim-maxDate_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateLimitDim_DIV'>DateLimitDim</a></td>
-<td><a href='TILDA___Docs.TILDA.html#DateLimitDim-maxDate_DIV'>maxDate</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#DateDim-dt_DIV'>dt</a> -- DATE</td>
-</tr>
-</table>
-</DIV></DIV>
 </DIV>
 
- @author   Tilda code gen for Java 8/PostgreSQL
- @version  Tilda 1.0
- @generated Dec 27 2018, 10:36:33EST
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__DATELIMITDIM implements tilda.interfaces.WriterObject
@@ -641,7 +569,7 @@ This is the hasChanged for:<BR>
           switch (__LookupId)
            {
              case 0:
-               PS.setDate(++i, new java.sql.Date(_invalidDate.getYear(), _invalidDate.getMonthValue(), _invalidDate.getDayOfMonth()));
+               PS.setDate(++i, new java.sql.Date(_invalidDate.getYear()-1900, _invalidDate.getMonthValue()-1, _invalidDate.getDayOfMonth()));
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -729,7 +657,7 @@ This is the hasChanged for:<BR>
           switch (__LookupId)
            {
              case 0:
-               PS.setDate(++i, new java.sql.Date(_invalidDate.getYear(), _invalidDate.getMonthValue(), _invalidDate.getDayOfMonth()));
+               PS.setDate(++i, new java.sql.Date(_invalidDate.getYear()-1900, _invalidDate.getMonthValue()-1, _invalidDate.getDayOfMonth()));
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");

@@ -61,7 +61,7 @@ public class Gen
                 if (PS.getErrorCount() > 0)
                   {
                     PS.printErrors();
-                    throw new java.lang.RuntimeException("There were parser session errors detected during gen.");
+                    throw new java.lang.RuntimeException("There were "+PS.getErrorCount()+" errors detected during gen.");
                   }
 
                 LOG.info("Loaded Tilda schema '" + PS._Main.getFullName() + "'.");

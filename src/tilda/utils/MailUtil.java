@@ -96,8 +96,8 @@ public class MailUtil
                 LOG.debug("No recipient. Not sending anything.");
                 return true;
               }
+            LastAddress = "FROM: "+From;
             email.setFrom(From);
-            LastAddress = From;
             email.setHtmlMsg(Message);
             if (Urgent == true)
               email.addHeader("X-Priority", "1");

@@ -310,8 +310,8 @@ public class Column extends TypeDef
          * }
          */
 
-        if (_Size != null && _Size != 0 && _Size != _SameAsObj._Size)
-          PS.AddError("Column '" + getFullName() + "' is a 'sameas' and is redefining a size '" + _Size + "' which doesn't match the destination column's size '" + _SameAsObj._Size + "'. Note that redefining a size for a sameas column is superfluous in the first place.");
+        if (_Size != null && _Size != 0 && _Size < _SameAsObj._Size)
+          PS.AddError("Column '" + getFullName() + "' is a 'sameas' and is redefining a size '" + _Size + "' that is lower that the origianal column's size '" + _SameAsObj._Size + "'. You can only enlarge a column (for example to go from a CHAR to a VARCHAR), not shrink it.");
         else if (_Mapper != null && _Mapper._Multi != MultiType.NONE)
           {
             _TypeStr += _Mapper._Multi == MultiType.LIST ? "[]"
@@ -520,6 +520,11 @@ public class Column extends TypeDef
         return _SequenceOrder;
       }
 
+    /**
+     * returns a comma-separated string containing the <B>unescaped</B> column short names
+     * @param L
+     * @return
+     */
     public static String PrintColumnList(List<Column> L)
       {
         StringBuilder Str = new StringBuilder();
@@ -551,5 +556,4 @@ public class Column extends TypeDef
       {
         return getType() == ColumnType.DATETIME && _FCT == FrameworkColumnType.NONE;
       }
-
   }

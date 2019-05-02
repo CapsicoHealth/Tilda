@@ -48,6 +48,20 @@ public class Index
 
     public transient Base            _Parent;
 
+    public Index()
+      {
+      }
+
+    public Index(Index I)
+      {
+        _Name = I._Name;
+        _Columns = I._Columns;
+        _OrderBy = I._OrderBy;
+        _Db = I._Db;
+        _SubWhere = I._SubWhere;
+        _SubQuery = new SubWhereClause(I._SubQuery);
+      }
+
     public String getName()
       {
         return _Parent._OriginalName + "_" + _Name;

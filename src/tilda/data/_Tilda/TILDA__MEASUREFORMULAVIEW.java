@@ -40,7 +40,7 @@ This View contains the following columns:<BLOCKQUOTE>
    <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('MeasureFormulaView-measureRefnum')" align="right"><B id='MeasureFormulaView-measureRefnum_DIV' class='columns dotted_underline cursor_pointer'>measureRefnum</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='MeasureFormulaView-measureRefnum_DIV' class='columns'>measureRefnum</B>&nbsp;&nbsp;</TD>
 <TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -50,7 +50,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>2&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('MeasureFormulaView-measureSchema')" align="right"><B id='MeasureFormulaView-measureSchema_DIV' class='columns dotted_underline cursor_pointer'>measureSchema</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='MeasureFormulaView-measureSchema_DIV' class='columns'>measureSchema</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(64)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -60,7 +60,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>3&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('MeasureFormulaView-measureName')" align="right"><B id='MeasureFormulaView-measureName_DIV' class='columns dotted_underline cursor_pointer'>measureName</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='MeasureFormulaView-measureName_DIV' class='columns'>measureName</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(64)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -70,7 +70,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>4&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('MeasureFormulaView-formulaRefnum')" align="right"><B id='MeasureFormulaView-formulaRefnum_DIV' class='columns dotted_underline cursor_pointer'>formulaRefnum</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='MeasureFormulaView-formulaRefnum_DIV' class='columns'>formulaRefnum</B>&nbsp;&nbsp;</TD>
 <TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -80,7 +80,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>5&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('MeasureFormulaView-formulaLocation')" align="right"><B id='MeasureFormulaView-formulaLocation_DIV' class='columns dotted_underline cursor_pointer'>formulaLocation</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='MeasureFormulaView-formulaLocation_DIV' class='columns'>formulaLocation</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(64)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -90,7 +90,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>6&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('MeasureFormulaView-formulaLocation2')" align="right"><B id='MeasureFormulaView-formulaLocation2_DIV' class='columns dotted_underline cursor_pointer'>formulaLocation2</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='MeasureFormulaView-formulaLocation2_DIV' class='columns'>formulaLocation2</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(64)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -100,7 +100,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>7&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('MeasureFormulaView-formulaName')" align="right"><B id='MeasureFormulaView-formulaName_DIV' class='columns dotted_underline cursor_pointer'>formulaName</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='MeasureFormulaView-formulaName_DIV' class='columns'>formulaName</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(64)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -110,7 +110,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>8&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('MeasureFormulaView-title')" align="right"><B id='MeasureFormulaView-title_DIV' class='columns dotted_underline cursor_pointer'>title</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='MeasureFormulaView-title_DIV' class='columns'>title</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(128)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -120,7 +120,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>9&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('MeasureFormulaView-description')" align="right"><B id='MeasureFormulaView-description_DIV' class='columns dotted_underline cursor_pointer'>description</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='MeasureFormulaView-description_DIV' class='columns'>description</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;text&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -130,7 +130,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>10&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('MeasureFormulaView-type')" align="right"><B id='MeasureFormulaView-type_DIV' class='columns dotted_underline cursor_pointer'>type</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='MeasureFormulaView-type_DIV' class='columns'>type</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(3)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -154,7 +154,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>11&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('MeasureFormulaView-formula')" align="right"><B id='MeasureFormulaView-formula_DIV' class='columns dotted_underline cursor_pointer'>formula</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='MeasureFormulaView-formula_DIV' class='columns'>formula</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;text&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -163,269 +163,8 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD>The formula.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Formula-formula_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Formula<B>&nbsp;&#8226;&nbsp;</B>formula</A></DIV></TD>
 </TR>
 </TABLE></BLOCKQUOTE>
-<DIV id='MeasureFormulaView-measureRefnum_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('MeasureFormulaView-measureRefnum_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#MeasureFormulaView_DIV'>MeasureFormulaView</a></td>
-<td><a href='TILDA___Docs.TILDA.html#MeasureFormulaView-measureRefnum_DIV'>measureRefnum</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#MeasureFormula_DIV'>MeasureFormula</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#MeasureFormula-measureRefnum_DIV'>measureRefnum</a></td>
-</tr>
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Measure_DIV'>Measure</a></td>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Measure-refnum_DIV'>refnum</a> -- LONG</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='MeasureFormulaView-measureSchema_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('MeasureFormulaView-measureSchema_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#MeasureFormulaView_DIV'>MeasureFormulaView</a></td>
-<td><a href='TILDA___Docs.TILDA.html#MeasureFormulaView-measureSchema_DIV'>measureSchema</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Measure_DIV'>Measure</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Measure-schema_DIV'>schema</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='MeasureFormulaView-measureName_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('MeasureFormulaView-measureName_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#MeasureFormulaView_DIV'>MeasureFormulaView</a></td>
-<td><a href='TILDA___Docs.TILDA.html#MeasureFormulaView-measureName_DIV'>measureName</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Measure_DIV'>Measure</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Measure-name_DIV'>name</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='MeasureFormulaView-formulaRefnum_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('MeasureFormulaView-formulaRefnum_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#MeasureFormulaView_DIV'>MeasureFormulaView</a></td>
-<td><a href='TILDA___Docs.TILDA.html#MeasureFormulaView-formulaRefnum_DIV'>formulaRefnum</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Formula_DIV'>Formula</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Formula-refnum_DIV'>refnum</a> -- LONG</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='MeasureFormulaView-formulaLocation_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('MeasureFormulaView-formulaLocation_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#MeasureFormulaView_DIV'>MeasureFormulaView</a></td>
-<td><a href='TILDA___Docs.TILDA.html#MeasureFormulaView-formulaLocation_DIV'>formulaLocation</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Formula_DIV'>Formula</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Formula-location_DIV'>location</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='MeasureFormulaView-formulaLocation2_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('MeasureFormulaView-formulaLocation2_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#MeasureFormulaView_DIV'>MeasureFormulaView</a></td>
-<td><a href='TILDA___Docs.TILDA.html#MeasureFormulaView-formulaLocation2_DIV'>formulaLocation2</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Formula_DIV'>Formula</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Formula-location2_DIV'>location2</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='MeasureFormulaView-formulaName_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('MeasureFormulaView-formulaName_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#MeasureFormulaView_DIV'>MeasureFormulaView</a></td>
-<td><a href='TILDA___Docs.TILDA.html#MeasureFormulaView-formulaName_DIV'>formulaName</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Formula_DIV'>Formula</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Formula-name_DIV'>name</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='MeasureFormulaView-title_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('MeasureFormulaView-title_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#MeasureFormulaView_DIV'>MeasureFormulaView</a></td>
-<td><a href='TILDA___Docs.TILDA.html#MeasureFormulaView-title_DIV'>title</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Formula_DIV'>Formula</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Formula-title_DIV'>title</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='MeasureFormulaView-description_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('MeasureFormulaView-description_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#MeasureFormulaView_DIV'>MeasureFormulaView</a></td>
-<td><a href='TILDA___Docs.TILDA.html#MeasureFormulaView-description_DIV'>description</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Formula_DIV'>Formula</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Formula-description_DIV'>description</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='MeasureFormulaView-type_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('MeasureFormulaView-type_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#MeasureFormulaView_DIV'>MeasureFormulaView</a></td>
-<td><a href='TILDA___Docs.TILDA.html#MeasureFormulaView-type_DIV'>type</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Formula_DIV'>Formula</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Formula-type_DIV'>type</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='MeasureFormulaView-formula_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('MeasureFormulaView-formula_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#MeasureFormulaView_DIV'>MeasureFormulaView</a></td>
-<td><a href='TILDA___Docs.TILDA.html#MeasureFormulaView-formula_DIV'>formula</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Formula_DIV'>Formula</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Formula-formula_DIV'>formula</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
 </DIV>
 
- @author   Tilda code gen for Java 8/PostgreSQL
- @version  Tilda 1.0
- @generated Dec 27 2018, 10:36:33EST
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__MEASUREFORMULAVIEW implements tilda.interfaces.ReaderObject
@@ -523,7 +262,7 @@ This is the setter for:<BR>
     void setMeasureRefnum(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _measureRefnum)
+       if (__Init == InitMode.CREATE || v != _measureRefnum)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.MeasureFormulaView.measureRefnum' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -765,7 +504,7 @@ This is the setter for:<BR>
     void setFormulaRefnum(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _formulaRefnum)
+       if (__Init == InitMode.CREATE || v != _formulaRefnum)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.MeasureFormulaView.formulaRefnum' that is invariant, or part of a read-only or pre-existing WORM object.");

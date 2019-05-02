@@ -278,7 +278,7 @@ public class Migrator
                 Helpers = true;
               }
           }
-        
+
         if (S._ExtraDDL != null && S._ExtraDDL._Before != null)
           for (String ddl : S._ExtraDDL._Before)
             {
@@ -321,10 +321,10 @@ public class Migrator
                       {
                         if (Col._Description.equalsIgnoreCase(CMeta._Descr) == false)
                           Actions.add(new ColumnComment(Col));
-                        
+
                         // Check default values
                         checkDefaultValue(Actions, Col, CMeta);
-                        
+
                         // Check arrays
                         if (CheckArrays(DBMeta, Errors, Col, CMeta) == false)
                           continue;
@@ -441,25 +441,24 @@ public class Migrator
                 // Actions.add(new CommitPoint());
 
                 // Cleaning any Indices that share the same signature, but differing names. Cleaning up Indices that are not unique, but share a name defined in the schema.
-                Set<String> Signatures = new HashSet<String>();
+                Set<String> DroppedSignatures = new HashSet<String>(); // Dropped Signatures
                 for (Index IX : Obj._Indices)
                   {
-                    if (IX._Db)
+                    if (IX == null || IX._Db == false)
+                      continue;
+                    for (IndexMeta ix : TMeta._Indices.values())
                       {
-                        for (IndexMeta ix : TMeta._Indices.values())
+                        if (IX.getSignature().equals(ix.getSignature())
+                        && !ix._Name.toLowerCase().equals(TMeta._TableName.toLowerCase() + "_pkey"))
                           {
-                            if (IX.getSignature().equals(ix.getSignature())
-                            && !ix._Name.toLowerCase().equals(TMeta._TableName.toLowerCase() + "_pkey"))
+                            if (ix._Unique
+                            && (ix._Name.equals(ix._Name.toLowerCase()) == false
+                            || ix._Name.equalsIgnoreCase(IX.getName()) == false))
                               {
-                                if (ix._Unique
-                                && (ix._Name.equals(ix._Name.toLowerCase()) == false
-                                || ix._Name.equalsIgnoreCase(IX.getName()) == false))
-                                  {
-                                    Errors.add("Index " + ix._Name + " is unique and contains the same signature as " + IX.getName() + " in the " + IX._Parent._Name + " schema definition");
-                                  }
-                                else if (Signatures.add(ix.getSignature()) == false) // catches duplicate signatures by different names in db. First will be renamed below
-                                  Actions.add(new TableIndexDrop(Obj, ix));
+                                Errors.add("Index " + ix._Name + " is unique and contains the same signature as " + IX.getName() + " in the " + IX._Parent._Name + " schema definition");
                               }
+                            else if (DroppedSignatures.add(ix.getSignature()) == false) // catches duplicate signatures by different names in db. First will be renamed below
+                              Actions.add(new TableIndexDrop(Obj, ix));
                           }
                       }
                   }
@@ -467,40 +466,42 @@ public class Migrator
                 // Checking any Indices which are not in the DB, so they can be added.
                 for (Index IX : Obj._Indices)
                   {
-                    if (IX._Db)
+                    if (IX == null || IX._Db == false)
+                      continue;
+                    boolean Found = false;
+                    String Sig = IX.getSignature();
+
+                    for (IndexMeta ix : TMeta._Indices.values())
                       {
-                        boolean Found = false;
-                        String Sig = IX.getSignature();
-
-                        for (IndexMeta ix : TMeta._Indices.values())
+                        if (!ix._Name.toLowerCase().equals(TMeta._TableName.toLowerCase() + "_pkey"))
                           {
-                            if (!ix._Name.toLowerCase().equals(TMeta._TableName.toLowerCase() + "_pkey"))
-                              {
-                                String Sig1 = ix.getSignature();
+                            String Sig1 = ix.getSignature();
 
-                                if (Sig.equals(Sig1) == true)
+                            if (Sig.equals(Sig1) == true && DroppedSignatures.add(ix.getSignature()) == false)
+                              {
+                                Found = true;
+                                if (ix._Name.equals(ix._Name.toLowerCase()) == false // name in the DB is not lowercase, i.e., case insensitive
+                                || ix._Name.equalsIgnoreCase(IX.getName()) == false // same sig, but new index name
+                                )
                                   {
-                                    Found = true;
-                                    if (ix._Name.equals(ix._Name.toLowerCase()) == false // name in the DB is not lowercase, i.e., case insensitive
-                                    || ix._Name.equalsIgnoreCase(IX.getName()) == false // same sig, but new index name
-                                    )
-                                      {
-                                        Actions.add(new TableIndexRename(Obj, ix._Name, IX.getName()));
-                                      }
-                                    break;
+                                    if (TMeta._Indices.containsKey(IX.getName().toLowerCase()))
+                                      Errors.add("Index " + ix._Name + " is attempting to be renamed to " + IX.getName() + " but an index with that name already exists with a different signature in the database");
+
+                                    Actions.add(new TableIndexRename(Obj, ix._Name, IX.getName()));
                                   }
+                                break;
                               }
                           }
-                        if (Found == false)
-                          {
-                            IndexMeta IMeta = TMeta.getIndexMeta(IX.getName()); // Try case-sensitive fashion
-                            IndexMeta IMeta2 = TMeta.getIndexMeta(IX.getName().toLowerCase()); // Try case-insensitive fashion
-                            if (IMeta != null && IMeta2 != null)
-                              Actions.add(new TableIndexDrop(Obj, IMeta));
-                            if (IMeta2 != null)
-                              Actions.add(new TableIndexDrop(Obj, IMeta2));
-                            Actions.add(new TableIndexAdd(IX));
-                          }
+                      }
+                    if (Found == false)
+                      {
+                        IndexMeta IMeta = TMeta.getIndexMeta(IX.getName()); // Try case-sensitive fashion
+                        IndexMeta IMeta2 = TMeta.getIndexMeta(IX.getName().toLowerCase()); // Try case-insensitive fashion
+                        if (IMeta != null && IMeta2 != null)
+                          Actions.add(new TableIndexDrop(Obj, IMeta));
+                        if (IMeta2 != null)
+                          Actions.add(new TableIndexDrop(Obj, IMeta2));
+                        Actions.add(new TableIndexAdd(IX));
                       }
                   }
               }
@@ -525,7 +526,7 @@ public class Migrator
                     MigrationAction A = new DDLDependencyPreManagement(DdlDepMan);
                     boolean NeedsDdlDependencyManagement = A.isNeeded(C, DBMeta);
                     if (NeedsDdlDependencyManagement == true)
-                     Actions.add(A);
+                      Actions.add(A);
                     Actions.add(new ViewDrop(V));
                     Actions.add(new ViewCreate(V));
                     if (NeedsDdlDependencyManagement == true)
@@ -533,7 +534,7 @@ public class Migrator
                   }
               }
           }
-        
+
         if (S._ExtraDDL != null && S._ExtraDDL._After != null)
           for (String ddl : S._ExtraDDL._After)
             {
@@ -561,30 +562,29 @@ public class Migrator
     throws Exception
       {
         // Default values are a pain because (1) typing, and (2) the DB often rewrites the values. Therefore
-        // we have to some unholy gymnastics here. It's also hard-coded to Postgres knowledge here, which should be 
+        // we have to some unholy gymnastics here. It's also hard-coded to Postgres knowledge here, which should be
         // fixed when going multi-db.
-        String defaultValue =  Col._DefaultCreateValue == null
-                             ? null
-                             : Col.getType() == ColumnType.DATE || Col.getType() == ColumnType.DATETIME || Col.getType() == ColumnType.CHAR || Col.getType() == ColumnType.STRING
-                             ? ValueHelper.printValue(Col.getName(), Col.getType(), Col._DefaultCreateValue._Value)
-                             : Col._DefaultCreateValue._Value;
+        String defaultValue = Col._DefaultCreateValue == null
+        ? null
+        : Col.getType() == ColumnType.DATE || Col.getType() == ColumnType.DATETIME || Col.getType() == ColumnType.CHAR || Col.getType() == ColumnType.STRING
+        ? ValueHelper.printValue(Col.getName(), Col.getType(), Col._DefaultCreateValue._Value)
+        : Col._DefaultCreateValue._Value;
         String defaultValueDB = CMeta._Default;
         if (defaultValueDB != null)
-         {
-           int i = defaultValueDB.lastIndexOf("::");
-           if (i != -1)
-             defaultValueDB = defaultValueDB.substring(0, i);
-         }
+          {
+            int i = defaultValueDB.lastIndexOf("::");
+            if (i != -1)
+              defaultValueDB = defaultValueDB.substring(0, i);
+          }
         // The "UNDEFINED" value is 1111-11-11, but with timezones, it can change inside the database. So we truncate to 9 characters so we get '1111-11-1'
         if (Col.getType() == ColumnType.DATE || Col.getType() == ColumnType.DATETIME)
-         if (Col._DefaultCreateValue != null && Col._DefaultCreateValue._Value.equalsIgnoreCase("UNDEFINED") == true && defaultValueDB != null && defaultValueDB.length() > 9)
-          {
-            defaultValue = defaultValue.substring(0,10);
-            defaultValueDB = defaultValueDB.substring(0,10);
-          }
-        if (   defaultValue == null && defaultValueDB != null
-            || defaultValue != null && defaultValue.equals(defaultValueDB) == false
-           )
+          if (Col._DefaultCreateValue != null && Col._DefaultCreateValue._Value.equalsIgnoreCase("UNDEFINED") == true && defaultValueDB != null && defaultValueDB.length() > 9)
+            {
+              defaultValue = defaultValue.substring(0, 10);
+              defaultValueDB = defaultValueDB.substring(0, 10);
+            }
+        if (defaultValue == null && defaultValueDB != null
+        || defaultValue != null && defaultValue.equals(defaultValueDB) == false)
           Actions.add(new ColumnDefault(Col));
       }
 

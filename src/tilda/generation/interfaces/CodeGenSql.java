@@ -78,6 +78,7 @@ public interface CodeGenSql extends DBType, CodeGenBase
     throws Exception;
     public void genDDLComments(PrintWriter Out, View V)
     throws Exception;
+    public String getDDLMetadataVersion();
     public void genDDLMetadata(PrintWriter Out, View V)
     throws Exception;
 

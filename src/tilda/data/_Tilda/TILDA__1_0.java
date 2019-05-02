@@ -11,6 +11,10 @@ import tilda.performance.*;
 import tilda.utils.*;
 
 
+/** @author    Tilda code gen for Java 8/PostgreSQL
+    @version   Tilda 1.0
+    @generated May 2 2019, 15:39:02EDT
+*/
 public final class TILDA__1_0
  {
    protected static final Logger LOG = LogManager.getLogger(TILDA__1_0.class.getName());
@@ -60,8 +64,8 @@ public final class TILDA__1_0
       tilda.data._Tilda.TILDA__OBJECTPERF_Factory.initObject(C);
       tilda.data._Tilda.TILDA__TRANSPERF_Factory.initObject(C);
       tilda.data._Tilda.TILDA__CONNECTION_Factory.initObject(C);
-      tilda.data._Tilda.TILDA__JOBS_Factory.initObject(C);
-      tilda.data._Tilda.TILDA__JOB_DETAIL_Factory.initObject(C);
+      tilda.data._Tilda.TILDA__JOB_Factory.initObject(C);
+      tilda.data._Tilda.TILDA__JOBPART_Factory.initObject(C);
       tilda.data._Tilda.TILDA__REFILLPERF_Factory.initObject(C);
       tilda.data._Tilda.TILDA__MAINTENANCE_Factory.initObject(C);
       tilda.data._Tilda.TILDA__FORMULA_Factory.initObject(C);

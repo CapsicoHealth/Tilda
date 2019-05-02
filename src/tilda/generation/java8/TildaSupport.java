@@ -28,6 +28,8 @@ import tilda.generation.interfaces.CodeGenTildaSupport;
 import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
+import tilda.utils.DateTimeUtil;
+import tilda.utils.SystemValues;
 
 public class TildaSupport implements CodeGenTildaSupport
   {
@@ -41,7 +43,7 @@ public class TildaSupport implements CodeGenTildaSupport
 
     @Override
     public void genFileStart(PrintWriter Out, Schema S)
-      throws Exception
+    throws Exception
       {
         Out.println("package " + S._Package + "." + Helper.TILDA_GEN_PACKAGE + ";");
         Out.println();
@@ -58,8 +60,14 @@ public class TildaSupport implements CodeGenTildaSupport
 
     @Override
     public void genClassStart(PrintWriter Out, GeneratorSession G, Object O)
-      throws Exception
+    throws Exception
       {
+        Out.println(Helper.getMultiLineDocCommentStart()
+        + " @author    Tilda code gen for " + Helper.getCodeGenLanguage() + "/" + G.getSql().getName() + SystemValues.NEWLINE
+        + "    @version   Tilda 1.0" + SystemValues.NEWLINE
+        + "    @generated " + DateTimeUtil.printDateTimeFriendly(SystemValues.STARTUP_DATE, true, true) + SystemValues.NEWLINE
+        + Helper.getMultiLineCommentEnd()
+        );
         Out.println("public final class TILDA__" + Generator.TILDA_VERSION_VAROK);
         Out.println(" {");
         Out.println("   protected static final Logger LOG = LogManager.getLogger(TILDA__" + Generator.TILDA_VERSION_VAROK + ".class.getName());");
@@ -112,13 +120,13 @@ public class TildaSupport implements CodeGenTildaSupport
         Out.println("    {");
         for (Object O : S._Objects)
           if (O != null && O._Mode != ObjectMode.DB_ONLY)
-           Out.println("      " + Helper.getFullBaseClassName(O) + "_Factory.initObject(C);");
+            Out.println("      " + Helper.getFullBaseClassName(O) + "_Factory.initObject(C);");
         Out.println("    }");
       }
 
     @Override
     public void genClassEnd(PrintWriter Out, GeneratorSession G)
-      throws Exception
+    throws Exception
       {
         Out.println(" }");
       }

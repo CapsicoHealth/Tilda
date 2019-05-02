@@ -1,0 +1,17 @@
+{
+  "package": "tilda.data.tmp"
+ ,"dependencies": null
+ ,"extraDDL":{
+     "before":[]
+    ,"after":[]
+   }
+  
+ ,"enumerations": [
+   ]
+
+ ,"objects":[
+   ]
+    
+ ,"views": [
+   ]
+}

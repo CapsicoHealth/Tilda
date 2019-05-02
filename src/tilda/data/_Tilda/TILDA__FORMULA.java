@@ -148,6 +148,16 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>10&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Formula-referencedColumns_DIV' class='columns'>referencedColumns</B>&nbsp;&nbsp;</TD>
+<TD>List<String> List<>&nbsp;/&nbsp;text[]&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The list of columns this formula depends on.</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>11&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Formula-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -156,8 +166,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was created. (TILDA.Formula)</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>11&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>12&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Formula-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -166,8 +176,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was last updated. (TILDA.Formula)</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>12&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>13&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Formula-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -177,215 +187,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD>The timestamp for when the record was deleted. (TILDA.Formula)</TD>
 </TR>
 </TABLE></BLOCKQUOTE>
-<DIV id='Formula-refnum_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Formula-refnum_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Formula_DIV'>Formula</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Formula-refnum_DIV'>refnum</a> -- LONG</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Formula-location_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Formula-location_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Formula_DIV'>Formula</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Formula-location_DIV'>location</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Formula-location2_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Formula-location2_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Formula_DIV'>Formula</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Formula-location2_DIV'>location2</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Formula-name_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Formula-name_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Formula_DIV'>Formula</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Formula-name_DIV'>name</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Formula-type_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Formula-type_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Formula_DIV'>Formula</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Formula-type_DIV'>type</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Formula-title_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Formula-title_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Formula_DIV'>Formula</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Formula-title_DIV'>title</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Formula-description_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Formula-description_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Formula_DIV'>Formula</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Formula-description_DIV'>description</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Formula-formula_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Formula-formula_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Formula_DIV'>Formula</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Formula-formula_DIV'>formula</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Formula-htmlDoc_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Formula-htmlDoc_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Formula_DIV'>Formula</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Formula-htmlDoc_DIV'>htmlDoc</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Formula-created_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Formula-created_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Formula_DIV'>Formula</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Formula-created_DIV'>created</a> -- DATETIME</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Formula-lastUpdated_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Formula-lastUpdated_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Formula_DIV'>Formula</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Formula-lastUpdated_DIV'>lastUpdated</a> -- DATETIME</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Formula-deleted_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Formula-deleted_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Formula_DIV'>Formula</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Formula-deleted_DIV'>deleted</a> -- DATETIME</td>
-</tr>
-</table>
-</DIV></DIV>
 </DIV>
 
- @author   Tilda code gen for Java 8/PostgreSQL
- @version  Tilda 1.0
- @generated Dec 27 2018, 10:36:33EST
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__FORMULA implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
@@ -484,7 +287,7 @@ This is the setter for:<BR>
    protected void setRefnum(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _refnum)
+       if (__Init == InitMode.CREATE || v != _refnum)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Formula.refnum' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -1776,6 +1579,204 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Formula.referencedColumns -> TILDA.Formula."referencedColumns"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.referencedColumns of type List<String></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.referencedColumns of type text[]</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>null</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The list of columns this formula depends on.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   List<String> _referencedColumns;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Formula.referencedColumns -> TILDA.Formula."referencedColumns"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.referencedColumns of type List<String></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.referencedColumns of type text[]</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>null</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The list of columns this formula depends on.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final String[] getReferencedColumnsAsArray()
+      { return _referencedColumns==null? null : _referencedColumns.toArray(new String[_referencedColumns.size()]); }
+   public final Iterator<String> getReferencedColumns()
+      { return _referencedColumns==null? null : _referencedColumns.iterator(); }
+   public final boolean hasReferencedColumns(String v)
+      { return _referencedColumns==null? false : _referencedColumns.contains(v); }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Formula.referencedColumns -> TILDA.Formula."referencedColumns"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the isNull for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.referencedColumns of type List<String></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.referencedColumns of type text[]</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>null</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The list of columns this formula depends on.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final boolean isNullReferencedColumns()
+     { return __Nulls.intersects(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask); }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Formula.referencedColumns -> TILDA.Formula."referencedColumns"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.referencedColumns of type List<String></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.referencedColumns of type text[]</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>null</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The list of columns this formula depends on.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public void setReferencedColumns(List<String> v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (v == null  || v.isEmpty() == true)
+        setNullReferencedColumns();
+       else if (CollectionUtil.equals(v, _referencedColumns) == false)
+        {
+          __Changes.or(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask);
+          __Nulls.andNot(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask);
+          if (_referencedColumns == null)
+           {
+             _referencedColumns = new ArrayList<String>();
+           }
+          else
+           {
+             _referencedColumns.clear();
+           }
+          for (String i : v)
+           {
+             _referencedColumns.add(i);
+           }
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+   public void addToReferencedColumns(int pos, String v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (_referencedColumns == null)
+        _referencedColumns = new ArrayList<String>();
+       if (v == null)
+        {
+          setNullReferencedColumns();
+        }
+       else if (pos >= _referencedColumns.size() || _referencedColumns.get(pos).equals(v) == false)
+        {
+          __Changes.or(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask);
+          __Nulls.andNot(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask);
+          _referencedColumns.add(pos, v);
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+   public void removeFromReferencedColumns(String v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (_referencedColumns.remove(v) == true)
+          __Changes.or(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask);
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+   public void removeFromReferencedColumns(int pos) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (_referencedColumns.remove(pos) != null)
+        {
+          __Changes.or(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask);
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Formula.referencedColumns -> TILDA.Formula."referencedColumns"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the null setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.referencedColumns of type List<String></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.referencedColumns of type text[]</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>null</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The list of columns this formula depends on.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public void setNullReferencedColumns()
+     {
+       long T0 = System.nanoTime();
+       if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask) == true) // already NULL
+        return;
+       __Changes.or(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask);
+       __Nulls.or(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask);
+       _referencedColumns=null;
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Formula.referencedColumns -> TILDA.Formula."referencedColumns"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the hasChanged for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.referencedColumns of type List<String></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.referencedColumns of type text[]</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>null</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The list of columns this formula depends on.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public boolean hasChangedReferencedColumns()
+     { return __Changes.intersects(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask); }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Formula.created -> TILDA.Formula."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
@@ -2415,14 +2416,15 @@ This is the hasChanged for:<BR>
 */
    public void CopyTo(tilda.data._Tilda.TILDA__FORMULA Dst) throws Exception
      {
-       Dst.setName       (_name       );
-       Dst.setType       (_type       );
-       Dst.setTitle      (_title      );
-       Dst.setDescription(_description);
-       if (__Changes.intersects(TILDA__FORMULA_Factory.COLS.FORMULA._Mask) == true) Dst.setNullFormula    (); else        Dst.setFormula    (_formula    );
-       if (__Changes.intersects(TILDA__FORMULA_Factory.COLS.HTMLDOC._Mask) == true) Dst.setNullHtmlDoc    (); else        Dst.setHtmlDoc    (_htmlDoc    );
-       Dst.setLastUpdated(_lastUpdated);
-       if (__Changes.intersects(TILDA__FORMULA_Factory.COLS.DELETED._Mask) == true) Dst.setNullDeleted    (); else        Dst.setDeleted    (_deleted    );
+       Dst.setName             (_name             );
+       Dst.setType             (_type             );
+       Dst.setTitle            (_title            );
+       Dst.setDescription      (_description      );
+       if (__Changes.intersects(TILDA__FORMULA_Factory.COLS.FORMULA._Mask) == true) Dst.setNullFormula          (); else        Dst.setFormula          (_formula          );
+       if (__Changes.intersects(TILDA__FORMULA_Factory.COLS.HTMLDOC._Mask) == true) Dst.setNullHtmlDoc          (); else        Dst.setHtmlDoc          (_htmlDoc          );
+       if (__Changes.intersects(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask) == true) Dst.setNullReferencedColumns(); else        Dst.setReferencedColumns(_referencedColumns);
+       Dst.setLastUpdated      (_lastUpdated      );
+       if (__Changes.intersects(TILDA__FORMULA_Factory.COLS.DELETED._Mask) == true) Dst.setNullDeleted          (); else        Dst.setDeleted          (_deleted          );
      }
 
 /**
@@ -2464,6 +2466,7 @@ This is the hasChanged for:<BR>
           if (__Changes.intersects(TILDA__FORMULA_Factory.COLS.DESCRIPTION._Mask) == true) { TILDA__FORMULA_Factory.COLS.DESCRIPTION.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
           if (__Changes.intersects(TILDA__FORMULA_Factory.COLS.FORMULA._Mask) == true) { TILDA__FORMULA_Factory.COLS.FORMULA.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
           if (__Changes.intersects(TILDA__FORMULA_Factory.COLS.HTMLDOC._Mask) == true) { TILDA__FORMULA_Factory.COLS.HTMLDOC.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask) == true) { TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
 
           if (__Changes.intersects(TILDA__FORMULA_Factory.COLS.CREATED._Mask) == true) { TILDA__FORMULA_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
              V.append(__Nulls.intersects(TILDA__FORMULA_Factory.COLS.CREATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
@@ -2496,6 +2499,7 @@ This is the hasChanged for:<BR>
           if (__Changes.intersects(TILDA__FORMULA_Factory.COLS.DESCRIPTION._Mask) == true) TILDA__FORMULA_Factory.COLS.DESCRIPTION.getFullColumnVarForUpdate(C, S);
           if (__Changes.intersects(TILDA__FORMULA_Factory.COLS.FORMULA._Mask) == true) TILDA__FORMULA_Factory.COLS.FORMULA.getFullColumnVarForUpdate(C, S);
           if (__Changes.intersects(TILDA__FORMULA_Factory.COLS.HTMLDOC._Mask) == true) TILDA__FORMULA_Factory.COLS.HTMLDOC.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask) == true) TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS.getFullColumnVarForUpdate(C, S);
 
           if (__Changes.intersects(TILDA__FORMULA_Factory.COLS.CREATED._Mask) == true)
            {
@@ -2588,6 +2592,10 @@ This is the hasChanged for:<BR>
         { 
           if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.HTMLDOC._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _htmlDoc);
         } 
+       if (__Changes.intersects(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR   ); else C.setArray(PS, ++i, TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Type, AllocatedArrays, _referencedColumns);
+        } 
        if (__Changes.intersects(TILDA__FORMULA_Factory.COLS.CREATED._Mask) == true) 
         { 
           if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.CREATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_created) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_created.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
@@ -2617,11 +2625,11 @@ This is the hasChanged for:<BR>
        switch (__LookupId)
         {
           case 0:
-             __Saved_refnum      = _refnum     ;
+             __Saved_refnum            = _refnum           ;
              break;
           case 1:
-             __Saved_location    = _location   ;
-             __Saved_name        = _name       ;
+             __Saved_location          = _location         ;
+             __Saved_name              = _name             ;
              break;
           case -666: if (__Init == InitMode.CREATE) break;
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -2660,11 +2668,11 @@ This is the hasChanged for:<BR>
           switch (__LookupId)
            {
              case 0:
-               PS.setLong     (++i, _refnum     );
+               PS.setLong     (++i, _refnum           );
                break;
              case 1:
-               PS.setString   (++i, _location   );
-               PS.setString   (++i, _name       );
+               PS.setString   (++i, _location         );
+               PS.setString   (++i, _name             );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -2683,8 +2691,9 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__FORMULA_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
+          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__FORMULA_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
           PS = null;
+          AllocatedArrays = null;
         }
 
        stateUpdatePostWrite();
@@ -2731,6 +2740,7 @@ This is the hasChanged for:<BR>
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Formula", "description");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Formula", "formula");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Formula", "htmlDoc");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Formula", "referencedColumns");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Formula", "created");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Formula", "lastUpdated");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Formula", "deleted");
@@ -2755,6 +2765,7 @@ This is the hasChanged for:<BR>
        QueryDetails.logQuery("TILDA.Formula", Q, toString());
        java.sql.PreparedStatement PS=null;
        java.sql.ResultSet RS=null;
+       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
        int count = 0;
 
        try
@@ -2764,11 +2775,11 @@ This is the hasChanged for:<BR>
           switch (__LookupId)
            {
              case 0:
-               PS.setLong     (++i, _refnum     );
+               PS.setLong     (++i, _refnum           );
                break;
              case 1:
-               PS.setString   (++i, _location   );
-               PS.setString   (++i, _name       );
+               PS.setString   (++i, _location         );
+               PS.setString   (++i, _name             );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -2790,27 +2801,30 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__FORMULA_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__FORMULA_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, AllocatedArrays);
           PS = null;
+          AllocatedArrays = null;
         }
     }
 
+   @SuppressWarnings("unchecked")
    boolean Init(Connection C, java.sql.ResultSet RS) throws Exception
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-      __Saved_refnum      = _refnum      =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.REFNUM._Mask     );
-      __Saved_location    = _location    = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.LOCATION._Mask   );
-                            _location2   = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.LOCATION2._Mask  );
-      __Saved_name        = _name        = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.NAME._Mask       );
-                            _type        = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.TYPE._Mask       ); else _type        = _type       .trim();
-                            _title       = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.TITLE._Mask      );
-                            _description = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.DESCRIPTION._Mask);
-                            _formula     = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.FORMULA._Mask    );
-                            _htmlDoc     = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.HTMLDOC._Mask    );
-                            _created     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.CREATED._Mask    );
-                            _lastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.LASTUPDATED._Mask);
-                            _deleted     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.DELETED._Mask    );
+      __Saved_refnum            = _refnum            =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.REFNUM._Mask           );
+      __Saved_location          = _location          = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.LOCATION._Mask         );
+                                  _location2         = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.LOCATION2._Mask        );
+      __Saved_name              = _name              = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.NAME._Mask             );
+                                  _type              = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.TYPE._Mask             ); else _type              = _type             .trim();
+                                  _title             = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.TITLE._Mask            );
+                                  _description       = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.DESCRIPTION._Mask      );
+                                  _formula           = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.FORMULA._Mask          );
+                                  _htmlDoc           = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.HTMLDOC._Mask          );
+                                  _referencedColumns = (List<String>) C.getArray(RS, ++i, TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask);
+                                  _created           = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.CREATED._Mask          );
+                                  _lastUpdated       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.LASTUPDATED._Mask      );
+                                  _deleted           = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.DELETED._Mask          );
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();
@@ -2823,18 +2837,19 @@ This is the hasChanged for:<BR>
     {
       long T0 = System.nanoTime();
       String Str = 
-                   "refnum: "                                                                                           +                                   getRefnum     () 
-               + "; location: "                                                                                         + TextUtil.PrintVariableStr        (getLocation   ())
-               + "; location2: "                                                                                        + TextUtil.PrintVariableStr        (getLocation2  ())
-               + "; name: "                                                                                             + TextUtil.PrintVariableStr        (getName       ())
-               + "; type: "                                                                                             + TextUtil.PrintVariableStr        (getType       ())
-               + "; title: "                                                                                            + TextUtil.PrintVariableStr        (getTitle      ())
-               + "; description: "                                                                                      + TextUtil.PrintVariableStr        (getDescription())
-               + "; formula"       + (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.FORMULA._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getFormula    ()))
-               + "; htmlDoc"       + (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.HTMLDOC._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getHtmlDoc    ()))
-               + "; created: "                                                                                          + DateTimeUtil.printDateTimeForJSON(getCreated    ())
-               + "; lastUpdated: "                                                                                      + DateTimeUtil.printDateTimeForJSON(getLastUpdated())
-               + "; deleted"       + (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.DELETED._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDeleted    ()))
+                   "refnum: "                                                                                                       +                                   getRefnum           () 
+               + "; location: "                                                                                                     + TextUtil.PrintVariableStr        (getLocation         ())
+               + "; location2: "                                                                                                    + TextUtil.PrintVariableStr        (getLocation2        ())
+               + "; name: "                                                                                                         + TextUtil.PrintVariableStr        (getName             ())
+               + "; type: "                                                                                                         + TextUtil.PrintVariableStr        (getType             ())
+               + "; title: "                                                                                                        + TextUtil.PrintVariableStr        (getTitle            ())
+               + "; description: "                                                                                                  + TextUtil.PrintVariableStr        (getDescription      ())
+               + "; formula"             + (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.FORMULA._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getFormula          ()))
+               + "; htmlDoc"             + (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.HTMLDOC._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getHtmlDoc          ()))
+               + "; referencedColumns"   + (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getReferencedColumns()))
+               + "; created: "                                                                                                      + DateTimeUtil.printDateTimeForJSON(getCreated          ())
+               + "; lastUpdated: "                                                                                                  + DateTimeUtil.printDateTimeForJSON(getLastUpdated      ())
+               + "; deleted"             + (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.DELETED._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDeleted          ()))
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;

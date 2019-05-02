@@ -30,6 +30,7 @@ import tilda.enums.FrameworkSourcedType;
 import tilda.enums.MultiType;
 import tilda.enums.ObjectLifecycle;
 import tilda.enums.ObjectMode;
+import tilda.enums.TildaType;
 import tilda.generation.interfaces.CodeGenAppData;
 import tilda.generation.interfaces.CodeGenAppFactory;
 import tilda.generation.interfaces.CodeGenAppJson;
@@ -100,10 +101,11 @@ public class Generator
         : S._Views.isEmpty() == false ? S._Views.get(0)
         : null;
 
+        // Some schemas may be empty, such as TILDA_TMP, so we have to fake a root object to get started.
         if (B == null)
           {
-            LOG.debug("  No objects or views found: the SQL file will not be generated.");
-            return;
+            B = new Object();
+            B._ParentSchema = S;            
           }
 
         File f = new File(GenFolder.getAbsolutePath() + File.separator + CG.getFileName(B));

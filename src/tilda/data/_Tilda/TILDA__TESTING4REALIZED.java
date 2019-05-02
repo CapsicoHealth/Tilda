@@ -31,6 +31,7 @@ import org.apache.logging.log4j.Logger;
 <DIV id="Testing4Realized_CNT" class="content">
 The Table TILDA.Testing4Realized:<UL>
 <LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>Testing4Realized_Factory</B>, <B>Testing4Realized_Data</B> in the package <B>tilda.data</B>.
+<LI>Is Realized from <B><A href="TILDA___Docs.TILDA.html#Testing4View_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing4View</A></B> through DB function <B>TILDA<B>&nbsp;&#8226;&nbsp;</B>Refill_Testing4Realized()</B>.</LI>
 <LI>Is configured for <B>ReadOnly</B> access.</LI>
 <LI>Is not OCC-Enabled. No record lifecycle columns (created/updated/deleted) have been generated.</LI>
 <LI>Has the following identity:<UL><LI>Unique Index: refnum</LI>
@@ -173,86 +174,6 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>14&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Testing4Realized-a9TZ_DIV' class='columns'>a9TZ</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Generated helper column to hold the time zone ID for 'a9'.</TD>
-</TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>15&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Testing4Realized-a9_DIV' class='columns'>a9</B>&nbsp;&nbsp;</TD>
-<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The blah</TD>
-</TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>16&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Testing4Realized-a9a1TZ_DIV' class='columns'>a9a1TZ</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Generated helper column to hold the time zone ID for 'a9a1'.</TD>
-</TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>17&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Testing4Realized-a9a1_DIV' class='columns'>a9a1</B>&nbsp;&nbsp;</TD>
-<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The blah</TD>
-</TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>18&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Testing4Realized-a9bTZ_DIV' class='columns'>a9bTZ</B>&nbsp;&nbsp;</TD>
-<TD>List<String> List<>&nbsp;/&nbsp;text[]&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Generated helper column to hold the time zone ID for 'a9b'.</TD>
-</TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>19&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Testing4Realized-a9b_DIV' class='columns'>a9b</B>&nbsp;&nbsp;</TD>
-<TD>List<ZonedDateTime> List<>&nbsp;/&nbsp;timestamptz[]&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The blah</TD>
-</TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>20&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Testing4Realized-a9c_DIV' class='columns'>a9c</B>&nbsp;&nbsp;</TD>
-<TD>LocalDate&nbsp;/&nbsp;date&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The blah</TD>
-</TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>21&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Testing4Realized-a9d_DIV' class='columns'>a9d</B>&nbsp;&nbsp;</TD>
-<TD>List<LocalDate> List<>&nbsp;/&nbsp;date[]&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The blah</TD>
-</TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>22&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing4Realized-a10a_DIV' class='columns'>a10a</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -262,7 +183,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD>The blah</TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
-    <TD>23&nbsp;&nbsp;</TD>
+    <TD>15&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing4Realized-a10b_DIV' class='columns'>a10b</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(10)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -272,7 +193,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD>The blah</TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
-    <TD>24&nbsp;&nbsp;</TD>
+    <TD>16&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing4Realized-a10c_DIV' class='columns'>a10c</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -282,7 +203,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD>The blah</TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
-    <TD>25&nbsp;&nbsp;</TD>
+    <TD>17&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing4Realized-description_DIV' class='columns'>description</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(250)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -292,7 +213,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD>The title for a person, i.e., Mr, Miss, Mrs...</TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
-    <TD>26&nbsp;&nbsp;</TD>
+    <TD>18&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing4Realized-desc2_DIV' class='columns'>desc2</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(3000)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -302,7 +223,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD>The title for a person, i.e., Mr, Miss, Mrs...</TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
-    <TD>27&nbsp;&nbsp;</TD>
+    <TD>19&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing4Realized-desc3_DIV' class='columns'>desc3</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;text&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -312,7 +233,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD>The title for a person, i.e., Mr, Miss, Mrs...</TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
-    <TD>28&nbsp;&nbsp;</TD>
+    <TD>20&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing4Realized-desc4_DIV' class='columns'>desc4</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;text&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -322,7 +243,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD>The title for a person, i.e., Mr, Miss, Mrs...</TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
-    <TD>29&nbsp;&nbsp;</TD>
+    <TD>21&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing4Realized-desc5_DIV' class='columns'>desc5</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;text&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -332,7 +253,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD>The title for a person, i.e., Mr, Miss, Mrs...</TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
-    <TD>30&nbsp;&nbsp;</TD>
+    <TD>22&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing4Realized-desc6_DIV' class='columns'>desc6</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;text&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -349,872 +270,138 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
-    <TD>31&nbsp;&nbsp;</TD>
+    <TD>23&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing4Realized-bastille_DIV' class='columns'>bastille</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column: Bastille Day</TD>
+<TD>Formula column '<B>Bastille Day</B>'<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing2View-bastille_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>bastille</A></DIV></TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
-    <TD>32&nbsp;&nbsp;</TD>
+    <TD>24&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing4Realized-toto_DIV' class='columns'>toto</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column: Last Updated</TD>
+<TD>Formula column '<B>Last Updated</B>'<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing2View-toto_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>toto</A></DIV></TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
-    <TD>33&nbsp;&nbsp;</TD>
+    <TD>25&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing4Realized-desc2_Cat1_DIV' class='columns'>desc2_Cat1</B>&nbsp;&nbsp;</TD>
 <TD>double&nbsp;/&nbsp;double precision&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column: desc2_Cat1 Title</TD>
+<TD>Formula column '<B>desc2_Cat1 Title</B>'<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing2View-desc2_Cat1_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>desc2_Cat1</A></DIV></TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
-    <TD>34&nbsp;&nbsp;</TD>
+    <TD>26&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing4Realized-desc2_Cat2_DIV' class='columns'>desc2_Cat2</B>&nbsp;&nbsp;</TD>
 <TD>double&nbsp;/&nbsp;double precision&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column: desc2_Cat2 Title</TD>
+<TD>Formula column '<B>desc2_Cat2 Title</B>'<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing2View-desc2_Cat2_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>desc2_Cat2</A></DIV></TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
-    <TD>35&nbsp;&nbsp;</TD>
+    <TD>27&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing4Realized-desc2_Cat3_DIV' class='columns'>desc2_Cat3</B>&nbsp;&nbsp;</TD>
 <TD>double&nbsp;/&nbsp;double precision&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column: desc2_Cat3 Title</TD>
+<TD>Formula column '<B>desc2_Cat3 Title</B>'<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing2View-desc2_Cat3_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>desc2_Cat3</A></DIV></TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
-    <TD>36&nbsp;&nbsp;</TD>
+    <TD>28&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing4Realized-a7_Cat4_DIV' class='columns'>a7_Cat4</B>&nbsp;&nbsp;</TD>
 <TD>double&nbsp;/&nbsp;double precision&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column: a7_Cat4 Title</TD>
+<TD>Formula column '<B>a7_Cat4 Title</B>'<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing2View-a7_Cat4_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a7_Cat4</A></DIV></TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
-    <TD>37&nbsp;&nbsp;</TD>
+    <TD>29&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing4Realized-a7_Cat5_DIV' class='columns'>a7_Cat5</B>&nbsp;&nbsp;</TD>
 <TD>double&nbsp;/&nbsp;double precision&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column: a7_Cat5 Title</TD>
+<TD>Formula column '<B>a7_Cat5 Title</B>'<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing2View-a7_Cat5_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a7_Cat5</A></DIV></TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
-    <TD>38&nbsp;&nbsp;</TD>
+    <TD>30&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing4Realized-a5_null_DIV' class='columns'>a5_null</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column: Null a5</TD>
+<TD>Formula column '<B>Null a5</B>'<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing2View-a5_null_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a5_null</A></DIV></TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
-    <TD>39&nbsp;&nbsp;</TD>
+    <TD>31&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing4Realized-a6_null_DIV' class='columns'>a6_null</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column: Null a6</TD>
+<TD>Formula column '<B>Null a6</B>'<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing2View-a6_null_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a6_null</A></DIV></TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
-    <TD>40&nbsp;&nbsp;</TD>
+    <TD>32&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing4Realized-a7_null_DIV' class='columns'>a7_null</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column: Null a7</TD>
+<TD>Formula column '<B>Null a7</B>'<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing2View-a7_null_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a7_null</A></DIV></TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
-    <TD>41&nbsp;&nbsp;</TD>
+    <TD>33&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing4Realized-a8_null_DIV' class='columns'>a8_null</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column: Null a8</TD>
+<TD>Formula column '<B>Null a8</B>'<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing2View-a8_null_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a8_null</A></DIV></TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
-    <TD>42&nbsp;&nbsp;</TD>
+    <TD>34&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing4Realized-a3_DIV' class='columns'>a3</B>&nbsp;&nbsp;</TD>
 <TD>boolean&nbsp;/&nbsp;boolean&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column: Always True</TD>
+<TD>Formula column '<B>Always True</B>'<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing4View-a3_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing4View<B>&nbsp;&#8226;&nbsp;</B>a3</A></DIV></TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
-    <TD>43&nbsp;&nbsp;</TD>
+    <TD>35&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing4Realized-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column: Always True</TD>
+<TD>Formula column '<B>Always True</B>'<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing4View-lastUpdated_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing4View<B>&nbsp;&#8226;&nbsp;</B>lastUpdated</A></DIV></TD>
 </TR>
 </TABLE></BLOCKQUOTE>
-<DIV id='Testing4Realized-refnum_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing4Realized-refnum_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized_DIV'>Testing4Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized-refnum_DIV'>refnum</a> -- LONG</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing4Realized-name_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing4Realized-name_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized_DIV'>Testing4Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized-name_DIV'>name</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing4Realized-a1_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing4Realized-a1_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized_DIV'>Testing4Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized-a1_DIV'>a1</a> -- BITFIELD</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing4Realized-a3b_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing4Realized-a3b_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized_DIV'>Testing4Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized-a3b_DIV'>a3b</a> -- BOOLEAN[]</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing4Realized-a4_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing4Realized-a4_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized_DIV'>Testing4Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized-a4_DIV'>a4</a> -- DOUBLE</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing4Realized-a4b_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing4Realized-a4b_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized_DIV'>Testing4Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized-a4b_DIV'>a4b</a> -- DOUBLE[]</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing4Realized-a5_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing4Realized-a5_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized_DIV'>Testing4Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized-a5_DIV'>a5</a> -- FLOAT</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing4Realized-a5b_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing4Realized-a5b_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized_DIV'>Testing4Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized-a5b_DIV'>a5b</a> -- FLOAT[]</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing4Realized-a7_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing4Realized-a7_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized_DIV'>Testing4Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized-a7_DIV'>a7</a> -- INTEGER</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing4Realized-a7b_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing4Realized-a7b_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized_DIV'>Testing4Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized-a7b_DIV'>a7b</a> -- INTEGER[]</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing4Realized-a8_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing4Realized-a8_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized_DIV'>Testing4Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized-a8_DIV'>a8</a> -- BINARY</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing4Realized-a8bTZ_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing4Realized-a8bTZ_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized_DIV'>Testing4Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized-a8bTZ_DIV'>a8bTZ</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing4Realized-a8b_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing4Realized-a8b_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized_DIV'>Testing4Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized-a8b_DIV'>a8b</a> -- DATETIME</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing4Realized-a9TZ_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing4Realized-a9TZ_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized_DIV'>Testing4Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized-a9TZ_DIV'>a9TZ</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing4Realized-a9_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing4Realized-a9_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized_DIV'>Testing4Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized-a9_DIV'>a9</a> -- DATETIME</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing4Realized-a9a1TZ_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing4Realized-a9a1TZ_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized_DIV'>Testing4Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized-a9a1TZ_DIV'>a9a1TZ</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing4Realized-a9a1_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing4Realized-a9a1_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized_DIV'>Testing4Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized-a9a1_DIV'>a9a1</a> -- DATETIME</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing4Realized-a9bTZ_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing4Realized-a9bTZ_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized_DIV'>Testing4Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized-a9bTZ_DIV'>a9bTZ</a> -- STRING[]</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing4Realized-a9b_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing4Realized-a9b_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized_DIV'>Testing4Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized-a9b_DIV'>a9b</a> -- DATETIME[]</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing4Realized-a9c_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing4Realized-a9c_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized_DIV'>Testing4Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized-a9c_DIV'>a9c</a> -- DATE</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing4Realized-a9d_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing4Realized-a9d_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized_DIV'>Testing4Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized-a9d_DIV'>a9d</a> -- DATE[]</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing4Realized-a10a_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing4Realized-a10a_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized_DIV'>Testing4Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized-a10a_DIV'>a10a</a> -- INTEGER</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing4Realized-a10b_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing4Realized-a10b_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized_DIV'>Testing4Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized-a10b_DIV'>a10b</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing4Realized-a10c_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing4Realized-a10c_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized_DIV'>Testing4Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized-a10c_DIV'>a10c</a> -- INTEGER</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing4Realized-description_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing4Realized-description_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized_DIV'>Testing4Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized-description_DIV'>description</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing4Realized-desc2_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing4Realized-desc2_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized_DIV'>Testing4Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized-desc2_DIV'>desc2</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing4Realized-desc3_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing4Realized-desc3_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized_DIV'>Testing4Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized-desc3_DIV'>desc3</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing4Realized-desc4_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing4Realized-desc4_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized_DIV'>Testing4Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized-desc4_DIV'>desc4</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing4Realized-desc5_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing4Realized-desc5_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized_DIV'>Testing4Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized-desc5_DIV'>desc5</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing4Realized-desc6_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing4Realized-desc6_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized_DIV'>Testing4Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized-desc6_DIV'>desc6</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing4Realized-bastille_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing4Realized-bastille_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized_DIV'>Testing4Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized-bastille_DIV'>bastille</a> -- DATETIME</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing4Realized-toto_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing4Realized-toto_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized_DIV'>Testing4Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized-toto_DIV'>toto</a> -- DATETIME</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing4Realized-desc2_Cat1_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing4Realized-desc2_Cat1_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized_DIV'>Testing4Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized-desc2_Cat1_DIV'>desc2_Cat1</a> -- DOUBLE</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing4Realized-desc2_Cat2_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing4Realized-desc2_Cat2_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized_DIV'>Testing4Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized-desc2_Cat2_DIV'>desc2_Cat2</a> -- DOUBLE</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing4Realized-desc2_Cat3_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing4Realized-desc2_Cat3_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized_DIV'>Testing4Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized-desc2_Cat3_DIV'>desc2_Cat3</a> -- DOUBLE</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing4Realized-a7_Cat4_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing4Realized-a7_Cat4_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized_DIV'>Testing4Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized-a7_Cat4_DIV'>a7_Cat4</a> -- DOUBLE</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing4Realized-a7_Cat5_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing4Realized-a7_Cat5_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized_DIV'>Testing4Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized-a7_Cat5_DIV'>a7_Cat5</a> -- DOUBLE</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing4Realized-a5_null_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing4Realized-a5_null_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized_DIV'>Testing4Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized-a5_null_DIV'>a5_null</a> -- INTEGER</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing4Realized-a6_null_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing4Realized-a6_null_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized_DIV'>Testing4Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized-a6_null_DIV'>a6_null</a> -- INTEGER</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing4Realized-a7_null_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing4Realized-a7_null_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized_DIV'>Testing4Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized-a7_null_DIV'>a7_null</a> -- INTEGER</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing4Realized-a8_null_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing4Realized-a8_null_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized_DIV'>Testing4Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized-a8_null_DIV'>a8_null</a> -- INTEGER</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing4Realized-a3_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing4Realized-a3_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized_DIV'>Testing4Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized-a3_DIV'>a3</a> -- BOOLEAN</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing4Realized-lastUpdated_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing4Realized-lastUpdated_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized_DIV'>Testing4Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4Realized-lastUpdated_DIV'>lastUpdated</a> -- DATETIME</td>
-</tr>
-</table>
-</DIV></DIV>
 </DIV>
 
- @author   Tilda code gen for Java 8/PostgreSQL
- @version  Tilda 1.0
- @generated Dec 27 2018, 10:36:33EST
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__TESTING4REALIZED implements tilda.interfaces.ReaderObject
@@ -1313,7 +500,7 @@ This is the setter for:<BR>
     void setRefnum(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _refnum)
+       if (__Init == InitMode.CREATE || v != _refnum)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4Realized.refnum' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -1544,7 +731,7 @@ This is the setter for:<BR>
     void setA1(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a1)
+       if (__Init == InitMode.CREATE || v != _a1)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4Realized.a1' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -1840,7 +1027,7 @@ This is the setter for:<BR>
     void setA4(double v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a4)
+       if (__Init == InitMode.CREATE || v != _a4)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4Realized.a4' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -2136,7 +1323,7 @@ This is the setter for:<BR>
     void setA5(float v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a5)
+       if (__Init == InitMode.CREATE || v != _a5)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4Realized.a5' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -2432,7 +1619,7 @@ This is the setter for:<BR>
     void setA7(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a7)
+       if (__Init == InitMode.CREATE || v != _a7)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4Realized.a7' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -3040,1291 +2227,6 @@ This is the null setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing4Realized.a9TZ -> TILDA.Testing4Realized."a9TZ"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4Realized.a9TZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a9TZ of type character(5)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a9'.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   String _a9TZ;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing4Realized.a9TZ -> TILDA.Testing4Realized."a9TZ"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4Realized.a9TZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a9TZ of type character(5)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a9'.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final String getA9TZ()
-      { return _a9TZ; }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing4Realized.a9TZ -> TILDA.Testing4Realized."a9TZ"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the isNull for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4Realized.a9TZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a9TZ of type character(5)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a9'.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final boolean isNullA9TZ()
-     { return __Nulls.intersects(TILDA__TESTING4REALIZED_Factory.COLS.A9TZ._Mask); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing4Realized.a9TZ -> TILDA.Testing4Realized."a9TZ"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4Realized.a9TZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a9TZ of type character(5)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a9'.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-    void setA9TZ(String v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (v == null)
-        {
-          setNullA9TZ();
-        }
-       else if (v.length() > 5)
-        throw new Exception("Cannot set tilda.data.TILDA.Testing4Realized.a9TZ: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
-       else if (v.equals(_a9TZ) == false)
-        {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4Realized.a9TZ' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes.or(TILDA__TESTING4REALIZED_Factory.COLS.A9TZ._Mask);
-          __Nulls.andNot(TILDA__TESTING4REALIZED_Factory.COLS.A9TZ._Mask);
-       _a9TZ = v;
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing4Realized.a9TZ -> TILDA.Testing4Realized."a9TZ"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the null setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4Realized.a9TZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a9TZ of type character(5)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a9'.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-    void setNullA9TZ()
-     {
-       long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__TESTING4REALIZED_Factory.COLS.A9TZ._Mask) == true) // already NULL
-        return;
-       __Changes.or(TILDA__TESTING4REALIZED_Factory.COLS.A9TZ._Mask);
-       __Nulls.or(TILDA__TESTING4REALIZED_Factory.COLS.A9TZ._Mask);
-       _a9TZ=null;
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing4Realized.a9 -> TILDA.Testing4Realized."a9"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4Realized.a9 of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a9 of type timestamptz</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
-
-<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
-  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>a9_CreateDefault</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>a9_CreateDefault&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>a9_CreateDefault</TD></TR>
-</TABLE>
-</TD></TR>
-
-</TABLE>
-*/
-   ZonedDateTime _a9;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing4Realized.a9 -> TILDA.Testing4Realized."a9"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4Realized.a9 of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a9 of type timestamptz</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
-
-<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
-  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>a9_CreateDefault</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>a9_CreateDefault&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>a9_CreateDefault</TD></TR>
-</TABLE>
-</TD></TR>
-
-</TABLE>
-*/
-   public final ZonedDateTime getA9()
-      { return _a9; }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing4Realized.a9 -> TILDA.Testing4Realized."a9"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the isNull for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4Realized.a9 of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a9 of type timestamptz</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
-
-<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
-  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>a9_CreateDefault</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>a9_CreateDefault&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>a9_CreateDefault</TD></TR>
-</TABLE>
-</TD></TR>
-
-</TABLE>
-*/
-   public final boolean isNullA9()
-     { return __Nulls.intersects(TILDA__TESTING4REALIZED_Factory.COLS.A9._Mask); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing4Realized.a9 -> TILDA.Testing4Realized."a9"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4Realized.a9 of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a9 of type timestamptz</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
-
-<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
-  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>a9_CreateDefault</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>a9_CreateDefault&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>a9_CreateDefault</TD></TR>
-</TABLE>
-</TD></TR>
-
-</TABLE>
-*/
-    void setA9(ZonedDateTime v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (v == null)
-        {
-          setNullA9();
-        }
-       else if (v.equals(_a9) == false)
-        {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4Realized.a9' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes.or(TILDA__TESTING4REALIZED_Factory.COLS.A9._Mask);
-          __Nulls.andNot(TILDA__TESTING4REALIZED_Factory.COLS.A9._Mask);
-       _a9 = v;
-          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(v.getZone().getId());
-          if (ZI == null)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4Realized.a9' because the timezone value '"+v.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-          setA9TZ(ZI.getId());
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing4Realized.a9 -> TILDA.Testing4Realized."a9"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the null setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4Realized.a9 of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a9 of type timestamptz</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
-
-<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
-  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>a9_CreateDefault</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>a9_CreateDefault&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>a9_CreateDefault</TD></TR>
-</TABLE>
-</TD></TR>
-
-</TABLE>
-*/
-    void setNullA9()
-     {
-       long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__TESTING4REALIZED_Factory.COLS.A9._Mask) == true) // already NULL
-        return;
-       __Changes.or(TILDA__TESTING4REALIZED_Factory.COLS.A9._Mask);
-       __Nulls.or(TILDA__TESTING4REALIZED_Factory.COLS.A9._Mask);
-       _a9=null;
-       setNullA9TZ();
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing4Realized.a9a1TZ -> TILDA.Testing4Realized."a9a1TZ"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4Realized.a9a1TZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a9a1TZ of type character(5)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a9a1'.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   String _a9a1TZ;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing4Realized.a9a1TZ -> TILDA.Testing4Realized."a9a1TZ"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4Realized.a9a1TZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a9a1TZ of type character(5)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a9a1'.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final String getA9a1TZ()
-      { return _a9a1TZ; }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing4Realized.a9a1TZ -> TILDA.Testing4Realized."a9a1TZ"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the isNull for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4Realized.a9a1TZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a9a1TZ of type character(5)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a9a1'.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final boolean isNullA9a1TZ()
-     { return __Nulls.intersects(TILDA__TESTING4REALIZED_Factory.COLS.A9A1TZ._Mask); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing4Realized.a9a1TZ -> TILDA.Testing4Realized."a9a1TZ"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4Realized.a9a1TZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a9a1TZ of type character(5)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a9a1'.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-    void setA9a1TZ(String v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (v == null)
-        {
-          setNullA9a1TZ();
-        }
-       else if (v.length() > 5)
-        throw new Exception("Cannot set tilda.data.TILDA.Testing4Realized.a9a1TZ: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
-       else if (v.equals(_a9a1TZ) == false)
-        {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4Realized.a9a1TZ' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes.or(TILDA__TESTING4REALIZED_Factory.COLS.A9A1TZ._Mask);
-          __Nulls.andNot(TILDA__TESTING4REALIZED_Factory.COLS.A9A1TZ._Mask);
-       _a9a1TZ = v;
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing4Realized.a9a1TZ -> TILDA.Testing4Realized."a9a1TZ"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the null setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4Realized.a9a1TZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a9a1TZ of type character(5)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a9a1'.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-    void setNullA9a1TZ()
-     {
-       long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__TESTING4REALIZED_Factory.COLS.A9A1TZ._Mask) == true) // already NULL
-        return;
-       __Changes.or(TILDA__TESTING4REALIZED_Factory.COLS.A9A1TZ._Mask);
-       __Nulls.or(TILDA__TESTING4REALIZED_Factory.COLS.A9A1TZ._Mask);
-       _a9a1TZ=null;
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing4Realized.a9a1 -> TILDA.Testing4Realized."a9a1"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4Realized.a9a1 of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a9a1 of type timestamptz</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
-
-<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
-  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>a9a1_CreateDefault</B>&nbsp;&nbsp;</TD><TD>UNDEFINED&nbsp;&nbsp;</TD><TD>a9a1_CreateDefault&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>a9a1_CreateDefault</TD></TR>
-</TABLE>
-</TD></TR>
-
-</TABLE>
-*/
-   ZonedDateTime _a9a1;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing4Realized.a9a1 -> TILDA.Testing4Realized."a9a1"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4Realized.a9a1 of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a9a1 of type timestamptz</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
-
-<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
-  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>a9a1_CreateDefault</B>&nbsp;&nbsp;</TD><TD>UNDEFINED&nbsp;&nbsp;</TD><TD>a9a1_CreateDefault&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>a9a1_CreateDefault</TD></TR>
-</TABLE>
-</TD></TR>
-
-</TABLE>
-*/
-   public final ZonedDateTime getA9a1()
-      { return _a9a1; }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing4Realized.a9a1 -> TILDA.Testing4Realized."a9a1"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the isNull for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4Realized.a9a1 of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a9a1 of type timestamptz</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
-
-<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
-  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>a9a1_CreateDefault</B>&nbsp;&nbsp;</TD><TD>UNDEFINED&nbsp;&nbsp;</TD><TD>a9a1_CreateDefault&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>a9a1_CreateDefault</TD></TR>
-</TABLE>
-</TD></TR>
-
-</TABLE>
-*/
-   public final boolean isNullA9a1()
-     { return __Nulls.intersects(TILDA__TESTING4REALIZED_Factory.COLS.A9A1._Mask); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing4Realized.a9a1 -> TILDA.Testing4Realized."a9a1"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4Realized.a9a1 of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a9a1 of type timestamptz</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
-
-<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
-  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>a9a1_CreateDefault</B>&nbsp;&nbsp;</TD><TD>UNDEFINED&nbsp;&nbsp;</TD><TD>a9a1_CreateDefault&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>a9a1_CreateDefault</TD></TR>
-</TABLE>
-</TD></TR>
-
-</TABLE>
-*/
-    void setA9a1(ZonedDateTime v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (v == null)
-        {
-          setNullA9a1();
-        }
-       else if (v.equals(_a9a1) == false)
-        {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4Realized.a9a1' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes.or(TILDA__TESTING4REALIZED_Factory.COLS.A9A1._Mask);
-          __Nulls.andNot(TILDA__TESTING4REALIZED_Factory.COLS.A9A1._Mask);
-       _a9a1 = v;
-          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(v.getZone().getId());
-          if (ZI == null)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4Realized.a9a1' because the timezone value '"+v.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-          setA9a1TZ(ZI.getId());
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing4Realized.a9a1 -> TILDA.Testing4Realized."a9a1"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the null setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4Realized.a9a1 of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a9a1 of type timestamptz</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
-
-<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
-  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>a9a1_CreateDefault</B>&nbsp;&nbsp;</TD><TD>UNDEFINED&nbsp;&nbsp;</TD><TD>a9a1_CreateDefault&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>a9a1_CreateDefault</TD></TR>
-</TABLE>
-</TD></TR>
-
-</TABLE>
-*/
-    void setNullA9a1()
-     {
-       long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__TESTING4REALIZED_Factory.COLS.A9A1._Mask) == true) // already NULL
-        return;
-       __Changes.or(TILDA__TESTING4REALIZED_Factory.COLS.A9A1._Mask);
-       __Nulls.or(TILDA__TESTING4REALIZED_Factory.COLS.A9A1._Mask);
-       _a9a1=null;
-       setNullA9a1TZ();
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing4Realized.a9bTZ -> TILDA.Testing4Realized."a9bTZ"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4Realized.a9bTZ of type List<String></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a9bTZ of type text[]</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>0</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a9b'.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   List<String> _a9bTZ;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing4Realized.a9bTZ -> TILDA.Testing4Realized."a9bTZ"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4Realized.a9bTZ of type List<String></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a9bTZ of type text[]</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>0</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a9b'.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final String[] getA9bTZAsArray()
-      { return _a9bTZ==null? null : _a9bTZ.toArray(new String[_a9bTZ.size()]); }
-   public final Iterator<String> getA9bTZ()
-      { return _a9bTZ==null? null : _a9bTZ.iterator(); }
-   public final boolean hasA9bTZ(String v)
-      { return _a9bTZ==null? false : _a9bTZ.contains(v); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing4Realized.a9bTZ -> TILDA.Testing4Realized."a9bTZ"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the isNull for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4Realized.a9bTZ of type List<String></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a9bTZ of type text[]</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>0</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a9b'.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final boolean isNullA9bTZ()
-     { return __Nulls.intersects(TILDA__TESTING4REALIZED_Factory.COLS.A9BTZ._Mask); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing4Realized.a9bTZ -> TILDA.Testing4Realized."a9bTZ"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4Realized.a9bTZ of type List<String></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a9bTZ of type text[]</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>0</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a9b'.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-    void setA9bTZ(List<String> v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
-        throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4Realized.a9bTZ' that is invariant, or part of a read-only or pre-existing WORM object.");
-       if (v == null  || v.isEmpty() == true)
-        setNullA9bTZ();
-       else if (CollectionUtil.equals(v, _a9bTZ) == false)
-        {
-          __Changes.or(TILDA__TESTING4REALIZED_Factory.COLS.A9BTZ._Mask);
-          __Nulls.andNot(TILDA__TESTING4REALIZED_Factory.COLS.A9BTZ._Mask);
-          if (_a9bTZ == null)
-           {
-             _a9bTZ = new ArrayList<String>();
-           }
-          else
-           {
-             _a9bTZ.clear();
-           }
-          for (String i : v)
-           {
-             _a9bTZ.add(i);
-           }
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-    void addToA9bTZ(int pos, String v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (_a9bTZ == null)
-        _a9bTZ = new ArrayList<String>();
-       if (v == null)
-        {
-          setNullA9bTZ();
-        }
-       else if (pos >= _a9bTZ.size() || _a9bTZ.get(pos).equals(v) == false)
-        {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4Realized.a9bTZ' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes.or(TILDA__TESTING4REALIZED_Factory.COLS.A9BTZ._Mask);
-          __Nulls.andNot(TILDA__TESTING4REALIZED_Factory.COLS.A9BTZ._Mask);
-          _a9bTZ.add(pos, v);
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-    void removeFromA9bTZ(String v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (_a9bTZ.remove(v) == true)
-          __Changes.or(TILDA__TESTING4REALIZED_Factory.COLS.A9BTZ._Mask);
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-    void removeFromA9bTZ(int pos) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (_a9bTZ.remove(pos) != null)
-        {
-          __Changes.or(TILDA__TESTING4REALIZED_Factory.COLS.A9BTZ._Mask);
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing4Realized.a9bTZ -> TILDA.Testing4Realized."a9bTZ"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the null setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4Realized.a9bTZ of type List<String></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a9bTZ of type text[]</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>0</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a9b'.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-    void setNullA9bTZ()
-     {
-       long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__TESTING4REALIZED_Factory.COLS.A9BTZ._Mask) == true) // already NULL
-        return;
-       __Changes.or(TILDA__TESTING4REALIZED_Factory.COLS.A9BTZ._Mask);
-       __Nulls.or(TILDA__TESTING4REALIZED_Factory.COLS.A9BTZ._Mask);
-       _a9bTZ=null;
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing4Realized.a9b -> TILDA.Testing4Realized."a9b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4Realized.a9b of type List<ZonedDateTime></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a9b of type timestamptz[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   List<ZonedDateTime> _a9b;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing4Realized.a9b -> TILDA.Testing4Realized."a9b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4Realized.a9b of type List<ZonedDateTime></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a9b of type timestamptz[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final ZonedDateTime[] getA9bAsArray()
-      { return _a9b==null? null : _a9b.toArray(new ZonedDateTime[_a9b.size()]); }
-   public final Iterator<ZonedDateTime> getA9b()
-      { return _a9b==null? null : _a9b.iterator(); }
-   public final boolean hasA9b(ZonedDateTime v)
-      { return _a9b==null? false : _a9b.contains(v); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing4Realized.a9b -> TILDA.Testing4Realized."a9b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the isNull for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4Realized.a9b of type List<ZonedDateTime></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a9b of type timestamptz[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final boolean isNullA9b()
-     { return __Nulls.intersects(TILDA__TESTING4REALIZED_Factory.COLS.A9B._Mask); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing4Realized.a9b -> TILDA.Testing4Realized."a9b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4Realized.a9b of type List<ZonedDateTime></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a9b of type timestamptz[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-    void setA9b(List<ZonedDateTime> v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
-        throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4Realized.a9b' that is invariant, or part of a read-only or pre-existing WORM object.");
-       if (v == null  || v.isEmpty() == true)
-        setNullA9b();
-       else if (CollectionUtil.equals(v, _a9b) == false)
-        {
-          __Changes.or(TILDA__TESTING4REALIZED_Factory.COLS.A9B._Mask);
-          __Nulls.andNot(TILDA__TESTING4REALIZED_Factory.COLS.A9B._Mask);
-          if (_a9b == null)
-           {
-             _a9b = new ArrayList<ZonedDateTime>();
-             _a9bTZ = new ArrayList<String>();
-           }
-          else
-           {
-             _a9b.clear();
-             _a9bTZ.clear();
-           }
-          for (int k = 0; k < v.size(); ++k)
-           {
-             ZonedDateTime i = v.get(k);
-             _a9b.add(i);
-             tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(i.getZone().getId());
-             if (ZI == null)
-              throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4Realized.a9b' because the timezone value '"+i.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-             addToA9bTZ(k, ZI.getId());
-           }
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-    void addToA9b(int pos, ZonedDateTime v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (_a9b == null)
-        _a9b = new ArrayList<ZonedDateTime>();
-       if (v == null)
-        {
-          setNullA9b();
-        }
-       else if (pos >= _a9b.size() || _a9b.get(pos).equals(v) == false)
-        {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4Realized.a9b' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes.or(TILDA__TESTING4REALIZED_Factory.COLS.A9B._Mask);
-          __Nulls.andNot(TILDA__TESTING4REALIZED_Factory.COLS.A9B._Mask);
-          _a9b.add(pos, v);
-          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(v.getZone().getId());
-          if (ZI == null)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4Realized.a9b' because the timezone value '"+v.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-          addToA9bTZ(pos, ZI.getId());
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-    void removeFromA9b(ZonedDateTime v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       int i = _a9b.indexOf(v);
-       if (1 != -1)
-        {
-          _a9b.remove(i);
-          removeFromA9bTZ(i);
-          __Changes.or(TILDA__TESTING4REALIZED_Factory.COLS.A9B._Mask);
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-    void removeFromA9b(int pos) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (_a9b.remove(pos) != null)
-        {
-          __Changes.or(TILDA__TESTING4REALIZED_Factory.COLS.A9B._Mask);
-          removeFromA9bTZ(pos);
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing4Realized.a9b -> TILDA.Testing4Realized."a9b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the null setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4Realized.a9b of type List<ZonedDateTime></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a9b of type timestamptz[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-    void setNullA9b()
-     {
-       long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__TESTING4REALIZED_Factory.COLS.A9B._Mask) == true) // already NULL
-        return;
-       __Changes.or(TILDA__TESTING4REALIZED_Factory.COLS.A9B._Mask);
-       __Nulls.or(TILDA__TESTING4REALIZED_Factory.COLS.A9B._Mask);
-       _a9b=null;
-       setNullA9bTZ();
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing4Realized.a9c -> TILDA.Testing4Realized."a9c"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4Realized.a9c of type LocalDate</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a9c of type date</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   LocalDate _a9c;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing4Realized.a9c -> TILDA.Testing4Realized."a9c"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4Realized.a9c of type LocalDate</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a9c of type date</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final LocalDate getA9c()
-      { return _a9c; }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing4Realized.a9c -> TILDA.Testing4Realized."a9c"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the isNull for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4Realized.a9c of type LocalDate</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a9c of type date</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final boolean isNullA9c()
-     { return __Nulls.intersects(TILDA__TESTING4REALIZED_Factory.COLS.A9C._Mask); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing4Realized.a9c -> TILDA.Testing4Realized."a9c"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4Realized.a9c of type LocalDate</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a9c of type date</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-    void setA9c(LocalDate v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (v == null)
-        {
-          setNullA9c();
-        }
-       else if (v.equals(_a9c) == false)
-        {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4Realized.a9c' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes.or(TILDA__TESTING4REALIZED_Factory.COLS.A9C._Mask);
-          __Nulls.andNot(TILDA__TESTING4REALIZED_Factory.COLS.A9C._Mask);
-       _a9c = v;
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing4Realized.a9c -> TILDA.Testing4Realized."a9c"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the null setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4Realized.a9c of type LocalDate</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a9c of type date</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-    void setNullA9c()
-     {
-       long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__TESTING4REALIZED_Factory.COLS.A9C._Mask) == true) // already NULL
-        return;
-       __Changes.or(TILDA__TESTING4REALIZED_Factory.COLS.A9C._Mask);
-       __Nulls.or(TILDA__TESTING4REALIZED_Factory.COLS.A9C._Mask);
-       _a9c=null;
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing4Realized.a9d -> TILDA.Testing4Realized."a9d"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4Realized.a9d of type List<LocalDate></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a9d of type date[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   List<LocalDate> _a9d;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing4Realized.a9d -> TILDA.Testing4Realized."a9d"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4Realized.a9d of type List<LocalDate></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a9d of type date[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final LocalDate[] getA9dAsArray()
-      { return _a9d==null? null : _a9d.toArray(new LocalDate[_a9d.size()]); }
-   public final Iterator<LocalDate> getA9d()
-      { return _a9d==null? null : _a9d.iterator(); }
-   public final boolean hasA9d(LocalDate v)
-      { return _a9d==null? false : _a9d.contains(v); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing4Realized.a9d -> TILDA.Testing4Realized."a9d"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the isNull for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4Realized.a9d of type List<LocalDate></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a9d of type date[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final boolean isNullA9d()
-     { return __Nulls.intersects(TILDA__TESTING4REALIZED_Factory.COLS.A9D._Mask); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing4Realized.a9d -> TILDA.Testing4Realized."a9d"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4Realized.a9d of type List<LocalDate></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a9d of type date[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-    void setA9d(List<LocalDate> v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
-        throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4Realized.a9d' that is invariant, or part of a read-only or pre-existing WORM object.");
-       if (v == null  || v.isEmpty() == true)
-        setNullA9d();
-       else if (CollectionUtil.equals(v, _a9d) == false)
-        {
-          __Changes.or(TILDA__TESTING4REALIZED_Factory.COLS.A9D._Mask);
-          __Nulls.andNot(TILDA__TESTING4REALIZED_Factory.COLS.A9D._Mask);
-          if (_a9d == null)
-           {
-             _a9d = new ArrayList<LocalDate>();
-           }
-          else
-           {
-             _a9d.clear();
-           }
-          for (LocalDate i : v)
-           {
-             _a9d.add(i);
-           }
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-    void addToA9d(int pos, LocalDate v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (_a9d == null)
-        _a9d = new ArrayList<LocalDate>();
-       if (v == null)
-        {
-          setNullA9d();
-        }
-       else if (pos >= _a9d.size() || _a9d.get(pos).equals(v) == false)
-        {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4Realized.a9d' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes.or(TILDA__TESTING4REALIZED_Factory.COLS.A9D._Mask);
-          __Nulls.andNot(TILDA__TESTING4REALIZED_Factory.COLS.A9D._Mask);
-          _a9d.add(pos, v);
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-    void removeFromA9d(LocalDate v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (_a9d.remove(v) == true)
-          __Changes.or(TILDA__TESTING4REALIZED_Factory.COLS.A9D._Mask);
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-    void removeFromA9d(int pos) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (_a9d.remove(pos) != null)
-        {
-          __Changes.or(TILDA__TESTING4REALIZED_Factory.COLS.A9D._Mask);
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing4Realized.a9d -> TILDA.Testing4Realized."a9d"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the null setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing4Realized.a9d of type List<LocalDate></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a9d of type date[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-    void setNullA9d()
-     {
-       long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__TESTING4REALIZED_Factory.COLS.A9D._Mask) == true) // already NULL
-        return;
-       __Changes.or(TILDA__TESTING4REALIZED_Factory.COLS.A9D._Mask);
-       __Nulls.or(TILDA__TESTING4REALIZED_Factory.COLS.A9D._Mask);
-       _a9d=null;
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing4Realized.a10a -> TILDA.Testing4Realized."a10a"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
@@ -4402,7 +2304,7 @@ This is the setter for:<BR>
     void setA10a(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a10a)
+       if (__Init == InitMode.CREATE || v != _a10a)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4Realized.a10a' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -4661,7 +2563,7 @@ This is the setter for:<BR>
     void setA10c(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a10c)
+       if (__Init == InitMode.CREATE || v != _a10c)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4Realized.a10c' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -5610,7 +3512,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.bastille of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Bastille Day</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Bastille Day</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -5629,7 +3531,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.bastille of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Bastille Day</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Bastille Day</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -5649,7 +3551,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.bastille of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Bastille Day</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Bastille Day</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -5669,7 +3571,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.bastille of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Bastille Day</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Bastille Day</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -5704,7 +3606,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.bastille of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Bastille Day</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Bastille Day</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -5738,7 +3640,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.toto of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Last Updated</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Last Updated</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -5757,7 +3659,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.toto of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Last Updated</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Last Updated</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -5777,7 +3679,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.toto of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Last Updated</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Last Updated</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -5797,7 +3699,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.toto of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Last Updated</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Last Updated</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -5832,7 +3734,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.toto of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Last Updated</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Last Updated</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -5866,7 +3768,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.desc2_Cat1 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: desc2_Cat1 Title</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>desc2_Cat1 Title</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -5885,7 +3787,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.desc2_Cat1 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: desc2_Cat1 Title</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>desc2_Cat1 Title</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -5905,7 +3807,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.desc2_Cat1 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: desc2_Cat1 Title</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>desc2_Cat1 Title</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -5925,7 +3827,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.desc2_Cat1 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: desc2_Cat1 Title</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>desc2_Cat1 Title</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -5934,7 +3836,7 @@ This is the setter for:<BR>
     void setDesc2_Cat1(double v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _desc2_Cat1)
+       if (__Init == InitMode.CREATE || v != _desc2_Cat1)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4Realized.desc2_Cat1' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -5956,7 +3858,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.desc2_Cat1 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: desc2_Cat1 Title</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>desc2_Cat1 Title</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -5990,7 +3892,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.desc2_Cat2 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: desc2_Cat2 Title</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>desc2_Cat2 Title</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -6009,7 +3911,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.desc2_Cat2 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: desc2_Cat2 Title</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>desc2_Cat2 Title</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -6029,7 +3931,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.desc2_Cat2 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: desc2_Cat2 Title</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>desc2_Cat2 Title</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -6049,7 +3951,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.desc2_Cat2 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: desc2_Cat2 Title</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>desc2_Cat2 Title</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -6058,7 +3960,7 @@ This is the setter for:<BR>
     void setDesc2_Cat2(double v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _desc2_Cat2)
+       if (__Init == InitMode.CREATE || v != _desc2_Cat2)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4Realized.desc2_Cat2' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -6080,7 +3982,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.desc2_Cat2 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: desc2_Cat2 Title</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>desc2_Cat2 Title</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -6114,7 +4016,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.desc2_Cat3 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: desc2_Cat3 Title</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>desc2_Cat3 Title</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -6133,7 +4035,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.desc2_Cat3 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: desc2_Cat3 Title</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>desc2_Cat3 Title</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -6153,7 +4055,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.desc2_Cat3 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: desc2_Cat3 Title</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>desc2_Cat3 Title</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -6173,7 +4075,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.desc2_Cat3 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: desc2_Cat3 Title</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>desc2_Cat3 Title</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -6182,7 +4084,7 @@ This is the setter for:<BR>
     void setDesc2_Cat3(double v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _desc2_Cat3)
+       if (__Init == InitMode.CREATE || v != _desc2_Cat3)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4Realized.desc2_Cat3' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -6204,7 +4106,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.desc2_Cat3 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: desc2_Cat3 Title</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>desc2_Cat3 Title</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -6238,7 +4140,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a7_Cat4 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: a7_Cat4 Title</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>a7_Cat4 Title</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -6257,7 +4159,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a7_Cat4 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: a7_Cat4 Title</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>a7_Cat4 Title</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -6277,7 +4179,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a7_Cat4 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: a7_Cat4 Title</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>a7_Cat4 Title</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -6297,7 +4199,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a7_Cat4 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: a7_Cat4 Title</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>a7_Cat4 Title</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -6306,7 +4208,7 @@ This is the setter for:<BR>
     void setA7_Cat4(double v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a7_Cat4)
+       if (__Init == InitMode.CREATE || v != _a7_Cat4)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4Realized.a7_Cat4' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -6328,7 +4230,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a7_Cat4 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: a7_Cat4 Title</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>a7_Cat4 Title</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -6362,7 +4264,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a7_Cat5 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: a7_Cat5 Title</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>a7_Cat5 Title</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -6381,7 +4283,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a7_Cat5 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: a7_Cat5 Title</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>a7_Cat5 Title</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -6401,7 +4303,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a7_Cat5 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: a7_Cat5 Title</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>a7_Cat5 Title</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -6421,7 +4323,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a7_Cat5 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: a7_Cat5 Title</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>a7_Cat5 Title</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -6430,7 +4332,7 @@ This is the setter for:<BR>
     void setA7_Cat5(double v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a7_Cat5)
+       if (__Init == InitMode.CREATE || v != _a7_Cat5)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4Realized.a7_Cat5' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -6452,7 +4354,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a7_Cat5 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: a7_Cat5 Title</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>a7_Cat5 Title</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -6486,7 +4388,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a5_null of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Null a5</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Null a5</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -6505,7 +4407,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a5_null of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Null a5</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Null a5</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -6525,7 +4427,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a5_null of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Null a5</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Null a5</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -6545,7 +4447,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a5_null of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Null a5</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Null a5</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -6554,7 +4456,7 @@ This is the setter for:<BR>
     void setA5_null(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a5_null)
+       if (__Init == InitMode.CREATE || v != _a5_null)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4Realized.a5_null' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -6576,7 +4478,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a5_null of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Null a5</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Null a5</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -6610,7 +4512,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a6_null of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Null a6</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Null a6</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -6629,7 +4531,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a6_null of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Null a6</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Null a6</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -6649,7 +4551,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a6_null of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Null a6</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Null a6</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -6669,7 +4571,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a6_null of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Null a6</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Null a6</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -6678,7 +4580,7 @@ This is the setter for:<BR>
     void setA6_null(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a6_null)
+       if (__Init == InitMode.CREATE || v != _a6_null)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4Realized.a6_null' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -6700,7 +4602,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a6_null of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Null a6</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Null a6</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -6734,7 +4636,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a7_null of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Null a7</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Null a7</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -6753,7 +4655,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a7_null of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Null a7</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Null a7</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -6773,7 +4675,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a7_null of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Null a7</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Null a7</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -6793,7 +4695,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a7_null of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Null a7</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Null a7</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -6802,7 +4704,7 @@ This is the setter for:<BR>
     void setA7_null(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a7_null)
+       if (__Init == InitMode.CREATE || v != _a7_null)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4Realized.a7_null' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -6824,7 +4726,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a7_null of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Null a7</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Null a7</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -6858,7 +4760,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a8_null of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Null a8</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Null a8</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -6877,7 +4779,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a8_null of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Null a8</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Null a8</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -6897,7 +4799,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a8_null of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Null a8</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Null a8</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -6917,7 +4819,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a8_null of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Null a8</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Null a8</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -6926,7 +4828,7 @@ This is the setter for:<BR>
     void setA8_null(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a8_null)
+       if (__Init == InitMode.CREATE || v != _a8_null)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4Realized.a8_null' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -6948,7 +4850,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a8_null of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Null a8</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Null a8</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -6982,7 +4884,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a3 of type boolean</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Always True</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Always True</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -7001,7 +4903,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a3 of type boolean</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Always True</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Always True</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -7021,7 +4923,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a3 of type boolean</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Always True</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Always True</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -7041,7 +4943,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a3 of type boolean</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Always True</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Always True</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -7050,7 +4952,7 @@ This is the setter for:<BR>
     void setA3(boolean v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a3)
+       if (__Init == InitMode.CREATE || v != _a3)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4Realized.a3' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -7072,7 +4974,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.a3 of type boolean</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Always True</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Always True</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -7106,7 +5008,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Always True</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Always True</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -7125,7 +5027,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Always True</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Always True</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -7145,7 +5047,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Always True</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Always True</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -7165,7 +5067,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Always True</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Always True</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -7200,7 +5102,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing4Realized.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Always True</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Always True</B>'</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -7263,14 +5165,6 @@ This is the null setter for:<BR>
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing4Realized", "a8");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing4Realized", "a8bTZ");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing4Realized", "a8b");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing4Realized", "a9TZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing4Realized", "a9");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing4Realized", "a9a1TZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing4Realized", "a9a1");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing4Realized", "a9bTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing4Realized", "a9b");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing4Realized", "a9c");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing4Realized", "a9d");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing4Realized", "a10a");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing4Realized", "a10b");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing4Realized", "a10c");
@@ -7367,14 +5261,6 @@ This is the null setter for:<BR>
                             _a8          =                              RS.getBytes    (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4REALIZED_Factory.COLS.A8._Mask         );
                             _a8bTZ       = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4REALIZED_Factory.COLS.A8BTZ._Mask      ); else _a8bTZ       = _a8bTZ      .trim();
                             _a8b         = ProcessZDT(_a8bTZ        , "tilda.data.TILDA.Testing4Realized.a8b"        , RS, ++i, TILDA__TESTING4REALIZED_Factory.COLS.A8B        , TILDA__TESTING4REALIZED_Factory.COLS.A8BTZ        ); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4REALIZED_Factory.COLS.A8B._Mask        );
-                            _a9TZ        = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4REALIZED_Factory.COLS.A9TZ._Mask       ); else _a9TZ        = _a9TZ       .trim();
-                            _a9          = ProcessZDT(_a9TZ         , "tilda.data.TILDA.Testing4Realized.a9"         , RS, ++i, TILDA__TESTING4REALIZED_Factory.COLS.A9         , TILDA__TESTING4REALIZED_Factory.COLS.A9TZ         ); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4REALIZED_Factory.COLS.A9._Mask         );
-                            _a9a1TZ      = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4REALIZED_Factory.COLS.A9A1TZ._Mask     ); else _a9a1TZ      = _a9a1TZ     .trim();
-                            _a9a1        = ProcessZDT(_a9a1TZ       , "tilda.data.TILDA.Testing4Realized.a9a1"       , RS, ++i, TILDA__TESTING4REALIZED_Factory.COLS.A9A1       , TILDA__TESTING4REALIZED_Factory.COLS.A9A1TZ       ); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4REALIZED_Factory.COLS.A9A1._Mask       );
-                            _a9bTZ = (List<String>) C.getArray(RS, ++i, TILDA__TESTING4REALIZED_Factory.COLS.A9BTZ._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4REALIZED_Factory.COLS.A9BTZ._Mask      );
-                            _a9b         = ProcessZDTs(C, _a9bTZ        , "tilda.data.TILDA.Testing4Realized.a9b"        , RS, ++i, TILDA__TESTING4REALIZED_Factory.COLS.A9B        , TILDA__TESTING4REALIZED_Factory.COLS.A9BTZ        ); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4REALIZED_Factory.COLS.A9B._Mask        );
-                            _a9c         = DateTimeUtil.toLocalDate(RS.getDate(++i)); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4REALIZED_Factory.COLS.A9C._Mask        );
-                            _a9d = (List<LocalDate>) C.getArray(RS, ++i, TILDA__TESTING4REALIZED_Factory.COLS.A9D._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4REALIZED_Factory.COLS.A9D._Mask        );
                             _a10a        =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4REALIZED_Factory.COLS.A10A._Mask       );
                             _a10b        = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4REALIZED_Factory.COLS.A10B._Mask       );
                             _a10c        =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4REALIZED_Factory.COLS.A10C._Mask       );
@@ -7421,34 +5307,6 @@ This is the null setter for:<BR>
       throw new Exception("The field "+DTFieldName+" is not null while its associated timezone field '"+DTFieldName+"TZ' is null. A TZ is mandatory for not null timestamps.");
      return ZDT;
    }
-  private final List<ZonedDateTime> ProcessZDTs(Connection C, List<String> TimezoneIds, String DTFieldName, java.sql.ResultSet RS, int ColumnPos, tilda.types.ColumnDefinition DTField, tilda.types.ColumnDefinition TZField)
-  throws Exception
-   {
-     List<Timestamp> L = (List<Timestamp>) C.getArray(RS, ColumnPos, DTField._Type, false);
-     boolean DTNull = false;
-     if (RS.wasNull() == true)
-      {
-         __Nulls.or(DTField._Mask);
-         DTNull = true;
-      }
-     boolean TZNull = __Nulls.intersects(TZField._Mask);
-     if (DTNull == false && TZNull == true)
-      throw new Exception("The field "+DTFieldName+" is not null while its associated timezone field '"+DTFieldName+"TZ' is null. A TZ is mandatory for not null timestamps.");
-     if (DTNull == true)
-      return null;
-
-     List<ZonedDateTime> ZDTs = new ArrayList<ZonedDateTime>();
-     for (int i = 0; i < TimezoneIds.size(); ++i)
-       {
-         String TimezoneId = TimezoneIds.get(i);
-         tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationById(TimezoneId);
-         if (ZI == null && TextUtil.isNullOrEmpty(TimezoneId) == false)
-          throw new Exception("Cannot set field '"+DTFieldName+"' because the timezone Id '" + TimezoneId + "' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-         ZonedDateTime ZDT = DateTimeUtil.toZonedDateTime(L.get(i), ZI == null ? "null" : ZI.getValue());
-         ZDTs.add(ZDT);
-       }
-     return ZDTs;
-   }
 
    protected abstract boolean AfterRead(Connection C) throws Exception;
 
@@ -7468,11 +5326,6 @@ This is the null setter for:<BR>
                + "; a7b"           + (__Nulls.intersects(TILDA__TESTING4REALIZED_Factory.COLS.A7B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA7b        ()))
                + "; a8"            + (__Nulls.intersects(TILDA__TESTING4REALIZED_Factory.COLS.A8._Mask) == true ? ": NULL" : ": " +                                   getA8         () )
                + "; a8b"           + (__Nulls.intersects(TILDA__TESTING4REALIZED_Factory.COLS.A8B._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getA8b        ()))
-               + "; a9"            + (__Nulls.intersects(TILDA__TESTING4REALIZED_Factory.COLS.A9._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getA9         ()))
-               + "; a9a1"          + (__Nulls.intersects(TILDA__TESTING4REALIZED_Factory.COLS.A9A1._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getA9a1       ()))
-               + "; a9b"           + (__Nulls.intersects(TILDA__TESTING4REALIZED_Factory.COLS.A9B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA9b        ()))
-               + "; a9c"           + (__Nulls.intersects(TILDA__TESTING4REALIZED_Factory.COLS.A9C._Mask) == true ? ": NULL" : ": " +                                   getA9c        () )
-               + "; a9d"           + (__Nulls.intersects(TILDA__TESTING4REALIZED_Factory.COLS.A9D._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA9d        ()))
                + "; a10a"          + (__Nulls.intersects(TILDA__TESTING4REALIZED_Factory.COLS.A10A._Mask) == true ? ": NULL" : ": " +                                   getA10a       () )
                + "; a10b"          + (__Nulls.intersects(TILDA__TESTING4REALIZED_Factory.COLS.A10B._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getA10b       ()))
                + "; a10c"          + (__Nulls.intersects(TILDA__TESTING4REALIZED_Factory.COLS.A10C._Mask) == true ? ": NULL" : ": " +                                   getA10c       () )

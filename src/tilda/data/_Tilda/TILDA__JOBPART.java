@@ -24,380 +24,173 @@ import org.apache.logging.log4j.Logger;
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
-<TABLE id="Jobs_DIV" class="tables">
-<SCRIPT>registerStickyHeader("Jobs_DIV");</SCRIPT>
-<TR valign="top"><TD><H2>Jobs&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 70%;"><SPAN class="BackToDetails"><A href="#Jobs_CNT">details</A>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><A href="#">top</A></SUP></H2></TD><TD align="right"></TD></TR>
+<TABLE id="JobPart_DIV" class="tables">
+<SCRIPT>registerStickyHeader("JobPart_DIV");</SCRIPT>
+<TR valign="top"><TD><H2>JobPart&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 70%;"><SPAN class="BackToDetails"><A href="#JobPart_CNT">details</A>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><A href="#">top</A></SUP></H2></TD><TD align="right"></TD></TR>
 </TABLE>
-<DIV id="Jobs_CNT" class="content">
-The Table TILDA.Jobs:<UL>
-<LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>Jobs_Factory</B>, <B>Jobs_Data</B> in the package <B>tilda.data</B>.
+<DIV id="JobPart_CNT" class="content">
+The Table TILDA.JobPart:<UL>
+<LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>JobPart_Factory</B>, <B>JobPart_Data</B> in the package <B>tilda.data</B>.
 <LI>Is configured for normal <B>read/write</B> access.</LI>
 <LI>Is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
-<LI>Defines foreign key(s) to <A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A> </LI>
-<LI>Has the following identity:<UL><LI>Unique Index: Id</LI>
+<LI>Defines foreign key(s) to <A href="TILDA___Docs.TILDA.html#Job_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>Job</A>, <A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A> </LI>
+<LI>Has the following identity:<UL><LI>Primary Key: refnum</LI>
 </UL></LI>
 </UL>
-<B>Description</B>: Jobs<BR>
+<B>Description</B>: Job party details<BR>
 <BR>
 This Table contains the following columns:<BLOCKQUOTE>
- <TABLE id="Jobs_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
+ <TABLE id="JobPart_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
    <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Jobs-Id_DIV' class='columns'>Id</B>&nbsp;&nbsp;</TD>
-<TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPart-refnum_DIV' class='columns'>refnum</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Id</TD>
+<TD>The primary key for this record</TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>2&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Jobs-Name_DIV' class='columns'>Name</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;/&nbsp;varchar(120)&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPart-jobRefnum_DIV' class='columns'>jobRefnum</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Name</TD>
+<TD>Parent Job Refnum<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Job_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>Job</A>: refnum</TD></TR>
+</TABLE>
+</TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>3&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('Jobs-StartTimeTZ')" align="right"><B id='Jobs-StartTimeTZ_DIV' class='columns dotted_underline cursor_pointer'>StartTimeTZ</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPart-name_DIV' class='columns'>name</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(200)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Generated helper column to hold the time zone ID for 'StartTime'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
-</TABLE>
-</TD>
+<TD>FileName</TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>4&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Jobs-StartTime_DIV' class='columns'>StartTime</B>&nbsp;&nbsp;</TD>
-<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPart-startTZ_DIV' class='columns'>startTZ</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>StartTime</TD>
+<TD>Generated helper column to hold the time zone ID for 'start'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
+</TABLE>
+</TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>5&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('Jobs-EndTimeTZ')" align="right"><B id='Jobs-EndTimeTZ_DIV' class='columns dotted_underline cursor_pointer'>EndTimeTZ</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPart-start_DIV' class='columns'>start</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>FileProcessStartTime</TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>6&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPart-endTZ_DIV' class='columns'>endTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Generated helper column to hold the time zone ID for 'EndTime'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
+<TD>Generated helper column to hold the time zone ID for 'end'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
 </TABLE>
 </TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>6&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Jobs-EndTime_DIV' class='columns'>EndTime</B>&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>7&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPart-end_DIV' class='columns'>end</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>EndTime</TD>
+<TD>FileProcessEndTime</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>7&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Jobs-TotalRecords_DIV' class='columns'>TotalRecords</B>&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>8&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPart-recordsCount_DIV' class='columns'>recordsCount</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>TotalRecords</TD>
+<TD>FileRecords</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>8&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Jobs-Status_DIV' class='columns'>Status</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;/&nbsp;varchar(200)&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>9&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPart-status_DIV' class='columns'>status</B>&nbsp;&nbsp;</TD>
+<TD>boolean&nbsp;/&nbsp;boolean&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Status</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>9&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Jobs-Error_DIV' class='columns'>Error</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;/&nbsp;varchar(1000)&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>10&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPart-msg_DIV' class='columns'>msg</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;text&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Error</TD>
-</TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>10&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Jobs-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
-<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The timestamp for when the record was created. (TILDA.Jobs)</TD>
+<TD>Message details</TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>11&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Jobs-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPart-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The timestamp for when the record was created. (TILDA.JobPart)</TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>12&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPart-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The timestamp for when the record was last updated. (TILDA.Jobs)</TD>
+<TD>The timestamp for when the record was last updated. (TILDA.JobPart)</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>12&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Jobs-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>13&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPart-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The timestamp for when the record was deleted. (TILDA.Jobs)</TD>
+<TD>The timestamp for when the record was deleted. (TILDA.JobPart)</TD>
 </TR>
 </TABLE></BLOCKQUOTE>
-<DIV id='Jobs-Id_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Jobs-Id_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs_DIV'>Jobs</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs-Id_DIV'>Id</a> -- INTEGER</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Jobs-Name_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Jobs-Name_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs_DIV'>Jobs</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs-Name_DIV'>Name</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Jobs-StartTimeTZ_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Jobs-StartTimeTZ_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs_DIV'>Jobs</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs-StartTimeTZ_DIV'>StartTimeTZ</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#ZoneInfo_DIV'>ZoneInfo</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#ZoneInfo-id_DIV'>id</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Jobs-StartTime_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Jobs-StartTime_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs_DIV'>Jobs</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs-StartTime_DIV'>StartTime</a> -- DATETIME</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Jobs-EndTimeTZ_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Jobs-EndTimeTZ_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs_DIV'>Jobs</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs-EndTimeTZ_DIV'>EndTimeTZ</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#ZoneInfo_DIV'>ZoneInfo</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#ZoneInfo-id_DIV'>id</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Jobs-EndTime_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Jobs-EndTime_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs_DIV'>Jobs</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs-EndTime_DIV'>EndTime</a> -- DATETIME</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Jobs-TotalRecords_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Jobs-TotalRecords_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs_DIV'>Jobs</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs-TotalRecords_DIV'>TotalRecords</a> -- INTEGER</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Jobs-Status_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Jobs-Status_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs_DIV'>Jobs</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs-Status_DIV'>Status</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Jobs-Error_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Jobs-Error_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs_DIV'>Jobs</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs-Error_DIV'>Error</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Jobs-created_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Jobs-created_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs_DIV'>Jobs</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs-created_DIV'>created</a> -- DATETIME</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Jobs-lastUpdated_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Jobs-lastUpdated_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs_DIV'>Jobs</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs-lastUpdated_DIV'>lastUpdated</a> -- DATETIME</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Jobs-deleted_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Jobs-deleted_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs_DIV'>Jobs</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs-deleted_DIV'>deleted</a> -- DATETIME</td>
-</tr>
-</table>
-</DIV></DIV>
 </DIV>
 
- @author   Tilda code gen for Java 8/PostgreSQL
- @version  Tilda 1.0
- @generated Dec 27 2018, 10:36:33EST
 */
 @SuppressWarnings({ "unused" })
-public abstract class TILDA__JOBS implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
+public abstract class TILDA__JOBPART implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
-   protected static final Logger LOG = LogManager.getLogger(TILDA__JOBS.class.getName());
+   protected static final Logger LOG = LogManager.getLogger(TILDA__JOBPART.class.getName());
 
-   public static final Class<TILDA__JOBS_Factory> FACTORY_CLASS= TILDA__JOBS_Factory.class;
-   public static final String TABLENAME = TextUtil.Print("TILDA.Jobs", "");
+   public static final Class<TILDA__JOBPART_Factory> FACTORY_CLASS= TILDA__JOBPART_Factory.class;
+   public static final String TABLENAME = TextUtil.Print("TILDA.JobPart", "");
 
-   protected TILDA__JOBS() { }
+   protected TILDA__JOBPART() { }
 
    InitMode __Init        = null;
    private BitSet   __Nulls       = new BitSet(64);
@@ -428,92 +221,74 @@ public abstract class TILDA__JOBS implements tilda.interfaces.WriterObject, tild
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.Id -> TILDA.Jobs."Id"
+//   Field tilda.data.TILDA.JobPart.refnum -> TILDA.JobPart."refnum"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.Id of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.Id of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.refnum of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.refnum of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Id</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   int _Id= SystemValues.EVIL_VALUE;
-   protected int __Saved_Id;
+   long _refnum= SystemValues.EVIL_VALUE;
+   protected long __Saved_refnum;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.Id -> TILDA.Jobs."Id"
+//   Field tilda.data.TILDA.JobPart.refnum -> TILDA.JobPart."refnum"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.Id of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.Id of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.refnum of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.refnum of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Id</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final int getId()
-      { return _Id; }
+   public final long getRefnum()
+      { return _refnum; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.Id -> TILDA.Jobs."Id"
+//   Field tilda.data.TILDA.JobPart.refnum -> TILDA.JobPart."refnum"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.Id of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.Id of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.refnum of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.refnum of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Id</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setId(int v) throws Exception
+   protected void setRefnum(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _Id)
+       if (__Init == InitMode.CREATE || v != _refnum)
         {
-          __Changes.or(TILDA__JOBS_Factory.COLS.ID._Mask);
-          __Nulls.andNot(TILDA__JOBS_Factory.COLS.ID._Mask);
-       _Id = v;
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+           throw new Exception("Cannot set field 'tilda.data.TILDA.JobPart.refnum' that is invariant, or part of a read-only or pre-existing WORM object.");
+          __Changes.or(TILDA__JOBPART_Factory.COLS.REFNUM._Mask);
+          __Nulls.andNot(TILDA__JOBPART_Factory.COLS.REFNUM._Mask);
+       _refnum = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.Id -> TILDA.Jobs."Id"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the hasChanged for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.Id of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.Id of type integer</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Id</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public boolean hasChangedId()
-     { return __Changes.intersects(TILDA__JOBS_Factory.COLS.ID._Mask); }
 
 
 
@@ -523,79 +298,152 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.Name -> TILDA.Jobs."Name"
+//   Field tilda.data.TILDA.JobPart.jobRefnum -> TILDA.JobPart."jobRefnum"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.Name of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.Name of type varchar(120)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.jobRefnum of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.jobRefnum of type bigint</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>120</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Name</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Parent Job Refnum</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _Name;
+   long _jobRefnum= SystemValues.EVIL_VALUE;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.Name -> TILDA.Jobs."Name"
+//   Field tilda.data.TILDA.JobPart.jobRefnum -> TILDA.JobPart."jobRefnum"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.Name of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.Name of type varchar(120)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.jobRefnum of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.jobRefnum of type bigint</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>120</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Name</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Parent Job Refnum</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final long getJobRefnum()
+      { return _jobRefnum; }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JobPart.jobRefnum -> TILDA.JobPart."jobRefnum"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.jobRefnum of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.jobRefnum of type bigint</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Parent Job Refnum</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public void setJobRefnum(long v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (__Init == InitMode.CREATE || v != _jobRefnum)
+        {
+          __Changes.or(TILDA__JOBPART_Factory.COLS.JOBREFNUM._Mask);
+          __Nulls.andNot(TILDA__JOBPART_Factory.COLS.JOBREFNUM._Mask);
+       _jobRefnum = v;
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JobPart.jobRefnum -> TILDA.JobPart."jobRefnum"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the hasChanged for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.jobRefnum of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.jobRefnum of type bigint</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Parent Job Refnum</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public boolean hasChangedJobRefnum()
+     { return __Changes.intersects(TILDA__JOBPART_Factory.COLS.JOBREFNUM._Mask); }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JobPart.name -> TILDA.JobPart."name"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.name of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.name of type varchar(200)</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>200</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>FileName</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   String _name;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JobPart.name -> TILDA.JobPart."name"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.name of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.name of type varchar(200)</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>200</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>FileName</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
    public final String getName()
-      { return _Name; }
+      { return _name; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.Name -> TILDA.Jobs."Name"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the isNull for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.Name of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.Name of type varchar(120)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>120</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Name</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final boolean isNullName()
-     { return __Nulls.intersects(TILDA__JOBS_Factory.COLS.NAME._Mask); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.Name -> TILDA.Jobs."Name"
+//   Field tilda.data.TILDA.JobPart.name -> TILDA.JobPart."name"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.Name of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.Name of type varchar(120)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.name of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.name of type varchar(200)</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>120</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Name</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>200</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>FileName</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -605,69 +453,38 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (v == null)
+        throw new Exception("Cannot set tilda.data.TILDA.JobPart.name to null: it's not nullable.");
+       else if (v.length() > 200)
+        throw new Exception("Cannot set tilda.data.TILDA.JobPart.name: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 200.");
+       else if (v.equals(_name) == false)
         {
-          setNullName();
-        }
-       else if (v.length() > 120)
-        throw new Exception("Cannot set tilda.data.TILDA.Jobs.Name: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 120.");
-       else if (v.equals(_Name) == false)
-        {
-          __Changes.or(TILDA__JOBS_Factory.COLS.NAME._Mask);
-          __Nulls.andNot(TILDA__JOBS_Factory.COLS.NAME._Mask);
-       _Name = v;
+          __Changes.or(TILDA__JOBPART_Factory.COLS.NAME._Mask);
+          __Nulls.andNot(TILDA__JOBPART_Factory.COLS.NAME._Mask);
+       _name = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.Name -> TILDA.Jobs."Name"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the null setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.Name of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.Name of type varchar(120)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>120</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Name</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setNullName()
-     {
-       long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__JOBS_Factory.COLS.NAME._Mask) == true) // already NULL
-        return;
-       __Changes.or(TILDA__JOBS_Factory.COLS.NAME._Mask);
-       __Nulls.or(TILDA__JOBS_Factory.COLS.NAME._Mask);
-       _Name=null;
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.Name -> TILDA.Jobs."Name"
+//   Field tilda.data.TILDA.JobPart.name -> TILDA.JobPart."name"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.Name of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.Name of type varchar(120)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.name of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.name of type varchar(200)</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>120</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Name</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>200</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>FileName</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
    public boolean hasChangedName()
-     { return __Changes.intersects(TILDA__JOBS_Factory.COLS.NAME._Mask); }
+     { return __Changes.intersects(TILDA__JOBPART_Factory.COLS.NAME._Mask); }
 
 
 
@@ -677,151 +494,99 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.StartTimeTZ -> TILDA.Jobs."StartTimeTZ"
+//   Field tilda.data.TILDA.JobPart.startTZ -> TILDA.JobPart."startTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.StartTimeTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.StartTimeTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.startTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.startTZ of type character(5)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'StartTime'.</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'start'.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _StartTimeTZ;
+   String _startTZ;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.StartTimeTZ -> TILDA.Jobs."StartTimeTZ"
+//   Field tilda.data.TILDA.JobPart.startTZ -> TILDA.JobPart."startTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.StartTimeTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.StartTimeTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.startTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.startTZ of type character(5)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'StartTime'.</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'start'.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final String getStartTimeTZ()
-      { return _StartTimeTZ; }
+   public final String getStartTZ()
+      { return _startTZ; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.StartTimeTZ -> TILDA.Jobs."StartTimeTZ"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the isNull for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.StartTimeTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.StartTimeTZ of type character(5)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'StartTime'.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final boolean isNullStartTimeTZ()
-     { return __Nulls.intersects(TILDA__JOBS_Factory.COLS.STARTTIMETZ._Mask); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.StartTimeTZ -> TILDA.Jobs."StartTimeTZ"
+//   Field tilda.data.TILDA.JobPart.startTZ -> TILDA.JobPart."startTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.StartTimeTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.StartTimeTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.startTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.startTZ of type character(5)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'StartTime'.</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'start'.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setStartTimeTZ(String v) throws Exception
+    void setStartTZ(String v) throws Exception
      {
        long T0 = System.nanoTime();
        if (v == null)
-        {
-          setNullStartTimeTZ();
-        }
+        throw new Exception("Cannot set tilda.data.TILDA.JobPart.startTZ to null: it's not nullable.");
        else if (v.length() > 5)
-        throw new Exception("Cannot set tilda.data.TILDA.Jobs.StartTimeTZ: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
-       else if (v.equals(_StartTimeTZ) == false)
+        throw new Exception("Cannot set tilda.data.TILDA.JobPart.startTZ: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
+       else if (v.equals(_startTZ) == false)
         {
-          __Changes.or(TILDA__JOBS_Factory.COLS.STARTTIMETZ._Mask);
-          __Nulls.andNot(TILDA__JOBS_Factory.COLS.STARTTIMETZ._Mask);
-       _StartTimeTZ = v;
+          __Changes.or(TILDA__JOBPART_Factory.COLS.STARTTZ._Mask);
+          __Nulls.andNot(TILDA__JOBPART_Factory.COLS.STARTTZ._Mask);
+       _startTZ = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.StartTimeTZ -> TILDA.Jobs."StartTimeTZ"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the null setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.StartTimeTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.StartTimeTZ of type character(5)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'StartTime'.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-    void setNullStartTimeTZ()
-     {
-       long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__JOBS_Factory.COLS.STARTTIMETZ._Mask) == true) // already NULL
-        return;
-       __Changes.or(TILDA__JOBS_Factory.COLS.STARTTIMETZ._Mask);
-       __Nulls.or(TILDA__JOBS_Factory.COLS.STARTTIMETZ._Mask);
-       _StartTimeTZ=null;
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.StartTimeTZ -> TILDA.Jobs."StartTimeTZ"
+//   Field tilda.data.TILDA.JobPart.startTZ -> TILDA.JobPart."startTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.StartTimeTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.StartTimeTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.startTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.startTZ of type character(5)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'StartTime'.</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'start'.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public boolean hasChangedStartTimeTZ()
-     { return __Changes.intersects(TILDA__JOBS_Factory.COLS.STARTTIMETZ._Mask); }
+   public boolean hasChangedStartTZ()
+     { return __Changes.intersects(TILDA__JOBPART_Factory.COLS.STARTTZ._Mask); }
 
 
 
@@ -831,214 +596,163 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.StartTime -> TILDA.Jobs."StartTime"
+//   Field tilda.data.TILDA.JobPart.start -> TILDA.JobPart."start"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.StartTime of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.StartTime of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.start of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.start of type timestamptz</TD></TR>
 
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>StartTime</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>FileProcessStartTime</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   ZonedDateTime _StartTime;
+   ZonedDateTime _start;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.StartTime -> TILDA.Jobs."StartTime"
+//   Field tilda.data.TILDA.JobPart.start -> TILDA.JobPart."start"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.StartTime of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.StartTime of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.start of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.start of type timestamptz</TD></TR>
 
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>StartTime</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>FileProcessStartTime</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final ZonedDateTime getStartTime()
-      { return _StartTime; }
+   public final ZonedDateTime getStart()
+      { return _start; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.StartTime -> TILDA.Jobs."StartTime"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the isNull for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.StartTime of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.StartTime of type timestamptz</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>StartTime</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final boolean isNullStartTime()
-     { return __Nulls.intersects(TILDA__JOBS_Factory.COLS.STARTTIME._Mask); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.StartTime -> TILDA.Jobs."StartTime"
+//   Field tilda.data.TILDA.JobPart.start -> TILDA.JobPart."start"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.StartTime of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.StartTime of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.start of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.start of type timestamptz</TD></TR>
 
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>StartTime</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>FileProcessStartTime</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setStartTime(ZonedDateTime v) throws Exception
+   public void setStart(ZonedDateTime v) throws Exception
      {
        long T0 = System.nanoTime();
        if (v == null)
+        throw new Exception("Cannot set tilda.data.TILDA.JobPart.start to null: it's not nullable.");
+       else if (v.equals(_start) == false)
         {
-          setNullStartTime();
-        }
-       else if (v.equals(_StartTime) == false)
-        {
-          __Changes.or(TILDA__JOBS_Factory.COLS.STARTTIME._Mask);
-          __Nulls.andNot(TILDA__JOBS_Factory.COLS.STARTTIME._Mask);
-       _StartTime = v;
+          __Changes.or(TILDA__JOBPART_Factory.COLS.START._Mask);
+          __Nulls.andNot(TILDA__JOBPART_Factory.COLS.START._Mask);
+       _start = v;
           tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(v.getZone().getId());
           if (ZI == null)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.Jobs.StartTime' because the timezone value '"+v.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-          setStartTimeTZ(ZI.getId());
+           throw new Exception("Cannot set field 'tilda.data.TILDA.JobPart.start' because the timezone value '"+v.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+          setStartTZ(ZI.getId());
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.StartTime -> TILDA.Jobs."StartTime"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the null setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.StartTime of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.StartTime of type timestamptz</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>StartTime</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setNullStartTime()
-     {
-       long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__JOBS_Factory.COLS.STARTTIME._Mask) == true) // already NULL
-        return;
-       __Changes.or(TILDA__JOBS_Factory.COLS.STARTTIME._Mask);
-       __Nulls.or(TILDA__JOBS_Factory.COLS.STARTTIME._Mask);
-       _StartTime=null;
-       setNullStartTimeTZ();
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.StartTime -> TILDA.Jobs."StartTime"
+//   Field tilda.data.TILDA.JobPart.start -> TILDA.JobPart."start"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the NOW setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.StartTime of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.StartTime of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.start of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.start of type timestamptz</TD></TR>
 
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>StartTime</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>FileProcessStartTime</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final void setStartTimeNow() throws Exception
+   public final void setStartNow() throws Exception
     {
-      setStartTime(DateTimeUtil.NOW_PLACEHOLDER_ZDT);
+      setStart(DateTimeUtil.NOW_PLACEHOLDER_ZDT);
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.StartTime -> TILDA.Jobs."StartTime"
+//   Field tilda.data.TILDA.JobPart.start -> TILDA.JobPart."start"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the UNDEFINED setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.StartTime of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.StartTime of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.start of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.start of type timestamptz</TD></TR>
 
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>StartTime</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>FileProcessStartTime</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final void setStartTimeUndefined() throws Exception
+   public final void setStartUndefined() throws Exception
     {
-      setStartTime(DateTimeUtil.UNDEFINED_PLACEHOLDER_ZDT);
+      setStart(DateTimeUtil.UNDEFINED_PLACEHOLDER_ZDT);
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.StartTime -> TILDA.Jobs."StartTime"
+//   Field tilda.data.TILDA.JobPart.start -> TILDA.JobPart."start"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.StartTime of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.StartTime of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.start of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.start of type timestamptz</TD></TR>
 
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>StartTime</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>FileProcessStartTime</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final void setStartTime(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
+   public final void setStart(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
     {
-      setStartTime(DateTimeUtil.New(year, month, date, hourOfDay, minute, second, millis, z));
+      setStart(DateTimeUtil.New(year, month, date, hourOfDay, minute, second, millis, z));
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.StartTime -> TILDA.Jobs."StartTime"
+//   Field tilda.data.TILDA.JobPart.start -> TILDA.JobPart."start"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.StartTime of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.StartTime of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.start of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.start of type timestamptz</TD></TR>
 
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>StartTime</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>FileProcessStartTime</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public boolean hasChangedStartTime()
-     { return __Changes.intersects(TILDA__JOBS_Factory.COLS.STARTTIME._Mask); }
+   public boolean hasChangedStart()
+     { return __Changes.intersects(TILDA__JOBPART_Factory.COLS.START._Mask); }
 
 
 
@@ -1048,151 +762,151 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.EndTimeTZ -> TILDA.Jobs."EndTimeTZ"
+//   Field tilda.data.TILDA.JobPart.endTZ -> TILDA.JobPart."endTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.EndTimeTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.EndTimeTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.endTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.endTZ of type character(5)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'EndTime'.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'end'.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _EndTimeTZ;
+   String _endTZ;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.EndTimeTZ -> TILDA.Jobs."EndTimeTZ"
+//   Field tilda.data.TILDA.JobPart.endTZ -> TILDA.JobPart."endTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.EndTimeTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.EndTimeTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.endTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.endTZ of type character(5)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'EndTime'.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'end'.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final String getEndTimeTZ()
-      { return _EndTimeTZ; }
+   public final String getEndTZ()
+      { return _endTZ; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.EndTimeTZ -> TILDA.Jobs."EndTimeTZ"
+//   Field tilda.data.TILDA.JobPart.endTZ -> TILDA.JobPart."endTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.EndTimeTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.EndTimeTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.endTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.endTZ of type character(5)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'EndTime'.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'end'.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isNullEndTimeTZ()
-     { return __Nulls.intersects(TILDA__JOBS_Factory.COLS.ENDTIMETZ._Mask); }
+   public final boolean isNullEndTZ()
+     { return __Nulls.intersects(TILDA__JOBPART_Factory.COLS.ENDTZ._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.EndTimeTZ -> TILDA.Jobs."EndTimeTZ"
+//   Field tilda.data.TILDA.JobPart.endTZ -> TILDA.JobPart."endTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.EndTimeTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.EndTimeTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.endTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.endTZ of type character(5)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'EndTime'.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'end'.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setEndTimeTZ(String v) throws Exception
+    void setEndTZ(String v) throws Exception
      {
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setNullEndTimeTZ();
+          setNullEndTZ();
         }
        else if (v.length() > 5)
-        throw new Exception("Cannot set tilda.data.TILDA.Jobs.EndTimeTZ: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
-       else if (v.equals(_EndTimeTZ) == false)
+        throw new Exception("Cannot set tilda.data.TILDA.JobPart.endTZ: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
+       else if (v.equals(_endTZ) == false)
         {
-          __Changes.or(TILDA__JOBS_Factory.COLS.ENDTIMETZ._Mask);
-          __Nulls.andNot(TILDA__JOBS_Factory.COLS.ENDTIMETZ._Mask);
-       _EndTimeTZ = v;
+          __Changes.or(TILDA__JOBPART_Factory.COLS.ENDTZ._Mask);
+          __Nulls.andNot(TILDA__JOBPART_Factory.COLS.ENDTZ._Mask);
+       _endTZ = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.EndTimeTZ -> TILDA.Jobs."EndTimeTZ"
+//   Field tilda.data.TILDA.JobPart.endTZ -> TILDA.JobPart."endTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.EndTimeTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.EndTimeTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.endTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.endTZ of type character(5)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'EndTime'.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'end'.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setNullEndTimeTZ()
+    void setNullEndTZ()
      {
        long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__JOBS_Factory.COLS.ENDTIMETZ._Mask) == true) // already NULL
+       if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.ENDTZ._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__JOBS_Factory.COLS.ENDTIMETZ._Mask);
-       __Nulls.or(TILDA__JOBS_Factory.COLS.ENDTIMETZ._Mask);
-       _EndTimeTZ=null;
+       __Changes.or(TILDA__JOBPART_Factory.COLS.ENDTZ._Mask);
+       __Nulls.or(TILDA__JOBPART_Factory.COLS.ENDTZ._Mask);
+       _endTZ=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.EndTimeTZ -> TILDA.Jobs."EndTimeTZ"
+//   Field tilda.data.TILDA.JobPart.endTZ -> TILDA.JobPart."endTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.EndTimeTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.EndTimeTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.endTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.endTZ of type character(5)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'EndTime'.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'end'.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public boolean hasChangedEndTimeTZ()
-     { return __Changes.intersects(TILDA__JOBS_Factory.COLS.ENDTIMETZ._Mask); }
+   public boolean hasChangedEndTZ()
+     { return __Changes.intersects(TILDA__JOBPART_Factory.COLS.ENDTZ._Mask); }
 
 
 
@@ -1202,214 +916,214 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.EndTime -> TILDA.Jobs."EndTime"
+//   Field tilda.data.TILDA.JobPart.end -> TILDA.JobPart."end"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.EndTime of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.EndTime of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.end of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.end of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>EndTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>FileProcessEndTime</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   ZonedDateTime _EndTime;
+   ZonedDateTime _end;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.EndTime -> TILDA.Jobs."EndTime"
+//   Field tilda.data.TILDA.JobPart.end -> TILDA.JobPart."end"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.EndTime of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.EndTime of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.end of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.end of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>EndTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>FileProcessEndTime</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final ZonedDateTime getEndTime()
-      { return _EndTime; }
+   public final ZonedDateTime getEnd()
+      { return _end; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.EndTime -> TILDA.Jobs."EndTime"
+//   Field tilda.data.TILDA.JobPart.end -> TILDA.JobPart."end"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.EndTime of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.EndTime of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.end of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.end of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>EndTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>FileProcessEndTime</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isNullEndTime()
-     { return __Nulls.intersects(TILDA__JOBS_Factory.COLS.ENDTIME._Mask); }
+   public final boolean isNullEnd()
+     { return __Nulls.intersects(TILDA__JOBPART_Factory.COLS.END._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.EndTime -> TILDA.Jobs."EndTime"
+//   Field tilda.data.TILDA.JobPart.end -> TILDA.JobPart."end"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.EndTime of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.EndTime of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.end of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.end of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>EndTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>FileProcessEndTime</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setEndTime(ZonedDateTime v) throws Exception
+   public void setEnd(ZonedDateTime v) throws Exception
      {
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setNullEndTime();
+          setNullEnd();
         }
-       else if (v.equals(_EndTime) == false)
+       else if (v.equals(_end) == false)
         {
-          __Changes.or(TILDA__JOBS_Factory.COLS.ENDTIME._Mask);
-          __Nulls.andNot(TILDA__JOBS_Factory.COLS.ENDTIME._Mask);
-       _EndTime = v;
+          __Changes.or(TILDA__JOBPART_Factory.COLS.END._Mask);
+          __Nulls.andNot(TILDA__JOBPART_Factory.COLS.END._Mask);
+       _end = v;
           tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(v.getZone().getId());
           if (ZI == null)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.Jobs.EndTime' because the timezone value '"+v.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-          setEndTimeTZ(ZI.getId());
+           throw new Exception("Cannot set field 'tilda.data.TILDA.JobPart.end' because the timezone value '"+v.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+          setEndTZ(ZI.getId());
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.EndTime -> TILDA.Jobs."EndTime"
+//   Field tilda.data.TILDA.JobPart.end -> TILDA.JobPart."end"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.EndTime of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.EndTime of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.end of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.end of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>EndTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>FileProcessEndTime</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setNullEndTime()
+   public void setNullEnd()
      {
        long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__JOBS_Factory.COLS.ENDTIME._Mask) == true) // already NULL
+       if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.END._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__JOBS_Factory.COLS.ENDTIME._Mask);
-       __Nulls.or(TILDA__JOBS_Factory.COLS.ENDTIME._Mask);
-       _EndTime=null;
-       setNullEndTimeTZ();
+       __Changes.or(TILDA__JOBPART_Factory.COLS.END._Mask);
+       __Nulls.or(TILDA__JOBPART_Factory.COLS.END._Mask);
+       _end=null;
+       setNullEndTZ();
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.EndTime -> TILDA.Jobs."EndTime"
+//   Field tilda.data.TILDA.JobPart.end -> TILDA.JobPart."end"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the NOW setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.EndTime of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.EndTime of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.end of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.end of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>EndTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>FileProcessEndTime</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final void setEndTimeNow() throws Exception
+   public final void setEndNow() throws Exception
     {
-      setEndTime(DateTimeUtil.NOW_PLACEHOLDER_ZDT);
+      setEnd(DateTimeUtil.NOW_PLACEHOLDER_ZDT);
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.EndTime -> TILDA.Jobs."EndTime"
+//   Field tilda.data.TILDA.JobPart.end -> TILDA.JobPart."end"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the UNDEFINED setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.EndTime of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.EndTime of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.end of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.end of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>EndTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>FileProcessEndTime</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final void setEndTimeUndefined() throws Exception
+   public final void setEndUndefined() throws Exception
     {
-      setEndTime(DateTimeUtil.UNDEFINED_PLACEHOLDER_ZDT);
+      setEnd(DateTimeUtil.UNDEFINED_PLACEHOLDER_ZDT);
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.EndTime -> TILDA.Jobs."EndTime"
+//   Field tilda.data.TILDA.JobPart.end -> TILDA.JobPart."end"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.EndTime of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.EndTime of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.end of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.end of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>EndTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>FileProcessEndTime</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final void setEndTime(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
+   public final void setEnd(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
     {
-      setEndTime(DateTimeUtil.New(year, month, date, hourOfDay, minute, second, millis, z));
+      setEnd(DateTimeUtil.New(year, month, date, hourOfDay, minute, second, millis, z));
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.EndTime -> TILDA.Jobs."EndTime"
+//   Field tilda.data.TILDA.JobPart.end -> TILDA.JobPart."end"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.EndTime of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.EndTime of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.end of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.end of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>EndTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>FileProcessEndTime</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public boolean hasChangedEndTime()
-     { return __Changes.intersects(TILDA__JOBS_Factory.COLS.ENDTIME._Mask); }
+   public boolean hasChangedEnd()
+     { return __Changes.intersects(TILDA__JOBPART_Factory.COLS.END._Mask); }
 
 
 
@@ -1419,139 +1133,139 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.TotalRecords -> TILDA.Jobs."TotalRecords"
+//   Field tilda.data.TILDA.JobPart.recordsCount -> TILDA.JobPart."recordsCount"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.TotalRecords of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.TotalRecords of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.recordsCount of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.recordsCount of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>TotalRecords</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>FileRecords</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   int _TotalRecords= SystemValues.EVIL_VALUE;
+   int _recordsCount= SystemValues.EVIL_VALUE;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.TotalRecords -> TILDA.Jobs."TotalRecords"
+//   Field tilda.data.TILDA.JobPart.recordsCount -> TILDA.JobPart."recordsCount"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.TotalRecords of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.TotalRecords of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.recordsCount of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.recordsCount of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>TotalRecords</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>FileRecords</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final int getTotalRecords()
-      { return _TotalRecords; }
+   public final int getRecordsCount()
+      { return _recordsCount; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.TotalRecords -> TILDA.Jobs."TotalRecords"
+//   Field tilda.data.TILDA.JobPart.recordsCount -> TILDA.JobPart."recordsCount"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.TotalRecords of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.TotalRecords of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.recordsCount of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.recordsCount of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>TotalRecords</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>FileRecords</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isNullTotalRecords()
-     { return __Nulls.intersects(TILDA__JOBS_Factory.COLS.TOTALRECORDS._Mask); }
+   public final boolean isNullRecordsCount()
+     { return __Nulls.intersects(TILDA__JOBPART_Factory.COLS.RECORDSCOUNT._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.TotalRecords -> TILDA.Jobs."TotalRecords"
+//   Field tilda.data.TILDA.JobPart.recordsCount -> TILDA.JobPart."recordsCount"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.TotalRecords of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.TotalRecords of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.recordsCount of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.recordsCount of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>TotalRecords</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>FileRecords</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setTotalRecords(int v) throws Exception
+   public void setRecordsCount(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _TotalRecords)
+       if (__Init == InitMode.CREATE || v != _recordsCount)
         {
-          __Changes.or(TILDA__JOBS_Factory.COLS.TOTALRECORDS._Mask);
-          __Nulls.andNot(TILDA__JOBS_Factory.COLS.TOTALRECORDS._Mask);
-       _TotalRecords = v;
+          __Changes.or(TILDA__JOBPART_Factory.COLS.RECORDSCOUNT._Mask);
+          __Nulls.andNot(TILDA__JOBPART_Factory.COLS.RECORDSCOUNT._Mask);
+       _recordsCount = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.TotalRecords -> TILDA.Jobs."TotalRecords"
+//   Field tilda.data.TILDA.JobPart.recordsCount -> TILDA.JobPart."recordsCount"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.TotalRecords of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.TotalRecords of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.recordsCount of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.recordsCount of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>TotalRecords</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>FileRecords</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setNullTotalRecords()
+   public void setNullRecordsCount()
      {
        long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__JOBS_Factory.COLS.TOTALRECORDS._Mask) == true) // already NULL
+       if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.RECORDSCOUNT._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__JOBS_Factory.COLS.TOTALRECORDS._Mask);
-       __Nulls.or(TILDA__JOBS_Factory.COLS.TOTALRECORDS._Mask);
-       _TotalRecords=0;
+       __Changes.or(TILDA__JOBPART_Factory.COLS.RECORDSCOUNT._Mask);
+       __Nulls.or(TILDA__JOBPART_Factory.COLS.RECORDSCOUNT._Mask);
+       _recordsCount=0;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.TotalRecords -> TILDA.Jobs."TotalRecords"
+//   Field tilda.data.TILDA.JobPart.recordsCount -> TILDA.JobPart."recordsCount"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.TotalRecords of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.TotalRecords of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.recordsCount of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.recordsCount of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>TotalRecords</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>FileRecords</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public boolean hasChangedTotalRecords()
-     { return __Changes.intersects(TILDA__JOBS_Factory.COLS.TOTALRECORDS._Mask); }
+   public boolean hasChangedRecordsCount()
+     { return __Changes.intersects(TILDA__JOBPART_Factory.COLS.RECORDSCOUNT._Mask); }
 
 
 
@@ -1561,15 +1275,14 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.Status -> TILDA.Jobs."Status"
+//   Field tilda.data.TILDA.JobPart.status -> TILDA.JobPart."status"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.Status of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.Status of type varchar(200)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.status of type boolean</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.status of type boolean</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>200</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Status</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
@@ -1577,19 +1290,18 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _Status;
+   boolean _status;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.Status -> TILDA.Jobs."Status"
+//   Field tilda.data.TILDA.JobPart.status -> TILDA.JobPart."status"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.Status of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.Status of type varchar(200)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.status of type boolean</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.status of type boolean</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>200</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Status</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
@@ -1597,20 +1309,19 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final String getStatus()
-      { return _Status; }
+   public final boolean getStatus()
+      { return _status; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.Status -> TILDA.Jobs."Status"
+//   Field tilda.data.TILDA.JobPart.status -> TILDA.JobPart."status"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.Status of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.Status of type varchar(200)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.status of type boolean</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.status of type boolean</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>200</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Status</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
@@ -1619,19 +1330,18 @@ This is the isNull for:<BR>
 </TABLE>
 */
    public final boolean isNullStatus()
-     { return __Nulls.intersects(TILDA__JOBS_Factory.COLS.STATUS._Mask); }
+     { return __Nulls.intersects(TILDA__JOBPART_Factory.COLS.STATUS._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.Status -> TILDA.Jobs."Status"
+//   Field tilda.data.TILDA.JobPart.status -> TILDA.JobPart."status"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.Status of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.Status of type varchar(200)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.status of type boolean</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.status of type boolean</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>200</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Status</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
@@ -1639,35 +1349,28 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setStatus(String v) throws Exception
+   public void setStatus(boolean v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (__Init == InitMode.CREATE || v != _status)
         {
-          setNullStatus();
-        }
-       else if (v.length() > 200)
-        throw new Exception("Cannot set tilda.data.TILDA.Jobs.Status: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 200.");
-       else if (v.equals(_Status) == false)
-        {
-          __Changes.or(TILDA__JOBS_Factory.COLS.STATUS._Mask);
-          __Nulls.andNot(TILDA__JOBS_Factory.COLS.STATUS._Mask);
-       _Status = v;
+          __Changes.or(TILDA__JOBPART_Factory.COLS.STATUS._Mask);
+          __Nulls.andNot(TILDA__JOBPART_Factory.COLS.STATUS._Mask);
+       _status = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.Status -> TILDA.Jobs."Status"
+//   Field tilda.data.TILDA.JobPart.status -> TILDA.JobPart."status"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.Status of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.Status of type varchar(200)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.status of type boolean</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.status of type boolean</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>200</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Status</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
@@ -1678,25 +1381,24 @@ This is the null setter for:<BR>
    public void setNullStatus()
      {
        long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__JOBS_Factory.COLS.STATUS._Mask) == true) // already NULL
+       if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.STATUS._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__JOBS_Factory.COLS.STATUS._Mask);
-       __Nulls.or(TILDA__JOBS_Factory.COLS.STATUS._Mask);
-       _Status=null;
+       __Changes.or(TILDA__JOBPART_Factory.COLS.STATUS._Mask);
+       __Nulls.or(TILDA__JOBPART_Factory.COLS.STATUS._Mask);
+       _status=false;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.Status -> TILDA.Jobs."Status"
+//   Field tilda.data.TILDA.JobPart.status -> TILDA.JobPart."status"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.Status of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.Status of type varchar(200)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.status of type boolean</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.status of type boolean</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>200</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Status</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
@@ -1705,7 +1407,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedStatus()
-     { return __Changes.intersects(TILDA__JOBS_Factory.COLS.STATUS._Mask); }
+     { return __Changes.intersects(TILDA__JOBPART_Factory.COLS.STATUS._Mask); }
 
 
 
@@ -1715,151 +1417,151 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.Error -> TILDA.Jobs."Error"
+//   Field tilda.data.TILDA.JobPart.msg -> TILDA.JobPart."msg"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.Error of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.Error of type varchar(1000)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.msg of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.msg of type text</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>1000</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>4096</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Error</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Message details</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _Error;
+   String _msg;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.Error -> TILDA.Jobs."Error"
+//   Field tilda.data.TILDA.JobPart.msg -> TILDA.JobPart."msg"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.Error of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.Error of type varchar(1000)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.msg of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.msg of type text</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>1000</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>4096</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Error</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Message details</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final String getError()
-      { return _Error; }
+   public final String getMsg()
+      { return _msg; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.Error -> TILDA.Jobs."Error"
+//   Field tilda.data.TILDA.JobPart.msg -> TILDA.JobPart."msg"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.Error of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.Error of type varchar(1000)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.msg of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.msg of type text</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>1000</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>4096</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Error</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Message details</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isNullError()
-     { return __Nulls.intersects(TILDA__JOBS_Factory.COLS.ERROR._Mask); }
+   public final boolean isNullMsg()
+     { return __Nulls.intersects(TILDA__JOBPART_Factory.COLS.MSG._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.Error -> TILDA.Jobs."Error"
+//   Field tilda.data.TILDA.JobPart.msg -> TILDA.JobPart."msg"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.Error of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.Error of type varchar(1000)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.msg of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.msg of type text</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>1000</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>4096</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Error</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Message details</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setError(String v) throws Exception
+   public void setMsg(String v) throws Exception
      {
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setNullError();
+          setNullMsg();
         }
-       else if (v.length() > 1000)
-        throw new Exception("Cannot set tilda.data.TILDA.Jobs.Error: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 1000.");
-       else if (v.equals(_Error) == false)
+       else if (v.length() > 4096)
+        throw new Exception("Cannot set tilda.data.TILDA.JobPart.msg: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 4096.");
+       else if (v.equals(_msg) == false)
         {
-          __Changes.or(TILDA__JOBS_Factory.COLS.ERROR._Mask);
-          __Nulls.andNot(TILDA__JOBS_Factory.COLS.ERROR._Mask);
-       _Error = v;
+          __Changes.or(TILDA__JOBPART_Factory.COLS.MSG._Mask);
+          __Nulls.andNot(TILDA__JOBPART_Factory.COLS.MSG._Mask);
+       _msg = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.Error -> TILDA.Jobs."Error"
+//   Field tilda.data.TILDA.JobPart.msg -> TILDA.JobPart."msg"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.Error of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.Error of type varchar(1000)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.msg of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.msg of type text</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>1000</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>4096</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Error</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Message details</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setNullError()
+   public void setNullMsg()
      {
        long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__JOBS_Factory.COLS.ERROR._Mask) == true) // already NULL
+       if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.MSG._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__JOBS_Factory.COLS.ERROR._Mask);
-       __Nulls.or(TILDA__JOBS_Factory.COLS.ERROR._Mask);
-       _Error=null;
+       __Changes.or(TILDA__JOBPART_Factory.COLS.MSG._Mask);
+       __Nulls.or(TILDA__JOBPART_Factory.COLS.MSG._Mask);
+       _msg=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.Error -> TILDA.Jobs."Error"
+//   Field tilda.data.TILDA.JobPart.msg -> TILDA.JobPart."msg"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.Error of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.Error of type varchar(1000)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.msg of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.msg of type text</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>1000</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>4096</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Error</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Message details</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public boolean hasChangedError()
-     { return __Changes.intersects(TILDA__JOBS_Factory.COLS.ERROR._Mask); }
+   public boolean hasChangedMsg()
+     { return __Changes.intersects(TILDA__JOBPART_Factory.COLS.MSG._Mask); }
 
 
 
@@ -1869,16 +1571,16 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.created -> TILDA.Jobs."created"
+//   Field tilda.data.TILDA.JobPart.created -> TILDA.JobPart."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.Jobs)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.JobPart)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1895,16 +1597,16 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.created -> TILDA.Jobs."created"
+//   Field tilda.data.TILDA.JobPart.created -> TILDA.JobPart."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.Jobs)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.JobPart)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1922,16 +1624,16 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.created -> TILDA.Jobs."created"
+//   Field tilda.data.TILDA.JobPart.created -> TILDA.JobPart."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.Jobs)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.JobPart)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1948,13 +1650,13 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.Jobs.created to null: it's not nullable.");
+        throw new Exception("Cannot set tilda.data.TILDA.JobPart.created to null: it's not nullable.");
        else if (v.equals(_created) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.Jobs.created' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes.or(TILDA__JOBS_Factory.COLS.CREATED._Mask);
-          __Nulls.andNot(TILDA__JOBS_Factory.COLS.CREATED._Mask);
+           throw new Exception("Cannot set field 'tilda.data.TILDA.JobPart.created' that is invariant, or part of a read-only or pre-existing WORM object.");
+          __Changes.or(TILDA__JOBPART_Factory.COLS.CREATED._Mask);
+          __Nulls.andNot(TILDA__JOBPART_Factory.COLS.CREATED._Mask);
        _created = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1962,16 +1664,16 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.created -> TILDA.Jobs."created"
+//   Field tilda.data.TILDA.JobPart.created -> TILDA.JobPart."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the NOW setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.Jobs)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.JobPart)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1991,16 +1693,16 @@ This is the NOW setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.created -> TILDA.Jobs."created"
+//   Field tilda.data.TILDA.JobPart.created -> TILDA.JobPart."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the UNDEFINED setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.Jobs)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.JobPart)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2020,16 +1722,16 @@ This is the UNDEFINED setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.created -> TILDA.Jobs."created"
+//   Field tilda.data.TILDA.JobPart.created -> TILDA.JobPart."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.Jobs)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.JobPart)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2049,16 +1751,16 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.created -> TILDA.Jobs."created"
+//   Field tilda.data.TILDA.JobPart.created -> TILDA.JobPart."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.Jobs)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.JobPart)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2072,7 +1774,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedCreated()
-     { return __Changes.intersects(TILDA__JOBS_Factory.COLS.CREATED._Mask); }
+     { return __Changes.intersects(TILDA__JOBPART_Factory.COLS.CREATED._Mask); }
 
 
 
@@ -2082,16 +1784,16 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.lastUpdated -> TILDA.Jobs."lastUpdated"
+//   Field tilda.data.TILDA.JobPart.lastUpdated -> TILDA.JobPart."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.Jobs)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.JobPart)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2108,16 +1810,16 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.lastUpdated -> TILDA.Jobs."lastUpdated"
+//   Field tilda.data.TILDA.JobPart.lastUpdated -> TILDA.JobPart."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.Jobs)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.JobPart)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2135,16 +1837,16 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.lastUpdated -> TILDA.Jobs."lastUpdated"
+//   Field tilda.data.TILDA.JobPart.lastUpdated -> TILDA.JobPart."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.Jobs)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.JobPart)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2161,11 +1863,11 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.Jobs.lastUpdated to null: it's not nullable.");
+        throw new Exception("Cannot set tilda.data.TILDA.JobPart.lastUpdated to null: it's not nullable.");
        else if (v.equals(_lastUpdated) == false)
         {
-          __Changes.or(TILDA__JOBS_Factory.COLS.LASTUPDATED._Mask);
-          __Nulls.andNot(TILDA__JOBS_Factory.COLS.LASTUPDATED._Mask);
+          __Changes.or(TILDA__JOBPART_Factory.COLS.LASTUPDATED._Mask);
+          __Nulls.andNot(TILDA__JOBPART_Factory.COLS.LASTUPDATED._Mask);
        _lastUpdated = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2173,16 +1875,16 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.lastUpdated -> TILDA.Jobs."lastUpdated"
+//   Field tilda.data.TILDA.JobPart.lastUpdated -> TILDA.JobPart."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the NOW setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.Jobs)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.JobPart)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2202,16 +1904,16 @@ This is the NOW setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.lastUpdated -> TILDA.Jobs."lastUpdated"
+//   Field tilda.data.TILDA.JobPart.lastUpdated -> TILDA.JobPart."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the UNDEFINED setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.Jobs)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.JobPart)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2231,16 +1933,16 @@ This is the UNDEFINED setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.lastUpdated -> TILDA.Jobs."lastUpdated"
+//   Field tilda.data.TILDA.JobPart.lastUpdated -> TILDA.JobPart."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.Jobs)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.JobPart)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2260,16 +1962,16 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.lastUpdated -> TILDA.Jobs."lastUpdated"
+//   Field tilda.data.TILDA.JobPart.lastUpdated -> TILDA.JobPart."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.Jobs)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.JobPart)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2283,7 +1985,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedLastUpdated()
-     { return __Changes.intersects(TILDA__JOBS_Factory.COLS.LASTUPDATED._Mask); }
+     { return __Changes.intersects(TILDA__JOBPART_Factory.COLS.LASTUPDATED._Mask); }
 
 
 
@@ -2293,16 +1995,16 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.deleted -> TILDA.Jobs."deleted"
+//   Field tilda.data.TILDA.JobPart.deleted -> TILDA.JobPart."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.Jobs)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.JobPart)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2312,16 +2014,16 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.deleted -> TILDA.Jobs."deleted"
+//   Field tilda.data.TILDA.JobPart.deleted -> TILDA.JobPart."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.Jobs)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.JobPart)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2332,36 +2034,36 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.deleted -> TILDA.Jobs."deleted"
+//   Field tilda.data.TILDA.JobPart.deleted -> TILDA.JobPart."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.Jobs)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.JobPart)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
    public final boolean isNullDeleted()
-     { return __Nulls.intersects(TILDA__JOBS_Factory.COLS.DELETED._Mask); }
+     { return __Nulls.intersects(TILDA__JOBPART_Factory.COLS.DELETED._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.deleted -> TILDA.Jobs."deleted"
+//   Field tilda.data.TILDA.JobPart.deleted -> TILDA.JobPart."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.Jobs)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.JobPart)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2376,8 +2078,8 @@ This is the setter for:<BR>
         }
        else if (v.equals(_deleted) == false)
         {
-          __Changes.or(TILDA__JOBS_Factory.COLS.DELETED._Mask);
-          __Nulls.andNot(TILDA__JOBS_Factory.COLS.DELETED._Mask);
+          __Changes.or(TILDA__JOBPART_Factory.COLS.DELETED._Mask);
+          __Nulls.andNot(TILDA__JOBPART_Factory.COLS.DELETED._Mask);
        _deleted = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2385,16 +2087,16 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.deleted -> TILDA.Jobs."deleted"
+//   Field tilda.data.TILDA.JobPart.deleted -> TILDA.JobPart."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.Jobs)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.JobPart)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2403,26 +2105,26 @@ This is the null setter for:<BR>
    public final void setNullDeleted()
      {
        long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__JOBS_Factory.COLS.DELETED._Mask) == true) // already NULL
+       if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.DELETED._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__JOBS_Factory.COLS.DELETED._Mask);
-       __Nulls.or(TILDA__JOBS_Factory.COLS.DELETED._Mask);
+       __Changes.or(TILDA__JOBPART_Factory.COLS.DELETED._Mask);
+       __Nulls.or(TILDA__JOBPART_Factory.COLS.DELETED._Mask);
        _deleted=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.deleted -> TILDA.Jobs."deleted"
+//   Field tilda.data.TILDA.JobPart.deleted -> TILDA.JobPart."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the NOW setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.Jobs)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.JobPart)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2435,16 +2137,16 @@ This is the NOW setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.deleted -> TILDA.Jobs."deleted"
+//   Field tilda.data.TILDA.JobPart.deleted -> TILDA.JobPart."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the UNDEFINED setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.Jobs)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.JobPart)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2457,16 +2159,16 @@ This is the UNDEFINED setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.deleted -> TILDA.Jobs."deleted"
+//   Field tilda.data.TILDA.JobPart.deleted -> TILDA.JobPart."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.Jobs)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.JobPart)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2479,23 +2181,23 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Jobs.deleted -> TILDA.Jobs."deleted"
+//   Field tilda.data.TILDA.JobPart.deleted -> TILDA.JobPart."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Jobs.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Jobs.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.Jobs)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.JobPart)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
    public boolean hasChangedDeleted()
-     { return __Changes.intersects(TILDA__JOBS_Factory.COLS.DELETED._Mask); }
+     { return __Changes.intersects(TILDA__JOBPART_Factory.COLS.DELETED._Mask); }
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2506,19 +2208,19 @@ This is the hasChanged for:<BR>
  Copies all the field which are not part of the primary key, not are CALCULATED and not invariant, from the 
  current object to the destination. 
 */
-   public void CopyTo(tilda.data._Tilda.TILDA__JOBS Dst) throws Exception
+   public void CopyTo(tilda.data._Tilda.TILDA__JOBPART Dst) throws Exception
      {
-       Dst.setId          (_Id          );
-       if (__Changes.intersects(TILDA__JOBS_Factory.COLS.NAME._Mask) == true) Dst.setNullName        (); else        Dst.setName        (_Name        );
-       if (__Changes.intersects(TILDA__JOBS_Factory.COLS.STARTTIMETZ._Mask) == true) Dst.setNullStartTimeTZ (); else        Dst.setStartTimeTZ (_StartTimeTZ );
-       if (__Changes.intersects(TILDA__JOBS_Factory.COLS.STARTTIME._Mask) == true) Dst.setNullStartTime   (); else        Dst.setStartTime   (_StartTime   );
-       if (__Changes.intersects(TILDA__JOBS_Factory.COLS.ENDTIMETZ._Mask) == true) Dst.setNullEndTimeTZ   (); else        Dst.setEndTimeTZ   (_EndTimeTZ   );
-       if (__Changes.intersects(TILDA__JOBS_Factory.COLS.ENDTIME._Mask) == true) Dst.setNullEndTime     (); else        Dst.setEndTime     (_EndTime     );
-       if (__Changes.intersects(TILDA__JOBS_Factory.COLS.TOTALRECORDS._Mask) == true) Dst.setNullTotalRecords(); else        Dst.setTotalRecords(_TotalRecords);
-       if (__Changes.intersects(TILDA__JOBS_Factory.COLS.STATUS._Mask) == true) Dst.setNullStatus      (); else        Dst.setStatus      (_Status      );
-       if (__Changes.intersects(TILDA__JOBS_Factory.COLS.ERROR._Mask) == true) Dst.setNullError       (); else        Dst.setError       (_Error       );
+       Dst.setJobRefnum   (_jobRefnum   );
+       Dst.setName        (_name        );
+       Dst.setStartTZ     (_startTZ     );
+       Dst.setStart       (_start       );
+       if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.ENDTZ._Mask) == true) Dst.setNullEndTZ       (); else        Dst.setEndTZ       (_endTZ       );
+       if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.END._Mask) == true) Dst.setNullEnd         (); else        Dst.setEnd         (_end         );
+       if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.RECORDSCOUNT._Mask) == true) Dst.setNullRecordsCount(); else        Dst.setRecordsCount(_recordsCount);
+       if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.STATUS._Mask) == true) Dst.setNullStatus      (); else        Dst.setStatus      (_status      );
+       if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.MSG._Mask) == true) Dst.setNullMsg         (); else        Dst.setMsg         (_msg         );
        Dst.setLastUpdated (_lastUpdated );
-       if (__Changes.intersects(TILDA__JOBS_Factory.COLS.DELETED._Mask) == true) Dst.setNullDeleted     (); else        Dst.setDeleted     (_deleted     );
+       if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.DELETED._Mask) == true) Dst.setNullDeleted     (); else        Dst.setDeleted     (_deleted     );
      }
 
 /**
@@ -2537,11 +2239,11 @@ This is the hasChanged for:<BR>
    protected String getTimeStampSignature() throws Exception
      {
        StringBuilder S = new StringBuilder(1024);
-       if (__Changes.intersects(TILDA__JOBS_Factory.COLS.STARTTIME._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_StartTime) == true ? "C" : "X");
-       if (__Changes.intersects(TILDA__JOBS_Factory.COLS.ENDTIME._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_EndTime) == true ? "C" : "X");
-       if (__Changes.intersects(TILDA__JOBS_Factory.COLS.CREATED._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_created) == true ? "C" : "X");
-       if (__Changes.intersects(TILDA__JOBS_Factory.COLS.LASTUPDATED._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? "C" : "X");
-       if (__Changes.intersects(TILDA__JOBS_Factory.COLS.DELETED._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_deleted) == true ? "C" : "X");
+       if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.START._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_start) == true ? "C" : "X");
+       if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.END._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_end) == true ? "C" : "X");
+       if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.CREATED._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_created) == true ? "C" : "X");
+       if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.LASTUPDATED._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? "C" : "X");
+       if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.DELETED._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_deleted) == true ? "C" : "X");
        return S.toString();
      }
    protected String getWriteQuery(Connection C) throws Exception
@@ -2551,34 +2253,35 @@ This is the hasChanged for:<BR>
        if (__Init == InitMode.CREATE)
         {
           StringBuilder V = new StringBuilder(1024);
-          S.append("insert into "); C.getFullTableVar(S, "TILDA", "Jobs");
+          S.append("insert into "); C.getFullTableVar(S, "TILDA", "JobPart");
           int Pos = S.length();
-          if (__Changes.intersects(TILDA__JOBS_Factory.COLS.ID._Mask) == true) { TILDA__JOBS_Factory.COLS.ID.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__JOBS_Factory.COLS.NAME._Mask) == true) { TILDA__JOBS_Factory.COLS.NAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__JOBS_Factory.COLS.STARTTIMETZ._Mask) == true) { TILDA__JOBS_Factory.COLS.STARTTIMETZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.REFNUM._Mask) == true) { TILDA__JOBPART_Factory.COLS.REFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.JOBREFNUM._Mask) == true) { TILDA__JOBPART_Factory.COLS.JOBREFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.NAME._Mask) == true) { TILDA__JOBPART_Factory.COLS.NAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.STARTTZ._Mask) == true) { TILDA__JOBPART_Factory.COLS.STARTTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
 
-          if (__Changes.intersects(TILDA__JOBS_Factory.COLS.STARTTIME._Mask) == true) { TILDA__JOBS_Factory.COLS.STARTTIME.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__JOBS_Factory.COLS.STARTTIME._Mask) == false && DateTimeUtil.isNowPlaceholder(_StartTime) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.START._Mask) == true) { TILDA__JOBPART_Factory.COLS.START.getFullColumnVarForInsert(C, S);
+             V.append(__Nulls.intersects(TILDA__JOBPART_Factory.COLS.START._Mask) == false && DateTimeUtil.isNowPlaceholder(_start) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
-          if (__Changes.intersects(TILDA__JOBS_Factory.COLS.ENDTIMETZ._Mask) == true) { TILDA__JOBS_Factory.COLS.ENDTIMETZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.ENDTZ._Mask) == true) { TILDA__JOBPART_Factory.COLS.ENDTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
 
-          if (__Changes.intersects(TILDA__JOBS_Factory.COLS.ENDTIME._Mask) == true) { TILDA__JOBS_Factory.COLS.ENDTIME.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__JOBS_Factory.COLS.ENDTIME._Mask) == false && DateTimeUtil.isNowPlaceholder(_EndTime) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.END._Mask) == true) { TILDA__JOBPART_Factory.COLS.END.getFullColumnVarForInsert(C, S);
+             V.append(__Nulls.intersects(TILDA__JOBPART_Factory.COLS.END._Mask) == false && DateTimeUtil.isNowPlaceholder(_end) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
-          if (__Changes.intersects(TILDA__JOBS_Factory.COLS.TOTALRECORDS._Mask) == true) { TILDA__JOBS_Factory.COLS.TOTALRECORDS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__JOBS_Factory.COLS.STATUS._Mask) == true) { TILDA__JOBS_Factory.COLS.STATUS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__JOBS_Factory.COLS.ERROR._Mask) == true) { TILDA__JOBS_Factory.COLS.ERROR.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.RECORDSCOUNT._Mask) == true) { TILDA__JOBPART_Factory.COLS.RECORDSCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.STATUS._Mask) == true) { TILDA__JOBPART_Factory.COLS.STATUS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.MSG._Mask) == true) { TILDA__JOBPART_Factory.COLS.MSG.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
 
-          if (__Changes.intersects(TILDA__JOBS_Factory.COLS.CREATED._Mask) == true) { TILDA__JOBS_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__JOBS_Factory.COLS.CREATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.CREATED._Mask) == true) { TILDA__JOBPART_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
+             V.append(__Nulls.intersects(TILDA__JOBPART_Factory.COLS.CREATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
-          else { TILDA__JOBS_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
-          if (__Changes.intersects(TILDA__JOBS_Factory.COLS.LASTUPDATED._Mask) == true) { TILDA__JOBS_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__JOBS_Factory.COLS.LASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+          else { TILDA__JOBPART_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
+          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.LASTUPDATED._Mask) == true) { TILDA__JOBPART_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S);
+             V.append(__Nulls.intersects(TILDA__JOBPART_Factory.COLS.LASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
-          else { TILDA__JOBS_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
-          if (__Changes.intersects(TILDA__JOBS_Factory.COLS.DELETED._Mask) == true) { TILDA__JOBS_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__JOBS_Factory.COLS.DELETED._Mask) == false && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+          else { TILDA__JOBPART_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
+          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.DELETED._Mask) == true) { TILDA__JOBPART_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S);
+             V.append(__Nulls.intersects(TILDA__JOBPART_Factory.COLS.DELETED._Mask) == false && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
 
           S.setCharAt(Pos, '(');
@@ -2589,65 +2292,66 @@ This is the hasChanged for:<BR>
         }
        else // InitMode can be anything else
         {
-          S.append("update "); C.getFullTableVar(S, "TILDA", "Jobs"); S.append(" set");
+          S.append("update "); C.getFullTableVar(S, "TILDA", "JobPart"); S.append(" set");
           int Pos = S.length();
-          if (__Changes.intersects(TILDA__JOBS_Factory.COLS.ID._Mask) == true) TILDA__JOBS_Factory.COLS.ID.getFullColumnVarForUpdate(C, S);
-          if (__Changes.intersects(TILDA__JOBS_Factory.COLS.NAME._Mask) == true) TILDA__JOBS_Factory.COLS.NAME.getFullColumnVarForUpdate(C, S);
-          if (__Changes.intersects(TILDA__JOBS_Factory.COLS.STARTTIMETZ._Mask) == true) TILDA__JOBS_Factory.COLS.STARTTIMETZ.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.REFNUM._Mask) == true) TILDA__JOBPART_Factory.COLS.REFNUM.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.JOBREFNUM._Mask) == true) TILDA__JOBPART_Factory.COLS.JOBREFNUM.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.NAME._Mask) == true) TILDA__JOBPART_Factory.COLS.NAME.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.STARTTZ._Mask) == true) TILDA__JOBPART_Factory.COLS.STARTTZ.getFullColumnVarForUpdate(C, S);
 
-          if (__Changes.intersects(TILDA__JOBS_Factory.COLS.STARTTIME._Mask) == true)
+          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.START._Mask) == true)
            {
-             if (__Nulls.intersects(TILDA__JOBS_Factory.COLS.STARTTIME._Mask) == false && DateTimeUtil.isNowPlaceholder(_StartTime) == true)
-              { TILDA__JOBS_Factory.COLS.STARTTIME.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
+             if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.START._Mask) == false && DateTimeUtil.isNowPlaceholder(_start) == true)
+              { TILDA__JOBPART_Factory.COLS.START.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
-              TILDA__JOBS_Factory.COLS.STARTTIME.getFullColumnVarForUpdate(C, S);
+              TILDA__JOBPART_Factory.COLS.START.getFullColumnVarForUpdate(C, S);
            }
-          if (__Changes.intersects(TILDA__JOBS_Factory.COLS.ENDTIMETZ._Mask) == true) TILDA__JOBS_Factory.COLS.ENDTIMETZ.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.ENDTZ._Mask) == true) TILDA__JOBPART_Factory.COLS.ENDTZ.getFullColumnVarForUpdate(C, S);
 
-          if (__Changes.intersects(TILDA__JOBS_Factory.COLS.ENDTIME._Mask) == true)
+          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.END._Mask) == true)
            {
-             if (__Nulls.intersects(TILDA__JOBS_Factory.COLS.ENDTIME._Mask) == false && DateTimeUtil.isNowPlaceholder(_EndTime) == true)
-              { TILDA__JOBS_Factory.COLS.ENDTIME.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
+             if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.END._Mask) == false && DateTimeUtil.isNowPlaceholder(_end) == true)
+              { TILDA__JOBPART_Factory.COLS.END.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
-              TILDA__JOBS_Factory.COLS.ENDTIME.getFullColumnVarForUpdate(C, S);
+              TILDA__JOBPART_Factory.COLS.END.getFullColumnVarForUpdate(C, S);
            }
-          if (__Changes.intersects(TILDA__JOBS_Factory.COLS.TOTALRECORDS._Mask) == true) TILDA__JOBS_Factory.COLS.TOTALRECORDS.getFullColumnVarForUpdate(C, S);
-          if (__Changes.intersects(TILDA__JOBS_Factory.COLS.STATUS._Mask) == true) TILDA__JOBS_Factory.COLS.STATUS.getFullColumnVarForUpdate(C, S);
-          if (__Changes.intersects(TILDA__JOBS_Factory.COLS.ERROR._Mask) == true) TILDA__JOBS_Factory.COLS.ERROR.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.RECORDSCOUNT._Mask) == true) TILDA__JOBPART_Factory.COLS.RECORDSCOUNT.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.STATUS._Mask) == true) TILDA__JOBPART_Factory.COLS.STATUS.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.MSG._Mask) == true) TILDA__JOBPART_Factory.COLS.MSG.getFullColumnVarForUpdate(C, S);
 
-          if (__Changes.intersects(TILDA__JOBS_Factory.COLS.CREATED._Mask) == true)
+          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.CREATED._Mask) == true)
            {
-             if (__Nulls.intersects(TILDA__JOBS_Factory.COLS.CREATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_created) == true)
-              { TILDA__JOBS_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
+             if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.CREATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_created) == true)
+              { TILDA__JOBPART_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
-              TILDA__JOBS_Factory.COLS.CREATED.getFullColumnVarForUpdate(C, S);
+              TILDA__JOBPART_Factory.COLS.CREATED.getFullColumnVarForUpdate(C, S);
            }
 
-          if (__Changes.intersects(TILDA__JOBS_Factory.COLS.LASTUPDATED._Mask) == true)
+          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.LASTUPDATED._Mask) == true)
            {
-             if (__Nulls.intersects(TILDA__JOBS_Factory.COLS.LASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true)
-              { TILDA__JOBS_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
+             if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.LASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true)
+              { TILDA__JOBPART_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
-              TILDA__JOBS_Factory.COLS.LASTUPDATED.getFullColumnVarForUpdate(C, S);
+              TILDA__JOBPART_Factory.COLS.LASTUPDATED.getFullColumnVarForUpdate(C, S);
            }
           else 
            {
-             TILDA__JOBS_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp());
+             TILDA__JOBPART_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp());
              setLastUpdatedNow();
            }
 
-          if (__Changes.intersects(TILDA__JOBS_Factory.COLS.DELETED._Mask) == true)
+          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.DELETED._Mask) == true)
            {
-             if (__Nulls.intersects(TILDA__JOBS_Factory.COLS.DELETED._Mask) == false && DateTimeUtil.isNowPlaceholder(_deleted) == true)
-              { TILDA__JOBS_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
+             if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.DELETED._Mask) == false && DateTimeUtil.isNowPlaceholder(_deleted) == true)
+              { TILDA__JOBPART_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
-              TILDA__JOBS_Factory.COLS.DELETED.getFullColumnVarForUpdate(C, S);
+              TILDA__JOBPART_Factory.COLS.DELETED.getFullColumnVarForUpdate(C, S);
            }
 
           switch (__LookupId)
            {
              case 0:
-                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Jobs", "Id"); S.append("=?)");
+                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "JobPart", "refnum"); S.append("=?)");
                 break;
              case -77: 
              case -666: if (__Init == InitMode.CREATE) break;
@@ -2659,61 +2363,65 @@ This is the hasChanged for:<BR>
        String Q = S.toString();
        S.setLength(0);
        S = null;
-       QueryDetails.setLastQuery(TILDA__JOBS_Factory.SCHEMA_TABLENAME_LABEL, Q);
-       QueryDetails.logQuery("TILDA.Jobs", Q, toString());
+       QueryDetails.setLastQuery(TILDA__JOBPART_Factory.SCHEMA_TABLENAME_LABEL, Q);
+       QueryDetails.logQuery("TILDA.JobPart", Q, toString());
 
        return Q;
      }
    protected int populatePreparedStatement(Connection C, java.sql.PreparedStatement PS, List<java.sql.Array> AllocatedArrays) throws Exception
      {
        int i = 0;
-       if (__Changes.intersects(TILDA__JOBS_Factory.COLS.ID._Mask) == true) 
+       if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.REFNUM._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOBS_Factory.COLS.ID._Mask) == true) PS.setNull(++i, java.sql.Types.INTEGER); else PS.setInt      (++i, _Id);
+          if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.REFNUM._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _refnum);
         } 
-       if (__Changes.intersects(TILDA__JOBS_Factory.COLS.NAME._Mask) == true) 
+       if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.JOBREFNUM._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOBS_Factory.COLS.NAME._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _Name);
+          if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.JOBREFNUM._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _jobRefnum);
         } 
-       if (__Changes.intersects(TILDA__JOBS_Factory.COLS.STARTTIMETZ._Mask) == true) 
+       if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.NAME._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOBS_Factory.COLS.STARTTIMETZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _StartTimeTZ);
+          if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.NAME._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _name);
         } 
-       if (__Changes.intersects(TILDA__JOBS_Factory.COLS.STARTTIME._Mask) == true) 
+       if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.STARTTZ._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOBS_Factory.COLS.STARTTIME._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_StartTime) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_StartTime.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+          if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.STARTTZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _startTZ);
         } 
-       if (__Changes.intersects(TILDA__JOBS_Factory.COLS.ENDTIMETZ._Mask) == true) 
+       if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.START._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOBS_Factory.COLS.ENDTIMETZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _EndTimeTZ);
+          if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.START._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_start) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_start.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
         } 
-       if (__Changes.intersects(TILDA__JOBS_Factory.COLS.ENDTIME._Mask) == true) 
+       if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.ENDTZ._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOBS_Factory.COLS.ENDTIME._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_EndTime) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_EndTime.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+          if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.ENDTZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _endTZ);
         } 
-       if (__Changes.intersects(TILDA__JOBS_Factory.COLS.TOTALRECORDS._Mask) == true) 
+       if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.END._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOBS_Factory.COLS.TOTALRECORDS._Mask) == true) PS.setNull(++i, java.sql.Types.INTEGER); else PS.setInt      (++i, _TotalRecords);
+          if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.END._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_end) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_end.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
         } 
-       if (__Changes.intersects(TILDA__JOBS_Factory.COLS.STATUS._Mask) == true) 
+       if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.RECORDSCOUNT._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOBS_Factory.COLS.STATUS._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _Status);
+          if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.RECORDSCOUNT._Mask) == true) PS.setNull(++i, java.sql.Types.INTEGER); else PS.setInt      (++i, _recordsCount);
         } 
-       if (__Changes.intersects(TILDA__JOBS_Factory.COLS.ERROR._Mask) == true) 
+       if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.STATUS._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOBS_Factory.COLS.ERROR._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _Error);
+          if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.STATUS._Mask) == true) PS.setNull(++i, java.sql.Types.BOOLEAN); else PS.setBoolean  (++i, _status);
         } 
-       if (__Changes.intersects(TILDA__JOBS_Factory.COLS.CREATED._Mask) == true) 
+       if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.MSG._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOBS_Factory.COLS.CREATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_created) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_created.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+          if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.MSG._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _msg);
         } 
-       if (__Changes.intersects(TILDA__JOBS_Factory.COLS.LASTUPDATED._Mask) == true) 
+       if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.CREATED._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOBS_Factory.COLS.LASTUPDATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_lastUpdated) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_lastUpdated.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+          if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.CREATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_created) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_created.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
         } 
-       if (__Changes.intersects(TILDA__JOBS_Factory.COLS.DELETED._Mask) == true) 
+       if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.LASTUPDATED._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOBS_Factory.COLS.DELETED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_deleted) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_deleted.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+          if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.LASTUPDATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_lastUpdated) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_lastUpdated.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+        } 
+       if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.DELETED._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.DELETED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_deleted) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_deleted.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
         } 
        return i;
      }
@@ -2732,7 +2440,7 @@ This is the hasChanged for:<BR>
        switch (__LookupId)
         {
           case 0:
-             __Saved_Id           = _Id          ;
+             __Saved_refnum       = _refnum      ;
              break;
           case -666: if (__Init == InitMode.CREATE) break;
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -2746,15 +2454,15 @@ This is the hasChanged for:<BR>
        long T0 = System.nanoTime();
        if (hasChanged() == false)
         {
-          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.Jobs has not changed: no writing will occur.");
-          QueryDetails.setLastQuery(TILDA__JOBS_Factory.SCHEMA_TABLENAME_LABEL, "");
+          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.JobPart has not changed: no writing will occur.");
+          QueryDetails.setLastQuery(TILDA__JOBPART_Factory.SCHEMA_TABLENAME_LABEL, "");
           return true;
         }
 
        if (BeforeWrite(C) == false)
         {
-          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.Jobs object's BeforeWrite() failed.");
-          QueryDetails.setLastQuery(TILDA__JOBS_Factory.SCHEMA_TABLENAME_LABEL, "");
+          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.JobPart object's BeforeWrite() failed.");
+          QueryDetails.setLastQuery(TILDA__JOBPART_Factory.SCHEMA_TABLENAME_LABEL, "");
           return false;
         }
 
@@ -2771,7 +2479,7 @@ This is the hasChanged for:<BR>
           switch (__LookupId)
            {
              case 0:
-               PS.setInt      (++i, _Id          );
+               PS.setLong     (++i, _refnum      );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -2790,7 +2498,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__JOBS_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
+          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__JOBPART_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
           PS = null;
         }
 
@@ -2820,32 +2528,33 @@ This is the hasChanged for:<BR>
      {
        long T0 = System.nanoTime();
        if (__Init == InitMode.CREATE)
-        throw new Exception("This TILDA.Jobs object is being Read() after a Create(), which doesn't make sense.");
+        throw new Exception("This TILDA.JobPart object is being Read() after a Create(), which doesn't make sense.");
        if (__Init == InitMode.READ == true && Force == false && hasChanged()==false)
         {
-          LOG.debug(QueryDetails._LOGGING_HEADER + "This TILDA.Jobs object has already been read.");
-          QueryDetails.setLastQuery(TILDA__JOBS_Factory.SCHEMA_TABLENAME_LABEL, "");
+          LOG.debug(QueryDetails._LOGGING_HEADER + "This TILDA.JobPart object has already been read.");
+          QueryDetails.setLastQuery(TILDA__JOBPART_Factory.SCHEMA_TABLENAME_LABEL, "");
           return true;
         }
        StringBuilder S = new StringBuilder(1024);
           S.append("select ");
-          S.append(" "); C.getFullColumnVar(S, "TILDA", "Jobs", "Id");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Jobs", "Name");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Jobs", "StartTimeTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Jobs", "StartTime");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Jobs", "EndTimeTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Jobs", "EndTime");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Jobs", "TotalRecords");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Jobs", "Status");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Jobs", "Error");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Jobs", "created");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Jobs", "lastUpdated");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Jobs", "deleted");
-          S.append(" from "); C.getFullTableVar(S, "TILDA", "Jobs");
+          S.append(" "); C.getFullColumnVar(S, "TILDA", "JobPart", "refnum");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobPart", "jobRefnum");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobPart", "name");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobPart", "startTZ");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobPart", "start");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobPart", "endTZ");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobPart", "end");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobPart", "recordsCount");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobPart", "status");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobPart", "msg");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobPart", "created");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobPart", "lastUpdated");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobPart", "deleted");
+          S.append(" from "); C.getFullTableVar(S, "TILDA", "JobPart");
        switch (__LookupId)
         {
           case 0:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Jobs", "Id"); S.append("=?)");
+             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "JobPart", "refnum"); S.append("=?)");
              break;
           case -77: 
           case -666: if (__Init == InitMode.CREATE) break;
@@ -2855,8 +2564,8 @@ This is the hasChanged for:<BR>
        String Q = S.toString();
        S.setLength(0);
        S = null;
-       QueryDetails.setLastQuery(TILDA__JOBS_Factory.SCHEMA_TABLENAME_LABEL, Q);
-       QueryDetails.logQuery("TILDA.Jobs", Q, toString());
+       QueryDetails.setLastQuery(TILDA__JOBPART_Factory.SCHEMA_TABLENAME_LABEL, Q);
+       QueryDetails.logQuery("TILDA.JobPart", Q, toString());
        java.sql.PreparedStatement PS=null;
        java.sql.ResultSet RS=null;
        int count = 0;
@@ -2868,7 +2577,7 @@ This is the hasChanged for:<BR>
           switch (__LookupId)
            {
              case 0:
-               PS.setInt      (++i, _Id          );
+               PS.setLong     (++i, _refnum      );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -2890,7 +2599,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__JOBS_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__JOBPART_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
     }
@@ -2899,18 +2608,19 @@ This is the hasChanged for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-      __Saved_Id           = _Id           =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBS_Factory.COLS.ID._Mask          );
-                             _Name         = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBS_Factory.COLS.NAME._Mask        );
-                             _StartTimeTZ  = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBS_Factory.COLS.STARTTIMETZ._Mask ); else _StartTimeTZ  = _StartTimeTZ .trim();
-                             _StartTime    = ProcessZDT(_StartTimeTZ   , "tilda.data.TILDA.Jobs.StartTime"   , RS, ++i, TILDA__JOBS_Factory.COLS.STARTTIME   , TILDA__JOBS_Factory.COLS.STARTTIMETZ   ); if (RS.wasNull() == true) __Nulls.or(TILDA__JOBS_Factory.COLS.STARTTIME._Mask   );
-                             _EndTimeTZ    = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBS_Factory.COLS.ENDTIMETZ._Mask   ); else _EndTimeTZ    = _EndTimeTZ   .trim();
-                             _EndTime      = ProcessZDT(_EndTimeTZ     , "tilda.data.TILDA.Jobs.EndTime"     , RS, ++i, TILDA__JOBS_Factory.COLS.ENDTIME     , TILDA__JOBS_Factory.COLS.ENDTIMETZ     ); if (RS.wasNull() == true) __Nulls.or(TILDA__JOBS_Factory.COLS.ENDTIME._Mask     );
-                             _TotalRecords =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBS_Factory.COLS.TOTALRECORDS._Mask);
-                             _Status       = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBS_Factory.COLS.STATUS._Mask      );
-                             _Error        = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBS_Factory.COLS.ERROR._Mask       );
-                             _created      = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__JOBS_Factory.COLS.CREATED._Mask     );
-                             _lastUpdated  = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__JOBS_Factory.COLS.LASTUPDATED._Mask );
-                             _deleted      = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__JOBS_Factory.COLS.DELETED._Mask     );
+      __Saved_refnum       = _refnum       =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPART_Factory.COLS.REFNUM._Mask      );
+                             _jobRefnum    =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPART_Factory.COLS.JOBREFNUM._Mask   );
+                             _name         = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPART_Factory.COLS.NAME._Mask        );
+                             _startTZ      = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPART_Factory.COLS.STARTTZ._Mask     ); else _startTZ      = _startTZ     .trim();
+                             _start        = ProcessZDT(_startTZ       , "tilda.data.TILDA.JobPart.start"       , RS, ++i, TILDA__JOBPART_Factory.COLS.START       , TILDA__JOBPART_Factory.COLS.STARTTZ       ); if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPART_Factory.COLS.START._Mask       );
+                             _endTZ        = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPART_Factory.COLS.ENDTZ._Mask       ); else _endTZ        = _endTZ       .trim();
+                             _end          = ProcessZDT(_endTZ         , "tilda.data.TILDA.JobPart.end"         , RS, ++i, TILDA__JOBPART_Factory.COLS.END         , TILDA__JOBPART_Factory.COLS.ENDTZ         ); if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPART_Factory.COLS.END._Mask         );
+                             _recordsCount =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPART_Factory.COLS.RECORDSCOUNT._Mask);
+                             _status       =                              RS.getBoolean  (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPART_Factory.COLS.STATUS._Mask      );
+                             _msg          = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPART_Factory.COLS.MSG._Mask         );
+                             _created      = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPART_Factory.COLS.CREATED._Mask     );
+                             _lastUpdated  = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPART_Factory.COLS.LASTUPDATED._Mask );
+                             _deleted      = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPART_Factory.COLS.DELETED._Mask     );
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();
@@ -2942,16 +2652,17 @@ This is the hasChanged for:<BR>
     {
       long T0 = System.nanoTime();
       String Str = 
-                   "Id: "                                                                                              +                                   getId          () 
-               + "; Name"           + (__Nulls.intersects(TILDA__JOBS_Factory.COLS.NAME._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getName        ()))
-               + "; StartTime"      + (__Nulls.intersects(TILDA__JOBS_Factory.COLS.STARTTIME._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getStartTime   ()))
-               + "; EndTime"        + (__Nulls.intersects(TILDA__JOBS_Factory.COLS.ENDTIME._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getEndTime     ()))
-               + "; TotalRecords"   + (__Nulls.intersects(TILDA__JOBS_Factory.COLS.TOTALRECORDS._Mask) == true ? ": NULL" : ": " +                                   getTotalRecords() )
-               + "; Status"         + (__Nulls.intersects(TILDA__JOBS_Factory.COLS.STATUS._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getStatus      ()))
-               + "; Error"          + (__Nulls.intersects(TILDA__JOBS_Factory.COLS.ERROR._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getError       ()))
-               + "; created: "                                                                                         + DateTimeUtil.printDateTimeForJSON(getCreated     ())
-               + "; lastUpdated: "                                                                                     + DateTimeUtil.printDateTimeForJSON(getLastUpdated ())
-               + "; deleted"        + (__Nulls.intersects(TILDA__JOBS_Factory.COLS.DELETED._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDeleted     ()))
+                   "refnum: "                                                                                             +                                   getRefnum      () 
+               + "; jobRefnum: "                                                                                          +                                   getJobRefnum   () 
+               + "; name: "                                                                                               + TextUtil.PrintVariableStr        (getName        ())
+               + "; start: "                                                                                              + DateTimeUtil.printDateTimeForJSON(getStart       ())
+               + "; end"            + (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.END._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getEnd         ()))
+               + "; recordsCount"   + (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.RECORDSCOUNT._Mask) == true ? ": NULL" : ": " +                                   getRecordsCount() )
+               + "; status"         + (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.STATUS._Mask) == true ? ": NULL" : ": " +                                   getStatus      () )
+               + "; msg"            + (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.MSG._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getMsg         ()))
+               + "; created: "                                                                                            + DateTimeUtil.printDateTimeForJSON(getCreated     ())
+               + "; lastUpdated: "                                                                                        + DateTimeUtil.printDateTimeForJSON(getLastUpdated ())
+               + "; deleted"        + (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.DELETED._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDeleted     ()))
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;
