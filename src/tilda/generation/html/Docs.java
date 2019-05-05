@@ -820,7 +820,7 @@ public class Docs
       {
         SortedSet<String> ColumnMatches = new TreeSet<String>();
         SortedSet<String> FormulaMatches = new TreeSet<String>();
-        String FormulaStr = printFormulaCodeHTML(F, ColumnMatches, FormulaMatches);
+        String FormulaStr = printFormulaCodeHTML(F, ColumnMatches, FormulaMatches, true);
 
         // Start Table
         Out.println("<TABLE border=\"1px\" style=\"border-collapse:collapse; border: 1px solid #AAA;\" cellspacing=\"0px\" cellpadding=\"2px\" width=\"98%\">");
@@ -909,7 +909,7 @@ public class Docs
           }
       }
 
-    public static String printFormulaCodeHTML(Formula F, SortedSet<String> ColumnMatches, SortedSet<String> FormulaMatches)
+    public static String printFormulaCodeHTML(Formula F, SortedSet<String> ColumnMatches, SortedSet<String> FormulaMatches, boolean regUrl)
       {
         StringBuffer Str = new StringBuffer();
 
@@ -917,9 +917,10 @@ public class Docs
         while (M.find() == true)
           {
             String s = M.group(1);
-            ViewColumn VC = F._ParentView.getViewColumn(s);
-            if (VC != null)
+            boolean found = F._ParentView.getViewColumn(s)!= null || F._ParentView.getPivottedColumn(s) != null;
+            if (found == true)
               {
+//                makeColumnHref()
                 M.appendReplacement(Str, "<B style=\"color:#00AA00;\">" + s + "</B>");
                 ColumnMatches.add(s);
               }
