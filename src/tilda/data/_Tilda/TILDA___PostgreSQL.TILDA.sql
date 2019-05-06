@@ -231,6 +231,11 @@ CREATE INDEX Connection_AllById ON TILDA.Connection ("id" ASC);
 create table if not exists TILDA.Job -- Jobs details
  (  "refnum"       bigint        not null   -- The primary key for this record
   , "name"         varchar(250)  not null   -- Name
+  , "type"         varchar(250)             -- Job part type
+  , "dataStartTZ"  character(5)             -- Generated helper column to hold the time zone ID for 'dataStart'.
+  , "dataStart"    timestamptz              -- StartTime
+  , "dataEndTZ"    character(5)             -- Generated helper column to hold the time zone ID for 'dataEnd'.
+  , "dataEnd"      timestamptz              -- StartTime
   , "startTZ"      character(5)  not null   -- Generated helper column to hold the time zone ID for 'start'.
   , "start"        timestamptz   not null   -- StartTime
   , "endTZ"        character(5)             -- Generated helper column to hold the time zone ID for 'end'.
@@ -241,12 +246,19 @@ create table if not exists TILDA.Job -- Jobs details
   , "lastUpdated"  timestamptz   not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.Job)
   , "deleted"      timestamptz              -- The timestamp for when the record was deleted. (TILDA.Job)
   , PRIMARY KEY("refnum")
+  , CONSTRAINT fk_Job_dataStart FOREIGN KEY ("dataStartTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
+  , CONSTRAINT fk_Job_dataEnd FOREIGN KEY ("dataEndTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
   , CONSTRAINT fk_Job_start FOREIGN KEY ("startTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
   , CONSTRAINT fk_Job_end FOREIGN KEY ("endTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
  );
 COMMENT ON TABLE TILDA.Job IS E'Jobs details';
 COMMENT ON COLUMN TILDA.Job."refnum" IS E'The primary key for this record';
 COMMENT ON COLUMN TILDA.Job."name" IS E'Name';
+COMMENT ON COLUMN TILDA.Job."type" IS E'Job part type';
+COMMENT ON COLUMN TILDA.Job."dataStartTZ" IS E'Generated helper column to hold the time zone ID for ''dataStart''.';
+COMMENT ON COLUMN TILDA.Job."dataStart" IS E'StartTime';
+COMMENT ON COLUMN TILDA.Job."dataEndTZ" IS E'Generated helper column to hold the time zone ID for ''dataEnd''.';
+COMMENT ON COLUMN TILDA.Job."dataEnd" IS E'StartTime';
 COMMENT ON COLUMN TILDA.Job."startTZ" IS E'Generated helper column to hold the time zone ID for ''start''.';
 COMMENT ON COLUMN TILDA.Job."start" IS E'StartTime';
 COMMENT ON COLUMN TILDA.Job."endTZ" IS E'Generated helper column to hold the time zone ID for ''end''.';
@@ -256,7 +268,8 @@ COMMENT ON COLUMN TILDA.Job."msg" IS E'Message details';
 COMMENT ON COLUMN TILDA.Job."created" IS E'The timestamp for when the record was created. (TILDA.Job)';
 COMMENT ON COLUMN TILDA.Job."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.Job)';
 COMMENT ON COLUMN TILDA.Job."deleted" IS E'The timestamp for when the record was deleted. (TILDA.Job)';
-CREATE INDEX Job_Jobs ON TILDA.Job ("name", "start" DESC);
+CREATE INDEX Job_JobName ON TILDA.Job ("name", "start" DESC);
+CREATE INDEX Job_JobType ON TILDA.Job ("type", "start" DESC);
 delete from TILDA.Key where "name" = 'TILDA.JOB';
 insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated") values ((select COALESCE(max("refnum"),0)+1 from TILDA.Key), 'TILDA.JOB',(select COALESCE(max("refnum"),0)+1 from TILDA.Job), 250, current_timestamp, current_timestamp);
 
@@ -265,38 +278,53 @@ insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated
 create table if not exists TILDA.JobPart -- Job party details
  (  "refnum"        bigint        not null   -- The primary key for this record
   , "jobRefnum"     bigint        not null   -- Parent Job Refnum
-  , "name"          varchar(200)  not null   -- FileName
+  , "name"          varchar(250)  not null   -- Job part name
+  , "type"          varchar(250)             -- Job part type
+  , "dataStartTZ"   character(5)             -- Generated helper column to hold the time zone ID for 'dataStart'.
+  , "dataStart"     timestamptz              -- Job part data start
+  , "dataEndTZ"     character(5)             -- Generated helper column to hold the time zone ID for 'dataEnd'.
+  , "dataEnd"       timestamptz              -- Job part data end
   , "startTZ"       character(5)  not null   -- Generated helper column to hold the time zone ID for 'start'.
-  , "start"         timestamptz   not null   -- FileProcessStartTime
+  , "start"         timestamptz   not null   -- Job part execution start
   , "endTZ"         character(5)             -- Generated helper column to hold the time zone ID for 'end'.
-  , "end"           timestamptz              -- FileProcessEndTime
-  , "recordsCount"  integer                  -- FileRecords
-  , "status"        boolean                  -- Status
+  , "end"           timestamptz              -- Job part execution end
+  , "recordsCount"  integer                  -- count of database or file or ... records.
+  , "status"        boolean                  -- Status flag, i.e., success=true and failure-false
+  , "notify"        boolean                  -- Notification flag
   , "msg"           text                     -- Message details
   , "created"       timestamptz   not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.JobPart)
   , "lastUpdated"   timestamptz   not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.JobPart)
   , "deleted"       timestamptz              -- The timestamp for when the record was deleted. (TILDA.JobPart)
   , PRIMARY KEY("refnum")
   , CONSTRAINT fk_JobPart_Job FOREIGN KEY ("jobRefnum") REFERENCES TILDA.Job ON DELETE restrict ON UPDATE cascade
+  , CONSTRAINT fk_JobPart_dataStart FOREIGN KEY ("dataStartTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
+  , CONSTRAINT fk_JobPart_dataEnd FOREIGN KEY ("dataEndTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
   , CONSTRAINT fk_JobPart_start FOREIGN KEY ("startTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
   , CONSTRAINT fk_JobPart_end FOREIGN KEY ("endTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
  );
 COMMENT ON TABLE TILDA.JobPart IS E'Job party details';
 COMMENT ON COLUMN TILDA.JobPart."refnum" IS E'The primary key for this record';
 COMMENT ON COLUMN TILDA.JobPart."jobRefnum" IS E'Parent Job Refnum';
-COMMENT ON COLUMN TILDA.JobPart."name" IS E'FileName';
+COMMENT ON COLUMN TILDA.JobPart."name" IS E'Job part name';
+COMMENT ON COLUMN TILDA.JobPart."type" IS E'Job part type';
+COMMENT ON COLUMN TILDA.JobPart."dataStartTZ" IS E'Generated helper column to hold the time zone ID for ''dataStart''.';
+COMMENT ON COLUMN TILDA.JobPart."dataStart" IS E'Job part data start';
+COMMENT ON COLUMN TILDA.JobPart."dataEndTZ" IS E'Generated helper column to hold the time zone ID for ''dataEnd''.';
+COMMENT ON COLUMN TILDA.JobPart."dataEnd" IS E'Job part data end';
 COMMENT ON COLUMN TILDA.JobPart."startTZ" IS E'Generated helper column to hold the time zone ID for ''start''.';
-COMMENT ON COLUMN TILDA.JobPart."start" IS E'FileProcessStartTime';
+COMMENT ON COLUMN TILDA.JobPart."start" IS E'Job part execution start';
 COMMENT ON COLUMN TILDA.JobPart."endTZ" IS E'Generated helper column to hold the time zone ID for ''end''.';
-COMMENT ON COLUMN TILDA.JobPart."end" IS E'FileProcessEndTime';
-COMMENT ON COLUMN TILDA.JobPart."recordsCount" IS E'FileRecords';
-COMMENT ON COLUMN TILDA.JobPart."status" IS E'Status';
+COMMENT ON COLUMN TILDA.JobPart."end" IS E'Job part execution end';
+COMMENT ON COLUMN TILDA.JobPart."recordsCount" IS E'count of database or file or ... records.';
+COMMENT ON COLUMN TILDA.JobPart."status" IS E'Status flag, i.e., success=true and failure-false';
+COMMENT ON COLUMN TILDA.JobPart."notify" IS E'Notification flag';
 COMMENT ON COLUMN TILDA.JobPart."msg" IS E'Message details';
 COMMENT ON COLUMN TILDA.JobPart."created" IS E'The timestamp for when the record was created. (TILDA.JobPart)';
 COMMENT ON COLUMN TILDA.JobPart."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.JobPart)';
 COMMENT ON COLUMN TILDA.JobPart."deleted" IS E'The timestamp for when the record was deleted. (TILDA.JobPart)';
-CREATE INDEX JobPart_JobParts ON TILDA.JobPart ("name", "start" DESC);
-CREATE INDEX JobPart_Jobs ON TILDA.JobPart ("jobRefnum", "start" DESC);
+CREATE INDEX JobPart_Job ON TILDA.JobPart ("jobRefnum", "start" DESC);
+CREATE INDEX JobPart_JobPartName ON TILDA.JobPart ("name", "start" DESC);
+CREATE INDEX JobPart_JobPartType ON TILDA.JobPart ("type", "start" DESC);
 delete from TILDA.Key where "name" = 'TILDA.JOBPART';
 insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated") values ((select COALESCE(max("refnum"),0)+1 from TILDA.Key), 'TILDA.JOBPART',(select COALESCE(max("refnum"),0)+1 from TILDA.JobPart), 250, current_timestamp, current_timestamp);
 

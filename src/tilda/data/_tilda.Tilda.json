@@ -154,35 +154,44 @@
    ,{ "name":"Job"
      ,"description":"Jobs details"
      ,"columns":[
-          { "name":"name"                                 , "type":"STRING"  , "nullable": false,  "size":   250,   "description":"Name" }
-         ,{ "name":"start"                                , "type":"DATETIME", "nullable": false,                   "description":"StartTime" }
-         ,{ "name":"end"                                  , "type":"DATETIME", "nullable": true ,                   "description":"EndTime" }
-         ,{ "name":"status"                               , "type":"BOOLEAN" , "nullable": true ,                   "description":"Status" }
-         ,{ "name":"msg"                                  , "type":"STRING"  , "nullable": true ,  "size":   4096,  "description":"Message details" }
+          { "name":"name"                             , "type":"STRING"  , "nullable": false, "size": 250,  "description":"Name" }
+         ,{ "name":"type"                             , "type":"STRING"  , "nullable": true , "size": 250,  "description":"Job part type" }
+         ,{ "name":"dataStart"                        , "type":"DATETIME", "nullable": true ,               "description":"StartTime" }
+         ,{ "name":"dataEnd"                          , "type":"DATETIME", "nullable": true ,               "description":"StartTime" }
+         ,{ "name":"start"                            , "type":"DATETIME", "nullable": false,               "description":"StartTime" }
+         ,{ "name":"end"                              , "type":"DATETIME", "nullable": true ,               "description":"EndTime" }
+         ,{ "name":"status"                           , "type":"BOOLEAN" , "nullable": true ,               "description":"Status" }
+         ,{ "name":"msg"                              , "type":"STRING"  , "nullable": true , "size":8192,  "description":"Message details" }
         ]
      ,"primary": { "autogen": true }
      ,"indices":[ 
-          { "name":"Jobs", "columns":["name"], "orderBy":["start desc"] }
+          { "name":"JobName", "columns":["name"], "orderBy":["start desc"] }
+         ,{ "name":"JobType", "columns":["type"], "orderBy":["start desc"] }
         ]         
     }, 
     { "name":"JobPart"
      ,"description":"Job party details"
      ,"columns":[
-          { "name":"jobRefnum"                        , "sameAs":"Job.refnum" ,                                      "description":"Parent Job Refnum" }       
-         ,{ "name":"name"                             , "type":"STRING"       , "nullable": false,  "size":    200,  "description":"FileName" }
-         ,{ "name":"start"                            , "type":"DATETIME"     , "nullable": false,                   "description":"FileProcessStartTime" }
-         ,{ "name":"end"                              , "type":"DATETIME"     , "nullable": true,                    "description":"FileProcessEndTime" }
-         ,{ "name":"recordsCount"                     , "type":"INTEGER"      , "nullable": true,                    "description":"FileRecords" }
-         ,{ "name":"status"                           , "type":"BOOLEAN"      , "nullable": true ,                   "description":"Status" }
-         ,{ "name":"msg"                              , "type":"STRING"       , "nullable": true ,  "size":   4096,  "description":"Message details" }
+          { "name":"jobRefnum"                        , "sameAs":"Job.refnum" ,                                 "description":"Parent Job Refnum" }       
+         ,{ "name":"name"                             , "type":"STRING"       , "nullable": false, "size": 250, "description":"Job part name" }
+         ,{ "name":"type"                             , "type":"STRING"       , "nullable": true , "size": 250, "description":"Job part type" }
+         ,{ "name":"dataStart"                        , "type":"DATETIME"     , "nullable": true ,              "description":"Job part data start" }
+         ,{ "name":"dataEnd"                          , "type":"DATETIME"     , "nullable": true ,              "description":"Job part data end" }
+         ,{ "name":"start"                            , "type":"DATETIME"     , "nullable": false,              "description":"Job part execution start" }
+         ,{ "name":"end"                              , "type":"DATETIME"     , "nullable": true ,              "description":"Job part execution end" }
+         ,{ "name":"recordsCount"                     , "type":"INTEGER"      , "nullable": true ,              "description":"count of database or file or ... records." }
+         ,{ "name":"status"                           , "type":"BOOLEAN"      , "nullable": true ,              "description":"Status flag, i.e., success=true and failure-false" }
+         ,{ "name":"notify"                           , "type":"BOOLEAN"      , "nullable": true ,              "description":"Notification flag" }
+         ,{ "name":"msg"                              , "type":"STRING"       , "nullable": true , "size":8192, "description":"Message details" }
        ]
      ,"primary": { "autogen": true }
      ,"foreign": [
          { "name":"Job",  "srcColumns":["jobRefnum"], "destObject": "Job" }
        ]
      ,"indices":[ 
-         { "name":"JobParts", "columns":["name"], "orderBy":["start desc"] }
-        ,{ "name":"Jobs", "columns":["jobRefnum"], "orderBy":["start desc"] }
+         { "name":"Job"        , "columns":["jobRefnum"], "orderBy":["start desc"] }
+        ,{ "name":"JobPartName", "columns":["name"]     , "orderBy":["start desc"] }
+        ,{ "name":"JobPartType", "columns":["type"]     , "orderBy":["start desc"] }
        ]         
     }
     
