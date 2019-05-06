@@ -286,10 +286,7 @@ public class Migrator
               if (A.isNeeded(C, DBMeta) == true)
                 Actions.add(A);
             }
-
-        Object lastObj = null;
-
-        
+ 
         for (Object Obj : S._Objects)
           {
             if (Obj == null)
@@ -328,7 +325,7 @@ public class Migrator
                         // Check arrays
                         if (CheckArrays(DBMeta, Errors, Col, CMeta) == false)
                           continue;
-
+                       
                         boolean condition1 = Col.isCollection() == false
                         && (Col.getType() == ColumnType.BITFIELD && CMeta._TildaType != ColumnType.INTEGER
                         || Col.getType() == ColumnType.JSON && CMeta._TildaType != ColumnType.STRING && CMeta._TildaType != ColumnType.JSON
@@ -349,11 +346,15 @@ public class Migrator
                         
                         if (condition1 || condition2)
                           {                      
+                            // Are the to/from types compatible?
+                            if (Col.getType().isDBCompatible(CMeta._TildaType) == false)
+                              throw new Exception("Type incompatbility requested for an alter column: cannot alter from " + CMeta._TildaType + " to " + Col.getType() + ".");
+                            
                             CAM.addColumnAlterType(CMeta, Col);
                             NeedsDdlDependencyManagement = true;
                           }
                         // Else, we could still have a size change and stay within a single STRING DB type
-                        if (!condition2 && Col.isCollection() == false && Col.getType() == ColumnType.STRING)
+                        else if (!condition2 && Col.isCollection() == false && Col.getType() == ColumnType.STRING)
                           {
                             DBStringType DBStrType = C.getDBStringType(CMeta._Size);
                             if (DBStrType != DBStringType.TEXT && CMeta._Size != Col._Size)
@@ -505,7 +506,6 @@ public class Migrator
                       }
                   }
               }
-            lastObj = Obj;
           }
         for (View V : S._Views)
           {

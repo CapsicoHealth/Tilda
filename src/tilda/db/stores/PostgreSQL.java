@@ -407,11 +407,7 @@ public class PostgreSQL implements DBType
     public boolean alterTableAlterColumnType(Connection Con, ColumnMeta ColMeta, Column Col, ZoneInfo_Data defaultZI)
     throws Exception
       {
-        // Are the to/from types compatible?
-        if (Col.getType().isDBCompatible(ColMeta._TildaType) == false)
-          throw new Exception("Type incompatbility requested for an alter column: cannot alter from " + ColMeta._TildaType + " to " + Col.getType() + ".");
-
-
+        
         if (ColMeta._TildaType == ColumnType.STRING)
           {
             /*
@@ -497,10 +493,6 @@ public class PostgreSQL implements DBType
         // Batch changing ColumnTypes
         for (ColMetaColPair CMP : BatchTypeCols)
           {
-            // Are the to/from types compatible?
-            if (CMP._Col.getType().isDBCompatible(CMP._CMeta._TildaType) == false)
-              throw new Exception("Type incompatbility requested for an alter column: cannot alter from " + CMP._CMeta._TildaType + " to " + CMP._Col.getType() + ".");
-
             if (CMP._CMeta._TildaType == ColumnType.STRING)
               {
                 if (CMP._Col.getType() == ColumnType.DATETIME || CMP._Col.getType() == ColumnType.DATE
