@@ -25,6 +25,7 @@ public class TILDA__JOB_Json
    /*@formatter:off*/
    @SerializedName("name"       ) public String  _name       ;
    @SerializedName("type"       ) public String  _type       ;
+   @SerializedName("userId"     ) public String  _userId     ;
    @SerializedName("dataStart"  ) public String  Str_dataStart  ;
    transient                      public ZonedDateTime  _dataStart  ;
    @SerializedName("dataEnd"    ) public String  Str_dataEnd    ;
@@ -78,6 +79,7 @@ public class TILDA__JOB_Json
     {
       if (_name       != null) Obj.setName       (_name       );
       if (_type       != null) Obj.setType       (_type       );
+      if (_userId     != null) Obj.setUserId     (_userId     );
       if (_dataStart  != null) Obj.setDataStart  (_dataStart  );
       if (_dataEnd    != null) Obj.setDataEnd    (_dataEnd    );
       if (_start      != null) Obj.setStart      (_start      );
@@ -91,6 +93,7 @@ public class TILDA__JOB_Json
       return
              "name"       + (_name        == null ? ": NULL" : "(" + (_name        == null ? 0 : _name       .length())+"): "+(_name        == null || _name       .length() < 100 ? _name        : _name       .substring(0, 100)+"..."))
          + "; type"       + (_type        == null ? ": NULL" : "(" + (_type        == null ? 0 : _type       .length())+"): "+(_type        == null || _type       .length() < 100 ? _type        : _type       .substring(0, 100)+"..."))
+         + "; userId"     + (_userId      == null ? ": NULL" : "(" + (_userId      == null ? 0 : _userId     .length())+"): "+(_userId      == null || _userId     .length() < 100 ? _userId      : _userId     .substring(0, 100)+"..."))
          + "; dataStart"  + (_dataStart   == null ? ": NULL" : ": "+DateTimeUtil.printDateTimeForSQL(_dataStart))
          + "; dataEnd"    + (_dataEnd     == null ? ": NULL" : ": "+DateTimeUtil.printDateTimeForSQL(_dataEnd))
          + "; start"      + (_start       == null ? ": NULL" : ": "+DateTimeUtil.printDateTimeForSQL(_start))

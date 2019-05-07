@@ -232,6 +232,7 @@ create table if not exists TILDA.Job -- Jobs details
  (  "refnum"       bigint        not null   -- The primary key for this record
   , "name"         varchar(250)  not null   -- Name
   , "type"         varchar(250)             -- Job part type
+  , "userId"       varchar(250)             -- Job user Id
   , "dataStartTZ"  character(5)             -- Generated helper column to hold the time zone ID for 'dataStart'.
   , "dataStart"    timestamptz              -- StartTime
   , "dataEndTZ"    character(5)             -- Generated helper column to hold the time zone ID for 'dataEnd'.
@@ -255,6 +256,7 @@ COMMENT ON TABLE TILDA.Job IS E'Jobs details';
 COMMENT ON COLUMN TILDA.Job."refnum" IS E'The primary key for this record';
 COMMENT ON COLUMN TILDA.Job."name" IS E'Name';
 COMMENT ON COLUMN TILDA.Job."type" IS E'Job part type';
+COMMENT ON COLUMN TILDA.Job."userId" IS E'Job user Id';
 COMMENT ON COLUMN TILDA.Job."dataStartTZ" IS E'Generated helper column to hold the time zone ID for ''dataStart''.';
 COMMENT ON COLUMN TILDA.Job."dataStart" IS E'StartTime';
 COMMENT ON COLUMN TILDA.Job."dataEndTZ" IS E'Generated helper column to hold the time zone ID for ''dataEnd''.';
@@ -275,7 +277,7 @@ insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated
 
 
 
-create table if not exists TILDA.JobPart -- Job party details
+create table if not exists TILDA.JobPart -- Job part details
  (  "refnum"        bigint        not null   -- The primary key for this record
   , "jobRefnum"     bigint        not null   -- Parent Job Refnum
   , "name"          varchar(250)  not null   -- Job part name
@@ -290,8 +292,6 @@ create table if not exists TILDA.JobPart -- Job party details
   , "end"           timestamptz              -- Job part execution end
   , "recordsCount"  integer                  -- count of database or file or ... records.
   , "status"        boolean                  -- Status flag, i.e., success=true and failure-false
-  , "notify"        boolean                  -- Notification flag
-  , "msg"           text                     -- Message details
   , "created"       timestamptz   not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.JobPart)
   , "lastUpdated"   timestamptz   not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.JobPart)
   , "deleted"       timestamptz              -- The timestamp for when the record was deleted. (TILDA.JobPart)
@@ -302,7 +302,7 @@ create table if not exists TILDA.JobPart -- Job party details
   , CONSTRAINT fk_JobPart_start FOREIGN KEY ("startTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
   , CONSTRAINT fk_JobPart_end FOREIGN KEY ("endTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
  );
-COMMENT ON TABLE TILDA.JobPart IS E'Job party details';
+COMMENT ON TABLE TILDA.JobPart IS E'Job part details';
 COMMENT ON COLUMN TILDA.JobPart."refnum" IS E'The primary key for this record';
 COMMENT ON COLUMN TILDA.JobPart."jobRefnum" IS E'Parent Job Refnum';
 COMMENT ON COLUMN TILDA.JobPart."name" IS E'Job part name';
@@ -317,8 +317,6 @@ COMMENT ON COLUMN TILDA.JobPart."endTZ" IS E'Generated helper column to hold the
 COMMENT ON COLUMN TILDA.JobPart."end" IS E'Job part execution end';
 COMMENT ON COLUMN TILDA.JobPart."recordsCount" IS E'count of database or file or ... records.';
 COMMENT ON COLUMN TILDA.JobPart."status" IS E'Status flag, i.e., success=true and failure-false';
-COMMENT ON COLUMN TILDA.JobPart."notify" IS E'Notification flag';
-COMMENT ON COLUMN TILDA.JobPart."msg" IS E'Message details';
 COMMENT ON COLUMN TILDA.JobPart."created" IS E'The timestamp for when the record was created. (TILDA.JobPart)';
 COMMENT ON COLUMN TILDA.JobPart."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.JobPart)';
 COMMENT ON COLUMN TILDA.JobPart."deleted" IS E'The timestamp for when the record was deleted. (TILDA.JobPart)';
@@ -327,6 +325,34 @@ CREATE INDEX JobPart_JobPartName ON TILDA.JobPart ("name", "start" DESC);
 CREATE INDEX JobPart_JobPartType ON TILDA.JobPart ("type", "start" DESC);
 delete from TILDA.Key where "name" = 'TILDA.JOBPART';
 insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated") values ((select COALESCE(max("refnum"),0)+1 from TILDA.Key), 'TILDA.JOBPART',(select COALESCE(max("refnum"),0)+1 from TILDA.JobPart), 250, current_timestamp, current_timestamp);
+
+
+
+create table if not exists TILDA.JobPartMessage -- Job part message details
+ (  "refnum"         bigint       not null   -- The primary key for this record
+  , "jobRefnum"      bigint       not null   -- Parent Job Refnum
+  , "jobPartRefnum"  bigint                  -- Parent Job Part Refnum
+  , "notify"         boolean      not null   -- Notification flag
+  , "msg"            text         not null   -- Message details
+  , "created"        timestamptz  not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.JobPartMessage)
+  , "lastUpdated"    timestamptz  not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.JobPartMessage)
+  , "deleted"        timestamptz             -- The timestamp for when the record was deleted. (TILDA.JobPartMessage)
+  , PRIMARY KEY("refnum")
+  , CONSTRAINT fk_JobPartMessage_Job FOREIGN KEY ("jobRefnum") REFERENCES TILDA.Job ON DELETE restrict ON UPDATE cascade
+ );
+COMMENT ON TABLE TILDA.JobPartMessage IS E'Job part message details';
+COMMENT ON COLUMN TILDA.JobPartMessage."refnum" IS E'The primary key for this record';
+COMMENT ON COLUMN TILDA.JobPartMessage."jobRefnum" IS E'Parent Job Refnum';
+COMMENT ON COLUMN TILDA.JobPartMessage."jobPartRefnum" IS E'Parent Job Part Refnum';
+COMMENT ON COLUMN TILDA.JobPartMessage."notify" IS E'Notification flag';
+COMMENT ON COLUMN TILDA.JobPartMessage."msg" IS E'Message details';
+COMMENT ON COLUMN TILDA.JobPartMessage."created" IS E'The timestamp for when the record was created. (TILDA.JobPartMessage)';
+COMMENT ON COLUMN TILDA.JobPartMessage."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.JobPartMessage)';
+COMMENT ON COLUMN TILDA.JobPartMessage."deleted" IS E'The timestamp for when the record was deleted. (TILDA.JobPartMessage)';
+CREATE INDEX JobPartMessage_Job ON TILDA.JobPartMessage ("jobRefnum", "created" DESC);
+CREATE INDEX JobPartMessage_JobPart ON TILDA.JobPartMessage ("jobPartRefnum", "created" DESC);
+delete from TILDA.Key where "name" = 'TILDA.JOBPARTMESSAGE';
+insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated") values ((select COALESCE(max("refnum"),0)+1 from TILDA.Key), 'TILDA.JOBPARTMESSAGE',(select COALESCE(max("refnum"),0)+1 from TILDA.JobPartMessage), 250, current_timestamp, current_timestamp);
 
 
 

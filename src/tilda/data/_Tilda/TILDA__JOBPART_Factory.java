@@ -292,43 +292,6 @@ This is the column definition for:<BR>
      public static Type_BooleanPrimitiveNull   STATUS      = new Type_BooleanPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "status"      , 13/*13*/, "Status flag, i.e., success=true and failure-false");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.JobPart.notify -> TILDA.JobPart."notify"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the column definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.notify of type boolean</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.notify of type boolean</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Notification flag</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-     public static Type_BooleanPrimitiveNull   NOTIFY      = new Type_BooleanPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "notify"      , 14/*14*/, "Notification flag");
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.JobPart.msg -> TILDA.JobPart."msg"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the column definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPart.msg of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPart.msg of type text</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>8192</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Message details</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-     public static Type_StringPrimitiveNull    MSG         = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "msg"         , 15/*15*/, "Message details");
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JobPart.created -> TILDA.JobPart."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
@@ -351,7 +314,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      CREATED     = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"     , 16/*16*/, "The timestamp for when the record was created. (TILDA.JobPart)");
+     public static Type_DatetimePrimitive      CREATED     = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"     , 14/*14*/, "The timestamp for when the record was created. (TILDA.JobPart)");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JobPart.lastUpdated -> TILDA.JobPart."lastUpdated"
@@ -376,7 +339,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      LASTUPDATED = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated" , 17/*17*/, "The timestamp for when the record was last updated. (TILDA.JobPart)");
+     public static Type_DatetimePrimitive      LASTUPDATED = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated" , 15/*15*/, "The timestamp for when the record was last updated. (TILDA.JobPart)");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JobPart.deleted -> TILDA.JobPart."deleted"
@@ -394,11 +357,11 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  DELETED     = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"     , 18/*18*/, "The timestamp for when the record was deleted. (TILDA.JobPart)");
+     public static Type_DatetimePrimitiveNull  DELETED     = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"     , 16/*16*/, "The timestamp for when the record was deleted. (TILDA.JobPart)");
 ;
    }
 
-   public static final ColumnDefinition[] COLUMNS = { COLS.REFNUM,COLS.JOBREFNUM,COLS.NAME,COLS.TYPE,COLS.DATASTARTTZ,COLS.DATASTART,COLS.DATAENDTZ,COLS.DATAEND,COLS.STARTTZ,COLS.START,COLS.ENDTZ,COLS.END,COLS.RECORDSCOUNT,COLS.STATUS,COLS.NOTIFY,COLS.MSG,COLS.CREATED,COLS.LASTUPDATED,COLS.DELETED };
+   public static final ColumnDefinition[] COLUMNS = { COLS.REFNUM,COLS.JOBREFNUM,COLS.NAME,COLS.TYPE,COLS.DATASTARTTZ,COLS.DATASTART,COLS.DATAENDTZ,COLS.DATAEND,COLS.STARTTZ,COLS.START,COLS.ENDTZ,COLS.END,COLS.RECORDSCOUNT,COLS.STATUS,COLS.CREATED,COLS.LASTUPDATED,COLS.DELETED };
 
    public static final ColumnDefinition[] COLUMNS_PRIMARY = { COLS.REFNUM };
 
@@ -488,8 +451,6 @@ This is the column definition for:<BR>
           S.append(", "); C.getFullColumnVar(S, "TILDA", "JobPart", "end");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "JobPart", "recordsCount");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "JobPart", "status");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobPart", "notify");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobPart", "msg");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "JobPart", "created");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "JobPart", "lastUpdated");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "JobPart", "deleted");
@@ -613,8 +574,6 @@ This is the column definition for:<BR>
        ZonedDateTime        _end          =                       ParseUtil.parseZonedDateTime("end"         , false, Values.get("end"         ), Errors );
        Integer        _recordsCount =                       ParseUtil.parseInteger("recordsCount", false, Values.get("recordsCount"), Errors );
        Boolean        _status       =                       ParseUtil.parseBoolean("status"      , false, Values.get("status"      ), Errors );
-       Boolean        _notify       =                       ParseUtil.parseBoolean("notify"      , false, Values.get("notify"      ), Errors );
-       String        _msg          =                       ParseUtil.parseString("msg"         , false, Values.get("msg"         ), Errors );
 
        if (IncomingErrors != Errors.size())
         return null;
@@ -628,8 +587,6 @@ This is the column definition for:<BR>
       if (_end         != null) Obj.setEnd         (_end         );
       if (_recordsCount!= null) Obj.setRecordsCount(_recordsCount);
       if (_status      != null) Obj.setStatus      (_status      );
-      if (_notify      != null) Obj.setNotify      (_notify      );
-      if (_msg         != null) Obj.setMsg         (_msg         );
 
       return Obj;
      }

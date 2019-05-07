@@ -36,8 +36,6 @@ public class TILDA__JOBPART_Json
    transient                       public ZonedDateTime  _end         ;
    @SerializedName("recordsCount") public Integer  _recordsCount;
    @SerializedName("status"      ) public Boolean  _status      ;
-   @SerializedName("notify"      ) public Boolean  _notify      ;
-   @SerializedName("msg"         ) public String  _msg         ;
    /*@formatter:on*/
 
    public tilda.data.JobPart_Data Write(Connection C) throws Exception
@@ -90,8 +88,6 @@ public class TILDA__JOBPART_Json
       if (_end         != null) Obj.setEnd         (_end         );
       if (_recordsCount!= null) Obj.setRecordsCount(_recordsCount);
       if (_status      != null) Obj.setStatus      (_status      );
-      if (_notify      != null) Obj.setNotify      (_notify      );
-      if (_msg         != null) Obj.setMsg         (_msg         );
     }
 
    public String toString()
@@ -106,8 +102,6 @@ public class TILDA__JOBPART_Json
          + "; end"         + (_end          == null ? ": NULL" : ": "+DateTimeUtil.printDateTimeForSQL(_end))
          + "; recordsCount"+ (_recordsCount == null ? ": NULL" : ": " + _recordsCount)
          + "; status"      + (_status       == null ? ": NULL" : ": " + _status      )
-         + "; notify"      + (_notify       == null ? ": NULL" : ": " + _notify      )
-         + "; msg"         + (_msg          == null ? ": NULL" : "(" + (_msg          == null ? 0 : _msg         .length())+"): "+(_msg          == null || _msg         .length() < 100 ? _msg          : _msg         .substring(0, 100)+"..."))
          + ";";
     }
 

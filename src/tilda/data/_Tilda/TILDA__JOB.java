@@ -74,6 +74,16 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>4&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Job-userId_DIV' class='columns'>userId</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(250)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Job user Id</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>5&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Job-dataStartTZ_DIV' class='columns'>dataStartTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -84,8 +94,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TABLE>
 </TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>5&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>6&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Job-dataStart_DIV' class='columns'>dataStart</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -94,8 +104,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>StartTime</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>6&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>7&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Job-dataEndTZ_DIV' class='columns'>dataEndTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -106,8 +116,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TABLE>
 </TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>7&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>8&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Job-dataEnd_DIV' class='columns'>dataEnd</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -116,8 +126,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>StartTime</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>8&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>9&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Job-startTZ_DIV' class='columns'>startTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -128,8 +138,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TABLE>
 </TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>9&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>10&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Job-start_DIV' class='columns'>start</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -138,8 +148,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>StartTime</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>10&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>11&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Job-endTZ_DIV' class='columns'>endTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -150,8 +160,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TABLE>
 </TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>11&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>12&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Job-end_DIV' class='columns'>end</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -160,8 +170,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>EndTime</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>12&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>13&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Job-status_DIV' class='columns'>status</B>&nbsp;&nbsp;</TD>
 <TD>boolean&nbsp;/&nbsp;boolean&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -170,8 +180,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Status</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>13&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>14&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Job-msg_DIV' class='columns'>msg</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;text&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -180,8 +190,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Message details</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>14&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>15&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Job-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -190,8 +200,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was created. (TILDA.Job)</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>15&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>16&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Job-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -200,8 +210,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was last updated. (TILDA.Job)</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>16&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>17&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Job-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -577,6 +587,160 @@ This is the hasChanged for:<BR>
 */
    public boolean hasChangedType()
      { return __Changes.intersects(TILDA__JOB_Factory.COLS.TYPE._Mask); }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Job.userId -> TILDA.Job."userId"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Job.userId of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Job.userId of type varchar(250)</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>250</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Job user Id</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   String _userId;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Job.userId -> TILDA.Job."userId"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Job.userId of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Job.userId of type varchar(250)</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>250</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Job user Id</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final String getUserId()
+      { return _userId; }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Job.userId -> TILDA.Job."userId"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the isNull for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Job.userId of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Job.userId of type varchar(250)</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>250</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Job user Id</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final boolean isNullUserId()
+     { return __Nulls.intersects(TILDA__JOB_Factory.COLS.USERID._Mask); }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Job.userId -> TILDA.Job."userId"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Job.userId of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Job.userId of type varchar(250)</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>250</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Job user Id</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public void setUserId(String v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (v == null)
+        {
+          setNullUserId();
+        }
+       else if (v.length() > 250)
+        throw new Exception("Cannot set tilda.data.TILDA.Job.userId: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 250.");
+       else if (v.equals(_userId) == false)
+        {
+          __Changes.or(TILDA__JOB_Factory.COLS.USERID._Mask);
+          __Nulls.andNot(TILDA__JOB_Factory.COLS.USERID._Mask);
+       _userId = v;
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Job.userId -> TILDA.Job."userId"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the null setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Job.userId of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Job.userId of type varchar(250)</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>250</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Job user Id</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public void setNullUserId()
+     {
+       long T0 = System.nanoTime();
+       if (__Nulls.intersects(TILDA__JOB_Factory.COLS.USERID._Mask) == true) // already NULL
+        return;
+       __Changes.or(TILDA__JOB_Factory.COLS.USERID._Mask);
+       __Nulls.or(TILDA__JOB_Factory.COLS.USERID._Mask);
+       _userId=null;
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Job.userId -> TILDA.Job."userId"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the hasChanged for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Job.userId of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Job.userId of type varchar(250)</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>250</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Job user Id</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public boolean hasChangedUserId()
+     { return __Changes.intersects(TILDA__JOB_Factory.COLS.USERID._Mask); }
 
 
 
@@ -2904,6 +3068,7 @@ This is the hasChanged for:<BR>
      {
        Dst.setName       (_name       );
        if (__Changes.intersects(TILDA__JOB_Factory.COLS.TYPE._Mask) == true) Dst.setNullType       (); else        Dst.setType       (_type       );
+       if (__Changes.intersects(TILDA__JOB_Factory.COLS.USERID._Mask) == true) Dst.setNullUserId     (); else        Dst.setUserId     (_userId     );
        if (__Changes.intersects(TILDA__JOB_Factory.COLS.DATASTARTTZ._Mask) == true) Dst.setNullDataStartTZ(); else        Dst.setDataStartTZ(_dataStartTZ);
        if (__Changes.intersects(TILDA__JOB_Factory.COLS.DATASTART._Mask) == true) Dst.setNullDataStart  (); else        Dst.setDataStart  (_dataStart  );
        if (__Changes.intersects(TILDA__JOB_Factory.COLS.DATAENDTZ._Mask) == true) Dst.setNullDataEndTZ  (); else        Dst.setDataEndTZ  (_dataEndTZ  );
@@ -2955,6 +3120,7 @@ This is the hasChanged for:<BR>
           if (__Changes.intersects(TILDA__JOB_Factory.COLS.REFNUM._Mask) == true) { TILDA__JOB_Factory.COLS.REFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
           if (__Changes.intersects(TILDA__JOB_Factory.COLS.NAME._Mask) == true) { TILDA__JOB_Factory.COLS.NAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
           if (__Changes.intersects(TILDA__JOB_Factory.COLS.TYPE._Mask) == true) { TILDA__JOB_Factory.COLS.TYPE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__JOB_Factory.COLS.USERID._Mask) == true) { TILDA__JOB_Factory.COLS.USERID.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
           if (__Changes.intersects(TILDA__JOB_Factory.COLS.DATASTARTTZ._Mask) == true) { TILDA__JOB_Factory.COLS.DATASTARTTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
 
           if (__Changes.intersects(TILDA__JOB_Factory.COLS.DATASTART._Mask) == true) { TILDA__JOB_Factory.COLS.DATASTART.getFullColumnVarForInsert(C, S);
@@ -3003,6 +3169,7 @@ This is the hasChanged for:<BR>
           if (__Changes.intersects(TILDA__JOB_Factory.COLS.REFNUM._Mask) == true) TILDA__JOB_Factory.COLS.REFNUM.getFullColumnVarForUpdate(C, S);
           if (__Changes.intersects(TILDA__JOB_Factory.COLS.NAME._Mask) == true) TILDA__JOB_Factory.COLS.NAME.getFullColumnVarForUpdate(C, S);
           if (__Changes.intersects(TILDA__JOB_Factory.COLS.TYPE._Mask) == true) TILDA__JOB_Factory.COLS.TYPE.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__JOB_Factory.COLS.USERID._Mask) == true) TILDA__JOB_Factory.COLS.USERID.getFullColumnVarForUpdate(C, S);
           if (__Changes.intersects(TILDA__JOB_Factory.COLS.DATASTARTTZ._Mask) == true) TILDA__JOB_Factory.COLS.DATASTARTTZ.getFullColumnVarForUpdate(C, S);
 
           if (__Changes.intersects(TILDA__JOB_Factory.COLS.DATASTART._Mask) == true)
@@ -3105,6 +3272,10 @@ This is the hasChanged for:<BR>
        if (__Changes.intersects(TILDA__JOB_Factory.COLS.TYPE._Mask) == true) 
         { 
           if (__Nulls.intersects(TILDA__JOB_Factory.COLS.TYPE._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _type);
+        } 
+       if (__Changes.intersects(TILDA__JOB_Factory.COLS.USERID._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__JOB_Factory.COLS.USERID._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _userId);
         } 
        if (__Changes.intersects(TILDA__JOB_Factory.COLS.DATASTARTTZ._Mask) == true) 
         { 
@@ -3275,6 +3446,7 @@ This is the hasChanged for:<BR>
           S.append(" "); C.getFullColumnVar(S, "TILDA", "Job", "refnum");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Job", "name");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Job", "type");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Job", "userId");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Job", "dataStartTZ");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Job", "dataStart");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Job", "dataEndTZ");
@@ -3349,6 +3521,7 @@ This is the hasChanged for:<BR>
       __Saved_refnum      = _refnum      =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOB_Factory.COLS.REFNUM._Mask     );
                             _name        = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOB_Factory.COLS.NAME._Mask       );
                             _type        = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOB_Factory.COLS.TYPE._Mask       );
+                            _userId      = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOB_Factory.COLS.USERID._Mask     );
                             _dataStartTZ = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOB_Factory.COLS.DATASTARTTZ._Mask); else _dataStartTZ = _dataStartTZ.trim();
                             _dataStart   = ProcessZDT(_dataStartTZ  , "tilda.data.TILDA.Job.dataStart"  , RS, ++i, TILDA__JOB_Factory.COLS.DATASTART  , TILDA__JOB_Factory.COLS.DATASTARTTZ  ); if (RS.wasNull() == true) __Nulls.or(TILDA__JOB_Factory.COLS.DATASTART._Mask  );
                             _dataEndTZ   = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOB_Factory.COLS.DATAENDTZ._Mask  ); else _dataEndTZ   = _dataEndTZ  .trim();
@@ -3396,6 +3569,7 @@ This is the hasChanged for:<BR>
                    "refnum: "                                                                                       +                                   getRefnum     () 
                + "; name: "                                                                                         + TextUtil.PrintVariableStr        (getName       ())
                + "; type"          + (__Nulls.intersects(TILDA__JOB_Factory.COLS.TYPE._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getType       ()))
+               + "; userId"        + (__Nulls.intersects(TILDA__JOB_Factory.COLS.USERID._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getUserId     ()))
                + "; dataStart"     + (__Nulls.intersects(TILDA__JOB_Factory.COLS.DATASTART._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDataStart  ()))
                + "; dataEnd"       + (__Nulls.intersects(TILDA__JOB_Factory.COLS.DATAEND._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDataEnd    ()))
                + "; start: "                                                                                        + DateTimeUtil.printDateTimeForJSON(getStart      ())
