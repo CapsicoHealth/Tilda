@@ -57,10 +57,13 @@ import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.performance.PerfTracker;
 import tilda.utils.ClassStaticInit;
+import tilda.utils.DurationUtil;
 import tilda.utils.FileUtil;
 import tilda.utils.LogUtil;
 import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
+import tilda.utils.concurrent.Executor;
+import tilda.utils.concurrent.SimpleRunnable;
 
 
 public class ConnectionPool
@@ -239,7 +242,7 @@ public class ConnectionPool
                         DatabaseMeta DBMeta = LoadDatabaseMetaData(C, TildaList);
                         Migrator.MigrateDatabase(C, Migrate.isMigrationActive() == false, TildaList, DBMeta, first, connectionUrls);
                       }
-                    if (/*first == true &&*/ Migrate.isMigrationActive() == false)
+                    if (/* first == true && */ Migrate.isMigrationActive() == false)
                       {
                         LOG.info("Initializing Schemas.");
                         for (Schema S : TildaList)
@@ -455,16 +458,56 @@ public class ConnectionPool
           }
       }
 
+
+    protected static class SchemaRunnable extends SimpleRunnable
+      {
+        public SchemaRunnable(Connection C, DatabaseMeta DBMeta, String SchemaPattern)
+          {
+            super("DBMETA " + SchemaPattern);
+            _C = C;
+            _DBMeta = DBMeta;
+            _SchemaPattern = SchemaPattern;
+          }
+
+        protected Connection   _C;
+        protected DatabaseMeta _DBMeta;
+        protected String       _SchemaPattern;
+
+        @Override
+        public void doRun()
+        throws Exception
+          {
+            _DBMeta.load(_C, _SchemaPattern);
+          }
+      }
+
     private static DatabaseMeta LoadDatabaseMetaData(Connection C, List<Schema> TildaList)
     throws Exception
       {
         DatabaseMeta DBMeta = new DatabaseMeta();
         LOG.info("Loading database metadata for found Schemas from " + C.getPoolName() + ".");
+        long T0 = System.nanoTime();
+        // LDH-Note: Something not right here... Parallelizing this takes 7x longer... Something inside is blocking.
+//        Executor O = new Executor(C.getMaxCores());
         for (Schema S : TildaList)
           {
             LOG.debug("  " + S._Name);
             DBMeta.load(C, S._Name);
+//            O.addRunnable(new SchemaRunnable(C, DBMeta, S._Name));
           }
+/*
+        List<Exception> Exceptions = O.run();
+        if (Exceptions.isEmpty() == false)
+          {
+            LOG.error("There were " + Exceptions.size() + " errors.");
+            for (Exception E : Exceptions)
+              LOG.error("      ", E);
+            throw new Exception("Couldn't read the database schema meta data.");
+          }
+        else
+          LOG.info("COMPLETED SUCCESSFULLY");
+*/
+        LOG.debug("Loaded "+TildaList.size()+" schemas in "+DurationUtil.PrintDuration(System.nanoTime()-T0));
         return DBMeta;
       }
 
@@ -475,6 +518,7 @@ public class ConnectionPool
         if (TildaList == null)
           throw new Exception("Tilda cannot start as we didn't find the necessary Tilda resources.");
 
+        List<String> WarningList = new ArrayList<String>();
         for (Schema S : TildaList)
           {
             CodeGenSql Sql = C.getSQlCodeGen();
@@ -502,19 +546,28 @@ public class ConnectionPool
                       throw new Exception("Schema " + S._Name + " depends on " + DepdencySchemaName + " which hasn't been loaded.");
                     }
                 }
-            else //if (S._Name.equals("TILDATMP") == false)
+            else // if (S._Name.equals("TILDATMP") == false)
               {
                 PS.addDependencySchema(TildaList.get(0));
                 PS.addDependencySchema(TildaList.get(1));
                 PS.addDependencySchema(S);
               }
             if (S._Name.equals("TILDA") == false && S._Name.equals("TILDATMP") == false)
-             S._DependencySchemas.add(TildaList.get(1));
+              S._DependencySchemas.add(TildaList.get(1));
             if (S.Validate(PS) == false)
               throw new Exception("Schema " + S._Name + " from resource " + S._ResourceName + " failed validation.");
             for (Object Obj : S._Objects)
               if (Obj != null)
-                MasterFactory.register(S._Package, Obj);
+                MasterFactory.register(S._Package, Obj, WarningList);
+          }
+        if (WarningList.isEmpty() == false)
+          {
+            LOG.warn("\n\n\n");
+            LOG.warn("*******************************************************************************************************************************************************");
+            LOG.warn("*** There were "+WarningList.size()+" important warning(s) while loading Tilda resources:");
+            for (int i = 0; i < WarningList.size(); ++i)
+              LOG.warn("***    "+(i+1)+" - "+WarningList.get(i));
+            LOG.warn("*******************************************************************************************************************************************************\n\n\n");
           }
 
         return TildaList;

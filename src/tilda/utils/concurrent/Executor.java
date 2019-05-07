@@ -79,13 +79,14 @@ public class Executor
                 LOG.error("Interrupted task\n", e);
               }
           }
+
         long seqTimeNano = 0;
         for (SimpleRunnable R : _Runnables)
           seqTimeNano+=R._taskTimeNano;
         long duration = System.nanoTime() - T0;
         LOG.debug("\n\n*******************************************************************************************\n"
         + "** Executed " + _Runnables.size() + " tasks in " + DurationUtil.PrintDuration(duration) + ".\n"
-        + "** Sequential time would have been around " + DurationUtil.PrintDuration(seqTimeNano) + " or "+NumberFormatUtil.PrintPercentWith1Dec(duration, seqTimeNano)+"% slower.\n"
+        + "** Sequential time would have been around " + DurationUtil.PrintDuration(seqTimeNano) + " or "+NumberFormatUtil.PrintPercentWith1Dec(duration, seqTimeNano)+"% of the time.\n"
         + "*******************************************************************************************\n\n");
         return _Exceptions;
       }

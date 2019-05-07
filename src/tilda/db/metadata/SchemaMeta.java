@@ -50,13 +50,14 @@ public class SchemaMeta
             String Type = RS.getString("TABLE_TYPE");
             String Name = RS.getString("TABLE_NAME").toLowerCase();
             String Descr = RS.getString("REMARKS");
-            if ("table".equalsIgnoreCase(Type) == true)
+//            LOG.debug("Type: "+Type+"; Name: "+Name+";");
+            if ("table".equalsIgnoreCase(Type) == true || "system table".equalsIgnoreCase(Type) == true)
               {
                 TableMeta T = new TableMeta(_SchemaName, Name, Descr);
                 T.load(C);
-                _DBTables.put(Name, T);
+                synchronized(_DBTables) { _DBTables.put(Name, T); }
               }
-            else if ("view".equalsIgnoreCase(Type) == true)
+            else if ("view".equalsIgnoreCase(Type) == true || "system view".equalsIgnoreCase(Type) == true)
               {
                 ViewMeta V = new ViewMeta(_SchemaName, Name, Descr);
                 // for (int i = 0; i < RS.getMetaData().getColumnCount(); ++i)
@@ -64,7 +65,7 @@ public class SchemaMeta
                 // LOG.debug(" column: "+RS.getMetaData().getColumnName(i+1)+"; value: "+RS.getString(RS.getMetaData().getColumnName(i+1))+";");
                 // }
                 V.load(C);
-                _DBViews.put(Name, V);
+                synchronized(_DBViews) { _DBViews.put(Name, V); }
               }
           }
         RS.close();

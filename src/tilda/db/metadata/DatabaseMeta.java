@@ -21,27 +21,33 @@ import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import tilda.db.Connection;
 
 public class DatabaseMeta
   {
+    static final Logger LOG = LogManager.getLogger(DatabaseMeta.class.getName());
+
     public DatabaseMeta()
       {
       }
 
     protected Map<String, SchemaMeta> _DBSchemas = new HashMap<String, SchemaMeta>();
-    protected boolean _SupportsArrays;
+    protected boolean                 _SupportsArrays;
 
-    public void load(Connection C, String SchemaPattern, String TablePattern) throws Exception
+    public void load(Connection C, String SchemaPattern, String TablePattern)
+    throws Exception
       {
         DatabaseMetaData meta = C.getMetaData();
-        ResultSet RS = meta.getSchemas(null, SchemaPattern==null?SchemaPattern:SchemaPattern.toLowerCase());
+        ResultSet RS = meta.getSchemas(null, SchemaPattern == null ? SchemaPattern : SchemaPattern.toLowerCase());
         while (RS.next() != false)
           {
             String SchemaName = RS.getString("TABLE_SCHEM").toLowerCase();
             SchemaMeta S = _DBSchemas.get(SchemaName);
             if (S == null)
-             S = new SchemaMeta(SchemaName);
+              S = new SchemaMeta(SchemaName);
             S.load(C, TablePattern);
             _DBSchemas.put(SchemaName, S);
           }
