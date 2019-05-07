@@ -680,6 +680,11 @@ public final class Connection
         return _DB.alterTableAlterColumnDefault(this, Col);
       }
 
+    public int getMaxCores() throws Exception
+      {
+        return _DB.getMaxCores(this);
+      }
+
   }
 
 

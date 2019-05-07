@@ -31,6 +31,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.postgresql.core.BaseConnection;
 
+import tilda.Reverse;
 import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
 import tilda.db.metadata.ColumnMeta;
@@ -60,6 +61,7 @@ import tilda.types.Type_DatetimePrimitive;
 import tilda.utils.CollectionUtil;
 import tilda.utils.DurationUtil.IntervalEnum;
 import tilda.utils.FileUtil;
+import tilda.utils.ParseUtil;
 import tilda.utils.TextUtil;
 import tilda.utils.pairs.StringStringPair;
 
@@ -817,7 +819,10 @@ public class PostgreSQL implements DBType
               TildaType = ColumnType.DATETIME;
               break;
             default:
-              throw new Exception("Cannot map SQL TypeName " + TypeName + " for array column '" + Name + "'.");
+              if (Reverse.isThisReverse() == false) // We want to be forgiving when doing Reverse, but not otherwise.
+               throw new Exception("Cannot map SQL TypeName " + TypeName + " for array column '" + Name + "'.");
+              TildaType = ColumnType.STRING;
+              break;
           }
         return TildaType;
       }
@@ -1110,6 +1115,16 @@ public class PostgreSQL implements DBType
     public int getMaxTableNameSize()
       {
         return 63;
+      }
+
+    @Override
+    public int getMaxCores(Connection Con)
+    throws Exception
+      {
+        String Q = "show max_parallel_workers;";
+        StringRP RP = new StringRP();
+        Con.ExecuteSelect("pg_catalog", "parallel_workers", Q, RP);
+        return ParseUtil.parseInteger(RP.getResult(), 2);
       }
 
   }

@@ -560,4 +560,12 @@ public class MSSQL implements DBType
       {
         throw new UnsupportedOperationException();
       }
+
+    @Override
+    public int getMaxCores(Connection C)
+    throws Exception
+      {
+        // TODO Auto-generated method stub
+        return 2;
+      }
   }
