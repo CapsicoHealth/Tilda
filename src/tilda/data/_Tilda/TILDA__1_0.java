@@ -13,7 +13,7 @@ import tilda.utils.*;
 
 /** @author    Tilda code gen for Java 8/PostgreSQL
     @version   Tilda 1.0
-    @generated Apr 12 2019, 17:27:02EDT
+    @generated May 7 2019, 12:04:48EDT
 */
 public final class TILDA__1_0
  {
@@ -66,6 +66,7 @@ public final class TILDA__1_0
       tilda.data._Tilda.TILDA__CONNECTION_Factory.initObject(C);
       tilda.data._Tilda.TILDA__JOB_Factory.initObject(C);
       tilda.data._Tilda.TILDA__JOBPART_Factory.initObject(C);
+      tilda.data._Tilda.TILDA__JOBPARTMESSAGE_Factory.initObject(C);
       tilda.data._Tilda.TILDA__REFILLPERF_Factory.initObject(C);
       tilda.data._Tilda.TILDA__MAINTENANCE_Factory.initObject(C);
       tilda.data._Tilda.TILDA__FORMULA_Factory.initObject(C);

@@ -66,6 +66,10 @@
    overflow-y: auto; /* Enable scroll if needed */ 
    overflow-x: hidden;
  }
+.search_results.Selectable TR:hover TD {
+   background-color:#c0fdd0;
+}
+
 .search_results .scrollLock { 
    overflow: hidden;
  }
@@ -144,6 +148,12 @@ input[type=text]:focus {
    border-bottom: 0px;
    background-color: none;
 }
+.NoSelection TD {
+   cursor: auto;
+   background-color: #eee !important;;
+   font-size: 125%;
+}
+
 .BackToDetails {
    display: none;
  }
@@ -176,6 +186,67 @@ input[type=text]:focus {
 
 .fadeInSlideTo0 {
     opacity: 1;
+}
+
+
+#MI {
+  position: fixed;
+  top: 9em;
+  bottom: 30px;
+  width: 100%;
+}
+
+#MI_SCHEMAS, #MI_OBJECTS, #MI_COLUMNS, #MI_DOCS {
+   float: left;
+   height: 98%;
+   margin-top: 30px;
+   padding-right: 20px;
+   overflow-y: auto;
+   overflow-x: hidden;
+   scrollbar-width: thin;
+   min-width: 150px;
+}
+
+#FILTER_SCHEMAS, #FILTER_OBJECTS, #FILTER_COLUMNS {
+   position: absolute;
+   top: 0px;
+}
+
+#MI_DOCS {
+   position: absolute;
+   right: 20px;
+   overflow-x: auto;
+   background-color: #FFF;
+   top: -2em;
+   max-width: 50%;
+}
+
+
+fieldset {
+  border: 0px;
+  border-top: 2px solid #aef;
+  margin-bottom: 30px;
+  padding-top: 10px;
+  padding-left: 25px;
+  width: 95%;
+}
+fieldset legend {
+   font-size:125%;
+   padding-left: 10px;
+   padding-right: 10px;
+   margin-left: -10px;
+}
+
+.Measure {
+   color: #6688AA;
+}
+.Measure:after {
+   content: 'MEASURE';
+}
+.Measure:hover::after {
+   font-variant: normal;
+   content: 'THIS FORMULA IS CATALOGUED AS A MEASURE.';
+   color: #EE5577;
 }
 </STYLE>
 <SCRIPT>
@@ -211,6 +282,22 @@ document.onkeydown = function(evt)
     {
       closeAllModals();
     }
+};
+
+function fireEvent(e, eventName)
+{
+  if (typeof e == 'string')
+   e = this.getElement(e);
+  if (e.fireEvent != null)
+    e.fireEvent("on"+eventName);
+  else if ("createEvent" in document)
+   {
+     var evt = document.createEvent("HTMLEvents");
+     evt.initEvent(eventName, false, true);
+     e.dispatchEvent(evt);
+   }
+  else
+   console.log("No support to fire events.");    
 };
 
 var closeAllModals = function()
@@ -340,6 +427,70 @@ var eventListener = function()
   searchResultsDiv.innerHTML = tempElementBody;
 }
 
+
+var eventListener_master = function(event)
+{
+  if (searchInput == null || searchInput == undefined)
+    {
+      searchInput = document.getElementById('search_input');
+    }
+  var searchInputText = searchInput.value;
+  showSearchResults(searchInputText != null && searchInputText != '');
+  var regex = new RegExp(searchInputText, 'gi');
+
+  var Str = "";
+  var ps = null;
+  var pt = null;
+  for (var gi = 0; gi < dbMeta.length; ++gi)
+    for (var si = 0; si < dbMeta[gi].schemas.length; ++si)
+      {
+        var s = dbMeta[gi].schemas[si];
+        if (regex.test(s.name) == true)
+          {
+            Str += '<TR><TD colspan="3">&nbsp;<A href="javascript:MasterIndex.paintResult(\''+s.name+'\', null, null);">'+s.name+'</A></TD></TR>';
+            ps=s;
+          }
+        for (var ti = 0; ti < s.objs.length; ++ti)
+          {
+            var t = s.objs[ti];
+            if (regex.test(t.name) == true)
+             {
+               Str += '<TR><TD colspan="1">'+(ps==s?'':'&nbsp;<A href="javascript:MasterIndex.paintResult(\''+s.name+'\', null, null);">'+s.name+'</A>')+'</TD>'
+                         +'<TD colspan="2">&nbsp;<A href="javascript:MasterIndex.paintResult(\''+s.name+'\', \''+t.name+'\', null);">'+t.name+'</A></TD>'
+                     +'</TR>';
+               ps=s;
+               pt=t;
+             }
+            for (var ci = 0; ci < t.cols.length; ++ci)
+              {
+                var c = t.cols[ci];
+                if (regex.test(c.name) == true)
+                 {
+                   Str += '<TR><TD>'+(ps==s?'':'&nbsp;<A href="javascript:MasterIndex.paintResult(\''+s.name+'\', null, null);">'+s.name+'</A>')+'</TD>'
+                             +'<TD>'+(pt==t?'':'&nbsp;<A href="javascript:MasterIndex.paintResult(\''+s.name+'\', \''+t.name+'\', null);">'+t.name+'</A>')+'</TD>'
+                             +'<TD>&nbsp;<A href="javascript:MasterIndex.paintResult(\''+s.name+'\', \''+t.name+'\', \''+c.name+'\');">'+c.name+'</A></TD>'
+                         +'</TR>';
+                   ps=s;
+                   pt=t;
+                 }
+              }
+          }
+      }
+  if (Str=="")
+    Str += "<TR><td colspan=\"2\">No Results Found</td></TR>";
+  else
+    Str = "<TR><th align='left'>&nbsp;Schema</th><th align='left'>&nbsp;Table/View</th><th align='left'>Field</th><TH>&nbsp;&nbsp;&nbsp;<A href=\"javascript:showSearchResults(false);\">X</A>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TH></TR>"+Str;
+
+  if (searchResultsDiv == null || searchResultsDiv == undefined)
+    {
+      searchResultsDiv = document.getElementById('__SEARCH_BOX_RESULTS__');
+    }
+  searchResultsDiv.innerHTML = Str;
+  event.preventDefault();
+  event.stopPropagation();
+}
+
+
 // Helper Methods
 var sortFilteredResults = function(results)
 {
@@ -430,6 +581,8 @@ var getData = function(type)
   return divIds;
 }
 
+
+
 Object.extend = function(source1, source2, destination)
 {
   for ( var key in source1)
@@ -494,47 +647,66 @@ function getAncestorNode(e, nodeName)
      e=e.parentNode;
    return e;
  }
+function unselectRow(e, styleClass)
+{
+  var Table = getAncestorNode(e, 'TABLE');
+  for (var i = 0; i < Table.rows.length; ++i)
+    Table.rows[i].classList.remove(styleClass);
+}
 function selectRow(e, styleClass)
  {
-   var Table = getAncestorNode(e, 'TABLE');
-   for (var i = 0; i < Table.rows.length; ++i)
-     Table.rows[i].classList.remove(styleClass);
+   unselectRow(e, styleClass);
    var TR = getAncestorNode(e, 'TR');
    if (TR != null)
     TR.classList.add(styleClass);
  }
+function printDocs(type, what)
+ {
+   return '<fieldset><legend>'+type+': <B>'+what.name+'</B></legend>'
+         +(what.docs==null?'No documentation available':what.docs)
+         +'</fieldset>'
+         ;
+ }
 
 var MasterIndex = {
-  paintSchemas: function(id, dbMeta)
+  _baseId: null
+ ,paintSchemas: function(dbMeta, regex)
    {
-     var Str = '<TABLE class="Rowed Selectable" onClick="MasterIndex.paintObjects(event, \''+id+'\')" border=\"0px\" cellspacing=\"0px\" cellpadding=\"3px\">\n';
+     var Str = '<INPUT type="text" id="FILTER_SCHEMAS" placeholder="filter schemas" onkeyup="MasterIndex.filter(event, \'S\')"><TABLE class="Rowed Selectable" onClick="MasterIndex.paintObjects(event)" border=\"0px\" cellspacing=\"0px\" cellpadding=\"3px\">\n';
      for (var i = 0; i < dbMeta.length; ++i)
        {
-         var s = dbMeta[i];
-         Str+='<TR><TD>'+s.name+'</TD></TR>\n';
+         var g = dbMeta[i];
+         Str+='<TR class="NoSelection"><TD colspan="2"><B>'+g.name+'</B></TD></TR>\n';
+         for (var j = 0; j < g.schemas.length; ++j)
+           Str+='<TR '+(g.schemas[j].explicit==true?'':'title="Dependency"')+'><TD style="padding-left: 25px;">'+g.schemas[j].name+'</TD><TD>'+(g.schemas[j].explicit==true?'':'<SUP class="Dependency">*</SUP>')+'</TR>\n';
        }
      Str+='</TABLE><BR><BR>\n';
-     document.getElementById(id+'_SCHEMAS').innerHTML=Str;
+     document.getElementById(this._baseId+'_SCHEMAS').innerHTML=Str;
    }
 
  ,selectedSchema: null
  ,selectedObject: null
- ,paintObjects: function(event, id)
+ ,paintObjects: function(event)
    {
      var selected = event.target.innerText;
-     selectRow(event.target, "Selected");     
+     var found = false;
      for (var i = 0; i < dbMeta.length; ++i)
-       if (dbMeta[i].name == selected)
-         {
-           this.selectedSchema = dbMeta[i];
-           break;
-         }
-     if (this.selectedSchema == null)
+      for (var j = 0; j < dbMeta[i].schemas.length; ++j)
+       if (dbMeta[i].schemas[j].name == selected)
+        {
+          this.selectedGroup = dbMeta[i];
+          this.selectedSchema = dbMeta[i].schemas[j];
+          found = true;
+          break;
+        }
+     if (found == false)
        {
          console.log("unknown selected schema '"+selected+"'.");
          return;
        }
-     var Str = '<TABLE class="Rowed Selectable offScreenOpacity0" onClick="MasterIndex.paintColumns(event, \''+id+'\')" border=\"0px\" cellspacing=\"0px\" cellpadding=\"3px\">\n';
+
+     selectRow(event.target, "Selected");
+     var Str = '<INPUT type="text" id="FILTER_OBJECTS" placeholder="filter Tables/Views" onkeyup="MasterIndex.filter(event, \'O\')"><TABLE class="Rowed Selectable offScreenOpacity0" onClick="MasterIndex.paintColumns(event)" border=\"0px\" cellspacing=\"0px\" cellpadding=\"3px\">\n';
      this.selectedObject = null; 
      if (this.selectedSchema.objs == null || this.selectedSchema.objs.length == 0)
        {
@@ -546,13 +718,20 @@ var MasterIndex = {
         Str+='<TR><TD>'+o.name+'</TD></TR>\n';
       }
      Str+='</TABLE><BR><BR>';
-     document.getElementById(id+'_COLUMNS').innerHTML='';
-     var e = document.getElementById(id+'_OBJECTS');
+     var e = document.getElementById(this._baseId+'_OBJECTS');
      e.innerHTML=Str;
-     setTimeout(function() { e.childNodes[0].classList.add("fadeInSlideTo0"); }, 10);
+     setTimeout(function() { e.childNodes[1].classList.add("fadeInSlideTo0"); }, 10);
+
+     document.getElementById(this._baseId+'_COLUMNS').innerHTML='';
+     this.selectedColumn=null;
+     this.selectedObject=null;
+
+     var d = document.getElementById(this._baseId+'_DOCS');
+     d.innerHTML=printDocs('Group', this.selectedGroup)+printDocs('Schema', this.selectedSchema);
+//     setTimeout(function() { e.classList.add("fadeInSlideTo0"); }, 10);     
    }
 
- ,paintColumns: function(event, id)
+ ,paintColumns: function(event)
    {
      var selected = event.target.innerText;
      selectRow(event.target, "Selected");
@@ -568,7 +747,7 @@ var MasterIndex = {
          return;
        }
 
-     var Str = '<TABLE class="Rowed offScreenOpacity0" border=\"0px\" cellspacing=\"0px\" cellpadding=\"3px\">\n';
+     var Str = '<INPUT type="text" id="FILTER_COLUMNS" placeholder="filter columns" onkeyup="MasterIndex.filter(event, \'C\')"><TABLE class="Rowed offScreenOpacity0 Selectable" onClick="MasterIndex.selectColumn(event)" border=\"0px\" cellspacing=\"0px\" cellpadding=\"3px\">\n';
      if (this.selectedObject.cols == null || this.selectedObject.cols.length == 0)
        {
          Str+="<TR><TD>NO COLUMNS DEFINED</TD></TR>";
@@ -576,28 +755,232 @@ var MasterIndex = {
      else for (var i = 0; i < this.selectedObject.cols.length; ++i)
        {
          var c = this.selectedObject.cols[i];
-         Str+='<TR><TD><A href="'+c.url+'" target="_other">'+c.name+'</A></TD><TD>'+c.type+'</TD><TD>'+(c.nullable==false ? "not null" : "nullable")+'<\TD></TR>\n';
+         Str+='<TR><TD><A href="'+c.url+'" target="_other">'+c.name+'</A></TD><TD>'+c.type+'</TD></TR>\n';
        }
      Str+='</TABLE><BR><BR>';
-     var e = document.getElementById(id+'_COLUMNS');
+     var e = document.getElementById(this._baseId+'_COLUMNS');
      e.innerHTML=Str;
-     setTimeout(function() { e.childNodes[0].classList.add("fadeInSlideTo0"); }, 10);
-     document.getElementById(id+'_COLUMNS').innerHTML=Str;
+     setTimeout(function() { e.childNodes[1].classList.add("fadeInSlideTo0"); }, 10);
+     
+     var d = document.getElementById(this._baseId+'_DOCS');
+     d.innerHTML=printDocs('Group', this.selectedGroup)+printDocs('Schema', this.selectedSchema)+printDocs('Object', this.selectedObject);
+   }
+ ,selectColumn: function(event)
+   {
+     selectRow(event.target, "Selected");
+     var e = getAncestorNode(event.target, 'TR');
+     if (e == null)
+       return;
+     selected = e.cells[0].innerText;
+     for (var i = 0; i < this.selectedObject.cols.length; ++i)
+       if (this.selectedObject.cols[i].name == selected)
+         {
+           this.selectedColumn = this.selectedObject.cols[i];
+           break;
+         }
+     if (this.selectedColumn == null)
+       {
+         console.log("unknown selected column '"+selected+"'.");
+         return;
+       }
+
+     var d = document.getElementById(this._baseId+'_DOCS');
+     d.innerHTML=printDocs('Group', this.selectedGroup)+printDocs('Schema', this.selectedSchema)+printDocs('Object', this.selectedObject)+printDocs(this.selectedColumn.formula==true?'Formula':'Column', this.selectedColumn);
+   }
+ ,paintResult: function(schemaName, tableName, columnName)
+   {
+     showSearchResults(false);
+     
+     if (this.selectedSchema == null || this.selectedSchema.name != schemaName)
+       {
+         var e = document.getElementById(this._baseId+'_SCHEMAS');
+         if (e != null && e.childNodes != null && e.childNodes[1] != null && e.childNodes[1].rows != null)
+          {
+            e = e.childNodes[1];
+            for (var i = 0; i < e.rows.length; ++i)
+             if (e.rows[i].cells[0].innerText==schemaName)
+              {
+                var cell = e.rows[i].cells[0];
+                MasterIndex.paintObjects({target: cell});
+                cell.scrollIntoView();
+                break;
+              }
+          }
+       }
+     
+     if (tableName != null && (this.selectedObject == null || this.selectedObject.name != tableName))
+       {
+         e = document.getElementById(this._baseId+'_OBJECTS');
+         if (e != null && e.childNodes != null && e.childNodes[1] != null && e.childNodes[1].rows != null)
+           {
+             e = e.childNodes[1];
+             for (var i = 0; i < e.rows.length; ++i)
+               if (e.rows[i].innerText==tableName)
+                {
+                  var cell = e.rows[i].cells[0];
+                  MasterIndex.paintColumns({target: cell});
+                  cell.scrollIntoView();
+                  break;
+                }
+           }
+       }
+     else if (tableName == null && this.selectedObject != null)
+       {
+         unselectRow(document.getElementById(this._baseId+'_OBJECTS').childNodes[1], 'Selected');
+         document.getElementById(this._baseId+'_COLUMNS').innerHTML='';
+         this.selectedObject=null;
+       }
+
+     if (columnName != null && (this.selectedColumn == null || this.selectedColumn.name != columnName))
+       {
+         e = document.getElementById(this._baseId+'_COLUMNS');
+         if (e != null && e.childNodes != null && e.childNodes[1] != null && e.childNodes[1].rows != null)
+           {
+             e = e.childNodes[1];
+             for (var i = 0; i < e.rows.length; ++i)
+               if (e.rows[i].cells[0].innerText==columnName)
+                {
+                  var cell = e.rows[i].cells[0];
+                  MasterIndex.selectColumn({target: cell});
+                  cell.scrollIntoView();
+                  break;
+                }
+           }
+       }
+     else if (columnName == null && this.selectedColumn != null)
+       {
+         unselectRow(document.getElementById(this._baseId+'_COLUMNS').childNodes[1], 'Selected');
+         this.selectedColumn = null;
+       }
+    }
+  ,filter: function(event, type)
+    {
+      var mark = type=='S'?'_SCHEMAS':type=='O'?'_OBJECTS':'_COLUMNS';
+      var val = document.getElementById('FILTER'+mark).value.toLowerCase();
+      var e = document.getElementById(this._baseId+mark);
+      if (e != null && e.childNodes != null && e.childNodes[1] != null && e.childNodes[1].rows != null)
+        {
+          e = e.childNodes[1];
+          for (var i = 0; i < e.rows.length; ++i)
+            if (e.rows[i].innerText.toLowerCase().indexOf(val) == -1)
+              e.rows[i].style.display="none";
+            else
+              e.rows[i].style.display="";
+        }
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  ,keyup: function(event)
+    {
+      switch(event.which)
+       {
+         case 37: // left
+              if (this.selectedColumn != null)
+                {
+                  this.paintResult(this.selectedSchema.name, this.selectedObject.name, null);
+                  break
+                }
+              else if (this.selectedObject != null)
+                {
+                  this.paintResult(this.selectedSchema.name, null, null);
+                  break
+                }
+              return;
+         case 38: // up
+               if (this.selectedColumn != null)
+                 {
+                   var i = this.selectedObject.cols.indexOf(this.selectedColumn);
+                   if (i > 0)
+                    {
+                      this.paintResult(this.selectedSchema.name, this.selectedObject.name, this.selectedObject.cols[i-1].name);
+                      break
+                    }
+                 }
+               else if (this.selectedObject != null)
+                 {
+                   var i = this.selectedSchema.objs.indexOf(this.selectedObject);
+                   if (i > 0)
+                    {
+                      this.paintResult(this.selectedSchema.name, this.selectedSchema.objs[i-1].name, null);
+                      break
+                    }
+                 }
+               else if (this.selectedSchema != null)
+                 {
+                   var i = dbMeta.indexOf(this.selectedSchema);
+                   if (i > 0)
+                    {
+                      this.paintResult(dbMeta[i-1].name, null, null);
+                      break
+                    }
+                 }
+              return;
+         case 39: // right
+              if (this.selectedColumn != null)
+               ;
+              else if (this.selectedObject != null)
+                {
+                  this.paintResult(this.selectedSchema.name, this.selectedObject.name, this.selectedObject.cols[0].name);
+                  break
+                }
+              else if (this.selectedSchema != null)
+                {
+                  this.paintResult(this.selectedSchema.name, this.selectedSchema.objs[0].name, null);
+                  break
+                }
+              return;
+         case 40: // down
+              if (this.selectedColumn != null)
+                {
+                  var i = this.selectedObject.cols.indexOf(this.selectedColumn);
+                  if (i != -1 && i < this.selectedObject.cols.length-1)
+                   {
+                     this.paintResult(this.selectedSchema.name, this.selectedObject.name, this.selectedObject.cols[i+1].name);
+                     break
+                   }
+                }
+              else if (this.selectedObject != null)
+                {
+                  var i = this.selectedSchema.objs.indexOf(this.selectedObject);
+                  if (i != -1 && i < this.selectedSchema.objs.length-1)
+                   {
+                     this.paintResult(this.selectedSchema.name, this.selectedSchema.objs[i+1].name, null);
+                     break
+                   }
+                }
+              else if (this.selectedSchema != null)
+                {
+                  var i = dbMeta.indexOf(this.selectedSchema);
+                  if (i != -1 && i < dbMeta.length-1)
+                   {
+                     this.paintResult(dbMeta[i+1].name, null, null);
+                     break
+                   }
+                }
+              return;
+         default: return;
+       }
+      event.stopPropagation();
+      event.preventDefault(); 
    }
 };
+
+
+
 
 </SCRIPT>
 
 </HEAD>
 <BODY>
 <H1>Schema TILDA</H1>
-<BR><BR>
+<BR>
 <DIV id="__SEARCH_BOX_BASE__"><TABLE id="__SEARCH_BOX__" border="0px" cellspacing="0px" cellpadding="0px"><TR valign="top"><TD width="1px" style="font-size: 125%; font-weight:bold;">SEARCH</TD><TD>
-<input type="text" onfocus="showSearchResults(true);eventListener()" oninput="eventListener()", id="search_input" placeholder="Search Tables/Views, Fields, Formulae" autocomplete="off">
-&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" oninput="eventListener()", id="cols_check" checked>&nbsp;Fields</label>
-&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" oninput="eventListener()", id="formulas_check" checked>&nbsp;Formulas</label>
-&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" oninput="eventListener()", id="realized_check">&nbsp;Realized</label></TD></TR>
-<TR><TD colspan="2"><table id="__SEARCH_BOX_RESULTS__" class="search_results" border="0px" cellspacing="0px"></table>
+<input type="text" onfocus="showSearchResults(true);eventListener(event)" onkeyup="eventListener(event)", id="search_input" placeholder="Search Tables/Views, Fields, Formulae" autocomplete="off">
+&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" oninput="eventListener(event)", id="cols_check" checked>&nbsp;Fields</label>
+&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" oninput="eventListener(event)", id="formulas_check" checked>&nbsp;Formulas</label>
+&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" oninput="eventListener(event)", id="realized_check">&nbsp;Realized</label>
+</TD></TR>
+<TR><TD colspan="2"><table id="__SEARCH_BOX_RESULTS__" class="search_results Selectable" border="0px" cellspacing="0px"></table>
 </TD></TR></TABLE></DIV>
 <style>.viewport {
    -webkit-user-select: none;
@@ -2182,7 +2565,6 @@ The Table TILDA.Job:<UL>
 <LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>Job_Factory</B>, <B>Job_Data</B> in the package <B>tilda.data</B>.
 <LI>Is configured for normal <B>read/write</B> access.</LI>
 <LI>Is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
-<LI>Defines foreign key(s) to <A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A> </LI>
 <LI>Has the following identity:<UL><LI>Primary Key: refnum</LI>
 </UL></LI>
 </UL>
@@ -2213,18 +2595,76 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>3&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Job-type_DIV' class='columns'>type</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(250)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Job type</TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>4&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Job-userId_DIV' class='columns'>userId</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(250)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Job user Id</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>5&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Job-dataStartTZ_DIV' class='columns'>dataStartTZ</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Generated helper column to hold the time zone ID for 'dataStart'.</TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>6&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Job-dataStart_DIV' class='columns'>dataStart</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>StartTime</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>7&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Job-dataEndTZ_DIV' class='columns'>dataEndTZ</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Generated helper column to hold the time zone ID for 'dataEnd'.</TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>8&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Job-dataEnd_DIV' class='columns'>dataEnd</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>StartTime</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>9&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Job-startTZ_DIV' class='columns'>startTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Generated helper column to hold the time zone ID for 'start'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
-</TABLE>
-</TD>
+<TD>Generated helper column to hold the time zone ID for 'start'.</TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
-    <TD>4&nbsp;&nbsp;</TD>
+    <TD>10&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Job-start_DIV' class='columns'>start</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -2234,19 +2674,17 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD>StartTime</TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
-    <TD>5&nbsp;&nbsp;</TD>
+    <TD>11&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Job-endTZ_DIV' class='columns'>endTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Generated helper column to hold the time zone ID for 'end'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
-</TABLE>
-</TD>
+<TD>Generated helper column to hold the time zone ID for 'end'.</TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
-    <TD>6&nbsp;&nbsp;</TD>
+    <TD>12&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Job-end_DIV' class='columns'>end</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -2256,7 +2694,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD>EndTime</TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
-    <TD>7&nbsp;&nbsp;</TD>
+    <TD>13&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Job-status_DIV' class='columns'>status</B>&nbsp;&nbsp;</TD>
 <TD>boolean&nbsp;/&nbsp;boolean&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -2266,7 +2704,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD>Status</TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
-    <TD>8&nbsp;&nbsp;</TD>
+    <TD>14&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Job-msg_DIV' class='columns'>msg</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;text&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -2276,7 +2714,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD>Message details</TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
-    <TD>9&nbsp;&nbsp;</TD>
+    <TD>15&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Job-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -2286,7 +2724,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD>The timestamp for when the record was created. (TILDA.Job)</TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
-    <TD>10&nbsp;&nbsp;</TD>
+    <TD>16&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Job-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -2296,7 +2734,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD>The timestamp for when the record was last updated. (TILDA.Job)</TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
-    <TD>11&nbsp;&nbsp;</TD>
+    <TD>17&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Job-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -2317,11 +2755,11 @@ The Table TILDA.JobPart:<UL>
 <LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>JobPart_Factory</B>, <B>JobPart_Data</B> in the package <B>tilda.data</B>.
 <LI>Is configured for normal <B>read/write</B> access.</LI>
 <LI>Is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
-<LI>Defines foreign key(s) to <A href="TILDA___Docs.TILDA.html#Job_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>Job</A>, <A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A> </LI>
+<LI>Defines a foreign key to <A href="TILDA___Docs.TILDA.html#Job_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>Job</A> </LI>
 <LI>Has the following identity:<UL><LI>Primary Key: refnum</LI>
 </UL></LI>
 </UL>
-<B>Description</B>: Job party details<BR>
+<B>Description</B>: Job part details<BR>
 <BR>
 This Table contains the following columns:<BLOCKQUOTE>
  <TABLE id="JobPart_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
@@ -2351,89 +2789,125 @@ This Table contains the following columns:<BLOCKQUOTE>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>3&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JobPart-name_DIV' class='columns'>name</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;/&nbsp;varchar(200)&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(250)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>FileName</TD>
+<TD>Job part name</TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>4&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPart-type_DIV' class='columns'>type</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(250)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Job part type</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>5&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPart-dataStartTZ_DIV' class='columns'>dataStartTZ</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Generated helper column to hold the time zone ID for 'dataStart'.</TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>6&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPart-dataStart_DIV' class='columns'>dataStart</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Job part data start</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>7&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPart-dataEndTZ_DIV' class='columns'>dataEndTZ</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Generated helper column to hold the time zone ID for 'dataEnd'.</TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>8&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPart-dataEnd_DIV' class='columns'>dataEnd</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Job part data end</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>9&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JobPart-startTZ_DIV' class='columns'>startTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Generated helper column to hold the time zone ID for 'start'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
-</TABLE>
-</TD>
+<TD>Generated helper column to hold the time zone ID for 'start'.</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>5&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>10&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JobPart-start_DIV' class='columns'>start</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>FileProcessStartTime</TD>
+<TD>Job part execution start</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>6&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>11&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JobPart-endTZ_DIV' class='columns'>endTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Generated helper column to hold the time zone ID for 'end'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
-</TABLE>
-</TD>
+<TD>Generated helper column to hold the time zone ID for 'end'.</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>7&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>12&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JobPart-end_DIV' class='columns'>end</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>FileProcessEndTime</TD>
+<TD>Job part execution end</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>8&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>13&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JobPart-recordsCount_DIV' class='columns'>recordsCount</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>FileRecords</TD>
+<TD>count of database or file or ... records.</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>9&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>14&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JobPart-status_DIV' class='columns'>status</B>&nbsp;&nbsp;</TD>
 <TD>boolean&nbsp;/&nbsp;boolean&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Status</TD>
-</TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>10&nbsp;&nbsp;</TD>
-<TD align="right"><B id='JobPart-msg_DIV' class='columns'>msg</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;/&nbsp;text&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Message details</TD>
+<TD>Status flag, i.e., success=true and failure-false</TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
-    <TD>11&nbsp;&nbsp;</TD>
+    <TD>15&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JobPart-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -2443,7 +2917,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD>The timestamp for when the record was created. (TILDA.JobPart)</TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
-    <TD>12&nbsp;&nbsp;</TD>
+    <TD>16&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JobPart-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -2453,7 +2927,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD>The timestamp for when the record was last updated. (TILDA.JobPart)</TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
-    <TD>13&nbsp;&nbsp;</TD>
+    <TD>17&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JobPart-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -2461,6 +2935,111 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was deleted. (TILDA.JobPart)</TD>
+</TR>
+</TABLE></BLOCKQUOTE>
+</DIV>
+<BR><BR><BR><BR><BR><BR>
+<TABLE id="JobPartMessage_DIV" class="tables">
+<SCRIPT>registerStickyHeader("JobPartMessage_DIV");</SCRIPT>
+<TR valign="top"><TD><H2>JobPartMessage&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 70%;"><SPAN class="BackToDetails"><A href="#JobPartMessage_CNT">details</A>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><A href="#">top</A></SUP></H2></TD><TD align="right"></TD></TR>
+</TABLE>
+<DIV id="JobPartMessage_CNT" class="content">
+The Table TILDA.JobPartMessage:<UL>
+<LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>JobPartMessage_Factory</B>, <B>JobPartMessage_Data</B> in the package <B>tilda.data</B>.
+<LI>Is configured for normal <B>read/write</B> access.</LI>
+<LI>Is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
+<LI>Defines foreign key(s) to <A href="TILDA___Docs.TILDA.html#Job_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>Job</A>, <A href="TILDA___Docs.TILDA.html#JobPart_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>JobPart</A> </LI>
+<LI>Has the following identity:<UL><LI>Primary Key: refnum</LI>
+</UL></LI>
+</UL>
+<B>Description</B>: Job part message details<BR>
+<BR>
+This Table contains the following columns:<BLOCKQUOTE>
+ <TABLE id="JobPartMessage_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>1&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPartMessage-refnum_DIV' class='columns'>refnum</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The primary key for this record</TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>2&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPartMessage-jobRefnum_DIV' class='columns'>jobRefnum</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Parent Job Refnum<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Job_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>Job</A>: refnum</TD></TR>
+</TABLE>
+</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>3&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPartMessage-jobPartRefnum_DIV' class='columns'>jobPartRefnum</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Parent Job Part Refnum<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#JobPart_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>JobPart</A>: refnum</TD></TR>
+</TABLE>
+</TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>4&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPartMessage-notify_DIV' class='columns'>notify</B>&nbsp;&nbsp;</TD>
+<TD>boolean&nbsp;/&nbsp;boolean&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Notification flag</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>5&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPartMessage-msg_DIV' class='columns'>msg</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;text&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Message details</TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>6&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPartMessage-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The timestamp for when the record was created. (TILDA.JobPartMessage)</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>7&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPartMessage-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The timestamp for when the record was last updated. (TILDA.JobPartMessage)</TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>8&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPartMessage-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The timestamp for when the record was deleted. (TILDA.JobPartMessage)</TD>
 </TR>
 </TABLE></BLOCKQUOTE>
 </DIV>
