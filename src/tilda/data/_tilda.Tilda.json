@@ -153,9 +153,10 @@
     
    ,{ "name":"Job"
      ,"description":"Jobs details"
+     ,"tzFk": false
      ,"columns":[
           { "name":"name"                             , "type":"STRING"  , "nullable": false, "size": 250,  "description":"Name" }
-         ,{ "name":"type"                             , "type":"STRING"  , "nullable": true , "size": 250,  "description":"Job part type" }
+         ,{ "name":"type"                             , "type":"STRING"  , "nullable": true , "size": 250,  "description":"Job type" }
          ,{ "name":"userId"                           , "type":"STRING"  , "nullable": true , "size": 250,  "description":"Job user Id" }
          ,{ "name":"dataStart"                        , "type":"DATETIME", "nullable": true ,               "description":"StartTime" }
          ,{ "name":"dataEnd"                          , "type":"DATETIME", "nullable": true ,               "description":"StartTime" }
@@ -172,6 +173,7 @@
     }
    ,{ "name":"JobPart"
      ,"description":"Job part details"
+     ,"tzFk": false
      ,"columns":[
           { "name":"jobRefnum"                        , "sameAs":"Job.refnum" ,                                 "description":"Parent Job Refnum" }       
          ,{ "name":"name"                             , "type":"STRING"       , "nullable": false, "size": 250, "description":"Job part name" }
@@ -204,6 +206,7 @@
      ,"primary": { "autogen": true }
      ,"foreign": [
          { "name":"Job",  "srcColumns":["jobRefnum"], "destObject": "Job" }
+        ,{ "name":"JobPart",  "srcColumns":["jobPartRefnum"], "destObject": "JobPart" }
        ]
      ,"indices":[ 
          { "name":"Job"        , "columns":["jobRefnum"], "orderBy":["created desc"] }

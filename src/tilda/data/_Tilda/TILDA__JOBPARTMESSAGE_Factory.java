@@ -581,6 +581,7 @@ This is the column definition for:<BR>
 
 
 
+
    public static SelectQuery newSelectQuery(Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, true); }
    public static SelectQuery newWhereQuery (Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, false); }
    public static ListResults<tilda.data.JobPartMessage_Data> runSelect(Connection C, SelectQuery Q, int Start, int Size) throws Exception

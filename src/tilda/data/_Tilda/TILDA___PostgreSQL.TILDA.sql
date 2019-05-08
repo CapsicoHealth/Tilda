@@ -231,7 +231,7 @@ CREATE INDEX Connection_AllById ON TILDA.Connection ("id" ASC);
 create table if not exists TILDA.Job -- Jobs details
  (  "refnum"       bigint        not null   -- The primary key for this record
   , "name"         varchar(250)  not null   -- Name
-  , "type"         varchar(250)             -- Job part type
+  , "type"         varchar(250)             -- Job type
   , "userId"       varchar(250)             -- Job user Id
   , "dataStartTZ"  character(5)             -- Generated helper column to hold the time zone ID for 'dataStart'.
   , "dataStart"    timestamptz              -- StartTime
@@ -247,15 +247,11 @@ create table if not exists TILDA.Job -- Jobs details
   , "lastUpdated"  timestamptz   not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.Job)
   , "deleted"      timestamptz              -- The timestamp for when the record was deleted. (TILDA.Job)
   , PRIMARY KEY("refnum")
-  , CONSTRAINT fk_Job_dataStart FOREIGN KEY ("dataStartTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
-  , CONSTRAINT fk_Job_dataEnd FOREIGN KEY ("dataEndTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
-  , CONSTRAINT fk_Job_start FOREIGN KEY ("startTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
-  , CONSTRAINT fk_Job_end FOREIGN KEY ("endTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
  );
 COMMENT ON TABLE TILDA.Job IS E'Jobs details';
 COMMENT ON COLUMN TILDA.Job."refnum" IS E'The primary key for this record';
 COMMENT ON COLUMN TILDA.Job."name" IS E'Name';
-COMMENT ON COLUMN TILDA.Job."type" IS E'Job part type';
+COMMENT ON COLUMN TILDA.Job."type" IS E'Job type';
 COMMENT ON COLUMN TILDA.Job."userId" IS E'Job user Id';
 COMMENT ON COLUMN TILDA.Job."dataStartTZ" IS E'Generated helper column to hold the time zone ID for ''dataStart''.';
 COMMENT ON COLUMN TILDA.Job."dataStart" IS E'StartTime';
@@ -297,10 +293,6 @@ create table if not exists TILDA.JobPart -- Job part details
   , "deleted"       timestamptz              -- The timestamp for when the record was deleted. (TILDA.JobPart)
   , PRIMARY KEY("refnum")
   , CONSTRAINT fk_JobPart_Job FOREIGN KEY ("jobRefnum") REFERENCES TILDA.Job ON DELETE restrict ON UPDATE cascade
-  , CONSTRAINT fk_JobPart_dataStart FOREIGN KEY ("dataStartTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
-  , CONSTRAINT fk_JobPart_dataEnd FOREIGN KEY ("dataEndTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
-  , CONSTRAINT fk_JobPart_start FOREIGN KEY ("startTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
-  , CONSTRAINT fk_JobPart_end FOREIGN KEY ("endTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
  );
 COMMENT ON TABLE TILDA.JobPart IS E'Job part details';
 COMMENT ON COLUMN TILDA.JobPart."refnum" IS E'The primary key for this record';
@@ -339,6 +331,7 @@ create table if not exists TILDA.JobPartMessage -- Job part message details
   , "deleted"        timestamptz             -- The timestamp for when the record was deleted. (TILDA.JobPartMessage)
   , PRIMARY KEY("refnum")
   , CONSTRAINT fk_JobPartMessage_Job FOREIGN KEY ("jobRefnum") REFERENCES TILDA.Job ON DELETE restrict ON UPDATE cascade
+  , CONSTRAINT fk_JobPartMessage_JobPart FOREIGN KEY ("jobPartRefnum") REFERENCES TILDA.JobPart ON DELETE restrict ON UPDATE cascade
  );
 COMMENT ON TABLE TILDA.JobPartMessage IS E'Job part message details';
 COMMENT ON COLUMN TILDA.JobPartMessage."refnum" IS E'The primary key for this record';

@@ -81,13 +81,13 @@ This is the column definition for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>250</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Job part type</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Job type</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    TYPE       = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "type"       , 2/*2*/, "Job part type");
+     public static Type_StringPrimitiveNull    TYPE       = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "type"       , 2/*2*/, "Job type");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Job.userId -> TILDA.Job."userId"
@@ -765,10 +765,6 @@ This is the column definition for:<BR>
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
        ReadMany(C, 2, RPI, Obj, null, Start, Size);
      }
-
-
-
-
 
 
    public static SelectQuery newSelectQuery(Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, true); }

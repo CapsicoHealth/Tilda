@@ -13,7 +13,7 @@ import tilda.utils.*;
 
 /** @author    Tilda code gen for Java 8/PostgreSQL
     @version   Tilda 1.0
-    @generated May 7 2019, 00:34:50EDT
+    @generated May 7 2019, 00:52:51EDT
 */
 public final class TILDA__1_0
  {

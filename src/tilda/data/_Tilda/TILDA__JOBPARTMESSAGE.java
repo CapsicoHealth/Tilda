@@ -33,7 +33,7 @@ The Table TILDA.JobPartMessage:<UL>
 <LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>JobPartMessage_Factory</B>, <B>JobPartMessage_Data</B> in the package <B>tilda.data</B>.
 <LI>Is configured for normal <B>read/write</B> access.</LI>
 <LI>Is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
-<LI>Defines a foreign key to <A href="TILDA___Docs.TILDA.html#Job_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>Job</A> </LI>
+<LI>Defines foreign key(s) to <A href="TILDA___Docs.TILDA.html#Job_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>Job</A>, <A href="TILDA___Docs.TILDA.html#JobPart_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>JobPart</A> </LI>
 <LI>Has the following identity:<UL><LI>Primary Key: refnum</LI>
 </UL></LI>
 </UL>
@@ -72,7 +72,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Parent Job Part Refnum</TD>
+<TD>Parent Job Part Refnum<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#JobPart_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>JobPart</A>: refnum</TD></TR>
+</TABLE>
+</TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>4&nbsp;&nbsp;</TD>
