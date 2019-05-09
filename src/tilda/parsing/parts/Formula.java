@@ -45,7 +45,8 @@ public class Formula extends TypeDef
     /*@formatter:on*/
 
     public transient View         _ParentView;
-    public boolean                _FormulaTemplate = false;
+    public transient boolean      _FormulaTemplate = false;
+    public transient Column       _ProxyCol;
 
     public Formula()
       {
