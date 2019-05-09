@@ -60,8 +60,8 @@ import tilda.utils.TextUtil;
 public class Docs
   {
 
-    private static int            prevLevel = 0;
-    private static int            rootLevel = 1;
+//    private static int            prevLevel = 0;
+//    private static int            rootLevel = 1;
 
     protected static final Logger LOG       = LogManager.getLogger(Docs.class.getName());
 
@@ -83,13 +83,14 @@ public class Docs
 
     public static String makeColumnHref(Column C)
       {
-        return "TILDA___Docs." + C._ParentObject.getSchema().getShortName() + ".html#"+ C._ParentObject._Name + "-" + C.getName() + "_DIV";
+        return "TILDA___Docs." + C._ParentObject.getSchema().getShortName() + ".html#" + C._ParentObject._Name + "-" + C.getName() + "_DIV";
       }
 
     public static String makeColumnLink(Column C)
       {
-        return "<A href=\""+makeColumnHref(C)+"\">" + coolPrint(C.getShortName()) + "</A>";
+        return "<A href=\"" + makeColumnHref(C) + "\">" + coolPrint(C.getShortName()) + "</A>";
       }
+
     protected static String makeFormulaLink(Formula F)
       {
         return "<A href=\"TILDA___Docs." + F._ParentView.getSchema().getShortName() + ".html#"
@@ -258,20 +259,21 @@ public class Docs
               FieldType = FieldType + " realized" + FieldType;
             Out.println("  <TR valign=\"top\" bgcolor=\"" + (i % 2 == 0 ? "#FFFFFF" : "#DFECF8") + "\">");
             Out.println("    <TD>" + i + "&nbsp;&nbsp;</TD>");
-/*
-            if (C.getSingleColFK() != null
- 
-            || (view != null && C._SameAsObj != null)
-            || (view != null && view.getPivotWithValue(C.getName()) != null)
-            || (view != null && view.getFormula(C.getName()) != null))
-              {
-                Out.println("<TD onclick=\"onModalShowClicked('" + O._Name + "-" + C.getName() + "')\" align=\"right\"><B id='" + O._Name + "-" + C.getName() + "_DIV' class='" + FieldType + " dotted_underline cursor_pointer'>" + C.getName() + "</B>&nbsp;&nbsp;</TD>");
-              }
-            else
-              {
-*/
+            /*
+             * if (C.getSingleColFK() != null
+             * 
+             * || (view != null && C._SameAsObj != null)
+             * || (view != null && view.getPivotWithValue(C.getName()) != null)
+             * || (view != null && view.getFormula(C.getName()) != null))
+             * {
+             * Out.println("<TD onclick=\"onModalShowClicked('" + O._Name + "-" + C.getName() + "')\" align=\"right\"><B id='" + O._Name + "-" + C.getName() + "_DIV' class='" +
+             * FieldType + " dotted_underline cursor_pointer'>" + C.getName() + "</B>&nbsp;&nbsp;</TD>");
+             * }
+             * else
+             * {
+             */
             Out.println("<TD align=\"right\"><B id='" + O._Name + "-" + C.getName() + "_DIV' class='" + FieldType + "'>" + C.getName() + "</B>&nbsp;&nbsp;</TD>");
-//              }
+            // }
 
             Out.print("<TD>");
             if (O._Mode != ObjectMode.DB_ONLY)
@@ -307,16 +309,16 @@ public class Docs
                             Out.print("</DIV>");
                           }
                       }
-//                    Out.println("<BLOCKQUOTE>");
-//                    PrintFormulaDetails(Out, O._SourceView, O._SourceView._Name, F, false);
-//                    Out.println("</BLOCKQUOTE>");
+                    // Out.println("<BLOCKQUOTE>");
+                    // PrintFormulaDetails(Out, O._SourceView, O._SourceView._Name, F, false);
+                    // Out.println("</BLOCKQUOTE>");
                   }
               }
             else if (view != null)
               {
                 Formula F = view.getFormula(C.getName());
                 if (F != null)
-                 PrintFormulaDetails(Out, view, view._Name, F, false);
+                  PrintFormulaDetails(Out, view, view._Name, F, false);
 
                 ViewColumn VC = view.getViewColumn(C.getName());
                 if (VC != null)
@@ -381,29 +383,30 @@ public class Docs
 
         Out.println("</TABLE></BLOCKQUOTE>");
 
-/*        
-        for (Column C : O._Columns)
-          {
-            Out.println("<DIV id='" + O._Name + "-" + C.getName() + "_MODAL' class='modal'>");
-            Out.println("<DIV class='modal-content'>");
-            Out.println("<SPAN onclick=\"onModalCloseClicked('" + O._Name + "-" + C.getName() + "_MODAL')\" class='close'>&times;</SPAN>");
-            // Out.println("<DIV><CENTER><H2>Dependencies for Column "+C.getShortName()+"</H2></CENTER></DIV>");
-            Out.println("<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>");
-            Out.println("<table style='margin: auto;'> ");
-            Out.println("  <tr> ");
-            Out.println("    <th align='left' width=\"300em\">Schema</th> ");
-            Out.println("    <th align='left' width=\"400em\">Table/View</th> ");
-            Out.println("    <th align='left' >Column/Formula</th> ");
-            Out.println("  </tr> ");
-            prevLevel = 5;
-            PrintColumnHierarchy(Out, O, C, false, 1);
-            Out.println("</table>");
-            Out.println("</DIV></DIV>");
-          }
-*/
+        /*
+         * for (Column C : O._Columns)
+         * {
+         * Out.println("<DIV id='" + O._Name + "-" + C.getName() + "_MODAL' class='modal'>");
+         * Out.println("<DIV class='modal-content'>");
+         * Out.println("<SPAN onclick=\"onModalCloseClicked('" + O._Name + "-" + C.getName() + "_MODAL')\" class='close'>&times;</SPAN>");
+         * // Out.println("<DIV><CENTER><H2>Dependencies for Column "+C.getShortName()+"</H2></CENTER></DIV>");
+         * Out.println("<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>");
+         * Out.println("<table style='margin: auto;'> ");
+         * Out.println("  <tr> ");
+         * Out.println("    <th align='left' width=\"300em\">Schema</th> ");
+         * Out.println("    <th align='left' width=\"400em\">Table/View</th> ");
+         * Out.println("    <th align='left' >Column/Formula</th> ");
+         * Out.println("  </tr> ");
+         * prevLevel = 5;
+         * PrintColumnHierarchy(Out, O, C, false, 1);
+         * Out.println("</table>");
+         * Out.println("</DIV></DIV>");
+         * }
+         */
         Out.println("</DIV>");
       }
 
+    /*
     private static void PrintColumnHierarchy(PrintWriter Out, Object O, Column C, boolean skipPrintColumn, int level)
       {
         if (O != null && C != null)
@@ -499,7 +502,14 @@ public class Docs
               {
                 int innerLevel = level;
                 ViewColumn VC = V.getViewColumn(col);
-                PrintColumnHierarchy(Out, VC._ParentView, VC, false, ++innerLevel);
+                if (VC != null)
+                 PrintColumnHierarchy(Out, VC._ParentView, VC, false, ++innerLevel);
+                else
+                  {
+                    Column C = V.getPivottedColumn(col);
+                    if (C != null)
+                      PrintColumnHierarchy(Out, C._ParentObject, C, false, ++innerLevel);
+                  }
               }
 
             for (String formula : formulaMatches)
@@ -512,6 +522,7 @@ public class Docs
           }
       }
 
+    
     private static void PrintColumn(PrintWriter Out, Column C, int level, boolean isLast, String valueToAppend)
       {
         String indentedBody = "";
@@ -687,6 +698,7 @@ public class Docs
           Out.println("<td>" + indentedBody + "<a href='" + columnName + "'>" + F._Name + "</a></td>");
         Out.println("</tr>");
       }
+   */
 
     private static void docFieldValues(PrintWriter Out, Column C)
       {
@@ -731,8 +743,8 @@ public class Docs
         while (M.find() == true)
           {
             String s = M.group(1);
-            ViewColumn VC = F.getParentView().getViewColumn(s);
-            if (VC != null)
+            Column C = F.getParentView().getProxyColumn(s);
+            if (C != null)
               {
                 ColumnMatches.add(s);
               }
@@ -833,7 +845,9 @@ public class Docs
             Out.println("<TR bgcolor=\"DFECF8\">");
             if (!FormulaMatches.isEmpty() || !ColumnMatches.isEmpty())
               {
-//                Out.println("<TD style=\"text-align:left !important;\" colspan=\"2\"><B>Term</B> <B onclick=\"onModalShowClicked('" + TName + "-" + F._Name + "')\" id='" + TName + "-" + F._Name + "_DIV' class='formula dotted_underline cursor_pointer'>" + F._Name + "</B>" + (TextUtil.isNullOrEmpty(F._Id) == true ? "" : (" &nbsp;&nbsp;&nbsp; (#" + F._Id + ")")) + "</TD>");
+                // Out.println("<TD style=\"text-align:left !important;\" colspan=\"2\"><B>Term</B> <B onclick=\"onModalShowClicked('" + TName + "-" + F._Name + "')\" id='" + TName
+                // + "-" + F._Name + "_DIV' class='formula dotted_underline cursor_pointer'>" + F._Name + "</B>" + (TextUtil.isNullOrEmpty(F._Id) == true ? "" : ("
+                // &nbsp;&nbsp;&nbsp; (#" + F._Id + ")")) + "</TD>");
                 Out.println("<TD style=\"text-align:left !important;\" colspan=\"2\"><B>Term</B> <B id='" + TName + "-" + F._Name + "_DIV' class='formula'>" + F._Name + "</B>" + (TextUtil.isNullOrEmpty(F._Id) == true ? "" : (" &nbsp;&nbsp;&nbsp; (#" + F._Id + ")")) + "</TD>");
               }
             else
@@ -857,16 +871,22 @@ public class Docs
             Out.println("<TR valign=\"top\"><TD width=\"1px\" align=\"right\"><B>Ref&nbsp;Columns</B></TD><TD>");
             for (String ColName : ColumnMatches)
               {
+                Column C = V.getProxyColumn(ColName);
+                Out.println("<A style=\"color:#00AA00; font-weight: bold;\" href=\"" + makeColumnHref(C) + "\">" + ColName + "</A><BR>");
                 ViewColumn VC = V.getViewColumn(ColName);
-                List<Column> L = VC.getSameAsLineage();
-                Out.println("<B style=\"color:#00AA00;\">" + ColName + "</B><BR>");
-                Out.println("<DIV style=\"padding-left:10px; font-size:75%;\">&nbsp;&nbsp;&rarr;&nbsp;"+makeColumnLink(L.get(0)));
-                if (L.size() > 2)
-                 Out.println("&nbsp;&nbsp;&rarr;&nbsp;&nbsp;&hellip;");
-                if (L.size() >= 2)
-                  Out.println("&nbsp;&nbsp;&rarr;&nbsp;"+makeColumnLink(L.get(L.size()-1)));
-                Out.println("</DIV>");
-                Out.println("<DIV style=\"padding-left:10px;\">"+L.get(0)._Description + "</DIV>");
+                List<Column> L = VC == null ? null : VC.getSameAsLineage();
+                if (L != null)
+                  {
+                    Out.println("<DIV style=\"padding-left:10px; font-size:75%;\">&nbsp;&nbsp;&rarr;&nbsp;" + makeColumnLink(L.get(0)));
+                    if (L.size() > 2)
+                      Out.println("&nbsp;&nbsp;&rarr;&nbsp;&nbsp;&hellip;");
+                    if (L.size() >= 2)
+                      Out.println("&nbsp;&nbsp;&rarr;&nbsp;" + makeColumnLink(L.get(L.size() - 1)));
+                    Out.println("</DIV>");
+                    Out.println("<DIV style=\"padding-left:10px;\">" + L.get(0)._Description + "</DIV>");
+                  }
+                else
+                  Out.println("<DIV style=\"padding-left:10px;\">" + C._Description + "</DIV>");
               }
             Out.println("</TD></TR>");
           }
@@ -876,9 +896,10 @@ public class Docs
             for (String FormulaName : FormulaMatches)
               {
                 Formula subF = V.getFormula(FormulaName, true);
-                Out.println("<B style=\"color:#0000AA;\">" + subF._Name + "</B><BR>");
-                Out.println("<DIV style=\"padding-left:10px; font-size:75%;\">&nbsp;&nbsp;&rarr;&nbsp;"+makeFormulaLink(subF)+"</DIV>");
-                Out.println("<DIV style=\"padding-left:10px;\">"+CleanForHTML(subF._Description) + "</DIV>");
+                Column C = V.getProxyColumn(FormulaName);
+                Out.println("<A style=\"color:#0000AA; font-weight: bold;\" href=\"" + makeColumnHref(C) + "\">" + FormulaName + "</A><BR>");
+                Out.println("<DIV style=\"padding-left:10px; font-size:75%;\">&nbsp;&nbsp;&rarr;&nbsp;" + makeFormulaLink(subF) + "</DIV>");
+                Out.println("<DIV style=\"padding-left:10px;\">" + CleanForHTML(subF._Description) + "</DIV>");
               }
             Out.println("</TD></TR>");
           }
@@ -901,8 +922,8 @@ public class Docs
             Out.println("    <th align='left' >Column/Formula</th> ");
             Out.println("  </tr> ");
 
-            prevLevel = 5;
-            PrintFormulaHierarchy(Out, F.getParentView(), F, false, 1);
+//            prevLevel = 5;
+//            PrintFormulaHierarchy(Out, F.getParentView(), F, false, 1);
 
             Out.println("</table>");
             Out.println("</DIV></DIV>");
@@ -917,11 +938,10 @@ public class Docs
         while (M.find() == true)
           {
             String s = M.group(1);
-            boolean found = F._ParentView.getViewColumn(s)!= null || F._ParentView.getPivottedColumn(s) != null;
-            if (found == true)
+            Column C = F._ParentView.getProxyColumn(s);
+            if (C != null)
               {
-//                makeColumnHref()
-                M.appendReplacement(Str, "<B style=\"color:#00AA00;\">" + s + "</B>");
+                M.appendReplacement(Str, "<A style=\"color:#00AA00; font-weight: bold;\" href=\"" + makeColumnHref(C) + "\">" + s + "</A>");
                 ColumnMatches.add(s);
               }
           }
@@ -933,13 +953,13 @@ public class Docs
             while (M.find() == true)
               {
                 String s = M.group(1);
-                for (Formula F2 : F._ParentView._Formulas)
-                  if (s.equals(F2._Name) == true)
-                    {
-                      M.appendReplacement(Str, "<B style=\"color:#0000AA;\">" + s + "</B>");
-                      FormulaMatches.add(s);
-                      break;
-                    }
+                Column C = F._ParentView.getProxyColumn(s);
+                if (C != null)
+                  {
+                    M.appendReplacement(Str, "<A style=\"color:#0000AA; font-weight: bold;\" href=\"" + makeColumnHref(C) + "\">" + s + "</A>");
+                    FormulaMatches.add(s);
+                    break;
+                  }
               }
             M.appendTail(Str);
           }
