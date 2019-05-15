@@ -281,7 +281,7 @@ This is the setter for:<BR>
    public void setActive(boolean v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _active)
+       if (__Init == InitMode.CREATE || v != _active)
         {
           __Changes.or(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask);
           __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask);
@@ -895,7 +895,7 @@ This is the setter for:<BR>
    public void setInitial(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _initial)
+       if (__Init == InitMode.CREATE || v != _initial)
         {
           __Changes.or(TILDA__CONNECTION_Factory.COLS.INITIAL._Mask);
           __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.INITIAL._Mask);
@@ -989,7 +989,7 @@ This is the setter for:<BR>
    public void setMax(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _max)
+       if (__Init == InitMode.CREATE || v != _max)
         {
           __Changes.or(TILDA__CONNECTION_Factory.COLS.MAX._Mask);
           __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.MAX._Mask);

@@ -1101,7 +1101,7 @@ This is the setter for:<BR>
    public void setCommitNano(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _commitNano)
+       if (__Init == InitMode.CREATE || v != _commitNano)
         {
           __Changes.or(TILDA__TRANSPERF_Factory.COLS.COMMITNANO._Mask);
           __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.COMMITNANO._Mask);
@@ -1262,7 +1262,7 @@ This is the setter for:<BR>
    public void setCommitCount(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _commitCount)
+       if (__Init == InitMode.CREATE || v != _commitCount)
         {
           __Changes.or(TILDA__TRANSPERF_Factory.COLS.COMMITCOUNT._Mask);
           __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.COMMITCOUNT._Mask);
@@ -1423,7 +1423,7 @@ This is the setter for:<BR>
    public void setRollbackNano(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _rollbackNano)
+       if (__Init == InitMode.CREATE || v != _rollbackNano)
         {
           __Changes.or(TILDA__TRANSPERF_Factory.COLS.ROLLBACKNANO._Mask);
           __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.ROLLBACKNANO._Mask);
@@ -1584,7 +1584,7 @@ This is the setter for:<BR>
    public void setRollbackCount(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _rollbackCount)
+       if (__Init == InitMode.CREATE || v != _rollbackCount)
         {
           __Changes.or(TILDA__TRANSPERF_Factory.COLS.ROLLBACKCOUNT._Mask);
           __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.ROLLBACKCOUNT._Mask);
@@ -1745,7 +1745,7 @@ This is the setter for:<BR>
    public void setSavepointSetNano(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _savepointSetNano)
+       if (__Init == InitMode.CREATE || v != _savepointSetNano)
         {
           __Changes.or(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTSETNANO._Mask);
           __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTSETNANO._Mask);
@@ -1906,7 +1906,7 @@ This is the setter for:<BR>
    public void setSavepointSetCount(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _savepointSetCount)
+       if (__Init == InitMode.CREATE || v != _savepointSetCount)
         {
           __Changes.or(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTSETCOUNT._Mask);
           __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTSETCOUNT._Mask);
@@ -2067,7 +2067,7 @@ This is the setter for:<BR>
    public void setSavepointCommitNano(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _savepointCommitNano)
+       if (__Init == InitMode.CREATE || v != _savepointCommitNano)
         {
           __Changes.or(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTCOMMITNANO._Mask);
           __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTCOMMITNANO._Mask);
@@ -2228,7 +2228,7 @@ This is the setter for:<BR>
    public void setSavepointCommitCount(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _savepointCommitCount)
+       if (__Init == InitMode.CREATE || v != _savepointCommitCount)
         {
           __Changes.or(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTCOMMITCOUNT._Mask);
           __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTCOMMITCOUNT._Mask);
@@ -2389,7 +2389,7 @@ This is the setter for:<BR>
    public void setSavepointRollbackNano(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _savepointRollbackNano)
+       if (__Init == InitMode.CREATE || v != _savepointRollbackNano)
         {
           __Changes.or(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTROLLBACKNANO._Mask);
           __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTROLLBACKNANO._Mask);
@@ -2550,7 +2550,7 @@ This is the setter for:<BR>
    public void setSavepointRollbackCount(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _savepointRollbackCount)
+       if (__Init == InitMode.CREATE || v != _savepointRollbackCount)
         {
           __Changes.or(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTROLLBACKCOUNT._Mask);
           __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTROLLBACKCOUNT._Mask);
@@ -2711,7 +2711,7 @@ This is the setter for:<BR>
    public void setStatementCloseNano(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _statementCloseNano)
+       if (__Init == InitMode.CREATE || v != _statementCloseNano)
         {
           __Changes.or(TILDA__TRANSPERF_Factory.COLS.STATEMENTCLOSENANO._Mask);
           __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.STATEMENTCLOSENANO._Mask);
@@ -2872,7 +2872,7 @@ This is the setter for:<BR>
    public void setStatementCloseCount(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _statementCloseCount)
+       if (__Init == InitMode.CREATE || v != _statementCloseCount)
         {
           __Changes.or(TILDA__TRANSPERF_Factory.COLS.STATEMENTCLOSECOUNT._Mask);
           __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.STATEMENTCLOSECOUNT._Mask);
@@ -3033,7 +3033,7 @@ This is the setter for:<BR>
    public void setConnectionCloseNano(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _connectionCloseNano)
+       if (__Init == InitMode.CREATE || v != _connectionCloseNano)
         {
           __Changes.or(TILDA__TRANSPERF_Factory.COLS.CONNECTIONCLOSENANO._Mask);
           __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.CONNECTIONCLOSENANO._Mask);
@@ -3194,7 +3194,7 @@ This is the setter for:<BR>
    public void setConnectionCloseCount(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _connectionCloseCount)
+       if (__Init == InitMode.CREATE || v != _connectionCloseCount)
         {
           __Changes.or(TILDA__TRANSPERF_Factory.COLS.CONNECTIONCLOSECOUNT._Mask);
           __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.CONNECTIONCLOSECOUNT._Mask);
@@ -3355,7 +3355,7 @@ This is the setter for:<BR>
    public void setConnectionGetNano(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _connectionGetNano)
+       if (__Init == InitMode.CREATE || v != _connectionGetNano)
         {
           __Changes.or(TILDA__TRANSPERF_Factory.COLS.CONNECTIONGETNANO._Mask);
           __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.CONNECTIONGETNANO._Mask);
@@ -3516,7 +3516,7 @@ This is the setter for:<BR>
    public void setConnectionGetCount(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _connectionGetCount)
+       if (__Init == InitMode.CREATE || v != _connectionGetCount)
         {
           __Changes.or(TILDA__TRANSPERF_Factory.COLS.CONNECTIONGETCOUNT._Mask);
           __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.CONNECTIONGETCOUNT._Mask);
@@ -3677,7 +3677,7 @@ This is the setter for:<BR>
    public void setTildaSetterNano(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _tildaSetterNano)
+       if (__Init == InitMode.CREATE || v != _tildaSetterNano)
         {
           __Changes.or(TILDA__TRANSPERF_Factory.COLS.TILDASETTERNANO._Mask);
           __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.TILDASETTERNANO._Mask);
@@ -3838,7 +3838,7 @@ This is the setter for:<BR>
    public void setTildaSetterCount(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _tildaSetterCount)
+       if (__Init == InitMode.CREATE || v != _tildaSetterCount)
         {
           __Changes.or(TILDA__TRANSPERF_Factory.COLS.TILDASETTERCOUNT._Mask);
           __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.TILDASETTERCOUNT._Mask);
@@ -3999,7 +3999,7 @@ This is the setter for:<BR>
    public void setTildaToStringNano(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _tildaToStringNano)
+       if (__Init == InitMode.CREATE || v != _tildaToStringNano)
         {
           __Changes.or(TILDA__TRANSPERF_Factory.COLS.TILDATOSTRINGNANO._Mask);
           __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.TILDATOSTRINGNANO._Mask);
@@ -4160,7 +4160,7 @@ This is the setter for:<BR>
    public void setTildaToStringCount(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _tildaToStringCount)
+       if (__Init == InitMode.CREATE || v != _tildaToStringCount)
         {
           __Changes.or(TILDA__TRANSPERF_Factory.COLS.TILDATOSTRINGCOUNT._Mask);
           __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.TILDATOSTRINGCOUNT._Mask);
@@ -4321,7 +4321,7 @@ This is the setter for:<BR>
    public void setTildaToJsonNano(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _tildaToJsonNano)
+       if (__Init == InitMode.CREATE || v != _tildaToJsonNano)
         {
           __Changes.or(TILDA__TRANSPERF_Factory.COLS.TILDATOJSONNANO._Mask);
           __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.TILDATOJSONNANO._Mask);
@@ -4482,7 +4482,7 @@ This is the setter for:<BR>
    public void setTildaToJsonCount(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _tildaToJsonCount)
+       if (__Init == InitMode.CREATE || v != _tildaToJsonCount)
         {
           __Changes.or(TILDA__TRANSPERF_Factory.COLS.TILDATOJSONCOUNT._Mask);
           __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.TILDATOJSONCOUNT._Mask);
@@ -4643,7 +4643,7 @@ This is the setter for:<BR>
    public void setTildaToCsvNano(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _tildaToCsvNano)
+       if (__Init == InitMode.CREATE || v != _tildaToCsvNano)
         {
           __Changes.or(TILDA__TRANSPERF_Factory.COLS.TILDATOCSVNANO._Mask);
           __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.TILDATOCSVNANO._Mask);
@@ -4804,7 +4804,7 @@ This is the setter for:<BR>
    public void setTildaToCsvCount(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _tildaToCsvCount)
+       if (__Init == InitMode.CREATE || v != _tildaToCsvCount)
         {
           __Changes.or(TILDA__TRANSPERF_Factory.COLS.TILDATOCSVCOUNT._Mask);
           __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.TILDATOCSVCOUNT._Mask);

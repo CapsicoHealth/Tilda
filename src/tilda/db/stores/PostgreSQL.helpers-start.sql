@@ -173,8 +173,7 @@ RETURNS TABLE (min_key_inclusive bigint, max_key_exclusive bigint) AS $$
 DECLARE
   val bigint;
 BEGIN
-  UPDATE TILDA.Key set "max"="max"+c where "name"=t;
-  SELECT "max" into val from TILDA.Key where "name"=t;
+  UPDATE TILDA.Key set "max"="max"+c where "name"=t returning "max" into val;
   return query select val-c as min_key_inclusive, val as max_key_exclusive;
 END; $$
 LANGUAGE PLPGSQL;
@@ -184,11 +183,95 @@ CREATE OR REPLACE FUNCTION TILDA.getKeyBatchAsMaxExclusive(t text, c integer) RE
 DECLARE
   val bigint;
 BEGIN
-  UPDATE TILDA.Key set "max"="max"+c where "name"=t;
-  SELECT "max" into val from TILDA.Key where "name"=t;
+  UPDATE TILDA.Key set "max"="max"+c where "name"=t returning "max" into val;
   return val;
 END; $$
 LANGUAGE PLPGSQL;
+
+
+-- Function to check dynamically if a table exists. It can also be used as an SQL-Injection
+-- check when another function needs to create some dynamic SQL and received table/schema names
+-- as strings
+CREATE OR REPLACE FUNCTION TILDA.existsTable(schemaName varchar, tableName varchar)
+RETURNS boolean
+STABLE LANGUAGE SQL AS
+  'SELECT true FROM information_schema.tables WHERE lower(tables.table_schema)=lower($1) and lower(tables.table_name)=lower($2);'
+;
+
+-- Function to check dynamically if a column exists. It can also be used as an SQL-Injection
+-- check when another function needs to create some dynamic SQL and received table/schema/column names
+-- as strings
+CREATE OR REPLACE FUNCTION TILDA.existsColumn(schemaName varchar, tableName varchar, colName varchar)
+RETURNS boolean
+STABLE LANGUAGE SQL AS $$
+  SELECT true FROM information_schema.tables T
+              JOIN information_schema.columns C on C.table_schema=T.table_schema and C.table_name=T.table_name
+   WHERE lower(T.table_schema)=lower($1) and lower(T.table_name)=lower($2) and lower(c.column_name)=lower($3)
+   ;
+$$;
+
+
+-- Updates the key in TILDA.Key to match the max(refnum)+1 from the named table
+CREATE OR REPLACE FUNCTION TILDA.updateMaxKey(schemaName varchar, tableName varchar)
+RETURNS bigint AS $$
+DECLARE
+  val bigint;
+  q text;
+BEGIN
+  IF (SELECT TILDA.existsColumn($1,$2,'refnum')) is distinct from true THEN -- test for table and schema existence.. and doubles as SQL injection barier.
+   return null;
+  END IF;
+  q:='SELECT coalesce(max(refnum),0) from '||schemaName||'.'||tableName;
+  EXECUTE q into val;
+  val:=val+1;
+  q:='update TILDA.Key set max='||val||' where name='''||upper(schemaName||'.'||tableName)||'''';
+  EXECUTE q;
+  return val;
+END; $$
+LANGUAGE PLPGSQL;
+
+
+-- Updates the key's max value in TILDA.Key to max(refnum)+1 of all registered tables.
+CREATE OR REPLACE FUNCTION TILDA.updateAllMaxKeys() RETURNS bigint AS $$
+DECLARE
+  val bigint;
+  counter bigint;
+  skipped bigint;
+  q text;
+  v_curr record;
+BEGIN
+  counter:=0;
+  skipped:=0;
+  for v_curr in (
+    SELECT name
+          ,substr(name, 1, strpos(name,'.')-1) as schemaName
+          ,substr(name, strpos(name,'.')+1) as tableName
+      from TILDA.Key
+   ) LOOP
+      -- It's possible for an old table to still be in the Tilda.Key table but no longer exist, or no longer have th erefnum column.
+      IF (SELECT TILDA.existsColumn(v_curr.schemaName,v_curr.tableName, 'refnum')) is distinct from true THEN
+        skipped:=skipped+1;
+        RAISE NOTICE 'Skipped table #% of %: %',skipped, counter, v_curr.name;
+        CONTINUE;
+      END IF;
+
+      q:='SELECT coalesce(max(refnum),0) from '||v_curr.schemaName||'.'||v_curr.tableName;
+      RAISE NOTICE '%',q;
+      EXECUTE q into val;
+      val:=val+1;
+      q:='update TILDA.Key set max='||val||' where name='''||v_curr.name||'''';
+      RAISE NOTICE '%',q;
+      EXECUTE q;
+      counter:=counter+1;
+      RAISE NOTICE 'Processed table #%: %',counter, v_curr.name;
+    END LOOP;
+  RAISE NOTICE 'Processed % tables, and skipped % (total=%)',counter, skipped, (counter+skipped);
+  return counter;
+END; $$
+LANGUAGE PLPGSQL;
+
+
+
 
 
 
@@ -219,17 +302,17 @@ $$;
 
 -----------------------------------------------------------------------------------------------------------------
 -- TILDA Duration functions
-CREATE OR REPLACE FUNCTION TILDA.daysBetween(timestamptz, timestamptz, boolean)
+CREATE OR REPLACE FUNCTION TILDA.daysBetween(ts1 timestamptz, ts2 timestamptz, midnight boolean)
   RETURNS integer
   IMMUTABLE LANGUAGE SQL AS
-'SELECT date_part(''days'', $2 - $1)::integer+(case $3 or $2 < $1 when true then 0 else 1 end);';
-COMMENT ON FUNCTION TILDA.DaysBetween(timestamptz, timestamptz, boolean) IS 'Computes the number of days between 2 dates ''start'' and ''end''. The third parameter indicates whether the midnight rule should be applied or not. If true, the number of days between 2016-12-01 and 2016-12-02 for example will be 1 (i.e., one mignight passed). If false, the returned count will be 2.';
+'SELECT case when $3 or $2 < $1 then $2::DATE - $1::DATE else $2::DATE - $1::DATE + 1 end;';
+COMMENT ON FUNCTION TILDA.DaysBetween(timestamptz, timestamptz, boolean) IS 'Computes the number of days between 2 dates ''start'' and ''end''. The third parameter indicates whether the midnight rule should be applied or not. If true, the number of days between 2016-12-01 and 2016-12-02 for example will be 1 (i.e., one mignight passed). If false, the returned count will be 2. Note that this function doesn.''t care about timezones and only compares the date portions of the parameters passed in.';
 
 
-CREATE OR REPLACE FUNCTION TILDA.daysBetween(timestamptz, timestamptz)
+CREATE OR REPLACE FUNCTION TILDA.daysBetween(ts1 timestamptz, ts2 timestamptz)
   RETURNS integer
   IMMUTABLE LANGUAGE SQL AS
-'SELECT date_part(''days'', $2 - $1)::integer+1;';
+'SELECT case when $2 < $1 then $2::DATE - $1::DATE else $2::DATE - $1::DATE + 1 end;';
 COMMENT ON FUNCTION TILDA.DaysBetween(timestamptz, timestamptz) IS 'Computes the number of days between 2 dates ''start'' and ''end''. This function is the same as TILDA.DaysBetween(timestamptz, timestamptz, boolean) but with the third parapeter defaulted to false, i.e., the number of days between 2016-12-01 and 2016-12-02 is 2.';
 
 
@@ -604,6 +687,122 @@ END
 $$ LANGUAGE plpgsql;
 
 
+
+
+
+
+
+
+-- Return size information per quarter on a specific tables, or all tables in a specific schema
+-- schema_name: the name of the schema
+-- table_name: the name of the table, or NULL if all tables in the schema are to be analyzed
+-- created_col_name: the name of the date or timestamp column to use for quarterly grouping
+-- start_date: the date the analysis should start from (based on the created_col_name names)
+create or replace function Tilda.getSizing(schema_name varchar, table_name varchar, created_col_name varchar, start_date date) 
+returns TABLE ("schemaName" varchar, "tableName" varchar, q date, "totalCount" bigint, "qCount" bigint, "totalSize" bigint, "totalSizepretty" text
+             , "qSize" numeric, "qSizepretty" text, "qPercent" numeric) as $$
+declare
+  v_curr record;
+  v_rec record;
+  v_query text;
+  v_count integer;
+begin
+  v_query:='with T as ('||E'\n';
+  v_count:=-1;
+  for v_curr in (
+    SELECT
+     schemaname as s,
+     relname as t,
+     columns.column_name as col,
+     pg_total_relation_size(relid) As tsize
+    FROM pg_catalog.pg_statio_user_tables
+      LEFT join information_schema.columns on columns.table_schema=schemaname and columns.table_name=relname and lower(columns.column_name)=lower($3)
+    WHERE ($1 is null OR lower($1)=lower(schemaname))
+      AND ($2 is null OR lower($2)=lower(relname   ))
+    ORDER BY pg_total_relation_size(relid) DESC
+   ) LOOP
+     v_count:=v_count+1;
+     IF v_curr.col is not null
+      THEN v_query:=v_query||(case when v_count> 0 then E'UNION\n' else '' end)
+         ||'  select '''||v_curr.s||'''::VARCHAR as "schemaName", '''||v_curr.t||'''::VARCHAR as "tableName", '||v_curr.tsize||'::BIGINT as "totalSize"'||E'\n'
+         ||'       , "totalCount", date_trunc(''quarter'', '||quote_ident($3)||')::DATE as q'||E'\n'
+         ||'       , count(*) as "qCount"'||E'\n'
+         ||'    from '||v_curr.s||'.'||v_curr.t||E'\n'
+         ||'       join (select count(*) as "totalCount" from '||v_curr.s||'.'||v_curr.t||') as T on 1=1'||E'\n'
+         ||'   where '||quote_ident($3)||' >= '''||$4||''''||E'\n'
+         ||'   group by 4, 5'||E'\n'
+         ;
+      ELSE v_query:=v_query||(case when v_count> 0 then E'UNION\n' else '' end)
+         ||'  select '''||v_curr.s||'''::VARCHAR as "schemaName", '''||v_curr.t||'''::VARCHAR as "tableName", '||v_curr.tsize||'::BIGINT as "totalSize"'||E'\n'
+         ||'       , "totalCount", null::DATE as q'||E'\n'
+         ||'       , count(*) as "qCount"'||E'\n'
+         ||'    from '||v_curr.s||'.'||v_curr.t||E'\n'
+         ||'       join (select count(*) as "totalCount" from '||v_curr.s||'.'||v_curr.t||') as T on 1=1'||E'\n'
+         ||'   group by 4, 5'||E'\n'
+         ; 
+      END IF;
+  END LOOP;
+  v_query:=v_query||')'||E'\n'
+         ||'select "schemaName", "tableName", q, "totalCount", "qCount"'||E'\n'
+         ||'     , "totalSize" , pg_size_pretty("totalSize") as "totalSizePretty"'||E'\n'
+         ||'     , round(1.0*"totalSize"*"qCount"/"totalCount",2) as "qSize"'||E'\n'
+         ||'     , pg_size_pretty(1.0*"totalSize"*"qCount"/"totalCount") as "qSizePretty"'||E'\n'
+         ||'     , round(100.0*"qCount"/"totalCount",2) as "qPercent"'||E'\n'
+         ||' from T'||E'\n'
+         ;
+  RETURN QUERY EXECUTE v_query;
+end;
+$$
+LANGUAGE plpgsql;
+
+
+
+
+-- returns an list of schemas, with the aggregate storage sizes of all of their tables, ordered by their sizes, with a running total.
+create or replace function Tilda.getSchemaSizes() 
+returns TABLE ("schemaName" varchar, "totalSize" numeric, "totalSizePretty" text, "totalSizeExternal" numeric, "totalSizeExternalPretty" text
+             , "runningTotalSize" numeric, "runningTotalSizePretty" text) as $$
+with T as (
+SELECT
+   schemaname::VARCHAR as "schemaName",
+   sum(pg_total_relation_size(relid)) As "totalSize",
+   pg_size_pretty(sum(pg_total_relation_size(relid))) As "totalSizePretty",
+   sum(pg_total_relation_size(relid)) - sum(pg_relation_size(relid)) as "totalSizeExternal",
+   pg_size_pretty(sum(pg_total_relation_size(relid)) - sum(pg_relation_size(relid))) as "totalSizeExternalPretty"
+  FROM pg_catalog.pg_statio_user_tables
+  group by 1
+  ORDER BY 2 DESC
+)
+select "schemaName", "totalSize", "totalSizePretty", "totalSizeExternal", "totalSizeExternalPretty"
+                   , sum("totalSize") over(order by "totalSize" desc) as "runningTotalSize"
+                   , pg_size_pretty(sum("totalSize") over(order by "totalSize" desc)) as "runningTotalSizePretty"
+  from T
+group by 1, 2, 3, 4, 5
+$$ LANGUAGE SQL;
+
+
+
+-- returns an list of tables, with their storage sizes, ordered by their sizes, with a running total.
+create or replace function Tilda.getTableSizes() 
+returns TABLE ("schemaName" varchar, "tableName" varchar, "totalSize" numeric, "totalSizePretty" text, "totalSizeExternal" numeric, "totalSizeExternalPretty" text
+             , "runningTotalSize" numeric, "runningTotalSizePretty" text) as $$
+with T as (
+SELECT
+   schemaname::VARCHAR as "schemaName",
+   relname::VARCHAR as "tableName",
+   pg_total_relation_size(relid)::numeric As "totalSize",
+   pg_size_pretty(pg_total_relation_size(relid)) As "totalSizePretty",
+   (pg_total_relation_size(relid) - pg_relation_size(relid))::numeric as "totalSizeExternal",
+   pg_size_pretty(pg_total_relation_size(relid) - pg_relation_size(relid)) as "totalSizeExternalPretty"
+  FROM pg_catalog.pg_statio_user_tables
+  ORDER BY pg_total_relation_size(relid) DESC
+)
+select "schemaName", "tableName", "totalSize", "totalSizePretty", "totalSizeExternal", "totalSizeExternalPretty"
+                   , sum("totalSize") over(order by "totalSize" desc) as "runningTotalSize"
+                   , pg_size_pretty(sum("totalSize") over(order by "totalSize" desc)) as "runningTotalSizePretty"
+  from T
+group by 1, 2, 3, 4, 5, 6
+$$ LANGUAGE SQL;
 
 
 

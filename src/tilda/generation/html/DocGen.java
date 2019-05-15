@@ -1,7 +1,14 @@
 package tilda.generation.html;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -14,10 +21,15 @@ import tilda.enums.FrameworkSourcedType;
 import tilda.generation.GeneratorSession;
 import tilda.generation.graphviz.GraphvizUtil;
 import tilda.parsing.ParserSession;
+import tilda.parsing.parts.Column;
+import tilda.parsing.parts.Formula;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
+import tilda.utils.CollectionUtil;
 import tilda.utils.FileUtil;
+import tilda.utils.JSONUtil;
+import tilda.utils.TextUtil;
 
 public class DocGen
   {
@@ -28,7 +40,8 @@ public class DocGen
 
     GeneratorSession              G;
 
-    public DocGen(Schema schema, GeneratorSession G) throws ParserConfigurationException
+    public DocGen(Schema schema, GeneratorSession G)
+      throws ParserConfigurationException
       {
         this.schema = schema;
         this.builder = factory.newDocumentBuilder();
@@ -88,7 +101,7 @@ public class DocGen
           for (String str : schema._Documentation._Description)
             writer.println(str);
 
-        writeSearchHTML(writer); // Add Search Box
+        writeSearchHTML(writer, true); // Add Search Box
 
         if (f.exists())
           {
@@ -204,19 +217,133 @@ public class DocGen
           writer.println("</BLOCKQUOTE>");
       }
 
-    public void writeSearchHTML(PrintWriter writer)
+    public static void writeSearchHTML(PrintWriter writer, boolean includeFields)
       {
 
-        writer.println("<BR><BR>");
+        writer.println("<BR>");
         writer.println("<DIV id=\"__SEARCH_BOX_BASE__\"><TABLE id=\"__SEARCH_BOX__\" border=\"0px\" cellspacing=\"0px\" cellpadding=\"0px\"><TR valign=\"top\"><TD width=\"1px\" style=\"font-size: 125%; font-weight:bold;\">SEARCH</TD><TD>");
-        writer.println("<input type=\"text\" onfocus=\"showSearchResults(true);eventListener()\" oninput=\"eventListener()\", id=\"search_input\" placeholder=\"Search Tables/Views, Fields, Formulae\" autocomplete=\"off\">");
-        writer.println("&nbsp;&nbsp;&nbsp;&nbsp;<label><input type=\"checkbox\" oninput=\"eventListener()\", id=\"cols_check\" checked>&nbsp;Fields</label>");
-        writer.println("&nbsp;&nbsp;&nbsp;&nbsp;<label><input type=\"checkbox\" oninput=\"eventListener()\", id=\"formulas_check\" checked>&nbsp;Formulas</label>");
-        writer.println("&nbsp;&nbsp;&nbsp;&nbsp;<label><input type=\"checkbox\" oninput=\"eventListener()\", id=\"realized_check\">&nbsp;Realized</label></TD></TR>");
-        writer.println("<TR><TD colspan=\"2\"><table id=\"__SEARCH_BOX_RESULTS__\" class=\"search_results\" border=\"0px\" cellspacing=\"0px\"></table>");
+        writer.println("<input type=\"text\" onfocus=\"showSearchResults(true);eventListener(event)\" onkeyup=\"eventListener(event)\", id=\"search_input\" placeholder=\"Search Tables/Views, Fields, Formulae\" autocomplete=\"off\">");
+        if (includeFields == true)
+          {
+            writer.println("&nbsp;&nbsp;&nbsp;&nbsp;<label><input type=\"checkbox\" oninput=\"eventListener(event)\", id=\"cols_check\" checked>&nbsp;Fields</label>");
+            writer.println("&nbsp;&nbsp;&nbsp;&nbsp;<label><input type=\"checkbox\" oninput=\"eventListener(event)\", id=\"formulas_check\" checked>&nbsp;Formulas</label>");
+            writer.println("&nbsp;&nbsp;&nbsp;&nbsp;<label><input type=\"checkbox\" oninput=\"eventListener(event)\", id=\"realized_check\">&nbsp;Realized</label>");
+          }
+        writer.println("</TD></TR>");
+        writer.println("<TR><TD colspan=\"2\"><table id=\"__SEARCH_BOX_RESULTS__\" class=\"search_results Selectable\" border=\"0px\" cellspacing=\"0px\"></table>");
         writer.println("</TD></TR></TABLE></DIV>");
         // writer.println("<SCRIPT>registerStickyHeader(\"__SEARCH_BOX__\");</SCRIPT>");
         // hideIfEsc(event, '__SEARCH_BOX_RESULTS__');
+      }
+
+    public static void GenMasterIndex(String Path, List<Schema> selectedSchemas, tilda.Docs.MasterConfig MC)
+    throws IOException
+      {
+        LOG.debug("Generating master index file");
+        PrintWriter writer = FileUtil.getBufferedPrintWriter(Path + "index.html", false);
+        writer.println("<HTML><HEAD>");
+        String CSS = FileUtil.getFileOfResourceContents("tilda/generation/html/TildaDocs.css");
+        String JS = FileUtil.getFileOfResourceContents("tilda/generation/html/TildaDocs.js");
+        writer.println(
+        "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=ISO-8859-1\"/>\n"
+        + "<title>Master Database Index</title>\n"
+        + "<STYLE>\n"
+        + CSS
+        + "</STYLE>\n"
+        + "<SCRIPT>\n"
+        + JS
+        + "</SCRIPT>\n"
+        + "</HEAD>\n"
+        + "<BODY onkeyup=\"MasterIndex.keyup(event);\">\n");
+        writer.println("<H1>"+TextUtil.Print(MC._Title, "Master Database Documentation")+"</H1>");
+        writer.println(String.join("\n", MC._Descriptions)+"<BR>");
+        writeSearchHTML(writer, false); // Add Search Box
+        writer.println("<BR>");
+        writer.println("<DIV id='MI'><DIV id='MI_SCHEMAS'></DIV><DIV id='MI_OBJECTS'></DIV><DIV id='MI_COLUMNS'></DIV><DIV id='MI_DOCS'></DIV></DIV>");
+        writer.println("<SCRIPT>");
+        writer.println("var dbMeta=[");
+        int g = -1;
+        for (tilda.Docs.MasterConfig.Group G : MC._Groups)
+          {
+            writer.print(++g == 0 ? "  {" : " ,{");
+            JSONUtil.Print(writer, "name", true, G._Name);
+            JSONUtil.Print(writer, "docs", false, G._Descriptions == null ? null : String.join("<BR>\n", G._Descriptions));
+            writer.println(", \"schemas\":[ ");
+            int s = -1;
+            for (Schema S : selectedSchemas)
+              {
+                tilda.Docs.MasterConfig.Group.SchemaType ST = G.getSchemaType(S._Name);
+                if (ST == null || S._Objects.isEmpty() == true)
+                  continue;
+                writer.print(++s == 0 ? "    {" : "   ,{");
+                JSONUtil.Print(writer, "name", true, S.getShortName());
+                JSONUtil.Print(writer, "docs", false, S.getDocumentation()._Description == null ? null : String.join("<BR>\n", S.getDocumentation()._Description));
+                JSONUtil.Print(writer, "explicit", false, ST == tilda.Docs.MasterConfig.Group.SchemaType.PRIMARY);
+                Set<String> deps = new HashSet<String>();
+                S.getFullDependencies(selectedSchemas, deps);
+                JSONUtil.Print(writer, "deps", false, CollectionUtil.toStringArray(deps));
+                writer.println(", \"objs\":[ ");
+                int o = -1;
+                S._Objects.sort(new Comparator<Object>()
+                  {
+                    @Override
+                    public int compare(Object o1, Object o2)
+                      {
+                        return o1 == null || o2 == null ? 0 : o1._Name.compareTo(o2._Name);
+                      }
+                  });
+                for (Object O : S._Objects)
+                  if (O != null)
+                    {
+                      writer.print(++o == 0 ? "        {" : "       ,{");
+                      JSONUtil.Print(writer, "name", true, O.getBaseName());
+                      JSONUtil.Print(writer, "docs", false, O._Description == null ? null : O._Description);
+                      writer.println(", \"cols\":[ ");
+                      int c = -1;
+                      O._Columns.sort(new Comparator<Column>()
+                        {
+                          @Override
+                          public int compare(Column c1, Column c2)
+                            {
+                              return c1 == null || c2 == null ? 0 : c1.getName().compareTo(c2.getName());
+                            }
+                        });
+                      for (Column C : O._Columns)
+                        if (C != null)
+                          {
+                            writer.print(++c == 0 ? "            {" : "           ,{");
+                            JSONUtil.Print(writer, "name", true, C.getName());
+                            JSONUtil.Print(writer, "type", false, C._Size == null ? C._TypeStr : C._TypeStr + "(" + C._Size + ")");
+                            JSONUtil.Print(writer, "nullable", false, C._Nullable);
+                            // if (C.getName().equals("isReferral") == true)
+                            // LOG.debug("xxx");
+                            Formula F = O._ParentSchema.getSourceFormula(C);
+                            if (F == null)
+                              JSONUtil.Print(writer, "docs", false, C._Description);
+                            else
+                              {
+                                SortedSet<String> ColumnMatches = new TreeSet<String>();
+                                SortedSet<String> FormulaMatches = new TreeSet<String>();
+                                JSONUtil.Print(writer, "formula", false, true);
+                                JSONUtil.Print(writer, "docs", false, F._Title + (F._Measure == false ? "" : "&nbsp;<SUP class=\"Measure\"></SUP>") + "<BR><BR>" + String.join(" ", F._Description) + "<PRE style=\"padding-top: 3px;\">" + Docs.printFormulaCodeHTML(F, ColumnMatches, FormulaMatches, true) + "</PRE>");
+                              }
+                            JSONUtil.Print(writer, "url", false, Docs.makeColumnHref(C));
+                            writer.println(" }");
+                          }
+                      writer.println("        ]}");
+                    }
+                writer.println("      ]}");
+              }
+            writer.println("    ]}");
+          }
+        writer.print("];");
+        writer.println("MasterIndex._baseId='MI';");
+        writer.println("MasterIndex.paintSchemas(dbMeta);");
+        writer.println("eventListener = eventListener_master;");
+        writer.println("</SCRIPT>");
+        writer.println("</BODY>");
+        writer.println("</HTML>");
+        writer.close();
       }
 
   }

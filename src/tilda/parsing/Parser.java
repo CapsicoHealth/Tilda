@@ -41,6 +41,16 @@ public abstract class Parser
   {
     protected static final Logger LOG = LogManager.getLogger(Parser.class.getName());
 
+    public static ParserSession init(CodeGenSql CGSql, List<Schema> SchemaList)
+     {
+       ParserSession PS = new ParserSession(SchemaList.get(SchemaList.size()-1), CGSql);;
+       for (Schema S : SchemaList)
+        PS.addDependencySchema(S);
+       for (Schema S : SchemaList)
+        S.Validate(PS);
+       return PS;
+     }
+
     public static ParserSession parse(String FilePath, CodeGenSql CGSql)
       {
         LOG.info("\n\n\n-----------------------------------------------------------------------------------------------------------------------------------------------");

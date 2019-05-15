@@ -7,19 +7,27 @@ package tilda.data;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-/**
-This is the application class <B>Data_JOB_DETAIL</B> mapped to the table <B>TILDA.JOB_DETAIL</B>.
-@see tilda.data._Tilda.TILDA__JOB_DETAIL
-*/
-public class Job_Detail_Json extends tilda.data._Tilda.TILDA__JOB_DETAIL_Json
- {
-   protected static final Logger LOG = LogManager.getLogger(Job_Detail_Json.class.getName());
+import tilda.db.*;
 
-   protected Job_Detail_Json() { }
+/**
+This is the application class <B>Data_JobPart</B> mapped to the table <B>TILDA.JobPart</B>.
+@see tilda.data._Tilda.TILDA__JOBPART
+*/
+public class JobPart_Factory extends tilda.data._Tilda.TILDA__JOBPART_Factory
+ {
+   protected static final Logger LOG = LogManager.getLogger(JobPart_Factory.class.getName());
+
+   protected JobPart_Factory() { }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Implement your customizations, if any, below.
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+   public static void init(Connection C) throws Exception
+    {
+      // Add logic to initialize your object, for example, caching some values, or validating some things.
+    }
 
  }

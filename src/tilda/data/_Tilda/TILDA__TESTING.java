@@ -578,7 +578,7 @@ This is the setter for:<BR>
    protected void setRefnum(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _refnum)
+       if (__Init == InitMode.CREATE || v != _refnum)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing.refnum' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -2350,7 +2350,7 @@ This is the setter for:<BR>
    public void setA1(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a1)
+       if (__Init == InitMode.CREATE || v != _a1)
         {
           __Changes.or(TILDA__TESTING_Factory.COLS.A1._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.A1._Mask);
@@ -2492,7 +2492,7 @@ This is the setter for:<BR>
    public void setA2(char v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a2)
+       if (__Init == InitMode.CREATE || v != _a2)
         {
           __Changes.or(TILDA__TESTING_Factory.COLS.A2._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.A2._Mask);
@@ -3001,7 +3001,7 @@ This is the setter for:<BR>
    public void setA3(boolean v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a3)
+       if (__Init == InitMode.CREATE || v != _a3)
         {
           __Changes.or(TILDA__TESTING_Factory.COLS.A3._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.A3._Mask);
@@ -3331,7 +3331,7 @@ This is the setter for:<BR>
    public void setA4(double v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a4)
+       if (__Init == InitMode.CREATE || v != _a4)
         {
           __Changes.or(TILDA__TESTING_Factory.COLS.A4._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.A4._Mask);
@@ -3661,7 +3661,7 @@ This is the setter for:<BR>
    public void setA5(float v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a5)
+       if (__Init == InitMode.CREATE || v != _a5)
         {
           __Changes.or(TILDA__TESTING_Factory.COLS.A5._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.A5._Mask);
@@ -3991,7 +3991,7 @@ This is the setter for:<BR>
    public void setA6(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a6)
+       if (__Init == InitMode.CREATE || v != _a6)
         {
           __Changes.or(TILDA__TESTING_Factory.COLS.A6._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.A6._Mask);
@@ -4871,7 +4871,7 @@ This is the setter for:<BR>
    public void setA7(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a7)
+       if (__Init == InitMode.CREATE || v != _a7)
         {
           __Changes.or(TILDA__TESTING_Factory.COLS.A7._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.A7._Mask);

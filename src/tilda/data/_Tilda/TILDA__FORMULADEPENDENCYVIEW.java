@@ -218,7 +218,7 @@ This is the setter for:<BR>
     void setFormulaRefnum(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _formulaRefnum)
+       if (__Init == InitMode.CREATE || v != _formulaRefnum)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.FormulaDependencyView.formulaRefnum' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -641,7 +641,7 @@ This is the setter for:<BR>
     void setDependencyRefnum(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _dependencyRefnum)
+       if (__Init == InitMode.CREATE || v != _dependencyRefnum)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.FormulaDependencyView.dependencyRefnum' that is invariant, or part of a read-only or pre-existing WORM object.");

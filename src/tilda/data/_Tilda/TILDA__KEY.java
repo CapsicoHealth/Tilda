@@ -233,7 +233,7 @@ This is the setter for:<BR>
    protected void setRefnum(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _refnum)
+       if (__Init == InitMode.CREATE || v != _refnum)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Key.refnum' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -414,7 +414,7 @@ This is the setter for:<BR>
    public void setMax(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _max)
+       if (__Init == InitMode.CREATE || v != _max)
         {
           __Changes.or(TILDA__KEY_Factory.COLS.MAX._Mask);
           __Nulls.andNot(TILDA__KEY_Factory.COLS.MAX._Mask);
@@ -508,7 +508,7 @@ This is the setter for:<BR>
    public void setCount(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _count)
+       if (__Init == InitMode.CREATE || v != _count)
         {
           __Changes.or(TILDA__KEY_Factory.COLS.COUNT._Mask);
           __Nulls.andNot(TILDA__KEY_Factory.COLS.COUNT._Mask);

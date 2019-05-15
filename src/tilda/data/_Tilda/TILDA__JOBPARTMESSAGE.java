@@ -24,127 +24,121 @@ import org.apache.logging.log4j.Logger;
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
-<TABLE id="DependencyDDLDummyTable_DIV" class="tables">
-<SCRIPT>registerStickyHeader("DependencyDDLDummyTable_DIV");</SCRIPT>
-<TR valign="top"><TD><H2>DependencyDDLDummyTable&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 70%;"><SPAN class="BackToDetails"><A href="#DependencyDDLDummyTable_CNT">details</A>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><A href="#">top</A></SUP></H2></TD><TD align="right"></TD></TR>
+<TABLE id="JobPartMessage_DIV" class="tables">
+<SCRIPT>registerStickyHeader("JobPartMessage_DIV");</SCRIPT>
+<TR valign="top"><TD><H2>JobPartMessage&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 70%;"><SPAN class="BackToDetails"><A href="#JobPartMessage_CNT">details</A>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><A href="#">top</A></SUP></H2></TD><TD align="right"></TD></TR>
 </TABLE>
-<DIV id="DependencyDDLDummyTable_CNT" class="content">
-The Table TILDA.DependencyDDLDummyTable:<UL>
-<LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>DependencyDDLDummyTable_Factory</B>, <B>DependencyDDLDummyTable_Data</B> in the package <B>tilda.data</B>.
+<DIV id="JobPartMessage_CNT" class="content">
+The Table TILDA.JobPartMessage:<UL>
+<LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>JobPartMessage_Factory</B>, <B>JobPartMessage_Data</B> in the package <B>tilda.data</B>.
 <LI>Is configured for normal <B>read/write</B> access.</LI>
 <LI>Is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
-<LI>Has the following identities:<UL><LI>Unique Index: srcSchemaName, srcTVName, seq</LI>
-<LI>Unique Index: srcSchemaName, srcTVName, depSchemaName, depViewName</LI>
+<LI>Defines foreign key(s) to <A href="TILDA___Docs.TILDA.html#Job_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>Job</A>, <A href="TILDA___Docs.TILDA.html#JobPart_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>JobPart</A> </LI>
+<LI>Has the following identity:<UL><LI>Primary Key: refnum</LI>
 </UL></LI>
 </UL>
-<B>Description</B>: A dummy Table created to generate JavaCode to handle results from the Tilda.getDependenciesDDLs() function output.<BR>
+<B>Description</B>: Job part message details<BR>
 <BR>
 This Table contains the following columns:<BLOCKQUOTE>
- <TABLE id="DependencyDDLDummyTable_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
+ <TABLE id="JobPartMessage_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
    <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
-<TD align="right"><B id='DependencyDDLDummyTable-srcSchemaName_DIV' class='columns'>srcSchemaName</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;/&nbsp;varchar(100)&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPartMessage-refnum_DIV' class='columns'>refnum</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The result value.</TD>
+<TD>The primary key for this record</TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>2&nbsp;&nbsp;</TD>
-<TD align="right"><B id='DependencyDDLDummyTable-srcTVName_DIV' class='columns'>srcTVName</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;/&nbsp;varchar(100)&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPartMessage-jobRefnum_DIV' class='columns'>jobRefnum</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The result value.</TD>
+<TD>Parent Job Refnum<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Job_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>Job</A>: refnum</TD></TR>
+</TABLE>
+</TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>3&nbsp;&nbsp;</TD>
-<TD align="right"><B id='DependencyDDLDummyTable-seq_DIV' class='columns'>seq</B>&nbsp;&nbsp;</TD>
-<TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPartMessage-jobPartRefnum_DIV' class='columns'>jobPartRefnum</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The blah</TD>
+<TD>Parent Job Part Refnum<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#JobPart_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>JobPart</A>: refnum</TD></TR>
+</TABLE>
+</TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>4&nbsp;&nbsp;</TD>
-<TD align="right"><B id='DependencyDDLDummyTable-depSchemaName_DIV' class='columns'>depSchemaName</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;/&nbsp;varchar(100)&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPartMessage-notify_DIV' class='columns'>notify</B>&nbsp;&nbsp;</TD>
+<TD>boolean&nbsp;/&nbsp;boolean&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The result value.</TD>
+<TD>Notification flag</TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>5&nbsp;&nbsp;</TD>
-<TD align="right"><B id='DependencyDDLDummyTable-depViewName_DIV' class='columns'>depViewName</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;/&nbsp;varchar(100)&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The result value.</TD>
-</TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>6&nbsp;&nbsp;</TD>
-<TD align="right"><B id='DependencyDDLDummyTable-restoreScript_DIV' class='columns'>restoreScript</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPartMessage-msg_DIV' class='columns'>msg</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;text&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The result value.</TD>
+<TD>Message details</TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>6&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPartMessage-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The timestamp for when the record was created. (TILDA.JobPartMessage)</TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>7&nbsp;&nbsp;</TD>
-<TD align="right"><B id='DependencyDDLDummyTable-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPartMessage-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The timestamp for when the record was created. (TILDA.DependencyDDLDummyTable)</TD>
+<TD>The timestamp for when the record was last updated. (TILDA.JobPartMessage)</TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>8&nbsp;&nbsp;</TD>
-<TD align="right"><B id='DependencyDDLDummyTable-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
-<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The timestamp for when the record was last updated. (TILDA.DependencyDDLDummyTable)</TD>
-</TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>9&nbsp;&nbsp;</TD>
-<TD align="right"><B id='DependencyDDLDummyTable-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobPartMessage-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The timestamp for when the record was deleted. (TILDA.DependencyDDLDummyTable)</TD>
+<TD>The timestamp for when the record was deleted. (TILDA.JobPartMessage)</TD>
 </TR>
 </TABLE></BLOCKQUOTE>
 </DIV>
 
 */
 @SuppressWarnings({ "unused" })
-public abstract class TILDA__DEPENDENCYDDLDUMMYTABLE implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
+public abstract class TILDA__JOBPARTMESSAGE implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
-   protected static final Logger LOG = LogManager.getLogger(TILDA__DEPENDENCYDDLDUMMYTABLE.class.getName());
+   protected static final Logger LOG = LogManager.getLogger(TILDA__JOBPARTMESSAGE.class.getName());
 
-   public static final Class<TILDA__DEPENDENCYDDLDUMMYTABLE_Factory> FACTORY_CLASS= TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.class;
-   public static final String TABLENAME = TextUtil.Print("TILDA.DependencyDDLDummyTable", "");
+   public static final Class<TILDA__JOBPARTMESSAGE_Factory> FACTORY_CLASS= TILDA__JOBPARTMESSAGE_Factory.class;
+   public static final String TABLENAME = TextUtil.Print("TILDA.JobPartMessage", "");
 
-   protected TILDA__DEPENDENCYDDLDUMMYTABLE() { }
+   protected TILDA__JOBPARTMESSAGE() { }
 
    InitMode __Init        = null;
    private BitSet   __Nulls       = new BitSet(64);
@@ -175,100 +169,506 @@ public abstract class TILDA__DEPENDENCYDDLDUMMYTABLE implements tilda.interfaces
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.srcSchemaName -> TILDA.DependencyDDLDummyTable."srcSchemaName"
+//   Field tilda.data.TILDA.JobPartMessage.refnum -> TILDA.JobPartMessage."refnum"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.srcSchemaName of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.srcSchemaName of type varchar(100)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPartMessage.refnum of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPartMessage.refnum of type bigint</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>100</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The result value.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _srcSchemaName;
-   protected String __Saved_srcSchemaName;
+   long _refnum= SystemValues.EVIL_VALUE;
+   protected long __Saved_refnum;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.srcSchemaName -> TILDA.DependencyDDLDummyTable."srcSchemaName"
+//   Field tilda.data.TILDA.JobPartMessage.refnum -> TILDA.JobPartMessage."refnum"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.srcSchemaName of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.srcSchemaName of type varchar(100)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPartMessage.refnum of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPartMessage.refnum of type bigint</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>100</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The result value.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final String getSrcSchemaName()
-      { return _srcSchemaName; }
+   public final long getRefnum()
+      { return _refnum; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.srcSchemaName -> TILDA.DependencyDDLDummyTable."srcSchemaName"
+//   Field tilda.data.TILDA.JobPartMessage.refnum -> TILDA.JobPartMessage."refnum"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.srcSchemaName of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.srcSchemaName of type varchar(100)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPartMessage.refnum of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPartMessage.refnum of type bigint</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>100</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The result value.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   protected void setRefnum(long v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (__Init == InitMode.CREATE || v != _refnum)
+        {
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+           throw new Exception("Cannot set field 'tilda.data.TILDA.JobPartMessage.refnum' that is invariant, or part of a read-only or pre-existing WORM object.");
+          __Changes.or(TILDA__JOBPARTMESSAGE_Factory.COLS.REFNUM._Mask);
+          __Nulls.andNot(TILDA__JOBPARTMESSAGE_Factory.COLS.REFNUM._Mask);
+       _refnum = v;
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JobPartMessage.jobRefnum -> TILDA.JobPartMessage."jobRefnum"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPartMessage.jobRefnum of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPartMessage.jobRefnum of type bigint</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Parent Job Refnum</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setSrcSchemaName(String v) throws Exception
+   long _jobRefnum= SystemValues.EVIL_VALUE;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JobPartMessage.jobRefnum -> TILDA.JobPartMessage."jobRefnum"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPartMessage.jobRefnum of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPartMessage.jobRefnum of type bigint</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Parent Job Refnum</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final long getJobRefnum()
+      { return _jobRefnum; }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JobPartMessage.jobRefnum -> TILDA.JobPartMessage."jobRefnum"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPartMessage.jobRefnum of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPartMessage.jobRefnum of type bigint</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Parent Job Refnum</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public void setJobRefnum(long v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (__Init == InitMode.CREATE || v != _jobRefnum)
+        {
+          __Changes.or(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBREFNUM._Mask);
+          __Nulls.andNot(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBREFNUM._Mask);
+       _jobRefnum = v;
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JobPartMessage.jobRefnum -> TILDA.JobPartMessage."jobRefnum"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the hasChanged for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPartMessage.jobRefnum of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPartMessage.jobRefnum of type bigint</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Parent Job Refnum</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public boolean hasChangedJobRefnum()
+     { return __Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBREFNUM._Mask); }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JobPartMessage.jobPartRefnum -> TILDA.JobPartMessage."jobPartRefnum"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPartMessage.jobPartRefnum of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPartMessage.jobPartRefnum of type bigint</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Parent Job Part Refnum</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   long _jobPartRefnum= SystemValues.EVIL_VALUE;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JobPartMessage.jobPartRefnum -> TILDA.JobPartMessage."jobPartRefnum"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPartMessage.jobPartRefnum of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPartMessage.jobPartRefnum of type bigint</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Parent Job Part Refnum</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final long getJobPartRefnum()
+      { return _jobPartRefnum; }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JobPartMessage.jobPartRefnum -> TILDA.JobPartMessage."jobPartRefnum"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the isNull for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPartMessage.jobPartRefnum of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPartMessage.jobPartRefnum of type bigint</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Parent Job Part Refnum</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final boolean isNullJobPartRefnum()
+     { return __Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask); }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JobPartMessage.jobPartRefnum -> TILDA.JobPartMessage."jobPartRefnum"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPartMessage.jobPartRefnum of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPartMessage.jobPartRefnum of type bigint</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Parent Job Part Refnum</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public void setJobPartRefnum(long v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (__Init == InitMode.CREATE || v != _jobPartRefnum)
+        {
+          __Changes.or(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask);
+          __Nulls.andNot(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask);
+       _jobPartRefnum = v;
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JobPartMessage.jobPartRefnum -> TILDA.JobPartMessage."jobPartRefnum"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the null setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPartMessage.jobPartRefnum of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPartMessage.jobPartRefnum of type bigint</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Parent Job Part Refnum</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public void setNullJobPartRefnum()
+     {
+       long T0 = System.nanoTime();
+       if (__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask) == true) // already NULL
+        return;
+       __Changes.or(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask);
+       __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask);
+       _jobPartRefnum=0L;
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JobPartMessage.jobPartRefnum -> TILDA.JobPartMessage."jobPartRefnum"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the hasChanged for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPartMessage.jobPartRefnum of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPartMessage.jobPartRefnum of type bigint</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Parent Job Part Refnum</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public boolean hasChangedJobPartRefnum()
+     { return __Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask); }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JobPartMessage.notify -> TILDA.JobPartMessage."notify"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPartMessage.notify of type boolean</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPartMessage.notify of type boolean</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Notification flag</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   boolean _notify;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JobPartMessage.notify -> TILDA.JobPartMessage."notify"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPartMessage.notify of type boolean</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPartMessage.notify of type boolean</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Notification flag</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final boolean getNotify()
+      { return _notify; }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JobPartMessage.notify -> TILDA.JobPartMessage."notify"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPartMessage.notify of type boolean</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPartMessage.notify of type boolean</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Notification flag</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public void setNotify(boolean v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (__Init == InitMode.CREATE || v != _notify)
+        {
+          __Changes.or(TILDA__JOBPARTMESSAGE_Factory.COLS.NOTIFY._Mask);
+          __Nulls.andNot(TILDA__JOBPARTMESSAGE_Factory.COLS.NOTIFY._Mask);
+       _notify = v;
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JobPartMessage.notify -> TILDA.JobPartMessage."notify"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the hasChanged for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPartMessage.notify of type boolean</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPartMessage.notify of type boolean</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Notification flag</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public boolean hasChangedNotify()
+     { return __Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.NOTIFY._Mask); }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JobPartMessage.msg -> TILDA.JobPartMessage."msg"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPartMessage.msg of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPartMessage.msg of type text</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>8192</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Message details</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   String _msg;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JobPartMessage.msg -> TILDA.JobPartMessage."msg"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPartMessage.msg of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPartMessage.msg of type text</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>8192</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Message details</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final String getMsg()
+      { return _msg; }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JobPartMessage.msg -> TILDA.JobPartMessage."msg"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPartMessage.msg of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPartMessage.msg of type text</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>8192</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Message details</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public void setMsg(String v) throws Exception
      {
        long T0 = System.nanoTime();
        if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.DependencyDDLDummyTable.srcSchemaName to null: it's not nullable.");
-       else if (v.length() > 100)
-        throw new Exception("Cannot set tilda.data.TILDA.DependencyDDLDummyTable.srcSchemaName: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 100.");
-       else if (v.equals(_srcSchemaName) == false)
+        throw new Exception("Cannot set tilda.data.TILDA.JobPartMessage.msg to null: it's not nullable.");
+       else if (v.length() > 8192)
+        throw new Exception("Cannot set tilda.data.TILDA.JobPartMessage.msg: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 8192.");
+       else if (v.equals(_msg) == false)
         {
-          __Changes.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SRCSCHEMANAME._Mask);
-          __Nulls.andNot(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SRCSCHEMANAME._Mask);
-       _srcSchemaName = v;
+          __Changes.or(TILDA__JOBPARTMESSAGE_Factory.COLS.MSG._Mask);
+          __Nulls.andNot(TILDA__JOBPARTMESSAGE_Factory.COLS.MSG._Mask);
+       _msg = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.srcSchemaName -> TILDA.DependencyDDLDummyTable."srcSchemaName"
+//   Field tilda.data.TILDA.JobPartMessage.msg -> TILDA.JobPartMessage."msg"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.srcSchemaName of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.srcSchemaName of type varchar(100)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPartMessage.msg of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPartMessage.msg of type text</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>100</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>8192</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The result value.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Message details</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public boolean hasChangedSrcSchemaName()
-     { return __Changes.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SRCSCHEMANAME._Mask); }
+   public boolean hasChangedMsg()
+     { return __Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.MSG._Mask); }
 
 
 
@@ -278,522 +678,16 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.srcTVName -> TILDA.DependencyDDLDummyTable."srcTVName"
+//   Field tilda.data.TILDA.JobPartMessage.created -> TILDA.JobPartMessage."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.srcTVName of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.srcTVName of type varchar(100)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>100</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The result value.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   String _srcTVName;
-   protected String __Saved_srcTVName;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.srcTVName -> TILDA.DependencyDDLDummyTable."srcTVName"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.srcTVName of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.srcTVName of type varchar(100)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>100</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The result value.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final String getSrcTVName()
-      { return _srcTVName; }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.srcTVName -> TILDA.DependencyDDLDummyTable."srcTVName"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.srcTVName of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.srcTVName of type varchar(100)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>100</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The result value.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setSrcTVName(String v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.DependencyDDLDummyTable.srcTVName to null: it's not nullable.");
-       else if (v.length() > 100)
-        throw new Exception("Cannot set tilda.data.TILDA.DependencyDDLDummyTable.srcTVName: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 100.");
-       else if (v.equals(_srcTVName) == false)
-        {
-          __Changes.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SRCTVNAME._Mask);
-          __Nulls.andNot(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SRCTVNAME._Mask);
-       _srcTVName = v;
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.srcTVName -> TILDA.DependencyDDLDummyTable."srcTVName"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the hasChanged for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.srcTVName of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.srcTVName of type varchar(100)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>100</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The result value.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public boolean hasChangedSrcTVName()
-     { return __Changes.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SRCTVNAME._Mask); }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.seq -> TILDA.DependencyDDLDummyTable."seq"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.seq of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.seq of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPartMessage.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPartMessage.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   int _seq= SystemValues.EVIL_VALUE;
-   protected int __Saved_seq;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.seq -> TILDA.DependencyDDLDummyTable."seq"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.seq of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.seq of type integer</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final int getSeq()
-      { return _seq; }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.seq -> TILDA.DependencyDDLDummyTable."seq"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.seq of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.seq of type integer</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setSeq(int v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _seq)
-        {
-          __Changes.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SEQ._Mask);
-          __Nulls.andNot(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SEQ._Mask);
-       _seq = v;
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.seq -> TILDA.DependencyDDLDummyTable."seq"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the hasChanged for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.seq of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.seq of type integer</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public boolean hasChangedSeq()
-     { return __Changes.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SEQ._Mask); }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.depSchemaName -> TILDA.DependencyDDLDummyTable."depSchemaName"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.depSchemaName of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.depSchemaName of type varchar(100)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>100</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The result value.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   String _depSchemaName;
-   protected String __Saved_depSchemaName;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.depSchemaName -> TILDA.DependencyDDLDummyTable."depSchemaName"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.depSchemaName of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.depSchemaName of type varchar(100)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>100</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The result value.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final String getDepSchemaName()
-      { return _depSchemaName; }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.depSchemaName -> TILDA.DependencyDDLDummyTable."depSchemaName"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.depSchemaName of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.depSchemaName of type varchar(100)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>100</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The result value.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setDepSchemaName(String v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.DependencyDDLDummyTable.depSchemaName to null: it's not nullable.");
-       else if (v.length() > 100)
-        throw new Exception("Cannot set tilda.data.TILDA.DependencyDDLDummyTable.depSchemaName: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 100.");
-       else if (v.equals(_depSchemaName) == false)
-        {
-          __Changes.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DEPSCHEMANAME._Mask);
-          __Nulls.andNot(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DEPSCHEMANAME._Mask);
-       _depSchemaName = v;
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.depSchemaName -> TILDA.DependencyDDLDummyTable."depSchemaName"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the hasChanged for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.depSchemaName of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.depSchemaName of type varchar(100)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>100</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The result value.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public boolean hasChangedDepSchemaName()
-     { return __Changes.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DEPSCHEMANAME._Mask); }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.depViewName -> TILDA.DependencyDDLDummyTable."depViewName"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.depViewName of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.depViewName of type varchar(100)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>100</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The result value.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   String _depViewName;
-   protected String __Saved_depViewName;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.depViewName -> TILDA.DependencyDDLDummyTable."depViewName"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.depViewName of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.depViewName of type varchar(100)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>100</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The result value.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final String getDepViewName()
-      { return _depViewName; }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.depViewName -> TILDA.DependencyDDLDummyTable."depViewName"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.depViewName of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.depViewName of type varchar(100)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>100</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The result value.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setDepViewName(String v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.DependencyDDLDummyTable.depViewName to null: it's not nullable.");
-       else if (v.length() > 100)
-        throw new Exception("Cannot set tilda.data.TILDA.DependencyDDLDummyTable.depViewName: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 100.");
-       else if (v.equals(_depViewName) == false)
-        {
-          __Changes.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DEPVIEWNAME._Mask);
-          __Nulls.andNot(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DEPVIEWNAME._Mask);
-       _depViewName = v;
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.depViewName -> TILDA.DependencyDDLDummyTable."depViewName"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the hasChanged for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.depViewName of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.depViewName of type varchar(100)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>100</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The result value.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public boolean hasChangedDepViewName()
-     { return __Changes.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DEPVIEWNAME._Mask); }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.restoreScript -> TILDA.DependencyDDLDummyTable."restoreScript"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.restoreScript of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.restoreScript of type text</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>30000</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The result value.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   String _restoreScript;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.restoreScript -> TILDA.DependencyDDLDummyTable."restoreScript"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.restoreScript of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.restoreScript of type text</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>30000</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The result value.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final String getRestoreScript()
-      { return _restoreScript; }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.restoreScript -> TILDA.DependencyDDLDummyTable."restoreScript"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.restoreScript of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.restoreScript of type text</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>30000</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The result value.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setRestoreScript(String v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.DependencyDDLDummyTable.restoreScript to null: it's not nullable.");
-       else if (v.length() > 30000)
-        throw new Exception("Cannot set tilda.data.TILDA.DependencyDDLDummyTable.restoreScript: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 30000.");
-       else if (v.equals(_restoreScript) == false)
-        {
-          __Changes.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.RESTORESCRIPT._Mask);
-          __Nulls.andNot(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.RESTORESCRIPT._Mask);
-       _restoreScript = v;
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.restoreScript -> TILDA.DependencyDDLDummyTable."restoreScript"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the hasChanged for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.restoreScript of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.restoreScript of type text</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>30000</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The result value.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public boolean hasChangedRestoreScript()
-     { return __Changes.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.RESTORESCRIPT._Mask); }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.created -> TILDA.DependencyDDLDummyTable."created"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.created of type timestamptz</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.DependencyDDLDummyTable)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.JobPartMessage)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -810,16 +704,16 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.created -> TILDA.DependencyDDLDummyTable."created"
+//   Field tilda.data.TILDA.JobPartMessage.created -> TILDA.JobPartMessage."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPartMessage.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPartMessage.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.DependencyDDLDummyTable)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.JobPartMessage)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -837,16 +731,16 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.created -> TILDA.DependencyDDLDummyTable."created"
+//   Field tilda.data.TILDA.JobPartMessage.created -> TILDA.JobPartMessage."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPartMessage.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPartMessage.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.DependencyDDLDummyTable)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.JobPartMessage)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -863,13 +757,13 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.DependencyDDLDummyTable.created to null: it's not nullable.");
+        throw new Exception("Cannot set tilda.data.TILDA.JobPartMessage.created to null: it's not nullable.");
        else if (v.equals(_created) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.DependencyDDLDummyTable.created' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.CREATED._Mask);
-          __Nulls.andNot(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.CREATED._Mask);
+           throw new Exception("Cannot set field 'tilda.data.TILDA.JobPartMessage.created' that is invariant, or part of a read-only or pre-existing WORM object.");
+          __Changes.or(TILDA__JOBPARTMESSAGE_Factory.COLS.CREATED._Mask);
+          __Nulls.andNot(TILDA__JOBPARTMESSAGE_Factory.COLS.CREATED._Mask);
        _created = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -877,16 +771,16 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.created -> TILDA.DependencyDDLDummyTable."created"
+//   Field tilda.data.TILDA.JobPartMessage.created -> TILDA.JobPartMessage."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the NOW setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPartMessage.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPartMessage.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.DependencyDDLDummyTable)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.JobPartMessage)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -906,16 +800,16 @@ This is the NOW setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.created -> TILDA.DependencyDDLDummyTable."created"
+//   Field tilda.data.TILDA.JobPartMessage.created -> TILDA.JobPartMessage."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the UNDEFINED setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPartMessage.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPartMessage.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.DependencyDDLDummyTable)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.JobPartMessage)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -935,16 +829,16 @@ This is the UNDEFINED setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.created -> TILDA.DependencyDDLDummyTable."created"
+//   Field tilda.data.TILDA.JobPartMessage.created -> TILDA.JobPartMessage."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPartMessage.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPartMessage.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.DependencyDDLDummyTable)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.JobPartMessage)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -964,16 +858,16 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.created -> TILDA.DependencyDDLDummyTable."created"
+//   Field tilda.data.TILDA.JobPartMessage.created -> TILDA.JobPartMessage."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPartMessage.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPartMessage.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.DependencyDDLDummyTable)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.JobPartMessage)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -987,7 +881,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedCreated()
-     { return __Changes.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.CREATED._Mask); }
+     { return __Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.CREATED._Mask); }
 
 
 
@@ -997,16 +891,16 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.lastUpdated -> TILDA.DependencyDDLDummyTable."lastUpdated"
+//   Field tilda.data.TILDA.JobPartMessage.lastUpdated -> TILDA.JobPartMessage."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPartMessage.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPartMessage.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.DependencyDDLDummyTable)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.JobPartMessage)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1023,16 +917,16 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.lastUpdated -> TILDA.DependencyDDLDummyTable."lastUpdated"
+//   Field tilda.data.TILDA.JobPartMessage.lastUpdated -> TILDA.JobPartMessage."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPartMessage.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPartMessage.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.DependencyDDLDummyTable)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.JobPartMessage)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1050,16 +944,16 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.lastUpdated -> TILDA.DependencyDDLDummyTable."lastUpdated"
+//   Field tilda.data.TILDA.JobPartMessage.lastUpdated -> TILDA.JobPartMessage."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPartMessage.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPartMessage.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.DependencyDDLDummyTable)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.JobPartMessage)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1076,11 +970,11 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.DependencyDDLDummyTable.lastUpdated to null: it's not nullable.");
+        throw new Exception("Cannot set tilda.data.TILDA.JobPartMessage.lastUpdated to null: it's not nullable.");
        else if (v.equals(_lastUpdated) == false)
         {
-          __Changes.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.LASTUPDATED._Mask);
-          __Nulls.andNot(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.LASTUPDATED._Mask);
+          __Changes.or(TILDA__JOBPARTMESSAGE_Factory.COLS.LASTUPDATED._Mask);
+          __Nulls.andNot(TILDA__JOBPARTMESSAGE_Factory.COLS.LASTUPDATED._Mask);
        _lastUpdated = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1088,16 +982,16 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.lastUpdated -> TILDA.DependencyDDLDummyTable."lastUpdated"
+//   Field tilda.data.TILDA.JobPartMessage.lastUpdated -> TILDA.JobPartMessage."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the NOW setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPartMessage.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPartMessage.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.DependencyDDLDummyTable)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.JobPartMessage)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1117,16 +1011,16 @@ This is the NOW setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.lastUpdated -> TILDA.DependencyDDLDummyTable."lastUpdated"
+//   Field tilda.data.TILDA.JobPartMessage.lastUpdated -> TILDA.JobPartMessage."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the UNDEFINED setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPartMessage.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPartMessage.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.DependencyDDLDummyTable)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.JobPartMessage)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1146,16 +1040,16 @@ This is the UNDEFINED setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.lastUpdated -> TILDA.DependencyDDLDummyTable."lastUpdated"
+//   Field tilda.data.TILDA.JobPartMessage.lastUpdated -> TILDA.JobPartMessage."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPartMessage.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPartMessage.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.DependencyDDLDummyTable)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.JobPartMessage)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1175,16 +1069,16 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.lastUpdated -> TILDA.DependencyDDLDummyTable."lastUpdated"
+//   Field tilda.data.TILDA.JobPartMessage.lastUpdated -> TILDA.JobPartMessage."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPartMessage.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPartMessage.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.DependencyDDLDummyTable)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.JobPartMessage)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1198,7 +1092,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedLastUpdated()
-     { return __Changes.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.LASTUPDATED._Mask); }
+     { return __Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.LASTUPDATED._Mask); }
 
 
 
@@ -1208,16 +1102,16 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.deleted -> TILDA.DependencyDDLDummyTable."deleted"
+//   Field tilda.data.TILDA.JobPartMessage.deleted -> TILDA.JobPartMessage."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPartMessage.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPartMessage.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.DependencyDDLDummyTable)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.JobPartMessage)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1227,16 +1121,16 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.deleted -> TILDA.DependencyDDLDummyTable."deleted"
+//   Field tilda.data.TILDA.JobPartMessage.deleted -> TILDA.JobPartMessage."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPartMessage.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPartMessage.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.DependencyDDLDummyTable)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.JobPartMessage)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1247,36 +1141,36 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.deleted -> TILDA.DependencyDDLDummyTable."deleted"
+//   Field tilda.data.TILDA.JobPartMessage.deleted -> TILDA.JobPartMessage."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPartMessage.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPartMessage.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.DependencyDDLDummyTable)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.JobPartMessage)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
    public final boolean isNullDeleted()
-     { return __Nulls.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DELETED._Mask); }
+     { return __Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.deleted -> TILDA.DependencyDDLDummyTable."deleted"
+//   Field tilda.data.TILDA.JobPartMessage.deleted -> TILDA.JobPartMessage."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPartMessage.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPartMessage.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.DependencyDDLDummyTable)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.JobPartMessage)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1291,8 +1185,8 @@ This is the setter for:<BR>
         }
        else if (v.equals(_deleted) == false)
         {
-          __Changes.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DELETED._Mask);
-          __Nulls.andNot(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DELETED._Mask);
+          __Changes.or(TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED._Mask);
+          __Nulls.andNot(TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED._Mask);
        _deleted = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1300,16 +1194,16 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.deleted -> TILDA.DependencyDDLDummyTable."deleted"
+//   Field tilda.data.TILDA.JobPartMessage.deleted -> TILDA.JobPartMessage."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPartMessage.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPartMessage.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.DependencyDDLDummyTable)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.JobPartMessage)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1318,26 +1212,26 @@ This is the null setter for:<BR>
    public final void setNullDeleted()
      {
        long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DELETED._Mask) == true) // already NULL
+       if (__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DELETED._Mask);
-       __Nulls.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DELETED._Mask);
+       __Changes.or(TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED._Mask);
+       __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED._Mask);
        _deleted=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.deleted -> TILDA.DependencyDDLDummyTable."deleted"
+//   Field tilda.data.TILDA.JobPartMessage.deleted -> TILDA.JobPartMessage."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the NOW setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPartMessage.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPartMessage.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.DependencyDDLDummyTable)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.JobPartMessage)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1350,16 +1244,16 @@ This is the NOW setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.deleted -> TILDA.DependencyDDLDummyTable."deleted"
+//   Field tilda.data.TILDA.JobPartMessage.deleted -> TILDA.JobPartMessage."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the UNDEFINED setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPartMessage.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPartMessage.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.DependencyDDLDummyTable)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.JobPartMessage)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1372,16 +1266,16 @@ This is the UNDEFINED setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.deleted -> TILDA.DependencyDDLDummyTable."deleted"
+//   Field tilda.data.TILDA.JobPartMessage.deleted -> TILDA.JobPartMessage."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPartMessage.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPartMessage.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.DependencyDDLDummyTable)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.JobPartMessage)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1394,23 +1288,23 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.DependencyDDLDummyTable.deleted -> TILDA.DependencyDDLDummyTable."deleted"
+//   Field tilda.data.TILDA.JobPartMessage.deleted -> TILDA.JobPartMessage."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobPartMessage.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobPartMessage.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.DependencyDDLDummyTable)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.JobPartMessage)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
    public boolean hasChangedDeleted()
-     { return __Changes.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DELETED._Mask); }
+     { return __Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED._Mask); }
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1421,16 +1315,14 @@ This is the hasChanged for:<BR>
  Copies all the field which are not part of the primary key, not are CALCULATED and not invariant, from the 
  current object to the destination. 
 */
-   public void CopyTo(tilda.data._Tilda.TILDA__DEPENDENCYDDLDUMMYTABLE Dst) throws Exception
+   public void CopyTo(tilda.data._Tilda.TILDA__JOBPARTMESSAGE Dst) throws Exception
      {
-       Dst.setSrcSchemaName(_srcSchemaName);
-       Dst.setSrcTVName    (_srcTVName    );
-       Dst.setSeq          (_seq          );
-       Dst.setDepSchemaName(_depSchemaName);
-       Dst.setDepViewName  (_depViewName  );
-       Dst.setRestoreScript(_restoreScript);
+       Dst.setJobRefnum    (_jobRefnum    );
+       if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask) == true) Dst.setNullJobPartRefnum(); else        Dst.setJobPartRefnum(_jobPartRefnum);
+       Dst.setNotify       (_notify       );
+       Dst.setMsg          (_msg          );
        Dst.setLastUpdated  (_lastUpdated  );
-       if (__Changes.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DELETED._Mask) == true) Dst.setNullDeleted      (); else        Dst.setDeleted      (_deleted      );
+       if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED._Mask) == true) Dst.setNullDeleted      (); else        Dst.setDeleted      (_deleted      );
      }
 
 /**
@@ -1449,9 +1341,9 @@ This is the hasChanged for:<BR>
    protected String getTimeStampSignature() throws Exception
      {
        StringBuilder S = new StringBuilder(1024);
-       if (__Changes.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.CREATED._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_created) == true ? "C" : "X");
-       if (__Changes.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.LASTUPDATED._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? "C" : "X");
-       if (__Changes.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DELETED._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_deleted) == true ? "C" : "X");
+       if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.CREATED._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_created) == true ? "C" : "X");
+       if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.LASTUPDATED._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? "C" : "X");
+       if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_deleted) == true ? "C" : "X");
        return S.toString();
      }
    protected String getWriteQuery(Connection C) throws Exception
@@ -1461,25 +1353,24 @@ This is the hasChanged for:<BR>
        if (__Init == InitMode.CREATE)
         {
           StringBuilder V = new StringBuilder(1024);
-          S.append("insert into "); C.getFullTableVar(S, "TILDA", "DependencyDDLDummyTable");
+          S.append("insert into "); C.getFullTableVar(S, "TILDA", "JobPartMessage");
           int Pos = S.length();
-          if (__Changes.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SRCSCHEMANAME._Mask) == true) { TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SRCSCHEMANAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SRCTVNAME._Mask) == true) { TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SRCTVNAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SEQ._Mask) == true) { TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SEQ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DEPSCHEMANAME._Mask) == true) { TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DEPSCHEMANAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DEPVIEWNAME._Mask) == true) { TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DEPVIEWNAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.RESTORESCRIPT._Mask) == true) { TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.RESTORESCRIPT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.REFNUM._Mask) == true) { TILDA__JOBPARTMESSAGE_Factory.COLS.REFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBREFNUM._Mask) == true) { TILDA__JOBPARTMESSAGE_Factory.COLS.JOBREFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask) == true) { TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.NOTIFY._Mask) == true) { TILDA__JOBPARTMESSAGE_Factory.COLS.NOTIFY.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.MSG._Mask) == true) { TILDA__JOBPARTMESSAGE_Factory.COLS.MSG.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
 
-          if (__Changes.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.CREATED._Mask) == true) { TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.CREATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+          if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.CREATED._Mask) == true) { TILDA__JOBPARTMESSAGE_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
+             V.append(__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.CREATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
-          else { TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
-          if (__Changes.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.LASTUPDATED._Mask) == true) { TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.LASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+          else { TILDA__JOBPARTMESSAGE_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
+          if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.LASTUPDATED._Mask) == true) { TILDA__JOBPARTMESSAGE_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S);
+             V.append(__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.LASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
-          else { TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
-          if (__Changes.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DELETED._Mask) == true) { TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DELETED._Mask) == false && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+          else { TILDA__JOBPARTMESSAGE_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
+          if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED._Mask) == true) { TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S);
+             V.append(__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED._Mask) == false && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
 
           S.setCharAt(Pos, '(');
@@ -1490,51 +1381,47 @@ This is the hasChanged for:<BR>
         }
        else // InitMode can be anything else
         {
-          S.append("update "); C.getFullTableVar(S, "TILDA", "DependencyDDLDummyTable"); S.append(" set");
+          S.append("update "); C.getFullTableVar(S, "TILDA", "JobPartMessage"); S.append(" set");
           int Pos = S.length();
-          if (__Changes.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SRCSCHEMANAME._Mask) == true) TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SRCSCHEMANAME.getFullColumnVarForUpdate(C, S);
-          if (__Changes.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SRCTVNAME._Mask) == true) TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SRCTVNAME.getFullColumnVarForUpdate(C, S);
-          if (__Changes.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SEQ._Mask) == true) TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SEQ.getFullColumnVarForUpdate(C, S);
-          if (__Changes.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DEPSCHEMANAME._Mask) == true) TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DEPSCHEMANAME.getFullColumnVarForUpdate(C, S);
-          if (__Changes.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DEPVIEWNAME._Mask) == true) TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DEPVIEWNAME.getFullColumnVarForUpdate(C, S);
-          if (__Changes.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.RESTORESCRIPT._Mask) == true) TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.RESTORESCRIPT.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.REFNUM._Mask) == true) TILDA__JOBPARTMESSAGE_Factory.COLS.REFNUM.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBREFNUM._Mask) == true) TILDA__JOBPARTMESSAGE_Factory.COLS.JOBREFNUM.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask) == true) TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.NOTIFY._Mask) == true) TILDA__JOBPARTMESSAGE_Factory.COLS.NOTIFY.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.MSG._Mask) == true) TILDA__JOBPARTMESSAGE_Factory.COLS.MSG.getFullColumnVarForUpdate(C, S);
 
-          if (__Changes.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.CREATED._Mask) == true)
+          if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.CREATED._Mask) == true)
            {
-             if (__Nulls.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.CREATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_created) == true)
-              { TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
+             if (__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.CREATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_created) == true)
+              { TILDA__JOBPARTMESSAGE_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
-              TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.CREATED.getFullColumnVarForUpdate(C, S);
+              TILDA__JOBPARTMESSAGE_Factory.COLS.CREATED.getFullColumnVarForUpdate(C, S);
            }
 
-          if (__Changes.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.LASTUPDATED._Mask) == true)
+          if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.LASTUPDATED._Mask) == true)
            {
-             if (__Nulls.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.LASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true)
-              { TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
+             if (__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.LASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true)
+              { TILDA__JOBPARTMESSAGE_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
-              TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.LASTUPDATED.getFullColumnVarForUpdate(C, S);
+              TILDA__JOBPARTMESSAGE_Factory.COLS.LASTUPDATED.getFullColumnVarForUpdate(C, S);
            }
           else 
            {
-             TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp());
+             TILDA__JOBPARTMESSAGE_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp());
              setLastUpdatedNow();
            }
 
-          if (__Changes.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DELETED._Mask) == true)
+          if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED._Mask) == true)
            {
-             if (__Nulls.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DELETED._Mask) == false && DateTimeUtil.isNowPlaceholder(_deleted) == true)
-              { TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
+             if (__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED._Mask) == false && DateTimeUtil.isNowPlaceholder(_deleted) == true)
+              { TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
-              TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DELETED.getFullColumnVarForUpdate(C, S);
+              TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED.getFullColumnVarForUpdate(C, S);
            }
 
           switch (__LookupId)
            {
              case 0:
-                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "DependencyDDLDummyTable", "srcSchemaName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "DependencyDDLDummyTable", "srcTVName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "DependencyDDLDummyTable", "seq"); S.append("=?)");
-                break;
-             case 1:
-                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "DependencyDDLDummyTable", "srcSchemaName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "DependencyDDLDummyTable", "srcTVName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "DependencyDDLDummyTable", "depSchemaName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "DependencyDDLDummyTable", "depViewName"); S.append("=?)");
+                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "JobPartMessage", "refnum"); S.append("=?)");
                 break;
              case -77: 
              case -666: if (__Init == InitMode.CREATE) break;
@@ -1546,49 +1433,45 @@ This is the hasChanged for:<BR>
        String Q = S.toString();
        S.setLength(0);
        S = null;
-       QueryDetails.setLastQuery(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.SCHEMA_TABLENAME_LABEL, Q);
-       QueryDetails.logQuery("TILDA.DependencyDDLDummyTable", Q, toString());
+       QueryDetails.setLastQuery(TILDA__JOBPARTMESSAGE_Factory.SCHEMA_TABLENAME_LABEL, Q);
+       QueryDetails.logQuery("TILDA.JobPartMessage", Q, toString());
 
        return Q;
      }
    protected int populatePreparedStatement(Connection C, java.sql.PreparedStatement PS, List<java.sql.Array> AllocatedArrays) throws Exception
      {
        int i = 0;
-       if (__Changes.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SRCSCHEMANAME._Mask) == true) 
+       if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.REFNUM._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SRCSCHEMANAME._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _srcSchemaName);
+          if (__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.REFNUM._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _refnum);
         } 
-       if (__Changes.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SRCTVNAME._Mask) == true) 
+       if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBREFNUM._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SRCTVNAME._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _srcTVName);
+          if (__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBREFNUM._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _jobRefnum);
         } 
-       if (__Changes.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SEQ._Mask) == true) 
+       if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SEQ._Mask) == true) PS.setNull(++i, java.sql.Types.INTEGER); else PS.setInt      (++i, _seq);
+          if (__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _jobPartRefnum);
         } 
-       if (__Changes.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DEPSCHEMANAME._Mask) == true) 
+       if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.NOTIFY._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DEPSCHEMANAME._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _depSchemaName);
+          if (__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.NOTIFY._Mask) == true) PS.setNull(++i, java.sql.Types.BOOLEAN); else PS.setBoolean  (++i, _notify);
         } 
-       if (__Changes.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DEPVIEWNAME._Mask) == true) 
+       if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.MSG._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DEPVIEWNAME._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _depViewName);
+          if (__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.MSG._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _msg);
         } 
-       if (__Changes.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.RESTORESCRIPT._Mask) == true) 
+       if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.CREATED._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.RESTORESCRIPT._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _restoreScript);
+          if (__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.CREATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_created) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_created.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
         } 
-       if (__Changes.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.CREATED._Mask) == true) 
+       if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.LASTUPDATED._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.CREATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_created) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_created.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+          if (__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.LASTUPDATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_lastUpdated) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_lastUpdated.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
         } 
-       if (__Changes.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.LASTUPDATED._Mask) == true) 
+       if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.LASTUPDATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_lastUpdated) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_lastUpdated.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
-        } 
-       if (__Changes.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DELETED._Mask) == true) 
-        { 
-          if (__Nulls.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DELETED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_deleted) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_deleted.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+          if (__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_deleted) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_deleted.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
         } 
        return i;
      }
@@ -1607,15 +1490,7 @@ This is the hasChanged for:<BR>
        switch (__LookupId)
         {
           case 0:
-             __Saved_srcSchemaName = _srcSchemaName;
-             __Saved_srcTVName     = _srcTVName    ;
-             __Saved_seq           = _seq          ;
-             break;
-          case 1:
-             __Saved_srcSchemaName = _srcSchemaName;
-             __Saved_srcTVName     = _srcTVName    ;
-             __Saved_depSchemaName = _depSchemaName;
-             __Saved_depViewName   = _depViewName  ;
+             __Saved_refnum        = _refnum       ;
              break;
           case -666: if (__Init == InitMode.CREATE) break;
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -1629,15 +1504,15 @@ This is the hasChanged for:<BR>
        long T0 = System.nanoTime();
        if (hasChanged() == false)
         {
-          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.DependencyDDLDummyTable has not changed: no writing will occur.");
-          QueryDetails.setLastQuery(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.SCHEMA_TABLENAME_LABEL, "");
+          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.JobPartMessage has not changed: no writing will occur.");
+          QueryDetails.setLastQuery(TILDA__JOBPARTMESSAGE_Factory.SCHEMA_TABLENAME_LABEL, "");
           return true;
         }
 
        if (BeforeWrite(C) == false)
         {
-          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.DependencyDDLDummyTable object's BeforeWrite() failed.");
-          QueryDetails.setLastQuery(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.SCHEMA_TABLENAME_LABEL, "");
+          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.JobPartMessage object's BeforeWrite() failed.");
+          QueryDetails.setLastQuery(TILDA__JOBPARTMESSAGE_Factory.SCHEMA_TABLENAME_LABEL, "");
           return false;
         }
 
@@ -1654,15 +1529,7 @@ This is the hasChanged for:<BR>
           switch (__LookupId)
            {
              case 0:
-               PS.setString   (++i, _srcSchemaName);
-               PS.setString   (++i, _srcTVName    );
-               PS.setInt      (++i, _seq          );
-               break;
-             case 1:
-               PS.setString   (++i, _srcSchemaName);
-               PS.setString   (++i, _srcTVName    );
-               PS.setString   (++i, _depSchemaName);
-               PS.setString   (++i, _depViewName  );
+               PS.setLong     (++i, _refnum       );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -1681,7 +1548,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
+          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__JOBPARTMESSAGE_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
           PS = null;
         }
 
@@ -1711,32 +1578,28 @@ This is the hasChanged for:<BR>
      {
        long T0 = System.nanoTime();
        if (__Init == InitMode.CREATE)
-        throw new Exception("This TILDA.DependencyDDLDummyTable object is being Read() after a Create(), which doesn't make sense.");
+        throw new Exception("This TILDA.JobPartMessage object is being Read() after a Create(), which doesn't make sense.");
        if (__Init == InitMode.READ == true && Force == false && hasChanged()==false)
         {
-          LOG.debug(QueryDetails._LOGGING_HEADER + "This TILDA.DependencyDDLDummyTable object has already been read.");
-          QueryDetails.setLastQuery(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.SCHEMA_TABLENAME_LABEL, "");
+          LOG.debug(QueryDetails._LOGGING_HEADER + "This TILDA.JobPartMessage object has already been read.");
+          QueryDetails.setLastQuery(TILDA__JOBPARTMESSAGE_Factory.SCHEMA_TABLENAME_LABEL, "");
           return true;
         }
        StringBuilder S = new StringBuilder(1024);
           S.append("select ");
-          S.append(" "); C.getFullColumnVar(S, "TILDA", "DependencyDDLDummyTable", "srcSchemaName");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DependencyDDLDummyTable", "srcTVName");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DependencyDDLDummyTable", "seq");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DependencyDDLDummyTable", "depSchemaName");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DependencyDDLDummyTable", "depViewName");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DependencyDDLDummyTable", "restoreScript");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DependencyDDLDummyTable", "created");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DependencyDDLDummyTable", "lastUpdated");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DependencyDDLDummyTable", "deleted");
-          S.append(" from "); C.getFullTableVar(S, "TILDA", "DependencyDDLDummyTable");
+          S.append(" "); C.getFullColumnVar(S, "TILDA", "JobPartMessage", "refnum");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobPartMessage", "jobRefnum");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobPartMessage", "jobPartRefnum");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobPartMessage", "notify");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobPartMessage", "msg");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobPartMessage", "created");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobPartMessage", "lastUpdated");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobPartMessage", "deleted");
+          S.append(" from "); C.getFullTableVar(S, "TILDA", "JobPartMessage");
        switch (__LookupId)
         {
           case 0:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "DependencyDDLDummyTable", "srcSchemaName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "DependencyDDLDummyTable", "srcTVName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "DependencyDDLDummyTable", "seq"); S.append("=?)");
-             break;
-          case 1:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "DependencyDDLDummyTable", "srcSchemaName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "DependencyDDLDummyTable", "srcTVName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "DependencyDDLDummyTable", "depSchemaName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "DependencyDDLDummyTable", "depViewName"); S.append("=?)");
+             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "JobPartMessage", "refnum"); S.append("=?)");
              break;
           case -77: 
           case -666: if (__Init == InitMode.CREATE) break;
@@ -1746,8 +1609,8 @@ This is the hasChanged for:<BR>
        String Q = S.toString();
        S.setLength(0);
        S = null;
-       QueryDetails.setLastQuery(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.SCHEMA_TABLENAME_LABEL, Q);
-       QueryDetails.logQuery("TILDA.DependencyDDLDummyTable", Q, toString());
+       QueryDetails.setLastQuery(TILDA__JOBPARTMESSAGE_Factory.SCHEMA_TABLENAME_LABEL, Q);
+       QueryDetails.logQuery("TILDA.JobPartMessage", Q, toString());
        java.sql.PreparedStatement PS=null;
        java.sql.ResultSet RS=null;
        int count = 0;
@@ -1759,15 +1622,7 @@ This is the hasChanged for:<BR>
           switch (__LookupId)
            {
              case 0:
-               PS.setString   (++i, _srcSchemaName);
-               PS.setString   (++i, _srcTVName    );
-               PS.setInt      (++i, _seq          );
-               break;
-             case 1:
-               PS.setString   (++i, _srcSchemaName);
-               PS.setString   (++i, _srcTVName    );
-               PS.setString   (++i, _depSchemaName);
-               PS.setString   (++i, _depViewName  );
+               PS.setLong     (++i, _refnum       );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -1789,7 +1644,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__JOBPARTMESSAGE_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
     }
@@ -1798,15 +1653,14 @@ This is the hasChanged for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-      __Saved_srcSchemaName = _srcSchemaName = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SRCSCHEMANAME._Mask);
-      __Saved_srcTVName     = _srcTVName     = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SRCTVNAME._Mask    );
-      __Saved_seq           = _seq           =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SEQ._Mask          );
-      __Saved_depSchemaName = _depSchemaName = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DEPSCHEMANAME._Mask);
-      __Saved_depViewName   = _depViewName   = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DEPVIEWNAME._Mask  );
-                              _restoreScript = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.RESTORESCRIPT._Mask);
-                              _created       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.CREATED._Mask      );
-                              _lastUpdated   = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.LASTUPDATED._Mask  );
-                              _deleted       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DELETED._Mask      );
+      __Saved_refnum        = _refnum        =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.REFNUM._Mask       );
+                              _jobRefnum     =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBREFNUM._Mask    );
+                              _jobPartRefnum =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask);
+                              _notify        =                              RS.getBoolean  (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.NOTIFY._Mask       );
+                              _msg           = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.MSG._Mask          );
+                              _created       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.CREATED._Mask      );
+                              _lastUpdated   = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.LASTUPDATED._Mask  );
+                              _deleted       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED._Mask      );
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();
@@ -1819,15 +1673,14 @@ This is the hasChanged for:<BR>
     {
       long T0 = System.nanoTime();
       String Str = 
-                   "srcSchemaName: "                                                                                                        + TextUtil.PrintVariableStr        (getSrcSchemaName())
-               + "; srcTVName: "                                                                                                            + TextUtil.PrintVariableStr        (getSrcTVName    ())
-               + "; seq: "                                                                                                                  +                                   getSeq          () 
-               + "; depSchemaName: "                                                                                                        + TextUtil.PrintVariableStr        (getDepSchemaName())
-               + "; depViewName: "                                                                                                          + TextUtil.PrintVariableStr        (getDepViewName  ())
-               + "; restoreScript: "                                                                                                        + TextUtil.PrintVariableStr        (getRestoreScript())
-               + "; created: "                                                                                                              + DateTimeUtil.printDateTimeForJSON(getCreated      ())
-               + "; lastUpdated: "                                                                                                          + DateTimeUtil.printDateTimeForJSON(getLastUpdated  ())
-               + "; deleted"         + (__Nulls.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DELETED._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDeleted      ()))
+                   "refnum: "                                                                                                      +                                   getRefnum       () 
+               + "; jobRefnum: "                                                                                                   +                                   getJobRefnum    () 
+               + "; jobPartRefnum"   + (__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask) == true ? ": NULL" : ": " +                                   getJobPartRefnum() )
+               + "; notify: "                                                                                                      +                                   getNotify       () 
+               + "; msg: "                                                                                                         + TextUtil.PrintVariableStr        (getMsg          ())
+               + "; created: "                                                                                                     + DateTimeUtil.printDateTimeForJSON(getCreated      ())
+               + "; lastUpdated: "                                                                                                 + DateTimeUtil.printDateTimeForJSON(getLastUpdated  ())
+               + "; deleted"         + (__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDeleted      ()))
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;

@@ -10,14 +10,14 @@ import org.apache.logging.log4j.Logger;
 import tilda.db.*;
 
 /**
-This is the application class <B>Data_JOB_DETAIL</B> mapped to the table <B>TILDA.JOB_DETAIL</B>.
-@see tilda.data._Tilda.TILDA__JOB_DETAIL
+This is the application class <B>Data_Job</B> mapped to the table <B>TILDA.Job</B>.
+@see tilda.data._Tilda.TILDA__JOB
 */
-public class Job_Detail_Factory extends tilda.data._Tilda.TILDA__JOB_DETAIL_Factory
+public class Job_Factory extends tilda.data._Tilda.TILDA__JOB_Factory
  {
-   protected static final Logger LOG = LogManager.getLogger(Job_Detail_Factory.class.getName());
+   protected static final Logger LOG = LogManager.getLogger(Job_Factory.class.getName());
 
-   protected Job_Detail_Factory() { }
+   protected Job_Factory() { }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
