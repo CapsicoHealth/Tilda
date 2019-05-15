@@ -15,7 +15,9 @@
  */
 
 -----------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------
 -- TILDA in() functions
+-----------------------------------------------------------------------------------------------------------------
 CREATE OR REPLACE FUNCTION TILDA.In(v text[], vals text[])
   RETURNS boolean
   IMMUTABLE LANGUAGE SQL AS
@@ -48,7 +50,12 @@ CREATE OR REPLACE FUNCTION TILDA.In(v bigint, vals bigint[])
 
 
 -----------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------
 -- TILDA toXXX() functions for Int, Double, Date
+-----------------------------------------------------------------------------------------------------------------
+
+---------------------
+-- ToInt
 CREATE OR REPLACE FUNCTION TILDA.toInt(str varchar, val integer)
 RETURNS integer AS $$
 BEGIN
@@ -57,12 +64,14 @@ EXCEPTION WHEN OTHERS THEN
   RETURN val;
 END;
 $$ LANGUAGE plpgsql IMMUTABLE;
+
 CREATE OR REPLACE FUNCTION TILDA.toInt(str1 varchar, str2 varchar, val integer)
 RETURNS integer AS $$
 BEGIN
   RETURN coalesce(Tilda.toInt(str1, null), Tilda.toInt(str2, val));
 END;
 $$ LANGUAGE plpgsql IMMUTABLE;
+
 CREATE OR REPLACE FUNCTION TILDA.toInt(str1 varchar, str2 varchar, str3 varchar, val integer)
 RETURNS integer AS $$
 BEGIN
@@ -71,6 +80,8 @@ END;
 $$ LANGUAGE plpgsql IMMUTABLE;
 
 
+---------------------
+-- ToDouble
 CREATE OR REPLACE FUNCTION TILDA.toDouble(str varchar, val double precision)
 RETURNS double precision AS $$
 BEGIN
@@ -79,12 +90,14 @@ EXCEPTION WHEN OTHERS THEN
   RETURN val;
 END;
 $$ LANGUAGE plpgsql IMMUTABLE;
+
 CREATE OR REPLACE FUNCTION TILDA.toDouble(str1 varchar, str2 varchar, val double precision)
 RETURNS double precision AS $$
 BEGIN
   RETURN coalesce(Tilda.toDouble(str1, null), Tilda.toDouble(str2, val));
 END;
 $$ LANGUAGE plpgsql IMMUTABLE;
+
 CREATE OR REPLACE FUNCTION TILDA.toDouble(str1 varchar, str2 varchar, str3 varchar, val double precision)
 RETURNS double precision AS $$
 BEGIN
@@ -93,6 +106,8 @@ END;
 $$ LANGUAGE plpgsql IMMUTABLE;
 
 
+---------------------
+-- ToFloat
 CREATE OR REPLACE FUNCTION TILDA.toFloat(str varchar, val real)
 RETURNS real AS $$
 BEGIN
@@ -101,12 +116,14 @@ EXCEPTION WHEN OTHERS THEN
   RETURN val;
 END;
 $$ LANGUAGE plpgsql IMMUTABLE;
+
 CREATE OR REPLACE FUNCTION TILDA.toFloat(str1 varchar, str2 varchar, val real)
 RETURNS real AS $$
 BEGIN
   RETURN coalesce(Tilda.toFloat(str1, null), Tilda.toFloat(str2, val));
 END;
 $$ LANGUAGE plpgsql IMMUTABLE;
+
 CREATE OR REPLACE FUNCTION TILDA.toFloat(str1 varchar, str2 varchar, str3 varchar, val real)
 RETURNS real AS $$
 BEGIN
@@ -115,6 +132,8 @@ END;
 $$ LANGUAGE plpgsql IMMUTABLE;
 
 
+---------------------
+-- ToDate
 CREATE OR REPLACE FUNCTION TILDA.toDate(str varchar, val Date)
 RETURNS Date AS $$
 BEGIN
@@ -123,12 +142,14 @@ EXCEPTION WHEN OTHERS THEN
   RETURN val;
 END;
 $$ LANGUAGE plpgsql IMMUTABLE;
+
 CREATE OR REPLACE FUNCTION TILDA.toDate(str1 varchar, str2 varchar, val Date)
 RETURNS Date AS $$
 BEGIN
   RETURN coalesce(Tilda.toDate(str1, null), Tilda.toDate(str2, val));
 END;
 $$ LANGUAGE plpgsql IMMUTABLE;
+
 CREATE OR REPLACE FUNCTION TILDA.toDate(str1 varchar, str2 varchar, str3 varchar, val Date)
 RETURNS Date AS $$
 BEGIN
@@ -137,8 +158,63 @@ END;
 $$ LANGUAGE plpgsql IMMUTABLE;
 
 
+---------------------
+-- ToBool
+CREATE OR REPLACE FUNCTION vnahgods.toBool(str varchar, val boolean)
+RETURNS boolean AS $$
+BEGIN
+  RETURN case when str is null then val else str::boolean end;
+EXCEPTION WHEN OTHERS THEN
+  RETURN val;
+END;
+$$ LANGUAGE plpgsql IMMUTABLE;
+
+CREATE OR REPLACE FUNCTION vnahgods.toBool(str1 varchar, str2 varchar, val boolean)
+RETURNS boolean AS $$
+BEGIN
+  RETURN coalesce(vnahgods.toBool(str1, null), vnahgods.toBool(str2, val));
+END;
+$$ LANGUAGE plpgsql IMMUTABLE;
+
+CREATE OR REPLACE FUNCTION vnahgods.toBool(str1 varchar, str2 varchar, str3 varchar, val boolean)
+RETURNS boolean AS $$
+BEGIN
+  RETURN coalesce(vnahgods.toBool(str1, null), vnahgods.toBool(str2, null), vnahgods.toBool(str3, val));
+END;
+$$ LANGUAGE plpgsql IMMUTABLE;
+
+
+---------------------
+-- ToBoolInt
+CREATE OR REPLACE FUNCTION vnahgods.toBoolInt(str varchar, val boolean)
+RETURNS integer AS $$
+BEGIN
+  RETURN case when str is null then val else str::boolean::integer end;
+EXCEPTION WHEN OTHERS THEN
+  RETURN val;
+END;
+$$ LANGUAGE plpgsql IMMUTABLE;
+
+CREATE OR REPLACE FUNCTION vnahgods.toBoolInt(str1 varchar, str2 varchar, val boolean)
+RETURNS integer AS $$
+BEGIN
+  RETURN coalesce(vnahgods.toBoolInt(str1, null), vnahgods.toBoolInt(str2, val));
+END;
+$$ LANGUAGE plpgsql IMMUTABLE;
+
+CREATE OR REPLACE FUNCTION vnahgods.toBoolInt(str1 varchar, str2 varchar, str3 varchar, val boolean)
+RETURNS integer AS $$
+BEGIN
+  RETURN coalesce(vnahgods.toBoolInt(str1, null), vnahgods.toBoolInt(str2, null), vnahgods.toBoolInt(str3, val));
+END;
+$$ LANGUAGE plpgsql IMMUTABLE;
+
+
+
 -----------------------------------------------------------------------------------------------------------------
--- TILDA Like() and ilike() functions
+-----------------------------------------------------------------------------------------------------------------
+-- TILDA like() and ilike() functions
+-----------------------------------------------------------------------------------------------------------------
 CREATE OR REPLACE FUNCTION TILDA.Like(v text[], val text)
   RETURNS boolean
   IMMUTABLE LANGUAGE SQL AS
@@ -165,9 +241,14 @@ CREATE OR REPLACE FUNCTION TILDA.ILike(v text, val text[])
   IMMUTABLE LANGUAGE SQL AS
   'select v ilike ANY(val);';
 
+
+
+
   
 -----------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------
 --- TILDA KEY-related functions
+-----------------------------------------------------------------------------------------------------------------
 CREATE OR REPLACE FUNCTION TILDA.getKeyBatch(t text, c integer) 
 RETURNS TABLE (min_key_inclusive bigint, max_key_exclusive bigint) AS $$
 DECLARE
@@ -273,10 +354,10 @@ LANGUAGE PLPGSQL;
 
 
 
-
-
+-----------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------
 -- TILDA String-to-Array conversion for automated array support, mostly from ETL platforms
+-----------------------------------------------------------------------------------------------------------------
 DROP CAST IF EXISTS (text AS text[]);
 CREATE OR REPLACE FUNCTION TILDA.strToArray(text)
   RETURNS text[]
@@ -300,8 +381,11 @@ $$;
 
 
 
+
+-----------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------
 -- TILDA Duration functions
+-----------------------------------------------------------------------------------------------------------------
 CREATE OR REPLACE FUNCTION TILDA.daysBetween(ts1 timestamptz, ts2 timestamptz, midnight boolean)
   RETURNS integer
   IMMUTABLE LANGUAGE SQL AS
@@ -350,8 +434,11 @@ CREATE OR REPLACE FUNCTION TILDA.ageBetween(timestamptz, timestamptz, float, flo
 'SELECT TILDA.Age($1, $2) >= $3 AND TILDA.Age($1, $2) < $4';
 
 
+
+-----------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------
 -- TILDA FIRST/LAST aggregates
+-----------------------------------------------------------------------------------------------------------------
 CREATE OR REPLACE FUNCTION TILDA.first_agg (anyelement, anyelement)
 RETURNS anyelement LANGUAGE SQL IMMUTABLE STRICT AS $$
         SELECT $1;
@@ -384,8 +471,11 @@ END $$;
 
 
 
+
+-----------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------
 -- TILDA array concatenation aggregate aggregates
+-----------------------------------------------------------------------------------------------------------------
 DO $$ BEGIN
 if not exists (SELECT 1 FROM pg_aggregate WHERE aggfnoid::TEXT = 'array_cat_agg') THEN
 CREATE AGGREGATE public.array_cat_agg (anyarray)
@@ -399,13 +489,12 @@ END $$;
 
 
 
+
+
 -----------------------------------------------------------------------------------------------------------------
--- Loading the TableFunc extension
---CREATE extension if not exists tablefunc;
-
-
 -----------------------------------------------------------------------------------------------------------------
 -- DDL Dependency management helper functions
+-----------------------------------------------------------------------------------------------------------------
 drop function if exists Tilda.getDependenciesDDLs(p_view_schema varchar, p_view_name varchar) ;
 drop type if exists tilda.getDependenciesDDLsDef;
 CREATE TYPE tilda.getDependenciesDDLsDef as (
@@ -690,8 +779,10 @@ $$ LANGUAGE plpgsql;
 
 
 
-
-
+----------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------
+-- Sizing helpers
+----------------------------------------------------------------------------------------------------------------------------------------
 
 -- Return size information per quarter on a specific tables, or all tables in a specific schema
 -- schema_name: the name of the schema
