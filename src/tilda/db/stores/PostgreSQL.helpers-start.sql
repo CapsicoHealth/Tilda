@@ -21,6 +21,41 @@
 -----------------------------------------------------------------------------------------------------------------
 create schema IF NOT EXISTS TILDA;
 
+
+
+-----------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------
+-- TILDA like() and ilike() functions
+-----------------------------------------------------------------------------------------------------------------
+CREATE OR REPLACE FUNCTION TILDA.Like(v text[], val text)
+  RETURNS boolean
+  IMMUTABLE LANGUAGE SQL AS
+  'select exists (select * from unnest(v) x_ where x_ like val);';
+CREATE OR REPLACE FUNCTION TILDA.Like(v text[], val text[])
+  RETURNS boolean
+  IMMUTABLE LANGUAGE SQL AS
+  'select exists (select * from unnest(v) x_ where x_ like ANY(val));';
+CREATE OR REPLACE FUNCTION TILDA.Like(v text, val text[])
+  RETURNS boolean
+  IMMUTABLE LANGUAGE SQL AS
+  'select v like ANY(val);';
+
+CREATE OR REPLACE FUNCTION TILDA.ILike(v text[], val text)
+  RETURNS boolean
+  IMMUTABLE LANGUAGE SQL AS
+  'select exists (select * from unnest(v) x_ where x_ ilike val);';
+CREATE OR REPLACE FUNCTION TILDA.ILike(v text[], val text[])
+  RETURNS boolean
+  IMMUTABLE LANGUAGE SQL AS
+  'select exists (select * from unnest(v) x_ where x_ ilike ANY(val));';
+CREATE OR REPLACE FUNCTION TILDA.ILike(v text, val text[])
+  RETURNS boolean
+  IMMUTABLE LANGUAGE SQL AS
+  'select v ilike ANY(val);';
+
+
+ 
+
 -----------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------
 -- TILDA in() functions
@@ -55,6 +90,10 @@ CREATE OR REPLACE FUNCTION TILDA.In(v bigint, vals bigint[])
   IMMUTABLE LANGUAGE SQL AS
   'select v = ANY(vals);';
 
+
+  
+  
+  
 
 -----------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------
@@ -218,175 +257,6 @@ $$ LANGUAGE plpgsql IMMUTABLE;
 
 
 
------------------------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------------------------
--- TILDA like() and ilike() functions
------------------------------------------------------------------------------------------------------------------
-CREATE OR REPLACE FUNCTION TILDA.Like(v text[], val text)
-  RETURNS boolean
-  IMMUTABLE LANGUAGE SQL AS
-  'select exists (select * from unnest(v) x_ where x_ like val);';
-CREATE OR REPLACE FUNCTION TILDA.Like(v text[], val text[])
-  RETURNS boolean
-  IMMUTABLE LANGUAGE SQL AS
-  'select exists (select * from unnest(v) x_ where x_ like ANY(val));';
-CREATE OR REPLACE FUNCTION TILDA.Like(v text, val text[])
-  RETURNS boolean
-  IMMUTABLE LANGUAGE SQL AS
-  'select v like ANY(val);';
-
-CREATE OR REPLACE FUNCTION TILDA.ILike(v text[], val text)
-  RETURNS boolean
-  IMMUTABLE LANGUAGE SQL AS
-  'select exists (select * from unnest(v) x_ where x_ ilike val);';
-CREATE OR REPLACE FUNCTION TILDA.ILike(v text[], val text[])
-  RETURNS boolean
-  IMMUTABLE LANGUAGE SQL AS
-  'select exists (select * from unnest(v) x_ where x_ ilike ANY(val));';
-CREATE OR REPLACE FUNCTION TILDA.ILike(v text, val text[])
-  RETURNS boolean
-  IMMUTABLE LANGUAGE SQL AS
-  'select v ilike ANY(val);';
-
-
-
-
-  
------------------------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------------------------
---- TILDA KEY-related functions
------------------------------------------------------------------------------------------------------------------
-CREATE OR REPLACE FUNCTION TILDA.getKeyBatch(t text, c integer) 
-RETURNS TABLE (min_key_inclusive bigint, max_key_exclusive bigint) AS $$
-DECLARE
-  val bigint;
-BEGIN
-  UPDATE TILDA.Key set "max"="max"+c where "name"=t returning "max" into val;
-  return query select val-c as min_key_inclusive, val as max_key_exclusive;
-END; $$
-LANGUAGE PLPGSQL;
-
-
-CREATE OR REPLACE FUNCTION TILDA.getKeyBatchAsMaxExclusive(t text, c integer) RETURNS bigint AS $$
-DECLARE
-  val bigint;
-BEGIN
-  UPDATE TILDA.Key set "max"="max"+c where "name"=t returning "max" into val;
-  return val;
-END; $$
-LANGUAGE PLPGSQL;
-
-
--- Function to check dynamically if a table exists. It can also be used as an SQL-Injection
--- check when another function needs to create some dynamic SQL and received table/schema names
--- as strings
-CREATE OR REPLACE FUNCTION TILDA.existsTable(schemaName varchar, tableName varchar)
-RETURNS boolean
-STABLE LANGUAGE SQL AS
-  'SELECT true FROM information_schema.tables WHERE lower(tables.table_schema)=lower($1) and lower(tables.table_name)=lower($2);'
-;
-
--- Function to check dynamically if a column exists. It can also be used as an SQL-Injection
--- check when another function needs to create some dynamic SQL and received table/schema/column names
--- as strings
-CREATE OR REPLACE FUNCTION TILDA.existsColumn(schemaName varchar, tableName varchar, colName varchar)
-RETURNS boolean
-STABLE LANGUAGE SQL AS $$
-  SELECT true FROM information_schema.tables T
-              JOIN information_schema.columns C on C.table_schema=T.table_schema and C.table_name=T.table_name
-   WHERE lower(T.table_schema)=lower($1) and lower(T.table_name)=lower($2) and lower(c.column_name)=lower($3)
-   ;
-$$;
-
-
--- Updates the key in TILDA.Key to match the max(refnum)+1 from the named table
-CREATE OR REPLACE FUNCTION TILDA.updateMaxKey(schemaName varchar, tableName varchar)
-RETURNS bigint AS $$
-DECLARE
-  val bigint;
-  q text;
-BEGIN
-  IF (SELECT TILDA.existsColumn($1,$2,'refnum')) is distinct from true THEN -- test for table and schema existence.. and doubles as SQL injection barier.
-   return null;
-  END IF;
-  q:='SELECT coalesce(max(refnum),0) from '||schemaName||'.'||tableName;
-  EXECUTE q into val;
-  val:=val+1;
-  q:='update TILDA.Key set max='||val||' where name='''||upper(schemaName||'.'||tableName)||'''';
-  EXECUTE q;
-  return val;
-END; $$
-LANGUAGE PLPGSQL;
-
-
--- Updates the key's max value in TILDA.Key to max(refnum)+1 of all registered tables.
-CREATE OR REPLACE FUNCTION TILDA.updateAllMaxKeys() RETURNS bigint AS $$
-DECLARE
-  val bigint;
-  counter bigint;
-  skipped bigint;
-  q text;
-  v_curr record;
-BEGIN
-  counter:=0;
-  skipped:=0;
-  for v_curr in (
-    SELECT name
-          ,substr(name, 1, strpos(name,'.')-1) as schemaName
-          ,substr(name, strpos(name,'.')+1) as tableName
-      from TILDA.Key
-   ) LOOP
-      -- It's possible for an old table to still be in the Tilda.Key table but no longer exist, or no longer have th erefnum column.
-      IF (SELECT TILDA.existsColumn(v_curr.schemaName,v_curr.tableName, 'refnum')) is distinct from true THEN
-        skipped:=skipped+1;
-        RAISE NOTICE 'Skipped table #% of %: %',skipped, counter, v_curr.name;
-        CONTINUE;
-      END IF;
-
-      q:='SELECT coalesce(max(refnum),0) from '||v_curr.schemaName||'.'||v_curr.tableName;
-      RAISE NOTICE '%',q;
-      EXECUTE q into val;
-      val:=val+1;
-      q:='update TILDA.Key set max='||val||' where name='''||v_curr.name||'''';
-      RAISE NOTICE '%',q;
-      EXECUTE q;
-      counter:=counter+1;
-      RAISE NOTICE 'Processed table #%: %',counter, v_curr.name;
-    END LOOP;
-  RAISE NOTICE 'Processed % tables, and skipped % (total=%)',counter, skipped, (counter+skipped);
-  return counter;
-END; $$
-LANGUAGE PLPGSQL;
-
-
-
-
------------------------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------------------------
--- TILDA String-to-Array conversion for automated array support, mostly from ETL platforms
------------------------------------------------------------------------------------------------------------------
-DROP CAST IF EXISTS (text AS text[]);
-CREATE OR REPLACE FUNCTION TILDA.strToArray(text)
-  RETURNS text[]
-  IMMUTABLE LANGUAGE SQL AS
-'SELECT regexp_split_to_array($1, ''``'');';
-CREATE CAST (text AS text[]) WITH FUNCTION TILDA.strToArray(text) as Implicit;
-
-DROP CAST IF EXISTS (varchar AS text[]);
-CREATE OR REPLACE FUNCTION TILDA.strToArray(varchar)
-  RETURNS text[]
-  IMMUTABLE LANGUAGE SQL AS
-'SELECT regexp_split_to_array($1, ''``'');';
-CREATE CAST (varchar AS text[]) WITH FUNCTION TILDA.strToArray(varchar) as Implicit;
-
--- allows a native representation, i.e., '{xxx,"abc 123",aaa}' to be parsed back into an array.
-CREATE OR REPLACE FUNCTION TILDA.StrNativeArrayToArray(v text)
-  RETURNS text[]
-  IMMUTABLE LANGUAGE SQL AS $$
-  select regexp_split_to_array(regexp_replace(v, '^{\"?|\"?}$', '', 'g'), '\"?,\"?')
-$$;
-
-
 
 
 -----------------------------------------------------------------------------------------------------------------
@@ -481,7 +351,7 @@ END $$;
 
 -----------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------
--- TILDA array concatenation aggregate aggregates
+-- TILDA array concatenation aggregates
 -----------------------------------------------------------------------------------------------------------------
 DO $$ BEGIN
 if not exists (SELECT 1 FROM pg_aggregate WHERE aggfnoid::TEXT = 'array_cat_agg') THEN
@@ -494,6 +364,70 @@ CREATE AGGREGATE public.array_cat_agg (anyarray)
 END IF;
 END $$;
 
+
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------
+-- TILDA String-to-Array conversion for automated array support, mostly from ETL platforms
+-----------------------------------------------------------------------------------------------------------------
+DROP CAST IF EXISTS (text AS text[]);
+CREATE OR REPLACE FUNCTION TILDA.strToArray(text)
+  RETURNS text[]
+  IMMUTABLE LANGUAGE SQL AS
+'SELECT regexp_split_to_array($1, ''``'');';
+CREATE CAST (text AS text[]) WITH FUNCTION TILDA.strToArray(text) as Implicit;
+
+DROP CAST IF EXISTS (varchar AS text[]);
+CREATE OR REPLACE FUNCTION TILDA.strToArray(varchar)
+  RETURNS text[]
+  IMMUTABLE LANGUAGE SQL AS
+'SELECT regexp_split_to_array($1, ''``'');';
+CREATE CAST (varchar AS text[]) WITH FUNCTION TILDA.strToArray(varchar) as Implicit;
+
+-- allows a native representation, i.e., '{xxx,"abc 123",aaa}' to be parsed back into an array.
+CREATE OR REPLACE FUNCTION TILDA.StrNativeArrayToArray(v text)
+  RETURNS text[]
+  IMMUTABLE LANGUAGE SQL AS $$
+  select regexp_split_to_array(regexp_replace(v, '^{\"?|\"?}$', '', 'g'), '\"?,\"?')
+$$;
+
+
+
+
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------
+-- Schema management helpers
+-----------------------------------------------------------------------------------------------------------------
+
+  -- Function to check dynamically if a table exists. It can also be used as an SQL-Injection
+-- check when another function needs to create some dynamic SQL and received table/schema names
+-- as strings
+CREATE OR REPLACE FUNCTION TILDA.existsTable(schemaName varchar, tableName varchar)
+RETURNS boolean
+STABLE LANGUAGE SQL AS
+  'SELECT true FROM information_schema.tables WHERE lower(tables.table_schema)=lower($1) and lower(tables.table_name)=lower($2);'
+;
+
+-- Function to check dynamically if a column exists. It can also be used as an SQL-Injection
+-- check when another function needs to create some dynamic SQL and received table/schema/column names
+-- as strings
+CREATE OR REPLACE FUNCTION TILDA.existsColumn(schemaName varchar, tableName varchar, colName varchar)
+RETURNS boolean
+STABLE LANGUAGE SQL AS $$
+  SELECT true FROM information_schema.tables T
+              JOIN information_schema.columns C on C.table_schema=T.table_schema and C.table_name=T.table_name
+   WHERE lower(T.table_schema)=lower($1) and lower(T.table_name)=lower($2) and lower(c.column_name)=lower($3)
+   ;
+$$;
 
 
 
