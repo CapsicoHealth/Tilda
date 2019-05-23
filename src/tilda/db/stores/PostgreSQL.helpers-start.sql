@@ -21,7 +21,7 @@
 -----------------------------------------------------------------------------------------------------------------
 create schema IF NOT EXISTS TILDA;
 
-
+-- See documentation on https://github.com/CapsicoHealth/Tilda/wiki/Tilda-Common-Helper-Database-Functions
 
 -----------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------
@@ -263,12 +263,31 @@ $$ LANGUAGE plpgsql IMMUTABLE;
 -----------------------------------------------------------------------------------------------------------------
 -- TILDA Duration functions
 -----------------------------------------------------------------------------------------------------------------
+
+---------------------
+-- age
+CREATE OR REPLACE FUNCTION TILDA.age(timestamptz, timestamptz)
+  RETURNS float
+  IMMUTABLE LANGUAGE SQL AS
+'SELECT date_part(''year'', age($2, $1)) + date_part(''month'', age($2, $1))/12.0 + date_part(''day'', age($2, $1))/365.0;';
+COMMENT ON FUNCTION TILDA.Age(timestamptz, timestamptz) IS 'Computes the age in years between 2 dates ''start'' and ''end'' with decimal places, so 1.25 years is 1y and 3 months. It is not 100% accurate as we use a simple 1y=365 days calculation. Use Tilda.DaysBetween if you want accurate days-based calculations.';
+
+
+---------------------
+-- ageBetween
+CREATE OR REPLACE FUNCTION TILDA.ageBetween(timestamptz, timestamptz, float, float)
+  RETURNS boolean
+  IMMUTABLE LANGUAGE SQL AS
+'SELECT TILDA.Age($1, $2) >= $3 AND TILDA.Age($1, $2) < $4';
+
+
+---------------------
+-- daysBetween
 CREATE OR REPLACE FUNCTION TILDA.daysBetween(ts1 timestamptz, ts2 timestamptz, midnight boolean)
   RETURNS integer
   IMMUTABLE LANGUAGE SQL AS
 'SELECT case when $3 or $2 < $1 then $2::DATE - $1::DATE else $2::DATE - $1::DATE + 1 end;';
 COMMENT ON FUNCTION TILDA.DaysBetween(timestamptz, timestamptz, boolean) IS 'Computes the number of days between 2 dates ''start'' and ''end''. The third parameter indicates whether the midnight rule should be applied or not. If true, the number of days between 2016-12-01 and 2016-12-02 for example will be 1 (i.e., one mignight passed). If false, the returned count will be 2. Note that this function doesn.''t care about timezones and only compares the date portions of the parameters passed in.';
-
 
 CREATE OR REPLACE FUNCTION TILDA.daysBetween(ts1 timestamptz, ts2 timestamptz)
   RETURNS integer
@@ -277,19 +296,19 @@ CREATE OR REPLACE FUNCTION TILDA.daysBetween(ts1 timestamptz, ts2 timestamptz)
 COMMENT ON FUNCTION TILDA.DaysBetween(timestamptz, timestamptz) IS 'Computes the number of days between 2 dates ''start'' and ''end''. This function is the same as TILDA.DaysBetween(timestamptz, timestamptz, boolean) but with the third parapeter defaulted to false, i.e., the number of days between 2016-12-01 and 2016-12-02 is 2.';
 
 
+------------------------------------------------------------------
+-- monthsBetween, quartersBetween, yearsBetween
 CREATE OR REPLACE FUNCTION TILDA.monthsBetween(timestamptz, timestamptz)
   RETURNS float
   IMMUTABLE LANGUAGE SQL AS
 'SELECT date_part(''year'', age($2, $1))*12+date_part(''month'', age($2, $1))+date_part(''days'', age($2, $1))/30.0;';
 COMMENT ON FUNCTION TILDA.MonthsBetween(timestamptz, timestamptz) IS 'Computes the aproximate number of months between 2 dates ''start'' and ''end''. It''s approximate because fractional days are computed as a 30th part of a month no matter which month it is.';
 
-
 CREATE OR REPLACE FUNCTION TILDA.quartersBetween(timestamptz, timestamptz)
   RETURNS float
   IMMUTABLE LANGUAGE SQL AS
 'SELECT date_part(''year'', age($2, $1))*4+date_part(''month'', age($2, $1))/3.0+date_part(''days'', age($2, $1))/91.0;';
 COMMENT ON FUNCTION TILDA.QuartersBetween(timestamptz, timestamptz) IS 'Computes the aproximate number of quarters between 2 dates ''start'' and ''end''. It''s approximate because fractional days are computed as a 91st part of a quarter no matter which quarter it is.';
-
 
 CREATE OR REPLACE FUNCTION TILDA.yearsBetween(timestamptz, timestamptz)
   RETURNS float
@@ -298,24 +317,15 @@ CREATE OR REPLACE FUNCTION TILDA.yearsBetween(timestamptz, timestamptz)
 COMMENT ON FUNCTION TILDA.YearsBetween(timestamptz, timestamptz) IS 'Computes the aproximate number of years between 2 dates ''start'' and ''end''. It''s approximate because fractional days are computed as a 365th part of a year no matter which year it is.';
 
 
-CREATE OR REPLACE FUNCTION TILDA.age(timestamptz, timestamptz)
-  RETURNS float
-  IMMUTABLE LANGUAGE SQL AS
-'SELECT date_part(''year'', age($2, $1)) + date_part(''month'', age($2, $1))/12.0 + date_part(''day'', age($2, $1))/365.0;';
-COMMENT ON FUNCTION TILDA.Age(timestamptz, timestamptz) IS 'Computes the age in years between 2 dates ''start'' and ''end'' with decimal places, so 1.25 years is 1y and 3 months. It is not 100% accurate as we use a simple 1y=365 days calculation. Use Tilda.DaysBetween if you want accurate days-based calculations.';
-
-
-CREATE OR REPLACE FUNCTION TILDA.ageBetween(timestamptz, timestamptz, float, float)
-  RETURNS boolean
-  IMMUTABLE LANGUAGE SQL AS
-'SELECT TILDA.Age($1, $2) >= $3 AND TILDA.Age($1, $2) < $4';
-
 
 
 -----------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------
--- TILDA FIRST/LAST aggregates
+-- TILDA aggregates
 -----------------------------------------------------------------------------------------------------------------
+
+---------------------
+-- First
 CREATE OR REPLACE FUNCTION TILDA.first_agg (anyelement, anyelement)
 RETURNS anyelement LANGUAGE SQL IMMUTABLE STRICT AS $$
         SELECT $1;
@@ -331,7 +341,8 @@ CREATE AGGREGATE public.FIRST (
 END IF;
 END $$;
 
-
+---------------------
+-- Last
 CREATE OR REPLACE FUNCTION TILDA.last_agg ( anyelement, anyelement )
 RETURNS anyelement LANGUAGE SQL IMMUTABLE STRICT AS $$
         SELECT $2;
@@ -346,13 +357,8 @@ CREATE AGGREGATE public.LAST (
 END IF;
 END $$;
 
-
-
-
------------------------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------------------------
--- TILDA array concatenation aggregates
------------------------------------------------------------------------------------------------------------------
+---------------------
+-- array_cat_agg
 DO $$ BEGIN
 if not exists (SELECT 1 FROM pg_aggregate WHERE aggfnoid::TEXT = 'array_cat_agg') THEN
 CREATE AGGREGATE public.array_cat_agg (anyarray)
@@ -363,8 +369,6 @@ CREATE AGGREGATE public.array_cat_agg (anyarray)
 );  
 END IF;
 END $$;
-
-
 
 
 
@@ -400,15 +404,12 @@ $$;
 
 
 
-
-
-
 -----------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------
 -- Schema management helpers
 -----------------------------------------------------------------------------------------------------------------
 
-  -- Function to check dynamically if a table exists. It can also be used as an SQL-Injection
+-- Function to check dynamically if a table exists. It can also be used as an SQL-Injection
 -- check when another function needs to create some dynamic SQL and received table/schema names
 -- as strings
 CREATE OR REPLACE FUNCTION TILDA.existsTable(schemaName varchar, tableName varchar)
@@ -428,7 +429,6 @@ STABLE LANGUAGE SQL AS $$
    WHERE lower(T.table_schema)=lower($1) and lower(T.table_name)=lower($2) and lower(c.column_name)=lower($3)
    ;
 $$;
-
 
 
 
@@ -549,7 +549,109 @@ LANGUAGE plpgsql;
 
 
 
--- compares 2 tables row by row as per the identify columns and check if they are all equals.
+-- Renames a column and properly handles cases where the table doesn't exist, source column doesn't exist, or dest column already exists.  
+-- Furthermore, the function handles a list of possible source names. For example, V2 of something renames a to b, and then V3 renames 
+-- b to c. This function can then handle a case of renaming either a or b to c. This can be useful when migrating different existing versions.
+-- A check will be performed to make sure there is only one valid source column.
+-- Return values:
+--     1: the operation was completed successfully and the column was renamed
+--     0: none of the source columns exist and the destination column already exists. We assume it was previously renamed.
+--    -1: the table couldn't be found
+--    -2: there were multiple matches in the table for the source column list. Only one match is expected.
+--    -3: none of the source columns can be found.
+--    -4: the destination column already exists.
+drop FUNCTION IF EXISTS tilda.renameColumnIfExists(schemaName varchar, tableName varchar, columnNames varchar[], newColumnName varchar);
+CREATE FUNCTION tilda.renameColumnIfExists(schemaName varchar, tableName varchar, columnNames varchar[], newColumnName varchar) 
+RETURNS RECORD AS $$
+DECLARE
+  _tableName varchar;
+  _columnNames varchar[];
+  _newColumnName varchar;
+BEGIN
+  SELECT tables.table_name, C2.column_name, array_agg(C1.column_name::TEXT)
+    INTO   _tableName, _newColumnName, _columnNames
+    FROM information_schema.tables
+      LEFT join information_schema.columns C2 on C2.table_schema=tables.table_schema and C2.table_name=tables.table_name and C2.column_name=newColumnName
+      LEFT join information_schema.columns C1 on C1.table_schema=tables.table_schema and C1.table_name=tables.table_name and Tilda.In(C1.column_name,columnNames)
+   WHERE lower(tables.table_schema)=lower(schemaName) and lower(tables.table_name)=lower(tableName)
+   GROUP BY 1,2
+  ;
+   -- Does the table exist?
+  IF _tableName is null
+  THEN RETURN (-1, 'Table '||schemaName||'.'||tableName||' cannot be found.');
+  -- Are there more than one potential source columns actually in the table?
+  ELSEIF array_length(_columnNames,1) > 1
+  THEN RETURN (-2, 'Multiple potential source columns '||schemaName||'.'||tableName||'.'||_columnNames::TEXT||' exist. There should be only one match.');
+  -- Does the src column not exist and neither the dest column?
+  ELSEIF _columnNames[1] is null AND _newColumnName is null
+  THEN RETURN (-3, 'Source column(s) '||schemaName||'.'||tableName||'.'||columnNames::TEXT||' cannot be found.');
+  -- Does the src column not exist but the dest column does?
+  ELSEIF _columnNames[1] is null AND _newColumnName is not null
+  THEN RETURN (0, 'Destination column '||schemaName||'.'||tableName||'.'||newColumnName||' already exists. Maybe it has been renamed already?');
+  -- the source column exists, but does the destination column already exists?
+  ELSEIF _newColumnName is not null
+  THEN RETURN (-4, 'Destination column '||schemaName||'.'||tableName||'.'||newColumnName||' already exists.');
+  END IF;
+  -- good to go
+  EXECUTE 'ALTER TABLE '||schemaName||'.'||tableName||' RENAME COLUMN "'||_columnNames[1]||'" TO "'||newColumnName||'"';
+  RETURN (1, 'Column '||schemaName||'.'||tableName||'.'||_columnNames[1]||' has been successfully renamed to '||newColumnName||'.');
+END
+$$ LANGUAGE plpgsql;
+
+
+
+
+
+
+
+-- Copies the contents of srcColumnName to destColumnName and if successful, drops srcColumnName. This is useful when for example some migration has already
+-- occurred to create the destination column and a copy/drop is needed vs the renameColumnIfExists() function which just renames a column.
+-- Return values:
+--     1: the operation was completed successfully and the column was renamed
+--     0: the source column cannot be found and the dest column already exists. We assume a previous operation was already performed successfully.
+--    -1: the table couldn't be found
+--    -3: source columns can be found.
+--    -4: the destination column cannot be found.
+drop FUNCTION IF EXISTS tilda.copyColumnAndDrop(schemaName varchar, tableName varchar, srcColumnName varchar, destColumnName varchar);
+CREATE FUNCTION tilda.copyColumnAndDrop(schemaName varchar, tableName varchar, srcColumnName varchar, destColumnName varchar) 
+RETURNS RECORD AS $$
+DECLARE
+  _tableName varchar;
+  _srcColumnName varchar;
+  _destColumnName varchar;
+BEGIN
+  SELECT tables.table_name, C1.column_name, C2.column_name
+    INTO   _tableName, _srcColumnName, _destColumnName
+    FROM information_schema.tables
+      LEFT join information_schema.columns C1 on C1.table_schema=tables.table_schema and C1.table_name=tables.table_name and C1.column_name=srcColumnName
+      LEFT join information_schema.columns C2 on C2.table_schema=tables.table_schema and C2.table_name=tables.table_name and C2.column_name=destColumnName
+   WHERE lower(tables.table_schema)=lower(schemaName) and lower(tables.table_name)=lower(tableName)
+  ;
+   -- Does the table exist?
+  IF _tableName is null
+  THEN RETURN (-1, 'Table '||schemaName||'.'||tableName||' cannot be found.');
+  -- Does the src column not exist and dest column exist?
+  ELSEIF _srcColumnName is null AND _destColumnName is not null
+  THEN RETURN (0, 'Source column '||_destColumnName||' does not exist and destination column '||_destColumnName||' exists. Maybe it has been copied and dropped already?');
+  -- Does the src column not exist and neither the dest column?
+  ELSEIF _srcColumnName is null
+  THEN RETURN (-3, 'Source column(s) '||schemaName||'.'||tableName||'.'||srcColumnName||' cannot be found.');
+  -- the source column exists, but does the destination column already exists?
+  ELSEIF _destColumnName is null
+  THEN RETURN (-4, 'Destination column '||schemaName||'.'||tableName||'.'||destColumnName||' does not exist.');
+  END IF;
+  -- good to go
+  EXECUTE 'update '||schemaName||'.'||tableName||' set "'||_destColumnName||'"="'||_srcColumnName||'"';
+  EXECUTE 'ALTER TABLE '||schemaName||'.'||tableName||' DROP COLUMN "'||_srcColumnName||'"';  
+  RETURN (1, 'Column '||_srcColumnName||' has been copied to '||_destColumnName||' and then dropped.');
+END
+$$ LANGUAGE plpgsql;
+
+
+
+-- Often, after doing some complex migration, changing business logic or data models, you need t0 be able to compare 2
+-- tables and make sure they are identical. For example, you have a complex view that you have changed in non-trivial ways.
+-- You would dump the original view into a temp table and then compare with results from the new view.
 -- returns the number of rows with a discrepancy.
 CREATE OR REPLACE FUNCTION tilda.CompareTables(table1 varchar, identity1 varchar[], columns1 varchar[], table2 varchar, identity2 varchar[], columns2 varchar[])
   RETURNS BIGINT AS
@@ -617,109 +719,9 @@ END; $BODY$
   COST 100;
 
 
-
--- Renames a column and properly handles cases where the table doesn't exist, source column doesn't exist, or dest column already exists.  
--- Furthermore, the function handles a list of possible source names. For example, V2 of something renames a to b, and then V3 renames 
--- b to c. This function can then handle a case of renaming either a or b to c. This can be useful when migrating different existing versions.
--- A check will be performed to make sure there is only one valid source column.
--- Return values:
---     1: the operation was completed successfully and the column was renamed
---     0: none of the source columns exist and the destination column already exists. We assume it was previously renamed.
---    -1: the table couldn't be found
---    -2: there were multiple matches in the table for the source column list. Only one match is expected.
---    -3: none of the source columns can be found.
---    -4: the destination column already exists.
-drop FUNCTION IF EXISTS tilda.renameColumnIfExists(schemaName varchar, tableName varchar, columnNames varchar[], newColumnName varchar);
-CREATE FUNCTION tilda.renameColumnIfExists(schemaName varchar, tableName varchar, columnNames varchar[], newColumnName varchar) 
-RETURNS RECORD AS $$
-DECLARE
-  _tableName varchar;
-  _columnNames varchar[];
-  _newColumnName varchar;
-BEGIN
-  SELECT tables.table_name, C2.column_name, array_agg(C1.column_name::TEXT)
-    INTO   _tableName, _newColumnName, _columnNames
-    FROM information_schema.tables
-      LEFT join information_schema.columns C2 on C2.table_schema=tables.table_schema and C2.table_name=tables.table_name and C2.column_name=newColumnName
-      LEFT join information_schema.columns C1 on C1.table_schema=tables.table_schema and C1.table_name=tables.table_name and Tilda.In(C1.column_name,columnNames)
-   WHERE lower(tables.table_schema)=lower(schemaName) and lower(tables.table_name)=lower(tableName)
-   GROUP BY 1,2
-  ;
-   -- Does the table exist?
-  IF _tableName is null
-  THEN RETURN (-1, 'Table '||schemaName||'.'||tableName||' cannot be found.');
-  -- Are there more than one potential source columns actually in the table?
-  ELSEIF array_length(_columnNames,1) > 1
-  THEN RETURN (-2, 'Multiple potential source columns '||schemaName||'.'||tableName||'.'||_columnNames::TEXT||' exist. There should be only one match.');
-  -- Does the src column not exist and neither the dest column?
-  ELSEIF _columnNames[1] is null AND _newColumnName is null
-  THEN RETURN (-3, 'Source column(s) '||schemaName||'.'||tableName||'.'||columnNames::TEXT||' cannot be found.');
-  -- Does the src column not exist but the dest column does?
-  ELSEIF _columnNames[1] is null AND _newColumnName is not null
-  THEN RETURN (0, 'Destination column '||schemaName||'.'||tableName||'.'||newColumnName||' already exists. Maybe it has been renamed already?');
-  -- the source column exists, but does the destination column already exists?
-  ELSEIF _newColumnName is not null
-  THEN RETURN (-4, 'Destination column '||schemaName||'.'||tableName||'.'||newColumnName||' already exists.');
-  END IF;
-  -- good to go
-  EXECUTE 'ALTER TABLE '||schemaName||'.'||tableName||' RENAME COLUMN "'||_columnNames[1]||'" TO "'||newColumnName||'"';
-  RETURN (1, 'Column '||schemaName||'.'||tableName||'.'||_columnNames[1]||' has been successfully renamed to '||newColumnName||'.');
-END
-$$ LANGUAGE plpgsql;
-
-
-
-
-
-
-
--- Copies the contents of srcColumnName to destColumnName and if successful, drops srcColumnName.
--- Return values:
---     1: the operation was completed successfully and the column was renamed
---     0: the source column cannot be found and the dest column already exists. We assume a previous operation was already performed successfully.
---    -1: the table couldn't be found
---    -3: source columns can be found.
---    -4: the destination column cannot be found.
-drop FUNCTION IF EXISTS tilda.copyColumnAndDrop(schemaName varchar, tableName varchar, srcColumnName varchar, destColumnName varchar);
-CREATE FUNCTION tilda.copyColumnAndDrop(schemaName varchar, tableName varchar, srcColumnName varchar, destColumnName varchar) 
-RETURNS RECORD AS $$
-DECLARE
-  _tableName varchar;
-  _srcColumnName varchar;
-  _destColumnName varchar;
-BEGIN
-  SELECT tables.table_name, C1.column_name, C2.column_name
-    INTO   _tableName, _srcColumnName, _destColumnName
-    FROM information_schema.tables
-      LEFT join information_schema.columns C1 on C1.table_schema=tables.table_schema and C1.table_name=tables.table_name and C1.column_name=srcColumnName
-      LEFT join information_schema.columns C2 on C2.table_schema=tables.table_schema and C2.table_name=tables.table_name and C2.column_name=destColumnName
-   WHERE lower(tables.table_schema)=lower(schemaName) and lower(tables.table_name)=lower(tableName)
-   GROUP BY 1,2
-  ;
-   -- Does the table exist?
-  IF _tableName is null
-  THEN RETURN (-1, 'Table '||schemaName||'.'||tableName||' cannot be found.');
-  -- Does the src column not exist and dest column exist?
-  ELSEIF _srcColumnName is null AND _destColumnName is not null
-  THEN RETURN (0, 'Source column '||_destColumnName||' does not exist and destination column '||_destColumnName||' exists. Maybe it has been copied and dropped already?');
-  -- Does the src column not exist and neither the dest column?
-  ELSEIF _srcColumnName is null
-  THEN RETURN (-3, 'Source column(s) '||schemaName||'.'||tableName||'.'||srcColumnName||' cannot be found.');
-  -- the source column exists, but does the destination column already exists?
-  ELSEIF _destColumnName is null
-  THEN RETURN (-4, 'Destination column '||schemaName||'.'||tableName||'.'||destColumnName||' does not exist.');
-  END IF;
-  -- good to go
-  EXECUTE 'update '||schemaName||'.'||tableName||' set "'||_destColumnName||'"="'||_srcColumnName||'"';
-  EXECUTE 'ALTER TABLE '||schemaName||'.'||tableName||' DROP COLUMN "'||_srcColumnName||'"';  
-  RETURN (1, 'Column '||_srcColumnName[1]||' has been copied to '||_destColumnName||' and then dropped.');
-END
-$$ LANGUAGE plpgsql;
-
-
-
-
-
+  
+  
+  
 ----------------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------------
 -- Sizing helpers
