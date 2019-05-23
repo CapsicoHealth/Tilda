@@ -206,7 +206,7 @@ $$ LANGUAGE plpgsql IMMUTABLE;
 
 ---------------------
 -- ToBool
-CREATE OR REPLACE FUNCTION vnahgods.toBool(str varchar, val boolean)
+CREATE OR REPLACE FUNCTION Tilda.toBool(str varchar, val boolean)
 RETURNS boolean AS $$
 BEGIN
   RETURN case when str is null then val else str::boolean end;
@@ -215,24 +215,24 @@ EXCEPTION WHEN OTHERS THEN
 END;
 $$ LANGUAGE plpgsql IMMUTABLE;
 
-CREATE OR REPLACE FUNCTION vnahgods.toBool(str1 varchar, str2 varchar, val boolean)
+CREATE OR REPLACE FUNCTION Tilda.toBool(str1 varchar, str2 varchar, val boolean)
 RETURNS boolean AS $$
 BEGIN
-  RETURN coalesce(vnahgods.toBool(str1, null), vnahgods.toBool(str2, val));
+  RETURN coalesce(Tilda.toBool(str1, null), Tilda.toBool(str2, val));
 END;
 $$ LANGUAGE plpgsql IMMUTABLE;
 
-CREATE OR REPLACE FUNCTION vnahgods.toBool(str1 varchar, str2 varchar, str3 varchar, val boolean)
+CREATE OR REPLACE FUNCTION Tilda.toBool(str1 varchar, str2 varchar, str3 varchar, val boolean)
 RETURNS boolean AS $$
 BEGIN
-  RETURN coalesce(vnahgods.toBool(str1, null), vnahgods.toBool(str2, null), vnahgods.toBool(str3, val));
+  RETURN coalesce(Tilda.toBool(str1, null), Tilda.toBool(str2, null), Tilda.toBool(str3, val));
 END;
 $$ LANGUAGE plpgsql IMMUTABLE;
 
 
 ---------------------
 -- ToBoolInt
-CREATE OR REPLACE FUNCTION vnahgods.toBoolInt(str varchar, val boolean)
+CREATE OR REPLACE FUNCTION Tilda.toBoolInt(str varchar, val boolean)
 RETURNS integer AS $$
 BEGIN
   RETURN case when str is null then val else str::boolean::integer end;
@@ -241,17 +241,17 @@ EXCEPTION WHEN OTHERS THEN
 END;
 $$ LANGUAGE plpgsql IMMUTABLE;
 
-CREATE OR REPLACE FUNCTION vnahgods.toBoolInt(str1 varchar, str2 varchar, val boolean)
+CREATE OR REPLACE FUNCTION Tilda.toBoolInt(str1 varchar, str2 varchar, val boolean)
 RETURNS integer AS $$
 BEGIN
-  RETURN coalesce(vnahgods.toBoolInt(str1, null), vnahgods.toBoolInt(str2, val));
+  RETURN coalesce(Tilda.toBoolInt(str1, null), Tilda.toBoolInt(str2, val));
 END;
 $$ LANGUAGE plpgsql IMMUTABLE;
 
-CREATE OR REPLACE FUNCTION vnahgods.toBoolInt(str1 varchar, str2 varchar, str3 varchar, val boolean)
+CREATE OR REPLACE FUNCTION Tilda.toBoolInt(str1 varchar, str2 varchar, str3 varchar, val boolean)
 RETURNS integer AS $$
 BEGIN
-  RETURN coalesce(vnahgods.toBoolInt(str1, null), vnahgods.toBoolInt(str2, null), vnahgods.toBoolInt(str3, val));
+  RETURN coalesce(Tilda.toBoolInt(str1, null), Tilda.toBoolInt(str2, null), Tilda.toBoolInt(str3, val));
 END;
 $$ LANGUAGE plpgsql IMMUTABLE;
 
