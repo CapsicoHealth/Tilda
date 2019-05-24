@@ -562,7 +562,7 @@ LANGUAGE plpgsql;
 --    -4: the destination column already exists.
 drop FUNCTION IF EXISTS tilda.renameColumnIfExists(schemaName varchar, tableName varchar, columnNames varchar[], newColumnName varchar);
 CREATE FUNCTION tilda.renameColumnIfExists(schemaName varchar, tableName varchar, columnNames varchar[], newColumnName varchar) 
-RETURNS RECORD AS $$
+RETURNS TABLE ("code" integer, "msg" text) as $$
 DECLARE
   _tableName varchar;
   _columnNames varchar[];
@@ -578,26 +578,26 @@ BEGIN
   ;
    -- Does the table exist?
   IF _tableName is null
-  THEN RETURN (-1, 'Table '||schemaName||'.'||tableName||' cannot be found.');
+  THEN RETURN QUERY select -1, 'Table '||schemaName||'.'||tableName||' cannot be found.';
   -- Are there more than one potential source columns actually in the table?
   ELSEIF array_length(_columnNames,1) > 1
-  THEN RETURN (-2, 'Multiple potential source columns '||schemaName||'.'||tableName||'.'||_columnNames::TEXT||' exist. There should be only one match.');
+  THEN RETURN QUERY select -2, 'Multiple potential source columns '||schemaName||'.'||tableName||'.'||_columnNames::TEXT||' exist. There should be only one match.';
   -- Does the src column not exist and neither the dest column?
   ELSEIF _columnNames[1] is null AND _newColumnName is null
-  THEN RETURN (-3, 'Source column(s) '||schemaName||'.'||tableName||'.'||columnNames::TEXT||' cannot be found.');
+  THEN RETURN QUERY select -3, 'Source column(s) '||schemaName||'.'||tableName||'.'||columnNames::TEXT||' cannot be found.';
   -- Does the src column not exist but the dest column does?
   ELSEIF _columnNames[1] is null AND _newColumnName is not null
-  THEN RETURN (0, 'Destination column '||schemaName||'.'||tableName||'.'||newColumnName||' already exists. Maybe it has been renamed already?');
+  THEN RETURN QUERY select 0, 'Destination column '||schemaName||'.'||tableName||'.'||newColumnName||' already exists. Maybe it has been renamed already?';
   -- the source column exists, but does the destination column already exists?
   ELSEIF _newColumnName is not null
-  THEN RETURN (-4, 'Destination column '||schemaName||'.'||tableName||'.'||newColumnName||' already exists.');
-  END IF;
+  THEN RETURN QUERY select -4, 'Destination column '||schemaName||'.'||tableName||'.'||newColumnName||' already exists.';
+  ELSE
   -- good to go
   EXECUTE 'ALTER TABLE '||schemaName||'.'||tableName||' RENAME COLUMN "'||_columnNames[1]||'" TO "'||newColumnName||'"';
-  RETURN (1, 'Column '||schemaName||'.'||tableName||'.'||_columnNames[1]||' has been successfully renamed to '||newColumnName||'.');
+  RETURN QUERY select 1, 'Column '||schemaName||'.'||tableName||'.'||_columnNames[1]||' has been successfully renamed to '||newColumnName||'.';
+  END IF;
 END
 $$ LANGUAGE plpgsql;
-
 
 
 
@@ -614,7 +614,7 @@ $$ LANGUAGE plpgsql;
 --    -4: the destination column cannot be found.
 drop FUNCTION IF EXISTS tilda.copyColumnAndDrop(schemaName varchar, tableName varchar, srcColumnName varchar, destColumnName varchar);
 CREATE FUNCTION tilda.copyColumnAndDrop(schemaName varchar, tableName varchar, srcColumnName varchar, destColumnName varchar) 
-RETURNS RECORD AS $$
+RETURNS TABLE ("code" integer, "msg" text) as $$
 DECLARE
   _tableName varchar;
   _srcColumnName varchar;
@@ -629,23 +629,25 @@ BEGIN
   ;
    -- Does the table exist?
   IF _tableName is null
-  THEN RETURN (-1, 'Table '||schemaName||'.'||tableName||' cannot be found.');
+  THEN RETURN QUERY select -1, 'Table '||schemaName||'.'||tableName||' cannot be found.';
   -- Does the src column not exist and dest column exist?
   ELSEIF _srcColumnName is null AND _destColumnName is not null
-  THEN RETURN (0, 'Source column '||_destColumnName||' does not exist and destination column '||_destColumnName||' exists. Maybe it has been copied and dropped already?');
+  THEN RETURN QUERY select 0, 'Source column '||_destColumnName||' does not exist and destination column '||_destColumnName||' exists. Maybe it has been copied and dropped already?';
   -- Does the src column not exist and neither the dest column?
   ELSEIF _srcColumnName is null
-  THEN RETURN (-3, 'Source column(s) '||schemaName||'.'||tableName||'.'||srcColumnName||' cannot be found.');
+  THEN RETURN QUERY select -3, 'Source column(s) '||schemaName||'.'||tableName||'.'||srcColumnName||' cannot be found.';
   -- the source column exists, but does the destination column already exists?
   ELSEIF _destColumnName is null
-  THEN RETURN (-4, 'Destination column '||schemaName||'.'||tableName||'.'||destColumnName||' does not exist.');
+  THEN RETURN QUERY select -4, 'Destination column '||schemaName||'.'||tableName||'.'||destColumnName||' does not exist.';
+  ELSE
+    -- good to go
+    EXECUTE 'update '||schemaName||'.'||tableName||' set "'||_destColumnName||'"="'||_srcColumnName||'"';
+    EXECUTE 'ALTER TABLE '||schemaName||'.'||tableName||' DROP COLUMN "'||_srcColumnName||'"';  
+    RETURN QUERY select 1, 'Column '||_srcColumnName||' has been copied to '||_destColumnName||' and then dropped.';
   END IF;
-  -- good to go
-  EXECUTE 'update '||schemaName||'.'||tableName||' set "'||_destColumnName||'"="'||_srcColumnName||'"';
-  EXECUTE 'ALTER TABLE '||schemaName||'.'||tableName||' DROP COLUMN "'||_srcColumnName||'"';  
-  RETURN (1, 'Column '||_srcColumnName||' has been copied to '||_destColumnName||' and then dropped.');
 END
 $$ LANGUAGE plpgsql;
+
 
 
 
@@ -793,51 +795,88 @@ LANGUAGE plpgsql;
 
 
 -- returns an list of schemas, with the aggregate storage sizes of all of their tables, ordered by their sizes, with a running total.
+drop function if exists Tilda.getSchemaSizes();
 create or replace function Tilda.getSchemaSizes() 
-returns TABLE ("schemaName" varchar, "totalSize" numeric, "totalSizePretty" text, "totalSizeExternal" numeric, "totalSizeExternalPretty" text
-             , "runningTotalSize" numeric, "runningTotalSizePretty" text) as $$
+returns TABLE ("schemaName" varchar, "totalSize" numeric, "totalSizePretty" text
+                                   , "totalSizeTable" numeric, "totalSizeTablePretty" text
+                                   , "totalSizeIndices" numeric, "totalSizeIndicesPretty" text
+                                   , "totalSizeOther" numeric, "totalSizeOtherPretty" text
+                                   , "runningTotalSize" numeric, "runningTotalSizePretty" text
+                                   , "runningTotalSizeTables" numeric, "runningTotalSizeTablesPretty" text
+                                   , "runningTotalSizeIndices" numeric, "runningTotalSizeIndicesPretty" text
+              ) as $$
 with T as (
 SELECT
-   schemaname::VARCHAR as "schemaName",
-   sum(pg_total_relation_size(relid)) As "totalSize",
-   pg_size_pretty(sum(pg_total_relation_size(relid))) As "totalSizePretty",
-   sum(pg_total_relation_size(relid)) - sum(pg_relation_size(relid)) as "totalSizeExternal",
-   pg_size_pretty(sum(pg_total_relation_size(relid)) - sum(pg_relation_size(relid))) as "totalSizeExternalPretty"
+   schemaname::VARCHAR as "schemaName"
+  ,sum(pg_total_relation_size(relid)) As "totalSize"
+  ,pg_size_pretty(sum(pg_total_relation_size(relid))) As "totalSizePretty"
+  ,sum(pg_relation_size(relid)) AS "totalSizeTable"
+  ,pg_size_pretty(sum(pg_relation_size(relid))) AS "totalSizeTablePretty"
+  ,sum(pg_indexes_size(relid)) AS "totalSizeIndices"
+  ,pg_size_pretty(sum(pg_indexes_size(relid))) AS "totalSizeIndicesPretty"
+  ,sum(pg_total_relation_size(relid)-pg_relation_size(relid)-pg_indexes_size(relid)) AS "totalSizeOther"
+  ,pg_size_pretty(sum(pg_total_relation_size(relid)-pg_relation_size(relid)-pg_indexes_size(relid))) AS "totalSizeOtherPretty"
   FROM pg_catalog.pg_statio_user_tables
   group by 1
   ORDER BY 2 DESC
 )
-select "schemaName", "totalSize", "totalSizePretty", "totalSizeExternal", "totalSizeExternalPretty"
-                   , sum("totalSize") over(order by "totalSize" desc) as "runningTotalSize"
-                   , pg_size_pretty(sum("totalSize") over(order by "totalSize" desc)) as "runningTotalSizePretty"
+select "schemaName"
+     , "totalSize", "totalSizePretty"
+     , "totalSizeTable", "totalSizeTablePretty"
+     , "totalSizeIndices", "totalSizeIndicesPretty"
+     , "totalSizeOther", "totalSizeOtherPretty"
+     , sum("totalSize") over(order by "totalSize" desc) as "runningTotalSize"
+     , pg_size_pretty(sum("totalSize") over(order by "totalSize" desc)) as "runningTotalSizePretty"
+     , sum("totalSizeTable") over(order by "totalSize" desc) as "runningTotalSizeTables"
+     , pg_size_pretty(sum("totalSizeTable") over(order by "totalSize" desc)) as "runningTotalSizeTablesPretty"
+     , sum("totalSizeIndices") over(order by "totalSize" desc) as "runningTotalSizeIndices"
+     , pg_size_pretty(sum("totalSizeIndices") over(order by "totalSize" desc)) as "runningTotalSizeIndicesPretty"
   from T
-group by 1, 2, 3, 4, 5
+group by 1, 2, 3, 4, 5, 6, 7, 8, 9
 $$ LANGUAGE SQL;
 
 
 
 -- returns an list of tables, with their storage sizes, ordered by their sizes, with a running total.
+drop function if exists Tilda.getTableSizes();
 create or replace function Tilda.getTableSizes() 
-returns TABLE ("schemaName" varchar, "tableName" varchar, "totalSize" numeric, "totalSizePretty" text, "totalSizeExternal" numeric, "totalSizeExternalPretty" text
-             , "runningTotalSize" numeric, "runningTotalSizePretty" text) as $$
+returns TABLE ("schemaName" varchar, "tableName" varchar, "totalSize" numeric, "totalSizePretty" text
+                                                        , "totalSizeTable" numeric, "totalSizeTablePretty" text
+                                                        , "totalSizeIndices" numeric, "totalSizeIndicesPretty" text
+                                                        , "totalSizeOther" numeric, "totalSizeOtherPretty" text
+                                                        , "runningTotalSize" numeric, "runningTotalSizePretty" text
+                                                        , "runningTotalSizeTables" numeric, "runningTotalSizeTablesPretty" text
+                                                        , "runningTotalSizeIndices" numeric, "runningTotalSizeIndicesPretty" text
+              ) as $$
 with T as (
 SELECT
-   schemaname::VARCHAR as "schemaName",
-   relname::VARCHAR as "tableName",
-   pg_total_relation_size(relid)::numeric As "totalSize",
-   pg_size_pretty(pg_total_relation_size(relid)) As "totalSizePretty",
-   (pg_total_relation_size(relid) - pg_relation_size(relid))::numeric as "totalSizeExternal",
-   pg_size_pretty(pg_total_relation_size(relid) - pg_relation_size(relid)) as "totalSizeExternalPretty"
+   schemaname::VARCHAR as "schemaName"
+  ,relname::VARCHAR as "tableName"
+  ,pg_total_relation_size(relid)::numeric As "totalSize"
+  ,pg_size_pretty(pg_total_relation_size(relid)) As "totalSizePretty"
+  ,pg_relation_size(relid)::numeric AS "totalSizeTable"
+  ,pg_size_pretty(pg_relation_size(relid)) AS "totalSizeTablePretty"
+  ,pg_indexes_size(relid)::numeric AS "totalSizeIndices"
+  ,pg_size_pretty(pg_indexes_size(relid)) AS "totalSizeIndicesPretty"
+  ,(pg_total_relation_size(relid)-pg_relation_size(relid)-pg_indexes_size(relid))::numeric AS "totalSizeOther"
+  ,pg_size_pretty(pg_total_relation_size(relid)-pg_relation_size(relid)-pg_indexes_size(relid)) AS "totalSizeOtherPretty"
   FROM pg_catalog.pg_statio_user_tables
   ORDER BY pg_total_relation_size(relid) DESC
 )
-select "schemaName", "tableName", "totalSize", "totalSizePretty", "totalSizeExternal", "totalSizeExternalPretty"
-                   , sum("totalSize") over(order by "totalSize" desc) as "runningTotalSize"
-                   , pg_size_pretty(sum("totalSize") over(order by "totalSize" desc)) as "runningTotalSizePretty"
+select "schemaName", "tableName"
+     , "totalSize", "totalSizePretty"
+     , "totalSizeTable", "totalSizeTablePretty"
+     , "totalSizeIndices", "totalSizeIndicesPretty"
+     , "totalSizeOther", "totalSizeOtherPretty"
+     , sum("totalSize") over(order by "totalSize" desc) as "runningTotalSize"
+     , pg_size_pretty(sum("totalSize") over(order by "totalSize" desc)) as "runningTotalSizePretty"
+     , sum("totalSizeTable") over(order by "totalSize" desc) as "runningTotalSizeTables"
+     , pg_size_pretty(sum("totalSizeTable") over(order by "totalSize" desc)) as "runningTotalSizeTablesPretty"
+     , sum("totalSizeIndices") over(order by "totalSize" desc) as "runningTotalSizeIndices"
+     , pg_size_pretty(sum("totalSizeIndices") over(order by "totalSize" desc)) as "runningTotalSizeIndicesPretty"
   from T
-group by 1, 2, 3, 4, 5, 6
+group by 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
 $$ LANGUAGE SQL;
-
 
 
 

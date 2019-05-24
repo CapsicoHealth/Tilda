@@ -993,7 +993,7 @@ public class PostgreSQL implements DBType
           throw new Exception(IX._Parent.getFullName() + " is defining index '" + IX.getName() + "' which is GIN-Elligible and also defined as UNIQUE: GIN indices cannot be unique.");
         if (IX._Db == false)
           Out.print("-- app-level index only -- ");
-        Out.print("CREATE" + (IX._Unique == true ? " UNIQUE" : "") + " INDEX IF EXISTS " + IX.getName() + " ON " + IX._Parent.getShortName() + (Gin ? " USING gin " : "") + " (");
+        Out.print("CREATE" + (IX._Unique == true ? " UNIQUE" : "") + " INDEX IF NOT EXISTS " + IX.getName() + " ON " + IX._Parent.getShortName() + (Gin ? " USING gin " : "") + " (");
         if (IX._ColumnObjs.isEmpty() == false)
           _SQL.PrintColumnList(Out, IX._ColumnObjs);
         if (IX._OrderByObjs.isEmpty() == false)
