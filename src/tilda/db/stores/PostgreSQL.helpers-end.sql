@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 
+-- Original file: https://github.com/CapsicoHealth/Tilda/blob/master/src/tilda/db/stores/PostgreSQL.helpers-end.sql
+-- Documentation: https://github.com/CapsicoHealth/Tilda/wiki/Tilda-Common-Helper-Database-Functions
+
+
 -----------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------
 --- TILDA KEY-related functions

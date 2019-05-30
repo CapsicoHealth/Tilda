@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+-- Original file: https://github.com/CapsicoHealth/Tilda/blob/master/src/tilda/db/stores/PostgreSQL.helpers-start.sql
+-- Documentation: https://github.com/CapsicoHealth/Tilda/wiki/Tilda-Common-Helper-Database-Functions
 
 -----------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------
@@ -21,7 +23,6 @@
 -----------------------------------------------------------------------------------------------------------------
 create schema IF NOT EXISTS TILDA;
 
--- See documentation on https://github.com/CapsicoHealth/Tilda/wiki/Tilda-Common-Helper-Database-Functions
 
 -----------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------
