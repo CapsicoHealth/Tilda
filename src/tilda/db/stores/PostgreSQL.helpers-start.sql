@@ -14,8 +14,53 @@
  * limitations under the License.
  */
 
+-- Original file: https://github.com/CapsicoHealth/Tilda/blob/master/src/tilda/db/stores/PostgreSQL.helpers-start.sql
+-- Documentation: https://github.com/CapsicoHealth/Tilda/wiki/Tilda-Common-Helper-Database-Functions
+
+-----------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------
+-- TILDA Schema
+-----------------------------------------------------------------------------------------------------------------
+create schema IF NOT EXISTS TILDA;
+
+
+-----------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------
+-- TILDA like() and ilike() functions
+-----------------------------------------------------------------------------------------------------------------
+CREATE OR REPLACE FUNCTION TILDA.Like(v text[], val text)
+  RETURNS boolean
+  IMMUTABLE LANGUAGE SQL AS
+  'select exists (select * from unnest(v) x_ where x_ like val);';
+CREATE OR REPLACE FUNCTION TILDA.Like(v text[], val text[])
+  RETURNS boolean
+  IMMUTABLE LANGUAGE SQL AS
+  'select exists (select * from unnest(v) x_ where x_ like ANY(val));';
+CREATE OR REPLACE FUNCTION TILDA.Like(v text, val text[])
+  RETURNS boolean
+  IMMUTABLE LANGUAGE SQL AS
+  'select v like ANY(val);';
+
+CREATE OR REPLACE FUNCTION TILDA.ILike(v text[], val text)
+  RETURNS boolean
+  IMMUTABLE LANGUAGE SQL AS
+  'select exists (select * from unnest(v) x_ where x_ ilike val);';
+CREATE OR REPLACE FUNCTION TILDA.ILike(v text[], val text[])
+  RETURNS boolean
+  IMMUTABLE LANGUAGE SQL AS
+  'select exists (select * from unnest(v) x_ where x_ ilike ANY(val));';
+CREATE OR REPLACE FUNCTION TILDA.ILike(v text, val text[])
+  RETURNS boolean
+  IMMUTABLE LANGUAGE SQL AS
+  'select v ilike ANY(val);';
+
+
+ 
+
+-----------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------
 -- TILDA in() functions
+-----------------------------------------------------------------------------------------------------------------
 CREATE OR REPLACE FUNCTION TILDA.In(v text[], vals text[])
   RETURNS boolean
   IMMUTABLE LANGUAGE SQL AS
@@ -47,8 +92,17 @@ CREATE OR REPLACE FUNCTION TILDA.In(v bigint, vals bigint[])
   'select v = ANY(vals);';
 
 
+  
+  
+  
+
+-----------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------
 -- TILDA toXXX() functions for Int, Double, Date
+-----------------------------------------------------------------------------------------------------------------
+
+---------------------
+-- ToInt
 CREATE OR REPLACE FUNCTION TILDA.toInt(str varchar, val integer)
 RETURNS integer AS $$
 BEGIN
@@ -57,12 +111,14 @@ EXCEPTION WHEN OTHERS THEN
   RETURN val;
 END;
 $$ LANGUAGE plpgsql IMMUTABLE;
+
 CREATE OR REPLACE FUNCTION TILDA.toInt(str1 varchar, str2 varchar, val integer)
 RETURNS integer AS $$
 BEGIN
   RETURN coalesce(Tilda.toInt(str1, null), Tilda.toInt(str2, val));
 END;
 $$ LANGUAGE plpgsql IMMUTABLE;
+
 CREATE OR REPLACE FUNCTION TILDA.toInt(str1 varchar, str2 varchar, str3 varchar, val integer)
 RETURNS integer AS $$
 BEGIN
@@ -71,6 +127,8 @@ END;
 $$ LANGUAGE plpgsql IMMUTABLE;
 
 
+---------------------
+-- ToDouble
 CREATE OR REPLACE FUNCTION TILDA.toDouble(str varchar, val double precision)
 RETURNS double precision AS $$
 BEGIN
@@ -79,12 +137,14 @@ EXCEPTION WHEN OTHERS THEN
   RETURN val;
 END;
 $$ LANGUAGE plpgsql IMMUTABLE;
+
 CREATE OR REPLACE FUNCTION TILDA.toDouble(str1 varchar, str2 varchar, val double precision)
 RETURNS double precision AS $$
 BEGIN
   RETURN coalesce(Tilda.toDouble(str1, null), Tilda.toDouble(str2, val));
 END;
 $$ LANGUAGE plpgsql IMMUTABLE;
+
 CREATE OR REPLACE FUNCTION TILDA.toDouble(str1 varchar, str2 varchar, str3 varchar, val double precision)
 RETURNS double precision AS $$
 BEGIN
@@ -93,6 +153,8 @@ END;
 $$ LANGUAGE plpgsql IMMUTABLE;
 
 
+---------------------
+-- ToFloat
 CREATE OR REPLACE FUNCTION TILDA.toFloat(str varchar, val real)
 RETURNS real AS $$
 BEGIN
@@ -101,12 +163,14 @@ EXCEPTION WHEN OTHERS THEN
   RETURN val;
 END;
 $$ LANGUAGE plpgsql IMMUTABLE;
+
 CREATE OR REPLACE FUNCTION TILDA.toFloat(str1 varchar, str2 varchar, val real)
 RETURNS real AS $$
 BEGIN
   RETURN coalesce(Tilda.toFloat(str1, null), Tilda.toFloat(str2, val));
 END;
 $$ LANGUAGE plpgsql IMMUTABLE;
+
 CREATE OR REPLACE FUNCTION TILDA.toFloat(str1 varchar, str2 varchar, str3 varchar, val real)
 RETURNS real AS $$
 BEGIN
@@ -115,6 +179,8 @@ END;
 $$ LANGUAGE plpgsql IMMUTABLE;
 
 
+---------------------
+-- ToDate
 CREATE OR REPLACE FUNCTION TILDA.toDate(str varchar, val Date)
 RETURNS Date AS $$
 BEGIN
@@ -123,12 +189,14 @@ EXCEPTION WHEN OTHERS THEN
   RETURN val;
 END;
 $$ LANGUAGE plpgsql IMMUTABLE;
+
 CREATE OR REPLACE FUNCTION TILDA.toDate(str1 varchar, str2 varchar, val Date)
 RETURNS Date AS $$
 BEGIN
   RETURN coalesce(Tilda.toDate(str1, null), Tilda.toDate(str2, val));
 END;
 $$ LANGUAGE plpgsql IMMUTABLE;
+
 CREATE OR REPLACE FUNCTION TILDA.toDate(str1 varchar, str2 varchar, str3 varchar, val Date)
 RETURNS Date AS $$
 BEGIN
@@ -137,146 +205,180 @@ END;
 $$ LANGUAGE plpgsql IMMUTABLE;
 
 
------------------------------------------------------------------------------------------------------------------
--- TILDA Like() and ilike() functions
-CREATE OR REPLACE FUNCTION TILDA.Like(v text[], val text)
-  RETURNS boolean
-  IMMUTABLE LANGUAGE SQL AS
-  'select exists (select * from unnest(v) x_ where x_ like val);';
-CREATE OR REPLACE FUNCTION TILDA.Like(v text[], val text[])
-  RETURNS boolean
-  IMMUTABLE LANGUAGE SQL AS
-  'select exists (select * from unnest(v) x_ where x_ like ANY(val));';
-CREATE OR REPLACE FUNCTION TILDA.Like(v text, val text[])
-  RETURNS boolean
-  IMMUTABLE LANGUAGE SQL AS
-  'select v like ANY(val);';
-
-CREATE OR REPLACE FUNCTION TILDA.ILike(v text[], val text)
-  RETURNS boolean
-  IMMUTABLE LANGUAGE SQL AS
-  'select exists (select * from unnest(v) x_ where x_ ilike val);';
-CREATE OR REPLACE FUNCTION TILDA.ILike(v text[], val text[])
-  RETURNS boolean
-  IMMUTABLE LANGUAGE SQL AS
-  'select exists (select * from unnest(v) x_ where x_ ilike ANY(val));';
-CREATE OR REPLACE FUNCTION TILDA.ILike(v text, val text[])
-  RETURNS boolean
-  IMMUTABLE LANGUAGE SQL AS
-  'select v ilike ANY(val);';
-
-  
------------------------------------------------------------------------------------------------------------------
---- TILDA KEY-related functions
-CREATE OR REPLACE FUNCTION TILDA.getKeyBatch(t text, c integer) 
-RETURNS TABLE (min_key_inclusive bigint, max_key_exclusive bigint) AS $$
-DECLARE
-  val bigint;
+---------------------
+-- ToBool
+CREATE OR REPLACE FUNCTION Tilda.toBool(str varchar, val boolean)
+RETURNS boolean AS $$
 BEGIN
-  UPDATE TILDA.Key set "max"="max"+c where "name"=t returning "max" into val;
-  return query select val-c as min_key_inclusive, val as max_key_exclusive;
-END; $$
-LANGUAGE PLPGSQL;
+  RETURN case when str is null then val else str::boolean end;
+EXCEPTION WHEN OTHERS THEN
+  RETURN val;
+END;
+$$ LANGUAGE plpgsql IMMUTABLE;
 
-
-CREATE OR REPLACE FUNCTION TILDA.getKeyBatchAsMaxExclusive(t text, c integer) RETURNS bigint AS $$
-DECLARE
-  val bigint;
+CREATE OR REPLACE FUNCTION Tilda.toBool(str1 varchar, str2 varchar, val boolean)
+RETURNS boolean AS $$
 BEGIN
-  UPDATE TILDA.Key set "max"="max"+c where "name"=t returning "max" into val;
-  return val;
-END; $$
-LANGUAGE PLPGSQL;
+  RETURN coalesce(Tilda.toBool(str1, null), Tilda.toBool(str2, val));
+END;
+$$ LANGUAGE plpgsql IMMUTABLE;
+
+CREATE OR REPLACE FUNCTION Tilda.toBool(str1 varchar, str2 varchar, str3 varchar, val boolean)
+RETURNS boolean AS $$
+BEGIN
+  RETURN coalesce(Tilda.toBool(str1, null), Tilda.toBool(str2, null), Tilda.toBool(str3, val));
+END;
+$$ LANGUAGE plpgsql IMMUTABLE;
 
 
--- Function to check dynamically if a table exists. It can also be used as an SQL-Injection
--- check when another function needs to create some dynamic SQL and received table/schema names
--- as strings
-CREATE OR REPLACE FUNCTION TILDA.existsTable(schemaName varchar, tableName varchar)
-RETURNS boolean
-STABLE LANGUAGE SQL AS
-  'SELECT true FROM information_schema.tables WHERE lower(tables.table_schema)=lower($1) and lower(tables.table_name)=lower($2);'
-;
+---------------------
+-- ToBoolInt
+CREATE OR REPLACE FUNCTION Tilda.toBoolInt(str varchar, val boolean)
+RETURNS integer AS $$
+BEGIN
+  RETURN case when str is null then val else str::boolean::integer end;
+EXCEPTION WHEN OTHERS THEN
+  RETURN val;
+END;
+$$ LANGUAGE plpgsql IMMUTABLE;
 
--- Function to check dynamically if a column exists. It can also be used as an SQL-Injection
--- check when another function needs to create some dynamic SQL and received table/schema/column names
--- as strings
-CREATE OR REPLACE FUNCTION TILDA.existsColumn(schemaName varchar, tableName varchar, colName varchar)
-RETURNS boolean
-STABLE LANGUAGE SQL AS $$
-  SELECT true FROM information_schema.tables T
-              JOIN information_schema.columns C on C.table_schema=T.table_schema and C.table_name=T.table_name
-   WHERE lower(T.table_schema)=lower($1) and lower(T.table_name)=lower($2) and lower(c.column_name)=lower($3)
-   ;
+CREATE OR REPLACE FUNCTION Tilda.toBoolInt(str1 varchar, str2 varchar, val boolean)
+RETURNS integer AS $$
+BEGIN
+  RETURN coalesce(Tilda.toBoolInt(str1, null), Tilda.toBoolInt(str2, val));
+END;
+$$ LANGUAGE plpgsql IMMUTABLE;
+
+CREATE OR REPLACE FUNCTION Tilda.toBoolInt(str1 varchar, str2 varchar, str3 varchar, val boolean)
+RETURNS integer AS $$
+BEGIN
+  RETURN coalesce(Tilda.toBoolInt(str1, null), Tilda.toBoolInt(str2, null), Tilda.toBoolInt(str3, val));
+END;
+$$ LANGUAGE plpgsql IMMUTABLE;
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------
+-- TILDA Duration functions
+-----------------------------------------------------------------------------------------------------------------
+
+---------------------
+-- age
+CREATE OR REPLACE FUNCTION TILDA.age(timestamptz, timestamptz)
+  RETURNS float
+  IMMUTABLE LANGUAGE SQL AS
+'SELECT date_part(''year'', age($2, $1)) + date_part(''month'', age($2, $1))/12.0 + date_part(''day'', age($2, $1))/365.0;';
+COMMENT ON FUNCTION TILDA.Age(timestamptz, timestamptz) IS 'Computes the age in years between 2 dates ''start'' and ''end'' with decimal places, so 1.25 years is 1y and 3 months. It is not 100% accurate as we use a simple 1y=365 days calculation. Use Tilda.DaysBetween if you want accurate days-based calculations.';
+
+
+---------------------
+-- ageBetween
+CREATE OR REPLACE FUNCTION TILDA.ageBetween(timestamptz, timestamptz, float, float)
+  RETURNS boolean
+  IMMUTABLE LANGUAGE SQL AS
+'SELECT TILDA.Age($1, $2) >= $3 AND TILDA.Age($1, $2) < $4';
+
+
+---------------------
+-- daysBetween
+CREATE OR REPLACE FUNCTION TILDA.daysBetween(ts1 timestamptz, ts2 timestamptz, midnight boolean)
+  RETURNS integer
+  IMMUTABLE LANGUAGE SQL AS
+'SELECT case when $3 or $2 < $1 then $2::DATE - $1::DATE else $2::DATE - $1::DATE + 1 end;';
+COMMENT ON FUNCTION TILDA.DaysBetween(timestamptz, timestamptz, boolean) IS 'Computes the number of days between 2 dates ''start'' and ''end''. The third parameter indicates whether the midnight rule should be applied or not. If true, the number of days between 2016-12-01 and 2016-12-02 for example will be 1 (i.e., one mignight passed). If false, the returned count will be 2. Note that this function doesn.''t care about timezones and only compares the date portions of the parameters passed in.';
+
+CREATE OR REPLACE FUNCTION TILDA.daysBetween(ts1 timestamptz, ts2 timestamptz)
+  RETURNS integer
+  IMMUTABLE LANGUAGE SQL AS
+'SELECT case when $2 < $1 then $2::DATE - $1::DATE else $2::DATE - $1::DATE + 1 end;';
+COMMENT ON FUNCTION TILDA.DaysBetween(timestamptz, timestamptz) IS 'Computes the number of days between 2 dates ''start'' and ''end''. This function is the same as TILDA.DaysBetween(timestamptz, timestamptz, boolean) but with the third parapeter defaulted to false, i.e., the number of days between 2016-12-01 and 2016-12-02 is 2.';
+
+
+------------------------------------------------------------------
+-- monthsBetween, quartersBetween, yearsBetween
+CREATE OR REPLACE FUNCTION TILDA.monthsBetween(timestamptz, timestamptz)
+  RETURNS float
+  IMMUTABLE LANGUAGE SQL AS
+'SELECT date_part(''year'', age($2, $1))*12+date_part(''month'', age($2, $1))+date_part(''days'', age($2, $1))/30.0;';
+COMMENT ON FUNCTION TILDA.MonthsBetween(timestamptz, timestamptz) IS 'Computes the aproximate number of months between 2 dates ''start'' and ''end''. It''s approximate because fractional days are computed as a 30th part of a month no matter which month it is.';
+
+CREATE OR REPLACE FUNCTION TILDA.quartersBetween(timestamptz, timestamptz)
+  RETURNS float
+  IMMUTABLE LANGUAGE SQL AS
+'SELECT date_part(''year'', age($2, $1))*4+date_part(''month'', age($2, $1))/3.0+date_part(''days'', age($2, $1))/91.0;';
+COMMENT ON FUNCTION TILDA.QuartersBetween(timestamptz, timestamptz) IS 'Computes the aproximate number of quarters between 2 dates ''start'' and ''end''. It''s approximate because fractional days are computed as a 91st part of a quarter no matter which quarter it is.';
+
+CREATE OR REPLACE FUNCTION TILDA.yearsBetween(timestamptz, timestamptz)
+  RETURNS float
+  IMMUTABLE LANGUAGE SQL AS
+'SELECT date_part(''year'', age($2, $1))+date_part(''month'', age($2, $1))/12.0+date_part(''days'', age($2, $1))/365.0;';
+COMMENT ON FUNCTION TILDA.YearsBetween(timestamptz, timestamptz) IS 'Computes the aproximate number of years between 2 dates ''start'' and ''end''. It''s approximate because fractional days are computed as a 365th part of a year no matter which year it is.';
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------
+-- TILDA aggregates
+-----------------------------------------------------------------------------------------------------------------
+
+---------------------
+-- First
+CREATE OR REPLACE FUNCTION TILDA.first_agg (anyelement, anyelement)
+RETURNS anyelement LANGUAGE SQL IMMUTABLE STRICT AS $$
+        SELECT $1;
 $$;
 
+DO $$ BEGIN
+if not exists (SELECT 1 FROM pg_aggregate WHERE aggfnoid::TEXT = 'first') THEN
+CREATE AGGREGATE public.FIRST (
+        sfunc    = TILDA.first_agg,
+        basetype = anyelement,
+        stype    = anyelement
+);
+END IF;
+END $$;
 
--- Updates the key in TILDA.Key to match the max(refnum)+1 from the named table
-CREATE OR REPLACE FUNCTION TILDA.updateMaxKey(schemaName varchar, tableName varchar)
-RETURNS bigint AS $$
-DECLARE
-  val bigint;
-  q text;
-BEGIN
-  IF (SELECT TILDA.existsColumn($1,$2,'refnum')) is distinct from true THEN -- test for table and schema existence.. and doubles as SQL injection barier.
-   return null;
-  END IF;
-  q:='SELECT coalesce(max(refnum),0) from '||schemaName||'.'||tableName;
-  EXECUTE q into val;
-  val:=val+1;
-  q:='update TILDA.Key set max='||val||' where name='''||upper(schemaName||'.'||tableName)||'''';
-  EXECUTE q;
-  return val;
-END; $$
-LANGUAGE PLPGSQL;
+---------------------
+-- Last
+CREATE OR REPLACE FUNCTION TILDA.last_agg ( anyelement, anyelement )
+RETURNS anyelement LANGUAGE SQL IMMUTABLE STRICT AS $$
+        SELECT $2;
+$$;
+DO $$ BEGIN
+if not exists (SELECT 1 FROM pg_aggregate WHERE aggfnoid::TEXT = 'last') THEN
+CREATE AGGREGATE public.LAST (
+        sfunc    = TILDA.last_agg,
+        basetype = anyelement,
+        stype    = anyelement
+);
+END IF;
+END $$;
 
-
--- Updates the key's max value in TILDA.Key to max(refnum)+1 of all registered tables.
-CREATE OR REPLACE FUNCTION TILDA.updateAllMaxKeys() RETURNS bigint AS $$
-DECLARE
-  val bigint;
-  counter bigint;
-  skipped bigint;
-  q text;
-  v_curr record;
-BEGIN
-  counter:=0;
-  skipped:=0;
-  for v_curr in (
-    SELECT name
-          ,substr(name, 1, strpos(name,'.')-1) as schemaName
-          ,substr(name, strpos(name,'.')+1) as tableName
-      from TILDA.Key
-   ) LOOP
-      -- It's possible for an old table to still be in the Tilda.Key table but no longer exist, or no longer have th erefnum column.
-      IF (SELECT TILDA.existsColumn(v_curr.schemaName,v_curr.tableName, 'refnum')) is distinct from true THEN
-        skipped:=skipped+1;
-        RAISE NOTICE 'Skipped table #% of %: %',skipped, counter, v_curr.name;
-        CONTINUE;
-      END IF;
-
-      q:='SELECT coalesce(max(refnum),0) from '||v_curr.schemaName||'.'||v_curr.tableName;
-      RAISE NOTICE '%',q;
-      EXECUTE q into val;
-      val:=val+1;
-      q:='update TILDA.Key set max='||val||' where name='''||v_curr.name||'''';
-      RAISE NOTICE '%',q;
-      EXECUTE q;
-      counter:=counter+1;
-      RAISE NOTICE 'Processed table #%: %',counter, v_curr.name;
-    END LOOP;
-  RAISE NOTICE 'Processed % tables, and skipped % (total=%)',counter, skipped, (counter+skipped);
-  return counter;
-END; $$
-LANGUAGE PLPGSQL;
-
+---------------------
+-- array_cat_agg
+DO $$ BEGIN
+if not exists (SELECT 1 FROM pg_aggregate WHERE aggfnoid::TEXT = 'array_cat_agg') THEN
+CREATE AGGREGATE public.array_cat_agg (anyarray)
+(
+    sfunc = array_cat,
+    stype = anyarray,
+    initcond = '{}'
+);  
+END IF;
+END $$;
 
 
 
 
 
 -----------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------
 -- TILDA String-to-Array conversion for automated array support, mostly from ETL platforms
+-----------------------------------------------------------------------------------------------------------------
 DROP CAST IF EXISTS (text AS text[]);
 CREATE OR REPLACE FUNCTION TILDA.strToArray(text)
   RETURNS text[]
@@ -300,112 +402,41 @@ $$;
 
 
 
------------------------------------------------------------------------------------------------------------------
--- TILDA Duration functions
-CREATE OR REPLACE FUNCTION TILDA.daysBetween(ts1 timestamptz, ts2 timestamptz, midnight boolean)
-  RETURNS integer
-  IMMUTABLE LANGUAGE SQL AS
-'SELECT case when $3 or $2 < $1 then $2::DATE - $1::DATE else $2::DATE - $1::DATE + 1 end;';
-COMMENT ON FUNCTION TILDA.DaysBetween(timestamptz, timestamptz, boolean) IS 'Computes the number of days between 2 dates ''start'' and ''end''. The third parameter indicates whether the midnight rule should be applied or not. If true, the number of days between 2016-12-01 and 2016-12-02 for example will be 1 (i.e., one mignight passed). If false, the returned count will be 2. Note that this function doesn.''t care about timezones and only compares the date portions of the parameters passed in.';
 
-
-CREATE OR REPLACE FUNCTION TILDA.daysBetween(ts1 timestamptz, ts2 timestamptz)
-  RETURNS integer
-  IMMUTABLE LANGUAGE SQL AS
-'SELECT case when $2 < $1 then $2::DATE - $1::DATE else $2::DATE - $1::DATE + 1 end;';
-COMMENT ON FUNCTION TILDA.DaysBetween(timestamptz, timestamptz) IS 'Computes the number of days between 2 dates ''start'' and ''end''. This function is the same as TILDA.DaysBetween(timestamptz, timestamptz, boolean) but with the third parapeter defaulted to false, i.e., the number of days between 2016-12-01 and 2016-12-02 is 2.';
-
-
-CREATE OR REPLACE FUNCTION TILDA.monthsBetween(timestamptz, timestamptz)
-  RETURNS float
-  IMMUTABLE LANGUAGE SQL AS
-'SELECT date_part(''year'', age($2, $1))*12+date_part(''month'', age($2, $1))+date_part(''days'', age($2, $1))/30.0;';
-COMMENT ON FUNCTION TILDA.MonthsBetween(timestamptz, timestamptz) IS 'Computes the aproximate number of months between 2 dates ''start'' and ''end''. It''s approximate because fractional days are computed as a 30th part of a month no matter which month it is.';
-
-
-CREATE OR REPLACE FUNCTION TILDA.quartersBetween(timestamptz, timestamptz)
-  RETURNS float
-  IMMUTABLE LANGUAGE SQL AS
-'SELECT date_part(''year'', age($2, $1))*4+date_part(''month'', age($2, $1))/3.0+date_part(''days'', age($2, $1))/91.0;';
-COMMENT ON FUNCTION TILDA.QuartersBetween(timestamptz, timestamptz) IS 'Computes the aproximate number of quarters between 2 dates ''start'' and ''end''. It''s approximate because fractional days are computed as a 91st part of a quarter no matter which quarter it is.';
-
-
-CREATE OR REPLACE FUNCTION TILDA.yearsBetween(timestamptz, timestamptz)
-  RETURNS float
-  IMMUTABLE LANGUAGE SQL AS
-'SELECT date_part(''year'', age($2, $1))+date_part(''month'', age($2, $1))/12.0+date_part(''days'', age($2, $1))/365.0;';
-COMMENT ON FUNCTION TILDA.YearsBetween(timestamptz, timestamptz) IS 'Computes the aproximate number of years between 2 dates ''start'' and ''end''. It''s approximate because fractional days are computed as a 365th part of a year no matter which year it is.';
-
-
-CREATE OR REPLACE FUNCTION TILDA.age(timestamptz, timestamptz)
-  RETURNS float
-  IMMUTABLE LANGUAGE SQL AS
-'SELECT date_part(''year'', age($2, $1)) + date_part(''month'', age($2, $1))/12.0 + date_part(''day'', age($2, $1))/365.0;';
-COMMENT ON FUNCTION TILDA.Age(timestamptz, timestamptz) IS 'Computes the age in years between 2 dates ''start'' and ''end'' with decimal places, so 1.25 years is 1y and 3 months. It is not 100% accurate as we use a simple 1y=365 days calculation. Use Tilda.DaysBetween if you want accurate days-based calculations.';
-
-
-CREATE OR REPLACE FUNCTION TILDA.ageBetween(timestamptz, timestamptz, float, float)
-  RETURNS boolean
-  IMMUTABLE LANGUAGE SQL AS
-'SELECT TILDA.Age($1, $2) >= $3 AND TILDA.Age($1, $2) < $4';
 
 
 -----------------------------------------------------------------------------------------------------------------
--- TILDA FIRST/LAST aggregates
-CREATE OR REPLACE FUNCTION TILDA.first_agg (anyelement, anyelement)
-RETURNS anyelement LANGUAGE SQL IMMUTABLE STRICT AS $$
-        SELECT $1;
+-----------------------------------------------------------------------------------------------------------------
+-- Schema management helpers
+-----------------------------------------------------------------------------------------------------------------
+
+-- Function to check dynamically if a table exists. It can also be used as an SQL-Injection
+-- check when another function needs to create some dynamic SQL and received table/schema names
+-- as strings
+CREATE OR REPLACE FUNCTION TILDA.existsTable(schemaName varchar, tableName varchar)
+RETURNS boolean
+STABLE LANGUAGE SQL AS
+  'SELECT true FROM information_schema.tables WHERE lower(tables.table_schema)=lower($1) and lower(tables.table_name)=lower($2);'
+;
+
+-- Function to check dynamically if a column exists. It can also be used as an SQL-Injection
+-- check when another function needs to create some dynamic SQL and received table/schema/column names
+-- as strings
+CREATE OR REPLACE FUNCTION TILDA.existsColumn(schemaName varchar, tableName varchar, colName varchar)
+RETURNS boolean
+STABLE LANGUAGE SQL AS $$
+  SELECT true FROM information_schema.tables T
+              JOIN information_schema.columns C on C.table_schema=T.table_schema and C.table_name=T.table_name
+   WHERE lower(T.table_schema)=lower($1) and lower(T.table_name)=lower($2) and lower(c.column_name)=lower($3)
+   ;
 $$;
 
-DO $$ BEGIN
-if not exists (SELECT 1 FROM pg_aggregate WHERE aggfnoid::TEXT = 'first') THEN
-CREATE AGGREGATE public.FIRST (
-        sfunc    = TILDA.first_agg,
-        basetype = anyelement,
-        stype    = anyelement
-);
-END IF;
-END $$;
-
-
-CREATE OR REPLACE FUNCTION TILDA.last_agg ( anyelement, anyelement )
-RETURNS anyelement LANGUAGE SQL IMMUTABLE STRICT AS $$
-        SELECT $2;
-$$;
-DO $$ BEGIN
-if not exists (SELECT 1 FROM pg_aggregate WHERE aggfnoid::TEXT = 'last') THEN
-CREATE AGGREGATE public.LAST (
-        sfunc    = TILDA.last_agg,
-        basetype = anyelement,
-        stype    = anyelement
-);
-END IF;
-END $$;
-
 
 
 -----------------------------------------------------------------------------------------------------------------
--- TILDA array concatenation aggregate aggregates
-DO $$ BEGIN
-if not exists (SELECT 1 FROM pg_aggregate WHERE aggfnoid::TEXT = 'array_cat_agg') THEN
-CREATE AGGREGATE public.array_cat_agg (anyarray)
-(
-    sfunc = array_cat,
-    stype = anyarray,
-    initcond = '{}'
-);  
-END IF;
-END $$;
-
-
-
------------------------------------------------------------------------------------------------------------------
--- Loading the TableFunc extension
---CREATE extension if not exists tablefunc;
-
-
 -----------------------------------------------------------------------------------------------------------------
 -- DDL Dependency management helper functions
+-----------------------------------------------------------------------------------------------------------------
 drop function if exists Tilda.getDependenciesDDLs(p_view_schema varchar, p_view_name varchar) ;
 drop type if exists tilda.getDependenciesDDLsDef;
 CREATE TYPE tilda.getDependenciesDDLsDef as (
@@ -519,7 +550,111 @@ LANGUAGE plpgsql;
 
 
 
--- compares 2 tables row by row as per the identify columns and check if they are all equals.
+-- Renames a column and properly handles cases where the table doesn't exist, source column doesn't exist, or dest column already exists.  
+-- Furthermore, the function handles a list of possible source names. For example, V2 of something renames a to b, and then V3 renames 
+-- b to c. This function can then handle a case of renaming either a or b to c. This can be useful when migrating different existing versions.
+-- A check will be performed to make sure there is only one valid source column.
+-- Return values:
+--     1: the operation was completed successfully and the column was renamed
+--     0: none of the source columns exist and the destination column already exists. We assume it was previously renamed.
+--    -1: the table couldn't be found
+--    -2: there were multiple matches in the table for the source column list. Only one match is expected.
+--    -3: none of the source columns can be found.
+--    -4: the destination column already exists.
+drop FUNCTION IF EXISTS tilda.renameColumnIfExists(schemaName varchar, tableName varchar, columnNames varchar[], newColumnName varchar);
+CREATE FUNCTION tilda.renameColumnIfExists(schemaName varchar, tableName varchar, columnNames varchar[], newColumnName varchar) 
+RETURNS TABLE ("code" integer, "msg" text) as $$
+DECLARE
+  _tableName varchar;
+  _columnNames varchar[];
+  _newColumnName varchar;
+BEGIN
+  SELECT tables.table_name, C2.column_name, array_agg(C1.column_name::TEXT)
+    INTO   _tableName, _newColumnName, _columnNames
+    FROM information_schema.tables
+      LEFT join information_schema.columns C2 on C2.table_schema=tables.table_schema and C2.table_name=tables.table_name and C2.column_name=newColumnName
+      LEFT join information_schema.columns C1 on C1.table_schema=tables.table_schema and C1.table_name=tables.table_name and Tilda.In(C1.column_name,columnNames)
+   WHERE lower(tables.table_schema)=lower(schemaName) and lower(tables.table_name)=lower(tableName)
+   GROUP BY 1,2
+  ;
+   -- Does the table exist?
+  IF _tableName is null
+  THEN RETURN QUERY select -1, 'Table '||schemaName||'.'||tableName||' cannot be found.';
+  -- Are there more than one potential source columns actually in the table?
+  ELSEIF array_length(_columnNames,1) > 1
+  THEN RETURN QUERY select -2, 'Multiple potential source columns '||schemaName||'.'||tableName||'.'||_columnNames::TEXT||' exist. There should be only one match.';
+  -- Does the src column not exist and neither the dest column?
+  ELSEIF _columnNames[1] is null AND _newColumnName is null
+  THEN RETURN QUERY select -3, 'Source column(s) '||schemaName||'.'||tableName||'.'||columnNames::TEXT||' cannot be found.';
+  -- Does the src column not exist but the dest column does?
+  ELSEIF _columnNames[1] is null AND _newColumnName is not null
+  THEN RETURN QUERY select 0, 'Destination column '||schemaName||'.'||tableName||'.'||newColumnName||' already exists. Maybe it has been renamed already?';
+  -- the source column exists, but does the destination column already exists?
+  ELSEIF _newColumnName is not null
+  THEN RETURN QUERY select -4, 'Destination column '||schemaName||'.'||tableName||'.'||newColumnName||' already exists.';
+  ELSE
+  -- good to go
+  EXECUTE 'ALTER TABLE '||schemaName||'.'||tableName||' RENAME COLUMN "'||_columnNames[1]||'" TO "'||newColumnName||'"';
+  RETURN QUERY select 1, 'Column '||schemaName||'.'||tableName||'.'||_columnNames[1]||' has been successfully renamed to '||newColumnName||'.';
+  END IF;
+END
+$$ LANGUAGE plpgsql;
+
+
+
+
+
+
+-- Copies the contents of srcColumnName to destColumnName and if successful, drops srcColumnName. This is useful when for example some migration has already
+-- occurred to create the destination column and a copy/drop is needed vs the renameColumnIfExists() function which just renames a column.
+-- Return values:
+--     1: the operation was completed successfully and the column was renamed
+--     0: the source column cannot be found and the dest column already exists. We assume a previous operation was already performed successfully.
+--    -1: the table couldn't be found
+--    -3: source columns can be found.
+--    -4: the destination column cannot be found.
+drop FUNCTION IF EXISTS tilda.copyColumnAndDrop(schemaName varchar, tableName varchar, srcColumnName varchar, destColumnName varchar);
+CREATE FUNCTION tilda.copyColumnAndDrop(schemaName varchar, tableName varchar, srcColumnName varchar, destColumnName varchar) 
+RETURNS TABLE ("code" integer, "msg" text) as $$
+DECLARE
+  _tableName varchar;
+  _srcColumnName varchar;
+  _destColumnName varchar;
+BEGIN
+  SELECT tables.table_name, C1.column_name, C2.column_name
+    INTO   _tableName, _srcColumnName, _destColumnName
+    FROM information_schema.tables
+      LEFT join information_schema.columns C1 on C1.table_schema=tables.table_schema and C1.table_name=tables.table_name and C1.column_name=srcColumnName
+      LEFT join information_schema.columns C2 on C2.table_schema=tables.table_schema and C2.table_name=tables.table_name and C2.column_name=destColumnName
+   WHERE lower(tables.table_schema)=lower(schemaName) and lower(tables.table_name)=lower(tableName)
+  ;
+   -- Does the table exist?
+  IF _tableName is null
+  THEN RETURN QUERY select -1, 'Table '||schemaName||'.'||tableName||' cannot be found.';
+  -- Does the src column not exist and dest column exist?
+  ELSEIF _srcColumnName is null AND _destColumnName is not null
+  THEN RETURN QUERY select 0, 'Source column '||_destColumnName||' does not exist and destination column '||_destColumnName||' exists. Maybe it has been copied and dropped already?';
+  -- Does the src column not exist and neither the dest column?
+  ELSEIF _srcColumnName is null
+  THEN RETURN QUERY select -3, 'Source column(s) '||schemaName||'.'||tableName||'.'||srcColumnName||' cannot be found.';
+  -- the source column exists, but does the destination column already exists?
+  ELSEIF _destColumnName is null
+  THEN RETURN QUERY select -4, 'Destination column '||schemaName||'.'||tableName||'.'||destColumnName||' does not exist.';
+  ELSE
+    -- good to go
+    EXECUTE 'update '||schemaName||'.'||tableName||' set "'||_destColumnName||'"="'||_srcColumnName||'"';
+    EXECUTE 'ALTER TABLE '||schemaName||'.'||tableName||' DROP COLUMN "'||_srcColumnName||'"';  
+    RETURN QUERY select 1, 'Column '||_srcColumnName||' has been copied to '||_destColumnName||' and then dropped.';
+  END IF;
+END
+$$ LANGUAGE plpgsql;
+
+
+
+
+-- Often, after doing some complex migration, changing business logic or data models, you need t0 be able to compare 2
+-- tables and make sure they are identical. For example, you have a complex view that you have changed in non-trivial ways.
+-- You would dump the original view into a temp table and then compare with results from the new view.
 -- returns the number of rows with a discrepancy.
 CREATE OR REPLACE FUNCTION tilda.CompareTables(table1 varchar, identity1 varchar[], columns1 varchar[], table2 varchar, identity2 varchar[], columns2 varchar[])
   RETURNS BIGINT AS
@@ -587,111 +722,13 @@ END; $BODY$
   COST 100;
 
 
-
--- Renames a column and properly handles cases where the table doesn't exist, source column doesn't exist, or dest column already exists.  
--- Furthermore, the function handles a list of possible source names. For example, V2 of something renames a to b, and then V3 renames 
--- b to c. This function can then handle a case of renaming either a or b to c. This can be useful when migrating different existing versions.
--- A check will be performed to make sure there is only one valid source column.
--- Return values:
---     1: the operation was completed successfully and the column was renamed
---     0: none of the source columns exist and the destination column already exists. We assume it was previously renamed.
---    -1: the table couldn't be found
---    -2: there were multiple matches in the table for the source column list. Only one match is expected.
---    -3: none of the source columns can be found.
---    -4: the destination column already exists.
-drop FUNCTION IF EXISTS tilda.renameColumnIfExists(schemaName varchar, tableName varchar, columnNames varchar[], newColumnName varchar);
-CREATE FUNCTION tilda.renameColumnIfExists(schemaName varchar, tableName varchar, columnNames varchar[], newColumnName varchar) 
-RETURNS RECORD AS $$
-DECLARE
-  _tableName varchar;
-  _columnNames varchar[];
-  _newColumnName varchar;
-BEGIN
-  SELECT tables.table_name, C2.column_name, array_agg(C1.column_name::TEXT)
-    INTO   _tableName, _newColumnName, _columnNames
-    FROM information_schema.tables
-      LEFT join information_schema.columns C2 on C2.table_schema=tables.table_schema and C2.table_name=tables.table_name and C2.column_name=newColumnName
-      LEFT join information_schema.columns C1 on C1.table_schema=tables.table_schema and C1.table_name=tables.table_name and Tilda.In(C1.column_name,columnNames)
-   WHERE lower(tables.table_schema)=lower(schemaName) and lower(tables.table_name)=lower(tableName)
-   GROUP BY 1,2
-  ;
-   -- Does the table exist?
-  IF _tableName is null
-  THEN RETURN (-1, 'Table '||schemaName||'.'||tableName||' cannot be found.');
-  -- Are there more than one potential source columns actually in the table?
-  ELSEIF array_length(_columnNames,1) > 1
-  THEN RETURN (-2, 'Multiple potential source columns '||schemaName||'.'||tableName||'.'||_columnNames::TEXT||' exist. There should be only one match.');
-  -- Does the src column not exist and neither the dest column?
-  ELSEIF _columnNames[1] is null AND _newColumnName is null
-  THEN RETURN (-3, 'Source column(s) '||schemaName||'.'||tableName||'.'||columnNames::TEXT||' cannot be found.');
-  -- Does the src column not exist but the dest column does?
-  ELSEIF _columnNames[1] is null AND _newColumnName is not null
-  THEN RETURN (0, 'Destination column '||schemaName||'.'||tableName||'.'||newColumnName||' already exists. Maybe it has been renamed already?');
-  -- the source column exists, but does the destination column already exists?
-  ELSEIF _newColumnName is not null
-  THEN RETURN (-4, 'Destination column '||schemaName||'.'||tableName||'.'||newColumnName||' already exists.');
-  END IF;
-  -- good to go
-  EXECUTE 'ALTER TABLE '||schemaName||'.'||tableName||' RENAME COLUMN "'||_columnNames[1]||'" TO "'||newColumnName||'"';
-  RETURN (1, 'Column '||schemaName||'.'||tableName||'.'||_columnNames[1]||' has been successfully renamed to '||newColumnName||'.');
-END
-$$ LANGUAGE plpgsql;
-
-
-
-
-
-
-
--- Copies the contents of srcColumnName to destColumnName and if successful, drops srcColumnName.
--- Return values:
---     1: the operation was completed successfully and the column was renamed
---     0: the source column cannot be found and the dest column already exists. We assume a previous operation was already performed successfully.
---    -1: the table couldn't be found
---    -3: source columns can be found.
---    -4: the destination column cannot be found.
-drop FUNCTION IF EXISTS tilda.copyColumnAndDrop(schemaName varchar, tableName varchar, srcColumnName varchar, destColumnName varchar);
-CREATE FUNCTION tilda.copyColumnAndDrop(schemaName varchar, tableName varchar, srcColumnName varchar, destColumnName varchar) 
-RETURNS RECORD AS $$
-DECLARE
-  _tableName varchar;
-  _srcColumnName varchar;
-  _destColumnName varchar;
-BEGIN
-  SELECT tables.table_name, C1.column_name, C2.column_name
-    INTO   _tableName, _srcColumnName, _destColumnName
-    FROM information_schema.tables
-      LEFT join information_schema.columns C1 on C1.table_schema=tables.table_schema and C1.table_name=tables.table_name and C1.column_name=srcColumnName
-      LEFT join information_schema.columns C2 on C2.table_schema=tables.table_schema and C2.table_name=tables.table_name and C2.column_name=destColumnName
-   WHERE lower(tables.table_schema)=lower(schemaName) and lower(tables.table_name)=lower(tableName)
-   GROUP BY 1,2
-  ;
-   -- Does the table exist?
-  IF _tableName is null
-  THEN RETURN (-1, 'Table '||schemaName||'.'||tableName||' cannot be found.');
-  -- Does the src column not exist and dest column exist?
-  ELSEIF _srcColumnName is null AND _destColumnName is not null
-  THEN RETURN (0, 'Source column '||_destColumnName||' does not exist and destination column '||_destColumnName||' exists. Maybe it has been copied and dropped already?');
-  -- Does the src column not exist and neither the dest column?
-  ELSEIF _srcColumnName is null
-  THEN RETURN (-3, 'Source column(s) '||schemaName||'.'||tableName||'.'||srcColumnName||' cannot be found.');
-  -- the source column exists, but does the destination column already exists?
-  ELSEIF _destColumnName is null
-  THEN RETURN (-4, 'Destination column '||schemaName||'.'||tableName||'.'||destColumnName||' does not exist.');
-  END IF;
-  -- good to go
-  EXECUTE 'update '||schemaName||'.'||tableName||' set "'||_destColumnName||'"="'||_srcColumnName||'"';
-  EXECUTE 'ALTER TABLE '||schemaName||'.'||tableName||' DROP COLUMN "'||_srcColumnName||'"';  
-  RETURN (1, 'Column '||_srcColumnName[1]||' has been copied to '||_destColumnName||' and then dropped.');
-END
-$$ LANGUAGE plpgsql;
-
-
-
-
-
-
-
+  
+  
+  
+----------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------
+-- Sizing helpers
+----------------------------------------------------------------------------------------------------------------------------------------
 
 -- Return size information per quarter on a specific tables, or all tables in a specific schema
 -- schema_name: the name of the schema
@@ -759,51 +796,88 @@ LANGUAGE plpgsql;
 
 
 -- returns an list of schemas, with the aggregate storage sizes of all of their tables, ordered by their sizes, with a running total.
+drop function if exists Tilda.getSchemaSizes();
 create or replace function Tilda.getSchemaSizes() 
-returns TABLE ("schemaName" varchar, "totalSize" numeric, "totalSizePretty" text, "totalSizeExternal" numeric, "totalSizeExternalPretty" text
-             , "runningTotalSize" numeric, "runningTotalSizePretty" text) as $$
+returns TABLE ("schemaName" varchar, "totalSize" numeric, "totalSizePretty" text
+                                   , "totalSizeTable" numeric, "totalSizeTablePretty" text
+                                   , "totalSizeIndices" numeric, "totalSizeIndicesPretty" text
+                                   , "totalSizeOther" numeric, "totalSizeOtherPretty" text
+                                   , "runningTotalSize" numeric, "runningTotalSizePretty" text
+                                   , "runningTotalSizeTables" numeric, "runningTotalSizeTablesPretty" text
+                                   , "runningTotalSizeIndices" numeric, "runningTotalSizeIndicesPretty" text
+              ) as $$
 with T as (
 SELECT
-   schemaname::VARCHAR as "schemaName",
-   sum(pg_total_relation_size(relid)) As "totalSize",
-   pg_size_pretty(sum(pg_total_relation_size(relid))) As "totalSizePretty",
-   sum(pg_total_relation_size(relid)) - sum(pg_relation_size(relid)) as "totalSizeExternal",
-   pg_size_pretty(sum(pg_total_relation_size(relid)) - sum(pg_relation_size(relid))) as "totalSizeExternalPretty"
+   schemaname::VARCHAR as "schemaName"
+  ,sum(pg_total_relation_size(relid)) As "totalSize"
+  ,pg_size_pretty(sum(pg_total_relation_size(relid))) As "totalSizePretty"
+  ,sum(pg_relation_size(relid)) AS "totalSizeTable"
+  ,pg_size_pretty(sum(pg_relation_size(relid))) AS "totalSizeTablePretty"
+  ,sum(pg_indexes_size(relid)) AS "totalSizeIndices"
+  ,pg_size_pretty(sum(pg_indexes_size(relid))) AS "totalSizeIndicesPretty"
+  ,sum(pg_total_relation_size(relid)-pg_relation_size(relid)-pg_indexes_size(relid)) AS "totalSizeOther"
+  ,pg_size_pretty(sum(pg_total_relation_size(relid)-pg_relation_size(relid)-pg_indexes_size(relid))) AS "totalSizeOtherPretty"
   FROM pg_catalog.pg_statio_user_tables
   group by 1
   ORDER BY 2 DESC
 )
-select "schemaName", "totalSize", "totalSizePretty", "totalSizeExternal", "totalSizeExternalPretty"
-                   , sum("totalSize") over(order by "totalSize" desc) as "runningTotalSize"
-                   , pg_size_pretty(sum("totalSize") over(order by "totalSize" desc)) as "runningTotalSizePretty"
+select "schemaName"
+     , "totalSize", "totalSizePretty"
+     , "totalSizeTable", "totalSizeTablePretty"
+     , "totalSizeIndices", "totalSizeIndicesPretty"
+     , "totalSizeOther", "totalSizeOtherPretty"
+     , sum("totalSize") over(order by "totalSize" desc) as "runningTotalSize"
+     , pg_size_pretty(sum("totalSize") over(order by "totalSize" desc)) as "runningTotalSizePretty"
+     , sum("totalSizeTable") over(order by "totalSize" desc) as "runningTotalSizeTables"
+     , pg_size_pretty(sum("totalSizeTable") over(order by "totalSize" desc)) as "runningTotalSizeTablesPretty"
+     , sum("totalSizeIndices") over(order by "totalSize" desc) as "runningTotalSizeIndices"
+     , pg_size_pretty(sum("totalSizeIndices") over(order by "totalSize" desc)) as "runningTotalSizeIndicesPretty"
   from T
-group by 1, 2, 3, 4, 5
+group by 1, 2, 3, 4, 5, 6, 7, 8, 9
 $$ LANGUAGE SQL;
 
 
 
 -- returns an list of tables, with their storage sizes, ordered by their sizes, with a running total.
+drop function if exists Tilda.getTableSizes();
 create or replace function Tilda.getTableSizes() 
-returns TABLE ("schemaName" varchar, "tableName" varchar, "totalSize" numeric, "totalSizePretty" text, "totalSizeExternal" numeric, "totalSizeExternalPretty" text
-             , "runningTotalSize" numeric, "runningTotalSizePretty" text) as $$
+returns TABLE ("schemaName" varchar, "tableName" varchar, "totalSize" numeric, "totalSizePretty" text
+                                                        , "totalSizeTable" numeric, "totalSizeTablePretty" text
+                                                        , "totalSizeIndices" numeric, "totalSizeIndicesPretty" text
+                                                        , "totalSizeOther" numeric, "totalSizeOtherPretty" text
+                                                        , "runningTotalSize" numeric, "runningTotalSizePretty" text
+                                                        , "runningTotalSizeTables" numeric, "runningTotalSizeTablesPretty" text
+                                                        , "runningTotalSizeIndices" numeric, "runningTotalSizeIndicesPretty" text
+              ) as $$
 with T as (
 SELECT
-   schemaname::VARCHAR as "schemaName",
-   relname::VARCHAR as "tableName",
-   pg_total_relation_size(relid)::numeric As "totalSize",
-   pg_size_pretty(pg_total_relation_size(relid)) As "totalSizePretty",
-   (pg_total_relation_size(relid) - pg_relation_size(relid))::numeric as "totalSizeExternal",
-   pg_size_pretty(pg_total_relation_size(relid) - pg_relation_size(relid)) as "totalSizeExternalPretty"
+   schemaname::VARCHAR as "schemaName"
+  ,relname::VARCHAR as "tableName"
+  ,pg_total_relation_size(relid)::numeric As "totalSize"
+  ,pg_size_pretty(pg_total_relation_size(relid)) As "totalSizePretty"
+  ,pg_relation_size(relid)::numeric AS "totalSizeTable"
+  ,pg_size_pretty(pg_relation_size(relid)) AS "totalSizeTablePretty"
+  ,pg_indexes_size(relid)::numeric AS "totalSizeIndices"
+  ,pg_size_pretty(pg_indexes_size(relid)) AS "totalSizeIndicesPretty"
+  ,(pg_total_relation_size(relid)-pg_relation_size(relid)-pg_indexes_size(relid))::numeric AS "totalSizeOther"
+  ,pg_size_pretty(pg_total_relation_size(relid)-pg_relation_size(relid)-pg_indexes_size(relid)) AS "totalSizeOtherPretty"
   FROM pg_catalog.pg_statio_user_tables
   ORDER BY pg_total_relation_size(relid) DESC
 )
-select "schemaName", "tableName", "totalSize", "totalSizePretty", "totalSizeExternal", "totalSizeExternalPretty"
-                   , sum("totalSize") over(order by "totalSize" desc) as "runningTotalSize"
-                   , pg_size_pretty(sum("totalSize") over(order by "totalSize" desc)) as "runningTotalSizePretty"
+select "schemaName", "tableName"
+     , "totalSize", "totalSizePretty"
+     , "totalSizeTable", "totalSizeTablePretty"
+     , "totalSizeIndices", "totalSizeIndicesPretty"
+     , "totalSizeOther", "totalSizeOtherPretty"
+     , sum("totalSize") over(order by "totalSize" desc) as "runningTotalSize"
+     , pg_size_pretty(sum("totalSize") over(order by "totalSize" desc)) as "runningTotalSizePretty"
+     , sum("totalSizeTable") over(order by "totalSize" desc) as "runningTotalSizeTables"
+     , pg_size_pretty(sum("totalSizeTable") over(order by "totalSize" desc)) as "runningTotalSizeTablesPretty"
+     , sum("totalSizeIndices") over(order by "totalSize" desc) as "runningTotalSizeIndices"
+     , pg_size_pretty(sum("totalSizeIndices") over(order by "totalSize" desc)) as "runningTotalSizeIndicesPretty"
   from T
-group by 1, 2, 3, 4, 5, 6
+group by 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
 $$ LANGUAGE SQL;
-
 
 
 
