@@ -24,9 +24,9 @@ COMMENT ON COLUMN TILDA.ZoneInfo."deactivated" IS E'The label for this enumerati
 COMMENT ON COLUMN TILDA.ZoneInfo."created" IS E'The timestamp for when the record was created. (TILDA.ZoneInfo)';
 COMMENT ON COLUMN TILDA.ZoneInfo."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.ZoneInfo)';
 COMMENT ON COLUMN TILDA.ZoneInfo."deleted" IS E'The timestamp for when the record was deleted. (TILDA.ZoneInfo)';
-CREATE UNIQUE INDEX ZoneInfo_Id ON TILDA.ZoneInfo ("id");
-CREATE UNIQUE INDEX ZoneInfo_Value ON TILDA.ZoneInfo ("value");
--- app-level index only -- CREATE INDEX ZoneInfo_All ON TILDA.ZoneInfo ("id" ASC);
+CREATE UNIQUE INDEX IF NOT EXISTS ZoneInfo_Id ON TILDA.ZoneInfo ("id");
+CREATE UNIQUE INDEX IF NOT EXISTS ZoneInfo_Value ON TILDA.ZoneInfo ("value");
+-- app-level index only -- CREATE INDEX IF NOT EXISTS ZoneInfo_All ON TILDA.ZoneInfo ("id" ASC);
 
 
 
@@ -48,8 +48,8 @@ COMMENT ON COLUMN TILDA.Key."count" IS E'The size of the pre-allocation required
 COMMENT ON COLUMN TILDA.Key."created" IS E'The timestamp for when the record was created.';
 COMMENT ON COLUMN TILDA.Key."lastUpdated" IS E'The timestamp for when the record was last updated.';
 COMMENT ON COLUMN TILDA.Key."deleted" IS E'The timestamp for when the record was deleted.';
-CREATE UNIQUE INDEX Key_Name ON TILDA.Key ("name");
--- app-level index only -- CREATE INDEX Key_AllByName ON TILDA.Key ("name" ASC);
+CREATE UNIQUE INDEX IF NOT EXISTS Key_Name ON TILDA.Key ("name");
+-- app-level index only -- CREATE INDEX IF NOT EXISTS Key_AllByName ON TILDA.Key ("name" ASC);
 
 
 
@@ -68,7 +68,7 @@ COMMENT ON COLUMN TILDA.Mapping."dst" IS E'The the destination (mapped) value fo
 COMMENT ON COLUMN TILDA.Mapping."created" IS E'The timestamp for when the record was created. (TILDA.Mapping)';
 COMMENT ON COLUMN TILDA.Mapping."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.Mapping)';
 COMMENT ON COLUMN TILDA.Mapping."deleted" IS E'The timestamp for when the record was deleted. (TILDA.Mapping)';
-CREATE UNIQUE INDEX Mapping_TypeSrcDst ON TILDA.Mapping ("type", "src", "dst");
+CREATE UNIQUE INDEX IF NOT EXISTS Mapping_TypeSrcDst ON TILDA.Mapping ("type", "src", "dst");
 
 
 
@@ -120,8 +120,8 @@ COMMENT ON COLUMN TILDA.ObjectPerf."deleteRecords" IS E'Blah...';
 COMMENT ON COLUMN TILDA.ObjectPerf."created" IS E'The timestamp for when the record was created. (TILDA.ObjectPerf)';
 COMMENT ON COLUMN TILDA.ObjectPerf."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.ObjectPerf)';
 COMMENT ON COLUMN TILDA.ObjectPerf."deleted" IS E'The timestamp for when the record was deleted. (TILDA.ObjectPerf)';
-CREATE INDEX ObjectPerf_SchemaByObjectStart ON TILDA.ObjectPerf ("schemaName", "objectName" ASC, "startPeriod" DESC);
--- app-level index only -- CREATE INDEX ObjectPerf_SchemaObjectByStart ON TILDA.ObjectPerf ("schemaName", "objectName", "startPeriod" DESC);
+CREATE INDEX IF NOT EXISTS ObjectPerf_SchemaByObjectStart ON TILDA.ObjectPerf ("schemaName", "objectName" ASC, "startPeriod" DESC);
+-- app-level index only -- CREATE INDEX IF NOT EXISTS ObjectPerf_SchemaObjectByStart ON TILDA.ObjectPerf ("schemaName", "objectName", "startPeriod" DESC);
 
 
 
@@ -224,7 +224,7 @@ COMMENT ON COLUMN TILDA.Connection."schemas" IS E'Schemas';
 COMMENT ON COLUMN TILDA.Connection."created" IS E'The timestamp for when the record was created. (TILDA.Connection)';
 COMMENT ON COLUMN TILDA.Connection."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.Connection)';
 COMMENT ON COLUMN TILDA.Connection."deleted" IS E'The timestamp for when the record was deleted. (TILDA.Connection)';
-CREATE INDEX Connection_AllById ON TILDA.Connection ("id" ASC);
+CREATE INDEX IF NOT EXISTS Connection_AllById ON TILDA.Connection ("id" ASC);
 
 
 
@@ -266,8 +266,8 @@ COMMENT ON COLUMN TILDA.Job."msg" IS E'Message details';
 COMMENT ON COLUMN TILDA.Job."created" IS E'The timestamp for when the record was created. (TILDA.Job)';
 COMMENT ON COLUMN TILDA.Job."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.Job)';
 COMMENT ON COLUMN TILDA.Job."deleted" IS E'The timestamp for when the record was deleted. (TILDA.Job)';
-CREATE INDEX Job_JobName ON TILDA.Job ("name", "start" DESC);
-CREATE INDEX Job_JobType ON TILDA.Job ("type", "start" DESC);
+CREATE INDEX IF NOT EXISTS Job_JobName ON TILDA.Job ("name", "start" DESC);
+CREATE INDEX IF NOT EXISTS Job_JobType ON TILDA.Job ("type", "start" DESC);
 delete from TILDA.Key where "name" = 'TILDA.JOB';
 insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated") values ((select COALESCE(max("refnum"),0)+1 from TILDA.Key), 'TILDA.JOB',(select COALESCE(max("refnum"),0)+1 from TILDA.Job), 250, current_timestamp, current_timestamp);
 
@@ -312,9 +312,9 @@ COMMENT ON COLUMN TILDA.JobPart."status" IS E'Status flag, i.e., success=true an
 COMMENT ON COLUMN TILDA.JobPart."created" IS E'The timestamp for when the record was created. (TILDA.JobPart)';
 COMMENT ON COLUMN TILDA.JobPart."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.JobPart)';
 COMMENT ON COLUMN TILDA.JobPart."deleted" IS E'The timestamp for when the record was deleted. (TILDA.JobPart)';
-CREATE INDEX JobPart_Job ON TILDA.JobPart ("jobRefnum", "start" DESC);
-CREATE INDEX JobPart_JobPartName ON TILDA.JobPart ("name", "start" DESC);
-CREATE INDEX JobPart_JobPartType ON TILDA.JobPart ("type", "start" DESC);
+CREATE INDEX IF NOT EXISTS JobPart_Job ON TILDA.JobPart ("jobRefnum", "start" DESC);
+CREATE INDEX IF NOT EXISTS JobPart_JobPartName ON TILDA.JobPart ("name", "start" DESC);
+CREATE INDEX IF NOT EXISTS JobPart_JobPartType ON TILDA.JobPart ("type", "start" DESC);
 delete from TILDA.Key where "name" = 'TILDA.JOBPART';
 insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated") values ((select COALESCE(max("refnum"),0)+1 from TILDA.Key), 'TILDA.JOBPART',(select COALESCE(max("refnum"),0)+1 from TILDA.JobPart), 250, current_timestamp, current_timestamp);
 
@@ -342,8 +342,8 @@ COMMENT ON COLUMN TILDA.JobPartMessage."msg" IS E'Message details';
 COMMENT ON COLUMN TILDA.JobPartMessage."created" IS E'The timestamp for when the record was created. (TILDA.JobPartMessage)';
 COMMENT ON COLUMN TILDA.JobPartMessage."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.JobPartMessage)';
 COMMENT ON COLUMN TILDA.JobPartMessage."deleted" IS E'The timestamp for when the record was deleted. (TILDA.JobPartMessage)';
-CREATE INDEX JobPartMessage_Job ON TILDA.JobPartMessage ("jobRefnum", "created" DESC);
-CREATE INDEX JobPartMessage_JobPart ON TILDA.JobPartMessage ("jobPartRefnum", "created" DESC);
+CREATE INDEX IF NOT EXISTS JobPartMessage_Job ON TILDA.JobPartMessage ("jobRefnum", "created" DESC);
+CREATE INDEX IF NOT EXISTS JobPartMessage_JobPart ON TILDA.JobPartMessage ("jobPartRefnum", "created" DESC);
 delete from TILDA.Key where "name" = 'TILDA.JOBPARTMESSAGE';
 insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated") values ((select COALESCE(max("refnum"),0)+1 from TILDA.Key), 'TILDA.JOBPARTMESSAGE',(select COALESCE(max("refnum"),0)+1 from TILDA.JobPartMessage), 250, current_timestamp, current_timestamp);
 
@@ -378,8 +378,8 @@ COMMENT ON COLUMN TILDA.RefillPerf."columnsMs" IS E'The list of columns that wer
 COMMENT ON COLUMN TILDA.RefillPerf."created" IS E'The timestamp for when the record was created. (TILDA.RefillPerf)';
 COMMENT ON COLUMN TILDA.RefillPerf."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.RefillPerf)';
 COMMENT ON COLUMN TILDA.RefillPerf."deleted" IS E'The timestamp for when the record was deleted. (TILDA.RefillPerf)';
-CREATE INDEX RefillPerf_SchemaByObjectStart ON TILDA.RefillPerf ("schemaName", "objectName" ASC, "startPeriod" DESC);
--- app-level index only -- CREATE INDEX RefillPerf_SchemaObjectByStart ON TILDA.RefillPerf ("schemaName", "objectName", "startPeriod" DESC);
+CREATE INDEX IF NOT EXISTS RefillPerf_SchemaByObjectStart ON TILDA.RefillPerf ("schemaName", "objectName" ASC, "startPeriod" DESC);
+-- app-level index only -- CREATE INDEX IF NOT EXISTS RefillPerf_SchemaObjectByStart ON TILDA.RefillPerf ("schemaName", "objectName", "startPeriod" DESC);
 
 
 
@@ -432,8 +432,8 @@ COMMENT ON COLUMN TILDA.Formula."referencedColumns" IS E'The list of columns thi
 COMMENT ON COLUMN TILDA.Formula."created" IS E'The timestamp for when the record was created. (TILDA.Formula)';
 COMMENT ON COLUMN TILDA.Formula."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.Formula)';
 COMMENT ON COLUMN TILDA.Formula."deleted" IS E'The timestamp for when the record was deleted. (TILDA.Formula)';
-CREATE UNIQUE INDEX Formula_Formula ON TILDA.Formula ("location", "name");
-CREATE INDEX Formula_RefCols ON TILDA.Formula USING gin  ("referencedColumns" );
+CREATE UNIQUE INDEX IF NOT EXISTS Formula_Formula ON TILDA.Formula ("location", "name");
+CREATE INDEX IF NOT EXISTS Formula_RefCols ON TILDA.Formula USING gin  ("referencedColumns" );
 delete from TILDA.Key where "name" = 'TILDA.FORMULA';
 insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated") values ((select COALESCE(max("refnum"),0)+1 from TILDA.Key), 'TILDA.FORMULA',(select COALESCE(max("refnum"),0)+1 from TILDA.Formula), 250, current_timestamp, current_timestamp);
 
@@ -455,7 +455,7 @@ COMMENT ON COLUMN TILDA.Measure."name" IS E'The name of the measure.';
 COMMENT ON COLUMN TILDA.Measure."created" IS E'The timestamp for when the record was created. (TILDA.Measure)';
 COMMENT ON COLUMN TILDA.Measure."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.Measure)';
 COMMENT ON COLUMN TILDA.Measure."deleted" IS E'The timestamp for when the record was deleted. (TILDA.Measure)';
-CREATE UNIQUE INDEX Measure_Measure ON TILDA.Measure ("schema", "name");
+CREATE UNIQUE INDEX IF NOT EXISTS Measure_Measure ON TILDA.Measure ("schema", "name");
 delete from TILDA.Key where "name" = 'TILDA.MEASURE';
 insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated") values ((select COALESCE(max("refnum"),0)+1 from TILDA.Key), 'TILDA.MEASURE',(select COALESCE(max("refnum"),0)+1 from TILDA.Measure), 250, current_timestamp, current_timestamp);
 
@@ -540,8 +540,8 @@ COMMENT ON COLUMN TILDA.DependencyDDLDummyTable."restoreScript" IS E'The result 
 COMMENT ON COLUMN TILDA.DependencyDDLDummyTable."created" IS E'The timestamp for when the record was created. (TILDA.DependencyDDLDummyTable)';
 COMMENT ON COLUMN TILDA.DependencyDDLDummyTable."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.DependencyDDLDummyTable)';
 COMMENT ON COLUMN TILDA.DependencyDDLDummyTable."deleted" IS E'The timestamp for when the record was deleted. (TILDA.DependencyDDLDummyTable)';
-CREATE UNIQUE INDEX DependencyDDLDummyTable_DepedencySequence ON TILDA.DependencyDDLDummyTable ("srcSchemaName", "srcTVName", "seq");
-CREATE UNIQUE INDEX DependencyDDLDummyTable_DepedencySTV ON TILDA.DependencyDDLDummyTable ("srcSchemaName", "srcTVName", "depSchemaName", "depViewName");
+CREATE UNIQUE INDEX IF NOT EXISTS DependencyDDLDummyTable_DepedencySequence ON TILDA.DependencyDDLDummyTable ("srcSchemaName", "srcTVName", "seq");
+CREATE UNIQUE INDEX IF NOT EXISTS DependencyDDLDummyTable_DepedencySTV ON TILDA.DependencyDDLDummyTable ("srcSchemaName", "srcTVName", "depSchemaName", "depViewName");
 
 
 
@@ -614,7 +614,7 @@ COMMENT ON TABLE TILDA.DateLimitDim IS E'A single row for min, max and invalid d
 COMMENT ON COLUMN TILDA.DateLimitDim."invalidDate" IS E'The invalid date';
 COMMENT ON COLUMN TILDA.DateLimitDim."minDate" IS E'The min date';
 COMMENT ON COLUMN TILDA.DateLimitDim."maxDate" IS E'The max date';
-CREATE UNIQUE INDEX DateLimitDim_InvalidDate ON TILDA.DateLimitDim ("invalidDate");
+CREATE UNIQUE INDEX IF NOT EXISTS DateLimitDim_InvalidDate ON TILDA.DateLimitDim ("invalidDate");
 
 
 
@@ -716,10 +716,10 @@ COMMENT ON COLUMN TILDA.Testing."a10c" IS E'The blah';
 COMMENT ON COLUMN TILDA.Testing."created" IS E'The timestamp for when the record was created. (TILDA.Testing)';
 COMMENT ON COLUMN TILDA.Testing."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.Testing)';
 COMMENT ON COLUMN TILDA.Testing."deleted" IS E'The timestamp for when the record was deleted. (TILDA.Testing)';
--- app-level index only -- CREATE INDEX Testing_AllByName ON TILDA.Testing ("name" ASC);
-CREATE INDEX Testing_AllByName2 ON TILDA.Testing ("name" ASC);
-CREATE INDEX Testing_AllByName3 ON TILDA.Testing ("name" DESC);
-CREATE INDEX Testing_AllByName4 ON TILDA.Testing ("name" ASC, "description" DESC);
+-- app-level index only -- CREATE INDEX IF NOT EXISTS Testing_AllByName ON TILDA.Testing ("name" ASC);
+CREATE INDEX IF NOT EXISTS Testing_AllByName2 ON TILDA.Testing ("name" ASC);
+CREATE INDEX IF NOT EXISTS Testing_AllByName3 ON TILDA.Testing ("name" DESC);
+CREATE INDEX IF NOT EXISTS Testing_AllByName4 ON TILDA.Testing ("name" ASC, "description" DESC);
 delete from TILDA.Key where "name" = 'TILDA.TESTING';
 insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated") values ((select COALESCE(max("refnum"),0)+1 from TILDA.Key), 'TILDA.TESTING',(select COALESCE(max("refnum"),0)+1 from TILDA.Testing), 25000, current_timestamp, current_timestamp);
 
@@ -800,8 +800,8 @@ COMMENT ON COLUMN TILDA.Testing2Realized."a5_null" IS E'Formula column ''<B>Null
 COMMENT ON COLUMN TILDA.Testing2Realized."a6_null" IS E'Formula column ''<B>Null a6</B>''';
 COMMENT ON COLUMN TILDA.Testing2Realized."a7_null" IS E'Formula column ''<B>Null a7</B>''';
 COMMENT ON COLUMN TILDA.Testing2Realized."a8_null" IS E'Formula column ''<B>Null a8</B>''';
-CREATE UNIQUE INDEX Testing2Realized_Refnum ON TILDA.Testing2Realized ("refnum");
-CREATE INDEX Testing2Realized_LastUpdated ON TILDA.Testing2Realized ("lastUpdated" DESC);
+CREATE UNIQUE INDEX IF NOT EXISTS Testing2Realized_Refnum ON TILDA.Testing2Realized ("refnum");
+CREATE INDEX IF NOT EXISTS Testing2Realized_LastUpdated ON TILDA.Testing2Realized ("lastUpdated" DESC);
 
 
 
@@ -820,8 +820,8 @@ COMMENT ON COLUMN TILDA.Testing3Realized."a8bTZ" IS E'Generated helper column to
 COMMENT ON COLUMN TILDA.Testing3Realized."a8b" IS E'The blah';
 COMMENT ON COLUMN TILDA.Testing3Realized."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.Testing)';
 COMMENT ON COLUMN TILDA.Testing3Realized."xxxLastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.Testing)';
-CREATE UNIQUE INDEX Testing3Realized_Refnum ON TILDA.Testing3Realized ("refnum");
-CREATE INDEX Testing3Realized_LastUpdated ON TILDA.Testing3Realized ("lastUpdated" DESC);
+CREATE UNIQUE INDEX IF NOT EXISTS Testing3Realized_Refnum ON TILDA.Testing3Realized ("refnum");
+CREATE INDEX IF NOT EXISTS Testing3Realized_LastUpdated ON TILDA.Testing3Realized ("lastUpdated" DESC);
 
 
 
@@ -898,8 +898,8 @@ COMMENT ON COLUMN TILDA.Testing4Realized."a7_null" IS E'Formula column ''<B>Null
 COMMENT ON COLUMN TILDA.Testing4Realized."a8_null" IS E'Formula column ''<B>Null a8</B>''';
 COMMENT ON COLUMN TILDA.Testing4Realized."a3" IS E'Formula column ''<B>Always True</B>''';
 COMMENT ON COLUMN TILDA.Testing4Realized."lastUpdated" IS E'Formula column ''<B>Always True</B>''';
-CREATE UNIQUE INDEX Testing4Realized_Refnum ON TILDA.Testing4Realized ("refnum");
-CREATE INDEX Testing4Realized_LastUpdated ON TILDA.Testing4Realized ("lastUpdated" DESC);
+CREATE UNIQUE INDEX IF NOT EXISTS Testing4Realized_Refnum ON TILDA.Testing4Realized ("refnum");
+CREATE INDEX IF NOT EXISTS Testing4Realized_LastUpdated ON TILDA.Testing4Realized ("lastUpdated" DESC);
 
 
 
