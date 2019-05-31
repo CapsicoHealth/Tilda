@@ -71,6 +71,118 @@ This is the column definition for:<BR>
      public static Type_StringPrimitive        NAME       = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "name"       , 1/*1*/, "Name");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Job.type -> TILDA.Job."type"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the column definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Job.type of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Job.type of type varchar(250)</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>250</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Job type</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+     public static Type_StringPrimitiveNull    TYPE       = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "type"       , 2/*2*/, "Job type");
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Job.userId -> TILDA.Job."userId"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the column definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Job.userId of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Job.userId of type varchar(250)</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>250</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Job user Id</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+     public static Type_StringPrimitiveNull    USERID     = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "userId"     , 3/*3*/, "Job user Id");
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Job.dataStartTZ -> TILDA.Job."dataStartTZ"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the column definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Job.dataStartTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Job.dataStartTZ of type character(5)</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'dataStart'.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+     public static Type_StringPrimitiveNull    DATASTARTTZ= new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "dataStartTZ", 4/*4*/, "Generated helper column to hold the time zone ID for 'dataStart'.");
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Job.dataStart -> TILDA.Job."dataStart"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the column definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Job.dataStart of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Job.dataStart of type timestamptz</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>StartTime</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+     public static Type_DatetimePrimitiveNull  DATASTART  = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "dataStart"  , 5/*5*/, "StartTime");
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Job.dataEndTZ -> TILDA.Job."dataEndTZ"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the column definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Job.dataEndTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Job.dataEndTZ of type character(5)</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'dataEnd'.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+     public static Type_StringPrimitiveNull    DATAENDTZ  = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "dataEndTZ"  , 6/*6*/, "Generated helper column to hold the time zone ID for 'dataEnd'.");
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Job.dataEnd -> TILDA.Job."dataEnd"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the column definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Job.dataEnd of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Job.dataEnd of type timestamptz</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>StartTime</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+     public static Type_DatetimePrimitiveNull  DATAEND    = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "dataEnd"    , 7/*7*/, "StartTime");
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Job.startTZ -> TILDA.Job."startTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
@@ -87,7 +199,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        STARTTZ    = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "startTZ"    , 2/*2*/, "Generated helper column to hold the time zone ID for 'start'.");
+     public static Type_StringPrimitive        STARTTZ    = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "startTZ"    , 8/*8*/, "Generated helper column to hold the time zone ID for 'start'.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Job.start -> TILDA.Job."start"
@@ -105,7 +217,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitive      START      = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "start"      , 3/*3*/, "StartTime");
+     public static Type_DatetimePrimitive      START      = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "start"      , 9/*9*/, "StartTime");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Job.endTZ -> TILDA.Job."endTZ"
@@ -124,7 +236,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    ENDTZ      = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "endTZ"      , 4/*4*/, "Generated helper column to hold the time zone ID for 'end'.");
+     public static Type_StringPrimitiveNull    ENDTZ      = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "endTZ"      , 10/*10*/, "Generated helper column to hold the time zone ID for 'end'.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Job.end -> TILDA.Job."end"
@@ -142,7 +254,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  END        = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "end"        , 5/*5*/, "EndTime");
+     public static Type_DatetimePrimitiveNull  END        = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "end"        , 11/*11*/, "EndTime");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Job.status -> TILDA.Job."status"
@@ -160,7 +272,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_BooleanPrimitiveNull   STATUS     = new Type_BooleanPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "status"     , 6/*6*/, "Status");
+     public static Type_BooleanPrimitiveNull   STATUS     = new Type_BooleanPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "status"     , 12/*12*/, "Status");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Job.msg -> TILDA.Job."msg"
@@ -171,7 +283,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Job.msg of type String</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Job.msg of type text</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>4096</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>8192</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Message details</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
@@ -179,7 +291,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    MSG        = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "msg"        , 7/*7*/, "Message details");
+     public static Type_StringPrimitiveNull    MSG        = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "msg"        , 13/*13*/, "Message details");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Job.created -> TILDA.Job."created"
@@ -204,7 +316,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      CREATED    = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"    , 8/*8*/, "The timestamp for when the record was created. (TILDA.Job)");
+     public static Type_DatetimePrimitive      CREATED    = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"    , 14/*14*/, "The timestamp for when the record was created. (TILDA.Job)");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Job.lastUpdated -> TILDA.Job."lastUpdated"
@@ -229,7 +341,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      LASTUPDATED= new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated", 9/*9*/, "The timestamp for when the record was last updated. (TILDA.Job)");
+     public static Type_DatetimePrimitive      LASTUPDATED= new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated", 15/*15*/, "The timestamp for when the record was last updated. (TILDA.Job)");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Job.deleted -> TILDA.Job."deleted"
@@ -247,11 +359,11 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  DELETED    = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"    , 10/*10*/, "The timestamp for when the record was deleted. (TILDA.Job)");
+     public static Type_DatetimePrimitiveNull  DELETED    = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"    , 16/*16*/, "The timestamp for when the record was deleted. (TILDA.Job)");
 ;
    }
 
-   public static final ColumnDefinition[] COLUMNS = { COLS.REFNUM,COLS.NAME,COLS.STARTTZ,COLS.START,COLS.ENDTZ,COLS.END,COLS.STATUS,COLS.MSG,COLS.CREATED,COLS.LASTUPDATED,COLS.DELETED };
+   public static final ColumnDefinition[] COLUMNS = { COLS.REFNUM,COLS.NAME,COLS.TYPE,COLS.USERID,COLS.DATASTARTTZ,COLS.DATASTART,COLS.DATAENDTZ,COLS.DATAEND,COLS.STARTTZ,COLS.START,COLS.ENDTZ,COLS.END,COLS.STATUS,COLS.MSG,COLS.CREATED,COLS.LASTUPDATED,COLS.DELETED };
 
    public static final ColumnDefinition[] COLUMNS_PRIMARY = { COLS.REFNUM };
 
@@ -329,6 +441,12 @@ This is the column definition for:<BR>
           S.append("select ");
           S.append(" "); C.getFullColumnVar(S, "TILDA", "Job", "refnum");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Job", "name");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Job", "type");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Job", "userId");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Job", "dataStartTZ");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Job", "dataStart");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Job", "dataEndTZ");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Job", "dataEnd");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Job", "startTZ");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Job", "start");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Job", "endTZ");
@@ -347,6 +465,10 @@ This is the column definition for:<BR>
                 break;
              case 1:
                 S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Job", "name"); S.append("=?)");
+                S.append(" order by "); C.getFullColumnVar(S, "TILDA", "Job", "start"); S.append(" DESC");
+                break;
+             case 2:
+                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Job", "type"); S.append("=?)");
                 S.append(" order by "); C.getFullColumnVar(S, "TILDA", "Job", "start"); S.append(" DESC");
                 break;
              case -77: 
@@ -373,6 +495,10 @@ This is the column definition for:<BR>
                 break;
              case 1: {
                PS.setString   (++i, Obj._name       );
+               break;
+             }
+             case 2: {
+               if (Obj.isNullType() == true) PS.setNull(++i, java.sql.Types.CHAR   );  else PS.setString   (++i, Obj._type       );
                break;
              }
              case -666: break;
@@ -432,6 +558,10 @@ This is the column definition for:<BR>
 
        Long        _refnum      =                       ParseUtil.parseLong("refnum"     , true , Values.get("refnum"     ), Errors );
        String        _name        =                       ParseUtil.parseString("name"       , true , Values.get("name"       ), Errors );
+       String        _type        =                       ParseUtil.parseString("type"       , false, Values.get("type"       ), Errors );
+       String        _userId      =                       ParseUtil.parseString("userId"     , false, Values.get("userId"     ), Errors );
+       ZonedDateTime        _dataStart   =                       ParseUtil.parseZonedDateTime("dataStart"  , false, Values.get("dataStart"  ), Errors );
+       ZonedDateTime        _dataEnd     =                       ParseUtil.parseZonedDateTime("dataEnd"    , false, Values.get("dataEnd"    ), Errors );
        ZonedDateTime        _start       =                       ParseUtil.parseZonedDateTime("start"      , true , Values.get("start"      ), Errors );
        ZonedDateTime        _end         =                       ParseUtil.parseZonedDateTime("end"        , false, Values.get("end"        ), Errors );
        Boolean        _status      =                       ParseUtil.parseBoolean("status"     , false, Values.get("status"     ), Errors );
@@ -443,6 +573,10 @@ This is the column definition for:<BR>
       tilda.data.Job_Data Obj = tilda.data.Job_Factory.Create(_name, _start);
 
       if (_refnum     != null) Obj.setRefnum     (_refnum     );
+      if (_type       != null) Obj.setType       (_type       );
+      if (_userId     != null) Obj.setUserId     (_userId     );
+      if (_dataStart  != null) Obj.setDataStart  (_dataStart  );
+      if (_dataEnd    != null) Obj.setDataEnd    (_dataEnd    );
       if (_end        != null) Obj.setEnd        (_end        );
       if (_status     != null) Obj.setStatus     (_status     );
       if (_msg        != null) Obj.setMsg        (_msg        );
@@ -581,7 +715,7 @@ This is the column definition for:<BR>
        return (tilda.data.Job_Data) Obj;
      }
 
-   static public ListResults<tilda.data.Job_Data> LookupWhereJobs(Connection C, String name, int Start, int Size) throws Exception
+   static public ListResults<tilda.data.Job_Data> LookupWhereJobName(Connection C, String name, int Start, int Size) throws Exception
      {
        tilda.data._Tilda.TILDA__JOB Obj = new tilda.data.Job_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -594,7 +728,7 @@ This is the column definition for:<BR>
        return RPI._L;
      }
 
-   static public void LookupWhereJobs(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Job_Data> OP, String name, int Start, int Size) throws Exception
+   static public void LookupWhereJobName(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Job_Data> OP, String name, int Start, int Size) throws Exception
      {
        tilda.data._Tilda.TILDA__JOB Obj = new tilda.data.Job_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -607,6 +741,30 @@ This is the column definition for:<BR>
      }
 
 
+   static public ListResults<tilda.data.Job_Data> LookupWhereJobType(Connection C, String type, int Start, int Size) throws Exception
+     {
+       tilda.data._Tilda.TILDA__JOB Obj = new tilda.data.Job_Data();
+       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
+
+       Obj.setType       (type       );
+
+
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
+       ReadMany(C, 2, RPI, Obj, null, Start, Size);
+       return RPI._L;
+     }
+
+   static public void LookupWhereJobType(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Job_Data> OP, String type, int Start, int Size) throws Exception
+     {
+       tilda.data._Tilda.TILDA__JOB Obj = new tilda.data.Job_Data();
+       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
+
+       Obj.setType       (type       );
+
+
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
+       ReadMany(C, 2, RPI, Obj, null, Start, Size);
+     }
 
 
    public static SelectQuery newSelectQuery(Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, true); }

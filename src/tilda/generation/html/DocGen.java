@@ -325,7 +325,7 @@ public class DocGen
                                 SortedSet<String> ColumnMatches = new TreeSet<String>();
                                 SortedSet<String> FormulaMatches = new TreeSet<String>();
                                 JSONUtil.Print(writer, "formula", false, true);
-                                JSONUtil.Print(writer, "docs", false, F._Title + (F._Measure == false ? "" : "&nbsp;<SUP class=\"Measure\"></SUP>") + "<BR><BR>" + String.join(" ", F._Description) + "<PRE style=\"padding-top: 3px;\">" + Docs.printFormulaCodeHTML(F, ColumnMatches, FormulaMatches) + "</PRE>");
+                                JSONUtil.Print(writer, "docs", false, F._Title + (F._Measure == false ? "" : "&nbsp;<SUP class=\"Measure\"></SUP>") + "<BR><BR>" + String.join(" ", F._Description) + "<PRE style=\"padding-top: 3px;\">" + Docs.printFormulaCodeHTML(F, ColumnMatches, FormulaMatches, true) + "</PRE>");
                               }
                             JSONUtil.Print(writer, "url", false, Docs.makeColumnHref(C));
                             writer.println(" }");
