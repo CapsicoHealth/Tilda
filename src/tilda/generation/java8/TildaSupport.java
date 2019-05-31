@@ -28,7 +28,6 @@ import tilda.generation.interfaces.CodeGenTildaSupport;
 import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
-import tilda.utils.DateTimeUtil;
 import tilda.utils.SystemValues;
 
 public class TildaSupport implements CodeGenTildaSupport
@@ -65,7 +64,8 @@ public class TildaSupport implements CodeGenTildaSupport
         Out.println(Helper.getMultiLineDocCommentStart()
         + " @author    Tilda code gen for " + Helper.getCodeGenLanguage() + "/" + G.getSql().getName() + SystemValues.NEWLINE
         + "    @version   Tilda 1.0" + SystemValues.NEWLINE
-        + "    @generated " + DateTimeUtil.printDateTimeFriendly(SystemValues.STARTUP_DATE, true, true) + SystemValues.NEWLINE
+// LDH-NOTE: @generated doesn't seem to be working properly with JavaDocs. Can't figure it out for now.
+//        + "    @generated " + DateTimeUtil.printDateTimeFriendly(SystemValues.STARTUP_DATE, true, true) + SystemValues.NEWLINE
         + Helper.getMultiLineCommentEnd()
         );
         Out.println("public final class TILDA__" + Generator.TILDA_VERSION_VAROK);
