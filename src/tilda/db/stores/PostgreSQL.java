@@ -22,6 +22,7 @@ import java.sql.Array;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -61,6 +62,7 @@ import tilda.utils.CollectionUtil;
 import tilda.utils.DurationUtil.IntervalEnum;
 import tilda.utils.FileUtil;
 import tilda.utils.TextUtil;
+import tilda.utils.pairs.ColMetaColPair;
 import tilda.utils.pairs.StringStringPair;
 
 public class PostgreSQL implements DBType
@@ -405,29 +407,37 @@ public class PostgreSQL implements DBType
     public boolean alterTableAlterColumnType(Connection Con, ColumnMeta ColMeta, Column Col, ZoneInfo_Data defaultZI)
     throws Exception
       {
+        
         if (ColMeta._TildaType == ColumnType.STRING)
           {
-            if (Col.getType() == ColumnType.INTEGER || Col.getType() == ColumnType.LONG || Col.getType() == ColumnType.FLOAT || Col.getType() == ColumnType.DOUBLE || Col.getType() == ColumnType.DATE)
-              {
-                String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName()
-                + "\" TYPE " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection())
-                + " USING (trim(\"" + Col.getName() + "\")::" + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection()) + ");";
-                return Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
-              }
-            else if (Col.getType() == ColumnType.DATETIME)
+            /*
+             * String Q = "SELECT count(*)\n"
+             * +"  FROM " + Col._ParentObject.getShortName()+"\n"
+             * +" WHERE trim(\"" + Col.getName() + "\")::" + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection()) +" is null or 1=1"
+             * ;
+             * ScalarRP RP = new ScalarRP();
+             * // Will throw if it fails.
+             * Con.ExecuteSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, RP);
+             */
+            if (Col.getType() == ColumnType.DATETIME || Col.getType() == ColumnType.DATE
+            || Col.getType() == ColumnType.INTEGER || Col.getType() == ColumnType.LONG || Col.getType() == ColumnType.FLOAT || Col.getType() == ColumnType.DOUBLE
+            || Col.getType() == ColumnType.BOOLEAN)
               {
                 String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName()
                 + "\" TYPE " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection())
                 + " USING (trim(\"" + Col.getName() + "\")::" + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection()) + ");";
 
-                if (Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) == false)
-                  return false;
+                boolean res = Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
+                if (Col.getType() != ColumnType.DATETIME || res == false)
+                  return res;
 
                 Col = Col._ParentObject.getColumn(Col.getName() + "TZ");
                 Q = "UPDATE " + Col._ParentObject.getShortName() + " SET \"" + Col.getName() + "\" = 'UTC' WHERE \"" + Col.getName() + "\" IS NULL";
 
                 return Con.ExecuteUpdate(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) >= 0;
               }
+            else
+              throw new Exception("Cannot alter a column from " + ColMeta._TildaType + " to " + Col.getType() + ".");
           }
 
         String Using = "";
@@ -443,10 +453,138 @@ public class PostgreSQL implements DBType
             + "!!  statement in the DB command line, and then rerun your program.\n"
             + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
           }
-
+        /*
+         * String Q = "SELECT count(*)\n"
+         * +"  FROM " + Col._ParentObject.getShortName()+"\n"
+         * +" WHERE \"" + Col.getName() + "\"::" + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection()) +" is null or 1=1"
+         * ;
+         * ScalarRP RP = new ScalarRP();
+         * // Will throw if it fails.
+         * Con.ExecuteSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, RP);
+         */
         String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName()
-        + "\" TYPE " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection()) + Using + ";";
+        + "\" TYPE " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection());
+        // going to boolean, must use a more elaborate expression to convert
+        if (Col.getType() == ColumnType.BOOLEAN)
+          Q += " USING (case when \"" + Col.getName() + "\"=0 then true when \"" + Col.getName() + "\" is null then null else false end)";
+        else if (ColMeta._TildaType == ColumnType.BOOLEAN)
+          Q += " USING \"" + Col.getName() + "\"::INTEGER::" + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection()) + ";";
+        else
+          Q += " USING \"" + Col.getName() + "\"::" + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection()) + ";";
+
         return Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
+      }
+
+    @Override
+    public boolean alterTableAlterColumnMulti(Connection Con, List<ColMetaColPair> BatchTypeCols, List<ColMetaColPair> BatchSizeCols, ZoneInfo_Data defaultZI)
+    throws Exception
+      {
+        if ((BatchTypeCols == null || BatchTypeCols.size() == 0) && (BatchSizeCols == null || BatchSizeCols.size() == 0))
+          LOG.error("There are no columns to process for alterTableAlterColumnMulti. Something has gone wrong when adding columns to the AlterColumnMulti migration action.");
+        
+        String Q = "ALTER TABLE "; 
+        if(BatchTypeCols.size() > 0)
+          Q += BatchTypeCols.get(0)._Col._ParentObject.getShortName();
+        else
+          Q += BatchSizeCols.get(0)._Col._ParentObject.getShortName();
+        
+        ArrayList<String> QU = new ArrayList<String>();
+
+        // Batch changing ColumnTypes
+        for (ColMetaColPair CMP : BatchTypeCols)
+          {
+            if (CMP._CMeta._TildaType == ColumnType.STRING)
+              {
+                if (CMP._Col.getType() == ColumnType.DATETIME || CMP._Col.getType() == ColumnType.DATE
+                || CMP._Col.getType() == ColumnType.INTEGER || CMP._Col.getType() == ColumnType.LONG || CMP._Col.getType() == ColumnType.FLOAT || CMP._Col.getType() == ColumnType.DOUBLE
+                || CMP._Col.getType() == ColumnType.BOOLEAN)
+                  {
+                    Q += " ALTER COLUMN \"" + CMP._Col.getName()
+                    + "\" TYPE " + getColumnType(CMP._Col.getType(), CMP._Col._Size, CMP._Col._Mode, CMP._Col.isCollection())
+                    + " USING (trim(\"" + CMP._Col.getName() + "\")::" + getColumnType(CMP._Col.getType(), CMP._Col._Size, CMP._Col._Mode, CMP._Col.isCollection()) + "),";
+
+                    // boolean res = Con.ExecuteDDL(CMP._Col._ParentObject._ParentSchema._Name, CMP._Col._ParentObject.getBaseName(), Q);
+                    if (CMP._Col.getType() == ColumnType.DATETIME)
+                      {
+                        Column ColTZ = CMP._Col._ParentObject.getColumn(CMP._Col.getName() + "TZ");
+                        QU.add("UPDATE " + CMP._Col._ParentObject.getShortName() + " SET \"" + ColTZ.getName() + "\" = 'UTC' WHERE \"" + ColTZ.getName() + "\" IS NULL;");
+                      }
+                  }
+                else
+                  throw new Exception("Cannot alter a column from " + CMP._CMeta._TildaType + " to " + CMP._Col.getType() + ".");
+              }
+            else
+              {
+                if (CMP._Col.isPrimaryKey() == true || CMP._Col.isForeignKey() == true)
+                  {
+                    LOG.warn("\n\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"
+                    + "!! ALTERING a primary or foreign key, which in some circumstances may lock in the JDBC driver. It should only \n"
+                    + "!! take a few seconds at most. If this takes any longer, it's hung. If this occurs, please run the below ALTER \n"
+                    + "!!  statement in the DB command line, and then rerun your program.\n"
+                    + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+                  }
+
+                Q += " ALTER COLUMN \"" + CMP._Col.getName()
+                + "\" TYPE " + getColumnType(CMP._Col.getType(), CMP._Col._Size, CMP._Col._Mode, CMP._Col.isCollection());
+                // going to boolean, must use a more elaborate expression to convert
+                if (CMP._Col.getType() == ColumnType.BOOLEAN)
+                  Q += " USING (case when \"" + CMP._Col.getName() + "\"=0 then true when \"" + CMP._Col.getName() + "\" is null then null else false end),";
+                else if (CMP._CMeta._TildaType == ColumnType.BOOLEAN)
+                  Q += " USING \"" + CMP._Col.getName() + "\"::INTEGER::" + getColumnType(CMP._Col.getType(), CMP._Col._Size, CMP._Col._Mode, CMP._Col.isCollection()) + ",";
+                else
+                  Q += " USING \"" + CMP._Col.getName() + "\"::" + getColumnType(CMP._Col.getType(), CMP._Col._Size, CMP._Col._Mode, CMP._Col.isCollection()) + ",";
+              }
+          }
+        
+        //Batch changing ColumnSize
+        for (ColMetaColPair CMP : BatchSizeCols)
+          {         
+            DBStringType ColT = getDBStringType(CMP._Col._Size);
+            DBStringType ColMetaT = getDBStringType(CMP._CMeta._Size);
+            // Is it shrinking?
+            if (CMP._Col._Size < CMP._CMeta._Size && ColT != DBStringType.TEXT)
+              {
+                String QS = "SELECT max(length(\"" + CMP._Col.getName() + "\")) from " + CMP._Col._ParentObject.getShortName();
+                ScalarRP RP = new ScalarRP();
+                Con.ExecuteSelect(CMP._Col._ParentObject._ParentSchema._Name, CMP._Col._ParentObject.getBaseName(), QS, RP);
+                if (RP.getResult() > CMP._Col._Size)
+                  {
+                    Q = "select \"" + CMP._Col.getName() + "\" || '  (' || length(\"" + CMP._Col.getName() + "\") || ')' as _x from " + CMP._Col._ParentObject.getShortName()
+                    + " group by \"" + CMP._Col.getName() + "\""
+                    + " order by length(\"" + CMP._Col.getName() + "\") desc"
+                    + " limit 10";
+                    StringListRP SLRP = new StringListRP();
+                    Con.ExecuteSelect(CMP._Col._ParentObject._ParentSchema._Name, CMP._Col._ParentObject.getBaseName(), Q, SLRP);
+                    LOG.error("Column sample:");
+                    for (String s : SLRP.getResult())
+                      LOG.error("   - " + s);
+                    throw new Exception("Cannot alter String column '" + CMP._Col.getFullName() + "' from size " + CMP._CMeta._Size + " down to " + CMP._Col._Size + " because there are values with sizes up to " + RP.getResult()
+                    + " that would be truncated. You need to manually migrate your database.");
+                  }
+              }
+
+            // Are we switching from CHAR(x) to VARCHAR(y) or TEXT?
+            String Using = "";
+            // Looks like we do not need the rtrim call. It slows things down and doesn't actually do anything in Postgres
+            // if (ColMetaT == DBStringType.CHARACTER && ColT != DBStringType.CHARACTER)
+            // Using = " USING rtrim(\"" + CMP._Col.getName() + "\")";
+            Q += "ALTER COLUMN \"" + CMP._Col.getName() + "\" TYPE "
+            + getColumnType(CMP._Col.getType(), CMP._Col._Size, CMP._Col._Mode, CMP._Col.isCollection()) + Using + ",";                   
+          }
+        
+        Q = Q.substring(0, Q.length() - 1) + ";";
+        LOG.info(Q);
+        if (QU.size() > 0)
+          {
+            if (Con.ExecuteDDL(BatchTypeCols.get(0)._Col._ParentObject._ParentSchema._Name, BatchTypeCols.get(0)._Col._ParentObject.getBaseName(), Q) == false)
+              return false;
+            for (String DTQ : QU)
+              if (Con.ExecuteUpdate(BatchTypeCols.get(0)._Col._ParentObject._ParentSchema._Name, BatchTypeCols.get(0)._Col._ParentObject.getBaseName(), DTQ) <= 0)
+                return false;
+            return true;
+          }
+        else
+          return Con.ExecuteDDL(BatchTypeCols.get(0)._Col._ParentObject._ParentSchema._Name, BatchTypeCols.get(0)._Col._ParentObject.getBaseName(), Q);
       }
 
     protected static void PrintFunctionIn(StringBuilder Str, String Type)
