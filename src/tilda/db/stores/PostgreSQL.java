@@ -219,9 +219,9 @@ public class PostgreSQL implements DBType
         Set<View> AncestorRealizedViews = V.getAncestorRealizedViews();
         boolean OK = true;
         if (SubRealizedViews != null || AncestorRealizedViews != null) // View depends on realized views.
-         OK = Con.ExecuteDDL(Sql.getViewSubRealizeSchemaName(), Sql.getViewSubRealizeViewName(V), "DROP VIEW IF EXISTS " + Sql.getViewSubRealizeName(V) + " CASCADE");
+          OK = Con.ExecuteDDL(Sql.getViewSubRealizeSchemaName(), Sql.getViewSubRealizeViewName(V), "DROP VIEW IF EXISTS " + Sql.getViewSubRealizeName(V) + " CASCADE");
 
-        return OK == false? OK : Con.ExecuteDDL(V._ParentSchema._Name, V.getBaseName(), "DROP VIEW IF EXISTS " + V.getShortName() + " CASCADE");
+        return OK == false ? OK : Con.ExecuteDDL(V._ParentSchema._Name, V.getBaseName(), "DROP VIEW IF EXISTS " + V.getShortName() + " CASCADE");
       }
 
     @Override
@@ -287,10 +287,10 @@ public class PostgreSQL implements DBType
       {
         String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName() + "\" ";
         if (Col._DefaultCreateValue == null)
-         Q += "DROP DEFAULT;";
+          Q += "DROP DEFAULT;";
         else
-         Q += "SET DEFAULT "+ValueHelper.printValue(Col.getName(), Col.getType(), Col._DefaultCreateValue._Value)+";";
-          
+          Q += "SET DEFAULT " + ValueHelper.printValue(Col.getName(), Col.getType(), Col._DefaultCreateValue._Value) + ";";
+
         return Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
       }
 

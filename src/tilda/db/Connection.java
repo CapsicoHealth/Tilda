@@ -312,7 +312,7 @@ public final class Connection
     public int ExecuteSelect(String SchemaName, String TableName, String Query, RecordProcessor RP)
     throws Exception
       {
-        return JDBCHelper.ExecuteSelect(_C, SchemaName, TableName, Query, RP);
+        return JDBCHelper.ExecuteSelect(_C, SchemaName, TableName, Query, RP, 0, false, -1, false, false);
       }
 
     /**
@@ -321,7 +321,7 @@ public final class Connection
     public int ExecuteSelect(String SchemaName, String TableName, String Query, RecordProcessor RP, int Start, boolean Offsetted, int Size, boolean Limited)
     throws Exception
       {
-        return ExecuteSelect(SchemaName, TableName, Query, RP, Start, Offsetted, Size, Limited, false);
+        return JDBCHelper.ExecuteSelect(_C, SchemaName, TableName, Query, RP, Start, Offsetted, Size, Limited, false);
       }
 
     /**
