@@ -935,7 +935,7 @@ public class GraphvizUtil
         writer.println("</HEAD>");
         writer.println("<BODY>");
         
-        DG.writeSearchHTML(writer); // Add Search Box
+        DG.writeSearchHTML(writer, true); // Add Search Box
         
         writer.println("<BR><BR><HR>");
         writer.println("<DIV class='svgs'>");

@@ -1151,7 +1151,9 @@ public class Sql extends PostgreSQL implements CodeGenSql
               {
                 String[] VCNames = new String[L.size()];
                 for (int i = 0; i < L.size(); ++i)
-                  VCNames[i] = L.get(i)._ParentView.getShortName() + "." + L.get(i)._Name;
+                  {
+                    VCNames[i] =  L.get(i)._ParentView.getShortName() + "." + L.get(i)._Name;
+                  }
                 OutFinal.print(", ARRAY[" + TextUtil.EscapeSingleQuoteForSQL(VCNames, true) + "]");
               }
             else
@@ -1342,6 +1344,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
       {
         String FormulaStr = TextUtil.JoinTrim(F._FormulaStrs, " ");
 
+        if (F._Name.startsWith("x_") == true)
+         LOG.debug("xxxx");
         Matcher M = F.getParentView()._ViewColumnsRegEx.matcher(FormulaStr);
         StringBuffer Str = new StringBuffer();
         while (M.find() == true)
@@ -1356,6 +1360,17 @@ public class Sql extends PostgreSQL implements CodeGenSql
               if (s.equals(VC._Name) == true)
                 {
                   ColumnType T = VC._SameAsObj == null && VC._SameAs.equals("_TS.p") == true ? ColumnType.DATE : VC._SameAsObj.getType();
+                  boolean nullTest = FormulaStr.substring(M.end()).toLowerCase().matches("\\s*is\\s*(not)?\\s*null.*");
+                  if (nullTest == false && (T == ColumnType.INTEGER || T == ColumnType.LONG || T == ColumnType.FLOAT || T == ColumnType.DOUBLE))
+                    M.appendReplacement(Str, "coalesce(\"" + M.group(1) + "\", 0)");
+                  else
+                    M.appendReplacement(Str, '"' + M.group(1) + '"');
+                  break;
+                }
+            for (Column C : ParentView._PivotColumns)
+              if (s.equals(C.getName()) == true)
+                {
+                  ColumnType T = C.getType();
                   boolean nullTest = FormulaStr.substring(M.end()).toLowerCase().matches("\\s*is\\s*(not)?\\s*null.*");
                   if (nullTest == false && (T == ColumnType.INTEGER || T == ColumnType.LONG || T == ColumnType.FLOAT || T == ColumnType.DOUBLE))
                     M.appendReplacement(Str, "coalesce(\"" + M.group(1) + "\", 0)");

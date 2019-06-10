@@ -151,36 +151,67 @@
       
     }
     
-   ,{ "name":"Jobs",
-      "description":"Jobs",
-      "columns":[
-        { "name":"Id"                                   , "type":"INTEGER" , "nullable": false,                 "description":"Id" },        
-        { "name":"Name"                                 , "type":"STRING"  , "nullable": true,  "size":   120,  "description":"Name" },
-        { "name":"StartTime"                            , "type":"DATETIME", "nullable": true,                  "description":"StartTime" },
-        { "name":"EndTime"                              , "type":"DATETIME", "nullable": true,                  "description":"EndTime" },
-        { "name":"TotalRecords"                         , "type":"INTEGER" , "nullable": true,                  "description":"TotalRecords" },
-        { "name":"Status"                               , "type":"STRING"  , "nullable": true,  "size":   200,  "description":"Status" },
-        { "name":"Error"                                , "type":"STRING"  , "nullable": true,  "size":   1000, "description":"Error" }
+   ,{ "name":"Job"
+     ,"description":"Jobs details"
+     ,"tzFk": false
+     ,"columns":[
+          { "name":"name"                             , "type":"STRING"  , "nullable": false, "size": 250,  "description":"Name" }
+         ,{ "name":"type"                             , "type":"STRING"  , "nullable": true , "size": 250,  "description":"Job type" }
+         ,{ "name":"userId"                           , "type":"STRING"  , "nullable": true , "size": 250,  "description":"Job user Id" }
+         ,{ "name":"dataStart"                        , "type":"DATETIME", "nullable": true ,               "description":"StartTime" }
+         ,{ "name":"dataEnd"                          , "type":"DATETIME", "nullable": true ,               "description":"StartTime" }
+         ,{ "name":"start"                            , "type":"DATETIME", "nullable": false,               "description":"StartTime" }
+         ,{ "name":"end"                              , "type":"DATETIME", "nullable": true ,               "description":"EndTime" }
+         ,{ "name":"status"                           , "type":"BOOLEAN" , "nullable": true ,               "description":"Status" }
+         ,{ "name":"msg"                              , "type":"STRING"  , "nullable": true , "size":8192,  "description":"Message details" }
+        ]
+     ,"primary": { "autogen": true }
+     ,"indices":[ 
+          { "name":"JobName", "columns":["name"], "orderBy":["start desc"] }
+         ,{ "name":"JobType", "columns":["type"], "orderBy":["start desc"] }
+        ]         
+    }
+   ,{ "name":"JobPart"
+     ,"description":"Job part details"
+     ,"tzFk": false
+     ,"columns":[
+          { "name":"jobRefnum"                        , "sameAs":"Job.refnum" ,                                 "description":"Parent Job Refnum" }       
+         ,{ "name":"name"                             , "type":"STRING"       , "nullable": false, "size": 250, "description":"Job part name" }
+         ,{ "name":"type"                             , "type":"STRING"       , "nullable": true , "size": 250, "description":"Job part type" }
+         ,{ "name":"dataStart"                        , "type":"DATETIME"     , "nullable": true ,              "description":"Job part data start" }
+         ,{ "name":"dataEnd"                          , "type":"DATETIME"     , "nullable": true ,              "description":"Job part data end" }
+         ,{ "name":"start"                            , "type":"DATETIME"     , "nullable": false,              "description":"Job part execution start" }
+         ,{ "name":"end"                              , "type":"DATETIME"     , "nullable": true ,              "description":"Job part execution end" }
+         ,{ "name":"recordsCount"                     , "type":"INTEGER"      , "nullable": true ,              "description":"count of database or file or ... records." }
+         ,{ "name":"status"                           , "type":"BOOLEAN"      , "nullable": true ,              "description":"Status flag, i.e., success=true and failure-false" }
        ]
-       ,"indices":[ 
-        { "name":"Job_Id", "columns":["Id"] }
-      ]         
-    }, 
-    { "name":"Job_Detail",
-      "description":"Job Detail",
-      "columns":[
-        { "name":"Id"                                   , "type":"INTEGER" , "nullable": false,                 "description":"Id" },        
-        { "name":"Job_Id"                               , "type":"INTEGER" , "nullable": false,                 "description":"Job Id" },       
-        { "name":"FileName"                             , "type":"STRING"  , "nullable": true,  "size":   200,  "description":"FileName" },
-        { "name":"FileRecords"                          , "type":"INTEGER" , "nullable": true,                  "description":"FileRecords" },
-        { "name":"FileProcessStartTime"                 , "type":"DATETIME", "nullable": true,                  "description":"FileProcessStartTime" },
-        { "name":"FileProcessEndTime"                   , "type":"DATETIME", "nullable": true,                  "description":"FileProcessEndTime" },
-        { "name":"Status"                               , "type":"STRING"  , "nullable": true,  "size":   200,  "description":"Status" },
-        { "name":"Error"                                , "type":"STRING"  , "nullable": true,  "size":   1000, "description":"Error" }
+     ,"primary": { "autogen": true }
+     ,"foreign": [
+         { "name":"Job",  "srcColumns":["jobRefnum"], "destObject": "Job" }
        ]
-       ,"indices":[ 
-        { "name":"Job_File_Id", "columns":["Id","Job_Id"] }
-      ]         
+     ,"indices":[ 
+         { "name":"Job"        , "columns":["jobRefnum"], "orderBy":["start desc"] }
+        ,{ "name":"JobPartName", "columns":["name"]     , "orderBy":["start desc"] }
+        ,{ "name":"JobPartType", "columns":["type"]     , "orderBy":["start desc"] }
+       ]         
+    }
+   ,{ "name":"JobPartMessage"
+     ,"description":"Job part message details"
+     ,"columns":[
+          { "name":"jobRefnum"                        , "sameAs":"Job.refnum"     ,                                 "description":"Parent Job Refnum" }       
+         ,{ "name":"jobPartRefnum"                    , "sameAs":"JobPart.refnum" , "nullable": true ,              "description":"Parent Job Part Refnum" }       
+         ,{ "name":"notify"                           , "type":"BOOLEAN"          , "nullable": false,              "description":"Notification flag" }
+         ,{ "name":"msg"                              , "type":"STRING"           , "nullable": false, "size":8192, "description":"Message details" }
+       ]
+     ,"primary": { "autogen": true }
+     ,"foreign": [
+         { "name":"Job",  "srcColumns":["jobRefnum"], "destObject": "Job" }
+        ,{ "name":"JobPart",  "srcColumns":["jobPartRefnum"], "destObject": "JobPart" }
+       ]
+     ,"indices":[ 
+         { "name":"Job"        , "columns":["jobRefnum"], "orderBy":["created desc"] }
+        ,{ "name":"JobPart"    , "columns":["jobPartRefnum"], "orderBy":["created desc"] }
+       ]         
     }
     
     
@@ -417,13 +448,19 @@
         { "name": "a9b"          , "type": "DATETIME[]" ,                                                       "description": "The blah"},
         { "name": "a9c"          , "type": "DATE"       ,                                                       "description": "The blah"},
         { "name": "a9d"          , "type": "DATE[]"     ,                                                       "description": "The blah"},
-        { "name": "a10"          , "type": "SHORT"      ,                                                       "description": "The blah"},
-        { "name": "a10b"         , "type": "SHORT[]"    ,                                                       "description": "The blah"},
+        
+        { "name": "a10a"         , "type": "INTEGER"        ,                                                       "description": "The blah"},
+        //{ "name": "a10a"         , "type": "BOOLEAN"        ,                                                       "description": "The blah"},
+        { "name": "a10b"         , "type": "STRING"        ,                  "size":    10,                    "description": "The blah"},
+        //{ "name": "a10b"         , "type": "INTEGER"        ,                                                       "description": "The blah"},
+        { "name": "a10c"         , "type": "INTEGER"        ,                                                       "description": "The blah"}
+        //{ "name": "a10c"         , "type": "LONG"        ,   
         
         { "name": "a11"          , "type": "NUMERIC"    , "precision":10, "scale":2,                             "description": "The blah"},
         { "name": "a11b"         , "type": "NUMERIC[]"  , "precision":10, "scale":2,                             "description": "The blah"},
         { "name": "a11c"         , "type": "NUMERIC"    , "precision":10,                                        "description": "The blah"}
-       /* { "name": "a11d"         , "type": "NUMERIC"    ,                                                        "description": "The blah"}*/ 
+       /* { "name": "a11d"         , "type": "NUMERIC"    ,             
+                                                            "description": "The blah"} */
       ],
       "primary": { "autogen": true, "keyBatch": 25000 },
       "indices":[ 

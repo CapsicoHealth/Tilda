@@ -598,7 +598,7 @@ public class TildaData implements CodeGenTildaData
                   else if (C.isList() == true)
                     Out.println("       if (pos >= _" + C.getName() + ".size() || _" + C.getName() + ".get(pos).equals(v) == false)");
                   else
-                    Out.println("       if (v != _" + C.getName() + ")");
+                    Out.println("       if (__Init == InitMode.CREATE || v != _" + C.getName() + ")");
                   Out.println("        {");
                   break;
                 case DATE:

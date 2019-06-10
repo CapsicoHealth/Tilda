@@ -162,210 +162,6 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD>The timestamp for when the record was deleted. (TILDA.Connection)</TD>
 </TR>
 </TABLE></BLOCKQUOTE>
-<DIV id='Connection-active_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Connection-active_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Connection_DIV'>Connection</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Connection-active_DIV'>active</a> -- BOOLEAN</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Connection-id_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Connection-id_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Connection_DIV'>Connection</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Connection-id_DIV'>id</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Connection-driver_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Connection-driver_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Connection_DIV'>Connection</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Connection-driver_DIV'>driver</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Connection-db_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Connection-db_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Connection_DIV'>Connection</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Connection-db_DIV'>db</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Connection-user_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Connection-user_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Connection_DIV'>Connection</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Connection-user_DIV'>user</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Connection-pswd_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Connection-pswd_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Connection_DIV'>Connection</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Connection-pswd_DIV'>pswd</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Connection-initial_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Connection-initial_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Connection_DIV'>Connection</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Connection-initial_DIV'>initial</a> -- INTEGER</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Connection-max_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Connection-max_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Connection_DIV'>Connection</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Connection-max_DIV'>max</a> -- INTEGER</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Connection-schemas_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Connection-schemas_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Connection_DIV'>Connection</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Connection-schemas_DIV'>schemas</a> -- STRING[]</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Connection-created_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Connection-created_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Connection_DIV'>Connection</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Connection-created_DIV'>created</a> -- DATETIME</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Connection-lastUpdated_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Connection-lastUpdated_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Connection_DIV'>Connection</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Connection-lastUpdated_DIV'>lastUpdated</a> -- DATETIME</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Connection-deleted_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Connection-deleted_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Connection_DIV'>Connection</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Connection-deleted_DIV'>deleted</a> -- DATETIME</td>
-</tr>
-</table>
-</DIV></DIV>
 </DIV>
 
 */
@@ -485,7 +281,7 @@ This is the setter for:<BR>
    public void setActive(boolean v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _active)
+       if (__Init == InitMode.CREATE || v != _active)
         {
           __Changes.or(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask);
           __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask);
@@ -1099,7 +895,7 @@ This is the setter for:<BR>
    public void setInitial(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _initial)
+       if (__Init == InitMode.CREATE || v != _initial)
         {
           __Changes.or(TILDA__CONNECTION_Factory.COLS.INITIAL._Mask);
           __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.INITIAL._Mask);
@@ -1193,7 +989,7 @@ This is the setter for:<BR>
    public void setMax(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _max)
+       if (__Init == InitMode.CREATE || v != _max)
         {
           __Changes.or(TILDA__CONNECTION_Factory.COLS.MAX._Mask);
           __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.MAX._Mask);

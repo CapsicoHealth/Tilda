@@ -43,6 +43,7 @@ import tilda.parsing.parts.View;
 import tilda.types.ColumnDefinition;
 import tilda.types.Type_DatetimePrimitive;
 import tilda.utils.DurationUtil.IntervalEnum;
+import tilda.utils.pairs.ColMetaColPair;
 import tilda.utils.pairs.StringStringPair;
 
 public interface DBType
@@ -69,11 +70,12 @@ public interface DBType
     public boolean createView                      (Connection Con, View V) throws Exception;
     public boolean alterTableAddColumn             (Connection Con, Column Col, String DefaultValue) throws Exception;
     public boolean alterTableAlterColumnDefault    (Connection Con, Column Col) throws Exception;
-    public boolean alterTableDropColumn            (Connection Con, Object Obj, String ColumnName) throws Exception;
+    public boolean alterTableAlterColumnNumericSize(Connection connection, ColumnMeta colMeta, Column col) throws Exception;
+    public boolean alterTableDropColumn            (Connection Con, Object Obj, String ColumnName) throws Exception;   
     public boolean alterTableAlterColumnNull       (Connection Con, Column Col, String DefaultValue) throws Exception;
     public boolean alterTableAlterColumnComment    (Connection Con, Column Col) throws Exception;
     public boolean alterTableAlterColumnType       (Connection Con, ColumnMeta ColMeta, Column Col, ZoneInfo_Data defaultZI) throws Exception;
-    public boolean alterTableAlterColumnNumericSize(Connection connection, ColumnMeta colMeta, Column col) throws Exception;
+    public boolean alterTableAlterColumnMulti      (Connection Con, List<ColMetaColPair> BatchTypeCols, List<ColMetaColPair> BatchSizeCols, ZoneInfo_Data defaultZI)  throws Exception;
     public boolean alterTableAlterColumnStringSize (Connection Con, ColumnMeta ColMeta, Column Col) throws Exception;
     public boolean alterTableReplaceTablePK        (Connection Con, Object Obj, PKMeta oldPK) throws Exception;
     public boolean alterTableDropFK                (Connection Con, Object Obj, FKMeta FK) throws Exception;
@@ -114,4 +116,5 @@ public interface DBType
     public void             within(Connection C, StringBuilder Str, Type_DatetimePrimitive Col, Type_DatetimePrimitive ColStart, long DurationCount, IntervalEnum DurationType);
     // LDH-NOTE: UNLOGGED Tables behave strangely in some situations... Disabling this feature.
 //    public boolean setTableLogging(Connection connection, String schemaName, String tableName, boolean logged) throws Exception;
+    
   }

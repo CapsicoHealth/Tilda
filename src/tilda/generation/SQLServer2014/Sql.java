@@ -453,7 +453,7 @@ public class Sql extends MSSQL implements CodeGenSql
       {
         if (I._Db == false)
           Out.print("-- app-level index only -- ");
-        Out.print("CREATE" + (I._Unique == true ? " UNIQUE" : "") + " INDEX " + I._Parent.getBaseName() + "_" + I._Name + " ON [" + I._Parent._ParentSchema._Name + "].[" + I._Parent._Name + "] (");
+        Out.print("CREATE" + (I._Unique == true ? " UNIQUE" : "") + " INDEX IF NOT EXISTS " + I._Parent.getBaseName() + "_" + I._Name + " ON [" + I._Parent._ParentSchema._Name + "].[" + I._Parent._Name + "] (");
         if (I._ColumnObjs.isEmpty() == false)
           PrintColumnList(Out, I._ColumnObjs);
         if (I._OrderByObjs.isEmpty() == false)

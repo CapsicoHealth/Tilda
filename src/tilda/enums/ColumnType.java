@@ -64,6 +64,7 @@ public enum ColumnType
     public final String      _SimpleName;
     public final String      _ShortName;
     public final static ColumnType[][]  _CompatibleTypes;
+    public final static ColumnType[][]  _CompatibleDBTypes;
 
     
     static
@@ -73,27 +74,53 @@ public enum ColumnType
         
         _CompatibleTypes = new ColumnType[][] 
          {
-			{STRING, JSON, CHAR, INTEGER, LONG, FLOAT, DOUBLE, BOOLEAN, DATE, DATETIME, BITFIELD, SHORT}
-		   ,{JSON}
-		   ,{CHAR, STRING}
-	       ,{SHORT}
-		   ,{INTEGER, SHORT}
-		   ,{LONG, INTEGER, SHORT}
-		   ,{FLOAT, INTEGER, SHORT}
-		   ,{DOUBLE, FLOAT, INTEGER, LONG, SHORT}
-           ,{NUMERIC, DOUBLE, FLOAT, INTEGER, LONG, SHORT}
-		   ,{BOOLEAN}
-		   ,{DATE}
-		   ,{DATETIME, DATE}
-		   ,{BINARY}
-		   ,{BITFIELD}
+			{STRING, JSON, CHAR, INTEGER, LONG, FLOAT, DOUBLE, BOOLEAN, DATE, DATETIME, BITFIELD, SHORT} //STRING
+		   ,{JSON}  //JSON
+		   ,{CHAR, STRING} //CHAR
+	       ,{SHORT} //SHORT
+		   ,{INTEGER, SHORT} //INTEGER
+		   ,{LONG, INTEGER, SHORT} //LONG
+		   ,{FLOAT, INTEGER, SHORT} //FLOAT
+		   ,{DOUBLE, FLOAT, INTEGER, LONG, SHORT} //DOUBLE
+           ,{NUMERIC, DOUBLE, FLOAT, INTEGER, LONG, SHORT}  //NUMERIC 
+		   ,{BOOLEAN} //BOOLEAN
+		   ,{DATE} //DATE
+		   ,{DATETIME, DATE} //DATETIME
+		   ,{BINARY} //BINARY
+		   ,{BITFIELD} //BITFIELD
           };
+
+         _CompatibleDBTypes = new ColumnType[][]
+           {
+              {STRING, JSON, CHAR, INTEGER, LONG, FLOAT, DOUBLE, BOOLEAN, DATE, DATETIME, BITFIELD, SHORT, NUMERIC}  //STRING
+             ,{JSON, STRING} //JSON
+             ,{CHAR, STRING, BOOLEAN} //CHAR
+             ,{SHORT, BOOLEAN, STRING} //SHORT TODO:CHECK
+             ,{INTEGER, BOOLEAN, STRING, LONG, DOUBLE, FLOAT, SHORT, NUMERIC} //INTEGER
+             ,{LONG, BOOLEAN, STRING, INTEGER, DOUBLE, FLOAT} //LONG
+             ,{FLOAT, BOOLEAN, STRING, INTEGER, DOUBLE, LONG} //FLOAT
+             ,{DOUBLE, FLOAT, INTEGER, LONG, BOOLEAN, STRING} //DOUBLE
+             ,{NUMERIC, DOUBLE, FLOAT, INTEGER, LONG, BOOLEAN, STRING} //NUMERIC TODO:CHECK
+             ,{BOOLEAN, DOUBLE, FLOAT, LONG, INTEGER, CHAR, STRING} //BOOLEAN
+             ,{DATE, STRING} //DATE
+             ,{DATETIME, DATE, STRING}  //DATETIME
+             ,{BINARY} //BINARY
+             ,{BITFIELD} //BITFIELD      
+            };   
+
         ColumnType[] colsToValidate = new ColumnType[_CompatibleTypes.length];
         for(int i = 0; i < _CompatibleTypes.length; i++)
           {
         	colsToValidate[i] = _CompatibleTypes[i][0];
           }
         ColumnType.validate(colsToValidate);
+        
+        ColumnType[] dbColsToValidate = new ColumnType[_CompatibleDBTypes.length];
+        for(int i = 0; i < _CompatibleDBTypes.length; i++)
+          {
+            dbColsToValidate[i] = _CompatibleDBTypes[i][0];
+          }
+        ColumnType.validate(dbColsToValidate);
         
       }
 
@@ -136,6 +163,23 @@ public enum ColumnType
 		return false;
 	  }
     
+    public boolean isDBCompatible(ColumnType Type) 
+      {
+        if(Type != null)
+          {
+            if(Type == this)
+              return true;
+            
+            for(int i = 0 ; i < _CompatibleDBTypes.length ; i++)
+              if(_CompatibleDBTypes[i][0] == Type)
+                for(int j = 1 ; j < _CompatibleDBTypes[i].length ; j++)
+                  if(_CompatibleDBTypes[i][j] == this)
+                    return true;
+          }
+        
+        return false;
+      }
+    
     public String getCompatibleTypesString(ColumnType Type) 
       { 
     	String compatibleTypes = Type.name();
@@ -146,6 +190,17 @@ public enum ColumnType
   	    
 		return compatibleTypes;
 	  }    
+    
+    public String getCompatibleDBTypesString(ColumnType Type) 
+      { 
+        String compatibleTypes = Type.name();
+        for(int i = 0 ; i < _CompatibleDBTypes.length ; i++)
+            if(_CompatibleDBTypes[i][0] == Type)
+              for(int j = 1 ; j < _CompatibleDBTypes[i].length ; j++)
+                  compatibleTypes += (compatibleTypes.length() > 0 ? ", " + _CompatibleDBTypes[i][j].name() : _CompatibleDBTypes[i][j].name());
+        
+        return compatibleTypes;
+      }  
     
     public static <T> void validate(T[] Enums)
       {

@@ -117,5 +117,8 @@ select FormulaDependencyView."formulaRefnum", "location" as "formulaLocation", "
 )
 select distinct * 
   from R
-
+;
  
+
+drop table if exists tilda.job_detail;
+drop table if exists tilda.jobs;

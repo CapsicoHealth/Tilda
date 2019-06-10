@@ -92,6 +92,8 @@ public class ViewColumn
 
     public transient FrameworkColumnType _FCT              = FrameworkColumnType.NONE;
 
+    public transient Column _ProxyCol = null; // The column generated for the proxy object representing the parent view.
+
     public String getFullName()
       {
         return _ParentView.getFullName() + "." + _Name;

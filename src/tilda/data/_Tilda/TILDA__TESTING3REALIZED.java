@@ -103,108 +103,6 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD>The timestamp for when the record was last updated. (TILDA.Testing)</TD>
 </TR>
 </TABLE></BLOCKQUOTE>
-<DIV id='Testing3Realized-refnum_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing3Realized-refnum_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing3Realized_DIV'>Testing3Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing3Realized-refnum_DIV'>refnum</a> -- LONG</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing3Realized-name_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing3Realized-name_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing3Realized_DIV'>Testing3Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing3Realized-name_DIV'>name</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing3Realized-a8bTZ_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing3Realized-a8bTZ_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing3Realized_DIV'>Testing3Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing3Realized-a8bTZ_DIV'>a8bTZ</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing3Realized-a8b_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing3Realized-a8b_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing3Realized_DIV'>Testing3Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing3Realized-a8b_DIV'>a8b</a> -- DATETIME</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing3Realized-lastUpdated_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing3Realized-lastUpdated_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing3Realized_DIV'>Testing3Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing3Realized-lastUpdated_DIV'>lastUpdated</a> -- DATETIME</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing3Realized-xxxLastUpdated_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing3Realized-xxxLastUpdated_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing3Realized_DIV'>Testing3Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing3Realized-xxxLastUpdated_DIV'>xxxLastUpdated</a> -- DATETIME</td>
-</tr>
-</table>
-</DIV></DIV>
 </DIV>
 
 */
@@ -305,7 +203,7 @@ This is the setter for:<BR>
     void setRefnum(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _refnum)
+       if (__Init == InitMode.CREATE || v != _refnum)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing3Realized.refnum' that is invariant, or part of a read-only or pre-existing WORM object.");

@@ -64,7 +64,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>3&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('RefillPerf-startPeriodTZ')" align="right"><B id='RefillPerf-startPeriodTZ_DIV' class='columns dotted_underline cursor_pointer'>startPeriodTZ</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='RefillPerf-startPeriodTZ_DIV' class='columns'>startPeriodTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
@@ -165,216 +165,6 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD>The timestamp for when the record was deleted. (TILDA.RefillPerf)</TD>
 </TR>
 </TABLE></BLOCKQUOTE>
-<DIV id='RefillPerf-schemaName_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('RefillPerf-schemaName_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#RefillPerf_DIV'>RefillPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#RefillPerf-schemaName_DIV'>schemaName</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='RefillPerf-objectName_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('RefillPerf-objectName_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#RefillPerf_DIV'>RefillPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#RefillPerf-objectName_DIV'>objectName</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='RefillPerf-startPeriodTZ_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('RefillPerf-startPeriodTZ_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#RefillPerf_DIV'>RefillPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#RefillPerf-startPeriodTZ_DIV'>startPeriodTZ</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#ZoneInfo_DIV'>ZoneInfo</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#ZoneInfo-id_DIV'>id</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='RefillPerf-startPeriod_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('RefillPerf-startPeriod_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#RefillPerf_DIV'>RefillPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#RefillPerf-startPeriod_DIV'>startPeriod</a> -- DATETIME</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='RefillPerf-timeCreateMs_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('RefillPerf-timeCreateMs_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#RefillPerf_DIV'>RefillPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#RefillPerf-timeCreateMs_DIV'>timeCreateMs</a> -- LONG</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='RefillPerf-timeIndexMs_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('RefillPerf-timeIndexMs_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#RefillPerf_DIV'>RefillPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#RefillPerf-timeIndexMs_DIV'>timeIndexMs</a> -- LONG</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='RefillPerf-timeAnalyzeMs_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('RefillPerf-timeAnalyzeMs_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#RefillPerf_DIV'>RefillPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#RefillPerf-timeAnalyzeMs_DIV'>timeAnalyzeMs</a> -- LONG</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='RefillPerf-timeTotalMs_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('RefillPerf-timeTotalMs_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#RefillPerf_DIV'>RefillPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#RefillPerf-timeTotalMs_DIV'>timeTotalMs</a> -- LONG</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='RefillPerf-columnsMs_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('RefillPerf-columnsMs_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#RefillPerf_DIV'>RefillPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#RefillPerf-columnsMs_DIV'>columnsMs</a> -- LONG</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='RefillPerf-created_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('RefillPerf-created_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#RefillPerf_DIV'>RefillPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#RefillPerf-created_DIV'>created</a> -- DATETIME</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='RefillPerf-lastUpdated_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('RefillPerf-lastUpdated_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#RefillPerf_DIV'>RefillPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#RefillPerf-lastUpdated_DIV'>lastUpdated</a> -- DATETIME</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='RefillPerf-deleted_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('RefillPerf-deleted_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#RefillPerf_DIV'>RefillPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#RefillPerf-deleted_DIV'>deleted</a> -- DATETIME</td>
-</tr>
-</table>
-</DIV></DIV>
 </DIV>
 
 */
@@ -829,7 +619,7 @@ This is the setter for:<BR>
    public void setTimeCreateMs(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _timeCreateMs)
+       if (__Init == InitMode.CREATE || v != _timeCreateMs)
         {
           __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMECREATEMS._Mask);
           __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMECREATEMS._Mask);
@@ -923,7 +713,7 @@ This is the setter for:<BR>
    public void setTimeIndexMs(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _timeIndexMs)
+       if (__Init == InitMode.CREATE || v != _timeIndexMs)
         {
           __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMEINDEXMS._Mask);
           __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMEINDEXMS._Mask);
@@ -1017,7 +807,7 @@ This is the setter for:<BR>
    public void setTimeAnalyzeMs(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _timeAnalyzeMs)
+       if (__Init == InitMode.CREATE || v != _timeAnalyzeMs)
         {
           __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMEANALYZEMS._Mask);
           __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMEANALYZEMS._Mask);
@@ -1111,7 +901,7 @@ This is the setter for:<BR>
    public void setTimeTotalMs(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _timeTotalMs)
+       if (__Init == InitMode.CREATE || v != _timeTotalMs)
         {
           __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMETOTALMS._Mask);
           __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMETOTALMS._Mask);
@@ -1205,7 +995,7 @@ This is the setter for:<BR>
    public void setColumnsMs(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _columnsMs)
+       if (__Init == InitMode.CREATE || v != _columnsMs)
         {
           __Changes.or(TILDA__REFILLPERF_Factory.COLS.COLUMNSMS._Mask);
           __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.COLUMNSMS._Mask);

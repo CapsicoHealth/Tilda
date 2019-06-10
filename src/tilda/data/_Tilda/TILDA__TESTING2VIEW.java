@@ -50,7 +50,7 @@ This View contains the following columns:<BLOCKQUOTE>
    <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left" nowrap><label>Realized<input type="checkbox" onchange="filterTable('Testing2View_TBL', 'R')", id="Testing2View_TBL_R"></label>&nbsp;</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description/<label>Formula<input type="checkbox" onchange="filterTable('Testing2View_TBL', 'F')", id="Testing2View_TBL_F"></label></TH></TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('Testing2View-refnum')" align="right"><B id='Testing2View-refnum_DIV' class='columns realizedcolumns dotted_underline cursor_pointer'>refnum</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2View-refnum_DIV' class='columns realizedcolumns'>refnum</B>&nbsp;&nbsp;</TD>
 <TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
@@ -60,7 +60,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>2&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('Testing2View-name')" align="right"><B id='Testing2View-name_DIV' class='columns realizedcolumns dotted_underline cursor_pointer'>name</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2View-name_DIV' class='columns realizedcolumns'>name</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(10)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
@@ -70,7 +70,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>3&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('Testing2View-lastUpdated')" align="right"><B id='Testing2View-lastUpdated_DIV' class='columns realizedcolumns dotted_underline cursor_pointer'>lastUpdated</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2View-lastUpdated_DIV' class='columns realizedcolumns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">AUTO&nbsp;&nbsp;</TD>
@@ -80,7 +80,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>4&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('Testing2View-xxxLastUpdated')" align="right"><B id='Testing2View-xxxLastUpdated_DIV' class='columns realizedcolumns dotted_underline cursor_pointer'>xxxLastUpdated</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2View-xxxLastUpdated_DIV' class='columns realizedcolumns'>xxxLastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">AUTO&nbsp;&nbsp;</TD>
@@ -90,7 +90,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>5&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('Testing2View-a1')" align="right"><B id='Testing2View-a1_DIV' class='columns realizedcolumns dotted_underline cursor_pointer'>a1</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2View-a1_DIV' class='columns realizedcolumns'>a1</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;INTEGER&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
@@ -100,7 +100,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>6&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('Testing2View-a3b')" align="right"><B id='Testing2View-a3b_DIV' class='columns realizedcolumns dotted_underline cursor_pointer'>a3b</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2View-a3b_DIV' class='columns realizedcolumns'>a3b</B>&nbsp;&nbsp;</TD>
 <TD>List<Boolean> List<>&nbsp;/&nbsp;boolean[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
@@ -110,7 +110,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>7&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('Testing2View-a4')" align="right"><B id='Testing2View-a4_DIV' class='columns realizedcolumns dotted_underline cursor_pointer'>a4</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2View-a4_DIV' class='columns realizedcolumns'>a4</B>&nbsp;&nbsp;</TD>
 <TD>double&nbsp;/&nbsp;double precision&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
@@ -120,7 +120,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>8&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('Testing2View-a4b')" align="right"><B id='Testing2View-a4b_DIV' class='columns realizedcolumns dotted_underline cursor_pointer'>a4b</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2View-a4b_DIV' class='columns realizedcolumns'>a4b</B>&nbsp;&nbsp;</TD>
 <TD>List<Double> List<>&nbsp;/&nbsp;double precision[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
@@ -130,7 +130,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>9&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('Testing2View-a5')" align="right"><B id='Testing2View-a5_DIV' class='columns realizedcolumns dotted_underline cursor_pointer'>a5</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2View-a5_DIV' class='columns realizedcolumns'>a5</B>&nbsp;&nbsp;</TD>
 <TD>float&nbsp;/&nbsp;real&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
@@ -140,7 +140,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>10&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('Testing2View-a5b')" align="right"><B id='Testing2View-a5b_DIV' class='columns realizedcolumns dotted_underline cursor_pointer'>a5b</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2View-a5b_DIV' class='columns realizedcolumns'>a5b</B>&nbsp;&nbsp;</TD>
 <TD>List<Float> List<>&nbsp;/&nbsp;real[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
@@ -150,7 +150,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>11&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('Testing2View-a7')" align="right"><B id='Testing2View-a7_DIV' class='columns realizedcolumns dotted_underline cursor_pointer'>a7</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2View-a7_DIV' class='columns realizedcolumns'>a7</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
@@ -160,7 +160,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>12&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('Testing2View-a7b')" align="right"><B id='Testing2View-a7b_DIV' class='columns realizedcolumns dotted_underline cursor_pointer'>a7b</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2View-a7b_DIV' class='columns realizedcolumns'>a7b</B>&nbsp;&nbsp;</TD>
 <TD>List<Integer> List<>&nbsp;/&nbsp;integer[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
@@ -170,7 +170,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>13&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('Testing2View-a8')" align="right"><B id='Testing2View-a8_DIV' class='columns realizedcolumns dotted_underline cursor_pointer'>a8</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2View-a8_DIV' class='columns realizedcolumns'>a8</B>&nbsp;&nbsp;</TD>
 <TD>byte[]&nbsp;/&nbsp;BYTEA&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
@@ -180,7 +180,11 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>14&nbsp;&nbsp;</TD>
+<<<<<<< HEAD
 <TD onclick="onModalShowClicked('Testing2View-a8bTZ')" align="right"><B id='Testing2View-a8bTZ_DIV' class='columns realizedcolumns dotted_underline cursor_pointer'>a8bTZ</B>&nbsp;&nbsp;</TD>
+=======
+<TD align="right"><B id='Testing2View-a8bTZ_DIV' class='columns realizedcolumns'>a8bTZ</B>&nbsp;&nbsp;</TD>
+>>>>>>> refs/remotes/origin/master
 <TD>String&nbsp;/&nbsp;varchar(10)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">AUTO&nbsp;&nbsp;</TD>
@@ -190,7 +194,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>15&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('Testing2View-a8b')" align="right"><B id='Testing2View-a8b_DIV' class='columns realizedcolumns dotted_underline cursor_pointer'>a8b</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2View-a8b_DIV' class='columns realizedcolumns'>a8b</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
@@ -200,6 +204,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>16&nbsp;&nbsp;</TD>
+<<<<<<< HEAD
 <TD onclick="onModalShowClicked('Testing2View-a10')" align="right"><B id='Testing2View-a10_DIV' class='columns realizedcolumns dotted_underline cursor_pointer'>a10</B>&nbsp;&nbsp;</TD>
 <TD>short&nbsp;/&nbsp;smallint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -251,6 +256,39 @@ This View contains the following columns:<BLOCKQUOTE>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>21&nbsp;&nbsp;</TD>
 <TD onclick="onModalShowClicked('Testing2View-description')" align="right"><B id='Testing2View-description_DIV' class='columns realizedcolumns dotted_underline cursor_pointer'>description</B>&nbsp;&nbsp;</TD>
+=======
+<TD align="right"><B id='Testing2View-a10a_DIV' class='columns realizedcolumns'>a10a</B>&nbsp;&nbsp;</TD>
+<TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing-a10a_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>a10a</A></DIV></TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>17&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2View-a10b_DIV' class='columns realizedcolumns'>a10b</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(10)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing-a10b_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>a10b</A></DIV></TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>18&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2View-a10c_DIV' class='columns realizedcolumns'>a10c</B>&nbsp;&nbsp;</TD>
+<TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing-a10c_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>a10c</A></DIV></TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>19&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2View-description_DIV' class='columns realizedcolumns'>description</B>&nbsp;&nbsp;</TD>
+>>>>>>> refs/remotes/origin/master
 <TD>String&nbsp;/&nbsp;varchar(250)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
@@ -259,8 +297,13 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD>The title for a person, i.e., Mr, Miss, Mrs...<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing-description_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>description</A></DIV></TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
+<<<<<<< HEAD
     <TD>22&nbsp;&nbsp;</TD>
 <TD onclick="onModalShowClicked('Testing2View-desc2')" align="right"><B id='Testing2View-desc2_DIV' class='columns realizedcolumns dotted_underline cursor_pointer'>desc2</B>&nbsp;&nbsp;</TD>
+=======
+    <TD>20&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2View-desc2_DIV' class='columns realizedcolumns'>desc2</B>&nbsp;&nbsp;</TD>
+>>>>>>> refs/remotes/origin/master
 <TD>String&nbsp;/&nbsp;varchar(3000)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
@@ -269,8 +312,13 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD>The title for a person, i.e., Mr, Miss, Mrs...<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing-desc2_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>desc2</A></DIV></TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
+<<<<<<< HEAD
     <TD>23&nbsp;&nbsp;</TD>
 <TD onclick="onModalShowClicked('Testing2View-desc3')" align="right"><B id='Testing2View-desc3_DIV' class='columns realizedcolumns dotted_underline cursor_pointer'>desc3</B>&nbsp;&nbsp;</TD>
+=======
+    <TD>21&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2View-desc3_DIV' class='columns realizedcolumns'>desc3</B>&nbsp;&nbsp;</TD>
+>>>>>>> refs/remotes/origin/master
 <TD>String&nbsp;/&nbsp;text&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
@@ -279,8 +327,13 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD>The title for a person, i.e., Mr, Miss, Mrs...<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing-desc3_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>desc3</A></DIV></TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
+<<<<<<< HEAD
     <TD>24&nbsp;&nbsp;</TD>
 <TD onclick="onModalShowClicked('Testing2View-desc4')" align="right"><B id='Testing2View-desc4_DIV' class='columns realizedcolumns dotted_underline cursor_pointer'>desc4</B>&nbsp;&nbsp;</TD>
+=======
+    <TD>22&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2View-desc4_DIV' class='columns realizedcolumns'>desc4</B>&nbsp;&nbsp;</TD>
+>>>>>>> refs/remotes/origin/master
 <TD>String&nbsp;/&nbsp;text&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
@@ -289,8 +342,13 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD>The title for a person, i.e., Mr, Miss, Mrs...<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing-desc4_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>desc4</A></DIV></TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
+<<<<<<< HEAD
     <TD>25&nbsp;&nbsp;</TD>
 <TD onclick="onModalShowClicked('Testing2View-desc5')" align="right"><B id='Testing2View-desc5_DIV' class='columns realizedcolumns dotted_underline cursor_pointer'>desc5</B>&nbsp;&nbsp;</TD>
+=======
+    <TD>23&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2View-desc5_DIV' class='columns realizedcolumns'>desc5</B>&nbsp;&nbsp;</TD>
+>>>>>>> refs/remotes/origin/master
 <TD>String&nbsp;/&nbsp;text&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
@@ -299,8 +357,13 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD>The title for a person, i.e., Mr, Miss, Mrs...<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing-desc5_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>desc5</A></DIV></TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
+<<<<<<< HEAD
     <TD>26&nbsp;&nbsp;</TD>
 <TD onclick="onModalShowClicked('Testing2View-desc6')" align="right"><B id='Testing2View-desc6_DIV' class='columns realizedcolumns dotted_underline cursor_pointer'>desc6</B>&nbsp;&nbsp;</TD>
+=======
+    <TD>24&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2View-desc6_DIV' class='columns realizedcolumns'>desc6</B>&nbsp;&nbsp;</TD>
+>>>>>>> refs/remotes/origin/master
 <TD>String&nbsp;/&nbsp;text&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
@@ -316,13 +379,19 @@ This View contains the following columns:<BLOCKQUOTE>
 </TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
+<<<<<<< HEAD
     <TD>27&nbsp;&nbsp;</TD>
 <TD onclick="onModalShowClicked('Testing2View-a3')" align="right"><B id='Testing2View-a3_DIV' class='formulae realizedformulae dotted_underline cursor_pointer'>a3</B>&nbsp;&nbsp;</TD>
+=======
+    <TD>25&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2View-a3_DIV' class='formulae realizedformulae'>a3</B>&nbsp;&nbsp;</TD>
+>>>>>>> refs/remotes/origin/master
 <TD>boolean&nbsp;/&nbsp;boolean&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<<<<<<< HEAD
 <TD>Formula column '<B>Not A3</B>'<BLOCKQUOTE>
 <TABLE class="RowedTable" border="0px" cellspacing="0px" cellpadding="2px" width="75%">
 <TR><TD><B>Title</B></TD><TD>Not A3</TD></TR><TR><TD><B>Description</B></TD><TD>Blah...</TD></TR><TR><TD><B>Formula</B></TD><TD><PRE style="padding-top: 3px;">NOT <B style="color:#00AA00;">a3</B></PRE></TD><TR>
@@ -334,6 +403,15 @@ This View contains the following columns:<BLOCKQUOTE>
 </TD></TR>
 <TR valign="top"><TD><B>Referenced Terms</B></TD><TD>
 None
+=======
+<TD>Formula column '<B>Not A3</B>'<TABLE border="1px" style="border-collapse:collapse; border: 1px solid #AAA;" cellspacing="0px" cellpadding="2px" width="98%">
+<TR valign="top"><TD width="1px" align="right"><B>Description</B></TD><TD>Blah...</TD></TR><TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">NOT <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDA.html#Testing2View-a3_DIV">a3</A></PRE></TD><TR>
+<TR valign="top"><TD width="1px" align="right"><B>Ref&nbsp;Columns</B></TD><TD>
+<A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDA.html#Testing2View-a3_DIV">a3</A><BR>
+<DIV style="padding-left:10px; font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing-a3_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>a3</A>
+</DIV>
+<DIV style="padding-left:10px;">The blah</DIV>
+>>>>>>> refs/remotes/origin/master
 </TD></TR>
 </TABLE>
 <DIV id='Testing2View-a3_MODAL' class='modal'>
@@ -346,28 +424,12 @@ None
     <th align='left' width="400em">Table/View</th> 
     <th align='left' >Column/Formula</th> 
   </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing2View_DIV'>Testing2View</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing2View-a3_DIV'>a3</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing2View_DIV'>Testing2View</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing2View-a3_DIV'>a3</a></td>
-</tr>
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing_DIV'>Testing</a></td>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing-a3_DIV'>a3</a> -- BOOLEAN</td>
-</tr>
 </table>
 </DIV></DIV>
-</BLOCKQUOTE>
 <DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing-a3_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>a3</A></DIV></TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
+<<<<<<< HEAD
     <TD>28&nbsp;&nbsp;</TD>
 <TD onclick="onModalShowClicked('Testing2View-bastille')" align="right"><B id='Testing2View-bastille_DIV' class='formulae realizedformulae dotted_underline cursor_pointer'>bastille</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
@@ -465,10 +527,16 @@ None
     <TD>31&nbsp;&nbsp;</TD>
 <TD onclick="onModalShowClicked('Testing2View-desc2_Cat2')" align="right"><B id='Testing2View-desc2_Cat2_DIV' class='formulae realizedformulae dotted_underline cursor_pointer'>desc2_Cat2</B>&nbsp;&nbsp;</TD>
 <TD>double&nbsp;/&nbsp;double precision&nbsp;&nbsp;</TD>
+=======
+    <TD>26&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2View-bastille_DIV' class='formulae realizedformulae'>bastille</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
+>>>>>>> refs/remotes/origin/master
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<<<<<<< HEAD
 <TD>Formula column '<B>desc2_Cat2 Title</B>'<BLOCKQUOTE>
 <TABLE class="RowedTable" border="0px" cellspacing="0px" cellpadding="2px" width="75%">
 <TR><TD><B>Title</B></TD><TD>desc2_Cat2 Title</TD></TR><TR><TD><B>Description</B></TD><TD>This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDA.Testing2View.</TD></TR><TR><TD><B>Formula</B></TD><TD><PRE style="padding-top: 3px;">case when <B style="color:#00AA00;">desc2</B>  in ('x', 'y', 'z') then 1 else 0 end</PRE></TD><TR>
@@ -476,10 +544,129 @@ None
 <TABLE border="0px">
 <TR><TD valign="top" align="right"><B style="color:#00AA00;">desc2</B>:</TD>
 <TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
+=======
+<TD>Formula column '<B>Bastille Day</B>'<TABLE border="1px" style="border-collapse:collapse; border: 1px solid #AAA;" cellspacing="0px" cellpadding="2px" width="98%">
+<TR valign="top"><TD width="1px" align="right"><B>Description</B></TD><TD>Blah...</TD></TR><TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">'1789-07-14'</PRE></TD><TR>
+>>>>>>> refs/remotes/origin/master
+</TABLE>
+</TD>
+</TR>
+<<<<<<< HEAD
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>32&nbsp;&nbsp;</TD>
+<TD onclick="onModalShowClicked('Testing2View-desc2_Cat3')" align="right"><B id='Testing2View-desc2_Cat3_DIV' class='formulae realizedformulae dotted_underline cursor_pointer'>desc2_Cat3</B>&nbsp;&nbsp;</TD>
+<TD>double&nbsp;/&nbsp;double precision&nbsp;&nbsp;</TD>
+=======
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>27&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2View-toto_DIV' class='formulae realizedformulae'>toto</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
+>>>>>>> refs/remotes/origin/master
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<<<<<<< HEAD
+<TD>Formula column '<B>desc2_Cat3 Title</B>'<BLOCKQUOTE>
+<TABLE class="RowedTable" border="0px" cellspacing="0px" cellpadding="2px" width="75%">
+<TR><TD><B>Title</B></TD><TD>desc2_Cat3 Title</TD></TR><TR><TD><B>Description</B></TD><TD>This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDA.Testing2View.</TD></TR><TR><TD><B>Formula</B></TD><TD><PRE style="padding-top: 3px;">case when <B style="color:#00AA00;">desc2</B>  in ('x', 'y', 'z') then 1 else 0 end</PRE></TD><TR>
+<TR valign="top"><TD><B>Referenced Columns</B></TD><TD>
+<TABLE border="0px">
+<TR><TD valign="top" align="right"><B style="color:#00AA00;">desc2</B>:</TD>
+<TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
+=======
+<TD>Formula column '<B>Last Updated</B>'<TABLE border="1px" style="border-collapse:collapse; border: 1px solid #AAA;" cellspacing="0px" cellpadding="2px" width="98%">
+<TR valign="top"><TD width="1px" align="right"><B>Description</B></TD><TD>Blah...</TD></TR><TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">'2018-08-10'</PRE></TD><TR>
+>>>>>>> refs/remotes/origin/master
+</TABLE>
+</TD>
+</TR>
+<<<<<<< HEAD
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>33&nbsp;&nbsp;</TD>
+<TD onclick="onModalShowClicked('Testing2View-a7_Cat4')" align="right"><B id='Testing2View-a7_Cat4_DIV' class='formulae realizedformulae dotted_underline cursor_pointer'>a7_Cat4</B>&nbsp;&nbsp;</TD>
+=======
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>28&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2View-desc2_Cat1_DIV' class='formulae realizedformulae'>desc2_Cat1</B>&nbsp;&nbsp;</TD>
+>>>>>>> refs/remotes/origin/master
+<TD>double&nbsp;/&nbsp;double precision&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<<<<<<< HEAD
+<TD>Formula column '<B>a7_Cat4 Title</B>'<BLOCKQUOTE>
+<TABLE class="RowedTable" border="0px" cellspacing="0px" cellpadding="2px" width="75%">
+<TR><TD><B>Title</B></TD><TD>a7_Cat4 Title</TD></TR><TR><TD><B>Description</B></TD><TD>This formula checks whether the column 'a7' value falls in the range of 0.0 and 10.0.</TD></TR><TR><TD><B>Formula</B></TD><TD><PRE style="padding-top: 3px;">case when <B style="color:#00AA00;">a7</B> >= 0.0 and <B style="color:#00AA00;">a7</B> < 10.0 then 1 else 0 end</PRE></TD><TR>
+<TR valign="top"><TD><B>Referenced Columns</B></TD><TD>
+<TABLE border="0px">
+<TR><TD valign="top" align="right"><B style="color:#00AA00;">a7</B>:</TD>
+<TD>The blah</TD></TR>
 </TABLE>
 </TD></TR>
 <TR valign="top"><TD><B>Referenced Terms</B></TD><TD>
 None
+=======
+<TD>Formula column '<B>desc2_Cat1 Title</B>'<TABLE border="1px" style="border-collapse:collapse; border: 1px solid #AAA;" cellspacing="0px" cellpadding="2px" width="98%">
+<TR valign="top"><TD width="1px" align="right"><B>Description</B></TD><TD>This formula checks whether the column 'desc2' contains the values 'a', 'b', 'c' for the View TILDA.Testing2View.</TD></TR><TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">case when <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDA.html#Testing2View-desc2_DIV">desc2</A>  in ('a', 'b', 'c') then 1 else 0 end</PRE></TD><TR>
+<TR valign="top"><TD width="1px" align="right"><B>Ref&nbsp;Columns</B></TD><TD>
+<A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDA.html#Testing2View-desc2_DIV">desc2</A><BR>
+<DIV style="padding-left:10px; font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing-desc2_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>desc2</A>
+</DIV>
+<DIV style="padding-left:10px;">The title for a person, i.e., Mr, Miss, Mrs...</DIV>
+>>>>>>> refs/remotes/origin/master
+</TD></TR>
+</TABLE>
+<DIV id='Testing2View-desc2_Cat1_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('Testing2View-desc2_Cat1_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Formula Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+</table>
+</DIV></DIV>
+</TD>
+</TR>
+<<<<<<< HEAD
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>34&nbsp;&nbsp;</TD>
+<TD onclick="onModalShowClicked('Testing2View-a7_Cat5')" align="right"><B id='Testing2View-a7_Cat5_DIV' class='formulae realizedformulae dotted_underline cursor_pointer'>a7_Cat5</B>&nbsp;&nbsp;</TD>
+=======
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>29&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2View-desc2_Cat2_DIV' class='formulae realizedformulae'>desc2_Cat2</B>&nbsp;&nbsp;</TD>
+>>>>>>> refs/remotes/origin/master
+<TD>double&nbsp;/&nbsp;double precision&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<<<<<<< HEAD
+<TD>Formula column '<B>a7_Cat5 Title</B>'<BLOCKQUOTE>
+<TABLE class="RowedTable" border="0px" cellspacing="0px" cellpadding="2px" width="75%">
+<TR><TD><B>Title</B></TD><TD>a7_Cat5 Title</TD></TR><TR><TD><B>Description</B></TD><TD>This formula checks whether the column 'a7' value falls in the range of 10.0 and 20.0.</TD></TR><TR><TD><B>Formula</B></TD><TD><PRE style="padding-top: 3px;">case when <B style="color:#00AA00;">a7</B> >= 10.0 and <B style="color:#00AA00;">a7</B> < 20.0 then 1 else 0 end</PRE></TD><TR>
+<TR valign="top"><TD><B>Referenced Columns</B></TD><TD>
+<TABLE border="0px">
+<TR><TD valign="top" align="right"><B style="color:#00AA00;">a7</B>:</TD>
+<TD>The blah</TD></TR>
+</TABLE>
+</TD></TR>
+<TR valign="top"><TD><B>Referenced Terms</B></TD><TD>
+None
+=======
+<TD>Formula column '<B>desc2_Cat2 Title</B>'<TABLE border="1px" style="border-collapse:collapse; border: 1px solid #AAA;" cellspacing="0px" cellpadding="2px" width="98%">
+<TR valign="top"><TD width="1px" align="right"><B>Description</B></TD><TD>This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDA.Testing2View.</TD></TR><TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">case when <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDA.html#Testing2View-desc2_DIV">desc2</A>  in ('x', 'y', 'z') then 1 else 0 end</PRE></TD><TR>
+<TR valign="top"><TD width="1px" align="right"><B>Ref&nbsp;Columns</B></TD><TD>
+<A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDA.html#Testing2View-desc2_DIV">desc2</A><BR>
+<DIV style="padding-left:10px; font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing-desc2_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>desc2</A>
+</DIV>
+<DIV style="padding-left:10px;">The title for a person, i.e., Mr, Miss, Mrs...</DIV>
+>>>>>>> refs/remotes/origin/master
 </TD></TR>
 </TABLE>
 <DIV id='Testing2View-desc2_Cat2_MODAL' class='modal'>
@@ -492,191 +679,26 @@ None
     <th align='left' width="400em">Table/View</th> 
     <th align='left' >Column/Formula</th> 
   </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing2View_DIV'>Testing2View</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing2View-desc2_Cat2_DIV'>desc2_Cat2</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing2View_DIV'>Testing2View</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing2View-desc2_DIV'>desc2</a></td>
-</tr>
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing_DIV'>Testing</a></td>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing-desc2_DIV'>desc2</a> -- STRING</td>
-</tr>
 </table>
 </DIV></DIV>
-</BLOCKQUOTE>
 </TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>32&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('Testing2View-desc2_Cat3')" align="right"><B id='Testing2View-desc2_Cat3_DIV' class='formulae realizedformulae dotted_underline cursor_pointer'>desc2_Cat3</B>&nbsp;&nbsp;</TD>
-<TD>double&nbsp;/&nbsp;double precision&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>desc2_Cat3 Title</B>'<BLOCKQUOTE>
-<TABLE class="RowedTable" border="0px" cellspacing="0px" cellpadding="2px" width="75%">
-<TR><TD><B>Title</B></TD><TD>desc2_Cat3 Title</TD></TR><TR><TD><B>Description</B></TD><TD>This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDA.Testing2View.</TD></TR><TR><TD><B>Formula</B></TD><TD><PRE style="padding-top: 3px;">case when <B style="color:#00AA00;">desc2</B>  in ('x', 'y', 'z') then 1 else 0 end</PRE></TD><TR>
-<TR valign="top"><TD><B>Referenced Columns</B></TD><TD>
-<TABLE border="0px">
-<TR><TD valign="top" align="right"><B style="color:#00AA00;">desc2</B>:</TD>
-<TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
-</TABLE>
-</TD></TR>
-<TR valign="top"><TD><B>Referenced Terms</B></TD><TD>
-None
-</TD></TR>
-</TABLE>
-<DIV id='Testing2View-desc2_Cat3_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing2View-desc2_Cat3_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Formula Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing2View_DIV'>Testing2View</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing2View-desc2_Cat3_DIV'>desc2_Cat3</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing2View_DIV'>Testing2View</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing2View-desc2_DIV'>desc2</a></td>
-</tr>
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing_DIV'>Testing</a></td>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing-desc2_DIV'>desc2</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-</BLOCKQUOTE>
-</TD>
-</TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>33&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('Testing2View-a7_Cat4')" align="right"><B id='Testing2View-a7_Cat4_DIV' class='formulae realizedformulae dotted_underline cursor_pointer'>a7_Cat4</B>&nbsp;&nbsp;</TD>
-<TD>double&nbsp;/&nbsp;double precision&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>a7_Cat4 Title</B>'<BLOCKQUOTE>
-<TABLE class="RowedTable" border="0px" cellspacing="0px" cellpadding="2px" width="75%">
-<TR><TD><B>Title</B></TD><TD>a7_Cat4 Title</TD></TR><TR><TD><B>Description</B></TD><TD>This formula checks whether the column 'a7' value falls in the range of 0.0 and 10.0.</TD></TR><TR><TD><B>Formula</B></TD><TD><PRE style="padding-top: 3px;">case when <B style="color:#00AA00;">a7</B> >= 0.0 and <B style="color:#00AA00;">a7</B> < 10.0 then 1 else 0 end</PRE></TD><TR>
-<TR valign="top"><TD><B>Referenced Columns</B></TD><TD>
-<TABLE border="0px">
-<TR><TD valign="top" align="right"><B style="color:#00AA00;">a7</B>:</TD>
-<TD>The blah</TD></TR>
-</TABLE>
-</TD></TR>
-<TR valign="top"><TD><B>Referenced Terms</B></TD><TD>
-None
-</TD></TR>
-</TABLE>
-<DIV id='Testing2View-a7_Cat4_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing2View-a7_Cat4_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Formula Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing2View_DIV'>Testing2View</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing2View-a7_Cat4_DIV'>a7_Cat4</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing2View_DIV'>Testing2View</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing2View-a7_DIV'>a7</a></td>
-</tr>
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing_DIV'>Testing</a></td>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing-a7_DIV'>a7</a> -- INTEGER</td>
-</tr>
-</table>
-</DIV></DIV>
-</BLOCKQUOTE>
-</TD>
-</TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>34&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('Testing2View-a7_Cat5')" align="right"><B id='Testing2View-a7_Cat5_DIV' class='formulae realizedformulae dotted_underline cursor_pointer'>a7_Cat5</B>&nbsp;&nbsp;</TD>
-<TD>double&nbsp;/&nbsp;double precision&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>a7_Cat5 Title</B>'<BLOCKQUOTE>
-<TABLE class="RowedTable" border="0px" cellspacing="0px" cellpadding="2px" width="75%">
-<TR><TD><B>Title</B></TD><TD>a7_Cat5 Title</TD></TR><TR><TD><B>Description</B></TD><TD>This formula checks whether the column 'a7' value falls in the range of 10.0 and 20.0.</TD></TR><TR><TD><B>Formula</B></TD><TD><PRE style="padding-top: 3px;">case when <B style="color:#00AA00;">a7</B> >= 10.0 and <B style="color:#00AA00;">a7</B> < 20.0 then 1 else 0 end</PRE></TD><TR>
-<TR valign="top"><TD><B>Referenced Columns</B></TD><TD>
-<TABLE border="0px">
-<TR><TD valign="top" align="right"><B style="color:#00AA00;">a7</B>:</TD>
-<TD>The blah</TD></TR>
-</TABLE>
-</TD></TR>
-<TR valign="top"><TD><B>Referenced Terms</B></TD><TD>
-None
-</TD></TR>
-</TABLE>
-<DIV id='Testing2View-a7_Cat5_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing2View-a7_Cat5_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Formula Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing2View_DIV'>Testing2View</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing2View-a7_Cat5_DIV'>a7_Cat5</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing2View_DIV'>Testing2View</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing2View-a7_DIV'>a7</a></td>
-</tr>
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing_DIV'>Testing</a></td>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing-a7_DIV'>a7</a> -- INTEGER</td>
-</tr>
-</table>
-</DIV></DIV>
-</BLOCKQUOTE>
-</TD>
-</TR>
+<<<<<<< HEAD
   <TR valign="top" bgcolor="#DFECF8">
     <TD>35&nbsp;&nbsp;</TD>
 <TD onclick="onModalShowClicked('Testing2View-a5_null')" align="right"><B id='Testing2View-a5_null_DIV' class='formulae realizedformulae dotted_underline cursor_pointer'>a5_null</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
+=======
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>30&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2View-desc2_Cat3_DIV' class='formulae realizedformulae'>desc2_Cat3</B>&nbsp;&nbsp;</TD>
+<TD>double&nbsp;/&nbsp;double precision&nbsp;&nbsp;</TD>
+>>>>>>> refs/remotes/origin/master
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<<<<<<< HEAD
 <TD>Formula column '<B>Null a5</B>'<BLOCKQUOTE>
 <TABLE class="RowedTable" border="0px" cellspacing="0px" cellpadding="2px" width="75%">
 <TR><TD><B>Title</B></TD><TD>Null a5</TD></TR><TR><TD><B>Description</B></TD><TD>Whether a5 is null or not</TD></TR><TR><TD><B>Formula</B></TD><TD><PRE style="padding-top: 3px;">case when <B style="color:#00AA00;">a5</B> is null then 1
@@ -690,11 +712,20 @@ end</PRE></TD><TR>
 </TD></TR>
 <TR valign="top"><TD><B>Referenced Terms</B></TD><TD>
 None
+=======
+<TD>Formula column '<B>desc2_Cat3 Title</B>'<TABLE border="1px" style="border-collapse:collapse; border: 1px solid #AAA;" cellspacing="0px" cellpadding="2px" width="98%">
+<TR valign="top"><TD width="1px" align="right"><B>Description</B></TD><TD>This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDA.Testing2View.</TD></TR><TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">case when <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDA.html#Testing2View-desc2_DIV">desc2</A>  in ('x', 'y', 'z') then 1 else 0 end</PRE></TD><TR>
+<TR valign="top"><TD width="1px" align="right"><B>Ref&nbsp;Columns</B></TD><TD>
+<A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDA.html#Testing2View-desc2_DIV">desc2</A><BR>
+<DIV style="padding-left:10px; font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing-desc2_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>desc2</A>
+</DIV>
+<DIV style="padding-left:10px;">The title for a person, i.e., Mr, Miss, Mrs...</DIV>
+>>>>>>> refs/remotes/origin/master
 </TD></TR>
 </TABLE>
-<DIV id='Testing2View-a5_null_MODAL' class='modal'>
+<DIV id='Testing2View-desc2_Cat3_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing2View-a5_null_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('Testing2View-desc2_Cat3_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Formula Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -702,35 +733,26 @@ None
     <th align='left' width="400em">Table/View</th> 
     <th align='left' >Column/Formula</th> 
   </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing2View_DIV'>Testing2View</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing2View-a5_null_DIV'>a5_null</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing2View_DIV'>Testing2View</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing2View-a5_DIV'>a5</a></td>
-</tr>
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing_DIV'>Testing</a></td>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing-a5_DIV'>a5</a> -- FLOAT</td>
-</tr>
 </table>
 </DIV></DIV>
-</BLOCKQUOTE>
 </TD>
 </TR>
+<<<<<<< HEAD
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>36&nbsp;&nbsp;</TD>
 <TD onclick="onModalShowClicked('Testing2View-a6_null')" align="right"><B id='Testing2View-a6_null_DIV' class='formulae realizedformulae dotted_underline cursor_pointer'>a6_null</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
+=======
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>31&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2View-a7_Cat4_DIV' class='formulae realizedformulae'>a7_Cat4</B>&nbsp;&nbsp;</TD>
+<TD>double&nbsp;/&nbsp;double precision&nbsp;&nbsp;</TD>
+>>>>>>> refs/remotes/origin/master
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<<<<<<< HEAD
 <TD>Formula column '<B>Null a6</B>'<BLOCKQUOTE>
 <TABLE class="RowedTable" border="0px" cellspacing="0px" cellpadding="2px" width="75%">
 <TR><TD><B>Title</B></TD><TD>Null a6</TD></TR><TR><TD><B>Description</B></TD><TD>Whether a6 is null or not</TD></TR><TR><TD><B>Formula</B></TD><TD><PRE style="padding-top: 3px;">case when <B style="color:#00AA00;">a6</B> is null then 1
@@ -744,11 +766,20 @@ end</PRE></TD><TR>
 </TD></TR>
 <TR valign="top"><TD><B>Referenced Terms</B></TD><TD>
 None
+=======
+<TD>Formula column '<B>a7_Cat4 Title</B>'<TABLE border="1px" style="border-collapse:collapse; border: 1px solid #AAA;" cellspacing="0px" cellpadding="2px" width="98%">
+<TR valign="top"><TD width="1px" align="right"><B>Description</B></TD><TD>This formula checks whether the column 'a7' value falls in the range of 0.0 and 10.0.</TD></TR><TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">case when <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDA.html#Testing2View-a7_DIV">a7</A> >= 0.0 and <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDA.html#Testing2View-a7_DIV">a7</A> < 10.0 then 1 else 0 end</PRE></TD><TR>
+<TR valign="top"><TD width="1px" align="right"><B>Ref&nbsp;Columns</B></TD><TD>
+<A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDA.html#Testing2View-a7_DIV">a7</A><BR>
+<DIV style="padding-left:10px; font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing-a7_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>a7</A>
+</DIV>
+<DIV style="padding-left:10px;">The blah</DIV>
+>>>>>>> refs/remotes/origin/master
 </TD></TR>
 </TABLE>
-<DIV id='Testing2View-a6_null_MODAL' class='modal'>
+<DIV id='Testing2View-a7_Cat4_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing2View-a6_null_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('Testing2View-a7_Cat4_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Formula Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -756,35 +787,26 @@ None
     <th align='left' width="400em">Table/View</th> 
     <th align='left' >Column/Formula</th> 
   </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing2View_DIV'>Testing2View</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing2View-a6_null_DIV'>a6_null</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing2View_DIV'>Testing2View</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing2View-a6_DIV'>a6</a></td>
-</tr>
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing_DIV'>Testing</a></td>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing-a6_DIV'>a6</a> -- LONG</td>
-</tr>
 </table>
 </DIV></DIV>
-</BLOCKQUOTE>
 </TD>
 </TR>
+<<<<<<< HEAD
   <TR valign="top" bgcolor="#DFECF8">
     <TD>37&nbsp;&nbsp;</TD>
 <TD onclick="onModalShowClicked('Testing2View-a7_null')" align="right"><B id='Testing2View-a7_null_DIV' class='formulae realizedformulae dotted_underline cursor_pointer'>a7_null</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
+=======
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>32&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2View-a7_Cat5_DIV' class='formulae realizedformulae'>a7_Cat5</B>&nbsp;&nbsp;</TD>
+<TD>double&nbsp;/&nbsp;double precision&nbsp;&nbsp;</TD>
+>>>>>>> refs/remotes/origin/master
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<<<<<<< HEAD
 <TD>Formula column '<B>Null a7</B>'<BLOCKQUOTE>
 <TABLE class="RowedTable" border="0px" cellspacing="0px" cellpadding="2px" width="75%">
 <TR><TD><B>Title</B></TD><TD>Null a7</TD></TR><TR><TD><B>Description</B></TD><TD>Whether a7 is null or not</TD></TR><TR><TD><B>Formula</B></TD><TD><PRE style="padding-top: 3px;">case when <B style="color:#00AA00;">a7</B> is null then 1
@@ -798,6 +820,109 @@ end</PRE></TD><TR>
 </TD></TR>
 <TR valign="top"><TD><B>Referenced Terms</B></TD><TD>
 None
+=======
+<TD>Formula column '<B>a7_Cat5 Title</B>'<TABLE border="1px" style="border-collapse:collapse; border: 1px solid #AAA;" cellspacing="0px" cellpadding="2px" width="98%">
+<TR valign="top"><TD width="1px" align="right"><B>Description</B></TD><TD>This formula checks whether the column 'a7' value falls in the range of 10.0 and 20.0.</TD></TR><TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">case when <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDA.html#Testing2View-a7_DIV">a7</A> >= 10.0 and <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDA.html#Testing2View-a7_DIV">a7</A> < 20.0 then 1 else 0 end</PRE></TD><TR>
+<TR valign="top"><TD width="1px" align="right"><B>Ref&nbsp;Columns</B></TD><TD>
+<A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDA.html#Testing2View-a7_DIV">a7</A><BR>
+<DIV style="padding-left:10px; font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing-a7_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>a7</A>
+</DIV>
+<DIV style="padding-left:10px;">The blah</DIV>
+>>>>>>> refs/remotes/origin/master
+</TD></TR>
+</TABLE>
+<DIV id='Testing2View-a7_Cat5_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('Testing2View-a7_Cat5_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Formula Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+</table>
+</DIV></DIV>
+</TD>
+</TR>
+<<<<<<< HEAD
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>38&nbsp;&nbsp;</TD>
+<TD onclick="onModalShowClicked('Testing2View-a8_null')" align="right"><B id='Testing2View-a8_null_DIV' class='formulae realizedformulae dotted_underline cursor_pointer'>a8_null</B>&nbsp;&nbsp;</TD>
+=======
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>33&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2View-a5_null_DIV' class='formulae realizedformulae'>a5_null</B>&nbsp;&nbsp;</TD>
+>>>>>>> refs/remotes/origin/master
+<TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<<<<<<< HEAD
+<TD>Formula column '<B>Null a8</B>'<BLOCKQUOTE>
+<TABLE class="RowedTable" border="0px" cellspacing="0px" cellpadding="2px" width="75%">
+<TR><TD><B>Title</B></TD><TD>Null a8</TD></TR><TR><TD><B>Description</B></TD><TD>Whether a8 is null or not</TD></TR><TR><TD><B>Formula</B></TD><TD><PRE style="padding-top: 3px;">case when <B style="color:#00AA00;">a8</B> is null then 1
+     when <B style="color:#00AA00;">a8</B> is not null then 0
+=======
+<TD>Formula column '<B>Null a5</B>'<TABLE border="1px" style="border-collapse:collapse; border: 1px solid #AAA;" cellspacing="0px" cellpadding="2px" width="98%">
+<TR valign="top"><TD width="1px" align="right"><B>Description</B></TD><TD>Whether a5 is null or not</TD></TR><TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">case when <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDA.html#Testing2View-a5_DIV">a5</A> is null then 1
+     when <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDA.html#Testing2View-a5_DIV">a5</A> is not null then 0
+>>>>>>> refs/remotes/origin/master
+end</PRE></TD><TR>
+<TR valign="top"><TD width="1px" align="right"><B>Ref&nbsp;Columns</B></TD><TD>
+<A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDA.html#Testing2View-a5_DIV">a5</A><BR>
+<DIV style="padding-left:10px; font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing-a5_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>a5</A>
+</DIV>
+<DIV style="padding-left:10px;">The blah</DIV>
+</TD></TR>
+</TABLE>
+<DIV id='Testing2View-a5_null_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('Testing2View-a5_null_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Formula Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+</table>
+</DIV></DIV>
+</TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>34&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2View-a6_null_DIV' class='formulae realizedformulae'>a6_null</B>&nbsp;&nbsp;</TD>
+<TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Formula column '<B>Null a6</B>'<TABLE border="1px" style="border-collapse:collapse; border: 1px solid #AAA;" cellspacing="0px" cellpadding="2px" width="98%">
+<TR valign="top"><TD width="1px" align="right"><B>Description</B></TD><TD>Whether a6 is null or not</TD></TR><TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">case when a6 is null then 1
+     when a6 is not null then 0
+end</PRE></TD><TR>
+</TABLE>
+</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>35&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2View-a7_null_DIV' class='formulae realizedformulae'>a7_null</B>&nbsp;&nbsp;</TD>
+<TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Formula column '<B>Null a7</B>'<TABLE border="1px" style="border-collapse:collapse; border: 1px solid #AAA;" cellspacing="0px" cellpadding="2px" width="98%">
+<TR valign="top"><TD width="1px" align="right"><B>Description</B></TD><TD>Whether a7 is null or not</TD></TR><TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">case when <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDA.html#Testing2View-a7_DIV">a7</A> is null then 1
+     when <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDA.html#Testing2View-a7_DIV">a7</A> is not null then 0
+end</PRE></TD><TR>
+<TR valign="top"><TD width="1px" align="right"><B>Ref&nbsp;Columns</B></TD><TD>
+<A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDA.html#Testing2View-a7_DIV">a7</A><BR>
+<DIV style="padding-left:10px; font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing-a7_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>a7</A>
+</DIV>
+<DIV style="padding-left:10px;">The blah</DIV>
 </TD></TR>
 </TABLE>
 <DIV id='Testing2View-a7_null_MODAL' class='modal'>
@@ -810,48 +935,27 @@ None
     <th align='left' width="400em">Table/View</th> 
     <th align='left' >Column/Formula</th> 
   </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing2View_DIV'>Testing2View</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing2View-a7_null_DIV'>a7_null</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing2View_DIV'>Testing2View</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing2View-a7_DIV'>a7</a></td>
-</tr>
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing_DIV'>Testing</a></td>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing-a7_DIV'>a7</a> -- INTEGER</td>
-</tr>
 </table>
 </DIV></DIV>
-</BLOCKQUOTE>
 </TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
-    <TD>38&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('Testing2View-a8_null')" align="right"><B id='Testing2View-a8_null_DIV' class='formulae realizedformulae dotted_underline cursor_pointer'>a8_null</B>&nbsp;&nbsp;</TD>
+    <TD>36&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2View-a8_null_DIV' class='formulae realizedformulae'>a8_null</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>Null a8</B>'<BLOCKQUOTE>
-<TABLE class="RowedTable" border="0px" cellspacing="0px" cellpadding="2px" width="75%">
-<TR><TD><B>Title</B></TD><TD>Null a8</TD></TR><TR><TD><B>Description</B></TD><TD>Whether a8 is null or not</TD></TR><TR><TD><B>Formula</B></TD><TD><PRE style="padding-top: 3px;">case when <B style="color:#00AA00;">a8</B> is null then 1
-     when <B style="color:#00AA00;">a8</B> is not null then 0
+<TD>Formula column '<B>Null a8</B>'<TABLE border="1px" style="border-collapse:collapse; border: 1px solid #AAA;" cellspacing="0px" cellpadding="2px" width="98%">
+<TR valign="top"><TD width="1px" align="right"><B>Description</B></TD><TD>Whether a8 is null or not</TD></TR><TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">case when <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDA.html#Testing2View-a8_DIV">a8</A> is null then 1
+     when <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDA.html#Testing2View-a8_DIV">a8</A> is not null then 0
 end</PRE></TD><TR>
-<TR valign="top"><TD><B>Referenced Columns</B></TD><TD>
-<TABLE border="0px">
-<TR><TD valign="top" align="right"><B style="color:#00AA00;">a8</B>:</TD>
-<TD>The blah</TD></TR>
-</TABLE>
-</TD></TR>
-<TR valign="top"><TD><B>Referenced Terms</B></TD><TD>
-None
+<TR valign="top"><TD width="1px" align="right"><B>Ref&nbsp;Columns</B></TD><TD>
+<A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDA.html#Testing2View-a8_DIV">a8</A><BR>
+<DIV style="padding-left:10px; font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing-a8_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>a8</A>
+</DIV>
+<DIV style="padding-left:10px;">The blah</DIV>
 </TD></TR>
 </TABLE>
 <DIV id='Testing2View-a8_null_MODAL' class='modal'>
@@ -864,28 +968,12 @@ None
     <th align='left' width="400em">Table/View</th> 
     <th align='left' >Column/Formula</th> 
   </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing2View_DIV'>Testing2View</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing2View-a8_null_DIV'>a8_null</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing2View_DIV'>Testing2View</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing2View-a8_DIV'>a8</a></td>
-</tr>
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing_DIV'>Testing</a></td>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing-a8_DIV'>a8</a> -- BINARY</td>
-</tr>
 </table>
 </DIV></DIV>
-</BLOCKQUOTE>
 </TD>
 </TR>
 </TABLE></BLOCKQUOTE>
+<<<<<<< HEAD
 <DIV id='Testing2View-refnum_MODAL' class='modal'>
 <DIV class='modal-content'>
 <SPAN onclick="onModalCloseClicked('Testing2View-refnum_MODAL')" class='close'>&times;</SPAN>
@@ -1688,6 +1776,8 @@ None
 </tr>
 </table>
 </DIV></DIV>
+=======
+>>>>>>> refs/remotes/origin/master
 </DIV>
 
 */
@@ -1788,7 +1878,7 @@ This is the setter for:<BR>
     void setRefnum(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _refnum)
+       if (__Init == InitMode.CREATE || v != _refnum)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing2View.refnum' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -2165,7 +2255,7 @@ This is the setter for:<BR>
     void setA1(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a1)
+       if (__Init == InitMode.CREATE || v != _a1)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing2View.a1' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -2461,7 +2551,7 @@ This is the setter for:<BR>
     void setA4(double v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a4)
+       if (__Init == InitMode.CREATE || v != _a4)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing2View.a4' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -2757,7 +2847,7 @@ This is the setter for:<BR>
     void setA5(float v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a5)
+       if (__Init == InitMode.CREATE || v != _a5)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing2View.a5' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -3053,7 +3143,7 @@ This is the setter for:<BR>
     void setA7(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a7)
+       if (__Init == InitMode.CREATE || v != _a7)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing2View.a7' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -3661,6 +3751,7 @@ This is the null setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+<<<<<<< HEAD
 //   Field tilda.data.TILDA.Testing2View.a10 -> TILDA.Testing2View."a10"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
@@ -4366,6 +4457,380 @@ This is the null setter for:<BR>
        __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.A11C._Mask);
        __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A11C._Mask);
        _a11c=BigDecimal.ZERO;
+=======
+//   Field tilda.data.TILDA.Testing2View.a10a -> TILDA.Testing2View."a10a"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a10a of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a10a of type integer</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   int _a10a= SystemValues.EVIL_VALUE;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a10a -> TILDA.Testing2View."a10a"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a10a of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a10a of type integer</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final int getA10a()
+      { return _a10a; }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a10a -> TILDA.Testing2View."a10a"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the isNull for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a10a of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a10a of type integer</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final boolean isNullA10a()
+     { return __Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A10A._Mask); }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a10a -> TILDA.Testing2View."a10a"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a10a of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a10a of type integer</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+    void setA10a(int v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (__Init == InitMode.CREATE || v != _a10a)
+        {
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+           throw new Exception("Cannot set field 'tilda.data.TILDA.Testing2View.a10a' that is invariant, or part of a read-only or pre-existing WORM object.");
+          __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.A10A._Mask);
+          __Nulls.andNot(TILDA__TESTING2VIEW_Factory.COLS.A10A._Mask);
+       _a10a = v;
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a10a -> TILDA.Testing2View."a10a"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the null setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a10a of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a10a of type integer</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+    void setNullA10a()
+     {
+       long T0 = System.nanoTime();
+       if (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A10A._Mask) == true) // already NULL
+        return;
+       __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.A10A._Mask);
+       __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A10A._Mask);
+       _a10a=0;
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a10b -> TILDA.Testing2View."a10b"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a10b of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a10b of type varchar(10)</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   String _a10b;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a10b -> TILDA.Testing2View."a10b"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a10b of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a10b of type varchar(10)</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final String getA10b()
+      { return _a10b; }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a10b -> TILDA.Testing2View."a10b"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the isNull for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a10b of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a10b of type varchar(10)</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final boolean isNullA10b()
+     { return __Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A10B._Mask); }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a10b -> TILDA.Testing2View."a10b"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a10b of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a10b of type varchar(10)</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+    void setA10b(String v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (v == null)
+        {
+          setNullA10b();
+        }
+       else if (v.length() > 10)
+        throw new Exception("Cannot set tilda.data.TILDA.Testing2View.a10b: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 10.");
+       else if (v.equals(_a10b) == false)
+        {
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+           throw new Exception("Cannot set field 'tilda.data.TILDA.Testing2View.a10b' that is invariant, or part of a read-only or pre-existing WORM object.");
+          __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.A10B._Mask);
+          __Nulls.andNot(TILDA__TESTING2VIEW_Factory.COLS.A10B._Mask);
+       _a10b = v;
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a10b -> TILDA.Testing2View."a10b"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the null setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a10b of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a10b of type varchar(10)</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+    void setNullA10b()
+     {
+       long T0 = System.nanoTime();
+       if (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A10B._Mask) == true) // already NULL
+        return;
+       __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.A10B._Mask);
+       __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A10B._Mask);
+       _a10b=null;
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a10c -> TILDA.Testing2View."a10c"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a10c of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a10c of type integer</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   int _a10c= SystemValues.EVIL_VALUE;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a10c -> TILDA.Testing2View."a10c"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a10c of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a10c of type integer</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final int getA10c()
+      { return _a10c; }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a10c -> TILDA.Testing2View."a10c"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the isNull for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a10c of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a10c of type integer</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final boolean isNullA10c()
+     { return __Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A10C._Mask); }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a10c -> TILDA.Testing2View."a10c"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a10c of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a10c of type integer</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+    void setA10c(int v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (__Init == InitMode.CREATE || v != _a10c)
+        {
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+           throw new Exception("Cannot set field 'tilda.data.TILDA.Testing2View.a10c' that is invariant, or part of a read-only or pre-existing WORM object.");
+          __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.A10C._Mask);
+          __Nulls.andNot(TILDA__TESTING2VIEW_Factory.COLS.A10C._Mask);
+       _a10c = v;
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a10c -> TILDA.Testing2View."a10c"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the null setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a10c of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a10c of type integer</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+    void setNullA10c()
+     {
+       long T0 = System.nanoTime();
+       if (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A10C._Mask) == true) // already NULL
+        return;
+       __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.A10C._Mask);
+       __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A10C._Mask);
+       _a10c=0;
+>>>>>>> refs/remotes/origin/master
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -5347,7 +5812,7 @@ This is the setter for:<BR>
     void setA3(boolean v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a3)
+       if (__Init == InitMode.CREATE || v != _a3)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing2View.a3' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -5727,7 +6192,7 @@ This is the setter for:<BR>
     void setDesc2_Cat1(double v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _desc2_Cat1)
+       if (__Init == InitMode.CREATE || v != _desc2_Cat1)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing2View.desc2_Cat1' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -5851,7 +6316,7 @@ This is the setter for:<BR>
     void setDesc2_Cat2(double v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _desc2_Cat2)
+       if (__Init == InitMode.CREATE || v != _desc2_Cat2)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing2View.desc2_Cat2' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -5975,7 +6440,7 @@ This is the setter for:<BR>
     void setDesc2_Cat3(double v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _desc2_Cat3)
+       if (__Init == InitMode.CREATE || v != _desc2_Cat3)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing2View.desc2_Cat3' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -6099,7 +6564,7 @@ This is the setter for:<BR>
     void setA7_Cat4(double v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a7_Cat4)
+       if (__Init == InitMode.CREATE || v != _a7_Cat4)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing2View.a7_Cat4' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -6223,7 +6688,7 @@ This is the setter for:<BR>
     void setA7_Cat5(double v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a7_Cat5)
+       if (__Init == InitMode.CREATE || v != _a7_Cat5)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing2View.a7_Cat5' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -6347,7 +6812,7 @@ This is the setter for:<BR>
     void setA5_null(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a5_null)
+       if (__Init == InitMode.CREATE || v != _a5_null)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing2View.a5_null' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -6471,7 +6936,7 @@ This is the setter for:<BR>
     void setA6_null(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a6_null)
+       if (__Init == InitMode.CREATE || v != _a6_null)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing2View.a6_null' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -6595,7 +7060,7 @@ This is the setter for:<BR>
     void setA7_null(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a7_null)
+       if (__Init == InitMode.CREATE || v != _a7_null)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing2View.a7_null' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -6719,7 +7184,7 @@ This is the setter for:<BR>
     void setA8_null(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a8_null)
+       if (__Init == InitMode.CREATE || v != _a8_null)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing2View.a8_null' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -6806,11 +7271,17 @@ This is the null setter for:<BR>
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2View", "a8");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2View", "a8bTZ");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2View", "a8b");
+<<<<<<< HEAD
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2View", "a10");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2View", "a10b");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2View", "a11");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2View", "a11b");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2View", "a11c");
+=======
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2View", "a10a");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2View", "a10b");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2View", "a10c");
+>>>>>>> refs/remotes/origin/master
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2View", "description");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2View", "desc2");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2View", "desc3");
@@ -6895,9 +7366,15 @@ This is the null setter for:<BR>
                                _a5b = (List<Float>) C.getArray(RS, ++i, TILDA__TESTING2VIEW_Factory.COLS.A5B._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A5B._Mask           );
                                _a7             =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A7._Mask            );
                                _a7b = (List<Integer>) C.getArray(RS, ++i, TILDA__TESTING2VIEW_Factory.COLS.A7B._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A7B._Mask           );
+<<<<<<< HEAD
                                _a8             =                              RS.getBytes     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A8._Mask            );
                                _a8bTZ          = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A8BTZ._Mask         );
+=======
+                               _a8             =                              RS.getBytes    (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A8._Mask            );
+                               _a8bTZ          = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A8BTZ._Mask         );
+>>>>>>> refs/remotes/origin/master
                                _a8b            = ProcessZDT(_a8bTZ           , "tilda.data.TILDA.Testing2View.a8b"           , RS, ++i, TILDA__TESTING2VIEW_Factory.COLS.A8B           , TILDA__TESTING2VIEW_Factory.COLS.A8BTZ           ); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A8B._Mask           );
+<<<<<<< HEAD
                                _a10            =                              RS.getShort     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A10._Mask           );
                                _a10b = (List<Short>) C.getArray(RS, ++i, TILDA__TESTING2VIEW_Factory.COLS.A10B._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A10B._Mask          );
                                _a11            =                              RS.getBigDecimal(++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A11._Mask           );
@@ -6910,6 +7387,18 @@ This is the null setter for:<BR>
                                _desc5          = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESC5._Mask         );
                                _desc6          = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESC6._Mask         );
                                _a3             =                              RS.getBoolean   (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A3._Mask            );
+=======
+                               _a10a           =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A10A._Mask          );
+                               _a10b           = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A10B._Mask          );
+                               _a10c           =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A10C._Mask          );
+                               _description    = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESCRIPTION._Mask   );
+                               _desc2          = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESC2._Mask         );
+                               _desc3          = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESC3._Mask         );
+                               _desc4          = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESC4._Mask         );
+                               _desc5          = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESC5._Mask         );
+                               _desc6          = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESC6._Mask         );
+                               _a3             =                              RS.getBoolean  (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A3._Mask            );
+>>>>>>> refs/remotes/origin/master
                                _bastille       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.BASTILLE._Mask      );
                                _toto           = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.TOTO._Mask          );
                                _desc2_Cat1     =                              RS.getDouble    (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESC2_CAT1._Mask    );
@@ -6966,11 +7455,17 @@ This is the null setter for:<BR>
                + "; a7b"              + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A7B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA7b           ()))
                + "; a8"               + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A8._Mask) == true ? ": NULL" : ": " +                                   getA8            () )
                + "; a8b"              + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A8B._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getA8b           ()))
+<<<<<<< HEAD
                + "; a10"              + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A10._Mask) == true ? ": NULL" : ": " +                                   getA10           () )
                + "; a10b"             + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A10B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA10b          ()))
                + "; a11"              + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A11._Mask) == true ? ": NULL" : ": " +                                   getA11           () )
                + "; a11b"             + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A11B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA11b          ()))
                + "; a11c"             + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A11C._Mask) == true ? ": NULL" : ": " +                                   getA11c          () )
+=======
+               + "; a10a"             + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A10A._Mask) == true ? ": NULL" : ": " +                                   getA10a          () )
+               + "; a10b"             + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A10B._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getA10b          ()))
+               + "; a10c"             + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A10C._Mask) == true ? ": NULL" : ": " +                                   getA10c          () )
+>>>>>>> refs/remotes/origin/master
                + "; description"      + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.DESCRIPTION._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDescription   ()))
                + "; desc2"            + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.DESC2._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDesc2         ()))
                + "; desc3"            + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.DESC3._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDesc3         ()))

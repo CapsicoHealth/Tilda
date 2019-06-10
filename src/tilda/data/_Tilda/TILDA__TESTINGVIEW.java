@@ -42,7 +42,7 @@ This View contains the following columns:<BLOCKQUOTE>
    <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('TestingView-name')" align="right"><B id='TestingView-name_DIV' class='columns dotted_underline cursor_pointer'>name</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingView-name_DIV' class='columns'>name</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(10)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -52,7 +52,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>2&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('TestingView-refnum')" align="right"><B id='TestingView-refnum_DIV' class='columns dotted_underline cursor_pointer'>refnum</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingView-refnum_DIV' class='columns'>refnum</B>&nbsp;&nbsp;</TD>
 <TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -62,7 +62,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>3&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('TestingView-a2Min')" align="right"><B id='TestingView-a2Min_DIV' class='columns dotted_underline cursor_pointer'>a2Min</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingView-a2Min_DIV' class='columns'>a2Min</B>&nbsp;&nbsp;</TD>
 <TD>char&nbsp;/&nbsp;character&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -72,7 +72,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>4&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('TestingView-a2Max')" align="right"><B id='TestingView-a2Max_DIV' class='columns dotted_underline cursor_pointer'>a2Max</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingView-a2Max_DIV' class='columns'>a2Max</B>&nbsp;&nbsp;</TD>
 <TD>char&nbsp;/&nbsp;character&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -92,7 +92,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>6&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('TestingView-a9')" align="right"><B id='TestingView-a9_DIV' class='columns dotted_underline cursor_pointer'>a9</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingView-a9_DIV' class='columns'>a9</B>&nbsp;&nbsp;</TD>
 <TD>List<ZonedDateTime> List<>&nbsp;/&nbsp;timestamptz[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -102,7 +102,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>7&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('TestingView-a9c')" align="right"><B id='TestingView-a9c_DIV' class='columns dotted_underline cursor_pointer'>a9c</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingView-a9c_DIV' class='columns'>a9c</B>&nbsp;&nbsp;</TD>
 <TD>List<LocalDate> List<>&nbsp;/&nbsp;date[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -112,7 +112,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>8&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('TestingView-a6First')" align="right"><B id='TestingView-a6First_DIV' class='columns dotted_underline cursor_pointer'>a6First</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingView-a6First_DIV' class='columns'>a6First</B>&nbsp;&nbsp;</TD>
 <TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -122,7 +122,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>9&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('TestingView-a6Last')" align="right"><B id='TestingView-a6Last_DIV' class='columns dotted_underline cursor_pointer'>a6Last</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingView-a6Last_DIV' class='columns'>a6Last</B>&nbsp;&nbsp;</TD>
 <TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -131,207 +131,6 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD>The blah<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing-a6_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>a6</A></DIV></TD>
 </TR>
 </TABLE></BLOCKQUOTE>
-<DIV id='TestingView-name_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('TestingView-name_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TestingView_DIV'>TestingView</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TestingView-name_DIV'>name</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing_DIV'>Testing</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing-name_DIV'>name</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='TestingView-refnum_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('TestingView-refnum_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TestingView_DIV'>TestingView</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TestingView-refnum_DIV'>refnum</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing_DIV'>Testing</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing-refnum_DIV'>refnum</a> -- LONG</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='TestingView-a2Min_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('TestingView-a2Min_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TestingView_DIV'>TestingView</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TestingView-a2Min_DIV'>a2Min</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing_DIV'>Testing</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing-a2_DIV'>a2</a> -- CHAR</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='TestingView-a2Max_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('TestingView-a2Max_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TestingView_DIV'>TestingView</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TestingView-a2Max_DIV'>a2Max</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing_DIV'>Testing</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing-a2_DIV'>a2</a> -- CHAR</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='TestingView-a9TZ_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('TestingView-a9TZ_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TestingView_DIV'>TestingView</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TestingView-a9TZ_DIV'>a9TZ</a> -- STRING[]</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='TestingView-a9_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('TestingView-a9_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TestingView_DIV'>TestingView</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TestingView-a9_DIV'>a9</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing_DIV'>Testing</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing-a9_DIV'>a9</a> -- DATETIME</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='TestingView-a9c_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('TestingView-a9c_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TestingView_DIV'>TestingView</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TestingView-a9c_DIV'>a9c</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing_DIV'>Testing</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing-a9c_DIV'>a9c</a> -- DATE</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='TestingView-a6First_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('TestingView-a6First_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TestingView_DIV'>TestingView</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TestingView-a6First_DIV'>a6First</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing_DIV'>Testing</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing-a6_DIV'>a6</a> -- LONG</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='TestingView-a6Last_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('TestingView-a6Last_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TestingView_DIV'>TestingView</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TestingView-a6Last_DIV'>a6Last</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing_DIV'>Testing</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing-a6_DIV'>a6</a> -- LONG</td>
-</tr>
-</table>
-</DIV></DIV>
 </DIV>
 
 */
@@ -514,7 +313,7 @@ This is the setter for:<BR>
     void setRefnum(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _refnum)
+       if (__Init == InitMode.CREATE || v != _refnum)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.TestingView.refnum' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -610,7 +409,7 @@ This is the setter for:<BR>
     void setA2Min(char v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a2Min)
+       if (__Init == InitMode.CREATE || v != _a2Min)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.TestingView.a2Min' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -734,7 +533,7 @@ This is the setter for:<BR>
     void setA2Max(char v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a2Max)
+       if (__Init == InitMode.CREATE || v != _a2Max)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.TestingView.a2Max' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -1444,7 +1243,7 @@ This is the setter for:<BR>
     void setA6First(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a6First)
+       if (__Init == InitMode.CREATE || v != _a6First)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.TestingView.a6First' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -1568,7 +1367,7 @@ This is the setter for:<BR>
     void setA6Last(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a6Last)
+       if (__Init == InitMode.CREATE || v != _a6Last)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.TestingView.a6Last' that is invariant, or part of a read-only or pre-existing WORM object.");

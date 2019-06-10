@@ -40,7 +40,7 @@ This View contains the following columns:<BLOCKQUOTE>
    <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('FormulaDependencyView-formulaRefnum')" align="right"><B id='FormulaDependencyView-formulaRefnum_DIV' class='columns dotted_underline cursor_pointer'>formulaRefnum</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='FormulaDependencyView-formulaRefnum_DIV' class='columns'>formulaRefnum</B>&nbsp;&nbsp;</TD>
 <TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -50,7 +50,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>2&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('FormulaDependencyView-location')" align="right"><B id='FormulaDependencyView-location_DIV' class='columns dotted_underline cursor_pointer'>location</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='FormulaDependencyView-location_DIV' class='columns'>location</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(64)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -60,7 +60,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>3&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('FormulaDependencyView-name')" align="right"><B id='FormulaDependencyView-name_DIV' class='columns dotted_underline cursor_pointer'>name</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='FormulaDependencyView-name_DIV' class='columns'>name</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(64)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -70,7 +70,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>4&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('FormulaDependencyView-referencedColumns')" align="right"><B id='FormulaDependencyView-referencedColumns_DIV' class='columns dotted_underline cursor_pointer'>referencedColumns</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='FormulaDependencyView-referencedColumns_DIV' class='columns'>referencedColumns</B>&nbsp;&nbsp;</TD>
 <TD>List<String> List<>&nbsp;/&nbsp;text[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -80,7 +80,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>5&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('FormulaDependencyView-dependencyRefnum')" align="right"><B id='FormulaDependencyView-dependencyRefnum_DIV' class='columns dotted_underline cursor_pointer'>dependencyRefnum</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='FormulaDependencyView-dependencyRefnum_DIV' class='columns'>dependencyRefnum</B>&nbsp;&nbsp;</TD>
 <TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -90,7 +90,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>6&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('FormulaDependencyView-dependentFormulaName')" align="right"><B id='FormulaDependencyView-dependentFormulaName_DIV' class='columns dotted_underline cursor_pointer'>dependentFormulaName</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='FormulaDependencyView-dependentFormulaName_DIV' class='columns'>dependentFormulaName</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(64)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -100,7 +100,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>7&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('FormulaDependencyView-dependentFormulaLocation')" align="right"><B id='FormulaDependencyView-dependentFormulaLocation_DIV' class='columns dotted_underline cursor_pointer'>dependentFormulaLocation</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='FormulaDependencyView-dependentFormulaLocation_DIV' class='columns'>dependentFormulaLocation</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(64)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -110,7 +110,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>8&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('FormulaDependencyView-dependentReferencedColumns')" align="right"><B id='FormulaDependencyView-dependentReferencedColumns_DIV' class='columns dotted_underline cursor_pointer'>dependentReferencedColumns</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='FormulaDependencyView-dependentReferencedColumns_DIV' class='columns'>dependentReferencedColumns</B>&nbsp;&nbsp;</TD>
 <TD>List<String> List<>&nbsp;/&nbsp;text[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -119,200 +119,6 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD>The list of columns this formula depends on.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Formula-referencedColumns_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Formula<B>&nbsp;&#8226;&nbsp;</B>referencedColumns</A></DIV></TD>
 </TR>
 </TABLE></BLOCKQUOTE>
-<DIV id='FormulaDependencyView-formulaRefnum_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('FormulaDependencyView-formulaRefnum_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FormulaDependencyView_DIV'>FormulaDependencyView</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FormulaDependencyView-formulaRefnum_DIV'>formulaRefnum</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#FormulaDependency_DIV'>FormulaDependency</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#FormulaDependency-formulaRefnum_DIV'>formulaRefnum</a></td>
-</tr>
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Formula_DIV'>Formula</a></td>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Formula-refnum_DIV'>refnum</a> -- LONG</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='FormulaDependencyView-location_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('FormulaDependencyView-location_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FormulaDependencyView_DIV'>FormulaDependencyView</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FormulaDependencyView-location_DIV'>location</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Formula_DIV'>Formula</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Formula-location_DIV'>location</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='FormulaDependencyView-name_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('FormulaDependencyView-name_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FormulaDependencyView_DIV'>FormulaDependencyView</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FormulaDependencyView-name_DIV'>name</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Formula_DIV'>Formula</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Formula-name_DIV'>name</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='FormulaDependencyView-referencedColumns_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('FormulaDependencyView-referencedColumns_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FormulaDependencyView_DIV'>FormulaDependencyView</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FormulaDependencyView-referencedColumns_DIV'>referencedColumns</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Formula_DIV'>Formula</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Formula-referencedColumns_DIV'>referencedColumns</a> -- STRING[]</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='FormulaDependencyView-dependencyRefnum_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('FormulaDependencyView-dependencyRefnum_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FormulaDependencyView_DIV'>FormulaDependencyView</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FormulaDependencyView-dependencyRefnum_DIV'>dependencyRefnum</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#FormulaDependency_DIV'>FormulaDependency</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#FormulaDependency-dependencyRefnum_DIV'>dependencyRefnum</a></td>
-</tr>
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Formula_DIV'>Formula</a></td>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Formula-refnum_DIV'>refnum</a> -- LONG</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='FormulaDependencyView-dependentFormulaName_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('FormulaDependencyView-dependentFormulaName_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FormulaDependencyView_DIV'>FormulaDependencyView</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FormulaDependencyView-dependentFormulaName_DIV'>dependentFormulaName</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Formula_DIV'>Formula</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Formula-name_DIV'>name</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='FormulaDependencyView-dependentFormulaLocation_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('FormulaDependencyView-dependentFormulaLocation_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FormulaDependencyView_DIV'>FormulaDependencyView</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FormulaDependencyView-dependentFormulaLocation_DIV'>dependentFormulaLocation</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Formula_DIV'>Formula</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Formula-location_DIV'>location</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='FormulaDependencyView-dependentReferencedColumns_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('FormulaDependencyView-dependentReferencedColumns_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FormulaDependencyView_DIV'>FormulaDependencyView</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FormulaDependencyView-dependentReferencedColumns_DIV'>dependentReferencedColumns</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Formula_DIV'>Formula</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Formula-referencedColumns_DIV'>referencedColumns</a> -- STRING[]</td>
-</tr>
-</table>
-</DIV></DIV>
 </DIV>
 
 */
@@ -412,7 +218,7 @@ This is the setter for:<BR>
     void setFormulaRefnum(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _formulaRefnum)
+       if (__Init == InitMode.CREATE || v != _formulaRefnum)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.FormulaDependencyView.formulaRefnum' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -835,7 +641,7 @@ This is the setter for:<BR>
     void setDependencyRefnum(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _dependencyRefnum)
+       if (__Init == InitMode.CREATE || v != _dependencyRefnum)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.FormulaDependencyView.dependencyRefnum' that is invariant, or part of a read-only or pre-existing WORM object.");

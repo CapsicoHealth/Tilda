@@ -779,6 +779,7 @@ This is the column definition for:<BR>
      public static Type_DateCollectionNull     A9D        = new Type_DateCollectionNull    (SCHEMA_LABEL, TABLENAME_LABEL, "a9d"        , 38/*38*/, "The blah");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+<<<<<<< HEAD
 //   Field tilda.data.TILDA.Testing.a10 -> TILDA.Testing."a10"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
@@ -867,6 +868,61 @@ This is the column definition for:<BR>
 </TABLE>
 */
      public static Type_NumericPrimitiveNull   A11C       = new Type_NumericPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a11c"       , 43/*43*/, "The blah");
+=======
+//   Field tilda.data.TILDA.Testing.a10a -> TILDA.Testing."a10a"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the column definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing.a10a of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing.a10a of type integer</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+     public static Type_IntegerPrimitiveNull   A10A       = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a10a"       , 39/*39*/, "The blah");
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing.a10b -> TILDA.Testing."a10b"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the column definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing.a10b of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing.a10b of type varchar(10)</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+     public static Type_StringPrimitiveNull    A10B       = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a10b"       , 40/*40*/, "The blah");
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing.a10c -> TILDA.Testing."a10c"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the column definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing.a10c of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing.a10c of type integer</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+     public static Type_IntegerPrimitiveNull   A10C       = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a10c"       , 41/*41*/, "The blah");
+>>>>>>> refs/remotes/origin/master
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing.created -> TILDA.Testing."created"
@@ -891,7 +947,11 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
+<<<<<<< HEAD
      public static Type_DatetimePrimitive      CREATED    = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"    , 44/*44*/, "The timestamp for when the record was created. (TILDA.Testing)");
+=======
+     public static Type_DatetimePrimitive      CREATED    = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"    , 42/*42*/, "The timestamp for when the record was created. (TILDA.Testing)");
+>>>>>>> refs/remotes/origin/master
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing.lastUpdated -> TILDA.Testing."lastUpdated"
@@ -916,7 +976,11 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
+<<<<<<< HEAD
      public static Type_DatetimePrimitive      LASTUPDATED= new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated", 45/*45*/, "The timestamp for when the record was last updated. (TILDA.Testing)");
+=======
+     public static Type_DatetimePrimitive      LASTUPDATED= new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated", 43/*43*/, "The timestamp for when the record was last updated. (TILDA.Testing)");
+>>>>>>> refs/remotes/origin/master
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing.deleted -> TILDA.Testing."deleted"
@@ -934,11 +998,19 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
+<<<<<<< HEAD
      public static Type_DatetimePrimitiveNull  DELETED    = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"    , 46/*46*/, "The timestamp for when the record was deleted. (TILDA.Testing)");
+=======
+     public static Type_DatetimePrimitiveNull  DELETED    = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"    , 44/*44*/, "The timestamp for when the record was deleted. (TILDA.Testing)");
+>>>>>>> refs/remotes/origin/master
 ;
    }
 
+<<<<<<< HEAD
    public static final ColumnDefinition[] COLUMNS = { COLS.REFNUM,COLS.REFNUM2,COLS.NAME,COLS.DESCRIPTION,COLS.DESC2,COLS.DESC3,COLS.DESC4,COLS.DESC5,COLS.DESC6,COLS.TOPS,COLS.TOPS2,COLS.A1,COLS.A2,COLS.A2B,COLS.A2C,COLS.A3,COLS.A3B,COLS.A4,COLS.A4B,COLS.A5,COLS.A5B,COLS.A6,COLS.A6B,COLS.A6C,COLS.A6DTZ,COLS.A6D,COLS.A7,COLS.A7B,COLS.A8,COLS.A8BTZ,COLS.A8B,COLS.A9TZ,COLS.A9,COLS.A9A1TZ,COLS.A9A1,COLS.A9BTZ,COLS.A9B,COLS.A9C,COLS.A9D,COLS.A10,COLS.A10B,COLS.A11,COLS.A11B,COLS.A11C,COLS.CREATED,COLS.LASTUPDATED,COLS.DELETED };
+=======
+   public static final ColumnDefinition[] COLUMNS = { COLS.REFNUM,COLS.REFNUM2,COLS.NAME,COLS.DESCRIPTION,COLS.DESC2,COLS.DESC3,COLS.DESC4,COLS.DESC5,COLS.DESC6,COLS.TOPS,COLS.TOPS2,COLS.A1,COLS.A2,COLS.A2B,COLS.A2C,COLS.A3,COLS.A3B,COLS.A4,COLS.A4B,COLS.A5,COLS.A5B,COLS.A6,COLS.A6B,COLS.A6C,COLS.A6DTZ,COLS.A6D,COLS.A7,COLS.A7B,COLS.A8,COLS.A8BTZ,COLS.A8B,COLS.A9TZ,COLS.A9,COLS.A9A1TZ,COLS.A9A1,COLS.A9BTZ,COLS.A9B,COLS.A9C,COLS.A9D,COLS.A10A,COLS.A10B,COLS.A10C,COLS.CREATED,COLS.LASTUPDATED,COLS.DELETED };
+>>>>>>> refs/remotes/origin/master
 
    public static final ColumnDefinition[] COLUMNS_PRIMARY = { COLS.REFNUM };
 
@@ -1053,11 +1125,17 @@ This is the column definition for:<BR>
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a9b");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a9c");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a9d");
+<<<<<<< HEAD
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a10");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a10b");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a11");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a11b");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a11c");
+=======
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a10a");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a10b");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a10c");
+>>>>>>> refs/remotes/origin/master
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "created");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "lastUpdated");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "deleted");
@@ -1208,11 +1286,17 @@ This is the column definition for:<BR>
        List<ZonedDateTime>  _a9b         = CollectionUtil.toList(ParseUtil.parseZonedDateTime("a9b"        , false, Values.get("a9b"        ), "``", Errors));
        LocalDate        _a9c         =                       ParseUtil.parseLocalDate("a9c"        , false, Values.get("a9c"        ), Errors );
        List<LocalDate>  _a9d         = CollectionUtil.toList(ParseUtil.parseLocalDate("a9d"        , false, Values.get("a9d"        ), "``", Errors));
+<<<<<<< HEAD
        Short        _a10         =                       ParseUtil.parseShort("a10"        , false, Values.get("a10"        ), Errors );
        List<Short>  _a10b        = CollectionUtil.toList(ParseUtil.parseShort("a10b"       , false, Values.get("a10b"       ), "``", Errors));
        BigDecimal        _a11         =                       ParseUtil.parseBigDecimal("a11"        , false, Values.get("a11"        ), Errors );
        List<BigDecimal>  _a11b        = CollectionUtil.toList(ParseUtil.parseBigDecimal("a11b"       , false, Values.get("a11b"       ), "``", Errors));
        BigDecimal        _a11c        =                       ParseUtil.parseBigDecimal("a11c"       , false, Values.get("a11c"       ), Errors );
+=======
+       Integer        _a10a        =                       ParseUtil.parseInteger("a10a"       , false, Values.get("a10a"       ), Errors );
+       String        _a10b        =                       ParseUtil.parseString("a10b"       , false, Values.get("a10b"       ), Errors );
+       Integer        _a10c        =                       ParseUtil.parseInteger("a10c"       , false, Values.get("a10c"       ), Errors );
+>>>>>>> refs/remotes/origin/master
 
        if (IncomingErrors != Errors.size())
         return null;
@@ -1250,11 +1334,17 @@ This is the column definition for:<BR>
       if (_a9b        != null) Obj.setA9b        (_a9b        );
       if (_a9c        != null) Obj.setA9c        (_a9c        );
       if (_a9d        != null) Obj.setA9d        (_a9d        );
+<<<<<<< HEAD
       if (_a10        != null) Obj.setA10        (_a10        );
       if (_a10b       != null) Obj.setA10b       (_a10b       );
       if (_a11        != null) Obj.setA11        (_a11        );
       if (_a11b       != null) Obj.setA11b       (_a11b       );
       if (_a11c       != null) Obj.setA11c       (_a11c       );
+=======
+      if (_a10a       != null) Obj.setA10a       (_a10a       );
+      if (_a10b       != null) Obj.setA10b       (_a10b       );
+      if (_a10c       != null) Obj.setA10c       (_a10c       );
+>>>>>>> refs/remotes/origin/master
 
       return Obj;
      }

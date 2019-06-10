@@ -40,7 +40,7 @@ This View contains the following columns:<BLOCKQUOTE>
    <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('FormulaResultView-formulaRefnum')" align="right"><B id='FormulaResultView-formulaRefnum_DIV' class='columns dotted_underline cursor_pointer'>formulaRefnum</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='FormulaResultView-formulaRefnum_DIV' class='columns'>formulaRefnum</B>&nbsp;&nbsp;</TD>
 <TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -50,7 +50,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>2&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('FormulaResultView-value')" align="right"><B id='FormulaResultView-value_DIV' class='columns dotted_underline cursor_pointer'>value</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='FormulaResultView-value_DIV' class='columns'>value</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(100)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -60,7 +60,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>3&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('FormulaResultView-description')" align="right"><B id='FormulaResultView-description_DIV' class='columns dotted_underline cursor_pointer'>description</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='FormulaResultView-description_DIV' class='columns'>description</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;text&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -70,7 +70,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>4&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('FormulaResultView-location')" align="right"><B id='FormulaResultView-location_DIV' class='columns dotted_underline cursor_pointer'>location</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='FormulaResultView-location_DIV' class='columns'>location</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(64)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -80,7 +80,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>5&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('FormulaResultView-name')" align="right"><B id='FormulaResultView-name_DIV' class='columns dotted_underline cursor_pointer'>name</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='FormulaResultView-name_DIV' class='columns'>name</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(64)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -89,126 +89,6 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD>The name of the formula/column.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Formula-name_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Formula<B>&nbsp;&#8226;&nbsp;</B>name</A></DIV></TD>
 </TR>
 </TABLE></BLOCKQUOTE>
-<DIV id='FormulaResultView-formulaRefnum_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('FormulaResultView-formulaRefnum_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FormulaResultView_DIV'>FormulaResultView</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FormulaResultView-formulaRefnum_DIV'>formulaRefnum</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#FormulaResult_DIV'>FormulaResult</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#FormulaResult-formulaRefnum_DIV'>formulaRefnum</a></td>
-</tr>
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Formula_DIV'>Formula</a></td>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Formula-refnum_DIV'>refnum</a> -- LONG</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='FormulaResultView-value_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('FormulaResultView-value_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FormulaResultView_DIV'>FormulaResultView</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FormulaResultView-value_DIV'>value</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#FormulaResult_DIV'>FormulaResult</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#FormulaResult-value_DIV'>value</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='FormulaResultView-description_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('FormulaResultView-description_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FormulaResultView_DIV'>FormulaResultView</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FormulaResultView-description_DIV'>description</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#FormulaResult_DIV'>FormulaResult</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#FormulaResult-description_DIV'>description</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='FormulaResultView-location_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('FormulaResultView-location_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FormulaResultView_DIV'>FormulaResultView</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FormulaResultView-location_DIV'>location</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Formula_DIV'>Formula</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Formula-location_DIV'>location</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='FormulaResultView-name_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('FormulaResultView-name_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FormulaResultView_DIV'>FormulaResultView</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FormulaResultView-name_DIV'>name</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Formula_DIV'>Formula</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Formula-name_DIV'>name</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
 </DIV>
 
 */
@@ -308,7 +188,7 @@ This is the setter for:<BR>
     void setFormulaRefnum(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _formulaRefnum)
+       if (__Init == InitMode.CREATE || v != _formulaRefnum)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.FormulaResultView.formulaRefnum' that is invariant, or part of a read-only or pre-existing WORM object.");

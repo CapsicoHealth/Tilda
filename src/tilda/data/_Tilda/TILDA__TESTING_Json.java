@@ -67,11 +67,17 @@ public class TILDA__TESTING_Json
    transient                      public List<ZonedDateTime>  _a9b        ;
    @SerializedName("a9c"        ) public LocalDate  _a9c        ;
    @SerializedName("a9d"        ) public List<LocalDate>  _a9d        ;
+<<<<<<< HEAD
    @SerializedName("a10"        ) public Short  _a10        ;
    @SerializedName("a10b"       ) public List<Short>  _a10b       ;
    @SerializedName("a11"        ) public BigDecimal  _a11        ;
    @SerializedName("a11b"       ) public List<BigDecimal>  _a11b       ;
    @SerializedName("a11c"       ) public BigDecimal  _a11c       ;
+=======
+   @SerializedName("a10a"       ) public Integer  _a10a       ;
+   @SerializedName("a10b"       ) public String  _a10b       ;
+   @SerializedName("a10c"       ) public Integer  _a10c       ;
+>>>>>>> refs/remotes/origin/master
    /*@formatter:on*/
 
    public tilda.data.Testing_Data Write(Connection C) throws Exception
@@ -155,11 +161,17 @@ public class TILDA__TESTING_Json
       if (_a9b        != null) Obj.setA9b        (_a9b        );
       if (_a9c        != null) Obj.setA9c        (_a9c        );
       if (_a9d        != null) Obj.setA9d        (_a9d        );
+<<<<<<< HEAD
       if (_a10        != null) Obj.setA10        (_a10        );
       if (_a10b       != null) Obj.setA10b       (_a10b       );
       if (_a11        != null) Obj.setA11        (_a11        );
       if (_a11b       != null) Obj.setA11b       (_a11b       );
       if (_a11c       != null) Obj.setA11c       (_a11c       );
+=======
+      if (_a10a       != null) Obj.setA10a       (_a10a       );
+      if (_a10b       != null) Obj.setA10b       (_a10b       );
+      if (_a10c       != null) Obj.setA10c       (_a10c       );
+>>>>>>> refs/remotes/origin/master
     }
 
    public String toString()
@@ -198,11 +210,17 @@ public class TILDA__TESTING_Json
          + "; a9b"        + (_a9b         == null ? ": NULL" : ": "+DateTimeUtil.printDateTimeForSQL(_a9b))
          + "; a9c"        + (_a9c         == null ? ": NULL" : ": " + _a9c        )
          + "; a9d"        + (_a9d         == null ? ": NULL" : ": " + _a9d        )
+<<<<<<< HEAD
          + "; a10"        + (_a10         == null ? ": NULL" : ": " + _a10        )
          + "; a10b"       + (_a10b        == null ? ": NULL" : ": " + _a10b       )
          + "; a11"        + (_a11         == null ? ": NULL" : ": " + _a11        )
          + "; a11b"       + (_a11b        == null ? ": NULL" : ": " + _a11b       )
          + "; a11c"       + (_a11c        == null ? ": NULL" : ": " + _a11c       )
+=======
+         + "; a10a"       + (_a10a        == null ? ": NULL" : ": " + _a10a       )
+         + "; a10b"       + (_a10b        == null ? ": NULL" : "(" + (_a10b        == null ? 0 : _a10b       .length())+"): "+_a10b)
+         + "; a10c"       + (_a10c        == null ? ": NULL" : ": " + _a10c       )
+>>>>>>> refs/remotes/origin/master
          + ";";
     }
 

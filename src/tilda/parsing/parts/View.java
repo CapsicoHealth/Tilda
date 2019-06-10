@@ -100,6 +100,20 @@ public class View extends Base
         return null;
       }
 
+    public Column getProxyColumn(String name)
+      {
+        for (Formula F : _Formulas)
+          if (F != null && F._Name != null && F._Name.equalsIgnoreCase(name) == true)
+            return F._ProxyCol;
+        for (ViewColumn VC : _ViewColumns)
+          if (VC != null && VC._Name != null && VC._Name.equalsIgnoreCase(name) == true)
+            return VC._ProxyCol;
+        for (Column C : _PivotColumns)
+          if (C != null && C._Name != null && C._Name.equalsIgnoreCase(name) == true)
+            return C;
+        return null;
+      }
+    
     @Override
     public String[] getColumnNames()
       {
@@ -528,7 +542,9 @@ public class View extends Base
             )
               {
                 // LOG.debug(" --> "+VC._Name +" SELECTED ");
-                O._Columns.add(new ViewColumnWrapper(VC._SameAsObj, VC, ++Counter));
+                Column C = new ViewColumnWrapper(VC._SameAsObj, VC, ++Counter);
+                O._Columns.add(C);
+                VC._ProxyCol = C;
               }
             // else
             // LOG.debug(" --> "+VC._Name +" IGNORED ");
@@ -542,6 +558,9 @@ public class View extends Base
             O._Columns.add(C);
           }
 
+        // LOG.debug(O._Name+": "+TextUtil.Print(O.getColumnNames()));
+        genPivotColumns(PS, O);
+        
         if (_ImportFormulas != null)
           for (String s : _ImportFormulas)
             {
@@ -605,11 +624,9 @@ public class View extends Base
                     else if (F._FormulaTemplate == true)
                       C._FCT = FrameworkColumnType.FORMULA_TEMPLATE;
                     O._Columns.add(C);
+                    F._ProxyCol = C;
                   }
               }
-
-        // LOG.debug(O._Name+": "+TextUtil.Print(O.getColumnNames()));
-        genPivotColumns(PS, O);
 
         PrepRegexes();
 
@@ -946,10 +963,21 @@ public class View extends Base
 
     public Formula getFormula(String FormulaName)
       {
+        return getFormula(FormulaName, false);
+      }
+
+    public Formula getFormula(String FormulaName, boolean deep)
+      {
         if (_Formulas != null)
           for (Formula F : _Formulas)
             if (F != null && F._Name.equalsIgnoreCase(FormulaName) == true)
               return F;
+        if (deep == true)
+          {
+            ViewColumn VC = getViewColumn(FormulaName);
+            if (VC != null && VC._SameAsView != null)
+             return VC._SameAsView.getFormula(FormulaName, deep);
+          }
         return null;
       }
 
@@ -1040,11 +1068,11 @@ public class View extends Base
         Graph.Node<DepWrapper> N = Root;
         for (ViewColumn VC : _ViewColumns)
           {
-//            LOG.debug("Looking at VC " + VC.getShortName() + ".");
+            // LOG.debug("Looking at VC " + VC.getShortName() + ".");
             List<Column> L = VC.getSameAsLineage();
             for (Column C : L)
               {
-//                LOG.debug(" Ancestor " + C.getShortName() + ".");
+                // LOG.debug(" Ancestor " + C.getShortName() + ".");
                 Graph.Node<DepWrapper> n = null;
                 boolean foundObj = false;
                 for (int i = 0; i < N.getChildrenNodes().size(); ++i) // Searching for a node at that level matching the incoming object definition
@@ -1058,7 +1086,7 @@ public class View extends Base
                   }
                 if (foundObj == true)
                   {
-//                    LOG.debug(" Found, moving on to Graph node " + n.getValue()._Obj.getShortName());
+                    // LOG.debug(" Found, moving on to Graph node " + n.getValue()._Obj.getShortName());
                     boolean foundCol = false;
                     for (Column c : n.getValue()._Columns)
                       if (c == C)
@@ -1075,14 +1103,14 @@ public class View extends Base
                     View V = DW.getObj()._ParentSchema.getSourceView(C._ParentObject);
                     if (onlyRealizedViews == false || V != null && (V._Realize != null))// || V.hasAncestorRealizedViews() == true))
                       {
-//                        LOG.debug(" Creating new Graph node " + C._ParentObject.getShortName());
+                        // LOG.debug(" Creating new Graph node " + C._ParentObject.getShortName());
                         DepWrapper SubDW = new DepWrapper(C._ParentObject, VC._As);
                         SubDW.addColumn(C);
                         N = N.addChild(SubDW);
                       }
                   }
               }
-//            LOG.debug(" Resetting to graph root for next VC");
+            // LOG.debug(" Resetting to graph root for next VC");
             N = Root;
           }
 
@@ -1187,7 +1215,7 @@ public class View extends Base
           }
         return S.isEmpty() == true ? null : S;
       }
-    
+
     /**
      * Returns a set of the first ancestor views referenced by this view that are realized.
      * if no such views were found.
@@ -1204,24 +1232,24 @@ public class View extends Base
             if (V == null || Names.add(V.getShortName()) == false)
               continue;
             if (V._Realize != null)
-             S.add(V);
+              S.add(V);
             else
               {
                 Set<View> S2 = V.getFirstAncestorRealizedViews();
                 if (S2 != null && S2.isEmpty() == false)
-                 S.addAll(S2);
+                  S.addAll(S2);
               }
           }
         return S.isEmpty() == true ? null : S;
       }
-    
+
 
     public boolean hasAncestorRealizedViews()
       {
         Set<View> S1 = getAncestorRealizedViews();
         Set<View> S2 = getSubRealizedViewRootNames();
-        return S1!=null && S1.isEmpty() == false || S2!=null && S2.isEmpty() == false;
+        return S1 != null && S1.isEmpty() == false || S2 != null && S2.isEmpty() == false;
       }
-    
+
 
   }
