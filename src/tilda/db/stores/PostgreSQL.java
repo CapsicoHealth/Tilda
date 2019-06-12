@@ -1094,6 +1094,7 @@ public class PostgreSQL implements DBType
       }
 
 
+    @Override
     public void cancel(Connection C)
     throws SQLException
       {
@@ -1110,6 +1111,13 @@ public class PostgreSQL implements DBType
     public int getMaxTableNameSize()
       {
         return 63;
+      }
+
+    @Override
+    public String getBackendConnectionId(Connection connection)
+    throws Exception
+      {
+        return null;
       }
 
   }

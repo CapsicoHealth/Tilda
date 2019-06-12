@@ -66,6 +66,11 @@ public abstract class DBPoll implements Runnable
         _C = ConnectionPool.get(_PoolName);
       }
 
+    public String getConnectionId() throws Exception
+      {
+        return _C.getBackendId();
+      }
+
     /**
      * If launched as a thread, attempts to terminate is asap.
      */
@@ -138,5 +143,5 @@ public abstract class DBPoll implements Runnable
     protected abstract void close()
     throws Exception;
 
-    
+
   }

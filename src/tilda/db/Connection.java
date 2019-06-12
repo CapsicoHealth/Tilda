@@ -680,6 +680,16 @@ public final class Connection
         return _DB.alterTableAlterColumnDefault(this, Col);
       }
 
+    public String getBackendId() throws Exception
+      {
+        return _DB.getBackendConnectionId(this);
+      }
+
+    public void cancel() throws Exception
+      {
+        _DB.cancel(this);
+      }
+
   }
 
 
