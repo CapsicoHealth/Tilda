@@ -290,14 +290,16 @@ public class Migrator
  
         for (Object Obj : S._Objects)
           {
-            ///////////TESTING
-            if(Obj._Name.equals("Testing"))
-              LOG.debug(Obj._Name);
             
             if (Obj == null)
               continue;
             if (Obj._FST == FrameworkSourcedType.VIEW || Obj._Mode == ObjectMode.CODE_ONLY == true)
               continue;
+            
+            ///////////TESTING
+            if(Obj._Name.equals("Testing"))
+              LOG.debug(Obj._Name);
+            
             TableMeta TMeta = DBMeta.getTableMeta(Obj._ParentSchema._Name, Obj._Name);
             int DddlManagementPos = Actions.size();
                

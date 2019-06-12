@@ -453,7 +453,7 @@
         //{ "name": "a10a"         , "type": "BOOLEAN"        ,                                                       "description": "The blah"},
         { "name": "a10b"         , "type": "STRING"        ,                  "size":    10,                    "description": "The blah"},
         //{ "name": "a10b"         , "type": "INTEGER"        ,                                                       "description": "The blah"},
-        { "name": "a10c"         , "type": "INTEGER"        ,                                                       "description": "The blah"}
+        { "name": "a10c"         , "type": "INTEGER"        ,                                                       "description": "The blah"},
         //{ "name": "a10c"         , "type": "LONG"        ,   
         
         { "name": "a11"          , "type": "NUMERIC"    , "precision":10, "scale":2,                             "description": "The blah"},

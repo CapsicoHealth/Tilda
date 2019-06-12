@@ -13,10 +13,6 @@ import tilda.utils.*;
 
 /** @author    Tilda code gen for Java 8/PostgreSQL
     @version   Tilda 1.0
-<<<<<<< HEAD
-    @generated Feb 27 2019, 17:54:59EST
-=======
->>>>>>> refs/remotes/origin/master
 */
 public final class TILDA__1_0
  {

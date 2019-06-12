@@ -10,6 +10,7 @@ import tilda.types.*;
 import tilda.utils.*;
 import tilda.utils.pairs.*;
 
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -494,11 +495,11 @@ This is the column definition for:<BR>
              case -7:
                 break;
              case 1: {
-               PS.setString   (++i, Obj._name       );
+               PS.setString    (++i, Obj._name       );
                break;
              }
              case 2: {
-               if (Obj.isNullType() == true) PS.setNull(++i, java.sql.Types.CHAR   );  else PS.setString   (++i, Obj._type       );
+               if (Obj.isNullType() == true) PS.setNull(++i, java.sql.Types.CHAR      );  else PS.setString    (++i, Obj._type       );
                break;
              }
              case -666: break;

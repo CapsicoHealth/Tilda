@@ -64,11 +64,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>3&nbsp;&nbsp;</TD>
-<<<<<<< HEAD
-<TD onclick="onModalShowClicked('Testing3View-a8bTZ')" align="right"><B id='Testing3View-a8bTZ_DIV' class='columns realizedcolumns dotted_underline cursor_pointer'>a8bTZ</B>&nbsp;&nbsp;</TD>
-=======
 <TD align="right"><B id='Testing3View-a8bTZ_DIV' class='columns realizedcolumns'>a8bTZ</B>&nbsp;&nbsp;</TD>
->>>>>>> refs/remotes/origin/master
 <TD>String&nbsp;/&nbsp;varchar(10)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">AUTO&nbsp;&nbsp;</TD>
@@ -857,15 +853,9 @@ This is the setter for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-<<<<<<< HEAD
       __Saved_refnum         = _refnum         =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING3VIEW_Factory.COLS.REFNUM._Mask        );
                                _name           = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING3VIEW_Factory.COLS.NAME._Mask          );
                                _a8bTZ          = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING3VIEW_Factory.COLS.A8BTZ._Mask         );
-=======
-      __Saved_refnum         = _refnum         =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING3VIEW_Factory.COLS.REFNUM._Mask        );
-                               _name           = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING3VIEW_Factory.COLS.NAME._Mask          );
-                               _a8bTZ          = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING3VIEW_Factory.COLS.A8BTZ._Mask         );
->>>>>>> refs/remotes/origin/master
                                _a8b            = ProcessZDT(_a8bTZ           , "tilda.data.TILDA.Testing3View.a8b"           , RS, ++i, TILDA__TESTING3VIEW_Factory.COLS.A8B           , TILDA__TESTING3VIEW_Factory.COLS.A8BTZ           ); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING3VIEW_Factory.COLS.A8B._Mask           );
                                _lastUpdated    = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING3VIEW_Factory.COLS.LASTUPDATED._Mask   );
                                _xxxLastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING3VIEW_Factory.COLS.XXXLASTUPDATED._Mask);

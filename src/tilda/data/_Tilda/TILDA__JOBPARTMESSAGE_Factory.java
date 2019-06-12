@@ -10,6 +10,7 @@ import tilda.types.*;
 import tilda.utils.*;
 import tilda.utils.pairs.*;
 
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -316,11 +317,11 @@ This is the column definition for:<BR>
              case -7:
                 break;
              case 1: {
-               PS.setLong     (++i, Obj._jobRefnum    );
+               PS.setLong      (++i, Obj._jobRefnum    );
                break;
              }
              case 2: {
-               if (Obj.isNullJobPartRefnum() == true) PS.setNull(++i, java.sql.Types.BIGINT );  else PS.setLong     (++i, Obj._jobPartRefnum);
+               if (Obj.isNullJobPartRefnum() == true) PS.setNull(++i, java.sql.Types.BIGINT    );  else PS.setLong      (++i, Obj._jobPartRefnum);
                break;
              }
              case -666: break;
