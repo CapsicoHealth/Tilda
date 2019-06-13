@@ -358,9 +358,9 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Formula column '<B>Always True</B>'<TABLE border="1px" style="border-collapse:collapse; border: 1px solid #AAA;" cellspacing="0px" cellpadding="2px" width="98%">
-<TR valign="top"><TD width="1px" align="right"><B>Description</B></TD><TD>Blah...</TD></TR><TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">NOT <B style="color:#00AA00;">a3</B> OR A3</PRE></TD><TR>
+<TR valign="top"><TD width="1px" align="right"><B>Description</B></TD><TD>Blah...</TD></TR><TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">NOT <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDA.html#Testing4View-a3_DIV">a3</A> OR A3</PRE></TD><TR>
 <TR valign="top"><TD width="1px" align="right"><B>Ref&nbsp;Columns</B></TD><TD>
-<B style="color:#00AA00;">a3</B><BR>
+<A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDA.html#Testing4View-a3_DIV">a3</A><BR>
 <DIV style="padding-left:10px; font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing2View-a3_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a3</A>
 </DIV>
 <DIV style="padding-left:10px;">Formula column '<B>Not A3</B>'</DIV>
@@ -376,22 +376,6 @@ This View contains the following columns:<BLOCKQUOTE>
     <th align='left' width="400em">Table/View</th> 
     <th align='left' >Column/Formula</th> 
   </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4View_DIV'>Testing4View</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4View-a3_DIV'>a3</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing4View_DIV'>Testing4View</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing4View-a3_DIV'>a3</a></td>
-</tr>
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing2View_DIV'>Testing2View</a></td>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing2View-a3_DIV'>a3</a> -- BOOLEAN</td>
-</tr>
 </table>
 </DIV></DIV>
 <DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing2View-a3_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a3</A></DIV></TD>
@@ -405,15 +389,10 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Formula column '<B>Always True</B>'<TABLE border="1px" style="border-collapse:collapse; border: 1px solid #AAA;" cellspacing="0px" cellpadding="2px" width="98%">
-<TR valign="top"><TD width="1px" align="right"><B>Description</B></TD><TD>Blah...</TD></TR><TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">GREATEST(<B style="color:#00AA00;">lastUpdated</B>, <B style="color:#00AA00;">xxxLastUpdated</B>)</PRE></TD><TR>
+<TR valign="top"><TD width="1px" align="right"><B>Description</B></TD><TD>Blah...</TD></TR><TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">GREATEST(<A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDA.html#Testing4View-lastUpdated_DIV">lastUpdated</A>, xxxLastUpdated)</PRE></TD><TR>
 <TR valign="top"><TD width="1px" align="right"><B>Ref&nbsp;Columns</B></TD><TD>
-<B style="color:#00AA00;">lastUpdated</B><BR>
+<A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDA.html#Testing4View-lastUpdated_DIV">lastUpdated</A><BR>
 <DIV style="padding-left:10px; font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing2View-lastUpdated_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>lastUpdated</A>
-&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing-lastUpdated_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>lastUpdated</A>
-</DIV>
-<DIV style="padding-left:10px;">The timestamp for when the record was last updated. (TILDA.Testing)</DIV>
-<B style="color:#00AA00;">xxxLastUpdated</B><BR>
-<DIV style="padding-left:10px; font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing2View-xxxLastUpdated_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>xxxLastUpdated</A>
 &nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing-lastUpdated_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>lastUpdated</A>
 </DIV>
 <DIV style="padding-left:10px;">The timestamp for when the record was last updated. (TILDA.Testing)</DIV>
@@ -429,43 +408,6 @@ This View contains the following columns:<BLOCKQUOTE>
     <th align='left' width="400em">Table/View</th> 
     <th align='left' >Column/Formula</th> 
   </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4View_DIV'>Testing4View</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing4View-lastUpdated_DIV'>lastUpdated</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing4View_DIV'>Testing4View</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing4View-lastUpdated_DIV'>lastUpdated</a></td>
-</tr>
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing2View_DIV'>Testing2View</a></td>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing2View-lastUpdated_DIV'>lastUpdated</a></td>
-</tr>
-<tr bgcolor="#DFECF8">
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing_DIV'>Testing</a></td>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing-lastUpdated_DIV'>lastUpdated</a> -- DATETIME</td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing4View_DIV'>Testing4View</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing4View-xxxLastUpdated_DIV'>xxxLastUpdated</a></td>
-</tr>
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing2View_DIV'>Testing2View</a></td>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing2View-xxxLastUpdated_DIV'>xxxLastUpdated</a></td>
-</tr>
-<tr bgcolor="#DFECF8">
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing_DIV'>Testing</a></td>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing-lastUpdated_DIV'>lastUpdated</a> -- DATETIME</td>
-</tr>
 </table>
 </DIV></DIV>
 <DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing2View-lastUpdated_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>lastUpdated</A><BR>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing-lastUpdated_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>lastUpdated</A></DIV></TD>
@@ -4859,7 +4801,7 @@ This is the null setter for:<BR>
         }
        catch (java.sql.SQLException E)
         {
-          return tilda.data._Tilda.TILDA__1_0.HandleCatch(C, E, "selected");
+          return C.handleCatch(E, "selected");
         }
        finally
         {

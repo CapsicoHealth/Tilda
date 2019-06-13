@@ -49,9 +49,9 @@ public class SequencePoll extends DBPoll
     throws Exception
       {
         super.init();
-        if (_C.ExecuteDDL("public", "sequences", "CREATE SEQUENCE " + _SequenceName + " minvalue 0;") == false)
+        if (_C.executeDDL("public", "sequences", "CREATE SEQUENCE " + _SequenceName + " minvalue 0;") == false)
           throw new Exception("Cannot create sequence '" + _SequenceName + "'.");
-        if (_C.ExecuteDDL("public", "sequences", "SELECT setval('" + _SequenceName + "', 0);") == false)
+        if (_C.executeDDL("public", "sequences", "SELECT setval('" + _SequenceName + "', 0);") == false)
           throw new Exception("Cannot create sequence '" + _SequenceName + "'.");
         _C.commit();
       }
@@ -60,7 +60,7 @@ public class SequencePoll extends DBPoll
     protected void close()
     throws Exception
       {
-        if (_C.ExecuteDDL("public", "sequences", "DROP SEQUENCE " + _SequenceName + ";") == false)
+        if (_C.executeDDL("public", "sequences", "DROP SEQUENCE " + _SequenceName + ";") == false)
           throw new Exception("Cannot drop sequence '" + _SequenceName + "'.");
         _C.commit();
         _H.close();
@@ -75,7 +75,7 @@ public class SequencePoll extends DBPoll
           {
             ScalarRP RP = new ScalarRP();
             // Gotta to a nextval to cross transaction boundaries, so we are playing a trick here.
-            if (C.ExecuteSelect("public", _SequenceName, "select nextval('" + _SequenceName + "')", RP) <= 0)
+            if (C.executeSelect("public", _SequenceName, "select nextval('" + _SequenceName + "')", RP) <= 0)
               {
                 LOG.debug("Finished sequence polling");
                 return false;

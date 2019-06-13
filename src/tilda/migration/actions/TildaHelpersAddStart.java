@@ -42,7 +42,7 @@ public class TildaHelpersAddStart extends MigrationAction
         LOG.debug(getDescription());
 
         String Str = C.getHelperFunctionsScript(true);
-        if (C.ExecuteDDL(TILDA__KEY_Factory.SCHEMA_LABEL, "*", Str) == false)
+        if (C.executeDDL(TILDA__KEY_Factory.SCHEMA_LABEL, "*", Str) == false)
           return false;
         return true;
       }

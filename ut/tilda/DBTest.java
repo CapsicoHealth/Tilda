@@ -101,7 +101,7 @@ public class DBTest
     private static void TruncateTestingTable(Connection C)
     throws Exception
       {
-        if (C.ExecuteDDL(Testing_Factory.SCHEMA_LABEL, Testing_Factory.TABLENAME_LABEL, "TRUNCATE TABLE " + Testing_Factory.SCHEMA_TABLENAME_LABEL) == false)
+        if (C.executeDDL(Testing_Factory.SCHEMA_LABEL, Testing_Factory.TABLENAME_LABEL, "TRUNCATE TABLE " + Testing_Factory.SCHEMA_TABLENAME_LABEL) == false)
           throw new Exception("Cannot execute...");
       }
 

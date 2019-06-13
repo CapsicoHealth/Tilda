@@ -71,7 +71,7 @@ public class SQLServerTest
           }
         finally
           {
-            JDBCHelper.CloseStatement(S);
+            JDBCHelper.closeStatement(S);
           }
       }
   }

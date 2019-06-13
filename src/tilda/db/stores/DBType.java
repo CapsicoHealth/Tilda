@@ -48,9 +48,10 @@ import tilda.utils.pairs.StringStringPair;
 public interface DBType
   {
     public String  getName();
-    public boolean isErrNoData(String SQLState, int ErrorCode);
+    public boolean isErrNoData(SQLException t);
     public String  getCurrentTimestampStr();
     public boolean isLockOrConnectionError(SQLException t);
+    public boolean isCanceledError(SQLException t);
     public boolean needsSavepoint();
     public boolean supportsArrays();
     public boolean supportsSelectLimit();

@@ -42,7 +42,7 @@ public class JDBCHelper
      * @param s the Statement. Can be null (it will be ignored)
      * @return an SQException (instead of throwing) if one happens.
      */
-    public static SQLException CloseStatement(Statement s)
+    public static SQLException closeStatement(Statement s)
       {
         if (s != null)
           try
@@ -60,13 +60,13 @@ public class JDBCHelper
       }
 
 
-    public static int Process(ResultSet RS, RecordProcessor RP, int Start, boolean Offsetted, int Size, boolean Limited)
+    public static int process(ResultSet RS, RecordProcessor RP, int Start, boolean Offsetted, int Size, boolean Limited)
     throws Exception
       {
-        return Process(RS, RP, Start, Offsetted, Size, Limited, false);
+        return process(RS, RP, Start, Offsetted, Size, Limited, false);
       }
 
-    public static int Process(ResultSet RS, RecordProcessor RP, int Start, boolean Offsetted, int Size, boolean Limited, boolean CountAll)
+    public static int process(ResultSet RS, RecordProcessor RP, int Start, boolean Offsetted, int Size, boolean Limited, boolean CountAll)
     throws Exception
       {
         RP.Start();
@@ -91,7 +91,7 @@ public class JDBCHelper
     /**
      * Executes a query with a record processor, starting at Start (0 is beginning), and for Size records.
      */
-    public static int ExecuteSelect(Connection C, String SchemaName, String TableName, String Query, RecordProcessor RP, int Start, boolean Offsetted, int Size, boolean Limited, boolean CountAll)
+    public static int executeSelect(Connection C, String SchemaName, String TableName, String Query, RecordProcessor RP, int Start, boolean Offsetted, int Size, boolean Limited, boolean CountAll)
     throws Exception
       {
         TableName = SchemaName + "." + TableName;
@@ -103,17 +103,17 @@ public class JDBCHelper
             QueryDetails.setLastQuery(TableName, Query);
             S = C.createStatement();
             ResultSet RS = S.executeQuery(Query);
-            int count = JDBCHelper.Process(RS, RP, Start, Offsetted, Size, Limited, CountAll);
+            int count = JDBCHelper.process(RS, RP, Start, Offsetted, Size, Limited, CountAll);
             PerfTracker.add(TableName, StatementType.SELECT, System.nanoTime() - T0, count);
             return count;
           }
         finally
           {
-            JDBCHelper.CloseStatement(S);
+            JDBCHelper.closeStatement(S);
           }
       }
 
-    public static int ExecuteUpdate(Connection C, String SchemaName, String TableName, String Query)
+    public static int executeUpdate(Connection C, String SchemaName, String TableName, String Query)
     throws Exception
       {
         TableName = SchemaName + "." + TableName;
@@ -130,11 +130,11 @@ public class JDBCHelper
           }
         finally
           {
-            JDBCHelper.CloseStatement(S);
+            JDBCHelper.closeStatement(S);
           }
       }
 
-    public static int ExecuteDelete(Connection C, String SchemaName, String TableName, String Query)
+    public static int executeDelete(Connection C, String SchemaName, String TableName, String Query)
     throws Exception
       {
         TableName = SchemaName + "." + TableName;
@@ -151,11 +151,11 @@ public class JDBCHelper
           }
         finally
           {
-            JDBCHelper.CloseStatement(S);
+            JDBCHelper.closeStatement(S);
           }
       }
 
-    public static boolean ExecuteDDL(Connection C, String SchemaName, String TableName, String Query)
+    public static boolean executeDDL(Connection C, String SchemaName, String TableName, String Query)
     throws Exception
       {
         TableName = SchemaName + "." + TableName;
@@ -174,12 +174,12 @@ public class JDBCHelper
           }
         finally
           {
-            JDBCHelper.CloseStatement(S);
+            JDBCHelper.closeStatement(S);
           }
       }
 
 
-    public static int ExecuteInsert(Connection C, String SchemaName, String TableName, String Query)
+    public static int executeInsert(Connection C, String SchemaName, String TableName, String Query)
     throws Exception
       {
         TableName = SchemaName + "." + TableName;
@@ -196,12 +196,12 @@ public class JDBCHelper
           }
         finally
           {
-            JDBCHelper.CloseStatement(S);
+            JDBCHelper.closeStatement(S);
           }
       }
 
 
-    public static String PrintResultSet(ResultSet RS)
+    public static String printResultSet(ResultSet RS)
     throws SQLException
       {
         int count = RS.getMetaData().getColumnCount();
@@ -215,7 +215,7 @@ public class JDBCHelper
         return Str.toString();
       }
     
-    public static int BatchWriteDone(int[] results, int size)
+    public static int batchWriteDone(int[] results, int size)
     throws Exception
       {
         if(results.length != size)

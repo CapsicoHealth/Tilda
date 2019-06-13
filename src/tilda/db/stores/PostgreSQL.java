@@ -74,9 +74,9 @@ public class PostgreSQL implements DBType
       }
 
     @Override
-    public boolean isErrNoData(String SQLState, int ErrorCode)
+    public boolean isErrNoData(SQLException E)
       {
-        return SQLState.equals("23505");
+        return "23505".equals(E.getSQLState());
       }
 
     @Override
@@ -94,6 +94,25 @@ public class PostgreSQL implements DBType
         return TextUtil.indexOf(E.getMessage().toLowerCase(), _LOCK_CONN_ERROR_SUBSTR);
       }
 
+    /**
+     * Postgres Cancellation codes, from <A href="https://www.postgresql.org/docs/11/errcodes-appendix.html">https://www.postgresql.org/docs/11/errcodes-appendix.html</A>
+     * <P>
+     * <UL><LI><B>57000</B>: operator_intervention.</LI>
+     *     <LI><B>57014</B>: query_canceled.</LI>
+     *     <LI><B>57P01</B>: admin_shutdown.</LI>
+     *     <LI><B>57P02</B>: crash_shutdown.</LI>
+     *     <LI><B>57P03</B>: cannot_connect_now.</LI>
+     *     <LI><B>57P04</B>: database_dropped.</LI>
+     * </UL>
+     */
+    protected static final String[] _CANCEL_SQL_STATES = { "57000", "57014", "57P01", "57P02", "57P03", "57P04" };
+    
+    @Override
+    public boolean isCanceledError(SQLException E)
+      {
+        return TextUtil.indexOf(E.getSQLState(), _CANCEL_SQL_STATES);
+      }
+    
     @Override
     public boolean needsSavepoint()
       {
@@ -188,7 +207,7 @@ public class PostgreSQL implements DBType
         StringWriter Str = new StringWriter();
         PrintWriter Out = new PrintWriter(Str);
         getSQlCodeGen().genFileStart(Out, S);
-        return Con.ExecuteDDL(S.getShortName(), null, Str.toString());
+        return Con.executeDDL(S.getShortName(), null, Str.toString());
       }
 
     @Override
@@ -198,7 +217,7 @@ public class PostgreSQL implements DBType
         StringWriter Str = new StringWriter();
         PrintWriter Out = new PrintWriter(Str);
         Generator.getTableDDL(getSQlCodeGen(), Out, Obj, true, true);
-        return Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Str.toString());
+        return Con.executeDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Str.toString());
       }
 
     @Override
@@ -208,7 +227,7 @@ public class PostgreSQL implements DBType
         StringWriter Str = new StringWriter();
         PrintWriter Out = new PrintWriter(Str);
         Generator.getTableDDL(getSQlCodeGen(), Out, Obj, false, true);
-        return Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Str.toString());
+        return Con.executeDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Str.toString());
       }
 
     @Override
@@ -219,9 +238,9 @@ public class PostgreSQL implements DBType
         Set<View> AncestorRealizedViews = V.getAncestorRealizedViews();
         boolean OK = true;
         if (SubRealizedViews != null || AncestorRealizedViews != null) // View depends on realized views.
-          OK = Con.ExecuteDDL(Sql.getViewSubRealizeSchemaName(), Sql.getViewSubRealizeViewName(V), "DROP VIEW IF EXISTS " + Sql.getViewSubRealizeName(V) + " CASCADE");
+          OK = Con.executeDDL(Sql.getViewSubRealizeSchemaName(), Sql.getViewSubRealizeViewName(V), "DROP VIEW IF EXISTS " + Sql.getViewSubRealizeName(V) + " CASCADE");
 
-        return OK == false ? OK : Con.ExecuteDDL(V._ParentSchema._Name, V.getBaseName(), "DROP VIEW IF EXISTS " + V.getShortName() + " CASCADE");
+        return OK == false ? OK : Con.executeDDL(V._ParentSchema._Name, V.getBaseName(), "DROP VIEW IF EXISTS " + V.getShortName() + " CASCADE");
       }
 
     @Override
@@ -231,7 +250,7 @@ public class PostgreSQL implements DBType
         StringBuilderWriter Str = new StringBuilderWriter();
         PrintWriter Out = new PrintWriter(Str);
         Generator.getViewBaseDDL(getSQlCodeGen(), Out, V);
-        if (Con.ExecuteDDL(V._ParentSchema._Name, V.getBaseName(), Str.toString()) == false)
+        if (Con.executeDDL(V._ParentSchema._Name, V.getBaseName(), Str.toString()) == false)
           return false;
         Out.close();
 
@@ -240,7 +259,7 @@ public class PostgreSQL implements DBType
         Generator.getViewCommentsDDL(getSQlCodeGen(), Out, V);
         if (Str.getBuilder().length() != 0)
           {
-            if (Con.ExecuteDDL(V._ParentSchema._Name, V.getBaseName(), Str.toString()) == false)
+            if (Con.executeDDL(V._ParentSchema._Name, V.getBaseName(), Str.toString()) == false)
               return false;
             Out.close();
           }
@@ -250,7 +269,7 @@ public class PostgreSQL implements DBType
         Generator.getViewMetadataDDL(getSQlCodeGen(), Out, V);
         if (Str.getBuilder().length() != 0)
           {
-            if (Con.ExecuteDDL(V._ParentSchema._Name, V.getBaseName(), Str.toString()) == false)
+            if (Con.executeDDL(V._ParentSchema._Name, V.getBaseName(), Str.toString()) == false)
               return false;
             Out.close();
           }
@@ -266,7 +285,7 @@ public class PostgreSQL implements DBType
           {
             String Q = "SELECT count(*) from " + Col._ParentObject.getShortName();
             ScalarRP RP = new ScalarRP();
-            Con.ExecuteSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, RP);
+            Con.executeSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, RP);
             if (RP.getResult() > 0)
               throw new Exception("Cannot add new 'not null' column '" + Col.getFullName() + "' to a table without a default value. Add a default value in the model, or manually migrate your database.");
           }
@@ -275,7 +294,7 @@ public class PostgreSQL implements DBType
           {
             Q += " not null DEFAULT " + ValueHelper.printValue(Col.getName(), Col.getType(), DefaultValue);
           }
-        if (Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) == false)
+        if (Con.executeDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) == false)
           return false;
 
         return alterTableAlterColumnComment(Con, Col);
@@ -291,7 +310,7 @@ public class PostgreSQL implements DBType
         else
           Q += "SET DEFAULT " + ValueHelper.printValue(Col.getName(), Col.getType(), Col._DefaultCreateValue._Value) + ";";
 
-        return Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
+        return Con.executeDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
       }
 
 
@@ -301,7 +320,7 @@ public class PostgreSQL implements DBType
     throws Exception
       {
         String Q = "COMMENT ON COLUMN " + Col._ParentObject.getShortName() + ".\"" + Col.getName() + "\" IS " + TextUtil.EscapeSingleQuoteForSQL(Col._Description) + ";";
-        return Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
+        return Con.executeDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
       }
 
     @Override
@@ -310,7 +329,7 @@ public class PostgreSQL implements DBType
       {
         String Q = "ALTER TABLE " + Obj.getShortName() + " DROP COLUMN \"" + ColumnName + "\"";
 
-        return Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q);
+        return Con.executeDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q);
       }
 
 
@@ -322,18 +341,18 @@ public class PostgreSQL implements DBType
           {
             String Q = "SELECT count(*) from " + Col._ParentObject.getShortName() + " where \"" + Col.getName() + "\" IS NULL";
             ScalarRP RP = new ScalarRP();
-            Con.ExecuteSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, RP);
+            Con.executeSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, RP);
             if (RP.getResult() > 0)
               {
                 if (DefaultValue == null)
                   throw new Exception("Cannot alter column '" + Col.getFullName() + "' to not null without a default value. Add a default value in the model, or manually migrate your database.");
                 Q = "UPDATE " + Col._ParentObject.getShortName() + " set \"" + Col.getName() + "\" = " + ValueHelper.printValue(Col.getName(), Col.getType(), DefaultValue) + " where \"" + Col.getName() + "\" IS NULL";
-                Con.ExecuteUpdate(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
+                Con.executeUpdate(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
               }
           }
 
         String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName() + "\" " + (Col._Nullable == false ? "SET" : "DROP") + " NOT NULL;";
-        return Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
+        return Con.executeDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
       }
 
     @Override
@@ -373,7 +392,7 @@ public class PostgreSQL implements DBType
           {
             String Q = "SELECT max(length(\"" + Col.getName() + "\")) from " + Col._ParentObject.getShortName();
             ScalarRP RP = new ScalarRP();
-            Con.ExecuteSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, RP);
+            Con.executeSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, RP);
             if (RP.getResult() > Col._Size)
               {
                 Q = "select \"" + Col.getName() + "\" || '  (' || length(\"" + Col.getName() + "\") || ')' as _x from " + Col._ParentObject.getShortName()
@@ -381,7 +400,7 @@ public class PostgreSQL implements DBType
                 + " order by length(\"" + Col.getName() + "\") desc"
                 + " limit 10";
                 StringListRP SLRP = new StringListRP();
-                Con.ExecuteSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, SLRP);
+                Con.executeSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, SLRP);
                 LOG.error("Column sample:");
                 for (String s : SLRP.getResult())
                   LOG.error("   - " + s);
@@ -397,7 +416,7 @@ public class PostgreSQL implements DBType
         // Using = " USING rtrim(\"" + Col.getName() + "\")";
         String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName() + "\" TYPE "
         + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection()) + Using + ";";
-        return Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
+        return Con.executeDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
       }
 
 
@@ -412,7 +431,7 @@ public class PostgreSQL implements DBType
                 String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName()
                 + "\" TYPE " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection())
                 + " USING (trim(\"" + Col.getName() + "\")::" + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection()) + ");";
-                return Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
+                return Con.executeDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
               }
             else if (Col.getType() == ColumnType.DATETIME)
               {
@@ -420,13 +439,13 @@ public class PostgreSQL implements DBType
                 + "\" TYPE " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection())
                 + " USING (trim(\"" + Col.getName() + "\")::" + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection()) + ");";
 
-                if (Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) == false)
+                if (Con.executeDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) == false)
                   return false;
 
                 Col = Col._ParentObject.getColumn(Col.getName() + "TZ");
                 Q = "UPDATE " + Col._ParentObject.getShortName() + " SET \"" + Col.getName() + "\" = 'UTC' WHERE \"" + Col.getName() + "\" IS NULL";
 
-                return Con.ExecuteUpdate(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) >= 0;
+                return Con.executeUpdate(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) >= 0;
               }
           }
 
@@ -446,7 +465,7 @@ public class PostgreSQL implements DBType
 
         String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName()
         + "\" TYPE " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection()) + Using + ";";
-        return Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
+        return Con.executeDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
       }
 
     protected static void PrintFunctionIn(StringBuilder Str, String Type)
@@ -906,7 +925,7 @@ public class PostgreSQL implements DBType
         getFullTableVar(Str, schemaName, tableName);
         if (cascade == true)
           Str.append(" CASCADE");
-        C.ExecuteUpdate(schemaName, tableName, Str.toString());
+        C.executeUpdate(schemaName, tableName, Str.toString());
       }
 
 
@@ -926,7 +945,7 @@ public class PostgreSQL implements DBType
     throws Exception
       {
         String Q = "COMMENT ON TABLE " + Obj.getShortName() + " IS " + TextUtil.EscapeSingleQuoteForSQL(Obj._Description) + ";";
-        return Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q);
+        return Con.executeDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q);
       }
 
     @Override
@@ -936,13 +955,13 @@ public class PostgreSQL implements DBType
         if (oldPK != null)
           {
             String Q = "ALTER TABLE " + Obj.getShortName() + " DROP CONSTRAINT \"" + oldPK._Name + "\";";
-            if (Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q) == false)
+            if (Con.executeDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q) == false)
               return false;
           }
         if (Obj._PrimaryKey != null)
           {
             String Q = "ALTER TABLE " + Obj.getShortName() + " ADD PRIMARY KEY (" + PrintColumnList(Obj._PrimaryKey._ColumnObjs) + ");";
-            return Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q);
+            return Con.executeDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q);
           }
         return true;
       }
@@ -952,7 +971,7 @@ public class PostgreSQL implements DBType
     throws Exception
       {
         String Q = "ALTER TABLE " + Obj.getShortName() + " DROP CONSTRAINT \"" + FK._Name + "\";";
-        return Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q);
+        return Con.executeDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q);
       }
 
     @Override
@@ -962,7 +981,7 @@ public class PostgreSQL implements DBType
         String Q = "ALTER TABLE " + FK._ParentObject.getShortName() + " ADD CONSTRAINT \"" + FK._Name + "\""
         + " FOREIGN KEY (" + PrintColumnList(FK._SrcColumnObjs) + ") REFERENCES " + FK._DestObjectObj._ParentSchema._Name + "." + FK._DestObjectObj._Name
         + " ON DELETE restrict ON UPDATE cascade";
-        return Con.ExecuteDDL(FK._ParentObject._ParentSchema._Name, FK._ParentObject.getBaseName(), Q);
+        return Con.executeDDL(FK._ParentObject._ParentSchema._Name, FK._ParentObject.getBaseName(), Q);
       }
 
     @Override
@@ -972,7 +991,7 @@ public class PostgreSQL implements DBType
         // If the DB Name comes in as all lower case, it's case-insensitive. Otherwise, we have to quote.
         String DropName = IX._Name.equals(IX._Name.toLowerCase()) == false ? "\"" + IX._Name + "\"" : IX._Name;
         String Q = "DROP INDEX " + Obj._ParentSchema._Name + "." + DropName + ";";
-        return Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q);
+        return Con.executeDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q);
       }
 
 
@@ -1016,7 +1035,7 @@ public class PostgreSQL implements DBType
     public boolean alterTableAddIndex(Connection Con, Index IX)
     throws Exception
       {
-        return Con.ExecuteDDL(IX._Parent._ParentSchema._Name, IX._Parent.getBaseName(), alterTableAddIndexDDL(IX));
+        return Con.executeDDL(IX._Parent._ParentSchema._Name, IX._Parent.getBaseName(), alterTableAddIndexDDL(IX));
       }
 
 
@@ -1030,7 +1049,7 @@ public class PostgreSQL implements DBType
 
         String Q = "ALTER INDEX " + Obj._ParentSchema._Name + "." + OldName + " RENAME TO " + NewName + ";";
 
-        return Con.ExecuteDDL(Obj._ParentSchema._Name, Obj._Name, Q);
+        return Con.executeDDL(Obj._ParentSchema._Name, Obj._Name, Q);
       }
 
 
@@ -1089,7 +1108,7 @@ public class PostgreSQL implements DBType
       {
         String Q = "select current_setting('is_superuser');";
         StringRP RP = new StringRP();
-        C.ExecuteSelect("SYSTEM", "CURRENT_SETTING", Q, RP);
+        C.executeSelect("SYSTEM", "CURRENT_SETTING", Q, RP);
         return "on".equals(RP.getResult()) == true;
       }
 

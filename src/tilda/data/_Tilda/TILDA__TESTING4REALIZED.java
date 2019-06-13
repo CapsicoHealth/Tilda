@@ -4817,7 +4817,7 @@ This is the null setter for:<BR>
         }
        catch (java.sql.SQLException E)
         {
-          return tilda.data._Tilda.TILDA__1_0.HandleCatch(C, E, "selected");
+          return C.handleCatch(E, "selected");
         }
        finally
         {

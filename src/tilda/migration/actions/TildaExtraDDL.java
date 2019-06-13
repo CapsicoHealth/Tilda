@@ -53,7 +53,7 @@ public class TildaExtraDDL extends MigrationAction
         if (TextUtil.isNullOrEmpty(Str) == true)
           return true;
 
-        if (C.ExecuteDDL(_SchemaName, "*", Str) == false)
+        if (C.executeDDL(_SchemaName, "*", Str) == false)
           return false;
 
         Maintenance_Data M = Maintenance_Factory.LookupByPrimaryKey("EXTERNAL_DDL", _ResourceName);
