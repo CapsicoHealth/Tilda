@@ -41,9 +41,10 @@ public class ColumnAlterType extends MigrationAction
 
     public boolean process(Connection C)
     throws Exception
-      {
-        return C.alterTableAlterColumnType(_CMeta, _Col, ZoneInfo_Factory.getEnumerationById("UTC"));
+      {       
+        return C.alterTableAlterColumnType(C, _CMeta, _Col, ZoneInfo_Factory.getEnumerationById("UTC"));
       }
+
 
     @Override
     public String getDescription()
