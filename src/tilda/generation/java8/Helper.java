@@ -154,9 +154,9 @@ public class Helper
             Out.println("          C.releaseSavepoint(false);");
           }
         if (Static == true)
-          Out.println("          " + getSupportClassFullName(O._ParentSchema) + ".HandleCatch(C, E, " + TextUtil.EscapeDoubleQuoteWithSlash(OperationDebugStr) + ");");
+          Out.println("          C.handleCatch(E, " + TextUtil.EscapeDoubleQuoteWithSlash(OperationDebugStr) + ");");
         else
-          Out.println("          return " + getSupportClassFullName(O._ParentSchema) + ".HandleCatch(C, E, " + TextUtil.EscapeDoubleQuoteWithSlash(OperationDebugStr) + ");");
+          Out.println("          return C.handleCatch(E, " + TextUtil.EscapeDoubleQuoteWithSlash(OperationDebugStr) + ");");
         boolean Collection = false;
         for (Column C : O._Columns)
           if (C != null && C.isCollection() == true)

@@ -431,4 +431,20 @@ public class IBMDB2 implements DBType
       {
         throw new UnsupportedOperationException();
       }
+
+
+    @Override
+    public String getBackendConnectionId(Connection connection)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+
+    @Override
+    public void cancel(Connection C)
+    throws SQLException
+      {
+        throw new UnsupportedOperationException();
+      }
   }

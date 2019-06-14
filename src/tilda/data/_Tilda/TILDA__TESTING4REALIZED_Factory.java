@@ -832,11 +832,11 @@ This is the column definition for:<BR>
            }
 
 
-          count = JDBCHelper.Process(PS.executeQuery(), RP, Start, true, Size, true);
+          count = JDBCHelper.process(PS.executeQuery(), RP, Start, true, Size, true);
         }
        catch (java.sql.SQLException E)
         {
-          tilda.data._Tilda.TILDA__1_0.HandleCatch(C, E, "selected");
+          C.handleCatch(E, "selected");
         }
        finally
         {

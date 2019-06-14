@@ -37,6 +37,7 @@ public class QueryDetails
     public final String                            _Table;
     public final String                            _Query;
     public boolean                                 _Deadlocked;
+    public boolean                                 _Canceled;
 
     private static final ThreadLocal<QueryDetails> _LastQuery = new ThreadLocal<QueryDetails>();
 
@@ -52,12 +53,25 @@ public class QueryDetails
           LastQuery._Deadlocked = true;
       }
 
+    public static void setLastQueryCanceled()
+      {
+        QueryDetails LastQuery = _LastQuery.get();
+        if (LastQuery != null)
+          LastQuery._Canceled = true;
+      }
+    
     public static boolean isLastQueryDeadlocked()
       {
         QueryDetails LastQuery = _LastQuery.get();
         return LastQuery != null ? LastQuery._Deadlocked : false;
       }
 
+    public static boolean isLastQueryCanceled()
+      {
+        QueryDetails LastQuery = _LastQuery.get();
+        return LastQuery != null ? LastQuery._Canceled : false;
+      }
+    
     public static String getLastQuerySecure()
       {
         QueryDetails LastQuery = _LastQuery.get();
