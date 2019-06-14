@@ -67,9 +67,9 @@ public class MSSQL implements DBType
       }
 
     @Override
-    public boolean isErrNoData(String SQLState, int ErrorCode)
+    public boolean isErrNoData(SQLException E)
       {
-        return SQLState.equals("23000") || ErrorCode == 2601;
+        return E.getSQLState().equals("23000") || E.getErrorCode() == 2601;
       }
 
 
@@ -578,6 +578,12 @@ public class MSSQL implements DBType
     @Override
     public void cancel(Connection C)
     throws SQLException
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public boolean isCanceledError(SQLException t)
       {
         throw new UnsupportedOperationException();
       }
