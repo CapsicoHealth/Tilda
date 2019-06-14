@@ -52,7 +52,7 @@ public abstract class DBPoll implements Runnable
 
     String               _PoolName;
     long                 _PauseMillis;
-    Exception            _E;
+    Throwable            _T;
     protected Connection _C;
 
     /**
@@ -91,10 +91,10 @@ public abstract class DBPoll implements Runnable
             while (_PauseMillis != SystemValues.EVIL_VALUE && doRun(_C, ++count) == true)
               Thread.sleep(_PauseMillis);
           }
-        catch (Exception E)
+        catch (Throwable T)
           {
-            LOG.error("An error occurred in the thread\n", E);
-            _E = E;
+            LOG.error("An error occurred in the thread\n", T);
+            _T = T;
           }
         finally
           {
