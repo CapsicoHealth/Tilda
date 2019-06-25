@@ -61,6 +61,7 @@ public enum ColumnType
     public final String      _SimpleName;
     public final String      _ShortName;
     public final static ColumnType[][]  _CompatibleTypes;
+    public final static ColumnType[][]  _CompatibleDBTypes;
 
     
     static
@@ -68,27 +69,51 @@ public enum ColumnType
         for (ColumnType T : ColumnType.values())
          _PadderTypeNames.track(T.name());
         
-        _CompatibleTypes = new ColumnType[][] 
-         {
-			{STRING, JSON, CHAR, INTEGER, LONG, FLOAT, DOUBLE, BOOLEAN, DATE, DATETIME, BITFIELD}
-		   ,{JSON}
-		   ,{CHAR, STRING}
-		   ,{INTEGER}
-		   ,{LONG, INTEGER}
-		   ,{FLOAT, INTEGER}
-		   ,{DOUBLE, FLOAT, INTEGER, LONG}
-		   ,{BOOLEAN}
-		   ,{DATE}
-		   ,{DATETIME, DATE}
-		   ,{BINARY}
-		   ,{BITFIELD}   		   
-          };
+        _CompatibleTypes = new ColumnType[][]
+          {
+             {STRING, JSON, CHAR, INTEGER, LONG, FLOAT, DOUBLE, BOOLEAN, DATE, DATETIME, BITFIELD}
+            ,{JSON}
+            ,{CHAR, STRING}
+            ,{INTEGER, BOOLEAN}
+            ,{LONG, INTEGER}
+            ,{FLOAT, INTEGER}
+            ,{DOUBLE, FLOAT, INTEGER, LONG}
+            ,{BOOLEAN, DOUBLE, FLOAT, LONG, INTEGER, CHAR, STRING}
+            ,{DATE}
+            ,{DATETIME, DATE}
+            ,{BINARY}
+            ,{BITFIELD}             
+           };
+         
+         _CompatibleDBTypes = new ColumnType[][]
+           {
+              {STRING, JSON, CHAR, INTEGER, LONG, FLOAT, DOUBLE, BOOLEAN, DATE, DATETIME, BITFIELD}
+             ,{JSON, STRING}
+             ,{CHAR, STRING, BOOLEAN}
+             ,{INTEGER, BOOLEAN, STRING, LONG, DOUBLE, FLOAT}
+             ,{LONG, BOOLEAN, STRING, INTEGER, DOUBLE, FLOAT}
+             ,{FLOAT, BOOLEAN, STRING, INTEGER, DOUBLE, LONG}
+             ,{DOUBLE, FLOAT, INTEGER, LONG, BOOLEAN, STRING}
+             ,{BOOLEAN, DOUBLE, FLOAT, LONG, INTEGER, CHAR, STRING}
+             ,{DATE, STRING}
+             ,{DATETIME, DATE, STRING}
+             ,{BINARY}
+             ,{BITFIELD}             
+            };   
+              
         ColumnType[] colsToValidate = new ColumnType[_CompatibleTypes.length];
         for(int i = 0; i < _CompatibleTypes.length; i++)
           {
         	colsToValidate[i] = _CompatibleTypes[i][0];
           }
         ColumnType.validate(colsToValidate);
+        
+        ColumnType[] dbColsToValidate = new ColumnType[_CompatibleDBTypes.length];
+        for(int i = 0; i < _CompatibleDBTypes.length; i++)
+          {
+            dbColsToValidate[i] = _CompatibleDBTypes[i][0];
+          }
+        ColumnType.validate(dbColsToValidate);
         
       }
 
@@ -131,6 +156,23 @@ public enum ColumnType
 		return false;
 	  }
     
+    public boolean isDBCompatible(ColumnType Type) 
+      {
+        if(Type != null)
+          {
+            if(Type == this)
+              return true;
+            
+            for(int i = 0 ; i < _CompatibleDBTypes.length ; i++)
+              if(_CompatibleDBTypes[i][0] == Type)
+                for(int j = 1 ; j < _CompatibleDBTypes[i].length ; j++)
+                  if(_CompatibleDBTypes[i][j] == this)
+                    return true;
+          }
+        
+        return false;
+      }
+    
     public String getCompatibleTypesString(ColumnType Type) 
       { 
     	String compatibleTypes = Type.name();
@@ -141,6 +183,17 @@ public enum ColumnType
   	    
 		return compatibleTypes;
 	  }    
+    
+    public String getCompatibleDBTypesString(ColumnType Type) 
+      { 
+        String compatibleTypes = Type.name();
+        for(int i = 0 ; i < _CompatibleDBTypes.length ; i++)
+            if(_CompatibleDBTypes[i][0] == Type)
+              for(int j = 1 ; j < _CompatibleDBTypes[i].length ; j++)
+                  compatibleTypes += (compatibleTypes.length() > 0 ? ", " + _CompatibleDBTypes[i][j].name() : _CompatibleDBTypes[i][j].name());
+        
+        return compatibleTypes;
+      }  
     
     public static <T> void validate(T[] Enums)
       {

@@ -520,6 +520,20 @@ public class CollectionUtil
         NewA[A.length] = Str;
         return NewA;
       }
+    
+    public static String[] append(String[] A1, String[] A2)
+      {
+        if (TextUtil.isNullOrEmpty(A1) == true)
+          return A2;
+        if (TextUtil.isNullOrEmpty(A2) == true)
+          return A1;
+
+        String[] A = new String[A1.length+A2.length];
+        System.arraycopy(A1, 0, A, 0, A1.length);
+        System.arraycopy(A2, 0, A, A1.length, A2.length);
+        return A;
+      }
+    
 
     public static <T> List<T> append(List<T> L, T[] A)
       {
