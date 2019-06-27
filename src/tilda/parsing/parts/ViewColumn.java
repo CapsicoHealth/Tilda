@@ -47,6 +47,9 @@ public class ViewColumn
 	@SerializedName("sameas"     ) public String         _Sameas_DEPRECATED;
     @SerializedName("sameAs"     ) public String         _SameAs       ;
     @SerializedName("as"         ) public String         _As           ;
+    @SerializedName("expression" ) public String         _Expression   ;
+    @SerializedName("type"       ) public String         _TypeStr      ;
+    @SerializedName("size"       ) public Integer        _Size         ;
     @SerializedName("prefix"     ) public String         _Prefix       ;
     @SerializedName("exclude"    ) public String[]       _Exclude       = new String[] { };
     @SerializedName("block"      ) public String[]       _Block         = new String[] { };
@@ -64,8 +67,6 @@ public class ViewColumn
     /*@formatter:on*/
 
 
-
-
     public ViewColumn()
       {
       }
@@ -81,18 +82,21 @@ public class ViewColumn
      */
 
     public transient View                _ParentView;
-    public transient Column              _SameAsObj;  // The column this ViewColumn matches to, which could be to an object column OR a view column.
-    public transient View                _SameAsView; // If a View column, this is the view from which it came. Otherwise. _SameAsObj._ParentObject is the source object.
+    public transient Column              _SameAsObj;                                    // The column this ViewColumn matches to, which could be to an object column OR a view
+                                                                                        // column.
+    public transient View                _SameAsView;                                   // If a View column, this is the view from which it came. Otherwise.
+                                                                                        // _SameAsObj._ParentObject is the source object.
     public transient JoinType            _Join;
     public transient AggregateType       _Aggregate;
     public transient List<Column>        _OrderByObjs      = new ArrayList<Column>();
     public transient List<OrderType>     _OrderByOrders    = new ArrayList<OrderType>();
+    public transient TypeDef             _Type;
 
     public transient boolean             _FailedValidation = false;
 
     public transient FrameworkColumnType _FCT              = FrameworkColumnType.NONE;
 
-    public transient Column _ProxyCol = null; // The column generated for the proxy object representing the parent view.
+    public transient Column              _ProxyCol         = null;                      // The column generated for the proxy object representing the parent view.
 
     public String getFullName()
       {
@@ -211,6 +215,18 @@ public class ViewColumn
           if (_SameAs.endsWith("*") == true)
             PS.AddError("View Column '" + getFullName() + "' defined an 'exclude' or 'block' attribute but the column is not a .*.");
 
+        // Parsing the extra type information if present.
+        if (_TypeStr != null)
+          {
+            _Type = new TypeDef(_TypeStr, _Size);
+            _Type.Validate(PS, "View Column '"+getFullName()+"'", true, false);
+          }
+        // Checking that type information is only present when expression is specified and vice-versa.
+        if (TextUtil.isNullOrEmpty(_Expression) == false && _Type == null)
+          PS.AddError("View Column '" + getFullName() + "' defined an 'expression' but neglected to specify type information and optionally, size.");
+        if (TextUtil.isNullOrEmpty(_Expression) == true && _Type != null)
+          PS.AddError("View Column '" + getFullName() + "' defined extra type/size information without an 'expression': type and size are for expressions only.");
+        
         return Errs == PS.getErrorCount();
       }
 
@@ -243,8 +259,8 @@ public class ViewColumn
               PS.AddError("View column '" + ColFullName + "' is declaring sameas '" + SameAs + "' resolving to '" + R.getFullName() + "' which cannot be found.");
             else
               {
-                //If the view is realized, it should not have direct dependencies on other realized views since the system can handle automatically these dependencies 
-                if (ParentView._Realize != null && (Col._ParentObject._TildaType==TildaType.REALIZED_VIEW || Col._ParentObject._FST == FrameworkSourcedType.REALIZED))
+                // If the view is realized, it should not have direct dependencies on other realized views since the system can handle automatically these dependencies
+                if (ParentView._Realize != null && (Col._ParentObject._TildaType == TildaType.REALIZED_VIEW || Col._ParentObject._FST == FrameworkSourcedType.REALIZED))
                   PS.AddError("View column '" + ColFullName + "' is declaring sameas '" + SameAs + "' resolving to a realized view '" + R.getFullObjectName() + "', which is not allowed. Refills automatically handle this.");
                 else
                   return Col;
@@ -308,6 +324,7 @@ public class ViewColumn
 
     /**
      * returns a comma-separated string containing the <B>unescaped</B> column short names
+     * 
      * @param L
      * @return
      */
