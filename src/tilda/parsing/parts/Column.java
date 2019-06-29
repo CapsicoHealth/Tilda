@@ -552,6 +552,10 @@ public class Column extends TypeDef
         return N;
       }
 
+    /**
+     * A column needs an extra timezone support column if it is of type DATETIME and was not framework-generated (e.g., created, lastUpdated...) 
+     * @return
+     */
     public boolean needsTZ()
       {
         return getType() == ColumnType.DATETIME && _FCT == FrameworkColumnType.NONE;

@@ -335,4 +335,17 @@ public class ViewColumn
           Str.append(Str.length() == 0 ? "" : ", ").append(VC.getShortName());
         return Str.toString();
       }
+
+    /**
+     * A view column of type 'DATETIME' needs an extra timezone support field if the underlying column needs one, and the 
+     * view column is not an aggregate, and does not have an expression unless it's of type datetime.
+     * @return
+     */
+    public boolean needsTZ()
+      {
+        return (_SameAsObj == null || _SameAsObj.needsTZ() == true)
+            && _Aggregate == null
+            && (TextUtil.isNullOrEmpty(_Expression) == true || _Type._Type == ColumnType.DATETIME)
+            ;
+      }
   }
