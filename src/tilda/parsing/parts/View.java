@@ -246,10 +246,7 @@ public class View extends Base
               {
                 PS.AddError("Column '" + VC.getFullName() + "' is defining a join type: columns of the first referenced table are considered part of the 'from' clause of a view and cannot define a join type.");
               }
-            
-            if (VC._Name.equals("episodeYear") == true)
-              LOG.debug("XXX");
-            
+
             // For DATETIME columns, we add an extra column to maintain the timezone.
             // The column must need such a timezone and not be an aggregate, and not have an expression unless it's of type datetime.
             if (VC.needsTZ() == true)
@@ -526,9 +523,6 @@ public class View extends Base
         O._OutputMaps = _OutputMaps;
         O._LCStr = ObjectLifecycle.READONLY.name();
         O._OCC = _OCC;
-
-        if (O._Name.equals("StatsClaim_View") == true)
-          LOG.debug("XXXXX");
 
         // LOG.debug(getFullName()+": "+TextUtil.Print(getColumnNames()));
         int Counter = -1;
