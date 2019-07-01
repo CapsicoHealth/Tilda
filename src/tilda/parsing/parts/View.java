@@ -246,10 +246,10 @@ public class View extends Base
               {
                 PS.AddError("Column '" + VC.getFullName() + "' is defining a join type: columns of the first referenced table are considered part of the 'from' clause of a view and cannot define a join type.");
               }
-            
+
             // For DATETIME columns, we add an extra column to maintain the timezone.
             // The column must need such a timezone and not be an aggregate, and not have an expression unless it's of type datetime.
-            if (VC._SameAsObj.needsTZ() == true && VC._Aggregate == null && (TextUtil.isNullOrEmpty(VC._Expression) == true || VC._Type._Type == ColumnType.DATETIME))
+            if (VC.needsTZ() == true)
               {
                 ViewColumn TZCol = new ViewColumn();
                 TZCol._SameAs = VC._SameAs + "TZ";

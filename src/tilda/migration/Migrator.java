@@ -343,7 +343,7 @@ public class Migrator
                           {
                             // Are the to/from types compatible?
                             if (Col.getType().isDBCompatible(CMeta._TildaType) == false)
-                              throw new Exception("Type incompatbility requested for an alter column: cannot alter from " + CMeta._TildaType + " to " + Col.getType() + ".");
+                              throw new Exception("Type incompatbility requested for an alter column "+Col.getShortName()+": cannot alter from " + CMeta._TildaType + " to " + Col.getType() + ".");
 
                             CAM.addColumnAlterType(CMeta, Col);
                             NeedsDdlDependencyManagement = true;
