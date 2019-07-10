@@ -25,12 +25,12 @@ public abstract class SimpleRunnable implements Runnable
   {
     protected static final Logger LOG = LogManager.getLogger(SimpleRunnable.class);
 
-    public SimpleRunnable(String Name)
+    public SimpleRunnable(String TaskName)
       {
-        _Name = Name;
+        _TaskName = TaskName;
       }
 
-    String   _Name;
+    String   _TaskName;
     Executor _Executor;
     long     _taskTimeNano = 0;
 
@@ -43,7 +43,7 @@ public abstract class SimpleRunnable implements Runnable
             doRun();
             _taskTimeNano = System.nanoTime() - T0;
             LOG.debug("\n\n*******************************************************************************************\n"
-            + "** Task " + _Name + " ran in " + DurationUtil.PrintDuration(_taskTimeNano) + ".\n"
+            + "** Task " + _TaskName + " ran in " + DurationUtil.PrintDuration(_taskTimeNano) + ".\n"
             + "*******************************************************************************************\n\n");
           }
         catch (Exception E)

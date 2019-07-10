@@ -53,7 +53,7 @@ public class Executor
     throws Exception
       {
         if (R._Executor != null)
-          throw new Exception("Runnable " + R._Name + " is already fregistered to an Orchestrator.");
+          throw new Exception("Runnable " + R._TaskName + " is already fregistered to an Orchestrator.");
         synchronized (_Runnables)
           {
             _Runnables.add(R);

@@ -63,7 +63,7 @@ import tilda.utils.LogUtil;
 import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
 import tilda.utils.concurrent.Executor;
-import tilda.utils.concurrent.SimpleRunnable;
+import tilda.utils.concurrent.SimpleRunnableDB;
 
 
 public class ConnectionPool
@@ -459,25 +459,24 @@ public class ConnectionPool
       }
 
 
-    protected static class SchemaRunnable extends SimpleRunnable
+    protected static class SchemaRunnable extends SimpleRunnableDB
       {
-        public SchemaRunnable(Connection C, DatabaseMeta DBMeta, String SchemaPattern)
+        public SchemaRunnable(String PoolId, DatabaseMeta DBMeta, String SchemaPattern)
           {
-            super("DBMETA " + SchemaPattern);
-            _C = C;
+            super("DBMETA " + SchemaPattern, PoolId);
             _DBMeta = DBMeta;
             _SchemaPattern = SchemaPattern;
           }
 
-        protected Connection   _C;
         protected DatabaseMeta _DBMeta;
         protected String       _SchemaPattern;
 
         @Override
-        public void doRun()
+        public void doRun(Connection C)
         throws Exception
           {
-            _DBMeta.load(_C, _SchemaPattern);
+            LOG.debug("   " + _SchemaPattern);
+            _DBMeta.load(C, _SchemaPattern);
           }
       }
 
@@ -485,17 +484,15 @@ public class ConnectionPool
     throws Exception
       {
         DatabaseMeta DBMeta = new DatabaseMeta();
-        LOG.info("Loading database metadata for found Schemas from " + C.getPoolName() + ".");
+        int MaxCores = C.getMaxCores();
+        MaxCores = MaxCores < 4 ? 4 : MaxCores / 2 > 8 ? 8 : MaxCores / 2;
+        LOG.info("Loading database metadata for found Schemas from " + C.getPoolName() + " using " + MaxCores + " threads.");
         long T0 = System.nanoTime();
-        // LDH-Note: Something not right here... Parallelizing this takes 7x longer... Something inside is blocking.
-//        Executor O = new Executor(C.getMaxCores());
+        Executor O = new Executor(1);
         for (Schema S : TildaList)
-          {
-            LOG.debug("  " + S._Name);
-            DBMeta.load(C, S._Name);
-//            O.addRunnable(new SchemaRunnable(C, DBMeta, S._Name));
-          }
-/*
+          O.addRunnable(new SchemaRunnable(C.getPoolId(), DBMeta, S._Name));
+
+        String toto = ConnectionPool.getDBDetails(C.getPoolId());
         List<Exception> Exceptions = O.run();
         if (Exceptions.isEmpty() == false)
           {
@@ -506,8 +503,8 @@ public class ConnectionPool
           }
         else
           LOG.info("COMPLETED SUCCESSFULLY");
-*/
-        LOG.debug("Loaded "+TildaList.size()+" schemas in "+DurationUtil.PrintDuration(System.nanoTime()-T0));
+
+        LOG.debug("Loaded " + TildaList.size() + " schemas in " + DurationUtil.PrintDuration(System.nanoTime() - T0));
         return DBMeta;
       }
 
@@ -564,9 +561,9 @@ public class ConnectionPool
           {
             LOG.warn("\n\n\n");
             LOG.warn("*******************************************************************************************************************************************************");
-            LOG.warn("*** There were "+WarningList.size()+" important warning(s) while loading Tilda resources:");
+            LOG.warn("*** There were " + WarningList.size() + " important warning(s) while loading Tilda resources:");
             for (int i = 0; i < WarningList.size(); ++i)
-              LOG.warn("***    "+(i+1)+" - "+WarningList.get(i));
+              LOG.warn("***    " + (i + 1) + " - " + WarningList.get(i));
             LOG.warn("*******************************************************************************************************************************************************\n\n\n");
           }
 
