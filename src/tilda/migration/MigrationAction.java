@@ -16,11 +16,16 @@
 
 package tilda.migration;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import tilda.db.Connection;
 import tilda.db.metadata.DatabaseMeta;
+import tilda.utils.pairs.ColMetaColPair;
 
 public abstract class MigrationAction
   {
+
     protected MigrationAction(String SchemaName, String TableViewName, boolean isDependencyAction)
       {
         _isDependencyAction = isDependencyAction;
@@ -31,7 +36,7 @@ public abstract class MigrationAction
     protected final String  _SchemaName;
     protected final String  _TableViewName;
     protected final boolean _isDependencyAction;
-
+    
     public abstract boolean process(Connection C)
     throws Exception;
 

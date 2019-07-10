@@ -100,6 +100,20 @@ public class View extends Base
         return null;
       }
 
+    public Column getProxyColumn(String name)
+      {
+        for (Formula F : _Formulas)
+          if (F != null && F._Name != null && F._Name.equalsIgnoreCase(name) == true)
+            return F._ProxyCol;
+        for (ViewColumn VC : _ViewColumns)
+          if (VC != null && VC._Name != null && VC._Name.equalsIgnoreCase(name) == true)
+            return VC._ProxyCol;
+        for (Column C : _PivotColumns)
+          if (C != null && C._Name != null && C._Name.equalsIgnoreCase(name) == true)
+            return C;
+        return null;
+      }
+    
     @Override
     public String[] getColumnNames()
       {
@@ -232,10 +246,10 @@ public class View extends Base
               {
                 PS.AddError("Column '" + VC.getFullName() + "' is defining a join type: columns of the first referenced table are considered part of the 'from' clause of a view and cannot define a join type.");
               }
-            // if (_Name.equals("Testing3View") == true)
-            // LOG.debug("xxx");
+
             // For DATETIME columns, we add an extra column to maintain the timezone.
-            if (VC._SameAsObj.needsTZ() == true && VC._Aggregate == null) // must need TZ and not be an aggregate column
+            // The column must need such a timezone and not be an aggregate, and not have an expression unless it's of type datetime.
+            if (VC.needsTZ() == true)
               {
                 ViewColumn TZCol = new ViewColumn();
                 TZCol._SameAs = VC._SameAs + "TZ";
@@ -528,7 +542,9 @@ public class View extends Base
             )
               {
                 // LOG.debug(" --> "+VC._Name +" SELECTED ");
-                O._Columns.add(new ViewColumnWrapper(VC._SameAsObj, VC, ++Counter));
+                Column C = new ViewColumnWrapper(VC._SameAsObj, VC, ++Counter);
+                O._Columns.add(C);
+                VC._ProxyCol = C;
               }
             // else
             // LOG.debug(" --> "+VC._Name +" IGNORED ");
@@ -542,6 +558,9 @@ public class View extends Base
             O._Columns.add(C);
           }
 
+        // LOG.debug(O._Name+": "+TextUtil.Print(O.getColumnNames()));
+        genPivotColumns(PS, O);
+        
         if (_ImportFormulas != null)
           for (String s : _ImportFormulas)
             {
@@ -605,11 +624,9 @@ public class View extends Base
                     else if (F._FormulaTemplate == true)
                       C._FCT = FrameworkColumnType.FORMULA_TEMPLATE;
                     O._Columns.add(C);
+                    F._ProxyCol = C;
                   }
               }
-
-        // LOG.debug(O._Name+": "+TextUtil.Print(O.getColumnNames()));
-        genPivotColumns(PS, O);
 
         PrepRegexes();
 

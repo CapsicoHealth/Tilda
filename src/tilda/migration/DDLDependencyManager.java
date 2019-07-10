@@ -89,7 +89,7 @@ public class DDLDependencyManager
         StringBuilder Str = new StringBuilder();
         for (DependencyDDLDummyTable_Data S : _Scripts)
           Str.append("\nDROP VIEW " + S.getDepSchemaName() + "." + S.getDepViewName() + ";");
-        if (C.ExecuteDDL(_SchemaName, _TableViewName, Str.toString()) == false)
+        if (C.executeDDL(_SchemaName, _TableViewName, Str.toString()) == false)
           throw new Exception("Database error dropping views dependent on " + _SchemaName + "." + _TableViewName + ".");
       }
 
@@ -105,7 +105,7 @@ public class DDLDependencyManager
         while (I.hasNext() == true)
           {
             DependencyDDLDummyTable_Data S = I.next();
-            if (C.ExecuteDDL(S.getDepSchemaName(), S.getDepViewName(), S.getRestoreScript()) == false)
+            if (C.executeDDL(S.getDepSchemaName(), S.getDepViewName(), S.getRestoreScript()) == false)
               throw new Exception("Database error restoring view " + S.getDepSchemaName() + "." + S.getDepViewName() + " that was dependent on " + _SchemaName + "." + _TableViewName + ".");
           }
       }

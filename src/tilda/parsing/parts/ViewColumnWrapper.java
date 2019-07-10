@@ -56,6 +56,14 @@ public class ViewColumnWrapper extends Column
                 _TypeStr = SameAsCol._Type == ColumnType.INTEGER ? ColumnType.LONG.name() : ColumnType.DOUBLE.name();
               }
           }
+        else if (TextUtil.isNullOrEmpty(VCol._Expression) == false)
+          {
+            _TypeStr = VCol._Type._Type.name()+(SameAsCol.isCollection()==true?"[]":"");
+            _Size = VCol._Type._Size;
+            _SameAs=null;            
+            _SameAs__DEPRECATED=null;            
+            _SameAsObj=null;            
+          }
         _VCol = VCol;
       }
 
@@ -78,11 +86,30 @@ public class ViewColumnWrapper extends Column
       {
         return _VCol.getName();
       }
-/*    
+
+    /**
+     * Overrides the Column's method and defers to the ViewColumn implementation.
+     */
     @Override
-    public boolean isOCCGenerated()
-    {
-      return _VCol._SameAsObj == null ? super.isOCCGenerated() : _VCol._SameAsObj.isOCCGenerated();
-    }
-*/
+    public boolean needsTZ()
+      {
+        return _VCol.needsTZ();
+      }
+
+    @Override
+    public ColumnType getType()
+      {
+        if (_VCol._Aggregate != null)
+         return _VCol.getAggregateType();
+        if (TextUtil.isNullOrEmpty(_VCol._Expression) == false)
+         return _VCol._Type._Type;
+        return super.getType();
+      }
+    /*
+     * @Override
+     * public boolean isOCCGenerated()
+     * {
+     * return _VCol._SameAsObj == null ? super.isOCCGenerated() : _VCol._SameAsObj.isOCCGenerated();
+     * }
+     */
   }

@@ -41,6 +41,6 @@ public class DeleteQuery extends QueryHelper
     public int execute()
       throws Exception
       {
-        return _C.ExecuteUpdate(_SchemaName, _TableName, _QueryStr.toString());
+        return _C.executeUpdate(_SchemaName, _TableName, _QueryStr.toString());
       }
   }

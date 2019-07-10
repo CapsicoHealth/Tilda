@@ -24,6 +24,7 @@ import java.sql.SQLException;
 import java.sql.Savepoint;
 import java.sql.Statement;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Deque;
 import java.util.List;
@@ -57,6 +58,7 @@ import tilda.utils.AnsiUtil;
 import tilda.utils.CollectionUtil;
 import tilda.utils.DurationUtil.IntervalEnum;
 import tilda.utils.SystemValues;
+import tilda.utils.pairs.ColMetaColPair;
 import tilda.utils.pairs.StringStringPair;
 
 
@@ -194,7 +196,7 @@ public final class Connection
      * @return an SQException (instead of throwing) if one happens.
      * @throws SQLException
      */
-    public final void CommitRollbackConnection(boolean Commit)
+    public final void commitRollbackConnection(boolean Commit)
     throws SQLException
       {
         if (Commit == true)
@@ -277,20 +279,32 @@ public final class Connection
         return _C.prepareStatement(Q);
       }
 
-    public boolean isErrNoData(String SQLState, int ErrorCode)
-    throws SQLException
-      {
-        return _DB.isErrNoData(SQLState, ErrorCode);
-      }
-
     public String getCurrentTimestampStr()
     throws SQLException
       {
         return _DB.getCurrentTimestampStr();
       }
 
+
+    public boolean isErrNoData(Throwable T)
+    throws SQLException
+      {
+        return isSQLExcception(T) == false ? false: _DB.isErrNoData((SQLException) T);
+      }
+
     public boolean isLockOrConnectionError(Throwable T)
     throws SQLException
+      {
+        return isSQLExcception(T) == false ? false: _DB.isLockOrConnectionError((SQLException) T);
+      }
+
+    public boolean isCanceledError(Throwable T)
+    throws SQLException
+      {
+        return isSQLExcception(T) == false ? false: _DB.isCanceledError((SQLException) T);
+      }
+
+    private boolean isSQLExcception(Throwable T)
       {
         if (T == null)
           return false;
@@ -305,57 +319,64 @@ public final class Connection
         if (T.getMessage() == null)
           return false;
 
-        return _DB.isLockOrConnectionError((SQLException) T);
+        return true;
       }
-
-
-    public int ExecuteSelect(String SchemaName, String TableName, String Query, RecordProcessor RP)
+    
+    public int executeSelect(String SchemaName, String TableName, String Query, RecordProcessor RP)
     throws Exception
       {
-        return JDBCHelper.ExecuteSelect(_C, SchemaName, TableName, Query, RP);
-      }
-
-    /**
-     * Executes a query with a record processor, starting at Start (0 is beginning), and for Size records.
-     */
-    public int ExecuteSelect(String SchemaName, String TableName, String Query, RecordProcessor RP, int Start, boolean Offsetted, int Size, boolean Limited)
-    throws Exception
-      {
-        return ExecuteSelect(SchemaName, TableName, Query, RP, Start, Offsetted, Size, Limited, false);
+        return executeSelect(SchemaName, TableName, Query, RP, 0, false, -1, false, false);
       }
 
     /**
      * Executes a query with a record processor, starting at Start (0 is beginning), and for Size records.
      */
-    public int ExecuteSelect(String SchemaName, String TableName, String Query, RecordProcessor RP, int Start, boolean Offsetted, int Size, boolean Limited, boolean CountAll)
+    public int executeSelect(String SchemaName, String TableName, String Query, RecordProcessor RP, int Start, boolean Offsetted, int Size, boolean Limited)
     throws Exception
       {
-        return JDBCHelper.ExecuteSelect(_C, SchemaName, TableName, Query, RP, Start, Offsetted, Size, Limited, CountAll);
+        return executeSelect(SchemaName, TableName, Query, RP, Start, Offsetted, Size, Limited, false);
+      }
+
+    /**
+     * Executes a query with a record processor, starting at Start (0 is beginning), and for Size records.
+     */
+    public int executeSelect(String SchemaName, String TableName, String Query, RecordProcessor RP, int Start, boolean Offsetted, int Size, boolean Limited, boolean CountAll)
+    throws Exception
+      {
+        try
+          {
+            return JDBCHelper.executeSelect(_C, SchemaName, TableName, Query, RP, Start, Offsetted, Size, Limited, CountAll);
+          }
+        catch (SQLException E)
+          {
+            handleCatch(E, "selected");
+            throw E;
+          }
       }
 
 
-    public int ExecuteUpdate(String SchemaName, String TableName, String Query)
+    public int executeUpdate(String SchemaName, String TableName, String Query)
     throws Exception
       {
-        return JDBCHelper.ExecuteUpdate(_C, SchemaName, TableName, Query);
+        return JDBCHelper.executeUpdate(_C, SchemaName, TableName, Query);
       }
 
-    public int ExecuteInsert(String SchemaName, String TableName, String Query)
+    public int executeInsert(String SchemaName, String TableName, String Query)
     throws Exception
       {
-        return JDBCHelper.ExecuteInsert(_C, SchemaName, TableName, Query);
+        return JDBCHelper.executeInsert(_C, SchemaName, TableName, Query);
       }
 
-    public int ExecuteDelete(String SchemaName, String TableName, String Query)
+    public int executeDelete(String SchemaName, String TableName, String Query)
     throws Exception
       {
-        return JDBCHelper.ExecuteDelete(_C, SchemaName, TableName, Query);
+        return JDBCHelper.executeDelete(_C, SchemaName, TableName, Query);
       }
 
-    public boolean ExecuteDDL(String SchemaName, String TableName, String Query)
+    public boolean executeDDL(String SchemaName, String TableName, String Query)
     throws Exception
       {
-        return JDBCHelper.ExecuteDDL(_C, SchemaName, TableName, Query);
+        return JDBCHelper.executeDDL(_C, SchemaName, TableName, Query);
       }
 
     public Array createArrayOf(String TypeName, java.lang.Object[] A)
@@ -493,10 +514,16 @@ public final class Connection
         return _DB.alterTableAlterColumnStringSize(this, ColMeta, Col);
       }
 
-    public boolean alterTableAlterColumnType(ColumnMeta ColMeta, Column Col, ZoneInfo_Data defaultZI)
+    public boolean alterTableAlterColumnType(Connection Con, ColumnMeta ColMeta, Column Col, ZoneInfo_Data defaultZI)
     throws Exception
       {
         return _DB.alterTableAlterColumnType(this, ColMeta, Col, defaultZI);
+      }
+    
+    public boolean alterTableAlterColumnMulti(List<ColMetaColPair> BatchTypeCols, List<ColMetaColPair> BatchSizeCols, ZoneInfo_Data defaultZI)
+    throws Exception
+      {
+        return _DB.alterTableAlterColumnMulti(this, BatchTypeCols, BatchSizeCols, defaultZI);
       }
 
     public String getHelperFunctionsScript(boolean Start)
@@ -610,18 +637,20 @@ public final class Connection
       }
 
 
-    public boolean HandleCatch(java.sql.SQLException E, String OperationDebugStr)
+    public boolean handleCatch(java.sql.SQLException E, String OperationDebugStr)
     throws java.sql.SQLException
       {
         if (isLockOrConnectionError(E) == true)
           QueryDetails.setLastQueryDeadlocked();
+        else if (isCanceledError(E) == true)
+          QueryDetails.setLastQueryCanceled();
         else if (E.getSQLState() == null)
           {
             LOG.warn("JDBC Error: No row " + OperationDebugStr + ": SQLState is null, ErrorCode=" + E.getErrorCode());
             LOG.warn("JDBC Message: " + E.getMessage());
             return false;
           }
-        else if (isErrNoData(E.getSQLState(), E.getErrorCode()) == true)
+        else if (isErrNoData(E) == true)
           {
             LOG.warn("JDBC Error: No row " + OperationDebugStr + ": SQLState=" + E.getSQLState() + ", ErrorCode=" + E.getErrorCode());
             LOG.warn("JDBC Message: " + E.getMessage());
@@ -683,6 +712,18 @@ public final class Connection
     public int getMaxCores() throws Exception
       {
         return _DB.getMaxCores(this);
+      }
+
+    public String getBackendId()
+    throws Exception
+      {
+        return _DB.getBackendConnectionId(this);
+      }
+
+    public void cancel()
+    throws Exception
+      {
+        _DB.cancel(this);
       }
 
   }

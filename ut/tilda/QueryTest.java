@@ -68,7 +68,7 @@ public class QueryTest extends Key_Factory
             Q.append(" set ").append(COLS.MAX).append("=").append(COLS.MAX).append("+").append(COLS.COUNT)
              .append(" where ").append(COLS.REFNUM).append("=").append(K.getRefnum())
              ;            
-            C.ExecuteUpdate(Key_Factory.SCHEMA_LABEL, Key_Factory.TABLENAME_LABEL, Q.toString());
+            C.executeUpdate(Key_Factory.SCHEMA_LABEL, Key_Factory.TABLENAME_LABEL, Q.toString());
 
             C.rollback();
           }

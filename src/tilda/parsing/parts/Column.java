@@ -133,16 +133,28 @@ public class Column extends TypeDef
         // _Values = ColumnValue.deepCopy(Values);
       }
 
+    /**
+     * Gets the full Tilda name of the column, which includes the package name
+     * @return The full Tilda name of the column, i.e., Package.Schema.Table.Column
+     */
     public String getFullName()
       {
         return _ParentObject.getFullName() + "." + _Name;
       }
 
+    /**
+     * Gets the full SQL name of the column, i.e., Schema.Table.Column
+     * @return the full SQL name of the column, i.e., Schema.Table.Column
+     */
     public String getShortName()
       {
         return _ParentObject.getShortName() + "." + _Name;
       }
 
+    /**
+     * Gets the name of the column.
+     * @return The name of the column
+     */
     public String getName()
       {
         return _Name;
@@ -552,6 +564,10 @@ public class Column extends TypeDef
         return N;
       }
 
+    /**
+     * A column needs an extra timezone support column if it is of type DATETIME and was not framework-generated (e.g., created, lastUpdated...) 
+     * @return
+     */
     public boolean needsTZ()
       {
         return getType() == ColumnType.DATETIME && _FCT == FrameworkColumnType.NONE;

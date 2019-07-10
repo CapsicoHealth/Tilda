@@ -26,7 +26,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.util.StringBuilderWriter;
 
-import tilda.db.Connection;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.enums.FrameworkSourcedType;
@@ -314,7 +313,7 @@ public class TildaFactory implements CodeGenTildaFactory
           Out.println("          int i = 0;");
         Out.println(SBW.getBuilder().toString());
         Out.println();
-        Out.println("          count = JDBCHelper.Process(PS.executeQuery(), RP, Start, " + G.getSql().supportsSelectOffset() + ", Size, " + G.getSql().supportsSelectOffset() + ");");
+        Out.println("          count = JDBCHelper.process(PS.executeQuery(), RP, Start, " + G.getSql().supportsSelectOffset() + ", Size, " + G.getSql().supportsSelectOffset() + ");");
         Out.println("        }");
         Helper.CatchFinallyBlock(Out, O, "selected", "StatementType.SELECT", false, true);
         Out.println();
@@ -959,7 +958,7 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("               if (index != 0 && (index + 1) % batchSize == 0)");
         Out.println("                 {");
         Out.println("                   int[] results = PS.executeBatch();");
-        Out.println("                   int failedRec = JDBCHelper.BatchWriteDone(results, batchSize);");
+        Out.println("                   int failedRec = JDBCHelper.batchWriteDone(results, batchSize);");
         Out.println("                   if (failedRec != -1)");
         Out.println("                     {");
         Out.println("                       LOG.debug(QueryDetails._LOGGING_HEADER + \"A batch of " + Helper.getFullAppDataClassName(O) + " objects between positions #\" + batchStart + \" and #\" + index + \" failed being written to the database.\");");
@@ -983,7 +982,7 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("           if (index != 0 && (index + 1) % batchSize != 0)");
         Out.println("             {");
         Out.println("               int[] results = PS.executeBatch();");
-        Out.println("               int failedRec = JDBCHelper.BatchWriteDone(results, L.size() - insertCount);");
+        Out.println("               int failedRec = JDBCHelper.batchWriteDone(results, L.size() - insertCount);");
         Out.println("               if (failedRec != -1)");
         Out.println("                 {");
         Out.println("                   LOG.debug(QueryDetails._LOGGING_HEADER + \"A batch of '" + O.getAppDataClassName() + "' objects ending at position #\" + index + \" failed being written to the database.\");");
@@ -1009,7 +1008,7 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("       catch (java.sql.SQLException E)");
         Out.println("         {");
         Out.println("           C.releaseSavepoint(false);");
-        Out.println("           TILDA__1_0.HandleCatch(C, E, \"updated or inserted\");");
+        Out.println("           C.handleCatch(E, \"updated or inserted\");");
         Out.println("           return 1;");
         Out.println("         }");
         Out.println("       finally");

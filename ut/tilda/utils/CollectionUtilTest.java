@@ -32,11 +32,19 @@ public class CollectionUtilTest
 
     public static void main(String[] args)
       {
-        Test3ListToArray();
-        Test3SetToArray();
-        Test3ArrayToListAndSet();
-        Test1();
-        Test2();
+        TestArrayAppent();
+//        Test3ListToArray();
+//        Test3SetToArray();
+//        Test3ArrayToListAndSet();
+//        Test1();
+//        Test2();
+      }
+
+    private static void TestArrayAppent()
+      {
+        String[] A1 = {null,"aaaaa","bbbbbb","cccccc","ddddddd", null};
+        String[] A2 = {"11111","22222","33333", null};
+        LOG.debug(TextUtil.Print(CollectionUtil.append(A1, A2)));
       }
 
     private static void Test1()

@@ -28,7 +28,6 @@ import tilda.generation.interfaces.CodeGenTildaSupport;
 import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
-import tilda.utils.DateTimeUtil;
 import tilda.utils.SystemValues;
 
 public class TildaSupport implements CodeGenTildaSupport
@@ -65,7 +64,8 @@ public class TildaSupport implements CodeGenTildaSupport
         Out.println(Helper.getMultiLineDocCommentStart()
         + " @author    Tilda code gen for " + Helper.getCodeGenLanguage() + "/" + G.getSql().getName() + SystemValues.NEWLINE
         + "    @version   Tilda 1.0" + SystemValues.NEWLINE
-        + "    @generated " + DateTimeUtil.printDateTimeFriendly(SystemValues.STARTUP_DATE, true, true) + SystemValues.NEWLINE
+// LDH-NOTE: @generated doesn't seem to be working properly with JavaDocs. Can't figure it out for now.
+//        + "    @generated " + DateTimeUtil.printDateTimeFriendly(SystemValues.STARTUP_DATE, true, true) + SystemValues.NEWLINE
         + Helper.getMultiLineCommentEnd()
         );
         Out.println("public final class TILDA__" + Generator.TILDA_VERSION_VAROK);
@@ -77,27 +77,6 @@ public class TildaSupport implements CodeGenTildaSupport
       {
         Out.println("   protected static final String _COMMAQUESTION            =TextUtil.Identity(\",?\");");
         Out.println("   protected static final String _EQUALQUESTION            =TextUtil.Identity(\"=?\");");
-        Out.println();
-        Out.println("   protected static boolean HandleCatch(Connection C, java.sql.SQLException E, String OperationDebugStr) throws java.sql.SQLException");
-        Out.println("     {");
-        Out.println("       if (C.isLockOrConnectionError(E) == true)");
-        Out.println("        QueryDetails.setLastQueryDeadlocked();");
-        Out.println("       else if (E.getSQLState() == null)");
-        Out.println("        {");
-        Out.println("          LOG.warn(\"JDBC Error: No row \"+OperationDebugStr+\": SQLState is null, ErrorCode=\"+E.getErrorCode());");
-        Out.println("          LOG.warn(\"JDBC Message: \"+E.getMessage());");
-        Out.println("          return false;");
-        Out.println("        }");
-        Out.println("       else if (C.isErrNoData(E.getSQLState(), E.getErrorCode()) == true)");
-        Out.println("        {");
-        Out.println("          LOG.warn(\"JDBC Error: No row \"+OperationDebugStr+\": SQLState=\"+E.getSQLState()+\", ErrorCode=\"+E.getErrorCode());");
-        Out.println("          LOG.warn(\"JDBC Message: \"+E.getMessage());");
-        Out.println("          return false;");
-        Out.println("        }");
-        Out.println("       LOG.error(\"JDBC Error: Fatal sql error: SQLState=\"+E.getSQLState()+\", ErrorCode=\"+E.getErrorCode());");
-        Out.println("       LOG.catching(E);");
-        Out.println("       throw E;");
-        Out.println("     }");
         Out.println();
         Out.println("   protected static void HandleFinally(java.sql.PreparedStatement PS, long T0, String TableName, StatementType ST, int count, List<java.sql.Array> AllocatedArrays) throws java.sql.SQLException");
         Out.println("     {");

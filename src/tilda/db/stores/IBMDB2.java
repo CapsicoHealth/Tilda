@@ -47,6 +47,7 @@ import tilda.types.ColumnDefinition;
 import tilda.types.Type_DatetimePrimitive;
 import tilda.utils.DurationUtil.IntervalEnum;
 import tilda.utils.TextUtil;
+import tilda.utils.pairs.ColMetaColPair;
 import tilda.utils.pairs.StringStringPair;
 
 public class IBMDB2 implements DBType
@@ -62,9 +63,9 @@ public class IBMDB2 implements DBType
 
 
     @Override
-    public boolean isErrNoData(String SQLState, int ErrorCode)
+    public boolean isErrNoData(SQLException E)
       {
-        return SQLState.equals("23505");
+        return E.getSQLState().equals("23505");
       }
 
     @Override
@@ -215,6 +216,12 @@ public class IBMDB2 implements DBType
 
     @Override
     public boolean alterTableAlterColumnType(Connection Con, ColumnMeta ColMeta, Column Col, ZoneInfo_Data defaultZI)
+      {
+        throw new UnsupportedOperationException();
+      }  
+    
+    @Override
+    public boolean alterTableAlterColumnMulti(Connection Con, List<ColMetaColPair> BatchTypeCols, List<ColMetaColPair> BatchSizeCols, ZoneInfo_Data defaultZI)
       {
         throw new UnsupportedOperationException();
       }
@@ -432,5 +439,26 @@ public class IBMDB2 implements DBType
       {
         // TODO Auto-generated method stub
         return 2;
+      }
+
+    public String getBackendConnectionId(Connection connection)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+
+    @Override
+    public void cancel(Connection C)
+    throws SQLException
+      {
+        throw new UnsupportedOperationException();
+      }
+
+
+    @Override
+    public boolean isCanceledError(SQLException t)
+      {
+        throw new UnsupportedOperationException();
       }
   }
