@@ -22,7 +22,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.db.Connection;
-import tilda.db.ConnectionPool;
+import tilda.db.ConnectionPoolStateInternal;
 
 public abstract class SimpleRunnableDB extends SimpleRunnable
   {
@@ -43,7 +43,7 @@ public abstract class SimpleRunnableDB extends SimpleRunnable
         Connection C = null;
         try
           {
-            C = ConnectionPool.get(_PoolId);
+            C = ConnectionPoolStateInternal.get(_PoolId);
             doRun(C);
             C.commit();
           }

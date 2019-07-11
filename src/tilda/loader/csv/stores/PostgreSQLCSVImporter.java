@@ -49,7 +49,7 @@ public class PostgreSQLCSVImporter extends CSVImporter
     throws Exception
       {
         TableMeta TM = new TableMeta(schemaName, tableName, "");
-        TM.load(C);
+        TM.load(C, C.getMetaData());
         Map<String, ColumnMeta> ColumnsMap = TM.getColumnMetaMap();
         PreparedStatement Pst = C.prepareStatement(Str.toString());
         List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();

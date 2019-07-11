@@ -43,19 +43,25 @@ public class SchemaMeta
     public void load(Connection C, String TablePattern)
     throws Exception
       {
-        DatabaseMetaData meta = C.getMetaData();
+        load(C, C.getMetaData(), TablePattern);
+      }
+
+    public void load(Connection C, DatabaseMetaData meta, String TablePattern)
+    throws Exception
+      {
+        LOG.debug("      meta.getTables "+_SchemaName+"."+TablePattern+".");
         ResultSet RS = meta.getTables(null, _SchemaName.toLowerCase(), TablePattern == null ? null : TablePattern.toLowerCase(), null);
+        LOG.debug("      meta.getTables "+_SchemaName+"."+TablePattern+" -- RS OBTAINED");
         while (RS.next() != false)
           {
             String Type = RS.getString("TABLE_TYPE");
             String Name = RS.getString("TABLE_NAME").toLowerCase();
             String Descr = RS.getString("REMARKS");
-//            LOG.debug("Type: "+Type+"; Name: "+Name+";");
+            // LOG.debug("Type: "+Type+"; Name: "+Name+";");
             if ("table".equalsIgnoreCase(Type) == true || "system table".equalsIgnoreCase(Type) == true)
               {
                 TableMeta T = new TableMeta(_SchemaName, Name, Descr);
-                T.load(C);
-                synchronized(_DBTables) { _DBTables.put(Name, T); }
+                _DBTables.put(Name, T);
               }
             else if ("view".equalsIgnoreCase(Type) == true || "system view".equalsIgnoreCase(Type) == true)
               {
@@ -64,11 +70,19 @@ public class SchemaMeta
                 // {
                 // LOG.debug(" column: "+RS.getMetaData().getColumnName(i+1)+"; value: "+RS.getString(RS.getMetaData().getColumnName(i+1))+";");
                 // }
-                V.load(C);
-                synchronized(_DBViews) { _DBViews.put(Name, V); }
+                _DBViews.put(Name, V);
               }
           }
+        LOG.debug("      meta.getTables "+_SchemaName+"."+TablePattern+" -- RS PROCESSED");
         RS.close();
+        LOG.debug("      meta.getTables "+_SchemaName+"."+TablePattern+" -- RS CLOSED");
+
+        for (TableMeta T : _DBTables.values())
+          T.load(C, meta);
+
+        for (ViewMeta V : _DBViews.values())
+          V.load(C, meta);
+
       }
 
     public TableMeta getTableMeta(String TableName)
@@ -80,7 +94,7 @@ public class SchemaMeta
       {
         return _DBTables.values();
       }
-    
+
     public ViewMeta getViewMeta(String ViewName)
       {
         return _DBViews.get(ViewName.toLowerCase());

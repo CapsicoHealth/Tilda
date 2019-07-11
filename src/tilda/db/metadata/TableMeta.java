@@ -54,10 +54,9 @@ public class TableMeta
     public PaddingTracker          _PadderColumnNames = new PaddingTracker();
 
 
-    public void load(Connection C)
+    public void load(Connection C, DatabaseMetaData meta)
     throws Exception
       {
-        DatabaseMetaData meta = C.getMetaData();
         ResultSet RS = meta.getColumns(null, _SchemaName.toLowerCase(), _TableName.toLowerCase(), null);
         while (RS.next() != false)
           {
@@ -66,21 +65,27 @@ public class TableMeta
             _ColumnsList.add(CI);
             _PadderColumnNames.track(CI._Name);
           }
+        RS.close();
 
         RS = meta.getIndexInfo(null, _SchemaName.toLowerCase(), _TableName.toLowerCase(), true, true);
         loadIndices(RS);
+        RS.close();
         RS = meta.getIndexInfo(null, _SchemaName.toLowerCase(), _TableName.toLowerCase(), false, true);
         loadIndices(RS);
+        RS.close();
 
         RS = meta.getImportedKeys(null, _SchemaName.toLowerCase(), _TableName.toLowerCase());
         loadForeignKeys(RS, _ForeignKeysOut, true, this);
+        RS.close();
 
         RS = meta.getExportedKeys(null, _SchemaName.toLowerCase(), _TableName.toLowerCase());
         loadForeignKeys(RS, _ForeignKeysIn, false, this);
+        RS.close();
 
         RS = meta.getPrimaryKeys(null, _SchemaName.toLowerCase(), _TableName.toLowerCase());
         if (RS.next() == true)
           _PrimaryKey = new PKMeta(RS);
+        RS.close();
       }
 
     private void loadIndices(ResultSet RS)

@@ -28,6 +28,7 @@ import java.util.Collection;
 import java.util.Deque;
 import java.util.List;
 
+import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -215,12 +216,14 @@ public final class Connection
       {
         try
           {
-            LOG.info(QueryDetails._LOGGING_HEADER + "C L O S I N G   A N D   R E T U R N I N G   C O N N E C T I O N  -----  " + _PoolName);
+            BasicDataSource BDS = ConnectionPoolStateInternal.getDataSourceById(_PoolId);
+            LOG.info(QueryDetails._LOGGING_HEADER + "C L O S I N G   A N D   R E T U R N I N G   C O N N E C T I O N  -----  " + _PoolName + "/"+_PoolId+", " + BDS.getNumActive() + "/" + BDS.getNumIdle() + "/" + BDS.getMaxTotal());
             long T0 = System.nanoTime();
             _C.close();
             _SavePoints.clear();
             PerfTracker.add(TransactionType.CONNECTION_CLOSE, System.nanoTime() - T0);
             _C = null;
+            LOG.info(QueryDetails._LOGGING_HEADER + "C L O S E D   A N D   R E T U R N E D   C O N N E C T I O N  -----  " + _PoolName + "/"+_PoolId + ", " + BDS.getNumActive() + "/" + BDS.getNumIdle() + "/" + BDS.getMaxTotal());
           }
         catch (SQLException E)
           {

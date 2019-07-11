@@ -42,11 +42,10 @@ public class ViewMeta
     public final String               _Descr;
     protected Map<String, ColumnMeta> _DBColumns = new HashMap<String, ColumnMeta>();
 
-    public void load(Connection C)
+    public void load(Connection C, DatabaseMetaData meta)
     throws Exception
       {
         // LOG.debug("View: " + _SchemaName + "." + _ViewName);
-        DatabaseMetaData meta = C.getMetaData();
         ResultSet RS = meta.getColumns(null, _SchemaName.toLowerCase(), _ViewName.toLowerCase(), null);
         while (RS.next() != false)
           {

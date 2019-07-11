@@ -18,13 +18,17 @@ package tilda.db.metadata;
 
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.db.Connection;
+import tilda.utils.concurrent.Executor;
+import tilda.utils.concurrent.SimpleRunnableDB;
 
 public class DatabaseMeta
   {
@@ -37,22 +41,57 @@ public class DatabaseMeta
     protected Map<String, SchemaMeta> _DBSchemas = new HashMap<String, SchemaMeta>();
     protected boolean                 _SupportsArrays;
 
+    protected static class SchemaRunnable extends SimpleRunnableDB
+      {
+        public SchemaRunnable(String PoolId, DatabaseMeta DBMeta, String SchemaPattern)
+          {
+            super("DBMETA " + SchemaPattern, PoolId);
+            _DBMeta = DBMeta;
+            _SchemaPattern = SchemaPattern;
+          }
+
+        protected DatabaseMeta _DBMeta;
+        protected String       _SchemaPattern;
+
+        @Override
+        public void doRun(Connection C)
+        throws Exception
+          {
+            LOG.debug("   " + _SchemaPattern);
+            _DBMeta.load(C, _SchemaPattern);
+          }
+      }
+
+
     public void load(Connection C, String SchemaPattern, String TablePattern)
     throws Exception
       {
         DatabaseMetaData meta = C.getMetaData();
-        ResultSet RS = meta.getSchemas(null, SchemaPattern == null ? SchemaPattern : SchemaPattern.toLowerCase());
+        LOG.debug("      meta.getSchemas "+SchemaPattern+".");
+        ResultSet RS = meta.getSchemas(null, SchemaPattern == null ? null : SchemaPattern.toLowerCase());
+        LOG.debug("      meta.getSchemas "+SchemaPattern+" -- RS OBTAINED");
+        List<SchemaMeta> L = new ArrayList<SchemaMeta>();
         while (RS.next() != false)
           {
             String SchemaName = RS.getString("TABLE_SCHEM").toLowerCase();
-            SchemaMeta S = _DBSchemas.get(SchemaName);
-            if (S == null)
-              S = new SchemaMeta(SchemaName);
-            S.load(C, TablePattern);
-            _DBSchemas.put(SchemaName, S);
+            synchronized (_DBSchemas)
+              {
+                if (_DBSchemas.get(SchemaName) == null)
+                  {
+                    SchemaMeta S = new SchemaMeta(SchemaName);
+                    _DBSchemas.put(SchemaName, S);
+                    L.add(S);
+                  }
+
+              }
           }
+        LOG.debug("      meta.getSchemas "+SchemaPattern+" -- RS PROCESSED");
         RS.close();
+        LOG.debug("      meta.getSchemas "+SchemaPattern+" -- RS CLOSED");
         _SupportsArrays = C.supportsArrays();
+
+        for (SchemaMeta S : L)
+          S.load(C, meta, TablePattern);
       }
 
     public void load(Connection C, String SchemaPattern)

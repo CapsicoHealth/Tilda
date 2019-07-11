@@ -24,7 +24,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.Method;
 import java.net.URL;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -48,14 +47,12 @@ import tilda.Migrate;
 import tilda.data.Connection_Data;
 import tilda.data.Connection_Factory;
 import tilda.db.metadata.DatabaseMeta;
-import tilda.enums.TransactionType;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.migration.Migrator;
 import tilda.parsing.Loader;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
-import tilda.performance.PerfTracker;
 import tilda.utils.ClassStaticInit;
 import tilda.utils.DurationUtil;
 import tilda.utils.FileUtil;
@@ -149,8 +146,6 @@ public class ConnectionPool
     // contains ConnectionId & Connection URL in each entry.
     protected static Map<String, String>          _UniqueDataSourceIds = new HashMap<String, String>();
 
-
-    protected static Map<String, BasicDataSource> _DataSourcesById     = new HashMap<String, BasicDataSource>();
     protected static Map<String, BasicDataSource> _DataSourcesBySig    = new HashMap<String, BasicDataSource>();
     protected static Map<String, Schema>          _Schemas             = new HashMap<String, Schema>();
     protected static Map<String, String>          _EmailConfigDetails  = null;
@@ -196,7 +191,7 @@ public class ConnectionPool
                     while (I.hasNext())
                       {
                         String Id = I.next();
-                        BasicDataSource BDS = _DataSourcesById.get(Id);
+                        BasicDataSource BDS = ConnectionPoolStateInternal._DataSourcesById.get(Id);
                         LOG.info("!!!     ===> " + Id + ": " + BDS.getUrl() + "USER=" + BDS.getUsername());
                       }
                     LOG.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
@@ -390,6 +385,11 @@ public class ConnectionPool
           }
       }
 
+    private static int getBasicDatasourceMaxIdleEstimate(BasicDataSource BDS)
+      {
+        return BDS.getInitialSize() > BDS.getMaxTotal() / 2 ? BDS.getInitialSize() : BDS.getMaxTotal() / 2;
+      }
+
     private static BasicDataSource newDataSource(String id, String driver, String db, String user, String pswd, int initial, int max)
       {
         LOG.info("Initializing a fresh pool for Id=" + id + ", DB=" + db + ", User=" + user + ", and Pswd=Shhhhhhh!");
@@ -403,6 +403,7 @@ public class ConnectionPool
           }
         BDS.setInitialSize(initial);
         BDS.setMaxTotal(max);
+        BDS.setMaxIdle(getBasicDatasourceMaxIdleEstimate(BDS));
         BDS.setDefaultAutoCommit(false);
         BDS.setDefaultTransactionIsolation(java.sql.Connection.TRANSACTION_READ_COMMITTED);
         BDS.setDefaultQueryTimeout(20000);
@@ -412,12 +413,12 @@ public class ConnectionPool
     private static void AddDatasource(String id, String driver, String db, String user, String pswd, int initial, int max)
     throws Exception
       {
-        if (_DataSourcesById.get(id) != null)
+        if (ConnectionPoolStateInternal._DataSourcesById.get(id) != null)
           throw new Exception("Connection with Id: " + id + " is defined in the database but has been defined in /tilda.config.json.");
 
-        synchronized (_DataSourcesById)
+        synchronized (ConnectionPoolStateInternal._DataSourcesById)
           {
-            if (_DataSourcesById.get(id) == null) // Definitely no connection pool by that name
+            if (ConnectionPoolStateInternal._DataSourcesById.get(id) == null) // Definitely no connection pool by that name
               {
                 String Sig = db + "``" + user;
                 BasicDataSource BDS = _DataSourcesBySig.get(Sig); // Let's see if that DB definition is already there
@@ -452,8 +453,9 @@ public class ConnectionPool
                       BDS.setInitialSize(initial);
                     if (BDS.getMaxTotal() < max)
                       BDS.setMaxTotal(max);
+                    BDS.setMaxIdle(getBasicDatasourceMaxIdleEstimate(BDS));
                   }
-                _DataSourcesById.put(id, BDS);
+                ConnectionPoolStateInternal._DataSourcesById.put(id, BDS);
               }
           }
       }
@@ -477,6 +479,7 @@ public class ConnectionPool
           {
             LOG.debug("   " + _SchemaPattern);
             _DBMeta.load(C, _SchemaPattern);
+            LOG.debug("   " + _SchemaPattern + " -- COMPLETED");
           }
       }
 
@@ -485,14 +488,14 @@ public class ConnectionPool
       {
         DatabaseMeta DBMeta = new DatabaseMeta();
         int MaxCores = C.getMaxCores();
-        MaxCores = MaxCores < 4 ? 4 : MaxCores / 2 > 8 ? 8 : MaxCores / 2;
+        MaxCores = MaxCores < 4 ? 4 : MaxCores > 12 ? 12 : MaxCores;
         LOG.info("Loading database metadata for found Schemas from " + C.getPoolName() + " using " + MaxCores + " threads.");
         long T0 = System.nanoTime();
-        Executor O = new Executor(1);
+        Executor O = new Executor(4);
         for (Schema S : TildaList)
+          // DBMeta.load(C, S._Name);
           O.addRunnable(new SchemaRunnable(C.getPoolId(), DBMeta, S._Name));
 
-        String toto = ConnectionPool.getDBDetails(C.getPoolId());
         List<Exception> Exceptions = O.run();
         if (Exceptions.isEmpty() == false)
           {
@@ -573,69 +576,24 @@ public class ConnectionPool
 
     private static boolean isTildaEnabled()
       {
-        return _DataSourcesById.get("MAIN") != null && _DataSourcesById.get("KEYS") != null;
+        return ConnectionPoolStateInternal._DataSourcesById.get("MAIN") != null && ConnectionPoolStateInternal._DataSourcesById.get("KEYS") != null;
       }
 
     public static Connection get(String Id)
     throws Exception
       {
-        return get(Id, null, null);
+        return ConnectionPoolStateInternal.get(Id, null, null);
       }
 
     public static Connection get(String Id, String userId, String userPswd)
     throws Exception
       {
-        if (userId == null)
-          LOG.info(QueryDetails._LOGGING_HEADER + "G E T T I N G   C O N N E C T I O N  -----  " + Id);
-        else
-          LOG.info(QueryDetails._LOGGING_HEADER + "G E T T I N G   U N P O O L E D   C O N N E C T I O N   W I T H   U S E R   O V E R R I D E  (" + userId + ")-----  " + Id);
-        BasicDataSource BDS = _DataSourcesById.get(Id);
-        if (BDS == null)
-          throw new Exception("Cannot find a connection pool for " + Id);
-
-        java.sql.Connection C = null;
-        for (int i = 1; i < 100; ++i)
-          {
-            try
-              {
-                long T0 = System.nanoTime();
-                if (userId == null)
-                  C = BDS.getConnection();
-                else
-                  {
-                    Class.forName(BDS.getDriverClassName());
-                    C = DriverManager.getConnection(BDS.getUrl(), userId, userPswd);
-                    C.setAutoCommit(false);
-                    C.setTransactionIsolation(java.sql.Connection.TRANSACTION_READ_COMMITTED);
-                    C.setClientInfo("defaultRowFetchSize", "1000");
-                  }
-                PerfTracker.add(TransactionType.CONNECTION_GET, System.nanoTime() - T0);
-                break;
-              }
-            catch (SQLException E)
-              {
-                LOG.error("   - Attempt #" + i + " failed to obtain a connection: " + E.getMessage());
-                if (Migrate.isTesting() == true)
-                  {
-                    if (C != null)
-                      C.close();
-                    throw E;
-                  }
-                if (i == 1)
-                  LOG.error("     (Sleeping for 30 seconds, and will re-try again, for a max of 100 times)");
-                Thread.sleep(1000 * 30);
-              }
-          }
-        if (C == null)
-          throw new Exception("Failed obtaining a connection after numerous tries.");
-        Connection Conn = new Connection(C, Id);
-        LOG.info(QueryDetails._LOGGING_HEADER + "G O T           C O N N E C T I O N  -----  " + Conn._PoolId + ", " + BDS.getNumActive() + "/" + BDS.getNumIdle() + "/" + BDS.getMaxTotal());
-        return Conn;
+        return ConnectionPoolStateInternal.get(Id, userId, userPswd);
       }
 
     public static String getDBDetails(String Id)
       {
-        BasicDataSource BDS = _DataSourcesById.get(Id);
+        BasicDataSource BDS = ConnectionPoolStateInternal._DataSourcesById.get(Id);
         if (BDS == null)
           return null;
         return BDS.getUrl();
@@ -697,5 +655,10 @@ public class ConnectionPool
       {
         // TODO Auto-generated method stub
         return null;
+      }
+
+    public static BasicDataSource getDataSourceById(String PoolId)
+      {
+        return ConnectionPoolStateInternal.getDataSourceById(PoolId);
       }
   }
