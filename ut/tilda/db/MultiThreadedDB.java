@@ -84,8 +84,8 @@ public class MultiThreadedDB
     private static void Test(Connection C)
     throws Exception
       {
-        Executor O = new Executor(1);
-        for (int i = 1; i <= 16; ++i)
+        Executor O = new Executor(16);
+        for (int i = 1; i <= 200; ++i)
           O.addRunnable(new CountRunnable(i, C.getPoolId()));
 
         List<Exception> Exceptions = O.run();
