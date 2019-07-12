@@ -152,7 +152,7 @@ public class DateTimeUtil
       }
 
     /**
-     * Simple method to get a Calendar object out of a string and a pattern
+     * Simple method to get a ZonedDateTime object out of a string and a pattern
      */
     public static ZonedDateTime parse(String DateTimeStr, String Pattern)
       {
@@ -170,7 +170,11 @@ public class DateTimeUtil
       }
 
     /**
-     * Simple method to get a Calendar object out of a string and a pattern
+     * Simple method to get a LocalDate object out of a string and a pattern.
+     * <P>
+     * This method returns a LocalDate based on a string value and a standard pattern. It avoids throwing an exception
+     * if the data cannot be parsed and will return NULL instead with a warning in the logs.
+     * @return a LocalDate object if the string could be parsed, or null otherwise.
      */
     public static LocalDate parseDate(String DateStr, String Pattern)
       {
