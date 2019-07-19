@@ -41,7 +41,7 @@ public class TildaHelpersAddEnd extends MigrationAction
         LOG.debug(getDescription());
 
         String Str = C.getHelperFunctionsScript(false);
-        if (C.ExecuteDDL(TILDA__KEY_Factory.SCHEMA_LABEL, "*", Str) == false)
+        if (C.executeDDL(TILDA__KEY_Factory.SCHEMA_LABEL, "*", Str) == false)
           return false;
 
         Str = C.getHelperFunctionsScript(true)+"\n"+Str;

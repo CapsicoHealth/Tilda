@@ -49,9 +49,10 @@ import tilda.utils.pairs.StringStringPair;
 public interface DBType
   {
     public String  getName();
-    public boolean isErrNoData(String SQLState, int ErrorCode);
+    public boolean isErrNoData(SQLException t);
     public String  getCurrentTimestampStr();
     public boolean isLockOrConnectionError(SQLException t);
+    public boolean isCanceledError(SQLException t);
     public boolean needsSavepoint();
     public boolean supportsArrays();
     public boolean supportsSelectLimit();
@@ -116,5 +117,6 @@ public interface DBType
     public void             within(Connection C, StringBuilder Str, Type_DatetimePrimitive Col, Type_DatetimePrimitive ColStart, long DurationCount, IntervalEnum DurationType);
     // LDH-NOTE: UNLOGGED Tables behave strangely in some situations... Disabling this feature.
 //    public boolean setTableLogging(Connection connection, String schemaName, String tableName, boolean logged) throws Exception;
-    
+    public String getBackendConnectionId(Connection connection) throws Exception;
+    void cancel(Connection C) throws SQLException;
   }

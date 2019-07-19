@@ -33,6 +33,8 @@ public abstract class SystemValues
 
     public static final String        NEWLINE         = System.getProperty("line.separator");
     public static final String        NEWLINEx2       = NEWLINE + NEWLINE;
+    public static final String        NEWLINEx3       = NEWLINE + NEWLINE + NEWLINE;
+    public static final String        NEWLINEx4       = NEWLINE + NEWLINE + NEWLINE + NEWLINE;
 
     static final Logger               LOG             = LogManager.getLogger(SystemValues.class.getName());
 

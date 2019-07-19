@@ -103,7 +103,7 @@ public class DBTest
     private static void TruncateTestingTable(Connection C)
     throws Exception
       {
-        if (C.ExecuteDDL(Testing_Factory.SCHEMA_LABEL, Testing_Factory.TABLENAME_LABEL, "TRUNCATE TABLE " + Testing_Factory.SCHEMA_TABLENAME_LABEL) == false)
+        if (C.executeDDL(Testing_Factory.SCHEMA_LABEL, Testing_Factory.TABLENAME_LABEL, "TRUNCATE TABLE " + Testing_Factory.SCHEMA_TABLENAME_LABEL) == false)
           throw new Exception("Cannot execute...");
       }
 
@@ -511,4 +511,42 @@ public class DBTest
          * CK.rollback();
          */
       }
+    
+    private static void Test6(Connection C)
+    throws Exception
+      {
+        LOG.info("----------------------------------------------------------------------------------------------------------------------");
+        LOG.info("- Local timezone date time");
+        ZonedDateTime ZDTStart = DateTimeUtil.Now(ZoneId.systemDefault()).withMinute(0).withSecond(0).withNano(0);
+        ZonedDateTime ZDTEnd = ZDTStart.plusHours(1);
+        LOG.debug("Start (App): " + DateTimeUtil.printDateTime(ZDTStart));
+        LOG.debug("End   (App): " + DateTimeUtil.printDateTime(ZDTEnd));
+        // Creates the shell data object for write
+        TransPerf_Data TP = TransPerf_Factory.Create(ZDTStart, ZDTEnd);
+        // Writes the object. Was just created, so it's an INSERT. 
+        if (TP.Write(C) == false)
+          throw new Exception("Cannot write TransPerf_Data Object");
+        // Creates a shell data object for read
+        TP = TransPerf_Factory.LookupByPrimaryKey(ZDTStart);
+        // reads the object as a SELECT.
+        if (TP.Read(C) == false)
+          throw new Exception("Cannot write TransPerf_Data Object");
+        TP.setEndPeriodNow();
+        // This is not an object obtained through a create, so it's assumed to exist and will be an UPDATE
+        if (TP.Write(C) == false)
+          throw new Exception("Cannot write TransPerf_Data Object");
+        
+        // In many cases, you (1) pretty much know the object exists, or (2) want to update an object
+        // directly and are OK if it fails because the object doesn't exist. In this case, you save
+        // a select compared to above.
+        TP = TransPerf_Factory.LookupByPrimaryKey(ZDTStart);
+        TP.setEndPeriodNow();
+        // This is not an object obtained through a create, so it's assumed to exist and will be an UPDATE
+        if (TP.Write(C) == false)
+          throw new Exception("Cannot write TransPerf_Data Object");
+        
+        LOG.debug("Start (DB): " + DateTimeUtil.printDateTime(TP.getStartPeriod()));
+        LOG.debug("End   (DB): " + DateTimeUtil.printDateTime(TP.getEndPeriod()));
+      }
+    
   }

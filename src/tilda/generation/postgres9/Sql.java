@@ -283,7 +283,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
     private String PrintBaseView(View V, boolean OmmitTZs)
     throws Exception
       {
-        List<TotalMess> FuckList = TotalMess.ScanView(V);
+        List<TotalMess> FuckList = TotalMess.ScanView(V); // Sorry for the explitives here, but this code is really messed up in very impolite ways!!!
 
         StringBuilder Str = new StringBuilder();
         Str.append("-- " + TextUtil.EscapeSingleQuoteForSQL(V._Description) + "\n");
@@ -517,33 +517,21 @@ public class Sql extends PostgreSQL implements CodeGenSql
                       break;
                     if (V._ViewColumns.get(i)._JoinOnly == false)
                       {
-                        ++count;
-                        Str.append((count == 1 ? "" : ", ") + count);
+                        if (count > 0)
+                          Str.append(", ");
+                        Str.append(++count);
                       }
                   }
                 Str.append("\n");
               }
             else
               {
-                First = true;
+                int count = 0;
                 for (ViewColumn VC : V._ViewColumns)
                   if (VC != null && VC._Aggregate == null && VC._JoinOnly == false/* && VC._FormulaOnly == false */) // base view must have the "blocked" columns
                     {
-                      if (First == true)
-                        {
-                          Str.append("     group by ");
-                          First = false;
-                        }
-                      else
-                        Str.append(", ");
-                      if (VC.isSameAsLitteral() == true)
-                        {
-                          Str.append(VC._SameAs);
-                        }
-                      else
-                        {
-                          Str.append(getFullColumnVar(VC._SameAsObj));
-                        }
+                      Str.append(count == 0 ? "     group by " : ", ");
+                      Str.append(++count);
                     }
                 if (First == false)
                   Str.append("\n");
@@ -617,7 +605,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         // If the column has a sameAs string, but no sameAsObj and is managed, then we print the sameAs as is.
         if (VC.isSameAsLitteral() == true)
           {
-            Str.append(VC._SameAs);
+            Str.append(TextUtil.isNullOrEmpty(VC._Expression) == true ? VC._SameAs : VC._Expression.replaceAll("\\?", VC._SameAs));
           }
         else
           {
@@ -632,7 +620,10 @@ public class Sql extends PostgreSQL implements CodeGenSql
               }
             if (trimNeeded)
               Str.append("trim(");
-            Str.append(TI.getFullName() + ".\"" + VC._SameAsObj.getName() + "\"" + (textConversionNeeded ? "::TEXT" : ""));
+            String ColExpr = TI.getFullName() + ".\"" + VC._SameAsObj.getName() + "\"" + (textConversionNeeded ? "::TEXT" : "");
+            if (TextUtil.isNullOrEmpty(VC._Expression) == false)
+              ColExpr = VC._Expression.replaceAll("\\?", ColExpr);
+            Str.append(ColExpr);
             if (trimNeeded)
               Str.append(")");
             if (VC._Aggregate != null)
@@ -1019,7 +1010,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         String Expr = aggr + "(\"" + VC.getName() + "\") filter (where \"" + P._VC.getName() + "\"= '" + TextUtil.EscapeSingleQuoteBaseForSQL(VPV._Value) + "') ";
 
         if (TextUtil.isNullOrEmpty(VPV._Expression) == false)
-          Expr = VPV._Expression.replace("?", Expr);
+          Expr = VPV._Expression.replaceAll("\\?", Expr);
         if (VPV._Type != null)
           Expr = "(" + Expr + ")::" + getColumnType(VPV._Type.getType(), VPV._Type._Size, ColumnMode.NORMAL, VPV._Type.isCollection(), VPV._Precision, VPV._Scale);
         return "\n     , " + Expr + " as \"" + A.makeName(VPV) + "\"";

@@ -158,7 +158,7 @@ public class TildaJson implements CodeGenTildaJson
                 if (C._DefaultCreateValue == null)
                   Out.println("       throw new Exception(\"Incoming value for '" + C.getFullName() + "' was null or empty. It's not nullable in the model.\\n\"+toString());");
                 else
-                  Out.println("       _" + C.getName() + "=" + TildaData.PrintColumnValue(C, C._DefaultCreateValue._Value) + ";");
+                  Out.println("       _" + C.getName() + "=" + TildaData.PrintColumnValue(C, C._DefaultCreateValue._Value) + getNumericTypeExtra(C)+";");
               }
             if (C.getType() == ColumnType.DATETIME)
               {
@@ -323,6 +323,14 @@ public class TildaJson implements CodeGenTildaJson
               Out.println("      if (_" + C.getName() + Pad + "!= null) Obj.set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "(_" + C.getName() + Pad + ");");
             }
         Out.println("    }");
+      }
+
+    private String getNumericTypeExtra(Column Col)
+      {
+        return Col.getType() == ColumnType.LONG ? "l"
+             : Col.getType() == ColumnType.FLOAT ? "f"
+             : Col.getType() == ColumnType.DOUBLE ? "d"
+             : "";
       }
 
     @Override

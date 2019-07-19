@@ -43,10 +43,10 @@ import tilda.enums.FrameworkSourcedType;
 import tilda.enums.ObjectMode;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.migration.actions.ColumnAdd;
+
 import tilda.migration.actions.ColumnAlterNull;
-import tilda.migration.actions.ColumnAlterNumericSize;
-import tilda.migration.actions.ColumnAlterStringSize;
 import tilda.migration.actions.ColumnAlterType;
+
 import tilda.migration.actions.ColumnAlterMulti;
 import tilda.migration.actions.ColumnComment;
 import tilda.migration.actions.ColumnDefault;
@@ -79,7 +79,6 @@ import tilda.parsing.parts.View;
 import tilda.parsing.parts.helpers.ValueHelper;
 import tilda.utils.AsciiArt;
 import tilda.utils.FileUtil;
-import tilda.utils.pairs.ColMetaColPair;
 
 public class Migrator
   {
@@ -287,7 +286,7 @@ public class Migrator
               if (A.isNeeded(C, DBMeta) == true)
                 Actions.add(A);
             }
- 
+
         for (Object Obj : S._Objects)
           {
             
@@ -302,7 +301,7 @@ public class Migrator
             
             TableMeta TMeta = DBMeta.getTableMeta(Obj._ParentSchema._Name, Obj._Name);
             int DddlManagementPos = Actions.size();
-               
+
             boolean NeedsDdlDependencyManagement = false;
             if (TMeta == null)
               Actions.add(new TableCreate(Obj));
@@ -310,9 +309,9 @@ public class Migrator
               {
                 if (Obj._Description.equalsIgnoreCase(TMeta._Descr) == false)
                   Actions.add(new TableComment(Obj));
-                
+
                 ColumnAlterMulti CAM = new ColumnAlterMulti(C, Obj);
-                                
+
                 for (Column Col : Obj._Columns)
                   {
                     
@@ -337,10 +336,11 @@ public class Migrator
                         // Check arrays
                         if (CheckArrays(DBMeta, Errors, Col, CMeta) == false)
                           continue;
+
                        
-                        boolean condition1 = Col.isCollection() == false;
+                        boolean condition1old = Col.isCollection() == false;
                         
-                        if (condition1
+                        if (condition1old
                         && (Col.getType() == ColumnType.BITFIELD && CMeta._TildaType != ColumnType.INTEGER
                         || Col.getType() == ColumnType.JSON && CMeta._TildaType != ColumnType.STRING && CMeta._TildaType != ColumnType.JSON
                         || Col.getType() != ColumnType.BITFIELD && Col.getType() != ColumnType.JSON && Col.getType() != CMeta._TildaType))
@@ -364,6 +364,13 @@ public class Migrator
                         
 
 
+
+                        boolean condition1 = Col.isCollection() == false
+                        && (Col.getType() == ColumnType.BITFIELD && CMeta._TildaType != ColumnType.INTEGER
+                        || Col.getType() == ColumnType.JSON && CMeta._TildaType != ColumnType.STRING && CMeta._TildaType != ColumnType.JSON
+                        || Col.getType() != ColumnType.BITFIELD && Col.getType() != ColumnType.JSON && Col.getType() != CMeta._TildaType);
+
+
                         // We have to check if someone changed goal-posts for VARCHAR and CLOG thresholds.
                         // The case here is that we have a CHAR(10) in the database, and the model still says
                         // STRING/10, but the thresholds have changed in such a way that now, it should be in the DB
@@ -373,15 +380,14 @@ public class Migrator
                         // model changes, but to threshold changes.
                         boolean condition2 = Col.isCollection() == false && Col.getType() == ColumnType.STRING
                         && (CMeta._TypeSql.equals("CHAR") == true && C.getDBStringType(Col._Size) != DBStringType.CHARACTER
-                        || CMeta._TypeSql.equals("VARCHAR") == true && C.getDBStringType(CMeta._Size) == DBStringType.CHARACTER)
-                        ;
-                        
+                        || CMeta._TypeSql.equals("VARCHAR") == true && C.getDBStringType(CMeta._Size) == DBStringType.CHARACTER);
+
                         if (condition1 || condition2)
-                          {                      
+                          {
                             // Are the to/from types compatible?
                             if (Col.getType().isDBCompatible(CMeta._TildaType) == false)
-                              throw new Exception("Type incompatbility requested for an alter column: cannot alter from " + CMeta._TildaType + " to " + Col.getType() + ".");
-                            
+                              throw new Exception("Type incompatbility requested for an alter column "+Col.getShortName()+": cannot alter from " + CMeta._TildaType + " to " + Col.getType() + ".");
+
                             CAM.addColumnAlterType(CMeta, Col);
                             NeedsDdlDependencyManagement = true;
                           }
@@ -399,9 +405,9 @@ public class Migrator
                           Actions.add(new ColumnAlterNull(Col));
                       }
                   }
-                if(CAM.isEmpty() == false)
+                if (CAM.isEmpty() == false)
                   Actions.add(CAM);
-                                
+
                 if (NeedsDdlDependencyManagement == true)
                   {
                     DDLDependencyManager DdlDepMan = new DDLDependencyManager(Obj._ParentSchema._Name, Obj._Name);
@@ -604,9 +610,18 @@ public class Migrator
         String defaultValueDB = CMeta._Default;
         if (defaultValueDB != null)
           {
+            // This section seems to be fairly Postgres-specific. This would need to eventually be abstracted away
+            // to support other databases' possible formats of default values.
             int i = defaultValueDB.lastIndexOf("::");
             if (i != -1)
               defaultValueDB = defaultValueDB.substring(0, i);
+            if (ColumnType.isNumber(Col.getType()) == true)
+              {
+                if (defaultValueDB.startsWith("'") == true)
+                  defaultValueDB = defaultValueDB.substring(1);
+                if (defaultValueDB.endsWith("'") == true)
+                  defaultValueDB = defaultValueDB.substring(0, defaultValueDB.length() - 1);
+              }
           }
         // The "UNDEFINED" value is 1111-11-11, but with timezones, it can change inside the database. So we truncate to 9 characters so we get '1111-11-1'
         if (Col.getType() == ColumnType.DATE || Col.getType() == ColumnType.DATETIME)

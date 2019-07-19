@@ -1725,7 +1725,7 @@ This is the hasChanged for:<BR>
        catch (java.sql.SQLException E)
         {
           C.releaseSavepoint(false);
-          return tilda.data._Tilda.TILDA__1_0.HandleCatch(C, E, "updated or inserted");
+          return C.handleCatch(E, "updated or inserted");
         }
        finally
         {
@@ -1833,7 +1833,7 @@ This is the hasChanged for:<BR>
         }
        catch (java.sql.SQLException E)
         {
-          return tilda.data._Tilda.TILDA__1_0.HandleCatch(C, E, "selected");
+          return C.handleCatch(E, "selected");
         }
        finally
         {

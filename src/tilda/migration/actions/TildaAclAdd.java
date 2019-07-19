@@ -67,7 +67,7 @@ public class TildaAclAdd extends MigrationAction
                SuperUserCon = ConnectionPool.get(C.getPoolId(), userId, userPswd);
              }
             String Str = SuperUserCon.getAclRolesScript(_TildaList);
-            if (SuperUserCon.ExecuteDDL(TILDA__KEY_Factory.SCHEMA_LABEL, "*", Str) == false)
+            if (SuperUserCon.executeDDL(TILDA__KEY_Factory.SCHEMA_LABEL, "*", Str) == false)
               return false;
 
             Maintenance_Data M = Maintenance_Factory.LookupByPrimaryKey("TILDA_ACL", "TILDA_ACL");

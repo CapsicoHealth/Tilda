@@ -67,9 +67,9 @@ public class MSSQL implements DBType
       }
 
     @Override
-    public boolean isErrNoData(String SQLState, int ErrorCode)
+    public boolean isErrNoData(SQLException E)
       {
-        return SQLState.equals("23000") || ErrorCode == 2601;
+        return E.getSQLState().equals("23000") || E.getErrorCode() == 2601;
       }
 
 
@@ -162,7 +162,7 @@ public class MSSQL implements DBType
         StringWriter Str = new StringWriter();
         PrintWriter Out = new PrintWriter(Str);
         getSQlCodeGen().genFileStart(Out, S);
-        Con.ExecuteDDL(S.getShortName(), null, Str.toString());
+        Con.executeDDL(S.getShortName(), null, Str.toString());
         return true;
       }
 
@@ -173,7 +173,7 @@ public class MSSQL implements DBType
         StringWriter Str = new StringWriter();
         PrintWriter Out = new PrintWriter(Str);
         Generator.getTableDDL(getSQlCodeGen(), Out, Obj, true, true);
-        Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getShortName(), Str.toString());
+        Con.executeDDL(Obj._ParentSchema._Name, Obj.getShortName(), Str.toString());
         return true;
       }
 
@@ -184,7 +184,7 @@ public class MSSQL implements DBType
         StringWriter Str = new StringWriter();
         PrintWriter Out = new PrintWriter(Str);
         Generator.getTableDDL(getSQlCodeGen(), Out, Obj, false, true);
-        Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getShortName(), Str.toString());
+        Con.executeDDL(Obj._ParentSchema._Name, Obj.getShortName(), Str.toString());
         return true;
       }
 
@@ -192,7 +192,7 @@ public class MSSQL implements DBType
     public boolean dropView(Connection Con, View V)
     throws Exception
       {
-        Con.ExecuteDDL(V._ParentSchema._Name, V.getShortName(), "DROP VIEW [" + V._ParentSchema._Name + "].[" + V._Name + "]");
+        Con.executeDDL(V._ParentSchema._Name, V.getShortName(), "DROP VIEW [" + V._ParentSchema._Name + "].[" + V._Name + "]");
         return true;
       }
 
@@ -203,7 +203,7 @@ public class MSSQL implements DBType
         StringWriter Str = new StringWriter();
         PrintWriter Out = new PrintWriter(Str);
         Generator.getFullViewDDL(getSQlCodeGen(), Out, V);
-        Con.ExecuteDDL(V._ParentSchema._Name, V.getShortName(), Str.toString());
+        Con.executeDDL(V._ParentSchema._Name, V.getShortName(), Str.toString());
         return true;
       }
 
@@ -235,7 +235,7 @@ public class MSSQL implements DBType
             Q += " not null DEFAULT " + ValueHelper.printValue(Col.getName(), Col.getType(), DefaultValue);
           }
 
-        Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
+        Con.executeDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
         return true;
       }
 
@@ -467,7 +467,7 @@ public class MSSQL implements DBType
         StringBuilder Str = new StringBuilder();
         Str.append("TRUNCATE TABLE ");
         getFullTableVar(Str, schemaName, tableName);
-        C.ExecuteUpdate(schemaName, tableName, Str.toString());
+        C.executeUpdate(schemaName, tableName, Str.toString());
       }
 
     @Override
@@ -571,6 +571,26 @@ public class MSSQL implements DBType
     @Override
     public boolean alterTableAlterColumnDefault(Connection Con, Column Col)
     throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public String getBackendConnectionId(Connection connection)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public void cancel(Connection C)
+    throws SQLException
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public boolean isCanceledError(SQLException t)
       {
         throw new UnsupportedOperationException();
       }

@@ -324,11 +324,11 @@ This is the column definition for:<BR>
            }
 
 
-          count = JDBCHelper.Process(PS.executeQuery(), RP, Start, true, Size, true);
+          count = JDBCHelper.process(PS.executeQuery(), RP, Start, true, Size, true);
         }
        catch (java.sql.SQLException E)
         {
-          tilda.data._Tilda.TILDA__1_0.HandleCatch(C, E, "selected");
+          C.handleCatch(E, "selected");
         }
        finally
         {
@@ -452,7 +452,7 @@ This is the column definition for:<BR>
                if (index != 0 && (index + 1) % batchSize == 0)
                  {
                    int[] results = PS.executeBatch();
-                   int failedRec = JDBCHelper.BatchWriteDone(results, batchSize);
+                   int failedRec = JDBCHelper.batchWriteDone(results, batchSize);
                    if (failedRec != -1)
                      {
                        LOG.debug(QueryDetails._LOGGING_HEADER + "A batch of tilda.data.ZoneInfo_Data objects between positions #" + batchStart + " and #" + index + " failed being written to the database.");
@@ -475,7 +475,7 @@ This is the column definition for:<BR>
            if (index != 0 && (index + 1) % batchSize != 0)
              {
                int[] results = PS.executeBatch();
-               int failedRec = JDBCHelper.BatchWriteDone(results, L.size() - insertCount);
+               int failedRec = JDBCHelper.batchWriteDone(results, L.size() - insertCount);
                if (failedRec != -1)
                  {
                    LOG.debug(QueryDetails._LOGGING_HEADER + "A batch of 'ZoneInfo_Data' objects ending at position #" + index + " failed being written to the database.");
@@ -498,7 +498,7 @@ This is the column definition for:<BR>
        catch (java.sql.SQLException E)
          {
            C.releaseSavepoint(false);
-           TILDA__1_0.HandleCatch(C, E, "updated or inserted");
+           C.handleCatch(E, "updated or inserted");
            return 1;
          }
        finally

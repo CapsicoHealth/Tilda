@@ -57,19 +57,20 @@ public enum ColumnType
         _ShortName = shortName;
       }
 
-    public static  PaddingTracker  _PadderTypeNames = new PaddingTracker();
-    public final boolean     _ArrayCompatible;
-    public final boolean     _SetCompatible;
-    public final boolean     _Primitive;
-    public final String      _SimpleName;
-    public final String      _ShortName;
-    public final static ColumnType[][]  _CompatibleTypes;
-    public final static ColumnType[][]  _CompatibleDBTypes;
+    public static PaddingTracker       _PadderTypeNames = new PaddingTracker();
+    public final boolean               _ArrayCompatible;
+    public final boolean               _SetCompatible;
+    public final boolean               _Primitive;
+    public final String                _SimpleName;
+    public final String                _ShortName;
+    public final static ColumnType[][] _CompatibleTypes;
+    public final static ColumnType[][] _CompatibleDBTypes;
 
-    
+
     static
       {
         for (ColumnType T : ColumnType.values())
+          
          _PadderTypeNames.track(T.name());
         
         _CompatibleTypes = new ColumnType[][] 
@@ -109,25 +110,25 @@ public enum ColumnType
             };   
 
         ColumnType[] colsToValidate = new ColumnType[_CompatibleTypes.length];
-        for(int i = 0; i < _CompatibleTypes.length; i++)
+        for (int i = 0; i < _CompatibleTypes.length; i++)
           {
-        	colsToValidate[i] = _CompatibleTypes[i][0];
+            colsToValidate[i] = _CompatibleTypes[i][0];
           }
         ColumnType.validate(colsToValidate);
-        
+
         ColumnType[] dbColsToValidate = new ColumnType[_CompatibleDBTypes.length];
-        for(int i = 0; i < _CompatibleDBTypes.length; i++)
+        for (int i = 0; i < _CompatibleDBTypes.length; i++)
           {
             dbColsToValidate[i] = _CompatibleDBTypes[i][0];
           }
         ColumnType.validate(dbColsToValidate);
-        
+
       }
 
     public static ColumnType parse(String Str)
       {
         if (Str == null)
-         return null;
+          return null;
         for (ColumnType e : ColumnType.values())
           if (Str.equalsIgnoreCase(e.name()) == true)
             return e;
@@ -137,88 +138,88 @@ public enum ColumnType
     public boolean isCollectionCompatible(MultiType CollectionType)
       {
         return CollectionType == MultiType.LIST ? _ArrayCompatible
-              :CollectionType == MultiType.SET  ? _SetCompatible
-              :false;
+        : CollectionType == MultiType.SET ? _SetCompatible
+        : false;
       }
-    
+
     public boolean isPrimitive()
       {
         return _Primitive;
       }
-    
-    public boolean isCompatible(ColumnType Type) 
+
+    public boolean isCompatible(ColumnType Type)
       {
-    	if(Type != null)
-    	  {
-    	    if(Type == this)
-    	      return true;
-    		
-    	    for(int i = 0 ; i < _CompatibleTypes.length ; i++)
-    	      if(_CompatibleTypes[i][0] == Type)
-    	    	for(int j = 1 ; j < _CompatibleTypes[i].length ; j++)
-    		      if(_CompatibleTypes[i][j] == this)
-    	            return true;
-    	  }
-    	
-		return false;
-	  }
-    
-    public boolean isDBCompatible(ColumnType Type) 
-      {
-        if(Type != null)
+        if (Type != null)
           {
-            if(Type == this)
+            if (Type == this)
               return true;
-            
-            for(int i = 0 ; i < _CompatibleDBTypes.length ; i++)
-              if(_CompatibleDBTypes[i][0] == Type)
-                for(int j = 1 ; j < _CompatibleDBTypes[i].length ; j++)
-                  if(_CompatibleDBTypes[i][j] == this)
+
+            for (int i = 0; i < _CompatibleTypes.length; i++)
+              if (_CompatibleTypes[i][0] == Type)
+                for (int j = 1; j < _CompatibleTypes[i].length; j++)
+                  if (_CompatibleTypes[i][j] == this)
                     return true;
           }
-        
+
         return false;
       }
-    
-    public String getCompatibleTypesString(ColumnType Type) 
-      { 
-    	String compatibleTypes = Type.name();
-  	    for(int i = 0 ; i < _CompatibleTypes.length ; i++)
-  	    	if(_CompatibleTypes[i][0] == Type)
-    	      for(int j = 1 ; j < _CompatibleTypes[i].length ; j++)
-    	    	  compatibleTypes += (compatibleTypes.length() > 0 ? ", " + _CompatibleTypes[i][j].name() : _CompatibleTypes[i][j].name());
-  	    
-		return compatibleTypes;
-	  }    
-    
-    public String getCompatibleDBTypesString(ColumnType Type) 
-      { 
+
+    public boolean isDBCompatible(ColumnType Type)
+      {
+        if (Type != null)
+          {
+            if (Type == this)
+              return true;
+
+            for (int i = 0; i < _CompatibleDBTypes.length; i++)
+              if (_CompatibleDBTypes[i][0] == Type)
+                for (int j = 1; j < _CompatibleDBTypes[i].length; j++)
+                  if (_CompatibleDBTypes[i][j] == this)
+                    return true;
+          }
+
+        return false;
+      }
+
+    public String getCompatibleTypesString(ColumnType Type)
+      {
         String compatibleTypes = Type.name();
-        for(int i = 0 ; i < _CompatibleDBTypes.length ; i++)
-            if(_CompatibleDBTypes[i][0] == Type)
-              for(int j = 1 ; j < _CompatibleDBTypes[i].length ; j++)
-                  compatibleTypes += (compatibleTypes.length() > 0 ? ", " + _CompatibleDBTypes[i][j].name() : _CompatibleDBTypes[i][j].name());
-        
+        for (int i = 0; i < _CompatibleTypes.length; i++)
+          if (_CompatibleTypes[i][0] == Type)
+            for (int j = 1; j < _CompatibleTypes[i].length; j++)
+              compatibleTypes += (compatibleTypes.length() > 0 ? ", " + _CompatibleTypes[i][j].name() : _CompatibleTypes[i][j].name());
+
         return compatibleTypes;
-      }  
-    
+      }
+
+    public String getCompatibleDBTypesString(ColumnType Type)
+      {
+        String compatibleTypes = Type.name();
+        for (int i = 0; i < _CompatibleDBTypes.length; i++)
+          if (_CompatibleDBTypes[i][0] == Type)
+            for (int j = 1; j < _CompatibleDBTypes[i].length; j++)
+              compatibleTypes += (compatibleTypes.length() > 0 ? ", " + _CompatibleDBTypes[i][j].name() : _CompatibleDBTypes[i][j].name());
+
+        return compatibleTypes;
+      }
+
     public static <T> void validate(T[] Enums)
       {
         ColumnType[] Vals = ColumnType.values();
-        
+
         if (Vals.length != Enums.length)
-         throw new Error("Error! The matching between "+ColumnType.class.getName()+" ("+Vals.length+") and "
-                        +Enums[0].getClass().getName()+" ("+Enums.length+") failed: the counts didn't match.");
+          throw new Error("Error! The matching between " + ColumnType.class.getName() + " (" + Vals.length + ") and "
+          + Enums[0].getClass().getName() + " (" + Enums.length + ") failed: the counts didn't match.");
         for (int i = 0; i < Vals.length; ++i)
-         if (Vals[i].toString().equals(Enums[i].toString()) == false)
-           throw new Error("Error! The enum "+ColumnType.class.getName()+"."+Vals[i].toString()+" did not match on position "+i+" against "
-               +Enums[0].getClass().getName()+"."+Enums[i].toString()+".");
+          if (Vals[i].toString().equals(Enums[i].toString()) == false)
+            throw new Error("Error! The enum " + ColumnType.class.getName() + "." + Vals[i].toString() + " did not match on position " + i + " against "
+            + Enums[0].getClass().getName() + "." + Enums[i].toString() + ".");
       }
 
     public String getPad()
-     {
-       return _PadderTypeNames.getPad(name());
-     }
+      {
+        return _PadderTypeNames.getPad(name());
+      }
 
     public Collection<?> parse(boolean isSet, String[] parts)
     throws Exception
@@ -298,5 +299,10 @@ public enum ColumnType
               throw new Exception("Cannot handle getArray() with a column type '" + this.name() + "'.");
           }
       }
-    
+
+    public static boolean isNumber(ColumnType Type)
+      {
+        return Type == DOUBLE || Type == FLOAT || Type == INTEGER || Type == LONG;
+      }
+
   }

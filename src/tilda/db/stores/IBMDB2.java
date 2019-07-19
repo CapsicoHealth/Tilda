@@ -63,9 +63,9 @@ public class IBMDB2 implements DBType
 
 
     @Override
-    public boolean isErrNoData(String SQLState, int ErrorCode)
+    public boolean isErrNoData(SQLException E)
       {
-        return SQLState.equals("23505");
+        return E.getSQLState().equals("23505");
       }
 
     @Override
@@ -435,6 +435,29 @@ public class IBMDB2 implements DBType
     @Override
     public boolean alterTableAlterColumnDefault(Connection Con, Column Col)
     throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+
+    @Override
+    public String getBackendConnectionId(Connection connection)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+
+    @Override
+    public void cancel(Connection C)
+    throws SQLException
+      {
+        throw new UnsupportedOperationException();
+      }
+
+
+    @Override
+    public boolean isCanceledError(SQLException t)
       {
         throw new UnsupportedOperationException();
       }

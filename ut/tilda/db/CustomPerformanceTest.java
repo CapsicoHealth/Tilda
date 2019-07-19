@@ -51,7 +51,7 @@ public class CustomPerformanceTest
     throws Exception
       {
         Connection conn = ConnectionPool.get("MAIN");
-        if (JDBCHelper.ExecuteDDL(conn._C, "public", "toto", "CREATE TABLE IF NOT EXISTS public.TOTO (c1 int, c2 int, c3 int, c4 timestamp, c5 varchar, c6 text, c7 float, c8 char(10), c9 date )") == false)
+        if (JDBCHelper.executeDDL(conn._C, "public", "toto", "CREATE TABLE IF NOT EXISTS public.TOTO (c1 int, c2 int, c3 int, c4 timestamp, c5 varchar, c6 text, c7 float, c8 char(10), c9 date )") == false)
           throw new Exception("Cannot execute...");
 
         List<Data> L = new ArrayList<Data>();
@@ -102,7 +102,7 @@ public class CustomPerformanceTest
     public static Data test(Connection conn, int commitSize, int batchSize)
     throws Exception
       {
-        if (JDBCHelper.ExecuteDDL(conn._C, "public", "toto", "TRUNCATE TABLE public.TOTO") == false)
+        if (JDBCHelper.executeDDL(conn._C, "public", "toto", "TRUNCATE TABLE public.TOTO") == false)
           throw new Exception("Cannot execute...");
 
         // System.out.println("commitSize: " + commitSize + "; batchSize: " + batchSize + ";");
@@ -174,7 +174,7 @@ public class CustomPerformanceTest
     public static Data test2(Connection conn, int commitSize, int batchSize)
     throws Exception
       {
-        if (JDBCHelper.ExecuteDDL(conn._C, "public", "toto", "TRUNCATE TABLE public.TOTO") == false)
+        if (JDBCHelper.executeDDL(conn._C, "public", "toto", "TRUNCATE TABLE public.TOTO") == false)
           throw new Exception("Cannot execute...");
 
         System.out.println("commitSize: " + commitSize + "; batchSize: " + batchSize + ";");
