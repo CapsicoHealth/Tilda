@@ -114,7 +114,7 @@ public class TildaData implements CodeGenTildaData
         Out.println("   protected static final Logger LOG = LogManager.getLogger(" + O._BaseClassName + ".class.getName());");
         Out.println();
         Out.println("   public static final Class<" + O._BaseClassName + "_Factory> FACTORY_CLASS= " + O._BaseClassName + "_Factory.class;");
-        Out.println("   public static final String TABLENAME = TextUtil.Print(" + TextUtil.EscapeDoubleQuoteWithSlash(O.getShortName()) + ", \"\");");
+        Out.println("   public static final String TABLENAME = TextUtil.Print(" + TextUtil.escapeDoubleQuoteWithSlash(O.getShortName()) + ", \"\");");
         Out.println();
         Out.println("   protected " + O._BaseClassName + "() { }");
         Out.println();
@@ -166,7 +166,7 @@ public class TildaData implements CodeGenTildaData
               {
                 Out.println("         if (" + C._JsonSchema._Validation._JavaCodeGenStr + ")");
                 Out.println("          return null;");
-                Out.println("         return " + TextUtil.EscapeDoubleQuoteWithSlash(C._JsonSchema._Validation._Descr) + ";");
+                Out.println("         return " + TextUtil.escapeDoubleQuoteWithSlash(C._JsonSchema._Validation._Descr) + ";");
               }
             else
               {
@@ -236,7 +236,7 @@ public class TildaData implements CodeGenTildaData
                     }
                   else
                     Out.print("                                             , ");
-                  Out.print("{ " + TextUtil.EscapeDoubleQuoteWithSlash(V._Value) + C._PadderValueValues.getPad(V._Value) + ", " + TextUtil.EscapeDoubleQuoteWithSlash(V._Label) + ", " + TextUtil.EscapeDoubleQuoteWithSlash(V._Description));
+                  Out.print("{ " + TextUtil.escapeDoubleQuoteWithSlash(V._Value) + C._PadderValueValues.getPad(V._Value) + ", " + TextUtil.escapeDoubleQuoteWithSlash(V._Label) + ", " + TextUtil.escapeDoubleQuoteWithSlash(V._Description));
                   Out.print(", \"");
                   if (V._Groupings != null && V._Groupings.length != 0)
                     {
@@ -281,30 +281,31 @@ public class TildaData implements CodeGenTildaData
         switch (C.getType())
           {
             case BOOLEAN:
-            case FLOAT:
             case INTEGER:
               return V;
+            case FLOAT:
+              return V+"f";
             case LONG:
               return V+"l";
             case DOUBLE:
               return V+"d";
             case CHAR:
-              return TextUtil.EscapeSingleQuoteForSQL(V);
+              return TextUtil.escapeSingleQuoteForSQL(V);
             case DATETIME:
               if (V.equalsIgnoreCase("NOW") == true)
                 return "DateTimeUtil.NOW_PLACEHOLDER_ZDT";
               else if (V.equalsIgnoreCase("UNDEFINED") == true)
                 return "DateTimeUtil.UNDEFINED_PLACEHOLDER_ZDT";
-              return "DateTimeUtil.toCalendarNoThrow(" + TextUtil.EscapeDoubleQuoteWithSlash(V) + ")";
+              return "DateTimeUtil.toCalendarNoThrow(" + TextUtil.escapeDoubleQuoteWithSlash(V) + ")";
             case DATE:
               if (V.equalsIgnoreCase("NOW") == true)
                 return "DateTimeUtil.NOW_PLACEHOLDER_D";
               else if (V.equalsIgnoreCase("UNDEFINED") == true)
                 return "DateTimeUtil.UNDEFINED_PLACEHOLDER_D";
-              return "DateTimeUtil.parseDate(" + TextUtil.EscapeDoubleQuoteWithSlash(V) + ", \"yyyy-MM-dd\")";
+              return "DateTimeUtil.parseDate(" + TextUtil.escapeDoubleQuoteWithSlash(V) + ", \"yyyy-MM-dd\")";
             case STRING:
             case JSON:
-              return TextUtil.EscapeDoubleQuoteWithSlash(V);
+              return TextUtil.escapeDoubleQuoteWithSlash(V);
             case BINARY:
             case BITFIELD:
               throw new Error("An invalid type '" + C.getType() + "' was assigned column values for code gen.");
@@ -606,7 +607,7 @@ public class TildaData implements CodeGenTildaData
                   if (C.getType() == ColumnType.STRING && C.isCollection() == false)
                     {
                       Out.println("       else if (v.length() > " + C._Size + ")");
-                      Out.println("        throw new Exception(\"Cannot set " + C.getFullName() + ": the value \"+TextUtil.EscapeDoubleQuoteWithSlash(v)+\" is larger than the max size allowed " + C._Size + ".\");");
+                      Out.println("        throw new Exception(\"Cannot set " + C.getFullName() + ": the value \"+TextUtil.escapeDoubleQuoteWithSlash(v)+\" is larger than the max size allowed " + C._Size + ".\");");
                     }
                   if (C.isSet() == true)
                     Out.println("       else if (_" + C.getName() + ".contains(v) == false)");
@@ -620,7 +621,7 @@ public class TildaData implements CodeGenTildaData
                       if (C._Protect == ProtectionType.ABSOLUTE)
                         Out.println("          v = HTMLFilter.CleanAbsolute(v);");
                       else if (C._Protect == ProtectionType.SMART)
-                        Out.println("          v = HTMLFilter.CleanSmart(" + TextUtil.EscapeDoubleQuoteWithSlash(C.getFullName()) + ",v);");
+                        Out.println("          v = HTMLFilter.CleanSmart(" + TextUtil.escapeDoubleQuoteWithSlash(C.getFullName()) + ",v);");
                     }
                   break;
                 case BINARY:

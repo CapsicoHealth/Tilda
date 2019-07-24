@@ -16,12 +16,8 @@
 
 package tilda.migration;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import tilda.db.Connection;
 import tilda.db.metadata.DatabaseMeta;
-import tilda.utils.pairs.ColMetaColPair;
 
 public abstract class MigrationAction
   {
