@@ -208,7 +208,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.Maintenance.type to null: it's not nullable.");
        else if (v.length() > 64)
-        throw new Exception("Cannot set tilda.data.TILDA.Maintenance.type: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
+        throw new Exception("Cannot set tilda.data.TILDA.Maintenance.type: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
        else if (v.equals(_type) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
@@ -292,7 +292,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.Maintenance.name to null: it's not nullable.");
        else if (v.length() > 512)
-        throw new Exception("Cannot set tilda.data.TILDA.Maintenance.name: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 512.");
+        throw new Exception("Cannot set tilda.data.TILDA.Maintenance.name: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 512.");
        else if (v.equals(_name) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
@@ -398,7 +398,7 @@ This is the setter for:<BR>
           setNullValue();
         }
        else if (v.length() > 500000)
-        throw new Exception("Cannot set tilda.data.TILDA.Maintenance.value: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 500000.");
+        throw new Exception("Cannot set tilda.data.TILDA.Maintenance.value: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 500000.");
        else if (v.equals(_value) == false)
         {
           __Changes.or(TILDA__MAINTENANCE_Factory.COLS.VALUE._Mask);

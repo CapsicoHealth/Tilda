@@ -27,11 +27,10 @@ import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ColumnValue;
 import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
-import tilda.parsing.parts.OutputMapping;
 import tilda.parsing.parts.Object;
+import tilda.parsing.parts.OutputMapping;
 import tilda.parsing.parts.PrimaryKey;
 import tilda.parsing.parts.SubWhereClause;
-import tilda.utils.DateTimeUtil;
 import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
 

@@ -68,7 +68,7 @@ public class Docs
 
     protected static String coolPrint(String Name)
       {
-        return TextUtil.SearchReplace(Name, ".", "<B>&nbsp;&#8226;&nbsp;</B>");
+        return TextUtil.searchReplace(Name, ".", "<B>&nbsp;&#8226;&nbsp;</B>");
       }
 
     public static String makeSchemaLink(Schema S)

@@ -321,7 +321,7 @@ public class PostgreSQL implements DBType
     public boolean alterTableAlterColumnComment(Connection Con, Column Col)
     throws Exception
       {
-        String Q = "COMMENT ON COLUMN " + Col._ParentObject.getShortName() + ".\"" + Col.getName() + "\" IS " + TextUtil.EscapeSingleQuoteForSQL(Col._Description) + ";";
+        String Q = "COMMENT ON COLUMN " + Col._ParentObject.getShortName() + ".\"" + Col.getName() + "\" IS " + TextUtil.escapeSingleQuoteForSQL(Col._Description) + ";";
         return Con.executeDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
       }
 
@@ -838,7 +838,7 @@ public class PostgreSQL implements DBType
         Role = Role.toLowerCase();
         Str.append("DO $body$\n");
         Str.append("BEGIN\n");
-        Str.append("   IF NOT EXISTS (SELECT FROM pg_catalog.pg_authid WHERE rolname = " + TextUtil.EscapeSingleQuoteForSQL(Role) + ")\n");
+        Str.append("   IF NOT EXISTS (SELECT FROM pg_catalog.pg_authid WHERE rolname = " + TextUtil.escapeSingleQuoteForSQL(Role) + ")\n");
         Str.append("   THEN\n");
         Str.append("      CREATE ROLE " + Role + ";\n");
         Str.append("   END IF;\n");
@@ -1082,7 +1082,7 @@ public class PostgreSQL implements DBType
     public boolean alterTableComment(Connection Con, Object Obj)
     throws Exception
       {
-        String Q = "COMMENT ON TABLE " + Obj.getShortName() + " IS " + TextUtil.EscapeSingleQuoteForSQL(Obj._Description) + ";";
+        String Q = "COMMENT ON TABLE " + Obj.getShortName() + " IS " + TextUtil.escapeSingleQuoteForSQL(Obj._Description) + ";";
         return Con.executeDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q);
       }
 

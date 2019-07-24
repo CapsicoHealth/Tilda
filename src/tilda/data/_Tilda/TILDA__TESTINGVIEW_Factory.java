@@ -105,25 +105,6 @@ This is the column definition for:<BR>
      public static Type_CharPrimitiveNull      A2MAX  = new Type_CharPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a2Max"  , 3/*3*/, "The blah");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TestingView.a9TZ -> TILDA.TestingView."a9TZ"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the column definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TestingView.a9TZ of type List<String></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TestingView.a9TZ of type text[]</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>0</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a9'.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-     public static Type_StringCollectionNull   A9TZ   = new Type_StringCollectionNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a9TZ"   , 4/*4*/, "Generated helper column to hold the time zone ID for 'a9'.");
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.TestingView.a9 -> TILDA.TestingView."a9"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
@@ -146,7 +127,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimeCollectionNull A9     = new Type_DatetimeCollectionNull(SCHEMA_LABEL, TABLENAME_LABEL, "a9"     , 5/*5*/, "The blah");
+     public static Type_DatetimeCollectionNull A9     = new Type_DatetimeCollectionNull(SCHEMA_LABEL, TABLENAME_LABEL, "a9"     , 4/*4*/, "The blah");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.TestingView.a9c -> TILDA.TestingView."a9c"
@@ -164,7 +145,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DateCollectionNull     A9C    = new Type_DateCollectionNull    (SCHEMA_LABEL, TABLENAME_LABEL, "a9c"    , 6/*6*/, "The blah");
+     public static Type_DateCollectionNull     A9C    = new Type_DateCollectionNull    (SCHEMA_LABEL, TABLENAME_LABEL, "a9c"    , 5/*5*/, "The blah");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.TestingView.a6First -> TILDA.TestingView."a6First"
@@ -182,7 +163,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitiveNull      A6FIRST= new Type_LongPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a6First", 7/*7*/, "The blah");
+     public static Type_LongPrimitiveNull      A6FIRST= new Type_LongPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a6First", 6/*6*/, "The blah");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.TestingView.a6Last -> TILDA.TestingView."a6Last"
@@ -200,11 +181,11 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitiveNull      A6LAST = new Type_LongPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a6Last" , 8/*8*/, "The blah");
+     public static Type_LongPrimitiveNull      A6LAST = new Type_LongPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a6Last" , 7/*7*/, "The blah");
 ;
    }
 
-   public static final ColumnDefinition[] COLUMNS = { COLS.NAME,COLS.REFNUM,COLS.A2MIN,COLS.A2MAX,COLS.A9TZ,COLS.A9,COLS.A9C,COLS.A6FIRST,COLS.A6LAST };
+   public static final ColumnDefinition[] COLUMNS = { COLS.NAME,COLS.REFNUM,COLS.A2MIN,COLS.A2MAX,COLS.A9,COLS.A9C,COLS.A6FIRST,COLS.A6LAST };
 
    public static final ColumnDefinition[] COLUMNS_PRIMARY = {  };
 
@@ -284,7 +265,6 @@ This is the column definition for:<BR>
           S.append(", "); C.getFullColumnVar(S, "TILDA", "TestingView", "refnum");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "TestingView", "a2Min");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "TestingView", "a2Max");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TestingView", "a9TZ");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "TestingView", "a9");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "TestingView", "a9c");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "TestingView", "a6First");

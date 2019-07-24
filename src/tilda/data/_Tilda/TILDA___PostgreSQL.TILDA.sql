@@ -1039,11 +1039,11 @@ select TILDA.Testing."name" as "name" -- Medical system unique enterprise id
      , last(TILDA.Testing."a6" order by "lastUpdated" ASC) as "a6Last" -- The blah
   from TILDA.Testing
  where (TILDA.Testing."deleted" is null)
-     group by TILDA.Testing."name"
+     group by 1
 ;
 
 
-COMMENT ON VIEW TILDA.TestingView IS E'-- DDL META DATA VERSION 2019-01-09\ncreate or replace view TILDA.TestingView as \n-- ''A test view to test aggregates.''\nselect TILDA.Testing."name" as "name" -- Medical system unique enterprise id\n     , count(TILDA.Testing."refnum") as "refnum" -- The primary key for this record\n     , coalesce(min(TILDA.Testing."a2") filter(where a2 is not null), ''AAA'') as "a2Min" -- The blah\n     , coalesce(max(TILDA.Testing."a2") filter(where a2 is not null), ''ZZZ'') as "a2Max" -- The blah\n     , array_agg(TILDA.Testing."a9" order by "lastUpdated" ASC) as "a9" -- The blah\n     , array_agg(TILDA.Testing."a9c") as "a9c" -- The blah\n     , first(TILDA.Testing."a6" order by "lastUpdated" ASC) as "a6First" -- The blah\n     , last(TILDA.Testing."a6" order by "lastUpdated" ASC) as "a6Last" -- The blah\n  from TILDA.Testing\n where (TILDA.Testing."deleted" is null)\n     group by TILDA.Testing."name"\n;\n\n';
+COMMENT ON VIEW TILDA.TestingView IS E'-- DDL META DATA VERSION 2019-01-09\ncreate or replace view TILDA.TestingView as \n-- ''A test view to test aggregates.''\nselect TILDA.Testing."name" as "name" -- Medical system unique enterprise id\n     , count(TILDA.Testing."refnum") as "refnum" -- The primary key for this record\n     , coalesce(min(TILDA.Testing."a2") filter(where a2 is not null), ''AAA'') as "a2Min" -- The blah\n     , coalesce(max(TILDA.Testing."a2") filter(where a2 is not null), ''ZZZ'') as "a2Max" -- The blah\n     , array_agg(TILDA.Testing."a9" order by "lastUpdated" ASC) as "a9" -- The blah\n     , array_agg(TILDA.Testing."a9c") as "a9c" -- The blah\n     , first(TILDA.Testing."a6" order by "lastUpdated" ASC) as "a6First" -- The blah\n     , last(TILDA.Testing."a6" order by "lastUpdated" ASC) as "a6Last" -- The blah\n  from TILDA.Testing\n where (TILDA.Testing."deleted" is null)\n     group by 1\n;\n\n';
 
 COMMENT ON COLUMN TILDA.TestingView."name" IS E'Medical system unique enterprise id';
 COMMENT ON COLUMN TILDA.TestingView."refnum" IS E'The primary key for this record';

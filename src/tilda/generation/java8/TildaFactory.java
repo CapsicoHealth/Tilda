@@ -134,9 +134,9 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("   protected " + O._BaseClassName + "_Factory() { }");
         Out.println();
         Out.println("   public static final Class<" + O._BaseClassName + "> DATA_CLASS= " + O._BaseClassName + ".class;");
-        Out.println("   public static final String SCHEMA_LABEL = TextUtil.Print(" + TextUtil.EscapeDoubleQuoteWithSlash(O._ParentSchema.getShortName()) + ", \"\");");
-        Out.println("   public static final String TABLENAME_LABEL = TextUtil.Print(" + TextUtil.EscapeDoubleQuoteWithSlash(O.getBaseName()) + ", \"\");");
-        Out.println("   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.Print(" + TextUtil.EscapeDoubleQuoteWithSlash(O.getShortName()) + ", \"\");");
+        Out.println("   public static final String SCHEMA_LABEL = TextUtil.Print(" + TextUtil.escapeDoubleQuoteWithSlash(O._ParentSchema.getShortName()) + ", \"\");");
+        Out.println("   public static final String TABLENAME_LABEL = TextUtil.Print(" + TextUtil.escapeDoubleQuoteWithSlash(O.getBaseName()) + ", \"\");");
+        Out.println("   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.Print(" + TextUtil.escapeDoubleQuoteWithSlash(O.getShortName()) + ", \"\");");
         Out.println("   public static void getFullTableNameVar(Connection C, StringBuilder S) { " + Helper.getFullTableVarAtRuntime(O) + "; }");
         Out.println();
         Out.println("   public static abstract class COLS {");
@@ -150,12 +150,12 @@ public class TildaFactory implements CodeGenTildaFactory
                 TypePad += "    ";
               if (C.isCollection() == false)
                 TypePad += " ";
-              // String ColVarFull = TextUtil.EscapeDoubleQuoteWithSlash(G.getSql().getFullColumnVar(C), "", false);
-              // String ColVarShort = TextUtil.EscapeDoubleQuoteWithSlash(G.getSql().getShortColumnVar(C), "", false);
-              // String ColVarOthers = TextUtil.EscapeDoubleQuoteWithSlash(G.getSql().getShortColumnVar(C), "", false);
+              // String ColVarFull = TextUtil.escapeDoubleQuoteWithSlash(G.getSql().getFullColumnVar(C), "", false);
+              // String ColVarShort = TextUtil.escapeDoubleQuoteWithSlash(G.getSql().getShortColumnVar(C), "", false);
+              // String ColVarOthers = TextUtil.escapeDoubleQuoteWithSlash(G.getSql().getShortColumnVar(C), "", false);
               String ColumnTypeClassName = "Type_" + TextUtil.NormalCapitalization(C.getType().name()) + (C.isCollection() ? "Collection" : "Primitive") + (C._Nullable == true ? "Null" : "");
               G.getGenDocs().docField(Out, G, C, "column definition");
-              Out.println("     public static " + ColumnTypeClassName + TypePad + " " + C.getName().toUpperCase() + ColumnPad + "= new " + ColumnTypeClassName + TypePad + "(SCHEMA_LABEL, TABLENAME_LABEL, \"" + C.getName() + "\"" + ColumnPad + ", " + (++Counter) + "/*" + C.getSequenceOrder() + "*/, " + TextUtil.EscapeDoubleQuoteWithSlash(C._Description) + ");");
+              Out.println("     public static " + ColumnTypeClassName + TypePad + " " + C.getName().toUpperCase() + ColumnPad + "= new " + ColumnTypeClassName + TypePad + "(SCHEMA_LABEL, TABLENAME_LABEL, \"" + C.getName() + "\"" + ColumnPad + ", " + (++Counter) + "/*" + C.getSequenceOrder() + "*/, " + TextUtil.escapeDoubleQuoteWithSlash(C._Description) + ");");
             }
         Out.println(";");
         Out.println("   }");
@@ -345,7 +345,7 @@ public class TildaFactory implements CodeGenTildaFactory
             Out.println();
             Out.println("       // Auto PK");
             Column PK = O._PrimaryKey._ColumnObjs.get(0);
-            Out.println("       Obj.set" + TextUtil.CapitalizeFirstCharacter(PK.getName()) + "(tilda.db.KeysManager.getKey(" + TextUtil.EscapeDoubleQuoteWithSlash(O.getShortName().toUpperCase()) + "));");
+            Out.println("       Obj.set" + TextUtil.CapitalizeFirstCharacter(PK.getName()) + "(tilda.db.KeysManager.getKey(" + TextUtil.escapeDoubleQuoteWithSlash(O.getShortName().toUpperCase()) + "));");
           }
         if (CreateColumns != null && CreateColumns.isEmpty() == false)
           {
@@ -381,8 +381,8 @@ public class TildaFactory implements CodeGenTildaFactory
             {
               if (C.getType() == ColumnType.BINARY)
                 {
-                  Out.println("       if (Values.get(" + TextUtil.EscapeDoubleQuoteWithSlash(C.getName()) + ") != null)");
-                  Out.println("        Errors.add(new StringStringPair(" + TextUtil.EscapeDoubleQuoteWithSlash(C.getName()) + ", \"Parameter is of a binary type and cannot be passed as a string value.\"));");
+                  Out.println("       if (Values.get(" + TextUtil.escapeDoubleQuoteWithSlash(C.getName()) + ") != null)");
+                  Out.println("        Errors.add(new StringStringPair(" + TextUtil.escapeDoubleQuoteWithSlash(C.getName()) + ", \"Parameter is of a binary type and cannot be passed as a string value.\"));");
                   continue;
                 }
               if (C._FCT.isManaged() == true || C._Mode != ColumnMode.NORMAL)
@@ -394,11 +394,11 @@ public class TildaFactory implements CodeGenTildaFactory
               : C.isSet() == true && C._JsonSchema == null ? "CollectionUtil.toSet ("
               : "                      ")
               + "ParseUtil.parse" + JavaJDBCType.getFieldTypeBaseClass(C)
-              + "(" + TextUtil.EscapeDoubleQuoteWithSlash(C.getName()) + Pad
+              + "(" + TextUtil.escapeDoubleQuoteWithSlash(C.getName()) + Pad
               + ", " + (C._Nullable == true ? "false" : "true ")
-              + ", Values.get(" + TextUtil.EscapeDoubleQuoteWithSlash(C.getName()) + Pad + ")");
+              + ", Values.get(" + TextUtil.escapeDoubleQuoteWithSlash(C.getName()) + Pad + ")");
               if (C.isCollection() == true && C._JsonSchema == null)
-                Out.print(", " + TextUtil.EscapeDoubleQuoteWithSlash(SystemValues.DEFAULT_SEPARATOR1_BACKQUOTES));
+                Out.print(", " + TextUtil.escapeDoubleQuoteWithSlash(SystemValues.DEFAULT_SEPARATOR1_BACKQUOTES));
               Out.println(", Errors"
               + (C.isCollection() == true && C._JsonSchema == null ? ")" : " ")
               + ");");
