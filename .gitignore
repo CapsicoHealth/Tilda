@@ -2,3 +2,4 @@
 /src/tilda/data/_Tilda.temp
 *.DS_Store
 /target/
+/tilda-docs.jar

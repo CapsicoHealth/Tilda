@@ -95,7 +95,7 @@ public class ValueHelper
               return defaultValue;
             case CHAR:
             case STRING:
-              return TextUtil.EscapeSingleQuoteForSQL(defaultValue);
+              return TextUtil.escapeSingleQuoteForSQL(defaultValue);
             case DATE:
             case DATETIME:
               if (defaultValue.equalsIgnoreCase("now") == true)
@@ -103,7 +103,7 @@ public class ValueHelper
               else if (defaultValue.equalsIgnoreCase("undefined") == true)
                 return "'"+DateTimeUtil.printDateTimeForSQL(DateTimeUtil.UNDEFINED_PLACEHOLDER_ZDT)+"'";
               else
-                return TextUtil.EscapeSingleQuoteForSQL(defaultValue);
+                return TextUtil.escapeSingleQuoteForSQL(defaultValue);
             default:
               throw new Error("Unhandled case in switch for type '" + colType + "'.");
           }

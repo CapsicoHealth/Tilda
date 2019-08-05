@@ -32,7 +32,6 @@ import tilda.enums.ObjectLifecycle;
 import tilda.enums.ObjectMode;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ValidationHelper;
-import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
 
 public class ViewRealize

@@ -285,10 +285,10 @@ public abstract class QueryHelper
         for (CaseWhen c : clause._Cases)
           {
             Str.append(" when ").append(c._WhereClause).append(" then ");
-            TextUtil.EscapeSingleQuoteForSQL(Str, c._Value);
+            TextUtil.escapeSingleQuoteForSQL(Str, c._Value);
           }
         Str.append(" else ");
-        TextUtil.EscapeSingleQuoteForSQL(Str, elseValue);
+        TextUtil.escapeSingleQuoteForSQL(Str, elseValue);
         Str.append(" end as \"").append(aliasName).append("\"");
 
         clause._Col = new ColumnDefinition(_SchemaName, _TableName, aliasName, 0, ColumnType.STRING, false, "");
@@ -511,7 +511,7 @@ public abstract class QueryHelper
             else
               {
                 _QueryStr.append(O._Str);
-                TextUtil.EscapeSingleQuoteForSQL(_QueryStr, V);
+                TextUtil.escapeSingleQuoteForSQL(_QueryStr, V);
               }
             _Section = S.WHERE;
           }
@@ -874,7 +874,7 @@ public abstract class QueryHelper
         if (not == true)
           _QueryStr.append(" not ");
         _QueryStr.append(" in (");
-        TextUtil.EscapeSingleQuoteForSQL(_QueryStr, V, true);
+        TextUtil.escapeSingleQuoteForSQL(_QueryStr, V, true);
         _QueryStr.append(")");
         return this;
       }
@@ -897,7 +897,7 @@ public abstract class QueryHelper
         if (not == true)
           _QueryStr.append(" not ");
         _QueryStr.append(" in (");
-        TextUtil.EscapeSingleQuoteForSQL(_QueryStr, V, true);
+        TextUtil.escapeSingleQuoteForSQL(_QueryStr, V, true);
         _QueryStr.append(")");
         return this;
       }
@@ -921,7 +921,7 @@ public abstract class QueryHelper
         _QueryStr.append(" TILDA.In(");
         Col.getFullColumnVarForSelect(_C, _QueryStr);
         _QueryStr.append(", ARRAY[");
-        TextUtil.EscapeSingleQuoteForSQL(_QueryStr, V, true);
+        TextUtil.escapeSingleQuoteForSQL(_QueryStr, V, true);
         _QueryStr.append("])");
         return this;
       }
@@ -945,7 +945,7 @@ public abstract class QueryHelper
         _QueryStr.append(" TILDA.In(");
         Col.getFullColumnVarForSelect(_C, _QueryStr);
         _QueryStr.append(", ARRAY[");
-        TextUtil.EscapeSingleQuoteForSQL(_QueryStr, V, true);
+        TextUtil.escapeSingleQuoteForSQL(_QueryStr, V, true);
         _QueryStr.append("])");
         return this;
       }
@@ -969,7 +969,7 @@ public abstract class QueryHelper
         if (not == true)
           _QueryStr.append(" not ");
         _QueryStr.append(" in (");
-        TextUtil.EscapeSingleQuoteForSQL(_QueryStr, V, true);
+        TextUtil.escapeSingleQuoteForSQL(_QueryStr, V, true);
         _QueryStr.append(")");
         return this;
       }
@@ -2327,13 +2327,13 @@ public abstract class QueryHelper
         _QueryStr.append("exists (select * from unnest(");
         Col.getFullColumnVarForSelect(_C, _QueryStr);
         _QueryStr.append(") x_ where x_ ").append(caseInsensitive == true ? "ilike" : "like").append(" ");
-        TextUtil.EscapeSingleQuoteForSQL(_QueryStr, V);
+        TextUtil.escapeSingleQuoteForSQL(_QueryStr, V);
         _QueryStr.append(")");
         /*
          * _QueryStr.append(" TILDA.like(");
          * Col.getFullColumnVarForSelect(_C, _QueryStr);
          * _QueryStr.append(", ");
-         * TextUtil.EscapeSingleQuoteForSQL(_QueryStr, V);
+         * TextUtil.escapeSingleQuoteForSQL(_QueryStr, V);
          * _QueryStr.append(")");
          */
         if (not == true)
@@ -2368,7 +2368,7 @@ public abstract class QueryHelper
         _QueryStr.append("exists (select * from unnest(");
         Col.getFullColumnVarForSelect(_C, _QueryStr);
         _QueryStr.append(") x_ where x_ ").append(caseInsensitive == true ? "ilike" : "like").append(" ANY(ARRAY[");
-        TextUtil.EscapeSingleQuoteForSQL(_QueryStr, V, true);
+        TextUtil.escapeSingleQuoteForSQL(_QueryStr, V, true);
         _QueryStr.append("]))");
         return this;
       }
@@ -2398,7 +2398,7 @@ public abstract class QueryHelper
         _QueryStr.append("exists (select * from unnest(");
         Col.getFullColumnVarForSelect(_C, _QueryStr);
         _QueryStr.append(") x_ where x_ ").append(caseInsensitive == true ? "ilike" : "like").append(" ANY(ARRAY[");
-        TextUtil.EscapeSingleQuoteForSQL(_QueryStr, V, true);
+        TextUtil.escapeSingleQuoteForSQL(_QueryStr, V, true);
         _QueryStr.append("]))");
         return this;
       }
@@ -2505,7 +2505,7 @@ public abstract class QueryHelper
               First = false;
             else
               Str.append(",");
-            TextUtil.EscapeSingleQuoteForSQL(Str, v);
+            TextUtil.escapeSingleQuoteForSQL(Str, v);
           }
         Str.append("]");
       }
@@ -2516,7 +2516,7 @@ public abstract class QueryHelper
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public QueryHelper any(Type_StringCollection Col, String v)
       {
-        TextUtil.EscapeSingleQuoteForSQL(_QueryStr, v);
+        TextUtil.escapeSingleQuoteForSQL(_QueryStr, v);
         _QueryStr.append(" = any(");
         Col.getFullColumnVarForSelect(_C, _QueryStr);
         _QueryStr.append(")");

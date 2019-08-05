@@ -152,7 +152,7 @@ public class TildaJson implements CodeGenTildaJson
                 if (C._DefaultCreateValue == null)
                   Out.println("       throw new Exception(\"Incoming value for '" + C.getFullName() + "' was null or empty. It's not nullable in the model.\\n\"+toString());");
                 else
-                  Out.println("       _" + C.getName() + "=" + TildaData.PrintColumnValue(C, C._DefaultCreateValue._Value) + getNumericTypeExtra(C)+";");
+                  Out.println("       _" + C.getName() + "=" + TildaData.PrintColumnValue(C, C._DefaultCreateValue._Value) +";");
               }
             if (C.getType() == ColumnType.DATETIME)
               {
@@ -319,13 +319,6 @@ public class TildaJson implements CodeGenTildaJson
         Out.println("    }");
       }
 
-    private String getNumericTypeExtra(Column Col)
-      {
-        return Col.getType() == ColumnType.LONG ? "l"
-             : Col.getType() == ColumnType.FLOAT ? "f"
-             : Col.getType() == ColumnType.DOUBLE ? "d"
-             : "";
-      }
 
     @Override
     public void genMethodToOutput(PrintWriter Out, GeneratorSession G, OutputMapping OM)
@@ -460,9 +453,9 @@ public class TildaJson implements CodeGenTildaJson
                 throw new Error("toCSV doesn't support export of JSON columns: this should have have come all the way here.");
               if (header.length() != 0)
                 header.append(",");
-              header.append(TextUtil.EscapeDoubleQuoteForCSV(C.getName()));
+              header.append(TextUtil.escapeDoubleQuoteForCSV(C.getName()));
             }
-        Out.println("      return " + TextUtil.EscapeDoubleQuoteWithSlash(header.toString()) + ";");
+        Out.println("      return " + TextUtil.escapeDoubleQuoteWithSlash(header.toString()) + ";");
         Out.println("    }");
         Out.println();
         Out.println("   public static void toCSV" + J._Name + "(java.io.Writer Out, List<" + Helper.getFullAppDataClassName(J._ParentObject) + "> L, boolean includeHeader) throws java.io.IOException");

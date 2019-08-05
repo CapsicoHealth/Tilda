@@ -33,6 +33,19 @@ import tilda.parsing.parts.Schema;
 import tilda.utils.AsciiArt;
 import tilda.utils.SystemValues;
 
+/**
+ * This command line utility will generate necessary artifacts from a tilda schema definition file as defined in
+ * <A href="https://github.com/CapsicoHealth/Tilda/wiki/Tilda-JSON-Syntax">the Tilda Wiki</A>.
+ * <P>
+ * It takes one or more parameters that represent the paths to the Tilda JSON files to be processed.
+ * This utility automatically handles dependencies for any listed schemas. For example:
+ * <PRE>
+ *   tilda.Gen C:/projects/Xyz/src/com/myCo/package/schema1/_tilda.Schema1.json
+ * </PRE>
+ * 
+ * @author Laurent Hasson
+ *
+ */
 public class Gen
   {
     static final Logger      LOG   = LogManager.getLogger(Gen.class.getName());

@@ -42,10 +42,73 @@ import tilda.utils.CollectionUtil;
 import tilda.utils.FileUtil;
 import tilda.utils.TextUtil;
 
+/**
+ * Generates HTML-based documentation and exports generated SQL for the Tilda resources specified in the input configuration file and
+ * available in the classpath.
+ * <P>
+ * The utility can take 1 or more parameters:
+ * <UL><LI> A mandatory path to the folder where to put the documentation files from active Tilda schemas in the classpath.</LI>
+ *     <LI> An optional path to a tilda.master.xxx.json file, or a list of schema names, to extract a subset of the documentation for specified schemas.</LI>
+ * </UL>
+ * For example:
+ * <UL><LI> Export docs and SQL for ALL the Tilda schemas found in the classpath
+ *       <PRE>   tilda.Docs C:\projects\docs\</PRE>
+ *     </LI>
+ *     <LI>Export docs and SQL for the Tilda schemas listed in the master configuration file and their dependencies, grouped as defined, and found in the classpath. 
+ *       <PRE>  tilda.Docs C:\projects\docs\ tilda.master.blah.json</PRE>
+ *     </LI> 
+ *    <LI>Export docs and SQL for the Tilda schemas Schema1 and Schema2 (and their dependencies), found in the classpath. 
+ *      <PRE>   tilda.Docs C:\projects\docs\ Schema1 Schema2</PRE>
+ *    </LI>
+ * </UL>
+ * The master configuration file is a JSON-based file as defined by {@link MasterConfig}. The utility will export an
+ * HTML file TILDA___Docs.[schema_name].html and TILDA___[db_type].[schema_name].sql, and a master index file index.html.
+ * For example:
+ * <PRE>
+ *    index.html
+ *    TILDA___Docs.SCHEMA1.html
+ *    TILDA___PostgreSQL.SCHEMA1.sql
+ * </PRE>
+ * 
+ * @author Laurent Hasson
+ * @see MasterConfig
+ * @see Docs#main(String[])
+ *
+ */
 public class Docs
   {
     static final Logger LOG = LogManager.getLogger(Docs.class.getName());
 
+    /**
+     * GSon-based definition for the Master Index definitionfor the command line {@link Docs} utility.
+     * <P>
+     * <PRE>
+     * { "title": "Sample Database Master Index"
+     *  ,"description":[
+     *     "This database includes tables that represent ODS and datamart capabilities of the main database."
+     *    ]
+     *  ,"groups":[
+     *      { "name":"Group 1 ODS"
+     *       ,"schemas":["Schema1", "Schema2"]
+     *       ,"description":[
+     *           "The Main 2 schemas, and automatically, their dependencies,"
+     *          ,"for the first group"
+     *         ]
+     *      }
+     *     ,{ "name":"Group 2 Datamarts"
+     *       ,"schemas":["DMPatients", "DMFinancials", "DMClinicals"]
+     *       ,"description":[
+     *           "The tilda-based datamart schemas and their related \"*Realized\" tables."
+     *          ,"Blah blah blah"
+     *         ]
+     *      }
+     *    ]
+     * }
+     * </PRE>
+     * 
+     * @see Docs
+     * @see Docs#main(String[])
+     */
     static public class MasterConfig
       {
         /*@formatter:off*/
@@ -121,6 +184,13 @@ public class Docs
       }
 
 
+    /**
+     * The main entry point for this command-line utility to generate documentation and SQL exports for Tilda schemas in the classpath.
+     * 
+     * @param Args The parameters as defined for {@link Docs}.
+     * @see Docs
+     * @see MasterConfig
+     */
     public static void main(String[] Args)
       {
         LOG.info("");

@@ -44,139 +44,207 @@ import javax.swing.text.rtf.RTFEditorKit;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import tilda.db.JDBCHelper;
-
 public class TextUtil
   {
-    protected static final Logger LOG = LogManager.getLogger(JDBCHelper.class.getName());
-
-    public static void PrintStringsCommaDelimited(PrintStream Out, List<String> Strings, String Quotable)
-      {
-        boolean First = true;
-        for (String Str : Strings)
-          {
-            if (First == true)
-              First = false;
-            else
-              Out.print(",");
-            if (Quotable != null)
-              Out.print(Quotable);
-            Out.print(Str);
-            if (Quotable != null)
-              Out.print(Quotable);
-          }
-      }
+    protected static final Logger LOG = LogManager.getLogger(TextUtil.class.getName());
 
     /**
      * Useful methods when creating string constants you don't want to be considered as compile-time constants (i.e.,
      * not be inlined in referring code).
      * 
-     * @param Str The String to process
+     * @param str The String to process
      * @return The string passed in, unchanged.
      */
-    public static String Identity(String Str)
+    public static String identity(String str)
       {
-        return Str;
+        return str;
       }
 
-    public static final String Quote(String S, char Q)
-      {
-        return Q + S + Q;
-      }
-
-    public static final String QuoteSingle(String S)
-      {
-        return '\'' + S + '\'';
-      }
-
-    public static final String QuoteDouble(String S)
-      {
-        return '"' + S + '"';
-      }
-
-    public static final String EscapeSingleQuoteBaseForSQL(String S)
-      {
-        StringBuilder X = new StringBuilder(S.length() + 8);
-        EscapeSingleQuoteForSQL(X, S, "", "");
-        return X.toString();
-      }
-
-    public static final String EscapeSingleQuoteForSQL(String S)
+    /**
+     * Escapes a string for SQL, including surrounding single quotes
+     * <P>
+     * Escapes a String value suitable for SQL generation including surrounding quotes, i.e., "John's Toe" -> "'John''s Toe'". Internally,
+     * this method creates a StringBuilder and calls {@link #escapeSingleQuoteForSQL(StringBuilder, String)}.
+     * If you are performance conscious and already working with a StringBuilder, use that other method instead.
+     * 
+     * @param str
+     * @return a string where the string is surrounded by a single quote and any single quote included is duplicated so as to make the result suitable to be used in an SQL query.
+     * 
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, String)} 
+     * @see {@link #escapeSingleQuoteForSQL(String)} 
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, String[], boolean)} 
+     * @see {@link #escapeSingleQuoteForSQL(String[], boolean)} 
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, char[], boolean)} 
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, Collection, boolean)} 
+     */
+    public static final String escapeSingleQuoteForSQL(String str)
       {
         StringBuilder X = new StringBuilder();
-        EscapeSingleQuoteForSQL(X, S, "'", "'");
+        escapeSingleQuoteForSQL(X, str, "'", "'");
         return X.toString();
       }
 
-    public static final void EscapeSingleQuoteForSQL(StringBuilder X, String S)
+    /**
+     * Escapes a string for SQL, including surrounding single quotes.
+     * <P>
+     * Escapes a String value suitable for SQL generation including surrounding quotes, i.e., "John's Toe" -> "'John''s Toe'" and
+     * appends it to the StringBuilder provided.
+     * 
+     * @param x The StringBuilder to append the escaped string to
+     * @param str The string to escape
+     * 
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, String)} 
+     * @see {@link #escapeSingleQuoteForSQL(String)} 
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, String[], boolean)} 
+     * @see {@link #escapeSingleQuoteForSQL(String[], boolean)} 
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, char[], boolean)} 
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, Collection, boolean)} 
+     */
+    public static final void escapeSingleQuoteForSQL(StringBuilder x, String str)
       {
-        EscapeSingleQuoteForSQL(X, S, "'", "'");
+        escapeSingleQuoteForSQL(x, str, "'", "'");
       }
 
 
-    public static final void EscapeSingleQuoteForSQL(StringBuilder X, String[] S, boolean First)
+    /**
+     * Escapes an array of string for SQL, including surrounding single quotes, comma-separated.
+     * <p>
+     * Escapes string values suitable for SQL generation including surrounding quotes, i.e., "John's Toe" -> "'John''s Toe'" and
+     * appends it to the StringBuilder provided separating them by commas (suitable for an "in" for example). Another version of
+     * this method, {@link #escapeSingleQuoteForSQL(String[], boolean)} is available that doesn't need a StringBuilder but which
+     * is less efficient.
+     *
+     * @param x The StringBuilder to append the comma-separated escaped string sto
+     * @param strs An array of Strings
+     * @param first whether this is the first printing in a list (should not start with a comma), or part of a series of call
+     * where the first part of the list has already occurred.
+     * 
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, String)} 
+     * @see {@link #escapeSingleQuoteForSQL(String)} 
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, String[], boolean)} 
+     * @see {@link #escapeSingleQuoteForSQL(String[], boolean)} 
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, char[], boolean)} 
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, Collection, boolean)} 
+     */
+    public static final void escapeSingleQuoteForSQL(StringBuilder x, String[] strs, boolean first)
       {
-        if (S != null)
-          for (String s : S)
+        if (strs != null)
+          for (String s : strs)
             {
               if (s == null)
                 continue;
-              if (First == true)
-                First = false;
+              if (first == true)
+                first = false;
               else
-                X.append(", ");
-              EscapeSingleQuoteForSQL(X, s);
+                x.append(", ");
+              escapeSingleQuoteForSQL(x, s);
             }
       }
-    public static final String EscapeSingleQuoteForSQL(String[] S, boolean First)
+
+    /**
+     * Escapes an array of string for SQL, including surrounding single quotes, comma-separated.
+     * <p>
+     * This method behaves similarly to {@link #escapeSingleQuoteForSQL(StringBuilder, String[], boolean)} but 
+     * creates an internal SrringBuilder and returns the escaped values directly. This doesn't perform as well
+     * as that other method, but is useful in simpler settings where you might not be working already with
+     * a StringBuilder. Otherwise, the other method is preferred and more efficient.
+     * @param strs An array of strings to escape.
+     * @param first whether this is the first part of a list (not starting with a comma), or a subsequent
+     *       part of a list, which should start with a comma.
+     * @return The comma-separated list of escaped strings suitable for an SQL "in" for example.
+     * 
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, String)} 
+     * @see {@link #escapeSingleQuoteForSQL(String)} 
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, String[], boolean)} 
+     * @see {@link #escapeSingleQuoteForSQL(String[], boolean)} 
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, char[], boolean)} 
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, Collection, boolean)} 
+     */
+    public static final String escapeSingleQuoteForSQL(String[] strs, boolean first)
       {
         StringBuilder Str = new StringBuilder();
-        EscapeSingleQuoteForSQL(Str, S, First);
+        escapeSingleQuoteForSQL(Str, strs, first);
         return Str.toString();
       }
-    
-    
 
-    public static void EscapeSingleQuoteForSQL(StringBuilder X, char[] S, boolean First)
+
+    /**
+     * Escapes a list of chars for SQL, including surrounding single quotes, comma-separated.
+     * <p>
+     * Escapes char values suitable for SQL generation including surrounding quotes, i.e., "'" -> "''''" and
+     * appends it to the StringBuilder provided separating them by commas (suitable for an "in" for example).
+     *
+     * @param x The StringBuilder to append the comma-separated escaped string sto
+     * @param chars An array of char 
+     * @param first whether this is the first printing in a list (should not start with a comma), or part of a series of call
+     * where the first part of the list has already occurred.
+     * 
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, String)} 
+     * @see {@link #escapeSingleQuoteForSQL(String)} 
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, String[], boolean)} 
+     * @see {@link #escapeSingleQuoteForSQL(String[], boolean)} 
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, char[], boolean)} 
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, Collection, boolean)} 
+     */
+    public static void escapeSingleQuoteForSQL(StringBuilder x, char[] chars, boolean first)
       {
-        if (S != null)
-          for (char s : S)
+        if (chars != null)
+          for (char s : chars)
             {
-              if (First == true)
-                First = false;
+              if (first == true)
+                first = false;
               else
-                X.append(", ");
+                x.append(", ");
               if (s == '\'')
-                X.append("''''");
+                x.append("''''");
               else
-                X.append("'").append(s).append("'");
+                x.append("'").append(s).append("'");
             }
       }
 
-    public static final <T> void EscapeSingleQuoteForSQL(StringBuilder X, Collection<T> Strs, boolean First)
+    /**
+     * Escapes a collection of objects' toString() for SQL, including surrounding single quotes, comma-separated.
+     * <p>
+     * This method behaves similarly to {@link #escapeSingleQuoteForSQL(StringBuilder, String[], boolean)} but 
+     * creates an internal SrringBuilder and returns the escaped values directly. This doesn't perform as well
+     * as that other method, but is useful in simpler settings where you might not be working already with
+     * a StringBuilder. Otherwise, the other method is preferred and more efficient.
+     * @param s An array of strings to escape.
+     * @param first whether this is the first part of a list (not starting with a comma), or a subsequent
+     *       part of a list, which should start with a comma.
+     * @return The comma-separated list of escaped strings suitable for an SQL "in" for example.
+     * 
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, String)} 
+     * @see {@link #escapeSingleQuoteForSQL(String)} 
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, String[], boolean)} 
+     * @see {@link #escapeSingleQuoteForSQL(String[], boolean)} 
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, char[], boolean)} 
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, Collection, boolean)} 
+     */
+    public static final <T> void escapeSingleQuoteForSQL(StringBuilder x, Collection<T> strs, boolean first)
       {
-        if (Strs != null)
-          for (T s : Strs)
+        if (strs != null)
+          for (T s : strs)
             {
               if (s == null)
                 continue;
-              if (First == true)
-                First = false;
+              if (first == true)
+                first = false;
               else
-                X.append(", ");
-              EscapeSingleQuoteForSQL(X, s.toString());
+                x.append(", ");
+              escapeSingleQuoteForSQL(x, s.toString());
             }
       }
 
-    public static final void EscapeSingleQuoteForSQL(StringBuilder X, String S, String Before, String End)
+    private static final void escapeSingleQuoteForSQL(StringBuilder x, String str, String before, String end)
       {
-        if (Before != null)
-          X.append(Before);
+        if (before != null)
+          x.append(before);
 
-        if (S != null)
+        if (str != null)
           {
-            int l = S.length();
-            char[] s = S.toCharArray();
+            int l = str.length();
+            char[] s = str.toCharArray();
             int i = 0;
             int j = 0;
             while (j < l && s[j] != '\'')
@@ -184,160 +252,145 @@ public class TextUtil
             while (j < l)
               {
                 ++j;
-                X.append(s, i, j - i).append('\'');
+                x.append(s, i, j - i).append('\'');
                 i = j;
                 while (j < l && s[j] != '\'')
                   ++j;
               }
-            X.append(s, i, l - i);
+            x.append(s, i, l - i);
           }
 
-        if (End != null)
-          X.append(End);
+        if (end != null)
+          x.append(end);
       }
 
-    public static final String EscapeDoubleQuoteWithSlash(String S, String BeforeAndAfter, boolean Double)
+    
+    
+    public static final String escapeDoubleQuoteWithSlash(String str)
       {
         StringBuilder X = new StringBuilder();
-        EscapeSomethingWithSlash(X, '"', S, BeforeAndAfter, BeforeAndAfter, Double);
+        escapeSomethingWithSlash(X, '"', str, "\"", "\"", false);
         return X.toString();
       }
 
-    public static final String EscapeDoubleQuoteWithSlash(String S)
+    public static final void escapeDoubleQuoteWithSlash(StringBuilder x, String str)
+      {
+        escapeSomethingWithSlash(x, '"', str, "\"", "\"", false);
+      }
+
+    public static final String escapeDoubleQuoteForCSV(String str)
       {
         StringBuilder X = new StringBuilder();
-        EscapeSomethingWithSlash(X, '"', S, "\"", "\"", false);
+        escapeDoubleQuoteForCSV(X, str);
         return X.toString();
       }
 
-    public static final void EscapeDoubleQuoteWithSlash(StringBuilder X, String S)
+    public static final void escapeDoubleQuoteForCSV(StringBuilder x, String str)
       {
-        EscapeSomethingWithSlash(X, '"', S, "\"", "\"", false);
+        escapeSomethingWithSomething(x, '"', "\"", str, "\"", "\"");
       }
 
-    public static final void EscapeDoubleQuoteWithSlash(StringBuilder X, String S, String Before, String End)
-      {
-        EscapeSomethingWithSlash(X, '"', S, Before, End, false);
-      }
 
-    public static final String EscapeDoubleQuoteForCSV(String S)
+    public static final String escapeSingleQuoteWithSlashDouble(String str)
       {
         StringBuilder X = new StringBuilder();
-        EscapeDoubleQuoteForCSV(X, S);
+        escapeSomethingWithSlash(X, '\'', str, "'", "'", true);
         return X.toString();
       }
 
-    public static final void EscapeDoubleQuoteForCSV(StringBuilder X, String S)
-      {
-        EscapeSomethingWithSomething(X, '"', "\"", S, "\"", "\"");
-      }
-
-
-    public static final String EscapeSingleQuoteWithSlashDouble(String S)
+    public static final String escapeSingleQuoteWithSlash(String str)
       {
         StringBuilder X = new StringBuilder();
-        EscapeSomethingWithSlash(X, '\'', S, "'", "'", true);
+        escapeSomethingWithSlash(X, '\'', str, "'", "'", false);
         return X.toString();
       }
 
-    public static final String EscapeSingleQuoteWithSlash(String S)
+    public static final void escapeSingleQuoteWithSlash(StringBuilder x, String str)
       {
-        StringBuilder X = new StringBuilder();
-        EscapeSomethingWithSlash(X, '\'', S, "'", "'", false);
-        return X.toString();
+        escapeSomethingWithSlash(x, '\'', str, "'", "'", false);
       }
 
-    public static final void EscapeSingleQuoteWithSlash(StringBuilder X, String S)
+    public static final void escapeAllQuotesWithSlash(StringBuilder x, String str)
       {
-        EscapeSomethingWithSlash(X, '\'', S, "'", "'", false);
+        escapeAllQuotesWithSlash(x, str, "\"", "\"");
       }
 
-    public static final void EscapeSingleQuoteWithSlash(StringBuilder X, String S, String Before, String End)
-      {
-        EscapeSomethingWithSlash(X, '\'', S, Before, End, false);
-      }
-
-    public static final void EscapeAllQuotesWithSlash(StringBuilder X, String S)
-      {
-        EscapeAllQuotesWithSlash(X, S, "\"", "\"");
-      }
-
-    public static final void EscapeAllQuotesWithSlash(StringBuilder X, String S, String Before, String End)
+    private static final void escapeAllQuotesWithSlash(StringBuilder x, String str, String before, String end)
       {
         StringBuilder XX = new StringBuilder(128);
-        EscapeSomethingWithSlash(XX, '"', S, null, null, false);
-        EscapeSomethingWithSlash(X, '\'', XX.toString(), Before, End, false);
+        escapeSomethingWithSlash(XX, '"', str, null, null, false);
+        escapeSomethingWithSlash(x, '\'', XX.toString(), before, end, false);
       }
 
-    public static final void EscapeSomethingWithSlash(StringBuilder X, char Something, String S, String Before, String End, boolean Double)
+    private static final void escapeSomethingWithSlash(StringBuilder x, char something, String str, String before, String end, boolean doubleEscape)
       {
-        EscapeSomethingWithSomething(X, Something, Double ? "\\\\\\" : "\\", S, Before, End);
+        escapeSomethingWithSomething(x, something, doubleEscape ? "\\\\\\" : "\\", str, before, end);
       }
 
-    private static final void EscapeSomethingWithSomething(StringBuilder X, char Something1, String Something2, String S, String Before, String End)
+    private static final void escapeSomethingWithSomething(StringBuilder x, char c, String something2, String str, String before, String end)
       {
-        if (Before != null)
+        if (before != null)
           {
-            X.append(Before);
+            x.append(before);
           }
-        if (S != null)
+        if (str != null)
           {
-            int l = S.length();
-            char[] s = S.toCharArray();
+            int l = str.length();
+            char[] s = str.toCharArray();
             int i = 0;
             int j = 0;
-            while (j < l && s[j] != Something1)
+            while (j < l && s[j] != c)
               ++j;
             while (j < l)
               {
-                X.append(s, i, j - i).append(Something2).append(Something1);
+                x.append(s, i, j - i).append(something2).append(c);
                 ++j;
                 i = j;
-                while (j < l && s[j] != Something1)
+                while (j < l && s[j] != c)
                   ++j;
               }
-            X.append(s, i, l - i);
+            x.append(s, i, l - i);
           }
 
-        if (End != null)
+        if (end != null)
           {
-            X.append(End);
+            x.append(end);
           }
       }
 
 
-    public static final String EscapeHTMLQuotes(String S)
+    public static final String escapeHTMLQuotes(String str)
       {
-        return EscapeHTMLJavaScriptQuotes(S, "\"");
+        return escapeHTMLJavaScriptQuotes(str, "\"");
       }
 
-    public static final String EscapeJavaScriptQuotes(String S)
+    public static final String escapeJavaScriptQuotes(String str)
       {
-        return EscapeHTMLJavaScriptQuotes(S, "'");
+        return escapeHTMLJavaScriptQuotes(str, "'");
       }
 
-    public static final String EscapeHTMLJavaScriptQuotes(String S)
+    public static final String escapeHTMLJavaScriptQuotes(String str)
       {
-        return EscapeHTMLJavaScriptQuotes(S, "");
+        return escapeHTMLJavaScriptQuotes(str, "");
       }
 
-    public static final String EscapeHTMLJavaScriptQuotes(String S, String BeforeAfter)
+    public static final String escapeHTMLJavaScriptQuotes(String str, String beforeAfter)
       {
-        if (S == null)
-          return BeforeAfter + BeforeAfter;
+        if (str == null)
+          return beforeAfter + beforeAfter;
         StringBuilder X = new StringBuilder(128);
-        X.append(BeforeAfter);
+        X.append(beforeAfter);
 
-        int len = S.length();
-        char[] s = S.toCharArray();
+        int len = str.length();
+        char[] s = str.toCharArray();
         int i = 0;
         int j = 0;
         while (j < len && s[j] != '"' && s[j] != '\'' && s[j] != '\n' && s[j] != '\r' && s[j] != '\\' && s[j] != '<')
           ++j;
         if (j >= len)
           {
-            X.append(S);
-            X.append(BeforeAfter);
+            X.append(str);
+            X.append(beforeAfter);
             return X.toString();
           }
         else
@@ -351,111 +404,143 @@ public class TextUtil
             } while (j < len);
 
         X.append(s, i, len - i);
-        X.append(BeforeAfter);
+        X.append(beforeAfter);
         return X.toString();
       }
 
-    public static boolean isNullOrEmpty(String Str)
+    /**
+     * Checks if a String is NULL or made up only of white spaces (as per {@link Character#isWhitespace(char)}.
+     * @param str
+     * @return true if the string is null or empty
+     */
+    public static boolean isNullOrEmpty(String str)
       {
-        if (Str != null && Str.isEmpty() == false)
-          for (int i = 0; i < Str.length(); ++i)
-            if (Character.isWhitespace(Str.charAt(i)) == false)
+        if (str != null && str.isEmpty() == false)
+          for (int i = 0; i < str.length(); ++i)
+            if (Character.isWhitespace(str.charAt(i)) == false)
               return false;
         return true;
       }
 
-    public static boolean isNullOrEmpty(String[] Str)
+    /**
+     * Checks if an array of Strings is NULL, empty, or made up of Strings that are themselves null or empty (as per {@link #isNullOrEmpty(String)}.
+     * @param strings
+     * @return true if the array is null or empty, or only contains strings that are themselves null or empty.
+     */
+    public static boolean isNullOrEmpty(String[] strings)
       {
-        if (Str != null)
-          for (String s : Str)
+        if (strings != null)
+          for (String s : strings)
             if (TextUtil.isNullOrEmpty(s) == false)
               return false;
         return true;
       }
 
-    public static boolean isNullOrEmpty(List<String> Str)
+    /**
+     * Checks if an list of Strings is NULL, empty, or made up of Strings that are themselves null or empty (as per {@link #isNullOrEmpty(String)}.
+     * @param strings
+     * @return true if the list is null or empty, or only contains strings that are themselves null or empty.
+     */
+    public static boolean isNullOrEmpty(List<String> strings)
       {
-        if (Str != null)
-          for (String s : Str)
+        if (strings != null)
+          for (String s : strings)
             if (TextUtil.isNullOrEmpty(s) == false)
               return false;
         return true;
       }
 
-    public static <T> boolean isNullOrEmpty(T[] A)
-      {
-        if (A == null || A.length == 0)
-          return true;
-        for (T v : A)
-          if (v != null)
-            return false;
-        return true;
-      }
 
-
-    public static final String SearchReplace(String Str, String Search, String Replace)
+    /**
+     * A search-and-replace method that can be in most cases about 3x faster than the built in {@link String#replaceAll(String, String)}, and
+     * doesn't use regexes.
+     * <p>
+     * See test case in TextUtilTest.Test_SearchReplace() for performance analysis.
+     * @param str
+     * @param search
+     * @param replace
+     * @return The string with the search substring replaced by the replace string.
+     */
+    public static final String searchReplace(String str, String search, String replace)
       {
-        if (Str == null)
-          return Str;
+        if (str == null)
+          return str;
         int i = 0;
-        int j = Str.indexOf(Search);
+        int j = str.indexOf(search);
         if (j == -1)
-          return Str;
+          return str;
 
-        char[] S = Str.toCharArray();
+        char[] S = str.toCharArray();
         StringBuilder X = new StringBuilder(256);
 
         while (j != -1)
           {
-            X.append(S, i, j - i).append(Replace);
-            i = j + Search.length();
-            j = Str.indexOf(Search, i);
+            X.append(S, i, j - i).append(replace);
+            i = j + search.length();
+            j = str.indexOf(search, i);
           }
         return X.append(S, i, S.length - i).toString();
       }
 
-    public static final StringBuilder SearchReplace(StringBuilder StrBuf, String Str, String Search, String Replace)
+    /**
+     * A search-and-replace method similar to {@link #searchReplace(String, String, String)} but which outputs the results to a StringBuilder.
+     * @param x
+     * @param str
+     * @param search
+     * @param replace
+     * @return The StringBuilder passed in.
+     */
+    public static final StringBuilder searchReplace(StringBuilder x, String str, String search, String replace)
       {
-        if (Str == null)
-          return StrBuf;
+        if (str == null)
+          return x;
         int i = 0;
-        int j = Str.indexOf(Search);
+        int j = str.indexOf(search);
         if (j == -1)
-          return StrBuf.append(Str);
+          return x.append(str);
 
-        char[] S = Str.toCharArray();
+        char[] S = str.toCharArray();
         while (j != -1)
           {
-            StrBuf.append(S, i, j - i).append(Replace);
-            i = j + Search.length();
-            j = Str.indexOf(Search, i);
+            x.append(S, i, j - i).append(replace);
+            i = j + search.length();
+            j = str.indexOf(search, i);
           }
-        return StrBuf.append(S, i, S.length - i);
+        return x.append(S, i, S.length - i);
       }
 
-    public static final Writer SearchReplace(Writer Out, String Str, String Search, String Replace)
+    /**
+     * A search-and-replace method similar to {@link #searchReplace(String, String, String)} but which outputs the results to a Writer.
+     * @param x
+     * @param str
+     * @param search
+     * @param replace
+     * @return The Writer passed in
+     * @throws IOException
+     */
+    public static final Writer searchReplace(Writer x, String str, String search, String replace)
     throws IOException
       {
-        if (Str == null)
-          return Out;
+        if (str == null)
+          return x;
         int i = 0;
-        int j = Str.indexOf(Search);
+        int j = str.indexOf(search);
         if (j == -1)
           {
-            Out.write(Str);
-            return Out;
+            x.write(str);
+            return x;
           }
 
-        char[] S = Str.toCharArray();
+        char[] S = str.toCharArray();
         while (j != -1)
           {
-            Out.write(S, i, j - i);
-            Out.write(Replace);
-            i = j + Search.length();
-            j = Str.indexOf(Search, i);
+            x.write(S, i, j - i);
+            x.write(replace);
+            i = j + search.length();
+            j = str.indexOf(search, i);
           }
-        Out.write(S, i, S.length - i);
-        return Out;
+        x.write(S, i, S.length - i);
+        return x;
       }
 
     public static String RemoveElement(int Index, String Vals, char Separator)
@@ -503,7 +588,8 @@ public class TextUtil
 
     /**
      * Returns the index in A that matched the value of Val (strict equal case sensitive or not based on IgnoreCase).
-     * If no match is found, returns -1; 
+     * If no match is found, returns -1;
+     * 
      * @param A
      * @param Val
      * @param IgnoreCase
@@ -524,12 +610,13 @@ public class TextUtil
           }
         return -1;
       }
-    
+
     /**
      * Returns the index in A that matched the value of Val, either as a startsWith, if the element in A ends in '*', or
-     * a endsWith if the element in A starts with a '*', or a strict equal otherwise. The comparison is case-sensitive 
-     * or not based on IgnoreCase. -1 is returned is no match is found. If there are multiple matches (for example 
-     * comparing "aaaa" with "a*" and "aa*", only the first one will be returned. 
+     * a endsWith if the element in A starts with a '*', or a strict equal otherwise. The comparison is case-sensitive
+     * or not based on IgnoreCase. -1 is returned is no match is found. If there are multiple matches (for example
+     * comparing "aaaa" with "a*" and "aa*", only the first one will be returned.
+     * 
      * @param A
      * @param Val
      * @param IgnoreCase
@@ -541,35 +628,35 @@ public class TextUtil
         if (A == null)
           return -1;
         if (IgnoreCase == true)
-         Val = Val.toLowerCase();
+          Val = Val.toLowerCase();
         for (int i = Start; i < A.length; ++i)
           {
             String Str = A[i];
             if (Str == null)
               continue;
             if (IgnoreCase == true)
-             Str = Str.toLowerCase();
+              Str = Str.toLowerCase();
             if (Str.length() > 1 && Str.endsWith("*") == true && Str.startsWith("*") == true)
               {
-                if (Val.indexOf(Str.substring(1, Str.length()-1)) != -1)
-                 return i;
+                if (Val.indexOf(Str.substring(1, Str.length() - 1)) != -1)
+                  return i;
               }
             if (Str.endsWith("*") == true)
               {
-                if (Val.startsWith(Str.substring(0, Str.length()-1)) == true)
-                 return i;
+                if (Val.startsWith(Str.substring(0, Str.length() - 1)) == true)
+                  return i;
               }
             else if (Str.startsWith("*") == true)
               {
                 if (Val.endsWith(Str.substring(1)) == true)
-                 return i;
+                  return i;
               }
             else if (Str.equals(Val) == true)
               return i;
           }
         return -1;
       }
-    
+
 
     public static int FindElement(String[][] A, String Val, int pos, boolean IgnoreCase, int Start)
       {
@@ -812,7 +899,7 @@ public class TextUtil
               First = false;
             else
               Str.append(",");
-            Str.append(EscapeJavaScriptQuotes(v));
+            Str.append(escapeJavaScriptQuotes(v));
           }
         return Str;
       }
@@ -956,9 +1043,9 @@ public class TextUtil
         Print(I, s);
         return s.toString();
       }
-    
+
     public static final String Print(Iterator<?> I, String Separator)
-    {	
+      {
         if (I == null)
           return null;
         StringBuilder Str = new StringBuilder();
@@ -969,14 +1056,14 @@ public class TextUtil
             if (First == true)
               First = false;
             else
-            	Str.append(Separator);
+              Str.append(Separator);
             if (O == null)
-            	Str.append("null");
+              Str.append("null");
             else
-            	Str.append(O.getClass() == ZonedDateTime.class ? DateTimeUtil.printDateTimeCompact((ZonedDateTime) O, true, true) : O.toString());
-            }
-         return Str.toString();
-    }
+              Str.append(O.getClass() == ZonedDateTime.class ? DateTimeUtil.printDateTimeCompact((ZonedDateTime) O, true, true) : O.toString());
+          }
+        return Str.toString();
+      }
 
 
     public static final void Print(Iterator<?> I, StringBuilder s)
@@ -1318,8 +1405,8 @@ public class TextUtil
 
     /**
      * Splits a string based on separator regex using the standard String.split() method. Implements a null-or-empty check
-     * on Str and returns null if true. Additionally, calls trim() on all results if Trim is true, and removes empties 
-     * from the final result if RemoveEmpties is true. 
+     * on Str and returns null if true. Additionally, calls trim() on all results if Trim is true, and removes empties
+     * from the final result if RemoveEmpties is true.
      * 
      * @param Str
      * @param SeparatorRegEx
@@ -1330,14 +1417,14 @@ public class TextUtil
     public static final String[] Split(String Str, String SeparatorRegEx, boolean Trim, boolean RemoveEmpties)
       {
         if (TextUtil.isNullOrEmpty(Str) == true)
-         return null;
+          return null;
         List<String> L = new ArrayList<String>();
         String[] SplitArray = Str.split(SeparatorRegEx);
         for (String s : SplitArray)
           {
             if (RemoveEmpties == true && TextUtil.isNullOrEmpty(s) == true)
-             continue;
-            L.add(s!=null&&Trim==true ? s.trim() : s);
+              continue;
+            L.add(s != null && Trim == true ? s.trim() : s);
           }
         return CollectionUtil.toStringArray(L);
       }
@@ -1345,7 +1432,7 @@ public class TextUtil
     /**
      * Splits a string based on separator regex using the standard String.split() method. Implements a null-or-empty check
      * on Str and returns null if true.
-     *  
+     * 
      * @param Str
      * @param SeparatorRegEx
      * @return
@@ -1364,7 +1451,7 @@ public class TextUtil
           {
             if (Str.length() != 0)
               Str.append(Separator);
-            if(o.getClass() != null)
+            if (o.getClass() != null)
               Str.append(o.getClass().getName());
             else
               Str.append(o.toString());
@@ -1596,7 +1683,7 @@ public class TextUtil
               }
             else
               Str.append(", ");
-            EscapeSingleQuoteForSQL(Str, s);
+            escapeSingleQuoteForSQL(Str, s);
           }
         if (First == false)
           Str.append(End);
@@ -1620,7 +1707,7 @@ public class TextUtil
               }
             else
               Str.append(" ").append(BooleanOperator).append(" ").append(ColumnName).append(" like ");
-            EscapeSingleQuoteForSQL(Str, s, "'%", "%'");
+            escapeSingleQuoteForSQL(Str, s, "'%", "%'");
           }
         if (First == false)
           Str.append(")");
@@ -1696,13 +1783,14 @@ public class TextUtil
           }
         return Str.toString();
       }
-    
+
     public static String[] partsSqlLike(String Val, String splitRegex, boolean lowerCase)
       {
         if (Val == null)
           return null;
         if (TextUtil.isNullOrEmpty(splitRegex) == true)
-         return new String[] { Val };
+          return new String[] { Val
+          };
         String[] Parts = Val.split(splitRegex);
         for (int i = 0; i < Parts.length; ++i)
           {

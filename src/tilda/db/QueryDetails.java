@@ -78,7 +78,7 @@ public class QueryDetails
         return LastQuery == null ? null : LastQuery._Query.replaceAll("\'[^\']*\'", "'****'");
       }
 
-    public static final String _LOGGING_HEADER = TextUtil.Identity("    ~~ ");
+    public static final String _LOGGING_HEADER = TextUtil.identity("    ~~ ");
     
     public static void logQuery(String TableName, String Query, String Values)
       {

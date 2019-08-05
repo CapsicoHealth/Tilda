@@ -316,7 +316,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.Key.name to null: it's not nullable.");
        else if (v.length() > 128)
-        throw new Exception("Cannot set tilda.data.TILDA.Key.name: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 128.");
+        throw new Exception("Cannot set tilda.data.TILDA.Key.name: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 128.");
        else if (v.equals(_name) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)

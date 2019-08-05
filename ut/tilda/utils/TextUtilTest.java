@@ -18,7 +18,6 @@ package tilda.utils;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -34,14 +33,14 @@ public class TextUtilTest
     public static void main(String[] args)
       {
 //        Test_SimplifyName();
-//        Test1();
+        Test_SearchReplace();
 //        Test2();
 //        Test3();
 //        Test4();
 //        Test_Perf_toString_type_vs_cast();
 //          Test_FindLikeElement();
 //          Test_Perf_endsWith_vs_charAt();
-          Test_isNullOrEmpty();
+//          Test_isNullOrEmpty();
       }
 
     private static void Test_isNullOrEmpty()
@@ -295,21 +294,23 @@ public class TextUtilTest
 
       }
 
-    private static void Test1()
+    private static void Test_SearchReplace()
       {
         String Str = "update TILDA.KEY set TILDA.KEY.\"max\"=TILDA.KEY.\"max\"+TILDA.KEY.\"count\"";
-        String TableName = "TILDA.KEY";
+        String TableName = "TILDA.KEY.";
         long T0 = System.nanoTime();
-        for (int i = 0; i < 1000000; ++i)
+        int runs = 10_000_000;
+        for (int i = 0; i < runs; ++i)
           {
-            TextUtil.SearchReplace(Str, TableName + ".", "");
+            TextUtil.searchReplace(Str, TableName, "");
           }
         System.out.println("TextUtil.SearchReplace: " + DurationUtil.PrintDuration(System.nanoTime() - T0));
 
         T0 = System.nanoTime();
-        for (int i = 0; i < 1000000; ++i)
+        TableName = "TILDA\\.KEY\\.";
+        for (int i = 0; i < runs; ++i)
           {
-            Str.replaceAll(TableName.replaceAll("\\.", "\\.") + ".", "");
+            Str.replaceAll(TableName, "");
           }
         System.out.println("String.replaceAll: " + DurationUtil.PrintDuration(System.nanoTime() - T0));
       }
