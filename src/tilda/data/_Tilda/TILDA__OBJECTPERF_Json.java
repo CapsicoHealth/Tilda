@@ -60,25 +60,25 @@ public class TILDA__OBJECTPERF_Json
       if (   _endPeriod     == null)
        throw new Exception("Incoming value for 'tilda.data.TILDA.ObjectPerf.endPeriod' was not in the expected format. Dates should follow the ISO format.\n"+toString());
       if (_selectNano    == null)
-       _selectNano=0l;
+       _selectNano=0ll;
       if (_selectCount   == null)
        _selectCount=0;
       if (_selectRecords == null)
        _selectRecords=0;
       if (_insertNano    == null)
-       _insertNano=0l;
+       _insertNano=0ll;
       if (_insertCount   == null)
        _insertCount=0;
       if (_insertRecords == null)
        _insertRecords=0;
       if (_updateNano    == null)
-       _updateNano=0l;
+       _updateNano=0ll;
       if (_updateCount   == null)
        _updateCount=0;
       if (_updateRecords == null)
        _updateRecords=0;
       if (_deleteNano    == null)
-       _deleteNano=0l;
+       _deleteNano=0ll;
       if (_deleteCount   == null)
        _deleteCount=0;
       if (_deleteRecords == null)
