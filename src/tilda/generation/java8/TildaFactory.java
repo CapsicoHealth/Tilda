@@ -979,7 +979,7 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("               PS.clearParameters();");
         Out.println("             }");
         Out.println();
-        Out.println("           if (index != 0 && (index + 1) % batchSize != 0)");
+        Out.println("           if ((index + 1) % batchSize != 0)");
         Out.println("             {");
         Out.println("               int[] results = PS.executeBatch();");
         Out.println("               int failedRec = JDBCHelper.batchWriteDone(results, L.size() - insertCount);");
