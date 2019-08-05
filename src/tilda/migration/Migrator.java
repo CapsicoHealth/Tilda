@@ -45,7 +45,7 @@ import tilda.generation.interfaces.CodeGenSql;
 import tilda.migration.actions.ColumnAdd;
 
 import tilda.migration.actions.ColumnAlterNull;
-import tilda.migration.actions.ColumnAlterType;
+import tilda.migration.actions.ColumnAlterNumericSize;
 
 import tilda.migration.actions.ColumnAlterMulti;
 import tilda.migration.actions.ColumnComment;
@@ -294,11 +294,7 @@ public class Migrator
               continue;
             if (Obj._FST == FrameworkSourcedType.VIEW || Obj._Mode == ObjectMode.CODE_ONLY == true)
               continue;
-            
-            ///////////TESTING
-            if(Obj._Name.equals("Testing"))
-              LOG.debug(Obj._Name);
-            
+
             TableMeta TMeta = DBMeta.getTableMeta(Obj._ParentSchema._Name, Obj._Name);
             int DddlManagementPos = Actions.size();
 
@@ -313,12 +309,7 @@ public class Migrator
                 ColumnAlterMulti CAM = new ColumnAlterMulti(C, Obj);
 
                 for (Column Col : Obj._Columns)
-                  {
-                    
-                    ///////////TESTING
-                    if(Col.getName().equals("a11"))
-                      LOG.debug("a11");
-                    
+                  {               
                     if (Col == null || Col._Mode == ColumnMode.CALCULATED)
                       continue;
 
@@ -335,35 +326,14 @@ public class Migrator
 
                         // Check arrays
                         if (CheckArrays(DBMeta, Errors, Col, CMeta) == false)
-                          continue;
-
-                       
-                        boolean condition1old = Col.isCollection() == false;
+                          continue;                                             
                         
-                        if (condition1old
-                        && (Col.getType() == ColumnType.BITFIELD && CMeta._TildaType != ColumnType.INTEGER
-                        || Col.getType() == ColumnType.JSON && CMeta._TildaType != ColumnType.STRING && CMeta._TildaType != ColumnType.JSON
-                        || Col.getType() != ColumnType.BITFIELD && Col.getType() != ColumnType.JSON && Col.getType() != CMeta._TildaType))
+                        if (Col.getType() == ColumnType.NUMERIC
+                        && (CMeta._Precision != Col._Precision && (CMeta._Scale != Col._Scale || Col._Scale == 0)))
                           {
-                            Actions.add(new ColumnAlterType(C, CMeta, Col));
+                            Actions.add(new ColumnAlterNumericSize(CMeta, Col));
                             NeedsDdlDependencyManagement = true;
                           }
-                        
-                        if(Col.getType() == ColumnType.NUMERIC)
-                          {
-                            LOG.debug("object: "+ Obj._Name +" --- name: " + Col.getName() + " --- precision: " + Col._Precision + " --- scale: " + Col._Scale);                            
-                          }
-                        
-                        
-//                        if (Col.isCollection() == false && Col.getType() == ColumnType.NUMERIC
-//                        && (CMeta._Size != Col._Precision && CMeta._Scale != Col._Scale))
-//                          {
-//                            Actions.add(new ColumnAlterNumericSize(CMeta, Col));
-//                            NeedsDdlDependencyManagement = true;
-//                          }
-                        
-
-
 
                         boolean condition1 = Col.isCollection() == false
                         && (Col.getType() == ColumnType.BITFIELD && CMeta._TildaType != ColumnType.INTEGER

@@ -19,6 +19,7 @@ package tilda.generation.java8;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.math.BigDecimal;
+import java.util.UUID;
 
 import tilda.enums.ColumnType;
 import tilda.parsing.parts.Column;
@@ -42,7 +43,8 @@ public enum JavaJDBCType
     DATE    ("LocalDate"    , LocalDate.class    , "Date      ", "DATE"                   , ColumnType.DATE    ),
     DATETIME("ZonedDateTime", ZonedDateTime.class, "Timestamp ", "TIMESTAMP_WITH_TIMEZONE", ColumnType.DATETIME),
     BINARY  ("byte[]"       , byte[].class       , "Bytes     ", "BINARY    "             , ColumnType.BINARY  ),
-    BITFIELD("int"          , Integer.class      , "Int       ", "BIGINT    "             , ColumnType.BITFIELD);
+    BITFIELD("int"          , Integer.class      , "Int       ", "BIGINT    "             , ColumnType.BITFIELD),
+    UUID    ("uuid"         , UUID.class         , "UUID      ", "UUID      "             , ColumnType.UUID    );
     /*@formatter:on*/
 
     static {

@@ -95,7 +95,12 @@ public class TildaData implements CodeGenTildaData
               {
                 Out.println();
                 Out.println("import java.math.BigDecimal;");
-              }            
+              }    
+            if(C.getType() == ColumnType.UUID)
+              {
+                Out.println();
+                Out.println("import java.util.UUID;");
+              }                           
           }
         Out.println();
       }
@@ -204,6 +209,9 @@ public class TildaData implements CodeGenTildaData
                   case NUMERIC: 
                     Out.print("= new BigDecimal(SystemValues.EVIL_VALUE)");
                     break;
+                  case UUID: 
+                    Out.print("= new UUID(0L, 0L)");
+                    break;                    
                   case DATETIME:  
                   case STRING:
                   case JSON:
@@ -592,7 +600,8 @@ public class TildaData implements CodeGenTildaData
                 case LONG:
                 case SHORT:
                 case INTEGER:
-                case NUMERIC:  
+                case NUMERIC:   
+                case UUID:                   
                   if (C.isSet() == true)
                     Out.println("       if (_" + C.getName() + ".contains(v) == false)");
                   else if (C.isList() == true)
@@ -880,7 +889,8 @@ public class TildaData implements CodeGenTildaData
                 break;
               case NUMERIC:
                 Out.println("       _" + C.getName() + "=BigDecimal.ZERO;");
-                break;                
+                break;              
+              case UUID:
               case DATETIME:
               case DATE:
               case STRING:
@@ -989,6 +999,7 @@ public class TildaData implements CodeGenTildaData
                   case LONG:
                   case STRING:
                   case NUMERIC:
+                  case UUID:
                     Out.println(" V.append(" + Helper.getSupportClassFullName(O._ParentSchema) + "._COMMAQUESTION);  }");
                     break;
                   default:
@@ -1053,6 +1064,7 @@ public class TildaData implements CodeGenTildaData
                   case NUMERIC:
                   case LONG:
                   case STRING:
+                  case UUID:  
                     if (C._DefaultUpdateValue == null)
                       Out.println("          if (__Changes.intersects(" + Mask + ") == true) " + Helper.getRuntimeUpdateStr(C) + ";");
                     else
@@ -1126,6 +1138,7 @@ public class TildaData implements CodeGenTildaData
                   case LONG:
                   case CHAR:
                   case STRING:
+                  case UUID:  
                     Out.print(" else ");
                     if (C.isCollection() == false)
                       Out.println("PS.set" + JavaJDBCType.get(C.getType())._JDBCType + "(++i, " + (C.getType() == ColumnType.CHAR ? "\"\"+" : "") + "_" + C.getName() + ");");
@@ -1365,6 +1378,7 @@ public class TildaData implements CodeGenTildaData
                   case BOOLEAN:
                   case CHAR:
                   case STRING:
+                  case UUID:  
                     if (C.isCollection() == true)
                       Out.print("_" + C.getName() + " = (" + (C.isSet() == true ? "Set<" : "List<") + JavaJDBCType.get(C.getType())._JavaClassType + ">) C.getArray(RS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + "._Type, " + C.isSet() + ");");
                     else if (C.getType() == ColumnType.CHAR)

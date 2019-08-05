@@ -21,6 +21,7 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 import tilda.utils.CollectionUtil;
 import tilda.utils.PaddingTracker;
@@ -45,7 +46,8 @@ public enum ColumnType
     DATE       (true , true , false, "DT" ),
     DATETIME   (true , false, false, "DTM"), // Datetimes are stored as 2 columns in the DB, so SETs are not allowed because they are unordered.
     BINARY     (false, false, false, "BIN"),
-    BITFIELD   (false, true , true , "BF" );
+    BITFIELD   (false, true , true , "BF" ),
+    UUID       (true , true , false, "UI" );
     /*@formatter:on*/
 
     private ColumnType(boolean ArrayCompatible, boolean SetCompatible, boolean Primitive, String shortName)
@@ -89,6 +91,7 @@ public enum ColumnType
 		   ,{DATETIME, DATE} //DATETIME
 		   ,{BINARY} //BINARY
 		   ,{BITFIELD} //BITFIELD
+		   ,{UUID, STRING}
           };
 
          _CompatibleDBTypes = new ColumnType[][]
@@ -106,7 +109,8 @@ public enum ColumnType
              ,{DATE, STRING} //DATE
              ,{DATETIME, DATE, STRING}  //DATETIME
              ,{BINARY} //BINARY
-             ,{BITFIELD} //BITFIELD      
+             ,{BITFIELD} //BITFIELD
+             ,{UUID, STRING}
             };   
 
         ColumnType[] colsToValidate = new ColumnType[_CompatibleTypes.length];
@@ -289,7 +293,14 @@ public enum ColumnType
               if (Errors.isEmpty() == false)
                 throw new Exception(Errors.get(0)._V);
               return isSet == true ? CollectionUtil.toSet(val) : CollectionUtil.toList(val);
-            }              
+            }         
+            case UUID:
+            {
+              UUID[] val = ParseUtil.parseUUID("SQLUUIDArray", true, parts, Errors);
+              if (Errors.isEmpty() == false)
+                throw new Exception(Errors.get(0)._V);
+              return isSet == true ? CollectionUtil.toSet(val) : CollectionUtil.toList(val);
+            }    
             case JSON:
             case STRING:
               return isSet == true ? CollectionUtil.toSet(parts) : CollectionUtil.toList(parts);
@@ -302,7 +313,7 @@ public enum ColumnType
 
     public static boolean isNumber(ColumnType Type)
       {
-        return Type == DOUBLE || Type == FLOAT || Type == INTEGER || Type == LONG;
+        return Type == DOUBLE || Type == FLOAT || Type == INTEGER || Type == LONG  || Type == NUMERIC;
       }
 
   }

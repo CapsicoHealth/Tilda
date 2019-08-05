@@ -90,6 +90,7 @@ public class Column extends TypeDef
         super(TypeStr, Size, Precision, Scale);
         _Name = Name;
         _Description = Description;
+
       }
 
     public Column(String Name, String TypeStr, Integer Size, boolean Nullable, ColumnMode Mode, boolean Invariant, ProtectionType Protect, String Description, Integer Precision, Integer Scale)
@@ -101,6 +102,8 @@ public class Column extends TypeDef
         _Invariant = Invariant;
         _ProtectStr = Protect == null ? null : Protect.name();
         _Description = Description;
+        _Precision = Precision;
+        _Scale = Scale;
       }
 
     public Column(String Name, ColumnType Type, String Description)
@@ -322,6 +325,12 @@ public class Column extends TypeDef
          * }
          */
 
+        if(_SameAsObj._Precision != null)
+          _Precision = _SameAsObj._Precision;
+        
+        if(_SameAsObj._Scale != null)
+          _Scale = _SameAsObj._Scale;
+        
         if (_Size != null && _Size != 0 && _Size < _SameAsObj._Size)
           PS.AddError("Column '" + getFullName() + "' is a 'sameas' and is redefining a size '" + _Size + "' that is lower that the origianal column's size '" + _SameAsObj._Size + "'. You can only enlarge a column (for example to go from a CHAR to a VARCHAR), not shrink it.");
         else if (_Mapper != null && _Mapper._Multi != MultiType.NONE)

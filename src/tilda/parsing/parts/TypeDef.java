@@ -38,8 +38,8 @@ public class TypeDef
     /*@formatter:off*/
     @SerializedName("type"      ) public String         _TypeStr    ;
     @SerializedName("size"      ) public Integer        _Size       ;
-    @SerializedName("precision" ) public Integer        _Precision       ;
-    @SerializedName("scale"     ) public Integer        _Scale       ;
+    @SerializedName("precision" ) public Integer        _Precision  ;
+    @SerializedName("scale"     ) public Integer        _Scale      ;
     /*@formatter:on*/
 
     protected transient ColumnType     _Type;
@@ -152,7 +152,11 @@ public class TypeDef
               else if(_Scale != null && _Scale < 0)
                 {
                   PS.AddError(What + " is defined as a '" + _Type + "' and has Scale that is less than 0. This is not allowed per Standard SQL.");
-                }             
+                } 
+              
+              //Sets a default of 0 when no scale is defined in schema
+              if(_Scale == null)
+                _Scale = 0;
           }               
         else
           {

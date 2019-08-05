@@ -431,12 +431,12 @@ public class PostgreSQL implements DBType
     throws Exception
       {
         // Is precision shrinking?
-        if (Col._Size < ColMeta._Size)
+        if (Col._Precision < ColMeta._Precision)
           {
             String Q = "SELECT length(max(\"" + Col.getName() + "\")::varchar) from " + Col._ParentObject.getShortName();
             ScalarRP RP = new ScalarRP();
             Con.executeSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, RP);
-            if (RP.getResult() > Col._Size+1) //add 1 because varchar conversion includes the decimal in length
+            if (RP.getResult() > Col._Precision+1) //add 1 because varchar conversion includes the decimal in length
               {
                 Q = "select \"" + Col.getName() + "\" || '  (' || length(\"" + Col.getName() + "\"::varchar) || ')' as _x from " + Col._ParentObject.getShortName()
                 + " group by \"" + Col.getName() + "\""
@@ -447,17 +447,23 @@ public class PostgreSQL implements DBType
                 LOG.error("Column sample:");
                 for (String s : SLRP.getResult())
                   LOG.error("   - " + s);
-                throw new Exception("Cannot alter Numeric column '" + Col.getFullName() + "' from precision " + ColMeta._Size + " down to " + Col._Size + " because there are values with precision lengths up to " + RP.getResult()
+                throw new Exception("Cannot alter Numeric column '" + Col.getFullName() + "' from precision " + ColMeta._Precision + " down to " + Col._Precision + " because there are values with precision lengths up to " + RP.getResult()
                 + " that would cause errors. You need to manually migrate your database.");
               }
           }
         
         // Is scale expanding?
         if (Col._Scale > ColMeta._Scale)
-          {            
-            String Q = "SELECT length((max(\"" + Col.getName() + "\")::int)::varchar)) from " + Col._ParentObject.getShortName();
+          { 
+            String Q = "";
+            
+            if(ColMeta.isArray() == true)
+              Q = "SELECT length(max(\"" + Col.getName() + "\"::int)::varchar) from (select unnest(\"" + Col.getName() + "\") as \"" + Col.getName() + "\" from "+ Col._ParentObject.getShortName() +") as t";            
+            else
+              Q = "SELECT length((max(\"" + Col.getName() + "\")::int)::varchar) from " + Col._ParentObject.getShortName();
             ScalarRP RP = new ScalarRP();
             Con.executeSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, RP);
+            long i = RP.getResult();
             if (RP.getResult() > (Col._Precision - Col._Scale)) //digits available for before the decimal
               {
                 Q = "select \"" + Col.getName() + "\" || '  (' || length((max(\"" + Col.getName() + "\")::int)::varchar) || ')' as _x from " + Col._ParentObject.getShortName()
@@ -967,6 +973,11 @@ public class PostgreSQL implements DBType
                   TypeSql = "JSONB";
                   TildaType = ColumnType.JSON;
                 }
+              else if (TypeName != null && TypeName.equalsIgnoreCase("uuid") == true)
+                {
+                  TypeSql = "UUID";
+                  TildaType = ColumnType.UUID;
+                }
               else
                 {
                   TypeSql = "OTHER";
@@ -1014,7 +1025,10 @@ public class PostgreSQL implements DBType
               break;
             case "_numeric":
               TildaType = ColumnType.NUMERIC;
-              break;              
+              break;         
+            case "_uuid":
+              TildaType = ColumnType.UUID;
+              break;                  
             case "_bpchar":
               TildaType = ColumnType.CHAR;
               break;

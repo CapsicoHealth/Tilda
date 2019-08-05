@@ -317,9 +317,28 @@ public class DBTest
         
         if (D.Write(C) == false)
           throw new Exception("Bad stuff!");
- 
-        C.commit();        
+              
+        D.setNullA12();
+        D.setNullA12b();
+        if (D.Write(C) == false)
+          throw new Exception("Bad stuff!");      
         
+        D.setA12((short) 123);
+        
+        List<Short> a12b = new ArrayList<Short>();
+        a12b.add((short) 123456789);
+        a12b.add((short) 3654);
+        a12b.add((short) 1234567345);      
+        
+        //"{-13035,-6026,177}"
+        
+        D.setA12b(a12b);
+        if (D.Write(C) == false)
+          throw new Exception("Bad stuff!");
+        
+        C.commit();   
+        
+        LOG.debug("A12: " + D.getA12());
         LOG.debug("A11: " + TextUtil.Print(D.getA11().toString(), "Bad"));
         D = Testing_Factory.LookupByPrimaryKey(D.getRefnum());
         if (D.Read(C) == false)

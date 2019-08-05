@@ -20,6 +20,7 @@ import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 
@@ -98,6 +99,73 @@ public class ParseUtil
         return parseString(Name, Mandatory, Values == null ? null : Values.split(Separator), Errors);
       }
 
+    
+    /************************************************************************************************************************
+     * UUIDS
+     ************************************************************************************************************************/
+
+    /**
+     * @param Name
+     * @param Mandatory
+     * @param Value
+     * @param Errors
+     * @return
+     */
+    public static UUID parseUUID(String Val)
+      {
+        if (TextUtil.isNullOrEmpty(Val) == false)
+          try
+            {
+              return UUID.fromString(Val);
+            }
+          catch (IllegalArgumentException E)
+            {
+            }
+        return new UUID(0L, 0L); //returns an empty UUID composed of zeros
+      }   
+
+    /**
+     * 
+     * @param Name
+     * @param Mandatory
+     * @param Values
+     * @param Errors
+     * @return
+     */
+    public static UUID[] parseUUID(String Name, boolean Mandatory, String[] Values, List<StringStringPair> Errors)
+      {
+        List<UUID> l = new ArrayList<UUID>();
+        if (Values != null)
+          for (String u : Values)
+            if (u == null)
+              l.add(parseUUID(u));
+        if (l.isEmpty() == true)
+          {
+            if (Mandatory == true)
+              {
+                LOG.error("Missing parameter '" + Name + "'.");
+                Errors.add(new StringStringPair(Name, "Mandatory Parameter"));
+              }
+            return null;
+          }
+        return l.toArray(new UUID[l.size()]);
+      }
+
+    /**
+     * 
+     * @param Name
+     * @param Mandatory
+     * @param Values
+     * @param Separator
+     * @param Errors
+     * @return
+     */
+    public static UUID[] parseUUID(String Name, boolean Mandatory, String Values, String Separator, List<StringStringPair> Errors)
+      {
+        return parseUUID(Name, Mandatory, Values == null ? null : Values.split(Separator), Errors);
+      }    
+    
+    
     /************************************************************************************************************************
      * SHORTS
      ************************************************************************************************************************/

@@ -27,6 +27,7 @@ import org.apache.logging.log4j.Logger;
 import com.google.gson.annotations.SerializedName;
 
 import tilda.enums.ColumnMode;
+import tilda.enums.ColumnType;
 import tilda.enums.FrameworkColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.enums.ObjectLifecycle;
@@ -82,8 +83,9 @@ public class Object extends Base
     public Column getColumn(String name)
       {
         for (Column C : _Columns)
-          if (C != null && C.getName() != null && C.getName().equals(name) == true)
+          if (C != null && C.getName() != null && C.getName().equals(name) == true) {           
             return C;
+          }
         return null;
       }
 

@@ -43,7 +43,7 @@ public class ColumnAlterNumericSize extends MigrationAction
     public String getDescription()
       {
         return "Alter table "+_Col._ParentObject.getFullName()
-              +(_Col._Size == _ColMeta._Size ? " numeric column is " + _Col._Size : (_Col._Size > _ColMeta._Size ? " expanding" : " shrinking")+" numeric column "+_Col.getName()+" precision from "+_ColMeta._Size+" to "+_Col._Size)
-              +(_Col._Scale != null ? (_Col._Scale == _ColMeta._Scale ? " and scale is " + _Col._Scale : (_Col._Scale > _ColMeta._Scale ? " and expanding" : " and shrinking")+" scale from "+_ColMeta._Scale+" to "+_Col._Scale) : "");
+              +(_Col._Precision == _ColMeta._Precision ? " numeric column is " + _Col._Precision : (_Col._Precision < _ColMeta._Precision ? " shrinking" : " expanding")+" numeric column "+_Col.getName()+" precision from "+_ColMeta._Precision+" to "+_Col._Precision)
+              +(_Col._Scale != null ? (_Col._Scale == _ColMeta._Scale ? " and scale is " + _Col._Scale : (_Col._Scale < _ColMeta._Scale ? " and shrinking" : " and expanding")+" scale from "+_ColMeta._Scale+" to "+_Col._Scale) : "");
       }
   }
