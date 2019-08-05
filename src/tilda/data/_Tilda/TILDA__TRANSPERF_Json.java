@@ -66,51 +66,51 @@ public class TILDA__TRANSPERF_Json
       if (   _endPeriod              == null)
        throw new Exception("Incoming value for 'tilda.data.TILDA.TransPerf.endPeriod' was not in the expected format. Dates should follow the ISO format.\n"+toString());
       if (_commitNano             == null)
-       _commitNano=0ll;
+       _commitNano=0l;
       if (_commitCount            == null)
        _commitCount=0;
       if (_rollbackNano           == null)
-       _rollbackNano=0ll;
+       _rollbackNano=0l;
       if (_rollbackCount          == null)
        _rollbackCount=0;
       if (_savepointSetNano       == null)
-       _savepointSetNano=0ll;
+       _savepointSetNano=0l;
       if (_savepointSetCount      == null)
        _savepointSetCount=0;
       if (_savepointCommitNano    == null)
-       _savepointCommitNano=0ll;
+       _savepointCommitNano=0l;
       if (_savepointCommitCount   == null)
        _savepointCommitCount=0;
       if (_savepointRollbackNano  == null)
-       _savepointRollbackNano=0ll;
+       _savepointRollbackNano=0l;
       if (_savepointRollbackCount == null)
        _savepointRollbackCount=0;
       if (_statementCloseNano     == null)
-       _statementCloseNano=0ll;
+       _statementCloseNano=0l;
       if (_statementCloseCount    == null)
        _statementCloseCount=0;
       if (_connectionCloseNano    == null)
-       _connectionCloseNano=0ll;
+       _connectionCloseNano=0l;
       if (_connectionCloseCount   == null)
        _connectionCloseCount=0;
       if (_connectionGetNano      == null)
-       _connectionGetNano=0ll;
+       _connectionGetNano=0l;
       if (_connectionGetCount     == null)
        _connectionGetCount=0;
       if (_tildaSetterNano        == null)
-       _tildaSetterNano=0ll;
+       _tildaSetterNano=0l;
       if (_tildaSetterCount       == null)
        _tildaSetterCount=0;
       if (_tildaToStringNano      == null)
-       _tildaToStringNano=0ll;
+       _tildaToStringNano=0l;
       if (_tildaToStringCount     == null)
        _tildaToStringCount=0;
       if (_tildaToJsonNano        == null)
-       _tildaToJsonNano=0ll;
+       _tildaToJsonNano=0l;
       if (_tildaToJsonCount       == null)
        _tildaToJsonCount=0;
       if (_tildaToCsvNano         == null)
-       _tildaToCsvNano=0ll;
+       _tildaToCsvNano=0l;
       if (_tildaToCsvCount        == null)
        _tildaToCsvCount=0;
 
