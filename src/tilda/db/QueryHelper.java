@@ -616,7 +616,8 @@ public abstract class QueryHelper
               {
                 _QueryStr.append(O._Str).append("'").append(DateTimeUtil.printDateTimeForSQL(V)).append("'");
               }
-            _Section = S.WHERE;
+            if (_Section != S.SET)
+             _Section = S.WHERE;
           }
         else
           throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
@@ -830,9 +831,34 @@ public abstract class QueryHelper
     throws Exception
       {
         setColumn(Col1);
-        return equals(V);
+        equals(V);
+        if (Col1.getTZCol() != null)
+          {
+            tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(V.getZone().getId());
+            if (ZI == null)
+             throw new Exception("Cannot set timestamp because timezone value '"+V.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+            setColumn(Col1);
+            equals(ZI.getId());
+          }
+        return this;
       }
 
+    public QueryHelper setNow(Type_DatetimePrimitive Col1)
+    throws Exception
+      {
+        ZonedDateTime Now = DateTimeUtil.NowUTC(); 
+        setColumn(Col1);
+        equals(Now);
+        if (Col1.getTZCol() != null)
+          {
+            tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(Now.getZone().getId());
+            if (ZI == null)
+             throw new Exception("Cannot set timestamp because timezone value '"+Now.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+            setColumn(Col1);
+            equals(ZI.getId());
+          }
+        return this;
+      }
 
 
 

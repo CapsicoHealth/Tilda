@@ -34,9 +34,9 @@ public class SequencePoll extends DBPoll
         public void close();
       }
 
-    public SequencePoll(String PoolName, long PauseNano, String SequenceName, Handler H)
+    public SequencePoll(String PoolName, long PauseMillis, String SequenceName, Handler H)
       {
-        super(PoolName, PauseNano);
+        super(PoolName, PauseMillis);
         _SequenceName = SequenceName;
         _H = H;
       }
