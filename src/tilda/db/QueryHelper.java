@@ -129,7 +129,7 @@ public abstract class QueryHelper
     protected S                   _Section        = null;
     protected boolean             _Where          = false;
     protected boolean             _NoWhereClause  = false;
-    protected int                 _WherePos       = -1; // There Wolf.
+    protected int                 _WherePos       = -1;                               // There Wolf.
     protected int                 _Cardinality    = 0;
     List<ColumnDefinition>        _Columns        = new ArrayList<ColumnDefinition>();
     Set<String>                   _Froms          = new HashSet<String>();
@@ -140,11 +140,11 @@ public abstract class QueryHelper
       {
         init();
       }
-    
+
     public boolean isWhereClauseEmpty()
-    {
-      return _QueryStr.length() == _WherePos;
-    }
+      {
+        return _QueryStr.length() == _WherePos;
+      }
 
     public int getCardinality()
       {
@@ -514,7 +514,7 @@ public abstract class QueryHelper
                 TextUtil.escapeSingleQuoteForSQL(_QueryStr, V);
               }
             if (_Section != S.SET)
-            _Section = S.WHERE;
+              _Section = S.WHERE;
           }
         else
           throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
@@ -527,7 +527,7 @@ public abstract class QueryHelper
           {
             _QueryStr.append(O._Str).append(V);
             if (_Section != S.SET)
-            _Section = S.WHERE;
+              _Section = S.WHERE;
           }
         else
           throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
@@ -540,7 +540,7 @@ public abstract class QueryHelper
           {
             _QueryStr.append(O._Str).append(V);
             if (_Section != S.SET)
-            _Section = S.WHERE;
+              _Section = S.WHERE;
           }
         else
           throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
@@ -553,7 +553,7 @@ public abstract class QueryHelper
           {
             _QueryStr.append(O._Str).append(V);
             if (_Section != S.SET)
-            _Section = S.WHERE;
+              _Section = S.WHERE;
           }
         else
           throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
@@ -566,7 +566,7 @@ public abstract class QueryHelper
           {
             _QueryStr.append(O._Str).append(V);
             if (_Section != S.SET)
-            _Section = S.WHERE;
+              _Section = S.WHERE;
           }
         else
           throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
@@ -579,7 +579,7 @@ public abstract class QueryHelper
           {
             _QueryStr.append(O._Str).append(V);
             if (_Section != S.SET)
-            _Section = S.WHERE;
+              _Section = S.WHERE;
           }
         else
           throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
@@ -592,7 +592,7 @@ public abstract class QueryHelper
           {
             _QueryStr.append(O._Str).append('\'').append(V).append('\'');
             if (_Section != S.SET)
-            _Section = S.WHERE;
+              _Section = S.WHERE;
           }
         else
           throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
@@ -624,7 +624,7 @@ public abstract class QueryHelper
                 _QueryStr.append(O._Str).append("'").append(DateTimeUtil.printDateTimeForSQL(V)).append("'");
               }
             if (_Section != S.SET)
-             _Section = S.WHERE;
+              _Section = S.WHERE;
           }
         else
           throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
@@ -671,18 +671,18 @@ public abstract class QueryHelper
         return this;
       }
 
-/*
-    public QueryHelper join(String SchemaName, String TableName, String JoinType, SelectQuery On)
-    throws Exception
-      {
-        if (_Froms.size() != 1)
-         throw new Exception("Cannot do join when you have already done multiple Froms.");
-        if (_Section != S.FROM)
-         throw new Exception("Cannot do a join unless it immediately follows a from.");
-        
-        return this;
-      }
-*/
+    /*
+     * public QueryHelper join(String SchemaName, String TableName, String JoinType, SelectQuery On)
+     * throws Exception
+     * {
+     * if (_Froms.size() != 1)
+     * throw new Exception("Cannot do join when you have already done multiple Froms.");
+     * if (_Section != S.FROM)
+     * throw new Exception("Cannot do a join unless it immediately follows a from.");
+     * 
+     * return this;
+     * }
+     */
 
     public QueryHelper tableSample(float Percentage, boolean Repeatable)
     throws Exception
@@ -843,7 +843,7 @@ public abstract class QueryHelper
           {
             tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(V.getZone().getId());
             if (ZI == null)
-             throw new Exception("Cannot set timestamp because timezone value '"+V.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+              throw new Exception("Cannot set timestamp because timezone value '" + V.getZone().getId() + "' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
             setColumn(Col1.getTZCol());
             equals(ZI.getId());
           }
@@ -853,14 +853,14 @@ public abstract class QueryHelper
     public QueryHelper setNow(Type_DatetimePrimitive Col1)
     throws Exception
       {
-        ZonedDateTime Now = DateTimeUtil.NowUTC(); 
+        ZonedDateTime Now = DateTimeUtil.NowUTC();
         setColumn(Col1);
         equals(Now);
         if (Col1.getTZCol() != null)
           {
             tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(Now.getZone().getId());
             if (ZI == null)
-             throw new Exception("Cannot set timestamp because timezone value '"+Now.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+              throw new Exception("Cannot set timestamp because timezone value '" + Now.getZone().getId() + "' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
             setColumn(Col1.getTZCol());
             equals(ZI.getId());
           }
@@ -899,9 +899,9 @@ public abstract class QueryHelper
     throws Exception
       {
         if (V == null || V.length == 0)
-          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
+          throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty value array.");
         if (isWhereClause() == false)
-          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
+          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
 
         Col.getFullColumnVarForSelect(_C, _QueryStr);
         if (not == true)
@@ -922,9 +922,9 @@ public abstract class QueryHelper
     throws Exception
       {
         if (V == null || V.isEmpty() == true)
-          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
+          throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty value collection.");
         if (isWhereClause() == false)
-          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
+          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
 
         Col.getFullColumnVarForSelect(_C, _QueryStr);
         if (not == true)
@@ -945,9 +945,9 @@ public abstract class QueryHelper
     throws Exception
       {
         if (V == null || V.length == 0)
-          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
+          throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty value array.");
         if (isWhereClause() == false)
-          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
+          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
 
         if (not == true)
           _QueryStr.append(" not ");
@@ -969,9 +969,9 @@ public abstract class QueryHelper
     throws Exception
       {
         if (V == null || V.isEmpty() == true)
-          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
+          throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty value array.");
         if (isWhereClause() == false)
-          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
+          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
 
         if (not == true)
           _QueryStr.append(" not ");
@@ -994,9 +994,9 @@ public abstract class QueryHelper
     throws Exception
       {
         if (V == null || V.length == 0)
-          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
+          throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty value array.");
         if (isWhereClause() == false)
-          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
+          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
 
         Col.getFullColumnVarForSelect(_C, _QueryStr);
         if (not == true)
@@ -1017,9 +1017,9 @@ public abstract class QueryHelper
     throws Exception
       {
         if (V == null || V.length == 0)
-          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
+          throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty value array.");
         if (isWhereClause() == false)
-          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
+          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
 
         Col.getFullColumnVarForSelect(_C, _QueryStr);
         if (not == true)
@@ -1045,9 +1045,9 @@ public abstract class QueryHelper
     throws Exception
       {
         if (V == null || V.length == 0)
-          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
+          throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty value array.");
         if (isWhereClause() == false)
-          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
+          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
 
         Col.getFullColumnVarForSelect(_C, _QueryStr);
         if (not == true)
@@ -1073,9 +1073,9 @@ public abstract class QueryHelper
     throws Exception
       {
         if (V == null || V.length == 0)
-          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
+          throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty value array.");
         if (isWhereClause() == false)
-          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
+          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
 
         Col.getFullColumnVarForSelect(_C, _QueryStr);
         if (not == true)
@@ -1101,9 +1101,9 @@ public abstract class QueryHelper
     throws Exception
       {
         if (V == null || V.length == 0)
-          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
+          throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty value array.");
         if (isWhereClause() == false)
-          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
+          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
 
         Col.getFullColumnVarForSelect(_C, _QueryStr);
         if (not == true)
@@ -1129,9 +1129,9 @@ public abstract class QueryHelper
     throws Exception
       {
         if (V == null || V.length == 0)
-          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
+          throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty value array.");
         if (isWhereClause() == false)
-          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
+          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
 
         Col.getFullColumnVarForSelect(_C, _QueryStr);
         if (not == true)
@@ -1162,9 +1162,9 @@ public abstract class QueryHelper
     throws Exception
       {
         if (V == null || V.isEmpty() == true)
-          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
+          throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty value collection.");
         if (isWhereClause() == false)
-          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
+          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
 
         Col.getFullColumnVarForSelect(_C, _QueryStr);
         if (not == true)
@@ -2332,7 +2332,7 @@ public abstract class QueryHelper
         Col.getFullColumnVarForSelect(_C, _QueryStr);
         if (caseInsensitive == true)
           _QueryStr.append(")");
-        OpVal(not == true ? Op.NOT_LIKE : Op.LIKE, caseInsensitive==true && V != null ? V.toLowerCase() : V);
+        OpVal(not == true ? Op.NOT_LIKE : Op.LIKE, caseInsensitive == true && V != null ? V.toLowerCase() : V);
         return this;
       }
 
@@ -2491,7 +2491,7 @@ public abstract class QueryHelper
             _QueryStr.append(")");
             return this;
           }
-        
+
         boolean First = true;
         for (String v : V)
           {
@@ -2526,7 +2526,7 @@ public abstract class QueryHelper
         return this;
       }
 
-    
+
 
     protected static void Array(StringBuilder Str, String[] V)
       {
@@ -2641,7 +2641,7 @@ public abstract class QueryHelper
           throw new Exception("Invalid query syntax: GroupBy after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
 
         // Check if we are just starting the query. For "WhereClause" queries, it's possible to have the select and from and then straight
-        // to an OrderBy or a GroupBy.  This will check whether we jumped straight to such a clause without having done a where.
+        // to an OrderBy or a GroupBy. This will check whether we jumped straight to such a clause without having done a where.
         if (_QueryStr.length() == 0)
           _NoWhereClause = true;
 
@@ -2676,7 +2676,7 @@ public abstract class QueryHelper
           throw new Exception("Invalid query syntax: OrderBy after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
 
         // Check if we are just starting the query. For "WhereClause" queries, it's possible to have the select and from and then straight
-        // to an OrderBy or a GroupBy.  This will check whether we jumped straight to such a clause without having done a where.
+        // to an OrderBy or a GroupBy. This will check whether we jumped straight to such a clause without having done a where.
         if (_QueryStr.length() == 0)
           _NoWhereClause = true;
 
@@ -2717,6 +2717,7 @@ public abstract class QueryHelper
     /**
      * Generates a BETWEEN statement based on the age range provided. Following with the standard Between
      * semantics, the range is considered fully inclusive, i.e., x <= age <= y.
+     * 
      * @param Col
      * @param ageRange
      * @return
@@ -2724,7 +2725,7 @@ public abstract class QueryHelper
     public QueryHelper ageBetween(Type_DatetimePrimitive Col, int[] ageRange)
       {
         ZonedDateTime Today = DateTimeUtil.getTodayTimestamp(true);
-        ZonedDateTime D1 = Today.minusYears(ageRange[1]+1).plusDays(1);
+        ZonedDateTime D1 = Today.minusYears(ageRange[1] + 1).plusDays(1);
         ZonedDateTime D2 = Today.minusYears(ageRange[0]);
         Col.getFullColumnVarForSelect(_C, _QueryStr);
         _QueryStr.append(" BETWEEN ").append("'").append(DateTimeUtil.printDateTimeForSQL(D1)).append("'")
@@ -2828,14 +2829,14 @@ public abstract class QueryHelper
         _C.within(_QueryStr, Col, ColStart, durationCount, Type);
         return this;
       }
-    
-    
+
+
     public QueryHelper newLine()
     throws Exception
       {
         return newLine(null);
       }
-    
+
     public QueryHelper newLine(String NextHeader)
     throws Exception
       {
@@ -2844,7 +2845,7 @@ public abstract class QueryHelper
           _QueryStr.append(NextHeader);
         return this;
       }
-    
+
 
 
     public String toString()
