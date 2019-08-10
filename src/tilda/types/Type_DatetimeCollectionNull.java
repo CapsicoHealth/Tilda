@@ -21,7 +21,10 @@ public class Type_DatetimeCollectionNull extends Type_DatetimeCollection impleme
   {
     public Type_DatetimeCollectionNull(String SchemaName, String TableName, String ColumnName, int Count, String Description)
       {
-        super(SchemaName, TableName, ColumnName, Count, Description);
+        this(SchemaName, TableName, ColumnName, Count, Description, null);
       }
-    
+    public Type_DatetimeCollectionNull(String SchemaName, String TableName, String ColumnName, int Count, String Description, Type_StringCollectionNull TZCols)
+      {
+        super(SchemaName, TableName, ColumnName, Count, Description, TZCols);
+      }
   }

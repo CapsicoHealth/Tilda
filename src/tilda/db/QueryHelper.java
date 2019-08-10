@@ -513,6 +513,7 @@ public abstract class QueryHelper
                 _QueryStr.append(O._Str);
                 TextUtil.escapeSingleQuoteForSQL(_QueryStr, V);
               }
+            if (_Section != S.SET)
             _Section = S.WHERE;
           }
         else
@@ -525,6 +526,7 @@ public abstract class QueryHelper
         if (_ST == StatementType.SELECT && (_Section == S.WHERE || _Section == S.FROM) || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
           {
             _QueryStr.append(O._Str).append(V);
+            if (_Section != S.SET)
             _Section = S.WHERE;
           }
         else
@@ -537,6 +539,7 @@ public abstract class QueryHelper
         if (_ST == StatementType.SELECT && (_Section == S.WHERE || _Section == S.FROM) || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
           {
             _QueryStr.append(O._Str).append(V);
+            if (_Section != S.SET)
             _Section = S.WHERE;
           }
         else
@@ -549,6 +552,7 @@ public abstract class QueryHelper
         if (_ST == StatementType.SELECT && (_Section == S.WHERE || _Section == S.FROM) || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
           {
             _QueryStr.append(O._Str).append(V);
+            if (_Section != S.SET)
             _Section = S.WHERE;
           }
         else
@@ -561,6 +565,7 @@ public abstract class QueryHelper
         if (_ST == StatementType.SELECT && (_Section == S.WHERE || _Section == S.FROM) || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
           {
             _QueryStr.append(O._Str).append(V);
+            if (_Section != S.SET)
             _Section = S.WHERE;
           }
         else
@@ -573,6 +578,7 @@ public abstract class QueryHelper
         if (_ST == StatementType.SELECT && (_Section == S.WHERE || _Section == S.FROM) || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET) || _ST == StatementType.DELETE && _Section == S.WHERE)
           {
             _QueryStr.append(O._Str).append(V);
+            if (_Section != S.SET)
             _Section = S.WHERE;
           }
         else
@@ -585,6 +591,7 @@ public abstract class QueryHelper
         if (_ST == StatementType.SELECT && (_Section == S.WHERE || _Section == S.FROM) || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
           {
             _QueryStr.append(O._Str).append('\'').append(V).append('\'');
+            if (_Section != S.SET)
             _Section = S.WHERE;
           }
         else
@@ -837,7 +844,7 @@ public abstract class QueryHelper
             tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(V.getZone().getId());
             if (ZI == null)
              throw new Exception("Cannot set timestamp because timezone value '"+V.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-            setColumn(Col1);
+            setColumn(Col1.getTZCol());
             equals(ZI.getId());
           }
         return this;
@@ -854,7 +861,7 @@ public abstract class QueryHelper
             tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(Now.getZone().getId());
             if (ZI == null)
              throw new Exception("Cannot set timestamp because timezone value '"+Now.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-            setColumn(Col1);
+            setColumn(Col1.getTZCol());
             equals(ZI.getId());
           }
         return this;
