@@ -178,7 +178,7 @@ public class Query
             if (clauseStrIndex <  m._start)
              {
                NewClauseStatic .append(_Clause, clauseStrIndex, m._start);
-               String Sub = TextUtil.EscapeDoubleQuoteWithSlash(_Clause.substring(clauseStrIndex, m._start));
+               String Sub = TextUtil.escapeDoubleQuoteWithSlash(_Clause.substring(clauseStrIndex, m._start));
                if (clauseStrIndex == 0)
                 NewClauseDynamic.append(Sub.substring(1, Sub.length()-1));
                else
@@ -239,7 +239,7 @@ public class Query
         if (clauseStrIndex < _Clause.length())
           {
             NewClauseStatic .append(_Clause, clauseStrIndex, _Clause.length());
-            String Sub = TextUtil.EscapeDoubleQuoteWithSlash(_Clause.substring(clauseStrIndex, _Clause.length()));
+            String Sub = TextUtil.escapeDoubleQuoteWithSlash(_Clause.substring(clauseStrIndex, _Clause.length()));
             NewClauseDynamic.append(Sub.substring(clauseStrIndex == 0 ? 1 : 0, Sub.length()-1));
           }
         

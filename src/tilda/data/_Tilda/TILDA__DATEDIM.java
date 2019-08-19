@@ -593,7 +593,7 @@ This is the setter for:<BR>
           setNullDayName();
         }
        else if (v.length() > 255)
-        throw new Exception("Cannot set tilda.data.TILDA.DateDim.dayName: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 255.");
+        throw new Exception("Cannot set tilda.data.TILDA.DateDim.dayName: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 255.");
        else if (v.equals(_dayName) == false)
         {
           __Changes.or(TILDA__DATEDIM_Factory.COLS.DAYNAME._Mask);
@@ -1741,7 +1741,7 @@ This is the setter for:<BR>
           setNullMonthName();
         }
        else if (v.length() > 255)
-        throw new Exception("Cannot set tilda.data.TILDA.DateDim.monthName: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 255.");
+        throw new Exception("Cannot set tilda.data.TILDA.DateDim.monthName: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 255.");
        else if (v.equals(_monthName) == false)
         {
           __Changes.or(TILDA__DATEDIM_Factory.COLS.MONTHNAME._Mask);
@@ -1895,7 +1895,7 @@ This is the setter for:<BR>
           setNullMonthNameShort();
         }
        else if (v.length() > 255)
-        throw new Exception("Cannot set tilda.data.TILDA.DateDim.monthNameShort: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 255.");
+        throw new Exception("Cannot set tilda.data.TILDA.DateDim.monthNameShort: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 255.");
        else if (v.equals(_monthNameShort) == false)
         {
           __Changes.or(TILDA__DATEDIM_Factory.COLS.MONTHNAMESHORT._Mask);
@@ -2191,7 +2191,7 @@ This is the setter for:<BR>
           setNullQuarterName();
         }
        else if (v.length() > 255)
-        throw new Exception("Cannot set tilda.data.TILDA.DateDim.quarterName: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 255.");
+        throw new Exception("Cannot set tilda.data.TILDA.DateDim.quarterName: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 255.");
        else if (v.equals(_quarterName) == false)
         {
           __Changes.or(TILDA__DATEDIM_Factory.COLS.QUARTERNAME._Mask);
@@ -2487,7 +2487,7 @@ This is the setter for:<BR>
           setNullMmyyyy();
         }
        else if (v.length() > 6)
-        throw new Exception("Cannot set tilda.data.TILDA.DateDim.mmyyyy: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 6.");
+        throw new Exception("Cannot set tilda.data.TILDA.DateDim.mmyyyy: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 6.");
        else if (v.equals(_mmyyyy) == false)
         {
           __Changes.or(TILDA__DATEDIM_Factory.COLS.MMYYYY._Mask);
@@ -2641,7 +2641,7 @@ This is the setter for:<BR>
           setNullMmddyyyy();
         }
        else if (v.length() > 8)
-        throw new Exception("Cannot set tilda.data.TILDA.DateDim.mmddyyyy: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 8.");
+        throw new Exception("Cannot set tilda.data.TILDA.DateDim.mmddyyyy: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 8.");
        else if (v.equals(_mmddyyyy) == false)
         {
           __Changes.or(TILDA__DATEDIM_Factory.COLS.MMDDYYYY._Mask);
@@ -2795,7 +2795,7 @@ This is the setter for:<BR>
           setNullYyyymmdd();
         }
        else if (v.length() > 8)
-        throw new Exception("Cannot set tilda.data.TILDA.DateDim.yyyymmdd: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 8.");
+        throw new Exception("Cannot set tilda.data.TILDA.DateDim.yyyymmdd: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 8.");
        else if (v.equals(_yyyymmdd) == false)
         {
           __Changes.or(TILDA__DATEDIM_Factory.COLS.YYYYMMDD._Mask);
@@ -3375,7 +3375,7 @@ This is the setter for:<BR>
           setNullHolidayName();
         }
        else if (v.length() > 255)
-        throw new Exception("Cannot set tilda.data.TILDA.DateDim.holidayName: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 255.");
+        throw new Exception("Cannot set tilda.data.TILDA.DateDim.holidayName: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 255.");
        else if (v.equals(_holidayName) == false)
         {
           __Changes.or(TILDA__DATEDIM_Factory.COLS.HOLIDAYNAME._Mask);

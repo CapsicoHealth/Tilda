@@ -22,7 +22,20 @@ public class Type_DatetimePrimitive extends ColumnDefinition
   {
     public Type_DatetimePrimitive(String SchemaName, String TableName, String ColumnName, int Count, String Description)
       {
-        super(SchemaName, TableName, ColumnName, Count, ColumnType.DATETIME, false, Description);
+        this(SchemaName, TableName, ColumnName, Count, Description, null);
       }
-    
+
+    public Type_DatetimePrimitive(String SchemaName, String TableName, String ColumnName, int Count, String Description, Type_StringPrimitive TZCol)
+      {
+        super(SchemaName, TableName, ColumnName, Count, ColumnType.DATETIME, false, Description);
+        _TZCol = TZCol;
+      }
+
+    protected final Type_StringPrimitive _TZCol;
+
+    public Type_StringPrimitive getTZCol()
+      {
+        return _TZCol;
+      }
+
   }

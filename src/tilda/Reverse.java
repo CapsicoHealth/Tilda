@@ -30,7 +30,6 @@ import tilda.db.metadata.SchemaMeta;
 import tilda.db.metadata.TableMeta;
 import tilda.enums.ColumnType;
 import tilda.enums.FrameworkColumnType;
-import tilda.parsing.parts.Column;
 import tilda.utils.AsciiArt;
 import tilda.utils.NumberFormatUtil;
 import tilda.utils.PaddingTracker;
@@ -64,8 +63,8 @@ public class Reverse
             for (TableMeta T : S.getTableMetas())
               {
                 Str.append("\n")
-                .append((++tableNum==0?"     { \"name\":" : "    ,{ \"name\":") + TextUtil.EscapeDoubleQuoteWithSlash(T._TableName) + "\n")
-                .append("      ,\"description\":"+TextUtil.EscapeDoubleQuoteWithSlash(TextUtil.isNullOrEmpty(T._Descr) == true?"Blah blah blah...":T._Descr)+"\n")
+                .append((++tableNum==0?"     { \"name\":" : "    ,{ \"name\":") + TextUtil.escapeDoubleQuoteWithSlash(T._TableName) + "\n")
+                .append("      ,\"description\":"+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.isNullOrEmpty(T._Descr) == true?"Blah blah blah...":T._Descr)+"\n")
                 .append("      ,\"columns\":[\n");
                 int colNum = 0;
                 boolean autoPK = false;
@@ -86,11 +85,11 @@ public class Reverse
                      continue;
                     if (autoPK == true && Col._NameOriginal.equals("refnum") == true)
                      continue;
-                    Str.append((++colNum==0?"         { \"name\":" : "        ,{ \"name\":") + TextUtil.EscapeDoubleQuoteWithSlash(Col._NameOriginal)+T._PadderColumnNames.getPad(Col._NameOriginal));
+                    Str.append((++colNum==0?"         { \"name\":" : "        ,{ \"name\":") + TextUtil.escapeDoubleQuoteWithSlash(Col._NameOriginal)+T._PadderColumnNames.getPad(Col._NameOriginal));
                     FKColumnMeta FKCol = Col.getFKMeta();
                     if (FKCol != null)
                       {
-                        Str.append(", \"sameas\":" + TextUtil.EscapeDoubleQuoteWithSlash(FKCol._ParentFK._OtherSchema+"."+FKCol._ParentFK._OtherTable+"."+FKCol._PKCol));
+                        Str.append(", \"sameas\":" + TextUtil.escapeDoubleQuoteWithSlash(FKCol._ParentFK._OtherSchema+"."+FKCol._ParentFK._OtherTable+"."+FKCol._PKCol));
                       }
                     else if (Col._TildaType == null)
                       {
@@ -107,7 +106,7 @@ public class Reverse
                       }
                     else
                       Str.append(", \"type\":\"" + Col._TildaType.name() + (Col.isArray() ? "[]\'\"":"\"  ") + Col._TildaType.getPad()+"              ");
-                    Str.append(", \"nullable\":" + (Col._Nullable == 1 ? "true " : "false") + ", \"description\":"+TextUtil.EscapeDoubleQuoteWithSlash(TextUtil.isNullOrEmpty(Col._Descr) == true?"Blah blah blah...":Col._Descr)+" }\n");
+                    Str.append(", \"nullable\":" + (Col._Nullable == 1 ? "true " : "false") + ", \"description\":"+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.isNullOrEmpty(Col._Descr) == true?"Blah blah blah...":Col._Descr)+" }\n");
                   }
                 Str.append("       ]\n");
                 
@@ -121,7 +120,7 @@ public class Reverse
                       {
                         if (++colNum != 0)
                           Str.append(", ");
-                        Str.append(TextUtil.EscapeDoubleQuoteWithSlash(ColName));
+                        Str.append(TextUtil.escapeDoubleQuoteWithSlash(ColName));
                       }
                     Str.append("] }\n");
                   }
@@ -137,7 +136,7 @@ public class Reverse
                     int num = -1;
                     for (FKMeta FK : T._ForeignKeysOut.values())
                       {
-                        Str.append((++colNum==0?"         " : "        ,") + "{ \"name\":" + TextUtil.EscapeDoubleQuoteWithSlash(FK.getCleanName())+Padder.getPad(FK.getCleanName())
+                        Str.append((++colNum==0?"         " : "        ,") + "{ \"name\":" + TextUtil.escapeDoubleQuoteWithSlash(FK.getCleanName())+Padder.getPad(FK.getCleanName())
                                   +", \"srcColumns\":[");
                         
                         int fkColNum = -1;
@@ -145,9 +144,9 @@ public class Reverse
                           {
                             if (++fkColNum!=0)
                              Str.append(", ");
-                            Str.append(TextUtil.EscapeDoubleQuoteWithSlash(FKCol._FKCol));
+                            Str.append(TextUtil.escapeDoubleQuoteWithSlash(FKCol._FKCol));
                           }
-                        Str.append("], \"destObject\":"+TextUtil.EscapeDoubleQuoteWithSlash(FK._OtherSchema+"."+FK._OtherTable)+" }\n");
+                        Str.append("], \"destObject\":"+TextUtil.escapeDoubleQuoteWithSlash(FK._OtherSchema+"."+FK._OtherTable)+" }\n");
                       }
                     Str.append("       ]\n");                    
                   }
@@ -164,14 +163,14 @@ public class Reverse
                       {
                         if (I._Name.toLowerCase().endsWith("_pkey") == true)
                          continue;
-                        Str.append((++indexNum==0?"         " : "        ,") + "{ \"name\":" + TextUtil.EscapeDoubleQuoteWithSlash(I.getCleanName())+Padder.getPad(I.getCleanName())
+                        Str.append((++indexNum==0?"         " : "        ,") + "{ \"name\":" + TextUtil.escapeDoubleQuoteWithSlash(I.getCleanName())+Padder.getPad(I.getCleanName())
                                   +", \""+(I._Unique == true ? "columns":"orderBy")+"\":[");
                         int indexColNum = -1;
                         for (IndexColumnMeta IndexCol : I._Columns)
                           {
                             if (++indexColNum!=0)
                              Str.append(", ");
-                            Str.append(TextUtil.EscapeDoubleQuoteWithSlash(IndexCol._Col+" "+(IndexCol._Asc==true?"ASC":"DESC")));
+                            Str.append(TextUtil.escapeDoubleQuoteWithSlash(IndexCol._Col+" "+(IndexCol._Asc==true?"ASC":"DESC")));
                           }
                         Str.append("] }\n");
                       }

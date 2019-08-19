@@ -74,19 +74,19 @@ public class Template extends Formula implements PatternObject
               PS.AddError("View " + _ParentView.getShortName() + " is defining a formula pattern '"+_Name+"' with a duplicate title '"+TE._Title+"'.");
 
             Formula F = new Formula();
-            F._Name = TextUtil.SearchReplace(_Name, "?", TE._Name);
+            F._Name = TextUtil.searchReplace(_Name, "?", TE._Name);
             F._Id = F._Name;
             F._Description = new String[_Description.length];
             for (int i = 0; i < _Description.length; ++i)
-             F._Description[i] = TextUtil.SearchReplace(_Description[i], "?", TE._Description);
+             F._Description[i] = TextUtil.searchReplace(_Description[i], "?", TE._Description);
             F._TypeStr = _TypeStr;
             F._Size = _Size;
             F._Precision = _Precision;
             F._Scale = _Scale;
             F._FormulaStrs = new String[_FormulaStrs.length];
             for (int i = 0; i < _FormulaStrs.length; ++i)
-             F._FormulaStrs[i] = TextUtil.SearchReplace(_FormulaStrs[i], "?", TE._Expression);
-            F._Title = TextUtil.SearchReplace(_Title, "?", TE._Title);
+             F._FormulaStrs[i] = TextUtil.searchReplace(_FormulaStrs[i], "?", TE._Expression);
+            F._Title = TextUtil.searchReplace(_Title, "?", TE._Title);
 
             F._FormulaTemplate = true;
 

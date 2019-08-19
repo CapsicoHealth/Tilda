@@ -208,7 +208,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.Mapping.type to null: it's not nullable.");
        else if (v.length() > 10)
-        throw new Exception("Cannot set tilda.data.TILDA.Mapping.type: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 10.");
+        throw new Exception("Cannot set tilda.data.TILDA.Mapping.type: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 10.");
        else if (v.equals(_type) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
@@ -313,7 +313,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.Mapping.src to null: it's not nullable.");
        else if (v.length() > 1024)
-        throw new Exception("Cannot set tilda.data.TILDA.Mapping.src: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 1024.");
+        throw new Exception("Cannot set tilda.data.TILDA.Mapping.src: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 1024.");
        else if (v.equals(_src) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
@@ -418,7 +418,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.Mapping.dst to null: it's not nullable.");
        else if (v.length() > 1024)
-        throw new Exception("Cannot set tilda.data.TILDA.Mapping.dst: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 1024.");
+        throw new Exception("Cannot set tilda.data.TILDA.Mapping.dst: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 1024.");
        else if (v.equals(_dst) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)

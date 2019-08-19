@@ -308,7 +308,7 @@ This is the setter for:<BR>
           setNullName();
         }
        else if (v.length() > 10)
-        throw new Exception("Cannot set tilda.data.TILDA.Testing3Realized.name: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 10.");
+        throw new Exception("Cannot set tilda.data.TILDA.Testing3Realized.name: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 10.");
        else if (v.equals(_name) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
@@ -443,7 +443,7 @@ This is the setter for:<BR>
           setNullA8bTZ();
         }
        else if (v.length() > 5)
-        throw new Exception("Cannot set tilda.data.TILDA.Testing3Realized.a8bTZ: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
+        throw new Exception("Cannot set tilda.data.TILDA.Testing3Realized.a8bTZ: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
        else if (v.equals(_a8bTZ) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)

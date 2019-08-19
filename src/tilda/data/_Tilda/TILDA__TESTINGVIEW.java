@@ -226,7 +226,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.TestingView.name to null: it's not nullable.");
        else if (v.length() > 10)
-        throw new Exception("Cannot set tilda.data.TILDA.TestingView.name: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 10.");
+        throw new Exception("Cannot set tilda.data.TILDA.TestingView.name: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 10.");
        else if (v.equals(_name) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
@@ -1292,10 +1292,10 @@ This is the null setter for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-                        _name    = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.NAME._Mask   );
-                        _refnum  =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.REFNUM._Mask );
-                        _a2Min   = ParseUtil.parseCharacter    (RS.getString    (++i));  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A2MIN._Mask  );
-                        _a2Max   = ParseUtil.parseCharacter    (RS.getString    (++i));  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A2MAX._Mask  );
+                        _name    = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.NAME._Mask   );
+                        _refnum  =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.REFNUM._Mask );
+                        _a2Min   = ParseUtil.parseCharacter    (RS.getString   (++i));  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A2MIN._Mask  );
+                        _a2Max   = ParseUtil.parseCharacter    (RS.getString   (++i));  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A2MAX._Mask  );
                         _a9      = ProcessZDTs(C, _a9TZ     , "tilda.data.TILDA.TestingView.a9"     , RS, ++i, TILDA__TESTINGVIEW_Factory.COLS.A9     , TILDA__TESTINGVIEW_Factory.COLS.A9TZ     ); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A9._Mask     );
                         _a9c = (List<LocalDate>) C.getArray(RS, ++i, TILDA__TESTINGVIEW_Factory.COLS.A9C._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A9C._Mask    );
                         _a6First =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A6FIRST._Mask);

@@ -69,7 +69,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitive      STARTPERIOD           = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "startPeriod"           , 1/*1*/, "The timestamp for when the record was created.");
+     public static Type_DatetimePrimitive      STARTPERIOD           = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "startPeriod"           , 1/*1*/, "The timestamp for when the record was created.", STARTPERIODTZ);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.TransPerf.endPeriodTZ -> TILDA.TransPerf."endPeriodTZ"
@@ -106,7 +106,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitive      ENDPERIOD             = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "endPeriod"             , 3/*3*/, "The timestamp for when the record was created.");
+     public static Type_DatetimePrimitive      ENDPERIOD             = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "endPeriod"             , 3/*3*/, "The timestamp for when the record was created.", ENDPERIODTZ);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.TransPerf.commitNano -> TILDA.TransPerf."commitNano"
@@ -1133,7 +1133,7 @@ This is the column definition for:<BR>
                PS.clearParameters();
              }
 
-           if (index != 0 && (index + 1) % batchSize != 0)
+           if ((index + 1) % batchSize != 0)
              {
                int[] results = PS.executeBatch();
                int failedRec = JDBCHelper.batchWriteDone(results, L.size() - insertCount);

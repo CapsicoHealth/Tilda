@@ -18,8 +18,8 @@ public final class TILDA__1_0
  {
    protected static final Logger LOG = LogManager.getLogger(TILDA__1_0.class.getName());
 
-   protected static final String _COMMAQUESTION            =TextUtil.Identity(",?");
-   protected static final String _EQUALQUESTION            =TextUtil.Identity("=?");
+   protected static final String _COMMAQUESTION            =TextUtil.identity(",?");
+   protected static final String _EQUALQUESTION            =TextUtil.identity("=?");
 
    protected static void HandleFinally(java.sql.PreparedStatement PS, long T0, String TableName, StatementType ST, int count, List<java.sql.Array> AllocatedArrays) throws java.sql.SQLException
      {

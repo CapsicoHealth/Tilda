@@ -345,7 +345,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.measureSchema to null: it's not nullable.");
        else if (v.length() > 64)
-        throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.measureSchema: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
+        throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.measureSchema: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
        else if (v.equals(_measureSchema) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
@@ -428,7 +428,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.measureName to null: it's not nullable.");
        else if (v.length() > 64)
-        throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.measureName: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
+        throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.measureName: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
        else if (v.equals(_measureName) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
@@ -587,7 +587,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.formulaLocation to null: it's not nullable.");
        else if (v.length() > 64)
-        throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.formulaLocation: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
+        throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.formulaLocation: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
        else if (v.equals(_formulaLocation) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
@@ -670,7 +670,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.formulaLocation2 to null: it's not nullable.");
        else if (v.length() > 64)
-        throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.formulaLocation2: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
+        throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.formulaLocation2: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
        else if (v.equals(_formulaLocation2) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
@@ -753,7 +753,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.formulaName to null: it's not nullable.");
        else if (v.length() > 64)
-        throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.formulaName: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
+        throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.formulaName: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
        else if (v.equals(_formulaName) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
@@ -836,7 +836,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.title to null: it's not nullable.");
        else if (v.length() > 128)
-        throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.title: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 128.");
+        throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.title: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 128.");
        else if (v.equals(_title) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
@@ -919,7 +919,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.description to null: it's not nullable.");
        else if (v.length() > 32000)
-        throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.description: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 32000.");
+        throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.description: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 32000.");
        else if (v.equals(_description) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
@@ -1228,7 +1228,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.type to null: it's not nullable.");
        else if (v.length() > 3)
-        throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.type: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 3.");
+        throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.type: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 3.");
        else if (v.equals(_type) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
@@ -1334,7 +1334,7 @@ This is the setter for:<BR>
           setNullFormula();
         }
        else if (v.length() > 32000)
-        throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.formula: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 32000.");
+        throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.formula: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 32000.");
        else if (v.equals(_formula) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)

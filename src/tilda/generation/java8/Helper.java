@@ -154,9 +154,9 @@ public class Helper
             Out.println("          C.releaseSavepoint(false);");
           }
         if (Static == true)
-          Out.println("          C.handleCatch(E, " + TextUtil.EscapeDoubleQuoteWithSlash(OperationDebugStr) + ");");
+          Out.println("          C.handleCatch(E, " + TextUtil.escapeDoubleQuoteWithSlash(OperationDebugStr) + ");");
         else
-          Out.println("          return C.handleCatch(E, " + TextUtil.EscapeDoubleQuoteWithSlash(OperationDebugStr) + ");");
+          Out.println("          return C.handleCatch(E, " + TextUtil.escapeDoubleQuoteWithSlash(OperationDebugStr) + ");");
         boolean Collection = false;
         for (Column C : O._Columns)
           if (C != null && C.isCollection() == true)
@@ -304,12 +304,12 @@ public class Helper
 
     public static String getFullColVarAtRuntime(Column C)
       {
-        return "C.getFullColumnVar(S, " + TextUtil.EscapeDoubleQuoteWithSlash(C._ParentObject._ParentSchema._Name) + ", " + TextUtil.EscapeDoubleQuoteWithSlash(C._ParentObject._Name) + ", " + TextUtil.EscapeDoubleQuoteWithSlash(C.getName()) + ")";
+        return "C.getFullColumnVar(S, " + TextUtil.escapeDoubleQuoteWithSlash(C._ParentObject._ParentSchema._Name) + ", " + TextUtil.escapeDoubleQuoteWithSlash(C._ParentObject._Name) + ", " + TextUtil.escapeDoubleQuoteWithSlash(C.getName()) + ")";
       }
 
     public static String getFullTableVarAtRuntime(Object O)
       {
-        return "C.getFullTableVar(S, " + TextUtil.EscapeDoubleQuoteWithSlash(O._ParentSchema._Name) + ", " + TextUtil.EscapeDoubleQuoteWithSlash(O._Name) + ")";
+        return "C.getFullTableVar(S, " + TextUtil.escapeDoubleQuoteWithSlash(O._ParentSchema._Name) + ", " + TextUtil.escapeDoubleQuoteWithSlash(O._Name) + ")";
       }
 
 
@@ -387,7 +387,7 @@ public class Helper
                 {
                   Out.println(Lead + "   case " + LookupId + ":");
                   if (I._SubQuery != null && I._SubQuery._FromObj.isEmpty() == false)
-                    Out.println(Lead + "      S.append(" + TextUtil.EscapeDoubleQuoteWithSlash(", " + PrintObjectList(I._SubQuery._FromObj)) + "); // Additional From's from the subwhereclause.");
+                    Out.println(Lead + "      S.append(" + TextUtil.escapeDoubleQuoteWithSlash(", " + PrintObjectList(I._SubQuery._FromObj)) + "); // Additional From's from the subwhereclause.");
                   String WhereClause = PrintWhereClause(G, I._ColumnObjs, I._SubQuery);
                   if (TextUtil.isNullOrEmpty(WhereClause) == false)
                     Out.println(Lead + "      S.append(\" where (" + WhereClause + ")\");");
@@ -422,7 +422,7 @@ public class Helper
                 {
                   Out.println(Lead + "   case " + LookupId + ":");
                   if (SWC._FromObj.isEmpty() == false)
-                    Out.println(Lead + "      S.append(" + TextUtil.EscapeDoubleQuoteWithSlash(", " + PrintObjectList(SWC._FromObj)) + "); // Additional From's from the subwhereclause.");
+                    Out.println(Lead + "      S.append(" + TextUtil.escapeDoubleQuoteWithSlash(", " + PrintObjectList(SWC._FromObj)) + "); // Additional From's from the subwhereclause.");
                   String WhereClause = PrintWhereClause(G, null, SWC);
                   if (TextUtil.isNullOrEmpty(WhereClause) == false)
                     Out.println(Lead + "      S.append(\" where (" + WhereClause + ")\");");
@@ -693,15 +693,15 @@ public class Helper
           Out.println("      Str.append(\",\");");
         if (C.getType() == ColumnType.DOUBLE || C.getType() == ColumnType.FLOAT || C.getType() == ColumnType.LONG || C.getType() == ColumnType.INTEGER
         || C.getType() == ColumnType.CHAR || C.getType() == ColumnType.BINARY || C.getType() == ColumnType.BOOLEAN)
-          Out.println("      TextUtil.EscapeDoubleQuoteForCSV(Str, \"\" + " + "Data.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "());");
+          Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, \"\" + " + "Data.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "());");
         else if (C.isCollection() == true)
-          Out.println("      TextUtil.EscapeDoubleQuoteForCSV(Str, " + "TextUtil.Print(Data.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "(), \",\"));");
+          Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, " + "TextUtil.Print(Data.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "(), \",\"));");
         else if (C.getType() == ColumnType.DATETIME)
-          Out.println("      TextUtil.EscapeDoubleQuoteForCSV(Str, " + "DateTimeUtil.printDateTimeForSQL(Data.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()));");
+          Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, " + "DateTimeUtil.printDateTimeForSQL(Data.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()));");
         else if (C.getType() == ColumnType.DATE)
-          Out.println("      TextUtil.EscapeDoubleQuoteForCSV(Str, " + "DateTimeUtil.printDate(Data.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()));");
+          Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, " + "DateTimeUtil.printDate(Data.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()));");
         else
-          Out.println("      TextUtil.EscapeDoubleQuoteForCSV(Str, " + "Data.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "());");
+          Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, " + "Data.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "());");
         return false;
       }
 
@@ -761,7 +761,7 @@ public class Helper
                 }
               Out.println(" " + getFullColVarAtRuntime(C) + ";");
             }
-        Out.println("          S.append(\" from \"); C.getFullTableVar(S, " + TextUtil.EscapeDoubleQuoteWithSlash(O._ParentSchema._Name) + ", " + TextUtil.EscapeDoubleQuoteWithSlash(O._Name) + ");");
+        Out.println("          S.append(\" from \"); C.getFullTableVar(S, " + TextUtil.escapeDoubleQuoteWithSlash(O._ParentSchema._Name) + ", " + TextUtil.escapeDoubleQuoteWithSlash(O._Name) + ");");
       }
 
   }

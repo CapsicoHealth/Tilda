@@ -58,7 +58,8 @@ public class ViewColumnWrapper extends Column
           }
         else if (TextUtil.isNullOrEmpty(VCol._Expression) == false)
           {
-            _TypeStr = VCol._Type._Type.name()+(SameAsCol.isCollection()==true?"[]":"");
+            _TypeStr = VCol._Type._TypeStr;
+//            _TypeStr = VCol._Type._Type.name()+(SameAsCol.isCollection()==true?"[]":"");
             _Size = VCol._Type._Size;
             _Scale = VCol._Type._Scale;
             _Precision = VCol._Type._Precision;

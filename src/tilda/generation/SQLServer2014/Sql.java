@@ -234,7 +234,7 @@ public class Sql extends MSSQL implements CodeGenSql
         boolean hasAggregates = false;
 
         Object ObjectMain = V._ViewColumns.get(0)._SameAsObj._ParentObject;
-        Out.println("-- " + TextUtil.EscapeSingleQuoteForSQL(V._Description));
+        Out.println("-- " + TextUtil.escapeSingleQuoteForSQL(V._Description));
         Out.print("select ");
         boolean First = true;
         Map<String, Integer> M = new HashMap<String, Integer>();
@@ -364,7 +364,7 @@ public class Sql extends MSSQL implements CodeGenSql
         String Str = OutStr.toString();
         OutFinal.print(Str);
         Str = Str.replaceAll("\n", "\\n");
-        // Out.println("COMMENT ON VIEW " + V._ParentSchema._Name + "." + V._Name + " IS " + TextUtil.EscapeSingleQuoteForSQL(Str) + ";");
+        // Out.println("COMMENT ON VIEW " + V._ParentSchema._Name + "." + V._Name + " IS " + TextUtil.escapeSingleQuoteForSQL(Str) + ";");
         OutStr.close();
       }
 

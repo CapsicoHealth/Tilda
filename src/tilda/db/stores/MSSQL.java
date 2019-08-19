@@ -400,7 +400,7 @@ public class MSSQL implements DBType
     throws Exception
       {
         StringBuilder Str = new StringBuilder();
-        TextUtil.EscapeSingleQuoteForSQL(Str, val, true);
+        TextUtil.escapeSingleQuoteForSQL(Str, val, true);
         PS.setString(i, Str.toString());
       }
 

@@ -371,7 +371,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.Formula.location to null: it's not nullable.");
        else if (v.length() > 64)
-        throw new Exception("Cannot set tilda.data.TILDA.Formula.location: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
+        throw new Exception("Cannot set tilda.data.TILDA.Formula.location: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
        else if (v.equals(_location) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
@@ -475,7 +475,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.Formula.location2 to null: it's not nullable.");
        else if (v.length() > 64)
-        throw new Exception("Cannot set tilda.data.TILDA.Formula.location2: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
+        throw new Exception("Cannot set tilda.data.TILDA.Formula.location2: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
        else if (v.equals(_location2) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
@@ -580,7 +580,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.Formula.name to null: it's not nullable.");
        else if (v.length() > 64)
-        throw new Exception("Cannot set tilda.data.TILDA.Formula.name: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
+        throw new Exception("Cannot set tilda.data.TILDA.Formula.name: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
        else if (v.equals(_name) == false)
         {
           __Changes.or(TILDA__FORMULA_Factory.COLS.NAME._Mask);
@@ -908,7 +908,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.Formula.type to null: it's not nullable.");
        else if (v.length() > 3)
-        throw new Exception("Cannot set tilda.data.TILDA.Formula.type: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 3.");
+        throw new Exception("Cannot set tilda.data.TILDA.Formula.type: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 3.");
        else if (v.equals(_type) == false)
         {
           __Changes.or(TILDA__FORMULA_Factory.COLS.TYPE._Mask);
@@ -1166,7 +1166,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.Formula.title to null: it's not nullable.");
        else if (v.length() > 128)
-        throw new Exception("Cannot set tilda.data.TILDA.Formula.title: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 128.");
+        throw new Exception("Cannot set tilda.data.TILDA.Formula.title: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 128.");
        else if (v.equals(_title) == false)
         {
           __Changes.or(TILDA__FORMULA_Factory.COLS.TITLE._Mask);
@@ -1268,7 +1268,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.Formula.description to null: it's not nullable.");
        else if (v.length() > 32000)
-        throw new Exception("Cannot set tilda.data.TILDA.Formula.description: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 32000.");
+        throw new Exception("Cannot set tilda.data.TILDA.Formula.description: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 32000.");
        else if (v.equals(_description) == false)
         {
           __Changes.or(TILDA__FORMULA_Factory.COLS.DESCRIPTION._Mask);
@@ -1393,7 +1393,7 @@ This is the setter for:<BR>
           setNullFormula();
         }
        else if (v.length() > 32000)
-        throw new Exception("Cannot set tilda.data.TILDA.Formula.formula: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 32000.");
+        throw new Exception("Cannot set tilda.data.TILDA.Formula.formula: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 32000.");
        else if (v.equals(_formula) == false)
         {
           __Changes.or(TILDA__FORMULA_Factory.COLS.FORMULA._Mask);
@@ -1547,7 +1547,7 @@ This is the setter for:<BR>
           setNullHtmlDoc();
         }
        else if (v.length() > 32000)
-        throw new Exception("Cannot set tilda.data.TILDA.Formula.htmlDoc: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 32000.");
+        throw new Exception("Cannot set tilda.data.TILDA.Formula.htmlDoc: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 32000.");
        else if (v.equals(_htmlDoc) == false)
         {
           __Changes.or(TILDA__FORMULA_Factory.COLS.HTMLDOC._Mask);
