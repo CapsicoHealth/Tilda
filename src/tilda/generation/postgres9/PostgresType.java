@@ -35,7 +35,7 @@ public enum PostgresType
     DATETIME("timestamptz"     , "timestamptz", ColumnType.DATETIME  ),
     BINARY  ("BYTEA"           , null         , ColumnType.BINARY    ),
     BITFIELD("INTEGER"         , "int4"       , ColumnType.BITFIELD  ),
-    UUID    ("uuid"            , "uuid"       , ColumnType.UUID      );
+    UUID    ("UUID"            , "uuid"       , ColumnType.UUID      );
     /*@formatter:on*/
 
     static

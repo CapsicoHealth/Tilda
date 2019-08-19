@@ -456,9 +456,9 @@
         { "name": "a10c"         , "type": "INTEGER"        ,                                                       "description": "The blah"},
         //{ "name": "a10c"         , "type": "LONG"        ,   
         
-        { "name": "a11"          , "type": "NUMERIC"    , "precision":9, "scale":3,                             "description": "The blah"},
-        { "name": "a11b"         , "type": "NUMERIC[]"  , "precision":11, "scale":5,                             "description": "The blah"},
-        { "name": "a11c"         , "type": "NUMERIC"    , "precision":11,                                        "description": "The blah"},
+        { "name": "a11"          , "type": "NUMERIC"    , "precision":8, "scale":4,                             "description": "The blah"},
+        { "name": "a11b"         , "type": "NUMERIC[]"  , "precision":6, "scale":3,                             "description": "The blah"},
+        { "name": "a11c"         , "type": "NUMERIC"    , "precision":5,                                        "description": "The blah"},
         //{ "name": "a11d"         , "type": "NUMERIC"    ,                                                        "description": "The blah"}, //ERRORS
         
         { "name": "a12"          , "type": "SHORT"      ,                                                         "description": "The blah"},

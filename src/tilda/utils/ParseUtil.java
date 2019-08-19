@@ -123,6 +123,25 @@ public class ParseUtil
             }
         return new UUID(0L, 0L); //returns an empty UUID composed of zeros
       }   
+    
+    /**
+     * @param Name
+     * @param Mandatory
+     * @param Value
+     * @param Errors
+     * @return
+     */
+    public static UUID parseUUID(String Name, boolean Mandatory, String Value, List<StringStringPair> Errors)
+      {
+        if (ParseUtil.parseString(Name, Mandatory, Value, Errors) == null)
+          {
+            LOG.error("Invalid value '" + Value + "' for parameter '" + Name + "'.");
+            Errors.add(new StringStringPair(Name, "Invalid parameter value '" + Value + "': expecting a UUID."));
+          }
+        
+        UUID v = ParseUtil.parseUUID(Value);
+        return v;
+      }    
 
     /**
      * 

@@ -661,13 +661,13 @@ create table if not exists TILDA.Testing -- blah blah
   , "a10a"         integer                        -- The blah
   , "a10b"         varchar(10)                    -- The blah
   , "a10c"         integer                        -- The blah
-  , "a11"          numeric(9,3)                   -- The blah
-  , "a11b"         numeric(11,5)[]                -- The blah
-  , "a11c"         numeric(11,0)                  -- The blah
+  , "a11"          numeric(8,4)                   -- The blah
+  , "a11b"         numeric(6,3)[]                 -- The blah
+  , "a11c"         numeric(5,0)                   -- The blah
   , "a12"          smallint                       -- The blah
   , "a12b"         smallint[]                     -- The blah
-  , "a13"          uuid                           -- The blah
-  , "a13b"         uuid[]                         -- The blah
+  , "a13"          UUID                           -- The blah
+  , "a13b"         UUID[]                         -- The blah
   , "created"      timestamptz         not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.Testing)
   , "lastUpdated"  timestamptz         not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.Testing)
   , "deleted"      timestamptz                    -- The timestamp for when the record was deleted. (TILDA.Testing)
@@ -758,13 +758,13 @@ create table if not exists TILDA.Testing2Realized -- Realized table for view TIL
   , "a10a"            integer                        -- The blah
   , "a10b"            varchar(10)                    -- The blah
   , "a10c"            integer                        -- The blah
-  , "a11"             numeric(9,3)                   -- The blah
-  , "a11b"            numeric(11,5)[]                -- The blah
-  , "a11c"            numeric(11,0)                  -- The blah
+  , "a11"             numeric(8,4)                   -- The blah
+  , "a11b"            numeric(6,3)[]                 -- The blah
+  , "a11c"            numeric(5,0)                   -- The blah
   , "a12"             smallint                       -- The blah
   , "a12b"            smallint[]                     -- The blah
-  , "a13"             uuid                           -- The blah
-  , "a13b"            uuid[]                         -- The blah
+  , "a13"             UUID                           -- The blah
+  , "a13b"            UUID[]                         -- The blah
   , "description"     varchar(250)                   -- The title for a person, i.e., Mr, Miss, Mrs...
   , "desc2"           varchar(3000)                  -- The title for a person, i.e., Mr, Miss, Mrs...
   , "desc3"           text                           -- The title for a person, i.e., Mr, Miss, Mrs...
@@ -870,13 +870,13 @@ create table if not exists TILDA.Testing4Realized -- Realized table for view TIL
   , "a10a"         integer                        -- The blah
   , "a10b"         varchar(10)                    -- The blah
   , "a10c"         integer                        -- The blah
-  , "a11"          numeric(9,3)                   -- The blah
-  , "a11b"         numeric(11,5)[]                -- The blah
-  , "a11c"         numeric(11,0)                  -- The blah
+  , "a11"          numeric(8,4)                   -- The blah
+  , "a11b"         numeric(6,3)[]                 -- The blah
+  , "a11c"         numeric(5,0)                   -- The blah
   , "a12"          smallint                       -- The blah
   , "a12b"         smallint[]                     -- The blah
-  , "a13"          uuid                           -- The blah
-  , "a13b"         uuid[]                         -- The blah
+  , "a13"          UUID                           -- The blah
+  , "a13b"         UUID[]                         -- The blah
   , "description"  varchar(250)                   -- The title for a person, i.e., Mr, Miss, Mrs...
   , "desc2"        varchar(3000)                  -- The title for a person, i.e., Mr, Miss, Mrs...
   , "desc3"        text                           -- The title for a person, i.e., Mr, Miss, Mrs...

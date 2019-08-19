@@ -24,6 +24,7 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -333,6 +334,19 @@ public class DBTest
         //"{-13035,-6026,177}"
         
         D.setA12b(a12b);
+        if (D.Write(C) == false)
+          throw new Exception("Bad stuff!");
+        
+        
+        D.setA13(new UUID(0l, 0l));    
+        if (D.Write(C) == false)
+          throw new Exception("Bad stuff!");
+        
+        D.setNullA13();
+        if (D.Write(C) == false)
+          throw new Exception("Bad stuff!");
+        
+        D.setA13(UUID.fromString("1234"));    
         if (D.Write(C) == false)
           throw new Exception("Bad stuff!");
         
