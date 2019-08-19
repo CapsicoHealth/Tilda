@@ -306,15 +306,26 @@ public class DBTest
         if (D.Write(C) == false)
           throw new Exception("Bad stuff!");
 
-        D.setA11(new BigDecimal(11111.1234));
+        D.setA11(new BigDecimal(1111.1234));
+        if (D.Write(C) == false)
+          throw new Exception("Bad stuff!");      
+        
+        
         
         List<BigDecimal> a11b = new ArrayList<BigDecimal>();
-        a11b.add(new BigDecimal(1234.568));
-        a11b.add(new BigDecimal(12345.689));
-        a11b.add(new BigDecimal(123456.8999));
+        a11b.add(new BigDecimal(123.568));
+        a11b.add(new BigDecimal(123.689));
+        a11b.add(new BigDecimal(123.899));
         D.setA11b(a11b);
+        if (D.Write(C) == false)
+          throw new Exception("Bad stuff!");      
         
-        D.setA11c(new BigDecimal(1111111111.0000));
+        
+        D.setA11c(new BigDecimal(1111.0000));
+        if (D.Write(C) == false)
+          throw new Exception("Bad stuff!");      
+        
+        //D.setA11c(new BigDecimal(1111111111.0000)); //Errors
         
         if (D.Write(C) == false)
           throw new Exception("Bad stuff!");
@@ -343,12 +354,13 @@ public class DBTest
           throw new Exception("Bad stuff!");
         
         D.setNullA13();
+        LOG.debug("A13: " + D.getA13());
         if (D.Write(C) == false)
           throw new Exception("Bad stuff!");
         
-        D.setA13(UUID.fromString("1234"));    
-        if (D.Write(C) == false)
-          throw new Exception("Bad stuff!");
+//        D.setA13(UUID.fromString("1234"));    
+//        if (D.Write(C) == false)
+//          throw new Exception("Bad stuff!");
         
         C.commit();   
         

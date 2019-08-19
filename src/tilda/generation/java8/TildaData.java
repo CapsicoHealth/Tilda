@@ -603,8 +603,7 @@ public class TildaData implements CodeGenTildaData
                 case LONG:
                 case SHORT:
                 case INTEGER:
-                case NUMERIC:   
-                case UUID:                   
+                case NUMERIC:                  
                   if (C.isSet() == true)
                     Out.println("       if (_" + C.getName() + ".contains(v) == false)");
                   else if (C.isList() == true)
@@ -613,6 +612,7 @@ public class TildaData implements CodeGenTildaData
                     Out.println("       if (__Init == InitMode.CREATE || v != _" + C.getName() + ")");
                   Out.println("        {");
                   break;
+                case UUID:                      
                 case DATE:
                 case DATETIME:
                 case STRING:
@@ -1130,9 +1130,10 @@ public class TildaData implements CodeGenTildaData
                   case JSON:
                     Out.println(" else PS.set" + JavaJDBCType.get(C.getType())._JDBCType + "(++i, " + (C.getType() == ColumnType.CHAR ? "\"\"+" : "") + "_" + C.getName() + ");");
                     break;
-                  case UUID:  
+                  case UUID:
+                    Out.print(" else ");
                     if (C.isCollection() == false)
-                      Out.println("PS.set" + JavaJDBCType.get(C.getType())._JDBCType + "(++i, " + (C.getType() == ColumnType.UUID ? "\"\"+" : "") + "_" + C.getName() + ");");
+                      Out.println("PS.set" + JavaJDBCType.get(C.getType())._JDBCType + "(++i, _" + C.getName() + ", java.sql.Types." + JavaJDBCType.get(C.getType())._JDBCSQLType + ");");
                     else
                       Out.println("C.setArray(PS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + "._Type, AllocatedArrays, _" + C.getName() + ");");
                     break;                    

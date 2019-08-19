@@ -495,7 +495,7 @@ public class PostgreSQL implements DBType
           {
             if (Col.getType() == ColumnType.DATETIME || Col.getType() == ColumnType.DATE
             || Col.getType() == ColumnType.INTEGER || Col.getType() == ColumnType.LONG || Col.getType() == ColumnType.FLOAT || Col.getType() == ColumnType.DOUBLE
-            || Col.getType() == ColumnType.BOOLEAN)
+            || Col.getType() == ColumnType.BOOLEAN || Col.getType() == ColumnType.UUID)
               {
                 String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName()
                 + "\" TYPE " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection(), Col._Precision, Col._Scale)
@@ -571,7 +571,7 @@ public class PostgreSQL implements DBType
           {
             if (CMP._CMeta._TildaType == ColumnType.STRING)
               {
-                if (CMP._Col.getType() == ColumnType.DATETIME || CMP._Col.getType() == ColumnType.DATE
+                if (CMP._Col.getType() == ColumnType.DATETIME || CMP._Col.getType() == ColumnType.DATE || CMP._Col.getType() == ColumnType.UUID
                 || CMP._Col.getType() == ColumnType.INTEGER || CMP._Col.getType() == ColumnType.LONG || CMP._Col.getType() == ColumnType.FLOAT || CMP._Col.getType() == ColumnType.DOUBLE
                 || CMP._Col.getType() == ColumnType.BOOLEAN || CMP._Col.getType() == ColumnType.NUMERIC || CMP._Col.getType() == ColumnType.SHORT)
                   {

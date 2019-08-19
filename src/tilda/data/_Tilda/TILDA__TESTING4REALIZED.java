@@ -3483,7 +3483,11 @@ This is the setter for:<BR>
     void setA13(UUID v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _a13)
+       if (v == null)
+        {
+          setNullA13();
+        }
+       else if (v.equals(_a13) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4Realized.a13' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -3639,7 +3643,11 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (_a13b == null)
         _a13b = new ArrayList<UUID>();
-       if (pos >= _a13b.size() || _a13b.get(pos).equals(v) == false)
+       if (v == null)
+        {
+          setNullA13b();
+        }
+       else if (pos >= _a13b.size() || _a13b.get(pos).equals(v) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing4Realized.a13b' that is invariant, or part of a read-only or pre-existing WORM object.");

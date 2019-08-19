@@ -8675,7 +8675,11 @@ This is the setter for:<BR>
    public void setA13(UUID v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _a13)
+       if (v == null)
+        {
+          setNullA13();
+        }
+       else if (v.equals(_a13) == false)
         {
           __Changes.or(TILDA__TESTING_Factory.COLS.A13._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.A13._Mask);
@@ -8847,7 +8851,11 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (_a13b == null)
         _a13b = new ArrayList<UUID>();
-       if (pos >= _a13b.size() || _a13b.get(pos).equals(v) == false)
+       if (v == null)
+        {
+          setNullA13b();
+        }
+       else if (pos >= _a13b.size() || _a13b.get(pos).equals(v) == false)
         {
           __Changes.or(TILDA__TESTING_Factory.COLS.A13B._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.A13B._Mask);
@@ -10076,11 +10084,11 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A13._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A13._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      );PS.setString    (++i, ""+_a13);
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A13._Mask) == true) PS.setNull(++i, java.sql.Types.OTHER     ); else PS.setObject    (++i, _a13, java.sql.Types.OTHER     );
         } 
        if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A13B._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A13B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR      );C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A13B._Type, AllocatedArrays, _a13b);
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A13B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.OTHER     ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A13B._Type, AllocatedArrays, _a13b);
         } 
        if (__Changes.intersects(TILDA__TESTING_Factory.COLS.CREATED._Mask) == true) 
         { 

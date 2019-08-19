@@ -96,7 +96,7 @@ public enum ColumnType
 
          _CompatibleDBTypes = new ColumnType[][]
            {
-              {STRING, JSON, CHAR, INTEGER, LONG, FLOAT, DOUBLE, BOOLEAN, DATE, DATETIME, BITFIELD, SHORT, NUMERIC}  //STRING
+              {STRING, JSON, CHAR, INTEGER, LONG, FLOAT, DOUBLE, BOOLEAN, DATE, DATETIME, BITFIELD, SHORT, NUMERIC, UUID}  //STRING
              ,{JSON, STRING} //JSON
              ,{CHAR, STRING, BOOLEAN} //CHAR
              ,{SHORT, BOOLEAN, STRING} //SHORT TODO:CHECK

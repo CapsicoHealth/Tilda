@@ -44,7 +44,7 @@ public enum JavaJDBCType
     DATETIME("ZonedDateTime", ZonedDateTime.class, "Timestamp ", "TIMESTAMP_WITH_TIMEZONE", ColumnType.DATETIME),
     BINARY  ("byte[]"       , byte[].class       , "Bytes     ", "BINARY    "             , ColumnType.BINARY  ),
     BITFIELD("int"          , Integer.class      , "Int       ", "BIGINT    "             , ColumnType.BITFIELD),
-    UUID    ("UUID"         , UUID.class         , "String    ", "CHAR      "             , ColumnType.UUID    );
+    UUID    ("UUID"         , UUID.class         , "Object    ", "OTHER     "             , ColumnType.UUID    );
     /*@formatter:on*/
 
     static {
