@@ -430,55 +430,55 @@ public class PostgreSQL implements DBType
     public boolean alterTableAlterColumnNumericSize(Connection Con, ColumnMeta ColMeta, Column Col)
     throws Exception
       {
-        // Is precision shrinking?
-        if (Col._Precision < ColMeta._Precision)
-          {
-            String Q = "SELECT length(max(\"" + Col.getName() + "\")::varchar) from " + Col._ParentObject.getShortName();
-            ScalarRP RP = new ScalarRP();
-            Con.executeSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, RP);
-            if (RP.getResult() > Col._Precision+1) //add 1 because varchar conversion includes the decimal in length
-              {
-                Q = "select \"" + Col.getName() + "\" || '  (' || length(\"" + Col.getName() + "\"::varchar) || ')' as _x from " + Col._ParentObject.getShortName()
-                + " group by \"" + Col.getName() + "\""
-                + " order by length(\"" + Col.getName() + "\"::varchar) desc"
-                + " limit 10";
-                StringListRP SLRP = new StringListRP();
-                Con.executeSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, SLRP);
-                LOG.error("Column sample:");
-                for (String s : SLRP.getResult())
-                  LOG.error("   - " + s);
-                throw new Exception("Cannot alter Numeric column '" + Col.getFullName() + "' from precision " + ColMeta._Precision + " down to " + Col._Precision + " because there are values with precision lengths up to " + RP.getResult()
-                + " that would cause errors. You need to manually migrate your database.");
-              }
-          }
+//        // Is precision shrinking?
+//        if (Col._Precision < ColMeta._Precision)
+//          {
+//            String Q = "SELECT length(max(\"" + Col.getName() + "\")::varchar) from " + Col._ParentObject.getShortName();
+//            ScalarRP RP = new ScalarRP();
+//            Con.executeSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, RP);
+//            if (RP.getResult() > Col._Precision+1) //add 1 because varchar conversion includes the decimal in length
+//              {
+//                Q = "select \"" + Col.getName() + "\" || '  (' || length(\"" + Col.getName() + "\"::varchar) || ')' as _x from " + Col._ParentObject.getShortName()
+//                + " group by \"" + Col.getName() + "\""
+//                + " order by length(\"" + Col.getName() + "\"::varchar) desc"
+//                + " limit 10";
+//                StringListRP SLRP = new StringListRP();
+//                Con.executeSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, SLRP);
+//                LOG.error("Column sample:");
+//                for (String s : SLRP.getResult())
+//                  LOG.error("   - " + s);
+//                throw new Exception("Cannot alter Numeric column '" + Col.getFullName() + "' from precision " + ColMeta._Precision + " down to " + Col._Precision + " because there are values with precision lengths up to " + RP.getResult()
+//                + " that would cause errors. You need to manually migrate your database.");
+//              }
+//          }
         
-        // Is scale expanding?
-        if (Col._Scale > ColMeta._Scale)
-          { 
-            String Q = "";
-            
-            if(ColMeta.isArray() == true)
-              Q = "SELECT length(max(\"" + Col.getName() + "\"::int)::varchar) from (select unnest(\"" + Col.getName() + "\") as \"" + Col.getName() + "\" from "+ Col._ParentObject.getShortName() +") as t";            
-            else
-              Q = "SELECT length((max(\"" + Col.getName() + "\")::int)::varchar) from " + Col._ParentObject.getShortName();
-            ScalarRP RP = new ScalarRP();
-            Con.executeSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, RP);
-            long i = RP.getResult();
-            if (RP.getResult() > (Col._Precision - Col._Scale)) //digits available for before the decimal
-              {
-                Q = "select \"" + Col.getName() + "\" || '  (' || length((max(\"" + Col.getName() + "\")::int)::varchar) || ')' as _x from " + Col._ParentObject.getShortName()
-                + " group by \"" + Col.getName() + "\""
-                + " order by length(\"" + Col.getName() + "\"::varchar) desc"
-                + " limit 10";
-                StringListRP SLRP = new StringListRP();
-                Con.executeSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, SLRP);
-                LOG.error("Column sample:");
-                for (String s : SLRP.getResult())
-                  LOG.error("   - " + s);
-                throw new Exception("Cannot alter Numeric column '" + Col.getFullName() + "' from scale " + Col._Scale + " up to " + ColMeta._Scale + " because there are pre-decimal value lengths up to " + RP.getResult()
-                + " that would cause errors. You need to manually migrate your database.");
-              }
-          }        
+//        // Is scale expanding?
+//        if (Col._Scale > ColMeta._Scale)
+//          { 
+//            String Q = "";
+//            
+//            if(ColMeta.isArray() == true)
+//              Q = "SELECT length(max(\"" + Col.getName() + "\"::int)::varchar) from (select unnest(\"" + Col.getName() + "\") as \"" + Col.getName() + "\" from "+ Col._ParentObject.getShortName() +") as t";            
+//            else
+//              Q = "SELECT length((max(\"" + Col.getName() + "\")::int)::varchar) from " + Col._ParentObject.getShortName();
+//            ScalarRP RP = new ScalarRP();
+//            Con.executeSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, RP);
+//            long i = RP.getResult();
+//            if (RP.getResult() > (Col._Precision - Col._Scale)) //digits available for before the decimal
+//              {
+//                Q = "select \"" + Col.getName() + "\" || '  (' || length((max(\"" + Col.getName() + "\")::int)::varchar) || ')' as _x from " + Col._ParentObject.getShortName()
+//                + " group by \"" + Col.getName() + "\""
+//                + " order by length(\"" + Col.getName() + "\"::varchar) desc"
+//                + " limit 10";
+//                StringListRP SLRP = new StringListRP();
+//                Con.executeSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, SLRP);
+//                LOG.error("Column sample:");
+//                for (String s : SLRP.getResult())
+//                  LOG.error("   - " + s);
+//                throw new Exception("Cannot alter Numeric column '" + Col.getFullName() + "' from scale " + Col._Scale + " up to " + ColMeta._Scale + " because there are pre-decimal value lengths up to " + RP.getResult()
+//                + " that would cause errors. You need to manually migrate your database.");
+//              }
+//          }        
 
         String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName() + "\" TYPE "
         + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection(), Col._Precision, Col._Scale) + ";";

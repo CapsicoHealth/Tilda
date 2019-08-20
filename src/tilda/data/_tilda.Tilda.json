@@ -265,6 +265,8 @@
                                                   ,{ "name":"Double"   , "value":"DBL", "description": "Double"    }
                                                   ,{ "name":"Date"     , "value":"DT" , "description": "Date"      }
                                                   ,{ "name":"DateTime" , "value":"DTM", "description": "DateTime"  }
+                                                  ,{ "name":"Numeric"  , "value":"NUM", "description": "Numeric"   }
+                                                  ,{ "name":"Uuid"     , "value":"UI" , "description": "Uuid"      }
                                                  ]
          }
         ,{ "name":"title"            , "type":"STRING"  , "nullable":false, "size":  128,                   "description":"The title of the formula/column."  }
@@ -449,23 +451,19 @@
         { "name": "a9c"          , "type": "DATE"       ,                                                       "description": "The blah"},
         { "name": "a9d"          , "type": "DATE[]"     ,                                                       "description": "The blah"},
         
-        { "name": "a10a"         , "type": "INTEGER"        ,                                                       "description": "The blah"},
-        //{ "name": "a10a"         , "type": "BOOLEAN"        ,                                                       "description": "The blah"},
-        { "name": "a10b"         , "type": "STRING"        ,                  "size":    10,                    "description": "The blah"},
-        //{ "name": "a10b"         , "type": "INTEGER"        ,                                                       "description": "The blah"},
-        { "name": "a10c"         , "type": "INTEGER"        ,                                                       "description": "The blah"},
-        //{ "name": "a10c"         , "type": "LONG"        ,   
+        { "name": "a10a"         , "type": "INTEGER"    ,                                                       "description": "The blah"},
+        { "name": "a10b"         , "type": "STRING"     ,                "size": 10,                            "description": "The blah"},
+        { "name": "a10c"         , "type": "INTEGER"    ,                                                       "description": "The blah"},
         
-        { "name": "a11"          , "type": "NUMERIC"    , "precision":8, "scale":4,                             "description": "The blah"},
-        { "name": "a11b"         , "type": "NUMERIC[]"  , "precision":6, "scale":3,                             "description": "The blah"},
-        { "name": "a11c"         , "type": "NUMERIC"    , "precision":5,                                        "description": "The blah"},
-        //{ "name": "a11d"         , "type": "NUMERIC"    ,                                                        "description": "The blah"}, //ERRORS
+        { "name": "a11"          , "type": "NUMERIC"    , "precision": 8, "scale": 4,                            "description": "The blah"},
+        { "name": "a11b"         , "type": "NUMERIC[]"  , "precision": 6, "scale": 3,                            "description": "The blah"},
+        { "name": "a11c"         , "type": "NUMERIC"    , "precision": 5,                                        "description": "The blah"},
+     
+        { "name": "a12"          , "type": "SHORT"      ,                                                        "description": "The blah"},
+        { "name": "a12b"         , "type": "SHORT[]"    ,                                                        "description": "The blah"},
         
-        { "name": "a12"          , "type": "SHORT"      ,                                                         "description": "The blah"},
-        { "name": "a12b"         , "type": "SHORT[]"   ,                                                         "description": "The blah"},
-        
-        { "name": "a13"         , "type": "UUID"   ,                                                         "description": "The blah"},
-        { "name": "a13b"        , "type": "UUID[]"   ,                                                         "description": "The blah"}
+        { "name": "a13"         , "type": "UUID"        ,                                                        "description": "The blah"},
+        { "name": "a13b"        , "type": "UUID[]"      ,                                                        "description": "The blah"}
                                                             
                                                             
       ],

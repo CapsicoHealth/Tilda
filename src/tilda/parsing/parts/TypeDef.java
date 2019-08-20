@@ -17,6 +17,7 @@
 package tilda.parsing.parts;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -217,7 +218,11 @@ public class TypeDef
             case SHORT:
               if (ParseUtil.parseShort(Value, (short)SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
                 return PS.AddError(What + " has a value '" + Value + "' which is invalid for type '" + _Type + "'.");
-              break;              
+              break;
+            case UUID:
+              if (ParseUtil.parseUUID(Value) == new UUID(0L, 0L))
+                return PS.AddError(What + " has a value '" + Value + "' which is invalid for type '" + _Type + "'.");
+              break; 
             case INTEGER:
               if (ParseUtil.parseInteger(Value, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
                 return PS.AddError(What + " has a value '" + Value + "' which is invalid for type '" + _Type + "'.");
