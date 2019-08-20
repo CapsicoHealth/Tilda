@@ -362,10 +362,21 @@ public class DBTest
 //        if (D.Write(C) == false)
 //          throw new Exception("Bad stuff!");
         
+        List<UUID> a13b = new ArrayList<UUID>();
+        a13b.add(new UUID(1l, 1l));
+        a13b.add(new UUID(2l, 3l));
+        a13b.add(new UUID(3l, 3l));      
+        
+        //"{-13035,-6026,177}"
+        
+        D.setA13b(a13b);
+        if (D.Write(C) == false)
+          throw new Exception("Bad stuff!");    
         C.commit();   
         
-        LOG.debug("A12: " + D.getA12());
         LOG.debug("A11: " + TextUtil.Print(D.getA11().toString(), "Bad"));
+        LOG.debug("A12: " + D.getA12());
+     
         D = Testing_Factory.LookupByPrimaryKey(D.getRefnum());
         if (D.Read(C) == false)
           throw new Exception("Bad stuff!");

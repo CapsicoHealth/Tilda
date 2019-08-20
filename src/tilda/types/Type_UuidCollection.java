@@ -16,12 +16,13 @@
 
 package tilda.types;
 
+import tilda.enums.ColumnType;
 
-public class Type_UuidCollectionNull extends Type_UuidCollection implements Nullable
+public class Type_UuidCollection extends ColumnDefinition
   {
-    public Type_UuidCollectionNull(String SchemaName, String TableName, String ColumnName, int Count, String Description)
+    public Type_UuidCollection(String SchemaName, String TableName, String ColumnName, int Count, String Description)
       {
-        super(SchemaName, TableName, ColumnName, Count, Description);
+        super(SchemaName, TableName, ColumnName, Count, ColumnType.UUID, true, Description);
       }
     
   }
