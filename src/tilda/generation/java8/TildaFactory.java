@@ -117,7 +117,6 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("import tilda.utils.*;");
         if (O._LC != ObjectLifecycle.READONLY)
           Out.println("import tilda.utils.pairs.*;");
-        Out.println();
         for (Column C : O._Columns)
           if(C != null && C.getType() == ColumnType.NUMERIC)
             {
