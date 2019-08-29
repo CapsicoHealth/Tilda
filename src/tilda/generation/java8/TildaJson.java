@@ -87,10 +87,11 @@ public class TildaJson implements CodeGenTildaJson
             Out.println("import com.google.gson.annotations.SerializedName;");
           }        
         for (Column C : O._Columns)         
-          if(C.getType() == ColumnType.NUMERIC)
+          if(C != null && C.getType() == ColumnType.NUMERIC)
             {
               Out.println();
               Out.println("import java.math.BigDecimal;");
+              break;
             }
         Out.println();
       }

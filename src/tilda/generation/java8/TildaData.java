@@ -90,18 +90,21 @@ public class TildaData implements CodeGenTildaData
                 Out.println("import com.google.gson.Gson;");
                 Out.println("import com.google.gson.GsonBuilder;");
                 Out.println("import com.google.gson.annotations.SerializedName;");
+                break;
               }
+          }
+        
+        for (Column C : O._Columns)
+          {
+            if (C == null)
+              continue;
             if(C.getType() == ColumnType.NUMERIC)
               {
                 Out.println();
                 Out.println("import java.math.BigDecimal;");
-              }    
-            if(C.getType() == ColumnType.UUID)
-              {
-                Out.println();
-                Out.println("import java.util.UUID;");
-              }                           
-          }
+                break;
+              } 
+          }      
         Out.println();
       }
 
@@ -306,6 +309,7 @@ public class TildaData implements CodeGenTildaData
               return V+"f";
             case LONG:
               return V+"l";
+            case NUMERIC:
             case DOUBLE:
               return V+"d";
             case CHAR:
@@ -391,6 +395,7 @@ public class TildaData implements CodeGenTildaData
               case INTEGER:
               case SHORT:
               case LONG:
+              case NUMERIC:
               case UUID:
                 Out.println("      { return _" + V._ParentColumn.getName() + " == " + ValueNameVar + "; }");
                 break;
@@ -795,8 +800,10 @@ public class TildaData implements CodeGenTildaData
             case FLOAT:
             case INTEGER:
             case SHORT:
+            case NUMERIC:
             case LONG:
             case STRING:
+            case UUID:
               if (V._ParentColumn.isCollection() == false)
                 Out.println("      { set" + TextUtil.CapitalizeFirstCharacter(V._ParentColumn.getName()) + "(" + ValueNameVar + "); }");
               else

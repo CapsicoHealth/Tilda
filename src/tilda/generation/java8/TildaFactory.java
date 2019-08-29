@@ -102,9 +102,11 @@ public class TildaFactory implements CodeGenTildaFactory
               }
         if (needTime == true)
           Out.println("import java.time.*;");
+        boolean needUtil = true;
         for (Column C : O._Columns)
           if (C != null && C.isCollection() == true || O._LC != ObjectLifecycle.READONLY)
             {
+              needUtil = false;
               Out.println("import java.util.*;");
               break;
             }
@@ -116,12 +118,23 @@ public class TildaFactory implements CodeGenTildaFactory
         if (O._LC != ObjectLifecycle.READONLY)
           Out.println("import tilda.utils.pairs.*;");
         Out.println();
-        for (Column C : O._Columns)         
-          if(C.getType() == ColumnType.NUMERIC)
+        for (Column C : O._Columns)
+          if(C != null && C.getType() == ColumnType.NUMERIC)
             {
               Out.println();
               Out.println("import java.math.BigDecimal;");
-            }            
+              break;
+            }
+        for (Column C : O._Columns)         
+          if(C != null && C.getType() == ColumnType.UUID)
+            {
+              if(needUtil != false)
+                {
+                  Out.println();
+                  Out.println("import java.util.UUID;");
+                }
+              break;
+            }
         Out.println(); 
         Out.println("import org.apache.logging.log4j.LogManager;");
         Out.println("import org.apache.logging.log4j.Logger;");
