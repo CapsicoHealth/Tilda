@@ -341,7 +341,7 @@ public enum ColumnType
 
     public static boolean isNumber(ColumnType Type)
       {
-        return Type == DOUBLE || Type == FLOAT || Type == INTEGER || Type == LONG || Type == NUMERIC;
+        return Type == DOUBLE || Type == FLOAT || Type == INTEGER || Type == LONG || Type == NUMERIC || Type == SHORT;
       }
 
   }
