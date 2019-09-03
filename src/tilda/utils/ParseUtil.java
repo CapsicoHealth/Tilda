@@ -278,18 +278,20 @@ public class ParseUtil
       {
         return parseShort(Name, Mandatory, Values == null ? null : Values.split(Separator), Errors);
       }
+
     
-    public static short parseShortFlexible(String Val, short Default)
-      {
-        short v = parseShort(Val, Default);
-        if (v != Default)
-         return v;
-        float f = parseFloat(Val, SystemValues.EVIL_VALUE);
-        v = (short) Math.round(f);
-        if (v != Default && v == f)
-         return v;
-        return Default;
-      }
+    //This implementation may throw a RTE. LDH asked that I comment until it can be resolved at a later time.
+//    public static short parseShortFlexible(String Val, short Default)
+//      {
+//        short v = parseShort(Val, Default);
+//        if (v != Default)
+//         return v;
+//        float f = parseFloat(Val, SystemValues.EVIL_VALUE);
+//        v = (short) Math.round(f);
+//        if (v != Default && v == f)
+//         return v;
+//        return Default;
+//      }
     
     
     /************************************************************************************************************************
