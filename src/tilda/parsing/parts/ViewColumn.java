@@ -49,6 +49,8 @@ public class ViewColumn
     @SerializedName("as"         ) public String         _As           ;
     @SerializedName("expression" ) public String         _Expression   ;
     @SerializedName("type"       ) public String         _TypeStr      ;
+    @SerializedName("precision"  ) public Integer        _Precision    ;
+    @SerializedName("scale"      ) public Integer        _Scale        ;
     @SerializedName("size"       ) public Integer        _Size         ;
     @SerializedName("prefix"     ) public String         _Prefix       ;
     @SerializedName("exclude"    ) public String[]       _Exclude       = new String[] { };
@@ -218,7 +220,7 @@ public class ViewColumn
         // Parsing the extra type information if present.
         if (_TypeStr != null)
           {
-            _Type = new TypeDef(_TypeStr, _Size);
+            _Type = new TypeDef(_TypeStr, _Size, _Precision, _Scale);
             _Type.Validate(PS, "View Column '"+getFullName()+"'", true, false);
           }
         // Checking that type information is only present when expression is specified and vice-versa.

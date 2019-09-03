@@ -650,12 +650,12 @@ This is the column definition for:<BR>
              case -7:
                 break;
              case 1: {
-               PS.setString   (++i, Obj._schemaName   );
+               PS.setString    (++i, Obj._schemaName   );
                break;
              }
              case 2: {
-               PS.setString   (++i, Obj._schemaName   );
-               PS.setString   (++i, Obj._objectName   );
+               PS.setString    (++i, Obj._schemaName   );
+               PS.setString    (++i, Obj._objectName   );
                break;
              }
              case -666: break;

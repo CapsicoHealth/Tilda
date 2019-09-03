@@ -1949,39 +1949,39 @@ This is the hasChanged for:<BR>
        int i = 0;
        if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask) == true) PS.setNull(++i, java.sql.Types.BOOLEAN); else PS.setBoolean  (++i, _active);
+          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask) == true) PS.setNull(++i, java.sql.Types.BOOLEAN   ); else PS.setBoolean   (++i, _active);
         } 
        if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.ID._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.ID._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _id);
+          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.ID._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _id);
         } 
        if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.DRIVER._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.DRIVER._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _driver);
+          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.DRIVER._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _driver);
         } 
        if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.DB._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.DB._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _db);
+          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.DB._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _db);
         } 
        if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.USER._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.USER._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _user);
+          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.USER._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _user);
         } 
        if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.PSWD._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.PSWD._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _pswd);
+          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.PSWD._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _pswd);
         } 
        if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.INITIAL._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.INITIAL._Mask) == true) PS.setNull(++i, java.sql.Types.INTEGER); else PS.setInt      (++i, _initial);
+          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.INITIAL._Mask) == true) PS.setNull(++i, java.sql.Types.INTEGER   ); else PS.setInt       (++i, _initial);
         } 
        if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.MAX._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.MAX._Mask) == true) PS.setNull(++i, java.sql.Types.INTEGER); else PS.setInt      (++i, _max);
+          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.MAX._Mask) == true) PS.setNull(++i, java.sql.Types.INTEGER   ); else PS.setInt       (++i, _max);
         } 
        if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR   ); else C.setArray(PS, ++i, TILDA__CONNECTION_Factory.COLS.SCHEMAS._Type, AllocatedArrays, _schemas);
+          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR      ); else C.setArray(PS, ++i, TILDA__CONNECTION_Factory.COLS.SCHEMAS._Type, AllocatedArrays, _schemas);
         } 
        if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.CREATED._Mask) == true) 
         { 
@@ -2051,7 +2051,7 @@ This is the hasChanged for:<BR>
           switch (__LookupId)
            {
              case 0:
-               PS.setString   (++i, _id         );
+               PS.setString    (++i, _id         );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -2150,7 +2150,7 @@ This is the hasChanged for:<BR>
           switch (__LookupId)
            {
              case 0:
-               PS.setString   (++i, _id         );
+               PS.setString    (++i, _id         );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -2183,14 +2183,14 @@ This is the hasChanged for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-                            _active      =                              RS.getBoolean  (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask     );
-      __Saved_id          = _id          = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.ID._Mask         );
-                            _driver      = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.DRIVER._Mask     );
-                            _db          = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.DB._Mask         );
-                            _user        = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.USER._Mask       );
-                            _pswd        = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.PSWD._Mask       );
-                            _initial     =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.INITIAL._Mask    );
-                            _max         =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.MAX._Mask        );
+                            _active      =                              RS.getBoolean   (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask     );
+      __Saved_id          = _id          = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.ID._Mask         );
+                            _driver      = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.DRIVER._Mask     );
+                            _db          = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.DB._Mask         );
+                            _user        = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.USER._Mask       );
+                            _pswd        = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.PSWD._Mask       );
+                            _initial     =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.INITIAL._Mask    );
+                            _max         =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.MAX._Mask        );
                             _schemas = (List<String>) C.getArray(RS, ++i, TILDA__CONNECTION_Factory.COLS.SCHEMAS._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask    );
                             _created     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.CREATED._Mask    );
                             _lastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.LASTUPDATED._Mask);

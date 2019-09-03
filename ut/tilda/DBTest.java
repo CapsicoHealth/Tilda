@@ -16,12 +16,15 @@
 
 package tilda;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -61,10 +64,10 @@ public class DBTest
             // Test2(C);
             // Test3(C);
             // Test4(C);
-            // Test5(C);
+             Test5(C);
 //            Test_Batch0(C);
-            Test_Batch2(C);
-            Test_Batch1(C);
+            //Test_Batch2(C);
+            //Test_Batch1(C);
             // Test_Batch3(C);
           }
         catch (Exception E)
@@ -287,9 +290,9 @@ public class DBTest
           throw new Exception("Bad stuff!");
         C.commit();
 
-        D = Testing_Factory.LookupByPrimaryKey(D.getRefnum());
-        if (D.Read(C) == false)
-          throw new Exception("Bad stuff!");
+//        D = Testing_Factory.LookupByPrimaryKey(D.getRefnum());
+//        if (D.Read(C) == false)
+//          throw new Exception("Bad stuff!");
         LOG.debug("A9: " + D.getA9());
         LOG.debug("A9b: " + TextUtil.Print(D.getA9b()));
         LOG.debug("A9bTZ: " + TextUtil.Print(D.getA9bTZ()));
@@ -303,7 +306,81 @@ public class DBTest
         if (D.Write(C) == false)
           throw new Exception("Bad stuff!");
 
-        C.commit();
+        D.setA11(new BigDecimal(1111.1234));
+        if (D.Write(C) == false)
+          throw new Exception("Bad stuff!");      
+        
+        
+        
+        List<BigDecimal> a11b = new ArrayList<BigDecimal>();
+        a11b.add(new BigDecimal(123.568));
+        a11b.add(new BigDecimal(123.689));
+        a11b.add(new BigDecimal(123.899));
+        D.setA11b(a11b);
+        if (D.Write(C) == false)
+          throw new Exception("Bad stuff!");      
+        
+        
+        D.setA11c(new BigDecimal(1111.0000));
+        if (D.Write(C) == false)
+          throw new Exception("Bad stuff!");      
+        
+        //D.setA11c(new BigDecimal(1111111111.0000)); //Errors
+        
+        if (D.Write(C) == false)
+          throw new Exception("Bad stuff!");
+              
+        D.setNullA12();
+        D.setNullA12b();
+        if (D.Write(C) == false)
+          throw new Exception("Bad stuff!");      
+        
+        D.setA12((short) 123);
+        
+        List<Short> a12b = new ArrayList<Short>();
+        a12b.add((short) 123456789);
+        a12b.add((short) 3654);
+        a12b.add((short) 1234567345);      
+        
+        //"{-13035,-6026,177}"
+        
+        D.setA12b(a12b);
+        if (D.Write(C) == false)
+          throw new Exception("Bad stuff!");
+        
+        
+        D.setA13(new UUID(0l, 0l));    
+        if (D.Write(C) == false)
+          throw new Exception("Bad stuff!");
+        
+        D.setNullA13();
+        LOG.debug("A13: " + D.getA13());
+        if (D.Write(C) == false)
+          throw new Exception("Bad stuff!");
+        
+//        D.setA13(UUID.fromString("1234"));    
+//        if (D.Write(C) == false)
+//          throw new Exception("Bad stuff!");
+        
+        List<UUID> a13b = new ArrayList<UUID>();
+        a13b.add(new UUID(1l, 1l));
+        a13b.add(new UUID(2l, 3l));
+        a13b.add(new UUID(3l, 3l));      
+        
+        //"{-13035,-6026,177}"
+        
+        D.setA13b(a13b);
+        if (D.Write(C) == false)
+          throw new Exception("Bad stuff!");    
+        C.commit();   
+        
+        LOG.debug("A11: " + TextUtil.Print(D.getA11().toString(), "Bad"));
+        LOG.debug("A12: " + D.getA12());
+     
+        D = Testing_Factory.LookupByPrimaryKey(D.getRefnum());
+        if (D.Read(C) == false)
+          throw new Exception("Bad stuff!");
+        
       }
 
     private static void Test4(Connection C)

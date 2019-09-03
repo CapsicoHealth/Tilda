@@ -496,15 +496,15 @@ This is the column definition for:<BR>
              case -7:
                 break;
              case 1: {
-               PS.setLong     (++i, Obj._jobRefnum   );
+               PS.setLong      (++i, Obj._jobRefnum   );
                break;
              }
              case 2: {
-               PS.setString   (++i, Obj._name        );
+               PS.setString    (++i, Obj._name        );
                break;
              }
              case 3: {
-               if (Obj.isNullType() == true) PS.setNull(++i, java.sql.Types.CHAR   );  else PS.setString   (++i, Obj._type        );
+               if (Obj.isNullType() == true) PS.setNull(++i, java.sql.Types.CHAR      );  else PS.setString    (++i, Obj._type        );
                break;
              }
              case -666: break;

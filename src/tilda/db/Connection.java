@@ -508,6 +508,12 @@ public final class Connection
         return _DB.getDBStringType(Size);
       }
 
+    public boolean alterTableAlterColumnNumericSize(ColumnMeta ColMeta, Column Col)
+    throws Exception
+      {
+        return _DB.alterTableAlterColumnNumericSize(this, ColMeta, Col);
+      }
+    
     public boolean alterTableAlterColumnStringSize(ColumnMeta ColMeta, Column Col)
     throws Exception
       {
@@ -564,9 +570,9 @@ public final class Connection
         _DB.getFullColumnVar(Str, SchemaName, TableName, ColumnName);
       }
 
-    public void getColumnType(StringBuilder Str, ColumnType T, Integer S, ColumnMode M, boolean Collection)
+    public void getColumnType(StringBuilder Str, ColumnType T, Integer S, ColumnMode M, boolean Collection, Integer Precision, Integer Scale)
       {
-        _DB.getColumnType(Str, T, S, M, Collection);
+        _DB.getColumnType(Str, T, S, M, Collection, Precision, Scale);
       }
 
 

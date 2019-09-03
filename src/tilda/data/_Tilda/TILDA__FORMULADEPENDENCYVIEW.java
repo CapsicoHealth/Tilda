@@ -1094,13 +1094,13 @@ This is the null setter for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-                                           _formulaRefnum              =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.FORMULAREFNUM._Mask             );
-                                           _location                   = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.LOCATION._Mask                  );
-                                           _name                       = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.NAME._Mask                      );
+                                           _formulaRefnum              =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.FORMULAREFNUM._Mask             );
+                                           _location                   = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.LOCATION._Mask                  );
+                                           _name                       = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.NAME._Mask                      );
                                            _referencedColumns = (List<String>) C.getArray(RS, ++i, TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.REFERENCEDCOLUMNS._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.REFERENCEDCOLUMNS._Mask         );
-                                           _dependencyRefnum           =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENCYREFNUM._Mask          );
-                                           _dependentFormulaName       = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENTFORMULANAME._Mask      );
-                                           _dependentFormulaLocation   = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENTFORMULALOCATION._Mask  );
+                                           _dependencyRefnum           =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENCYREFNUM._Mask          );
+                                           _dependentFormulaName       = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENTFORMULANAME._Mask      );
+                                           _dependentFormulaLocation   = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENTFORMULALOCATION._Mask  );
                                            _dependentReferencedColumns = (List<String>) C.getArray(RS, ++i, TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENTREFERENCEDCOLUMNS._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENTREFERENCEDCOLUMNS._Mask);
      __LookupId = 0;
      __Init     = InitMode.READ;

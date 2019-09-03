@@ -14,6 +14,8 @@ import tilda.utils.*;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.math.BigDecimal;
+
 
 @SuppressWarnings({ "unused" })
 public class TILDA__TESTING_Json
@@ -64,6 +66,13 @@ public class TILDA__TESTING_Json
    @SerializedName("a10a"       ) public Integer  _a10a       ;
    @SerializedName("a10b"       ) public String  _a10b       ;
    @SerializedName("a10c"       ) public Integer  _a10c       ;
+   @SerializedName("a11"        ) public BigDecimal  _a11        ;
+   @SerializedName("a11b"       ) public List<BigDecimal>  _a11b       ;
+   @SerializedName("a11c"       ) public BigDecimal  _a11c       ;
+   @SerializedName("a12"        ) public Short  _a12        ;
+   @SerializedName("a12b"       ) public List<Short>  _a12b       ;
+   @SerializedName("a13"        ) public UUID  _a13        ;
+   @SerializedName("a13b"       ) public List<UUID>  _a13b       ;
    /*@formatter:on*/
 
    public tilda.data.Testing_Data Write(Connection C) throws Exception
@@ -150,6 +159,13 @@ public class TILDA__TESTING_Json
       if (_a10a       != null) Obj.setA10a       (_a10a       );
       if (_a10b       != null) Obj.setA10b       (_a10b       );
       if (_a10c       != null) Obj.setA10c       (_a10c       );
+      if (_a11        != null) Obj.setA11        (_a11        );
+      if (_a11b       != null) Obj.setA11b       (_a11b       );
+      if (_a11c       != null) Obj.setA11c       (_a11c       );
+      if (_a12        != null) Obj.setA12        (_a12        );
+      if (_a12b       != null) Obj.setA12b       (_a12b       );
+      if (_a13        != null) Obj.setA13        (_a13        );
+      if (_a13b       != null) Obj.setA13b       (_a13b       );
     }
 
    public String toString()
@@ -191,6 +207,13 @@ public class TILDA__TESTING_Json
          + "; a10a"       + (_a10a        == null ? ": NULL" : ": " + _a10a       )
          + "; a10b"       + (_a10b        == null ? ": NULL" : "(" + (_a10b        == null ? 0 : _a10b       .length())+"): "+_a10b)
          + "; a10c"       + (_a10c        == null ? ": NULL" : ": " + _a10c       )
+         + "; a11"        + (_a11         == null ? ": NULL" : ": " + _a11        )
+         + "; a11b"       + (_a11b        == null ? ": NULL" : ": " + _a11b       )
+         + "; a11c"       + (_a11c        == null ? ": NULL" : ": " + _a11c       )
+         + "; a12"        + (_a12         == null ? ": NULL" : ": " + _a12        )
+         + "; a12b"       + (_a12b        == null ? ": NULL" : ": " + _a12b       )
+         + "; a13"        + (_a13         == null ? ": NULL" : ": " + _a13        )
+         + "; a13b"       + (_a13b        == null ? ": NULL" : ": " + _a13b       )
          + ";";
     }
 

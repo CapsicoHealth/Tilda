@@ -18,6 +18,8 @@ import tilda.utils.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.math.BigDecimal;
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
@@ -224,6 +226,76 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>19&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2View-a11_DIV' class='columns realizedcolumns'>a11</B>&nbsp;&nbsp;</TD>
+<TD>BigDecimal&nbsp;/&nbsp;numeric(8,4)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing-a11_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>a11</A></DIV></TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>20&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2View-a11b_DIV' class='columns realizedcolumns'>a11b</B>&nbsp;&nbsp;</TD>
+<TD>List<BigDecimal> List<>&nbsp;/&nbsp;numeric(6,3)[]&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing-a11b_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>a11b</A></DIV></TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>21&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2View-a11c_DIV' class='columns realizedcolumns'>a11c</B>&nbsp;&nbsp;</TD>
+<TD>BigDecimal&nbsp;/&nbsp;numeric(5,0)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing-a11c_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>a11c</A></DIV></TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>22&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2View-a12_DIV' class='columns realizedcolumns'>a12</B>&nbsp;&nbsp;</TD>
+<TD>short&nbsp;/&nbsp;smallint&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing-a12_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>a12</A></DIV></TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>23&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2View-a12b_DIV' class='columns realizedcolumns'>a12b</B>&nbsp;&nbsp;</TD>
+<TD>List<Short> List<>&nbsp;/&nbsp;smallint[]&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing-a12b_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>a12b</A></DIV></TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>24&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2View-a13_DIV' class='columns realizedcolumns'>a13</B>&nbsp;&nbsp;</TD>
+<TD>UUID&nbsp;/&nbsp;UUID&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing-a13_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>a13</A></DIV></TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>25&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2View-a13b_DIV' class='columns realizedcolumns'>a13b</B>&nbsp;&nbsp;</TD>
+<TD>List<UUID> List<>&nbsp;/&nbsp;UUID[]&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing-a13b_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>a13b</A></DIV></TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>26&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2View-description_DIV' class='columns realizedcolumns'>description</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(250)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -232,8 +304,8 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The title for a person, i.e., Mr, Miss, Mrs...<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing-description_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>description</A></DIV></TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>20&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>27&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2View-desc2_DIV' class='columns realizedcolumns'>desc2</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(3000)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -242,8 +314,8 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The title for a person, i.e., Mr, Miss, Mrs...<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing-desc2_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>desc2</A></DIV></TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>21&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>28&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2View-desc3_DIV' class='columns realizedcolumns'>desc3</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;text&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -252,8 +324,8 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The title for a person, i.e., Mr, Miss, Mrs...<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing-desc3_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>desc3</A></DIV></TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>22&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>29&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2View-desc4_DIV' class='columns realizedcolumns'>desc4</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;text&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -262,8 +334,8 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The title for a person, i.e., Mr, Miss, Mrs...<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing-desc4_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>desc4</A></DIV></TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>23&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>30&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2View-desc5_DIV' class='columns realizedcolumns'>desc5</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;text&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -272,8 +344,8 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The title for a person, i.e., Mr, Miss, Mrs...<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing-desc5_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>desc5</A></DIV></TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>24&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>31&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2View-desc6_DIV' class='columns realizedcolumns'>desc6</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;text&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -289,8 +361,8 @@ This View contains the following columns:<BLOCKQUOTE>
 </BLOCKQUOTE>
 </TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>25&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>32&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2View-a3_DIV' class='formulae realizedformulae'>a3</B>&nbsp;&nbsp;</TD>
 <TD>boolean&nbsp;/&nbsp;boolean&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -320,8 +392,8 @@ This View contains the following columns:<BLOCKQUOTE>
 </DIV></DIV>
 <DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing-a3_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>a3</A></DIV></TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>26&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>33&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2View-bastille_DIV' class='formulae realizedformulae'>bastille</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -333,8 +405,8 @@ This View contains the following columns:<BLOCKQUOTE>
 </TABLE>
 </TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>27&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>34&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2View-toto_DIV' class='formulae realizedformulae'>toto</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -346,8 +418,8 @@ This View contains the following columns:<BLOCKQUOTE>
 </TABLE>
 </TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>28&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>35&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2View-desc2_Cat1_DIV' class='formulae realizedformulae'>desc2_Cat1</B>&nbsp;&nbsp;</TD>
 <TD>double&nbsp;/&nbsp;double precision&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -377,8 +449,8 @@ This View contains the following columns:<BLOCKQUOTE>
 </DIV></DIV>
 </TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>29&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>36&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2View-desc2_Cat2_DIV' class='formulae realizedformulae'>desc2_Cat2</B>&nbsp;&nbsp;</TD>
 <TD>double&nbsp;/&nbsp;double precision&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -408,8 +480,8 @@ This View contains the following columns:<BLOCKQUOTE>
 </DIV></DIV>
 </TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>30&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>37&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2View-desc2_Cat3_DIV' class='formulae realizedformulae'>desc2_Cat3</B>&nbsp;&nbsp;</TD>
 <TD>double&nbsp;/&nbsp;double precision&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -439,8 +511,8 @@ This View contains the following columns:<BLOCKQUOTE>
 </DIV></DIV>
 </TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>31&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>38&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2View-a7_Cat4_DIV' class='formulae realizedformulae'>a7_Cat4</B>&nbsp;&nbsp;</TD>
 <TD>double&nbsp;/&nbsp;double precision&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -470,8 +542,8 @@ This View contains the following columns:<BLOCKQUOTE>
 </DIV></DIV>
 </TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>32&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>39&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2View-a7_Cat5_DIV' class='formulae realizedformulae'>a7_Cat5</B>&nbsp;&nbsp;</TD>
 <TD>double&nbsp;/&nbsp;double precision&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -501,8 +573,8 @@ This View contains the following columns:<BLOCKQUOTE>
 </DIV></DIV>
 </TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>33&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>40&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2View-a5_null_DIV' class='formulae realizedformulae'>a5_null</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -534,8 +606,8 @@ end</PRE></TD><TR>
 </DIV></DIV>
 </TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>34&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>41&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2View-a6_null_DIV' class='formulae realizedformulae'>a6_null</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -549,8 +621,8 @@ end</PRE></TD><TR>
 </TABLE>
 </TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>35&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>42&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2View-a7_null_DIV' class='formulae realizedformulae'>a7_null</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -582,8 +654,8 @@ end</PRE></TD><TR>
 </DIV></DIV>
 </TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>36&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>43&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2View-a8_null_DIV' class='formulae realizedformulae'>a8_null</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -2961,6 +3033,1026 @@ This is the null setter for:<BR>
        __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.A10C._Mask);
        __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A10C._Mask);
        _a10c=0;
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a11 -> TILDA.Testing2View."a11"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a11 of type BigDecimal</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a11 of type numeric(8,4)</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   BigDecimal _a11= new BigDecimal(SystemValues.EVIL_VALUE);
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a11 -> TILDA.Testing2View."a11"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a11 of type BigDecimal</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a11 of type numeric(8,4)</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final BigDecimal getA11()
+      { return _a11; }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a11 -> TILDA.Testing2View."a11"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the isNull for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a11 of type BigDecimal</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a11 of type numeric(8,4)</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final boolean isNullA11()
+     { return __Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A11._Mask); }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a11 -> TILDA.Testing2View."a11"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a11 of type BigDecimal</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a11 of type numeric(8,4)</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+    void setA11(BigDecimal v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (__Init == InitMode.CREATE || v != _a11)
+        {
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+           throw new Exception("Cannot set field 'tilda.data.TILDA.Testing2View.a11' that is invariant, or part of a read-only or pre-existing WORM object.");
+          __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.A11._Mask);
+          __Nulls.andNot(TILDA__TESTING2VIEW_Factory.COLS.A11._Mask);
+       _a11 = v;
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a11 -> TILDA.Testing2View."a11"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the null setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a11 of type BigDecimal</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a11 of type numeric(8,4)</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+    void setNullA11()
+     {
+       long T0 = System.nanoTime();
+       if (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A11._Mask) == true) // already NULL
+        return;
+       __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.A11._Mask);
+       __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A11._Mask);
+       _a11=BigDecimal.ZERO;
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a11b -> TILDA.Testing2View."a11b"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a11b of type List<BigDecimal></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a11b of type numeric(6,3)[]</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   List<BigDecimal> _a11b;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a11b -> TILDA.Testing2View."a11b"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a11b of type List<BigDecimal></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a11b of type numeric(6,3)[]</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final BigDecimal[] getA11bAsArray()
+      { return _a11b==null? null : _a11b.toArray(new BigDecimal[_a11b.size()]); }
+   public final Iterator<BigDecimal> getA11b()
+      { return _a11b==null? null : _a11b.iterator(); }
+   public final boolean hasA11b(BigDecimal v)
+      { return _a11b==null? false : _a11b.contains(v); }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a11b -> TILDA.Testing2View."a11b"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the isNull for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a11b of type List<BigDecimal></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a11b of type numeric(6,3)[]</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final boolean isNullA11b()
+     { return __Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A11B._Mask); }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a11b -> TILDA.Testing2View."a11b"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a11b of type List<BigDecimal></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a11b of type numeric(6,3)[]</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+    void setA11b(List<BigDecimal> v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+        throw new Exception("Cannot set field 'tilda.data.TILDA.Testing2View.a11b' that is invariant, or part of a read-only or pre-existing WORM object.");
+       if (v == null  || v.isEmpty() == true)
+        setNullA11b();
+       else if (CollectionUtil.equals(v, _a11b) == false)
+        {
+          __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.A11B._Mask);
+          __Nulls.andNot(TILDA__TESTING2VIEW_Factory.COLS.A11B._Mask);
+          if (_a11b == null)
+           {
+             _a11b = new ArrayList<BigDecimal>();
+           }
+          else
+           {
+             _a11b.clear();
+           }
+          for (BigDecimal i : v)
+           {
+             _a11b.add(i);
+           }
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+    void addToA11b(int pos, BigDecimal v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (_a11b == null)
+        _a11b = new ArrayList<BigDecimal>();
+       if (pos >= _a11b.size() || _a11b.get(pos).equals(v) == false)
+        {
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+           throw new Exception("Cannot set field 'tilda.data.TILDA.Testing2View.a11b' that is invariant, or part of a read-only or pre-existing WORM object.");
+          __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.A11B._Mask);
+          __Nulls.andNot(TILDA__TESTING2VIEW_Factory.COLS.A11B._Mask);
+          _a11b.add(pos, v);
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+    void removeFromA11b(BigDecimal v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (_a11b.remove(v) == true)
+          __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.A11B._Mask);
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+    void removeFromA11b(int pos) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (_a11b.remove(pos) != null)
+        {
+          __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.A11B._Mask);
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a11b -> TILDA.Testing2View."a11b"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the null setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a11b of type List<BigDecimal></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a11b of type numeric(6,3)[]</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+    void setNullA11b()
+     {
+       long T0 = System.nanoTime();
+       if (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A11B._Mask) == true) // already NULL
+        return;
+       __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.A11B._Mask);
+       __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A11B._Mask);
+       _a11b=null;
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a11c -> TILDA.Testing2View."a11c"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a11c of type BigDecimal</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a11c of type numeric(5,0)</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   BigDecimal _a11c= new BigDecimal(SystemValues.EVIL_VALUE);
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a11c -> TILDA.Testing2View."a11c"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a11c of type BigDecimal</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a11c of type numeric(5,0)</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final BigDecimal getA11c()
+      { return _a11c; }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a11c -> TILDA.Testing2View."a11c"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the isNull for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a11c of type BigDecimal</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a11c of type numeric(5,0)</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final boolean isNullA11c()
+     { return __Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A11C._Mask); }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a11c -> TILDA.Testing2View."a11c"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a11c of type BigDecimal</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a11c of type numeric(5,0)</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+    void setA11c(BigDecimal v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (__Init == InitMode.CREATE || v != _a11c)
+        {
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+           throw new Exception("Cannot set field 'tilda.data.TILDA.Testing2View.a11c' that is invariant, or part of a read-only or pre-existing WORM object.");
+          __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.A11C._Mask);
+          __Nulls.andNot(TILDA__TESTING2VIEW_Factory.COLS.A11C._Mask);
+       _a11c = v;
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a11c -> TILDA.Testing2View."a11c"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the null setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a11c of type BigDecimal</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a11c of type numeric(5,0)</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+    void setNullA11c()
+     {
+       long T0 = System.nanoTime();
+       if (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A11C._Mask) == true) // already NULL
+        return;
+       __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.A11C._Mask);
+       __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A11C._Mask);
+       _a11c=BigDecimal.ZERO;
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a12 -> TILDA.Testing2View."a12"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a12 of type short</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a12 of type smallint</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   short _a12= SystemValues.EVIL_VALUE;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a12 -> TILDA.Testing2View."a12"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a12 of type short</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a12 of type smallint</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final short getA12()
+      { return _a12; }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a12 -> TILDA.Testing2View."a12"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the isNull for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a12 of type short</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a12 of type smallint</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final boolean isNullA12()
+     { return __Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A12._Mask); }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a12 -> TILDA.Testing2View."a12"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a12 of type short</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a12 of type smallint</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+    void setA12(short v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (__Init == InitMode.CREATE || v != _a12)
+        {
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+           throw new Exception("Cannot set field 'tilda.data.TILDA.Testing2View.a12' that is invariant, or part of a read-only or pre-existing WORM object.");
+          __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.A12._Mask);
+          __Nulls.andNot(TILDA__TESTING2VIEW_Factory.COLS.A12._Mask);
+       _a12 = v;
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a12 -> TILDA.Testing2View."a12"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the null setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a12 of type short</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a12 of type smallint</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+    void setNullA12()
+     {
+       long T0 = System.nanoTime();
+       if (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A12._Mask) == true) // already NULL
+        return;
+       __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.A12._Mask);
+       __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A12._Mask);
+       _a12=0;
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a12b -> TILDA.Testing2View."a12b"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a12b of type List<Short></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a12b of type smallint[]</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   List<Short> _a12b;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a12b -> TILDA.Testing2View."a12b"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a12b of type List<Short></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a12b of type smallint[]</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final Short[] getA12bAsArray()
+      { return _a12b==null? null : _a12b.toArray(new Short[_a12b.size()]); }
+   public final Iterator<Short> getA12b()
+      { return _a12b==null? null : _a12b.iterator(); }
+   public final boolean hasA12b(short v)
+      { return _a12b==null? false : _a12b.contains(v); }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a12b -> TILDA.Testing2View."a12b"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the isNull for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a12b of type List<Short></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a12b of type smallint[]</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final boolean isNullA12b()
+     { return __Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A12B._Mask); }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a12b -> TILDA.Testing2View."a12b"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a12b of type List<Short></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a12b of type smallint[]</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+    void setA12b(List<Short> v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+        throw new Exception("Cannot set field 'tilda.data.TILDA.Testing2View.a12b' that is invariant, or part of a read-only or pre-existing WORM object.");
+       if (v == null  || v.isEmpty() == true)
+        setNullA12b();
+       else if (CollectionUtil.equals(v, _a12b) == false)
+        {
+          __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.A12B._Mask);
+          __Nulls.andNot(TILDA__TESTING2VIEW_Factory.COLS.A12B._Mask);
+          if (_a12b == null)
+           {
+             _a12b = new ArrayList<Short>();
+           }
+          else
+           {
+             _a12b.clear();
+           }
+          for (short i : v)
+           {
+             _a12b.add(i);
+           }
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+    void addToA12b(int pos, short v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (_a12b == null)
+        _a12b = new ArrayList<Short>();
+       if (pos >= _a12b.size() || _a12b.get(pos).equals(v) == false)
+        {
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+           throw new Exception("Cannot set field 'tilda.data.TILDA.Testing2View.a12b' that is invariant, or part of a read-only or pre-existing WORM object.");
+          __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.A12B._Mask);
+          __Nulls.andNot(TILDA__TESTING2VIEW_Factory.COLS.A12B._Mask);
+          _a12b.add(pos, v);
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+    void removeFromA12b(Short v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (_a12b.remove(v) == true)
+          __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.A12B._Mask);
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+    void removeFromA12b(int pos) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (_a12b.remove(pos) != null)
+        {
+          __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.A12B._Mask);
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a12b -> TILDA.Testing2View."a12b"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the null setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a12b of type List<Short></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a12b of type smallint[]</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+    void setNullA12b()
+     {
+       long T0 = System.nanoTime();
+       if (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A12B._Mask) == true) // already NULL
+        return;
+       __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.A12B._Mask);
+       __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A12B._Mask);
+       _a12b=null;
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a13 -> TILDA.Testing2View."a13"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a13 of type UUID</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a13 of type UUID</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   UUID _a13= new UUID(0L, 0L);
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a13 -> TILDA.Testing2View."a13"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a13 of type UUID</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a13 of type UUID</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final UUID getA13()
+      { return _a13; }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a13 -> TILDA.Testing2View."a13"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the isNull for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a13 of type UUID</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a13 of type UUID</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final boolean isNullA13()
+     { return __Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A13._Mask); }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a13 -> TILDA.Testing2View."a13"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a13 of type UUID</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a13 of type UUID</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+    void setA13(UUID v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (v == null)
+        {
+          setNullA13();
+        }
+       else if (v.equals(_a13) == false)
+        {
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+           throw new Exception("Cannot set field 'tilda.data.TILDA.Testing2View.a13' that is invariant, or part of a read-only or pre-existing WORM object.");
+          __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.A13._Mask);
+          __Nulls.andNot(TILDA__TESTING2VIEW_Factory.COLS.A13._Mask);
+       _a13 = v;
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a13 -> TILDA.Testing2View."a13"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the null setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a13 of type UUID</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a13 of type UUID</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+    void setNullA13()
+     {
+       long T0 = System.nanoTime();
+       if (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A13._Mask) == true) // already NULL
+        return;
+       __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.A13._Mask);
+       __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A13._Mask);
+       _a13=null;
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a13b -> TILDA.Testing2View."a13b"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a13b of type List<UUID></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a13b of type UUID[]</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   List<UUID> _a13b;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a13b -> TILDA.Testing2View."a13b"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a13b of type List<UUID></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a13b of type UUID[]</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final UUID[] getA13bAsArray()
+      { return _a13b==null? null : _a13b.toArray(new UUID[_a13b.size()]); }
+   public final Iterator<UUID> getA13b()
+      { return _a13b==null? null : _a13b.iterator(); }
+   public final boolean hasA13b(UUID v)
+      { return _a13b==null? false : _a13b.contains(v); }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a13b -> TILDA.Testing2View."a13b"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the isNull for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a13b of type List<UUID></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a13b of type UUID[]</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final boolean isNullA13b()
+     { return __Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A13B._Mask); }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a13b -> TILDA.Testing2View."a13b"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a13b of type List<UUID></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a13b of type UUID[]</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+    void setA13b(List<UUID> v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+        throw new Exception("Cannot set field 'tilda.data.TILDA.Testing2View.a13b' that is invariant, or part of a read-only or pre-existing WORM object.");
+       if (v == null  || v.isEmpty() == true)
+        setNullA13b();
+       else if (CollectionUtil.equals(v, _a13b) == false)
+        {
+          __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.A13B._Mask);
+          __Nulls.andNot(TILDA__TESTING2VIEW_Factory.COLS.A13B._Mask);
+          if (_a13b == null)
+           {
+             _a13b = new ArrayList<UUID>();
+           }
+          else
+           {
+             _a13b.clear();
+           }
+          for (UUID i : v)
+           {
+             _a13b.add(i);
+           }
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+    void addToA13b(int pos, UUID v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (_a13b == null)
+        _a13b = new ArrayList<UUID>();
+       if (v == null)
+        {
+          setNullA13b();
+        }
+       else if (pos >= _a13b.size() || _a13b.get(pos).equals(v) == false)
+        {
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+           throw new Exception("Cannot set field 'tilda.data.TILDA.Testing2View.a13b' that is invariant, or part of a read-only or pre-existing WORM object.");
+          __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.A13B._Mask);
+          __Nulls.andNot(TILDA__TESTING2VIEW_Factory.COLS.A13B._Mask);
+          _a13b.add(pos, v);
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+    void removeFromA13b(UUID v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (_a13b.remove(v) == true)
+          __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.A13B._Mask);
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+    void removeFromA13b(int pos) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (_a13b.remove(pos) != null)
+        {
+          __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.A13B._Mask);
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a13b -> TILDA.Testing2View."a13b"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the null setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a13b of type List<UUID></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a13b of type UUID[]</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+    void setNullA13b()
+     {
+       long T0 = System.nanoTime();
+       if (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A13B._Mask) == true) // already NULL
+        return;
+       __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.A13B._Mask);
+       __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A13B._Mask);
+       _a13b=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -5404,6 +6496,13 @@ This is the null setter for:<BR>
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2View", "a10a");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2View", "a10b");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2View", "a10c");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2View", "a11");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2View", "a11b");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2View", "a11c");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2View", "a12");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2View", "a12b");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2View", "a13");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2View", "a13b");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2View", "description");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2View", "desc2");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2View", "desc3");
@@ -5476,42 +6575,49 @@ This is the null setter for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-      __Saved_refnum         = _refnum         =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.REFNUM._Mask        );
-                               _name           = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.NAME._Mask          );
+      __Saved_refnum         = _refnum         =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.REFNUM._Mask        );
+                               _name           = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.NAME._Mask          );
                                _lastUpdated    = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.LASTUPDATED._Mask   );
                                _xxxLastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.XXXLASTUPDATED._Mask);
-                               _a1             =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A1._Mask            );
+                               _a1             =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A1._Mask            );
                                _a3b = (List<Boolean>) C.getArray(RS, ++i, TILDA__TESTING2VIEW_Factory.COLS.A3B._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A3B._Mask           );
-                               _a4             =                              RS.getDouble   (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A4._Mask            );
+                               _a4             =                              RS.getDouble    (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A4._Mask            );
                                _a4b = (List<Double>) C.getArray(RS, ++i, TILDA__TESTING2VIEW_Factory.COLS.A4B._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A4B._Mask           );
-                               _a5             =                              RS.getFloat    (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A5._Mask            );
+                               _a5             =                              RS.getFloat     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A5._Mask            );
                                _a5b = (List<Float>) C.getArray(RS, ++i, TILDA__TESTING2VIEW_Factory.COLS.A5B._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A5B._Mask           );
-                               _a7             =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A7._Mask            );
+                               _a7             =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A7._Mask            );
                                _a7b = (List<Integer>) C.getArray(RS, ++i, TILDA__TESTING2VIEW_Factory.COLS.A7B._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A7B._Mask           );
-                               _a8             =                              RS.getBytes    (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A8._Mask            );
-                               _a8bTZ          = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A8BTZ._Mask         );
+                               _a8             =                              RS.getBytes     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A8._Mask            );
+                               _a8bTZ          = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A8BTZ._Mask         );
                                _a8b            = ProcessZDT(_a8bTZ           , "tilda.data.TILDA.Testing2View.a8b"           , RS, ++i, TILDA__TESTING2VIEW_Factory.COLS.A8B           , TILDA__TESTING2VIEW_Factory.COLS.A8BTZ           ); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A8B._Mask           );
-                               _a10a           =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A10A._Mask          );
-                               _a10b           = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A10B._Mask          );
-                               _a10c           =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A10C._Mask          );
-                               _description    = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESCRIPTION._Mask   );
-                               _desc2          = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESC2._Mask         );
-                               _desc3          = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESC3._Mask         );
-                               _desc4          = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESC4._Mask         );
-                               _desc5          = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESC5._Mask         );
-                               _desc6          = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESC6._Mask         );
-                               _a3             =                              RS.getBoolean  (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A3._Mask            );
+                               _a10a           =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A10A._Mask          );
+                               _a10b           = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A10B._Mask          );
+                               _a10c           =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A10C._Mask          );
+                               _a11            =                              RS.getBigDecimal(++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A11._Mask           );
+                               _a11b = (List<BigDecimal>) C.getArray(RS, ++i, TILDA__TESTING2VIEW_Factory.COLS.A11B._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A11B._Mask          );
+                               _a11c           =                              RS.getBigDecimal(++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A11C._Mask          );
+                               _a12            =                              RS.getShort     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A12._Mask           );
+                               _a12b = (List<Short>) C.getArray(RS, ++i, TILDA__TESTING2VIEW_Factory.COLS.A12B._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A12B._Mask          );
+                               _a13            =                              (java.util.UUID) RS.getObject(++i);  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A13._Mask           );
+                               _a13b = (List<UUID>) C.getArray(RS, ++i, TILDA__TESTING2VIEW_Factory.COLS.A13B._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A13B._Mask          );
+                               _description    = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESCRIPTION._Mask   );
+                               _desc2          = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESC2._Mask         );
+                               _desc3          = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESC3._Mask         );
+                               _desc4          = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESC4._Mask         );
+                               _desc5          = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESC5._Mask         );
+                               _desc6          = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESC6._Mask         );
+                               _a3             =                              RS.getBoolean   (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A3._Mask            );
                                _bastille       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.BASTILLE._Mask      );
                                _toto           = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.TOTO._Mask          );
-                               _desc2_Cat1     =                              RS.getDouble   (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESC2_CAT1._Mask    );
-                               _desc2_Cat2     =                              RS.getDouble   (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESC2_CAT2._Mask    );
-                               _desc2_Cat3     =                              RS.getDouble   (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESC2_CAT3._Mask    );
-                               _a7_Cat4        =                              RS.getDouble   (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A7_CAT4._Mask       );
-                               _a7_Cat5        =                              RS.getDouble   (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A7_CAT5._Mask       );
-                               _a5_null        =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A5_NULL._Mask       );
-                               _a6_null        =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A6_NULL._Mask       );
-                               _a7_null        =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A7_NULL._Mask       );
-                               _a8_null        =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A8_NULL._Mask       );
+                               _desc2_Cat1     =                              RS.getDouble    (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESC2_CAT1._Mask    );
+                               _desc2_Cat2     =                              RS.getDouble    (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESC2_CAT2._Mask    );
+                               _desc2_Cat3     =                              RS.getDouble    (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESC2_CAT3._Mask    );
+                               _a7_Cat4        =                              RS.getDouble    (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A7_CAT4._Mask       );
+                               _a7_Cat5        =                              RS.getDouble    (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A7_CAT5._Mask       );
+                               _a5_null        =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A5_NULL._Mask       );
+                               _a6_null        =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A6_NULL._Mask       );
+                               _a7_null        =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A7_NULL._Mask       );
+                               _a8_null        =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A8_NULL._Mask       );
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();
@@ -5560,6 +6666,13 @@ This is the null setter for:<BR>
                + "; a10a"             + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A10A._Mask) == true ? ": NULL" : ": " +                                   getA10a          () )
                + "; a10b"             + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A10B._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getA10b          ()))
                + "; a10c"             + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A10C._Mask) == true ? ": NULL" : ": " +                                   getA10c          () )
+               + "; a11"              + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A11._Mask) == true ? ": NULL" : ": " +                                   getA11           () )
+               + "; a11b"             + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A11B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA11b          ()))
+               + "; a11c"             + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A11C._Mask) == true ? ": NULL" : ": " +                                   getA11c          () )
+               + "; a12"              + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A12._Mask) == true ? ": NULL" : ": " +                                   getA12           () )
+               + "; a12b"             + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A12B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA12b          ()))
+               + "; a13"              + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A13._Mask) == true ? ": NULL" : ": " +                                   getA13           () )
+               + "; a13b"             + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A13B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA13b          ()))
                + "; description"      + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.DESCRIPTION._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDescription   ()))
                + "; desc2"            + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.DESC2._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDesc2         ()))
                + "; desc3"            + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.DESC3._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDesc3         ()))

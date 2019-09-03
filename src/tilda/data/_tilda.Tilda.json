@@ -258,12 +258,15 @@
                                      , "values": [ { "name":"String"   , "value":"STR", "description": "String"    }
                                                   ,{ "name":"Character", "value":"CHR", "description": "Character" }
                                                   ,{ "name":"Boolean"  , "value":"BOL", "description": "Boolean"   }
+                                                  ,{ "name":"Short"    , "value":"SHT", "description": "Short"     }
                                                   ,{ "name":"Integer"  , "value":"INT", "description": "Integer"   }
                                                   ,{ "name":"Long"     , "value":"LNG", "description": "Long"      }
                                                   ,{ "name":"Float"    , "value":"FLT", "description": "Float"     }
                                                   ,{ "name":"Double"   , "value":"DBL", "description": "Double"    }
                                                   ,{ "name":"Date"     , "value":"DT" , "description": "Date"      }
                                                   ,{ "name":"DateTime" , "value":"DTM", "description": "DateTime"  }
+                                                  ,{ "name":"Numeric"  , "value":"NUM", "description": "Numeric"   }
+                                                  ,{ "name":"Uuid"     , "value":"UI" , "description": "Uuid"      }
                                                  ]
          }
         ,{ "name":"title"            , "type":"STRING"  , "nullable":false, "size":  128,                   "description":"The title of the formula/column."  }
@@ -448,12 +451,21 @@
         { "name": "a9c"          , "type": "DATE"       ,                                                       "description": "The blah"},
         { "name": "a9d"          , "type": "DATE[]"     ,                                                       "description": "The blah"},
         
-        { "name": "a10a"         , "type": "INTEGER"        ,                                                       "description": "The blah"},
-        //{ "name": "a10a"         , "type": "BOOLEAN"        ,                                                       "description": "The blah"},
-        { "name": "a10b"         , "type": "STRING"        ,                  "size":    10,                    "description": "The blah"},
-        //{ "name": "a10b"         , "type": "INTEGER"        ,                                                       "description": "The blah"},
-        { "name": "a10c"         , "type": "INTEGER"        ,                                                       "description": "The blah"}
-        //{ "name": "a10c"         , "type": "LONG"        ,                                                       "description": "The blah"}
+        { "name": "a10a"         , "type": "INTEGER"    ,                                                       "description": "The blah"},
+        { "name": "a10b"         , "type": "STRING"     ,                "size": 10,                            "description": "The blah"},
+        { "name": "a10c"         , "type": "INTEGER"    ,                                                       "description": "The blah"},
+        
+        { "name": "a11"          , "type": "NUMERIC"    , "precision": 8, "scale": 4,                            "description": "The blah"},
+        { "name": "a11b"         , "type": "NUMERIC[]"  , "precision": 6, "scale": 3,                            "description": "The blah"},
+        { "name": "a11c"         , "type": "NUMERIC"    , "precision": 5,                                        "description": "The blah"},
+     
+        { "name": "a12"          , "type": "SHORT"      ,                                                        "description": "The blah"},
+        { "name": "a12b"         , "type": "SHORT[]"    ,                                                        "description": "The blah"},
+        
+        { "name": "a13"         , "type": "UUID"        ,                                                        "description": "The blah"},
+        { "name": "a13b"        , "type": "UUID[]"      ,                                                        "description": "The blah"}
+                                                            
+                                                            
       ],
       "primary": { "autogen": true, "keyBatch": 25000 },
       "indices":[ 

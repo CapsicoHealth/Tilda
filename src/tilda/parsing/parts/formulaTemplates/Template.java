@@ -81,6 +81,8 @@ public class Template extends Formula implements PatternObject
              F._Description[i] = TextUtil.searchReplace(_Description[i], "?", TE._Description);
             F._TypeStr = _TypeStr;
             F._Size = _Size;
+            F._Precision = _Precision;
+            F._Scale = _Scale;
             F._FormulaStrs = new String[_FormulaStrs.length];
             for (int i = 0; i < _FormulaStrs.length; ++i)
              F._FormulaStrs[i] = TextUtil.searchReplace(_FormulaStrs[i], "?", TE._Expression);

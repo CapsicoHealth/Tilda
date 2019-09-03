@@ -82,15 +82,29 @@ public class TildaData implements CodeGenTildaData
         Out.println();
         Out.println("import org.apache.logging.log4j.LogManager;");
         Out.println("import org.apache.logging.log4j.Logger;");
+        for (Column C : O._Columns) 
+          {
+            if (C._JsonSchema != null)
+              {
+                Out.println();
+                Out.println("import com.google.gson.Gson;");
+                Out.println("import com.google.gson.GsonBuilder;");
+                Out.println("import com.google.gson.annotations.SerializedName;");
+                break;
+              }
+          }
+        
         for (Column C : O._Columns)
-          if (C._JsonSchema != null)
-            {
-              Out.println();
-              Out.println("import com.google.gson.Gson;");
-              Out.println("import com.google.gson.GsonBuilder;");
-              Out.println("import com.google.gson.annotations.SerializedName;");
-              break;
-            }
+          {
+            if (C == null)
+              continue;
+            if(C.getType() == ColumnType.NUMERIC)
+              {
+                Out.println();
+                Out.println("import java.math.BigDecimal;");
+                break;
+              } 
+          }      
         Out.println();
       }
 
@@ -191,10 +205,17 @@ public class TildaData implements CodeGenTildaData
                   case DOUBLE:
                   case FLOAT:
                   case INTEGER:
+                  case SHORT: 
                   case LONG:
                     Out.print("= SystemValues.EVIL_VALUE");
                     break;
-                  case DATETIME:
+                  case NUMERIC: 
+                    Out.print("= new BigDecimal(SystemValues.EVIL_VALUE)");
+                    break;
+                  case UUID: 
+                    Out.print("= new UUID(0L, 0L)");
+                    break;                    
+                  case DATETIME:  
                   case STRING:
                   case JSON:
                     break;
@@ -281,12 +302,14 @@ public class TildaData implements CodeGenTildaData
         switch (C.getType())
           {
             case BOOLEAN:
+            case SHORT:
             case INTEGER:
               return V;
             case FLOAT:
               return V+"f";
             case LONG:
               return V+"l";
+            case NUMERIC:
             case DOUBLE:
               return V+"d";
             case CHAR:
@@ -305,6 +328,7 @@ public class TildaData implements CodeGenTildaData
               return "DateTimeUtil.parseDate(" + TextUtil.escapeDoubleQuoteWithSlash(V) + ", \"yyyy-MM-dd\")";
             case STRING:
             case JSON:
+            case UUID:
               return TextUtil.escapeDoubleQuoteWithSlash(V);
             case BINARY:
             case BITFIELD:
@@ -369,7 +393,10 @@ public class TildaData implements CodeGenTildaData
               case DOUBLE:
               case FLOAT:
               case INTEGER:
+              case SHORT:
               case LONG:
+              case NUMERIC:
+              case UUID:
                 Out.println("      { return _" + V._ParentColumn.getName() + " == " + ValueNameVar + "; }");
                 break;
               case DATETIME:
@@ -579,7 +606,9 @@ public class TildaData implements CodeGenTildaData
                 case DOUBLE:
                 case FLOAT:
                 case LONG:
+                case SHORT:
                 case INTEGER:
+                case NUMERIC:                  
                   if (C.isSet() == true)
                     Out.println("       if (_" + C.getName() + ".contains(v) == false)");
                   else if (C.isList() == true)
@@ -588,6 +617,7 @@ public class TildaData implements CodeGenTildaData
                     Out.println("       if (__Init == InitMode.CREATE || v != _" + C.getName() + ")");
                   Out.println("        {");
                   break;
+                case UUID:                      
                 case DATE:
                 case DATETIME:
                 case STRING:
@@ -769,8 +799,11 @@ public class TildaData implements CodeGenTildaData
             case DOUBLE:
             case FLOAT:
             case INTEGER:
+            case SHORT:
+            case NUMERIC:
             case LONG:
             case STRING:
+            case UUID:
               if (V._ParentColumn.isCollection() == false)
                 Out.println("      { set" + TextUtil.CapitalizeFirstCharacter(V._ParentColumn.getName()) + "(" + ValueNameVar + "); }");
               else
@@ -861,8 +894,13 @@ public class TildaData implements CodeGenTildaData
               case FLOAT:
               case BITFIELD:
               case INTEGER:
+              case SHORT:
                 Out.println("       _" + C.getName() + "=0;");
                 break;
+              case NUMERIC:
+                Out.println("       _" + C.getName() + "=BigDecimal.ZERO;");
+                break;              
+              case UUID:
               case DATETIME:
               case DATE:
               case STRING:
@@ -967,8 +1005,11 @@ public class TildaData implements CodeGenTildaData
                   case DOUBLE:
                   case FLOAT:
                   case INTEGER:
+                  case SHORT:
                   case LONG:
                   case STRING:
+                  case NUMERIC:
+                  case UUID:
                     Out.println(" V.append(" + Helper.getSupportClassFullName(O._ParentSchema) + "._COMMAQUESTION);  }");
                     break;
                   default:
@@ -1029,8 +1070,11 @@ public class TildaData implements CodeGenTildaData
                   case FLOAT:
                   case DOUBLE:
                   case INTEGER:
+                  case SHORT:
+                  case NUMERIC:
                   case LONG:
                   case STRING:
+                  case UUID:  
                     if (C._DefaultUpdateValue == null)
                       Out.println("          if (__Changes.intersects(" + Mask + ") == true) " + Helper.getRuntimeUpdateStr(C) + ";");
                     else
@@ -1093,11 +1137,20 @@ public class TildaData implements CodeGenTildaData
                   case JSON:
                     Out.println(" else PS.set" + JavaJDBCType.get(C.getType())._JDBCType + "(++i, " + (C.getType() == ColumnType.CHAR ? "\"\"+" : "") + "_" + C.getName() + ");");
                     break;
+                  case UUID:
+                    Out.print(" else ");
+                    if (C.isCollection() == false)
+                      Out.println("PS.set" + JavaJDBCType.get(C.getType())._JDBCType + "(++i, _" + C.getName() + ", java.sql.Types." + JavaJDBCType.get(C.getType())._JDBCSQLType + ");");
+                    else
+                      Out.println("C.setArray(PS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + "._Type, AllocatedArrays, _" + C.getName() + ");");
+                    break;                    
                   case BINARY:
                   case BITFIELD:
                   case BOOLEAN:
                   case DOUBLE:
                   case FLOAT:
+                  case SHORT:
+                  case NUMERIC:
                   case INTEGER:
                   case LONG:
                   case CHAR:
@@ -1330,15 +1383,23 @@ public class TildaData implements CodeGenTildaData
                     Out.println(Header + "    _" + C.getName() + "Obj = CollectionUtil.toList(tmp);");
                     Out.println(Header + "  }");
                     break;
+                  case UUID:
+                    if (C.isCollection() == true)
+                      Out.print("_" + C.getName() + " = (" + (C.isSet() == true ? "Set<" : "List<") + JavaJDBCType.get(C.getType())._JavaClassType + ">) C.getArray(RS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + "._Type, " + C.isSet() + ");");
+                    else
+                      Out.print("_" + C.getName() + Pad + " =                              (java.util.UUID) RS.getObject(++i); ");
+                    break;
                   case DOUBLE:
                   case FLOAT:
                   case INTEGER:
+                  case SHORT:
+                  case NUMERIC:  
                   case LONG:
                   case BINARY:
                   case BITFIELD:
                   case BOOLEAN:
                   case CHAR:
-                  case STRING:
+                  case STRING:                   
                     if (C.isCollection() == true)
                       Out.print("_" + C.getName() + " = (" + (C.isSet() == true ? "Set<" : "List<") + JavaJDBCType.get(C.getType())._JavaClassType + ">) C.getArray(RS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + "._Type, " + C.isSet() + ");");
                     else if (C.getType() == ColumnType.CHAR)

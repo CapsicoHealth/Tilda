@@ -1048,11 +1048,11 @@ This is the hasChanged for:<BR>
        int i = 0;
        if (__Changes.intersects(TILDA__FORMULADEPENDENCY_Factory.COLS.FORMULAREFNUM._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__FORMULADEPENDENCY_Factory.COLS.FORMULAREFNUM._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _formulaRefnum);
+          if (__Nulls.intersects(TILDA__FORMULADEPENDENCY_Factory.COLS.FORMULAREFNUM._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT    ); else PS.setLong      (++i, _formulaRefnum);
         } 
        if (__Changes.intersects(TILDA__FORMULADEPENDENCY_Factory.COLS.DEPENDENCYREFNUM._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__FORMULADEPENDENCY_Factory.COLS.DEPENDENCYREFNUM._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _dependencyRefnum);
+          if (__Nulls.intersects(TILDA__FORMULADEPENDENCY_Factory.COLS.DEPENDENCYREFNUM._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT    ); else PS.setLong      (++i, _dependencyRefnum);
         } 
        if (__Changes.intersects(TILDA__FORMULADEPENDENCY_Factory.COLS.CREATED._Mask) == true) 
         { 
@@ -1123,8 +1123,8 @@ This is the hasChanged for:<BR>
           switch (__LookupId)
            {
              case 0:
-               PS.setLong     (++i, _formulaRefnum   );
-               PS.setLong     (++i, _dependencyRefnum);
+               PS.setLong      (++i, _formulaRefnum   );
+               PS.setLong      (++i, _dependencyRefnum);
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -1214,8 +1214,8 @@ This is the hasChanged for:<BR>
           switch (__LookupId)
            {
              case 0:
-               PS.setLong     (++i, _formulaRefnum   );
-               PS.setLong     (++i, _dependencyRefnum);
+               PS.setLong      (++i, _formulaRefnum   );
+               PS.setLong      (++i, _dependencyRefnum);
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -1246,8 +1246,8 @@ This is the hasChanged for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-      __Saved_formulaRefnum    = _formulaRefnum    =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULADEPENDENCY_Factory.COLS.FORMULAREFNUM._Mask   );
-      __Saved_dependencyRefnum = _dependencyRefnum =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULADEPENDENCY_Factory.COLS.DEPENDENCYREFNUM._Mask);
+      __Saved_formulaRefnum    = _formulaRefnum    =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULADEPENDENCY_Factory.COLS.FORMULAREFNUM._Mask   );
+      __Saved_dependencyRefnum = _dependencyRefnum =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULADEPENDENCY_Factory.COLS.DEPENDENCYREFNUM._Mask);
                                  _created          = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULADEPENDENCY_Factory.COLS.CREATED._Mask         );
                                  _lastUpdated      = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULADEPENDENCY_Factory.COLS.LASTUPDATED._Mask     );
                                  _deleted          = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULADEPENDENCY_Factory.COLS.DELETED._Mask         );

@@ -16,10 +16,12 @@
 
 package tilda.enums;
 
+import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 import tilda.utils.CollectionUtil;
 import tilda.utils.PaddingTracker;
@@ -31,18 +33,21 @@ public enum ColumnType
   {
 
     /*@formatter:off*/
-    STRING  (true , true , false, "STR"),
-    JSON    (true , false, false, "JSN"),
-    CHAR    (true , true , true , "CHR"),
-    INTEGER (true , true , true , "INT"),
-    LONG    (true , true , true , "LNG"),
-    FLOAT   (true , true , true , "FLT"),
-    DOUBLE  (true , true , true , "DBL"),
-    BOOLEAN (true , true , true , "BOL"),
-    DATE    (true , true , false, "DT"),
-    DATETIME(true , false, false, "DTM"), // Datetimes are stored as 2 columns in the DB, so SETs are not allowed because they are unordered.
-    BINARY  (false, false, false, "BIN"),
-    BITFIELD(false, true , true , "BF");
+    STRING     (true , true , false, "STR"),
+    JSON       (true , false, false, "JSN"),
+    CHAR       (true , true , true , "CHR"),
+    SHORT      (true , true , true , "SHT"),
+    INTEGER    (true , true , true , "INT"),
+    LONG       (true , true , true , "LNG"),
+    FLOAT      (true , true , true , "FLT"),
+    DOUBLE     (true , true , true , "DBL"),
+    NUMERIC    (true , true , false, "NUM"),
+    BOOLEAN    (true , true , true , "BOL"),
+    DATE       (true , true , false, "DT" ),
+    DATETIME   (true , false, false, "DTM"), // Datetimes are stored as 2 columns in the DB, so SETs are not allowed because they are unordered.
+    BINARY     (false, false, false, "BIN"),
+    BITFIELD   (false, true , true , "BF" ),
+    UUID       (true , true , false, "UI" );
     /*@formatter:on*/
 
     private ColumnType(boolean ArrayCompatible, boolean SetCompatible, boolean Primitive, String shortName)
@@ -67,38 +72,73 @@ public enum ColumnType
     static
       {
         for (ColumnType T : ColumnType.values())
+
           _PadderTypeNames.track(T.name());
 
         _CompatibleTypes = new ColumnType[][] {
-            { STRING, JSON, CHAR, INTEGER, LONG, FLOAT, DOUBLE, BOOLEAN, DATE, DATETIME, BITFIELD
-            }, { JSON
-            }, { CHAR, STRING
-            }, { INTEGER, BOOLEAN
-            }, { LONG, INTEGER
-            }, { FLOAT, INTEGER
-            }, { DOUBLE, FLOAT, INTEGER, LONG
-            }, { BOOLEAN, DOUBLE, FLOAT, LONG, INTEGER, CHAR, STRING
-            }, { DATE
-            }, { DATETIME, DATE
-            }, { BINARY
-            }, { BITFIELD
-            }
+            { STRING, JSON, CHAR, INTEGER, LONG, FLOAT, DOUBLE, BOOLEAN, DATE, DATETIME, BITFIELD, SHORT, UUID, NUMERIC
+            } // STRING
+            , { JSON
+            } // JSON
+            , { CHAR, STRING
+            } // CHAR
+            , { SHORT
+            } // SHORT
+            , { INTEGER, SHORT
+            } // INTEGER
+            , { LONG, INTEGER, SHORT
+            } // LONG
+            , { FLOAT, INTEGER, SHORT
+            } // FLOAT
+            , { DOUBLE, FLOAT, INTEGER, LONG, SHORT
+            } // DOUBLE
+            , { NUMERIC, DOUBLE, FLOAT, INTEGER, LONG, SHORT
+            } // NUMERIC
+            , { BOOLEAN
+            } // BOOLEAN
+            , { DATE
+            } // DATE
+            , { DATETIME, DATE
+            } // DATETIME
+            , { BINARY
+            } // BINARY
+            , { BITFIELD
+            } // BITFIELD
+            , { UUID, STRING
+            } // UUID
         };
 
         _CompatibleDBTypes = new ColumnType[][] {
-            { STRING, JSON, CHAR, INTEGER, LONG, FLOAT, DOUBLE, BOOLEAN, DATE, DATETIME, BITFIELD
-            }, { JSON, STRING
-            }, { CHAR, STRING, BOOLEAN
-            }, { INTEGER, BOOLEAN, STRING, LONG, DOUBLE, FLOAT
-            }, { LONG, BOOLEAN, STRING, INTEGER, DOUBLE, FLOAT
-            }, { FLOAT, BOOLEAN, STRING, INTEGER, DOUBLE, LONG
-            }, { DOUBLE, FLOAT, INTEGER, LONG, BOOLEAN, STRING
-            }, { BOOLEAN, DOUBLE, FLOAT, LONG, INTEGER, CHAR, STRING
-            }, { DATE, STRING
-            }, { DATETIME, DATE, STRING
-            }, { BINARY
-            }, { BITFIELD
-            }
+            { STRING, JSON, CHAR, INTEGER, LONG, FLOAT, DOUBLE, BOOLEAN, DATE, DATETIME, BITFIELD, SHORT, NUMERIC, UUID
+            } // STRING
+            , { JSON, STRING
+            } // JSON
+            , { CHAR, STRING, BOOLEAN
+            } // CHAR
+            , { SHORT, BOOLEAN, STRING
+            } // SHORT TODO:CHECK
+            , { INTEGER, BOOLEAN, STRING, LONG, DOUBLE, FLOAT, SHORT, NUMERIC, BITFIELD
+            } // INTEGER
+            , { LONG, BOOLEAN, STRING, INTEGER, DOUBLE, FLOAT
+            } // LONG
+            , { FLOAT, BOOLEAN, STRING, INTEGER, DOUBLE, LONG
+            } // FLOAT
+            , { DOUBLE, FLOAT, INTEGER, LONG, BOOLEAN, STRING
+            } // DOUBLE
+            , { NUMERIC, DOUBLE, FLOAT, INTEGER, LONG, BOOLEAN, STRING
+            } // NUMERIC TODO:CHECK
+            , { BOOLEAN, DOUBLE, FLOAT, LONG, INTEGER, CHAR, STRING
+            } // BOOLEAN
+            , { DATE, STRING
+            } // DATE
+            , { DATETIME, DATE, STRING
+            } // DATETIME
+            , { BINARY
+            } // BINARY
+            , { BITFIELD
+            } // BITFIELD
+            , { UUID, STRING
+            } // UUID
         };
 
         ColumnType[] colsToValidate = new ColumnType[_CompatibleTypes.length];
@@ -254,6 +294,13 @@ public enum ColumnType
                   throw new Exception(Errors.get(0)._V);
                 return isSet == true ? CollectionUtil.toSet(val) : CollectionUtil.toList(val);
               }
+            case SHORT:
+              {
+                short[] val = ParseUtil.parseShort("SQLShortArray", true, parts, Errors);
+                if (Errors.isEmpty() == false)
+                  throw new Exception(Errors.get(0)._V);
+                return isSet == true ? CollectionUtil.toSet(val) : CollectionUtil.toList(val);
+              }
             case INTEGER:
               {
                 int[] val = ParseUtil.parseInteger("SQLIntegerArray", true, parts, Errors);
@@ -264,6 +311,20 @@ public enum ColumnType
             case LONG:
               {
                 long[] val = ParseUtil.parseLong("SQLLongArray", true, parts, Errors);
+                if (Errors.isEmpty() == false)
+                  throw new Exception(Errors.get(0)._V);
+                return isSet == true ? CollectionUtil.toSet(val) : CollectionUtil.toList(val);
+              }
+            case NUMERIC:
+              {
+                BigDecimal[] val = ParseUtil.parseBigDecimal("SQLNumericArray", true, parts, Errors);
+                if (Errors.isEmpty() == false)
+                  throw new Exception(Errors.get(0)._V);
+                return isSet == true ? CollectionUtil.toSet(val) : CollectionUtil.toList(val);
+              }
+            case UUID:
+              {
+                UUID[] val = ParseUtil.parseUUID("SQLUUIDArray", true, parts, Errors);
                 if (Errors.isEmpty() == false)
                   throw new Exception(Errors.get(0)._V);
                 return isSet == true ? CollectionUtil.toSet(val) : CollectionUtil.toList(val);
@@ -280,7 +341,7 @@ public enum ColumnType
 
     public static boolean isNumber(ColumnType Type)
       {
-        return Type == DOUBLE || Type == FLOAT || Type == INTEGER || Type == LONG;
+        return Type == DOUBLE || Type == FLOAT || Type == INTEGER || Type == LONG || Type == NUMERIC || Type == SHORT;
       }
 
   }

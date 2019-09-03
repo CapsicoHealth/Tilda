@@ -43,8 +43,11 @@ import tilda.enums.FrameworkSourcedType;
 import tilda.enums.ObjectMode;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.migration.actions.ColumnAdd;
-import tilda.migration.actions.ColumnAlterMulti;
+
 import tilda.migration.actions.ColumnAlterNull;
+import tilda.migration.actions.ColumnAlterNumericSize;
+
+import tilda.migration.actions.ColumnAlterMulti;
 import tilda.migration.actions.ColumnComment;
 import tilda.migration.actions.ColumnDefault;
 import tilda.migration.actions.DDLDependencyPostManagement;
@@ -286,10 +289,12 @@ public class Migrator
 
         for (Object Obj : S._Objects)
           {
+            
             if (Obj == null)
               continue;
             if (Obj._FST == FrameworkSourcedType.VIEW || Obj._Mode == ObjectMode.CODE_ONLY == true)
               continue;
+
             TableMeta TMeta = DBMeta.getTableMeta(Obj._ParentSchema._Name, Obj._Name);
             int DddlManagementPos = Actions.size();
 
@@ -304,7 +309,7 @@ public class Migrator
                 ColumnAlterMulti CAM = new ColumnAlterMulti(C, Obj);
 
                 for (Column Col : Obj._Columns)
-                  {
+                  {               
                     if (Col == null || Col._Mode == ColumnMode.CALCULATED)
                       continue;
 
@@ -321,12 +326,20 @@ public class Migrator
 
                         // Check arrays
                         if (CheckArrays(DBMeta, Errors, Col, CMeta) == false)
-                          continue;
+                          continue;                                             
+                        
+                        if (Col.getType() == ColumnType.NUMERIC
+                        && (CMeta._Precision != Col._Precision && (CMeta._Scale != Col._Scale || Col._Scale == 0)))
+                          {
+                            Actions.add(new ColumnAlterNumericSize(CMeta, Col));
+                            NeedsDdlDependencyManagement = true;
+                          }
 
                         boolean condition1 = Col.isCollection() == false
                         && (Col.getType() == ColumnType.BITFIELD && CMeta._TildaType != ColumnType.INTEGER
                         || Col.getType() == ColumnType.JSON && CMeta._TildaType != ColumnType.STRING && CMeta._TildaType != ColumnType.JSON
                         || Col.getType() != ColumnType.BITFIELD && Col.getType() != ColumnType.JSON && Col.getType() != CMeta._TildaType);
+
 
                         // We have to check if someone changed goal-posts for VARCHAR and CLOG thresholds.
                         // The case here is that we have a CHAR(10) in the database, and the model still says

@@ -553,7 +553,7 @@ public class View extends Base
         if (_TimeSeries != null)
           {
             ColumnType Type = ColumnType.DATE;
-            Column C = new Column(_TimeSeries._Name, Type.name(), 0, true, ColumnMode.NORMAL, true, null, "Timeseries period");
+            Column C = new Column(_TimeSeries._Name, Type.name(), 0, true, ColumnMode.NORMAL, true, null, "Timeseries period", null, null);
             C._FCT = FrameworkColumnType.TS;
             O._Columns.add(C);
           }
@@ -618,7 +618,7 @@ public class View extends Base
                 else
                   {
                     F.Validate(PS, this);
-                    Column C = new Column(F._Name, F._TypeStr, F._Size, true, ColumnMode.NORMAL, true, null, "Formula column '<B>" + F._Title + "</B>'");
+                    Column C = new Column(F._Name, F._TypeStr, F._Size, true, ColumnMode.NORMAL, true, null, "Formula column '<B>" + F._Title+"</B>'", F._Precision, F._Scale);
                     if (F.getType() == ColumnType.DATETIME)
                       C._FCT = FrameworkColumnType.DT_FORMULA;
                     else if (F._FormulaTemplate == true)
@@ -741,7 +741,7 @@ public class View extends Base
                       {
                         ColumnType Type = VPV._Type != null ? VPV._Type._Type : AggregateType;
                         Column C = new Column(A.makeName(VPV), Type.name(), Type == ColumnType.STRING ? A._VC._SameAsObj._Size : 0, true, ColumnMode.NORMAL, true, null,
-                        VPV._Description + " (pivot of " + VC.getAggregateName() + " on " + P._VC._SameAsObj.getShortName() + "='" + VPV._Value + "')");
+                        VPV._Description + " (pivot of " + VC.getAggregateName() + " on " + P._VC._SameAsObj.getShortName() + "='" + VPV._Value + "')", A._VC._SameAsObj._Precision, A._VC._SameAsObj._Scale);
                         O._Columns.add(C);
                         _PivotColumns.add(C);
                       }
@@ -766,7 +766,7 @@ public class View extends Base
                         ColumnType AggregateType = VC.getAggregateType();
                         ColumnType Type = VPV._Type != null ? VPV._Type._Type : AggregateType;
                         Column C = new Column(A.makeName(VPV), Type.name(), Type == ColumnType.STRING ? A._VC._SameAsObj._Size : 0, true, ColumnMode.NORMAL, true, null,
-                        VPV._Description + " (pivot of " + VC.getAggregateName() + " on " + P._VC._SameAsObj.getShortName() + "='" + VPV._Value + "')");
+                        VPV._Description + " (pivot of " + VC.getAggregateName() + " on " + P._VC._SameAsObj.getShortName() + "='" + VPV._Value + "')", A._VC._SameAsObj._Precision, A._VC._SameAsObj._Scale);
                         O._Columns.add(C);
                         _PivotColumns.add(C);
                       }

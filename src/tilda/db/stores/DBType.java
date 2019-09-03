@@ -63,30 +63,31 @@ public interface DBType
     
     public CodeGenSql getSQlCodeGen();
 
-    public boolean createSchema                   (Connection Con, Schema S) throws Exception;
-    public boolean createTable                    (Connection Con, Object Obj) throws Exception;
-    public boolean alterTableComment              (Connection Con, Object Obj) throws Exception;
-    public boolean createKeysEntry                (Connection Con, Object Obj) throws Exception;
-    public boolean dropView                       (Connection Con, View V) throws Exception;
-    public boolean createView                     (Connection Con, View V) throws Exception;
-    public boolean alterTableAddColumn            (Connection Con, Column Col, String DefaultValue) throws Exception;
-    public boolean alterTableAlterColumnDefault   (Connection Con, Column Col) throws Exception;
-    public boolean alterTableDropColumn           (Connection Con, Object Obj, String ColumnName) throws Exception;
-    public boolean alterTableAlterColumnNull      (Connection Con, Column Col, String DefaultValue) throws Exception;
-    public boolean alterTableAlterColumnComment   (Connection Con, Column Col) throws Exception;
-    public boolean alterTableAlterColumnType      (Connection Con, ColumnMeta ColMeta, Column Col, ZoneInfo_Data defaultZI) throws Exception;
-    public boolean alterTableAlterColumnMulti     (Connection Con, List<ColMetaColPair> BatchTypeCols, List<ColMetaColPair> BatchSizeCols, ZoneInfo_Data defaultZI)  throws Exception;
-    public boolean alterTableAlterColumnStringSize(Connection Con, ColumnMeta ColMeta, Column Col) throws Exception;
-    public boolean alterTableReplaceTablePK       (Connection Con, Object Obj, PKMeta oldPK) throws Exception;
-    public boolean alterTableDropFK               (Connection Con, Object Obj, FKMeta FK) throws Exception;
-    public boolean alterTableAddFK                (Connection Con, ForeignKey FK) throws Exception;
-    public boolean alterTableDropIndex            (Connection Con, Object Obj, IndexMeta IX) throws Exception;
-    public String  alterTableAddIndexDDL          (Index IX) throws Exception;
-    public boolean alterTableAddIndex             (Connection Con, Index IX) throws Exception;
-    public boolean alterTableRenameIndex          (Connection Con, Object Obj, String OldName, String NewName) throws Exception;
-    public String  getHelperFunctionsScript       (Connection Con, boolean start) throws Exception;    
-    public String  getAclRolesScript              (Connection Con, List<Schema> TildaList) throws Exception;
-    public boolean isSuperUser                    (Connection C) throws Exception;
+    public boolean createSchema                    (Connection Con, Schema S) throws Exception;
+    public boolean createTable                     (Connection Con, Object Obj) throws Exception;
+    public boolean alterTableComment               (Connection Con, Object Obj) throws Exception;
+    public boolean createKeysEntry                 (Connection Con, Object Obj) throws Exception;
+    public boolean dropView                        (Connection Con, View V) throws Exception;
+    public boolean createView                      (Connection Con, View V) throws Exception;
+    public boolean alterTableAddColumn             (Connection Con, Column Col, String DefaultValue) throws Exception;
+    public boolean alterTableAlterColumnDefault    (Connection Con, Column Col) throws Exception;
+    public boolean alterTableAlterColumnNumericSize(Connection connection, ColumnMeta colMeta, Column col) throws Exception;
+    public boolean alterTableDropColumn            (Connection Con, Object Obj, String ColumnName) throws Exception;   
+    public boolean alterTableAlterColumnNull       (Connection Con, Column Col, String DefaultValue) throws Exception;
+    public boolean alterTableAlterColumnComment    (Connection Con, Column Col) throws Exception;
+    public boolean alterTableAlterColumnType       (Connection Con, ColumnMeta ColMeta, Column Col, ZoneInfo_Data defaultZI) throws Exception;
+    public boolean alterTableAlterColumnMulti      (Connection Con, List<ColMetaColPair> BatchTypeCols, List<ColMetaColPair> BatchSizeCols, ZoneInfo_Data defaultZI)  throws Exception;
+    public boolean alterTableAlterColumnStringSize (Connection Con, ColumnMeta ColMeta, Column Col) throws Exception;
+    public boolean alterTableReplaceTablePK        (Connection Con, Object Obj, PKMeta oldPK) throws Exception;
+    public boolean alterTableDropFK                (Connection Con, Object Obj, FKMeta FK) throws Exception;
+    public boolean alterTableAddFK                 (Connection Con, ForeignKey FK) throws Exception;
+    public boolean alterTableDropIndex             (Connection Con, Object Obj, IndexMeta IX) throws Exception;
+    public String  alterTableAddIndexDDL           (Index IX) throws Exception;
+    public boolean alterTableAddIndex              (Connection Con, Index IX) throws Exception;
+    public boolean alterTableRenameIndex           (Connection Con, Object Obj, String OldName, String NewName) throws Exception;
+    public String  getHelperFunctionsScript        (Connection Con, boolean start) throws Exception;    
+    public String  getAclRolesScript               (Connection Con, List<Schema> TildaList) throws Exception;
+    public boolean isSuperUser                     (Connection C) throws Exception;
 
 
     public void   truncateTable(Connection C, String schemaName, String tableName, boolean cascade) throws Exception;
@@ -105,7 +106,7 @@ public interface DBType
     public StringStringPair getTypeMapping(int type, String name, int size, String typeName) throws Exception;
     public void             getFullColumnVar(StringBuilder Str, String SchemaName, String TableName, String ColumnName);
     public void             getFullTableVar (StringBuilder Str, String SchemaName, String TableName);
-    public void             getColumnType   (StringBuilder Str, ColumnType T, Integer S, ColumnMode M, boolean Collection);
+    public void             getColumnType   (StringBuilder Str, ColumnType T, Integer S, ColumnMode M, boolean Collection, Integer Precision, Integer Scale);
     public void             setArray(Connection C, PreparedStatement PS, int i, ColumnType Type, List<Array> allocatedArrays, Collection<?> val) throws Exception;
     public Collection<?>    getArray(              ResultSet         RS, int i, ColumnType Type, boolean isSet) throws Exception;
     public void             setJson (              PreparedStatement PS, int i, String jsonValue) throws Exception;
