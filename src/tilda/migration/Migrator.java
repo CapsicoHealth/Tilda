@@ -117,7 +117,7 @@ public class Migrator
           {
             PrintDiscrepancies(C, migrationData, DependencySchemas);
             confirmMigration(C);
-            applyMigration(C, migrationData);
+            applyMigration(C, migrationData, DependencySchemas);
             doAcl(C, TildaList, DBMeta);
             if (Migrate.isTesting() == false)
               KeysManager.reloadAll();
@@ -147,22 +147,30 @@ public class Migrator
         LOG.warn("There were " + migrationData.getActionCount() + " discrepencies found between the application's required data model and the database " + C.getPoolName() + ".");
         LOG.info("");
         int counter = 0;
+        int counterApplied = 0;
         for (MigrationScript S : migrationData.getMigrationScripts())
           {
             int counterSchema = 0;
             for (MigrationAction MA : S._Actions)
               {
+                boolean included = S._S == null || TextUtil.FindElement(DependencySchemas, S._S._Name, true, 0) == -1;
                 if (S._S != null && counterSchema == 0) // Print schema header for logs
                   {
                     ++counterSchema;
-                    LOG.warn("    Schema '" + S._S._Name + "': " + (S._S == null || TextUtil.FindElement(DependencySchemas, S._S._Name, true, 0) == -1 ? "" : " DECLARED AS A DEPENDENCY IN tilda.config.json AND WON'T BE MIGRATED!"));
+                    LOG.warn("    Schema '" + S._S._Name + "': " + (included == true ? "" : " DECLARED AS A DEPENDENCY IN tilda.config.json AND WON'T BE MIGRATED!"));
                   }
                 if (MA.isDependencyAction() == false)
-                  LOG.warn("        " + (++counter) + " - " + MA.getDescription());
+                  {
+                    if (included == true)
+                      ++counterApplied;
+                    LOG.warn((included == true ? "       " : "       // ") + (++counter) + " - " + MA.getDescription());
+                  }
                 else
-                  LOG.debug("        - (dependency) " + MA.getDescription());
+                  LOG.debug((included == true ? "       " : "       // ") + "(dependency) " + MA.getDescription());
               }
           }
+        LOG.info("");
+        LOG.warn("A total of " + counterApplied + " migration steps will be applied.");
       }
 
     public static MigrationDataModel AnalyzeDatabase(Connection C, boolean CheckOnly, List<Schema> TildaList, DatabaseMeta DBMeta)
@@ -176,11 +184,6 @@ public class Migrator
 
         LOG.info("===> Analyzing DB ( Url: " + C.getPoolName() + " )");
         LOG.info("Analyzing differences between the database and the application's expected data model...");
-        MigrationScript InitScript = new MigrationScript(null, new ArrayList<MigrationAction>());
-        // for (Schema S : TildaList)
-        // if (S._Views.isEmpty() == false)
-        // InitScript._Actions.add(new SchemaViewsDrop(S));
-        Scripts.add(InitScript);
         for (Schema S : TildaList)
           {
             List<MigrationAction> L = Migrator.getMigrationActions(C, C.getSQlCodeGen(), S, TildaList, DBMeta);
@@ -223,7 +226,7 @@ public class Migrator
           }
       }
 
-    protected static void applyMigration(Connection C, MigrationDataModel migrationData)
+    protected static void applyMigration(Connection C, MigrationDataModel migrationData, String[] DependencySchemas)
     throws Exception
       {
         LOG.info("===> Migrating DB ( Url: " + C.getURL() + " )");
@@ -236,6 +239,8 @@ public class Migrator
               {
                 if (S._Actions.isEmpty() == true)
                   continue;
+                if (S._S != null && TextUtil.FindElement(DependencySchemas, S._S._Name, true, 0) != -1)
+                 continue;
                 for (MigrationAction A : S._Actions)
                   {
                     lastAction = A;
