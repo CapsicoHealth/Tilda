@@ -17,12 +17,12 @@
             { "name": "id"        , "type": "STRING"                                       , "nullable": false, "size": 128, "invariant": true, "description": "The name of the test" }
            ,{ "name": "name"      , "type": "STRING"                                       , "nullable": false, "size": 128, "invariant": true, "description": "The name of the test" }
            ,{ "name": "test_fk"   , "sameAs":"Test.refnum"                                 , "nullable": false,              "invariant": true, "description": "The name of the test" }
-           ,{ "name": "test2_fk"  , "sameAs":"Test2.refnum"                                , "nullable": false,              "invariant": true, "description": "The name of the test" }
+//           ,{ "name": "test2_fk"  , "sameAs":"Test2.refnum"                                , "nullable": false,              "invariant": true, "description": "The name of the test" }
          ]
        ,"primary": { "autogen": true }
        ,"foreign": [
-            { "name":"Test ", "srcColumns":["test_fk"], "destObject":"Test" }
-           ,{ "name":"Test2", "srcColumns":["test2_fk"], "destObject":"Test2" }
+            { "name":"Test", "srcColumns":["test_fk"], "destObject":"Test" }
+//           ,{ "name":"Test2", "srcColumns":["test2_fk"], "destObject":"Test2" }
          ]
        ,"indices":[ 
             { "name": "Name"     , "columns": ["name"] }
@@ -48,6 +48,59 @@
             { "name": "", "columns": ["refnum", "userRefnum", "name"] }
          ]
       }
+
+
+// Example from the Wiki's Pivot article.
+,{ "name":"User"
+  ,"description":"Users"
+  ,"columns":[
+      { "name":"id"   , "type":"STRING", "size": 40, "nullable":false, "description":"The user's id"    }
+     ,{ "name":"email", "type":"STRING", "size":255, "nullable":false, "description":"The user's email" }
+    ]
+  ,"primary": { "autogen": true, "keyBatch": 500 }
+  ,"indices": [ 
+      { "name":"Id"   , "columns": ["id"   ] }
+     ,{ "name":"Email", "columns": ["email"] }
+     ,{ "name":"All"                        , "orderBy": ["lastUpdated"]}
+    ]
+ }
+
+// Example from the Wiki's Pivot article.
+,{ "name": "Form"
+  ,"description": "User-entered forms"
+  ,"columns":[
+      { "name":"userRefnum", "sameas":"User.refnum"    , "nullable":false, "description":"The user who created the form" }
+     ,{ "name":"type"      , "type":"STRING", "size":40, "nullable":false, "description":"Form template type" }
+     ,{ "name":"fillDate"  , "type":"DATETIME"         , "nullable":true , "description":"The date the form was filled" }
+    ]
+  ,"primary": { "autogen": true, "keyBatch": 500 }
+  ,"foreign": [
+      { "name":"User"  , "srcColumns":["userRefnum"   ], "destObject": "User"    }
+    ]
+  ,"indices": [ 
+      { "name": "Type" , "columns": ["type"], "orderBy": ["fillDate"]}
+     ,{ "name": "All"                       , "orderBy": ["lastUpdated"]}
+    ]
+ }
+
+// Example from the Wiki's Pivot article.
+,{ "name": "FormAnswer"
+  ,"description": "Form answers"
+  ,"columns":[
+      { "name":"formRefnum", "sameas":"Form.refnum"       , "nullable": false, "invariant": true, "description":"The form's refnum" }
+     ,{ "name":"field"     , "type":"STRING", "size": 60  , "nullable": false                   , "description":"question/field id" }
+     ,{ "name":"value"     , "type":"STRING", "size": 4000, "nullable": true                    , "description":"answer value" }
+    ]
+  ,"primary": { "autogen": true, "keyBatch": 500 }
+  ,"foreign": [
+      { "name":"Form" ,  "srcColumns":["formRefnum"], "destObject": "Form" }
+    ]
+  ,"indices": [ 
+      { "name":"FormAnswer", "columns":["formRefnum", "field"]}
+     ,{ "name":"All"       , "columns":[]                     , "orderBy":["lastUpdated"]}
+    ]
+ }
+
    ]
    
    
@@ -62,30 +115,62 @@
        ,"queries": [
          ]
       ,"formulaColumns":[
-          { "name": "test_loop_1"
-           ,"type": "STRING", "size":100
-           ,"formula":[ 
-               "'test_loop_1: '||(a3*2)||test_loop_2"
-             ]
-           ,"title": "test_loop_2 Multiplied By Two"
-           ,"description":[
-               "Blah..."
-             ]
-          }
-         ,{ "name": "test_loop_2"
-           ,"type": "STRING", "size":100
-           ,"formula":[ 
-               "'test_loop_2: '||(a3*2)||test_loop_1"
-             ]
-           ,"title": "test_loop_1 Multiplied By Two"
-           ,"description":[
-               "Blah..."
-             ]
-          }
+//          { "name": "test_loop_1"
+//           ,"type": "STRING", "size":100
+//           ,"formula":[ 
+//               "'test_loop_1: '||(a3*2)||test_loop_2"
+//             ]
+//           ,"title": "test_loop_2 Multiplied By Two"
+//           ,"description":[
+//               "Blah..."
+//             ]
+//          }
+//         ,{ "name": "test_loop_2"
+//           ,"type": "STRING", "size":100
+//           ,"formula":[ 
+//               "'test_loop_2: '||(a3*2)||test_loop_1"
+//             ]
+//           ,"title": "test_loop_1 Multiplied By Two"
+//           ,"description":[
+//               "Blah..."
+//             ]
+//          }
         ]
        ,"json":[
             { "name": "", "columns": ["refnum", "name", "userId"] }
          ]
       }
+      
+// Example from the Wiki's Pivot article.
+,{ "name": "Form_SAT01_PivotView"
+  ,"description": "A pivoted view of SAT_01 forms"
+  ,"columns":[
+      { "sameas": "Form.refnum"     , "name":"formRefnum"     }
+     ,{ "sameas": "Form.fillDate"   , "name":"formFillDate"   }
+     ,{ "sameas": "User.refnum"     , "name":"formUserRefnum" }
+     ,{ "sameas": "User.email"      , "name":"formUserEmail"  }
+     ,{ "sameas": "FormAnswer.value", "aggregate":"MAX"       }
+    ]
+  ,"subWhereX":{
+      "clause":["    Form.type = 'SAT_01'" 
+               ,"and Form.deleted is null"
+               ,"and FormAnswer.deleted is null"
+               ]
+     ,"description":["Only look at SAT_01 forms and answers that have not been deleted."
+                    ]
+    }
+  ,"pivots":[
+      { "on": "FormAnswer.field" 
+       ,"aggregates":[
+           { "name":"value", "prefix":"" }
+         ]
+       ,"values":[ { "value":"Q1", "expression":"Tilda.toInt(?,null)", "type":"INTEGER", "description":"Q1" }
+                  ,{ "value":"Q2", "expression":"Tilda.toInt(?,null)", "type":"INTEGER", "description":"Q2" }
+                  ,{ "value":"Q3", "expression":"Tilda.toInt(?,null)", "type":"INTEGER", "description":"Q3" }
+                  ,{ "value":"Q4"                                                      , "description":"Q4" }
+                ]
+      }
+    ]
+ }      
    ]
 }
