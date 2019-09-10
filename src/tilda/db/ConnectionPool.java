@@ -29,11 +29,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.logging.log4j.Level;
@@ -42,11 +40,13 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.annotations.SerializedName;
 
 import tilda.Migrate;
 import tilda.data.Connection_Data;
 import tilda.data.Connection_Factory;
+import tilda.db.config.Bootstrappers;
+import tilda.db.config.Conn;
+import tilda.db.config.ConnDefs;
 import tilda.db.metadata.DatabaseMeta;
 import tilda.enums.TransactionType;
 import tilda.generation.interfaces.CodeGenSql;
@@ -69,83 +69,11 @@ public class ConnectionPool
       {
       }
 
-    private static class ConnDefs
-      {
-        /*@formatter:off*/
-       @SerializedName("connections"   ) public Conn[]      _Conns       = new Conn[0];
-       @SerializedName("email"         ) public EmailConfig _EmailConfig;
-       @SerializedName("initDebug"     ) public boolean     _InitDebug = false;
-       @SerializedName("skipValidation") public boolean     _SkipValidation = false;
-       /*@formatter:on*/
-
-        public boolean validate()
-          {
-            if (_Conns == null || _Conns.length == 0)
-              {
-                LOG.error("No connections were defined in the Tilda configuration file");
-                return false;
-              }
-            Set<String> IDs = new HashSet<String>();
-            boolean OK = true;
-            for (Conn C : _Conns)
-              {
-                if (IDs.add(C._Id) == false)
-                  {
-                    LOG.error("A duplicate connection with id=" + C._Id + " has been defined.");
-                    OK = false;
-                  }
-                if (TextUtil.isNullOrEmpty(C._Driver) == true)
-                  {
-                    LOG.error("Connection id=" + C._Id + " didn't define a driver!");
-                    OK = false;
-                  }
-                if (TextUtil.isNullOrEmpty(C._DB) == true)
-                  {
-                    LOG.error("Connection id=" + C._Id + " didn't define a DB connection string!");
-                    OK = false;
-                  }
-              }
-            return OK;
-          }
-      }
-
-    private static class EmailConfig
-      {
-        /*@formatter:off*/
-        @SerializedName("smtp"        ) public String _SMTP      = null;
-        @SerializedName("userId"      ) public String _UserId    = null;
-        @SerializedName("pswd"        ) public String _Pswd      = null;
-        /*@formatter:on*/
-      }
-
-    private static class Conn
-      {
-      /*@formatter:off*/
-      @SerializedName("id"     ) public String   _Id      = null;
-      @SerializedName("driver" ) public String   _Driver  = null;
-      @SerializedName("db"     ) public String   _DB      = null;
-      @SerializedName("user"   ) public String   _User    = null;
-      @SerializedName("pswd"   ) public String   _Pswd    = null;
-      @SerializedName("initial") public int      _Initial =  3;
-      @SerializedName("max"    ) public int      _Max     = 30;
-      @SerializedName("schemas") public String[] _Schemas = new String[]{};
-      /*@formatter:on*/
-      }
-
-    private static class Bootstrappers
-      {
-        /*@formatter:off*/
-        @SerializedName("classNames") public String[]  _classNames = { };
-        /*@formatter:on*/
-      }
-
-
     static final Logger                           LOG                  = LogManager.getLogger(ConnectionPool.class.getName());
 
     // _UniqueDataSourceIds is a helper object. Used mainly to retrieve Unique ConnectionID's
     // contains ConnectionId & Connection URL in each entry.
     protected static Map<String, String>          _UniqueDataSourceIds = new HashMap<String, String>();
-
 
     protected static Map<String, BasicDataSource> _DataSourcesById     = new HashMap<String, BasicDataSource>();
     protected static Map<String, BasicDataSource> _DataSourcesBySig    = new HashMap<String, BasicDataSource>();
@@ -153,6 +81,7 @@ public class ConnectionPool
     protected static Map<String, String>          _EmailConfigDetails  = null;
     protected static boolean                      _InitDebug           = false;
     protected static boolean                      _SkipValidation      = false;
+    protected static String[]                     _DependencySchemas   = { };
 
     public static void autoInit()
       {
@@ -207,7 +136,6 @@ public class ConnectionPool
                     LOG.info("\n");
                   }
 
-
                 boolean first = true;
                 List<Schema> TildaList = null;
                 Iterator<String> connectionIds = getUniqueDataSourceIds().keySet().iterator();
@@ -237,7 +165,7 @@ public class ConnectionPool
                     if (Migrate.isMigrationActive() == true || _SkipValidation == false)
                       {
                         DatabaseMeta DBMeta = LoadDatabaseMetaData(C, TildaList);
-                        Migrator.MigrateDatabase(C, Migrate.isMigrationActive() == false, TildaList, DBMeta, first, connectionUrls);
+                        Migrator.MigrateDatabase(C, Migrate.isMigrationActive() == false, TildaList, DBMeta, first, connectionUrls, _DependencySchemas);
                       }
                     if (/*first == true &&*/ Migrate.isMigrationActive() == false)
                       {
@@ -342,6 +270,7 @@ public class ConnectionPool
               {
                 _InitDebug = Defs._InitDebug;
                 _SkipValidation = Defs._SkipValidation;
+                _DependencySchemas = Defs._DependencySchemas;
                 for (Conn Co : Defs._Conns)
                   {
                     AddDatasource(Co._Id, Co._Driver, Co._DB, Co._User, Co._Pswd, Co._Initial, Co._Max);

@@ -79,6 +79,7 @@ import tilda.parsing.parts.View;
 import tilda.parsing.parts.helpers.ValueHelper;
 import tilda.utils.AsciiArt;
 import tilda.utils.FileUtil;
+import tilda.utils.TextUtil;
 
 public class Migrator
   {
@@ -87,7 +88,7 @@ public class Migrator
     public static final String    TILDA_VERSION       = "1.0";
     public static final String    TILDA_VERSION_VAROK = "1_0";
 
-    public static void MigrateDatabase(Connection C, boolean CheckOnly, List<Schema> TildaList, DatabaseMeta DBMeta, boolean first, List<String> connectionUrls)
+    public static void MigrateDatabase(Connection C, boolean CheckOnly, List<Schema> TildaList, DatabaseMeta DBMeta, boolean first, List<String> connectionUrls, String[] DependencySchemas)
     throws Exception
       {
         MigrationDataModel migrationData = Migrator.AnalyzeDatabase(C, CheckOnly, TildaList, DBMeta);
@@ -114,7 +115,7 @@ public class Migrator
           }
         else if (CheckOnly == false)
           {
-            PrintDiscrepancies(C, migrationData);
+            PrintDiscrepancies(C, migrationData, DependencySchemas);
             confirmMigration(C);
             applyMigration(C, migrationData);
             doAcl(C, TildaList, DBMeta);
@@ -140,20 +141,28 @@ public class Migrator
           A.process(C);
       }
 
-    public static void PrintDiscrepancies(Connection C, MigrationDataModel migrationData)
+    public static void PrintDiscrepancies(Connection C, MigrationDataModel migrationData, String[] DependencySchemas)
       {
         LOG.info("");
         LOG.warn("There were " + migrationData.getActionCount() + " discrepencies found between the application's required data model and the database " + C.getPoolName() + ".");
         LOG.info("");
         int counter = 0;
         for (MigrationScript S : migrationData.getMigrationScripts())
-          for (MigrationAction MA : S._Actions)
-            {
-              if (MA.isDependencyAction() == false)
-                LOG.warn("    " + (++counter) + " - " + MA.getDescription());
-              else
-                LOG.debug("    - (dependency) " + MA.getDescription());
-            }
+          {
+            int counterSchema = 0;
+            for (MigrationAction MA : S._Actions)
+              {
+                if (S._S != null && counterSchema == 0) // Print schema header for logs
+                  {
+                    ++counterSchema;
+                    LOG.warn("    Schema '" + S._S._Name + "': " + (S._S == null || TextUtil.FindElement(DependencySchemas, S._S._Name, true, 0) == -1 ? "" : " DECLARED AS A DEPENDENCY IN tilda.config.json AND WON'T BE MIGRATED!"));
+                  }
+                if (MA.isDependencyAction() == false)
+                  LOG.warn("        " + (++counter) + " - " + MA.getDescription());
+                else
+                  LOG.debug("        - (dependency) " + MA.getDescription());
+              }
+          }
       }
 
     public static MigrationDataModel AnalyzeDatabase(Connection C, boolean CheckOnly, List<Schema> TildaList, DatabaseMeta DBMeta)
@@ -289,7 +298,7 @@ public class Migrator
 
         for (Object Obj : S._Objects)
           {
-            
+
             if (Obj == null)
               continue;
             if (Obj._FST == FrameworkSourcedType.VIEW || Obj._Mode == ObjectMode.CODE_ONLY == true)
@@ -309,7 +318,7 @@ public class Migrator
                 ColumnAlterMulti CAM = new ColumnAlterMulti(C, Obj);
 
                 for (Column Col : Obj._Columns)
-                  {               
+                  {
                     if (Col == null || Col._Mode == ColumnMode.CALCULATED)
                       continue;
 
@@ -326,8 +335,8 @@ public class Migrator
 
                         // Check arrays
                         if (CheckArrays(DBMeta, Errors, Col, CMeta) == false)
-                          continue;                                             
-                        
+                          continue;
+
                         if (Col.getType() == ColumnType.NUMERIC
                         && (CMeta._Precision != Col._Precision && (CMeta._Scale != Col._Scale || Col._Scale == 0)))
                           {
@@ -356,7 +365,7 @@ public class Migrator
                           {
                             // Are the to/from types compatible?
                             if (Col.getType().isDBCompatible(CMeta._TildaType) == false)
-                              throw new Exception("Type incompatbility requested for an alter column "+Col.getShortName()+": cannot alter from " + CMeta._TildaType + " to " + Col.getType() + ".");
+                              throw new Exception("Type incompatbility requested for an alter column " + Col.getShortName() + ": cannot alter from " + CMeta._TildaType + " to " + Col.getType() + ".");
 
                             CAM.addColumnAlterType(CMeta, Col);
                             NeedsDdlDependencyManagement = true;
