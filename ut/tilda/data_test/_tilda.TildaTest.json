@@ -101,7 +101,50 @@
     ]
  }
 
-   ]
+/*
+ * **TestQuestionAnswer**: Let's assume there is some meta-data model for tests that essentially boils down to tests, questions and answers. One could build a normalized model with 3 tables, but for simplicity here and the purpose of this example, let's adopt a more analytical approach and build a dimension for a traditional star-schema data warehouse that would be populated by some ETL process. The resulting table therefore doesn't care so much about normalization and is simpler to use at runtime for our purpose. That table simply lists all the questions and answers in order (sequences) for a given test "type". You can imagine a simple UI that would popup questions in order, display all the answers in a multiple-choice type questionaire.
+ * **TestAnswer**: We'll then capture a simple data set for students taking tests and answering questions.
+*/
+,{ "name": "TestQuestionAnswer"
+  ,"description": "Questions and answers for multiple-choice tests"
+  ,"columns":[
+      { "name":"type"         , "type":"STRING" , "size":  60, "nullable":false        , "description":"Form template type" }
+     ,{ "name":"questionSeq"  , "type":"INTEGER"             , "nullable":false        , "description":"Sequence of the question for the test" }
+     ,{ "name":"questionId"   , "type":"STRING" , "size":  60, "nullable":false        , "description":"Question id" }
+     ,{ "name":"questionLabel", "type":"STRING" , "size": 256, "nullable":false        , "description":"Question label" }
+     ,{ "name":"answerSeq"    , "type":"INTEGER"             , "nullable":false        , "description":"Sequence of the answer for the question in the test" }
+     ,{ "name":"answerId"     , "type":"STRING" , "size":  60, "nullable":false        , "description":"Answer id" }
+     ,{ "name":"answerLabel"  , "type":"STRING" , "size": 256, "nullable":false        , "description":"Answer label" }
+     ,{ "name":"correct"      , "type":"BOOLEAN"             , "nullable":false        , "description":"Whether the answer is a correct one or not for that question (technically, there could be more than one)" }
+    ]
+  ,"primary": { "autogen": true, "keyBatch": 500 }
+  ,"indices": [ 
+      { "name":"FormAnswer", "columns":["type", "questionId", "answerSeq"] }
+     ,{ "name":"Form"      , "columns":["type"]                          , "orderBy":["questionId", "answerSeq"], "db":false }
+    ]
+ }
+
+,{ "name": "TestAnswer"
+  ,"description": "Test answers"
+  ,"columns":[
+      { "name":"formRefnum", "sameas":"Form.refnum"                  , "nullable": false, "invariant": true, "description":"The form's refnum" }
+     ,{ "name":"questionId", "sameas":"TestQuestionAnswer.questionId", "nullable":false, "description":"Question id" }
+     ,{ "name":"answerId"  , "sameas":"TestQuestionAnswer.answerId"  , "nullable":true , "description":"Answer value" }
+     ,{ "name":"timeMillis", "type":"INTEGER"                        , "nullable":false, "description":"Time in milliseconds for the time spent answering the question" }
+     ,{ "name":"correct"   , "type":"BOOLEAN"             , "nullable":false, "description":"Whether the answer is correct or not" }
+    ]
+  ,"primary": { "autogen": true, "keyBatch": 500 }
+  ,"foreign": [
+      { "name":"Form" ,  "srcColumns":["formRefnum"], "destObject": "Form" }
+    ]
+  ,"indices": [ 
+      { "name":"FormAnswer", "columns":["formRefnum", "questionId"]}
+     ,{ "name":"Form"      , "columns":["formRefnum"]              , "orderBy":["questionId"]}
+    ]
+ }
+
+
+]
    
    
  ,"views": [
@@ -172,5 +215,83 @@
       }
     ]
  }      
+
+,{ "name": "Test_XYZ_PivotView"
+  ,"description": "A pivoted view of SAT_01 forms"
+  ,"columns":[
+      { "sameas": "Form.refnum"  , "name":"formRefnum"     }
+     ,{ "sameas": "Form.type"    , "name":"formType"       }
+     ,{ "sameas": "Form.fillDate", "name":"formFillDate"   }
+     ,{ "sameas": "User.refnum"  , "name":"formUserRefnum" }
+     ,{ "sameas": "User.email"   , "name":"formUserEmail"  }
+     ,{ "sameas": "TestAnswer.correct"   , "name":"countCorrect"        , "aggregate":"COUNT", "filter":"correct = true"   }
+     ,{ "sameas": "TestAnswer.correct"   , "name":"countIncorrect"      , "aggregate":"COUNT", "filter":"correct = false"  }
+//     ,{ "sameas": "TestAnswer.timeMillis", "name":"timeMillisTotal", "aggregate":"SUM"  }
+//     ,{ "sameas": "TestAnswer.timeMillis", "name":"timeMillisAvg"  , "aggregate":"AVG"  }
+     ,{ "sameas": "TestAnswer.timeMillis", "name":"timeMillisMin"  , "aggregate":"MIN"  }
+     ,{ "sameas": "TestAnswer.timeMillis", "name":"timeMillisMax"  , "aggregate":"MAX"  }
+     ,{ "sameas": "TestAnswer.correct"                             , "aggregate":"MIN", "joinOnly":true  }
+    ]
+  ,"subWhereX":{
+      "clause":["    Form.type = 'XYZ'" 
+               ,"and Form.deleted is null"
+               ,"and TestAnswer.deleted is null"
+               ]
+     ,"description":["Only look at XYZ forms and answers that have not been deleted."
+                    ]
+    }
+  ,"pivots":[
+      { "on": "TestAnswer.questionId" 
+       ,"aggregates":[
+           { "name":"correct"      , "suffix":"_correct"    }
+          ,{ "name":"timeMillisMax", "suffix":"_timeMillis" }
+         ]
+       ,"values":[ { "value":"QX", "description":"Question X" }
+                  ,{ "value":"QY", "description":"Question Y" }
+                  ,{ "value":"QZ", "description":"Question Z" }
+                ]
+       ,"interleave":true
+      }
+    ]
+  ,"realize":{
+       "primary":{ "columns":["formRefnum"] }
+      ,"foreign":[
+          { "name":"Form" ,  "srcColumns":["formRefnum"    ], "destObject": "Form" }
+         ,{ "name":"User"  , "srcColumns":["formUserRefnum"], "destObject": "User" }
+        ]
+      ,"indices":[
+          { "name":"User", "columns":["formUserRefnum"], "orderBy":["formFillDate desc"] }
+         ,{ "name":"Type", "columns":["formType"      ], "orderBy":["formFillDate desc"] }
+        ]
+    }
+ }      
+
+
+
+,{ "name": "Test_View"
+  ,"description": "A pivoted view of SAT_01 forms"
+  ,"columns":[
+      { "sameas": "Form.type"    }
+     ,{ "sameas": "Form.refnum"  , "name":"testCount"   , "aggregate":"COUNT", "distinct":true }
+     ,{ "sameas": "Form.fillDate", "name":"testFirst"   , "aggregate":"MIN"   }
+     ,{ "sameas": "Form.fillDate", "name":"testLast"    , "aggregate":"LAST"  }
+     ,{ "sameas": "User.refnum"  , "name":"userCount"   , "aggregate":"COUNT", "distinct":true }
+     ,{ "sameas": "TestAnswer.correct"   , "name":"answerCount"          , "aggregate":"COUNT"   }
+     ,{ "sameas": "TestAnswer.correct"   , "name":"answerCountCorrect"   , "aggregate":"COUNT", "filter":"correct = true"   }
+     ,{ "sameas": "TestAnswer.correct"   , "name":"answerCountIncorrect" , "aggregate":"COUNT", "filter":"correct = false"  }
+     ,{ "sameas": "TestAnswer.timeMillis", "name":"timeMillisTotal", "aggregate":"SUM"  }
+     ,{ "sameas": "TestAnswer.timeMillis", "name":"timeMillisAvg"  , "aggregate":"AVG"  }
+     ,{ "sameas": "TestAnswer.timeMillis", "name":"timeMillisMin"  , "aggregate":"MIN"  }
+     ,{ "sameas": "TestAnswer.timeMillis", "name":"timeMillisMax"  , "aggregate":"MAX"  }
+    ]
+  ,"subWhereX":{
+      "clause":["    Form.deleted is null"
+               ,"and TestAnswer.deleted is null"
+               ]
+     ,"description":["Look at all forms and answers that have not been deleted."
+                    ]
+    }
+ }      
+
    ]
 }
