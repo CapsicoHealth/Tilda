@@ -217,7 +217,7 @@
  }      
 
 ,{ "name": "Test_XYZ_PivotView"
-  ,"description": "A pivoted view of SAT_01 forms"
+  ,"description": "A pivoted view of XYZ forms"
   ,"columns":[
       { "sameas": "Form.refnum"  , "name":"formRefnum"     }
      ,{ "sameas": "Form.type"    , "name":"formType"       }
