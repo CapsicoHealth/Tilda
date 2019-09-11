@@ -226,8 +226,8 @@
      ,{ "sameas": "User.email"   , "name":"formUserEmail"  }
      ,{ "sameas": "TestAnswer.correct"   , "name":"countCorrect"        , "aggregate":"COUNT", "filter":"correct = true"   }
      ,{ "sameas": "TestAnswer.correct"   , "name":"countIncorrect"      , "aggregate":"COUNT", "filter":"correct = false"  }
-//     ,{ "sameas": "TestAnswer.timeMillis", "name":"timeMillisTotal", "aggregate":"SUM"  }
-//     ,{ "sameas": "TestAnswer.timeMillis", "name":"timeMillisAvg"  , "aggregate":"AVG"  }
+     ,{ "sameas": "TestAnswer.timeMillis", "name":"timeMillisTotal", "aggregate":"SUM"  }
+     ,{ "sameas": "TestAnswer.timeMillis", "name":"timeMillisAvg"  , "aggregate":"AVG"  }
      ,{ "sameas": "TestAnswer.timeMillis", "name":"timeMillisMin"  , "aggregate":"MIN"  }
      ,{ "sameas": "TestAnswer.timeMillis", "name":"timeMillisMax"  , "aggregate":"MAX"  }
      ,{ "sameas": "TestAnswer.correct"                             , "aggregate":"MIN", "joinOnly":true  }
