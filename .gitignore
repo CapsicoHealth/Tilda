@@ -1,5 +1,6 @@
 /bin/
 /src/tilda/data/_Tilda.temp
+/ut/tilda/data_test/_Tilda
 *.DS_Store
 /target/
 /tilda-docs.jar
