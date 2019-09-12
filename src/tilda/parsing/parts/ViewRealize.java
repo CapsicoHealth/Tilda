@@ -155,7 +155,7 @@ public class ViewRealize
                 if (C._Type == ColumnType.STRING && C._Size != null && C._Size <= 8)
                  C._Size = 10;
                 // Make sure that the type is managed through the getType() method to account for aggregates.
-                Column newCol = new Column(C._Name, C.getType().name(), C._Size, C._Description +" (from "+C.getShortName()+")", C._Precision, C._Scale);
+                Column newCol = new Column(C._Name, C.getType().name()+(C.isList()?"[]":C.isSet()?"{}":""), C._Size, C._Description +" (from "+C.getShortName()+")", C._Precision, C._Scale);
                 newCol._Nullable = O.isUniqueIndexColumn(C._Name) == false && O.isPrimaryKey(C._Name) == false;
                 newCol._Invariant = O.isPrimaryKey(C._Name)==true;
                 newCol._ProtectStr = C._ProtectStr;

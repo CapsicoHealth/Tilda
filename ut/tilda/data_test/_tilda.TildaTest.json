@@ -291,7 +291,84 @@
      ,"description":["Look at all forms and answers that have not been deleted."
                     ]
     }
- }      
-
+  ,"realize":{
+       "primary":{ "columns":["type"] }
+    }
+ }
+ 
+,{ "name": "Test_XYZ_Analytics_View"
+  ,"description": "A view of XYZ forms with analytics"
+  ,"columns":[
+      { "sameas": "Test_XYZ_PivotView.formRefnum"      }
+     ,{ "sameas": "Test_XYZ_PivotView.formType"        }
+     ,{ "sameas": "Test_XYZ_PivotView.formFillDate"    }
+     ,{ "sameas": "Test_XYZ_PivotView.formUserRefnum"  }
+     ,{ "sameas": "Test_XYZ_PivotView.formUserEmail"   }
+     ,{ "sameas": "Test_XYZ_PivotView.countCorrect"    , "name":"formCountCorrect"    }
+     ,{ "sameas": "Test_XYZ_PivotView.timeMillisTotal" , "name":"formTimeMillisTotal" }
+     ,{ "sameas": "Test_View.testCount"                }
+     ,{ "sameas": "Test_View.answerCountCorrect"       , "name":"testAnswerCountCorrect" }
+     ,{ "sameas": "Test_View.timeMillisAvg"            , "name":"testTimeMillisAvg"      }
+     
+    ]
+  ,"joins": [
+      { "object": "Test_View"
+      , "joinType": "INNER"
+      , "on": [ { "db":"*", "clause":"Test_View.\"type\" = Test_XYZ_PivotView.\"formType\"" }
+              ]
+      }
+    ]
+ ,"formulaColumns":[
+     { "name": "isPassed"
+      ,"type": "INTEGER"
+      ,"formula":[ 
+          "formCountCorrect >= 2"
+        ]
+      ,"title": "Test Passed"
+      ,"description":[
+          "Whether the test was passed or not by answering at least 2 out of the 3 questions."
+        ]
+     }
+    ,{ "name": "tookLongerThanAverage"
+      ,"type": "INTEGER"
+      ,"formula":[ 
+          "formTimeMillisTotal > testTimeMillisAvg"
+        ]
+      ,"title": "Test Took Longer Than Average"
+      ,"description":[
+          "Whether the test took longer that the average time spent across all tests."
+        ]
+     }
+    ,{ "name": "wasChallenging"
+      ,"type": "INTEGER"
+      ,"formula":[ 
+          "    isPassed=1"
+         ,"AND testAnswerCountCorrect < testCount*3/2"
+        ]
+      ,"title": "Test Was Challenging"
+      ,"description":[
+          "Whether the test was challenging in that:<LI>"
+         ,"  <LI>it was passed,</LI>"
+         ,"  <LI>and overall, less than a third of answers across all tests were answered correctly.</LI>"
+         ,"</UL>"
+        ]
+      ,"values":[
+           { "value":"0", "description":"The test was not challenging" }
+          ,{ "value":"1", "description":"The test was challenging" }
+        ]
+     }
    ]
+ ,"realize":{
+       "primary":{ "columns":["formRefnum"] }
+      ,"foreign":[
+          { "name":"Form" ,  "srcColumns":["formRefnum"    ], "destObject": "Form" }
+         ,{ "name":"User"  , "srcColumns":["formUserRefnum"], "destObject": "User" }
+        ]
+      ,"indices":[
+          { "name":"User", "columns":["formUserRefnum"], "orderBy":["formFillDate desc"] }
+         ,{ "name":"Type", "columns":["formType"      ], "orderBy":["formFillDate desc"] }
+        ]
+    }
+ }      
+    ]
 }
