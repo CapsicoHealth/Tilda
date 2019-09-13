@@ -154,13 +154,15 @@ public class ViewRealize
                 //         at GEN time. Gotta encode this better in the model.
                 if (C._Type == ColumnType.STRING && C._Size != null && C._Size <= 8)
                  C._Size = 10;
-//              Column newCol = new Column(C._Name, C._TypeStr, C._Size, true, C._Mode, C._Invariant, C._Protect, C._Description);
-                Column newCol = new Column(C._Name, C._TypeStr, C._Size, C._Description, C._Precision, C._Scale);
+                // Make sure that the type is managed through the getType() method to account for aggregates.
+                Column newCol = new Column(C._Name, C.getType().name()+(C.isList()?"[]":C.isSet()?"{}":""), C._Size, C._Description +" (from "+C.getShortName()+")", C._Precision, C._Scale);
                 newCol._Nullable = O.isUniqueIndexColumn(C._Name) == false && O.isPrimaryKey(C._Name) == false;
                 newCol._Invariant = O.isPrimaryKey(C._Name)==true;
+                newCol._ProtectStr = C._ProtectStr;
                 newCol._FCT = C._FCT;
-                newCol._SameAs = C._SameAs;
-                newCol._SameAsObj = C._SameAsObj;
+//LDH-NOTE: Not sure why we need to define SAME_AS here given that we specify all the information previously. This is causing issues with some aggregates...
+//                newCol._SameAs = C._SameAs;
+//                newCol._SameAsObj = C._SameAsObj;
                 O._Columns.add(newCol);
               }
           }
