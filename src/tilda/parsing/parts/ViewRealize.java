@@ -142,7 +142,7 @@ public class ViewRealize
 //        LOG.debug(ParentRealized._O.getFullName()+": "+TextUtil.Print(ParentRealized._O.getColumnNames()));
         for (Column C : ParentRealized._O._Columns)
           {
-//            if (C._Name.equals("episodeStartTZ") == true)
+//            if (C._Name.equals("pr_cptCodes") == true)
 //              LOG.debug("XXX");
             if (TextUtil.FindStarElement(_Exclude_DEPRECATED, C._Name, false, 0) == -1)
               {
@@ -154,12 +154,12 @@ public class ViewRealize
                 //         make realized tables friendly to data scientists and dealing with trailing blanks (from CHAR values) is not good.
                 //         Here, we are effectively changing the type of the final column to be a VARCHAR instead of a CHAR and will do a trim
                 //         at GEN time. Gotta encode this better in the model.
-                if (C._Type == ColumnType.STRING && C._Size != null && C._Size <= 8)
+                if (C._Type == ColumnType.STRING && C.isCollection() == false && C._Size != null && C._Size <= 8)
                  C._Size = 10;
                 // Make sure that the type is managed through the getType() method to account for aggregates.
                 Column newCol = new Column(C._Name, C.getType().name()+(C.isList()?"[]":C.isSet()?"{}":""), C._Size, C._Description +" (from "+C.getShortName()+")", C._Precision, C._Scale);
                 // If the final type is not a String or is a collection, we must clear the possible size since the aggregate changed the type.
-                if (C.getType() != C._Type && (newCol._TypeStr.startsWith("STRING") == false || C.isCollection() == true))
+                if (newCol._TypeStr.startsWith("STRING") == false || C.isCollection() == true)
                   newCol._Size = null;
                 newCol._Nullable = O.isUniqueIndexColumn(C._Name) == false && O.isPrimaryKey(C._Name) == false;
                 newCol._Invariant = O.isPrimaryKey(C._Name)==true;

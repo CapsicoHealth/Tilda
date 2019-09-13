@@ -66,6 +66,7 @@ public class DocGen
 
     public void writeSchema(ParserSession PS)
       {
+// We don't need to deal with GraphViz anymore        
 //        File file = new File(getSchemaChromeAppGenHTML(schema, ".html"));
 //        if (!file.exists())
 //          {
