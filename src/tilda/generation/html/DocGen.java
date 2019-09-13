@@ -66,13 +66,13 @@ public class DocGen
 
     public void writeSchema(ParserSession PS)
       {
-        File file = new File(getSchemaChromeAppGenHTML(schema, ".html"));
-        if (!file.exists())
-          {
-            new GraphvizUtil(this.schema, G).writeSchema(this, PS);
-          }
-        else
-          {
+//        File file = new File(getSchemaChromeAppGenHTML(schema, ".html"));
+//        if (!file.exists())
+//          {
+//            new GraphvizUtil(this.schema, G).writeSchema(this, PS);
+//          }
+//        else
+//          {
             try
               {
                 writeHTML(PS);
@@ -82,7 +82,7 @@ public class DocGen
                 e.printStackTrace();
               }
 
-          }
+//          }
       }
 
     private void writeHTML(ParserSession PS)

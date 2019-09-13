@@ -3,7 +3,6 @@
  ,"dependencies": ["com/capsico/organizations/data/_tilda.Organizations.json"
                   ]
  ,"documentation": {
-     "graph":"complex",
      "description": [
          "This schema blah blah blah.<BR>"
         ,"<B>Copyright (c) 2017, CapsicoHealth Inc., All rights reserved.</B>"
