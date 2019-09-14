@@ -573,7 +573,8 @@ public class PostgreSQL implements DBType
               {
                 if (CMP._Col.getType() == ColumnType.DATETIME || CMP._Col.getType() == ColumnType.DATE || CMP._Col.getType() == ColumnType.UUID
                 || CMP._Col.getType() == ColumnType.INTEGER || CMP._Col.getType() == ColumnType.LONG || CMP._Col.getType() == ColumnType.FLOAT || CMP._Col.getType() == ColumnType.DOUBLE
-                || CMP._Col.getType() == ColumnType.BOOLEAN || CMP._Col.getType() == ColumnType.NUMERIC || CMP._Col.getType() == ColumnType.SHORT)
+                || CMP._Col.getType() == ColumnType.BOOLEAN || CMP._Col.getType() == ColumnType.NUMERIC || CMP._Col.getType() == ColumnType.SHORT
+                || CMP._Col.getType() == ColumnType.STRING && CMP._Col._Size != CMP._CMeta._Size)
                   {
                     Q += " ALTER COLUMN \"" + CMP._Col.getName()
                     + "\" TYPE " + getColumnType(CMP._Col.getType(), CMP._Col._Size, CMP._Col._Mode, CMP._Col.isCollection(), CMP._Col._Precision, CMP._Col._Scale)

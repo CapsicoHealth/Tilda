@@ -55,17 +55,9 @@ public final class TILDA__1_0
       tilda.data._Tilda.TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.initObject(C);
       tilda.data._Tilda.TILDA__DATEDIM_Factory.initObject(C);
       tilda.data._Tilda.TILDA__DATELIMITDIM_Factory.initObject(C);
-      tilda.data._Tilda.TILDA__TESTING_Factory.initObject(C);
       tilda.data._Tilda.TILDA__FORMULARESULTVIEW_Factory.initObject(C);
       tilda.data._Tilda.TILDA__FORMULADEPENDENCYVIEW_Factory.initObject(C);
       tilda.data._Tilda.TILDA__MEASUREFORMULAVIEW_Factory.initObject(C);
-      tilda.data._Tilda.TILDA__TESTINGVIEW_Factory.initObject(C);
-      tilda.data._Tilda.TILDA__TESTING2VIEW_Factory.initObject(C);
-      tilda.data._Tilda.TILDA__TESTING2REALIZED_Factory.initObject(C);
-      tilda.data._Tilda.TILDA__TESTING3VIEW_Factory.initObject(C);
-      tilda.data._Tilda.TILDA__TESTING3REALIZED_Factory.initObject(C);
-      tilda.data._Tilda.TILDA__TESTING4VIEW_Factory.initObject(C);
-      tilda.data._Tilda.TILDA__TESTING4REALIZED_Factory.initObject(C);
     }
 
  }

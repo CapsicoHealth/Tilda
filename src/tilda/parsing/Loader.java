@@ -92,6 +92,9 @@ public class Loader
         if (TildaList.get(1)._ResourceName.equals(Parser._BASE_TILDA_SCHEMA_RESOURCE) == false)
           {
             LOG.error("Could not find find the base Tilda schema resource " + Parser._BASE_TILDA_SCHEMA_RESOURCE);
+            LOG.info("Loaded resources are:");
+            for (Schema S : TildaList)
+              LOG.info("    "+S._Name);
             return null;
           }
         return TildaList;
