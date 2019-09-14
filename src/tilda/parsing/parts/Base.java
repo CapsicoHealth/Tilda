@@ -44,6 +44,7 @@ public abstract class Base
     @SerializedName("queries"    ) public List<SubWhereClause> _Queries    = new ArrayList<SubWhereClause>();
     @SerializedName("json"       ) public List<OutputMapping>  _JsonDEPRECATED = new ArrayList<OutputMapping >();
     @SerializedName("outputMaps" ) public List<OutputMapping>  _OutputMaps = new ArrayList<OutputMapping>();
+    @SerializedName("tenantInit" ) public Boolean              _TenantInit = Boolean.FALSE;
     /*@formatter:on*/
 
     public transient Schema          _ParentSchema;

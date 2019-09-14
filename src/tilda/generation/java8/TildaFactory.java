@@ -26,6 +26,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.util.StringBuilderWriter;
 
+import tilda.db.Connection;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.enums.FrameworkSourcedType;
@@ -118,23 +119,23 @@ public class TildaFactory implements CodeGenTildaFactory
         if (O._LC != ObjectLifecycle.READONLY)
           Out.println("import tilda.utils.pairs.*;");
         for (Column C : O._Columns)
-          if(C != null && C.getType() == ColumnType.NUMERIC)
+          if (C != null && C.getType() == ColumnType.NUMERIC)
             {
               Out.println();
               Out.println("import java.math.BigDecimal;");
               break;
             }
-        for (Column C : O._Columns)         
-          if(C != null && C.getType() == ColumnType.UUID)
+        for (Column C : O._Columns)
+          if (C != null && C.getType() == ColumnType.UUID)
             {
-              if(needUtil != false)
+              if (needUtil != false)
                 {
                   Out.println();
                   Out.println("import java.util.UUID;");
                 }
               break;
             }
-        Out.println(); 
+        Out.println();
         Out.println("import org.apache.logging.log4j.LogManager;");
         Out.println("import org.apache.logging.log4j.Logger;");
         Out.println();
@@ -175,9 +176,9 @@ public class TildaFactory implements CodeGenTildaFactory
               String ColumnTypeClassName = "Type_" + TextUtil.NormalCapitalization(C.getType().name()) + (C.isCollection() ? "Collection" : "Primitive") + (C._Nullable == true ? "Null" : "");
               G.getGenDocs().docField(Out, G, C, "column definition");
               Out.print("     public static " + ColumnTypeClassName + TypePad + " " + C.getName().toUpperCase() + ColumnPad + "= new " + ColumnTypeClassName + TypePad + "(SCHEMA_LABEL, TABLENAME_LABEL, \"" + C.getName() + "\"" + ColumnPad + ", " + (++Counter) + "/*" + C.getSequenceOrder() + "*/, " + TextUtil.escapeDoubleQuoteWithSlash(C._Description));
-              if (C.getType() == ColumnType.DATETIME && C.needsTZ() == true && O.getColumn(C.getName()+"TZ") != null)
+              if (C.getType() == ColumnType.DATETIME && C.needsTZ() == true && O.getColumn(C.getName() + "TZ") != null)
                 {
-                  Out.print(", "+C.getName().toUpperCase()+"TZ");
+                  Out.print(", " + C.getName().toUpperCase() + "TZ");
                 }
               Out.println(");");
             }
@@ -194,7 +195,7 @@ public class TildaFactory implements CodeGenTildaFactory
               Out.print("COLS." + C.getName().toUpperCase());
             }
         Out.println(" };");
-        
+
         Out.println();
         String FirstIdentityColumns = null;
         Out.print("   public static final ColumnDefinition[] COLUMNS_PRIMARY = { ");
@@ -209,7 +210,7 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println(" };");
         Out.println();
         if (Counter > 0)
-          FirstIdentityColumns="COLUMNS_PRIMARY";
+          FirstIdentityColumns = "COLUMNS_PRIMARY";
 
         Out.println("   public static final ColumnDefinition[][] COLUMNS_UNIQUE_INDICES = { ");
         Counter = -1;
@@ -230,28 +231,49 @@ public class TildaFactory implements CodeGenTildaFactory
                   }
               Out.println("}");
               if (FirstIdentityColumns == null)
-                FirstIdentityColumns="COLUMNS_UNIQUE_INDICES[0]";
+                FirstIdentityColumns = "COLUMNS_UNIQUE_INDICES[0]";
             }
         Out.println("        };");
         Out.println();
-        Out.println("   public static final ColumnDefinition[] COLUMNS_FIRST_IDENTITY = "+(FirstIdentityColumns==null?"{}":FirstIdentityColumns)+";");
+        Out.println("   public static final ColumnDefinition[] COLUMNS_FIRST_IDENTITY = " + (FirstIdentityColumns == null ? "{}" : FirstIdentityColumns) + ";");
         Out.println();
 
-        Out.println("   private static Boolean  __INITIALIZED = false;");
-        Out.println("   protected static void initObject(Connection C) throws Exception");
-        Out.println("     {");
-        Out.println("       if (__INITIALIZED == false)");
-        Out.println("        synchronized(__INITIALIZED)");
-        Out.println("         {");
-        Out.println("           if (__INITIALIZED == false)");
-        Out.println("            {");
-        if (O._FST == FrameworkSourcedType.ENUMERATION || O._FST == FrameworkSourcedType.MAPPER)
-          Out.println("              initMappings(C);");
-        Out.println("              " + Helper.getFullAppFactoryClassName(O) + ".init(C);");
-        Out.println("              __INITIALIZED = true;");
-        Out.println("            }");
-        Out.println("         }");
-        Out.println("     }");
+        if (O._TenantInit == false)
+          {
+            Out.println("   private static Boolean  __INITIALIZED = false;");
+            Out.println("   protected static void initObject(Connection C) throws Exception");
+            Out.println("     {");
+            Out.println("       if (__INITIALIZED == false)");
+            Out.println("        synchronized(__INITIALIZED)");
+            Out.println("         {");
+            Out.println("           if (__INITIALIZED == false)");
+            Out.println("            {");
+            if (O._FST == FrameworkSourcedType.ENUMERATION || O._FST == FrameworkSourcedType.MAPPER)
+              Out.println("              initMappings(C);");
+            Out.println("              " + Helper.getFullAppFactoryClassName(O) + ".init(C);");
+            Out.println("              __INITIALIZED = true;");
+            Out.println("            }");
+            Out.println("         }");
+            Out.println("     }");
+          }
+        else
+          {
+            Out.println("   private static Set<String>  __INITIALIZED = new HashSet<String>();");
+            Out.println("   protected static void initObject(Connection C) throws Exception");
+            Out.println("     {");
+            Out.println("       if (__INITIALIZED.contains(C.getURL()) == false)");
+            Out.println("        synchronized(__INITIALIZED)");
+            Out.println("         {");
+            Out.println("           if (__INITIALIZED.contains(C.getURL()) == false)");
+            Out.println("            {");
+            Out.println("              __INITIALIZED.add(C.getURL());");
+            if (O._FST == FrameworkSourcedType.ENUMERATION || O._FST == FrameworkSourcedType.MAPPER)
+              Out.println("              initMappings(C);");
+            Out.println("              " + Helper.getFullAppFactoryClassName(O) + ".init(C);");
+            Out.println("            }");
+            Out.println("         }");
+            Out.println("     }");
+          }
         Out.println("   private static class RecordProcessorInternal implements tilda.db.processors.RecordProcessor");
         Out.println("     {");
         Out.println("       public RecordProcessorInternal(Connection C, int Start)");
