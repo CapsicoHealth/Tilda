@@ -47,6 +47,13 @@ public class JsonValidation
     @SerializedName("descr") public String   _Descr;
     /*@formatter:on*/
 
+    public JsonValidation(JsonValidation jv)
+      {
+        _Rule = jv._Rule;
+        _Descr = jv._Descr;
+      }
+    
+    
     public transient String _JavaCodeGenStr = null;
 
     public boolean Validate(ParserSession PS, Column C)

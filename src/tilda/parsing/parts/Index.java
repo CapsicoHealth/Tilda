@@ -59,7 +59,8 @@ public class Index
         _OrderBy = I._OrderBy;
         _Db = I._Db;
         _SubWhere = I._SubWhere;
-        _SubQuery = new SubWhereClause(I._SubQuery);
+        if (I._SubQuery != null)
+         _SubQuery = new SubWhereClause(I._SubQuery);
       }
 
     public String getName()

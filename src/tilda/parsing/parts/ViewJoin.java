@@ -53,11 +53,6 @@ public class ViewJoin
       {
         int Errs = PS.getErrorCount();
         _ParentView = ParentView;
-        
-        if (_Object.equalsIgnoreCase("patients.score") == true)
-          {
-            LOG.debug("xxx");
-          }
 
         // Mandatories
         if (TextUtil.isNullOrEmpty(_Object) == true)

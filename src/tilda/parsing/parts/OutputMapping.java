@@ -40,6 +40,15 @@ public class OutputMapping
       {
       }
 
+    /*@formatter:off*/
+    @SerializedName("name"        ) public String   _Name;
+    @SerializedName("columns"     ) public String[] _Columns;
+    @SerializedName("sync"        ) public boolean  _Sync = false;
+    @SerializedName("outTypes"    ) public String[] _OutputTypeStrs;
+    @SerializedName("nvpSrc"      ) public String 	_NVPSrcStr;
+    @SerializedName("nvpValueType") public String   _NVPValueTypeStr;
+    /*@formatter:on*/
+
     public OutputMapping(OutputMapping OM)
       {
         _Name = OM._Name;
@@ -50,16 +59,7 @@ public class OutputMapping
         _NVPValueTypeStr = OM._NVPValueTypeStr;
       }
 
-    /*@formatter:off*/
-    @SerializedName("name"        ) public String   _Name;
-    @SerializedName("columns"     ) public String[] _Columns;
-    @SerializedName("sync"        ) public boolean  _Sync = false;
-    @SerializedName("outTypes"    ) public String[] _OutputTypeStrs;
-    @SerializedName("nvpSrc"      ) public String 	_NVPSrcStr;
-    @SerializedName("nvpValueType") public String   _NVPValueTypeStr;
     
-    /*@formatter:on*/
-
     public transient List<Column>           _ColumnObjs;
     public transient List<OutputFormatType> _OutputTypes;
     public transient NVPSourceType          _NVPSrc;

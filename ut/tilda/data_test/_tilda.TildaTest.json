@@ -50,6 +50,9 @@
       
    ,{ "name": "Testing",
       "description": "blah blah",
+      "cloneAs":[
+          { "name":"Cloned", "description":"?{} - Ready for publishing" }
+       ],
       "columns":[
         { "name": "refnum2"      , "type": "LONG[]"     , "nullable": false,                "invariant": true , "description": "The person's primary key" },
         { "name": "name"         , "type": "STRING"     , "nullable": false, "size":    10,                     "description": "Medical system unique enterprise id" },
