@@ -145,6 +145,11 @@ public class Docs
             Object OR = O._ParentSchema.getObject(O._SourceView._Name);
             Out.println("<LI>Is Realized from <B>" + makeObjectLink(OR) + "</B> through DB function <B>" + coolPrint(O._ParentSchema.getShortName() + ".Refill_" + O._Name) + "()</B>.</LI>");
           }
+        else if (O._FST == FrameworkSourcedType.CLONED)
+          {
+            Object OR = O._ParentSchema.getObject(O._SourceObject._Name);
+            Out.println("<LI>Is Cloned from <B>" + makeObjectLink(OR) + "</B>.</LI>");
+          }
 
         if (view == null)
           {

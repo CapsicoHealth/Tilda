@@ -46,6 +46,16 @@ public class ColumnValue
       {
       }
 
+    public ColumnValue(ColumnValue cv)
+      {
+        _Name = cv._Name;
+        _Value = cv._Value;
+        _Label = cv._Label;
+        _Description = cv._Description;
+        _Groupings = cv._Groupings;
+        _Default = cv._Default;
+      }
+
     public ColumnValue(String Name, String Value, String Label, String Description, String[] Groupings, DefaultType Default)
       {
         _Name        = Name;

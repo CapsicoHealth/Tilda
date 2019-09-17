@@ -119,7 +119,7 @@ public class TildaData implements CodeGenTildaData
           Out.print(" tilda.interfaces.ReaderObject");
         else
           Out.print(" tilda.interfaces.WriterObject");
-        if (O.isOCC() == true && (O._FST == FrameworkSourcedType.NONE || O._FST == FrameworkSourcedType.VIEW))
+        if (O.isOCC() == true && (O._FST == FrameworkSourcedType.NONE || O._FST == FrameworkSourcedType.VIEW || O._FST == FrameworkSourcedType.CLONED))
           Out.print(", tilda.interfaces.OCCObject");
         if (O.isJsonable() == true)
           Out.print(", tilda.interfaces.JSONable");

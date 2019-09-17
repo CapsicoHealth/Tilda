@@ -70,6 +70,28 @@ public abstract class Base
         _TildaType = Type;
       }
 
+    public Base(Base b)
+      {
+        _Name = b._Name;
+        _Description = b._Description;
+
+        // SubWhereClauses are being modified as part of validation, and so we need a clean copy here.
+        _Queries = new ArrayList<SubWhereClause>();
+        for (SubWhereClause SWC : b._Queries)
+          if (SWC != null)
+            _Queries.add(new SubWhereClause(SWC));
+
+        // OutputMaps are being modified as part of validation, and so we need a clean copy here.
+        for (OutputMapping OM : b._JsonDEPRECATED)
+          _JsonDEPRECATED.add(new OutputMapping(OM));
+        for (OutputMapping OM : b._OutputMaps)
+          _OutputMaps.add(new OutputMapping(OM));
+
+        _TenantInit = b._TenantInit;
+        _TildaType = b._TildaType;
+      }
+
+
     /**
      * 
      * @return the FULL name of the schema (including the package name) + '.' + the name of the object.
@@ -165,9 +187,12 @@ public abstract class Base
         // artifacts won't exist yet at this point.
 
         if (_JsonDEPRECATED.isEmpty() == false)
-          for (OutputMapping J : _JsonDEPRECATED)
-            _OutputMaps.add(J);
-
+          {
+            for (OutputMapping J : _JsonDEPRECATED)
+              _OutputMaps.add(J);
+            _JsonDEPRECATED.clear();
+          }
+        
         _Validated = Errs == PS.getErrorCount();
         return _Validated;
       }
@@ -190,20 +215,22 @@ public abstract class Base
 
     /**
      * "colA", "abc*"
+     * 
      * @param vals
      * @return
      */
     protected List<String> expandColumnNames(String[] vals)
       {
-        String[] colNames = getColumnNames(); 
+        String[] colNames = getColumnNames();
         List<String> L = new ArrayList<String>();
         for (String val : vals)
           {
-            String[] valsA = new String[] { val };
-            for (String colName : colNames) 
+            String[] valsA = new String[] { val
+            };
+            for (String colName : colNames)
               {
                 if (TextUtil.FindStarElement(valsA, colName, false, 0) != -1)
-                 L.add(colName);
+                  L.add(colName);
               }
           }
         return L;

@@ -187,7 +187,7 @@ public class View extends Base
         String LastUpdatedColObjName = null;
         String LastUpdatedETLColObjName = null;
         String DeletedColObjName = null;
-
+        
         // First, let's construct the actual view and validate its fields
         boolean err = false;
         for (int i = 0; i < _ViewColumns.size(); ++i)

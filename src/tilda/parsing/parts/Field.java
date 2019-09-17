@@ -16,33 +16,30 @@
 
 package tilda.parsing.parts;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import tilda.enums.ColumnMode;
+import com.google.gson.annotations.SerializedName;
+
 import tilda.enums.ColumnType;
 import tilda.parsing.ParserSession;
 import tilda.utils.TextUtil;
 
-import com.google.gson.annotations.SerializedName;
-
 public class Field extends TypeDef
   {
-    static final Logger             LOG                = LogManager.getLogger(Field.class.getName());
+    static final Logger         LOG = LogManager.getLogger(Field.class.getName());
 
     /*@formatter:off*/
 	@SerializedName("name"       ) public String         _Name       ;
-
     @SerializedName("nullable"   ) public Boolean        _Nullable   ;
     @SerializedName("description") public String         _Description;
     /*@formatter:on*/
 
-    public transient ColumnType     _Type;
-    public transient String         _TypeSep;
-    public transient Interface         _ParentInterface;
+    public transient ColumnType _Type;
+    public transient String     _TypeSep;
+    public transient Interface  _ParentInterface;
 
     public String getFullName()
       {
@@ -53,7 +50,7 @@ public class Field extends TypeDef
       {
         return _ParentInterface.getShortName() + "." + _Name;
       }
-    
+
     protected static final Pattern P = Pattern.compile(".*\\[(.+)\\]");
 
     public boolean Validate(ParserSession PS, Interface I)
@@ -65,9 +62,9 @@ public class Field extends TypeDef
         // Mandatories
         if (TextUtil.isNullOrEmpty(_Name) == true)
           return PS.AddError("Field '" + getFullName() + "' didn't define a 'name'. It is mandatory.");
-        
+
         if (_Name.length() > PS._CGSql.getMaxColumnNameSize())
-          return PS.AddError("Field '" + getFullName() + "' has a name that's too long: max allowed by your database is "+PS._CGSql.getMaxColumnNameSize()+" vs "+_Name.length()+" for this identifier.");
+          return PS.AddError("Field '" + getFullName() + "' has a name that's too long: max allowed by your database is " + PS._CGSql.getMaxColumnNameSize() + " vs " + _Name.length() + " for this identifier.");
 
         if (super.Validate(PS, "Column '" + getFullName() + "'", true, false) == false)
           return false;
@@ -80,7 +77,7 @@ public class Field extends TypeDef
 
         if (_Type != ColumnType.STRING && _Size != null)
           {
-              PS.AddError("Field '" + getFullName() + "' is defined as a '" + _Type + "' with a 'size'. Only String fields should have a 'size' defined.");
+            PS.AddError("Field '" + getFullName() + "' is defined as a '" + _Type + "' with a 'size'. Only String fields should have a 'size' defined.");
           }
 
         return Errs == PS.getErrorCount();
@@ -91,6 +88,6 @@ public class Field extends TypeDef
       {
         return TextUtil.isNullOrEmpty(_TypeSep) == false;
       }
-    
+
 
   }

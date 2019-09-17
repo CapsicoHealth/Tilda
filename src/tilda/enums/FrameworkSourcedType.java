@@ -28,6 +28,7 @@ public enum FrameworkSourcedType
 
     , REALIZED
     
+    , CLONED
     ;
     
 

@@ -34,17 +34,27 @@ public class PrimaryKey
     @SerializedName("keyBatch" )  public Integer  _KeyBatch;
     /*@formatter:on*/
 
-    public transient List<Column> _ColumnObjs = new ArrayList<Column>();
+    public PrimaryKey()
+      {
+      }
 
+    public PrimaryKey(PrimaryKey pk)
+      {
+        _Columns = pk._Columns;
+        _Autogen = pk._Autogen;
+        _KeyBatch = pk._KeyBatch;
+      }
+
+    public transient List<Column> _ColumnObjs = new ArrayList<Column>();
     public transient Object       _ParentObject;
-    
+
     public boolean Validate(ParserSession PS, Object O)
       {
         int Errs = PS.getErrorCount();
         _ParentObject = O;
 
         if (_Autogen == null && _Columns == null)
-         PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a primary key without any column or autogen setting: it needs one or the other.");
+          PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a primary key without any column or autogen setting: it needs one or the other.");
 
         if (_Autogen == false && (_Columns == null || _Columns.length == 0))
           PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a custom primary key (autogen is false) but doesn't have any columns listed.");
@@ -54,32 +64,34 @@ public class PrimaryKey
 
         if (_Autogen == true)
           {
-            _Columns = new String[] { "refnum" };
+            _Columns = new String[] { "refnum"
+            };
             if (_KeyBatch == null)
               _KeyBatch = 250;
           }
         else
           {
             if (_KeyBatch != null)
-             return PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a keyBatch which is not valid for a non autogen primary key.");
+              return PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a keyBatch which is not valid for a non autogen primary key.");
           }
-        _ColumnObjs = ValidationHelper.ProcessColumn(PS, O, "a primary key", _Columns, new ValidationHelper.Processor() {
-          @Override
-          public boolean process(ParserSession PS, Base ParentObject, String What, Column C)
-            {
-              if (C._ParentObject._FST == FrameworkSourcedType.VIEW)
-               return true;
-              
-              if (C._Nullable == true)
-                PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a primary key with column '" + C.getName() + "' which is nullable.");
-              if (C._Invariant == false)
-                PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a primary key with column '" + C.getName() + "' which is not an invariant.");
-              if (C._Mode == ColumnMode.CALCULATED)
-                PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a primary key with column '" + C.getName() + "' which is calculated.");
-              C._PrimaryKey = true;
-              return true;
-            }
-        });
+        _ColumnObjs = ValidationHelper.ProcessColumn(PS, O, "a primary key", _Columns, new ValidationHelper.Processor()
+          {
+            @Override
+            public boolean process(ParserSession PS, Base ParentObject, String What, Column C)
+              {
+                if (C._ParentObject._FST == FrameworkSourcedType.VIEW)
+                  return true;
+
+                if (C._Nullable == true)
+                  PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a primary key with column '" + C.getName() + "' which is nullable.");
+                if (C._Invariant == false)
+                  PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a primary key with column '" + C.getName() + "' which is not an invariant.");
+                if (C._Mode == ColumnMode.CALCULATED)
+                  PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a primary key with column '" + C.getName() + "' which is calculated.");
+                C._PrimaryKey = true;
+                return true;
+              }
+          });
 
         return Errs == PS.getErrorCount();
       }
