@@ -142,8 +142,6 @@ public class ViewRealize
 //        LOG.debug(ParentRealized._O.getFullName()+": "+TextUtil.Print(ParentRealized._O.getColumnNames()));
         for (Column C : ParentRealized._O._Columns)
           {
-//            if (C._Name.equals("pr_cptCodes") == true)
-//              LOG.debug("XXX");
             if (TextUtil.FindStarElement(_Exclude_DEPRECATED, C._Name, false, 0) == -1)
               {
                 if (C._FCT.isOCC() == true)

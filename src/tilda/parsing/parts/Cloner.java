@@ -21,42 +21,38 @@ import com.google.gson.annotations.SerializedName;
 import tilda.parsing.ParserSession;
 import tilda.utils.TextUtil;
 
-public class JsonField extends TypeDef
+public class Cloner
   {
-    public JsonField()
+    public Cloner()
       {
       }
 
     /*@formatter:off*/
     @SerializedName("name"       ) public String  _Name       ;
-    @SerializedName("nullable"   ) public Boolean _Nullable   ;
     @SerializedName("description") public String  _Description;
     /*@formatter:on*/
 
-    public JsonField(JsonField jf)
+    public transient Object _ParentObject;
+
+    public Cloner(Cloner c)
       {
-        super(jf);
-        _Name = jf._Name;
-        _Nullable = jf._Nullable;
-        _Description = jf._Description;
+        _Name = c._Name;
+        _Description = c._Description;
       }
 
-    public boolean Validate(ParserSession PS, Column C)
+    public boolean Validate(ParserSession PS, Object parentObject)
       {
+        _ParentObject = parentObject;
         if (TextUtil.isNullOrEmpty(_Name) == true)
           {
-            PS.AddError("Column '" + C.getFullName() + "' defined a jsonSchema with a field without name.");
+            PS.AddError("Object '" + parentObject.getFullName() + "' defined a cloneAs without a name.");
             return false;
           }
 
-        if (_Nullable == null)
-          _Nullable = Boolean.TRUE;
-
         if (TextUtil.isNullOrEmpty(_Description) == true)
-          PS.AddError("Column '" + C.getFullName() + " defined a jsonSchema with field '" + _Name + "' without a description.");
-
-        if (super.Validate(PS, "JsonSchema field", true, true) == false)
-          return false;
+          PS.AddError("Object '" + parentObject.getFullName() + "' defined a cloneAs without a description.");
+        else
+          _Description = _Description.replace("?{}", parentObject._Description) + " (cloned from "+parentObject.getShortName()+")";
 
         return true;
       }

@@ -53,6 +53,14 @@ public class TypeDef
       {
       }
 
+    public TypeDef(TypeDef td)
+      {
+        _TypeStr = td._TypeStr;
+        _Size = td._Size;
+        _Precision = td._Precision;
+        _Scale = td._Scale;
+      }
+
     public TypeDef(String TypeStr, Integer Size, Integer Precision, Integer Scale)
       {
         _TypeStr = TypeStr;
@@ -129,36 +137,36 @@ public class TypeDef
                 else if (_Size < 2)
                   PS.AddError(What + " is defined as a '" + _Type + "' but doesn't define a size >= 2.");
               }
-          }       
+          }
         else if (_Type == ColumnType.NUMERIC)
           {
-            
-              if(_Scale != null && _Precision == null)
-                {
-                  PS.AddError(What + " is defined as a '" + _Type + "' and has defined a Scale without a Precision. This is not allowed per Standard SQL.");
-                }
-              else if(_Precision != null && _Scale != null && _Scale > _Precision)
-                {
-                  PS.AddError(What + " is defined as a '" + _Type + "' and has Scale that is greater than the Precision. This is not allowed per Standard SQL.");
-                }
-              else if (_Precision == null || _Precision == 0)
-                {
-                  if (StringSizeOptional == false)
-                    PS.AddError(What + " is defined as a '" + _Type + "' but doesn't define a Precision.");
-                }
-              else if(_Precision != null && _Precision < 0)
-                {
-                  PS.AddError(What + " is defined as a '" + _Type + "' and has Precision that is less than 0. This is not allowed per Standard SQL.");
-                }
-              else if(_Scale != null && _Scale < 0)
-                {
-                  PS.AddError(What + " is defined as a '" + _Type + "' and has Scale that is less than 0. This is not allowed per Standard SQL.");
-                } 
-              
-              //Sets a default of 0 when no scale is defined in schema
-              if(_Scale == null)
-                _Scale = 0;
-          }               
+
+            if (_Scale != null && _Precision == null)
+              {
+                PS.AddError(What + " is defined as a '" + _Type + "' and has defined a Scale without a Precision. This is not allowed per Standard SQL.");
+              }
+            else if (_Precision != null && _Scale != null && _Scale > _Precision)
+              {
+                PS.AddError(What + " is defined as a '" + _Type + "' and has Scale that is greater than the Precision. This is not allowed per Standard SQL.");
+              }
+            else if (_Precision == null || _Precision == 0)
+              {
+                if (StringSizeOptional == false)
+                  PS.AddError(What + " is defined as a '" + _Type + "' but doesn't define a Precision.");
+              }
+            else if (_Precision != null && _Precision < 0)
+              {
+                PS.AddError(What + " is defined as a '" + _Type + "' and has Precision that is less than 0. This is not allowed per Standard SQL.");
+              }
+            else if (_Scale != null && _Scale < 0)
+              {
+                PS.AddError(What + " is defined as a '" + _Type + "' and has Scale that is less than 0. This is not allowed per Standard SQL.");
+              }
+
+            // Sets a default of 0 when no scale is defined in schema
+            if (_Scale == null)
+              _Scale = 0;
+          }
         else
           {
             if (_Size != null && _Size > 0)
@@ -214,15 +222,15 @@ public class TypeDef
             case NUMERIC:
               if (ParseUtil.parseBigDecimal(Value, new BigDecimal(SystemValues.EVIL_VALUE)) == new BigDecimal(SystemValues.EVIL_VALUE))
                 return PS.AddError(What + " has a value '" + Value + "' which is invalid for type '" + _Type + "'.");
-              break;              
+              break;
             case SHORT:
-              if (ParseUtil.parseShort(Value, (short)SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
+              if (ParseUtil.parseShort(Value, (short) SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
                 return PS.AddError(What + " has a value '" + Value + "' which is invalid for type '" + _Type + "'.");
               break;
             case UUID:
               if (ParseUtil.parseUUID(Value) == new UUID(0L, 0L))
                 return PS.AddError(What + " has a value '" + Value + "' which is invalid for type '" + _Type + "'.");
-              break; 
+              break;
             case INTEGER:
               if (ParseUtil.parseInteger(Value, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
                 return PS.AddError(What + " has a value '" + Value + "' which is invalid for type '" + _Type + "'.");
@@ -246,6 +254,7 @@ public class TypeDef
       {
         return _Type;
       }
+
     public MultiType getTypeCollection()
       {
         return _TypeCollection;

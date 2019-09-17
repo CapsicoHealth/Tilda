@@ -27,7 +27,6 @@ import org.apache.logging.log4j.Logger;
 import com.google.gson.annotations.SerializedName;
 
 import tilda.enums.ColumnMode;
-import tilda.enums.ColumnType;
 import tilda.enums.FrameworkColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.enums.ObjectLifecycle;
@@ -40,7 +39,7 @@ import tilda.types.ColumnDefinition;
 public class Object extends Base
   {
 
-    static final Logger                   LOG          = LogManager.getLogger(Object.class.getName());
+    static final Logger                   LOG           = LogManager.getLogger(Object.class.getName());
 
     /*@formatter:off*/
     @SerializedName("occ"           ) public boolean              _OCC        = true ;
@@ -49,6 +48,7 @@ public class Object extends Base
     @SerializedName("mode"          ) public String               _ModeStr    ;
     @SerializedName("etl"           ) public boolean              _ETL        = false;
     @SerializedName("lc"            ) public String               _LCStr      ;
+    @SerializedName("cloneAs"       ) public Cloner[]             _CloneAs    ;
 
     @SerializedName("columns"       ) public List<Column>         _Columns    = new ArrayList<Column        >();
 
@@ -63,14 +63,42 @@ public class Object extends Base
 
     public transient boolean              _HasUniqueIndex;
     public transient boolean              _HasUniqueQuery;
-    public transient FrameworkSourcedType _FST         = FrameworkSourcedType.NONE;
-    public transient View                 _SourceView  = null; // For tables such as Realized tables generated out of views.
+    public transient FrameworkSourcedType _FST          = FrameworkSourcedType.NONE;
+    public transient View                 _SourceView   = null;                                        // For tables such as Realized tables generated out of views.
+    public transient Object               _SourceObject = null;                                        // For tables such as Realized tables generated out of views.
     public transient ObjectLifecycle      _LC;
     public transient ObjectMode           _Mode;
 
     public Object()
       {
         super(TildaType.OBJECT);
+      }
+
+    public Object(Object obj)
+      {
+        super(obj);
+        _OCC = obj._OCC;
+        _DBOnly_DEPRECATED = obj._DBOnly_DEPRECATED;
+        _TZFK = obj._TZFK;
+        _ModeStr = obj._ModeStr;
+        _ETL = obj._ETL;
+        _LCStr = obj._LCStr;
+        for (Column C : obj._Columns)
+          if (C != null)
+            _Columns.add(new Column(C));
+        if (obj._PrimaryKey != null)
+          _PrimaryKey = new PrimaryKey(obj._PrimaryKey);
+        if (obj._ForeignKeys.isEmpty() == false)
+          for (ForeignKey FK : obj._ForeignKeys)
+            if (FK != null)
+              _ForeignKeys.add(new ForeignKey(FK));
+        if (obj._Indices.isEmpty() == false)
+          for (Index I : obj._Indices)
+            if (I != null)
+              _Indices.add(new Index(I));
+
+        _Http = obj._Http;
+        _History = obj._History;
       }
 
     @Override
@@ -83,9 +111,10 @@ public class Object extends Base
     public Column getColumn(String name)
       {
         for (Column C : _Columns)
-          if (C != null && C.getName() != null && C.getName().equals(name) == true) {           
-            return C;
-          }
+          if (C != null && C.getName() != null && C.getName().equals(name) == true)
+            {
+              return C;
+            }
         return null;
       }
 
@@ -114,12 +143,25 @@ public class Object extends Base
       {
         if (_Validated == true)
           return true;
-
+        
         if (super.Validate(PS, ParentSchema) == false)
           return false;
 
         int Errs = PS.getErrorCount();
 
+        if (_CloneAs != null)
+          for (Cloner C : _CloneAs)
+            {
+              if (C.Validate(PS, this) == false)
+               return false;
+              Object obj = new Object(this);
+              obj._Name = _Name + "_" + C._Name;
+              obj._Description = C._Description;
+              obj._FST = FrameworkSourcedType.CLONED;
+              obj._SourceObject = this;
+              ParentSchema._Objects.add(obj);
+            }
+        
         if (getFullName().equals("tilda.data.TILDA.Key") == true)
           {
             Column created = getColumn("created");
@@ -190,9 +232,10 @@ public class Object extends Base
                         TZCol.Validate(PS, this);
                         if (ColumnNames.add(TZCol.getName().toUpperCase()) == false)
                           PS.AddError("Generated column '" + TZCol.getFullName() + "' conflicts with another column already named the same in Object '" + getFullName() + "'.");
-                        if (C.isCollection() == false && _TZFK==true)
+                        if (C.isCollection() == false && _TZFK == true)
                           {
-                            addForeignKey(C.getName(), new String[] { TZCol.getName()}, "tilda.data.TILDA.ZONEINFO");
+                            addForeignKey(C.getName(), new String[] { TZCol.getName()
+                            }, "tilda.data.TILDA.ZONEINFO");
                           }
                       }
                   }
@@ -303,6 +346,7 @@ public class Object extends Base
           PS.AddError("Object '" + getFullName() + "' doesn't have any identity. You must define at least a primary key or a unique index.");
 
         _Validated = Errs == PS.getErrorCount();
+
         return _Validated;
       }
 
@@ -526,14 +570,16 @@ public class Object extends Base
 
     public void addQuery(SubWhereClause SWC)
       {
-        _Queries.add(new SubWhereClause(SWC));
+        if (SWC != null)
+          _Queries.add(new SubWhereClause(SWC));
       }
 
     public void addQueries(List<SubWhereClause> Queries)
       {
         if (Queries != null)
           for (SubWhereClause SWC : Queries)
-            addQuery(SWC);
+            if (SWC != null)
+              addQuery(SWC);
       }
 
     /**

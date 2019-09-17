@@ -19,7 +19,6 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.enums.FrameworkSourcedType;
 import tilda.generation.GeneratorSession;
-import tilda.generation.graphviz.GraphvizUtil;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Formula;
@@ -163,8 +162,9 @@ public class DocGen
         WriteObjectDocsList(writer, FrameworkSourcedType.ENUMERATION, "Enumerations");
         WriteObjectDocsList(writer, FrameworkSourcedType.MAPPER, "Mappers");
         WriteObjectDocsList(writer, FrameworkSourcedType.NONE, "Tables");
-        WriteObjectDocsList(writer, FrameworkSourcedType.REALIZED, "Realized Tables");
+        WriteObjectDocsList(writer, FrameworkSourcedType.CLONED, "Cloned Tables");
         WriteObjectDocsList(writer, FrameworkSourcedType.VIEW, "Views");
+        WriteObjectDocsList(writer, FrameworkSourcedType.REALIZED, "Realized Views");
         /*
          * boolean First = true;
          * for (View V : schema._Views)
@@ -316,8 +316,7 @@ public class DocGen
                             JSONUtil.Print(writer, "name", true, C.getName());
                             JSONUtil.Print(writer, "type", false, C._Size == null ? C._TypeStr : C._TypeStr + "(" + C._Size + ")");
                             JSONUtil.Print(writer, "nullable", false, C._Nullable);
-                            // if (C.getName().equals("isReferral") == true)
-                            // LOG.debug("xxx");
+
                             Formula F = O._ParentSchema.getSourceFormula(C);
                             if (F == null)
                               JSONUtil.Print(writer, "docs", false, C._Description);

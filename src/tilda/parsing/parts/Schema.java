@@ -218,13 +218,16 @@ public class Schema
               M.Validate(PS, this, ++i);
             }
         Set<String> ThingNames = new HashSet<String>();
-        for (Object O : _Objects)
-          if (O != null)
+        for (i = 0; i < _Objects.size(); ++i)
+          {
+            Object O = _Objects.get(i);
+            if (O != null)
             {
               if (ThingNames.add(O._Name.toUpperCase()) == false)
                 PS.AddError("The Object '" + O._Name + "' conflicts with another Thing already defined with the same name in Schema '" + getFullName() + "'.");
               O.Validate(PS, this);
             }
+      }
 
         // boolean hasFormulas = false;
         Map<String, Formula> Measures = new HashMap<String, Formula>();

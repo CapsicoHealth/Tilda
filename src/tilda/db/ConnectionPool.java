@@ -173,8 +173,6 @@ public class ConnectionPool
                         for (Schema S : TildaList)
                           {
                             LOG.debug("  " + S.getFullName());
-                            if (S._Name.equals("BUNDLES") == true)
-                              LOG.debug("XXX");
                             Method M = Class.forName(tilda.generation.java8.Helper.getSupportClassFullName(S)).getMethod("initSchema", Connection.class);
                             M.invoke(null, C);
                             if (_Schemas.get(S._Name.toUpperCase()) == null)
