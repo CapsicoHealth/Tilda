@@ -1,4 +1,4 @@
-<P align="center"><IMG src="Tilda.jpg"></P>
+<P align="center"><IMG src="docs/documentation/Tilda.jpg"></P>
 <H1>Intro</H1>
 Tilda (Transparent Iterative Light Data Architecture) is not an ORM but a data-oriented platform that takes a model-driven approach at the database schema level and projects it out to various programming environments. It provides a JSON-based configuration language to define tables and higher level patterns such as complex views, exporters, history/versioning support, datamarts, pivots, formulas etc... It generates code so can focus on your business logic. It automates migration, deployments (in single-database or multi-tenant fashion), documentation, and increases team velocity by supporting iterative development cycles working with complex data models from design to deployment.<BR>
 <BR>
@@ -7,7 +7,7 @@ This work is based on ideas and experience building complex data systems and app
 At this time, Tilda only supports Java 1.8+ as a target language, and Postgres 9.5+ as a target Database (while exploiting features from V10, V11 and V12 if available). However, it may not be too hard to implement other target languages in the future  (such as JavaSCript or .Net for example), and other data stores (MS SQL Server, mySQL, and also non-relational backends such as Cassandra,  MongoDB or Hadoop). Ultimately, we are aiming for an extensible data architecture that would enable integration with different formats, such as CSV, or HL7 (a standard healthcare data exchange format), and the ability to extend the patterns supported (feeding data to predictive models for example). Tilda ultimately strives at identifying core patterns used in a complex data-driven application, and capture them as reusable declarative bits so you can assemble them to match your needs.<BR>
 
 <H1>Docs</H1>
-We are making progress on the <A href="https://github.com/CapsicoHealth/Tilda/wiki">Wiki</A> and started publishing the <A href="https://capsicohealth.github.io/Tilda/overview-summary.html">JavaDocs</A> for the project.
+We are making progress on the <A href="https://github.com/CapsicoHealth/Tilda/wiki">Wiki</A> and started publishing the <A href="https://capsicohealth.github.io/Tilda/javadocs/index.html">JavaDocs</A> for the project.
  
 <H1>License</H1>
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this code except in compliance with the License. You may obtain a copy of the License at
