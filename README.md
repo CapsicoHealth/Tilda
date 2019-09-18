@@ -1,4 +1,4 @@
-<P align="center"><IMG src="docs/documentation/tilda.gif"></P>
+<P align="center"><IMG height="200px" src="docs/documentation/tilda.gif"></P>
 <H1>Intro</H1>
 Tilda (Transparent Iterative Light Data Architecture) is not an ORM but a data-oriented platform that takes a model-driven approach at the database schema level and projects it out to various programming environments. It provides a JSON-based configuration language to define tables and higher level patterns such as complex views, exporters, history/versioning support, datamarts, pivots, formulas etc... It generates code so can focus on your business logic. It automates migration, deployments (in single-database or multi-tenant fashion), documentation, and increases team velocity by supporting iterative development cycles working with complex data models from design to deployment.<BR>
 <BR>
