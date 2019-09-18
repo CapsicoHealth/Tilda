@@ -13,6 +13,10 @@ We are making progress on the overall documentation for the project:
     <LI>The <A href="https://capsicohealth.github.io/Tilda/javadocs/index.html">JavaDocs</A></LI>
     <LI>The project's <A href="https://capsicohealth.github.io/Tilda/index.html">home page</A></LI>
 </UL>
+
+<H1>Releases</H1>
+Releases are posted in the standard Github location <A href="https://github.com/CapsicoHealth/Tilda/releases">here</A>.
+</H1>
  
 <H1>License</H1>
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this code except in compliance with the License. You may obtain a copy of the License at
