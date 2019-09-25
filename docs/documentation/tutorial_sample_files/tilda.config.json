@@ -1,9 +1,9 @@
 { 
   "connections": [
-	   { "id": "KEYS", "driver": "org.postgresql.Driver", "db": "jdbc:postgresql://localhost:5432/Pepper?reWriteBatchedInserts=true"
+	   { "id": "KEYS", "driver": "org.postgresql.Driver", "db": "jdbc:postgresql://localhost:5432/TildaTutorial?reWriteBatchedInserts=true"
 	    ,"user": "postgres", "pswd": "xxx", "initial": 1, "max":  5
 	   }
-	  ,{ "id": "MAIN", "driver": "org.postgresql.Driver", "db": "jdbc:postgresql://localhost:5432/Pepper?reWriteBatchedInserts=true"
+	  ,{ "id": "MAIN", "driver": "org.postgresql.Driver", "db": "jdbc:postgresql://localhost:5432/TildaTutorial?reWriteBatchedInserts=true"
 	    ,"user": "postgres", "pswd": "xxx", "initial": 3, "max": 20
 	   }
    ]
