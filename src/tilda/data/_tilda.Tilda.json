@@ -485,5 +485,33 @@
          ,"description":["Active formulas and their sub-formulas"]
         }
      }       
+     
+     
+    ,{ "name": "JobView"
+      ,"description": "A view of the job data."
+      ,"columns":[
+          { "sameas": "Job.refnum"            , "name":"jobRefnum"           }
+         ,{ "sameas": "Job.name"              , "name":"jobName"             }
+         ,{ "sameas": "Job.type"              , "name":"jobType"             }
+         ,{ "sameas": "Job.userId"            , "name":"jobUserId"           }
+         ,{ "sameas": "Job.dataStart"         , "name":"jobDataStart"        }
+         ,{ "sameas": "Job.dataEnd"           , "name":"jobDataEnd"          }
+         ,{ "sameas": "Job.start"             , "name":"jobStart"            }
+         ,{ "sameas": "Job.end"               , "name":"jobEnd"              }
+         ,{ "sameas": "Job.status"            , "name":"jobStatus"           }
+         ,{ "sameas": "Job.msg"               , "name":"jobMsg"              }
+         ,{ "sameas": "JobPart.name"          , "name":"jobPartName"         }
+         ,{ "sameas": "JobPart.type"          , "name":"jobPartType"         }
+         ,{ "sameas": "JobPart.dataStart"     , "name":"jobPartDataStart"    }
+         ,{ "sameas": "JobPart.dataEnd"       , "name":"jobPartDataEnd"      }
+         ,{ "sameas": "JobPart.start"         , "name":"jobPartStart"        }
+         ,{ "sameas": "JobPart.end"           , "name":"jobPartEnd"          }
+         ,{ "sameas": "JobPart.recordsCount"  , "name":"jobPartRecordsCount" }
+         ,{ "sameas": "JobPart.status"        , "name":"jobPartStatus"       }
+         ,{ "sameas": "JobPartMessage.notify" , "name":"jobPartNotify"       }
+         ,{ "sameas": "JobPartMessage.msg"    , "name":"jobPartMessage"      }
+        ]
+     }
+
    ]
 }
