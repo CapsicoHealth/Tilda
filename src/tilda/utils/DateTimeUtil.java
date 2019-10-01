@@ -244,12 +244,12 @@ public class DateTimeUtil
 
     public static String printDate(LocalDate D)
       {
-        return D.format(DateTimeFormatter.ISO_DATE);
+        return D==null ? null : D.format(DateTimeFormatter.ISO_DATE);
       }
 
     public static String printDateForJSON(LocalDate D)
       {
-        return D.format(DateTimeFormatter.ISO_DATE);
+        return D==null ? null : D.format(DateTimeFormatter.ISO_DATE);
       }
 
     public static String printDate(List<LocalDate> L)
