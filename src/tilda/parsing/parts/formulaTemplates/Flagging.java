@@ -72,7 +72,8 @@ public class Flagging implements PatternObject
         return this._Column;
       }
 
-    public boolean Validate(ParserSession PS, View ParentView)
+    @Override
+    public boolean validate(ParserSession PS, View ParentView)
       {
         int Errs = PS.getErrorCount();
         _ParentView = ParentView;

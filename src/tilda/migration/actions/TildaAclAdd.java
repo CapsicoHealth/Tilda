@@ -70,11 +70,11 @@ public class TildaAclAdd extends MigrationAction
             if (SuperUserCon.executeDDL(TILDA__KEY_Factory.SCHEMA_LABEL, "*", Str) == false)
               return false;
 
-            Maintenance_Data M = Maintenance_Factory.LookupByPrimaryKey("TILDA_ACL", "TILDA_ACL");
-            if (M.Read(SuperUserCon) == false)
-              M = Maintenance_Factory.Create("TILDA_ACL", "TILDA_ACL");
+            Maintenance_Data M = Maintenance_Factory.lookupByPrimaryKey("TILDA_ACL", "TILDA_ACL");
+            if (M.read(SuperUserCon) == false)
+              M = Maintenance_Factory.create("TILDA_ACL", "TILDA_ACL");
             M.setValue(Str);
-            boolean res = M.Write(SuperUserCon);
+            boolean res = M.write(SuperUserCon);
             if (res == true)
               SuperUserCon.commit();
             return res;

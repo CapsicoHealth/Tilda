@@ -107,9 +107,9 @@ public class Reverse
                         if (Col._Size == 1)
                           Str.append(", \"type\":\"" + ColumnType.CHAR.name() + (Col.isArray() ? "[]\"":"\"  ") + ColumnType.CHAR.getPad()+"                ");
                         else if (Col._Size < 32000)
-                          Str.append(", \"type\":\"" + ColumnType.STRING.name() + (Col.isArray() ? "[]\"":"\"  ") + ColumnType.STRING.getPad() + ", \"size\":" + NumberFormatUtil.LeadingSpace(Col._Size, 5));
+                          Str.append(", \"type\":\"" + ColumnType.STRING.name() + (Col.isArray() ? "[]\"":"\"  ") + ColumnType.STRING.getPad() + ", \"size\":" + NumberFormatUtil.leadingSpace(Col._Size, 5));
                         else
-                          Str.append(", \"type\":\"" + ColumnType.STRING.name() + (Col.isArray() ? "[]\"":"\"  ") + ColumnType.STRING.getPad() + ", \"size\":" + NumberFormatUtil.LeadingSpace(32000, 5));
+                          Str.append(", \"type\":\"" + ColumnType.STRING.name() + (Col.isArray() ? "[]\"":"\"  ") + ColumnType.STRING.getPad() + ", \"size\":" + NumberFormatUtil.leadingSpace(32000, 5));
                       }
                     else
                       Str.append(", \"type\":\"" + Col._TildaType.name() + (Col.isArray() ? "[]\'\"":"\"  ") + Col._TildaType.getPad()+"              ");

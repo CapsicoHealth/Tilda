@@ -71,7 +71,7 @@ public class ColDefJson
                 String Err = r.validate();
                 if (Err != null)
                   throw new Exception(Err);
-                L.add(ColumnDefinition.Create(null, null, r._Name, r._Type, r._Multi, r._Nullable, r._Descr));
+                L.add(ColumnDefinition.create(null, null, r._Name, r._Type, r._Multi, r._Nullable, r._Descr));
               }
             return L;
           }

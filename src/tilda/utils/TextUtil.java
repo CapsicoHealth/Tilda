@@ -543,7 +543,7 @@ public class TextUtil
         return x;
       }
 
-    public static String RemoveElement(int Index, String Vals, char Separator)
+    public static String removeElement(int Index, String Vals, char Separator)
       {
         int Pos = 0;
         for (int i = 0; i < Index; ++i)
@@ -561,7 +561,7 @@ public class TextUtil
         return Vals.substring(0, Pos) + Vals.substring(Pos2 + 1);
       }
 
-    public static int FindElement(String V, String Vals, char Separator)
+    public static int findElement(String V, String Vals, char Separator)
       {
         if (V == null || Vals == null)
           return -1;
@@ -596,7 +596,7 @@ public class TextUtil
      * @param Start
      * @return
      */
-    public static int FindElement(String[] A, String Val, boolean IgnoreCase, int Start)
+    public static int findElement(String[] A, String Val, boolean IgnoreCase, int Start)
       {
         if (A == null)
           return -1;
@@ -623,7 +623,7 @@ public class TextUtil
      * @param Start
      * @return
      */
-    public static int FindStarElement(String[] A, String Val, boolean IgnoreCase, int Start)
+    public static int findStarElement(String[] A, String Val, boolean IgnoreCase, int Start)
       {
         if (A == null)
           return -1;
@@ -658,7 +658,7 @@ public class TextUtil
       }
 
 
-    public static int FindElement(String[][] A, String Val, int pos, boolean IgnoreCase, int Start)
+    public static int findElement(String[][] A, String Val, int pos, boolean IgnoreCase, int Start)
       {
         if (A == null)
           return -1;
@@ -674,7 +674,7 @@ public class TextUtil
       }
 
 
-    public static String GetElement(int Index, String Vals, char Separator)
+    public static String getElement(int Index, String Vals, char Separator)
       {
         int Pos = 0;
         for (int i = 0; i < Index; ++i)
@@ -691,7 +691,7 @@ public class TextUtil
       }
 
 
-    public static String ToShortDollarStr(double Value)
+    public static String toShortDollarStr(double Value)
       {
         char C = ' ';
         if (Value >= 1000000000)
@@ -722,7 +722,7 @@ public class TextUtil
         return Str + C;
       }
 
-    public static int Count(String Src, char c)
+    public static int count(String Src, char c)
       {
         int count = 0;
         int i = -1;
@@ -731,7 +731,7 @@ public class TextUtil
         return count;
       }
 
-    public static int Count(String Src, String c)
+    public static int count(String Src, String c)
       {
         int count = 0;
         int i = -c.length();
@@ -789,7 +789,7 @@ public class TextUtil
         return true;
       }
 
-    public static String ProcessTextToHTMLParagraphs(String Text, String StyleClass)
+    public static String processTextToHTMLParagraphs(String Text, String StyleClass)
       {
         Text = Text.replace("<br>", "</P><P class='" + StyleClass + "'>");
         Text = Text.replace("<BR>", "</P><P class='" + StyleClass + "'>");
@@ -800,12 +800,12 @@ public class TextUtil
         return "<P class='" + StyleClass + "'>" + Text + "</P>";
       }
 
-    public static String NoNullPrint(String Val, String Default)
+    public static String noNullPrint(String Val, String Default)
       {
         return Val == null ? Default : Val;
       }
 
-    public static String NoNullOrEmptyPrint(String Val, String Default)
+    public static String noNullOrEmptyPrint(String Val, String Default)
       {
         return isNullOrEmpty(Val) == true ? Default : Val;
       }
@@ -814,7 +814,7 @@ public class TextUtil
      * Takes a string and rewrites it by replacing all special characters with an '_'. Special characters include
      * ' ', '*', '\'', '/', '"', ':', ';', ',', '.', '%', '+', '&', '=', '?', '-'
      */
-    public static String SanitizeName(String Name)
+    public static String sanitizeName(String Name)
       {
         char C[] = Name.toCharArray();
         for (int i = 0; i < C.length; ++i)
@@ -847,7 +847,7 @@ public class TextUtil
      * Takes a string and rewrites it in lower case, and removing all non alpha-numeric characters. For example
      * "This is * TEST" becomes "thisistest"
      */
-    public static String SimplifyName(String Name)
+    public static String simplifyName(String Name)
       {
         if (Name == null)
           return null;
@@ -914,7 +914,7 @@ public class TextUtil
         return Character.UNASSIGNED;
       }
 
-    public static String ReplaceAccentedCharacters(String Str)
+    public static String replaceAccentedCharacters(String Str)
       {
         char[] Chars = Str.toCharArray();
         for (int i = 0; i < Chars.length; ++i)
@@ -926,7 +926,7 @@ public class TextUtil
         return new String(Chars);
       }
 
-    public static char RemoveAccent(char c)
+    public static char removeAccent(char c)
       {
         char ch = isAccentedCharacter(c);
         if (ch != Character.UNASSIGNED)
@@ -934,7 +934,7 @@ public class TextUtil
         return ch == Character.UNASSIGNED ? c : ch;
       }
 
-    public static String ReplaceAccentedCharactersWithWebSpecialCharacters(String Str)
+    public static String replaceAccentedCharactersWithWebSpecialCharacters(String Str)
       {
         for (int i = 0; i < ACCENTEDCHARS.length(); i += 2)
           {
@@ -954,7 +954,7 @@ public class TextUtil
         }
     };
 
-    public static String ConvertWebSpecialCharacters(String Str)
+    public static String convertWebSpecialCharacters(String Str)
       {
         StringBuilder Buf = new StringBuilder(Str.length());
 
@@ -989,7 +989,7 @@ public class TextUtil
         return Buf.toString();
       }
 
-    public static String[] Unique(String[] strings)
+    public static String[] unique(String[] strings)
       {
         Set<String> set = new HashSet<String>();
         for (int i = 0; i < strings.length; i++)
@@ -1000,7 +1000,7 @@ public class TextUtil
         return set.toArray(new String[0]);
       }
 
-    public static void Print(String[] StrArray, StringBuilder s)
+    public static void print(String[] StrArray, StringBuilder s)
       {
         if (StrArray == null)
           return;
@@ -1015,14 +1015,14 @@ public class TextUtil
           }
       }
 
-    public static String Print(String[][] A, int pos)
+    public static String print(String[][] A, int pos)
       {
         StringBuilder s = new StringBuilder();
-        Print(A, pos, s);
+        print(A, pos, s);
         return s.toString();
       }
 
-    public static void Print(String[][] StrArray, int pos, StringBuilder s)
+    public static void print(String[][] StrArray, int pos, StringBuilder s)
       {
         if (StrArray == null)
           return;
@@ -1037,14 +1037,14 @@ public class TextUtil
           }
       }
 
-    public static final String Print(Iterator<?> I)
+    public static final String print(Iterator<?> I)
       {
         StringBuilder s = new StringBuilder();
-        Print(I, s);
+        print(I, s);
         return s.toString();
       }
 
-    public static final String Print(Iterator<?> I, String Separator)
+    public static final String print(Iterator<?> I, String Separator)
       {
         if (I == null)
           return null;
@@ -1066,7 +1066,7 @@ public class TextUtil
       }
 
 
-    public static final void Print(Iterator<?> I, StringBuilder s)
+    public static final void print(Iterator<?> I, StringBuilder s)
       {
         if (I == null)
           return;
@@ -1085,7 +1085,7 @@ public class TextUtil
           }
       }
 
-    public static final void PrintWithQuotes(String[] StrArray, StringBuilder s)
+    public static final void printWithQuotes(String[] StrArray, StringBuilder s)
       {
         if (StrArray == null)
           return;
@@ -1102,10 +1102,10 @@ public class TextUtil
           }
       }
 
-    public static final String Print(String[] StrArray)
+    public static final String print(String[] StrArray)
       {
         StringBuilder Str = new StringBuilder();
-        Print(StrArray, Str);
+        print(StrArray, Str);
         return Str.toString();
       }
 
@@ -1118,13 +1118,13 @@ public class TextUtil
      * @return
      * @see #isNullOrEmpty(String)
      */
-    public static final String Print(String Str, String Default)
+    public static final String print(String Str, String Default)
       {
         return isNullOrEmpty(Str) == false ? Str : Default;
       }
 
 
-    public static final void EscapeXML(PrintWriter Out, String Str)
+    public static final void escapeXML(PrintWriter Out, String Str)
       {
         for (int i = 0; i < Str.length(); ++i)
           {
@@ -1144,7 +1144,7 @@ public class TextUtil
           }
       }
 
-    public static final void EscapeXML(PrintStream Out, String Str)
+    public static final void escapeXML(PrintStream Out, String Str)
       {
         if (Str == null)
           return;
@@ -1167,7 +1167,7 @@ public class TextUtil
       }
 
 
-    public static final void PrintXMLTag(PrintWriter Out, String Lead, String Tag, String Content)
+    public static final void printXMLTag(PrintWriter Out, String Lead, String Tag, String Content)
       {
         if (isNullOrEmpty(Content) == false)
           {
@@ -1175,7 +1175,7 @@ public class TextUtil
             Out.print("<");
             Out.print(Tag);
             Out.print(">");
-            EscapeXML(Out, Content);
+            escapeXML(Out, Content);
             Out.print("</");
             Out.print(Tag);
             Out.println(">");
@@ -1220,7 +1220,7 @@ public class TextUtil
       }
 
 
-    public static final String StreamToString(InputStream In)
+    public static final String streamToString(InputStream In)
     throws IOException
       {
         StringBuilder Str = new StringBuilder();
@@ -1235,7 +1235,7 @@ public class TextUtil
       }
 
 
-    public static final void PrintExceptionMessages(StringBuilder Str, boolean HTML, Throwable T, boolean PrintCauseToo)
+    public static final void printExceptionMessages(StringBuilder Str, boolean HTML, Throwable T, boolean PrintCauseToo)
       {
         if (HTML == true)
           Str.append("<PRE style=\"font-size: 75%;\">\n");
@@ -1248,19 +1248,19 @@ public class TextUtil
           Str.append("</PRE>\n");
       }
 
-    public static final void PrintException(StringBuilder Str, boolean HTML, Throwable T, boolean PrintCauseToo)
+    public static final void printException(StringBuilder Str, boolean HTML, Throwable T, boolean PrintCauseToo)
       {
         if (PrintCauseToo == true && T.getCause() != null)
           {
-            PrintException(Str, HTML, T.getCause());
+            printException(Str, HTML, T.getCause());
             if (HTML == true)
               Str.append("<BR>");
             Str.append("\n");
           }
-        PrintException(Str, HTML, T);
+        printException(Str, HTML, T);
       }
 
-    protected static final void PrintException(StringBuilder Str, boolean HTML, Throwable T)
+    protected static final void printException(StringBuilder Str, boolean HTML, Throwable T)
       {
         if (HTML == true)
           Str.append("<PRE style=\"font-size: 75%;\"><B>");
@@ -1291,12 +1291,12 @@ public class TextUtil
         return true;
       }
 
-    public static final String Merge(String Set1, String Set2, String Separator)
+    public static final String merge(String Set1, String Set2, String Separator)
       {
-        return Merge(Set1, Set2, Separator, Separator, true, false);
+        return merge(Set1, Set2, Separator, Separator, true, false);
       }
 
-    public static final String Merge(String Set1, String Set2, String SeparatorRegEx, String SeparatorStr, boolean TrailingSeparator, boolean Trim)
+    public static final String merge(String Set1, String Set2, String SeparatorRegEx, String SeparatorStr, boolean TrailingSeparator, boolean Trim)
       {
         if (Set1 == null)
           return Set2;
@@ -1374,7 +1374,7 @@ public class TextUtil
       }
 
 
-    public static final boolean Equals(String S1, String S2)
+    public static final boolean equals(String S1, String S2)
       {
         if (S1 == null && S2 == null)
           return true;
@@ -1383,7 +1383,7 @@ public class TextUtil
         return S1.equals(S2);
       }
 
-    public static final String GenerateLead(char C, int Level)
+    public static final String generateLead(char C, int Level)
       {
         StringBuilder Str = new StringBuilder();
         for (int i = 0; i < Level; ++i)
@@ -1391,7 +1391,7 @@ public class TextUtil
         return Str.toString();
       }
 
-    public static final String Print(int[] Integers, String Post)
+    public static final String print(int[] Integers, String Post)
       {
         StringBuilder Str = new StringBuilder();
         for (int i : Integers)
@@ -1414,7 +1414,7 @@ public class TextUtil
      * @param RemoveEmpties
      * @return
      */
-    public static final String[] Split(String Str, String SeparatorRegEx, boolean Trim, boolean RemoveEmpties)
+    public static final String[] split(String Str, String SeparatorRegEx, boolean Trim, boolean RemoveEmpties)
       {
         if (TextUtil.isNullOrEmpty(Str) == true)
           return null;
@@ -1437,12 +1437,12 @@ public class TextUtil
      * @param SeparatorRegEx
      * @return
      */
-    public static final String[] Split(String Str, String SeparatorRegEx)
+    public static final String[] split(String Str, String SeparatorRegEx)
       {
         return isNullOrEmpty(Str) == true ? null : Str.split(SeparatorRegEx);
       }
 
-    public static final String Print(List<?> L, String Separator)
+    public static final String print(List<?> L, String Separator)
       {
         if (L == null || L.isEmpty() == true)
           return null;
@@ -1468,7 +1468,7 @@ public class TextUtil
      * @param rhs a string that may be null (method will return false)
      * @return true if there is a match.
      */
-    public static final boolean StarEqual(String lhs, String rhs)
+    public static final boolean starEqual(String lhs, String rhs)
       {
         if (rhs == null)
           return false;
@@ -1483,11 +1483,11 @@ public class TextUtil
         return lhs.equals(rhs);
       }
 
-    public static final boolean StarEqualIgnoreCase(String lhs, String rhs)
+    public static final boolean starEqualIgnoreCase(String lhs, String rhs)
       {
         if (rhs == null)
           return false;
-        return StarEqual(lhs.toLowerCase(), rhs.toLowerCase());
+        return starEqual(lhs.toLowerCase(), rhs.toLowerCase());
       }
 
     /**
@@ -1496,16 +1496,16 @@ public class TextUtil
      * @param Str
      * @return
      */
-    public static final String SemiMask(String Str)
+    public static final String semiMask(String Str)
       {
         if (isNullOrEmpty(Str) == true)
           return null;
         if (Str.length() <= 4)
           return "***";
-        return SemiMask(Str, (Str.length() / 10) + 3);
+        return semiMask(Str, (Str.length() / 10) + 3);
       }
 
-    private static final String SemiMask(String Str, int m)
+    private static final String semiMask(String Str, int m)
       {
         StringBuilder S = new StringBuilder();
         for (int i = 0; i < Str.length(); ++i)
@@ -1514,7 +1514,7 @@ public class TextUtil
       }
 
 
-    public static final String CapitalizeEachWord(String Str)
+    public static final String capitalizeEachWord(String Str)
       {
         if (isNullOrEmpty(Str) == true)
           return null;
@@ -1530,17 +1530,17 @@ public class TextUtil
         return new String(str);
       }
 
-    public static final String StandardizeFullName(String Title, String Last, String First, String Middle)
+    public static final String standardizeFullName(String Title, String Last, String First, String Middle)
       {
         Title = isNullOrEmpty(Title) ? "" : Title + " ";
         Last = isNullOrEmpty(Last) ? "" : Last.trim().toUpperCase();
-        First = isNullOrEmpty(First) ? "" : CapitalizeEachWord(First.trim());
+        First = isNullOrEmpty(First) ? "" : capitalizeEachWord(First.trim());
         Middle = isNullOrEmpty(Middle) ? "" : " " + Character.toUpperCase(Middle.trim().charAt(0)) + ".";
 
         return Title + Last + ", " + First + Middle;
       }
 
-    public static final String MaskName(String Last, String First, long RefNum)
+    public static final String maskName(String Last, String First, long RefNum)
       {
         String MaskedName = (isNullOrEmpty(First) == true ? "" : Character.toUpperCase(First.charAt(0)) + "") + (isNullOrEmpty(Last) == true ? "" : Character.toUpperCase(Last.charAt(0)) + "");
         if (MaskedName.length() == 0)
@@ -1552,7 +1552,7 @@ public class TextUtil
         return MaskedName;
       }
 
-    public static final String MaskName(String StandardFullName, long RefNum)
+    public static final String maskName(String StandardFullName, long RefNum)
       {
         String[] Parts = StandardFullName.split("\\s*,\\s*|\\s");
         String Last = Parts.length > 0 ? Parts[0] : "";
@@ -1569,7 +1569,7 @@ public class TextUtil
       }
 
 
-    public static final String CapitalizeFirstCharacter(String Str)
+    public static final String capitalizeFirstCharacter(String Str)
       {
         if (isNullOrEmpty(Str) == true)
           return null;
@@ -1578,7 +1578,7 @@ public class TextUtil
         return Character.toUpperCase(Str.charAt(0)) + Str.substring(1);
       }
 
-    public static final String NormalCapitalization(String Str)
+    public static final String normalCapitalization(String Str)
       {
         if (isNullOrEmpty(Str) == true)
           return null;
@@ -1588,7 +1588,7 @@ public class TextUtil
       }
 
 
-    public static final void ListPrint(StringBuilder Str, String Sep, String Val)
+    public static final void listPrint(StringBuilder Str, String Sep, String Val)
       {
         if (isNullOrEmpty(Val) == false)
           {
@@ -1598,7 +1598,7 @@ public class TextUtil
           }
       }
 
-    public static final void SortDoubleDimensionArray(String StrArr[][])
+    public static final void sortDoubleDimensionArray(String StrArr[][])
       {
         if (StrArr != null)
           {
@@ -1615,7 +1615,7 @@ public class TextUtil
           }
       }
 
-    public static final String SortAndConcatenateStringArray(String StrArray[], String Separator)
+    public static final String sortAndConcatenateStringArray(String StrArray[], String Separator)
       {
         String Result = null;
         if (StrArray != null && Separator != null)
@@ -1634,7 +1634,7 @@ public class TextUtil
         return Result;
       }
 
-    public static final String RemoveTokenFromArray(String Source[], String DeleteToken)
+    public static final String removeTokenFromArray(String Source[], String DeleteToken)
       {
         String Result = null;
         if (Source != null)
@@ -1666,9 +1666,9 @@ public class TextUtil
       }
 
 
-    public static final boolean PrintSQLIn(StringBuilder Str, String Start, String CommaSeparatedList, String End)
+    public static final boolean printSQLIn(StringBuilder Str, String Start, String CommaSeparatedList, String End)
       {
-        String[] Parts = Split(CommaSeparatedList, "\\s*,\\s*");
+        String[] Parts = split(CommaSeparatedList, "\\s*,\\s*");
         if (Parts == null || Parts.length == 0)
           return false;
         boolean First = true;
@@ -1690,9 +1690,9 @@ public class TextUtil
         return !First;
       }
 
-    public static final boolean PrintSQLLike(StringBuilder Str, String Start, String ColumnName, String CommaSeparatedList, String BooleanOperator)
+    public static final boolean printSQLLike(StringBuilder Str, String Start, String ColumnName, String CommaSeparatedList, String BooleanOperator)
       {
-        String[] Parts = Split(CommaSeparatedList, "\\s*,\\s*");
+        String[] Parts = split(CommaSeparatedList, "\\s*,\\s*");
         if (Parts == null || Parts.length == 0)
           return false;
         boolean First = true;
@@ -1714,7 +1714,7 @@ public class TextUtil
         return !First;
       }
 
-    public static final String AsNonBreakingHTML(String str)
+    public static final String asNonBreakingHTML(String str)
       {
         return str.replaceAll("\\s", "&nbsp;");
       }
@@ -1725,7 +1725,7 @@ public class TextUtil
         return val != null && (val.equals("1") || val.equalsIgnoreCase("Y") || val.equalsIgnoreCase("T") || val.equalsIgnoreCase("YES") || val.equalsIgnoreCase("TRUE"));
       }
 
-    public static final String EscapeForRegex(String s)
+    public static final String escapeForRegex(String s)
       {
         StringBuilder Str = new StringBuilder();
         for (int i = 0; i < s.length(); ++i)
@@ -1734,7 +1734,7 @@ public class TextUtil
         return Str.toString();
       }
 
-    public static final boolean CrudeStringValidation(String Str, char Delimiter, char Escape)
+    public static final boolean crudeStringValidation(String Str, char Delimiter, char Escape)
       {
         Pattern P = Pattern.compile("^\\" + Escape + "\\" + Delimiter);
         Matcher m = P.matcher(Str);
@@ -1752,22 +1752,22 @@ public class TextUtil
         return Str == null || Str.length() <= MaxLen ? Str : Str.substring(0, MaxLen - 3) + "...";
       }
 
-    public static final String PrintVariableStr(String Value)
+    public static final String printVariableStr(String Value)
       {
-        return PrintVariableStr(Value, 100);
+        return printVariableStr(Value, 100);
       }
 
-    public static final String PrintVariableStr(String Value, int MaxLen)
+    public static final String printVariableStr(String Value, int MaxLen)
       {
         return "[" + (Value == null ? 0 : Value.length()) + "] " + toMaxLength(Value, MaxLen);
       }
 
-    public static String Trim(String Str)
+    public static String trim(String Str)
       {
         return Str == null ? null : Str.trim();
       }
 
-    public static String JoinTrim(String[] A, String Separator)
+    public static String joinTrim(String[] A, String Separator)
       {
         if (A == null)
           return null;

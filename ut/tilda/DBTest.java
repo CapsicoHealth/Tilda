@@ -95,7 +95,7 @@ public class DBTest
         LongList.add((long) 100);
         List<Testing_Data> L = new ArrayList<Testing_Data>();
         for (int i = 0; i < 200_000; ++i)
-          L.add(Testing_Factory.Create(LongList, "aaa-" + Integer.toString(i)));
+          L.add(Testing_Factory.create(LongList, "aaa-" + Integer.toString(i)));
         return L;
       }
 
@@ -121,13 +121,13 @@ public class DBTest
         int i = 0;
         for (Testing_Data D : L)
           {
-            if (D.Write(C) == false)
+            if (D.write(C) == false)
               throw new Exception("Failed obj: " + D.toString());
             if (++i % commitSize == 0)
               {
                 LogUtil.resetLogLevel();
                 long T1 = System.nanoTime() - T0;
-                LOG.debug("Wrote: " + i + " records so far. Took " + DurationUtil.PrintDuration(T1) + " or " + DurationUtil.PrintPerformancePerSecond(T1, i) + " records/s");
+                LOG.debug("Wrote: " + i + " records so far. Took " + DurationUtil.printDuration(T1) + " or " + DurationUtil.printPerformancePerSecond(T1, i) + " records/s");
                 C.commit();
                 LogUtil.setLogLevel(Level.ERROR);
               }
@@ -138,7 +138,7 @@ public class DBTest
         C.commit();
 
         T0 = System.nanoTime() - T0;
-        LOG.info("Test_Batch0 took " + DurationUtil.PrintDuration(T0) + " or " + DurationUtil.PrintPerformancePerSecond(T0, L.size()) + " records/s");
+        LOG.info("Test_Batch0 took " + DurationUtil.printDuration(T0) + " or " + DurationUtil.printPerformancePerSecond(T0, L.size()) + " records/s");
       }
 
 
@@ -157,12 +157,12 @@ public class DBTest
 
         int batchSize = 1000;
         int commitSize = 10000;
-        int errIndex = Testing_Factory.WriteBatch(C, L, batchSize, commitSize);
+        int errIndex = Testing_Factory.writeBatch(C, L, batchSize, commitSize);
         if (errIndex != -1)
           throw new Exception("Failed obj: " + L.get(errIndex).toString());
 
         T0 = System.nanoTime() - T0;
-        LOG.info("Test_Batch1 took " + DurationUtil.PrintDuration(T0) + " or " + DurationUtil.PrintPerformancePerSecond(T0, L.size()) + " records/s");
+        LOG.info("Test_Batch1 took " + DurationUtil.printDuration(T0) + " or " + DurationUtil.printPerformancePerSecond(T0, L.size()) + " records/s");
       }
 
     /**
@@ -183,17 +183,17 @@ public class DBTest
         for (int i = 0; i < L.size(); i += commitSize)
           {
             List<Testing_Data> subL = L.subList(i, i + commitSize);
-            int errIndex = Testing_Factory.WriteBatch(C, subL, batchSize, -1);
+            int errIndex = Testing_Factory.writeBatch(C, subL, batchSize, -1);
             if (errIndex != -1)
               throw new Exception("Failed obj: " + subL.get(errIndex).toString());
             long T1 = System.nanoTime() - T0;
-            LOG.debug("Wrote: " + i + " records so far. Took " + DurationUtil.PrintDuration(T1) + " or " + DurationUtil.PrintPerformancePerSecond(T1, i) + " records/s");
+            LOG.debug("Wrote: " + i + " records so far. Took " + DurationUtil.printDuration(T1) + " or " + DurationUtil.printPerformancePerSecond(T1, i) + " records/s");
             LOG.debug("Commiting sub-batch of " + subL.size() + " records");
             C.commit();
           }
 
         T0 = System.nanoTime() - T0;
-        LOG.info("Test_Batch2 took " + DurationUtil.PrintDuration(T0) + " or " + DurationUtil.PrintPerformancePerSecond(T0, L.size()) + " records/s");
+        LOG.info("Test_Batch2 took " + DurationUtil.printDuration(T0) + " or " + DurationUtil.printPerformancePerSecond(T0, L.size()) + " records/s");
       }
 
 
@@ -212,14 +212,14 @@ public class DBTest
         LongList.add((long) 100);
         List<Testing_Data> L = new ArrayList<Testing_Data>();
 
-        Testing_Data D = Testing_Factory.Create(LongList, "aaa-0");
-        D.setA9(DateTimeUtil.NowLocal());
+        Testing_Data D = Testing_Factory.create(LongList, "aaa-0");
+        D.setA9(DateTimeUtil.nowLocal());
         L.add(D);
-        D = Testing_Factory.Create(LongList, "aaa-1");
+        D = Testing_Factory.create(LongList, "aaa-1");
         D.setA2('X');
         L.add(D);
 
-        int errIndex = Testing_Factory.WriteBatch(C, L, 400, 1200);
+        int errIndex = Testing_Factory.writeBatch(C, L, 400, 1200);
         if (errIndex != -1)
           {
             LOG.debug("Failed obj: " + L.get(errIndex).toString());
@@ -234,8 +234,8 @@ public class DBTest
         L.add((long) 1); // Yeah, could have written 1l, but just spent 5mn of my life looking at this and thinking it was "11".
         L.add((long) 10);
         L.add((long) 100);
-        Testing_Data D = Testing_Factory.Create(L, "Blah");
-        if (D.Write(C) == false)
+        Testing_Data D = Testing_Factory.create(L, "Blah");
+        if (D.write(C) == false)
           throw new Exception("Bad stuff!");
 
         List<Character> Lc = new ArrayList<Character>();
@@ -253,59 +253,59 @@ public class DBTest
         D.setA2('G');
         D.setDesc2("blah blah blah blah blah blah blah");
 
-        if (D.Write(C) == false)
+        if (D.write(C) == false)
           throw new Exception("Bad stuff!");
 
-        D.setNullA1();
-        D.setNullA2();
-        if (D.Write(C) == false)
+        D.setA1Null();
+        D.setA2Null();
+        if (D.write(C) == false)
           throw new Exception("Bad stuff!");
 
-        ZonedDateTime Now = DateTimeUtil.NowLocal();
+        ZonedDateTime Now = DateTimeUtil.nowLocal();
         D.setA9(Now);
-        LOG.debug("A9 null?: " + D.isNullA9());
+        LOG.debug("A9 null?: " + D.isA9Null());
         List<ZonedDateTime> ZDTs = new ArrayList<ZonedDateTime>();
-        ZDTs.add(DateTimeUtil.NewUTC(2018, 1, 1, 0, 0, 0, 0));
-        ZDTs.add(DateTimeUtil.NewUTC(2018, 2, 1, 0, 0, 0, 0));
-        ZDTs.add(DateTimeUtil.NewUTC(2018, 3, 1, 0, 0, 0, 0));
+        ZDTs.add(DateTimeUtil.newUTC(2018, 1, 1, 0, 0, 0, 0));
+        ZDTs.add(DateTimeUtil.newUTC(2018, 2, 1, 0, 0, 0, 0));
+        ZDTs.add(DateTimeUtil.newUTC(2018, 3, 1, 0, 0, 0, 0));
         ZDTs.add(Now);
         D.setA9b(ZDTs);
-        LOG.debug("A9b: " + TextUtil.Print(D.getA9b()));
-        LOG.debug("A9bTZ: " + TextUtil.Print(D.getA9bTZ()));
-        if (D.Write(C) == false)
+        LOG.debug("A9b: " + TextUtil.print(D.getA9b()));
+        LOG.debug("A9bTZ: " + TextUtil.print(D.getA9bTZ()));
+        if (D.write(C) == false)
           throw new Exception("Bad stuff!");
 
-        LocalDate Today = DateTimeUtil.NowLocalDate();
+        LocalDate Today = DateTimeUtil.nowLocalDate();
         D.setA9c(Today);
-        LOG.debug("A9c null?: " + D.isNullA9c());
+        LOG.debug("A9c null?: " + D.isA9cNull());
         List<LocalDate> LDs = new ArrayList<LocalDate>();
-        LDs.add(DateTimeUtil.New(2018, 4, 1));
-        LDs.add(DateTimeUtil.New(2018, 5, 1));
-        LDs.add(DateTimeUtil.New(2018, 6, 1));
+        LDs.add(DateTimeUtil.newYMD(2018, 4, 1));
+        LDs.add(DateTimeUtil.newYMD(2018, 5, 1));
+        LDs.add(DateTimeUtil.newYMD(2018, 6, 1));
         LDs.add(Today);
         D.setA9d(LDs);
-        if (D.Write(C) == false)
+        if (D.write(C) == false)
           throw new Exception("Bad stuff!");
         C.commit();
 
-//        D = Testing_Factory.LookupByPrimaryKey(D.getRefnum());
-//        if (D.Read(C) == false)
+//        D = Testing_Factory.lookupByPrimaryKey(D.getRefnum());
+//        if (D.read(C) == false)
 //          throw new Exception("Bad stuff!");
         LOG.debug("A9: " + D.getA9());
-        LOG.debug("A9b: " + TextUtil.Print(D.getA9b()));
-        LOG.debug("A9bTZ: " + TextUtil.Print(D.getA9bTZ()));
+        LOG.debug("A9b: " + TextUtil.print(D.getA9b()));
+        LOG.debug("A9bTZ: " + TextUtil.print(D.getA9bTZ()));
         LOG.debug("A9c: " + D.getA9c());
-        LOG.debug("A9d: " + TextUtil.Print(D.getA9d()));
+        LOG.debug("A9d: " + TextUtil.print(D.getA9d()));
 
-        D.setNullA9();
-        D.setNullA9b();
-        D.setNullA9c();
-        D.setNullA9d();
-        if (D.Write(C) == false)
+        D.setA9Null();
+        D.setA9bNull();
+        D.setA9cNull();
+        D.setA9dNull();
+        if (D.write(C) == false)
           throw new Exception("Bad stuff!");
 
         D.setA11(new BigDecimal(1111.1234));
-        if (D.Write(C) == false)
+        if (D.write(C) == false)
           throw new Exception("Bad stuff!");      
         
         
@@ -315,22 +315,22 @@ public class DBTest
         a11b.add(new BigDecimal(123.689));
         a11b.add(new BigDecimal(123.899));
         D.setA11b(a11b);
-        if (D.Write(C) == false)
+        if (D.write(C) == false)
           throw new Exception("Bad stuff!");      
         
         
         D.setA11c(new BigDecimal(1111.0000));
-        if (D.Write(C) == false)
+        if (D.write(C) == false)
           throw new Exception("Bad stuff!");      
         
         //D.setA11c(new BigDecimal(1111111111.0000)); //Errors
         
-        if (D.Write(C) == false)
+        if (D.write(C) == false)
           throw new Exception("Bad stuff!");
               
-        D.setNullA12();
-        D.setNullA12b();
-        if (D.Write(C) == false)
+        D.setA12Null();
+        D.setA12bNull();
+        if (D.write(C) == false)
           throw new Exception("Bad stuff!");      
         
         D.setA12((short) 123);
@@ -343,21 +343,21 @@ public class DBTest
         //"{-13035,-6026,177}"
         
         D.setA12b(a12b);
-        if (D.Write(C) == false)
+        if (D.write(C) == false)
           throw new Exception("Bad stuff!");
         
         
         D.setA13(new UUID(0l, 0l));    
-        if (D.Write(C) == false)
+        if (D.write(C) == false)
           throw new Exception("Bad stuff!");
         
-        D.setNullA13();
+        D.setA13Null();
         LOG.debug("A13: " + D.getA13());
-        if (D.Write(C) == false)
+        if (D.write(C) == false)
           throw new Exception("Bad stuff!");
         
 //        D.setA13(UUID.fromString("1234"));    
-//        if (D.Write(C) == false)
+//        if (D.write(C) == false)
 //          throw new Exception("Bad stuff!");
         
         List<UUID> a13b = new ArrayList<UUID>();
@@ -368,15 +368,15 @@ public class DBTest
         //"{-13035,-6026,177}"
         
         D.setA13b(a13b);
-        if (D.Write(C) == false)
+        if (D.write(C) == false)
           throw new Exception("Bad stuff!");    
         C.commit();   
         
-        LOG.debug("A11: " + TextUtil.Print(D.getA11().toString(), "Bad"));
+        LOG.debug("A11: " + TextUtil.print(D.getA11().toString(), "Bad"));
         LOG.debug("A12: " + D.getA12());
      
-        D = Testing_Factory.LookupByPrimaryKey(D.getRefnum());
-        if (D.Read(C) == false)
+        D = Testing_Factory.lookupByPrimaryKey(D.getRefnum());
+        if (D.read(C) == false)
           throw new Exception("Bad stuff!");
         
       }
@@ -388,7 +388,7 @@ public class DBTest
         L.add(1l);
         L.add(10l);
         L.add(100l);
-        Testing_Data D = Testing_Factory.Create(L, "Blah");
+        Testing_Data D = Testing_Factory.create(L, "Blah");
 
         List<Character> Lc = new ArrayList<Character>();
         Lc.add('A');
@@ -422,14 +422,14 @@ public class DBTest
         D.setA7b(Li);
 
 
-        if (D.Write(C) == false)
+        if (D.write(C) == false)
           throw new Exception("Bad stuff!");
         C.commit();
 
         D.setA1(777);
         D.setA2('G');
         D.setDesc2("blah blah blah blah blah blah blah");
-        if (D.Write(C) == false)
+        if (D.write(C) == false)
           throw new Exception("Bad stuff!");
         C.commit();
 
@@ -441,32 +441,32 @@ public class DBTest
       {
         LOG.debug("\n");
         LOG.debug("0, 0");
-        ListResults<Key_Data> L = Key_Factory.LookupWhereAllByName(C, 0, 0);
+        ListResults<Key_Data> L = Key_Factory.lookupWhereAllByName(C, 0, 0);
         PrintDetails(L);
 
         LOG.debug("\n");
         LOG.debug("0, -1");
-        L = Key_Factory.LookupWhereAllByName(C, 0, -1);
+        L = Key_Factory.lookupWhereAllByName(C, 0, -1);
         PrintDetails(L);
 
         LOG.debug("\n");
         LOG.debug("5, -1");
-        L = Key_Factory.LookupWhereAllByName(C, 5, -1);
+        L = Key_Factory.lookupWhereAllByName(C, 5, -1);
         PrintDetails(L);
 
         LOG.debug("\n");
         LOG.debug("5, 5");
-        L = Key_Factory.LookupWhereAllByName(C, 5, 5);
+        L = Key_Factory.lookupWhereAllByName(C, 5, 5);
         PrintDetails(L);
 
         LOG.debug("\n");
         LOG.debug("10, 10");
-        L = Key_Factory.LookupWhereAllByName(C, 10, 10);
+        L = Key_Factory.lookupWhereAllByName(C, 10, 10);
         PrintDetails(L);
 
         LOG.debug("\n");
         LOG.debug("100, 100");
-        L = Key_Factory.LookupWhereAllByName(C, 100, 100);
+        L = Key_Factory.lookupWhereAllByName(C, 100, 100);
         PrintDetails(L);
       }
 
@@ -475,7 +475,7 @@ public class DBTest
         LOG.debug("Size: " + L.size() + "; Start: " + L.getStart() + "; End: " + L.getEnd() + "; Max: " + L.getMax() + "; More: " + L.hasMore() + ";");
         LOG.debug("Keys:");
         for (Key_Data k : L)
-          LOG.debug("   " + NumberFormatUtil.LeadingZero3(k.getRefnum()) + " / " + k.getName());
+          LOG.debug("   " + NumberFormatUtil.leadingZero3(k.getRefnum()) + " / " + k.getName());
       }
 
     private static void Test2(Connection C)
@@ -483,30 +483,30 @@ public class DBTest
       {
         LOG.info("----------------------------------------------------------------------------------------------------------------------");
         LOG.info("- Local timezone date time");
-        ZonedDateTime ZDTStart = DateTimeUtil.Now(ZoneId.systemDefault()).withMinute(0).withSecond(0).withNano(0);
+        ZonedDateTime ZDTStart = DateTimeUtil.nowTZ(ZoneId.systemDefault()).withMinute(0).withSecond(0).withNano(0);
         ZonedDateTime ZDTEnd = ZDTStart.plusHours(1);
         LOG.debug("Start (App): " + DateTimeUtil.printDateTime(ZDTStart));
         LOG.debug("End   (App): " + DateTimeUtil.printDateTime(ZDTEnd));
-        TransPerf_Data TP = TransPerf_Factory.Create(ZDTStart, ZDTEnd);
-        if (TP.Write(C) == false)
+        TransPerf_Data TP = TransPerf_Factory.create(ZDTStart, ZDTEnd);
+        if (TP.write(C) == false)
           throw new Exception("Cannot write TransPerf_Data Object");
-        TP = TransPerf_Factory.LookupByPrimaryKey(ZDTStart);
-        if (TP.Read(C) == false)
+        TP = TransPerf_Factory.lookupByPrimaryKey(ZDTStart);
+        if (TP.read(C) == false)
           throw new Exception("Cannot write TransPerf_Data Object");
         LOG.debug("Start (DB): " + DateTimeUtil.printDateTime(TP.getStartPeriod()));
         LOG.debug("End   (DB): " + DateTimeUtil.printDateTime(TP.getEndPeriod()));
 
         LOG.info("----------------------------------------------------------------------------------------------------------------------");
         LOG.info("- US/Pacific date time");
-        ZDTStart = DateTimeUtil.Now(DateTimeZone.USPacific).withMinute(0).withSecond(0).withNano(0);
+        ZDTStart = DateTimeUtil.nowTZ(DateTimeZone.USPacific).withMinute(0).withSecond(0).withNano(0);
         ZDTEnd = ZDTStart.plusHours(1);
         LOG.debug("Start (App): " + DateTimeUtil.printDateTime(ZDTStart));
         LOG.debug("End   (App): " + DateTimeUtil.printDateTime(ZDTEnd));
-        TP = TransPerf_Factory.Create(ZDTStart, ZDTEnd);
-        if (TP.Write(C) == false)
+        TP = TransPerf_Factory.create(ZDTStart, ZDTEnd);
+        if (TP.write(C) == false)
           throw new Exception("Cannot write TransPerf_Data Object");
-        TP = TransPerf_Factory.LookupByPrimaryKey(ZDTStart);
-        if (TP.Read(C) == false)
+        TP = TransPerf_Factory.lookupByPrimaryKey(ZDTStart);
+        if (TP.read(C) == false)
           throw new Exception("Cannot write TransPerf_Data Object");
         LOG.debug("Start (DB): " + DateTimeUtil.printDateTime(TP.getStartPeriod()));
         LOG.debug("End   (DB): " + DateTimeUtil.printDateTime(TP.getEndPeriod()));
@@ -520,7 +520,7 @@ public class DBTest
         for (int i = 0; i < 1000; ++i)
           LOG.debug("Getting key for TESTESTEST: " + KeysManager.getKey("TESTESTEST"));
         T0 = System.nanoTime() - T0;
-        LOG.info("Took " + DurationUtil.PrintDuration(T0) + " or " + DurationUtil.PrintPerformancePerSecond(T0, 1000) + " keys/s");
+        LOG.info("Took " + DurationUtil.printDuration(T0) + " or " + DurationUtil.printPerformancePerSecond(T0, 1000) + " keys/s");
 
         StringBuilder Str = new StringBuilder();
         PerfTracker.print(Str);
@@ -529,32 +529,32 @@ public class DBTest
         /*
          * CK = ConnectionPool.get("KEYS");
          * 
-         * Key k = Key.Create(CK, -2, "TESTESTEST", 0, 200);
-         * if (k.Write() == false)
+         * Key k = Key.create(CK, -2, "TESTESTEST", 0, 200);
+         * if (k.write() == false)
          * {
          * LOG.debug("Key " + k.getRefnum() + "/" + k.getName() + " already exists");
-         * k = Key.Create(CK, -3, "TESTESTEST", 0, 200);
-         * if (k.Write() == false)
+         * k = Key.create(CK, -3, "TESTESTEST", 0, 200);
+         * if (k.write() == false)
          * LOG.debug("Key " + k.getRefnum() + "/" + k.getName() + " already exists");
          * }
          * else
          * {
          * k.setMax(500);
-         * if (k.Write() == false)
+         * if (k.write() == false)
          * throw new Exception("Cannot write the key");
          * }
          * 
          * CK.commit();
          * 
-         * k = Key.LookupByPrimaryKey(CK, -2);
-         * if (k.Read() == false)
+         * k = Key.lookupByPrimaryKey(CK, -2);
+         * if (k.read() == false)
          * throw new Exception("Cannot read the key");
          * 
-         * k = Key.LookupByPrimaryKey(CK, -5653);
-         * if (k.Read() == false)
+         * k = Key.lookupByPrimaryKey(CK, -5653);
+         * if (k.read() == false)
          * {
-         * k = Key.LookupByName(CK, "TILDA.TESTING");
-         * if (k.Read() == false)
+         * k = Key.lookupByName(CK, "TILDA.TESTING");
+         * if (k.read() == false)
          * throw new Exception("Cannot read the key");
          * }
          * 
@@ -571,32 +571,32 @@ public class DBTest
       {
         LOG.info("----------------------------------------------------------------------------------------------------------------------");
         LOG.info("- Local timezone date time");
-        ZonedDateTime ZDTStart = DateTimeUtil.Now(ZoneId.systemDefault()).withMinute(0).withSecond(0).withNano(0);
+        ZonedDateTime ZDTStart = DateTimeUtil.nowTZ(ZoneId.systemDefault()).withMinute(0).withSecond(0).withNano(0);
         ZonedDateTime ZDTEnd = ZDTStart.plusHours(1);
         LOG.debug("Start (App): " + DateTimeUtil.printDateTime(ZDTStart));
         LOG.debug("End   (App): " + DateTimeUtil.printDateTime(ZDTEnd));
         // Creates the shell data object for write
-        TransPerf_Data TP = TransPerf_Factory.Create(ZDTStart, ZDTEnd);
+        TransPerf_Data TP = TransPerf_Factory.create(ZDTStart, ZDTEnd);
         // Writes the object. Was just created, so it's an INSERT. 
-        if (TP.Write(C) == false)
+        if (TP.write(C) == false)
           throw new Exception("Cannot write TransPerf_Data Object");
         // Creates a shell data object for read
-        TP = TransPerf_Factory.LookupByPrimaryKey(ZDTStart);
+        TP = TransPerf_Factory.lookupByPrimaryKey(ZDTStart);
         // reads the object as a SELECT.
-        if (TP.Read(C) == false)
+        if (TP.read(C) == false)
           throw new Exception("Cannot write TransPerf_Data Object");
         TP.setEndPeriodNow();
         // This is not an object obtained through a create, so it's assumed to exist and will be an UPDATE
-        if (TP.Write(C) == false)
+        if (TP.write(C) == false)
           throw new Exception("Cannot write TransPerf_Data Object");
         
         // In many cases, you (1) pretty much know the object exists, or (2) want to update an object
         // directly and are OK if it fails because the object doesn't exist. In this case, you save
         // a select compared to above.
-        TP = TransPerf_Factory.LookupByPrimaryKey(ZDTStart);
+        TP = TransPerf_Factory.lookupByPrimaryKey(ZDTStart);
         TP.setEndPeriodNow();
         // This is not an object obtained through a create, so it's assumed to exist and will be an UPDATE
-        if (TP.Write(C) == false)
+        if (TP.write(C) == false)
           throw new Exception("Cannot write TransPerf_Data Object");
         
         LOG.debug("Start (DB): " + DateTimeUtil.printDateTime(TP.getStartPeriod()));

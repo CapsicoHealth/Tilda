@@ -167,7 +167,7 @@ public class Helper
         Out.println("        }");
         Out.println("       finally");
         Out.println("        {");
-        Out.println("          " + getSupportClassFullName(O._ParentSchema) + ".HandleFinally(PS, T0, " + O.getBaseClassName() + "_Factory.SCHEMA_TABLENAME_LABEL, " + StatementTypeStr + ", count, " + (Collection == true ? "AllocatedArrays" : "null") + ");");
+        Out.println("          " + getSupportClassFullName(O._ParentSchema) + ".handleFinally(PS, T0, " + O.getBaseClassName() + "_Factory.SCHEMA_TABLENAME_LABEL, " + StatementTypeStr + ", count, " + (Collection == true ? "AllocatedArrays" : "null") + ");");
         Out.println("          PS = null;");
         if (Collection == true)
           Out.println("          AllocatedArrays = null;");
@@ -214,12 +214,12 @@ public class Helper
     throws Error
       {
         if (V._Value.equalsIgnoreCase("NOW") == true)
-          return "set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "Now();";
+          return "set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "Now();";
         else if (V._Value.equalsIgnoreCase("UNDEFINED") == true)
-          return "set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "Undefined();";
+          return "set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "Undefined();";
         else if (C.getType() == ColumnType.DATE && DateTimeUtil.parseDate(V._Value, "yyyy-MM-dd") != null)
           {
-            String MethodName = TextUtil.CapitalizeFirstCharacter(C.getName()) + TextUtil.CapitalizeFirstCharacter(V._Name);
+            String MethodName = TextUtil.capitalizeFirstCharacter(C.getName()) + TextUtil.capitalizeFirstCharacter(V._Name);
             return "set" + MethodName + "();";
           }
 
@@ -264,13 +264,13 @@ public class Helper
           Padder.track(C.getName() + C._DefaultCreateValue._Name);
         for (Column C : DefaultUpdateColumns)
           {
-            String MethodName = Padder.pad(TextUtil.CapitalizeFirstCharacter(C.getName()) + TextUtil.CapitalizeFirstCharacter(C._DefaultCreateValue._Name));
+            String MethodName = Padder.pad(TextUtil.capitalizeFirstCharacter(C.getName()) + TextUtil.capitalizeFirstCharacter(C._DefaultCreateValue._Name));
             if (C.getType() == ColumnType.DATETIME)
               {
                 if (C._DefaultCreateValue._Value.equalsIgnoreCase("NOW") == true)
-                  Out.println(Prefix + "set" + Padder.pad(TextUtil.CapitalizeFirstCharacter(C.getName()) + "Now") + "();");
+                  Out.println(Prefix + "set" + Padder.pad(TextUtil.capitalizeFirstCharacter(C.getName()) + "Now") + "();");
                 else if (C._DefaultCreateValue._Value.equalsIgnoreCase("UNDEFINED") == true)
-                  Out.println(Prefix + "set" + Padder.pad(TextUtil.CapitalizeFirstCharacter(C.getName()) + "Undefined") + "();");
+                  Out.println(Prefix + "set" + Padder.pad(TextUtil.capitalizeFirstCharacter(C.getName()) + "Undefined") + "();");
                 else
                   throw new Error("Trying to generate a setter call to TIMESTAMP column '" + C.getFullName() + "' for the value '" + C._DefaultCreateValue._Value
                   + "'. TIMESTAMP fields are not supposed to have explicit values.");
@@ -504,7 +504,7 @@ public class Helper
                     PrintColumnPreparedStatementSetter(Out, O, Lead, C, Static);
                   if (I._SubQuery != null && I._SubQuery._Attributes.isEmpty() == false)
                     {
-                      String MethodName = "LookupWhere" + I._Name;
+                      String MethodName = "lookupWhere" + I._Name;
                       Out.println(Lead + "     " + MethodName + "Params P = (" + MethodName + "Params) ExtraParams;");
                       Out.println(Lead + "     LOG.debug(QueryDetails._LOGGING_HEADER + \"  \" + P.toString());");
                       for (Query.Attribute A : I._SubQuery._Attributes)
@@ -548,7 +548,7 @@ public class Helper
               if (UniqueConstraints == false)
                 {
                   Out.println(Lead + "   case " + LookupId + ": {");
-                  String MethodName = "LookupWhere" + SWC._Name;
+                  String MethodName = "lookupWhere" + SWC._Name;
                   if (SWC._Attributes.isEmpty() == false)
                     {
                       Out.println(Lead + "     " + MethodName + "Params P = (" + MethodName + "Params) ExtraParams;");
@@ -593,7 +593,7 @@ public class Helper
             String Pad = O._PadderColumnNames.getPad(C.getName());
             Out.print(Lead + "     ");
             if (C._Nullable == true)
-              Out.print("if (" + Pred + "isNull" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "() == true) PS.setNull(++i, java.sql.Types." + JavaJDBCType.get(C.getType())._JDBCSQLType + ");  else ");
+              Out.print("if (" + Pred + "is" + TextUtil.capitalizeFirstCharacter(C.getName()) + "Null() == true) PS.setNull(++i, java.sql.Types." + JavaJDBCType.get(C.getType())._JDBCSQLType + ");  else ");
             if (C.getType() == ColumnType.DATETIME)
               Out.println("PS.setTimestamp(++i, new java.sql.Timestamp(" + Pred + "_" + C.getName() + ".toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);");
             else if (C.getType() == ColumnType.DATE)
@@ -667,22 +667,22 @@ public class Helper
             if (C._Mode == ColumnMode.CALCULATED)
               {
                 if (C.isCollection() == true || C.getType().isPrimitive() == false)
-                  Out.println("      if (Obj.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "() != null)");
+                  Out.println("      if (Obj.get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "() != null)");
               }
             else
               {
-                Out.print("      if (Obj.isNull" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "() == false");
+                Out.print("      if (Obj.is" + TextUtil.capitalizeFirstCharacter(C.getName()) + "Null() == false");
                 if (C.isCollection() == true || C.getType().isPrimitive() == false)
-                  Out.print(" && Obj.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "() != null");
+                  Out.print(" && Obj.get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "() != null");
                 Out.println(")");
               }
           }
         if (C.getType() == ColumnType.JSON)
-          Out.println("        JSONUtil.PrintSubJson(Out, \"" + C.getName() + "\", " + First + ", Obj._" + C.getName() + ");");
+          Out.println("        JSONUtil.printSubJson(Out, \"" + C.getName() + "\", " + First + ", Obj._" + C.getName() + ");");
         else if (C.isCollection() == false)
-          Out.println("        JSONUtil.Print(Out, \"" + C.getName() + "\", " + First + ", Obj.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "());");
+          Out.println("        JSONUtil.print(Out, \"" + C.getName() + "\", " + First + ", Obj.get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "());");
         else
-          Out.println("        JSONUtil.Print(Out, \"" + C.getName() + "\", " + First + ", Obj._" + C.getName() + ".toArray(new " + JavaJDBCType.getFieldTypeBaseClass(C) + "[Obj._" + C.getName() + ".size()]));");
+          Out.println("        JSONUtil.print(Out, \"" + C.getName() + "\", " + First + ", Obj._" + C.getName() + ".toArray(new " + JavaJDBCType.getFieldTypeBaseClass(C) + "[Obj._" + C.getName() + ".size()]));");
         Out.println();
         return false;
       }
@@ -693,21 +693,21 @@ public class Helper
           Out.println("      Str.append(\",\");");
         if (C.getType() == ColumnType.DOUBLE || C.getType() == ColumnType.FLOAT || C.getType() == ColumnType.LONG || C.getType() == ColumnType.INTEGER
         || C.getType() == ColumnType.CHAR || C.getType() == ColumnType.BINARY || C.getType() == ColumnType.BOOLEAN)
-          Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, \"\" + " + "Data.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "());");
+          Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, \"\" + " + "Data.get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "());");
         else if (C.isCollection() == true)
-          Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, " + "TextUtil.Print(Data.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "(), \",\"));");
+          Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, " + "TextUtil.print(Data.get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "(), \",\"));");
         else if (C.getType() == ColumnType.DATETIME)
-          Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, " + "DateTimeUtil.printDateTimeForSQL(Data.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()));");
+          Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, " + "DateTimeUtil.printDateTimeForSQL(Data.get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "()));");
         else if (C.getType() == ColumnType.DATE)
-          Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, " + "DateTimeUtil.printDate(Data.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()));");
+          Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, " + "DateTimeUtil.printDate(Data.get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "()));");
         else
-          Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, " + "Data.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "());");
+          Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, " + "Data.get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "());");
         return false;
       }
 
     public static String NVPValueCast(Column C, ColumnType CastTo)
       {
-        String castString = "D.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()";
+        String castString = "D.get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "()";
 
         if (C.getType() != CastTo)
           switch (CastTo)

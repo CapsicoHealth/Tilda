@@ -94,8 +94,8 @@ public class ConnectionPool
         Connection Keys = null;
         try
           {
-            InitBootstrappers();
-            ReadConfig();
+            initBootstrappers();
+            readConfig();
             if (_InitDebug == false && Migrate.isMigrationActive() == false)
               {
                 LOG.info("The initDebug flag in the tilda.config.json file is set to false, and so detailed debugging is turned off during system initialization");
@@ -104,7 +104,7 @@ public class ConnectionPool
             if (isTildaEnabled() == true)
               {
                 Keys = get("KEYS");
-                ReadConnections(Keys);
+                readConnections(Keys);
 
                 if (Migrate.isMigrationActive() == true)
                   {
@@ -145,7 +145,7 @@ public class ConnectionPool
                     String connectionId = connectionIds.next();
                     C = get(connectionId);
                     if (TildaList == null)
-                      TildaList = LoadTildaResources(C);
+                      TildaList = loadTildaResources(C);
                     if (C.isSuperUser() == true)
                       {
                         LOG.warn("###################################################################################################################");
@@ -164,7 +164,7 @@ public class ConnectionPool
 
                     if (Migrate.isMigrationActive() == true || _SkipValidation == false)
                       {
-                        DatabaseMeta DBMeta = LoadDatabaseMetaData(C, TildaList);
+                        DatabaseMeta DBMeta = loadDatabaseMetaData(C, TildaList);
                         Migrator.MigrateDatabase(C, Migrate.isMigrationActive() == false, TildaList, DBMeta, first, connectionUrls, _DependencySchemas);
                       }
                     if (/*first == true &&*/ Migrate.isMigrationActive() == false)
@@ -212,7 +212,7 @@ public class ConnectionPool
           LogUtil.resetLogLevel();
       }
 
-    private static void ReadConnections(Connection Keys)
+    private static void readConnections(Connection Keys)
     throws Exception
       {
         LOG.info("Adding Connections from tilda.CONNECTIONS table to Pool");
@@ -221,7 +221,7 @@ public class ConnectionPool
         ListResults<Connection_Data> connections = null;
         try
           {
-            connections = Connection_Factory.LookupWhereActive(Keys, 0, 10000);
+            connections = Connection_Factory.lookupWhereActive(Keys, 0, 10000);
           }
         catch (Exception e)
           {
@@ -232,12 +232,12 @@ public class ConnectionPool
         while (iterator.hasNext())
           {
             connection = iterator.next();
-            AddDatasource(connection.getId(), connection.getDriver(), connection.getDb(), connection.getUser(), connection.getPswd(), connection.getInitial(), connection.getMax());
+            addDatasource(connection.getId(), connection.getDriver(), connection.getDb(), connection.getUser(), connection.getPswd(), connection.getInitial(), connection.getMax());
           }
         LOG.info("Completed Adding Connections from tilda.CONNECTIONS table to Pool");
       }
 
-    private static void ReadConfig()
+    private static void readConfig()
     throws Exception
       {
         LOG.info("Initializing Tilda: loading configuration file '/tilda.config.json'.");
@@ -273,7 +273,7 @@ public class ConnectionPool
                 _DependencySchemas = Defs._DependencySchemas;
                 for (Conn Co : Defs._Conns)
                   {
-                    AddDatasource(Co._Id, Co._Driver, Co._DB, Co._User, Co._Pswd, Co._Initial, Co._Max);
+                    addDatasource(Co._Id, Co._Driver, Co._DB, Co._User, Co._Pswd, Co._Initial, Co._Max);
                   }
                 if (Defs._EmailConfig != null)
                   {
@@ -291,7 +291,7 @@ public class ConnectionPool
           }
       }
 
-    private static void InitBootstrappers()
+    private static void initBootstrappers()
     throws IOException
       {
         LOG.info("Initializing Tilda: loading configuration file '/tilda.bootstrappers.config.json'.");
@@ -335,7 +335,7 @@ public class ConnectionPool
         return BDS;
       }
 
-    private static void AddDatasource(String id, String driver, String db, String user, String pswd, int initial, int max)
+    private static void addDatasource(String id, String driver, String db, String user, String pswd, int initial, int max)
     throws Exception
       {
         if (_DataSourcesById.get(id) != null)
@@ -384,7 +384,7 @@ public class ConnectionPool
           }
       }
 
-    private static DatabaseMeta LoadDatabaseMetaData(Connection C, List<Schema> TildaList)
+    private static DatabaseMeta loadDatabaseMetaData(Connection C, List<Schema> TildaList)
     throws Exception
       {
         DatabaseMeta DBMeta = new DatabaseMeta();
@@ -397,7 +397,7 @@ public class ConnectionPool
         return DBMeta;
       }
 
-    private static List<Schema> LoadTildaResources(Connection C)
+    private static List<Schema> loadTildaResources(Connection C)
     throws Exception
       {
         List<Schema> TildaList = Loader.LoadTildaResources();

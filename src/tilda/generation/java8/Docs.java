@@ -161,7 +161,7 @@ public class Docs implements CodeGenDocs
                     + "<TD>" + V._Value + "&nbsp;&nbsp;</TD>"
                     + "<TD>" + V._Label + "&nbsp;&nbsp;</TD>"
                     + "<TD>" + V._Default + "&nbsp;&nbsp;</TD>"
-                    + "<TD>" + TextUtil.Print(V._Groupings) + "&nbsp;&nbsp;</TD>"
+                    + "<TD>" + TextUtil.print(V._Groupings) + "&nbsp;&nbsp;</TD>"
                     // + "<TD>" + V._Raw + "</TD>"
                     + "<TD>" + V._Description + "</TD>"
                     +"</TR>"
@@ -247,7 +247,7 @@ public class Docs implements CodeGenDocs
                 + "  <TR><TD align=\"right\"><B>Value</B></TD><TD>" + V._Value + "</TD></TR>" + SystemValues.NEWLINE
                 + "  <TR><TD align=\"right\"><B>Default</B></TD><TD>" + V._Default + "</TD></TR>" + SystemValues.NEWLINE
                 + "  <TR><TD align=\"right\"><B>Label</B></TD><TD>" + V._Label + "</TD></TR>" + SystemValues.NEWLINE
-                + "  <TR><TD align=\"right\"><B>Groupings</B></TD><TD>" + TextUtil.Print(V._Groupings) + "</TD></TR>" + SystemValues.NEWLINE
+                + "  <TR><TD align=\"right\"><B>Groupings</B></TD><TD>" + TextUtil.print(V._Groupings) + "</TD></TR>" + SystemValues.NEWLINE
                 + "  <TR valign=\"top\"><TD align=\"right\"><B>Description</B></TD><TD>" + V._Description + "</TD></TR>" + SystemValues.NEWLINE
                 + "</TABLE>" + SystemValues.NEWLINE
                 + Helper.getMultiLineCommentEnd()

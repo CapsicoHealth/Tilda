@@ -495,7 +495,7 @@ public class Schema
             LOG.info("   " + X._Name);
             if (recurse == true)
               for (Object O : X._Objects)
-                LOG.info("       " + O._Name + ": " + TextUtil.Print(O.getColumnNames()));
+                LOG.info("       " + O._Name + ": " + TextUtil.print(O.getColumnNames()));
           }
       }
 

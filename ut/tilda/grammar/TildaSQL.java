@@ -60,18 +60,18 @@ public class TildaSQL
     // Meta-data about the sample object used in the test rules.
     /*@formatter:off*/
     protected static List<ColumnDefinition> _COLS = CollectionUtil.toList(new ColumnDefinition[] {
-           ColumnDefinition.Create(null, null, "DESYNPUF_ID"            , ColumnType.STRING  , false, false, "De-identified patient id")
-          ,ColumnDefinition.Create(null, null, "CLM_FROM_DT"            , ColumnType.DATETIME, false, true , "Claim start date")
-          ,ColumnDefinition.Create(null, null, "CLM_THRU_DT"            , ColumnType.DATETIME, false, true , "Claim end date")
-          ,ColumnDefinition.Create(null, null, "CLM_PMT_AMT"            , ColumnType.FLOAT   , false, true , "Claim payment")
-          ,ColumnDefinition.Create(null, null, "PRVDR_CLASS"            , ColumnType.STRING  , false, true , "Provider class")
-          ,ColumnDefinition.Create(null, null, "CLM_TYPE"               , ColumnType.CHAR    , false, false, "Claim type")
-          ,ColumnDefinition.Create(null, null, "PRIMARY_ICD9_DGNS_CD"   , ColumnType.STRING  , false, true , "Primary ICD9 diagnosis code")
-          ,ColumnDefinition.Create(null, null, "SECONDARY_ICD9_DGNS_CD" , ColumnType.STRING  , true , true , "Secondary ICD9 diagnosis codes")
-          ,ColumnDefinition.Create(null, null, "PRIMARY_ICD9_PRCDR_CD"  , ColumnType.STRING  , false, true , "Primary ICD9 procedure code")
-          ,ColumnDefinition.Create(null, null, "SECONDARY_ICD9_PRCDR_CD", ColumnType.STRING  , true , true , "Secondary ICD9 procedure codes")
-          ,ColumnDefinition.Create(null, null, "BENE_BIRTH_DT"          , ColumnType.DATETIME, false, true , "Beneficiary date of birth")
-          ,ColumnDefinition.Create(null, null, "BENE_SEX_IDENT_CD"      , ColumnType.CHAR    , false, true , "Beneficiary gender")
+           ColumnDefinition.create(null, null, "DESYNPUF_ID"            , ColumnType.STRING  , false, false, "De-identified patient id")
+          ,ColumnDefinition.create(null, null, "CLM_FROM_DT"            , ColumnType.DATETIME, false, true , "Claim start date")
+          ,ColumnDefinition.create(null, null, "CLM_THRU_DT"            , ColumnType.DATETIME, false, true , "Claim end date")
+          ,ColumnDefinition.create(null, null, "CLM_PMT_AMT"            , ColumnType.FLOAT   , false, true , "Claim payment")
+          ,ColumnDefinition.create(null, null, "PRVDR_CLASS"            , ColumnType.STRING  , false, true , "Provider class")
+          ,ColumnDefinition.create(null, null, "CLM_TYPE"               , ColumnType.CHAR    , false, false, "Claim type")
+          ,ColumnDefinition.create(null, null, "PRIMARY_ICD9_DGNS_CD"   , ColumnType.STRING  , false, true , "Primary ICD9 diagnosis code")
+          ,ColumnDefinition.create(null, null, "SECONDARY_ICD9_DGNS_CD" , ColumnType.STRING  , true , true , "Secondary ICD9 diagnosis codes")
+          ,ColumnDefinition.create(null, null, "PRIMARY_ICD9_PRCDR_CD"  , ColumnType.STRING  , false, true , "Primary ICD9 procedure code")
+          ,ColumnDefinition.create(null, null, "SECONDARY_ICD9_PRCDR_CD", ColumnType.STRING  , true , true , "Secondary ICD9 procedure codes")
+          ,ColumnDefinition.create(null, null, "BENE_BIRTH_DT"          , ColumnType.DATETIME, false, true , "Beneficiary date of birth")
+          ,ColumnDefinition.create(null, null, "BENE_SEX_IDENT_CD"      , ColumnType.CHAR    , false, true , "Beneficiary gender")
     });
    /*@formatter:on*/
 
@@ -336,11 +336,11 @@ public class TildaSQL
         WCC_CG.addWhereClauseDef("wc2", Expr2, _COLS);
         WCC_CG.addWhereClauseDef("wc3", Expr3, _COLS);
         WCC_CG.setCompositionExpression("wc1 and wc2 and wc3");
-        LOG.debug("Parsing time: " + DurationUtil.PrintDuration(System.nanoTime() - T0) + ".");
+        LOG.debug("Parsing time: " + DurationUtil.printDuration(System.nanoTime() - T0) + ".");
 
         T0 = System.nanoTime();
         CompiledWhereClause CWC = WCC_CG.gen("tilda._gen.cwc");
-        LOG.debug("Compile time: " + DurationUtil.PrintDuration(System.nanoTime() - T0) + ".");
+        LOG.debug("Compile time: " + DurationUtil.printDuration(System.nanoTime() - T0) + ".");
 
         T0 = System.nanoTime();
         int MaxCount = 100000;
@@ -351,7 +351,7 @@ public class TildaSQL
               LOG.debug("Run " + (j + 1) + ": " + x);
           }
         long RunTime = System.nanoTime() - T0;
-        LOG.debug("Run TRUE time: " + DurationUtil.PrintDuration(RunTime) + " at " + DurationUtil.PrintPerformancePerMinute(RunTime, MaxCount) + " ruleSets/mn");
+        LOG.debug("Run TRUE time: " + DurationUtil.printDuration(RunTime) + " at " + DurationUtil.printPerformancePerMinute(RunTime, MaxCount) + " ruleSets/mn");
 
 
         T0 = System.nanoTime();
@@ -362,7 +362,7 @@ public class TildaSQL
               LOG.debug("Run " + (j + 1) + ": " + x);
           }
         RunTime = System.nanoTime() - T0;
-        LOG.debug("Run FALSE time: " + DurationUtil.PrintDuration(RunTime) + " at " + DurationUtil.PrintPerformancePerMinute(RunTime, MaxCount) + " ruleSets/mn");
+        LOG.debug("Run FALSE time: " + DurationUtil.printDuration(RunTime) + " at " + DurationUtil.printPerformancePerMinute(RunTime, MaxCount) + " ruleSets/mn");
 
       }
 

@@ -92,7 +92,7 @@ public class Import
             LOG.info("");
             LOG.info("");
             LOG.info("");
-            LOG.info("Processed a total of " + RecordsCount + " records in " + DurationUtil.getDurationSeconds(timeTaken) + "s (" + DurationUtil.PrintPerformancePerMinute(timeTaken, RecordsCount) + " records/mn).");
+            LOG.info("Processed a total of " + RecordsCount + " records in " + DurationUtil.getDurationSeconds(timeTaken) + "s (" + DurationUtil.printPerformancePerMinute(timeTaken, RecordsCount) + " records/mn).");
             StringBuilder Str = new StringBuilder();
             Str.setLength(0);
             PerfTracker.print(Str);
@@ -169,7 +169,7 @@ public class Import
         int Total = I.process(C);
         T = System.nanoTime() - T;
         
-        LOG.info("Processed " + Total + " records in " + DurationUtil.getDurationSeconds(T) + "s (" + DurationUtil.PrintPerformancePerMinute(T, Total) + " records/mn).");
+        LOG.info("Processed " + Total + " records in " + DurationUtil.getDurationSeconds(T) + "s (" + DurationUtil.printPerformancePerMinute(T, Total) + " records/mn).");
         return Total;
       }
     

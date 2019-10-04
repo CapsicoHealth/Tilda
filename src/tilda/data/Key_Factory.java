@@ -57,7 +57,7 @@ public class Key_Factory extends tilda.data._Tilda.TILDA__KEY_Factory
              Q.set(COLS.MAX, COLS.MAX).plus(COLS.COUNT)
               .where().equals(COLS.REFNUM, K.getRefnum());
              Q.execute();
-             K.Refresh(C);
+             K.refresh(C);
              K._K.set(K.getCount());
              LOG.debug("Refilled '"+K.getName()+"' keys "+(K.getMax()-K.getCount()+1)+" - "+K.getMax());
              k = K._K.addAndGet(-1);

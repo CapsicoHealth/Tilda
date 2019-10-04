@@ -26,19 +26,19 @@ public class TILDA__MEASURE_Json
    @SerializedName("name"       ) public String  _name       ;
    /*@formatter:on*/
 
-   public tilda.data.Measure_Data Write(Connection C) throws Exception
+   public tilda.data.Measure_Data write(Connection C) throws Exception
     {
       if (TextUtil.isNullOrEmpty(_schema     ) == true)
        throw new Exception("Incoming value for 'tilda.data.TILDA.Measure.schema' was null or empty. It's not nullable in the model.\n"+toString());
       if (TextUtil.isNullOrEmpty(_name       ) == true)
        throw new Exception("Incoming value for 'tilda.data.TILDA.Measure.name' was null or empty. It's not nullable in the model.\n"+toString());
 
-      tilda.data.Measure_Data Obj = tilda.data.Measure_Factory.Create(_schema, _name);
-      Update(Obj);
-      if (Obj.Write(C) == false)
+      tilda.data.Measure_Data Obj = tilda.data.Measure_Factory.create(_schema, _name);
+      update(Obj);
+      if (Obj.write(C) == false)
        {
-         Obj = tilda.data.Measure_Factory.LookupByMeasure(_schema, _name);
-         if (Obj.Read(C) == false)
+         Obj = tilda.data.Measure_Factory.lookupByMeasure(_schema, _name);
+         if (Obj.read(C) == false)
           throw new Exception("Cannot create the tilda.data.TILDA.Measure object.\n"+toString());
          LOG.debug("Nothing has changed in the object, so no update necessary.");
 
@@ -46,7 +46,7 @@ public class TILDA__MEASURE_Json
       return Obj;
    }
 
-   public void Update(tilda.data.Measure_Data Obj) throws Exception
+   public void update(tilda.data.Measure_Data Obj) throws Exception
     {
       if (_schema     != null) Obj.setSchema     (_schema     );
       if (_name       != null) Obj.setName       (_name       );

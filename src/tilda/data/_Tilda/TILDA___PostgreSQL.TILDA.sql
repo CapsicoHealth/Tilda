@@ -739,3 +739,83 @@ BEGIN
 END; $$
 LANGUAGE PLPGSQL;
 
+
+
+-- DDL META DATA VERSION 2019-01-09
+create or replace view TILDA.JobView as 
+-- 'A view of the job data.'
+select TILDA.Job."refnum" as "jobRefnum" -- The primary key for this record
+     , TILDA.Job."name" as "jobName" -- Name
+     , TILDA.Job."type" as "jobType" -- Job type
+     , TILDA.Job."userId" as "jobUserId" -- Job user Id
+     , trim(TILDA.Job."dataStartTZ") as "jobDataStartTZ" -- Generated helper column to hold the time zone ID for 'dataStart'.
+     , TILDA.Job."dataStart" as "jobDataStart" -- StartTime
+     , trim(TILDA.Job."dataEndTZ") as "jobDataEndTZ" -- Generated helper column to hold the time zone ID for 'dataEnd'.
+     , TILDA.Job."dataEnd" as "jobDataEnd" -- StartTime
+     , trim(TILDA.Job."startTZ") as "jobStartTZ" -- Generated helper column to hold the time zone ID for 'start'.
+     , TILDA.Job."start" as "jobStart" -- StartTime
+     , trim(TILDA.Job."endTZ") as "jobEndTZ" -- Generated helper column to hold the time zone ID for 'end'.
+     , TILDA.Job."end" as "jobEnd" -- EndTime
+     , TILDA.Job."status" as "jobStatus" -- Status
+     , TILDA.Job."msg" as "jobMsg" -- Message details
+     , TILDA.JobPart."name" as "jobPartName" -- Job part name
+     , TILDA.JobPart."type" as "jobPartType" -- Job part type
+     , trim(TILDA.JobPart."dataStartTZ") as "jobPartDataStartTZ" -- Generated helper column to hold the time zone ID for 'dataStart'.
+     , TILDA.JobPart."dataStart" as "jobPartDataStart" -- Job part data start
+     , trim(TILDA.JobPart."dataEndTZ") as "jobPartDataEndTZ" -- Generated helper column to hold the time zone ID for 'dataEnd'.
+     , TILDA.JobPart."dataEnd" as "jobPartDataEnd" -- Job part data end
+     , trim(TILDA.JobPart."startTZ") as "jobPartStartTZ" -- Generated helper column to hold the time zone ID for 'start'.
+     , TILDA.JobPart."start" as "jobPartStart" -- Job part execution start
+     , trim(TILDA.JobPart."endTZ") as "jobPartEndTZ" -- Generated helper column to hold the time zone ID for 'end'.
+     , TILDA.JobPart."end" as "jobPartEnd" -- Job part execution end
+     , TILDA.JobPart."recordsCount" as "jobPartRecordsCount" -- count of database or file or ... records.
+     , TILDA.JobPart."status" as "jobPartStatus" -- Status flag, i.e., success=true and failure-false
+     , TILDA.JobPartMessage."notify" as "jobPartNotify" -- Notification flag
+     , TILDA.JobPartMessage."msg" as "jobPartMessage" -- Message details
+  from TILDA.Job
+     left  join TILDA.JobPart on TILDA.JobPart."jobRefnum" = TILDA.Job."refnum"
+     left  join TILDA.JobPartMessage on TILDA.JobPartMessage."jobPartRefnum" = TILDA.JobPart."refnum"
+;
+
+
+COMMENT ON VIEW TILDA.JobView IS E'-- DDL META DATA VERSION 2019-01-09\ncreate or replace view TILDA.JobView as \n-- ''A view of the job data.''\nselect TILDA.Job."refnum" as "jobRefnum" -- The primary key for this record\n     , TILDA.Job."name" as "jobName" -- Name\n     , TILDA.Job."type" as "jobType" -- Job type\n     , TILDA.Job."userId" as "jobUserId" -- Job user Id\n     , trim(TILDA.Job."dataStartTZ") as "jobDataStartTZ" -- Generated helper column to hold the time zone ID for ''dataStart''.\n     , TILDA.Job."dataStart" as "jobDataStart" -- StartTime\n     , trim(TILDA.Job."dataEndTZ") as "jobDataEndTZ" -- Generated helper column to hold the time zone ID for ''dataEnd''.\n     , TILDA.Job."dataEnd" as "jobDataEnd" -- StartTime\n     , trim(TILDA.Job."startTZ") as "jobStartTZ" -- Generated helper column to hold the time zone ID for ''start''.\n     , TILDA.Job."start" as "jobStart" -- StartTime\n     , trim(TILDA.Job."endTZ") as "jobEndTZ" -- Generated helper column to hold the time zone ID for ''end''.\n     , TILDA.Job."end" as "jobEnd" -- EndTime\n     , TILDA.Job."status" as "jobStatus" -- Status\n     , TILDA.Job."msg" as "jobMsg" -- Message details\n     , TILDA.JobPart."name" as "jobPartName" -- Job part name\n     , TILDA.JobPart."type" as "jobPartType" -- Job part type\n     , trim(TILDA.JobPart."dataStartTZ") as "jobPartDataStartTZ" -- Generated helper column to hold the time zone ID for ''dataStart''.\n     , TILDA.JobPart."dataStart" as "jobPartDataStart" -- Job part data start\n     , trim(TILDA.JobPart."dataEndTZ") as "jobPartDataEndTZ" -- Generated helper column to hold the time zone ID for ''dataEnd''.\n     , TILDA.JobPart."dataEnd" as "jobPartDataEnd" -- Job part data end\n     , trim(TILDA.JobPart."startTZ") as "jobPartStartTZ" -- Generated helper column to hold the time zone ID for ''start''.\n     , TILDA.JobPart."start" as "jobPartStart" -- Job part execution start\n     , trim(TILDA.JobPart."endTZ") as "jobPartEndTZ" -- Generated helper column to hold the time zone ID for ''end''.\n     , TILDA.JobPart."end" as "jobPartEnd" -- Job part execution end\n     , TILDA.JobPart."recordsCount" as "jobPartRecordsCount" -- count of database or file or ... records.\n     , TILDA.JobPart."status" as "jobPartStatus" -- Status flag, i.e., success=true and failure-false\n     , TILDA.JobPartMessage."notify" as "jobPartNotify" -- Notification flag\n     , TILDA.JobPartMessage."msg" as "jobPartMessage" -- Message details\n  from TILDA.Job\n     left  join TILDA.JobPart on TILDA.JobPart."jobRefnum" = TILDA.Job."refnum"\n     left  join TILDA.JobPartMessage on TILDA.JobPartMessage."jobPartRefnum" = TILDA.JobPart."refnum"\n;\n\n';
+
+COMMENT ON COLUMN TILDA.JobView."jobRefnum" IS E'The primary key for this record';
+COMMENT ON COLUMN TILDA.JobView."jobName" IS E'Name';
+COMMENT ON COLUMN TILDA.JobView."jobType" IS E'Job type';
+COMMENT ON COLUMN TILDA.JobView."jobUserId" IS E'Job user Id';
+COMMENT ON COLUMN TILDA.JobView."jobDataStartTZ" IS E'Generated helper column to hold the time zone ID for ''dataStart''.';
+COMMENT ON COLUMN TILDA.JobView."jobDataStart" IS E'StartTime';
+COMMENT ON COLUMN TILDA.JobView."jobDataEndTZ" IS E'Generated helper column to hold the time zone ID for ''dataEnd''.';
+COMMENT ON COLUMN TILDA.JobView."jobDataEnd" IS E'StartTime';
+COMMENT ON COLUMN TILDA.JobView."jobStartTZ" IS E'Generated helper column to hold the time zone ID for ''start''.';
+COMMENT ON COLUMN TILDA.JobView."jobStart" IS E'StartTime';
+COMMENT ON COLUMN TILDA.JobView."jobEndTZ" IS E'Generated helper column to hold the time zone ID for ''end''.';
+COMMENT ON COLUMN TILDA.JobView."jobEnd" IS E'EndTime';
+COMMENT ON COLUMN TILDA.JobView."jobStatus" IS E'Status';
+COMMENT ON COLUMN TILDA.JobView."jobMsg" IS E'Message details';
+COMMENT ON COLUMN TILDA.JobView."jobPartName" IS E'Job part name';
+COMMENT ON COLUMN TILDA.JobView."jobPartType" IS E'Job part type';
+COMMENT ON COLUMN TILDA.JobView."jobPartDataStartTZ" IS E'Generated helper column to hold the time zone ID for ''dataStart''.';
+COMMENT ON COLUMN TILDA.JobView."jobPartDataStart" IS E'Job part data start';
+COMMENT ON COLUMN TILDA.JobView."jobPartDataEndTZ" IS E'Generated helper column to hold the time zone ID for ''dataEnd''.';
+COMMENT ON COLUMN TILDA.JobView."jobPartDataEnd" IS E'Job part data end';
+COMMENT ON COLUMN TILDA.JobView."jobPartStartTZ" IS E'Generated helper column to hold the time zone ID for ''start''.';
+COMMENT ON COLUMN TILDA.JobView."jobPartStart" IS E'Job part execution start';
+COMMENT ON COLUMN TILDA.JobView."jobPartEndTZ" IS E'Generated helper column to hold the time zone ID for ''end''.';
+COMMENT ON COLUMN TILDA.JobView."jobPartEnd" IS E'Job part execution end';
+COMMENT ON COLUMN TILDA.JobView."jobPartRecordsCount" IS E'count of database or file or ... records.';
+COMMENT ON COLUMN TILDA.JobView."jobPartStatus" IS E'Status flag, i.e., success=true and failure-false';
+COMMENT ON COLUMN TILDA.JobView."jobPartNotify" IS E'Notification flag';
+COMMENT ON COLUMN TILDA.JobView."jobPartMessage" IS E'Message details';
+
+DO $$
+-- This view doesn't have any formula, but just in case it used to and they were all repoved from the model, we still have to do some cleanup.
+DECLARE
+  ts timestamp;
+BEGIN
+  select into ts current_timestamp;
+  UPDATE TILDA.Formula set deleted = current_timestamp where "location" = 'TILDA.JobView' AND "lastUpdated" < ts;
+END; $$
+LANGUAGE PLPGSQL;
+

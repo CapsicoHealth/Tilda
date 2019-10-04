@@ -108,7 +108,7 @@ public class IBMDB2 implements DBType
       }
 
     @Override
-    public boolean FullIdentifierOnUpdate()
+    public boolean fullIdentifierOnUpdate()
       {
         return false;
       }

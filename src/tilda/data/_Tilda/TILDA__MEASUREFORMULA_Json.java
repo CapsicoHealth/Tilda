@@ -26,19 +26,19 @@ public class TILDA__MEASUREFORMULA_Json
    @SerializedName("formulaRefnum") public Long  _formulaRefnum;
    /*@formatter:on*/
 
-   public tilda.data.MeasureFormula_Data Write(Connection C) throws Exception
+   public tilda.data.MeasureFormula_Data write(Connection C) throws Exception
     {
       if (_measureRefnum == null)
        throw new Exception("Incoming value for 'tilda.data.TILDA.MeasureFormula.measureRefnum' was null or empty. It's not nullable in the model.\n"+toString());
       if (_formulaRefnum == null)
        throw new Exception("Incoming value for 'tilda.data.TILDA.MeasureFormula.formulaRefnum' was null or empty. It's not nullable in the model.\n"+toString());
 
-      tilda.data.MeasureFormula_Data Obj = tilda.data.MeasureFormula_Factory.Create(_measureRefnum, _formulaRefnum);
-      Update(Obj);
-      if (Obj.Write(C) == false)
+      tilda.data.MeasureFormula_Data Obj = tilda.data.MeasureFormula_Factory.create(_measureRefnum, _formulaRefnum);
+      update(Obj);
+      if (Obj.write(C) == false)
        {
-         Obj = tilda.data.MeasureFormula_Factory.LookupByPrimaryKey(_measureRefnum, _formulaRefnum);
-         if (Obj.Read(C) == false)
+         Obj = tilda.data.MeasureFormula_Factory.lookupByPrimaryKey(_measureRefnum, _formulaRefnum);
+         if (Obj.read(C) == false)
           throw new Exception("Cannot create the tilda.data.TILDA.MeasureFormula object.\n"+toString());
          LOG.debug("Nothing has changed in the object, so no update necessary.");
 
@@ -46,7 +46,7 @@ public class TILDA__MEASUREFORMULA_Json
       return Obj;
    }
 
-   public void Update(tilda.data.MeasureFormula_Data Obj) throws Exception
+   public void update(tilda.data.MeasureFormula_Data Obj) throws Exception
     {
       if (_measureRefnum!= null) Obj.setMeasureRefnum(_measureRefnum);
       if (_formulaRefnum!= null) Obj.setFormulaRefnum(_formulaRefnum);

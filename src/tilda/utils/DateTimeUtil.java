@@ -44,7 +44,7 @@ public class DateTimeUtil
 
     protected static final ZoneId     _UTC                = ZoneId.of("Etc/UTC");
 
-    public static final ZonedDateTime NOW_PLACEHOLDER_ZDT = NewUTC(999, 12, 31, 23, 59, 0, 0);
+    public static final ZonedDateTime NOW_PLACEHOLDER_ZDT = newUTC(999, 12, 31, 23, 59, 0, 0);
     public static final LocalDate     NOW_PLACEHOLDER_D   = LocalDate.of(999, 12, 31);
 
     public static boolean isNowPlaceholder(ZonedDateTime ZDT)
@@ -58,7 +58,7 @@ public class DateTimeUtil
       }
 
 
-    public static final ZonedDateTime UNDEFINED_PLACEHOLDER_ZDT = NewUTC(1111, 11, 11, 0, 0, 0, 0);
+    public static final ZonedDateTime UNDEFINED_PLACEHOLDER_ZDT = newUTC(1111, 11, 11, 0, 0, 0, 0);
     public static final LocalDate     UNDEFINED_PLACEHOLDER_D   = LocalDate.of(1111, 11, 11);
 
     public static boolean isUndefinedPlaceholder(ZonedDateTime ZDT)
@@ -78,26 +78,26 @@ public class DateTimeUtil
      * Returns a new ZonedDateTime object in the UTC timezone, based on the information provided using
      * the ZonedDateTime class conventions.
      */
-    public static ZonedDateTime NewUTC(int Year, int Month, int Day, int Hour, int Minutes, int Seconds, int Milliseconds)
+    public static ZonedDateTime newUTC(int Year, int Month, int Day, int Hour, int Minutes, int Seconds, int Milliseconds)
       {
-        return New(Year, Month, Day, Hour, Minutes, Seconds, Milliseconds * 1000000, _UTC);
+        return newTZ(Year, Month, Day, Hour, Minutes, Seconds, Milliseconds * 1000000, _UTC);
       }
 
     /**
      * Returns a new ZonedDateTime object based on the information provided using
      * the ZonedDateTime class conventions.
      */
-    public static ZonedDateTime New(int Year, int Month, int Day, int Hour, int Minutes, int Seconds, int Milliseconds, ZoneId Z)
+    public static ZonedDateTime newTZ(int Year, int Month, int Day, int Hour, int Minutes, int Seconds, int Milliseconds, ZoneId Z)
       {
         return ZonedDateTime.of(Year, Month, Day, Hour, Minutes, Seconds, Milliseconds * 1000000, Z);
       }
 
-    public static ZonedDateTime New(int Year, int Month, int Day, int Hour, int Minutes, int Seconds, int Milliseconds, DateTimeZone Z)
+    public static ZonedDateTime newTZ(int Year, int Month, int Day, int Hour, int Minutes, int Seconds, int Milliseconds, DateTimeZone Z)
       {
         return ZonedDateTime.of(Year, Month, Day, Hour, Minutes, Seconds, Milliseconds * 1000000, Z._ZoneId);
       }
 
-    public static LocalDate New(int Year, int Month, int Day)
+    public static LocalDate newYMD(int Year, int Month, int Day)
       {
         return LocalDate.of(Year, Month, Day);
       }
@@ -108,38 +108,38 @@ public class DateTimeUtil
         return ZonedDateTime.now().getOffset().getId();
       }
 
-    public static ZonedDateTime NowLocal()
+    public static ZonedDateTime nowLocal()
       {
         return ZonedDateTime.now();
       }
 
-    public static ZonedDateTime NowUTC()
+    public static ZonedDateTime nowUTC()
       {
         return ZonedDateTime.now(_UTC);
       }
 
-    public static ZonedDateTime Now(ZoneId Z)
+    public static ZonedDateTime nowTZ(ZoneId Z)
       {
         return ZonedDateTime.now(Z);
       }
 
-    public static ZonedDateTime Now(DateTimeZone Z)
+    public static ZonedDateTime nowTZ(DateTimeZone Z)
       {
         return ZonedDateTime.now(Z._ZoneId);
       }
 
-    public static LocalDate NowLocalDate()
+    public static LocalDate nowLocalDate()
       {
         return LocalDate.now();
       }
 
 
-    public static ZonedDateTime Oldest(ZonedDateTime ZDT1, ZonedDateTime ZDT2)
+    public static ZonedDateTime oldest(ZonedDateTime ZDT1, ZonedDateTime ZDT2)
       {
         return ZDT1 == null ? ZDT2 : ZDT2 == null ? ZDT1 : ZDT1.compareTo(ZDT2) < 0 ? ZDT1 : ZDT2;
       }
 
-    public static ZonedDateTime Youngest(ZonedDateTime ZDT1, ZonedDateTime ZDT2)
+    public static ZonedDateTime youngest(ZonedDateTime ZDT1, ZonedDateTime ZDT2)
       {
         return ZDT1 == null ? ZDT2 : ZDT2 == null ? ZDT1 : ZDT1.compareTo(ZDT2) > 0 ? ZDT1 : ZDT2;
       }
@@ -368,7 +368,7 @@ public class DateTimeUtil
 
         try
           {
-            return New(year, month, day, hours, minutes, seconds, 0, ZoneId.systemDefault());
+            return newTZ(year, month, day, hours, minutes, seconds, 0, ZoneId.systemDefault());
           }
         catch (Exception E)
           {
@@ -688,8 +688,8 @@ public class DateTimeUtil
           {
             newL.add(ZDT == null ? null : new java.sql.Timestamp(ZDT.toInstant().toEpochMilli()));
           }
-        LOG.debug("L: "+TextUtil.Print(L.iterator()));
-        LOG.debug("newL: "+TextUtil.Print(newL.iterator()));
+        LOG.debug("L: "+TextUtil.print(L.iterator()));
+        LOG.debug("newL: "+TextUtil.print(newL.iterator()));
         return newL;
       }
 

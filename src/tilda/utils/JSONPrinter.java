@@ -39,7 +39,7 @@ public class JSONPrinter
 
     protected static interface ElementDef
       {
-        public void Print(Writer Out, boolean FirstElement, String Header)
+        public void print(Writer Out, boolean FirstElement, String Header)
         throws Exception;
       }
 
@@ -56,10 +56,11 @@ public class JSONPrinter
         protected final JSONable _Val;
         protected final String   _JsonExportName;
 
-        public void Print(Writer Out, boolean FirstElement, String Header)
+        @Override
+        public void print(Writer Out, boolean FirstElement, String Header)
         throws Exception
           {
-            JSONUtil.Print(Out, _Name, _JsonExportName, FirstElement, _Val, Header);
+            JSONUtil.print(Out, _Name, _JsonExportName, FirstElement, _Val, Header);
           }
       }
 
@@ -85,11 +86,12 @@ public class JSONPrinter
         protected final String                   _JsonExportName;
         protected final ZonedDateTime            _SyncToken;
 
-        public void Print(Writer Out, boolean FirstElement, String Header)
+        @Override
+        public void print(Writer Out, boolean FirstElement, String Header)
         throws Exception
           {
             if (_SyncToken == null)
-             JSONUtil.Print(Out, _Name, _JsonExportName, FirstElement, _Val, Header);
+             JSONUtil.print(Out, _Name, _JsonExportName, FirstElement, _Val, Header);
           }
       }
 
@@ -104,10 +106,11 @@ public class JSONPrinter
         protected final String     _Name;
         protected final String[][] _Val;
 
-        public void Print(Writer Out, boolean FirstElement, String Header)
+        @Override
+        public void print(Writer Out, boolean FirstElement, String Header)
         throws Exception
           {
-            JSONUtil.Print(Out, _Name, FirstElement, _Val, Header);
+            JSONUtil.print(Out, _Name, FirstElement, _Val, Header);
           }
       }
 
@@ -122,10 +125,11 @@ public class JSONPrinter
         protected final String _Name;
         protected final String _Val;
 
-        public void Print(Writer Out, boolean FirstElement, String Header)
+        @Override
+        public void print(Writer Out, boolean FirstElement, String Header)
         throws Exception
           {
-            JSONUtil.Print(Out, _Name, FirstElement);
+            JSONUtil.print(Out, _Name, FirstElement);
             Out.write(_Val);
           }
       }
@@ -141,11 +145,12 @@ public class JSONPrinter
         protected final String  _Name;
         protected final boolean _Val;
 
-        public void Print(Writer Out, boolean FirstElement, String Header)
+        @Override
+        public void print(Writer Out, boolean FirstElement, String Header)
         throws Exception
           {
             Out.write(Header);
-            JSONUtil.Print(Out, _Name, FirstElement, _Val);
+            JSONUtil.print(Out, _Name, FirstElement, _Val);
           }
       }
 
@@ -160,11 +165,12 @@ public class JSONPrinter
         protected final String _Name;
         protected final long   _Val;
 
-        public void Print(Writer Out, boolean FirstElement, String Header)
+        @Override
+        public void print(Writer Out, boolean FirstElement, String Header)
         throws Exception
           {
             Out.write(Header);
-            JSONUtil.Print(Out, _Name, FirstElement, _Val);
+            JSONUtil.print(Out, _Name, FirstElement, _Val);
           }
       }
 
@@ -179,11 +185,12 @@ public class JSONPrinter
         protected final String _Name;
         protected final double _Val;
 
-        public void Print(Writer Out, boolean FirstElement, String Header)
+        @Override
+        public void print(Writer Out, boolean FirstElement, String Header)
         throws Exception
           {
             Out.write(Header);
-            JSONUtil.Print(Out, _Name, FirstElement, _Val);
+            JSONUtil.print(Out, _Name, FirstElement, _Val);
           }
       }
 
@@ -198,11 +205,12 @@ public class JSONPrinter
         protected final String _Name;
         protected final String _Val;
 
-        public void Print(Writer Out, boolean FirstElement, String Header)
+        @Override
+        public void print(Writer Out, boolean FirstElement, String Header)
         throws Exception
           {
             Out.write(Header);
-            JSONUtil.Print(Out, _Name, FirstElement, _Val);
+            JSONUtil.print(Out, _Name, FirstElement, _Val);
           }
       }
 
@@ -217,11 +225,12 @@ public class JSONPrinter
         protected final String _Name;
         protected final ZonedDateTime _Val;
 
-        public void Print(Writer Out, boolean FirstElement, String Header)
+        @Override
+        public void print(Writer Out, boolean FirstElement, String Header)
         throws Exception
           {
             Out.write(Header);
-            JSONUtil.Print(Out, _Name, FirstElement, _Val);
+            JSONUtil.print(Out, _Name, FirstElement, _Val);
           }
       }
     
@@ -287,14 +296,14 @@ public class JSONPrinter
       }
 
 
-    public void Print(Writer Out)
+    public void print(Writer Out)
     throws Exception
       {
         JSONUtil.startOK(Out, '{');
         boolean First = true;
         for (ElementDef e : _Elements)
           {
-            e.Print(Out, First, "    ");
+            e.print(Out, First, "    ");
             First = false;
           }
         JSONUtil.end(Out, '}');

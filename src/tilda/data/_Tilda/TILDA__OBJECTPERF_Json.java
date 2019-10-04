@@ -43,7 +43,7 @@ public class TILDA__OBJECTPERF_Json
    @SerializedName("deleteRecords") public Integer  _deleteRecords;
    /*@formatter:on*/
 
-   public tilda.data.ObjectPerf_Data Write(Connection C) throws Exception
+   public tilda.data.ObjectPerf_Data write(Connection C) throws Exception
     {
       if (TextUtil.isNullOrEmpty(_schemaName   ) == true)
        throw new Exception("Incoming value for 'tilda.data.TILDA.ObjectPerf.schemaName' was null or empty. It's not nullable in the model.\n"+toString());
@@ -84,12 +84,12 @@ public class TILDA__OBJECTPERF_Json
       if (_deleteRecords == null)
        _deleteRecords=0;
 
-      tilda.data.ObjectPerf_Data Obj = tilda.data.ObjectPerf_Factory.Create(_schemaName, _objectName, _startPeriod, _endPeriod);
-      Update(Obj);
-      if (Obj.Write(C) == false)
+      tilda.data.ObjectPerf_Data Obj = tilda.data.ObjectPerf_Factory.create(_schemaName, _objectName, _startPeriod, _endPeriod);
+      update(Obj);
+      if (Obj.write(C) == false)
        {
-         Obj = tilda.data.ObjectPerf_Factory.LookupByPrimaryKey(_schemaName, _objectName, _startPeriod);
-         if (Obj.Read(C) == false)
+         Obj = tilda.data.ObjectPerf_Factory.lookupByPrimaryKey(_schemaName, _objectName, _startPeriod);
+         if (Obj.read(C) == false)
           throw new Exception("Cannot create the tilda.data.TILDA.ObjectPerf object.\n"+toString());
          if (_endPeriod    != null) Obj.setEndPeriod    (_endPeriod    );
          if (_selectNano   != null) Obj.setSelectNano   (_selectNano   );
@@ -104,14 +104,14 @@ public class TILDA__OBJECTPERF_Json
          if (_deleteNano   != null) Obj.setDeleteNano   (_deleteNano   );
          if (_deleteCount  != null) Obj.setDeleteCount  (_deleteCount  );
          if (_deleteRecords!= null) Obj.setDeleteRecords(_deleteRecords);
-         if (Obj.Write(C) == false)
+         if (Obj.write(C) == false)
           throw new Exception("Cannot update the tilda.data.TILDA.ObjectPerf object: "+Obj.toString());
 
        }
       return Obj;
    }
 
-   public void Update(tilda.data.ObjectPerf_Data Obj) throws Exception
+   public void update(tilda.data.ObjectPerf_Data Obj) throws Exception
     {
       if (_schemaName   != null) Obj.setSchemaName   (_schemaName   );
       if (_objectName   != null) Obj.setObjectName   (_objectName   );

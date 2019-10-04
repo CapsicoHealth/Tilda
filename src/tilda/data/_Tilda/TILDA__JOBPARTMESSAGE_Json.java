@@ -28,7 +28,7 @@ public class TILDA__JOBPARTMESSAGE_Json
    @SerializedName("msg"          ) public String  _msg          ;
    /*@formatter:on*/
 
-   public tilda.data.JobPartMessage_Data Write(Connection C) throws Exception
+   public tilda.data.JobPartMessage_Data write(Connection C) throws Exception
     {
       if (_jobRefnum     == null)
        throw new Exception("Incoming value for 'tilda.data.TILDA.JobPartMessage.jobRefnum' was null or empty. It's not nullable in the model.\n"+toString());
@@ -37,16 +37,16 @@ public class TILDA__JOBPARTMESSAGE_Json
       if (TextUtil.isNullOrEmpty(_msg          ) == true)
        throw new Exception("Incoming value for 'tilda.data.TILDA.JobPartMessage.msg' was null or empty. It's not nullable in the model.\n"+toString());
 
-      tilda.data.JobPartMessage_Data Obj = tilda.data.JobPartMessage_Factory.Create(_jobRefnum, _notify, _msg);
-      Update(Obj);
-      if (Obj.Write(C) == false)
+      tilda.data.JobPartMessage_Data Obj = tilda.data.JobPartMessage_Factory.create(_jobRefnum, _notify, _msg);
+      update(Obj);
+      if (Obj.write(C) == false)
        {
          throw new Exception("Cannot create the tilda.data.TILDA.JobPartMessage object.\n"+toString());
        }
       return Obj;
    }
 
-   public void Update(tilda.data.JobPartMessage_Data Obj) throws Exception
+   public void update(tilda.data.JobPartMessage_Data Obj) throws Exception
     {
       if (_jobRefnum    != null) Obj.setJobRefnum    (_jobRefnum    );
       if (_jobPartRefnum!= null) Obj.setJobPartRefnum(_jobPartRefnum);

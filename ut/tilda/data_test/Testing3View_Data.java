@@ -26,7 +26,7 @@ public class Testing3View_Data extends tilda.data_test._Tilda.TILDA__TESTING3VIE
 
 
    @Override
-   protected boolean AfterRead(Connection C) throws Exception
+   protected boolean afterRead(Connection C) throws Exception
      {
        // Do things after an object has just been read form the data store, for example, take care of AUTO fields.
        return true;

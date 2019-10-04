@@ -27,7 +27,7 @@ public class TILDA__MAPPING_Json
    @SerializedName("dst"        ) public String  _dst        ;
    /*@formatter:on*/
 
-   public tilda.data.Mapping_Data Write(Connection C) throws Exception
+   public tilda.data.Mapping_Data write(Connection C) throws Exception
     {
       if (TextUtil.isNullOrEmpty(_type       ) == true)
        throw new Exception("Incoming value for 'tilda.data.TILDA.Mapping.type' was null or empty. It's not nullable in the model.\n"+toString());
@@ -36,12 +36,12 @@ public class TILDA__MAPPING_Json
       if (TextUtil.isNullOrEmpty(_dst        ) == true)
        throw new Exception("Incoming value for 'tilda.data.TILDA.Mapping.dst' was null or empty. It's not nullable in the model.\n"+toString());
 
-      tilda.data.Mapping_Data Obj = tilda.data.Mapping_Factory.Create(_type, _src, _dst);
-      Update(Obj);
-      if (Obj.Write(C) == false)
+      tilda.data.Mapping_Data Obj = tilda.data.Mapping_Factory.create(_type, _src, _dst);
+      update(Obj);
+      if (Obj.write(C) == false)
        {
-         Obj = tilda.data.Mapping_Factory.LookupByTypeSrcDst(_type, _src, _dst);
-         if (Obj.Read(C) == false)
+         Obj = tilda.data.Mapping_Factory.lookupByTypeSrcDst(_type, _src, _dst);
+         if (Obj.read(C) == false)
           throw new Exception("Cannot create the tilda.data.TILDA.Mapping object.\n"+toString());
          LOG.debug("Nothing has changed in the object, so no update necessary.");
 
@@ -49,7 +49,7 @@ public class TILDA__MAPPING_Json
       return Obj;
    }
 
-   public void Update(tilda.data.Mapping_Data Obj) throws Exception
+   public void update(tilda.data.Mapping_Data Obj) throws Exception
     {
       if (_type       != null) Obj.setType       (_type       );
       if (_src        != null) Obj.setSrc        (_src        );

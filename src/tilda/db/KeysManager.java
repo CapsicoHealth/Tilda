@@ -37,7 +37,7 @@ public class KeysManager
     public static long getKey(String ObjectName)
     throws Exception
       {
-        Init(false);
+        init(false);
         Key_Data k = _M.get(ObjectName);
         if (k == null)
           throw new Exception("Requested a key for unknown object '" + ObjectName + "'.");
@@ -48,19 +48,19 @@ public class KeysManager
     public static boolean hasKey(String ObjectName)
     throws Exception
       {
-        Init(false);
+        init(false);
         return _M.get(ObjectName) != null;
       }
 
     public static void reloadAll()
     throws Exception
       {
-        Init(true);
+        init(true);
       }
 
     protected static final String _SEM = "KEYS";
 
-    protected static void Init(boolean reinit)
+    protected static void init(boolean reinit)
     throws SQLException
       {
         if (_M == null || _M.isEmpty() == true || reinit == true)
@@ -77,7 +77,7 @@ public class KeysManager
                         LOG.info("Reloading the tilda key definitions.");
                       _M = new HashMap<String, Key_Data>();
                       C = ConnectionPool.get(_SEM);
-                      ListResults<Key_Data> L = Key_Factory.LookupWhereAllByName(C, 0, -1);
+                      ListResults<Key_Data> L = Key_Factory.lookupWhereAllByName(C, 0, -1);
                       for (Key_Data k : L)
                         {
                           _M.put(k.getName(), k);

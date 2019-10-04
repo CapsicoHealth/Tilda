@@ -35,7 +35,7 @@ public class JSONTest
         for (int i = 0; i < Count; ++i)
          test1();
         T0 = System.nanoTime()-T0;
-        System.out.println("Run time: " + DurationUtil.PrintDuration(T0) + " at " + DurationUtil.PrintPerformancePerMinute(T0, Count) + " parses/mn");
+        System.out.println("Run time: " + DurationUtil.printDuration(T0) + " at " + DurationUtil.printPerformancePerMinute(T0, Count) + " parses/mn");
         
         System.out.println("\n\n\n");
         System.out.println("================================================================================================");
@@ -45,7 +45,7 @@ public class JSONTest
         for (int i = 0; i < Count; ++i)
          test2();
         T0 = System.nanoTime()-T0;
-        System.out.println("Run time: " + DurationUtil.PrintDuration(T0) + " at " + DurationUtil.PrintPerformancePerMinute(T0, Count) + " parses/mn");
+        System.out.println("Run time: " + DurationUtil.printDuration(T0) + " at " + DurationUtil.printPerformancePerMinute(T0, Count) + " parses/mn");
         
         // tilda.parsing.parts.Object Obj = new tilda.parsing.parts.Object();
         // Obj._Name = "toto";

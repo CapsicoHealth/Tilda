@@ -461,7 +461,7 @@ public abstract class QueryHelper
         return this;
       }
 
-    protected final void OpCol(Op O, ColumnDefinition Col)
+    protected final void opCol(Op O, ColumnDefinition Col)
     throws Exception
       {
         if (_Section != S.SET && _Section != S.WHERE)
@@ -487,7 +487,7 @@ public abstract class QueryHelper
         public final String _Str;
       }
 
-    protected final void OpVal(Op O, String V)
+    protected final void opVal(Op O, String V)
     throws Exception
       {
         if (_ST == StatementType.SELECT && (_Section == S.WHERE || _Section == S.FROM)
@@ -520,7 +520,7 @@ public abstract class QueryHelper
           throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
       }
 
-    protected final void OpVal(Op O, boolean V)
+    protected final void opVal(Op O, boolean V)
     throws Exception
       {
         if (_ST == StatementType.SELECT && (_Section == S.WHERE || _Section == S.FROM) || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
@@ -533,7 +533,7 @@ public abstract class QueryHelper
           throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
       }
 
-    protected final void OpVal(Op O, double V)
+    protected final void opVal(Op O, double V)
     throws Exception
       {
         if (_ST == StatementType.SELECT && (_Section == S.WHERE || _Section == S.FROM) || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
@@ -546,7 +546,7 @@ public abstract class QueryHelper
           throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
       }
 
-    protected final void OpVal(Op O, float V)
+    protected final void opVal(Op O, float V)
     throws Exception
       {
         if (_ST == StatementType.SELECT && (_Section == S.WHERE || _Section == S.FROM) || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
@@ -559,7 +559,7 @@ public abstract class QueryHelper
           throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
       }
 
-    protected final void OpVal(Op O, int V)
+    protected final void opVal(Op O, int V)
     throws Exception
       {
         if (_ST == StatementType.SELECT && (_Section == S.WHERE || _Section == S.FROM) || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
@@ -572,7 +572,7 @@ public abstract class QueryHelper
           throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
       }
 
-    protected final void OpVal(Op O, long V)
+    protected final void opVal(Op O, long V)
     throws Exception
       {
         if (_ST == StatementType.SELECT && (_Section == S.WHERE || _Section == S.FROM) || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET) || _ST == StatementType.DELETE && _Section == S.WHERE)
@@ -585,7 +585,7 @@ public abstract class QueryHelper
           throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
       }
 
-    protected final void OpVal(Op O, char V)
+    protected final void opVal(Op O, char V)
     throws Exception
       {
         if (_ST == StatementType.SELECT && (_Section == S.WHERE || _Section == S.FROM) || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
@@ -598,7 +598,7 @@ public abstract class QueryHelper
           throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
       }
 
-    protected final void OpVal(Op O, ZonedDateTime V)
+    protected final void opVal(Op O, ZonedDateTime V)
     throws Exception
       {
         if (_ST == StatementType.SELECT && (_Section == S.WHERE || _Section == S.FROM) || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
@@ -853,7 +853,7 @@ public abstract class QueryHelper
     public QueryHelper setNow(Type_DatetimePrimitive Col1)
     throws Exception
       {
-        ZonedDateTime Now = DateTimeUtil.NowUTC();
+        ZonedDateTime Now = DateTimeUtil.nowUTC();
         setColumn(Col1);
         equals(Now);
         if (Col1.getTZCol() != null)
@@ -1220,56 +1220,56 @@ public abstract class QueryHelper
     public QueryHelper equals(String V)
     throws Exception
       {
-        OpVal(Op.EQUALS, V);
+        opVal(Op.EQUALS, V);
         return this;
       }
 
     public QueryHelper equals(char V)
     throws Exception
       {
-        OpVal(Op.EQUALS, V);
+        opVal(Op.EQUALS, V);
         return this;
       }
 
     public QueryHelper equals(boolean V)
     throws Exception
       {
-        OpVal(Op.EQUALS, V);
+        opVal(Op.EQUALS, V);
         return this;
       }
 
     public QueryHelper equals(int V)
     throws Exception
       {
-        OpVal(Op.EQUALS, V);
+        opVal(Op.EQUALS, V);
         return this;
       }
 
     public QueryHelper equals(long V)
     throws Exception
       {
-        OpVal(Op.EQUALS, V);
+        opVal(Op.EQUALS, V);
         return this;
       }
 
     public QueryHelper equals(float V)
     throws Exception
       {
-        OpVal(Op.EQUALS, V);
+        opVal(Op.EQUALS, V);
         return this;
       }
 
     public QueryHelper equals(double V)
     throws Exception
       {
-        OpVal(Op.EQUALS, V);
+        opVal(Op.EQUALS, V);
         return this;
       }
 
     public QueryHelper equals(ZonedDateTime ZDT)
     throws Exception
       {
-        OpVal(Op.EQUALS, ZDT);
+        opVal(Op.EQUALS, ZDT);
         return this;
       }
 
@@ -1282,14 +1282,14 @@ public abstract class QueryHelper
     throws Exception
       {
         Col1.getFullColumnVarForSelect(_C, _QueryStr);
-        OpCol(O, Col2);
+        opCol(O, Col2);
         return this;
       }
 
     public QueryHelper equals(ColumnDefinition Col1)
     throws Exception
       {
-        OpCol(Op.EQUALS, Col1);
+        opCol(Op.EQUALS, Col1);
         return this;
       }
 
@@ -1350,7 +1350,7 @@ public abstract class QueryHelper
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.EQUALS, V);
+        opVal(Op.EQUALS, V);
         return this;
       }
 
@@ -1358,7 +1358,7 @@ public abstract class QueryHelper
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.EQUALS, V);
+        opVal(Op.EQUALS, V);
         return this;
       }
 
@@ -1366,7 +1366,7 @@ public abstract class QueryHelper
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.EQUALS, V);
+        opVal(Op.EQUALS, V);
         return this;
       }
 
@@ -1374,7 +1374,7 @@ public abstract class QueryHelper
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.EQUALS, V);
+        opVal(Op.EQUALS, V);
         return this;
       }
 
@@ -1382,7 +1382,7 @@ public abstract class QueryHelper
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.EQUALS, V);
+        opVal(Op.EQUALS, V);
         return this;
       }
 
@@ -1390,7 +1390,7 @@ public abstract class QueryHelper
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.EQUALS, V);
+        opVal(Op.EQUALS, V);
         return this;
       }
 
@@ -1398,7 +1398,7 @@ public abstract class QueryHelper
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.EQUALS, V);
+        opVal(Op.EQUALS, V);
         return this;
       }
 
@@ -1406,7 +1406,7 @@ public abstract class QueryHelper
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.EQUALS, ZDT);
+        opVal(Op.EQUALS, ZDT);
         return this;
       }
 
@@ -1418,7 +1418,7 @@ public abstract class QueryHelper
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.LT, V);
+        opVal(Op.LT, V);
         return this;
       }
 
@@ -1426,7 +1426,7 @@ public abstract class QueryHelper
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.LT, V);
+        opVal(Op.LT, V);
         return this;
       }
 
@@ -1434,7 +1434,7 @@ public abstract class QueryHelper
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.LT, V);
+        opVal(Op.LT, V);
         return this;
       }
 
@@ -1442,7 +1442,7 @@ public abstract class QueryHelper
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.LT, V);
+        opVal(Op.LT, V);
         return this;
       }
 
@@ -1450,7 +1450,7 @@ public abstract class QueryHelper
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.LT, V);
+        opVal(Op.LT, V);
         return this;
       }
 
@@ -1458,7 +1458,7 @@ public abstract class QueryHelper
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.LT, V);
+        opVal(Op.LT, V);
         return this;
       }
 
@@ -1466,7 +1466,7 @@ public abstract class QueryHelper
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.LT, V);
+        opVal(Op.LT, V);
         return this;
       }
 
@@ -1474,7 +1474,7 @@ public abstract class QueryHelper
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.LT, ZDT);
+        opVal(Op.LT, ZDT);
         return this;
       }
 
@@ -1537,7 +1537,7 @@ public abstract class QueryHelper
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.LTE, V);
+        opVal(Op.LTE, V);
         return this;
       }
 
@@ -1545,7 +1545,7 @@ public abstract class QueryHelper
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.LTE, V);
+        opVal(Op.LTE, V);
         return this;
       }
 
@@ -1553,7 +1553,7 @@ public abstract class QueryHelper
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.LTE, V);
+        opVal(Op.LTE, V);
         return this;
       }
 
@@ -1561,7 +1561,7 @@ public abstract class QueryHelper
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.LTE, V);
+        opVal(Op.LTE, V);
         return this;
       }
 
@@ -1569,7 +1569,7 @@ public abstract class QueryHelper
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.LTE, V);
+        opVal(Op.LTE, V);
         return this;
       }
 
@@ -1577,7 +1577,7 @@ public abstract class QueryHelper
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.LTE, V);
+        opVal(Op.LTE, V);
         return this;
       }
 
@@ -1585,7 +1585,7 @@ public abstract class QueryHelper
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.LTE, V);
+        opVal(Op.LTE, V);
         return this;
       }
 
@@ -1593,7 +1593,7 @@ public abstract class QueryHelper
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.LTE, ZDT);
+        opVal(Op.LTE, ZDT);
         return this;
       }
 
@@ -1657,7 +1657,7 @@ public abstract class QueryHelper
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.GT, V);
+        opVal(Op.GT, V);
         return this;
       }
 
@@ -1665,7 +1665,7 @@ public abstract class QueryHelper
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.GT, V);
+        opVal(Op.GT, V);
         return this;
       }
 
@@ -1673,7 +1673,7 @@ public abstract class QueryHelper
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.GT, V);
+        opVal(Op.GT, V);
         return this;
       }
 
@@ -1681,7 +1681,7 @@ public abstract class QueryHelper
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.GT, V);
+        opVal(Op.GT, V);
         return this;
       }
 
@@ -1689,7 +1689,7 @@ public abstract class QueryHelper
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.GT, V);
+        opVal(Op.GT, V);
         return this;
       }
 
@@ -1697,7 +1697,7 @@ public abstract class QueryHelper
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.GT, V);
+        opVal(Op.GT, V);
         return this;
       }
 
@@ -1705,7 +1705,7 @@ public abstract class QueryHelper
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.GT, V);
+        opVal(Op.GT, V);
         return this;
       }
 
@@ -1713,7 +1713,7 @@ public abstract class QueryHelper
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.GT, ZDT);
+        opVal(Op.GT, ZDT);
         return this;
       }
 
@@ -1779,7 +1779,7 @@ public abstract class QueryHelper
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpCol(Op.GTE, Col);
+        opCol(Op.GTE, Col);
         return this;
       }
 
@@ -1787,7 +1787,7 @@ public abstract class QueryHelper
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.GTE, V);
+        opVal(Op.GTE, V);
         return this;
       }
 
@@ -1795,7 +1795,7 @@ public abstract class QueryHelper
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.GTE, V);
+        opVal(Op.GTE, V);
         return this;
       }
 
@@ -1803,7 +1803,7 @@ public abstract class QueryHelper
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.GTE, V);
+        opVal(Op.GTE, V);
         return this;
       }
 
@@ -1811,7 +1811,7 @@ public abstract class QueryHelper
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.GTE, V);
+        opVal(Op.GTE, V);
         return this;
       }
 
@@ -1819,7 +1819,7 @@ public abstract class QueryHelper
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.GTE, V);
+        opVal(Op.GTE, V);
         return this;
       }
 
@@ -1827,7 +1827,7 @@ public abstract class QueryHelper
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.GTE, V);
+        opVal(Op.GTE, V);
         return this;
       }
 
@@ -1835,7 +1835,7 @@ public abstract class QueryHelper
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.GTE, V);
+        opVal(Op.GTE, V);
         return this;
       }
 
@@ -1843,7 +1843,7 @@ public abstract class QueryHelper
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.GTE, ZDT);
+        opVal(Op.GTE, ZDT);
         return this;
       }
 
@@ -1905,67 +1905,67 @@ public abstract class QueryHelper
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Col <> value
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public QueryHelper not_equals(Type_StringPrimitive Col, String V)
+    public QueryHelper notEquals(Type_StringPrimitive Col, String V)
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.NOT_EQUALS, V);
+        opVal(Op.NOT_EQUALS, V);
         return this;
       }
 
-    public QueryHelper not_equals(Type_CharPrimitive Col, char V)
+    public QueryHelper notEquals(Type_CharPrimitive Col, char V)
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.NOT_EQUALS, V);
+        opVal(Op.NOT_EQUALS, V);
         return this;
       }
 
-    public QueryHelper not_equals(Type_BooleanPrimitive Col, boolean V)
+    public QueryHelper notEquals(Type_BooleanPrimitive Col, boolean V)
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.NOT_EQUALS, V);
+        opVal(Op.NOT_EQUALS, V);
         return this;
       }
 
-    public QueryHelper not_equals(Type_IntegerPrimitive Col, int V)
+    public QueryHelper notEquals(Type_IntegerPrimitive Col, int V)
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.NOT_EQUALS, V);
+        opVal(Op.NOT_EQUALS, V);
         return this;
       }
 
-    public QueryHelper not_equals(Type_LongPrimitive Col, long V)
+    public QueryHelper notEquals(Type_LongPrimitive Col, long V)
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.NOT_EQUALS, V);
+        opVal(Op.NOT_EQUALS, V);
         return this;
       }
 
-    public QueryHelper not_equals(Type_FloatPrimitive Col, float V)
+    public QueryHelper notEquals(Type_FloatPrimitive Col, float V)
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.NOT_EQUALS, V);
+        opVal(Op.NOT_EQUALS, V);
         return this;
       }
 
-    public QueryHelper not_equals(Type_DoublePrimitive Col, double V)
+    public QueryHelper notEquals(Type_DoublePrimitive Col, double V)
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.NOT_EQUALS, V);
+        opVal(Op.NOT_EQUALS, V);
         return this;
       }
 
-    public QueryHelper not_equals(Type_DatetimePrimitive Col, ZonedDateTime ZDT)
+    public QueryHelper notEquals(Type_DatetimePrimitive Col, ZonedDateTime ZDT)
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.NOT_EQUALS, ZDT);
+        opVal(Op.NOT_EQUALS, ZDT);
         return this;
       }
 
@@ -1973,49 +1973,49 @@ public abstract class QueryHelper
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Col <> Col
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public QueryHelper not_equals(Type_StringPrimitive Col1, Type_StringPrimitive Col2)
+    public QueryHelper notEquals(Type_StringPrimitive Col1, Type_StringPrimitive Col2)
     throws Exception
       {
         return compareBase(Col1, Col2, Op.NOT_EQUALS);
       }
 
-    public QueryHelper not_equals(Type_DatetimePrimitive Col1, Type_DatetimePrimitive Col2)
+    public QueryHelper notEquals(Type_DatetimePrimitive Col1, Type_DatetimePrimitive Col2)
     throws Exception
       {
         return compareBase(Col1, Col2, Op.NOT_EQUALS);
       }
 
-    public QueryHelper not_equals(Type_CharPrimitive Col1, Type_CharPrimitive Col2)
+    public QueryHelper notEquals(Type_CharPrimitive Col1, Type_CharPrimitive Col2)
     throws Exception
       {
         return compareBase(Col1, Col2, Op.NOT_EQUALS);
       }
 
-    public QueryHelper not_equals(Type_BooleanPrimitive Col1, Type_BooleanPrimitive Col2)
+    public QueryHelper notEquals(Type_BooleanPrimitive Col1, Type_BooleanPrimitive Col2)
     throws Exception
       {
         return compareBase(Col1, Col2, Op.NOT_EQUALS);
       }
 
-    public QueryHelper not_equals(Type_IntegerPrimitive Col1, Type_IntegerPrimitive Col2)
+    public QueryHelper notEquals(Type_IntegerPrimitive Col1, Type_IntegerPrimitive Col2)
     throws Exception
       {
         return compareBase(Col1, Col2, Op.NOT_EQUALS);
       }
 
-    public QueryHelper not_equals(Type_LongPrimitive Col1, Type_LongPrimitive Col2)
+    public QueryHelper notEquals(Type_LongPrimitive Col1, Type_LongPrimitive Col2)
     throws Exception
       {
         return compareBase(Col1, Col2, Op.NOT_EQUALS);
       }
 
-    public QueryHelper not_equals(Type_FloatPrimitive Col1, Type_FloatPrimitive Col2)
+    public QueryHelper notEquals(Type_FloatPrimitive Col1, Type_FloatPrimitive Col2)
     throws Exception
       {
         return compareBase(Col1, Col2, Op.NOT_EQUALS);
       }
 
-    public QueryHelper not_equals(Type_DoublePrimitive Col1, Type_DoublePrimitive Col2)
+    public QueryHelper notEquals(Type_DoublePrimitive Col1, Type_DoublePrimitive Col2)
     throws Exception
       {
         return compareBase(Col1, Col2, Op.NOT_EQUALS);
@@ -2030,252 +2030,252 @@ public abstract class QueryHelper
     public QueryHelper plus(ColumnDefinition Col)
     throws Exception
       {
-        OpCol(Op.PLUS, Col);
+        opCol(Op.PLUS, Col);
         return this;
       }
 
     public QueryHelper plus(String V)
     throws Exception
       {
-        OpVal(Op.PLUS, V);
+        opVal(Op.PLUS, V);
         return this;
       }
 
     public QueryHelper plus(char V)
     throws Exception
       {
-        OpVal(Op.PLUS, V);
+        opVal(Op.PLUS, V);
         return this;
       }
 
     public QueryHelper plus(boolean V)
     throws Exception
       {
-        OpVal(Op.PLUS, V);
+        opVal(Op.PLUS, V);
         return this;
       }
 
     public QueryHelper plus(int V)
     throws Exception
       {
-        OpVal(Op.PLUS, V);
+        opVal(Op.PLUS, V);
         return this;
       }
 
     public QueryHelper plus(long V)
     throws Exception
       {
-        OpVal(Op.PLUS, V);
+        opVal(Op.PLUS, V);
         return this;
       }
 
     public QueryHelper plus(float V)
     throws Exception
       {
-        OpVal(Op.PLUS, V);
+        opVal(Op.PLUS, V);
         return this;
       }
 
     public QueryHelper plus(double V)
     throws Exception
       {
-        OpVal(Op.PLUS, V);
+        opVal(Op.PLUS, V);
         return this;
       }
 
     public QueryHelper plus(ZonedDateTime ZDT)
     throws Exception
       {
-        OpVal(Op.PLUS, ZDT);
+        opVal(Op.PLUS, ZDT);
         return this;
       }
 
     public QueryHelper minus(ColumnDefinition Col)
     throws Exception
       {
-        OpCol(Op.MINUS, Col);
+        opCol(Op.MINUS, Col);
         return this;
       }
 
     public QueryHelper minus(String V)
     throws Exception
       {
-        OpVal(Op.MINUS, V);
+        opVal(Op.MINUS, V);
         return this;
       }
 
     public QueryHelper minus(char V)
     throws Exception
       {
-        OpVal(Op.MINUS, V);
+        opVal(Op.MINUS, V);
         return this;
       }
 
     public QueryHelper minus(boolean V)
     throws Exception
       {
-        OpVal(Op.MINUS, V);
+        opVal(Op.MINUS, V);
         return this;
       }
 
     public QueryHelper minus(int V)
     throws Exception
       {
-        OpVal(Op.MINUS, V);
+        opVal(Op.MINUS, V);
         return this;
       }
 
     public QueryHelper minus(long V)
     throws Exception
       {
-        OpVal(Op.MINUS, V);
+        opVal(Op.MINUS, V);
         return this;
       }
 
     public QueryHelper minus(float V)
     throws Exception
       {
-        OpVal(Op.MINUS, V);
+        opVal(Op.MINUS, V);
         return this;
       }
 
     public QueryHelper minus(double V)
     throws Exception
       {
-        OpVal(Op.MINUS, V);
+        opVal(Op.MINUS, V);
         return this;
       }
 
     public QueryHelper minus(ZonedDateTime ZDT)
     throws Exception
       {
-        OpVal(Op.MINUS, ZDT);
+        opVal(Op.MINUS, ZDT);
         return this;
       }
 
     public QueryHelper multiply(ColumnDefinition Col)
     throws Exception
       {
-        OpCol(Op.MULTIPLY, Col);
+        opCol(Op.MULTIPLY, Col);
         return this;
       }
 
     public QueryHelper multiply(String V)
     throws Exception
       {
-        OpVal(Op.MULTIPLY, V);
+        opVal(Op.MULTIPLY, V);
         return this;
       }
 
     public QueryHelper multiply(char V)
     throws Exception
       {
-        OpVal(Op.MULTIPLY, V);
+        opVal(Op.MULTIPLY, V);
         return this;
       }
 
     public QueryHelper multiply(boolean V)
     throws Exception
       {
-        OpVal(Op.MULTIPLY, V);
+        opVal(Op.MULTIPLY, V);
         return this;
       }
 
     public QueryHelper multiply(int V)
     throws Exception
       {
-        OpVal(Op.MULTIPLY, V);
+        opVal(Op.MULTIPLY, V);
         return this;
       }
 
     public QueryHelper multiply(long V)
     throws Exception
       {
-        OpVal(Op.MULTIPLY, V);
+        opVal(Op.MULTIPLY, V);
         return this;
       }
 
     public QueryHelper multiply(float V)
     throws Exception
       {
-        OpVal(Op.MULTIPLY, V);
+        opVal(Op.MULTIPLY, V);
         return this;
       }
 
     public QueryHelper multiply(double V)
     throws Exception
       {
-        OpVal(Op.MULTIPLY, V);
+        opVal(Op.MULTIPLY, V);
         return this;
       }
 
     public QueryHelper multiply(ZonedDateTime ZDT)
     throws Exception
       {
-        OpVal(Op.MULTIPLY, ZDT);
+        opVal(Op.MULTIPLY, ZDT);
         return this;
       }
 
     public QueryHelper divide(ColumnDefinition Col)
     throws Exception
       {
-        OpCol(Op.DIVIDE, Col);
+        opCol(Op.DIVIDE, Col);
         return this;
       }
 
     public QueryHelper divide(String V)
     throws Exception
       {
-        OpVal(Op.DIVIDE, V);
+        opVal(Op.DIVIDE, V);
         return this;
       }
 
     public QueryHelper divide(char V)
     throws Exception
       {
-        OpVal(Op.DIVIDE, V);
+        opVal(Op.DIVIDE, V);
         return this;
       }
 
     public QueryHelper divide(boolean V)
     throws Exception
       {
-        OpVal(Op.DIVIDE, V);
+        opVal(Op.DIVIDE, V);
         return this;
       }
 
     public QueryHelper divide(int V)
     throws Exception
       {
-        OpVal(Op.DIVIDE, V);
+        opVal(Op.DIVIDE, V);
         return this;
       }
 
     public QueryHelper divide(long V)
     throws Exception
       {
-        OpVal(Op.DIVIDE, V);
+        opVal(Op.DIVIDE, V);
         return this;
       }
 
     public QueryHelper divide(float V)
     throws Exception
       {
-        OpVal(Op.DIVIDE, V);
+        opVal(Op.DIVIDE, V);
         return this;
       }
 
     public QueryHelper divide(double V)
     throws Exception
       {
-        OpVal(Op.DIVIDE, V);
+        opVal(Op.DIVIDE, V);
         return this;
       }
 
     public QueryHelper divide(ZonedDateTime ZDT)
     throws Exception
       {
-        OpVal(Op.DIVIDE, ZDT);
+        opVal(Op.DIVIDE, ZDT);
         return this;
       }
 
@@ -2292,7 +2292,7 @@ public abstract class QueryHelper
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.EQUALS, (String) null);
+        opVal(Op.EQUALS, (String) null);
         return this;
       }
 
@@ -2300,7 +2300,7 @@ public abstract class QueryHelper
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.NOT_EQUALS, (String) null);
+        opVal(Op.NOT_EQUALS, (String) null);
         return this;
       }
 
@@ -2332,7 +2332,7 @@ public abstract class QueryHelper
         Col.getFullColumnVarForSelect(_C, _QueryStr);
         if (caseInsensitive == true)
           _QueryStr.append(")");
-        OpVal(not == true ? Op.NOT_LIKE : Op.LIKE, caseInsensitive == true && V != null ? V.toLowerCase() : V);
+        opVal(not == true ? Op.NOT_LIKE : Op.LIKE, caseInsensitive == true && V != null ? V.toLowerCase() : V);
         return this;
       }
 
@@ -2470,7 +2470,7 @@ public abstract class QueryHelper
         if (First == false && caseInsensitive == true)
           _QueryStr.append(")");
 
-        OpVal(not == true ? Op.NOT_LIKE : Op.LIKE, caseInsensitive == true && V != null ? V.toLowerCase() : V);
+        opVal(not == true ? Op.NOT_LIKE : Op.LIKE, caseInsensitive == true && V != null ? V.toLowerCase() : V);
         return this;
       }
 
@@ -2487,7 +2487,7 @@ public abstract class QueryHelper
           {
             Col.getFullColumnVarForSelect(_C, _QueryStr);
             _QueryStr.append(caseInsensitive == true ? " ilike" : " like").append(" ANY(");
-            Array(_QueryStr, V);
+            array(_QueryStr, V);
             _QueryStr.append(")");
             return this;
           }
@@ -2528,7 +2528,7 @@ public abstract class QueryHelper
 
 
 
-    protected static void Array(StringBuilder Str, String[] V)
+    protected static void array(StringBuilder Str, String[] V)
       {
         Str.append("ARRAY[");
         boolean First = true;
@@ -2563,7 +2563,7 @@ public abstract class QueryHelper
           throw new Exception("Invalid query syntax: Calling the operator 'like' with a null or empty array/list.");
         Col.getFullColumnVarForSelect(_C, _QueryStr);
         _QueryStr.append(" && ");
-        Array(_QueryStr, V);
+        array(_QueryStr, V);
         return this;
       }
 
@@ -2573,7 +2573,7 @@ public abstract class QueryHelper
           return this;
         Col.getFullColumnVarForSelect(_C, _QueryStr);
         _QueryStr.append(" && ");
-        Array(_QueryStr, CollectionUtil.toStringArray(Vals));
+        array(_QueryStr, CollectionUtil.toStringArray(Vals));
         return this;
       }
 

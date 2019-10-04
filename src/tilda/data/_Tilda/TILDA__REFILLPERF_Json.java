@@ -34,7 +34,7 @@ public class TILDA__REFILLPERF_Json
    @SerializedName("columnsMs"    ) public Long  _columnsMs    ;
    /*@formatter:on*/
 
-   public tilda.data.RefillPerf_Data Write(Connection C) throws Exception
+   public tilda.data.RefillPerf_Data write(Connection C) throws Exception
     {
       if (TextUtil.isNullOrEmpty(_schemaName   ) == true)
        throw new Exception("Incoming value for 'tilda.data.TILDA.RefillPerf.schemaName' was null or empty. It's not nullable in the model.\n"+toString());
@@ -56,26 +56,26 @@ public class TILDA__REFILLPERF_Json
       if (_columnsMs     == null)
        throw new Exception("Incoming value for 'tilda.data.TILDA.RefillPerf.columnsMs' was null or empty. It's not nullable in the model.\n"+toString());
 
-      tilda.data.RefillPerf_Data Obj = tilda.data.RefillPerf_Factory.Create(_schemaName, _objectName, _startPeriod, _timeCreateMs, _timeIndexMs, _timeAnalyzeMs, _timeTotalMs, _columnsMs);
-      Update(Obj);
-      if (Obj.Write(C) == false)
+      tilda.data.RefillPerf_Data Obj = tilda.data.RefillPerf_Factory.create(_schemaName, _objectName, _startPeriod, _timeCreateMs, _timeIndexMs, _timeAnalyzeMs, _timeTotalMs, _columnsMs);
+      update(Obj);
+      if (Obj.write(C) == false)
        {
-         Obj = tilda.data.RefillPerf_Factory.LookupByPrimaryKey(_schemaName, _objectName, _startPeriod);
-         if (Obj.Read(C) == false)
+         Obj = tilda.data.RefillPerf_Factory.lookupByPrimaryKey(_schemaName, _objectName, _startPeriod);
+         if (Obj.read(C) == false)
           throw new Exception("Cannot create the tilda.data.TILDA.RefillPerf object.\n"+toString());
          if (_timeCreateMs != null) Obj.setTimeCreateMs (_timeCreateMs );
          if (_timeIndexMs  != null) Obj.setTimeIndexMs  (_timeIndexMs  );
          if (_timeAnalyzeMs!= null) Obj.setTimeAnalyzeMs(_timeAnalyzeMs);
          if (_timeTotalMs  != null) Obj.setTimeTotalMs  (_timeTotalMs  );
          if (_columnsMs    != null) Obj.setColumnsMs    (_columnsMs    );
-         if (Obj.Write(C) == false)
+         if (Obj.write(C) == false)
           throw new Exception("Cannot update the tilda.data.TILDA.RefillPerf object: "+Obj.toString());
 
        }
       return Obj;
    }
 
-   public void Update(tilda.data.RefillPerf_Data Obj) throws Exception
+   public void update(tilda.data.RefillPerf_Data Obj) throws Exception
     {
       if (_schemaName   != null) Obj.setSchemaName   (_schemaName   );
       if (_objectName   != null) Obj.setObjectName   (_objectName   );

@@ -58,12 +58,12 @@ public class TablePKReplace extends MigrationAction
           {
             if (_Obj._PrimaryKey == null)
               return "Dropping Table " + _Obj.getFullName() + "'s Primary Key " + _TMeta._PrimaryKey.toString();
-            return "Updating Table " + _Obj.getFullName() + "'s Primary Key from " + _TMeta._PrimaryKey.toString() + " to (" + TextUtil.Print(_Obj._PrimaryKey._Columns) + ")";
+            return "Updating Table " + _Obj.getFullName() + "'s Primary Key from " + _TMeta._PrimaryKey.toString() + " to (" + TextUtil.print(_Obj._PrimaryKey._Columns) + ")";
           }
 
         if (_Obj._PrimaryKey == null)
           return "Not doing anything to Table " + _Obj.getFullName() + "'s Primary Key. Why is this being called?";
-        return "Adding Table " + _Obj.getFullName() + "'s Primary Key (" + TextUtil.Print(_Obj._PrimaryKey._Columns) + ")";
+        return "Adding Table " + _Obj.getFullName() + "'s Primary Key (" + TextUtil.print(_Obj._PrimaryKey._Columns) + ")";
       }
 
 

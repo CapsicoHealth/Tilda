@@ -53,7 +53,7 @@ public class TILDA__TRANSPERF_Json
    @SerializedName("tildaToCsvCount"       ) public Integer  _tildaToCsvCount       ;
    /*@formatter:on*/
 
-   public tilda.data.TransPerf_Data Write(Connection C) throws Exception
+   public tilda.data.TransPerf_Data write(Connection C) throws Exception
     {
       if (TextUtil.isNullOrEmpty(Str_startPeriod           ) == true)
        throw new Exception("Incoming value for 'tilda.data.TILDA.TransPerf.startPeriod' was null or empty. It's not nullable in the model.\n"+toString());
@@ -114,12 +114,12 @@ public class TILDA__TRANSPERF_Json
       if (_tildaToCsvCount        == null)
        _tildaToCsvCount=0;
 
-      tilda.data.TransPerf_Data Obj = tilda.data.TransPerf_Factory.Create(_startPeriod, _endPeriod);
-      Update(Obj);
-      if (Obj.Write(C) == false)
+      tilda.data.TransPerf_Data Obj = tilda.data.TransPerf_Factory.create(_startPeriod, _endPeriod);
+      update(Obj);
+      if (Obj.write(C) == false)
        {
-         Obj = tilda.data.TransPerf_Factory.LookupByPrimaryKey(_startPeriod);
-         if (Obj.Read(C) == false)
+         Obj = tilda.data.TransPerf_Factory.lookupByPrimaryKey(_startPeriod);
+         if (Obj.read(C) == false)
           throw new Exception("Cannot create the tilda.data.TILDA.TransPerf object.\n"+toString());
          if (_endPeriod             != null) Obj.setEndPeriod             (_endPeriod             );
          if (_commitNano            != null) Obj.setCommitNano            (_commitNano            );
@@ -146,14 +146,14 @@ public class TILDA__TRANSPERF_Json
          if (_tildaToJsonCount      != null) Obj.setTildaToJsonCount      (_tildaToJsonCount      );
          if (_tildaToCsvNano        != null) Obj.setTildaToCsvNano        (_tildaToCsvNano        );
          if (_tildaToCsvCount       != null) Obj.setTildaToCsvCount       (_tildaToCsvCount       );
-         if (Obj.Write(C) == false)
+         if (Obj.write(C) == false)
           throw new Exception("Cannot update the tilda.data.TILDA.TransPerf object: "+Obj.toString());
 
        }
       return Obj;
    }
 
-   public void Update(tilda.data.TransPerf_Data Obj) throws Exception
+   public void update(tilda.data.TransPerf_Data Obj) throws Exception
     {
       if (_startPeriod           != null) Obj.setStartPeriod           (_startPeriod           );
       if (_endPeriod             != null) Obj.setEndPeriod             (_endPeriod             );

@@ -28,7 +28,7 @@ public class TILDA__DATELIMITDIM_Json
    @SerializedName("maxDate"    ) public LocalDate  _maxDate    ;
    /*@formatter:on*/
 
-   public tilda.data.DateLimitDim_Data Write(Connection C) throws Exception
+   public tilda.data.DateLimitDim_Data write(Connection C) throws Exception
     {
       if (_invalidDate == null)
        throw new Exception("Incoming value for 'tilda.data.TILDA.DateLimitDim.invalidDate' was null or empty. It's not nullable in the model.\n"+toString());
@@ -37,23 +37,23 @@ public class TILDA__DATELIMITDIM_Json
       if (_maxDate     == null)
        throw new Exception("Incoming value for 'tilda.data.TILDA.DateLimitDim.maxDate' was null or empty. It's not nullable in the model.\n"+toString());
 
-      tilda.data.DateLimitDim_Data Obj = tilda.data.DateLimitDim_Factory.Create(_invalidDate, _minDate, _maxDate);
-      Update(Obj);
-      if (Obj.Write(C) == false)
+      tilda.data.DateLimitDim_Data Obj = tilda.data.DateLimitDim_Factory.create(_invalidDate, _minDate, _maxDate);
+      update(Obj);
+      if (Obj.write(C) == false)
        {
-         Obj = tilda.data.DateLimitDim_Factory.LookupByInvalidDate(_invalidDate);
-         if (Obj.Read(C) == false)
+         Obj = tilda.data.DateLimitDim_Factory.lookupByInvalidDate(_invalidDate);
+         if (Obj.read(C) == false)
           throw new Exception("Cannot create the tilda.data.TILDA.DateLimitDim object.\n"+toString());
          if (_minDate    != null) Obj.setMinDate    (_minDate    );
          if (_maxDate    != null) Obj.setMaxDate    (_maxDate    );
-         if (Obj.Write(C) == false)
+         if (Obj.write(C) == false)
           throw new Exception("Cannot update the tilda.data.TILDA.DateLimitDim object: "+Obj.toString());
 
        }
       return Obj;
    }
 
-   public void Update(tilda.data.DateLimitDim_Data Obj) throws Exception
+   public void update(tilda.data.DateLimitDim_Data Obj) throws Exception
     {
       if (_invalidDate!= null) Obj.setInvalidDate(_invalidDate);
       if (_minDate    != null) Obj.setMinDate    (_minDate    );

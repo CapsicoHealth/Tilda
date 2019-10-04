@@ -26,13 +26,14 @@ public class ScalarRP implements RecordProcessor
   {
     protected long _Res;
 
-    public void Start()
+    @Override
+    public void start()
       {
         _Res = SystemValues.EVIL_VALUE;
       }
 
     @Override
-    public boolean Process(int Index, ResultSet RS)
+    public boolean process(int Index, ResultSet RS)
       throws SQLException
       {
         _Res = RS.getLong(1);
@@ -40,7 +41,7 @@ public class ScalarRP implements RecordProcessor
       }
 
     @Override
-    public void End(boolean hasMore, int MaxIndex)
+    public void end(boolean hasMore, int MaxIndex)
       {
       }
 

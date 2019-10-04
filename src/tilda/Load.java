@@ -200,7 +200,7 @@ public class Load
       {
         if (truncatedTables.isEmpty() == false)
           {
-            LOG.info("Your load file includes "+truncatedTables.size()+" truncate operations: "+TextUtil.Print(truncatedTables.iterator())+".");
+            LOG.info("Your load file includes "+truncatedTables.size()+" truncate operations: "+TextUtil.print(truncatedTables.iterator())+".");
             LOG.info("Press 'y' followed by enter to continue, or anything else to abort.");
             try (Scanner scanner = new Scanner(System.in))
               {
@@ -289,7 +289,7 @@ public class Load
         long timeTaken = System.nanoTime();
         long TotalRowCount = ImportProcessor.parallelProcess(connectionIdsList, Conf._RootFolder, threadsCount, dataObjects);
         timeTaken = System.nanoTime() - timeTaken;
-        LOG.debug("Total time taken for ImportProcessor.process() = " + DurationUtil.PrintDuration(timeTaken) + " with a combined throughput of "+DurationUtil.PrintPerformancePerMinute(timeTaken, TotalRowCount) + " Records/min)");
+        LOG.debug("Total time taken for ImportProcessor.process() = " + DurationUtil.printDuration(timeTaken) + " with a combined throughput of "+DurationUtil.printPerformancePerMinute(timeTaken, TotalRowCount) + " Records/min)");
       }
 
     private static boolean isValidArguments(List<String> arguments)
@@ -446,7 +446,7 @@ public class Load
                                 List<String> errors = ValidateDataObjects(ConnectionIds, selectedDO);
                                 if (errors.size() > 0)
                                   {
-                                    String error = TextUtil.JoinTrim(errors.toArray(new String[errors.size()]), ", \n");
+                                    String error = TextUtil.joinTrim(errors.toArray(new String[errors.size()]), ", \n");
                                     JOptionPane.showMessageDialog(null, error, "Validation Failed. Aborting !!", JOptionPane.ERROR_MESSAGE);
                                     LOG.error("Validation Failed. Aborting !!");
                                     System.exit(1);

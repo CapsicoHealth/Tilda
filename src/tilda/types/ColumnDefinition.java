@@ -137,7 +137,7 @@ public class ColumnDefinition
     // return Create(null, TableName, ColumnName, Type, Collection, Nullable, Description);
     // }
 
-    public static ColumnDefinition Create(String SchemaName, String TableName, String ColumnName, ColumnType Type, boolean Collection, boolean Nullable, String Description)
+    public static ColumnDefinition create(String SchemaName, String TableName, String ColumnName, ColumnType Type, boolean Collection, boolean Nullable, String Description)
       {
         String ClassName = "tilda.types.Type_" + Type._SimpleName + (Collection == true ? "Collection" : "Primitive") + (Nullable == true ? "Null" : "");
         try

@@ -27,7 +27,7 @@ public class TILDA__FORMULARESULT_Json
    @SerializedName("description"  ) public String  _description  ;
    /*@formatter:on*/
 
-   public tilda.data.FormulaResult_Data Write(Connection C) throws Exception
+   public tilda.data.FormulaResult_Data write(Connection C) throws Exception
     {
       if (_formulaRefnum == null)
        throw new Exception("Incoming value for 'tilda.data.TILDA.FormulaResult.formulaRefnum' was null or empty. It's not nullable in the model.\n"+toString());
@@ -36,22 +36,22 @@ public class TILDA__FORMULARESULT_Json
       if (TextUtil.isNullOrEmpty(_description  ) == true)
        throw new Exception("Incoming value for 'tilda.data.TILDA.FormulaResult.description' was null or empty. It's not nullable in the model.\n"+toString());
 
-      tilda.data.FormulaResult_Data Obj = tilda.data.FormulaResult_Factory.Create(_formulaRefnum, _value, _description);
-      Update(Obj);
-      if (Obj.Write(C) == false)
+      tilda.data.FormulaResult_Data Obj = tilda.data.FormulaResult_Factory.create(_formulaRefnum, _value, _description);
+      update(Obj);
+      if (Obj.write(C) == false)
        {
-         Obj = tilda.data.FormulaResult_Factory.LookupByPrimaryKey(_formulaRefnum, _value);
-         if (Obj.Read(C) == false)
+         Obj = tilda.data.FormulaResult_Factory.lookupByPrimaryKey(_formulaRefnum, _value);
+         if (Obj.read(C) == false)
           throw new Exception("Cannot create the tilda.data.TILDA.FormulaResult object.\n"+toString());
          if (_description  != null) Obj.setDescription  (_description  );
-         if (Obj.Write(C) == false)
+         if (Obj.write(C) == false)
           throw new Exception("Cannot update the tilda.data.TILDA.FormulaResult object: "+Obj.toString());
 
        }
       return Obj;
    }
 
-   public void Update(tilda.data.FormulaResult_Data Obj) throws Exception
+   public void update(tilda.data.FormulaResult_Data Obj) throws Exception
     {
       if (_formulaRefnum!= null) Obj.setFormulaRefnum(_formulaRefnum);
       if (_value        != null) Obj.setValue        (_value        );

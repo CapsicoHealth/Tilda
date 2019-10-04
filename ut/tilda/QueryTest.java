@@ -46,7 +46,7 @@ public class QueryTest extends Key_Factory
           {
             C = ConnectionPool.get("MAIN");
 
-            Key_Data K = Key_Factory.Create(-3, "TOTO", 0, 100);
+            Key_Data K = Key_Factory.create(-3, "TOTO", 0, 100);
 
               {
                 UpdateQuery Q = newUpdateQuery(C);

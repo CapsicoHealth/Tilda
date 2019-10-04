@@ -40,8 +40,8 @@ public class Manifest
             java.util.jar.Manifest Man = new java.util.jar.Manifest();
             Man.read(In);
             In.close();
-            String Tildas = TextUtil.Print(Man.getMainAttributes().getValue("Tilda"), "");
-            if (TextUtil.FindElement(PS._Main._ResourceNameShort, Tildas, ';') == -1)
+            String Tildas = TextUtil.print(Man.getMainAttributes().getValue("Tilda"), "");
+            if (TextUtil.findElement(PS._Main._ResourceNameShort, Tildas, ';') == -1)
              {
                Tildas=Tildas.trim()+PS._Main._ResourceNameShort+"; ";
                Man.getMainAttributes().putValue("Tilda", Tildas);

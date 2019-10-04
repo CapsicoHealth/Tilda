@@ -84,8 +84,8 @@ public class Executor
           seqTimeNano+=R._taskTimeNano;
         long duration = System.nanoTime() - T0;
         LOG.debug("\n\n*******************************************************************************************\n"
-        + "** Executed " + _Runnables.size() + " tasks in " + DurationUtil.PrintDuration(duration) + ".\n"
-        + "** Sequential time would have been around " + DurationUtil.PrintDuration(seqTimeNano) + " or "+NumberFormatUtil.PrintPercentWith1Dec(duration, seqTimeNano)+"% slower.\n"
+        + "** Executed " + _Runnables.size() + " tasks in " + DurationUtil.printDuration(duration) + ".\n"
+        + "** Sequential time would have been around " + DurationUtil.printDuration(seqTimeNano) + " or "+NumberFormatUtil.printPercentWith1Dec(duration, seqTimeNano)+"% slower.\n"
         + "*******************************************************************************************\n\n");
         return _Exceptions;
       }

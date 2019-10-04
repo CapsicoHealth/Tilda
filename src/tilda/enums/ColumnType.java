@@ -55,7 +55,7 @@ public enum ColumnType
         _ArrayCompatible = ArrayCompatible;
         _SetCompatible = SetCompatible;
         _Primitive = Primitive;
-        _SimpleName = TextUtil.CapitalizeFirstCharacter(name().toLowerCase());
+        _SimpleName = TextUtil.capitalizeFirstCharacter(name().toLowerCase());
         _ShortName = shortName;
       }
 

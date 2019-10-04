@@ -23,14 +23,15 @@ import java.time.OffsetDateTime;
 
 public class TimeStampRP implements RecordProcessor
   {
-    public void Start()
+    @Override
+    public void start()
       {
-      };
+      }
 
     protected OffsetDateTime _ODT;
 
     @Override
-    public boolean Process(int Index, ResultSet RS)
+    public boolean process(int Index, ResultSet RS)
       throws SQLException
       {
         _ODT = (OffsetDateTime) RS.getObject(1);
@@ -38,7 +39,7 @@ public class TimeStampRP implements RecordProcessor
       }
 
     @Override
-    public void End(boolean hasMore, int MaxIndex)
+    public void end(boolean hasMore, int MaxIndex)
       {
       }
 

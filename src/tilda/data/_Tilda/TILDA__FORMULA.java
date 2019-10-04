@@ -199,7 +199,7 @@ public abstract class TILDA__FORMULA implements tilda.interfaces.WriterObject, t
    protected static final Logger LOG = LogManager.getLogger(TILDA__FORMULA.class.getName());
 
    public static final Class<TILDA__FORMULA_Factory> FACTORY_CLASS= TILDA__FORMULA_Factory.class;
-   public static final String TABLENAME = TextUtil.Print("TILDA.Formula", "");
+   public static final String TABLENAME = TextUtil.print("TILDA.Formula", "");
 
    protected TILDA__FORMULA() { }
 
@@ -1436,7 +1436,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isNullFormula()
+   public final boolean isFormulaNull()
      { return __Nulls.intersects(TILDA__FORMULA_Factory.COLS.FORMULA._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1462,7 +1462,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setNullFormula();
+          setFormulaNull();
         }
        else if (v.length() > 32000)
         throw new Exception("Cannot set tilda.data.TILDA.Formula.formula: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 32000.");
@@ -1493,7 +1493,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setNullFormula()
+   public void setFormulaNull()
      {
        long T0 = System.nanoTime();
        if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.FORMULA._Mask) == true) // already NULL
@@ -1590,7 +1590,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isNullHtmlDoc()
+   public final boolean isHtmlDocNull()
      { return __Nulls.intersects(TILDA__FORMULA_Factory.COLS.HTMLDOC._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1616,7 +1616,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setNullHtmlDoc();
+          setHtmlDocNull();
         }
        else if (v.length() > 32000)
         throw new Exception("Cannot set tilda.data.TILDA.Formula.htmlDoc: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 32000.");
@@ -1647,7 +1647,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setNullHtmlDoc()
+   public void setHtmlDocNull()
      {
        long T0 = System.nanoTime();
        if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.HTMLDOC._Mask) == true) // already NULL
@@ -1748,7 +1748,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isNullReferencedColumns()
+   public final boolean isReferencedColumnsNull()
      { return __Nulls.intersects(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1773,7 +1773,7 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (v == null  || v.isEmpty() == true)
-        setNullReferencedColumns();
+        setReferencedColumnsNull();
        else if (CollectionUtil.equals(v, _referencedColumns) == false)
         {
           __Changes.or(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask);
@@ -1800,7 +1800,7 @@ This is the setter for:<BR>
         _referencedColumns = new ArrayList<String>();
        if (v == null)
         {
-          setNullReferencedColumns();
+          setReferencedColumnsNull();
         }
        else if (pos >= _referencedColumns.size() || _referencedColumns.get(pos).equals(v) == false)
         {
@@ -1845,7 +1845,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setNullReferencedColumns()
+   public void setReferencedColumnsNull()
      {
        long T0 = System.nanoTime();
        if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask) == true) // already NULL
@@ -2060,7 +2060,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 */
     final void setCreated(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
     {
-      setCreated(DateTimeUtil.New(year, month, date, hourOfDay, minute, second, millis, z));
+      setCreated(DateTimeUtil.newTZ(year, month, date, hourOfDay, minute, second, millis, z));
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2271,7 +2271,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 */
    public final void setLastUpdated(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
     {
-      setLastUpdated(DateTimeUtil.New(year, month, date, hourOfDay, minute, second, millis, z));
+      setLastUpdated(DateTimeUtil.newTZ(year, month, date, hourOfDay, minute, second, millis, z));
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2363,7 +2363,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isNullDeleted()
+   public final boolean isDeletedNull()
      { return __Nulls.intersects(TILDA__FORMULA_Factory.COLS.DELETED._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2388,7 +2388,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setNullDeleted();
+          setDeletedNull();
         }
        else if (v.equals(_deleted) == false)
         {
@@ -2416,7 +2416,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final void setNullDeleted()
+   public final void setDeletedNull()
      {
        long T0 = System.nanoTime();
        if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.DELETED._Mask) == true) // already NULL
@@ -2490,7 +2490,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 */
    public final void setDeleted(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
     {
-      setDeleted(DateTimeUtil.New(year, month, date, hourOfDay, minute, second, millis, z));
+      setDeleted(DateTimeUtil.newTZ(year, month, date, hourOfDay, minute, second, millis, z));
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2522,26 +2522,26 @@ This is the hasChanged for:<BR>
  Copies all the field which are not part of the primary key, not are CALCULATED and not invariant, from the 
  current object to the destination. 
 */
-   public void CopyTo(tilda.data._Tilda.TILDA__FORMULA Dst) throws Exception
+   public void copyTo(tilda.data._Tilda.TILDA__FORMULA Dst) throws Exception
      {
        Dst.setName             (_name             );
        Dst.setType             (_type             );
        Dst.setTitle            (_title            );
        Dst.setDescription      (_description      );
-       if (__Changes.intersects(TILDA__FORMULA_Factory.COLS.FORMULA._Mask) == true) Dst.setNullFormula          (); else        Dst.setFormula          (_formula          );
-       if (__Changes.intersects(TILDA__FORMULA_Factory.COLS.HTMLDOC._Mask) == true) Dst.setNullHtmlDoc          (); else        Dst.setHtmlDoc          (_htmlDoc          );
-       if (__Changes.intersects(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask) == true) Dst.setNullReferencedColumns(); else        Dst.setReferencedColumns(_referencedColumns);
+       if (__Changes.intersects(TILDA__FORMULA_Factory.COLS.FORMULA._Mask) == true) Dst.setFormulaNull          (); else        Dst.setFormula          (_formula          );
+       if (__Changes.intersects(TILDA__FORMULA_Factory.COLS.HTMLDOC._Mask) == true) Dst.setHtmlDocNull          (); else        Dst.setHtmlDoc          (_htmlDoc          );
+       if (__Changes.intersects(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask) == true) Dst.setReferencedColumnsNull(); else        Dst.setReferencedColumns(_referencedColumns);
        Dst.setLastUpdated      (_lastUpdated      );
-       if (__Changes.intersects(TILDA__FORMULA_Factory.COLS.DELETED._Mask) == true) Dst.setNullDeleted          (); else        Dst.setDeleted          (_deleted          );
+       if (__Changes.intersects(TILDA__FORMULA_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull          (); else        Dst.setDeleted          (_deleted          );
      }
 
 /**
  Sets the 'lastUpdated' column to now and causes a Write to occur to update the object in the data store.
 */
-   public final boolean Touch(Connection C) throws Exception
+   public final boolean touch(Connection C) throws Exception
      {
        setLastUpdatedNow();
-       return Write(C);
+       return write(C);
      }
 
 /**
@@ -2746,7 +2746,7 @@ This is the hasChanged for:<BR>
        __Changes.clear();
        __Nulls.clear();
      }
-   public final boolean Write(Connection C) throws Exception
+   public final boolean write(Connection C) throws Exception
      {
        long T0 = System.nanoTime();
        if (hasChanged() == false)
@@ -2756,9 +2756,9 @@ This is the hasChanged for:<BR>
           return true;
         }
 
-       if (BeforeWrite(C) == false)
+       if (beforeWrite(C) == false)
         {
-          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.Formula object's BeforeWrite() failed.");
+          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.Formula object's beforeWrite() failed.");
           QueryDetails.setLastQuery(TILDA__FORMULA_Factory.SCHEMA_TABLENAME_LABEL, "");
           return false;
         }
@@ -2799,7 +2799,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__FORMULA_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__FORMULA_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
           PS = null;
           AllocatedArrays = null;
         }
@@ -2808,7 +2808,7 @@ This is the hasChanged for:<BR>
        return true;
      }
 
-   protected abstract boolean BeforeWrite(Connection C) throws Exception;
+   protected abstract boolean beforeWrite(Connection C) throws Exception;
 
 
 
@@ -2816,21 +2816,21 @@ This is the hasChanged for:<BR>
 // THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-   public final boolean Refresh(Connection C) throws Exception
+   public final boolean refresh(Connection C) throws Exception
      {
-       return ReadOne(C, true);
+       return readOne(C, true);
      }
 
-   public final boolean Read(Connection C) throws Exception
+   public final boolean read(Connection C) throws Exception
      {
-       return ReadOne(C, false);
+       return readOne(C, false);
      }
 
-   private final boolean ReadOne(Connection C, boolean Force) throws Exception
+   private final boolean readOne(Connection C, boolean Force) throws Exception
      {
        long T0 = System.nanoTime();
        if (__Init == InitMode.CREATE)
-        throw new Exception("This TILDA.Formula object is being Read() after a Create(), which doesn't make sense.");
+        throw new Exception("This TILDA.Formula object is being read() after a create(), which doesn't make sense.");
        if (__Init == InitMode.READ == true && Force == false && hasChanged()==false)
         {
           LOG.debug(QueryDetails._LOGGING_HEADER + "This TILDA.Formula object has already been read.");
@@ -2901,7 +2901,7 @@ This is the hasChanged for:<BR>
               return false;
             }
           count = 1;
-          return Init(C, RS);
+          return init(C, RS);
         }
        catch (java.sql.SQLException E)
         {
@@ -2909,26 +2909,26 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__FORMULA_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, AllocatedArrays);
+          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__FORMULA_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, AllocatedArrays);
           PS = null;
           AllocatedArrays = null;
         }
     }
 
    @SuppressWarnings("unchecked")
-   boolean Init(Connection C, java.sql.ResultSet RS) throws Exception
+   boolean init(Connection C, java.sql.ResultSet RS) throws Exception
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
       __Saved_refnum            = _refnum            =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.REFNUM._Mask           );
-      __Saved_location          = _location          = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.LOCATION._Mask         );
-                                  _location2         = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.LOCATION2._Mask        );
-      __Saved_name              = _name              = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.NAME._Mask             );
-                                  _type              = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.TYPE._Mask             ); else _type              = _type             .trim();
-                                  _title             = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.TITLE._Mask            );
-                                  _description       = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.DESCRIPTION._Mask      );
-                                  _formula           = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.FORMULA._Mask          );
-                                  _htmlDoc           = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.HTMLDOC._Mask          );
+      __Saved_location          = _location          = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.LOCATION._Mask         );
+                                  _location2         = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.LOCATION2._Mask        );
+      __Saved_name              = _name              = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.NAME._Mask             );
+                                  _type              = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.TYPE._Mask             ); else _type              = _type             .trim();
+                                  _title             = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.TITLE._Mask            );
+                                  _description       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.DESCRIPTION._Mask      );
+                                  _formula           = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.FORMULA._Mask          );
+                                  _htmlDoc           = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.HTMLDOC._Mask          );
                                   _referencedColumns = (List<String>) C.getArray(RS, ++i, TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask);
                                   _created           = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.CREATED._Mask          );
                                   _lastUpdated       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.LASTUPDATED._Mask      );
@@ -2936,25 +2936,25 @@ This is the hasChanged for:<BR>
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();
-     return AfterRead(C);
+     return afterRead(C);
    }
 
-   protected abstract boolean AfterRead(Connection C) throws Exception;
+   protected abstract boolean afterRead(Connection C) throws Exception;
 
    public String toString()
     {
       long T0 = System.nanoTime();
       String Str = 
                    "refnum: "                                                                                                       +                                   getRefnum           () 
-               + "; location: "                                                                                                     + TextUtil.PrintVariableStr        (getLocation         ())
-               + "; location2: "                                                                                                    + TextUtil.PrintVariableStr        (getLocation2        ())
-               + "; name: "                                                                                                         + TextUtil.PrintVariableStr        (getName             ())
-               + "; type: "                                                                                                         + TextUtil.PrintVariableStr        (getType             ())
-               + "; title: "                                                                                                        + TextUtil.PrintVariableStr        (getTitle            ())
-               + "; description: "                                                                                                  + TextUtil.PrintVariableStr        (getDescription      ())
-               + "; formula"             + (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.FORMULA._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getFormula          ()))
-               + "; htmlDoc"             + (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.HTMLDOC._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getHtmlDoc          ()))
-               + "; referencedColumns"   + (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getReferencedColumns()))
+               + "; location: "                                                                                                     + TextUtil.printVariableStr        (getLocation         ())
+               + "; location2: "                                                                                                    + TextUtil.printVariableStr        (getLocation2        ())
+               + "; name: "                                                                                                         + TextUtil.printVariableStr        (getName             ())
+               + "; type: "                                                                                                         + TextUtil.printVariableStr        (getType             ())
+               + "; title: "                                                                                                        + TextUtil.printVariableStr        (getTitle            ())
+               + "; description: "                                                                                                  + TextUtil.printVariableStr        (getDescription      ())
+               + "; formula"             + (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.FORMULA._Mask) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getFormula          ()))
+               + "; htmlDoc"             + (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.HTMLDOC._Mask) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getHtmlDoc          ()))
+               + "; referencedColumns"   + (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask) == true ? ": NULL" : ": " + TextUtil.print                   (getReferencedColumns()))
                + "; created: "                                                                                                      + DateTimeUtil.printDateTimeForJSON(getCreated          ())
                + "; lastUpdated: "                                                                                                  + DateTimeUtil.printDateTimeForJSON(getLastUpdated      ())
                + "; deleted"             + (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.DELETED._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDeleted          ()))

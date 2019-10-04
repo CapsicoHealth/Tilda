@@ -153,7 +153,7 @@ public class Migrator
             int counterSchema = 0;
             for (MigrationAction MA : S._Actions)
               {
-                boolean included = S._S == null || TextUtil.FindElement(DependencySchemas, S._S._Name, true, 0) == -1;
+                boolean included = S._S == null || TextUtil.findElement(DependencySchemas, S._S._Name, true, 0) == -1;
                 if (S._S != null && counterSchema == 0) // Print schema header for logs
                   {
                     ++counterSchema;
@@ -239,7 +239,7 @@ public class Migrator
               {
                 if (S._Actions.isEmpty() == true)
                   continue;
-                if (S._S != null && TextUtil.FindElement(DependencySchemas, S._S._Name, true, 0) != -1)
+                if (S._S != null && TextUtil.findElement(DependencySchemas, S._S._Name, true, 0) != -1)
                  continue;
                 for (MigrationAction A : S._Actions)
                   {
