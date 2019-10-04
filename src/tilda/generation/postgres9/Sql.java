@@ -1400,7 +1400,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         Str.append("/*genRealizedColumnList*/");
         boolean First = true;
         boolean Blocked = false;
-        // LOG.debug("View " + V._Name + ": " + TextUtil.Print(V.getColumnNames()));
+        // LOG.debug("View " + V._Name + ": " + TextUtil.print(V.getColumnNames()));
         for (ViewColumn VC : V._ViewColumns)
           {
             if (V.isPivotColumn(VC) == true || V.isPivotAggregate(VC) == true)

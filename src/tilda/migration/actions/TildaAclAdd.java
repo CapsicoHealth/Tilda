@@ -105,8 +105,8 @@ public class TildaAclAdd extends MigrationAction
         String Str = C.getAclRolesScript(_TildaList);
         if (Str == null)
           return false;
-        Maintenance_Data M = Maintenance_Factory.LookupByPrimaryKey("TILDA_ACL", "TILDA_ACL");
-        return M.Read(C) == false || M.getValue().equals(Str.trim()) == false;
+        Maintenance_Data M = Maintenance_Factory.lookupByPrimaryKey("TILDA_ACL", "TILDA_ACL");
+        return M.read(C) == false || M.getValue().equals(Str.trim()) == false;
 */
       }
 

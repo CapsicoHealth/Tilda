@@ -113,7 +113,7 @@ public class ViewRealize
                 PS.AddError("Mapping '" + VRM._Name + "' is duplicated in the realize section for view '" + ParentView.getFullName() + "'.");
               if (ParentView.getColumn(VRM._Name) == null && ParentView.getFormula(VRM._Name) == null && ParentView.getPivottedColumn(VRM._Name) == null)
                 PS.AddError("Mapping for column '" + VRM._Name + "' is defined without a matching column/formula/pivot in the main view '" + ParentView.getFullName() + "'.");
-              if (TextUtil.FindStarElement(_Exclude_DEPRECATED, VRM._Name, true, 0) != -1)
+              if (TextUtil.findStarElement(_Exclude_DEPRECATED, VRM._Name, true, 0) != -1)
                 PS.AddError("Mapping for column '" + VRM._Name + "' is defined while also being excluded.");
             }
 */
@@ -139,7 +139,7 @@ public class ViewRealize
         O._Indices = _Indices;
         
         boolean OCC = false;
-//        LOG.debug(ParentRealized._O.getFullName()+": "+TextUtil.Print(ParentRealized._O.getColumnNames()));
+//        LOG.debug(ParentRealized._O.getFullName()+": "+TextUtil.print(ParentRealized._O.getColumnNames()));
         for (Column C : ParentRealized._O._Columns)
           {
             if (TextUtil.findStarElement(_Exclude_DEPRECATED, C._Name, false, 0) == -1)

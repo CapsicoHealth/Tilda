@@ -61,9 +61,9 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("package " + O._ParentSchema._Package + "." + Helper.TILDA_GEN_PACKAGE + ";");
         Out.println();
         boolean needTime = false;
-        // Check any not null column, which would show up in the Create method.
+        // Check any DATE or DATETIME column.
         for (Column C : O._Columns)
-          if (C != null && (C.getType() == ColumnType.DATETIME || C.getType() == ColumnType.DATE) && C._Nullable == false)
+          if (C != null && (C.getType() == ColumnType.DATETIME || C.getType() == ColumnType.DATE))
             {
               needTime = true;
               break;

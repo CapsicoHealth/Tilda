@@ -206,11 +206,11 @@ public class View extends Base
             // dependency (.*) expansion
             if (VC._SameAs != null && VC._SameAs.endsWith("*") == true)
               {
-                // LOG.debug("View "+_Name+": "+TextUtil.Print(getColumnNames()));
+                // LOG.debug("View "+_Name+": "+TextUtil.print(getColumnNames()));
                 if (HandleStarExpansion(PS, i, VC) == false)
                   return false;
                 --i;
-                // LOG.debug("View "+_Name+": "+TextUtil.Print(getColumnNames()));
+                // LOG.debug("View "+_Name+": "+TextUtil.print(getColumnNames()));
                 continue;
               }
             else if (TextUtil.isNullOrEmpty(VC._Prefix) == false)
@@ -356,9 +356,9 @@ public class View extends Base
           PS.AddError("View '" + getFullName() + "' is defining a 'countStar' element which is deprecated. Please use a standard column definition with an aggregate of 'COUNT'.");
 
         // gotta construct a shadow Object for code-gen.
-        // LOG.debug("View " + _Name + ": " + TextUtil.Print(getColumnNames()));
+        // LOG.debug("View " + _Name + ": " + TextUtil.print(getColumnNames()));
         Object O = MakeObjectProxy(PS);
-        // LOG.debug("Object " + O._Name + ": " + TextUtil.Print(O.getColumnNames()));
+        // LOG.debug("Object " + O._Name + ": " + TextUtil.print(O.getColumnNames()));
 
         if (_Realize != null)
           _Realize.Validate(PS, this, new ViewRealizedWrapper(O));
@@ -524,7 +524,7 @@ public class View extends Base
         O._LCStr = ObjectLifecycle.READONLY.name();
         O._OCC = _OCC;
 
-        // LOG.debug(getFullName()+": "+TextUtil.Print(getColumnNames()));
+        // LOG.debug(getFullName()+": "+TextUtil.print(getColumnNames()));
         int Counter = -1;
         for (ViewColumn VC : _ViewColumns)
           {
@@ -558,7 +558,7 @@ public class View extends Base
             O._Columns.add(C);
           }
 
-        // LOG.debug(O._Name+": "+TextUtil.Print(O.getColumnNames()));
+        // LOG.debug(O._Name+": "+TextUtil.print(O.getColumnNames()));
         genPivotColumns(PS, O);
         
         if (_ImportFormulas != null)
