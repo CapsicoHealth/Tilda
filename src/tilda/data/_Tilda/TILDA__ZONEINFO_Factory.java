@@ -6,9 +6,12 @@ import java.util.*;
 
 import tilda.db.*;
 import tilda.enums.*;
+import tilda.performance.*;
 import tilda.types.*;
 import tilda.utils.*;
 import tilda.utils.pairs.*;
+
+import com.google.gson.annotations.SerializedName;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,9 +29,9 @@ public class TILDA__ZONEINFO_Factory
    protected TILDA__ZONEINFO_Factory() { }
 
    public static final Class<TILDA__ZONEINFO> DATA_CLASS= TILDA__ZONEINFO.class;
-   public static final String SCHEMA_LABEL = TextUtil.Print("TILDA", "");
-   public static final String TABLENAME_LABEL = TextUtil.Print("ZoneInfo", "");
-   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.Print("TILDA.ZoneInfo", "");
+   public static final String SCHEMA_LABEL = TextUtil.print("TILDA", "");
+   public static final String TABLENAME_LABEL = TextUtil.print("ZoneInfo", "");
+   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.print("TILDA.ZoneInfo", "");
    public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "ZoneInfo"); }
 
    public static abstract class COLS {
@@ -237,35 +240,35 @@ This is the column definition for:<BR>
        protected Connection _C = null;
        protected tilda.db.processors.ObjectProcessor<tilda.data.ZoneInfo_Data> _OP;
        protected ArrayListResults<tilda.data.ZoneInfo_Data> _L = null;
-       public void    Start  () { }
-       public void    End    (boolean HasMore, int Max) { if (_OP == null) _L.wrapup(HasMore, Max); }
-       public boolean Process(int Index, java.sql.ResultSet RS) throws Exception
+       public void    start  () { }
+       public void    end    (boolean HasMore, int Max) { if (_OP == null) _L.wrapup(HasMore, Max); }
+       public boolean process(int Index, java.sql.ResultSet RS) throws Exception
         {
           tilda.data.ZoneInfo_Data Obj = new tilda.data.ZoneInfo_Data();
-          boolean OK = ((tilda.data._Tilda.TILDA__ZONEINFO)Obj).Init(_C, RS);
+          boolean OK = ((tilda.data._Tilda.TILDA__ZONEINFO)Obj).init(_C, RS);
           if (OK == true)
            {
              if (_OP == null)
               _L.add(Obj);
              else
-              _OP.Process(Index, Obj);
+              _OP.process(Index, Obj);
            }
           return OK;
         }
      }
 
-   protected static final void ProcessMany(Connection C, String FullSelectQuery, int Start, int Size, tilda.db.processors.RecordProcessor RP) throws Exception
+   protected static final void processMany(Connection C, String FullSelectQuery, int Start, int Size, tilda.db.processors.RecordProcessor RP) throws Exception
      {
-       ReadMany(C, -77, RP, null, FullSelectQuery, Start, Size);
+       readMany(C, -77, RP, null, FullSelectQuery, Start, Size);
      }
-   protected static final ListResults<tilda.data.ZoneInfo_Data> ReadMany(Connection C, String FullSelectQuery, int Start, int Size) throws Exception
+   protected static final ListResults<tilda.data.ZoneInfo_Data> readMany(Connection C, String FullSelectQuery, int Start, int Size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
-       ReadMany(C, -77, RPI, null, FullSelectQuery, Start, Size);
+       readMany(C, -77, RPI, null, FullSelectQuery, Start, Size);
        return RPI._L;
      }
 
-   private static final void ReadMany(Connection C, int LookupId, tilda.db.processors.RecordProcessor RP, tilda.data._Tilda.TILDA__ZONEINFO Obj, Object ExtraParams, int Start, int Size) throws Exception
+   private static final void readMany(Connection C, int LookupId, tilda.db.processors.RecordProcessor RP, tilda.data._Tilda.TILDA__ZONEINFO Obj, Object ExtraParams, int Start, int Size) throws Exception
      {
        long T0 = System.nanoTime();
        StringBuilder S = new StringBuilder(1024);
@@ -331,7 +334,7 @@ This is the column definition for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__ZONEINFO_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__ZONEINFO_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
 
@@ -349,7 +352,7 @@ This is the column definition for:<BR>
  @param value         (max size 50) The value for this enumeration.
  @param label         (max size 254) The label for this enumeration.
 */
-   static public tilda.data.ZoneInfo_Data Create(String id, String value, String label) throws Exception
+   static public tilda.data.ZoneInfo_Data create(String id, String value, String label) throws Exception
      {
        tilda.data._Tilda.TILDA__ZONEINFO Obj = new tilda.data.ZoneInfo_Data();
        Obj.initForCreate();
@@ -367,7 +370,7 @@ This is the column definition for:<BR>
        return (tilda.data.ZoneInfo_Data) Obj;
      }
 
-   static public tilda.data.ZoneInfo_Data Create(Map<String, String> Values, List<StringStringPair> Errors)
+   static public tilda.data.ZoneInfo_Data create(Map<String, String> Values, List<StringStringPair> Errors)
    throws Exception
      {
        int IncomingErrors = Errors.size();
@@ -380,13 +383,13 @@ This is the column definition for:<BR>
        if (IncomingErrors != Errors.size())
         return null;
 
-      tilda.data.ZoneInfo_Data Obj = tilda.data.ZoneInfo_Factory.Create(_id, _value, _label);
+      tilda.data.ZoneInfo_Data Obj = tilda.data.ZoneInfo_Factory.create(_id, _value, _label);
 
       if (_deactivated  != null) Obj.setDeactivated  (_deactivated  );
 
       return Obj;
      }
-   public static int WriteBatch(Connection C, List<tilda.data.ZoneInfo_Data> L, int batchSize, int commitSize) throws Exception
+   public static int writeBatch(Connection C, List<tilda.data.ZoneInfo_Data> L, int batchSize, int commitSize) throws Exception
      {
        long T0 = System.nanoTime();
 
@@ -424,7 +427,7 @@ This is the column definition for:<BR>
                    return index;
                  }
 
-               if (((TILDA__ZONEINFO) d).BeforeWrite(C) == false)
+               if (((TILDA__ZONEINFO) d).beforeWrite(C) == false)
                  {
                    LOG.debug(QueryDetails._LOGGING_HEADER + "The 'tilda.data.ZoneInfo_Data' object at positon #" + index + " failed in its BeforeWrite() method.");
                    QueryDetails.setLastQuery(TILDA__ZONEINFO_Factory.SCHEMA_TABLENAME_LABEL, "");
@@ -502,13 +505,13 @@ This is the column definition for:<BR>
          }
        finally
          {
-           TILDA__1_0.HandleFinally(PS, T0, TILDA__ZONEINFO_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+           TILDA__1_0.handleFinally(PS, T0, TILDA__ZONEINFO_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
            PS = null;
            AllocatedArrays = null;
          }
        }
 
-   static public tilda.data.ZoneInfo_Data LookupByPrimaryKey(String id) throws Exception
+   static public tilda.data.ZoneInfo_Data lookupByPrimaryKey(String id) throws Exception
      {
        tilda.data._Tilda.TILDA__ZONEINFO Obj = new tilda.data.ZoneInfo_Data();
        Obj.initForLookup(0);
@@ -518,7 +521,7 @@ This is the column definition for:<BR>
        return (tilda.data.ZoneInfo_Data) Obj;
      }
 
-   static public tilda.data.ZoneInfo_Data LookupById(String id) throws Exception
+   static public tilda.data.ZoneInfo_Data lookupById(String id) throws Exception
      {
        tilda.data._Tilda.TILDA__ZONEINFO Obj = new tilda.data.ZoneInfo_Data();
        Obj.initForLookup(1);
@@ -528,7 +531,7 @@ This is the column definition for:<BR>
        return (tilda.data.ZoneInfo_Data) Obj;
      }
 
-   static public tilda.data.ZoneInfo_Data LookupByValue(String value) throws Exception
+   static public tilda.data.ZoneInfo_Data lookupByValue(String value) throws Exception
      {
        tilda.data._Tilda.TILDA__ZONEINFO Obj = new tilda.data.ZoneInfo_Data();
        Obj.initForLookup(2);
@@ -538,7 +541,7 @@ This is the column definition for:<BR>
        return (tilda.data.ZoneInfo_Data) Obj;
      }
 
-   static public ListResults<tilda.data.ZoneInfo_Data> LookupWhereAll(Connection C, int Start, int Size) throws Exception
+   static public ListResults<tilda.data.ZoneInfo_Data> lookupWhereAll(Connection C, int Start, int Size) throws Exception
      {
        tilda.data._Tilda.TILDA__ZONEINFO Obj = new tilda.data.ZoneInfo_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -546,11 +549,11 @@ This is the column definition for:<BR>
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
-       ReadMany(C, 3, RPI, Obj, null, Start, Size);
+       readMany(C, 3, RPI, Obj, null, Start, Size);
        return RPI._L;
      }
 
-   static public void LookupWhereAll(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.ZoneInfo_Data> OP, int Start, int Size) throws Exception
+   static public void lookupWhereAll(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.ZoneInfo_Data> OP, int Start, int Size) throws Exception
      {
        tilda.data._Tilda.TILDA__ZONEINFO Obj = new tilda.data.ZoneInfo_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -558,7 +561,7 @@ This is the column definition for:<BR>
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       ReadMany(C, 3, RPI, Obj, null, Start, Size);
+       readMany(C, 3, RPI, Obj, null, Start, Size);
      }
 
 
@@ -568,13 +571,13 @@ This is the column definition for:<BR>
    public static ListResults<tilda.data.ZoneInfo_Data> runSelect(Connection C, SelectQuery Q, int Start, int Size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
-       ReadMany(C, -7, RPI, null, Q, Start, Size);
+       readMany(C, -7, RPI, null, Q, Start, Size);
        return RPI._L;
      }
    public static void runSelect(Connection C, SelectQuery Q, tilda.db.processors.ObjectProcessor<tilda.data.ZoneInfo_Data> OP, int Start, int Size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       ReadMany(C, -7, RPI, null, Q, Start, Size);
+       readMany(C, -7, RPI, null, Q, Start, Size);
      }
    public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
    public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
@@ -585,7 +588,7 @@ This is the column definition for:<BR>
      {
        __ENUMERATIONS_BY_ID   .clear();
        __ENUMERATIONS_BY_VALUE.clear();
-       ListResults<tilda.data.ZoneInfo_Data> L = LookupWhereAll(C, 0, -1);
+       ListResults<tilda.data.ZoneInfo_Data> L = lookupWhereAll(C, 0, -1);
        for (tilda.data.ZoneInfo_Data obj : L)
         {
           __ENUMERATIONS_BY_ID   .put(obj.getId   (), obj);

@@ -167,7 +167,7 @@ public abstract class Base
 
         if (_Name.length() > PS._CGSql.getMaxTableNameSize())
           PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring " + _TildaType.name() + " '" + getBaseName() + "' with a name that's too long: max allowed by your database is " + PS._CGSql.getMaxColumnNameSize() + " vs " + _Name.length() + " for this identifier.");
-        if (_Name.equals(TextUtil.SanitizeName(_Name)) == false)
+        if (_Name.equals(TextUtil.sanitizeName(_Name)) == false)
           PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring " + _TildaType.name() + " '" + getBaseName() + "' with a name containing invalid characters (must all be alphanumeric or underscore).");
         if (ValidationHelper.isValidIdentifier(_Name) == false)
           PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring " + _TildaType.name() + " '" + getBaseName() + "' with a name '" + _Name + "' which is not valid. " + ValidationHelper._ValidIdentifierMessage);
@@ -229,7 +229,7 @@ public abstract class Base
             };
             for (String colName : colNames)
               {
-                if (TextUtil.FindStarElement(valsA, colName, false, 0) != -1)
+                if (TextUtil.findStarElement(valsA, colName, false, 0) != -1)
                   L.add(colName);
               }
           }

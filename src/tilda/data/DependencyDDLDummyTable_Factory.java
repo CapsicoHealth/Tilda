@@ -38,11 +38,11 @@ public class DependencyDDLDummyTable_Factory extends tilda.data._Tilda.TILDA__DE
       }
 
 
-    public static List<DependencyDDLDummyTable_Data> LookupDDLDependencies(Connection C, String SchemaName, String TableViewName)
+    public static List<DependencyDDLDummyTable_Data> lookupDDLDependencies(Connection C, String SchemaName, String TableViewName)
     throws Exception
       {
         String Query = "select * from Tilda.getDependenciesDDLs(" + TextUtil.escapeSingleQuoteForSQL(SchemaName) + ", " + TextUtil.escapeSingleQuoteForSQL(TableViewName) + ")";
-        return ReadMany(C, Query, 0, -1);
+        return readMany(C, Query, 0, -1);
       }
 
   }

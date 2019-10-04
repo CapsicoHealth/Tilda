@@ -125,7 +125,7 @@ public abstract class CSVImporter
 
                 NumOfRecs = (cmsDO._HeadersIncluded == true) ? (NumOfRecs - 1) : NumOfRecs;
                 t0 = System.nanoTime() - t0;
-                LOG.debug("Processed a total of " + NumberFormatUtil.PrintWith000Sep(NumOfRecs) + " records in " + DurationUtil.PrintDuration(t0) + " (" + DurationUtil.PrintPerformancePerMinute(t0, NumOfRecs) + " Records/min)");
+                LOG.debug("Processed a total of " + NumberFormatUtil.printWith000Sep(NumOfRecs) + " records in " + DurationUtil.printDuration(t0) + " (" + DurationUtil.printPerformancePerMinute(t0, NumOfRecs) + " Records/min)");
 
                 Results results = new Results(file, cmsDO._SchemaName, cmsDO._TableName, NumOfRecs, t0);
                 resultsList.add(results);
@@ -168,19 +168,19 @@ public abstract class CSVImporter
         Str.append("INSERT INTO ").append(schemaName).append(".").append(tableName).append("(");
 
         boolean occ = false;
-        if (DBColumns != null && DBColumns.get("refnum") != null && TextUtil.FindElement(columns, "refnum", false, 0) == -1)
+        if (DBColumns != null && DBColumns.get("refnum") != null && TextUtil.findElement(columns, "refnum", false, 0) == -1)
           {
             Str.append("\"refnum\"");
             occ = true;
           }
-        if (DBColumns != null && DBColumns.get("lastupdated") != null && TextUtil.FindElement(columns, "lastUpdated", false, 0) == -1)
+        if (DBColumns != null && DBColumns.get("lastupdated") != null && TextUtil.findElement(columns, "lastUpdated", false, 0) == -1)
           {
             if (occ == true)
               Str.append(",");
             Str.append("\"lastUpdated\"");
             occ = true;
           }
-        if (DBColumns != null && DBColumns.get("created") != null && TextUtil.FindElement(columns, "created", false, 0) == -1)
+        if (DBColumns != null && DBColumns.get("created") != null && TextUtil.findElement(columns, "created", false, 0) == -1)
           {
             if (occ == true)
               Str.append(",");
@@ -203,12 +203,12 @@ public abstract class CSVImporter
         Str.append(") ");
         Str.append(" Values (");
 
-        if (DBColumns != null && DBColumns.get("refnum") != null && TextUtil.FindElement(columns, "refnum", false, 0) == -1)
+        if (DBColumns != null && DBColumns.get("refnum") != null && TextUtil.findElement(columns, "refnum", false, 0) == -1)
           {
             Str.append("?");
             occ = true;
           }
-        if (DBColumns != null && DBColumns.get("lastupdated") != null && TextUtil.FindElement(columns, "lastUpdated", false, 0) == -1)
+        if (DBColumns != null && DBColumns.get("lastupdated") != null && TextUtil.findElement(columns, "lastUpdated", false, 0) == -1)
           {
             if (occ == true)
               Str.append(",");
@@ -216,7 +216,7 @@ public abstract class CSVImporter
             Str.append("?");
             occ = true;
           }
-        if (DBColumns != null && DBColumns.get("created") != null && TextUtil.FindElement(columns, "created", false, 0) == -1)
+        if (DBColumns != null && DBColumns.get("created") != null && TextUtil.findElement(columns, "created", false, 0) == -1)
           {
             if (occ == true)
               Str.append(",");
@@ -311,7 +311,7 @@ public abstract class CSVImporter
               }
             for (int i = 0; i < Headers.length; ++i)
               {
-                if (TextUtil.FindElement(completeHeaders, Headers[i], false, 0) == -1)
+                if (TextUtil.findElement(completeHeaders, Headers[i], false, 0) == -1)
                   {
                     Error = true;
                     LOG.error("File header column '" + Headers[i] + "' cannot be found in the header list in the configuration file.");
@@ -319,7 +319,7 @@ public abstract class CSVImporter
               }
             for (int i = 0; i < completeHeaders.length; ++i)
               {
-                if (TextUtil.FindElement(Headers, completeHeaders[i], false, 0) == -1)
+                if (TextUtil.findElement(Headers, completeHeaders[i], false, 0) == -1)
                   {
                     Error = true;
                     LOG.error("Configuration header column '" + completeHeaders[i] + "' cannot be found in the file's header columns.");
@@ -331,8 +331,8 @@ public abstract class CSVImporter
                 if (Error == false)
                   LOG.error("Something weird... Arrays.equals reports the 2 lists don't match, yet the individual tests all passed.");
                 LOG.error("Headers do not match:");
-                LOG.error("   File Headers  : " + TextUtil.Print(Headers));
-                LOG.error("   Maping Headers: " + TextUtil.Print(completeHeaders));
+                LOG.error("   File Headers  : " + TextUtil.print(Headers));
+                LOG.error("   Maping Headers: " + TextUtil.print(completeHeaders));
                 throw new Exception("Invalid column headers passed.");
               }
           }

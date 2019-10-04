@@ -96,7 +96,7 @@ public class JSONUtilTest
                     Print(Out, A);
                   }
               }
-            System.out.println("Print1 (via generics and casting): " + DurationUtil.PrintDuration(System.nanoTime() - T0));
+            System.out.println("Print1 (via generics and casting): " + DurationUtil.printDuration(System.nanoTime() - T0));
           }
           {
             long T0 = System.nanoTime();
@@ -109,7 +109,7 @@ public class JSONUtilTest
                     Print2(Out, A);
                   }
               }
-            System.out.println("Print2 (no casting): " + DurationUtil.PrintDuration(System.nanoTime() - T0));
+            System.out.println("Print2 (no casting): " + DurationUtil.printDuration(System.nanoTime() - T0));
           }
       }
   }

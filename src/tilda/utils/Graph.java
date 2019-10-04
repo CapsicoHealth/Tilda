@@ -160,7 +160,7 @@ public class Graph<T>
       }
     
     
-    protected static <T> void Traverse(Visitor<T> V, int Level, int FirstMiddleLast, Node<T> N, List<T> Path, boolean pre)
+    protected static <T> void traverse(Visitor<T> V, int Level, int FirstMiddleLast, Node<T> N, List<T> Path, boolean pre)
     throws Exception
       {
         if (N == null)
@@ -171,7 +171,7 @@ public class Graph<T>
         for (int i = 0; i < N.getChildrenNodes().size(); ++i)
           {
             Node<T> Child = N.getChildrenNodes().get(i);
-            Traverse(V, Level + 1, i == 0 ? 0 : i == N.getChildrenNodes().size() - 1 ? 1 : -1, Child, Path, pre);
+            traverse(V, Level + 1, i == 0 ? 0 : i == N.getChildrenNodes().size() - 1 ? 1 : -1, Child, Path, pre);
           }
         if (pre == false)
           V.visitNode(Level, FirstMiddleLast, N._v, Path);
@@ -184,10 +184,10 @@ public class Graph<T>
      * @param pre Whether the visitor should be called on node entry (pre-processing), or node exit (post-processing).
      * @throws Exception
      */
-    public void Traverse(Visitor<T> V, boolean pre)
+    public void traverse(Visitor<T> V, boolean pre)
     throws Exception
       {
         List<T> Path = new ArrayList<T>();
-        Traverse(V, 0, 0, _Root, Path, pre);
+        traverse(V, 0, 0, _Root, Path, pre);
       }
   }

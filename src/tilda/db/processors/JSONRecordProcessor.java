@@ -22,12 +22,12 @@ public class JSONRecordProcessor implements RecordProcessor
    protected SelectQuery _Q;
 
    @Override
-   public void Start()
+   public void start()
     {
     }
 
    @Override
-   public boolean Process(int Index, ResultSet RS)
+   public boolean process(int Index, ResultSet RS)
    throws Exception
     {
       _Out.write(Index == 0 ? "    { " : "  , { ");
@@ -37,11 +37,11 @@ public class JSONRecordProcessor implements RecordProcessor
         {
           ColumnDefinition c = I.next();
           if (c._Type == ColumnType.CHAR || c._Type == ColumnType.STRING)
-           JSONUtil.Print(_Out, c.getName(), i==1 , RS.getString(i).trim());
+           JSONUtil.print(_Out, c.getName(), i==1 , RS.getString(i).trim());
           else if (c._Type == ColumnType.DOUBLE || c._Type == ColumnType.FLOAT)
-           JSONUtil.Print(_Out, c.getName(), i==1 , RS.getDouble(i));
+           JSONUtil.print(_Out, c.getName(), i==1 , RS.getDouble(i));
           else if (c._Type == ColumnType.LONG || c._Type == ColumnType.INTEGER)
-            JSONUtil.Print(_Out, c.getName(), i==1 , RS.getLong(i));
+            JSONUtil.print(_Out, c.getName(), i==1 , RS.getLong(i));
           else
            throw new Exception(c._Type+" column '"+c.getName()+"' was passed in through a query in position "+i+": JSONRecordProcessor only supports columns of type char/string/text, long/integer, or double/float.");
           ++i;
@@ -51,7 +51,7 @@ public class JSONRecordProcessor implements RecordProcessor
     }
 
    @Override
-   public void End(boolean hasMore, int MaxIndex)
+   public void end(boolean hasMore, int MaxIndex)
     {
     }
 }

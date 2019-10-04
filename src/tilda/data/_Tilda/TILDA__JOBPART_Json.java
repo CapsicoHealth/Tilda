@@ -38,7 +38,7 @@ public class TILDA__JOBPART_Json
    @SerializedName("status"      ) public Boolean  _status      ;
    /*@formatter:on*/
 
-   public tilda.data.JobPart_Data Write(Connection C) throws Exception
+   public tilda.data.JobPart_Data write(Connection C) throws Exception
     {
       if (_jobRefnum    == null)
        throw new Exception("Incoming value for 'tilda.data.TILDA.JobPart.jobRefnum' was null or empty. It's not nullable in the model.\n"+toString());
@@ -68,16 +68,16 @@ public class TILDA__JOBPART_Json
           throw new Exception("Incoming value for 'tilda.data.TILDA.JobPart.end' was not in the expected format. Dates should follow the ISO format.\n"+toString());
        }
 
-      tilda.data.JobPart_Data Obj = tilda.data.JobPart_Factory.Create(_jobRefnum, _name, _start);
-      Update(Obj);
-      if (Obj.Write(C) == false)
+      tilda.data.JobPart_Data Obj = tilda.data.JobPart_Factory.create(_jobRefnum, _name, _start);
+      update(Obj);
+      if (Obj.write(C) == false)
        {
          throw new Exception("Cannot create the tilda.data.TILDA.JobPart object.\n"+toString());
        }
       return Obj;
    }
 
-   public void Update(tilda.data.JobPart_Data Obj) throws Exception
+   public void update(tilda.data.JobPart_Data Obj) throws Exception
     {
       if (_jobRefnum   != null) Obj.setJobRefnum   (_jobRefnum   );
       if (_name        != null) Obj.setName        (_name        );

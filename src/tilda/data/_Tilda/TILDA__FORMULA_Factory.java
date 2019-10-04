@@ -6,9 +6,12 @@ import java.util.*;
 
 import tilda.db.*;
 import tilda.enums.*;
+import tilda.performance.*;
 import tilda.types.*;
 import tilda.utils.*;
 import tilda.utils.pairs.*;
+
+import com.google.gson.annotations.SerializedName;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,9 +29,9 @@ public class TILDA__FORMULA_Factory
    protected TILDA__FORMULA_Factory() { }
 
    public static final Class<TILDA__FORMULA> DATA_CLASS= TILDA__FORMULA.class;
-   public static final String SCHEMA_LABEL = TextUtil.Print("TILDA", "");
-   public static final String TABLENAME_LABEL = TextUtil.Print("Formula", "");
-   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.Print("TILDA.Formula", "");
+   public static final String SCHEMA_LABEL = TextUtil.print("TILDA", "");
+   public static final String TABLENAME_LABEL = TextUtil.print("Formula", "");
+   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.print("TILDA.Formula", "");
    public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "Formula"); }
 
    public static abstract class COLS {
@@ -348,35 +351,35 @@ This is the column definition for:<BR>
        protected Connection _C = null;
        protected tilda.db.processors.ObjectProcessor<tilda.data.Formula_Data> _OP;
        protected ArrayListResults<tilda.data.Formula_Data> _L = null;
-       public void    Start  () { }
-       public void    End    (boolean HasMore, int Max) { if (_OP == null) _L.wrapup(HasMore, Max); }
-       public boolean Process(int Index, java.sql.ResultSet RS) throws Exception
+       public void    start  () { }
+       public void    end    (boolean HasMore, int Max) { if (_OP == null) _L.wrapup(HasMore, Max); }
+       public boolean process(int Index, java.sql.ResultSet RS) throws Exception
         {
           tilda.data.Formula_Data Obj = new tilda.data.Formula_Data();
-          boolean OK = ((tilda.data._Tilda.TILDA__FORMULA)Obj).Init(_C, RS);
+          boolean OK = ((tilda.data._Tilda.TILDA__FORMULA)Obj).init(_C, RS);
           if (OK == true)
            {
              if (_OP == null)
               _L.add(Obj);
              else
-              _OP.Process(Index, Obj);
+              _OP.process(Index, Obj);
            }
           return OK;
         }
      }
 
-   protected static final void ProcessMany(Connection C, String FullSelectQuery, int Start, int Size, tilda.db.processors.RecordProcessor RP) throws Exception
+   protected static final void processMany(Connection C, String FullSelectQuery, int Start, int Size, tilda.db.processors.RecordProcessor RP) throws Exception
      {
-       ReadMany(C, -77, RP, null, FullSelectQuery, Start, Size);
+       readMany(C, -77, RP, null, FullSelectQuery, Start, Size);
      }
-   protected static final ListResults<tilda.data.Formula_Data> ReadMany(Connection C, String FullSelectQuery, int Start, int Size) throws Exception
+   protected static final ListResults<tilda.data.Formula_Data> readMany(Connection C, String FullSelectQuery, int Start, int Size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
-       ReadMany(C, -77, RPI, null, FullSelectQuery, Start, Size);
+       readMany(C, -77, RPI, null, FullSelectQuery, Start, Size);
        return RPI._L;
      }
 
-   private static final void ReadMany(Connection C, int LookupId, tilda.db.processors.RecordProcessor RP, tilda.data._Tilda.TILDA__FORMULA Obj, Object ExtraParams, int Start, int Size) throws Exception
+   private static final void readMany(Connection C, int LookupId, tilda.db.processors.RecordProcessor RP, tilda.data._Tilda.TILDA__FORMULA Obj, Object ExtraParams, int Start, int Size) throws Exception
      {
        long T0 = System.nanoTime();
        StringBuilder S = new StringBuilder(1024);
@@ -448,7 +451,7 @@ This is the column definition for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__FORMULA_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, AllocatedArrays);
+          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__FORMULA_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, AllocatedArrays);
           PS = null;
           AllocatedArrays = null;
         }
@@ -470,7 +473,7 @@ This is the column definition for:<BR>
  @param title             (max size 128) The title of the formula/column.
  @param description       (max size 32000) The description of the formula/column.
 */
-   static public tilda.data.Formula_Data Create(String location, String location2, String name, String type, String title, String description) throws Exception
+   static public tilda.data.Formula_Data create(String location, String location2, String name, String type, String title, String description) throws Exception
      {
        tilda.data._Tilda.TILDA__FORMULA Obj = new tilda.data.Formula_Data();
        Obj.initForCreate();
@@ -494,7 +497,7 @@ This is the column definition for:<BR>
        return (tilda.data.Formula_Data) Obj;
      }
 
-   static public tilda.data.Formula_Data Create(Map<String, String> Values, List<StringStringPair> Errors)
+   static public tilda.data.Formula_Data create(Map<String, String> Values, List<StringStringPair> Errors)
    throws Exception
      {
        int IncomingErrors = Errors.size();
@@ -513,7 +516,7 @@ This is the column definition for:<BR>
        if (IncomingErrors != Errors.size())
         return null;
 
-      tilda.data.Formula_Data Obj = tilda.data.Formula_Factory.Create(_location, _location2, _name, _type, _title, _description);
+      tilda.data.Formula_Data Obj = tilda.data.Formula_Factory.create(_location, _location2, _name, _type, _title, _description);
 
       if (_refnum           != null) Obj.setRefnum           (_refnum           );
       if (_formula          != null) Obj.setFormula          (_formula          );
@@ -522,7 +525,7 @@ This is the column definition for:<BR>
 
       return Obj;
      }
-   public static int WriteBatch(Connection C, List<tilda.data.Formula_Data> L, int batchSize, int commitSize) throws Exception
+   public static int writeBatch(Connection C, List<tilda.data.Formula_Data> L, int batchSize, int commitSize) throws Exception
      {
        long T0 = System.nanoTime();
 
@@ -560,7 +563,7 @@ This is the column definition for:<BR>
                    return index;
                  }
 
-               if (((TILDA__FORMULA) d).BeforeWrite(C) == false)
+               if (((TILDA__FORMULA) d).beforeWrite(C) == false)
                  {
                    LOG.debug(QueryDetails._LOGGING_HEADER + "The 'tilda.data.Formula_Data' object at positon #" + index + " failed in its BeforeWrite() method.");
                    QueryDetails.setLastQuery(TILDA__FORMULA_Factory.SCHEMA_TABLENAME_LABEL, "");
@@ -638,13 +641,13 @@ This is the column definition for:<BR>
          }
        finally
          {
-           TILDA__1_0.HandleFinally(PS, T0, TILDA__FORMULA_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+           TILDA__1_0.handleFinally(PS, T0, TILDA__FORMULA_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
            PS = null;
            AllocatedArrays = null;
          }
        }
 
-   static public tilda.data.Formula_Data LookupByPrimaryKey(long refnum) throws Exception
+   static public tilda.data.Formula_Data lookupByPrimaryKey(long refnum) throws Exception
      {
        tilda.data._Tilda.TILDA__FORMULA Obj = new tilda.data.Formula_Data();
        Obj.initForLookup(0);
@@ -654,7 +657,7 @@ This is the column definition for:<BR>
        return (tilda.data.Formula_Data) Obj;
      }
 
-   static public tilda.data.Formula_Data LookupByFormula(String location, String name) throws Exception
+   static public tilda.data.Formula_Data lookupByFormula(String location, String name) throws Exception
      {
        tilda.data._Tilda.TILDA__FORMULA Obj = new tilda.data.Formula_Data();
        Obj.initForLookup(1);
@@ -665,7 +668,7 @@ This is the column definition for:<BR>
        return (tilda.data.Formula_Data) Obj;
      }
 
-   static public ListResults<tilda.data.Formula_Data> LookupWhereRefCols(Connection C, int Start, int Size) throws Exception
+   static public ListResults<tilda.data.Formula_Data> lookupWhereRefCols(Connection C, int Start, int Size) throws Exception
      {
        tilda.data._Tilda.TILDA__FORMULA Obj = new tilda.data.Formula_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -673,11 +676,11 @@ This is the column definition for:<BR>
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
-       ReadMany(C, 2, RPI, Obj, null, Start, Size);
+       readMany(C, 2, RPI, Obj, null, Start, Size);
        return RPI._L;
      }
 
-   static public void LookupWhereRefCols(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Formula_Data> OP, int Start, int Size) throws Exception
+   static public void lookupWhereRefCols(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Formula_Data> OP, int Start, int Size) throws Exception
      {
        tilda.data._Tilda.TILDA__FORMULA Obj = new tilda.data.Formula_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -685,7 +688,7 @@ This is the column definition for:<BR>
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       ReadMany(C, 2, RPI, Obj, null, Start, Size);
+       readMany(C, 2, RPI, Obj, null, Start, Size);
      }
 
 
@@ -694,13 +697,13 @@ This is the column definition for:<BR>
    public static ListResults<tilda.data.Formula_Data> runSelect(Connection C, SelectQuery Q, int Start, int Size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
-       ReadMany(C, -7, RPI, null, Q, Start, Size);
+       readMany(C, -7, RPI, null, Q, Start, Size);
        return RPI._L;
      }
    public static void runSelect(Connection C, SelectQuery Q, tilda.db.processors.ObjectProcessor<tilda.data.Formula_Data> OP, int Start, int Size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       ReadMany(C, -7, RPI, null, Q, Start, Size);
+       readMany(C, -7, RPI, null, Q, Start, Size);
      }
    public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
    public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }

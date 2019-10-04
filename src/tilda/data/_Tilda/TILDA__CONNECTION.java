@@ -171,7 +171,7 @@ public abstract class TILDA__CONNECTION implements tilda.interfaces.WriterObject
    protected static final Logger LOG = LogManager.getLogger(TILDA__CONNECTION.class.getName());
 
    public static final Class<TILDA__CONNECTION_Factory> FACTORY_CLASS= TILDA__CONNECTION_Factory.class;
-   public static final String TABLENAME = TextUtil.Print("TILDA.Connection", "");
+   public static final String TABLENAME = TextUtil.print("TILDA.Connection", "");
 
    protected TILDA__CONNECTION() { }
 
@@ -258,7 +258,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isNullActive()
+   public final boolean isActiveNull()
      { return __Nulls.intersects(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -307,7 +307,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setNullActive()
+   public void setActiveNull()
      {
        long T0 = System.nanoTime();
        if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask) == true) // already NULL
@@ -1347,7 +1347,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 */
     final void setCreated(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
     {
-      setCreated(DateTimeUtil.New(year, month, date, hourOfDay, minute, second, millis, z));
+      setCreated(DateTimeUtil.newTZ(year, month, date, hourOfDay, minute, second, millis, z));
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1558,7 +1558,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 */
    public final void setLastUpdated(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
     {
-      setLastUpdated(DateTimeUtil.New(year, month, date, hourOfDay, minute, second, millis, z));
+      setLastUpdated(DateTimeUtil.newTZ(year, month, date, hourOfDay, minute, second, millis, z));
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1650,7 +1650,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isNullDeleted()
+   public final boolean isDeletedNull()
      { return __Nulls.intersects(TILDA__CONNECTION_Factory.COLS.DELETED._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1675,7 +1675,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setNullDeleted();
+          setDeletedNull();
         }
        else if (v.equals(_deleted) == false)
         {
@@ -1703,7 +1703,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final void setNullDeleted()
+   public final void setDeletedNull()
      {
        long T0 = System.nanoTime();
        if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.DELETED._Mask) == true) // already NULL
@@ -1777,7 +1777,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 */
    public final void setDeleted(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
     {
-      setDeleted(DateTimeUtil.New(year, month, date, hourOfDay, minute, second, millis, z));
+      setDeleted(DateTimeUtil.newTZ(year, month, date, hourOfDay, minute, second, millis, z));
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1809,9 +1809,9 @@ This is the hasChanged for:<BR>
  Copies all the field which are not part of the primary key, not are CALCULATED and not invariant, from the 
  current object to the destination. 
 */
-   public void CopyTo(tilda.data._Tilda.TILDA__CONNECTION Dst) throws Exception
+   public void copyTo(tilda.data._Tilda.TILDA__CONNECTION Dst) throws Exception
      {
-       if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask) == true) Dst.setNullActive     (); else        Dst.setActive     (_active     );
+       if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask) == true) Dst.setActiveNull     (); else        Dst.setActive     (_active     );
        Dst.setDriver     (_driver     );
        Dst.setDb         (_db         );
        Dst.setUser       (_user       );
@@ -1820,16 +1820,16 @@ This is the hasChanged for:<BR>
        Dst.setMax        (_max        );
        Dst.setSchemas    (_schemas    );
        Dst.setLastUpdated(_lastUpdated);
-       if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.DELETED._Mask) == true) Dst.setNullDeleted    (); else        Dst.setDeleted    (_deleted    );
+       if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull    (); else        Dst.setDeleted    (_deleted    );
      }
 
 /**
  Sets the 'lastUpdated' column to now and causes a Write to occur to update the object in the data store.
 */
-   public final boolean Touch(Connection C) throws Exception
+   public final boolean touch(Connection C) throws Exception
      {
        setLastUpdatedNow();
-       return Write(C);
+       return write(C);
      }
 
 /**
@@ -2021,7 +2021,7 @@ This is the hasChanged for:<BR>
        __Changes.clear();
        __Nulls.clear();
      }
-   public final boolean Write(Connection C) throws Exception
+   public final boolean write(Connection C) throws Exception
      {
        long T0 = System.nanoTime();
        if (hasChanged() == false)
@@ -2031,9 +2031,9 @@ This is the hasChanged for:<BR>
           return true;
         }
 
-       if (BeforeWrite(C) == false)
+       if (beforeWrite(C) == false)
         {
-          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.Connection object's BeforeWrite() failed.");
+          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.Connection object's beforeWrite() failed.");
           QueryDetails.setLastQuery(TILDA__CONNECTION_Factory.SCHEMA_TABLENAME_LABEL, "");
           return false;
         }
@@ -2070,7 +2070,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__CONNECTION_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__CONNECTION_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
           PS = null;
           AllocatedArrays = null;
         }
@@ -2079,7 +2079,7 @@ This is the hasChanged for:<BR>
        return true;
      }
 
-   protected abstract boolean BeforeWrite(Connection C) throws Exception;
+   protected abstract boolean beforeWrite(Connection C) throws Exception;
 
 
 
@@ -2087,21 +2087,21 @@ This is the hasChanged for:<BR>
 // THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-   public final boolean Refresh(Connection C) throws Exception
+   public final boolean refresh(Connection C) throws Exception
      {
-       return ReadOne(C, true);
+       return readOne(C, true);
      }
 
-   public final boolean Read(Connection C) throws Exception
+   public final boolean read(Connection C) throws Exception
      {
-       return ReadOne(C, false);
+       return readOne(C, false);
      }
 
-   private final boolean ReadOne(Connection C, boolean Force) throws Exception
+   private final boolean readOne(Connection C, boolean Force) throws Exception
      {
        long T0 = System.nanoTime();
        if (__Init == InitMode.CREATE)
-        throw new Exception("This TILDA.Connection object is being Read() after a Create(), which doesn't make sense.");
+        throw new Exception("This TILDA.Connection object is being read() after a create(), which doesn't make sense.");
        if (__Init == InitMode.READ == true && Force == false && hasChanged()==false)
         {
           LOG.debug(QueryDetails._LOGGING_HEADER + "This TILDA.Connection object has already been read.");
@@ -2164,7 +2164,7 @@ This is the hasChanged for:<BR>
               return false;
             }
           count = 1;
-          return Init(C, RS);
+          return init(C, RS);
         }
        catch (java.sql.SQLException E)
         {
@@ -2172,23 +2172,23 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__CONNECTION_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, AllocatedArrays);
+          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__CONNECTION_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, AllocatedArrays);
           PS = null;
           AllocatedArrays = null;
         }
     }
 
    @SuppressWarnings("unchecked")
-   boolean Init(Connection C, java.sql.ResultSet RS) throws Exception
+   boolean init(Connection C, java.sql.ResultSet RS) throws Exception
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
                             _active      =                              RS.getBoolean   (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask     );
-      __Saved_id          = _id          = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.ID._Mask         );
-                            _driver      = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.DRIVER._Mask     );
-                            _db          = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.DB._Mask         );
-                            _user        = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.USER._Mask       );
-                            _pswd        = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.PSWD._Mask       );
+      __Saved_id          = _id          = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.ID._Mask         );
+                            _driver      = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.DRIVER._Mask     );
+                            _db          = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.DB._Mask         );
+                            _user        = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.USER._Mask       );
+                            _pswd        = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.PSWD._Mask       );
                             _initial     =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.INITIAL._Mask    );
                             _max         =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.MAX._Mask        );
                             _schemas = (List<String>) C.getArray(RS, ++i, TILDA__CONNECTION_Factory.COLS.SCHEMAS._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask    );
@@ -2198,24 +2198,24 @@ This is the hasChanged for:<BR>
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();
-     return AfterRead(C);
+     return afterRead(C);
    }
 
-   protected abstract boolean AfterRead(Connection C) throws Exception;
+   protected abstract boolean afterRead(Connection C) throws Exception;
 
    public String toString()
     {
       long T0 = System.nanoTime();
       String Str = 
                    "active"        + (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask) == true ? ": NULL" : ": " +                                   getActive     () )
-               + "; id: "                                                                                                  + TextUtil.PrintVariableStr        (getId         ())
-               + "; driver: "                                                                                              + TextUtil.PrintVariableStr        (getDriver     ())
-               + "; db: "                                                                                                  + TextUtil.PrintVariableStr        (getDb         ())
-               + "; user: "                                                                                                + TextUtil.PrintVariableStr        (getUser       ())
-               + "; pswd: "                                                                                                + TextUtil.PrintVariableStr        (getPswd       ())
+               + "; id: "                                                                                                  + TextUtil.printVariableStr        (getId         ())
+               + "; driver: "                                                                                              + TextUtil.printVariableStr        (getDriver     ())
+               + "; db: "                                                                                                  + TextUtil.printVariableStr        (getDb         ())
+               + "; user: "                                                                                                + TextUtil.printVariableStr        (getUser       ())
+               + "; pswd: "                                                                                                + TextUtil.printVariableStr        (getPswd       ())
                + "; initial: "                                                                                             +                                   getInitial    () 
                + "; max: "                                                                                                 +                                   getMax        () 
-               + "; schemas: "                                                                                             + TextUtil.Print                   (getSchemas    ())
+               + "; schemas: "                                                                                             + TextUtil.print                   (getSchemas    ())
                + "; created: "                                                                                             + DateTimeUtil.printDateTimeForJSON(getCreated    ())
                + "; lastUpdated: "                                                                                         + DateTimeUtil.printDateTimeForJSON(getLastUpdated())
                + "; deleted"       + (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.DELETED._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDeleted    ()))

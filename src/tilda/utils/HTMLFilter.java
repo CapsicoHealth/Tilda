@@ -29,7 +29,7 @@ public class HTMLFilter
      * @param Str The string to clean up
      * @return the cleaned up Str
      */
-    public static String CleanAbsolute(String Str)
+    public static String cleanAbsolute(String Str)
       {
         // If Str is null or empty, there is nothing to do.
         if (TextUtil.isNullOrEmpty(Str) == true)
@@ -87,25 +87,25 @@ public class HTMLFilter
 
     public static List<String> getFilterReportForThread() { return _FilteredMatches.get(); }
     
-    protected static String FormatReportOutput(String Name, String Value)
+    protected static String formatReportOutput(String Name, String Value)
       {
-        return "<TR valign=\"top\"><TD><B>"+Name+"</B>:</TD><TD>"+CleanAbsolute(Value)+"</TD></TR>\n";
+        return "<TR valign=\"top\"><TD><B>"+Name+"</B>:</TD><TD>"+cleanAbsolute(Value)+"</TD></TR>\n";
       }
 
-    protected static void Replace(String Name, Pattern P, StringBuffer Src, StringBuffer Dest, String ReplaceStr)
+    protected static void replace(String Name, Pattern P, StringBuffer Src, StringBuffer Dest, String ReplaceStr)
       {
         List<String> L = _FilteredMatches.get();
         Matcher m = P.matcher(Src);
         while (m.find() == true)
          {
-           L.add(FormatReportOutput(Name, m.group()));
+           L.add(formatReportOutput(Name, m.group()));
            m.appendReplacement(Dest, ReplaceStr);
          }
         m.appendTail(Dest);
       }
     
     /** returns the start index of the first match **/
-    protected static int FindFirst(String Name, Pattern P, String Str)
+    protected static int findFirst(String Name, Pattern P, String Str)
       {
         Matcher m = P.matcher(Str);
         while (m.find() == true)
@@ -116,7 +116,7 @@ public class HTMLFilter
       }
     
     /** returns the end index of the last match **/
-    protected static int FindLast(String Name, Pattern P, String Str)
+    protected static int findLast(String Name, Pattern P, String Str)
       {
         Matcher m = P.matcher(Str);
         int Index = -1;
@@ -126,14 +126,14 @@ public class HTMLFilter
          }
         return Index;
       }
-    protected static int Detect(String Name, Pattern P, String Str)
+    protected static int detect(String Name, Pattern P, String Str)
       {
         List<String> L = _FilteredMatches.get();
         int Count = 0;
         Matcher m = P.matcher(Str);
         while (m.find() == true)
          {
-           L.add(FormatReportOutput(Name, m.group()));
+           L.add(formatReportOutput(Name, m.group()));
            ++Count;
          }
         return Count;
@@ -180,35 +180,35 @@ public class HTMLFilter
      * @param Str The string to clean up
      * @return the cleaned up string, which should be identical if no offense has been found.
      */
-    public static String CleanSmart(String Name, String Str)
+    public static String cleanSmart(String Name, String Str)
       {
         // If Str is null or empty, nothing to do.
         if (TextUtil.isNullOrEmpty(Str) == true)
           return Str;
 
          List<String> L = _FilteredMatches.get();
-         int EndMarker = FindLast(Name, _BODYSTART_PATTERN, Str);
+         int EndMarker = findLast(Name, _BODYSTART_PATTERN, Str);
          if (EndMarker != -1)
            {
-             L.add(FormatReportOutput(Name, Str.substring(0, EndMarker)));             
+             L.add(formatReportOutput(Name, Str.substring(0, EndMarker)));             
              Str = Str.substring(EndMarker);
            }
-         int StartMarker = FindFirst(Name, _BODYEND_PATTERN, Str);
+         int StartMarker = findFirst(Name, _BODYEND_PATTERN, Str);
          if (StartMarker != -1)
            {
-             L.add(FormatReportOutput(Name, Str.substring(StartMarker)));             
+             L.add(formatReportOutput(Name, Str.substring(StartMarker)));             
              Str = Str.substring(0, StartMarker);
            }
 
          StringBuffer Str1 = new StringBuffer(Str);
          StringBuffer Str2 = new StringBuffer(Str.length());
-         Replace(Name, _TAGREMOVE_PATTERN, Str1, Str2, "<BAD$1/>");
+         replace(Name, _TAGREMOVE_PATTERN, Str1, Str2, "<BAD$1/>");
          Str1.setLength(0);
 
-         Replace(Name, _ONXXX_PATTERN, Str2, Str1, "BADon$1=\"\"");
+         replace(Name, _ONXXX_PATTERN, Str2, Str1, "BADon$1=\"\"");
          Str2.setLength(0);
 
-         Replace(Name, _JS_PATTERN, Str1, Str2, "BAD$1=\"\"");
+         replace(Name, _JS_PATTERN, Str1, Str2, "BAD$1=\"\"");
 
          return Str2.toString();
       }

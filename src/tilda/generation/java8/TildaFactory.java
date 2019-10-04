@@ -18,7 +18,6 @@ package tilda.generation.java8;
 
 import java.io.PrintWriter;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -26,7 +25,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.util.StringBuilderWriter;
 
-import tilda.db.Connection;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.enums.FrameworkSourcedType;
@@ -38,6 +36,7 @@ import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Object;
+import tilda.parsing.parts.OutputMapping;
 import tilda.parsing.parts.PrimaryKey;
 import tilda.parsing.parts.Query;
 import tilda.parsing.parts.SubWhereClause;
@@ -62,45 +61,54 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("package " + O._ParentSchema._Package + "." + Helper.TILDA_GEN_PACKAGE + ";");
         Out.println();
         boolean needTime = false;
-        // Check any not null column, which would show up in the Create method.
+        // Check any DATE or DATETIME column.
         for (Column C : O._Columns)
-          if (C != null && (C.getType() == ColumnType.DATETIME || C.getType() == ColumnType.DATE) && C._Nullable == false)
+          if (C != null && (C.getType() == ColumnType.DATETIME || C.getType() == ColumnType.DATE))
+            {
+              needTime = true;
+              break;
+            }
+        // A class could have no timestamp, but still do sync that would introduce timestamps
+        for (OutputMapping OM : O._OutputMaps)
+          if (OM != null && OM._Sync == true)
             {
               needTime = true;
               break;
             }
         // Check Indices for Lookup methods
-        if (needTime == false)
-          for (Index I : O._Indices)
-            if (I != null)
-              {
-                for (Column C : I._ColumnObjs)
-                  if (C.getType() == ColumnType.DATETIME || C.getType() == ColumnType.DATE)
-                    {
-                      needTime = true;
-                      break;
-                    }
-                if (needTime == true)
-                  break;
-              }
-        // Check query-based lookups methods
-        if (needTime == false)
-          for (SubWhereClause SWC : O._Queries)
-            if (SWC != null && SWC._Attributes != null)
-              {
-                Iterator<Query.Attribute> I = SWC._Attributes.iterator();
-                while (I.hasNext() == true)
-                  {
-                    Column C = I.next()._Col;
-                    if (C.getType() == ColumnType.DATETIME || C.getType() == ColumnType.DATE)
-                      {
-                        needTime = true;
-                        break;
-                      }
-                  }
-                if (needTime == true)
-                  break;
-              }
+// LDH-NOTE: Is this necessary? An index cannot refer to a column that is not listed already
+//          and so, it would have been caught in the previous column loop. 
+//        if (needTime == false)
+//          for (Index I : O._Indices)
+//            if (I != null)
+//              {
+//                for (Column C : I._ColumnObjs)
+//                  if (C.getType() == ColumnType.DATETIME || C.getType() == ColumnType.DATE)
+//                    {
+//                      needTime = true;
+//                      break;
+//                    }
+//                if (needTime == true)
+//                  break;
+//              }
+//        // Check query-based lookups methods
+//        if (needTime == false)
+//          for (SubWhereClause SWC : O._Queries)
+//            if (SWC != null && SWC._Attributes != null)
+//              {
+//                Iterator<Query.Attribute> I = SWC._Attributes.iterator();
+//                while (I.hasNext() == true)
+//                  {
+//                    Column C = I.next()._Col;
+//                    if (C.getType() == ColumnType.DATETIME || C.getType() == ColumnType.DATE)
+//                      {
+//                        needTime = true;
+//                        break;
+//                      }
+//                  }
+//                if (needTime == true)
+//                  break;
+//              }
         if (needTime == true)
           Out.println("import java.time.*;");
         boolean needUtil = true;
@@ -114,6 +122,7 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println();
         Out.println("import tilda.db.*;");
         Out.println("import tilda.enums.*;");
+        Out.println("import tilda.performance.*;");
         Out.println("import tilda.types.*;");
         Out.println("import tilda.utils.*;");
         if (O._LC != ObjectLifecycle.READONLY)
@@ -135,7 +144,12 @@ public class TildaFactory implements CodeGenTildaFactory
                 }
               break;
             }
-        Out.println();
+        if (O._LC != ObjectLifecycle.READONLY)
+          {
+            Out.println();
+            Out.println("import com.google.gson.annotations.SerializedName;");
+          }        
+        Out.println();        
         Out.println("import org.apache.logging.log4j.LogManager;");
         Out.println("import org.apache.logging.log4j.Logger;");
         Out.println();
@@ -154,9 +168,9 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("   protected " + O._BaseClassName + "_Factory() { }");
         Out.println();
         Out.println("   public static final Class<" + O._BaseClassName + "> DATA_CLASS= " + O._BaseClassName + ".class;");
-        Out.println("   public static final String SCHEMA_LABEL = TextUtil.Print(" + TextUtil.escapeDoubleQuoteWithSlash(O._ParentSchema.getShortName()) + ", \"\");");
-        Out.println("   public static final String TABLENAME_LABEL = TextUtil.Print(" + TextUtil.escapeDoubleQuoteWithSlash(O.getBaseName()) + ", \"\");");
-        Out.println("   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.Print(" + TextUtil.escapeDoubleQuoteWithSlash(O.getShortName()) + ", \"\");");
+        Out.println("   public static final String SCHEMA_LABEL = TextUtil.print(" + TextUtil.escapeDoubleQuoteWithSlash(O._ParentSchema.getShortName()) + ", \"\");");
+        Out.println("   public static final String TABLENAME_LABEL = TextUtil.print(" + TextUtil.escapeDoubleQuoteWithSlash(O.getBaseName()) + ", \"\");");
+        Out.println("   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.print(" + TextUtil.escapeDoubleQuoteWithSlash(O.getShortName()) + ", \"\");");
         Out.println("   public static void getFullTableNameVar(Connection C, StringBuilder S) { " + Helper.getFullTableVarAtRuntime(O) + "; }");
         Out.println();
         Out.println("   public static abstract class COLS {");
@@ -173,7 +187,7 @@ public class TildaFactory implements CodeGenTildaFactory
               // String ColVarFull = TextUtil.escapeDoubleQuoteWithSlash(G.getSql().getFullColumnVar(C), "", false);
               // String ColVarShort = TextUtil.escapeDoubleQuoteWithSlash(G.getSql().getShortColumnVar(C), "", false);
               // String ColVarOthers = TextUtil.escapeDoubleQuoteWithSlash(G.getSql().getShortColumnVar(C), "", false);
-              String ColumnTypeClassName = "Type_" + TextUtil.NormalCapitalization(C.getType().name()) + (C.isCollection() ? "Collection" : "Primitive") + (C._Nullable == true ? "Null" : "");
+              String ColumnTypeClassName = "Type_" + TextUtil.normalCapitalization(C.getType().name()) + (C.isCollection() ? "Collection" : "Primitive") + (C._Nullable == true ? "Null" : "");
               G.getGenDocs().docField(Out, G, C, "column definition");
               Out.print("     public static " + ColumnTypeClassName + TypePad + " " + C.getName().toUpperCase() + ColumnPad + "= new " + ColumnTypeClassName + TypePad + "(SCHEMA_LABEL, TABLENAME_LABEL, \"" + C.getName() + "\"" + ColumnPad + ", " + (++Counter) + "/*" + C.getSequenceOrder() + "*/, " + TextUtil.escapeDoubleQuoteWithSlash(C._Description));
               if (C.getType() == ColumnType.DATETIME && C.needsTZ() == true && O.getColumn(C.getName() + "TZ") != null)
@@ -289,36 +303,36 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("       protected Connection _C = null;");
         Out.println("       protected tilda.db.processors.ObjectProcessor<" + Helper.getFullAppDataClassName(O) + "> _OP;");
         Out.println("       protected ArrayListResults<" + Helper.getFullAppDataClassName(O) + "> _L = null;");
-        Out.println("       public void    Start  () { }");
-        Out.println("       public void    End    (boolean HasMore, int Max) { if (_OP == null) _L.wrapup(HasMore, Max); }");
-        Out.println("       public boolean Process(int Index, java.sql.ResultSet RS) throws Exception");
+        Out.println("       public void    start  () { }");
+        Out.println("       public void    end    (boolean HasMore, int Max) { if (_OP == null) _L.wrapup(HasMore, Max); }");
+        Out.println("       public boolean process(int Index, java.sql.ResultSet RS) throws Exception");
         Out.println("        {");
         Out.println("          " + Helper.getFullAppDataClassName(O) + " Obj = new " + Helper.getFullAppDataClassName(O) + "();");
-        Out.println("          boolean OK = ((" + Helper.getFullBaseClassName(O) + ")Obj).Init(_C, RS);");
+        Out.println("          boolean OK = ((" + Helper.getFullBaseClassName(O) + ")Obj).init(_C, RS);");
         Out.println("          if (OK == true)");
         Out.println("           {");
         Out.println("             if (_OP == null)");
         Out.println("              _L.add(Obj);");
         Out.println("             else");
-        Out.println("              _OP.Process(Index, Obj);");
+        Out.println("              _OP.process(Index, Obj);");
         Out.println("           }");
         Out.println("          return OK;");
         Out.println("        }");
         Out.println("     }");
         Out.println();
-        Out.println("   protected static final void ProcessMany(Connection C, String FullSelectQuery, int Start, int Size, tilda.db.processors.RecordProcessor RP) throws Exception");
+        Out.println("   protected static final void processMany(Connection C, String FullSelectQuery, int Start, int Size, tilda.db.processors.RecordProcessor RP) throws Exception");
         Out.println("     {");
-        Out.println("       ReadMany(C, -77, RP, null, FullSelectQuery, Start, Size);");
+        Out.println("       readMany(C, -77, RP, null, FullSelectQuery, Start, Size);");
         Out.println("     }");
 
-        Out.println("   protected static final ListResults<" + Helper.getFullAppDataClassName(O) + "> ReadMany(Connection C, String FullSelectQuery, int Start, int Size) throws Exception");
+        Out.println("   protected static final ListResults<" + Helper.getFullAppDataClassName(O) + "> readMany(Connection C, String FullSelectQuery, int Start, int Size) throws Exception");
         Out.println("     {");
         Out.println("       RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);");
-        Out.println("       ReadMany(C, -77, RPI, null, FullSelectQuery, Start, Size);");
+        Out.println("       readMany(C, -77, RPI, null, FullSelectQuery, Start, Size);");
         Out.println("       return RPI._L;");
         Out.println("     }");
         Out.println();
-        Out.println("   private static final void ReadMany(Connection C, int LookupId, tilda.db.processors.RecordProcessor RP, "
+        Out.println("   private static final void readMany(Connection C, int LookupId, tilda.db.processors.RecordProcessor RP, "
         + Helper.getFullBaseClassName(O) + " Obj, Object ExtraParams, int Start, int Size) throws Exception");
         Out.println("     {");
         Out.println("       long T0 = System.nanoTime();");
@@ -370,7 +384,7 @@ public class TildaFactory implements CodeGenTildaFactory
     public void genMethodCreate(PrintWriter Out, GeneratorSession G, Object O, List<Column> CreateColumns, List<Column> DefaultColumns)
     throws Exception
       {
-        Out.print("   static public " + Helper.getFullAppDataClassName(O) + " Create(");
+        Out.print("   static public " + Helper.getFullAppDataClassName(O) + " create(");
         boolean First = true;
         for (Column C : CreateColumns)
           if (C != null && (C._PrimaryKey == false || O._PrimaryKey._Autogen == false))
@@ -391,7 +405,7 @@ public class TildaFactory implements CodeGenTildaFactory
             Out.println();
             Out.println("       // Auto PK");
             Column PK = O._PrimaryKey._ColumnObjs.get(0);
-            Out.println("       Obj.set" + TextUtil.CapitalizeFirstCharacter(PK.getName()) + "(tilda.db.KeysManager.getKey(" + TextUtil.escapeDoubleQuoteWithSlash(O.getShortName().toUpperCase()) + "));");
+            Out.println("       Obj.set" + TextUtil.capitalizeFirstCharacter(PK.getName()) + "(tilda.db.KeysManager.getKey(" + TextUtil.escapeDoubleQuoteWithSlash(O.getShortName().toUpperCase()) + "));");
           }
         if (CreateColumns != null && CreateColumns.isEmpty() == false)
           {
@@ -400,7 +414,7 @@ public class TildaFactory implements CodeGenTildaFactory
             for (Column C : CreateColumns)
               {
                 String Pad = O._PadderColumnNames.getPad(C.getName());
-                Out.println("       Obj.set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "(" + C.getName() + Pad + ");");
+                Out.println("       Obj.set" + TextUtil.capitalizeFirstCharacter(C.getName()) + Pad + "(" + C.getName() + Pad + ");");
               }
           }
 
@@ -417,7 +431,7 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println();
 
 
-        Out.println("   static public " + Helper.getFullAppDataClassName(O) + " Create(Map<String, String> Values, List<StringStringPair> Errors)");
+        Out.println("   static public " + Helper.getFullAppDataClassName(O) + " create(Map<String, String> Values, List<StringStringPair> Errors)");
         Out.println("   throws Exception");
         Out.println("     {");
         Out.println("       int IncomingErrors = Errors.size();");
@@ -453,7 +467,7 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("       if (IncomingErrors != Errors.size())");
         Out.println("        return null;");
         Out.println();
-        Out.print("      " + Helper.getFullAppDataClassName(O) + " Obj = " + Helper.getFullAppFactoryClassName(O) + ".Create(");
+        Out.print("      " + Helper.getFullAppDataClassName(O) + " Obj = " + Helper.getFullAppFactoryClassName(O) + ".create(");
         First = true;
         for (Column C : CreateColumns)
           if (C != null && (C._PrimaryKey == false || O._PrimaryKey._Autogen == false))
@@ -470,7 +484,7 @@ public class TildaFactory implements CodeGenTildaFactory
           if (C != null && C.getType() != ColumnType.BINARY && C._FCT.isManaged() == false && C._Mode == ColumnMode.NORMAL && CreateColumns.contains(C) == false)
             {
               String Pad = O._PadderColumnNames.getPad(C.getName());
-              Out.println("      if (_" + C.getName() + Pad + "!= null) Obj.set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "(_" + C.getName() + Pad + ");");
+              Out.println("      if (_" + C.getName() + Pad + "!= null) Obj.set" + TextUtil.capitalizeFirstCharacter(C.getName()) + Pad + "(_" + C.getName() + Pad + ");");
             }
         Out.println();
         Out.println("      return Obj;");
@@ -483,7 +497,7 @@ public class TildaFactory implements CodeGenTildaFactory
     @Override
     public void genMethodLookupByPrimaryKey(PrintWriter Out, GeneratorSession G, PrimaryKey PK, long LookupId)
       {
-        Out.print("   static public " + Helper.getFullAppDataClassName(PK._ParentObject) + " LookupByPrimaryKey(");
+        Out.print("   static public " + Helper.getFullAppDataClassName(PK._ParentObject) + " lookupByPrimaryKey(");
         boolean First = true;
         for (Column C : PK._ColumnObjs)
           if (C != null)
@@ -503,7 +517,7 @@ public class TildaFactory implements CodeGenTildaFactory
           if (C != null)
             {
               String Pad = C._ParentObject.getColumnPad(C.getName());
-              Out.print("       Obj.set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "(" + C.getName() + Pad + "); ");
+              Out.print("       Obj.set" + TextUtil.capitalizeFirstCharacter(C.getName()) + Pad + "(" + C.getName() + Pad + "); ");
               if (PK._ParentObject.getLifecycle() != ObjectLifecycle.READONLY)
                 Out.print("Obj.__Saved_" + C.getName() + Pad + " = Obj._" + C.getName() + Pad + ";");
               Out.println();
@@ -519,7 +533,7 @@ public class TildaFactory implements CodeGenTildaFactory
         if (I._Unique == false)
           throw new Error("ERROR: called genMethodLookupByUniqueIndex with a non-Unique Index");
 
-        Out.print("   static public " + Helper.getFullAppDataClassName(I._Parent) + " LookupBy" + I._Name + "(");
+        Out.print("   static public " + Helper.getFullAppDataClassName(I._Parent) + " lookupBy" + I._Name + "(");
         boolean First = true;
         for (Column C : I._ColumnObjs)
           if (C != null)
@@ -539,7 +553,7 @@ public class TildaFactory implements CodeGenTildaFactory
           if (C != null)
             {
               String Pad = C._ParentObject.getColumnPad(C.getName());
-              Out.print("       Obj.set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "(" + C.getName() + Pad + "); ");
+              Out.print("       Obj.set" + TextUtil.capitalizeFirstCharacter(C.getName()) + Pad + "(" + C.getName() + Pad + "); ");
               if (C._PrimaryKey == true && I._Parent.getLifecycle() != ObjectLifecycle.READONLY)
                 Out.print("Obj.__Saved_" + C.getName() + Pad + " = Obj._" + C.getName() + Pad + ";");
               Out.println();
@@ -578,7 +592,7 @@ public class TildaFactory implements CodeGenTildaFactory
           if (C != null)
             {
               String Pad = C._ParentObject.getColumnPad(C.getName());
-              Out.println("       Obj.set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "(" + C.getName() + Pad + ");");
+              Out.println("       Obj.set" + TextUtil.capitalizeFirstCharacter(C.getName()) + Pad + "(" + C.getName() + Pad + ");");
             }
         Out.println();
         if (q != null && q._Attributes.isEmpty() == false)
@@ -609,14 +623,14 @@ public class TildaFactory implements CodeGenTildaFactory
 
         Query q = I._SubQuery == null ? null : I._SubQuery.getQuery(G.getSql());
 
-        String MethodName = "LookupWhere" + I._Name;
+        String MethodName = "lookupWhere" + I._Name;
         Out.print("   static public ListResults<" + Helper.getFullAppDataClassName(I._Parent) + "> " + MethodName + "(Connection C");
         genMethodLookupWhereIndexSignature(Out, G, I, q);
         Out.println("     {");
         genMethodLookupWhereIndexPreamble(Out, I, q, MethodName);
         Out.println();
         Out.println("       RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);");
-        Out.println("       ReadMany(C, " + LookupId + ", RPI, Obj, " + (q != null && q._Attributes.isEmpty() == false ? "P" : "null") + ", Start, Size);");
+        Out.println("       readMany(C, " + LookupId + ", RPI, Obj, " + (q != null && q._Attributes.isEmpty() == false ? "P" : "null") + ", Start, Size);");
         Out.println("       return RPI._L;");
         Out.println("     }");
         Out.println();
@@ -626,7 +640,7 @@ public class TildaFactory implements CodeGenTildaFactory
         genMethodLookupWhereIndexPreamble(Out, I, q, MethodName);
         Out.println();
         Out.println("       RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);");
-        Out.println("       ReadMany(C, " + LookupId + ", RPI, Obj, " + (q != null && q._Attributes.isEmpty() == false ? "P" : "null") + ", Start, Size);");
+        Out.println("       readMany(C, " + LookupId + ", RPI, Obj, " + (q != null && q._Attributes.isEmpty() == false ? "P" : "null") + ", Start, Size);");
         Out.println("     }");
         Out.println();
 
@@ -642,7 +656,7 @@ public class TildaFactory implements CodeGenTildaFactory
         if (SWC._Unique == true)
           throw new Error("ERROR: called genMethodLookupWhereQuery with a Unique SubWhereclause");
 
-        String MethodName = "LookupWhere" + SWC._Name;
+        String MethodName = "lookupWhere" + SWC._Name;
         Out.print("   static public ListResults<" + Helper.getFullAppDataClassName(SWC._ParentObject) + "> " + MethodName
         + "(Connection C");
         Set<String> VarNameSet = new HashSet<String>();
@@ -678,7 +692,7 @@ public class TildaFactory implements CodeGenTildaFactory
           }
         Out.println();
         Out.println("       RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);");
-        Out.println("       ReadMany(C, " + LookupId + ", RPI, Obj, " + (SWC._Attributes.isEmpty() == false ? "P" : "null") + ", Start, Size);");
+        Out.println("       readMany(C, " + LookupId + ", RPI, Obj, " + (SWC._Attributes.isEmpty() == false ? "P" : "null") + ", Start, Size);");
         Out.println("       return RPI._L;");
         Out.println("     }");
         Out.println();
@@ -693,7 +707,7 @@ public class TildaFactory implements CodeGenTildaFactory
         if (SWC._Unique == false)
           throw new Error("ERROR: called genMethodLookupByUniqueQuery with a non-Unique SubWhereclause");
 
-        String MethodName = "LookupBy" + SWC._Name;
+        String MethodName = "lookupBy" + SWC._Name;
         Out.print("   static public " + Helper.getFullAppDataClassName(SWC._ParentObject) + " " + MethodName + "(");
         boolean First = true;
         for (Query.Attribute A : SWC._Attributes)
@@ -714,7 +728,7 @@ public class TildaFactory implements CodeGenTildaFactory
           if (A != null && A._Col != null)
             {
               String Pad = A._Col._ParentObject.getColumnPad(A._Col.getName());
-              Out.print("       Obj.set" + TextUtil.CapitalizeFirstCharacter(A._Col.getName()) + Pad + "(" + A._Col.getName() + Pad + "); ");
+              Out.print("       Obj.set" + TextUtil.capitalizeFirstCharacter(A._Col.getName()) + Pad + "(" + A._Col.getName() + Pad + "); ");
               if (A._Col._PrimaryKey == true && SWC._ParentObject.getLifecycle() != ObjectLifecycle.READONLY)
                 Out.print("Obj.__Saved_" + A._Col.getName() + Pad + " = Obj._" + A._Col.getName() + Pad + ";");
               Out.println();
@@ -739,13 +753,13 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("   public static ListResults<" + Helper.getFullAppDataClassName(O) + "> runSelect(Connection C, SelectQuery Q, int Start, int Size) throws Exception");
         Out.println("     {");
         Out.println("       RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);");
-        Out.println("       ReadMany(C, -7, RPI, null, Q, Start, Size);");
+        Out.println("       readMany(C, -7, RPI, null, Q, Start, Size);");
         Out.println("       return RPI._L;");
         Out.println("     }");
         Out.println("   public static void runSelect(Connection C, SelectQuery Q, tilda.db.processors.ObjectProcessor<" + Helper.getFullAppDataClassName(O) + "> OP, int Start, int Size) throws Exception");
         Out.println("     {");
         Out.println("       RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);");
-        Out.println("       ReadMany(C, -7, RPI, null, Q, Start, Size);");
+        Out.println("       readMany(C, -7, RPI, null, Q, Start, Size);");
         Out.println("     }");
         if (O._LC == ObjectLifecycle.NORMAL)
           {
@@ -788,13 +802,13 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("   public static void initMappings(Connection C) throws Exception");
         Out.println("     {");
         Out.println("       __MAPPINGS.clear();");
-        Out.println("       ListResults<" + Helper.getFullAppDataClassName(O) + "> L = LookupWhereAll(C, 0, -1);");
+        Out.println("       ListResults<" + Helper.getFullAppDataClassName(O) + "> L = lookupWhereAll(C, 0, -1);");
         Out.println("       boolean mismatch = false;");
         Out.println("       for (" + Helper.getFullAppDataClassName(O) + " obj : L)");
         Out.println("        {");
         if (O.getColumn("group") != null)
           {
-            Out.println("          if (TextUtil.FindElement(" + Helper.getFullAppDataClassName(O) + "._group_Values, obj.getGroup(), 0, true, 0) == -1)");
+            Out.println("          if (TextUtil.findElement(" + Helper.getFullAppDataClassName(O) + "._group_Values, obj.getGroup(), 0, true, 0) == -1)");
             Out.println("           {");
             Out.println("             if (mismatch == false)");
             Out.println("              LOG.warn(\"Could not validate against the model.\");");
@@ -811,12 +825,12 @@ public class TildaFactory implements CodeGenTildaFactory
                 First = false;
               else
                 Out.print(" + \"``\" + ");
-              Out.print("obj.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()");
+              Out.print("obj.get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "()");
             }
         Out.println(", obj);");
         Out.println("        }");
         Out.println("       if (mismatch == true)");
-        Out.println("        LOG.warn(\"Currently modeled values are: \"+TextUtil.Print(" + Helper.getFullAppDataClassName(O) + "._group_Values, 0)+\".\");");
+        Out.println("        LOG.warn(\"Currently modeled values are: \"+TextUtil.print(" + Helper.getFullAppDataClassName(O) + "._group_Values, 0)+\".\");");
         Out.println("     }");
 
         Out.println("   private static " + Helper.getFullAppDataClassName(O) + " getMapping(" + FuncParams + ")");
@@ -907,7 +921,7 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("     {");
         Out.println("       __ENUMERATIONS_BY_ID   .clear();");
         Out.println("       __ENUMERATIONS_BY_VALUE.clear();");
-        Out.println("       ListResults<" + Helper.getFullAppDataClassName(O) + "> L = LookupWhereAll(C, 0, -1);");
+        Out.println("       ListResults<" + Helper.getFullAppDataClassName(O) + "> L = lookupWhereAll(C, 0, -1);");
         Out.println("       for (" + Helper.getFullAppDataClassName(O) + " obj : L)");
         Out.println("        {");
         Out.println("          __ENUMERATIONS_BY_ID   .put(obj.getId   (), obj);");
@@ -938,7 +952,7 @@ public class TildaFactory implements CodeGenTildaFactory
     public void genBatchWrite(PrintWriter Out, GeneratorSession G, Object O)
     throws Exception
       {
-        Out.println("   public static int WriteBatch(Connection C, List<" + Helper.getFullAppDataClassName(O) + "> L, int batchSize, int commitSize) throws Exception");
+        Out.println("   public static int writeBatch(Connection C, List<" + Helper.getFullAppDataClassName(O) + "> L, int batchSize, int commitSize) throws Exception");
         Out.println("     {");
         Out.println("       long T0 = System.nanoTime();");
         Out.println();
@@ -977,7 +991,7 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("                   return index;");
         Out.println("                 }");
         Out.println();
-        Out.println("               if (((" + O._BaseClassName + ") d).BeforeWrite(C) == false)");
+        Out.println("               if (((" + O._BaseClassName + ") d).beforeWrite(C) == false)");
         Out.println("                 {");
         Out.println("                   LOG.debug(QueryDetails._LOGGING_HEADER + \"The '" + Helper.getFullAppDataClassName(O) + "' object at positon #\" + index + \" failed in its BeforeWrite() method.\");");
         Out.println("                   QueryDetails.setLastQuery(" + O.getBaseClassName() + "_Factory.SCHEMA_TABLENAME_LABEL, \"\");");
@@ -1059,10 +1073,12 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("         }");
         Out.println("       finally");
         Out.println("         {");
-        Out.println("           TILDA__1_0.HandleFinally(PS, T0, " + O._BaseClassName + "_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);");
+        Out.println("           TILDA__1_0.handleFinally(PS, T0, " + O._BaseClassName + "_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);");
         Out.println("           PS = null;");
         Out.println("           AllocatedArrays = null;");
         Out.println("         }");
         Out.println("       }");
       }
+    
+    
   }

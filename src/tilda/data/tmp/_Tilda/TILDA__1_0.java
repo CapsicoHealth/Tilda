@@ -21,7 +21,7 @@ public final class TILDA__1_0
    protected static final String _COMMAQUESTION            =TextUtil.identity(",?");
    protected static final String _EQUALQUESTION            =TextUtil.identity("=?");
 
-   protected static void HandleFinally(java.sql.PreparedStatement PS, long T0, String TableName, StatementType ST, int count, List<java.sql.Array> AllocatedArrays) throws java.sql.SQLException
+   protected static void handleFinally(java.sql.PreparedStatement PS, long T0, String TableName, StatementType ST, int count, List<java.sql.Array> AllocatedArrays) throws java.sql.SQLException
      {
        if (PS != null)
         PS.close();

@@ -142,7 +142,7 @@ public class MSSQL implements DBType
       }
 
     @Override
-    public boolean FullIdentifierOnUpdate()
+    public boolean fullIdentifierOnUpdate()
       {
         return false;
       }

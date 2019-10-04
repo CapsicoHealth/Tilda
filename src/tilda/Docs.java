@@ -285,7 +285,7 @@ public class Docs
             if (Missing.isEmpty() == false)
               {
                 g._SchemasAuto = CollectionUtil.toStringArray(Missing);
-                LOG.warn("Group " + g._Name + " is missing schemas: " + TextUtil.Print(g._SchemasAuto) + ". Adding to automatic dependencies list for that group");
+                LOG.warn("Group " + g._Name + " is missing schemas: " + TextUtil.print(g._SchemasAuto) + ". Adding to automatic dependencies list for that group");
               }
           }
       }

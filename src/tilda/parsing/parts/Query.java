@@ -121,7 +121,7 @@ public class Query
         if (TextUtil.isNullOrEmpty(_Clause) == true)
           return PS.AddError(OwnerObjName + " is defining an subWhereclause without a query value.");
 
-        if (TextUtil.CrudeStringValidation(_Clause, '\'', '\'') == false)
+        if (TextUtil.crudeStringValidation(_Clause, '\'', '\'') == false)
           PS.AddError(OwnerObjName + " is defining a subWhereclause '" + _Clause + "' which has an unterminated string sequence.");
 
         // LOG.debug("Start clause: "+_Clause+";");
@@ -194,7 +194,7 @@ public class Query
                 NewClauseStatic.append("?");
                 NewClauseDynamic.append(").append(\"?\").append(");
                 String var = m._name;
-                if (TextUtil.FindElement(ColumnNames, var, false, 0) != -1)
+                if (TextUtil.findElement(ColumnNames, var, false, 0) != -1)
                   {
                     PS.AddError(OwnerObjName + " is defining a subWhereclause '" + _Clause + "' which has a parameter marker '?(" + m._name + ")' which is already taken as a column name.");
                     break;
@@ -203,7 +203,7 @@ public class Query
                 if (TextUtil.isNullOrEmpty(var) == true)
                   var = lastColumnMatch.getName();
                 else
-                  var = lastColumnMatch.getName() + TextUtil.CapitalizeFirstCharacter(var);
+                  var = lastColumnMatch.getName() + TextUtil.capitalizeFirstCharacter(var);
                 _Attributes.add(new Attribute(lastColumnMatch, var, m._type == 'A'));
               }
             else if (m._type == 'C')

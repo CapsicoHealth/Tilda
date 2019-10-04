@@ -142,7 +142,7 @@ public abstract class TILDA__DEPENDENCYDDLDUMMYTABLE implements tilda.interfaces
    protected static final Logger LOG = LogManager.getLogger(TILDA__DEPENDENCYDDLDUMMYTABLE.class.getName());
 
    public static final Class<TILDA__DEPENDENCYDDLDUMMYTABLE_Factory> FACTORY_CLASS= TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.class;
-   public static final String TABLENAME = TextUtil.Print("TILDA.DependencyDDLDummyTable", "");
+   public static final String TABLENAME = TextUtil.print("TILDA.DependencyDDLDummyTable", "");
 
    protected TILDA__DEPENDENCYDDLDUMMYTABLE() { }
 
@@ -959,7 +959,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 */
     final void setCreated(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
     {
-      setCreated(DateTimeUtil.New(year, month, date, hourOfDay, minute, second, millis, z));
+      setCreated(DateTimeUtil.newTZ(year, month, date, hourOfDay, minute, second, millis, z));
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1170,7 +1170,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 */
    public final void setLastUpdated(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
     {
-      setLastUpdated(DateTimeUtil.New(year, month, date, hourOfDay, minute, second, millis, z));
+      setLastUpdated(DateTimeUtil.newTZ(year, month, date, hourOfDay, minute, second, millis, z));
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1262,7 +1262,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isNullDeleted()
+   public final boolean isDeletedNull()
      { return __Nulls.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DELETED._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1287,7 +1287,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setNullDeleted();
+          setDeletedNull();
         }
        else if (v.equals(_deleted) == false)
         {
@@ -1315,7 +1315,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final void setNullDeleted()
+   public final void setDeletedNull()
      {
        long T0 = System.nanoTime();
        if (__Nulls.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DELETED._Mask) == true) // already NULL
@@ -1389,7 +1389,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 */
    public final void setDeleted(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
     {
-      setDeleted(DateTimeUtil.New(year, month, date, hourOfDay, minute, second, millis, z));
+      setDeleted(DateTimeUtil.newTZ(year, month, date, hourOfDay, minute, second, millis, z));
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1421,7 +1421,7 @@ This is the hasChanged for:<BR>
  Copies all the field which are not part of the primary key, not are CALCULATED and not invariant, from the 
  current object to the destination. 
 */
-   public void CopyTo(tilda.data._Tilda.TILDA__DEPENDENCYDDLDUMMYTABLE Dst) throws Exception
+   public void copyTo(tilda.data._Tilda.TILDA__DEPENDENCYDDLDUMMYTABLE Dst) throws Exception
      {
        Dst.setSrcSchemaName(_srcSchemaName);
        Dst.setSrcTVName    (_srcTVName    );
@@ -1430,16 +1430,16 @@ This is the hasChanged for:<BR>
        Dst.setDepViewName  (_depViewName  );
        Dst.setRestoreScript(_restoreScript);
        Dst.setLastUpdated  (_lastUpdated  );
-       if (__Changes.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DELETED._Mask) == true) Dst.setNullDeleted      (); else        Dst.setDeleted      (_deleted      );
+       if (__Changes.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull      (); else        Dst.setDeleted      (_deleted      );
      }
 
 /**
  Sets the 'lastUpdated' column to now and causes a Write to occur to update the object in the data store.
 */
-   public final boolean Touch(Connection C) throws Exception
+   public final boolean touch(Connection C) throws Exception
      {
        setLastUpdatedNow();
-       return Write(C);
+       return write(C);
      }
 
 /**
@@ -1624,7 +1624,7 @@ This is the hasChanged for:<BR>
        __Changes.clear();
        __Nulls.clear();
      }
-   public final boolean Write(Connection C) throws Exception
+   public final boolean write(Connection C) throws Exception
      {
        long T0 = System.nanoTime();
        if (hasChanged() == false)
@@ -1634,9 +1634,9 @@ This is the hasChanged for:<BR>
           return true;
         }
 
-       if (BeforeWrite(C) == false)
+       if (beforeWrite(C) == false)
         {
-          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.DependencyDDLDummyTable object's BeforeWrite() failed.");
+          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.DependencyDDLDummyTable object's beforeWrite() failed.");
           QueryDetails.setLastQuery(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.SCHEMA_TABLENAME_LABEL, "");
           return false;
         }
@@ -1681,7 +1681,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
+          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
           PS = null;
         }
 
@@ -1689,7 +1689,7 @@ This is the hasChanged for:<BR>
        return true;
      }
 
-   protected abstract boolean BeforeWrite(Connection C) throws Exception;
+   protected abstract boolean beforeWrite(Connection C) throws Exception;
 
 
 
@@ -1697,21 +1697,21 @@ This is the hasChanged for:<BR>
 // THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-   public final boolean Refresh(Connection C) throws Exception
+   public final boolean refresh(Connection C) throws Exception
      {
-       return ReadOne(C, true);
+       return readOne(C, true);
      }
 
-   public final boolean Read(Connection C) throws Exception
+   public final boolean read(Connection C) throws Exception
      {
-       return ReadOne(C, false);
+       return readOne(C, false);
      }
 
-   private final boolean ReadOne(Connection C, boolean Force) throws Exception
+   private final boolean readOne(Connection C, boolean Force) throws Exception
      {
        long T0 = System.nanoTime();
        if (__Init == InitMode.CREATE)
-        throw new Exception("This TILDA.DependencyDDLDummyTable object is being Read() after a Create(), which doesn't make sense.");
+        throw new Exception("This TILDA.DependencyDDLDummyTable object is being read() after a create(), which doesn't make sense.");
        if (__Init == InitMode.READ == true && Force == false && hasChanged()==false)
         {
           LOG.debug(QueryDetails._LOGGING_HEADER + "This TILDA.DependencyDDLDummyTable object has already been read.");
@@ -1781,7 +1781,7 @@ This is the hasChanged for:<BR>
               return false;
             }
           count = 1;
-          return Init(C, RS);
+          return init(C, RS);
         }
        catch (java.sql.SQLException E)
         {
@@ -1789,42 +1789,42 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
     }
 
-   boolean Init(Connection C, java.sql.ResultSet RS) throws Exception
+   boolean init(Connection C, java.sql.ResultSet RS) throws Exception
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-      __Saved_srcSchemaName = _srcSchemaName = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SRCSCHEMANAME._Mask);
-      __Saved_srcTVName     = _srcTVName     = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SRCTVNAME._Mask    );
+      __Saved_srcSchemaName = _srcSchemaName = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SRCSCHEMANAME._Mask);
+      __Saved_srcTVName     = _srcTVName     = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SRCTVNAME._Mask    );
       __Saved_seq           = _seq           =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SEQ._Mask          );
-      __Saved_depSchemaName = _depSchemaName = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DEPSCHEMANAME._Mask);
-      __Saved_depViewName   = _depViewName   = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DEPVIEWNAME._Mask  );
-                              _restoreScript = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.RESTORESCRIPT._Mask);
+      __Saved_depSchemaName = _depSchemaName = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DEPSCHEMANAME._Mask);
+      __Saved_depViewName   = _depViewName   = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DEPVIEWNAME._Mask  );
+                              _restoreScript = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.RESTORESCRIPT._Mask);
                               _created       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.CREATED._Mask      );
                               _lastUpdated   = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.LASTUPDATED._Mask  );
                               _deleted       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DELETED._Mask      );
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();
-     return AfterRead(C);
+     return afterRead(C);
    }
 
-   protected abstract boolean AfterRead(Connection C) throws Exception;
+   protected abstract boolean afterRead(Connection C) throws Exception;
 
    public String toString()
     {
       long T0 = System.nanoTime();
       String Str = 
-                   "srcSchemaName: "                                                                                                        + TextUtil.PrintVariableStr        (getSrcSchemaName())
-               + "; srcTVName: "                                                                                                            + TextUtil.PrintVariableStr        (getSrcTVName    ())
+                   "srcSchemaName: "                                                                                                        + TextUtil.printVariableStr        (getSrcSchemaName())
+               + "; srcTVName: "                                                                                                            + TextUtil.printVariableStr        (getSrcTVName    ())
                + "; seq: "                                                                                                                  +                                   getSeq          () 
-               + "; depSchemaName: "                                                                                                        + TextUtil.PrintVariableStr        (getDepSchemaName())
-               + "; depViewName: "                                                                                                          + TextUtil.PrintVariableStr        (getDepViewName  ())
-               + "; restoreScript: "                                                                                                        + TextUtil.PrintVariableStr        (getRestoreScript())
+               + "; depSchemaName: "                                                                                                        + TextUtil.printVariableStr        (getDepSchemaName())
+               + "; depViewName: "                                                                                                          + TextUtil.printVariableStr        (getDepViewName  ())
+               + "; restoreScript: "                                                                                                        + TextUtil.printVariableStr        (getRestoreScript())
                + "; created: "                                                                                                              + DateTimeUtil.printDateTimeForJSON(getCreated      ())
                + "; lastUpdated: "                                                                                                          + DateTimeUtil.printDateTimeForJSON(getLastUpdated  ())
                + "; deleted"         + (__Nulls.intersects(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DELETED._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDeleted      ()))

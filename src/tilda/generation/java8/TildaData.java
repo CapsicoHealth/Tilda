@@ -128,7 +128,7 @@ public class TildaData implements CodeGenTildaData
         Out.println("   protected static final Logger LOG = LogManager.getLogger(" + O._BaseClassName + ".class.getName());");
         Out.println();
         Out.println("   public static final Class<" + O._BaseClassName + "_Factory> FACTORY_CLASS= " + O._BaseClassName + "_Factory.class;");
-        Out.println("   public static final String TABLENAME = TextUtil.Print(" + TextUtil.escapeDoubleQuoteWithSlash(O.getShortName()) + ", \"\");");
+        Out.println("   public static final String TABLENAME = TextUtil.print(" + TextUtil.escapeDoubleQuoteWithSlash(O.getShortName()) + ", \"\");");
         Out.println();
         Out.println("   protected " + O._BaseClassName + "() { }");
         Out.println();
@@ -282,12 +282,12 @@ public class TildaData implements CodeGenTildaData
               if (C._MapperDef != null)
                 {
                   Out.println("   public static final " + JavaJDBCType.getFieldTypeBase(C._MapperDef._ParentColumn)
-                  + " _" + C.getName() + TextUtil.CapitalizeFirstCharacter(V._Name) + C._PadderValueNames.getPad(V._Name)
+                  + " _" + C.getName() + TextUtil.capitalizeFirstCharacter(V._Name) + C._PadderValueNames.getPad(V._Name)
                   + " = " + Helper.getFullAppDataClassName(C._MapperDef._DestObjectObj) + "._group" + V._Name + ";");
                 }
               else
                 {
-                  Out.print("   public static final " + JavaJDBCType.getFieldTypeBase(C) + " _" + C.getName() + TextUtil.CapitalizeFirstCharacter(V._Name) + C._PadderValueNames.getPad(V._Name) + " = ");
+                  Out.print("   public static final " + JavaJDBCType.getFieldTypeBase(C) + " _" + C.getName() + TextUtil.capitalizeFirstCharacter(V._Name) + C._PadderValueNames.getPad(V._Name) + " = ");
                   Out.print(PrintColumnValue(V._ParentColumn, V._Value));
                   Out.println(";");
                 }
@@ -344,19 +344,19 @@ public class TildaData implements CodeGenTildaData
     throws Exception
       {
         if (C._Mode == ColumnMode.CALCULATED && C._MapperDef == null)
-          Out.println("   public abstract " + JavaJDBCType.getFieldType(C) + " get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "();");
+          Out.println("   public abstract " + JavaJDBCType.getFieldType(C) + " get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "();");
         else if (C.getType() == ColumnType.JSON && C._JsonSchema != null)
           {
             if (C.isCollection() == false)
               {
-                Out.println("   public final " + C._JsonSchema._TypeName + " get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()");
+                Out.println("   public final " + C._JsonSchema._TypeName + " get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "()");
                 Out.println("      {");
                 Out.println("        return _" + C.getName() + "Obj;");
                 Out.println("      }");
               }
             else
               {
-                Out.println("   public final List<" + C._JsonSchema._TypeName + "> get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()");
+                Out.println("   public final List<" + C._JsonSchema._TypeName + "> get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "()");
                 Out.println("      {");
                 Out.println("        return _" + C.getName() + "Obj;");
                 Out.println("      }");
@@ -364,16 +364,16 @@ public class TildaData implements CodeGenTildaData
           }
         else if (C.isCollection() == false)
           {
-            Out.println("   public final " + JavaJDBCType.getFieldType(C) + " get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()");
+            Out.println("   public final " + JavaJDBCType.getFieldType(C) + " get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "()");
             Out.println("      { return _" + C.getName() + "; }");
           }
         else
           {
-            Out.println("   public final " + JavaJDBCType.getFieldTypeBaseClass(C) + "[] get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "AsArray()");
+            Out.println("   public final " + JavaJDBCType.getFieldTypeBaseClass(C) + "[] get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "AsArray()");
             Out.println("      { return _" + C.getName() + "==null? null : _" + C.getName() + ".toArray(new " + JavaJDBCType.getFieldTypeBaseClass(C) + "[_" + C.getName() + ".size()]); }");
-            Out.println("   public final Iterator<" + JavaJDBCType.getFieldTypeBaseClass(C) + "> get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()");
+            Out.println("   public final Iterator<" + JavaJDBCType.getFieldTypeBaseClass(C) + "> get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "()");
             Out.println("      { return _" + C.getName() + "==null? null : _" + C.getName() + ".iterator(); }");
-            Out.println("   public final boolean has" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "(" + JavaJDBCType.getFieldTypeBase(C) + " v)");
+            Out.println("   public final boolean has" + TextUtil.capitalizeFirstCharacter(C.getName()) + "(" + JavaJDBCType.getFieldTypeBase(C) + " v)");
             Out.println("      { return _" + C.getName() + "==null? false : _" + C.getName() + ".contains(v); }");
           }
       }
@@ -381,8 +381,8 @@ public class TildaData implements CodeGenTildaData
     @Override
     public void genMethodIs(PrintWriter Out, GeneratorSession G, ColumnValue V)
       {
-        String ValueNameVar = "_" + V._ParentColumn.getName() + TextUtil.CapitalizeFirstCharacter(V._Name);
-        Out.println("   public final boolean is" + TextUtil.CapitalizeFirstCharacter(V._ParentColumn.getName()) + TextUtil.CapitalizeFirstCharacter(V._Name) + "()");
+        String ValueNameVar = "_" + V._ParentColumn.getName() + TextUtil.capitalizeFirstCharacter(V._Name);
+        Out.println("   public final boolean is" + TextUtil.capitalizeFirstCharacter(V._ParentColumn.getName()) + TextUtil.capitalizeFirstCharacter(V._Name) + "()");
         if (V._ParentColumn.isCollection() == true)
           Out.println("      { return  _" + V._ParentColumn.getName() + " != null && _" + V._ParentColumn.getName() + ".contains(" + ValueNameVar + ") == true; }");
         else
@@ -434,9 +434,9 @@ public class TildaData implements CodeGenTildaData
         if (C.isCollection() == true)
           {
             if (C._JsonSchema == null)
-              Out.println("   " + Visibility + " void set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "(" + JavaJDBCType.getFieldType(C) + " v) throws Exception");
+              Out.println("   " + Visibility + " void set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "(" + JavaJDBCType.getFieldType(C) + " v) throws Exception");
             else
-              Out.println("   " + Visibility + " void set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "(String v) throws Exception");
+              Out.println("   " + Visibility + " void set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "(String v) throws Exception");
 
             Out.println("     {");
             Out.println("       long T0 = System.nanoTime();");
@@ -447,7 +447,7 @@ public class TildaData implements CodeGenTildaData
               }
             Out.println("       if (v == null " + (C._Nullable == true ? " || v.isEmpty() == true" : "") + ")");
             if (C._Nullable == true)
-              Out.println("        setNull" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "();");
+              Out.println("        set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "Null();");
             else
               Out.println("        throw new Exception(\"Cannot set " + C.getFullName() + " to null: it's not nullable.\");");
             if (C._JsonSchema == null)
@@ -537,7 +537,7 @@ public class TildaData implements CodeGenTildaData
                     Out.println("             tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(i.getZone().getId());");
                     Out.println("             if (ZI == null)");
                     Out.println("              throw new Exception(\"Cannot set field '" + C.getFullName() + "' because the timezone value '\"+i.getZone().getId()+\"' is unknown. Make sure it is mapped properly in the ZoneInfo table.\");");
-                    Out.println("             addTo" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "TZ(k, ZI.getId());");
+                    Out.println("             addTo" + TextUtil.capitalizeFirstCharacter(C.getName()) + "TZ(k, ZI.getId());");
                   }
                 if (C._Mapper != null)
                   {
@@ -548,7 +548,7 @@ public class TildaData implements CodeGenTildaData
                         Column col = C._Mapper._SrcColumnObjs.get(c);
                         if (c != 0)
                           Str.append(", ");
-                        Str.append("get" + TextUtil.CapitalizeFirstCharacter(col.getName()) + "()");
+                        Str.append("get" + TextUtil.capitalizeFirstCharacter(col.getName()) + "()");
                       }
                     if (C._Mapper._Name != ColumnMapperMode.NONE)
                       Out.println("             _" + C.getName() + "MappedName.add(" + ClassName + ".getMappedName(" + Str + ", i));");
@@ -572,11 +572,11 @@ public class TildaData implements CodeGenTildaData
         if (C._JsonSchema == null)
           {
             if (C.isList() == true)
-              Out.println("   " + Visibility + " void addTo" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "(int pos, " + JavaJDBCType.getFieldTypeBase(C) + " v) throws Exception");
+              Out.println("   " + Visibility + " void addTo" + TextUtil.capitalizeFirstCharacter(C.getName()) + "(int pos, " + JavaJDBCType.getFieldTypeBase(C) + " v) throws Exception");
             else if (C.isSet() == true)
-              Out.println("   " + Visibility + " void addTo" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "(" + JavaJDBCType.getFieldTypeBase(C) + " v) throws Exception");
+              Out.println("   " + Visibility + " void addTo" + TextUtil.capitalizeFirstCharacter(C.getName()) + "(" + JavaJDBCType.getFieldTypeBase(C) + " v) throws Exception");
             else
-              Out.println("   " + Visibility + (C._FCT == FrameworkColumnType.OCC_DELETED || C._FCT == FrameworkColumnType.OCC_LASTUPDATED ? " final" : "") + " void set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "(" + JavaJDBCType.getFieldType(C) + " v) throws Exception");
+              Out.println("   " + Visibility + (C._FCT == FrameworkColumnType.OCC_DELETED || C._FCT == FrameworkColumnType.OCC_LASTUPDATED ? " final" : "") + " void set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "(" + JavaJDBCType.getFieldType(C) + " v) throws Exception");
             Out.println("     {");
             Out.println("       long T0 = System.nanoTime();");
             if (C.isCollection() == true)
@@ -595,7 +595,7 @@ public class TildaData implements CodeGenTildaData
                 Out.println("           throw new Exception(\"Cannot set " + C.getFullName() + ": the value \'\"+v+\"\' is not a valid Enumerated value as per \'" + FactoryClassName + "\'.\");");
                 Out.println("          v = e.getId();");
                 if (C._Enum._Name != ColumnMapperMode.NONE)
-                  Out.println("          " + (C.isCollection() == true ? "addTo" : "set") + TextUtil.CapitalizeFirstCharacter(C.getName()) + "EnumValue(e.getValue());");
+                  Out.println("          " + (C.isCollection() == true ? "addTo" : "set") + TextUtil.capitalizeFirstCharacter(C.getName()) + "EnumValue(e.getValue());");
                 Out.println("        }");
               }
             switch (C.getType())
@@ -629,7 +629,7 @@ public class TildaData implements CodeGenTildaData
                       if (C._Mode == ColumnMode.CALCULATED && C._MapperDef != null)
                         Out.println("          _" + C.getName() + " = null;");
                       else
-                        Out.println("          setNull" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "();");
+                        Out.println("          set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "Null();");
                       Out.println("        }");
                     }
                   else
@@ -649,9 +649,9 @@ public class TildaData implements CodeGenTildaData
                   if (C.getType() == ColumnType.STRING && C.isCollection() == false)
                     {
                       if (C._Protect == ProtectionType.ABSOLUTE)
-                        Out.println("          v = HTMLFilter.CleanAbsolute(v);");
+                        Out.println("          v = HTMLFilter.cleanAbsolute(v);");
                       else if (C._Protect == ProtectionType.SMART)
-                        Out.println("          v = HTMLFilter.CleanSmart(" + TextUtil.escapeDoubleQuoteWithSlash(C.getFullName()) + ",v);");
+                        Out.println("          v = HTMLFilter.cleanSmart(" + TextUtil.escapeDoubleQuoteWithSlash(C.getFullName()) + ",v);");
                     }
                   break;
                 case BINARY:
@@ -685,13 +685,13 @@ public class TildaData implements CodeGenTildaData
                     Column col = C._Mapper._SrcColumnObjs.get(c);
                     if (c != 0)
                       Str.append(", ");
-                    Str.append("get" + TextUtil.CapitalizeFirstCharacter(col.getName()) + "()");
+                    Str.append("get" + TextUtil.capitalizeFirstCharacter(col.getName()) + "()");
                   }
 
                 if (C._Mapper._Name != ColumnMapperMode.NONE)
-                  Out.println("          " + (C.isCollection() == true ? "addTo" : "set") + TextUtil.CapitalizeFirstCharacter(C.getName()) + "MappedName(" + ClassName + ".getMappedName(" + Str + ", v));");
+                  Out.println("          " + (C.isCollection() == true ? "addTo" : "set") + TextUtil.capitalizeFirstCharacter(C.getName()) + "MappedName(" + ClassName + ".getMappedName(" + Str + ", v));");
                 if (C._Mapper._Group != ColumnMapperMode.NONE)
-                  Out.println("          " + (C.isCollection() == true ? "addTo" : "set") + TextUtil.CapitalizeFirstCharacter(C.getName()) + "MappedGroup(" + ClassName + ".getMappedGroup(" + Str + ", v));");
+                  Out.println("          " + (C.isCollection() == true ? "addTo" : "set") + TextUtil.capitalizeFirstCharacter(C.getName()) + "MappedGroup(" + ClassName + ".getMappedGroup(" + Str + ", v));");
               }
             if (C.needsTZ() == true)
               {
@@ -699,9 +699,9 @@ public class TildaData implements CodeGenTildaData
                 Out.println("          if (ZI == null)");
                 Out.println("           throw new Exception(\"Cannot set field '" + C.getFullName() + "' because the timezone value '\"+v.getZone().getId()+\"' is unknown. Make sure it is mapped properly in the ZoneInfo table.\");");
                 if (C.isCollection() == true)
-                  Out.println("          addTo" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "TZ(pos, ZI.getId());");
+                  Out.println("          addTo" + TextUtil.capitalizeFirstCharacter(C.getName()) + "TZ(pos, ZI.getId());");
                 else
-                  Out.println("          set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "TZ(ZI.getId());");
+                  Out.println("          set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "TZ(ZI.getId());");
               }
             if (C.getType() != ColumnType.BINARY)
               Out.println("        }");
@@ -710,7 +710,7 @@ public class TildaData implements CodeGenTildaData
 
             if (C.isCollection() == true)
               {
-                Out.println("   " + Visibility + " void removeFrom" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "(" + JavaJDBCType.getFieldTypeBaseClass(C) + " v) throws Exception");
+                Out.println("   " + Visibility + " void removeFrom" + TextUtil.capitalizeFirstCharacter(C.getName()) + "(" + JavaJDBCType.getFieldTypeBaseClass(C) + " v) throws Exception");
                 Out.println("     {");
                 Out.println("       long T0 = System.nanoTime();");
                 if (C._Mode != ColumnMode.CALCULATED)
@@ -721,7 +721,7 @@ public class TildaData implements CodeGenTildaData
                         Out.println("       if (1 != -1)");
                         Out.println("        {");
                         Out.println("          _" + C.getName() + ".remove(i);");
-                        Out.println("          removeFrom" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "TZ(i);");
+                        Out.println("          removeFrom" + TextUtil.capitalizeFirstCharacter(C.getName()) + "TZ(i);");
                         Out.println("          __Changes.or(" + Mask + ");");
                         Out.println("        }");
                       }
@@ -738,7 +738,7 @@ public class TildaData implements CodeGenTildaData
               }
             if (C.isList() == true)
               {
-                Out.println("   " + Visibility + " void removeFrom" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "(int pos) throws Exception");
+                Out.println("   " + Visibility + " void removeFrom" + TextUtil.capitalizeFirstCharacter(C.getName()) + "(int pos) throws Exception");
                 Out.println("     {");
                 Out.println("       long T0 = System.nanoTime();");
                 if (C._Mode != ColumnMode.CALCULATED)
@@ -747,7 +747,7 @@ public class TildaData implements CodeGenTildaData
                     Out.println("        {");
                     Out.println("          __Changes.or(" + Mask + ");");
                     if (C.needsTZ() == true)
-                      Out.println("          removeFrom" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "TZ(pos);");
+                      Out.println("          removeFrom" + TextUtil.capitalizeFirstCharacter(C.getName()) + "TZ(pos);");
                     Out.println("        }");
                   }
                 else
@@ -759,9 +759,9 @@ public class TildaData implements CodeGenTildaData
         else
           {
             if (C.isCollection() == true)
-              Out.println("   " + Visibility + " void set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "(List<" + C._JsonSchema._TypeName + "> v) throws Exception");
+              Out.println("   " + Visibility + " void set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "(List<" + C._JsonSchema._TypeName + "> v) throws Exception");
             else
-              Out.println("   " + Visibility + " void set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "(" + C._JsonSchema._TypeName + " v) throws Exception");
+              Out.println("   " + Visibility + " void set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "(" + C._JsonSchema._TypeName + " v) throws Exception");
             Out.println("     {");
             Out.println("       long T0 = System.nanoTime();");
             if (C._Invariant == true || C._ParentObject.getLifecycle() != ObjectLifecycle.NORMAL)
@@ -771,7 +771,7 @@ public class TildaData implements CodeGenTildaData
               }
             Out.println("       if (v == null " + (C.isCollection() == true && C._Nullable == true ? " || v.isEmpty() == true" : "") + ")");
             if (C._Nullable == true)
-              Out.println("        setNull" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "();");
+              Out.println("        set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "Null();");
             else
               Out.println("        throw new Exception(\"Cannot set " + C.getFullName() + " to null: it's not nullable.\");");
             Out.println("       else");
@@ -790,8 +790,8 @@ public class TildaData implements CodeGenTildaData
     @Override
     public void genMethodSetAs(PrintWriter Out, GeneratorSession G, ColumnValue V)
       {
-        String ValueNameVar = "_" + V._ParentColumn.getName() + TextUtil.CapitalizeFirstCharacter(V._Name);
-        Out.println("   public void set" + TextUtil.CapitalizeFirstCharacter(V._ParentColumn.getName()) + TextUtil.CapitalizeFirstCharacter(V._Name) + "() throws Exception");
+        String ValueNameVar = "_" + V._ParentColumn.getName() + TextUtil.capitalizeFirstCharacter(V._Name);
+        Out.println("   public void set" + TextUtil.capitalizeFirstCharacter(V._ParentColumn.getName()) + TextUtil.capitalizeFirstCharacter(V._Name) + "() throws Exception");
         switch (V._ParentColumn.getType())
           {
             case BOOLEAN:
@@ -805,15 +805,15 @@ public class TildaData implements CodeGenTildaData
             case STRING:
             case UUID:
               if (V._ParentColumn.isCollection() == false)
-                Out.println("      { set" + TextUtil.CapitalizeFirstCharacter(V._ParentColumn.getName()) + "(" + ValueNameVar + "); }");
+                Out.println("      { set" + TextUtil.capitalizeFirstCharacter(V._ParentColumn.getName()) + "(" + ValueNameVar + "); }");
               else
-                Out.println("      { addTo" + TextUtil.CapitalizeFirstCharacter(V._ParentColumn.getName()) + "(" + ValueNameVar + "); }");
+                Out.println("      { addTo" + TextUtil.capitalizeFirstCharacter(V._ParentColumn.getName()) + "(" + ValueNameVar + "); }");
               break;
             case DATETIME:
             case DATE:
               if (V._ParentColumn.isCollection() == false)
                 {
-                  Out.println("      { set" + TextUtil.CapitalizeFirstCharacter(V._ParentColumn.getName()) + "(" + ValueNameVar + "); }");
+                  Out.println("      { set" + TextUtil.capitalizeFirstCharacter(V._ParentColumn.getName()) + "(" + ValueNameVar + "); }");
                   break;
                 }
               throw new Error("An invalid type '" + V._ParentColumn.getType() + "' was assigned column values for code gen for column " + V._ParentColumn.getName() + " as a SET or LIST.");
@@ -831,9 +831,9 @@ public class TildaData implements CodeGenTildaData
     public void genMethodSetDateTimeNow(PrintWriter Out, GeneratorSession G, Column C)
       {
         String Visibility = Helper.getVisibility(C, true);
-        Out.println("   " + Visibility + " final void set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "Now() throws Exception");
+        Out.println("   " + Visibility + " final void set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "Now() throws Exception");
         Out.println("    {");
-        Out.println("      set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "(DateTimeUtil.NOW_PLACEHOLDER_ZDT);");
+        Out.println("      set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "(DateTimeUtil.NOW_PLACEHOLDER_ZDT);");
         Out.println("    }");
       }
 
@@ -841,9 +841,9 @@ public class TildaData implements CodeGenTildaData
     public void genMethodSetDateTimeUndefined(PrintWriter Out, GeneratorSession G, Column C)
       {
         String Visibility = Helper.getVisibility(C, true);
-        Out.println("   " + Visibility + " final void set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "Undefined() throws Exception");
+        Out.println("   " + Visibility + " final void set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "Undefined() throws Exception");
         Out.println("    {");
-        Out.println("      set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "(DateTimeUtil.UNDEFINED_PLACEHOLDER_ZDT);");
+        Out.println("      set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "(DateTimeUtil.UNDEFINED_PLACEHOLDER_ZDT);");
         Out.println("    }");
       }
 
@@ -851,9 +851,9 @@ public class TildaData implements CodeGenTildaData
     public void genMethodSetDateTimeExplicit(PrintWriter Out, GeneratorSession G, Column C)
       {
         String Visibility = Helper.getVisibility(C, true);
-        Out.println("   " + Visibility + " final void set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception");
+        Out.println("   " + Visibility + " final void set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception");
         Out.println("    {");
-        Out.println("      set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "(DateTimeUtil.New(year, month, date, hourOfDay, minute, second, millis, z));");
+        Out.println("      set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "(DateTimeUtil.newTZ(year, month, date, hourOfDay, minute, second, millis, z));");
         Out.println("    }");
       }
 
@@ -865,7 +865,7 @@ public class TildaData implements CodeGenTildaData
         String Mask = Helper.getRuntimeMask(C);
         String Visibility = Helper.getVisibility(C, true);
 
-        Out.println("   " + Visibility + (C._FCT == FrameworkColumnType.OCC_DELETED || C._FCT == FrameworkColumnType.OCC_LASTUPDATED ? " final" : "") + " void setNull" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()");
+        Out.println("   " + Visibility + (C._FCT == FrameworkColumnType.OCC_DELETED || C._FCT == FrameworkColumnType.OCC_LASTUPDATED ? " final" : "") + " void set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "Null()");
         Out.println("     {");
         Out.println("       long T0 = System.nanoTime();");
         if (C._Mode != ColumnMode.CALCULATED)
@@ -913,7 +913,7 @@ public class TildaData implements CodeGenTildaData
             }
         if (C.needsTZ() == true)
           {
-            Out.println("       setNull" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "TZ();");
+            Out.println("       set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "TZNull();");
           }
         Out.println("       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);");
         Out.println("     }");
@@ -924,7 +924,7 @@ public class TildaData implements CodeGenTildaData
     throws Exception
       {
         String Mask = Helper.getRuntimeMask(C);
-        Out.println("   public boolean hasChanged" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()");
+        Out.println("   public boolean hasChanged" + TextUtil.capitalizeFirstCharacter(C.getName()) + "()");
         Out.println("     { return __Changes.intersects(" + Mask + "); }");
       }
 
@@ -933,7 +933,7 @@ public class TildaData implements CodeGenTildaData
     throws Exception
       {
         String Mask = Helper.getRuntimeMask(C);
-        Out.println("   public final boolean isNull" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()");
+        Out.println("   public final boolean is" + TextUtil.capitalizeFirstCharacter(C.getName()) + "Null()");
         Out.println("     { return __Nulls.intersects(" + Mask + "); }");
       }
 
@@ -941,10 +941,10 @@ public class TildaData implements CodeGenTildaData
     public void genMethodTouch(PrintWriter Out, GeneratorSession G, Column C)
     throws Exception
       {
-        Out.println("   public final boolean Touch(Connection C) throws Exception");
+        Out.println("   public final boolean touch(Connection C) throws Exception");
         Out.println("     {");
-        Out.println("       set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "Now();");
-        Out.println("       return Write(C);");
+        Out.println("       set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "Now();");
+        Out.println("       return write(C);");
         Out.println("     }");
       }
 
@@ -1079,7 +1079,7 @@ public class TildaData implements CodeGenTildaData
                       Out.println("          if (__Changes.intersects(" + Mask + ") == true) " + Helper.getRuntimeUpdateStr(C) + ";");
                     else
                       {
-                        String MethodName = TextUtil.CapitalizeFirstCharacter(C.getName()) + TextUtil.CapitalizeFirstCharacter(C._DefaultUpdateValue._Name);
+                        String MethodName = TextUtil.capitalizeFirstCharacter(C.getName()) + TextUtil.capitalizeFirstCharacter(C._DefaultUpdateValue._Name);
                         Out.println("          if (__Changes.intersects(" + Mask + ") == false) set" + MethodName + "();");
                         Out.println("          " + Helper.getRuntimeUpdateStr(C) + ";");
                       }
@@ -1201,7 +1201,7 @@ public class TildaData implements CodeGenTildaData
         genWriteQuery(Out, G, O);
         genWritePreparedStatementPopulation(Out, O);
         genPostWriteObjectStateUpdate(Out, O);
-        Out.println("   public final boolean Write(Connection C) throws Exception");
+        Out.println("   public final boolean write(Connection C) throws Exception");
         Out.println("     {");
         Out.println("       long T0 = System.nanoTime();");
         Out.println("       if (hasChanged() == false)");
@@ -1211,9 +1211,9 @@ public class TildaData implements CodeGenTildaData
         Out.println("          return true;");
         Out.println("        }");
         Out.println();
-        Out.println("       if (BeforeWrite(C) == false)");
+        Out.println("       if (beforeWrite(C) == false)");
         Out.println("        {");
-        Out.println("          LOG.debug(QueryDetails._LOGGING_HEADER + \"The " + O.getFullName() + " object's BeforeWrite() failed.\");");
+        Out.println("          LOG.debug(QueryDetails._LOGGING_HEADER + \"The " + O.getFullName() + " object's beforeWrite() failed.\");");
         Out.println("          QueryDetails.setLastQuery(" + O.getBaseClassName() + "_Factory.SCHEMA_TABLENAME_LABEL, \"\");");
         Out.println("          return false;");
         Out.println("        }");
@@ -1253,7 +1253,7 @@ public class TildaData implements CodeGenTildaData
         Out.println("       return true;");
         Out.println("     }");
         Out.println();
-        Out.println("   protected abstract boolean BeforeWrite(Connection C) throws Exception;");
+        Out.println("   protected abstract boolean beforeWrite(Connection C) throws Exception;");
         Out.println();
       }
 
@@ -1262,7 +1262,7 @@ public class TildaData implements CodeGenTildaData
     public void genMethodCopyTo(PrintWriter Out, GeneratorSession G, Object O, List<Column> CopyToColumns)
     throws Exception
       {
-        Out.println("   public void CopyTo(" + Helper.getFullBaseClassName(O) + " Dst) throws Exception");
+        Out.println("   public void copyTo(" + Helper.getFullBaseClassName(O) + " Dst) throws Exception");
         Out.println("     {");
         for (Column C : CopyToColumns)
           if (C != null)
@@ -1270,8 +1270,8 @@ public class TildaData implements CodeGenTildaData
               String Mask = Helper.getRuntimeMask(C);
               String Pad = O._PadderColumnNames.getPad(C.getName());
               if (C._Nullable == true)
-                Out.print("       if (__Changes.intersects(" + Mask + ") == true) Dst.setNull" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "(); else ");
-              Out.println("       Dst.set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "(_" + C.getName() + Pad + ");");
+                Out.print("       if (__Changes.intersects(" + Mask + ") == true) Dst.set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "Null"+ Pad + "(); else ");
+              Out.println("       Dst.set" + TextUtil.capitalizeFirstCharacter(C.getName()) + Pad + "(_" + C.getName() + Pad + ");");
             }
         Out.println("     }");
       }
@@ -1279,25 +1279,25 @@ public class TildaData implements CodeGenTildaData
     @Override
     public void genMethodRefresh(PrintWriter Out, GeneratorSession G, Object O)
       {
-        Out.println("   public final boolean Refresh(Connection C) throws Exception");
+        Out.println("   public final boolean refresh(Connection C) throws Exception");
         Out.println("     {");
-        Out.println("       return ReadOne(C, true);");
+        Out.println("       return readOne(C, true);");
         Out.println("     }");
       }
 
     @Override
     public void genMethodRead(PrintWriter Out, GeneratorSession G, Object O)
       {
-        Out.println("   public final boolean Read(Connection C) throws Exception");
+        Out.println("   public final boolean read(Connection C) throws Exception");
         Out.println("     {");
-        Out.println("       return ReadOne(C, false);");
+        Out.println("       return readOne(C, false);");
         Out.println("     }");
         Out.println();
-        Out.println("   private final boolean ReadOne(Connection C, boolean Force) throws Exception");
+        Out.println("   private final boolean readOne(Connection C, boolean Force) throws Exception");
         Out.println("     {");
         Out.println("       long T0 = System.nanoTime();");
         Out.println("       if (__Init == InitMode.CREATE)");
-        Out.println("        throw new Exception(\"This " + O.getShortName() + " object is being Read() after a Create(), which doesn't make sense.\");");
+        Out.println("        throw new Exception(\"This " + O.getShortName() + " object is being read() after a create(), which doesn't make sense.\");");
         Out.println("       if (__Init == InitMode.READ == true && Force == false && hasChanged()==false)");
         Out.println("        {");
         Out.println("          LOG.debug(QueryDetails._LOGGING_HEADER + \"This " + O.getShortName() + " object has already been read.\");");
@@ -1340,7 +1340,7 @@ public class TildaData implements CodeGenTildaData
         Out.println("              return false;");
         Out.println("            }");
         Out.println("          count = 1;");
-        Out.println("          return Init(C, RS);");
+        Out.println("          return init(C, RS);");
         Out.println("        }");
         Helper.CatchFinallyBlock(Out, O, "selected", "StatementType.SELECT", false, false);
         Out.println("    }");
@@ -1351,7 +1351,7 @@ public class TildaData implements CodeGenTildaData
               Out.println("   @SuppressWarnings(\"unchecked\")");
               break;
             }
-        Out.println("   boolean Init(Connection C, java.sql.ResultSet RS) throws Exception");
+        Out.println("   boolean init(Connection C, java.sql.ResultSet RS) throws Exception");
         Out.println("    {");
         Out.println("      int i = 0;");
         Out.println("     __Init = InitMode.LOOKUP;");
@@ -1405,7 +1405,7 @@ public class TildaData implements CodeGenTildaData
                     else if (C.getType() == ColumnType.CHAR)
                       Out.print("_" + C.getName() + Pad + " = ParseUtil.parseCharacter    (RS.get" + JavaJDBCType.get(C.getType())._JDBCType + "(++i)); ");
                     else if (C.getType() == ColumnType.STRING)
-                      Out.print("_" + C.getName() + Pad + " = TextUtil.Trim               (RS.get" + JavaJDBCType.get(C.getType())._JDBCType + "(++i)) ; ");
+                      Out.print("_" + C.getName() + Pad + " = TextUtil.trim               (RS.get" + JavaJDBCType.get(C.getType())._JDBCType + "(++i)) ; ");
                     else
                       Out.print("_" + C.getName() + Pad + " =                              RS.get" + JavaJDBCType.get(C.getType())._JDBCType + "(++i) ; ");
                     break;
@@ -1419,11 +1419,11 @@ public class TildaData implements CodeGenTildaData
                     break;
                   case DATETIME:
                     if (C.isCollection() == true)
-                      Out.print("_" + C.getName() + Pad + " = ProcessZDTs(C, _" + C.getName() + "TZ" + Pad + ", \"" + C.getFullName() + "\"" + Pad + ", RS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + Pad + ", " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + "TZ" + Pad + ");");
+                      Out.print("_" + C.getName() + Pad + " = processZDTs(C, _" + C.getName() + "TZ" + Pad + ", \"" + C.getFullName() + "\"" + Pad + ", RS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + Pad + ", " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + "TZ" + Pad + ");");
                     // Out.print("_" + C.getName() + Pad + " = " + SerializeArray(G) + "((" + JavaJDBCType.get(C.getType())._JavaClassType + "[])RS.getArray(++i).getArray());");
                     // throw new Error("Cannot do DateTime arrays yet!");
                     else if (C.needsTZ() == true)
-                      Out.print("_" + C.getName() + Pad + " = ProcessZDT(_" + C.getName() + "TZ" + Pad + ", \"" + C.getFullName() + "\"" + Pad + ", RS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + Pad + ", " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + "TZ" + Pad + ");");
+                      Out.print("_" + C.getName() + Pad + " = processZDT(_" + C.getName() + "TZ" + Pad + ", \"" + C.getFullName() + "\"" + Pad + ", RS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + Pad + ", " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + "TZ" + Pad + ");");
                     else
                       Out.print("_" + C.getName() + Pad + " = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), " + (C._FCT.isManaged() == true ? "null" : "_" + C.getName() + "TZ") + ");");
                     break;
@@ -1450,12 +1450,12 @@ public class TildaData implements CodeGenTildaData
                       Column col = C._Mapper._SrcColumnObjs.get(c);
                       if (c != 0)
                         Str.append(", ");
-                      Str.append("get" + TextUtil.CapitalizeFirstCharacter(col.getName()) + "()");
+                      Str.append("get" + TextUtil.capitalizeFirstCharacter(col.getName()) + "()");
                     }
                   if (C._Mapper._Name == ColumnMapperMode.MEMORY)
-                    Out.println(Header + "    " + (C.isCollection() == true ? "addTo" : "set") + TextUtil.CapitalizeFirstCharacter(C.getName()) + "MappedName(" + ClassName + ".getMappedName(" + Str + ", " + VarName + "));");
+                    Out.println(Header + "    " + (C.isCollection() == true ? "addTo" : "set") + TextUtil.capitalizeFirstCharacter(C.getName()) + "MappedName(" + ClassName + ".getMappedName(" + Str + ", " + VarName + "));");
                   if (C._Mapper._Group == ColumnMapperMode.MEMORY)
-                    Out.println(Header + "    " + (C.isCollection() == true ? "addTo" : "set") + TextUtil.CapitalizeFirstCharacter(C.getName()) + "MappedGroup(" + ClassName + ".getMappedGroup(" + Str + ", " + VarName + "));");
+                    Out.println(Header + "    " + (C.isCollection() == true ? "addTo" : "set") + TextUtil.capitalizeFirstCharacter(C.getName()) + "MappedGroup(" + ClassName + ".getMappedGroup(" + Str + ", " + VarName + "));");
                   if (C.isCollection() == true)
                     {
                       Out.println(Header + "  }");
@@ -1477,7 +1477,7 @@ public class TildaData implements CodeGenTildaData
                       Out.println(Header + "    " + DataClassName + " e = " + FactoryClassName + ".getEnumerationById(" + VarName + ");");
                       Out.println(Header + "    if (e == null)");
                       Out.println(Header + "     throw new Exception(\"Cannot set " + C.getFullName() + ": the value \'\"+" + VarName + "+\"\' is not a valid Enumerated value as per \'" + FactoryClassName + "\'.\");");
-                      Out.println(Header + "    " + (C.isCollection() == true ? "addTo" : "set") + TextUtil.CapitalizeFirstCharacter(C.getName()) + "EnumValue(e.getValue());");
+                      Out.println(Header + "    " + (C.isCollection() == true ? "addTo" : "set") + TextUtil.capitalizeFirstCharacter(C.getName()) + "EnumValue(e.getValue());");
                     }
                   if (C.isCollection() == true)
                     {
@@ -1500,13 +1500,13 @@ public class TildaData implements CodeGenTildaData
         Out.println("     __LookupId = 0;");
         Out.println("     __Init     = InitMode.READ;");
         Out.println("     __Changes.clear();");
-        Out.println("     return AfterRead(C);");
+        Out.println("     return afterRead(C);");
         Out.println("   }");
         for (Column C : O._Columns)
           if (C != null && C.needsTZ() == true)
             {
               Out.println();
-              Out.println("  private final ZonedDateTime ProcessZDT(String TimezoneId, String DTFieldName, java.sql.ResultSet RS, int ColumnPos, tilda.types.ColumnDefinition DTField, tilda.types.ColumnDefinition TZField)");
+              Out.println("  private final ZonedDateTime processZDT(String TimezoneId, String DTFieldName, java.sql.ResultSet RS, int ColumnPos, tilda.types.ColumnDefinition DTField, tilda.types.ColumnDefinition TZField)");
               Out.println("  throws Exception");
               Out.println("   {");
               Out.println("     tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationById(TimezoneId);");
@@ -1529,7 +1529,7 @@ public class TildaData implements CodeGenTildaData
         for (Column C : O._Columns)
           if (C != null && C.needsTZ() == true && C.isCollection() == true)
             {
-              Out.println("  private final List<ZonedDateTime> ProcessZDTs(Connection C, List<String> TimezoneIds, String DTFieldName, java.sql.ResultSet RS, int ColumnPos, tilda.types.ColumnDefinition DTField, tilda.types.ColumnDefinition TZField)");
+              Out.println("  private final List<ZonedDateTime> processZDTs(Connection C, List<String> TimezoneIds, String DTFieldName, java.sql.ResultSet RS, int ColumnPos, tilda.types.ColumnDefinition DTField, tilda.types.ColumnDefinition TZField)");
               Out.println("  throws Exception");
               Out.println("   {");
               Out.println("     List<Timestamp> L = (List<Timestamp>) C.getArray(RS, ColumnPos, DTField._Type, false);");
@@ -1560,7 +1560,7 @@ public class TildaData implements CodeGenTildaData
               break;
             }
         Out.println();
-        Out.println("   protected abstract boolean AfterRead(Connection C) throws Exception;");
+        Out.println("   protected abstract boolean afterRead(Connection C) throws Exception;");
       }
 
     @Override
@@ -1591,27 +1591,27 @@ public class TildaData implements CodeGenTildaData
                 {
                   if (C.getType() == ColumnType.DATETIME)
                     {
-                      Out.print(": \"" + Lead + " + DateTimeUtil.printDateTimeForJSON(get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "())");
+                      Out.print(": \"" + Lead + " + DateTimeUtil.printDateTimeForJSON(get" + TextUtil.capitalizeFirstCharacter(C.getName()) + Pad + "())");
                     }
                   else if (C.getType() == ColumnType.JSON)
                     {
-                      Out.print(": \"" + Lead + " + TextUtil.PrintVariableStr        (_" + C.getName() + ")");
+                      Out.print(": \"" + Lead + " + TextUtil.printVariableStr        (_" + C.getName() + ")");
                     }
                   else if (C.getType() == ColumnType.STRING)
                     {
-                      Out.print(": \"" + Lead + " + TextUtil.PrintVariableStr        (get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "())");
+                      Out.print(": \"" + Lead + " + TextUtil.printVariableStr        (get" + TextUtil.capitalizeFirstCharacter(C.getName()) + Pad + "())");
                     }
                   else
                     {
-                      Out.print(": \"" + Lead + " +                                   get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "() ");
+                      Out.print(": \"" + Lead + " +                                   get" + TextUtil.capitalizeFirstCharacter(C.getName()) + Pad + "() ");
                     }
                 }
               else
                 {
                   if (C.getType() == ColumnType.JSON)
-                    Out.print(": \"" + Lead + " + TextUtil.PrintVariableStr        (_" + C.getName() + ")");
+                    Out.print(": \"" + Lead + " + TextUtil.printVariableStr        (_" + C.getName() + ")");
                   else
-                    Out.print(": \"" + Lead + " + TextUtil.Print                   (get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "())");
+                    Out.print(": \"" + Lead + " + TextUtil.print                   (get" + TextUtil.capitalizeFirstCharacter(C.getName()) + Pad + "())");
                 }
 
               if (C._Nullable == true && C._Mode != ColumnMode.CALCULATED)

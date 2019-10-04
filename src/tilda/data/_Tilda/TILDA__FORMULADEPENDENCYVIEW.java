@@ -128,7 +128,7 @@ public abstract class TILDA__FORMULADEPENDENCYVIEW implements tilda.interfaces.R
    protected static final Logger LOG = LogManager.getLogger(TILDA__FORMULADEPENDENCYVIEW.class.getName());
 
    public static final Class<TILDA__FORMULADEPENDENCYVIEW_Factory> FACTORY_CLASS= TILDA__FORMULADEPENDENCYVIEW_Factory.class;
-   public static final String TABLENAME = TextUtil.Print("TILDA.FormulaDependencyView", "");
+   public static final String TABLENAME = TextUtil.print("TILDA.FormulaDependencyView", "");
 
    protected TILDA__FORMULADEPENDENCYVIEW() { }
 
@@ -464,7 +464,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isNullReferencedColumns()
+   public final boolean isReferencedColumnsNull()
      { return __Nulls.intersects(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.REFERENCEDCOLUMNS._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -491,7 +491,7 @@ This is the setter for:<BR>
        if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
         throw new Exception("Cannot set field 'tilda.data.TILDA.FormulaDependencyView.referencedColumns' that is invariant, or part of a read-only or pre-existing WORM object.");
        if (v == null  || v.isEmpty() == true)
-        setNullReferencedColumns();
+        setReferencedColumnsNull();
        else if (CollectionUtil.equals(v, _referencedColumns) == false)
         {
           __Changes.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.REFERENCEDCOLUMNS._Mask);
@@ -518,7 +518,7 @@ This is the setter for:<BR>
         _referencedColumns = new ArrayList<String>();
        if (v == null)
         {
-          setNullReferencedColumns();
+          setReferencedColumnsNull();
         }
        else if (pos >= _referencedColumns.size() || _referencedColumns.get(pos).equals(v) == false)
         {
@@ -565,7 +565,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setNullReferencedColumns()
+    void setReferencedColumnsNull()
      {
        long T0 = System.nanoTime();
        if (__Nulls.intersects(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.REFERENCEDCOLUMNS._Mask) == true) // already NULL
@@ -887,7 +887,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isNullDependentReferencedColumns()
+   public final boolean isDependentReferencedColumnsNull()
      { return __Nulls.intersects(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENTREFERENCEDCOLUMNS._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -914,7 +914,7 @@ This is the setter for:<BR>
        if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
         throw new Exception("Cannot set field 'tilda.data.TILDA.FormulaDependencyView.dependentReferencedColumns' that is invariant, or part of a read-only or pre-existing WORM object.");
        if (v == null  || v.isEmpty() == true)
-        setNullDependentReferencedColumns();
+        setDependentReferencedColumnsNull();
        else if (CollectionUtil.equals(v, _dependentReferencedColumns) == false)
         {
           __Changes.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENTREFERENCEDCOLUMNS._Mask);
@@ -941,7 +941,7 @@ This is the setter for:<BR>
         _dependentReferencedColumns = new ArrayList<String>();
        if (v == null)
         {
-          setNullDependentReferencedColumns();
+          setDependentReferencedColumnsNull();
         }
        else if (pos >= _dependentReferencedColumns.size() || _dependentReferencedColumns.get(pos).equals(v) == false)
         {
@@ -988,7 +988,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setNullDependentReferencedColumns()
+    void setDependentReferencedColumnsNull()
      {
        long T0 = System.nanoTime();
        if (__Nulls.intersects(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENTREFERENCEDCOLUMNS._Mask) == true) // already NULL
@@ -1009,21 +1009,21 @@ This is the null setter for:<BR>
 // THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-   public final boolean Refresh(Connection C) throws Exception
+   public final boolean refresh(Connection C) throws Exception
      {
-       return ReadOne(C, true);
+       return readOne(C, true);
      }
 
-   public final boolean Read(Connection C) throws Exception
+   public final boolean read(Connection C) throws Exception
      {
-       return ReadOne(C, false);
+       return readOne(C, false);
      }
 
-   private final boolean ReadOne(Connection C, boolean Force) throws Exception
+   private final boolean readOne(Connection C, boolean Force) throws Exception
      {
        long T0 = System.nanoTime();
        if (__Init == InitMode.CREATE)
-        throw new Exception("This TILDA.FormulaDependencyView object is being Read() after a Create(), which doesn't make sense.");
+        throw new Exception("This TILDA.FormulaDependencyView object is being read() after a create(), which doesn't make sense.");
        if (__Init == InitMode.READ == true && Force == false && hasChanged()==false)
         {
           LOG.debug(QueryDetails._LOGGING_HEADER + "This TILDA.FormulaDependencyView object has already been read.");
@@ -1075,7 +1075,7 @@ This is the null setter for:<BR>
               return false;
             }
           count = 1;
-          return Init(C, RS);
+          return init(C, RS);
         }
        catch (java.sql.SQLException E)
         {
@@ -1083,45 +1083,45 @@ This is the null setter for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__FORMULADEPENDENCYVIEW_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, AllocatedArrays);
+          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__FORMULADEPENDENCYVIEW_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, AllocatedArrays);
           PS = null;
           AllocatedArrays = null;
         }
     }
 
    @SuppressWarnings("unchecked")
-   boolean Init(Connection C, java.sql.ResultSet RS) throws Exception
+   boolean init(Connection C, java.sql.ResultSet RS) throws Exception
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
                                            _formulaRefnum              =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.FORMULAREFNUM._Mask             );
-                                           _location                   = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.LOCATION._Mask                  );
-                                           _name                       = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.NAME._Mask                      );
+                                           _location                   = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.LOCATION._Mask                  );
+                                           _name                       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.NAME._Mask                      );
                                            _referencedColumns = (List<String>) C.getArray(RS, ++i, TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.REFERENCEDCOLUMNS._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.REFERENCEDCOLUMNS._Mask         );
                                            _dependencyRefnum           =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENCYREFNUM._Mask          );
-                                           _dependentFormulaName       = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENTFORMULANAME._Mask      );
-                                           _dependentFormulaLocation   = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENTFORMULALOCATION._Mask  );
+                                           _dependentFormulaName       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENTFORMULANAME._Mask      );
+                                           _dependentFormulaLocation   = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENTFORMULALOCATION._Mask  );
                                            _dependentReferencedColumns = (List<String>) C.getArray(RS, ++i, TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENTREFERENCEDCOLUMNS._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENTREFERENCEDCOLUMNS._Mask);
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();
-     return AfterRead(C);
+     return afterRead(C);
    }
 
-   protected abstract boolean AfterRead(Connection C) throws Exception;
+   protected abstract boolean afterRead(Connection C) throws Exception;
 
    public String toString()
     {
       long T0 = System.nanoTime();
       String Str = 
                    "formulaRefnum: "                                                                                                                                +                                   getFormulaRefnum             () 
-               + "; location: "                                                                                                                                     + TextUtil.PrintVariableStr        (getLocation                  ())
-               + "; name: "                                                                                                                                         + TextUtil.PrintVariableStr        (getName                      ())
-               + "; referencedColumns"            + (__Nulls.intersects(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.REFERENCEDCOLUMNS._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getReferencedColumns         ()))
+               + "; location: "                                                                                                                                     + TextUtil.printVariableStr        (getLocation                  ())
+               + "; name: "                                                                                                                                         + TextUtil.printVariableStr        (getName                      ())
+               + "; referencedColumns"            + (__Nulls.intersects(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.REFERENCEDCOLUMNS._Mask) == true ? ": NULL" : ": " + TextUtil.print                   (getReferencedColumns         ()))
                + "; dependencyRefnum: "                                                                                                                             +                                   getDependencyRefnum          () 
-               + "; dependentFormulaName: "                                                                                                                         + TextUtil.PrintVariableStr        (getDependentFormulaName      ())
-               + "; dependentFormulaLocation: "                                                                                                                     + TextUtil.PrintVariableStr        (getDependentFormulaLocation  ())
-               + "; dependentReferencedColumns"   + (__Nulls.intersects(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENTREFERENCEDCOLUMNS._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getDependentReferencedColumns()))
+               + "; dependentFormulaName: "                                                                                                                         + TextUtil.printVariableStr        (getDependentFormulaName      ())
+               + "; dependentFormulaLocation: "                                                                                                                     + TextUtil.printVariableStr        (getDependentFormulaLocation  ())
+               + "; dependentReferencedColumns"   + (__Nulls.intersects(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENTREFERENCEDCOLUMNS._Mask) == true ? ": NULL" : ": " + TextUtil.print                   (getDependentReferencedColumns()))
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;

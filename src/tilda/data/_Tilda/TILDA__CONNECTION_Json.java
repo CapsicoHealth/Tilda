@@ -33,7 +33,7 @@ public class TILDA__CONNECTION_Json
    @SerializedName("schemas"    ) public List<String>  _schemas    ;
    /*@formatter:on*/
 
-   public tilda.data.Connection_Data Write(Connection C) throws Exception
+   public tilda.data.Connection_Data write(Connection C) throws Exception
     {
       if (TextUtil.isNullOrEmpty(_id         ) == true)
        throw new Exception("Incoming value for 'tilda.data.TILDA.Connection.id' was null or empty. It's not nullable in the model.\n"+toString());
@@ -52,12 +52,12 @@ public class TILDA__CONNECTION_Json
       if (_schemas     == null || _schemas    .isEmpty() == true)
        throw new Exception("Incoming value for 'tilda.data.TILDA.Connection.schemas' was null or empty. It's not nullable in the model.\n"+toString());
 
-      tilda.data.Connection_Data Obj = tilda.data.Connection_Factory.Create(_id, _driver, _db, _user, _pswd, _initial, _max, _schemas);
-      Update(Obj);
-      if (Obj.Write(C) == false)
+      tilda.data.Connection_Data Obj = tilda.data.Connection_Factory.create(_id, _driver, _db, _user, _pswd, _initial, _max, _schemas);
+      update(Obj);
+      if (Obj.write(C) == false)
        {
-         Obj = tilda.data.Connection_Factory.LookupByPrimaryKey(_id);
-         if (Obj.Read(C) == false)
+         Obj = tilda.data.Connection_Factory.lookupByPrimaryKey(_id);
+         if (Obj.read(C) == false)
           throw new Exception("Cannot create the tilda.data.TILDA.Connection object.\n"+toString());
          if (_active     != null) Obj.setActive     (_active     );
          if (_driver     != null) Obj.setDriver     (_driver     );
@@ -67,14 +67,14 @@ public class TILDA__CONNECTION_Json
          if (_initial    != null) Obj.setInitial    (_initial    );
          if (_max        != null) Obj.setMax        (_max        );
          if (_schemas    != null) Obj.setSchemas    (_schemas    );
-         if (Obj.Write(C) == false)
+         if (Obj.write(C) == false)
           throw new Exception("Cannot update the tilda.data.TILDA.Connection object: "+Obj.toString());
 
        }
       return Obj;
    }
 
-   public void Update(tilda.data.Connection_Data Obj) throws Exception
+   public void update(tilda.data.Connection_Data Obj) throws Exception
     {
       if (_active     != null) Obj.setActive     (_active     );
       if (_id         != null) Obj.setId         (_id         );

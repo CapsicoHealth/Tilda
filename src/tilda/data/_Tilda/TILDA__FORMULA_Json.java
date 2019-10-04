@@ -33,7 +33,7 @@ public class TILDA__FORMULA_Json
    @SerializedName("referencedColumns") public List<String>  _referencedColumns;
    /*@formatter:on*/
 
-   public tilda.data.Formula_Data Write(Connection C) throws Exception
+   public tilda.data.Formula_Data write(Connection C) throws Exception
     {
       if (TextUtil.isNullOrEmpty(_location         ) == true)
        throw new Exception("Incoming value for 'tilda.data.TILDA.Formula.location' was null or empty. It's not nullable in the model.\n"+toString());
@@ -48,12 +48,12 @@ public class TILDA__FORMULA_Json
       if (TextUtil.isNullOrEmpty(_description      ) == true)
        throw new Exception("Incoming value for 'tilda.data.TILDA.Formula.description' was null or empty. It's not nullable in the model.\n"+toString());
 
-      tilda.data.Formula_Data Obj = tilda.data.Formula_Factory.Create(_location, _location2, _name, _type, _title, _description);
-      Update(Obj);
-      if (Obj.Write(C) == false)
+      tilda.data.Formula_Data Obj = tilda.data.Formula_Factory.create(_location, _location2, _name, _type, _title, _description);
+      update(Obj);
+      if (Obj.write(C) == false)
        {
-         Obj = tilda.data.Formula_Factory.LookupByFormula(_location, _name);
-         if (Obj.Read(C) == false)
+         Obj = tilda.data.Formula_Factory.lookupByFormula(_location, _name);
+         if (Obj.read(C) == false)
           throw new Exception("Cannot create the tilda.data.TILDA.Formula object.\n"+toString());
          if (_location2        .equals(Obj.getLocation2        ()) == false)
           throw new Exception("Cannot update the invariant field 'tilda.data.TILDA.Formula.location2' from '"+Obj.getLocation2()+"' to '"+_location2+"': "+Obj.toString());
@@ -63,14 +63,14 @@ public class TILDA__FORMULA_Json
          if (_formula          != null) Obj.setFormula          (_formula          );
          if (_htmlDoc          != null) Obj.setHtmlDoc          (_htmlDoc          );
          if (_referencedColumns!= null) Obj.setReferencedColumns(_referencedColumns);
-         if (Obj.Write(C) == false)
+         if (Obj.write(C) == false)
           throw new Exception("Cannot update the tilda.data.TILDA.Formula object: "+Obj.toString());
 
        }
       return Obj;
    }
 
-   public void Update(tilda.data.Formula_Data Obj) throws Exception
+   public void update(tilda.data.Formula_Data Obj) throws Exception
     {
       if (_location         != null) Obj.setLocation         (_location         );
       if (_location2        != null) Obj.setLocation2        (_location2        );

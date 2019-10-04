@@ -47,19 +47,19 @@ public class TILDA__DATEDIM_Json
    @SerializedName("holidayName"   ) public String  _holidayName   ;
    /*@formatter:on*/
 
-   public tilda.data.DateDim_Data Write(Connection C) throws Exception
+   public tilda.data.DateDim_Data write(Connection C) throws Exception
     {
       if (_dt             == null)
        throw new Exception("Incoming value for 'tilda.data.TILDA.DateDim.dt' was null or empty. It's not nullable in the model.\n"+toString());
       if (_epoch          == null)
        throw new Exception("Incoming value for 'tilda.data.TILDA.DateDim.epoch' was null or empty. It's not nullable in the model.\n"+toString());
 
-      tilda.data.DateDim_Data Obj = tilda.data.DateDim_Factory.Create(_dt, _epoch);
-      Update(Obj);
-      if (Obj.Write(C) == false)
+      tilda.data.DateDim_Data Obj = tilda.data.DateDim_Factory.create(_dt, _epoch);
+      update(Obj);
+      if (Obj.write(C) == false)
        {
-         Obj = tilda.data.DateDim_Factory.LookupByPrimaryKey(_dt);
-         if (Obj.Read(C) == false)
+         Obj = tilda.data.DateDim_Factory.lookupByPrimaryKey(_dt);
+         if (Obj.read(C) == false)
           throw new Exception("Cannot create the tilda.data.TILDA.DateDim object.\n"+toString());
          if (_epoch         != null) Obj.setEpoch         (_epoch         );
          if (_dayName       != null) Obj.setDayName       (_dayName       );
@@ -82,14 +82,14 @@ public class TILDA__DATEDIM_Json
          if (_isBusinessDay != null) Obj.setIsBusinessDay (_isBusinessDay );
          if (_isHoliday     != null) Obj.setIsHoliday     (_isHoliday     );
          if (_holidayName   != null) Obj.setHolidayName   (_holidayName   );
-         if (Obj.Write(C) == false)
+         if (Obj.write(C) == false)
           throw new Exception("Cannot update the tilda.data.TILDA.DateDim object: "+Obj.toString());
 
        }
       return Obj;
    }
 
-   public void Update(tilda.data.DateDim_Data Obj) throws Exception
+   public void update(tilda.data.DateDim_Data Obj) throws Exception
     {
       if (_dt            != null) Obj.setDt            (_dt            );
       if (_epoch         != null) Obj.setEpoch         (_epoch         );

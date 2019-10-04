@@ -55,7 +55,7 @@ public class DDLDependencyManager
     public boolean fetchDependencies(Connection C)
     throws Exception
       {
-        _Scripts = DependencyDDLDummyTable_Factory.LookupDDLDependencies(C, _SchemaName, _TableViewName);
+        _Scripts = DependencyDDLDummyTable_Factory.lookupDDLDependencies(C, _SchemaName, _TableViewName);
         boolean Error = false;
         for (DependencyDDLDummyTable_Data S : _Scripts)
           {

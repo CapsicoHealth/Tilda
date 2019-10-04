@@ -28,7 +28,7 @@ public class TILDA__KEY_Json
    @SerializedName("count"         ) public Integer  _count         ;
    /*@formatter:on*/
 
-   public tilda.data.Key_Data Write(Connection C) throws Exception
+   public tilda.data.Key_Data write(Connection C) throws Exception
     {
       if (_refnum         == null)
        throw new Exception("Incoming value for 'tilda.data.TILDA.Key.refnum' was null or empty. It's not nullable in the model.\n"+toString());
@@ -39,23 +39,23 @@ public class TILDA__KEY_Json
       if (_count          == null)
        throw new Exception("Incoming value for 'tilda.data.TILDA.Key.count' was null or empty. It's not nullable in the model.\n"+toString());
 
-      tilda.data.Key_Data Obj = tilda.data.Key_Factory.Create(_refnum, _name, _max, _count);
-      Update(Obj);
-      if (Obj.Write(C) == false)
+      tilda.data.Key_Data Obj = tilda.data.Key_Factory.create(_refnum, _name, _max, _count);
+      update(Obj);
+      if (Obj.write(C) == false)
        {
-         Obj = tilda.data.Key_Factory.LookupByName(_name);
-         if (Obj.Read(C) == false)
+         Obj = tilda.data.Key_Factory.lookupByName(_name);
+         if (Obj.read(C) == false)
           throw new Exception("Cannot create the tilda.data.TILDA.Key object.\n"+toString());
          if (_max           != null) Obj.setMax           (_max           );
          if (_count         != null) Obj.setCount         (_count         );
-         if (Obj.Write(C) == false)
+         if (Obj.write(C) == false)
           throw new Exception("Cannot update the tilda.data.TILDA.Key object: "+Obj.toString());
 
        }
       return Obj;
    }
 
-   public void Update(tilda.data.Key_Data Obj) throws Exception
+   public void update(tilda.data.Key_Data Obj) throws Exception
     {
       if (_refnum        != null) Obj.setRefnum        (_refnum        );
       if (_name          != null) Obj.setName          (_name          );

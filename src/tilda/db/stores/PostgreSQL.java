@@ -189,7 +189,7 @@ public class PostgreSQL implements DBType
 
 
     @Override
-    public boolean FullIdentifierOnUpdate()
+    public boolean fullIdentifierOnUpdate()
       {
         return true;
       }
@@ -1257,7 +1257,7 @@ public class PostgreSQL implements DBType
     throws Exception
       {
         // If the DB Name comes in as all lower case, it's case-insensitive. Otherwise, we have to quote.
-        if (OldName.equals(OldName.toLowerCase()) == false || OldName.equals(TextUtil.SanitizeName(OldName)) == false)
+        if (OldName.equals(OldName.toLowerCase()) == false || OldName.equals(TextUtil.sanitizeName(OldName)) == false)
           OldName = "\"" + OldName + "\"";
 
         String Q = "ALTER INDEX " + Obj._ParentSchema._Name + "." + OldName + " RENAME TO " + NewName + ";";

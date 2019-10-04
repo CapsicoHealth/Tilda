@@ -37,7 +37,7 @@ public class RootImporter implements Importer
       {
         int Count = 0;
         
-        for (ZoneInfo_Json          obj : _Zones        ) { ++Count; obj.Write(C); }
+        for (ZoneInfo_Json          obj : _Zones        ) { ++Count; obj.write(C); }
         ZoneInfo_Factory.initMappings(C);
         
         return Count;

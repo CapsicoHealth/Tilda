@@ -43,7 +43,7 @@ public abstract class SimpleRunnable implements Runnable
             doRun();
             _taskTimeNano = System.nanoTime() - T0;
             LOG.debug("\n\n*******************************************************************************************\n"
-            + "** Task " + _Name + " ran in " + DurationUtil.PrintDuration(_taskTimeNano) + ".\n"
+            + "** Task " + _Name + " ran in " + DurationUtil.printDuration(_taskTimeNano) + ".\n"
             + "*******************************************************************************************\n\n");
           }
         catch (Exception E)

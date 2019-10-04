@@ -27,29 +27,29 @@ public class TILDA__MAINTENANCE_Json
    @SerializedName("value"      ) public String  _value      ;
    /*@formatter:on*/
 
-   public tilda.data.Maintenance_Data Write(Connection C) throws Exception
+   public tilda.data.Maintenance_Data write(Connection C) throws Exception
     {
       if (TextUtil.isNullOrEmpty(_type       ) == true)
        throw new Exception("Incoming value for 'tilda.data.TILDA.Maintenance.type' was null or empty. It's not nullable in the model.\n"+toString());
       if (TextUtil.isNullOrEmpty(_name       ) == true)
        throw new Exception("Incoming value for 'tilda.data.TILDA.Maintenance.name' was null or empty. It's not nullable in the model.\n"+toString());
 
-      tilda.data.Maintenance_Data Obj = tilda.data.Maintenance_Factory.Create(_type, _name);
-      Update(Obj);
-      if (Obj.Write(C) == false)
+      tilda.data.Maintenance_Data Obj = tilda.data.Maintenance_Factory.create(_type, _name);
+      update(Obj);
+      if (Obj.write(C) == false)
        {
-         Obj = tilda.data.Maintenance_Factory.LookupByPrimaryKey(_type, _name);
-         if (Obj.Read(C) == false)
+         Obj = tilda.data.Maintenance_Factory.lookupByPrimaryKey(_type, _name);
+         if (Obj.read(C) == false)
           throw new Exception("Cannot create the tilda.data.TILDA.Maintenance object.\n"+toString());
          if (_value      != null) Obj.setValue      (_value      );
-         if (Obj.Write(C) == false)
+         if (Obj.write(C) == false)
           throw new Exception("Cannot update the tilda.data.TILDA.Maintenance object: "+Obj.toString());
 
        }
       return Obj;
    }
 
-   public void Update(tilda.data.Maintenance_Data Obj) throws Exception
+   public void update(tilda.data.Maintenance_Data Obj) throws Exception
     {
       if (_type       != null) Obj.setType       (_type       );
       if (_name       != null) Obj.setName       (_name       );

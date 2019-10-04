@@ -38,7 +38,7 @@ public class TILDA__JOB_Json
    @SerializedName("msg"        ) public String  _msg        ;
    /*@formatter:on*/
 
-   public tilda.data.Job_Data Write(Connection C) throws Exception
+   public tilda.data.Job_Data write(Connection C) throws Exception
     {
       if (TextUtil.isNullOrEmpty(_name       ) == true)
        throw new Exception("Incoming value for 'tilda.data.TILDA.Job.name' was null or empty. It's not nullable in the model.\n"+toString());
@@ -66,16 +66,16 @@ public class TILDA__JOB_Json
           throw new Exception("Incoming value for 'tilda.data.TILDA.Job.end' was not in the expected format. Dates should follow the ISO format.\n"+toString());
        }
 
-      tilda.data.Job_Data Obj = tilda.data.Job_Factory.Create(_name, _start);
-      Update(Obj);
-      if (Obj.Write(C) == false)
+      tilda.data.Job_Data Obj = tilda.data.Job_Factory.create(_name, _start);
+      update(Obj);
+      if (Obj.write(C) == false)
        {
          throw new Exception("Cannot create the tilda.data.TILDA.Job object.\n"+toString());
        }
       return Obj;
    }
 
-   public void Update(tilda.data.Job_Data Obj) throws Exception
+   public void update(tilda.data.Job_Data Obj) throws Exception
     {
       if (_name       != null) Obj.setName       (_name       );
       if (_type       != null) Obj.setType       (_type       );

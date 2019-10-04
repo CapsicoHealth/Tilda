@@ -175,7 +175,7 @@ public abstract class TILDA__MEASUREFORMULAVIEW implements tilda.interfaces.Read
    protected static final Logger LOG = LogManager.getLogger(TILDA__MEASUREFORMULAVIEW.class.getName());
 
    public static final Class<TILDA__MEASUREFORMULAVIEW_Factory> FACTORY_CLASS= TILDA__MEASUREFORMULAVIEW_Factory.class;
-   public static final String TABLENAME = TextUtil.Print("TILDA.MeasureFormulaView", "");
+   public static final String TABLENAME = TextUtil.print("TILDA.MeasureFormulaView", "");
 
    protected TILDA__MEASUREFORMULAVIEW() { }
 
@@ -1347,7 +1347,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isNullFormula()
+   public final boolean isFormulaNull()
      { return __Nulls.intersects(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULA._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1373,7 +1373,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setNullFormula();
+          setFormulaNull();
         }
        else if (v.length() > 32000)
         throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.formula: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 32000.");
@@ -1406,7 +1406,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setNullFormula()
+    void setFormulaNull()
      {
        long T0 = System.nanoTime();
        if (__Nulls.intersects(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULA._Mask) == true) // already NULL
@@ -1427,21 +1427,21 @@ This is the null setter for:<BR>
 // THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-   public final boolean Refresh(Connection C) throws Exception
+   public final boolean refresh(Connection C) throws Exception
      {
-       return ReadOne(C, true);
+       return readOne(C, true);
      }
 
-   public final boolean Read(Connection C) throws Exception
+   public final boolean read(Connection C) throws Exception
      {
-       return ReadOne(C, false);
+       return readOne(C, false);
      }
 
-   private final boolean ReadOne(Connection C, boolean Force) throws Exception
+   private final boolean readOne(Connection C, boolean Force) throws Exception
      {
        long T0 = System.nanoTime();
        if (__Init == InitMode.CREATE)
-        throw new Exception("This TILDA.MeasureFormulaView object is being Read() after a Create(), which doesn't make sense.");
+        throw new Exception("This TILDA.MeasureFormulaView object is being read() after a create(), which doesn't make sense.");
        if (__Init == InitMode.READ == true && Force == false && hasChanged()==false)
         {
           LOG.debug(QueryDetails._LOGGING_HEADER + "This TILDA.MeasureFormulaView object has already been read.");
@@ -1495,7 +1495,7 @@ This is the null setter for:<BR>
               return false;
             }
           count = 1;
-          return Init(C, RS);
+          return init(C, RS);
         }
        catch (java.sql.SQLException E)
         {
@@ -1503,49 +1503,49 @@ This is the null setter for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__MEASUREFORMULAVIEW_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__MEASUREFORMULAVIEW_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
     }
 
-   boolean Init(Connection C, java.sql.ResultSet RS) throws Exception
+   boolean init(Connection C, java.sql.ResultSet RS) throws Exception
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
                                  _measureRefnum    =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.MEASUREREFNUM._Mask   );
-                                 _measureSchema    = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.MEASURESCHEMA._Mask   );
-                                 _measureName      = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.MEASURENAME._Mask     );
+                                 _measureSchema    = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.MEASURESCHEMA._Mask   );
+                                 _measureName      = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.MEASURENAME._Mask     );
                                  _formulaRefnum    =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULAREFNUM._Mask   );
-                                 _formulaLocation  = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULALOCATION._Mask );
-                                 _formulaLocation2 = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULALOCATION2._Mask);
-                                 _formulaName      = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULANAME._Mask     );
-                                 _title            = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.TITLE._Mask           );
-                                 _description      = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.DESCRIPTION._Mask     );
-                                 _type             = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.TYPE._Mask            ); else _type             = _type            .trim();
-                                 _formula          = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULA._Mask         );
+                                 _formulaLocation  = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULALOCATION._Mask );
+                                 _formulaLocation2 = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULALOCATION2._Mask);
+                                 _formulaName      = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULANAME._Mask     );
+                                 _title            = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.TITLE._Mask           );
+                                 _description      = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.DESCRIPTION._Mask     );
+                                 _type             = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.TYPE._Mask            ); else _type             = _type            .trim();
+                                 _formula          = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULA._Mask         );
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();
-     return AfterRead(C);
+     return afterRead(C);
    }
 
-   protected abstract boolean AfterRead(Connection C) throws Exception;
+   protected abstract boolean afterRead(Connection C) throws Exception;
 
    public String toString()
     {
       long T0 = System.nanoTime();
       String Str = 
                    "measureRefnum: "                                                                                                         +                                   getMeasureRefnum   () 
-               + "; measureSchema: "                                                                                                         + TextUtil.PrintVariableStr        (getMeasureSchema   ())
-               + "; measureName: "                                                                                                           + TextUtil.PrintVariableStr        (getMeasureName     ())
+               + "; measureSchema: "                                                                                                         + TextUtil.printVariableStr        (getMeasureSchema   ())
+               + "; measureName: "                                                                                                           + TextUtil.printVariableStr        (getMeasureName     ())
                + "; formulaRefnum: "                                                                                                         +                                   getFormulaRefnum   () 
-               + "; formulaLocation: "                                                                                                       + TextUtil.PrintVariableStr        (getFormulaLocation ())
-               + "; formulaLocation2: "                                                                                                      + TextUtil.PrintVariableStr        (getFormulaLocation2())
-               + "; formulaName: "                                                                                                           + TextUtil.PrintVariableStr        (getFormulaName     ())
-               + "; title: "                                                                                                                 + TextUtil.PrintVariableStr        (getTitle           ())
-               + "; description: "                                                                                                           + TextUtil.PrintVariableStr        (getDescription     ())
-               + "; type: "                                                                                                                  + TextUtil.PrintVariableStr        (getType            ())
-               + "; formula"            + (__Nulls.intersects(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULA._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getFormula         ()))
+               + "; formulaLocation: "                                                                                                       + TextUtil.printVariableStr        (getFormulaLocation ())
+               + "; formulaLocation2: "                                                                                                      + TextUtil.printVariableStr        (getFormulaLocation2())
+               + "; formulaName: "                                                                                                           + TextUtil.printVariableStr        (getFormulaName     ())
+               + "; title: "                                                                                                                 + TextUtil.printVariableStr        (getTitle           ())
+               + "; description: "                                                                                                           + TextUtil.printVariableStr        (getDescription     ())
+               + "; type: "                                                                                                                  + TextUtil.printVariableStr        (getType            ())
+               + "; formula"            + (__Nulls.intersects(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULA._Mask) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getFormula         ()))
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;

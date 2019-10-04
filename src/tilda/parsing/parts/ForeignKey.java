@@ -65,7 +65,7 @@ public class ForeignKey
         if (TextUtil.isNullOrEmpty(_Name) == true)
           return PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a foreign key without a name.");
 
-        if (_Name.equals(TextUtil.SanitizeName(_Name)) == false)
+        if (_Name.equals(TextUtil.sanitizeName(_Name)) == false)
           PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining foreign key '" + _Name + "' with a name containing invalid characters (must all be alphanumeric or underscore).");
 
         if (TextUtil.isJavaIdentifier(_Name) == false)
@@ -148,7 +148,7 @@ public class ForeignKey
 
     public String getColumnList()
       {
-        return TextUtil.Print(_SrcColumns);
+        return TextUtil.print(_SrcColumns);
       }
 
     public String getSignature()

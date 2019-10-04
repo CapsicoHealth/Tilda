@@ -140,7 +140,7 @@ public class TildaJson implements CodeGenTildaJson
     public void genMethodWrite(PrintWriter Out, GeneratorSession G, Object O, List<Column> CreateColumns, List<Column> Columns)
     throws Exception
       {
-        Out.println("   public " + Helper.getFullAppDataClassName(O) + " Write(Connection C) throws Exception");
+        Out.println("   public " + Helper.getFullAppDataClassName(O) + " write(Connection C) throws Exception");
         Out.println("    {");
         for (Column C : Columns)
           {
@@ -194,13 +194,13 @@ public class TildaJson implements CodeGenTildaJson
             // }
             if (O._FST == FrameworkSourcedType.MAPPER && C.getName().equals("group") == true)
               {
-                Out.println("      if (TextUtil.FindElement(" + Helper.getFullAppDataClassName(O) + "._" + C.getName() + "_Values, _" + C.getName() + ", 0, true, 0) == -1)");
-                Out.println("       throw new Exception(\"Invalid value " + C.getName() + "='\"+_" + C.getName() + "+\"'. As per the model, valid values are: \"+TextUtil.Print(" + Helper.getFullAppDataClassName(O) + "._"
+                Out.println("      if (TextUtil.findElement(" + Helper.getFullAppDataClassName(O) + "._" + C.getName() + "_Values, _" + C.getName() + ", 0, true, 0) == -1)");
+                Out.println("       throw new Exception(\"Invalid value " + C.getName() + "='\"+_" + C.getName() + "+\"'. As per the model, valid values are: \"+TextUtil.print(" + Helper.getFullAppDataClassName(O) + "._"
                 + C.getName() + "_Values, 0)+\".\\n\"+toString());");
               }
           }
         Out.println();
-        Out.print("      " + Helper.getFullAppDataClassName(O) + " Obj = " + Helper.getFullAppFactoryClassName(O) + ".Create(");
+        Out.print("      " + Helper.getFullAppDataClassName(O) + " Obj = " + Helper.getFullAppFactoryClassName(O) + ".create(");
         boolean First = true;
         for (Column C : CreateColumns)
           if (C != null && (C._PrimaryKey == false || O._PrimaryKey._Autogen == false))
@@ -212,8 +212,8 @@ public class TildaJson implements CodeGenTildaJson
               Out.print("_" + C.getName());
             }
         Out.println(");");
-        Out.println("      Update(Obj);");
-        Out.println("      if (Obj.Write(C) == false)");
+        Out.println("      update(Obj);");
+        Out.println("      if (Obj.write(C) == false)");
         Out.println("       {");
         List<Column> Cols = null;
         if (O._Indices != null)
@@ -239,7 +239,7 @@ public class TildaJson implements CodeGenTildaJson
                 }
             if (FirstGoodIndex != null)
               {
-                Out.print("         Obj = " + Helper.getFullAppFactoryClassName(O) + ".LookupBy" + FirstGoodIndex._Name + "(");
+                Out.print("         Obj = " + Helper.getFullAppFactoryClassName(O) + ".lookupBy" + FirstGoodIndex._Name + "(");
                 First = true;
                 for (Column C : FirstGoodIndex._ColumnObjs)
                   if (C != null)
@@ -257,7 +257,7 @@ public class TildaJson implements CodeGenTildaJson
           }
         if (Cols == null && O._PrimaryKey != null && O._PrimaryKey._Autogen == false)
           {
-            Out.print("         Obj = " + Helper.getFullAppFactoryClassName(O) + ".LookupByPrimaryKey(");
+            Out.print("         Obj = " + Helper.getFullAppFactoryClassName(O) + ".lookupByPrimaryKey(");
             First = true;
             for (Column C : O._PrimaryKey._ColumnObjs)
               if (C != null)
@@ -277,7 +277,7 @@ public class TildaJson implements CodeGenTildaJson
           }
         else
           {
-            Out.println("         if (Obj.Read(C) == false)");
+            Out.println("         if (Obj.read(C) == false)");
             Out.println("          throw new Exception(\"Cannot create the " + O.getFullName() + " object.\\n\"+toString());");
             int count = 0;
             for (Column C : O._Columns)
@@ -286,22 +286,22 @@ public class TildaJson implements CodeGenTildaJson
                   if (C._Invariant == false)
                     {
                       String Pad = O._PadderColumnNames.getPad(C.getName());
-                      Out.println("         if (_" + C.getName() + Pad + "!= null) Obj.set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "(_" + C.getName() + Pad + ");");
+                      Out.println("         if (_" + C.getName() + Pad + "!= null) Obj.set" + TextUtil.capitalizeFirstCharacter(C.getName()) + Pad + "(_" + C.getName() + Pad + ");");
                       ++count;
                     }
                   else if (C._PrimaryKey == false)
                     {
                       String Pad = O._PadderColumnNames.getPad(C.getName());
                       if (C.isCollection() == false && C.getType().isPrimitive() == true)
-                        Out.println("         if (_" + C.getName() + Pad + "!= Obj.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "())");
+                        Out.println("         if (_" + C.getName() + Pad + "!= Obj.get" + TextUtil.capitalizeFirstCharacter(C.getName()) + Pad + "())");
                       else
-                        Out.println("         if (_" + C.getName() + Pad + ".equals(Obj.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "()) == false)");
-                      Out.println("          throw new Exception(\"Cannot update the invariant field '" + C.getFullName() + "' from '\"+Obj.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()+\"' to '\"+_" + C.getName() + "+\"': \"+Obj.toString());");
+                        Out.println("         if (_" + C.getName() + Pad + ".equals(Obj.get" + TextUtil.capitalizeFirstCharacter(C.getName()) + Pad + "()) == false)");
+                      Out.println("          throw new Exception(\"Cannot update the invariant field '" + C.getFullName() + "' from '\"+Obj.get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "()+\"' to '\"+_" + C.getName() + "+\"': \"+Obj.toString());");
                     }
                 }
             if (count != 0)
               {
-                Out.println("         if (Obj.Write(C) == false)");
+                Out.println("         if (Obj.write(C) == false)");
                 Out.println("          throw new Exception(\"Cannot update the " + O.getFullName() + " object: \"+Obj.toString());");
               }
             else
@@ -315,13 +315,13 @@ public class TildaJson implements CodeGenTildaJson
         Out.println("      return Obj;");
         Out.println("   }");
         Out.println();
-        Out.println("   public void Update(" + Helper.getFullAppDataClassName(O) + " Obj) throws Exception");
+        Out.println("   public void update(" + Helper.getFullAppDataClassName(O) + " Obj) throws Exception");
         Out.println("    {");
         for (Column C : O._Columns)
           if (C != null && C.isJSONColumn() == true)
             {
               String Pad = O._PadderColumnNames.getPad(C.getName());
-              Out.println("      if (_" + C.getName() + Pad + "!= null) Obj.set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "(_" + C.getName() + Pad + ");");
+              Out.println("      if (_" + C.getName() + Pad + "!= null) Obj.set" + TextUtil.capitalizeFirstCharacter(C.getName()) + Pad + "(_" + C.getName() + Pad + ");");
             }
         Out.println("    }");
       }
@@ -508,8 +508,8 @@ public class TildaJson implements CodeGenTildaJson
             Column nameCol = J._ColumnObjs.get(0);
             Column valCol = J._ColumnObjs.get(1);
 
-            String nameType = TextUtil.NormalCapitalization(nameCol.getType().name());
-            String valType = TextUtil.NormalCapitalization(valCol.getType().name());
+            String nameType = TextUtil.normalCapitalization(nameCol.getType().name());
+            String valType = TextUtil.normalCapitalization(valCol.getType().name());
 
             if (nameType.equalsIgnoreCase("Char"))
               nameType = "Character";
@@ -521,21 +521,21 @@ public class TildaJson implements CodeGenTildaJson
             Out.println("      Map<" + nameType + ", " + valType + "> M = new HashMap<" + nameType + ", " + valType + ">();");
             Out.println("      for (" + Helper.getFullAppDataClassName(J._ParentObject) + " D : L)");
             Out.println("        {");
-            Out.println("          " + valType + " val = M.get(D.get" + TextUtil.CapitalizeFirstCharacter(nameCol.getName()) + "());");
+            Out.println("          " + valType + " val = M.get(D.get" + TextUtil.capitalizeFirstCharacter(nameCol.getName()) + "());");
             Out.println("          if(val != null)");
-            Out.println("            throw new Exception(\"The key \" + D.get" + TextUtil.CapitalizeFirstCharacter(nameCol.getName()) + "() + \" with value \" + String.valueOf(val) + \" already exists in the Map. Key values must be unique.\");");
+            Out.println("            throw new Exception(\"The key \" + D.get" + TextUtil.capitalizeFirstCharacter(nameCol.getName()) + "() + \" with value \" + String.valueOf(val) + \" already exists in the Map. Key values must be unique.\");");
             if (nameCol.getType().name().equalsIgnoreCase("STRING"))
-              Out.println("          if(TextUtil.isNullOrEmpty(D.get" + TextUtil.CapitalizeFirstCharacter(nameCol.getName()) + "()) == false)");
+              Out.println("          if(TextUtil.isNullOrEmpty(D.get" + TextUtil.capitalizeFirstCharacter(nameCol.getName()) + "()) == false)");
             else
-              Out.println("          if(D.isNull" + TextUtil.CapitalizeFirstCharacter(nameCol.getName()) + "() == false)");
-            Out.println("            M.put(D.get" + TextUtil.CapitalizeFirstCharacter(nameCol.getName()) + "(), D.get" + TextUtil.CapitalizeFirstCharacter(valCol.getName()) + "());");
+              Out.println("          if(D.is" + TextUtil.capitalizeFirstCharacter(nameCol.getName()) + "Null() == false)");
+            Out.println("            M.put(D.get" + TextUtil.capitalizeFirstCharacter(nameCol.getName()) + "(), D.get" + TextUtil.capitalizeFirstCharacter(valCol.getName()) + "());");
             Out.println("        }");
             Out.println("      return M;");
             Out.println("    }");
           }
         else
           {
-            String valType = TextUtil.NormalCapitalization(J._NVPValueTypeStr);
+            String valType = TextUtil.normalCapitalization(J._NVPValueTypeStr);
 
             if (valType.equalsIgnoreCase("Char"))
               valType = "Character";

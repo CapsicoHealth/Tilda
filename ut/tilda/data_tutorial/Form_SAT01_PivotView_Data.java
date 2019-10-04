@@ -26,7 +26,7 @@ public class Form_SAT01_PivotView_Data extends tilda.data_tutorial._Tilda.TILDA_
 
 
    @Override
-   protected boolean AfterRead(Connection C) throws Exception
+   protected boolean afterRead(Connection C) throws Exception
      {
        // Do things after an object has just been read form the data store, for example, take care of AUTO fields.
        return true;

@@ -79,7 +79,7 @@ public class Index
 
         if (_Name.length() > PS._CGSql.getMaxColumnNameSize())
           PS.AddError("Object '" + _Parent.getFullName() + "' is defining index '" + _Name + "' with a name that's too long: max allowed by your database is "+PS._CGSql.getMaxColumnNameSize()+" vs "+_Name.length()+" for this identifier.");
-        if (_Name.equals(TextUtil.SanitizeName(_Name)) == false)
+        if (_Name.equals(TextUtil.sanitizeName(_Name)) == false)
          PS.AddError("Object '" + _Parent.getFullName() + "' is defining index '" + _Name + "' with a name containing invalid characters (must all be alphanumeric or underscore).");
         if (TextUtil.isJavaIdentifier(_Name) == false)
          PS.AddError("Object '" + _Parent.getFullName() + "' is defining index '" + _Name + "' with a name that is imcompatible with standard identifier convensions (for example, Java, JavaScript since Foreign Keys have programmatic equivalents in those languages).");

@@ -510,7 +510,7 @@ public abstract class TILDA__TRANSPERF implements tilda.interfaces.WriterObject,
    protected static final Logger LOG = LogManager.getLogger(TILDA__TRANSPERF.class.getName());
 
    public static final Class<TILDA__TRANSPERF_Factory> FACTORY_CLASS= TILDA__TRANSPERF_Factory.class;
-   public static final String TABLENAME = TextUtil.Print("TILDA.TransPerf", "");
+   public static final String TABLENAME = TextUtil.print("TILDA.TransPerf", "");
 
    protected TILDA__TRANSPERF() { }
 
@@ -967,7 +967,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 */
    public final void setEndPeriod(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
     {
-      setEndPeriod(DateTimeUtil.New(year, month, date, hourOfDay, minute, second, millis, z));
+      setEndPeriod(DateTimeUtil.newTZ(year, month, date, hourOfDay, minute, second, millis, z));
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -5037,7 +5037,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 */
     final void setCreated(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
     {
-      setCreated(DateTimeUtil.New(year, month, date, hourOfDay, minute, second, millis, z));
+      setCreated(DateTimeUtil.newTZ(year, month, date, hourOfDay, minute, second, millis, z));
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -5248,7 +5248,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 */
    public final void setLastUpdated(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
     {
-      setLastUpdated(DateTimeUtil.New(year, month, date, hourOfDay, minute, second, millis, z));
+      setLastUpdated(DateTimeUtil.newTZ(year, month, date, hourOfDay, minute, second, millis, z));
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -5340,7 +5340,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isNullDeleted()
+   public final boolean isDeletedNull()
      { return __Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.DELETED._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -5365,7 +5365,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setNullDeleted();
+          setDeletedNull();
         }
        else if (v.equals(_deleted) == false)
         {
@@ -5393,7 +5393,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final void setNullDeleted()
+   public final void setDeletedNull()
      {
        long T0 = System.nanoTime();
        if (__Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.DELETED._Mask) == true) // already NULL
@@ -5467,7 +5467,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 */
    public final void setDeleted(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
     {
-      setDeleted(DateTimeUtil.New(year, month, date, hourOfDay, minute, second, millis, z));
+      setDeleted(DateTimeUtil.newTZ(year, month, date, hourOfDay, minute, second, millis, z));
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -5499,7 +5499,7 @@ This is the hasChanged for:<BR>
  Copies all the field which are not part of the primary key, not are CALCULATED and not invariant, from the 
  current object to the destination. 
 */
-   public void CopyTo(tilda.data._Tilda.TILDA__TRANSPERF Dst) throws Exception
+   public void copyTo(tilda.data._Tilda.TILDA__TRANSPERF Dst) throws Exception
      {
        Dst.setEndPeriodTZ           (_endPeriodTZ           );
        Dst.setEndPeriod             (_endPeriod             );
@@ -5528,16 +5528,16 @@ This is the hasChanged for:<BR>
        Dst.setTildaToCsvNano        (_tildaToCsvNano        );
        Dst.setTildaToCsvCount       (_tildaToCsvCount       );
        Dst.setLastUpdated           (_lastUpdated           );
-       if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.DELETED._Mask) == true) Dst.setNullDeleted               (); else        Dst.setDeleted               (_deleted               );
+       if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull               (); else        Dst.setDeleted               (_deleted               );
      }
 
 /**
  Sets the 'lastUpdated' column to now and causes a Write to occur to update the object in the data store.
 */
-   public final boolean Touch(Connection C) throws Exception
+   public final boolean touch(Connection C) throws Exception
      {
        setLastUpdatedNow();
-       return Write(C);
+       return write(C);
      }
 
 /**
@@ -5865,7 +5865,7 @@ This is the hasChanged for:<BR>
        __Changes.clear();
        __Nulls.clear();
      }
-   public final boolean Write(Connection C) throws Exception
+   public final boolean write(Connection C) throws Exception
      {
        long T0 = System.nanoTime();
        if (hasChanged() == false)
@@ -5875,9 +5875,9 @@ This is the hasChanged for:<BR>
           return true;
         }
 
-       if (BeforeWrite(C) == false)
+       if (beforeWrite(C) == false)
         {
-          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.TransPerf object's BeforeWrite() failed.");
+          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.TransPerf object's beforeWrite() failed.");
           QueryDetails.setLastQuery(TILDA__TRANSPERF_Factory.SCHEMA_TABLENAME_LABEL, "");
           return false;
         }
@@ -5914,7 +5914,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__TRANSPERF_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
+          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__TRANSPERF_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
           PS = null;
         }
 
@@ -5922,7 +5922,7 @@ This is the hasChanged for:<BR>
        return true;
      }
 
-   protected abstract boolean BeforeWrite(Connection C) throws Exception;
+   protected abstract boolean beforeWrite(Connection C) throws Exception;
 
 
 
@@ -5930,21 +5930,21 @@ This is the hasChanged for:<BR>
 // THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-   public final boolean Refresh(Connection C) throws Exception
+   public final boolean refresh(Connection C) throws Exception
      {
-       return ReadOne(C, true);
+       return readOne(C, true);
      }
 
-   public final boolean Read(Connection C) throws Exception
+   public final boolean read(Connection C) throws Exception
      {
-       return ReadOne(C, false);
+       return readOne(C, false);
      }
 
-   private final boolean ReadOne(Connection C, boolean Force) throws Exception
+   private final boolean readOne(Connection C, boolean Force) throws Exception
      {
        long T0 = System.nanoTime();
        if (__Init == InitMode.CREATE)
-        throw new Exception("This TILDA.TransPerf object is being Read() after a Create(), which doesn't make sense.");
+        throw new Exception("This TILDA.TransPerf object is being read() after a create(), which doesn't make sense.");
        if (__Init == InitMode.READ == true && Force == false && hasChanged()==false)
         {
           LOG.debug(QueryDetails._LOGGING_HEADER + "This TILDA.TransPerf object has already been read.");
@@ -6025,7 +6025,7 @@ This is the hasChanged for:<BR>
               return false;
             }
           count = 1;
-          return Init(C, RS);
+          return init(C, RS);
         }
        catch (java.sql.SQLException E)
         {
@@ -6033,19 +6033,19 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__TRANSPERF_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__TRANSPERF_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
     }
 
-   boolean Init(Connection C, java.sql.ResultSet RS) throws Exception
+   boolean init(Connection C, java.sql.ResultSet RS) throws Exception
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-                                       _startPeriodTZ          = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.STARTPERIODTZ._Mask         ); else _startPeriodTZ          = _startPeriodTZ         .trim();
-      __Saved_startPeriod            = _startPeriod            = ProcessZDT(_startPeriodTZ           , "tilda.data.TILDA.TransPerf.startPeriod"           , RS, ++i, TILDA__TRANSPERF_Factory.COLS.STARTPERIOD           , TILDA__TRANSPERF_Factory.COLS.STARTPERIODTZ           ); if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.STARTPERIOD._Mask           );
-                                       _endPeriodTZ            = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.ENDPERIODTZ._Mask           ); else _endPeriodTZ            = _endPeriodTZ           .trim();
-                                       _endPeriod              = ProcessZDT(_endPeriodTZ             , "tilda.data.TILDA.TransPerf.endPeriod"             , RS, ++i, TILDA__TRANSPERF_Factory.COLS.ENDPERIOD             , TILDA__TRANSPERF_Factory.COLS.ENDPERIODTZ             ); if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.ENDPERIOD._Mask             );
+                                       _startPeriodTZ          = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.STARTPERIODTZ._Mask         ); else _startPeriodTZ          = _startPeriodTZ         .trim();
+      __Saved_startPeriod            = _startPeriod            = processZDT(_startPeriodTZ           , "tilda.data.TILDA.TransPerf.startPeriod"           , RS, ++i, TILDA__TRANSPERF_Factory.COLS.STARTPERIOD           , TILDA__TRANSPERF_Factory.COLS.STARTPERIODTZ           ); if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.STARTPERIOD._Mask           );
+                                       _endPeriodTZ            = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.ENDPERIODTZ._Mask           ); else _endPeriodTZ            = _endPeriodTZ           .trim();
+                                       _endPeriod              = processZDT(_endPeriodTZ             , "tilda.data.TILDA.TransPerf.endPeriod"             , RS, ++i, TILDA__TRANSPERF_Factory.COLS.ENDPERIOD             , TILDA__TRANSPERF_Factory.COLS.ENDPERIODTZ             ); if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.ENDPERIOD._Mask             );
                                        _commitNano             =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.COMMITNANO._Mask            );
                                        _commitCount            =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.COMMITCOUNT._Mask           );
                                        _rollbackNano           =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.ROLLBACKNANO._Mask          );
@@ -6076,10 +6076,10 @@ This is the hasChanged for:<BR>
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();
-     return AfterRead(C);
+     return afterRead(C);
    }
 
-  private final ZonedDateTime ProcessZDT(String TimezoneId, String DTFieldName, java.sql.ResultSet RS, int ColumnPos, tilda.types.ColumnDefinition DTField, tilda.types.ColumnDefinition TZField)
+  private final ZonedDateTime processZDT(String TimezoneId, String DTFieldName, java.sql.ResultSet RS, int ColumnPos, tilda.types.ColumnDefinition DTField, tilda.types.ColumnDefinition TZField)
   throws Exception
    {
      tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationById(TimezoneId);
@@ -6098,7 +6098,7 @@ This is the hasChanged for:<BR>
      return ZDT;
    }
 
-   protected abstract boolean AfterRead(Connection C) throws Exception;
+   protected abstract boolean afterRead(Connection C) throws Exception;
 
    public String toString()
     {

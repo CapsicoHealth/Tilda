@@ -113,7 +113,7 @@ public class ViewRealize
                 PS.AddError("Mapping '" + VRM._Name + "' is duplicated in the realize section for view '" + ParentView.getFullName() + "'.");
               if (ParentView.getColumn(VRM._Name) == null && ParentView.getFormula(VRM._Name) == null && ParentView.getPivottedColumn(VRM._Name) == null)
                 PS.AddError("Mapping for column '" + VRM._Name + "' is defined without a matching column/formula/pivot in the main view '" + ParentView.getFullName() + "'.");
-              if (TextUtil.FindStarElement(_Exclude_DEPRECATED, VRM._Name, true, 0) != -1)
+              if (TextUtil.findStarElement(_Exclude_DEPRECATED, VRM._Name, true, 0) != -1)
                 PS.AddError("Mapping for column '" + VRM._Name + "' is defined while also being excluded.");
             }
 */
@@ -125,7 +125,7 @@ public class ViewRealize
         // If we don't do this and an error occurs, the user will get a message during the validation for the created object which will feel out of context.
         if (O._Name.length() > PS._CGSql.getMaxTableNameSize())
           PS.AddError("View '" + ParentView.getFullName() + "' is being realized to table '"+O._Name+"' with a name that's too long: max allowed by your database is " + PS._CGSql.getMaxColumnNameSize() + " vs "+O._Name.length()+" for this identifier.");
-        if (O._Name.equals(TextUtil.SanitizeName(O._Name)) == false)
+        if (O._Name.equals(TextUtil.sanitizeName(O._Name)) == false)
           PS.AddError("View '" + ParentView.getFullName() + "' is being realized to table '"+O._Name+"' with a name containing invalid characters (must all be alphanumeric or underscore).");
         if (ValidationHelper.isValidIdentifier(O._Name) == false)
           PS.AddError("View '" + ParentView.getFullName() + "' is being realized to table '"+O._Name+"' with a name which is not valid. " + ValidationHelper._ValidIdentifierMessage);
@@ -139,10 +139,10 @@ public class ViewRealize
         O._Indices = _Indices;
         
         boolean OCC = false;
-//        LOG.debug(ParentRealized._O.getFullName()+": "+TextUtil.Print(ParentRealized._O.getColumnNames()));
+//        LOG.debug(ParentRealized._O.getFullName()+": "+TextUtil.print(ParentRealized._O.getColumnNames()));
         for (Column C : ParentRealized._O._Columns)
           {
-            if (TextUtil.FindStarElement(_Exclude_DEPRECATED, C._Name, false, 0) == -1)
+            if (TextUtil.findStarElement(_Exclude_DEPRECATED, C._Name, false, 0) == -1)
               {
                 if (C._FCT.isOCC() == true)
                  OCC = true;

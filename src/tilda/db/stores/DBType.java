@@ -98,7 +98,7 @@ public interface DBType
     
     public static DBType[] _DBTypes = { Postgres, SQLServer, DB2 };
 
-    public boolean FullIdentifierOnUpdate();
+    public boolean fullIdentifierOnUpdate();
     public String getAggregateStr(AggregateType AT);
 
     public DBStringType getDBStringType(int Size);

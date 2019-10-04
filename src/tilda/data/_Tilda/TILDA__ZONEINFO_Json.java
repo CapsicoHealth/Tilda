@@ -30,7 +30,7 @@ public class TILDA__ZONEINFO_Json
    transient                        public ZonedDateTime  _deactivated  ;
    /*@formatter:on*/
 
-   public tilda.data.ZoneInfo_Data Write(Connection C) throws Exception
+   public tilda.data.ZoneInfo_Data write(Connection C) throws Exception
     {
       if (TextUtil.isNullOrEmpty(_id           ) == true)
        throw new Exception("Incoming value for 'tilda.data.TILDA.ZoneInfo.id' was null or empty. It's not nullable in the model.\n"+toString());
@@ -45,24 +45,24 @@ public class TILDA__ZONEINFO_Json
           throw new Exception("Incoming value for 'tilda.data.TILDA.ZoneInfo.deactivated' was not in the expected format. Dates should follow the ISO format.\n"+toString());
        }
 
-      tilda.data.ZoneInfo_Data Obj = tilda.data.ZoneInfo_Factory.Create(_id, _value, _label);
-      Update(Obj);
-      if (Obj.Write(C) == false)
+      tilda.data.ZoneInfo_Data Obj = tilda.data.ZoneInfo_Factory.create(_id, _value, _label);
+      update(Obj);
+      if (Obj.write(C) == false)
        {
-         Obj = tilda.data.ZoneInfo_Factory.LookupById(_id);
-         if (Obj.Read(C) == false)
+         Obj = tilda.data.ZoneInfo_Factory.lookupById(_id);
+         if (Obj.read(C) == false)
           throw new Exception("Cannot create the tilda.data.TILDA.ZoneInfo object.\n"+toString());
          if (_value        != null) Obj.setValue        (_value        );
          if (_label        != null) Obj.setLabel        (_label        );
          if (_deactivated  != null) Obj.setDeactivated  (_deactivated  );
-         if (Obj.Write(C) == false)
+         if (Obj.write(C) == false)
           throw new Exception("Cannot update the tilda.data.TILDA.ZoneInfo object: "+Obj.toString());
 
        }
       return Obj;
    }
 
-   public void Update(tilda.data.ZoneInfo_Data Obj) throws Exception
+   public void update(tilda.data.ZoneInfo_Data Obj) throws Exception
     {
       if (_id           != null) Obj.setId           (_id           );
       if (_value        != null) Obj.setValue        (_value        );

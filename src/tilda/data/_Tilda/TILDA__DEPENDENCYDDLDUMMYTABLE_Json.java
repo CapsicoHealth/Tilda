@@ -30,7 +30,7 @@ public class TILDA__DEPENDENCYDDLDUMMYTABLE_Json
    @SerializedName("restoreScript") public String  _restoreScript;
    /*@formatter:on*/
 
-   public tilda.data.DependencyDDLDummyTable_Data Write(Connection C) throws Exception
+   public tilda.data.DependencyDDLDummyTable_Data write(Connection C) throws Exception
     {
       if (TextUtil.isNullOrEmpty(_srcSchemaName) == true)
        throw new Exception("Incoming value for 'tilda.data.TILDA.DependencyDDLDummyTable.srcSchemaName' was null or empty. It's not nullable in the model.\n"+toString());
@@ -45,24 +45,24 @@ public class TILDA__DEPENDENCYDDLDUMMYTABLE_Json
       if (TextUtil.isNullOrEmpty(_restoreScript) == true)
        throw new Exception("Incoming value for 'tilda.data.TILDA.DependencyDDLDummyTable.restoreScript' was null or empty. It's not nullable in the model.\n"+toString());
 
-      tilda.data.DependencyDDLDummyTable_Data Obj = tilda.data.DependencyDDLDummyTable_Factory.Create(_srcSchemaName, _srcTVName, _seq, _depSchemaName, _depViewName, _restoreScript);
-      Update(Obj);
-      if (Obj.Write(C) == false)
+      tilda.data.DependencyDDLDummyTable_Data Obj = tilda.data.DependencyDDLDummyTable_Factory.create(_srcSchemaName, _srcTVName, _seq, _depSchemaName, _depViewName, _restoreScript);
+      update(Obj);
+      if (Obj.write(C) == false)
        {
-         Obj = tilda.data.DependencyDDLDummyTable_Factory.LookupByDepedencySequence(_srcSchemaName, _srcTVName, _seq);
-         if (Obj.Read(C) == false)
+         Obj = tilda.data.DependencyDDLDummyTable_Factory.lookupByDepedencySequence(_srcSchemaName, _srcTVName, _seq);
+         if (Obj.read(C) == false)
           throw new Exception("Cannot create the tilda.data.TILDA.DependencyDDLDummyTable object.\n"+toString());
          if (_depSchemaName!= null) Obj.setDepSchemaName(_depSchemaName);
          if (_depViewName  != null) Obj.setDepViewName  (_depViewName  );
          if (_restoreScript!= null) Obj.setRestoreScript(_restoreScript);
-         if (Obj.Write(C) == false)
+         if (Obj.write(C) == false)
           throw new Exception("Cannot update the tilda.data.TILDA.DependencyDDLDummyTable object: "+Obj.toString());
 
        }
       return Obj;
    }
 
-   public void Update(tilda.data.DependencyDDLDummyTable_Data Obj) throws Exception
+   public void update(tilda.data.DependencyDDLDummyTable_Data Obj) throws Exception
     {
       if (_srcSchemaName!= null) Obj.setSrcSchemaName(_srcSchemaName);
       if (_srcTVName    != null) Obj.setSrcTVName    (_srcTVName    );
