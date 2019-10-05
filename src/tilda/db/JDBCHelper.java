@@ -60,13 +60,13 @@ public class JDBCHelper
       }
 
 
-    public static int process(ResultSet RS, RecordProcessor RP, int Start, boolean Offsetted, int Size, boolean Limited)
+    public static int process(ResultSet RS, RecordProcessor RP, int Start, boolean Offsetted, int Size)
     throws Exception
       {
-        return process(RS, RP, Start, Offsetted, Size, Limited, false);
+        return process(RS, RP, Start, Offsetted, Size, false);
       }
 
-    public static int process(ResultSet RS, RecordProcessor RP, int Start, boolean Offsetted, int Size, boolean Limited, boolean CountAll)
+    public static int process(ResultSet RS, RecordProcessor RP, int Start, boolean Offsetted, int Size, boolean CountAll)
     throws Exception
       {
         RP.start();
@@ -91,7 +91,7 @@ public class JDBCHelper
     /**
      * Executes a query with a record processor, starting at Start (0 is beginning), and for Size records.
      */
-    public static int executeSelect(Connection C, String SchemaName, String TableName, String Query, RecordProcessor RP, int Start, boolean Offsetted, int Size, boolean Limited, boolean CountAll)
+    public static int executeSelect(Connection C, String SchemaName, String TableName, String Query, RecordProcessor RP, int Start, boolean Offsetted, int Size, boolean CountAll)
     throws Exception
       {
         TableName = SchemaName + "." + TableName;
@@ -103,7 +103,7 @@ public class JDBCHelper
             QueryDetails.setLastQuery(TableName, Query);
             S = C.createStatement();
             ResultSet RS = S.executeQuery(Query);
-            int count = JDBCHelper.process(RS, RP, Start, Offsetted, Size, Limited, CountAll);
+            int count = JDBCHelper.process(RS, RP, Start, Offsetted, Size, CountAll);
             PerfTracker.add(TableName, StatementType.SELECT, System.nanoTime() - T0, count);
             return count;
           }
