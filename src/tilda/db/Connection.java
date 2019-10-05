@@ -324,27 +324,27 @@ public final class Connection
     public int executeSelect(String SchemaName, String TableName, String Query, RecordProcessor RP)
     throws Exception
       {
-        return executeSelect(SchemaName, TableName, Query, RP, 0, false, -1, false);
+        return executeSelect(SchemaName, TableName, Query, RP, 0, false, -1, false, false);
       }
 
     /**
      * Executes a query with a record processor, starting at Start (0 is beginning), and for Size records.
      */
-    public int executeSelect(String SchemaName, String TableName, String Query, RecordProcessor RP, int Start, boolean Offsetted, int Size)
+    public int executeSelect(String SchemaName, String TableName, String Query, RecordProcessor RP, int Start, boolean Offsetted, int Size, boolean Limited)
     throws Exception
       {
-        return executeSelect(SchemaName, TableName, Query, RP, Start, Offsetted, Size, false);
+        return executeSelect(SchemaName, TableName, Query, RP, Start, Offsetted, Size, Limited, false);
       }
 
     /**
      * Executes a query with a record processor, starting at Start (0 is beginning), and for Size records.
      */
-    public int executeSelect(String SchemaName, String TableName, String Query, RecordProcessor RP, int Start, boolean Offsetted, int Size, boolean CountAll)
+    public int executeSelect(String SchemaName, String TableName, String Query, RecordProcessor RP, int Start, boolean Offsetted, int Size, boolean Limited, boolean CountAll)
     throws Exception
       {
         try
           {
-            return JDBCHelper.executeSelect(_C, SchemaName, TableName, Query, RP, Start, Offsetted, Size, CountAll);
+            return JDBCHelper.executeSelect(_C, SchemaName, TableName, Query, RP, Start, Offsetted, Size, Limited, CountAll);
           }
         catch (SQLException E)
           {
