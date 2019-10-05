@@ -774,7 +774,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                     OutFinal.append("\"").append(VC._Name).append("\"");
                   }
                 OutFinal.append(")");
-                OutFinal.append("\n  DO UPDATE SET\n");
+                OutFinal.append("  DO UPDATE SET\n");
                 First = true;
                 for (String ColNames : V._Realize._ParentRealized.getColumnNames())
                   {

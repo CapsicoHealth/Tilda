@@ -881,12 +881,12 @@ public abstract class QueryHelper
      */
     protected boolean isWhereClause()
       {
-        if (_Section == S.FROM && _ST == StatementType.SELECT)
+        if (_Section == S.FROM && (_ST == StatementType.SELECT || _ST == StatementType.DELETE))
           {
             _Section = S.WHERE;
             return true;
           }
-        return _Section == S.WHERE && (_ST == StatementType.SELECT || _ST == StatementType.UPDATE);
+        return _Section == S.WHERE && (_ST == StatementType.SELECT || _ST == StatementType.UPDATE || _ST == StatementType.DELETE);
       }
 
     public QueryHelper in(Type_StringPrimitive Col, String[] V)
