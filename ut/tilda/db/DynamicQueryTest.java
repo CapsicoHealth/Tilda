@@ -31,7 +31,6 @@ public class DynamicQueryTest
 
     public static void main(String[] args)
       {
-
         Connection C = null;
         try
           {
