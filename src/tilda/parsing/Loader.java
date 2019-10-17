@@ -89,9 +89,9 @@ public class Loader
         Schema.ReorderTildaListWithDependencies(TildaList);
 
         // The first schema should be Tilda since it's a dependency to everything.
-        if (TildaList.get(1)._ResourceName.equals(Parser._BASE_TILDA_SCHEMA_RESOURCE) == false)
+        if (TildaList.get(1)._ResourceName.equals(Schema._BASE_TILDA_SCHEMA_RESOURCE) == false)
           {
-            LOG.error("Could not find find the base Tilda schema resource " + Parser._BASE_TILDA_SCHEMA_RESOURCE);
+            LOG.error("Could not find find the base Tilda schema resource " + Schema._BASE_TILDA_SCHEMA_RESOURCE);
             LOG.info("Loaded resources are:");
             for (Schema S : TildaList)
               LOG.info("    "+S._Name);
