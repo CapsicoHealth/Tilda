@@ -36,7 +36,9 @@ public enum AggregateType
 
   COUNT,
 
-  ARRAY;
+  ARRAY,
+
+  ARRAYCAT;
 
     public static AggregateType parse(String Str)
       {

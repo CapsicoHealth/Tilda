@@ -133,7 +133,7 @@ public class ViewRealize
         O._Description = "Realized table for view "+ParentView.getShortName()+": "+ParentRealized._O._Description;
         O.addQueries(ParentView._Queries);
         O._OutputMaps = OutputMapping.newInstances(ParentView._OutputMaps);
-        O._LCStr = ObjectLifecycle.READONLY.name();
+        O._LCStr = ObjectLifecycle.NORMAL.name();
         O._PrimaryKey = _PrimaryKey;
         O._ForeignKeys = _ForeignKeys;
         O._Indices = _Indices;
@@ -169,7 +169,10 @@ public class ViewRealize
                 O._Columns.add(newCol);
               }
           }
-        O._OCC = OCC;
+        
+        // We can't just copy the OCC status of the view because we don't know which columns are actually used.
+        O._OCC = O.getColumn("created") != null && O.getColumn("lastUpdated") != null && O.getColumn("deleted") != null;
+        
         O._ModeStr = ParentView._DBOnly==true?ObjectMode.DB_ONLY.toString():ObjectMode.NORMAL.toString();
         ParentView._ParentSchema._Objects.add(O);
         O.Validate(PS, ParentView._ParentSchema);

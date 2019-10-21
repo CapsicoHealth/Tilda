@@ -104,7 +104,7 @@ public class Object extends Base
     @Override
     public String toString()
       {
-        return super.toString() + ": " + getFullName();
+        return getFullName() + " (" + super.toString() + ")";
       }
 
     @Override
@@ -143,7 +143,7 @@ public class Object extends Base
       {
         if (_Validated == true)
           return true;
-        
+
         if (super.Validate(PS, ParentSchema) == false)
           return false;
 
@@ -153,7 +153,7 @@ public class Object extends Base
           for (Cloner C : _CloneAs)
             {
               if (C.Validate(PS, this) == false)
-               return false;
+                return false;
               Object obj = new Object(this);
               obj._Name = _Name + "_" + C._Name;
               obj._Description = C._Description;
@@ -161,7 +161,7 @@ public class Object extends Base
               obj._SourceObject = this;
               ParentSchema._Objects.add(obj);
             }
-        
+
         if (getFullName().equals("tilda.data.TILDA.Key") == true)
           {
             Column created = getColumn("created");
