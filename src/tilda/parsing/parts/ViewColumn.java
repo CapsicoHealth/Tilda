@@ -69,6 +69,7 @@ public class ViewColumn
     /*@formatter:on*/
 
 
+
     public ViewColumn()
       {
       }
@@ -313,7 +314,7 @@ public class ViewColumn
         return L;
       }
 
-
+    @Override
     public String toString()
       {
         return getClass().getName() + ":" + _ParentView != null ? getFullName() : _Sameas_DEPRECATED != null ? _Sameas_DEPRECATED : _SameAs;

@@ -77,23 +77,33 @@ public class ParserSession
 
     public Schema getSchema(String PackageName, String SchemaName)
       {
-//        Schema.PrintSchemaList(CollectionUtil.toList(_Dependencies.values().iterator()), true);
+//      Schema.PrintSchemaList(CollectionUtil.toList(_Dependencies.values().iterator()), true);
         String FullName = PackageName + "." + SchemaName;
         Schema S = _Dependencies.get(FullName);
         if (S == null)
-          LOG.debug("Schema " + FullName + " cannot be found out of the current schema list ["+getSchemaList()+"].");
+          LOG.debug("Schema " + FullName + " cannot be found out of the current schema list [" + getSchemaList() + "].");
         return S;
       }
 
+    public Schema getSchema(String resourceName)
+      {
+        for (Schema S : _Dependencies.values())
+          if (S._ResourceName.contentEquals(resourceName) == true)
+           return S;
+        LOG.debug("Schema " + resourceName + " cannot be found out of the current schema list [" + getSchemaList() + "].");
+        return null;
+      }
+
+
     public Schema getSchemaForDependency(String PackageName, String SchemaName)
-    {
-      String FullName = PackageName + "." + SchemaName;
-      Schema S = _Dependencies.get(FullName);
-      if (S == null)
-        LOG.debug("Schema "+ FullName +" has not been found in the schema dependency list.");
-      return S;
-    }    
-    
+      {
+        String FullName = PackageName + "." + SchemaName;
+        Schema S = _Dependencies.get(FullName);
+        if (S == null)
+          LOG.debug("Schema " + FullName + " has not been found in the schema dependency list.");
+        return S;
+      }
+
     public String getSchemaList()
       {
         StringBuilder Str = new StringBuilder();
@@ -130,7 +140,7 @@ public class ParserSession
         LOG.error("Error #" + _Errors.size() + ": " + Err);
         return false;
       }
-    
+
     public List<String> getErrors()
       {
         return _Errors;
@@ -139,17 +149,17 @@ public class ParserSession
     public int getErrorCount()
       {
         return _Errors.size();
-      }    
+      }
 
     public boolean printErrors()
-    {
-      LOG.error("==============================================================================================");
-      LOG.error("There were " + getErrorCount() + " errors when trying to validate the schema set");
-      int i = 0;
-      for (String Err : _Errors)
-        LOG.error("    " + (++i) + " - " + Err);
-      return false;
-    }
+      {
+        LOG.error("==============================================================================================");
+        LOG.error("There were " + getErrorCount() + " errors when trying to validate the schema set");
+        int i = 0;
+        for (String Err : _Errors)
+          LOG.error("    " + (++i) + " - " + Err);
+        return false;
+      }
 
     public List<String> getNotes()
       {
@@ -162,15 +172,15 @@ public class ParserSession
       }
 
     public boolean AddNote(String Note)
-    {
-      _Notes.add(Note);
-      LOG.info("Note #" + _Notes.size() + ": " + Note);
-      return false;
-    }
-  
+      {
+        _Notes.add(Note);
+        LOG.info("Note #" + _Notes.size() + ": " + Note);
+        return false;
+      }
+
     public boolean printNotes()
       {
-        
+
         LOG.info("==============================================================================================");
         LOG.info("There were " + getNoteCount() + " notes when trying to validate the schema set");
         int i = 0;

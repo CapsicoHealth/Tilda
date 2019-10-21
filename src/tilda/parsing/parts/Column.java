@@ -584,9 +584,11 @@ public class Column extends TypeDef
         return Str.toString();
       }
 
+    @Override
     public String toString()
       {
-        return getClass().getName() + ":" + getFullName();
+        return getClass().getName() + ":" + getFullName() + " (" + super.toString() + ")";
+
       }
 
     String getLogicalName()

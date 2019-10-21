@@ -401,14 +401,14 @@ public class ConnectionPool
     throws Exception
       {
         List<Schema> TildaList = Loader.LoadTildaResources();
-        if (TildaList == null)
+        if (TildaList == null || TildaList.isEmpty() == true)
           throw new Exception("Tilda cannot start as we didn't find the necessary Tilda resources.");
 
         for (Schema S : TildaList)
           {
             CodeGenSql Sql = C.getSQlCodeGen();
             ParserSession PS = new ParserSession(S, Sql);
-            if (S._Dependencies != null)
+            if (TextUtil.isNullOrEmpty(S._Dependencies) == false)
               for (String DepdencySchemaName : S._Dependencies)
                 {
                   boolean Found = false;
@@ -433,14 +433,15 @@ public class ConnectionPool
                 }
             else //if (S._Name.equals("TILDATMP") == false)
               {
-                PS.addDependencySchema(TildaList.get(0));
-                PS.addDependencySchema(TildaList.get(1));
+                PS.addDependencySchema(TildaList.get(0)); // Should be TILDATMP
+                PS.addDependencySchema(TildaList.get(1)); // Should be TILDA
                 PS.addDependencySchema(S);
+                S.setDefaultDependencies(PS);
               }
-            if (S._Name.equals("TILDA") == false && S._Name.equals("TILDATMP") == false)
-             S._DependencySchemas.add(TildaList.get(1));
+
             if (S.Validate(PS) == false)
               throw new Exception("Schema " + S._Name + " from resource " + S._ResourceName + " failed validation.");
+            
             for (Object Obj : S._Objects)
               if (Obj != null)
                 MasterFactory.register(S._Package, Obj);

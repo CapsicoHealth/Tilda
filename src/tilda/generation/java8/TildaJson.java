@@ -85,9 +85,9 @@ public class TildaJson implements CodeGenTildaJson
           {
             Out.println();
             Out.println("import com.google.gson.annotations.SerializedName;");
-          }        
-        for (Column C : O._Columns)         
-          if(C != null && C.getType() == ColumnType.NUMERIC)
+          }
+        for (Column C : O._Columns)
+          if (C != null && C.getType() == ColumnType.NUMERIC)
             {
               Out.println();
               Out.println("import java.math.BigDecimal;");
@@ -159,7 +159,7 @@ public class TildaJson implements CodeGenTildaJson
                 if (C._DefaultCreateValue == null)
                   Out.println("       throw new Exception(\"Incoming value for '" + C.getFullName() + "' was null or empty. It's not nullable in the model.\\n\"+toString());");
                 else
-                  Out.println("       _" + C.getName() + "=" + TildaData.PrintColumnValue(C, C._DefaultCreateValue._Value) +";");
+                  Out.println("       _" + C.getName() + "=" + TildaData.PrintColumnValue(C, C._DefaultCreateValue._Value) + ";");
               }
             if (C.getType() == ColumnType.DATETIME)
               {
@@ -277,37 +277,9 @@ public class TildaJson implements CodeGenTildaJson
           }
         else
           {
-            Out.println("         if (Obj.read(C) == false)");
-            Out.println("          throw new Exception(\"Cannot create the " + O.getFullName() + " object.\\n\"+toString());");
-            int count = 0;
-            for (Column C : O._Columns)
-              if (C != null && C.isJSONColumn() == true && Cols.contains(C) == false)
-                {
-                  if (C._Invariant == false)
-                    {
-                      String Pad = O._PadderColumnNames.getPad(C.getName());
-                      Out.println("         if (_" + C.getName() + Pad + "!= null) Obj.set" + TextUtil.capitalizeFirstCharacter(C.getName()) + Pad + "(_" + C.getName() + Pad + ");");
-                      ++count;
-                    }
-                  else if (C._PrimaryKey == false)
-                    {
-                      String Pad = O._PadderColumnNames.getPad(C.getName());
-                      if (C.isCollection() == false && C.getType().isPrimitive() == true)
-                        Out.println("         if (_" + C.getName() + Pad + "!= Obj.get" + TextUtil.capitalizeFirstCharacter(C.getName()) + Pad + "())");
-                      else
-                        Out.println("         if (_" + C.getName() + Pad + ".equals(Obj.get" + TextUtil.capitalizeFirstCharacter(C.getName()) + Pad + "()) == false)");
-                      Out.println("          throw new Exception(\"Cannot update the invariant field '" + C.getFullName() + "' from '\"+Obj.get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "()+\"' to '\"+_" + C.getName() + "+\"': \"+Obj.toString());");
-                    }
-                }
-            if (count != 0)
-              {
-                Out.println("         if (Obj.write(C) == false)");
-                Out.println("          throw new Exception(\"Cannot update the " + O.getFullName() + " object: \"+Obj.toString());");
-              }
-            else
-              {
-                Out.println("         LOG.debug(\"Nothing has changed in the object, so no update necessary.\");");
-              }
+            Out.println("         update(Obj);");
+            Out.println("         if (Obj.write(C) == false)");
+            Out.println("          throw new Exception(\"Cannot update the " + O.getFullName() + " object: \"+Obj.toString());");
             Out.println();
 
           }
@@ -469,7 +441,7 @@ public class TildaJson implements CodeGenTildaJson
         Out.println("    {");
         Out.println("      long T0 = System.nanoTime();");
         Out.println("      if (includeHeader == true)");
-        Out.println("        Out.write(getCSVHeader"+J._Name+"() + \"\\n\");");
+        Out.println("        Out.write(getCSVHeader" + J._Name + "() + \"\\n\");");
         Out.println("      for (" + Helper.getFullAppDataClassName(J._ParentObject) + " O : L)");
         Out.println("       if (O!=null)");
         Out.println("        {");

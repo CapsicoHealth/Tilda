@@ -3,16 +3,16 @@
     {
       "name": "object",
       "title": "Tables Graph",
-      "package": "tilda.data_test",
+      "package": "tilda.data_tutorial",
       "viewOnly": false,
       "scale": 1
     },
     {
       "name": "view",
       "title": "Views Graph",
-      "package": "tilda.data_test",
+      "package": "tilda.data_tutorial",
       "viewOnly": true,
-      "scale": 1
+      "scale": 0.98
     }
   ],
   "tilda.data_test.object#test": {
@@ -526,5 +526,375 @@
         "y": 590
       }
     ]
+  },
+  "tilda.data_tutorial.object#user": {
+    "type": "basic.Rect",
+    "position": {
+      "x": 480,
+      "y": 40
+    },
+    "size": {
+      "width": 216,
+      "height": 30
+    },
+    "angle": 0,
+    "id": "977058bc-2055-46fe-8248-dfa00a314393",
+    "customId": "user",
+    "z": 7,
+    "attrs": {
+      "rect": {
+        "fill": "rgb(46,117,182)",
+        "stroke": "rgb(65,113,156)",
+        "stroke-width": 2
+      },
+      "text": {
+        "fill": "white",
+        "text": "TildaTutorial.User"
+      }
+    }
+  },
+  "tilda.data_tutorial.object#form": {
+    "type": "basic.Rect",
+    "position": {
+      "x": 480,
+      "y": 110
+    },
+    "size": {
+      "width": 216,
+      "height": 30
+    },
+    "angle": 0,
+    "id": "be41365b-283d-4141-a0ed-e885cea7a8b5",
+    "customId": "form",
+    "z": 1,
+    "attrs": {
+      "rect": {
+        "fill": "rgb(46,117,182)",
+        "stroke": "rgb(65,113,156)",
+        "stroke-width": 2
+      },
+      "text": {
+        "fill": "white",
+        "text": "TildaTutorial.Form"
+      }
+    }
+  },
+  "tilda.data_tutorial.object#formanswer": {
+    "type": "basic.Rect",
+    "position": {
+      "x": 600,
+      "y": 330
+    },
+    "size": {
+      "width": 288,
+      "height": 30
+    },
+    "angle": 0,
+    "id": "4f4986d7-a258-4edd-b5c0-af9e0e5cf11a",
+    "customId": "formanswer",
+    "z": 5,
+    "attrs": {
+      "rect": {
+        "fill": "rgb(46,117,182)",
+        "stroke": "rgb(65,113,156)",
+        "stroke-width": 2
+      },
+      "text": {
+        "fill": "white",
+        "text": "TildaTutorial.FormAnswer"
+      }
+    }
+  },
+  "tilda.data_tutorial.object#testquestionanswer": {
+    "type": "basic.Rect",
+    "position": {
+      "x": 400,
+      "y": 290
+    },
+    "size": {
+      "width": 384,
+      "height": 30
+    },
+    "angle": 0,
+    "id": "112fb239-c8c7-4e8c-a561-ad0b9fa9bb27",
+    "customId": "testquestionanswer",
+    "z": 8,
+    "attrs": {
+      "rect": {
+        "fill": "rgb(46,117,182)",
+        "stroke": "rgb(65,113,156)",
+        "stroke-width": 2
+      },
+      "text": {
+        "fill": "white",
+        "text": "TildaTutorial.TestQuestionAnswer"
+      }
+    }
+  },
+  "tilda.data_tutorial.object#testanswer": {
+    "type": "basic.Rect",
+    "position": {
+      "x": 290,
+      "y": 210
+    },
+    "size": {
+      "width": 288,
+      "height": 30
+    },
+    "angle": 0,
+    "id": "e0ad0ec6-117a-4260-a61a-d7f3e4cd5d5b",
+    "customId": "testanswer",
+    "z": 2,
+    "attrs": {
+      "rect": {
+        "fill": "rgb(46,117,182)",
+        "stroke": "rgb(65,113,156)",
+        "stroke-width": 2
+      },
+      "text": {
+        "fill": "white",
+        "text": "TildaTutorial.TestAnswer"
+      }
+    }
+  },
+  "tilda.data_tutorial.view#form_sat01_pivotview": {
+    "type": "basic.Rect",
+    "position": {
+      "x": 170,
+      "y": 260
+    },
+    "size": {
+      "width": 408,
+      "height": 30
+    },
+    "angle": 0,
+    "id": "588302f3-7059-430b-8093-a42f397130e9",
+    "customId": "form_sat01_pivotview",
+    "z": 1,
+    "hidden": true,
+    "attrs": {
+      "rect": {
+        "fill": "rgb(169,209,142)",
+        "stroke": "rgb(0,176,80)",
+        "stroke-width": 1,
+        "stroke-dasharray": "3,3"
+      },
+      "text": {
+        "fill": "black",
+        "text": "TildaTutorial.Form_SAT01_PivotView"
+      }
+    }
+  },
+  "tilda.data_tutorial.view#form": {
+    "type": "basic.Rect",
+    "position": {
+      "x": 750,
+      "y": 250
+    },
+    "size": {
+      "width": 216,
+      "height": 30
+    },
+    "angle": 0,
+    "id": "b4b42922-dd39-4850-b9b1-9c75ff35a38d",
+    "customId": "form",
+    "z": 4,
+    "attrs": {
+      "rect": {
+        "fill": "rgb(46,117,182)",
+        "stroke": "rgb(65,113,156)",
+        "stroke-width": 2
+      },
+      "text": {
+        "fill": "white",
+        "text": "TildaTutorial.Form"
+      }
+    }
+  },
+  "tilda.data_tutorial.view#user": {
+    "type": "basic.Rect",
+    "position": {
+      "x": 400,
+      "y": 200
+    },
+    "size": {
+      "width": 216,
+      "height": 30
+    },
+    "angle": 0,
+    "id": "826b05e2-65f7-4b2a-84e1-2bc2ee823697",
+    "customId": "user",
+    "z": 18,
+    "attrs": {
+      "rect": {
+        "fill": "rgb(46,117,182)",
+        "stroke": "rgb(65,113,156)",
+        "stroke-width": 2
+      },
+      "text": {
+        "fill": "white",
+        "text": "TildaTutorial.User"
+      }
+    }
+  },
+  "tilda.data_tutorial.view#formanswer": {
+    "type": "basic.Rect",
+    "position": {
+      "x": 720,
+      "y": 200
+    },
+    "size": {
+      "width": 288,
+      "height": 30
+    },
+    "angle": 0,
+    "id": "4ace75f8-ef2e-4a41-a769-815dce77c9c0",
+    "customId": "formanswer",
+    "z": 2,
+    "hidden": true,
+    "attrs": {
+      "rect": {
+        "fill": "rgb(46,117,182)",
+        "stroke": "rgb(65,113,156)",
+        "stroke-width": 2
+      },
+      "text": {
+        "fill": "white",
+        "text": "TildaTutorial.FormAnswer"
+      }
+    }
+  },
+  "tilda.data_tutorial.view#test_xyz_pivotview": {
+    "type": "basic.Rect",
+    "position": {
+      "x": 490,
+      "y": 420
+    },
+    "size": {
+      "width": 384,
+      "height": 30
+    },
+    "angle": 0,
+    "id": "9476fd42-aa73-4c15-88dd-2c97d816e570",
+    "customId": "test_xyz_pivotview",
+    "z": 11,
+    "attrs": {
+      "rect": {
+        "fill": "rgb(169,209,142)",
+        "stroke": "rgb(0,176,80)",
+        "stroke-width": 1,
+        "stroke-dasharray": "3,3"
+      },
+      "text": {
+        "fill": "black",
+        "text": "TildaTutorial.Test_XYZ_PivotView"
+      }
+    }
+  },
+  "tilda.data_tutorial.view#testanswer": {
+    "type": "basic.Rect",
+    "position": {
+      "x": 1070,
+      "y": 300
+    },
+    "size": {
+      "width": 288,
+      "height": 30
+    },
+    "angle": 0,
+    "id": "be584204-674d-4ed8-95f1-0256e288d3cf",
+    "customId": "testanswer",
+    "z": 14,
+    "attrs": {
+      "rect": {
+        "fill": "rgb(46,117,182)",
+        "stroke": "rgb(65,113,156)",
+        "stroke-width": 2
+      },
+      "text": {
+        "fill": "white",
+        "text": "TildaTutorial.TestAnswer"
+      }
+    }
+  },
+  "tilda.data_tutorial.view#test_view": {
+    "type": "basic.Rect",
+    "position": {
+      "x": 900,
+      "y": 420
+    },
+    "size": {
+      "width": 276,
+      "height": 30
+    },
+    "angle": 0,
+    "id": "260cc91d-4b72-46cb-b24b-2d7e3bafe376",
+    "customId": "test_view",
+    "z": 8,
+    "attrs": {
+      "rect": {
+        "fill": "rgb(169,209,142)",
+        "stroke": "rgb(0,176,80)",
+        "stroke-width": 1,
+        "stroke-dasharray": "3,3"
+      },
+      "text": {
+        "fill": "black",
+        "text": "TildaTutorial.Test_View"
+      }
+    }
+  },
+  "tilda.data_tutorial.view#test_xyz_analytics_view": {
+    "type": "basic.Rect",
+    "position": {
+      "x": 670,
+      "y": 500
+    },
+    "size": {
+      "width": 444,
+      "height": 30
+    },
+    "angle": 0,
+    "id": "964aa91d-2cc1-4170-b5bc-a2a719782a65",
+    "customId": "test_xyz_analytics_view",
+    "z": 7,
+    "attrs": {
+      "rect": {
+        "fill": "rgb(169,209,142)",
+        "stroke": "rgb(0,176,80)",
+        "stroke-width": 1,
+        "stroke-dasharray": "3,3"
+      },
+      "text": {
+        "fill": "black",
+        "text": "TildaTutorial.Test_XYZ_Analytics_View"
+      }
+    }
+  },
+  "tilda.data_tutorial.object#formanswer.hidden": {
+    "type": "basic.Rect",
+    "position": {
+      "x": 590,
+      "y": 210
+    },
+    "size": {
+      "width": 288,
+      "height": 30
+    },
+    "angle": 0,
+    "id": "08022862-1317-482d-a1ff-fd0a48b0a230",
+    "customId": "formanswer",
+    "z": 5,
+    "attrs": {
+      "rect": {
+        "fill": "rgb(46,117,182)",
+        "stroke": "rgb(65,113,156)",
+        "stroke-width": 2
+      },
+      "text": {
+        "fill": "white",
+        "text": "TildaTutorial.FormAnswer"
+      }
+    }
   }
 }

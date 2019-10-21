@@ -182,6 +182,8 @@ public class PostgreSQL implements DBType
               return "variance";
             case ARRAY:
               return "array_agg";
+            case ARRAYCAT:
+              return "array_cat_agg";
             default:
               throw new Error("Cannot convert AggregateType " + AT + " to a database aggregate function name.");
           }
