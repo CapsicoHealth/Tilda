@@ -26,7 +26,7 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import tilda.utils.JSONUtil;
+import tilda.utils.json.JSONUtil;
 
 public class ErrorList
   {

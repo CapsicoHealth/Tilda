@@ -81,6 +81,7 @@ public class TildaJson implements CodeGenTildaJson
         Out.println("import tilda.enums.*;");
         Out.println("import tilda.performance.*;");
         Out.println("import tilda.utils.*;");
+        Out.println("import tilda.utils.json.*;");
         if (O._LC != ObjectLifecycle.READONLY)
           {
             Out.println();

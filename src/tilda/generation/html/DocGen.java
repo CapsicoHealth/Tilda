@@ -27,8 +27,8 @@ import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
 import tilda.utils.CollectionUtil;
 import tilda.utils.FileUtil;
-import tilda.utils.JSONUtil;
 import tilda.utils.TextUtil;
+import tilda.utils.json.JSONUtil;
 
 public class DocGen
   {

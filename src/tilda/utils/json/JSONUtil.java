@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package tilda.utils;
+package tilda.utils.json;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -32,6 +32,9 @@ import com.google.gson.Gson;
 
 import tilda.db.JDBCHelper;
 import tilda.interfaces.JSONable;
+import tilda.utils.DateTimeUtil;
+import tilda.utils.HttpStatus;
+import tilda.utils.TextUtil;
 
 public class JSONUtil
   {
@@ -79,7 +82,7 @@ public class JSONUtil
         Out.write(DateTimeUtil.printDateForJSON(v));
         Out.write("\"");
       }
-    
+
     protected static void printChar(Writer Out, char v)
     throws IOException
       {
@@ -105,7 +108,7 @@ public class JSONUtil
         Out.write(v == Double.NaN ? "null" : Double.toString(v));
       }
 
-    protected static void print(Writer Out, String Name, boolean FirstElement)
+    public static void print(Writer Out, String Name, boolean FirstElement)
     throws IOException
       {
         Out.write(FirstElement == false ? "," : " ");
@@ -519,7 +522,8 @@ public class JSONUtil
       }
 
     /**
-     * Starts the standard JSON header for payload
+     * Starts the standard JSON header for payload, i.e., {code:xxx,data:}
+     * 
      * @param Out
      * @param openObjectOrArray A character for '{' or '[' depending on whether an object is output, or an array of objects.
      * @throws IOException
@@ -532,6 +536,18 @@ public class JSONUtil
         Out.write(",\"data\": ");
         Out.write(openObjectOrArray);
         Out.write("\n");
+      }
+
+    public static void startend(Writer Out, char startChar)
+    throws IOException
+      {
+        Out.write(startChar);
+      }
+
+    public static void newline(Writer Out)
+    throws IOException
+      {
+        Out.write('\n');
       }
 
     public static void end(Writer Out, char closeObjectOrArray)
@@ -609,15 +625,15 @@ public class JSONUtil
             Out.write(Header);
             if (First == true)
               {
-                Out.write(Header+"   ");
+                Out.write(Header + "   ");
                 First = false;
               }
             else
-              Out.write(Header+"  ,");
+              Out.write(Header + "  ,");
             Obj.toJSON(Out, JsonExportName, true);
             Out.write("\n");
           }
-        Out.write(Header+"  ]\n");
+        Out.write(Header + "  ]\n");
       }
 
     public static void print(Writer Out, String elementName, String JsonExportName, boolean firstElement, JSONable Obj, String Header)
@@ -630,7 +646,7 @@ public class JSONUtil
         else
           Obj.toJSON(Out, JsonExportName, true);
       }
-    
+
     public static void print(Writer Out, String elementName, boolean firstElement, String[][] Values, String Header)
     throws IOException
       {
