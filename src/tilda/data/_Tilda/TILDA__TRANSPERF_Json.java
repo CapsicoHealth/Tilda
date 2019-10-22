@@ -11,6 +11,7 @@ import tilda.db.*;
 import tilda.enums.*;
 import tilda.performance.*;
 import tilda.utils.*;
+import tilda.utils.json.*;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -119,33 +120,7 @@ public class TILDA__TRANSPERF_Json
       if (Obj.write(C) == false)
        {
          Obj = tilda.data.TransPerf_Factory.lookupByPrimaryKey(_startPeriod);
-         if (Obj.read(C) == false)
-          throw new Exception("Cannot create the tilda.data.TILDA.TransPerf object.\n"+toString());
-         if (_endPeriod             != null) Obj.setEndPeriod             (_endPeriod             );
-         if (_commitNano            != null) Obj.setCommitNano            (_commitNano            );
-         if (_commitCount           != null) Obj.setCommitCount           (_commitCount           );
-         if (_rollbackNano          != null) Obj.setRollbackNano          (_rollbackNano          );
-         if (_rollbackCount         != null) Obj.setRollbackCount         (_rollbackCount         );
-         if (_savepointSetNano      != null) Obj.setSavepointSetNano      (_savepointSetNano      );
-         if (_savepointSetCount     != null) Obj.setSavepointSetCount     (_savepointSetCount     );
-         if (_savepointCommitNano   != null) Obj.setSavepointCommitNano   (_savepointCommitNano   );
-         if (_savepointCommitCount  != null) Obj.setSavepointCommitCount  (_savepointCommitCount  );
-         if (_savepointRollbackNano != null) Obj.setSavepointRollbackNano (_savepointRollbackNano );
-         if (_savepointRollbackCount!= null) Obj.setSavepointRollbackCount(_savepointRollbackCount);
-         if (_statementCloseNano    != null) Obj.setStatementCloseNano    (_statementCloseNano    );
-         if (_statementCloseCount   != null) Obj.setStatementCloseCount   (_statementCloseCount   );
-         if (_connectionCloseNano   != null) Obj.setConnectionCloseNano   (_connectionCloseNano   );
-         if (_connectionCloseCount  != null) Obj.setConnectionCloseCount  (_connectionCloseCount  );
-         if (_connectionGetNano     != null) Obj.setConnectionGetNano     (_connectionGetNano     );
-         if (_connectionGetCount    != null) Obj.setConnectionGetCount    (_connectionGetCount    );
-         if (_tildaSetterNano       != null) Obj.setTildaSetterNano       (_tildaSetterNano       );
-         if (_tildaSetterCount      != null) Obj.setTildaSetterCount      (_tildaSetterCount      );
-         if (_tildaToStringNano     != null) Obj.setTildaToStringNano     (_tildaToStringNano     );
-         if (_tildaToStringCount    != null) Obj.setTildaToStringCount    (_tildaToStringCount    );
-         if (_tildaToJsonNano       != null) Obj.setTildaToJsonNano       (_tildaToJsonNano       );
-         if (_tildaToJsonCount      != null) Obj.setTildaToJsonCount      (_tildaToJsonCount      );
-         if (_tildaToCsvNano        != null) Obj.setTildaToCsvNano        (_tildaToCsvNano        );
-         if (_tildaToCsvCount       != null) Obj.setTildaToCsvCount       (_tildaToCsvCount       );
+         update(Obj);
          if (Obj.write(C) == false)
           throw new Exception("Cannot update the tilda.data.TILDA.TransPerf object: "+Obj.toString());
 

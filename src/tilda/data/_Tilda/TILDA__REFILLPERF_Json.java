@@ -11,6 +11,7 @@ import tilda.db.*;
 import tilda.enums.*;
 import tilda.performance.*;
 import tilda.utils.*;
+import tilda.utils.json.*;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -61,13 +62,7 @@ public class TILDA__REFILLPERF_Json
       if (Obj.write(C) == false)
        {
          Obj = tilda.data.RefillPerf_Factory.lookupByPrimaryKey(_schemaName, _objectName, _startPeriod);
-         if (Obj.read(C) == false)
-          throw new Exception("Cannot create the tilda.data.TILDA.RefillPerf object.\n"+toString());
-         if (_timeCreateMs != null) Obj.setTimeCreateMs (_timeCreateMs );
-         if (_timeIndexMs  != null) Obj.setTimeIndexMs  (_timeIndexMs  );
-         if (_timeAnalyzeMs!= null) Obj.setTimeAnalyzeMs(_timeAnalyzeMs);
-         if (_timeTotalMs  != null) Obj.setTimeTotalMs  (_timeTotalMs  );
-         if (_columnsMs    != null) Obj.setColumnsMs    (_columnsMs    );
+         update(Obj);
          if (Obj.write(C) == false)
           throw new Exception("Cannot update the tilda.data.TILDA.RefillPerf object: "+Obj.toString());
 

@@ -11,6 +11,7 @@ import tilda.db.*;
 import tilda.enums.*;
 import tilda.performance.*;
 import tilda.utils.*;
+import tilda.utils.json.*;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -89,21 +90,7 @@ public class TILDA__OBJECTPERF_Json
       if (Obj.write(C) == false)
        {
          Obj = tilda.data.ObjectPerf_Factory.lookupByPrimaryKey(_schemaName, _objectName, _startPeriod);
-         if (Obj.read(C) == false)
-          throw new Exception("Cannot create the tilda.data.TILDA.ObjectPerf object.\n"+toString());
-         if (_endPeriod    != null) Obj.setEndPeriod    (_endPeriod    );
-         if (_selectNano   != null) Obj.setSelectNano   (_selectNano   );
-         if (_selectCount  != null) Obj.setSelectCount  (_selectCount  );
-         if (_selectRecords!= null) Obj.setSelectRecords(_selectRecords);
-         if (_insertNano   != null) Obj.setInsertNano   (_insertNano   );
-         if (_insertCount  != null) Obj.setInsertCount  (_insertCount  );
-         if (_insertRecords!= null) Obj.setInsertRecords(_insertRecords);
-         if (_updateNano   != null) Obj.setUpdateNano   (_updateNano   );
-         if (_updateCount  != null) Obj.setUpdateCount  (_updateCount  );
-         if (_updateRecords!= null) Obj.setUpdateRecords(_updateRecords);
-         if (_deleteNano   != null) Obj.setDeleteNano   (_deleteNano   );
-         if (_deleteCount  != null) Obj.setDeleteCount  (_deleteCount  );
-         if (_deleteRecords!= null) Obj.setDeleteRecords(_deleteRecords);
+         update(Obj);
          if (Obj.write(C) == false)
           throw new Exception("Cannot update the tilda.data.TILDA.ObjectPerf object: "+Obj.toString());
 

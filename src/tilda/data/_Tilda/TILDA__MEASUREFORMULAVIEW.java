@@ -13,8 +13,11 @@ import tilda.enums.*;
 import tilda.performance.*;
 import tilda.utils.*;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.*;
+
+import com.google.gson.*;
+import com.google.gson.annotations.*;
+import java.math.*;
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -183,6 +186,10 @@ public abstract class TILDA__MEASUREFORMULAVIEW implements tilda.interfaces.Read
    private BitSet   __Nulls       = new BitSet(64);
    BitSet   __Changes     = new BitSet(64);
    private boolean  __NewlyCreated= false;
+
+   public static enum LookupByMethod
+     {
+     };
    private int      __LookupId;
 
    public  boolean hasChanged    () { return __Changes.isEmpty() == false; }

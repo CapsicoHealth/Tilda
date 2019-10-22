@@ -11,6 +11,7 @@ import tilda.db.*;
 import tilda.enums.*;
 import tilda.performance.*;
 import tilda.utils.*;
+import tilda.utils.json.*;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -59,29 +60,7 @@ public class TILDA__DATEDIM_Json
       if (Obj.write(C) == false)
        {
          Obj = tilda.data.DateDim_Factory.lookupByPrimaryKey(_dt);
-         if (Obj.read(C) == false)
-          throw new Exception("Cannot create the tilda.data.TILDA.DateDim object.\n"+toString());
-         if (_epoch         != null) Obj.setEpoch         (_epoch         );
-         if (_dayName       != null) Obj.setDayName       (_dayName       );
-         if (_dayOfWeek     != null) Obj.setDayOfWeek     (_dayOfWeek     );
-         if (_dayOfMonth    != null) Obj.setDayOfMonth    (_dayOfMonth    );
-         if (_dayOfQuarter  != null) Obj.setDayOfQuarter  (_dayOfQuarter  );
-         if (_dayOfYear     != null) Obj.setDayOfYear     (_dayOfYear     );
-         if (_weekOfMonth   != null) Obj.setWeekOfMonth   (_weekOfMonth   );
-         if (_weekOfYear    != null) Obj.setWeekOfYear    (_weekOfYear    );
-         if (_monthOfYear   != null) Obj.setMonthOfYear   (_monthOfYear   );
-         if (_monthName     != null) Obj.setMonthName     (_monthName     );
-         if (_monthNameShort!= null) Obj.setMonthNameShort(_monthNameShort);
-         if (_quarterOfYear != null) Obj.setQuarterOfYear (_quarterOfYear );
-         if (_quarterName   != null) Obj.setQuarterName   (_quarterName   );
-         if (_year          != null) Obj.setYear          (_year          );
-         if (_mmyyyy        != null) Obj.setMmyyyy        (_mmyyyy        );
-         if (_mmddyyyy      != null) Obj.setMmddyyyy      (_mmddyyyy      );
-         if (_yyyymmdd      != null) Obj.setYyyymmdd      (_yyyymmdd      );
-         if (_isWeekend     != null) Obj.setIsWeekend     (_isWeekend     );
-         if (_isBusinessDay != null) Obj.setIsBusinessDay (_isBusinessDay );
-         if (_isHoliday     != null) Obj.setIsHoliday     (_isHoliday     );
-         if (_holidayName   != null) Obj.setHolidayName   (_holidayName   );
+         update(Obj);
          if (Obj.write(C) == false)
           throw new Exception("Cannot update the tilda.data.TILDA.DateDim object: "+Obj.toString());
 

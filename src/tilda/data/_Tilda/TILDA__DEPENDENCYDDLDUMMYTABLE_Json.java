@@ -10,6 +10,7 @@ import tilda.db.*;
 import tilda.enums.*;
 import tilda.performance.*;
 import tilda.utils.*;
+import tilda.utils.json.*;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -50,11 +51,7 @@ public class TILDA__DEPENDENCYDDLDUMMYTABLE_Json
       if (Obj.write(C) == false)
        {
          Obj = tilda.data.DependencyDDLDummyTable_Factory.lookupByDepedencySequence(_srcSchemaName, _srcTVName, _seq);
-         if (Obj.read(C) == false)
-          throw new Exception("Cannot create the tilda.data.TILDA.DependencyDDLDummyTable object.\n"+toString());
-         if (_depSchemaName!= null) Obj.setDepSchemaName(_depSchemaName);
-         if (_depViewName  != null) Obj.setDepViewName  (_depViewName  );
-         if (_restoreScript!= null) Obj.setRestoreScript(_restoreScript);
+         update(Obj);
          if (Obj.write(C) == false)
           throw new Exception("Cannot update the tilda.data.TILDA.DependencyDDLDummyTable object: "+Obj.toString());
 

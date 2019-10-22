@@ -10,6 +10,7 @@ import tilda.db.*;
 import tilda.enums.*;
 import tilda.performance.*;
 import tilda.utils.*;
+import tilda.utils.json.*;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -44,10 +45,7 @@ public class TILDA__KEY_Json
       if (Obj.write(C) == false)
        {
          Obj = tilda.data.Key_Factory.lookupByName(_name);
-         if (Obj.read(C) == false)
-          throw new Exception("Cannot create the tilda.data.TILDA.Key object.\n"+toString());
-         if (_max           != null) Obj.setMax           (_max           );
-         if (_count         != null) Obj.setCount         (_count         );
+         update(Obj);
          if (Obj.write(C) == false)
           throw new Exception("Cannot update the tilda.data.TILDA.Key object: "+Obj.toString());
 

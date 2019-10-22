@@ -72,8 +72,8 @@ public interface CodeGenTildaJson extends CodeGenBase
      * @param G
      * @param J
      */
-    void genMethodToOutput(PrintWriter Out, GeneratorSession G, OutputMapping J)
-    throws Exception;
+//    void genMethodToOutput(PrintWriter Out, GeneratorSession G, OutputMapping J)
+//    throws Exception;
 
 
     /**
@@ -82,6 +82,6 @@ public interface CodeGenTildaJson extends CodeGenBase
      * @param g
      * @param col
      */
-    public void genMethodJSONSchema(PrintWriter out, GeneratorSession g, Column col);
+//    public void genMethodJSONSchema(PrintWriter out, GeneratorSession g, Column col);
 
   }

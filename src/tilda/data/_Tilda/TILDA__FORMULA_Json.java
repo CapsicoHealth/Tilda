@@ -10,6 +10,7 @@ import tilda.db.*;
 import tilda.enums.*;
 import tilda.performance.*;
 import tilda.utils.*;
+import tilda.utils.json.*;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -53,16 +54,7 @@ public class TILDA__FORMULA_Json
       if (Obj.write(C) == false)
        {
          Obj = tilda.data.Formula_Factory.lookupByFormula(_location, _name);
-         if (Obj.read(C) == false)
-          throw new Exception("Cannot create the tilda.data.TILDA.Formula object.\n"+toString());
-         if (_location2        .equals(Obj.getLocation2        ()) == false)
-          throw new Exception("Cannot update the invariant field 'tilda.data.TILDA.Formula.location2' from '"+Obj.getLocation2()+"' to '"+_location2+"': "+Obj.toString());
-         if (_type             != null) Obj.setType             (_type             );
-         if (_title            != null) Obj.setTitle            (_title            );
-         if (_description      != null) Obj.setDescription      (_description      );
-         if (_formula          != null) Obj.setFormula          (_formula          );
-         if (_htmlDoc          != null) Obj.setHtmlDoc          (_htmlDoc          );
-         if (_referencedColumns!= null) Obj.setReferencedColumns(_referencedColumns);
+         update(Obj);
          if (Obj.write(C) == false)
           throw new Exception("Cannot update the tilda.data.TILDA.Formula object: "+Obj.toString());
 

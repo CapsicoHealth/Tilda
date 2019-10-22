@@ -271,7 +271,7 @@ public class Docs implements CodeGenDocs
       {
         Out.println(
             Helper.getMultiLineDocCommentStart() + SystemValues.NEWLINE
-                + " Creates a new object in memory, which you can subsequently {@link #Write()} to the data store." + SystemValues.NEWLINE
+                + " Creates a new object in memory, which you can subsequently {@link #write()} to the data store." + SystemValues.NEWLINE
                 + " current object to the destination. "
             );
         for (Column C : CreateColumns)

@@ -15,8 +15,11 @@ import tilda.enums.*;
 import tilda.performance.*;
 import tilda.utils.*;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.*;
+
+import com.google.gson.*;
+import com.google.gson.annotations.*;
+import java.math.*;
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -232,6 +235,11 @@ public abstract class TILDA__JOBPART implements tilda.interfaces.WriterObject, t
    private BitSet   __Nulls       = new BitSet(64);
    BitSet   __Changes     = new BitSet(64);
    private boolean  __NewlyCreated= false;
+
+   public static enum LookupByMethod
+     {
+         PrimaryKey // Lookup by primary key - Id: 0
+     };
    private int      __LookupId;
 
    public  boolean hasChanged    () { return __Changes.isEmpty() == false; }
@@ -853,7 +861,9 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   ZonedDateTime _dataStart;
+   @SerializedName("dataStart")
+   public String  Str_dataStart;
+   ZonedDateTime _dataStart = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1224,7 +1234,9 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   ZonedDateTime _dataEnd;
+   @SerializedName("dataEnd")
+   public String  Str_dataEnd;
+   ZonedDateTime _dataEnd = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1543,7 +1555,9 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   ZonedDateTime _start;
+   @SerializedName("start")
+   public String  Str_start;
+   ZonedDateTime _start = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1863,7 +1877,9 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   ZonedDateTime _end;
+   @SerializedName("end")
+   public String  Str_end;
+   ZonedDateTime _end = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2371,7 +2387,9 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   ZonedDateTime _created;
+   @SerializedName("created")
+   public String  Str_created;
+   ZonedDateTime _created = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2584,7 +2602,9 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   ZonedDateTime _lastUpdated;
+   @SerializedName("lastUpdated")
+   public String  Str_lastUpdated;
+   ZonedDateTime _lastUpdated = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2788,7 +2808,9 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   ZonedDateTime _deleted;
+   @SerializedName("deleted")
+   public String  Str_deleted;
+   ZonedDateTime _deleted = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3280,6 +3302,9 @@ This is the hasChanged for:<BR>
    public final boolean write(Connection C) throws Exception
      {
        long T0 = System.nanoTime();
+       if (__Init == null && __LookupId==0) // Loaded via some other mechamism, e.g., Json or CSV loader
+        {
+        }
        if (hasChanged() == false)
         {
           LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.JobPart has not changed: no writing will occur.");

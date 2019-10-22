@@ -10,6 +10,7 @@ import tilda.db.*;
 import tilda.enums.*;
 import tilda.performance.*;
 import tilda.utils.*;
+import tilda.utils.json.*;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -39,9 +40,7 @@ public class TILDA__MAINTENANCE_Json
       if (Obj.write(C) == false)
        {
          Obj = tilda.data.Maintenance_Factory.lookupByPrimaryKey(_type, _name);
-         if (Obj.read(C) == false)
-          throw new Exception("Cannot create the tilda.data.TILDA.Maintenance object.\n"+toString());
-         if (_value      != null) Obj.setValue      (_value      );
+         update(Obj);
          if (Obj.write(C) == false)
           throw new Exception("Cannot update the tilda.data.TILDA.Maintenance object: "+Obj.toString());
 

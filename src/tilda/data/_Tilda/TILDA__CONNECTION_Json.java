@@ -10,6 +10,7 @@ import tilda.db.*;
 import tilda.enums.*;
 import tilda.performance.*;
 import tilda.utils.*;
+import tilda.utils.json.*;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -57,16 +58,7 @@ public class TILDA__CONNECTION_Json
       if (Obj.write(C) == false)
        {
          Obj = tilda.data.Connection_Factory.lookupByPrimaryKey(_id);
-         if (Obj.read(C) == false)
-          throw new Exception("Cannot create the tilda.data.TILDA.Connection object.\n"+toString());
-         if (_active     != null) Obj.setActive     (_active     );
-         if (_driver     != null) Obj.setDriver     (_driver     );
-         if (_db         != null) Obj.setDb         (_db         );
-         if (_user       != null) Obj.setUser       (_user       );
-         if (_pswd       != null) Obj.setPswd       (_pswd       );
-         if (_initial    != null) Obj.setInitial    (_initial    );
-         if (_max        != null) Obj.setMax        (_max        );
-         if (_schemas    != null) Obj.setSchemas    (_schemas    );
+         update(Obj);
          if (Obj.write(C) == false)
           throw new Exception("Cannot update the tilda.data.TILDA.Connection object: "+Obj.toString());
 

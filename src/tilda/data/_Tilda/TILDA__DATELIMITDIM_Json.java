@@ -11,6 +11,7 @@ import tilda.db.*;
 import tilda.enums.*;
 import tilda.performance.*;
 import tilda.utils.*;
+import tilda.utils.json.*;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -42,10 +43,7 @@ public class TILDA__DATELIMITDIM_Json
       if (Obj.write(C) == false)
        {
          Obj = tilda.data.DateLimitDim_Factory.lookupByInvalidDate(_invalidDate);
-         if (Obj.read(C) == false)
-          throw new Exception("Cannot create the tilda.data.TILDA.DateLimitDim object.\n"+toString());
-         if (_minDate    != null) Obj.setMinDate    (_minDate    );
-         if (_maxDate    != null) Obj.setMaxDate    (_maxDate    );
+         update(Obj);
          if (Obj.write(C) == false)
           throw new Exception("Cannot update the tilda.data.TILDA.DateLimitDim object: "+Obj.toString());
 

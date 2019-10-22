@@ -470,15 +470,26 @@ public class Generator
 
         if (O._FST == FrameworkSourcedType.MAPPER)
           {
+            Out.println();
             DG.docMappingSupport(Out, G, O);
             CG.genMappingSupport(Out, G, O);
           }
         else if (O._FST == FrameworkSourcedType.ENUMERATION)
           {
+            Out.println();
             DG.docEnumerationSupport(Out, G, O);
             CG.genEnumerationSupport(Out, G, O);
           }
-              
+        
+        for (OutputMapping OM : O._OutputMaps)
+          if (OM != null)
+            {
+              Out.println();
+              DG.docMethodOutput(Out, G, OM);
+              CG.genMethodToOutput(Out, G, OM);
+            }
+
+        Out.println();
         CG.genClassEnd(Out, G);
         Out.close();
       }
@@ -510,22 +521,7 @@ public class Generator
             Out.println();
             CG.genMethodToString(Out, G, O);
           }
-        for (OutputMapping OM : O._OutputMaps)
-          if (OM != null)
-            {
-              Out.println();
-              DG.docMethodOutput(Out, G, OM);
-              CG.genMethodToOutput(Out, G, OM);
-            }
         Out.println();
-        for (Column Col : O._Columns)
-          {
-            if (Col != null && Col._JsonSchema != null)
-              {
-                DG.docMethodJSONSchema(Out, G, Col);
-                CG.genMethodJSONSchema(Out, G, Col);
-              }
-          }
         CG.genClassEnd(Out, G);
         Out.close();
       }

@@ -10,6 +10,7 @@ import tilda.db.*;
 import tilda.enums.*;
 import tilda.performance.*;
 import tilda.utils.*;
+import tilda.utils.json.*;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -41,9 +42,9 @@ public class TILDA__MAPPING_Json
       if (Obj.write(C) == false)
        {
          Obj = tilda.data.Mapping_Factory.lookupByTypeSrcDst(_type, _src, _dst);
-         if (Obj.read(C) == false)
-          throw new Exception("Cannot create the tilda.data.TILDA.Mapping object.\n"+toString());
-         LOG.debug("Nothing has changed in the object, so no update necessary.");
+         update(Obj);
+         if (Obj.write(C) == false)
+          throw new Exception("Cannot update the tilda.data.TILDA.Mapping object: "+Obj.toString());
 
        }
       return Obj;
