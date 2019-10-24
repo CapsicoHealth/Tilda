@@ -510,23 +510,19 @@ This Table contains the following columns:<BLOCKQUOTE>
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__TRANSPERF implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
-   protected static final Logger LOG = LogManager.getLogger(TILDA__TRANSPERF.class.getName());
+   protected transient static final Logger LOG = LogManager.getLogger(TILDA__TRANSPERF.class.getName());
 
-   public static final Class<TILDA__TRANSPERF_Factory> FACTORY_CLASS= TILDA__TRANSPERF_Factory.class;
-   public static final String TABLENAME = TextUtil.print("TILDA.TransPerf", "");
+   public transient static final Class<TILDA__TRANSPERF_Factory> FACTORY_CLASS= TILDA__TRANSPERF_Factory.class;
+   public transient static final String TABLENAME = TextUtil.print("TILDA.TransPerf", "");
 
    protected TILDA__TRANSPERF() { }
 
-   InitMode __Init        = null;
-   private BitSet   __Nulls       = new BitSet(64);
-   BitSet   __Changes     = new BitSet(64);
-   private boolean  __NewlyCreated= false;
+   transient InitMode __Init        = null;
+   transient BitSet   __Nulls       = new BitSet(64);
+   transient BitSet   __Changes     = new BitSet(64);
+   transient boolean  __NewlyCreated= false;
 
-   public static enum LookupByMethod
-     {
-         PrimaryKey // Lookup by primary key - Id: 0
-     };
-   private int      __LookupId;
+   transient int      __LookupId;
 
    public  boolean hasChanged    () { return __Changes.isEmpty() == false; }
    public  boolean isNewlyCreated() { return __NewlyCreated; }
@@ -567,7 +563,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _startPeriodTZ;
+   String _startPeriodTZ=null;;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -672,7 +668,8 @@ This is the definition for:<BR>
 */
    @SerializedName("startPeriod")
    public String  Str_startPeriod;
-   ZonedDateTime _startPeriod = null;
+   transient ZonedDateTime _startPeriod = null;
+   transient ZonedDateTime __Saved_startPeriod;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -755,7 +752,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _endPeriodTZ;
+   String _endPeriodTZ=null;;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -858,7 +855,7 @@ This is the definition for:<BR>
 */
    @SerializedName("endPeriod")
    public String  Str_endPeriod;
-   ZonedDateTime _endPeriod = null;
+   transient ZonedDateTime _endPeriod = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1031,7 +1028,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   long _commitNano= SystemValues.EVIL_VALUE;
+   @SerializedName("commitNano")
+   Long _commitNano=null;;
 /**
 These are the enumerated values for tilda.data.TILDA.TransPerf.commitNano, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
 
@@ -1069,7 +1067,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final long getCommitNano()
-      { return _commitNano; }
+      { return _commitNano==null?0l:_commitNano; }
 
 /**
 This is the value is-a for tilda.data.TILDA.TransPerf.commitNano:<BR>
@@ -1192,7 +1190,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   int _commitCount= SystemValues.EVIL_VALUE;
+   @SerializedName("commitCount")
+   Integer _commitCount=null;;
 /**
 These are the enumerated values for tilda.data.TILDA.TransPerf.commitCount, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
 
@@ -1230,7 +1229,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final int getCommitCount()
-      { return _commitCount; }
+      { return _commitCount==null?0:_commitCount; }
 
 /**
 This is the value is-a for tilda.data.TILDA.TransPerf.commitCount:<BR>
@@ -1353,7 +1352,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   long _rollbackNano= SystemValues.EVIL_VALUE;
+   @SerializedName("rollbackNano")
+   Long _rollbackNano=null;;
 /**
 These are the enumerated values for tilda.data.TILDA.TransPerf.rollbackNano, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
 
@@ -1391,7 +1391,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final long getRollbackNano()
-      { return _rollbackNano; }
+      { return _rollbackNano==null?0l:_rollbackNano; }
 
 /**
 This is the value is-a for tilda.data.TILDA.TransPerf.rollbackNano:<BR>
@@ -1514,7 +1514,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   int _rollbackCount= SystemValues.EVIL_VALUE;
+   @SerializedName("rollbackCount")
+   Integer _rollbackCount=null;;
 /**
 These are the enumerated values for tilda.data.TILDA.TransPerf.rollbackCount, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
 
@@ -1552,7 +1553,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final int getRollbackCount()
-      { return _rollbackCount; }
+      { return _rollbackCount==null?0:_rollbackCount; }
 
 /**
 This is the value is-a for tilda.data.TILDA.TransPerf.rollbackCount:<BR>
@@ -1675,7 +1676,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   long _savepointSetNano= SystemValues.EVIL_VALUE;
+   @SerializedName("savepointSetNano")
+   Long _savepointSetNano=null;;
 /**
 These are the enumerated values for tilda.data.TILDA.TransPerf.savepointSetNano, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
 
@@ -1713,7 +1715,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final long getSavepointSetNano()
-      { return _savepointSetNano; }
+      { return _savepointSetNano==null?0l:_savepointSetNano; }
 
 /**
 This is the value is-a for tilda.data.TILDA.TransPerf.savepointSetNano:<BR>
@@ -1836,7 +1838,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   int _savepointSetCount= SystemValues.EVIL_VALUE;
+   @SerializedName("savepointSetCount")
+   Integer _savepointSetCount=null;;
 /**
 These are the enumerated values for tilda.data.TILDA.TransPerf.savepointSetCount, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
 
@@ -1874,7 +1877,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final int getSavepointSetCount()
-      { return _savepointSetCount; }
+      { return _savepointSetCount==null?0:_savepointSetCount; }
 
 /**
 This is the value is-a for tilda.data.TILDA.TransPerf.savepointSetCount:<BR>
@@ -1997,7 +2000,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   long _savepointCommitNano= SystemValues.EVIL_VALUE;
+   @SerializedName("savepointCommitNano")
+   Long _savepointCommitNano=null;;
 /**
 These are the enumerated values for tilda.data.TILDA.TransPerf.savepointCommitNano, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
 
@@ -2035,7 +2039,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final long getSavepointCommitNano()
-      { return _savepointCommitNano; }
+      { return _savepointCommitNano==null?0l:_savepointCommitNano; }
 
 /**
 This is the value is-a for tilda.data.TILDA.TransPerf.savepointCommitNano:<BR>
@@ -2158,7 +2162,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   int _savepointCommitCount= SystemValues.EVIL_VALUE;
+   @SerializedName("savepointCommitCount")
+   Integer _savepointCommitCount=null;;
 /**
 These are the enumerated values for tilda.data.TILDA.TransPerf.savepointCommitCount, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
 
@@ -2196,7 +2201,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final int getSavepointCommitCount()
-      { return _savepointCommitCount; }
+      { return _savepointCommitCount==null?0:_savepointCommitCount; }
 
 /**
 This is the value is-a for tilda.data.TILDA.TransPerf.savepointCommitCount:<BR>
@@ -2319,7 +2324,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   long _savepointRollbackNano= SystemValues.EVIL_VALUE;
+   @SerializedName("savepointRollbackNano")
+   Long _savepointRollbackNano=null;;
 /**
 These are the enumerated values for tilda.data.TILDA.TransPerf.savepointRollbackNano, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
 
@@ -2357,7 +2363,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final long getSavepointRollbackNano()
-      { return _savepointRollbackNano; }
+      { return _savepointRollbackNano==null?0l:_savepointRollbackNano; }
 
 /**
 This is the value is-a for tilda.data.TILDA.TransPerf.savepointRollbackNano:<BR>
@@ -2480,7 +2486,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   int _savepointRollbackCount= SystemValues.EVIL_VALUE;
+   @SerializedName("savepointRollbackCount")
+   Integer _savepointRollbackCount=null;;
 /**
 These are the enumerated values for tilda.data.TILDA.TransPerf.savepointRollbackCount, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
 
@@ -2518,7 +2525,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final int getSavepointRollbackCount()
-      { return _savepointRollbackCount; }
+      { return _savepointRollbackCount==null?0:_savepointRollbackCount; }
 
 /**
 This is the value is-a for tilda.data.TILDA.TransPerf.savepointRollbackCount:<BR>
@@ -2641,7 +2648,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   long _statementCloseNano= SystemValues.EVIL_VALUE;
+   @SerializedName("statementCloseNano")
+   Long _statementCloseNano=null;;
 /**
 These are the enumerated values for tilda.data.TILDA.TransPerf.statementCloseNano, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
 
@@ -2679,7 +2687,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final long getStatementCloseNano()
-      { return _statementCloseNano; }
+      { return _statementCloseNano==null?0l:_statementCloseNano; }
 
 /**
 This is the value is-a for tilda.data.TILDA.TransPerf.statementCloseNano:<BR>
@@ -2802,7 +2810,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   int _statementCloseCount= SystemValues.EVIL_VALUE;
+   @SerializedName("statementCloseCount")
+   Integer _statementCloseCount=null;;
 /**
 These are the enumerated values for tilda.data.TILDA.TransPerf.statementCloseCount, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
 
@@ -2840,7 +2849,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final int getStatementCloseCount()
-      { return _statementCloseCount; }
+      { return _statementCloseCount==null?0:_statementCloseCount; }
 
 /**
 This is the value is-a for tilda.data.TILDA.TransPerf.statementCloseCount:<BR>
@@ -2963,7 +2972,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   long _connectionCloseNano= SystemValues.EVIL_VALUE;
+   @SerializedName("connectionCloseNano")
+   Long _connectionCloseNano=null;;
 /**
 These are the enumerated values for tilda.data.TILDA.TransPerf.connectionCloseNano, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
 
@@ -3001,7 +3011,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final long getConnectionCloseNano()
-      { return _connectionCloseNano; }
+      { return _connectionCloseNano==null?0l:_connectionCloseNano; }
 
 /**
 This is the value is-a for tilda.data.TILDA.TransPerf.connectionCloseNano:<BR>
@@ -3124,7 +3134,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   int _connectionCloseCount= SystemValues.EVIL_VALUE;
+   @SerializedName("connectionCloseCount")
+   Integer _connectionCloseCount=null;;
 /**
 These are the enumerated values for tilda.data.TILDA.TransPerf.connectionCloseCount, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
 
@@ -3162,7 +3173,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final int getConnectionCloseCount()
-      { return _connectionCloseCount; }
+      { return _connectionCloseCount==null?0:_connectionCloseCount; }
 
 /**
 This is the value is-a for tilda.data.TILDA.TransPerf.connectionCloseCount:<BR>
@@ -3285,7 +3296,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   long _connectionGetNano= SystemValues.EVIL_VALUE;
+   @SerializedName("connectionGetNano")
+   Long _connectionGetNano=null;;
 /**
 These are the enumerated values for tilda.data.TILDA.TransPerf.connectionGetNano, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
 
@@ -3323,7 +3335,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final long getConnectionGetNano()
-      { return _connectionGetNano; }
+      { return _connectionGetNano==null?0l:_connectionGetNano; }
 
 /**
 This is the value is-a for tilda.data.TILDA.TransPerf.connectionGetNano:<BR>
@@ -3446,7 +3458,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   int _connectionGetCount= SystemValues.EVIL_VALUE;
+   @SerializedName("connectionGetCount")
+   Integer _connectionGetCount=null;;
 /**
 These are the enumerated values for tilda.data.TILDA.TransPerf.connectionGetCount, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
 
@@ -3484,7 +3497,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final int getConnectionGetCount()
-      { return _connectionGetCount; }
+      { return _connectionGetCount==null?0:_connectionGetCount; }
 
 /**
 This is the value is-a for tilda.data.TILDA.TransPerf.connectionGetCount:<BR>
@@ -3607,7 +3620,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   long _tildaSetterNano= SystemValues.EVIL_VALUE;
+   @SerializedName("tildaSetterNano")
+   Long _tildaSetterNano=null;;
 /**
 These are the enumerated values for tilda.data.TILDA.TransPerf.tildaSetterNano, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
 
@@ -3645,7 +3659,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final long getTildaSetterNano()
-      { return _tildaSetterNano; }
+      { return _tildaSetterNano==null?0l:_tildaSetterNano; }
 
 /**
 This is the value is-a for tilda.data.TILDA.TransPerf.tildaSetterNano:<BR>
@@ -3768,7 +3782,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   int _tildaSetterCount= SystemValues.EVIL_VALUE;
+   @SerializedName("tildaSetterCount")
+   Integer _tildaSetterCount=null;;
 /**
 These are the enumerated values for tilda.data.TILDA.TransPerf.tildaSetterCount, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
 
@@ -3806,7 +3821,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final int getTildaSetterCount()
-      { return _tildaSetterCount; }
+      { return _tildaSetterCount==null?0:_tildaSetterCount; }
 
 /**
 This is the value is-a for tilda.data.TILDA.TransPerf.tildaSetterCount:<BR>
@@ -3929,7 +3944,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   long _tildaToStringNano= SystemValues.EVIL_VALUE;
+   @SerializedName("tildaToStringNano")
+   Long _tildaToStringNano=null;;
 /**
 These are the enumerated values for tilda.data.TILDA.TransPerf.tildaToStringNano, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
 
@@ -3967,7 +3983,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final long getTildaToStringNano()
-      { return _tildaToStringNano; }
+      { return _tildaToStringNano==null?0l:_tildaToStringNano; }
 
 /**
 This is the value is-a for tilda.data.TILDA.TransPerf.tildaToStringNano:<BR>
@@ -4090,7 +4106,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   int _tildaToStringCount= SystemValues.EVIL_VALUE;
+   @SerializedName("tildaToStringCount")
+   Integer _tildaToStringCount=null;;
 /**
 These are the enumerated values for tilda.data.TILDA.TransPerf.tildaToStringCount, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
 
@@ -4128,7 +4145,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final int getTildaToStringCount()
-      { return _tildaToStringCount; }
+      { return _tildaToStringCount==null?0:_tildaToStringCount; }
 
 /**
 This is the value is-a for tilda.data.TILDA.TransPerf.tildaToStringCount:<BR>
@@ -4251,7 +4268,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   long _tildaToJsonNano= SystemValues.EVIL_VALUE;
+   @SerializedName("tildaToJsonNano")
+   Long _tildaToJsonNano=null;;
 /**
 These are the enumerated values for tilda.data.TILDA.TransPerf.tildaToJsonNano, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
 
@@ -4289,7 +4307,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final long getTildaToJsonNano()
-      { return _tildaToJsonNano; }
+      { return _tildaToJsonNano==null?0l:_tildaToJsonNano; }
 
 /**
 This is the value is-a for tilda.data.TILDA.TransPerf.tildaToJsonNano:<BR>
@@ -4412,7 +4430,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   int _tildaToJsonCount= SystemValues.EVIL_VALUE;
+   @SerializedName("tildaToJsonCount")
+   Integer _tildaToJsonCount=null;;
 /**
 These are the enumerated values for tilda.data.TILDA.TransPerf.tildaToJsonCount, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
 
@@ -4450,7 +4469,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final int getTildaToJsonCount()
-      { return _tildaToJsonCount; }
+      { return _tildaToJsonCount==null?0:_tildaToJsonCount; }
 
 /**
 This is the value is-a for tilda.data.TILDA.TransPerf.tildaToJsonCount:<BR>
@@ -4573,7 +4592,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   long _tildaToCsvNano= SystemValues.EVIL_VALUE;
+   @SerializedName("tildaToCsvNano")
+   Long _tildaToCsvNano=null;;
 /**
 These are the enumerated values for tilda.data.TILDA.TransPerf.tildaToCsvNano, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
 
@@ -4611,7 +4631,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final long getTildaToCsvNano()
-      { return _tildaToCsvNano; }
+      { return _tildaToCsvNano==null?0l:_tildaToCsvNano; }
 
 /**
 This is the value is-a for tilda.data.TILDA.TransPerf.tildaToCsvNano:<BR>
@@ -4734,7 +4754,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   int _tildaToCsvCount= SystemValues.EVIL_VALUE;
+   @SerializedName("tildaToCsvCount")
+   Integer _tildaToCsvCount=null;;
 /**
 These are the enumerated values for tilda.data.TILDA.TransPerf.tildaToCsvCount, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
 
@@ -4772,7 +4793,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final int getTildaToCsvCount()
-      { return _tildaToCsvCount; }
+      { return _tildaToCsvCount==null?0:_tildaToCsvCount; }
 
 /**
 This is the value is-a for tilda.data.TILDA.TransPerf.tildaToCsvCount:<BR>
@@ -4895,9 +4916,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   @SerializedName("created")
    public String  Str_created;
-   ZonedDateTime _created = null;
+   transient ZonedDateTime _created = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -5110,9 +5130,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   @SerializedName("lastUpdated")
    public String  Str_lastUpdated;
-   ZonedDateTime _lastUpdated = null;
+   transient ZonedDateTime _lastUpdated = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -5316,9 +5335,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   @SerializedName("deleted")
    public String  Str_deleted;
-   ZonedDateTime _deleted = null;
+   transient ZonedDateTime _deleted = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -5560,7 +5578,197 @@ This is the hasChanged for:<BR>
 /**
  Writes the object to the data store if any changes has occurred since the object was initially
  read from the data store or last written. 
+ If the object was deserialized (i.e., not created via the factory lookup() or create() methods, 
+ then this method assumes a create() and will check that all non-null columns have been provided. If you 
+ need more flexibility for an upsert, use the upsert(Connection, boolean) version of write 
+ which will try a combination of insert/update to get the object to the DB. 
+ Note that if you use write() right after a create, lookup or deserialization initialization, only the
+ template fields (not null, natural identity and/or any field set prior to calling this method) exist 
+  in memory. Call refresh() to force a select and retrieve all the fields for that record.
 */
+   public final boolean write(Connection C) throws Exception
+     {
+       long T0 = System.nanoTime();
+
+       if (__Init == null && __LookupId==0) // Loaded via some other mechamism, e.g., Json or CSV loader
+        {
+          validateDeserialization();
+          initForCreate();
+        }
+
+       if (hasChanged() == false)
+        {
+          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.TransPerf has not changed: no writing will occur.");
+          QueryDetails.setLastQuery(TILDA__TRANSPERF_Factory.SCHEMA_TABLENAME_LABEL, "");
+          return true;
+        }
+
+       if (beforeWrite(C) == false)
+        {
+          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.TransPerf object's beforeWrite() failed.");
+          QueryDetails.setLastQuery(TILDA__TRANSPERF_Factory.SCHEMA_TABLENAME_LABEL, "");
+          return false;
+        }
+
+       String Q = getWriteQuery(C);
+
+       java.sql.PreparedStatement PS = null;
+       int count = 0;
+       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
+       try
+        {
+          PS = C.prepareStatement(Q);
+          int i = populatePreparedStatement(C, PS, AllocatedArrays);
+
+          switch (__LookupId)
+           {
+             case 0:
+               PS.setTimestamp(++i, new java.sql.Timestamp(_startPeriod.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+               break;
+             case -666: if (__Init == InitMode.CREATE) break;
+             default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
+           }
+
+          C.setSavepoint();
+          count = PS.executeUpdate();
+          C.releaseSavepoint(true);
+          if (count == 0)
+           return false;
+        }
+       catch (java.sql.SQLException E)
+        {
+          C.releaseSavepoint(false);
+          return C.handleCatch(E, "updated or inserted");
+        }
+       finally
+        {
+          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__TRANSPERF_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
+          PS = null;
+        }
+
+       stateUpdatePostWrite();
+       return true;
+     }
+
+   protected abstract boolean beforeWrite(Connection C) throws Exception;
+
+   protected void validateDeserialization() throws Exception
+     {
+       if (TextUtil.isNullOrEmpty(Str_startPeriod) == true)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.TransPerf.startPeriod' was null or empty. It's not nullable in the model.\n"+toString());
+        __Changes.or(TILDA__TRANSPERF_Factory.COLS.STARTPERIOD._Mask);
+        __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.STARTPERIOD._Mask);
+       _startPeriod = DateTimeUtil.parsefromJSON(Str_startPeriod);
+       if (   _startPeriod == null)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.TransPerf.startPeriod' was not in the expected format. Dates should follow the ISO format.\n"+toString());
+       __Changes.or(TILDA__TRANSPERF_Factory.COLS.STARTPERIOD._Mask);
+       __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.STARTPERIOD._Mask);
+       if (TextUtil.isNullOrEmpty(Str_endPeriod) == true)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.TransPerf.endPeriod' was null or empty. It's not nullable in the model.\n"+toString());
+        __Changes.or(TILDA__TRANSPERF_Factory.COLS.ENDPERIOD._Mask);
+        __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.ENDPERIOD._Mask);
+       _endPeriod = DateTimeUtil.parsefromJSON(Str_endPeriod);
+       if (   _endPeriod == null)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.TransPerf.endPeriod' was not in the expected format. Dates should follow the ISO format.\n"+toString());
+       __Changes.or(TILDA__TRANSPERF_Factory.COLS.ENDPERIOD._Mask);
+       __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.ENDPERIOD._Mask);
+       if (_commitNano == null)
+        _commitNano=0l;
+        __Changes.or(TILDA__TRANSPERF_Factory.COLS.COMMITNANO._Mask);
+        __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.COMMITNANO._Mask);
+       if (_commitCount == null)
+        _commitCount=0;
+        __Changes.or(TILDA__TRANSPERF_Factory.COLS.COMMITCOUNT._Mask);
+        __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.COMMITCOUNT._Mask);
+       if (_rollbackNano == null)
+        _rollbackNano=0l;
+        __Changes.or(TILDA__TRANSPERF_Factory.COLS.ROLLBACKNANO._Mask);
+        __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.ROLLBACKNANO._Mask);
+       if (_rollbackCount == null)
+        _rollbackCount=0;
+        __Changes.or(TILDA__TRANSPERF_Factory.COLS.ROLLBACKCOUNT._Mask);
+        __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.ROLLBACKCOUNT._Mask);
+       if (_savepointSetNano == null)
+        _savepointSetNano=0l;
+        __Changes.or(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTSETNANO._Mask);
+        __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTSETNANO._Mask);
+       if (_savepointSetCount == null)
+        _savepointSetCount=0;
+        __Changes.or(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTSETCOUNT._Mask);
+        __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTSETCOUNT._Mask);
+       if (_savepointCommitNano == null)
+        _savepointCommitNano=0l;
+        __Changes.or(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTCOMMITNANO._Mask);
+        __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTCOMMITNANO._Mask);
+       if (_savepointCommitCount == null)
+        _savepointCommitCount=0;
+        __Changes.or(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTCOMMITCOUNT._Mask);
+        __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTCOMMITCOUNT._Mask);
+       if (_savepointRollbackNano == null)
+        _savepointRollbackNano=0l;
+        __Changes.or(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTROLLBACKNANO._Mask);
+        __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTROLLBACKNANO._Mask);
+       if (_savepointRollbackCount == null)
+        _savepointRollbackCount=0;
+        __Changes.or(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTROLLBACKCOUNT._Mask);
+        __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTROLLBACKCOUNT._Mask);
+       if (_statementCloseNano == null)
+        _statementCloseNano=0l;
+        __Changes.or(TILDA__TRANSPERF_Factory.COLS.STATEMENTCLOSENANO._Mask);
+        __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.STATEMENTCLOSENANO._Mask);
+       if (_statementCloseCount == null)
+        _statementCloseCount=0;
+        __Changes.or(TILDA__TRANSPERF_Factory.COLS.STATEMENTCLOSECOUNT._Mask);
+        __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.STATEMENTCLOSECOUNT._Mask);
+       if (_connectionCloseNano == null)
+        _connectionCloseNano=0l;
+        __Changes.or(TILDA__TRANSPERF_Factory.COLS.CONNECTIONCLOSENANO._Mask);
+        __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.CONNECTIONCLOSENANO._Mask);
+       if (_connectionCloseCount == null)
+        _connectionCloseCount=0;
+        __Changes.or(TILDA__TRANSPERF_Factory.COLS.CONNECTIONCLOSECOUNT._Mask);
+        __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.CONNECTIONCLOSECOUNT._Mask);
+       if (_connectionGetNano == null)
+        _connectionGetNano=0l;
+        __Changes.or(TILDA__TRANSPERF_Factory.COLS.CONNECTIONGETNANO._Mask);
+        __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.CONNECTIONGETNANO._Mask);
+       if (_connectionGetCount == null)
+        _connectionGetCount=0;
+        __Changes.or(TILDA__TRANSPERF_Factory.COLS.CONNECTIONGETCOUNT._Mask);
+        __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.CONNECTIONGETCOUNT._Mask);
+       if (_tildaSetterNano == null)
+        _tildaSetterNano=0l;
+        __Changes.or(TILDA__TRANSPERF_Factory.COLS.TILDASETTERNANO._Mask);
+        __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.TILDASETTERNANO._Mask);
+       if (_tildaSetterCount == null)
+        _tildaSetterCount=0;
+        __Changes.or(TILDA__TRANSPERF_Factory.COLS.TILDASETTERCOUNT._Mask);
+        __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.TILDASETTERCOUNT._Mask);
+       if (_tildaToStringNano == null)
+        _tildaToStringNano=0l;
+        __Changes.or(TILDA__TRANSPERF_Factory.COLS.TILDATOSTRINGNANO._Mask);
+        __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.TILDATOSTRINGNANO._Mask);
+       if (_tildaToStringCount == null)
+        _tildaToStringCount=0;
+        __Changes.or(TILDA__TRANSPERF_Factory.COLS.TILDATOSTRINGCOUNT._Mask);
+        __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.TILDATOSTRINGCOUNT._Mask);
+       if (_tildaToJsonNano == null)
+        _tildaToJsonNano=0l;
+        __Changes.or(TILDA__TRANSPERF_Factory.COLS.TILDATOJSONNANO._Mask);
+        __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.TILDATOJSONNANO._Mask);
+       if (_tildaToJsonCount == null)
+        _tildaToJsonCount=0;
+        __Changes.or(TILDA__TRANSPERF_Factory.COLS.TILDATOJSONCOUNT._Mask);
+        __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.TILDATOJSONCOUNT._Mask);
+       if (_tildaToCsvNano == null)
+        _tildaToCsvNano=0l;
+        __Changes.or(TILDA__TRANSPERF_Factory.COLS.TILDATOCSVNANO._Mask);
+        __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.TILDATOCSVNANO._Mask);
+       if (_tildaToCsvCount == null)
+        _tildaToCsvCount=0;
+        __Changes.or(TILDA__TRANSPERF_Factory.COLS.TILDATOCSVCOUNT._Mask);
+        __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.TILDATOCSVCOUNT._Mask);
+     }
    protected String getTimeStampSignature() throws Exception
      {
        StringBuilder S = new StringBuilder(1024);
@@ -5882,67 +6090,63 @@ This is the hasChanged for:<BR>
        __Changes.clear();
        __Nulls.clear();
      }
-   public final boolean write(Connection C) throws Exception
+/**
+ Writes the object to the data store using an upsert approach and assumes the object is either
+ in create or deserialized mode. 
+ The parameter createFirst controls whether the logic should do an insert first and if it fails, then do 
+ an update, or the opposite (update first and if it fails, then an insert). This is necessary for databases
+ without a robust upsert SQL syntax where separate insert/update statements must be issued.
+ The method will figure out based on the fields set which natural identity (a unique index) is applicable for
+ the lookup operation.
+ Note that when you use upsert() (right after a create or deserialization initialization), only the template
+ fields (not null, natural identity and/or any field set prior to calling this method) exist in memory. Call
+ refresh() to force a select and retrieve all the fields for that record.
+*/
+   public final boolean upsert(Connection C, boolean updateFirst) throws Exception
      {
-       long T0 = System.nanoTime();
-       if (__Init == null && __LookupId==0) // Loaded via some other mechamism, e.g., Json or CSV loader
-        {
-        }
-       if (hasChanged() == false)
-        {
-          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.TransPerf has not changed: no writing will occur.");
-          QueryDetails.setLastQuery(TILDA__TRANSPERF_Factory.SCHEMA_TABLENAME_LABEL, "");
-          return true;
-        }
+       boolean OK =    __Init == InitMode.CREATE && __NewlyCreated == true && __LookupId == SystemValues.EVIL_VALUE // Create() through factory
+                    || __Init == null && __LookupId==0 // Loaded via some deserialization mechamism, e.g., Json or CSV loader
+               ;
+       if (OK == false)
+        throw new Exception("Object has not been instanciated via deserialization or the factory create() method.");
 
-       if (beforeWrite(C) == false)
+       if (__Init == null && __LookupId==0);  // object deserialized
+        validateDeserialization();
+
+       int lookupId = getFirstValidLookupBy();
+       if (lookupId == SystemValues.EVIL_VALUE)
+        throw new Exception("Object has not been intialized with sufficient data for any natural key to be available for a lookup.");
+
+       if (updateFirst == true)
         {
-          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.TransPerf object's beforeWrite() failed.");
-          QueryDetails.setLastQuery(TILDA__TRANSPERF_Factory.SCHEMA_TABLENAME_LABEL, "");
-          return false;
-        }
-
-       String Q = getWriteQuery(C);
-
-       java.sql.PreparedStatement PS = null;
-       int count = 0;
-       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
-       try
-        {
-          PS = C.prepareStatement(Q);
-          int i = populatePreparedStatement(C, PS, AllocatedArrays);
-
-          switch (__LookupId)
+          initForLookup(lookupId);
+          if (write(C) == false)
            {
-             case 0:
-               PS.setTimestamp(++i, new java.sql.Timestamp(_startPeriod.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
-               break;
-             case -666: if (__Init == InitMode.CREATE) break;
-             default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
+             initForCreate();
+             return write(C);
            }
-
-          C.setSavepoint();
-          count = PS.executeUpdate();
-          C.releaseSavepoint(true);
-          if (count == 0)
-           return false;
         }
-       catch (java.sql.SQLException E)
+       else
         {
-          C.releaseSavepoint(false);
-          return C.handleCatch(E, "updated or inserted");
-        }
-       finally
-        {
-          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__TRANSPERF_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
-          PS = null;
+          initForCreate();
+          if (write(C) == false)
+           {
+             initForLookup(lookupId);
+             return write(C);
+           }
         }
 
-       stateUpdatePostWrite();
        return true;
      }
 
-   protected abstract boolean beforeWrite(Connection C) throws Exception;
+   protected int getFirstValidLookupBy() throws Exception
+     {
+       // Testing if primary key has been set - Id: 0
+       if (TextUtil.isNullOrEmpty(Str_startPeriod) == false)
+        return 0;
+
+       return SystemValues.EVIL_VALUE;
+     }
 
 
 

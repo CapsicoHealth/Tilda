@@ -17,12 +17,10 @@
 package tilda.generation.interfaces;
 
 import java.io.PrintWriter;
-
 import java.util.List;
 
 import tilda.generation.GeneratorSession;
 import tilda.parsing.parts.Column;
-import tilda.parsing.parts.OutputMapping;
 import tilda.parsing.parts.Object;
 
 public interface CodeGenTildaJson extends CodeGenBase

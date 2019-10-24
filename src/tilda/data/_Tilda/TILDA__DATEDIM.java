@@ -301,23 +301,19 @@ This Table contains the following columns:<BLOCKQUOTE>
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__DATEDIM implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
-   protected static final Logger LOG = LogManager.getLogger(TILDA__DATEDIM.class.getName());
+   protected transient static final Logger LOG = LogManager.getLogger(TILDA__DATEDIM.class.getName());
 
-   public static final Class<TILDA__DATEDIM_Factory> FACTORY_CLASS= TILDA__DATEDIM_Factory.class;
-   public static final String TABLENAME = TextUtil.print("TILDA.DateDim", "");
+   public transient static final Class<TILDA__DATEDIM_Factory> FACTORY_CLASS= TILDA__DATEDIM_Factory.class;
+   public transient static final String TABLENAME = TextUtil.print("TILDA.DateDim", "");
 
    protected TILDA__DATEDIM() { }
 
-   InitMode __Init        = null;
-   private BitSet   __Nulls       = new BitSet(64);
-   BitSet   __Changes     = new BitSet(64);
-   private boolean  __NewlyCreated= false;
+   transient InitMode __Init        = null;
+   transient BitSet   __Nulls       = new BitSet(64);
+   transient BitSet   __Changes     = new BitSet(64);
+   transient boolean  __NewlyCreated= false;
 
-   public static enum LookupByMethod
-     {
-         PrimaryKey // Lookup by primary key - Id: 0
-     };
-   private int      __LookupId;
+   transient int      __LookupId;
 
    public  boolean hasChanged    () { return __Changes.isEmpty() == false; }
    public  boolean isNewlyCreated() { return __NewlyCreated; }
@@ -357,7 +353,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   LocalDate _dt;
+   @SerializedName("dt")
+   LocalDate _dt=null;;
    protected LocalDate __Saved_dt;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -436,7 +433,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   long _epoch= SystemValues.EVIL_VALUE;
+   @SerializedName("epoch")
+   Long _epoch=null;;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -456,7 +454,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final long getEpoch()
-      { return _epoch; }
+      { return _epoch==null?0l:_epoch; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -531,7 +529,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _dayName;
+   @SerializedName("dayName")
+   String _dayName=null;;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -684,7 +683,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   int _dayOfWeek= SystemValues.EVIL_VALUE;
+   @SerializedName("dayOfWeek")
+   Integer _dayOfWeek=null;;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -704,7 +704,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final int getDayOfWeek()
-      { return _dayOfWeek; }
+      { return _dayOfWeek==null?0:_dayOfWeek; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -779,7 +779,7 @@ This is the null setter for:<BR>
         return;
        __Changes.or(TILDA__DATEDIM_Factory.COLS.DAYOFWEEK._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.DAYOFWEEK._Mask);
-       _dayOfWeek=0;
+       _dayOfWeek=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -826,7 +826,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   int _dayOfMonth= SystemValues.EVIL_VALUE;
+   @SerializedName("dayOfMonth")
+   Integer _dayOfMonth=null;;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -846,7 +847,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final int getDayOfMonth()
-      { return _dayOfMonth; }
+      { return _dayOfMonth==null?0:_dayOfMonth; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -921,7 +922,7 @@ This is the null setter for:<BR>
         return;
        __Changes.or(TILDA__DATEDIM_Factory.COLS.DAYOFMONTH._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.DAYOFMONTH._Mask);
-       _dayOfMonth=0;
+       _dayOfMonth=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -968,7 +969,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   int _dayOfQuarter= SystemValues.EVIL_VALUE;
+   @SerializedName("dayOfQuarter")
+   Integer _dayOfQuarter=null;;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -988,7 +990,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final int getDayOfQuarter()
-      { return _dayOfQuarter; }
+      { return _dayOfQuarter==null?0:_dayOfQuarter; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1063,7 +1065,7 @@ This is the null setter for:<BR>
         return;
        __Changes.or(TILDA__DATEDIM_Factory.COLS.DAYOFQUARTER._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.DAYOFQUARTER._Mask);
-       _dayOfQuarter=0;
+       _dayOfQuarter=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -1110,7 +1112,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   int _dayOfYear= SystemValues.EVIL_VALUE;
+   @SerializedName("dayOfYear")
+   Integer _dayOfYear=null;;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1130,7 +1133,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final int getDayOfYear()
-      { return _dayOfYear; }
+      { return _dayOfYear==null?0:_dayOfYear; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1205,7 +1208,7 @@ This is the null setter for:<BR>
         return;
        __Changes.or(TILDA__DATEDIM_Factory.COLS.DAYOFYEAR._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.DAYOFYEAR._Mask);
-       _dayOfYear=0;
+       _dayOfYear=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -1252,7 +1255,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   int _weekOfMonth= SystemValues.EVIL_VALUE;
+   @SerializedName("weekOfMonth")
+   Integer _weekOfMonth=null;;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1272,7 +1276,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final int getWeekOfMonth()
-      { return _weekOfMonth; }
+      { return _weekOfMonth==null?0:_weekOfMonth; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1347,7 +1351,7 @@ This is the null setter for:<BR>
         return;
        __Changes.or(TILDA__DATEDIM_Factory.COLS.WEEKOFMONTH._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.WEEKOFMONTH._Mask);
-       _weekOfMonth=0;
+       _weekOfMonth=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -1394,7 +1398,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   int _weekOfYear= SystemValues.EVIL_VALUE;
+   @SerializedName("weekOfYear")
+   Integer _weekOfYear=null;;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1414,7 +1419,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final int getWeekOfYear()
-      { return _weekOfYear; }
+      { return _weekOfYear==null?0:_weekOfYear; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1489,7 +1494,7 @@ This is the null setter for:<BR>
         return;
        __Changes.or(TILDA__DATEDIM_Factory.COLS.WEEKOFYEAR._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.WEEKOFYEAR._Mask);
-       _weekOfYear=0;
+       _weekOfYear=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -1536,7 +1541,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   int _monthOfYear= SystemValues.EVIL_VALUE;
+   @SerializedName("monthOfYear")
+   Integer _monthOfYear=null;;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1556,7 +1562,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final int getMonthOfYear()
-      { return _monthOfYear; }
+      { return _monthOfYear==null?0:_monthOfYear; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1631,7 +1637,7 @@ This is the null setter for:<BR>
         return;
        __Changes.or(TILDA__DATEDIM_Factory.COLS.MONTHOFYEAR._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.MONTHOFYEAR._Mask);
-       _monthOfYear=0;
+       _monthOfYear=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -1679,7 +1685,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _monthName;
+   @SerializedName("monthName")
+   String _monthName=null;;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1833,7 +1840,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _monthNameShort;
+   @SerializedName("monthNameShort")
+   String _monthNameShort=null;;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1986,7 +1994,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   int _quarterOfYear= SystemValues.EVIL_VALUE;
+   @SerializedName("quarterOfYear")
+   Integer _quarterOfYear=null;;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2006,7 +2015,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final int getQuarterOfYear()
-      { return _quarterOfYear; }
+      { return _quarterOfYear==null?0:_quarterOfYear; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2081,7 +2090,7 @@ This is the null setter for:<BR>
         return;
        __Changes.or(TILDA__DATEDIM_Factory.COLS.QUARTEROFYEAR._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.QUARTEROFYEAR._Mask);
-       _quarterOfYear=0;
+       _quarterOfYear=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -2129,7 +2138,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _quarterName;
+   @SerializedName("quarterName")
+   String _quarterName=null;;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2282,7 +2292,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   int _year= SystemValues.EVIL_VALUE;
+   @SerializedName("year")
+   Integer _year=null;;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2302,7 +2313,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final int getYear()
-      { return _year; }
+      { return _year==null?0:_year; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2377,7 +2388,7 @@ This is the null setter for:<BR>
         return;
        __Changes.or(TILDA__DATEDIM_Factory.COLS.YEAR._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.YEAR._Mask);
-       _year=0;
+       _year=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -2425,7 +2436,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _mmyyyy;
+   @SerializedName("mmyyyy")
+   String _mmyyyy=null;;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2579,7 +2591,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _mmddyyyy;
+   @SerializedName("mmddyyyy")
+   String _mmddyyyy=null;;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2733,7 +2746,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _yyyymmdd;
+   @SerializedName("yyyymmdd")
+   String _yyyymmdd=null;;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2886,7 +2900,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   int _isWeekend= SystemValues.EVIL_VALUE;
+   @SerializedName("isWeekend")
+   Integer _isWeekend=null;;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2906,7 +2921,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final int getIsWeekend()
-      { return _isWeekend; }
+      { return _isWeekend==null?0:_isWeekend; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2981,7 +2996,7 @@ This is the null setter for:<BR>
         return;
        __Changes.or(TILDA__DATEDIM_Factory.COLS.ISWEEKEND._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.ISWEEKEND._Mask);
-       _isWeekend=0;
+       _isWeekend=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -3028,7 +3043,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   int _isBusinessDay= SystemValues.EVIL_VALUE;
+   @SerializedName("isBusinessDay")
+   Integer _isBusinessDay=null;;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3048,7 +3064,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final int getIsBusinessDay()
-      { return _isBusinessDay; }
+      { return _isBusinessDay==null?0:_isBusinessDay; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3123,7 +3139,7 @@ This is the null setter for:<BR>
         return;
        __Changes.or(TILDA__DATEDIM_Factory.COLS.ISBUSINESSDAY._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.ISBUSINESSDAY._Mask);
-       _isBusinessDay=0;
+       _isBusinessDay=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -3170,7 +3186,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   int _isHoliday= SystemValues.EVIL_VALUE;
+   @SerializedName("isHoliday")
+   Integer _isHoliday=null;;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3190,7 +3207,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final int getIsHoliday()
-      { return _isHoliday; }
+      { return _isHoliday==null?0:_isHoliday; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3265,7 +3282,7 @@ This is the null setter for:<BR>
         return;
        __Changes.or(TILDA__DATEDIM_Factory.COLS.ISHOLIDAY._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.ISHOLIDAY._Mask);
-       _isHoliday=0;
+       _isHoliday=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -3313,7 +3330,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _holidayName;
+   @SerializedName("holidayName")
+   String _holidayName=null;;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3473,9 +3491,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   @SerializedName("created")
    public String  Str_created;
-   ZonedDateTime _created = null;
+   transient ZonedDateTime _created = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3688,9 +3705,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   @SerializedName("lastUpdated")
    public String  Str_lastUpdated;
-   ZonedDateTime _lastUpdated = null;
+   transient ZonedDateTime _lastUpdated = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3894,9 +3910,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   @SerializedName("deleted")
    public String  Str_deleted;
-   ZonedDateTime _deleted = null;
+   transient ZonedDateTime _deleted = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4133,7 +4148,191 @@ This is the hasChanged for:<BR>
 /**
  Writes the object to the data store if any changes has occurred since the object was initially
  read from the data store or last written. 
+ If the object was deserialized (i.e., not created via the factory lookup() or create() methods, 
+ then this method assumes a create() and will check that all non-null columns have been provided. If you 
+ need more flexibility for an upsert, use the upsert(Connection, boolean) version of write 
+ which will try a combination of insert/update to get the object to the DB. 
+ Note that if you use write() right after a create, lookup or deserialization initialization, only the
+ template fields (not null, natural identity and/or any field set prior to calling this method) exist 
+  in memory. Call refresh() to force a select and retrieve all the fields for that record.
 */
+   public final boolean write(Connection C) throws Exception
+     {
+       long T0 = System.nanoTime();
+
+       if (__Init == null && __LookupId==0) // Loaded via some other mechamism, e.g., Json or CSV loader
+        {
+          validateDeserialization();
+          initForCreate();
+        }
+
+       if (hasChanged() == false)
+        {
+          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.DateDim has not changed: no writing will occur.");
+          QueryDetails.setLastQuery(TILDA__DATEDIM_Factory.SCHEMA_TABLENAME_LABEL, "");
+          return true;
+        }
+
+       if (beforeWrite(C) == false)
+        {
+          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.DateDim object's beforeWrite() failed.");
+          QueryDetails.setLastQuery(TILDA__DATEDIM_Factory.SCHEMA_TABLENAME_LABEL, "");
+          return false;
+        }
+
+       String Q = getWriteQuery(C);
+
+       java.sql.PreparedStatement PS = null;
+       int count = 0;
+       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
+       try
+        {
+          PS = C.prepareStatement(Q);
+          int i = populatePreparedStatement(C, PS, AllocatedArrays);
+
+          switch (__LookupId)
+           {
+             case 0:
+               PS.setDate(++i, new java.sql.Date(_dt.getYear()-1900, _dt.getMonthValue()-1, _dt.getDayOfMonth()));
+               break;
+             case -666: if (__Init == InitMode.CREATE) break;
+             default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
+           }
+
+          C.setSavepoint();
+          count = PS.executeUpdate();
+          C.releaseSavepoint(true);
+          if (count == 0)
+           return false;
+        }
+       catch (java.sql.SQLException E)
+        {
+          C.releaseSavepoint(false);
+          return C.handleCatch(E, "updated or inserted");
+        }
+       finally
+        {
+          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__DATEDIM_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
+          PS = null;
+        }
+
+       stateUpdatePostWrite();
+       return true;
+     }
+
+   protected abstract boolean beforeWrite(Connection C) throws Exception;
+
+   protected void validateDeserialization() throws Exception
+     {
+       if (_dt == null)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.DateDim.dt' was null or empty. It's not nullable in the model.\n"+toString());
+        __Changes.or(TILDA__DATEDIM_Factory.COLS.DT._Mask);
+        __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.DT._Mask);
+       if (_epoch == null)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.DateDim.epoch' was null or empty. It's not nullable in the model.\n"+toString());
+        __Changes.or(TILDA__DATEDIM_Factory.COLS.EPOCH._Mask);
+        __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.EPOCH._Mask);
+       if (TextUtil.isNullOrEmpty(_dayName) == false)
+        {
+          __Changes.or(TILDA__DATEDIM_Factory.COLS.DAYNAME._Mask);
+          __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.DAYNAME._Mask);
+        }
+       if (_dayOfWeek != null)
+        {
+          __Changes.or(TILDA__DATEDIM_Factory.COLS.DAYOFWEEK._Mask);
+          __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.DAYOFWEEK._Mask);
+        }
+       if (_dayOfMonth != null)
+        {
+          __Changes.or(TILDA__DATEDIM_Factory.COLS.DAYOFMONTH._Mask);
+          __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.DAYOFMONTH._Mask);
+        }
+       if (_dayOfQuarter != null)
+        {
+          __Changes.or(TILDA__DATEDIM_Factory.COLS.DAYOFQUARTER._Mask);
+          __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.DAYOFQUARTER._Mask);
+        }
+       if (_dayOfYear != null)
+        {
+          __Changes.or(TILDA__DATEDIM_Factory.COLS.DAYOFYEAR._Mask);
+          __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.DAYOFYEAR._Mask);
+        }
+       if (_weekOfMonth != null)
+        {
+          __Changes.or(TILDA__DATEDIM_Factory.COLS.WEEKOFMONTH._Mask);
+          __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.WEEKOFMONTH._Mask);
+        }
+       if (_weekOfYear != null)
+        {
+          __Changes.or(TILDA__DATEDIM_Factory.COLS.WEEKOFYEAR._Mask);
+          __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.WEEKOFYEAR._Mask);
+        }
+       if (_monthOfYear != null)
+        {
+          __Changes.or(TILDA__DATEDIM_Factory.COLS.MONTHOFYEAR._Mask);
+          __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.MONTHOFYEAR._Mask);
+        }
+       if (TextUtil.isNullOrEmpty(_monthName) == false)
+        {
+          __Changes.or(TILDA__DATEDIM_Factory.COLS.MONTHNAME._Mask);
+          __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.MONTHNAME._Mask);
+        }
+       if (TextUtil.isNullOrEmpty(_monthNameShort) == false)
+        {
+          __Changes.or(TILDA__DATEDIM_Factory.COLS.MONTHNAMESHORT._Mask);
+          __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.MONTHNAMESHORT._Mask);
+        }
+       if (_quarterOfYear != null)
+        {
+          __Changes.or(TILDA__DATEDIM_Factory.COLS.QUARTEROFYEAR._Mask);
+          __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.QUARTEROFYEAR._Mask);
+        }
+       if (TextUtil.isNullOrEmpty(_quarterName) == false)
+        {
+          __Changes.or(TILDA__DATEDIM_Factory.COLS.QUARTERNAME._Mask);
+          __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.QUARTERNAME._Mask);
+        }
+       if (_year != null)
+        {
+          __Changes.or(TILDA__DATEDIM_Factory.COLS.YEAR._Mask);
+          __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.YEAR._Mask);
+        }
+       if (TextUtil.isNullOrEmpty(_mmyyyy) == false)
+        {
+          __Changes.or(TILDA__DATEDIM_Factory.COLS.MMYYYY._Mask);
+          __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.MMYYYY._Mask);
+        }
+       if (TextUtil.isNullOrEmpty(_mmddyyyy) == false)
+        {
+          __Changes.or(TILDA__DATEDIM_Factory.COLS.MMDDYYYY._Mask);
+          __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.MMDDYYYY._Mask);
+        }
+       if (TextUtil.isNullOrEmpty(_yyyymmdd) == false)
+        {
+          __Changes.or(TILDA__DATEDIM_Factory.COLS.YYYYMMDD._Mask);
+          __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.YYYYMMDD._Mask);
+        }
+       if (_isWeekend != null)
+        {
+          __Changes.or(TILDA__DATEDIM_Factory.COLS.ISWEEKEND._Mask);
+          __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.ISWEEKEND._Mask);
+        }
+       if (_isBusinessDay != null)
+        {
+          __Changes.or(TILDA__DATEDIM_Factory.COLS.ISBUSINESSDAY._Mask);
+          __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.ISBUSINESSDAY._Mask);
+        }
+       if (_isHoliday != null)
+        {
+          __Changes.or(TILDA__DATEDIM_Factory.COLS.ISHOLIDAY._Mask);
+          __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.ISHOLIDAY._Mask);
+        }
+       if (TextUtil.isNullOrEmpty(_holidayName) == false)
+        {
+          __Changes.or(TILDA__DATEDIM_Factory.COLS.HOLIDAYNAME._Mask);
+          __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.HOLIDAYNAME._Mask);
+        }
+     }
    protected String getTimeStampSignature() throws Exception
      {
        StringBuilder S = new StringBuilder(1024);
@@ -4405,67 +4604,63 @@ This is the hasChanged for:<BR>
        __Changes.clear();
        __Nulls.clear();
      }
-   public final boolean write(Connection C) throws Exception
+/**
+ Writes the object to the data store using an upsert approach and assumes the object is either
+ in create or deserialized mode. 
+ The parameter createFirst controls whether the logic should do an insert first and if it fails, then do 
+ an update, or the opposite (update first and if it fails, then an insert). This is necessary for databases
+ without a robust upsert SQL syntax where separate insert/update statements must be issued.
+ The method will figure out based on the fields set which natural identity (a unique index) is applicable for
+ the lookup operation.
+ Note that when you use upsert() (right after a create or deserialization initialization), only the template
+ fields (not null, natural identity and/or any field set prior to calling this method) exist in memory. Call
+ refresh() to force a select and retrieve all the fields for that record.
+*/
+   public final boolean upsert(Connection C, boolean updateFirst) throws Exception
      {
-       long T0 = System.nanoTime();
-       if (__Init == null && __LookupId==0) // Loaded via some other mechamism, e.g., Json or CSV loader
-        {
-        }
-       if (hasChanged() == false)
-        {
-          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.DateDim has not changed: no writing will occur.");
-          QueryDetails.setLastQuery(TILDA__DATEDIM_Factory.SCHEMA_TABLENAME_LABEL, "");
-          return true;
-        }
+       boolean OK =    __Init == InitMode.CREATE && __NewlyCreated == true && __LookupId == SystemValues.EVIL_VALUE // Create() through factory
+                    || __Init == null && __LookupId==0 // Loaded via some deserialization mechamism, e.g., Json or CSV loader
+               ;
+       if (OK == false)
+        throw new Exception("Object has not been instanciated via deserialization or the factory create() method.");
 
-       if (beforeWrite(C) == false)
+       if (__Init == null && __LookupId==0);  // object deserialized
+        validateDeserialization();
+
+       int lookupId = getFirstValidLookupBy();
+       if (lookupId == SystemValues.EVIL_VALUE)
+        throw new Exception("Object has not been intialized with sufficient data for any natural key to be available for a lookup.");
+
+       if (updateFirst == true)
         {
-          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.DateDim object's beforeWrite() failed.");
-          QueryDetails.setLastQuery(TILDA__DATEDIM_Factory.SCHEMA_TABLENAME_LABEL, "");
-          return false;
-        }
-
-       String Q = getWriteQuery(C);
-
-       java.sql.PreparedStatement PS = null;
-       int count = 0;
-       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
-       try
-        {
-          PS = C.prepareStatement(Q);
-          int i = populatePreparedStatement(C, PS, AllocatedArrays);
-
-          switch (__LookupId)
+          initForLookup(lookupId);
+          if (write(C) == false)
            {
-             case 0:
-               PS.setDate(++i, new java.sql.Date(_dt.getYear()-1900, _dt.getMonthValue()-1, _dt.getDayOfMonth()));
-               break;
-             case -666: if (__Init == InitMode.CREATE) break;
-             default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
+             initForCreate();
+             return write(C);
            }
-
-          C.setSavepoint();
-          count = PS.executeUpdate();
-          C.releaseSavepoint(true);
-          if (count == 0)
-           return false;
         }
-       catch (java.sql.SQLException E)
+       else
         {
-          C.releaseSavepoint(false);
-          return C.handleCatch(E, "updated or inserted");
-        }
-       finally
-        {
-          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__DATEDIM_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
-          PS = null;
+          initForCreate();
+          if (write(C) == false)
+           {
+             initForLookup(lookupId);
+             return write(C);
+           }
         }
 
-       stateUpdatePostWrite();
        return true;
      }
 
-   protected abstract boolean beforeWrite(Connection C) throws Exception;
+   protected int getFirstValidLookupBy() throws Exception
+     {
+       // Testing if primary key has been set - Id: 0
+       if (_dt != null)
+        return 0;
+
+       return SystemValues.EVIL_VALUE;
+     }
 
 
 

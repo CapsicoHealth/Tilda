@@ -106,23 +106,19 @@ This Table contains the following columns:<BLOCKQUOTE>
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__FORMULADEPENDENCY implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
-   protected static final Logger LOG = LogManager.getLogger(TILDA__FORMULADEPENDENCY.class.getName());
+   protected transient static final Logger LOG = LogManager.getLogger(TILDA__FORMULADEPENDENCY.class.getName());
 
-   public static final Class<TILDA__FORMULADEPENDENCY_Factory> FACTORY_CLASS= TILDA__FORMULADEPENDENCY_Factory.class;
-   public static final String TABLENAME = TextUtil.print("TILDA.FormulaDependency", "");
+   public transient static final Class<TILDA__FORMULADEPENDENCY_Factory> FACTORY_CLASS= TILDA__FORMULADEPENDENCY_Factory.class;
+   public transient static final String TABLENAME = TextUtil.print("TILDA.FormulaDependency", "");
 
    protected TILDA__FORMULADEPENDENCY() { }
 
-   InitMode __Init        = null;
-   private BitSet   __Nulls       = new BitSet(64);
-   BitSet   __Changes     = new BitSet(64);
-   private boolean  __NewlyCreated= false;
+   transient InitMode __Init        = null;
+   transient BitSet   __Nulls       = new BitSet(64);
+   transient BitSet   __Changes     = new BitSet(64);
+   transient boolean  __NewlyCreated= false;
 
-   public static enum LookupByMethod
-     {
-         PrimaryKey // Lookup by primary key - Id: 0
-     };
-   private int      __LookupId;
+   transient int      __LookupId;
 
    public  boolean hasChanged    () { return __Changes.isEmpty() == false; }
    public  boolean isNewlyCreated() { return __NewlyCreated; }
@@ -162,7 +158,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   long _formulaRefnum= SystemValues.EVIL_VALUE;
+   @SerializedName("formulaRefnum")
+   Long _formulaRefnum=null;;
    protected long __Saved_formulaRefnum;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -183,7 +180,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final long getFormulaRefnum()
-      { return _formulaRefnum; }
+      { return _formulaRefnum==null?0l:_formulaRefnum; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -239,7 +236,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   long _dependencyRefnum= SystemValues.EVIL_VALUE;
+   @SerializedName("dependencyRefnum")
+   Long _dependencyRefnum=null;;
    protected long __Saved_dependencyRefnum;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -260,7 +258,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final long getDependencyRefnum()
-      { return _dependencyRefnum; }
+      { return _dependencyRefnum==null?0l:_dependencyRefnum; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -323,9 +321,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   @SerializedName("created")
    public String  Str_created;
-   ZonedDateTime _created = null;
+   transient ZonedDateTime _created = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -538,9 +535,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   @SerializedName("lastUpdated")
    public String  Str_lastUpdated;
-   ZonedDateTime _lastUpdated = null;
+   transient ZonedDateTime _lastUpdated = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -744,9 +740,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   @SerializedName("deleted")
    public String  Str_deleted;
-   ZonedDateTime _deleted = null;
+   transient ZonedDateTime _deleted = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -962,7 +957,92 @@ This is the hasChanged for:<BR>
 /**
  Writes the object to the data store if any changes has occurred since the object was initially
  read from the data store or last written. 
+ If the object was deserialized (i.e., not created via the factory lookup() or create() methods, 
+ then this method assumes a create() and will check that all non-null columns have been provided. If you 
+ need more flexibility for an upsert, use the upsert(Connection, boolean) version of write 
+ which will try a combination of insert/update to get the object to the DB. 
+ Note that if you use write() right after a create, lookup or deserialization initialization, only the
+ template fields (not null, natural identity and/or any field set prior to calling this method) exist 
+  in memory. Call refresh() to force a select and retrieve all the fields for that record.
 */
+   public final boolean write(Connection C) throws Exception
+     {
+       long T0 = System.nanoTime();
+
+       if (__Init == null && __LookupId==0) // Loaded via some other mechamism, e.g., Json or CSV loader
+        {
+          validateDeserialization();
+          initForCreate();
+        }
+
+       if (hasChanged() == false)
+        {
+          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.FormulaDependency has not changed: no writing will occur.");
+          QueryDetails.setLastQuery(TILDA__FORMULADEPENDENCY_Factory.SCHEMA_TABLENAME_LABEL, "");
+          return true;
+        }
+
+       if (beforeWrite(C) == false)
+        {
+          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.FormulaDependency object's beforeWrite() failed.");
+          QueryDetails.setLastQuery(TILDA__FORMULADEPENDENCY_Factory.SCHEMA_TABLENAME_LABEL, "");
+          return false;
+        }
+
+       String Q = getWriteQuery(C);
+
+       java.sql.PreparedStatement PS = null;
+       int count = 0;
+       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
+       try
+        {
+          PS = C.prepareStatement(Q);
+          int i = populatePreparedStatement(C, PS, AllocatedArrays);
+
+          switch (__LookupId)
+           {
+             case 0:
+               PS.setLong      (++i, _formulaRefnum   );
+               PS.setLong      (++i, _dependencyRefnum);
+               break;
+             case -666: if (__Init == InitMode.CREATE) break;
+             default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
+           }
+
+          C.setSavepoint();
+          count = PS.executeUpdate();
+          C.releaseSavepoint(true);
+          if (count == 0)
+           return false;
+        }
+       catch (java.sql.SQLException E)
+        {
+          C.releaseSavepoint(false);
+          return C.handleCatch(E, "updated or inserted");
+        }
+       finally
+        {
+          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__FORMULADEPENDENCY_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
+          PS = null;
+        }
+
+       stateUpdatePostWrite();
+       return true;
+     }
+
+   protected abstract boolean beforeWrite(Connection C) throws Exception;
+
+   protected void validateDeserialization() throws Exception
+     {
+       if (_formulaRefnum == null)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.FormulaDependency.formulaRefnum' was null or empty. It's not nullable in the model.\n"+toString());
+        __Changes.or(TILDA__FORMULADEPENDENCY_Factory.COLS.FORMULAREFNUM._Mask);
+        __Nulls.andNot(TILDA__FORMULADEPENDENCY_Factory.COLS.FORMULAREFNUM._Mask);
+       if (_dependencyRefnum == null)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.FormulaDependency.dependencyRefnum' was null or empty. It's not nullable in the model.\n"+toString());
+        __Changes.or(TILDA__FORMULADEPENDENCY_Factory.COLS.DEPENDENCYREFNUM._Mask);
+        __Nulls.andNot(TILDA__FORMULADEPENDENCY_Factory.COLS.DEPENDENCYREFNUM._Mask);
+     }
    protected String getTimeStampSignature() throws Exception
      {
        StringBuilder S = new StringBuilder(1024);
@@ -1107,68 +1187,63 @@ This is the hasChanged for:<BR>
        __Changes.clear();
        __Nulls.clear();
      }
-   public final boolean write(Connection C) throws Exception
+/**
+ Writes the object to the data store using an upsert approach and assumes the object is either
+ in create or deserialized mode. 
+ The parameter createFirst controls whether the logic should do an insert first and if it fails, then do 
+ an update, or the opposite (update first and if it fails, then an insert). This is necessary for databases
+ without a robust upsert SQL syntax where separate insert/update statements must be issued.
+ The method will figure out based on the fields set which natural identity (a unique index) is applicable for
+ the lookup operation.
+ Note that when you use upsert() (right after a create or deserialization initialization), only the template
+ fields (not null, natural identity and/or any field set prior to calling this method) exist in memory. Call
+ refresh() to force a select and retrieve all the fields for that record.
+*/
+   public final boolean upsert(Connection C, boolean updateFirst) throws Exception
      {
-       long T0 = System.nanoTime();
-       if (__Init == null && __LookupId==0) // Loaded via some other mechamism, e.g., Json or CSV loader
-        {
-        }
-       if (hasChanged() == false)
-        {
-          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.FormulaDependency has not changed: no writing will occur.");
-          QueryDetails.setLastQuery(TILDA__FORMULADEPENDENCY_Factory.SCHEMA_TABLENAME_LABEL, "");
-          return true;
-        }
+       boolean OK =    __Init == InitMode.CREATE && __NewlyCreated == true && __LookupId == SystemValues.EVIL_VALUE // Create() through factory
+                    || __Init == null && __LookupId==0 // Loaded via some deserialization mechamism, e.g., Json or CSV loader
+               ;
+       if (OK == false)
+        throw new Exception("Object has not been instanciated via deserialization or the factory create() method.");
 
-       if (beforeWrite(C) == false)
+       if (__Init == null && __LookupId==0);  // object deserialized
+        validateDeserialization();
+
+       int lookupId = getFirstValidLookupBy();
+       if (lookupId == SystemValues.EVIL_VALUE)
+        throw new Exception("Object has not been intialized with sufficient data for any natural key to be available for a lookup.");
+
+       if (updateFirst == true)
         {
-          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.FormulaDependency object's beforeWrite() failed.");
-          QueryDetails.setLastQuery(TILDA__FORMULADEPENDENCY_Factory.SCHEMA_TABLENAME_LABEL, "");
-          return false;
-        }
-
-       String Q = getWriteQuery(C);
-
-       java.sql.PreparedStatement PS = null;
-       int count = 0;
-       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
-       try
-        {
-          PS = C.prepareStatement(Q);
-          int i = populatePreparedStatement(C, PS, AllocatedArrays);
-
-          switch (__LookupId)
+          initForLookup(lookupId);
+          if (write(C) == false)
            {
-             case 0:
-               PS.setLong      (++i, _formulaRefnum   );
-               PS.setLong      (++i, _dependencyRefnum);
-               break;
-             case -666: if (__Init == InitMode.CREATE) break;
-             default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
+             initForCreate();
+             return write(C);
            }
-
-          C.setSavepoint();
-          count = PS.executeUpdate();
-          C.releaseSavepoint(true);
-          if (count == 0)
-           return false;
         }
-       catch (java.sql.SQLException E)
+       else
         {
-          C.releaseSavepoint(false);
-          return C.handleCatch(E, "updated or inserted");
-        }
-       finally
-        {
-          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__FORMULADEPENDENCY_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
-          PS = null;
+          initForCreate();
+          if (write(C) == false)
+           {
+             initForLookup(lookupId);
+             return write(C);
+           }
         }
 
-       stateUpdatePostWrite();
        return true;
      }
 
-   protected abstract boolean beforeWrite(Connection C) throws Exception;
+   protected int getFirstValidLookupBy() throws Exception
+     {
+       // Testing if primary key has been set - Id: 0
+       if (_formulaRefnum != null && _dependencyRefnum != null)
+        return 0;
+
+       return SystemValues.EVIL_VALUE;
+     }
 
 
 
