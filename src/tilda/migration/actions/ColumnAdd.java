@@ -17,7 +17,6 @@
 package tilda.migration.actions;
 
 import tilda.db.Connection;
-import tilda.db.metadata.DatabaseMeta;
 import tilda.migration.MigrationAction;
 import tilda.parsing.parts.Column;
 

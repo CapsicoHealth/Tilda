@@ -339,9 +339,48 @@ public enum ColumnType
           }
       }
 
-    public static boolean isNumber(ColumnType Type)
+    public boolean isNumber()
       {
-        return Type == DOUBLE || Type == FLOAT || Type == INTEGER || Type == LONG || Type == NUMERIC || Type == SHORT;
+        return this == DOUBLE || this == FLOAT || this == INTEGER || this == LONG || this == NUMERIC || this == SHORT;
       }
 
+
+    public static boolean isNumber(ColumnType Type)
+      {
+        return Type == null ? false : Type.isNumber();
+      }
+
+/*
+    public String getDefaultNullValue()
+      {
+        switch (this)
+          {
+            case BOOLEAN:
+              return "Boolean.FALSE";
+            case CHAR:
+              return "Character.UNASSIGNED";
+            case DOUBLE:
+              return "Double.valueOf(SystemValues.EVIL_VALUE)";
+            case FLOAT:
+              return "Float.valueOf(SystemValues.EVIL_VALUE)";
+            case INTEGER:
+              return "Integer.valueOf(SystemValues.EVIL_VALUE)";
+            case SHORT:
+              return "Short.valueOf(SystemValues.EVIL_VALUE)";
+            case LONG:
+              return "Long.valueOf(SystemValues.EVIL_VALUE)";
+            case NUMERIC:
+            case DATE:
+            case DATETIME:
+            case UUID:
+            case STRING:
+            case JSON:
+            case BINARY:
+            case BITFIELD:
+              return "null";
+           default:
+              throw new Error("Incomplete switch on ColumnType "+this.name());
+          }
+      }
+*/
   }

@@ -804,28 +804,28 @@ public class ParseUtil
      {
         try
           {
-            return new Integer(Integer.parseInt(val));
+            return Integer.valueOf(Integer.parseInt(val));
           }
         catch (NumberFormatException E)
           {
           }
         try
           {
-            return new Long(Long.parseLong(val));
+            return Long.valueOf(Long.parseLong(val));
           }
         catch (NumberFormatException E)
           {
           }
         try
           {
-            return new Float(Float.parseFloat(val));
+            return Float.valueOf(Float.parseFloat(val));
           }
         catch (NumberFormatException E)
           {
           }
         try
           {
-            return new Double(Double.parseDouble(val));
+            return Double.valueOf(Double.parseDouble(val));
           }
         catch (NumberFormatException E)
           {

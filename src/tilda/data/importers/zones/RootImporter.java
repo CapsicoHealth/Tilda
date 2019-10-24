@@ -19,17 +19,17 @@ package tilda.data.importers.zones;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.annotations.SerializedName;
+
 import tilda.Importer;
 import tilda.data.ZoneInfo_Factory;
-import tilda.data.ZoneInfo_Json;
+import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
-
-import com.google.gson.annotations.SerializedName;
 
 public class RootImporter implements Importer
   {
     /*@formatter:off*/
-    @SerializedName("zones") public List<ZoneInfo_Json> _Zones = new ArrayList<ZoneInfo_Json>();
+    @SerializedName("zones") public List<ZoneInfo_Data> _Zones = new ArrayList<ZoneInfo_Data>();
     /*@formatter:on*/
     
     @Override
@@ -37,7 +37,7 @@ public class RootImporter implements Importer
       {
         int Count = 0;
         
-        for (ZoneInfo_Json          obj : _Zones        ) { ++Count; obj.write(C); }
+        for (ZoneInfo_Data obj : _Zones) { ++Count; if (obj.upsert(C, true) == false) throw new Exception("Cannot upsert ZoneInfo"); }
         ZoneInfo_Factory.initMappings(C);
         
         return Count;

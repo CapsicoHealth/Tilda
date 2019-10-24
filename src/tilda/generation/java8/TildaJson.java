@@ -24,17 +24,12 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.enums.ColumnType;
 import tilda.enums.FrameworkSourcedType;
-import tilda.enums.NVPSourceType;
-import tilda.enums.ObjectLifecycle;
-import tilda.enums.OutputFormatType;
-import tilda.enums.TildaType;
 import tilda.generation.GeneratorSession;
 import tilda.generation.interfaces.CodeGenTildaJson;
 import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Object;
-import tilda.parsing.parts.OutputMapping;
 import tilda.utils.PaddingUtil;
 import tilda.utils.TextUtil;
 
@@ -54,46 +49,18 @@ public class TildaJson implements CodeGenTildaJson
       {
         Out.println("package " + O._ParentSchema._Package + "." + Helper.TILDA_GEN_PACKAGE + ";");
         Out.println();
-        boolean needTime = false;
-        if (O._LC != ObjectLifecycle.READONLY)
-          for (Column C : O._Columns)
-            if (C != null && (C.getType() == ColumnType.DATETIME || C.getType() == ColumnType.DATE) && C._FCT.isOCC() == false)
-              {
-                needTime = true;
-                break;
-              }
-        for (OutputMapping OM : O._OutputMaps)
-          if (OM != null && OM._Sync == true)
-            {
-              needTime = true;
-              break;
-            }
-        if (needTime == true)
-          Out.println("import java.time.*;");
-
+        Out.println("import java.time.*;");
         Out.println("import java.util.*;");
+        Out.println("import java.math.*;");
         Out.println();
-        Out.println("import org.apache.logging.log4j.LogManager;");
-        Out.println("import org.apache.logging.log4j.Logger;");
+        Out.println("import org.apache.logging.log4j.*;");
+        Out.println("import com.google.gson.annotations.*;");
         Out.println();
-        if (O._LC != ObjectLifecycle.READONLY)
-          Out.println("import tilda.db.*;");
+        Out.println("import tilda.db.*;");
         Out.println("import tilda.enums.*;");
         Out.println("import tilda.performance.*;");
         Out.println("import tilda.utils.*;");
         Out.println("import tilda.utils.json.*;");
-        if (O._LC != ObjectLifecycle.READONLY)
-          {
-            Out.println();
-            Out.println("import com.google.gson.annotations.SerializedName;");
-          }
-        for (Column C : O._Columns)
-          if (C != null && C.getType() == ColumnType.NUMERIC)
-            {
-              Out.println();
-              Out.println("import java.math.BigDecimal;");
-              break;
-            }
         Out.println();
       }
 

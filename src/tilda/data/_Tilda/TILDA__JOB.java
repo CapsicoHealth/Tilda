@@ -221,23 +221,19 @@ This Table contains the following columns:<BLOCKQUOTE>
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__JOB implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
-   protected static final Logger LOG = LogManager.getLogger(TILDA__JOB.class.getName());
+   protected transient static final Logger LOG = LogManager.getLogger(TILDA__JOB.class.getName());
 
-   public static final Class<TILDA__JOB_Factory> FACTORY_CLASS= TILDA__JOB_Factory.class;
-   public static final String TABLENAME = TextUtil.print("TILDA.Job", "");
+   public transient static final Class<TILDA__JOB_Factory> FACTORY_CLASS= TILDA__JOB_Factory.class;
+   public transient static final String TABLENAME = TextUtil.print("TILDA.Job", "");
 
    protected TILDA__JOB() { }
 
-   InitMode __Init        = null;
-   private BitSet   __Nulls       = new BitSet(64);
-   BitSet   __Changes     = new BitSet(64);
-   private boolean  __NewlyCreated= false;
+   transient InitMode __Init        = null;
+   transient BitSet   __Nulls       = new BitSet(64);
+   transient BitSet   __Changes     = new BitSet(64);
+   transient boolean  __NewlyCreated= false;
 
-   public static enum LookupByMethod
-     {
-         PrimaryKey // Lookup by primary key - Id: 0
-     };
-   private int      __LookupId;
+   transient int      __LookupId;
 
    public  boolean hasChanged    () { return __Changes.isEmpty() == false; }
    public  boolean isNewlyCreated() { return __NewlyCreated; }
@@ -277,7 +273,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   long _refnum= SystemValues.EVIL_VALUE;
+   Long _refnum=null;;
    protected long __Saved_refnum;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -298,7 +294,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final long getRefnum()
-      { return _refnum; }
+      { return _refnum==null?0l:_refnum; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -355,7 +351,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _name;
+   @SerializedName("name")
+   String _name=null;;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -457,7 +454,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _type;
+   @SerializedName("type")
+   String _type=null;;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -611,7 +609,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _userId;
+   @SerializedName("userId")
+   String _userId=null;;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -765,7 +764,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _dataStartTZ;
+   String _dataStartTZ=null;;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -920,7 +919,7 @@ This is the definition for:<BR>
 */
    @SerializedName("dataStart")
    public String  Str_dataStart;
-   ZonedDateTime _dataStart = null;
+   transient ZonedDateTime _dataStart = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1138,7 +1137,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _dataEndTZ;
+   String _dataEndTZ=null;;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1293,7 +1292,7 @@ This is the definition for:<BR>
 */
    @SerializedName("dataEnd")
    public String  Str_dataEnd;
-   ZonedDateTime _dataEnd = null;
+   transient ZonedDateTime _dataEnd = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1511,7 +1510,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _startTZ;
+   String _startTZ=null;;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1614,7 +1613,7 @@ This is the definition for:<BR>
 */
    @SerializedName("start")
    public String  Str_start;
-   ZonedDateTime _start = null;
+   transient ZonedDateTime _start = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1781,7 +1780,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _endTZ;
+   String _endTZ=null;;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1936,7 +1935,7 @@ This is the definition for:<BR>
 */
    @SerializedName("end")
    public String  Str_end;
-   ZonedDateTime _end = null;
+   transient ZonedDateTime _end = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2153,7 +2152,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   boolean _status;
+   @SerializedName("status")
+   Boolean _status=null;;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2173,7 +2173,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final boolean getStatus()
-      { return _status; }
+      { return _status==null?false:_status; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2248,7 +2248,7 @@ This is the null setter for:<BR>
         return;
        __Changes.or(TILDA__JOB_Factory.COLS.STATUS._Mask);
        __Nulls.or(TILDA__JOB_Factory.COLS.STATUS._Mask);
-       _status=false;
+       _status=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -2296,7 +2296,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _msg;
+   @SerializedName("msg")
+   String _msg=null;;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2456,9 +2457,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   @SerializedName("created")
    public String  Str_created;
-   ZonedDateTime _created = null;
+   transient ZonedDateTime _created = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2671,9 +2671,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   @SerializedName("lastUpdated")
    public String  Str_lastUpdated;
-   ZonedDateTime _lastUpdated = null;
+   transient ZonedDateTime _lastUpdated = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2877,9 +2876,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   @SerializedName("deleted")
    public String  Str_deleted;
-   ZonedDateTime _deleted = null;
+   transient ZonedDateTime _deleted = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3108,7 +3106,142 @@ This is the hasChanged for:<BR>
 /**
  Writes the object to the data store if any changes has occurred since the object was initially
  read from the data store or last written. 
+ If the object was deserialized (i.e., not created via the factory lookup() or create() methods, 
+ then this method assumes a create() and will check that all non-null columns have been provided. If you 
+ need more flexibility for an upsert, use the upsert(Connection, boolean) version of write 
+ which will try a combination of insert/update to get the object to the DB. 
+ Note that if you use write() right after a create, lookup or deserialization initialization, only the
+ template fields (not null, natural identity and/or any field set prior to calling this method) exist 
+  in memory. Call refresh() to force a select and retrieve all the fields for that record.
 */
+   public final boolean write(Connection C) throws Exception
+     {
+       long T0 = System.nanoTime();
+
+       if (__Init == null && __LookupId==0) // Loaded via some other mechamism, e.g., Json or CSV loader
+        {
+          validateDeserialization();
+          initForCreate();
+          // Auto PK
+          setRefnum(tilda.db.KeysManager.getKey("TILDA.JOB"));
+        }
+
+       if (hasChanged() == false)
+        {
+          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.Job has not changed: no writing will occur.");
+          QueryDetails.setLastQuery(TILDA__JOB_Factory.SCHEMA_TABLENAME_LABEL, "");
+          return true;
+        }
+
+       if (beforeWrite(C) == false)
+        {
+          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.Job object's beforeWrite() failed.");
+          QueryDetails.setLastQuery(TILDA__JOB_Factory.SCHEMA_TABLENAME_LABEL, "");
+          return false;
+        }
+
+       String Q = getWriteQuery(C);
+
+       java.sql.PreparedStatement PS = null;
+       int count = 0;
+       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
+       try
+        {
+          PS = C.prepareStatement(Q);
+          int i = populatePreparedStatement(C, PS, AllocatedArrays);
+
+          switch (__LookupId)
+           {
+             case 0:
+               PS.setLong      (++i, _refnum     );
+               break;
+             case -666: if (__Init == InitMode.CREATE) break;
+             default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
+           }
+
+          C.setSavepoint();
+          count = PS.executeUpdate();
+          C.releaseSavepoint(true);
+          if (count == 0)
+           return false;
+        }
+       catch (java.sql.SQLException E)
+        {
+          C.releaseSavepoint(false);
+          return C.handleCatch(E, "updated or inserted");
+        }
+       finally
+        {
+          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__JOB_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
+          PS = null;
+        }
+
+       stateUpdatePostWrite();
+       return true;
+     }
+
+   protected abstract boolean beforeWrite(Connection C) throws Exception;
+
+   protected void validateDeserialization() throws Exception
+     {
+       if (TextUtil.isNullOrEmpty(_name) == true)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.Job.name' was null or empty. It's not nullable in the model.\n"+toString());
+        __Changes.or(TILDA__JOB_Factory.COLS.NAME._Mask);
+        __Nulls.andNot(TILDA__JOB_Factory.COLS.NAME._Mask);
+       if (TextUtil.isNullOrEmpty(_type) == false)
+        {
+          __Changes.or(TILDA__JOB_Factory.COLS.TYPE._Mask);
+          __Nulls.andNot(TILDA__JOB_Factory.COLS.TYPE._Mask);
+        }
+       if (TextUtil.isNullOrEmpty(_userId) == false)
+        {
+          __Changes.or(TILDA__JOB_Factory.COLS.USERID._Mask);
+          __Nulls.andNot(TILDA__JOB_Factory.COLS.USERID._Mask);
+        }
+       if (TextUtil.isNullOrEmpty(Str_dataStart) == false)
+        {
+          _dataStart = DateTimeUtil.parsefromJSON(Str_dataStart);
+          if (   _dataStart == null)
+           throw new Exception("Incoming value for 'tilda.data.TILDA.Job.dataStart' was not in the expected format. Dates should follow the ISO format.\n"+toString());
+          __Changes.or(TILDA__JOB_Factory.COLS.DATASTART._Mask);
+          __Nulls.andNot(TILDA__JOB_Factory.COLS.DATASTART._Mask);
+        }
+       if (TextUtil.isNullOrEmpty(Str_dataEnd) == false)
+        {
+          _dataEnd = DateTimeUtil.parsefromJSON(Str_dataEnd);
+          if (   _dataEnd == null)
+           throw new Exception("Incoming value for 'tilda.data.TILDA.Job.dataEnd' was not in the expected format. Dates should follow the ISO format.\n"+toString());
+          __Changes.or(TILDA__JOB_Factory.COLS.DATAEND._Mask);
+          __Nulls.andNot(TILDA__JOB_Factory.COLS.DATAEND._Mask);
+        }
+       if (TextUtil.isNullOrEmpty(Str_start) == true)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.Job.start' was null or empty. It's not nullable in the model.\n"+toString());
+        __Changes.or(TILDA__JOB_Factory.COLS.START._Mask);
+        __Nulls.andNot(TILDA__JOB_Factory.COLS.START._Mask);
+       _start = DateTimeUtil.parsefromJSON(Str_start);
+       if (   _start == null)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.Job.start' was not in the expected format. Dates should follow the ISO format.\n"+toString());
+       __Changes.or(TILDA__JOB_Factory.COLS.START._Mask);
+       __Nulls.andNot(TILDA__JOB_Factory.COLS.START._Mask);
+       if (TextUtil.isNullOrEmpty(Str_end) == false)
+        {
+          _end = DateTimeUtil.parsefromJSON(Str_end);
+          if (   _end == null)
+           throw new Exception("Incoming value for 'tilda.data.TILDA.Job.end' was not in the expected format. Dates should follow the ISO format.\n"+toString());
+          __Changes.or(TILDA__JOB_Factory.COLS.END._Mask);
+          __Nulls.andNot(TILDA__JOB_Factory.COLS.END._Mask);
+        }
+       if (_status != null)
+        {
+          __Changes.or(TILDA__JOB_Factory.COLS.STATUS._Mask);
+          __Nulls.andNot(TILDA__JOB_Factory.COLS.STATUS._Mask);
+        }
+       if (TextUtil.isNullOrEmpty(_msg) == false)
+        {
+          __Changes.or(TILDA__JOB_Factory.COLS.MSG._Mask);
+          __Nulls.andNot(TILDA__JOB_Factory.COLS.MSG._Mask);
+        }
+     }
    protected String getTimeStampSignature() throws Exception
      {
        StringBuilder S = new StringBuilder(1024);
@@ -3368,68 +3501,6 @@ This is the hasChanged for:<BR>
        __Changes.clear();
        __Nulls.clear();
      }
-   public final boolean write(Connection C) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (__Init == null && __LookupId==0) // Loaded via some other mechamism, e.g., Json or CSV loader
-        {
-        }
-       if (hasChanged() == false)
-        {
-          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.Job has not changed: no writing will occur.");
-          QueryDetails.setLastQuery(TILDA__JOB_Factory.SCHEMA_TABLENAME_LABEL, "");
-          return true;
-        }
-
-       if (beforeWrite(C) == false)
-        {
-          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.Job object's beforeWrite() failed.");
-          QueryDetails.setLastQuery(TILDA__JOB_Factory.SCHEMA_TABLENAME_LABEL, "");
-          return false;
-        }
-
-       String Q = getWriteQuery(C);
-
-       java.sql.PreparedStatement PS = null;
-       int count = 0;
-       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
-       try
-        {
-          PS = C.prepareStatement(Q);
-          int i = populatePreparedStatement(C, PS, AllocatedArrays);
-
-          switch (__LookupId)
-           {
-             case 0:
-               PS.setLong      (++i, _refnum     );
-               break;
-             case -666: if (__Init == InitMode.CREATE) break;
-             default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
-           }
-
-          C.setSavepoint();
-          count = PS.executeUpdate();
-          C.releaseSavepoint(true);
-          if (count == 0)
-           return false;
-        }
-       catch (java.sql.SQLException E)
-        {
-          C.releaseSavepoint(false);
-          return C.handleCatch(E, "updated or inserted");
-        }
-       finally
-        {
-          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__JOB_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
-          PS = null;
-        }
-
-       stateUpdatePostWrite();
-       return true;
-     }
-
-   protected abstract boolean beforeWrite(Connection C) throws Exception;
-
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

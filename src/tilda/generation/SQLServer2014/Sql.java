@@ -261,7 +261,7 @@ public class Sql extends MSSQL implements CodeGenSql
                         if (FKObj != null)
                           {
                             Integer I = M.get(FKObj._Name);
-                            I = new Integer(I == null ? 1 : I.intValue() + 1);
+                            I = Integer.valueOf(I == null ? 1 : I.intValue() + 1);
                             M.put(FKObj._Name, I);
                           }
                       }
