@@ -81,7 +81,7 @@ public class Generator
               LOG.debug("  Generating Tilda classes for Object '" + O.getFullName() + "'.");
               genTildaData(G, GenFolder, O);
               genTildaFactory(G, GenFolder, O);
-              genTildaJson(G, GenFolder, O);
+//              genTildaJson(G, GenFolder, O);
               genAppData(G, Res.getParentFile(), O);
               genAppFactory(G, Res.getParentFile(), O);
 //              genAppJson(G, Res.getParentFile(), O);
