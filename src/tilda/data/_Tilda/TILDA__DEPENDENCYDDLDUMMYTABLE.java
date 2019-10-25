@@ -196,7 +196,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("srcSchemaName")
-   String _srcSchemaName=null;;
+   String _srcSchemaName=null;
    protected String __Saved_srcSchemaName;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -300,7 +300,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("srcTVName")
-   String _srcTVName=null;;
+   String _srcTVName=null;
    protected String __Saved_srcTVName;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -403,7 +403,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("seq")
-   Integer _seq=null;;
+   Integer _seq=null;
    protected int __Saved_seq;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -446,7 +446,7 @@ This is the setter for:<BR>
    public void setSeq(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _seq)
+       if (__Init == InitMode.CREATE || _seq == null || v != _seq)
         {
           __Changes.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SEQ._Mask);
           __Nulls.andNot(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SEQ._Mask);
@@ -500,7 +500,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("depSchemaName")
-   String _depSchemaName=null;;
+   String _depSchemaName=null;
    protected String __Saved_depSchemaName;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -604,7 +604,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("depViewName")
-   String _depViewName=null;;
+   String _depViewName=null;
    protected String __Saved_depViewName;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -708,7 +708,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("restoreScript")
-   String _restoreScript=null;;
+   String _restoreScript=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -816,7 +816,6 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   public String  Str_created;
    transient ZonedDateTime _created = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -877,7 +876,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.DependencyDDLDummyTable.created to null: it's not nullable.");
        else if (v.equals(_created) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.DependencyDDLDummyTable.created' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.CREATED._Mask);
           __Nulls.andNot(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.CREATED._Mask);
@@ -1030,7 +1029,6 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   public String  Str_lastUpdated;
    transient ZonedDateTime _lastUpdated = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1235,7 +1233,6 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public String  Str_deleted;
    transient ZonedDateTime _deleted = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1542,30 +1539,36 @@ This is the hasChanged for:<BR>
 
    protected void validateDeserialization() throws Exception
      {
+
        if (TextUtil.isNullOrEmpty(_srcSchemaName) == true)
         throw new Exception("Incoming value for 'tilda.data.TILDA.DependencyDDLDummyTable.srcSchemaName' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SRCSCHEMANAME._Mask);
-        __Nulls.andNot(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SRCSCHEMANAME._Mask);
+          __Changes.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SRCSCHEMANAME._Mask);
+          __Nulls.andNot(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SRCSCHEMANAME._Mask);
+
        if (TextUtil.isNullOrEmpty(_srcTVName) == true)
         throw new Exception("Incoming value for 'tilda.data.TILDA.DependencyDDLDummyTable.srcTVName' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SRCTVNAME._Mask);
-        __Nulls.andNot(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SRCTVNAME._Mask);
+          __Changes.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SRCTVNAME._Mask);
+          __Nulls.andNot(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SRCTVNAME._Mask);
+
        if (_seq == null)
         throw new Exception("Incoming value for 'tilda.data.TILDA.DependencyDDLDummyTable.seq' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SEQ._Mask);
-        __Nulls.andNot(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SEQ._Mask);
+          __Changes.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SEQ._Mask);
+          __Nulls.andNot(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SEQ._Mask);
+
        if (TextUtil.isNullOrEmpty(_depSchemaName) == true)
         throw new Exception("Incoming value for 'tilda.data.TILDA.DependencyDDLDummyTable.depSchemaName' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DEPSCHEMANAME._Mask);
-        __Nulls.andNot(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DEPSCHEMANAME._Mask);
+          __Changes.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DEPSCHEMANAME._Mask);
+          __Nulls.andNot(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DEPSCHEMANAME._Mask);
+
        if (TextUtil.isNullOrEmpty(_depViewName) == true)
         throw new Exception("Incoming value for 'tilda.data.TILDA.DependencyDDLDummyTable.depViewName' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DEPVIEWNAME._Mask);
-        __Nulls.andNot(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DEPVIEWNAME._Mask);
+          __Changes.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DEPVIEWNAME._Mask);
+          __Nulls.andNot(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DEPVIEWNAME._Mask);
+
        if (TextUtil.isNullOrEmpty(_restoreScript) == true)
         throw new Exception("Incoming value for 'tilda.data.TILDA.DependencyDDLDummyTable.restoreScript' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.RESTORESCRIPT._Mask);
-        __Nulls.andNot(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.RESTORESCRIPT._Mask);
+          __Changes.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.RESTORESCRIPT._Mask);
+          __Nulls.andNot(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.RESTORESCRIPT._Mask);
      }
    protected String getTimeStampSignature() throws Exception
      {
@@ -1794,11 +1797,21 @@ This is the hasChanged for:<BR>
        return true;
      }
 
+   /**
+   * Returns the first satisfied natural identify (i.e., unique indices), or if defined, the PK. by 'satisfied',
+   * we mean an identity whose columns have all been provided (i.e., not null). We prioritize natural identities
+   * over the PK since PKs are typically not stable across systems. For example, one might model a user with a PK
+   * but also an identify over an email address for example. That email address for a given logical user should be
+   * constant across multiple environments (e.g., a dev, staging or prod), where as a PK might be generated based
+   * on dynamic factors that are very likely to be different across systems.
+   */
    protected int getFirstValidLookupBy() throws Exception
      {
+
        // Testing if cols for unique index DepedencySequence were set - Id: 0
        if (TextUtil.isNullOrEmpty(_srcSchemaName) == false && TextUtil.isNullOrEmpty(_srcTVName) == false && _seq != null)
         return 0;
+
        // Testing if cols for unique index DepedencySTV were set - Id: 1
        if (TextUtil.isNullOrEmpty(_srcSchemaName) == false && TextUtil.isNullOrEmpty(_srcTVName) == false && TextUtil.isNullOrEmpty(_depSchemaName) == false && TextUtil.isNullOrEmpty(_depViewName) == false)
         return 1;

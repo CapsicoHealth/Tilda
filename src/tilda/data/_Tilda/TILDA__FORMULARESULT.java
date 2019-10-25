@@ -167,7 +167,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("formulaRefnum")
-   Long _formulaRefnum=null;;
+   Long _formulaRefnum=null;
    protected long __Saved_formulaRefnum;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -210,15 +210,25 @@ This is the setter for:<BR>
    protected void setFormulaRefnum(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _formulaRefnum)
+       if (__Init == InitMode.CREATE || _formulaRefnum == null || v != _formulaRefnum)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.FormulaResult.formulaRefnum' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__FORMULARESULT_Factory.COLS.FORMULAREFNUM._Mask);
           __Nulls.andNot(TILDA__FORMULARESULT_Factory.COLS.FORMULAREFNUM._Mask);
        _formulaRefnum = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+   /**
+    * Being invariant, the field formulaRefnum doesn't have a public setter. To support deserialization however, 
+    * we may need to set that field after a create/deserialization and before any write. The init methods allows
+    * to do so.
+   */
+   public void initFormulaRefnum(long v) throws Exception
+     {
+       setFormulaRefnum(v);
      }
 
 
@@ -246,7 +256,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("value")
-   String _value=null;;
+   String _value=null;
    protected String __Saved_value;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -297,13 +307,23 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.FormulaResult.value: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 100.");
        else if (v.equals(_value) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.FormulaResult.value' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__FORMULARESULT_Factory.COLS.VALUE._Mask);
           __Nulls.andNot(TILDA__FORMULARESULT_Factory.COLS.VALUE._Mask);
        _value = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+   /**
+    * Being invariant, the field value doesn't have a public setter. To support deserialization however, 
+    * we may need to set that field after a create/deserialization and before any write. The init methods allows
+    * to do so.
+   */
+   public void initValue(String v) throws Exception
+     {
+       setValue(v);
      }
 
 
@@ -331,7 +351,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("description")
-   String _description=null;;
+   String _description=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -439,7 +459,6 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   public String  Str_created;
    transient ZonedDateTime _created = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -500,7 +519,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.FormulaResult.created to null: it's not nullable.");
        else if (v.equals(_created) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.FormulaResult.created' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__FORMULARESULT_Factory.COLS.CREATED._Mask);
           __Nulls.andNot(TILDA__FORMULARESULT_Factory.COLS.CREATED._Mask);
@@ -653,7 +672,6 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   public String  Str_lastUpdated;
    transient ZonedDateTime _lastUpdated = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -858,7 +876,6 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public String  Str_deleted;
    transient ZonedDateTime _deleted = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1153,18 +1170,21 @@ This is the hasChanged for:<BR>
 
    protected void validateDeserialization() throws Exception
      {
+
        if (_formulaRefnum == null)
         throw new Exception("Incoming value for 'tilda.data.TILDA.FormulaResult.formulaRefnum' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__FORMULARESULT_Factory.COLS.FORMULAREFNUM._Mask);
-        __Nulls.andNot(TILDA__FORMULARESULT_Factory.COLS.FORMULAREFNUM._Mask);
+          __Changes.or(TILDA__FORMULARESULT_Factory.COLS.FORMULAREFNUM._Mask);
+          __Nulls.andNot(TILDA__FORMULARESULT_Factory.COLS.FORMULAREFNUM._Mask);
+
        if (TextUtil.isNullOrEmpty(_value) == true)
         throw new Exception("Incoming value for 'tilda.data.TILDA.FormulaResult.value' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__FORMULARESULT_Factory.COLS.VALUE._Mask);
-        __Nulls.andNot(TILDA__FORMULARESULT_Factory.COLS.VALUE._Mask);
+          __Changes.or(TILDA__FORMULARESULT_Factory.COLS.VALUE._Mask);
+          __Nulls.andNot(TILDA__FORMULARESULT_Factory.COLS.VALUE._Mask);
+
        if (TextUtil.isNullOrEmpty(_description) == true)
         throw new Exception("Incoming value for 'tilda.data.TILDA.FormulaResult.description' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__FORMULARESULT_Factory.COLS.DESCRIPTION._Mask);
-        __Nulls.andNot(TILDA__FORMULARESULT_Factory.COLS.DESCRIPTION._Mask);
+          __Changes.or(TILDA__FORMULARESULT_Factory.COLS.DESCRIPTION._Mask);
+          __Nulls.andNot(TILDA__FORMULARESULT_Factory.COLS.DESCRIPTION._Mask);
      }
    protected String getTimeStampSignature() throws Exception
      {
@@ -1365,8 +1385,17 @@ This is the hasChanged for:<BR>
        return true;
      }
 
+   /**
+   * Returns the first satisfied natural identify (i.e., unique indices), or if defined, the PK. by 'satisfied',
+   * we mean an identity whose columns have all been provided (i.e., not null). We prioritize natural identities
+   * over the PK since PKs are typically not stable across systems. For example, one might model a user with a PK
+   * but also an identify over an email address for example. That email address for a given logical user should be
+   * constant across multiple environments (e.g., a dev, staging or prod), where as a PK might be generated based
+   * on dynamic factors that are very likely to be different across systems.
+   */
    protected int getFirstValidLookupBy() throws Exception
      {
+
        // Testing if primary key has been set - Id: 0
        if (_formulaRefnum != null && TextUtil.isNullOrEmpty(_value) == false)
         return 0;

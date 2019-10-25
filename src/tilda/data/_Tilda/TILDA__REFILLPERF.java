@@ -228,7 +228,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("schemaName")
-   String _schemaName=null;;
+   String _schemaName=null;
    protected String __Saved_schemaName;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -279,13 +279,23 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.RefillPerf.schemaName: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
        else if (v.equals(_schemaName) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.RefillPerf.schemaName' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__REFILLPERF_Factory.COLS.SCHEMANAME._Mask);
           __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.SCHEMANAME._Mask);
        _schemaName = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+   /**
+    * Being invariant, the field schemaName doesn't have a public setter. To support deserialization however, 
+    * we may need to set that field after a create/deserialization and before any write. The init methods allows
+    * to do so.
+   */
+   public void initSchemaName(String v) throws Exception
+     {
+       setSchemaName(v);
      }
 
 
@@ -313,7 +323,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("objectName")
-   String _objectName=null;;
+   String _objectName=null;
    protected String __Saved_objectName;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -364,13 +374,23 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.RefillPerf.objectName: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
        else if (v.equals(_objectName) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.RefillPerf.objectName' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__REFILLPERF_Factory.COLS.OBJECTNAME._Mask);
           __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.OBJECTNAME._Mask);
        _objectName = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+   /**
+    * Being invariant, the field objectName doesn't have a public setter. To support deserialization however, 
+    * we may need to set that field after a create/deserialization and before any write. The init methods allows
+    * to do so.
+   */
+   public void initObjectName(String v) throws Exception
+     {
+       setObjectName(v);
      }
 
 
@@ -397,7 +417,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _startPeriodTZ=null;;
+   String _startPeriodTZ=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -447,7 +467,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.RefillPerf.startPeriodTZ: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
        else if (v.equals(_startPeriodTZ) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.RefillPerf.startPeriodTZ' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__REFILLPERF_Factory.COLS.STARTPERIODTZ._Mask);
           __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.STARTPERIODTZ._Mask);
@@ -501,7 +521,9 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("startPeriod")
-   public String  Str_startPeriod;
+   String  Str_startPeriod;
+   public void initStartPeriod(String v) { Str_startPeriod = v; }
+   public String initStartPeriodVal() { return Str_startPeriod; }
    transient ZonedDateTime _startPeriod = null;
    transient ZonedDateTime __Saved_startPeriod;
 
@@ -549,7 +571,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.RefillPerf.startPeriod to null: it's not nullable.");
        else if (v.equals(_startPeriod) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.RefillPerf.startPeriod' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__REFILLPERF_Factory.COLS.STARTPERIOD._Mask);
           __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.STARTPERIOD._Mask);
@@ -560,6 +582,16 @@ This is the setter for:<BR>
           setStartPeriodTZ(ZI.getId());
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+   /**
+    * Being invariant, the field startPeriod doesn't have a public setter. To support deserialization however, 
+    * we may need to set that field after a create/deserialization and before any write. The init methods allows
+    * to do so.
+   */
+   public void initStartPeriod(ZonedDateTime v) throws Exception
+     {
+       setStartPeriod(v);
      }
 
 
@@ -586,7 +618,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("timeCreateMs")
-   Long _timeCreateMs=null;;
+   Long _timeCreateMs=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -628,7 +660,7 @@ This is the setter for:<BR>
    public void setTimeCreateMs(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _timeCreateMs)
+       if (__Init == InitMode.CREATE || _timeCreateMs == null || v != _timeCreateMs)
         {
           __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMECREATEMS._Mask);
           __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMECREATEMS._Mask);
@@ -681,7 +713,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("timeIndexMs")
-   Long _timeIndexMs=null;;
+   Long _timeIndexMs=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -723,7 +755,7 @@ This is the setter for:<BR>
    public void setTimeIndexMs(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _timeIndexMs)
+       if (__Init == InitMode.CREATE || _timeIndexMs == null || v != _timeIndexMs)
         {
           __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMEINDEXMS._Mask);
           __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMEINDEXMS._Mask);
@@ -776,7 +808,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("timeAnalyzeMs")
-   Long _timeAnalyzeMs=null;;
+   Long _timeAnalyzeMs=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -818,7 +850,7 @@ This is the setter for:<BR>
    public void setTimeAnalyzeMs(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _timeAnalyzeMs)
+       if (__Init == InitMode.CREATE || _timeAnalyzeMs == null || v != _timeAnalyzeMs)
         {
           __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMEANALYZEMS._Mask);
           __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMEANALYZEMS._Mask);
@@ -871,7 +903,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("timeTotalMs")
-   Long _timeTotalMs=null;;
+   Long _timeTotalMs=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -913,7 +945,7 @@ This is the setter for:<BR>
    public void setTimeTotalMs(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _timeTotalMs)
+       if (__Init == InitMode.CREATE || _timeTotalMs == null || v != _timeTotalMs)
         {
           __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMETOTALMS._Mask);
           __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMETOTALMS._Mask);
@@ -966,7 +998,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("columnsMs")
-   Long _columnsMs=null;;
+   Long _columnsMs=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1008,7 +1040,7 @@ This is the setter for:<BR>
    public void setColumnsMs(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _columnsMs)
+       if (__Init == InitMode.CREATE || _columnsMs == null || v != _columnsMs)
         {
           __Changes.or(TILDA__REFILLPERF_Factory.COLS.COLUMNSMS._Mask);
           __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.COLUMNSMS._Mask);
@@ -1067,7 +1099,6 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   public String  Str_created;
    transient ZonedDateTime _created = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1128,7 +1159,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.RefillPerf.created to null: it's not nullable.");
        else if (v.equals(_created) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.RefillPerf.created' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__REFILLPERF_Factory.COLS.CREATED._Mask);
           __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.CREATED._Mask);
@@ -1281,7 +1312,6 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   public String  Str_lastUpdated;
    transient ZonedDateTime _lastUpdated = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1486,7 +1516,6 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public String  Str_deleted;
    transient ZonedDateTime _deleted = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1786,43 +1815,57 @@ This is the hasChanged for:<BR>
 
    protected void validateDeserialization() throws Exception
      {
+
        if (TextUtil.isNullOrEmpty(_schemaName) == true)
         throw new Exception("Incoming value for 'tilda.data.TILDA.RefillPerf.schemaName' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__REFILLPERF_Factory.COLS.SCHEMANAME._Mask);
-        __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.SCHEMANAME._Mask);
+          __Changes.or(TILDA__REFILLPERF_Factory.COLS.SCHEMANAME._Mask);
+          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.SCHEMANAME._Mask);
+
        if (TextUtil.isNullOrEmpty(_objectName) == true)
         throw new Exception("Incoming value for 'tilda.data.TILDA.RefillPerf.objectName' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__REFILLPERF_Factory.COLS.OBJECTNAME._Mask);
-        __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.OBJECTNAME._Mask);
+          __Changes.or(TILDA__REFILLPERF_Factory.COLS.OBJECTNAME._Mask);
+          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.OBJECTNAME._Mask);
+
        if (TextUtil.isNullOrEmpty(Str_startPeriod) == true)
         throw new Exception("Incoming value for 'tilda.data.TILDA.RefillPerf.startPeriod' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__REFILLPERF_Factory.COLS.STARTPERIOD._Mask);
-        __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.STARTPERIOD._Mask);
+          __Changes.or(TILDA__REFILLPERF_Factory.COLS.STARTPERIOD._Mask);
+          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.STARTPERIOD._Mask);
+        {
        _startPeriod = DateTimeUtil.parsefromJSON(Str_startPeriod);
        if (   _startPeriod == null)
         throw new Exception("Incoming value for 'tilda.data.TILDA.RefillPerf.startPeriod' was not in the expected format. Dates should follow the ISO format.\n"+toString());
        __Changes.or(TILDA__REFILLPERF_Factory.COLS.STARTPERIOD._Mask);
        __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.STARTPERIOD._Mask);
+       tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(_startPeriod.getZone().getId());
+       if (ZI == null)
+        throw new Exception("Cannot set field 'tilda.data.TILDA.RefillPerf.startPeriod' because the timezone value '"+_startPeriod.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+          setStartPeriodTZ(ZI.getId());
+        }
+
        if (_timeCreateMs == null)
         throw new Exception("Incoming value for 'tilda.data.TILDA.RefillPerf.timeCreateMs' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMECREATEMS._Mask);
-        __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMECREATEMS._Mask);
+          __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMECREATEMS._Mask);
+          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMECREATEMS._Mask);
+
        if (_timeIndexMs == null)
         throw new Exception("Incoming value for 'tilda.data.TILDA.RefillPerf.timeIndexMs' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMEINDEXMS._Mask);
-        __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMEINDEXMS._Mask);
+          __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMEINDEXMS._Mask);
+          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMEINDEXMS._Mask);
+
        if (_timeAnalyzeMs == null)
         throw new Exception("Incoming value for 'tilda.data.TILDA.RefillPerf.timeAnalyzeMs' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMEANALYZEMS._Mask);
-        __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMEANALYZEMS._Mask);
+          __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMEANALYZEMS._Mask);
+          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMEANALYZEMS._Mask);
+
        if (_timeTotalMs == null)
         throw new Exception("Incoming value for 'tilda.data.TILDA.RefillPerf.timeTotalMs' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMETOTALMS._Mask);
-        __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMETOTALMS._Mask);
+          __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMETOTALMS._Mask);
+          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMETOTALMS._Mask);
+
        if (_columnsMs == null)
         throw new Exception("Incoming value for 'tilda.data.TILDA.RefillPerf.columnsMs' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__REFILLPERF_Factory.COLS.COLUMNSMS._Mask);
-        __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.COLUMNSMS._Mask);
+          __Changes.or(TILDA__REFILLPERF_Factory.COLS.COLUMNSMS._Mask);
+          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.COLUMNSMS._Mask);
      }
    protected String getTimeStampSignature() throws Exception
      {
@@ -2071,8 +2114,17 @@ This is the hasChanged for:<BR>
        return true;
      }
 
+   /**
+   * Returns the first satisfied natural identify (i.e., unique indices), or if defined, the PK. by 'satisfied',
+   * we mean an identity whose columns have all been provided (i.e., not null). We prioritize natural identities
+   * over the PK since PKs are typically not stable across systems. For example, one might model a user with a PK
+   * but also an identify over an email address for example. That email address for a given logical user should be
+   * constant across multiple environments (e.g., a dev, staging or prod), where as a PK might be generated based
+   * on dynamic factors that are very likely to be different across systems.
+   */
    protected int getFirstValidLookupBy() throws Exception
      {
+
        // Testing if primary key has been set - Id: 0
        if (TextUtil.isNullOrEmpty(_schemaName) == false && TextUtil.isNullOrEmpty(_objectName) == false && TextUtil.isNullOrEmpty(Str_startPeriod) == false)
         return 0;

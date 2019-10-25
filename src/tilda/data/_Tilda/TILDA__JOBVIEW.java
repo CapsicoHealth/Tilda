@@ -384,7 +384,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("jobRefnum")
-   Long _jobRefnum=null;;
+   Long _jobRefnum=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -426,15 +426,25 @@ This is the setter for:<BR>
     void setJobRefnum(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _jobRefnum)
+       if (__Init == InitMode.CREATE || _jobRefnum == null || v != _jobRefnum)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.JobView.jobRefnum' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBREFNUM._Mask);
           __Nulls.andNot(TILDA__JOBVIEW_Factory.COLS.JOBREFNUM._Mask);
        _jobRefnum = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+   /**
+    * Being invariant, the field jobRefnum doesn't have a public setter. To support deserialization however, 
+    * we may need to set that field after a create/deserialization and before any write. The init methods allows
+    * to do so.
+   */
+   public void initJobRefnum(long v) throws Exception
+     {
+       setJobRefnum(v);
      }
 
 
@@ -462,7 +472,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("jobName")
-   String _jobName=null;;
+   String _jobName=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -512,7 +522,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.JobView.jobName: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 250.");
        else if (v.equals(_jobName) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.JobView.jobName' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBNAME._Mask);
           __Nulls.andNot(TILDA__JOBVIEW_Factory.COLS.JOBNAME._Mask);
@@ -546,7 +556,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("jobType")
-   String _jobType=null;;
+   String _jobType=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -619,7 +629,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.JobView.jobType: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 250.");
        else if (v.equals(_jobType) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.JobView.jobType' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBTYPE._Mask);
           __Nulls.andNot(TILDA__JOBVIEW_Factory.COLS.JOBTYPE._Mask);
@@ -682,7 +692,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("jobUserId")
-   String _jobUserId=null;;
+   String _jobUserId=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -755,7 +765,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.JobView.jobUserId: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 250.");
        else if (v.equals(_jobUserId) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.JobView.jobUserId' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBUSERID._Mask);
           __Nulls.andNot(TILDA__JOBVIEW_Factory.COLS.JOBUSERID._Mask);
@@ -817,7 +827,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _jobDataStartTZ=null;;
+   String _jobDataStartTZ=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -890,7 +900,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.JobView.jobDataStartTZ: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
        else if (v.equals(_jobDataStartTZ) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.JobView.jobDataStartTZ' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBDATASTARTTZ._Mask);
           __Nulls.andNot(TILDA__JOBVIEW_Factory.COLS.JOBDATASTARTTZ._Mask);
@@ -952,7 +962,9 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("jobDataStart")
-   public String  Str_jobDataStart;
+   String  Str_jobDataStart;
+   public void initJobDataStart(String v) { Str_jobDataStart = v; }
+   public String initJobDataStartVal() { return Str_jobDataStart; }
    transient ZonedDateTime _jobDataStart = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1021,7 +1033,7 @@ This is the setter for:<BR>
         }
        else if (v.equals(_jobDataStart) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.JobView.jobDataStart' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBDATASTART._Mask);
           __Nulls.andNot(TILDA__JOBVIEW_Factory.COLS.JOBDATASTART._Mask);
@@ -1087,7 +1099,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _jobDataEndTZ=null;;
+   String _jobDataEndTZ=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1160,7 +1172,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.JobView.jobDataEndTZ: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
        else if (v.equals(_jobDataEndTZ) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.JobView.jobDataEndTZ' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBDATAENDTZ._Mask);
           __Nulls.andNot(TILDA__JOBVIEW_Factory.COLS.JOBDATAENDTZ._Mask);
@@ -1222,7 +1234,9 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("jobDataEnd")
-   public String  Str_jobDataEnd;
+   String  Str_jobDataEnd;
+   public void initJobDataEnd(String v) { Str_jobDataEnd = v; }
+   public String initJobDataEndVal() { return Str_jobDataEnd; }
    transient ZonedDateTime _jobDataEnd = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1291,7 +1305,7 @@ This is the setter for:<BR>
         }
        else if (v.equals(_jobDataEnd) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.JobView.jobDataEnd' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBDATAEND._Mask);
           __Nulls.andNot(TILDA__JOBVIEW_Factory.COLS.JOBDATAEND._Mask);
@@ -1357,7 +1371,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _jobStartTZ=null;;
+   String _jobStartTZ=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1407,7 +1421,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.JobView.jobStartTZ: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
        else if (v.equals(_jobStartTZ) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.JobView.jobStartTZ' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBSTARTTZ._Mask);
           __Nulls.andNot(TILDA__JOBVIEW_Factory.COLS.JOBSTARTTZ._Mask);
@@ -1440,7 +1454,9 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("jobStart")
-   public String  Str_jobStart;
+   String  Str_jobStart;
+   public void initJobStart(String v) { Str_jobStart = v; }
+   public String initJobStartVal() { return Str_jobStart; }
    transient ZonedDateTime _jobStart = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1487,7 +1503,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.JobView.jobStart to null: it's not nullable.");
        else if (v.equals(_jobStart) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.JobView.jobStart' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBSTART._Mask);
           __Nulls.andNot(TILDA__JOBVIEW_Factory.COLS.JOBSTART._Mask);
@@ -1524,7 +1540,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _jobEndTZ=null;;
+   String _jobEndTZ=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1597,7 +1613,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.JobView.jobEndTZ: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
        else if (v.equals(_jobEndTZ) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.JobView.jobEndTZ' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBENDTZ._Mask);
           __Nulls.andNot(TILDA__JOBVIEW_Factory.COLS.JOBENDTZ._Mask);
@@ -1659,7 +1675,9 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("jobEnd")
-   public String  Str_jobEnd;
+   String  Str_jobEnd;
+   public void initJobEnd(String v) { Str_jobEnd = v; }
+   public String initJobEndVal() { return Str_jobEnd; }
    transient ZonedDateTime _jobEnd = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1728,7 +1746,7 @@ This is the setter for:<BR>
         }
        else if (v.equals(_jobEnd) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.JobView.jobEnd' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBEND._Mask);
           __Nulls.andNot(TILDA__JOBVIEW_Factory.COLS.JOBEND._Mask);
@@ -1794,7 +1812,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("jobStatus")
-   Boolean _jobStatus=null;;
+   Boolean _jobStatus=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1856,9 +1874,9 @@ This is the setter for:<BR>
     void setJobStatus(boolean v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _jobStatus)
+       if (__Init == InitMode.CREATE || _jobStatus == null || v != _jobStatus)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.JobView.jobStatus' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBSTATUS._Mask);
           __Nulls.andNot(TILDA__JOBVIEW_Factory.COLS.JOBSTATUS._Mask);
@@ -1920,7 +1938,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("jobMsg")
-   String _jobMsg=null;;
+   String _jobMsg=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1993,7 +2011,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.JobView.jobMsg: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 8192.");
        else if (v.equals(_jobMsg) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.JobView.jobMsg' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBMSG._Mask);
           __Nulls.andNot(TILDA__JOBVIEW_Factory.COLS.JOBMSG._Mask);
@@ -2056,7 +2074,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("jobPartName")
-   String _jobPartName=null;;
+   String _jobPartName=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2106,7 +2124,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.JobView.jobPartName: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 250.");
        else if (v.equals(_jobPartName) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.JobView.jobPartName' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTNAME._Mask);
           __Nulls.andNot(TILDA__JOBVIEW_Factory.COLS.JOBPARTNAME._Mask);
@@ -2140,7 +2158,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("jobPartType")
-   String _jobPartType=null;;
+   String _jobPartType=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2213,7 +2231,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.JobView.jobPartType: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 250.");
        else if (v.equals(_jobPartType) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.JobView.jobPartType' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTTYPE._Mask);
           __Nulls.andNot(TILDA__JOBVIEW_Factory.COLS.JOBPARTTYPE._Mask);
@@ -2275,7 +2293,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _jobPartDataStartTZ=null;;
+   String _jobPartDataStartTZ=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2348,7 +2366,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.JobView.jobPartDataStartTZ: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
        else if (v.equals(_jobPartDataStartTZ) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.JobView.jobPartDataStartTZ' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTDATASTARTTZ._Mask);
           __Nulls.andNot(TILDA__JOBVIEW_Factory.COLS.JOBPARTDATASTARTTZ._Mask);
@@ -2410,7 +2428,9 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("jobPartDataStart")
-   public String  Str_jobPartDataStart;
+   String  Str_jobPartDataStart;
+   public void initJobPartDataStart(String v) { Str_jobPartDataStart = v; }
+   public String initJobPartDataStartVal() { return Str_jobPartDataStart; }
    transient ZonedDateTime _jobPartDataStart = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2479,7 +2499,7 @@ This is the setter for:<BR>
         }
        else if (v.equals(_jobPartDataStart) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.JobView.jobPartDataStart' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTDATASTART._Mask);
           __Nulls.andNot(TILDA__JOBVIEW_Factory.COLS.JOBPARTDATASTART._Mask);
@@ -2545,7 +2565,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _jobPartDataEndTZ=null;;
+   String _jobPartDataEndTZ=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2618,7 +2638,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.JobView.jobPartDataEndTZ: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
        else if (v.equals(_jobPartDataEndTZ) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.JobView.jobPartDataEndTZ' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTDATAENDTZ._Mask);
           __Nulls.andNot(TILDA__JOBVIEW_Factory.COLS.JOBPARTDATAENDTZ._Mask);
@@ -2680,7 +2700,9 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("jobPartDataEnd")
-   public String  Str_jobPartDataEnd;
+   String  Str_jobPartDataEnd;
+   public void initJobPartDataEnd(String v) { Str_jobPartDataEnd = v; }
+   public String initJobPartDataEndVal() { return Str_jobPartDataEnd; }
    transient ZonedDateTime _jobPartDataEnd = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2749,7 +2771,7 @@ This is the setter for:<BR>
         }
        else if (v.equals(_jobPartDataEnd) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.JobView.jobPartDataEnd' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTDATAEND._Mask);
           __Nulls.andNot(TILDA__JOBVIEW_Factory.COLS.JOBPARTDATAEND._Mask);
@@ -2815,7 +2837,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _jobPartStartTZ=null;;
+   String _jobPartStartTZ=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2865,7 +2887,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.JobView.jobPartStartTZ: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
        else if (v.equals(_jobPartStartTZ) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.JobView.jobPartStartTZ' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTSTARTTZ._Mask);
           __Nulls.andNot(TILDA__JOBVIEW_Factory.COLS.JOBPARTSTARTTZ._Mask);
@@ -2898,7 +2920,9 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("jobPartStart")
-   public String  Str_jobPartStart;
+   String  Str_jobPartStart;
+   public void initJobPartStart(String v) { Str_jobPartStart = v; }
+   public String initJobPartStartVal() { return Str_jobPartStart; }
    transient ZonedDateTime _jobPartStart = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2945,7 +2969,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.JobView.jobPartStart to null: it's not nullable.");
        else if (v.equals(_jobPartStart) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.JobView.jobPartStart' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTSTART._Mask);
           __Nulls.andNot(TILDA__JOBVIEW_Factory.COLS.JOBPARTSTART._Mask);
@@ -2982,7 +3006,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _jobPartEndTZ=null;;
+   String _jobPartEndTZ=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3055,7 +3079,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.JobView.jobPartEndTZ: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
        else if (v.equals(_jobPartEndTZ) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.JobView.jobPartEndTZ' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTENDTZ._Mask);
           __Nulls.andNot(TILDA__JOBVIEW_Factory.COLS.JOBPARTENDTZ._Mask);
@@ -3117,7 +3141,9 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("jobPartEnd")
-   public String  Str_jobPartEnd;
+   String  Str_jobPartEnd;
+   public void initJobPartEnd(String v) { Str_jobPartEnd = v; }
+   public String initJobPartEndVal() { return Str_jobPartEnd; }
    transient ZonedDateTime _jobPartEnd = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3186,7 +3212,7 @@ This is the setter for:<BR>
         }
        else if (v.equals(_jobPartEnd) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.JobView.jobPartEnd' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTEND._Mask);
           __Nulls.andNot(TILDA__JOBVIEW_Factory.COLS.JOBPARTEND._Mask);
@@ -3252,7 +3278,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("jobPartRecordsCount")
-   Integer _jobPartRecordsCount=null;;
+   Integer _jobPartRecordsCount=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3314,9 +3340,9 @@ This is the setter for:<BR>
     void setJobPartRecordsCount(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _jobPartRecordsCount)
+       if (__Init == InitMode.CREATE || _jobPartRecordsCount == null || v != _jobPartRecordsCount)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.JobView.jobPartRecordsCount' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTRECORDSCOUNT._Mask);
           __Nulls.andNot(TILDA__JOBVIEW_Factory.COLS.JOBPARTRECORDSCOUNT._Mask);
@@ -3377,7 +3403,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("jobPartStatus")
-   Boolean _jobPartStatus=null;;
+   Boolean _jobPartStatus=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3439,9 +3465,9 @@ This is the setter for:<BR>
     void setJobPartStatus(boolean v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _jobPartStatus)
+       if (__Init == InitMode.CREATE || _jobPartStatus == null || v != _jobPartStatus)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.JobView.jobPartStatus' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTSTATUS._Mask);
           __Nulls.andNot(TILDA__JOBVIEW_Factory.COLS.JOBPARTSTATUS._Mask);
@@ -3502,7 +3528,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("jobPartNotify")
-   Boolean _jobPartNotify=null;;
+   Boolean _jobPartNotify=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3544,9 +3570,9 @@ This is the setter for:<BR>
     void setJobPartNotify(boolean v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _jobPartNotify)
+       if (__Init == InitMode.CREATE || _jobPartNotify == null || v != _jobPartNotify)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.JobView.jobPartNotify' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTNOTIFY._Mask);
           __Nulls.andNot(TILDA__JOBVIEW_Factory.COLS.JOBPARTNOTIFY._Mask);
@@ -3580,7 +3606,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("jobPartMessage")
-   String _jobPartMessage=null;;
+   String _jobPartMessage=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3630,7 +3656,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.JobView.jobPartMessage: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 8192.");
        else if (v.equals(_jobPartMessage) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.JobView.jobPartMessage' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTMESSAGE._Mask);
           __Nulls.andNot(TILDA__JOBVIEW_Factory.COLS.JOBPARTMESSAGE._Mask);

@@ -224,7 +224,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("active")
-   Boolean _active=null;;
+   Boolean _active=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -286,7 +286,7 @@ This is the setter for:<BR>
    public void setActive(boolean v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _active)
+       if (__Init == InitMode.CREATE || _active == null || v != _active)
         {
           __Changes.or(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask);
           __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask);
@@ -368,7 +368,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("id")
-   String _id=null;;
+   String _id=null;
    protected String __Saved_id;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -419,13 +419,23 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.Connection.id: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 15.");
        else if (v.equals(_id) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Connection.id' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__CONNECTION_Factory.COLS.ID._Mask);
           __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.ID._Mask);
        _id = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+   /**
+    * Being invariant, the field id doesn't have a public setter. To support deserialization however, 
+    * we may need to set that field after a create/deserialization and before any write. The init methods allows
+    * to do so.
+   */
+   public void initId(String v) throws Exception
+     {
+       setId(v);
      }
 
 
@@ -453,7 +463,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("driver")
-   String _driver=null;;
+   String _driver=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -556,7 +566,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("db")
-   String _db=null;;
+   String _db=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -659,7 +669,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("user")
-   String _user=null;;
+   String _user=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -762,7 +772,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("pswd")
-   String _pswd=null;;
+   String _pswd=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -864,7 +874,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("initial")
-   Integer _initial=null;;
+   Integer _initial=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -906,7 +916,7 @@ This is the setter for:<BR>
    public void setInitial(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _initial)
+       if (__Init == InitMode.CREATE || _initial == null || v != _initial)
         {
           __Changes.or(TILDA__CONNECTION_Factory.COLS.INITIAL._Mask);
           __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.INITIAL._Mask);
@@ -959,7 +969,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("max")
-   Integer _max=null;;
+   Integer _max=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1001,7 +1011,7 @@ This is the setter for:<BR>
    public void setMax(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _max)
+       if (__Init == InitMode.CREATE || _max == null || v != _max)
         {
           __Changes.or(TILDA__CONNECTION_Factory.COLS.MAX._Mask);
           __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.MAX._Mask);
@@ -1207,7 +1217,6 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   public String  Str_created;
    transient ZonedDateTime _created = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1268,7 +1277,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.Connection.created to null: it's not nullable.");
        else if (v.equals(_created) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Connection.created' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__CONNECTION_Factory.COLS.CREATED._Mask);
           __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.CREATED._Mask);
@@ -1421,7 +1430,6 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   public String  Str_lastUpdated;
    transient ZonedDateTime _lastUpdated = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1626,7 +1634,6 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public String  Str_deleted;
    transient ZonedDateTime _deleted = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1928,43 +1935,52 @@ This is the hasChanged for:<BR>
 
    protected void validateDeserialization() throws Exception
      {
+
        if (_active != null)
         {
           __Changes.or(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask);
           __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask);
         }
+
        if (TextUtil.isNullOrEmpty(_id) == true)
         throw new Exception("Incoming value for 'tilda.data.TILDA.Connection.id' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__CONNECTION_Factory.COLS.ID._Mask);
-        __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.ID._Mask);
+          __Changes.or(TILDA__CONNECTION_Factory.COLS.ID._Mask);
+          __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.ID._Mask);
+
        if (TextUtil.isNullOrEmpty(_driver) == true)
         throw new Exception("Incoming value for 'tilda.data.TILDA.Connection.driver' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__CONNECTION_Factory.COLS.DRIVER._Mask);
-        __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.DRIVER._Mask);
+          __Changes.or(TILDA__CONNECTION_Factory.COLS.DRIVER._Mask);
+          __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.DRIVER._Mask);
+
        if (TextUtil.isNullOrEmpty(_db) == true)
         throw new Exception("Incoming value for 'tilda.data.TILDA.Connection.db' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__CONNECTION_Factory.COLS.DB._Mask);
-        __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.DB._Mask);
+          __Changes.or(TILDA__CONNECTION_Factory.COLS.DB._Mask);
+          __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.DB._Mask);
+
        if (TextUtil.isNullOrEmpty(_user) == true)
         throw new Exception("Incoming value for 'tilda.data.TILDA.Connection.user' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__CONNECTION_Factory.COLS.USER._Mask);
-        __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.USER._Mask);
+          __Changes.or(TILDA__CONNECTION_Factory.COLS.USER._Mask);
+          __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.USER._Mask);
+
        if (TextUtil.isNullOrEmpty(_pswd) == true)
         throw new Exception("Incoming value for 'tilda.data.TILDA.Connection.pswd' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__CONNECTION_Factory.COLS.PSWD._Mask);
-        __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.PSWD._Mask);
+          __Changes.or(TILDA__CONNECTION_Factory.COLS.PSWD._Mask);
+          __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.PSWD._Mask);
+
        if (_initial == null)
         throw new Exception("Incoming value for 'tilda.data.TILDA.Connection.initial' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__CONNECTION_Factory.COLS.INITIAL._Mask);
-        __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.INITIAL._Mask);
+          __Changes.or(TILDA__CONNECTION_Factory.COLS.INITIAL._Mask);
+          __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.INITIAL._Mask);
+
        if (_max == null)
         throw new Exception("Incoming value for 'tilda.data.TILDA.Connection.max' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__CONNECTION_Factory.COLS.MAX._Mask);
-        __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.MAX._Mask);
+          __Changes.or(TILDA__CONNECTION_Factory.COLS.MAX._Mask);
+          __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.MAX._Mask);
+
        if (_schemas == null || _schemas.isEmpty() == true)
         throw new Exception("Incoming value for 'tilda.data.TILDA.Connection.schemas' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask);
-        __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask);
+          __Changes.or(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask);
+          __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask);
      }
    protected String getTimeStampSignature() throws Exception
      {
@@ -2200,8 +2216,17 @@ This is the hasChanged for:<BR>
        return true;
      }
 
+   /**
+   * Returns the first satisfied natural identify (i.e., unique indices), or if defined, the PK. by 'satisfied',
+   * we mean an identity whose columns have all been provided (i.e., not null). We prioritize natural identities
+   * over the PK since PKs are typically not stable across systems. For example, one might model a user with a PK
+   * but also an identify over an email address for example. That email address for a given logical user should be
+   * constant across multiple environments (e.g., a dev, staging or prod), where as a PK might be generated based
+   * on dynamic factors that are very likely to be different across systems.
+   */
    protected int getFirstValidLookupBy() throws Exception
      {
+
        // Testing if primary key has been set - Id: 0
        if (TextUtil.isNullOrEmpty(_id) == false)
         return 0;

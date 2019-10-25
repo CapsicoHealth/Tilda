@@ -181,7 +181,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("formulaRefnum")
-   Long _formulaRefnum=null;;
+   Long _formulaRefnum=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -223,15 +223,25 @@ This is the setter for:<BR>
     void setFormulaRefnum(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _formulaRefnum)
+       if (__Init == InitMode.CREATE || _formulaRefnum == null || v != _formulaRefnum)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.FormulaDependencyView.formulaRefnum' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.FORMULAREFNUM._Mask);
           __Nulls.andNot(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.FORMULAREFNUM._Mask);
        _formulaRefnum = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+   /**
+    * Being invariant, the field formulaRefnum doesn't have a public setter. To support deserialization however, 
+    * we may need to set that field after a create/deserialization and before any write. The init methods allows
+    * to do so.
+   */
+   public void initFormulaRefnum(long v) throws Exception
+     {
+       setFormulaRefnum(v);
      }
 
 
@@ -259,7 +269,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("location")
-   String _location=null;;
+   String _location=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -309,13 +319,23 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.FormulaDependencyView.location: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
        else if (v.equals(_location) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.FormulaDependencyView.location' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.LOCATION._Mask);
           __Nulls.andNot(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.LOCATION._Mask);
        _location = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+   /**
+    * Being invariant, the field location doesn't have a public setter. To support deserialization however, 
+    * we may need to set that field after a create/deserialization and before any write. The init methods allows
+    * to do so.
+   */
+   public void initLocation(String v) throws Exception
+     {
+       setLocation(v);
      }
 
 
@@ -343,7 +363,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("name")
-   String _name=null;;
+   String _name=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -393,7 +413,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.FormulaDependencyView.name: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
        else if (v.equals(_name) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.FormulaDependencyView.name' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.NAME._Mask);
           __Nulls.andNot(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.NAME._Mask);
@@ -496,7 +516,7 @@ This is the setter for:<BR>
     void setReferencedColumns(List<String> v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+       if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
         throw new Exception("Cannot set field 'tilda.data.TILDA.FormulaDependencyView.referencedColumns' that is invariant, or part of a read-only or pre-existing WORM object.");
        if (v == null  || v.isEmpty() == true)
         setReferencedColumnsNull();
@@ -530,7 +550,7 @@ This is the setter for:<BR>
         }
        else if (pos >= _referencedColumns.size() || _referencedColumns.get(pos).equals(v) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.FormulaDependencyView.referencedColumns' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.REFERENCEDCOLUMNS._Mask);
           __Nulls.andNot(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.REFERENCEDCOLUMNS._Mask);
@@ -608,7 +628,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("dependencyRefnum")
-   Long _dependencyRefnum=null;;
+   Long _dependencyRefnum=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -650,15 +670,25 @@ This is the setter for:<BR>
     void setDependencyRefnum(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _dependencyRefnum)
+       if (__Init == InitMode.CREATE || _dependencyRefnum == null || v != _dependencyRefnum)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.FormulaDependencyView.dependencyRefnum' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENCYREFNUM._Mask);
           __Nulls.andNot(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENCYREFNUM._Mask);
        _dependencyRefnum = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+   /**
+    * Being invariant, the field dependencyRefnum doesn't have a public setter. To support deserialization however, 
+    * we may need to set that field after a create/deserialization and before any write. The init methods allows
+    * to do so.
+   */
+   public void initDependencyRefnum(long v) throws Exception
+     {
+       setDependencyRefnum(v);
      }
 
 
@@ -686,7 +716,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("dependentFormulaName")
-   String _dependentFormulaName=null;;
+   String _dependentFormulaName=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -736,7 +766,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.FormulaDependencyView.dependentFormulaName: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
        else if (v.equals(_dependentFormulaName) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.FormulaDependencyView.dependentFormulaName' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENTFORMULANAME._Mask);
           __Nulls.andNot(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENTFORMULANAME._Mask);
@@ -770,7 +800,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("dependentFormulaLocation")
-   String _dependentFormulaLocation=null;;
+   String _dependentFormulaLocation=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -820,13 +850,23 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.FormulaDependencyView.dependentFormulaLocation: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
        else if (v.equals(_dependentFormulaLocation) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.FormulaDependencyView.dependentFormulaLocation' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENTFORMULALOCATION._Mask);
           __Nulls.andNot(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENTFORMULALOCATION._Mask);
        _dependentFormulaLocation = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+   /**
+    * Being invariant, the field dependentFormulaLocation doesn't have a public setter. To support deserialization however, 
+    * we may need to set that field after a create/deserialization and before any write. The init methods allows
+    * to do so.
+   */
+   public void initDependentFormulaLocation(String v) throws Exception
+     {
+       setDependentFormulaLocation(v);
      }
 
 
@@ -923,7 +963,7 @@ This is the setter for:<BR>
     void setDependentReferencedColumns(List<String> v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+       if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
         throw new Exception("Cannot set field 'tilda.data.TILDA.FormulaDependencyView.dependentReferencedColumns' that is invariant, or part of a read-only or pre-existing WORM object.");
        if (v == null  || v.isEmpty() == true)
         setDependentReferencedColumnsNull();
@@ -957,7 +997,7 @@ This is the setter for:<BR>
         }
        else if (pos >= _dependentReferencedColumns.size() || _dependentReferencedColumns.get(pos).equals(v) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.FormulaDependencyView.dependentReferencedColumns' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENTREFERENCEDCOLUMNS._Mask);
           __Nulls.andNot(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENTREFERENCEDCOLUMNS._Mask);

@@ -188,7 +188,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   Long _refnum=null;;
+   Long _refnum=null;
    protected long __Saved_refnum;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -231,9 +231,9 @@ This is the setter for:<BR>
    protected void setRefnum(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _refnum)
+       if (__Init == InitMode.CREATE || _refnum == null || v != _refnum)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.JobPartMessage.refnum' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__JOBPARTMESSAGE_Factory.COLS.REFNUM._Mask);
           __Nulls.andNot(TILDA__JOBPARTMESSAGE_Factory.COLS.REFNUM._Mask);
@@ -266,7 +266,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("jobRefnum")
-   Long _jobRefnum=null;;
+   Long _jobRefnum=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -308,7 +308,7 @@ This is the setter for:<BR>
    public void setJobRefnum(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _jobRefnum)
+       if (__Init == InitMode.CREATE || _jobRefnum == null || v != _jobRefnum)
         {
           __Changes.or(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBREFNUM._Mask);
           __Nulls.andNot(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBREFNUM._Mask);
@@ -361,7 +361,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("jobPartRefnum")
-   Long _jobPartRefnum=null;;
+   Long _jobPartRefnum=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -423,7 +423,7 @@ This is the setter for:<BR>
    public void setJobPartRefnum(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _jobPartRefnum)
+       if (__Init == InitMode.CREATE || _jobPartRefnum == null || v != _jobPartRefnum)
         {
           __Changes.or(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask);
           __Nulls.andNot(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask);
@@ -504,7 +504,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("notify")
-   Boolean _notify=null;;
+   Boolean _notify=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -546,7 +546,7 @@ This is the setter for:<BR>
    public void setNotify(boolean v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _notify)
+       if (__Init == InitMode.CREATE || _notify == null || v != _notify)
         {
           __Changes.or(TILDA__JOBPARTMESSAGE_Factory.COLS.NOTIFY._Mask);
           __Nulls.andNot(TILDA__JOBPARTMESSAGE_Factory.COLS.NOTIFY._Mask);
@@ -600,7 +600,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("msg")
-   String _msg=null;;
+   String _msg=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -708,7 +708,6 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   public String  Str_created;
    transient ZonedDateTime _created = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -769,7 +768,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.JobPartMessage.created to null: it's not nullable.");
        else if (v.equals(_created) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.JobPartMessage.created' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__JOBPARTMESSAGE_Factory.COLS.CREATED._Mask);
           __Nulls.andNot(TILDA__JOBPARTMESSAGE_Factory.COLS.CREATED._Mask);
@@ -922,7 +921,6 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   public String  Str_lastUpdated;
    transient ZonedDateTime _lastUpdated = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1127,7 +1125,6 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public String  Str_deleted;
    transient ZonedDateTime _deleted = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1426,23 +1423,27 @@ This is the hasChanged for:<BR>
 
    protected void validateDeserialization() throws Exception
      {
+
        if (_jobRefnum == null)
         throw new Exception("Incoming value for 'tilda.data.TILDA.JobPartMessage.jobRefnum' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBREFNUM._Mask);
-        __Nulls.andNot(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBREFNUM._Mask);
+          __Changes.or(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBREFNUM._Mask);
+          __Nulls.andNot(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBREFNUM._Mask);
+
        if (_jobPartRefnum != null)
         {
           __Changes.or(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask);
           __Nulls.andNot(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask);
         }
+
        if (_notify == null)
         throw new Exception("Incoming value for 'tilda.data.TILDA.JobPartMessage.notify' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__JOBPARTMESSAGE_Factory.COLS.NOTIFY._Mask);
-        __Nulls.andNot(TILDA__JOBPARTMESSAGE_Factory.COLS.NOTIFY._Mask);
+          __Changes.or(TILDA__JOBPARTMESSAGE_Factory.COLS.NOTIFY._Mask);
+          __Nulls.andNot(TILDA__JOBPARTMESSAGE_Factory.COLS.NOTIFY._Mask);
+
        if (TextUtil.isNullOrEmpty(_msg) == true)
         throw new Exception("Incoming value for 'tilda.data.TILDA.JobPartMessage.msg' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__JOBPARTMESSAGE_Factory.COLS.MSG._Mask);
-        __Nulls.andNot(TILDA__JOBPARTMESSAGE_Factory.COLS.MSG._Mask);
+          __Changes.or(TILDA__JOBPARTMESSAGE_Factory.COLS.MSG._Mask);
+          __Nulls.andNot(TILDA__JOBPARTMESSAGE_Factory.COLS.MSG._Mask);
      }
    protected String getTimeStampSignature() throws Exception
      {

@@ -195,7 +195,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("refnum")
-   Long _refnum=null;;
+   Long _refnum=null;
    protected long __Saved_refnum;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -238,15 +238,25 @@ This is the setter for:<BR>
    protected void setRefnum(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _refnum)
+       if (__Init == InitMode.CREATE || _refnum == null || v != _refnum)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Key.refnum' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__KEY_Factory.COLS.REFNUM._Mask);
           __Nulls.andNot(TILDA__KEY_Factory.COLS.REFNUM._Mask);
        _refnum = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+   /**
+    * Being invariant, the field refnum doesn't have a public setter. To support deserialization however, 
+    * we may need to set that field after a create/deserialization and before any write. The init methods allows
+    * to do so.
+   */
+   public void initRefnum(long v) throws Exception
+     {
+       setRefnum(v);
      }
 
 
@@ -274,7 +284,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("name")
-   String _name=null;;
+   String _name=null;
    protected String __Saved_name;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -325,13 +335,23 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.Key.name: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 128.");
        else if (v.equals(_name) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Key.name' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__KEY_Factory.COLS.NAME._Mask);
           __Nulls.andNot(TILDA__KEY_Factory.COLS.NAME._Mask);
        _name = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+   /**
+    * Being invariant, the field name doesn't have a public setter. To support deserialization however, 
+    * we may need to set that field after a create/deserialization and before any write. The init methods allows
+    * to do so.
+   */
+   public void initName(String v) throws Exception
+     {
+       setName(v);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -379,7 +399,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("max")
-   Long _max=null;;
+   Long _max=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -421,7 +441,7 @@ This is the setter for:<BR>
    public void setMax(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _max)
+       if (__Init == InitMode.CREATE || _max == null || v != _max)
         {
           __Changes.or(TILDA__KEY_Factory.COLS.MAX._Mask);
           __Nulls.andNot(TILDA__KEY_Factory.COLS.MAX._Mask);
@@ -474,7 +494,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("count")
-   Integer _count=null;;
+   Integer _count=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -516,7 +536,7 @@ This is the setter for:<BR>
    public void setCount(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _count)
+       if (__Init == InitMode.CREATE || _count == null || v != _count)
         {
           __Changes.or(TILDA__KEY_Factory.COLS.COUNT._Mask);
           __Nulls.andNot(TILDA__KEY_Factory.COLS.COUNT._Mask);
@@ -575,7 +595,6 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   public String  Str_created;
    transient ZonedDateTime _created = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -636,7 +655,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.Key.created to null: it's not nullable.");
        else if (v.equals(_created) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Key.created' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__KEY_Factory.COLS.CREATED._Mask);
           __Nulls.andNot(TILDA__KEY_Factory.COLS.CREATED._Mask);
@@ -815,7 +834,6 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   public String  Str_lastUpdated;
    transient ZonedDateTime _lastUpdated = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1046,7 +1064,6 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public String  Str_deleted;
    transient ZonedDateTime _deleted = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1344,22 +1361,26 @@ This is the hasChanged for:<BR>
 
    protected void validateDeserialization() throws Exception
      {
+
        if (_refnum == null)
         throw new Exception("Incoming value for 'tilda.data.TILDA.Key.refnum' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__KEY_Factory.COLS.REFNUM._Mask);
-        __Nulls.andNot(TILDA__KEY_Factory.COLS.REFNUM._Mask);
+          __Changes.or(TILDA__KEY_Factory.COLS.REFNUM._Mask);
+          __Nulls.andNot(TILDA__KEY_Factory.COLS.REFNUM._Mask);
+
        if (TextUtil.isNullOrEmpty(_name) == true)
         throw new Exception("Incoming value for 'tilda.data.TILDA.Key.name' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__KEY_Factory.COLS.NAME._Mask);
-        __Nulls.andNot(TILDA__KEY_Factory.COLS.NAME._Mask);
+          __Changes.or(TILDA__KEY_Factory.COLS.NAME._Mask);
+          __Nulls.andNot(TILDA__KEY_Factory.COLS.NAME._Mask);
+
        if (_max == null)
         throw new Exception("Incoming value for 'tilda.data.TILDA.Key.max' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__KEY_Factory.COLS.MAX._Mask);
-        __Nulls.andNot(TILDA__KEY_Factory.COLS.MAX._Mask);
+          __Changes.or(TILDA__KEY_Factory.COLS.MAX._Mask);
+          __Nulls.andNot(TILDA__KEY_Factory.COLS.MAX._Mask);
+
        if (_count == null)
         throw new Exception("Incoming value for 'tilda.data.TILDA.Key.count' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__KEY_Factory.COLS.COUNT._Mask);
-        __Nulls.andNot(TILDA__KEY_Factory.COLS.COUNT._Mask);
+          __Changes.or(TILDA__KEY_Factory.COLS.COUNT._Mask);
+          __Nulls.andNot(TILDA__KEY_Factory.COLS.COUNT._Mask);
      }
    protected String getTimeStampSignature() throws Exception
      {
@@ -1571,14 +1592,24 @@ This is the hasChanged for:<BR>
        return true;
      }
 
+   /**
+   * Returns the first satisfied natural identify (i.e., unique indices), or if defined, the PK. by 'satisfied',
+   * we mean an identity whose columns have all been provided (i.e., not null). We prioritize natural identities
+   * over the PK since PKs are typically not stable across systems. For example, one might model a user with a PK
+   * but also an identify over an email address for example. That email address for a given logical user should be
+   * constant across multiple environments (e.g., a dev, staging or prod), where as a PK might be generated based
+   * on dynamic factors that are very likely to be different across systems.
+   */
    protected int getFirstValidLookupBy() throws Exception
      {
-       // Testing if primary key has been set - Id: 0
-       if (_refnum != null)
-        return 0;
+
        // Testing if cols for unique index Name were set - Id: 1
        if (TextUtil.isNullOrEmpty(_name) == false)
         return 1;
+
+       // Testing if primary key has been set - Id: 0
+       if (_refnum != null)
+        return 0;
 
        return SystemValues.EVIL_VALUE;
      }

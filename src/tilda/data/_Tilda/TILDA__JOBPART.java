@@ -276,7 +276,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   Long _refnum=null;;
+   Long _refnum=null;
    protected long __Saved_refnum;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -319,9 +319,9 @@ This is the setter for:<BR>
    protected void setRefnum(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _refnum)
+       if (__Init == InitMode.CREATE || _refnum == null || v != _refnum)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.JobPart.refnum' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__JOBPART_Factory.COLS.REFNUM._Mask);
           __Nulls.andNot(TILDA__JOBPART_Factory.COLS.REFNUM._Mask);
@@ -354,7 +354,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("jobRefnum")
-   Long _jobRefnum=null;;
+   Long _jobRefnum=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -396,7 +396,7 @@ This is the setter for:<BR>
    public void setJobRefnum(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _jobRefnum)
+       if (__Init == InitMode.CREATE || _jobRefnum == null || v != _jobRefnum)
         {
           __Changes.or(TILDA__JOBPART_Factory.COLS.JOBREFNUM._Mask);
           __Nulls.andNot(TILDA__JOBPART_Factory.COLS.JOBREFNUM._Mask);
@@ -450,7 +450,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("name")
-   String _name=null;;
+   String _name=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -553,7 +553,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("type")
-   String _type=null;;
+   String _type=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -707,7 +707,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _dataStartTZ=null;;
+   String _dataStartTZ=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -861,7 +861,9 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("dataStart")
-   public String  Str_dataStart;
+   String  Str_dataStart;
+   public void initDataStart(String v) { Str_dataStart = v; }
+   public String initDataStartVal() { return Str_dataStart; }
    transient ZonedDateTime _dataStart = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1080,7 +1082,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _dataEndTZ=null;;
+   String _dataEndTZ=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1234,7 +1236,9 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("dataEnd")
-   public String  Str_dataEnd;
+   String  Str_dataEnd;
+   public void initDataEnd(String v) { Str_dataEnd = v; }
+   public String initDataEndVal() { return Str_dataEnd; }
    transient ZonedDateTime _dataEnd = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1453,7 +1457,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _startTZ=null;;
+   String _startTZ=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1555,7 +1559,9 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("start")
-   public String  Str_start;
+   String  Str_start;
+   public void initStart(String v) { Str_start = v; }
+   public String initStartVal() { return Str_start; }
    transient ZonedDateTime _start = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1723,7 +1729,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _endTZ=null;;
+   String _endTZ=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1877,7 +1883,9 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("end")
-   public String  Str_end;
+   String  Str_end;
+   public void initEnd(String v) { Str_end = v; }
+   public String initEndVal() { return Str_end; }
    transient ZonedDateTime _end = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2096,7 +2104,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("recordsCount")
-   Integer _recordsCount=null;;
+   Integer _recordsCount=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2158,7 +2166,7 @@ This is the setter for:<BR>
    public void setRecordsCount(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _recordsCount)
+       if (__Init == InitMode.CREATE || _recordsCount == null || v != _recordsCount)
         {
           __Changes.or(TILDA__JOBPART_Factory.COLS.RECORDSCOUNT._Mask);
           __Nulls.andNot(TILDA__JOBPART_Factory.COLS.RECORDSCOUNT._Mask);
@@ -2239,7 +2247,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("status")
-   Boolean _status=null;;
+   Boolean _status=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2301,7 +2309,7 @@ This is the setter for:<BR>
    public void setStatus(boolean v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _status)
+       if (__Init == InitMode.CREATE || _status == null || v != _status)
         {
           __Changes.or(TILDA__JOBPART_Factory.COLS.STATUS._Mask);
           __Nulls.andNot(TILDA__JOBPART_Factory.COLS.STATUS._Mask);
@@ -2388,7 +2396,6 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   public String  Str_created;
    transient ZonedDateTime _created = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2449,7 +2456,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.JobPart.created to null: it's not nullable.");
        else if (v.equals(_created) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.JobPart.created' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__JOBPART_Factory.COLS.CREATED._Mask);
           __Nulls.andNot(TILDA__JOBPART_Factory.COLS.CREATED._Mask);
@@ -2602,7 +2609,6 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   public String  Str_lastUpdated;
    transient ZonedDateTime _lastUpdated = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2807,7 +2813,6 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public String  Str_deleted;
    transient ZonedDateTime _deleted = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3115,19 +3120,23 @@ This is the hasChanged for:<BR>
 
    protected void validateDeserialization() throws Exception
      {
+
        if (_jobRefnum == null)
         throw new Exception("Incoming value for 'tilda.data.TILDA.JobPart.jobRefnum' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__JOBPART_Factory.COLS.JOBREFNUM._Mask);
-        __Nulls.andNot(TILDA__JOBPART_Factory.COLS.JOBREFNUM._Mask);
+          __Changes.or(TILDA__JOBPART_Factory.COLS.JOBREFNUM._Mask);
+          __Nulls.andNot(TILDA__JOBPART_Factory.COLS.JOBREFNUM._Mask);
+
        if (TextUtil.isNullOrEmpty(_name) == true)
         throw new Exception("Incoming value for 'tilda.data.TILDA.JobPart.name' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__JOBPART_Factory.COLS.NAME._Mask);
-        __Nulls.andNot(TILDA__JOBPART_Factory.COLS.NAME._Mask);
+          __Changes.or(TILDA__JOBPART_Factory.COLS.NAME._Mask);
+          __Nulls.andNot(TILDA__JOBPART_Factory.COLS.NAME._Mask);
+
        if (TextUtil.isNullOrEmpty(_type) == false)
         {
           __Changes.or(TILDA__JOBPART_Factory.COLS.TYPE._Mask);
           __Nulls.andNot(TILDA__JOBPART_Factory.COLS.TYPE._Mask);
         }
+
        if (TextUtil.isNullOrEmpty(Str_dataStart) == false)
         {
           _dataStart = DateTimeUtil.parsefromJSON(Str_dataStart);
@@ -3135,7 +3144,12 @@ This is the hasChanged for:<BR>
            throw new Exception("Incoming value for 'tilda.data.TILDA.JobPart.dataStart' was not in the expected format. Dates should follow the ISO format.\n"+toString());
           __Changes.or(TILDA__JOBPART_Factory.COLS.DATASTART._Mask);
           __Nulls.andNot(TILDA__JOBPART_Factory.COLS.DATASTART._Mask);
+          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(_dataStart.getZone().getId());
+          if (ZI == null)
+           throw new Exception("Cannot set field 'tilda.data.TILDA.JobPart.dataStart' because the timezone value '"+_dataStart.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+          setDataStartTZ(ZI.getId());
         }
+
        if (TextUtil.isNullOrEmpty(Str_dataEnd) == false)
         {
           _dataEnd = DateTimeUtil.parsefromJSON(Str_dataEnd);
@@ -3143,16 +3157,28 @@ This is the hasChanged for:<BR>
            throw new Exception("Incoming value for 'tilda.data.TILDA.JobPart.dataEnd' was not in the expected format. Dates should follow the ISO format.\n"+toString());
           __Changes.or(TILDA__JOBPART_Factory.COLS.DATAEND._Mask);
           __Nulls.andNot(TILDA__JOBPART_Factory.COLS.DATAEND._Mask);
+          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(_dataEnd.getZone().getId());
+          if (ZI == null)
+           throw new Exception("Cannot set field 'tilda.data.TILDA.JobPart.dataEnd' because the timezone value '"+_dataEnd.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+          setDataEndTZ(ZI.getId());
         }
+
        if (TextUtil.isNullOrEmpty(Str_start) == true)
         throw new Exception("Incoming value for 'tilda.data.TILDA.JobPart.start' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__JOBPART_Factory.COLS.START._Mask);
-        __Nulls.andNot(TILDA__JOBPART_Factory.COLS.START._Mask);
+          __Changes.or(TILDA__JOBPART_Factory.COLS.START._Mask);
+          __Nulls.andNot(TILDA__JOBPART_Factory.COLS.START._Mask);
+        {
        _start = DateTimeUtil.parsefromJSON(Str_start);
        if (   _start == null)
         throw new Exception("Incoming value for 'tilda.data.TILDA.JobPart.start' was not in the expected format. Dates should follow the ISO format.\n"+toString());
        __Changes.or(TILDA__JOBPART_Factory.COLS.START._Mask);
        __Nulls.andNot(TILDA__JOBPART_Factory.COLS.START._Mask);
+       tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(_start.getZone().getId());
+       if (ZI == null)
+        throw new Exception("Cannot set field 'tilda.data.TILDA.JobPart.start' because the timezone value '"+_start.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+          setStartTZ(ZI.getId());
+        }
+
        if (TextUtil.isNullOrEmpty(Str_end) == false)
         {
           _end = DateTimeUtil.parsefromJSON(Str_end);
@@ -3160,12 +3186,18 @@ This is the hasChanged for:<BR>
            throw new Exception("Incoming value for 'tilda.data.TILDA.JobPart.end' was not in the expected format. Dates should follow the ISO format.\n"+toString());
           __Changes.or(TILDA__JOBPART_Factory.COLS.END._Mask);
           __Nulls.andNot(TILDA__JOBPART_Factory.COLS.END._Mask);
+          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(_end.getZone().getId());
+          if (ZI == null)
+           throw new Exception("Cannot set field 'tilda.data.TILDA.JobPart.end' because the timezone value '"+_end.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+          setEndTZ(ZI.getId());
         }
+
        if (_recordsCount != null)
         {
           __Changes.or(TILDA__JOBPART_Factory.COLS.RECORDSCOUNT._Mask);
           __Nulls.andNot(TILDA__JOBPART_Factory.COLS.RECORDSCOUNT._Mask);
         }
+
        if (_status != null)
         {
           __Changes.or(TILDA__JOBPART_Factory.COLS.STATUS._Mask);

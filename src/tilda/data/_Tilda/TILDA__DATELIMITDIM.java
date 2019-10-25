@@ -141,7 +141,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("invalidDate")
-   LocalDate _invalidDate=null;;
+   LocalDate _invalidDate=null;
    protected LocalDate __Saved_invalidDate;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -239,7 +239,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("minDate")
-   LocalDate _minDate=null;;
+   LocalDate _minDate=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -336,7 +336,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("maxDate")
-   LocalDate _maxDate=null;;
+   LocalDate _maxDate=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -504,18 +504,21 @@ This is the hasChanged for:<BR>
 
    protected void validateDeserialization() throws Exception
      {
+
        if (_invalidDate == null)
         throw new Exception("Incoming value for 'tilda.data.TILDA.DateLimitDim.invalidDate' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__DATELIMITDIM_Factory.COLS.INVALIDDATE._Mask);
-        __Nulls.andNot(TILDA__DATELIMITDIM_Factory.COLS.INVALIDDATE._Mask);
+          __Changes.or(TILDA__DATELIMITDIM_Factory.COLS.INVALIDDATE._Mask);
+          __Nulls.andNot(TILDA__DATELIMITDIM_Factory.COLS.INVALIDDATE._Mask);
+
        if (_minDate == null)
         throw new Exception("Incoming value for 'tilda.data.TILDA.DateLimitDim.minDate' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__DATELIMITDIM_Factory.COLS.MINDATE._Mask);
-        __Nulls.andNot(TILDA__DATELIMITDIM_Factory.COLS.MINDATE._Mask);
+          __Changes.or(TILDA__DATELIMITDIM_Factory.COLS.MINDATE._Mask);
+          __Nulls.andNot(TILDA__DATELIMITDIM_Factory.COLS.MINDATE._Mask);
+
        if (_maxDate == null)
         throw new Exception("Incoming value for 'tilda.data.TILDA.DateLimitDim.maxDate' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__DATELIMITDIM_Factory.COLS.MAXDATE._Mask);
-        __Nulls.andNot(TILDA__DATELIMITDIM_Factory.COLS.MAXDATE._Mask);
+          __Changes.or(TILDA__DATELIMITDIM_Factory.COLS.MAXDATE._Mask);
+          __Nulls.andNot(TILDA__DATELIMITDIM_Factory.COLS.MAXDATE._Mask);
      }
    protected String getTimeStampSignature() throws Exception
      {
@@ -683,8 +686,17 @@ This is the hasChanged for:<BR>
        return true;
      }
 
+   /**
+   * Returns the first satisfied natural identify (i.e., unique indices), or if defined, the PK. by 'satisfied',
+   * we mean an identity whose columns have all been provided (i.e., not null). We prioritize natural identities
+   * over the PK since PKs are typically not stable across systems. For example, one might model a user with a PK
+   * but also an identify over an email address for example. That email address for a given logical user should be
+   * constant across multiple environments (e.g., a dev, staging or prod), where as a PK might be generated based
+   * on dynamic factors that are very likely to be different across systems.
+   */
    protected int getFirstValidLookupBy() throws Exception
      {
+
        // Testing if cols for unique index InvalidDate were set - Id: 0
        if (_invalidDate != null)
         return 0;

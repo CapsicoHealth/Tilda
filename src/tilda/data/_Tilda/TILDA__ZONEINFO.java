@@ -190,7 +190,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("id")
-   String _id=null;;
+   String _id=null;
    protected String __Saved_id;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -241,13 +241,23 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.ZoneInfo.id: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
        else if (v.equals(_id) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.ZoneInfo.id' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__ZONEINFO_Factory.COLS.ID._Mask);
           __Nulls.andNot(TILDA__ZONEINFO_Factory.COLS.ID._Mask);
        _id = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+   /**
+    * Being invariant, the field id doesn't have a public setter. To support deserialization however, 
+    * we may need to set that field after a create/deserialization and before any write. The init methods allows
+    * to do so.
+   */
+   public void initId(String v) throws Exception
+     {
+       setId(v);
      }
 
 
@@ -275,7 +285,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("value")
-   String _value=null;;
+   String _value=null;
    protected String __Saved_value;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -379,7 +389,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("label")
-   String _label=null;;
+   String _label=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -482,7 +492,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _deactivatedTZ=null;;
+   String _deactivatedTZ=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -636,7 +646,9 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("deactivated")
-   public String  Str_deactivated;
+   String  Str_deactivated;
+   public void initDeactivated(String v) { Str_deactivated = v; }
+   public String initDeactivatedVal() { return Str_deactivated; }
    transient ZonedDateTime _deactivated = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -861,7 +873,6 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   public String  Str_created;
    transient ZonedDateTime _created = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -922,7 +933,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.ZoneInfo.created to null: it's not nullable.");
        else if (v.equals(_created) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.ZoneInfo.created' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__ZONEINFO_Factory.COLS.CREATED._Mask);
           __Nulls.andNot(TILDA__ZONEINFO_Factory.COLS.CREATED._Mask);
@@ -1075,7 +1086,6 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   public String  Str_lastUpdated;
    transient ZonedDateTime _lastUpdated = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1280,7 +1290,6 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public String  Str_deleted;
    transient ZonedDateTime _deleted = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1583,18 +1592,22 @@ This is the hasChanged for:<BR>
 
    protected void validateDeserialization() throws Exception
      {
+
        if (TextUtil.isNullOrEmpty(_id) == true)
         throw new Exception("Incoming value for 'tilda.data.TILDA.ZoneInfo.id' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__ZONEINFO_Factory.COLS.ID._Mask);
-        __Nulls.andNot(TILDA__ZONEINFO_Factory.COLS.ID._Mask);
+          __Changes.or(TILDA__ZONEINFO_Factory.COLS.ID._Mask);
+          __Nulls.andNot(TILDA__ZONEINFO_Factory.COLS.ID._Mask);
+
        if (TextUtil.isNullOrEmpty(_value) == true)
         throw new Exception("Incoming value for 'tilda.data.TILDA.ZoneInfo.value' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__ZONEINFO_Factory.COLS.VALUE._Mask);
-        __Nulls.andNot(TILDA__ZONEINFO_Factory.COLS.VALUE._Mask);
+          __Changes.or(TILDA__ZONEINFO_Factory.COLS.VALUE._Mask);
+          __Nulls.andNot(TILDA__ZONEINFO_Factory.COLS.VALUE._Mask);
+
        if (TextUtil.isNullOrEmpty(_label) == true)
         throw new Exception("Incoming value for 'tilda.data.TILDA.ZoneInfo.label' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__ZONEINFO_Factory.COLS.LABEL._Mask);
-        __Nulls.andNot(TILDA__ZONEINFO_Factory.COLS.LABEL._Mask);
+          __Changes.or(TILDA__ZONEINFO_Factory.COLS.LABEL._Mask);
+          __Nulls.andNot(TILDA__ZONEINFO_Factory.COLS.LABEL._Mask);
+
        if (TextUtil.isNullOrEmpty(Str_deactivated) == false)
         {
           _deactivated = DateTimeUtil.parsefromJSON(Str_deactivated);
@@ -1602,6 +1615,10 @@ This is the hasChanged for:<BR>
            throw new Exception("Incoming value for 'tilda.data.TILDA.ZoneInfo.deactivated' was not in the expected format. Dates should follow the ISO format.\n"+toString());
           __Changes.or(TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask);
           __Nulls.andNot(TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask);
+          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(_deactivated.getZone().getId());
+          if (ZI == null)
+           throw new Exception("Cannot set field 'tilda.data.TILDA.ZoneInfo.deactivated' because the timezone value '"+_deactivated.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+          setDeactivatedTZ(ZI.getId());
         }
      }
    protected String getTimeStampSignature() throws Exception
@@ -1837,17 +1854,28 @@ This is the hasChanged for:<BR>
        return true;
      }
 
+   /**
+   * Returns the first satisfied natural identify (i.e., unique indices), or if defined, the PK. by 'satisfied',
+   * we mean an identity whose columns have all been provided (i.e., not null). We prioritize natural identities
+   * over the PK since PKs are typically not stable across systems. For example, one might model a user with a PK
+   * but also an identify over an email address for example. That email address for a given logical user should be
+   * constant across multiple environments (e.g., a dev, staging or prod), where as a PK might be generated based
+   * on dynamic factors that are very likely to be different across systems.
+   */
    protected int getFirstValidLookupBy() throws Exception
      {
-       // Testing if primary key has been set - Id: 0
-       if (TextUtil.isNullOrEmpty(_id) == false)
-        return 0;
+
        // Testing if cols for unique index Id were set - Id: 1
        if (TextUtil.isNullOrEmpty(_id) == false)
         return 1;
+
        // Testing if cols for unique index Value were set - Id: 2
        if (TextUtil.isNullOrEmpty(_value) == false)
         return 2;
+
+       // Testing if primary key has been set - Id: 0
+       if (TextUtil.isNullOrEmpty(_id) == false)
+        return 0;
 
        return SystemValues.EVIL_VALUE;
      }

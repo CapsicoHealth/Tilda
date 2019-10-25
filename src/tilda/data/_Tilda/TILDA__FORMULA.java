@@ -251,7 +251,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   Long _refnum=null;;
+   Long _refnum=null;
    protected long __Saved_refnum;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -294,9 +294,9 @@ This is the setter for:<BR>
    protected void setRefnum(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _refnum)
+       if (__Init == InitMode.CREATE || _refnum == null || v != _refnum)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Formula.refnum' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__FORMULA_Factory.COLS.REFNUM._Mask);
           __Nulls.andNot(TILDA__FORMULA_Factory.COLS.REFNUM._Mask);
@@ -330,7 +330,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("location")
-   String _location=null;;
+   String _location=null;
    protected String __Saved_location;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -381,13 +381,23 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.Formula.location: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
        else if (v.equals(_location) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Formula.location' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__FORMULA_Factory.COLS.LOCATION._Mask);
           __Nulls.andNot(TILDA__FORMULA_Factory.COLS.LOCATION._Mask);
        _location = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+   /**
+    * Being invariant, the field location doesn't have a public setter. To support deserialization however, 
+    * we may need to set that field after a create/deserialization and before any write. The init methods allows
+    * to do so.
+   */
+   public void initLocation(String v) throws Exception
+     {
+       setLocation(v);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -436,7 +446,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("location2")
-   String _location2=null;;
+   String _location2=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -486,13 +496,23 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.Formula.location2: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
        else if (v.equals(_location2) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Formula.location2' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__FORMULA_Factory.COLS.LOCATION2._Mask);
           __Nulls.andNot(TILDA__FORMULA_Factory.COLS.LOCATION2._Mask);
        _location2 = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+   /**
+    * Being invariant, the field location2 doesn't have a public setter. To support deserialization however, 
+    * we may need to set that field after a create/deserialization and before any write. The init methods allows
+    * to do so.
+   */
+   public void initLocation2(String v) throws Exception
+     {
+       setLocation2(v);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -541,7 +561,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("name")
-   String _name=null;;
+   String _name=null;
    protected String __Saved_name;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -663,7 +683,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("type")
-   String _type=null;;
+   String _type=null;
 /**
 These are the enumerated values for tilda.data.TILDA.Formula.type, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
 
@@ -1200,7 +1220,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("title")
-   String _title=null;;
+   String _title=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1303,7 +1323,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("description")
-   String _description=null;;
+   String _description=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1406,7 +1426,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("formula")
-   String _formula=null;;
+   String _formula=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1561,7 +1581,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("htmlDoc")
-   String _htmlDoc=null;;
+   String _htmlDoc=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1920,7 +1940,6 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   public String  Str_created;
    transient ZonedDateTime _created = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1981,7 +2000,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.Formula.created to null: it's not nullable.");
        else if (v.equals(_created) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Formula.created' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__FORMULA_Factory.COLS.CREATED._Mask);
           __Nulls.andNot(TILDA__FORMULA_Factory.COLS.CREATED._Mask);
@@ -2134,7 +2153,6 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   public String  Str_lastUpdated;
    transient ZonedDateTime _lastUpdated = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2339,7 +2357,6 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public String  Str_deleted;
    transient ZonedDateTime _deleted = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2646,40 +2663,49 @@ This is the hasChanged for:<BR>
 
    protected void validateDeserialization() throws Exception
      {
+
        if (TextUtil.isNullOrEmpty(_location) == true)
         throw new Exception("Incoming value for 'tilda.data.TILDA.Formula.location' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__FORMULA_Factory.COLS.LOCATION._Mask);
-        __Nulls.andNot(TILDA__FORMULA_Factory.COLS.LOCATION._Mask);
+          __Changes.or(TILDA__FORMULA_Factory.COLS.LOCATION._Mask);
+          __Nulls.andNot(TILDA__FORMULA_Factory.COLS.LOCATION._Mask);
+
        if (TextUtil.isNullOrEmpty(_location2) == true)
         throw new Exception("Incoming value for 'tilda.data.TILDA.Formula.location2' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__FORMULA_Factory.COLS.LOCATION2._Mask);
-        __Nulls.andNot(TILDA__FORMULA_Factory.COLS.LOCATION2._Mask);
+          __Changes.or(TILDA__FORMULA_Factory.COLS.LOCATION2._Mask);
+          __Nulls.andNot(TILDA__FORMULA_Factory.COLS.LOCATION2._Mask);
+
        if (TextUtil.isNullOrEmpty(_name) == true)
         throw new Exception("Incoming value for 'tilda.data.TILDA.Formula.name' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__FORMULA_Factory.COLS.NAME._Mask);
-        __Nulls.andNot(TILDA__FORMULA_Factory.COLS.NAME._Mask);
+          __Changes.or(TILDA__FORMULA_Factory.COLS.NAME._Mask);
+          __Nulls.andNot(TILDA__FORMULA_Factory.COLS.NAME._Mask);
+
        if (TextUtil.isNullOrEmpty(_type) == true)
         throw new Exception("Incoming value for 'tilda.data.TILDA.Formula.type' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__FORMULA_Factory.COLS.TYPE._Mask);
-        __Nulls.andNot(TILDA__FORMULA_Factory.COLS.TYPE._Mask);
+          __Changes.or(TILDA__FORMULA_Factory.COLS.TYPE._Mask);
+          __Nulls.andNot(TILDA__FORMULA_Factory.COLS.TYPE._Mask);
+
        if (TextUtil.isNullOrEmpty(_title) == true)
         throw new Exception("Incoming value for 'tilda.data.TILDA.Formula.title' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__FORMULA_Factory.COLS.TITLE._Mask);
-        __Nulls.andNot(TILDA__FORMULA_Factory.COLS.TITLE._Mask);
+          __Changes.or(TILDA__FORMULA_Factory.COLS.TITLE._Mask);
+          __Nulls.andNot(TILDA__FORMULA_Factory.COLS.TITLE._Mask);
+
        if (TextUtil.isNullOrEmpty(_description) == true)
         throw new Exception("Incoming value for 'tilda.data.TILDA.Formula.description' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__FORMULA_Factory.COLS.DESCRIPTION._Mask);
-        __Nulls.andNot(TILDA__FORMULA_Factory.COLS.DESCRIPTION._Mask);
+          __Changes.or(TILDA__FORMULA_Factory.COLS.DESCRIPTION._Mask);
+          __Nulls.andNot(TILDA__FORMULA_Factory.COLS.DESCRIPTION._Mask);
+
        if (TextUtil.isNullOrEmpty(_formula) == false)
         {
           __Changes.or(TILDA__FORMULA_Factory.COLS.FORMULA._Mask);
           __Nulls.andNot(TILDA__FORMULA_Factory.COLS.FORMULA._Mask);
         }
+
        if (TextUtil.isNullOrEmpty(_htmlDoc) == false)
         {
           __Changes.or(TILDA__FORMULA_Factory.COLS.HTMLDOC._Mask);
           __Nulls.andNot(TILDA__FORMULA_Factory.COLS.HTMLDOC._Mask);
         }
+
        if (_referencedColumns != null && _referencedColumns.isEmpty() == false)
         {
           __Changes.or(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask);
@@ -2939,14 +2965,24 @@ This is the hasChanged for:<BR>
        return true;
      }
 
+   /**
+   * Returns the first satisfied natural identify (i.e., unique indices), or if defined, the PK. by 'satisfied',
+   * we mean an identity whose columns have all been provided (i.e., not null). We prioritize natural identities
+   * over the PK since PKs are typically not stable across systems. For example, one might model a user with a PK
+   * but also an identify over an email address for example. That email address for a given logical user should be
+   * constant across multiple environments (e.g., a dev, staging or prod), where as a PK might be generated based
+   * on dynamic factors that are very likely to be different across systems.
+   */
    protected int getFirstValidLookupBy() throws Exception
      {
-       // Testing if primary key has been set - Id: 0
-       if (_refnum != null)
-        return 0;
+
        // Testing if cols for unique index Formula were set - Id: 1
        if (TextUtil.isNullOrEmpty(_location) == false && TextUtil.isNullOrEmpty(_name) == false)
         return 1;
+
+       // Testing if primary key has been set - Id: 0
+       if (_refnum != null)
+        return 0;
 
        return SystemValues.EVIL_VALUE;
      }

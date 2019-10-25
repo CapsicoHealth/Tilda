@@ -165,7 +165,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("type")
-   String _type=null;;
+   String _type=null;
    protected String __Saved_type;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -216,13 +216,23 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.Mapping.type: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 10.");
        else if (v.equals(_type) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Mapping.type' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__MAPPING_Factory.COLS.TYPE._Mask);
           __Nulls.andNot(TILDA__MAPPING_Factory.COLS.TYPE._Mask);
        _type = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+   /**
+    * Being invariant, the field type doesn't have a public setter. To support deserialization however, 
+    * we may need to set that field after a create/deserialization and before any write. The init methods allows
+    * to do so.
+   */
+   public void initType(String v) throws Exception
+     {
+       setType(v);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -271,7 +281,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("src")
-   String _src=null;;
+   String _src=null;
    protected String __Saved_src;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -322,13 +332,23 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.Mapping.src: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 1024.");
        else if (v.equals(_src) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Mapping.src' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__MAPPING_Factory.COLS.SRC._Mask);
           __Nulls.andNot(TILDA__MAPPING_Factory.COLS.SRC._Mask);
        _src = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+   /**
+    * Being invariant, the field src doesn't have a public setter. To support deserialization however, 
+    * we may need to set that field after a create/deserialization and before any write. The init methods allows
+    * to do so.
+   */
+   public void initSrc(String v) throws Exception
+     {
+       setSrc(v);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -377,7 +397,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    @SerializedName("dst")
-   String _dst=null;;
+   String _dst=null;
    protected String __Saved_dst;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -428,13 +448,23 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.Mapping.dst: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 1024.");
        else if (v.equals(_dst) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Mapping.dst' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__MAPPING_Factory.COLS.DST._Mask);
           __Nulls.andNot(TILDA__MAPPING_Factory.COLS.DST._Mask);
        _dst = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+   /**
+    * Being invariant, the field dst doesn't have a public setter. To support deserialization however, 
+    * we may need to set that field after a create/deserialization and before any write. The init methods allows
+    * to do so.
+   */
+   public void initDst(String v) throws Exception
+     {
+       setDst(v);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -488,7 +518,6 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   public String  Str_created;
    transient ZonedDateTime _created = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -549,7 +578,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.Mapping.created to null: it's not nullable.");
        else if (v.equals(_created) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Mapping.created' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__MAPPING_Factory.COLS.CREATED._Mask);
           __Nulls.andNot(TILDA__MAPPING_Factory.COLS.CREATED._Mask);
@@ -702,7 +731,6 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   public String  Str_lastUpdated;
    transient ZonedDateTime _lastUpdated = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -907,7 +935,6 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public String  Str_deleted;
    transient ZonedDateTime _deleted = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1202,18 +1229,21 @@ This is the hasChanged for:<BR>
 
    protected void validateDeserialization() throws Exception
      {
+
        if (TextUtil.isNullOrEmpty(_type) == true)
         throw new Exception("Incoming value for 'tilda.data.TILDA.Mapping.type' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__MAPPING_Factory.COLS.TYPE._Mask);
-        __Nulls.andNot(TILDA__MAPPING_Factory.COLS.TYPE._Mask);
+          __Changes.or(TILDA__MAPPING_Factory.COLS.TYPE._Mask);
+          __Nulls.andNot(TILDA__MAPPING_Factory.COLS.TYPE._Mask);
+
        if (TextUtil.isNullOrEmpty(_src) == true)
         throw new Exception("Incoming value for 'tilda.data.TILDA.Mapping.src' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__MAPPING_Factory.COLS.SRC._Mask);
-        __Nulls.andNot(TILDA__MAPPING_Factory.COLS.SRC._Mask);
+          __Changes.or(TILDA__MAPPING_Factory.COLS.SRC._Mask);
+          __Nulls.andNot(TILDA__MAPPING_Factory.COLS.SRC._Mask);
+
        if (TextUtil.isNullOrEmpty(_dst) == true)
         throw new Exception("Incoming value for 'tilda.data.TILDA.Mapping.dst' was null or empty. It's not nullable in the model.\n"+toString());
-        __Changes.or(TILDA__MAPPING_Factory.COLS.DST._Mask);
-        __Nulls.andNot(TILDA__MAPPING_Factory.COLS.DST._Mask);
+          __Changes.or(TILDA__MAPPING_Factory.COLS.DST._Mask);
+          __Nulls.andNot(TILDA__MAPPING_Factory.COLS.DST._Mask);
      }
    protected String getTimeStampSignature() throws Exception
      {
@@ -1415,8 +1445,17 @@ This is the hasChanged for:<BR>
        return true;
      }
 
+   /**
+   * Returns the first satisfied natural identify (i.e., unique indices), or if defined, the PK. by 'satisfied',
+   * we mean an identity whose columns have all been provided (i.e., not null). We prioritize natural identities
+   * over the PK since PKs are typically not stable across systems. For example, one might model a user with a PK
+   * but also an identify over an email address for example. That email address for a given logical user should be
+   * constant across multiple environments (e.g., a dev, staging or prod), where as a PK might be generated based
+   * on dynamic factors that are very likely to be different across systems.
+   */
    protected int getFirstValidLookupBy() throws Exception
      {
+
        // Testing if cols for unique index TypeSrcDst were set - Id: 0
        if (TextUtil.isNullOrEmpty(_type) == false && TextUtil.isNullOrEmpty(_src) == false && TextUtil.isNullOrEmpty(_dst) == false)
         return 0;
