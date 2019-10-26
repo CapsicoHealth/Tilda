@@ -1200,9 +1200,10 @@ public class TildaData implements CodeGenTildaData
                 else if (C.isCollection() == false && C.getType() == ColumnType.DATETIME)
                   Out.println("       if (TextUtil.isNullOrEmpty(Str_" + C.getName() + ") == true)");
                 else if (C.isCollection() == true)
-                  Out.println("       if (_" + C.getName() + " == null || _" + C.getName() + ".isEmpty() == true)");
+                  Out.println("       if (_" + C.getName() + (C._JsonSchema == null ? "" : "Obj") + " == null || _" + C.getName() + (C._JsonSchema == null ? "" : "Obj") + ".isEmpty() == true)");
                 else
-                  Out.println("       if (_" + C.getName() + " == null)"); // || _" + C.getName() + " == " + C.getType().getDefaultNullValue() + ")");
+                  Out.println("       if (_" + C.getName() + (C._JsonSchema == null ? "" : "Obj") + " == null)"); // || _" + C.getName() + " == " +
+                                                                                                                  // C.getType().getDefaultNullValue() + ")");
 
                 if (C._DefaultCreateValue == null)
                   Out.println("        throw new Exception(\"Incoming value for '" + C.getFullName() + "' was null or empty. It's not nullable in the model.\\n\"+toString());");
@@ -1243,9 +1244,9 @@ public class TildaData implements CodeGenTildaData
                 else if (C.isCollection() == false && C.getType() == ColumnType.DATETIME)
                   Out.println("       if (TextUtil.isNullOrEmpty(Str_" + C.getName() + ") == false)");
                 else if (C.isCollection() == true)
-                  Out.println("       if (_" + C.getName() + " != null && _" + C.getName() + ".isEmpty() == false)");
+                  Out.println("       if (_" + C.getName() + (C._JsonSchema == null ? "" : "Obj") + " != null && _" + C.getName() + (C._JsonSchema == null ? "" : "Obj") + ".isEmpty() == false)");
                 else
-                  Out.println("       if (_" + C.getName() + " != null)");
+                  Out.println("       if (_" + C.getName() + (C._JsonSchema == null ? "" : "Obj") + " != null)");
                 Out.println("        {");
                 validateHousekeeping(Out, C, Mask);
                 Out.println("        }");
@@ -1264,6 +1265,11 @@ public class TildaData implements CodeGenTildaData
       {
         Out.println("          __Changes.or(" + Mask + ");");
         Out.println("          __Nulls.andNot(" + Mask + ");");
+        if (C._JsonSchema != null)
+          {
+            Out.println("          Gson gson = new GsonBuilder().setPrettyPrinting().create();");
+            Out.println("          _" + C.getName() + " = gson.toJson(_" + C.getName() + "Obj, LIST_TYPE_" + C._JsonSchema._TypeName + ");");
+          }
         if (C._Mapper != null)
           {
             if (C._Mapper._Name == ColumnMapperMode.DB)
@@ -1299,7 +1305,7 @@ public class TildaData implements CodeGenTildaData
               }
             if (C.isCollection() == true)
               {
-                Out.println("          for (" + JavaJDBCType.getFieldTypeBase(C) + " i : _" + C.getName()+")");
+                Out.println("          for (" + JavaJDBCType.getFieldTypeBase(C) + " i : _" + C.getName() + ")");
                 Out.println("           {");
               }
             if (C._Mapper._Name != ColumnMapperMode.NONE)
@@ -1346,7 +1352,7 @@ public class TildaData implements CodeGenTildaData
         Out.println("   */");
         Out.println("   protected int getFirstValidLookupBy() throws Exception");
         Out.println("     {");
-        
+
         // If there is a primary key, it comes first (id=0), but we output the check for the PK if it exists, last.
         int LookupId = O._PrimaryKey == null ? -1 : 0;
         if (O._Indices != null)
