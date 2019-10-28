@@ -172,7 +172,7 @@ public class ConnectionPool
                         LOG.info("Initializing Schemas for " + C._Url);
                         for (Schema S : TildaList)
                           {
-                            LOG.debug("  " + S.getFullName());
+                            LOG.debug("  Initializing Schema " + S.getFullName());
                             Method M = Class.forName(tilda.generation.java8.Helper.getSupportClassFullName(S)).getMethod("initSchema", Connection.class);
                             M.invoke(null, C);
                             if (_Schemas.get(S._Name.toUpperCase()) == null)
@@ -191,6 +191,16 @@ public class ConnectionPool
         catch (Throwable T)
           {
             LOG.error("Cannot initialize Tilda\n", T);
+            if (T.getCause() != null)
+              {
+                T = T.getCause();
+                LOG.catching(T);
+                if (T.getCause() != null)
+                  {
+                    T = T.getCause();
+                    LOG.catching(T.getCause());
+                  }
+              }
             throw new Error(T);
           }
         finally

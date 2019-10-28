@@ -1638,11 +1638,14 @@ public class TildaData implements CodeGenTildaData
                 {
                   case JSON:
                     Out.println("_" + C.getName() + Pad + " =                              RS.get" + JavaJDBCType.get(C.getType())._JDBCType + "(++i) ; ");
-                    Out.println(Header + " if (_" + C.getName() + " != null)");
-                    Out.println(Header + "  {");
-                    Out.println(Header + "    " + C._JsonSchema._TypeName + "[] tmp = gson.fromJson(_" + C.getName() + ", " + C._JsonSchema._TypeName + "[].class);");
-                    Out.println(Header + "    _" + C.getName() + "Obj = CollectionUtil.toList(tmp);");
-                    Out.println(Header + "  }");
+                    if (C._JsonSchema != null)
+                      {
+                        Out.println(Header + " if (_" + C.getName() + " != null)");
+                        Out.println(Header + "  {");
+                        Out.println(Header + "    " + C._JsonSchema._TypeName + "[] tmp = gson.fromJson(_" + C.getName() + ", " + C._JsonSchema._TypeName + "[].class);");
+                        Out.println(Header + "    _" + C.getName() + "Obj = CollectionUtil.toList(tmp);");
+                        Out.println(Header + "  }");
+                      }
                     break;
                   case UUID:
                     if (C.isCollection() == true)

@@ -23,5 +23,4 @@ public class Type_DatePrimitiveNull extends Type_DatetimePrimitive implements Nu
       {
         super(SchemaName, TableName, ColumnName, Count, Description);
       }
-    
   }
