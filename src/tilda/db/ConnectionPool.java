@@ -414,7 +414,6 @@ public class ConnectionPool
         if (TildaList == null || TildaList.isEmpty() == true)
           throw new Exception("Tilda cannot start as we didn't find the necessary Tilda resources.");
 
-        List<String> Warnings = new ArrayList<String>();
         for (Schema S : TildaList)
           {
             CodeGenSql Sql = C.getSQlCodeGen();
@@ -455,19 +454,7 @@ public class ConnectionPool
             
             for (Object Obj : S._Objects)
               if (Obj != null)
-                MasterFactory.register(S._Package, Obj, Warnings);
-          }
-        if (Warnings.isEmpty() == false)
-          {
-            StringBuilder Str = new StringBuilder();
-            Str.append("\n\n#############################################################################################################################\n");
-            Str.append("There were "+Warnings.size()+" runtime warnings:\n");
-            for (String w : Warnings)
-              Str.append("    - "+w+"\n");
-            Str.append("These errors are typically due to the model having been updated but\n");
-            Str.append("the Gen utility was not run, or the workspace was not refreshed and built.\n");
-            Str.append("#############################################################################################################################\n\n");
-            LOG.warn(Str.toString());
+                MasterFactory.register(S._Package, Obj);
           }
 
         return TildaList;
