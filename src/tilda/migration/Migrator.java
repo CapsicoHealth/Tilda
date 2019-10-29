@@ -363,8 +363,13 @@ public class Migrator
                         // from INT to STRING etc... But they won't catch an internal change of CHAR to VARCHAR not due to
                         // model changes, but to threshold changes.
                         boolean condition2 = Col.isCollection() == false && Col.getType() == ColumnType.STRING
-                        && (CMeta._TypeSql.equals("CHAR") == true && C.getDBStringType(Col._Size) != DBStringType.CHARACTER
-                        || CMeta._TypeSql.equals("VARCHAR") == true && C.getDBStringType(CMeta._Size) == DBStringType.CHARACTER);
+                        // the database type is CHAR, but the Tilda type is not CHAR (i.e., the goal post for what is CHAR Vs VARCHAR changed)
+                        && (  CMeta._TypeSql.equals("CHAR") == true && C.getDBStringType(CMeta._Size) != DBStringType.CHARACTER
+                        // the database type is VARCHAR but the Tilda type is CHAR (i.e., the goal post for what is CHAR Vs VARCHAR changed)
+                           || CMeta._TypeSql.equals("VARCHAR") == true && C.getDBStringType(CMeta._Size) == DBStringType.CHARACTER
+                        // the database type is TEXT but the Tilda type is not TEXT
+                           || CMeta._TypeSql.equals("VARCHAR") == true && CMeta._TypeName.equals("text") == true && C.getDBStringType(CMeta._Size) != DBStringType.TEXT
+                           );
 
                         if (condition1 || condition2)
                           {
@@ -378,8 +383,13 @@ public class Migrator
                         // Else, we could still have a size change and stay within a single STRING DB type
                         else if (!condition2 && Col.isCollection() == false && Col.getType() == ColumnType.STRING)
                           {
-                            DBStringType DBStrType = C.getDBStringType(CMeta._Size);
-                            if (DBStrType != DBStringType.TEXT && CMeta._Size != Col._Size)
+                            // The size-based types don't match
+                            if (   C.getDBStringType(CMeta._Size).equals(C.getDBStringType(Col._Size)) == false
+                            // they match, but within a type, they are different sizes, except for TEXT
+                                ||    C.getDBStringType(CMeta._Size).equals(C.getDBStringType(Col._Size)) == true 
+                                   && CMeta._Size != Col._Size 
+                                   && CMeta._TypeSql.equals("VARCHAR") == false && CMeta._TypeName.equals("text") == false
+                               )
                               {
                                 CAM.addColumnAlterStringSize(CMeta, Col);
                                 NeedsDdlDependencyManagement = true;
