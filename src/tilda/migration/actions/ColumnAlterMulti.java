@@ -86,7 +86,9 @@ public class ColumnAlterMulti extends MigrationAction
     @Override
     public String getDescription()
       {
-        String S = "Alter table "+ this._L.get(0)._Col._ParentObject.getFullName();
+        String MainTable = this._L.isEmpty()==false ? this._L.get(0)._Col._ParentObject.getFullName() : this._LS.get(0)._Col._ParentObject.getFullName();
+        
+        String S = "Alter table "+ MainTable;
         
         for(ColumnAlterType CAT : _L)
           {
@@ -106,6 +108,6 @@ public class ColumnAlterMulti extends MigrationAction
 
     public boolean isEmpty()
       {   
-        return _L.isEmpty();
+        return _L.isEmpty() == true && _LS.isEmpty() == true;
       }
   }

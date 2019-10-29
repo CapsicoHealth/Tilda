@@ -99,22 +99,24 @@ public class PostgreSQL implements DBType
     /**
      * Postgres Cancellation codes, from <A href="https://www.postgresql.org/docs/11/errcodes-appendix.html">https://www.postgresql.org/docs/11/errcodes-appendix.html</A>
      * <P>
-     * <UL><LI><B>57000</B>: operator_intervention.</LI>
-     *     <LI><B>57014</B>: query_canceled.</LI>
-     *     <LI><B>57P01</B>: admin_shutdown.</LI>
-     *     <LI><B>57P02</B>: crash_shutdown.</LI>
-     *     <LI><B>57P03</B>: cannot_connect_now.</LI>
-     *     <LI><B>57P04</B>: database_dropped.</LI>
+     * <UL>
+     * <LI><B>57000</B>: operator_intervention.</LI>
+     * <LI><B>57014</B>: query_canceled.</LI>
+     * <LI><B>57P01</B>: admin_shutdown.</LI>
+     * <LI><B>57P02</B>: crash_shutdown.</LI>
+     * <LI><B>57P03</B>: cannot_connect_now.</LI>
+     * <LI><B>57P04</B>: database_dropped.</LI>
      * </UL>
      */
-    protected static final String[] _CANCEL_SQL_STATES = { "57000", "57014", "57P01", "57P02", "57P03", "57P04" };
-    
+    protected static final String[] _CANCEL_SQL_STATES = { "57000", "57014", "57P01", "57P02", "57P03", "57P04"
+    };
+
     @Override
     public boolean isCanceledError(SQLException E)
       {
         return TextUtil.indexOf(E.getSQLState(), _CANCEL_SQL_STATES);
       }
-    
+
     @Override
     public boolean needsSavepoint()
       {
@@ -383,9 +385,9 @@ public class PostgreSQL implements DBType
             : "text";
           }
 
-        return PostgresType.get(T)._SQLType 
-               + (T == ColumnType.NUMERIC && Precision != null ? "("+ Precision + (Scale != null ? "," + Scale : "") + ")" : "") 
-               + (T != ColumnType.JSON && Collection == true ? "[]" : "");
+        return PostgresType.get(T)._SQLType
+        + (T == ColumnType.NUMERIC && Precision != null ? "(" + Precision + (Scale != null ? "," + Scale : "") + ")" : "")
+        + (T != ColumnType.JSON && Collection == true ? "[]" : "");
       }
 
     @Override
@@ -432,67 +434,70 @@ public class PostgreSQL implements DBType
     public boolean alterTableAlterColumnNumericSize(Connection Con, ColumnMeta ColMeta, Column Col)
     throws Exception
       {
-//        // Is precision shrinking?
-//        if (Col._Precision < ColMeta._Precision)
-//          {
-//            String Q = "SELECT length(max(\"" + Col.getName() + "\")::varchar) from " + Col._ParentObject.getShortName();
-//            ScalarRP RP = new ScalarRP();
-//            Con.executeSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, RP);
-//            if (RP.getResult() > Col._Precision+1) //add 1 because varchar conversion includes the decimal in length
-//              {
-//                Q = "select \"" + Col.getName() + "\" || '  (' || length(\"" + Col.getName() + "\"::varchar) || ')' as _x from " + Col._ParentObject.getShortName()
-//                + " group by \"" + Col.getName() + "\""
-//                + " order by length(\"" + Col.getName() + "\"::varchar) desc"
-//                + " limit 10";
-//                StringListRP SLRP = new StringListRP();
-//                Con.executeSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, SLRP);
-//                LOG.error("Column sample:");
-//                for (String s : SLRP.getResult())
-//                  LOG.error("   - " + s);
-//                throw new Exception("Cannot alter Numeric column '" + Col.getFullName() + "' from precision " + ColMeta._Precision + " down to " + Col._Precision + " because there are values with precision lengths up to " + RP.getResult()
-//                + " that would cause errors. You need to manually migrate your database.");
-//              }
-//          }
-        
-//        // Is scale expanding?
-//        if (Col._Scale > ColMeta._Scale)
-//          { 
-//            String Q = "";
-//            
-//            if(ColMeta.isArray() == true)
-//              Q = "SELECT length(max(\"" + Col.getName() + "\"::int)::varchar) from (select unnest(\"" + Col.getName() + "\") as \"" + Col.getName() + "\" from "+ Col._ParentObject.getShortName() +") as t";            
-//            else
-//              Q = "SELECT length((max(\"" + Col.getName() + "\")::int)::varchar) from " + Col._ParentObject.getShortName();
-//            ScalarRP RP = new ScalarRP();
-//            Con.executeSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, RP);
-//            long i = RP.getResult();
-//            if (RP.getResult() > (Col._Precision - Col._Scale)) //digits available for before the decimal
-//              {
-//                Q = "select \"" + Col.getName() + "\" || '  (' || length((max(\"" + Col.getName() + "\")::int)::varchar) || ')' as _x from " + Col._ParentObject.getShortName()
-//                + " group by \"" + Col.getName() + "\""
-//                + " order by length(\"" + Col.getName() + "\"::varchar) desc"
-//                + " limit 10";
-//                StringListRP SLRP = new StringListRP();
-//                Con.executeSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, SLRP);
-//                LOG.error("Column sample:");
-//                for (String s : SLRP.getResult())
-//                  LOG.error("   - " + s);
-//                throw new Exception("Cannot alter Numeric column '" + Col.getFullName() + "' from scale " + Col._Scale + " up to " + ColMeta._Scale + " because there are pre-decimal value lengths up to " + RP.getResult()
-//                + " that would cause errors. You need to manually migrate your database.");
-//              }
-//          }        
+        // // Is precision shrinking?
+        // if (Col._Precision < ColMeta._Precision)
+        // {
+        // String Q = "SELECT length(max(\"" + Col.getName() + "\")::varchar) from " + Col._ParentObject.getShortName();
+        // ScalarRP RP = new ScalarRP();
+        // Con.executeSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, RP);
+        // if (RP.getResult() > Col._Precision+1) //add 1 because varchar conversion includes the decimal in length
+        // {
+        // Q = "select \"" + Col.getName() + "\" || ' (' || length(\"" + Col.getName() + "\"::varchar) || ')' as _x from " + Col._ParentObject.getShortName()
+        // + " group by \"" + Col.getName() + "\""
+        // + " order by length(\"" + Col.getName() + "\"::varchar) desc"
+        // + " limit 10";
+        // StringListRP SLRP = new StringListRP();
+        // Con.executeSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, SLRP);
+        // LOG.error("Column sample:");
+        // for (String s : SLRP.getResult())
+        // LOG.error(" - " + s);
+        // throw new Exception("Cannot alter Numeric column '" + Col.getFullName() + "' from precision " + ColMeta._Precision + " down to " + Col._Precision + " because there are
+        // values with precision lengths up to " + RP.getResult()
+        // + " that would cause errors. You need to manually migrate your database.");
+        // }
+        // }
+
+        // // Is scale expanding?
+        // if (Col._Scale > ColMeta._Scale)
+        // {
+        // String Q = "";
+        //
+        // if(ColMeta.isArray() == true)
+        // Q = "SELECT length(max(\"" + Col.getName() + "\"::int)::varchar) from (select unnest(\"" + Col.getName() + "\") as \"" + Col.getName() + "\" from "+
+        // Col._ParentObject.getShortName() +") as t";
+        // else
+        // Q = "SELECT length((max(\"" + Col.getName() + "\")::int)::varchar) from " + Col._ParentObject.getShortName();
+        // ScalarRP RP = new ScalarRP();
+        // Con.executeSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, RP);
+        // long i = RP.getResult();
+        // if (RP.getResult() > (Col._Precision - Col._Scale)) //digits available for before the decimal
+        // {
+        // Q = "select \"" + Col.getName() + "\" || ' (' || length((max(\"" + Col.getName() + "\")::int)::varchar) || ')' as _x from " + Col._ParentObject.getShortName()
+        // + " group by \"" + Col.getName() + "\""
+        // + " order by length(\"" + Col.getName() + "\"::varchar) desc"
+        // + " limit 10";
+        // StringListRP SLRP = new StringListRP();
+        // Con.executeSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, SLRP);
+        // LOG.error("Column sample:");
+        // for (String s : SLRP.getResult())
+        // LOG.error(" - " + s);
+        // throw new Exception("Cannot alter Numeric column '" + Col.getFullName() + "' from scale " + Col._Scale + " up to " + ColMeta._Scale + " because there are pre-decimal
+        // value lengths up to " + RP.getResult()
+        // + " that would cause errors. You need to manually migrate your database.");
+        // }
+        // }
 
         String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName() + "\" TYPE "
         + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection(), Col._Precision, Col._Scale) + ";";
         return Con.executeDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
-      }    
-    
+      }
+
 
     @Override
     public boolean alterTableAlterColumnType(Connection Con, ColumnMeta ColMeta, Column Col, ZoneInfo_Data defaultZI)
     throws Exception
       {
-        
+
         if (ColMeta._TildaType == ColumnType.STRING)
           {
             if (Col.getType() == ColumnType.DATETIME || Col.getType() == ColumnType.DATE
@@ -559,13 +564,13 @@ public class PostgreSQL implements DBType
       {
         if ((BatchTypeCols == null || BatchTypeCols.size() == 0) && (BatchSizeCols == null || BatchSizeCols.size() == 0))
           LOG.error("There are no columns to process for alterTableAlterColumnMulti. Something has gone wrong when adding columns to the AlterColumnMulti migration action.");
-        
-        String Q = "ALTER TABLE "; 
-        if(BatchTypeCols.size() > 0)
+
+        String Q = "ALTER TABLE ";
+        if (BatchTypeCols.size() > 0)
           Q += BatchTypeCols.get(0)._Col._ParentObject.getShortName();
         else
           Q += BatchSizeCols.get(0)._Col._ParentObject.getShortName();
-        
+
         ArrayList<String> QU = new ArrayList<String>();
 
         // Batch changing ColumnTypes
@@ -614,10 +619,10 @@ public class PostgreSQL implements DBType
                   Q += " USING \"" + CMP._Col.getName() + "\"::" + getColumnType(CMP._Col.getType(), CMP._Col._Size, CMP._Col._Mode, CMP._Col.isCollection(), CMP._Col._Precision, CMP._Col._Scale) + ",";
               }
           }
-        
-        //Batch changing ColumnSize
+
+        // Batch changing ColumnSize
         for (ColMetaColPair CMP : BatchSizeCols)
-          {         
+          {
             DBStringType ColT = getDBStringType(CMP._Col._Size);
             DBStringType ColMetaT = getDBStringType(CMP._CMeta._Size);
             // Is it shrinking?
@@ -648,9 +653,9 @@ public class PostgreSQL implements DBType
             // if (ColMetaT == DBStringType.CHARACTER && ColT != DBStringType.CHARACTER)
             // Using = " USING rtrim(\"" + CMP._Col.getName() + "\")";
             Q += "ALTER COLUMN \"" + CMP._Col.getName() + "\" TYPE "
-            + getColumnType(CMP._Col.getType(), CMP._Col._Size, CMP._Col._Mode, CMP._Col.isCollection(), CMP._Col._Precision, CMP._Col._Scale) + Using + ",";                   
+            + getColumnType(CMP._Col.getType(), CMP._Col._Size, CMP._Col._Mode, CMP._Col.isCollection(), CMP._Col._Precision, CMP._Col._Scale) + Using + ",";
           }
-        
+
         Q = Q.substring(0, Q.length() - 1) + ";";
         LOG.info(Q);
         if (QU.size() > 0)
@@ -663,7 +668,13 @@ public class PostgreSQL implements DBType
             return true;
           }
         else
-          return Con.executeDDL(BatchTypeCols.get(0)._Col._ParentObject._ParentSchema._Name, BatchTypeCols.get(0)._Col._ParentObject.getBaseName(), Q);
+          {
+            String Schema = BatchTypeCols != null && BatchTypeCols.isEmpty() == false ? BatchTypeCols.get(0)._Col._ParentObject._ParentSchema._Name
+                                                                                      : BatchSizeCols.get(0)._Col._ParentObject._ParentSchema._Name;
+            String Table = BatchTypeCols != null && BatchTypeCols.isEmpty() == false ? BatchTypeCols.get(0)._Col._ParentObject.getBaseName()
+                                                                                     : BatchSizeCols.get(0)._Col._ParentObject.getBaseName();
+            return Con.executeDDL(Schema, Table, Q);
+          }
       }
 
     protected static void PrintFunctionIn(StringBuilder Str, String Type)
@@ -1013,7 +1024,7 @@ public class PostgreSQL implements DBType
           {
             case "_int2":
               TildaType = ColumnType.SHORT;
-              break;            
+              break;
             case "_int4":
               TildaType = ColumnType.INTEGER;
               break;
@@ -1028,10 +1039,10 @@ public class PostgreSQL implements DBType
               break;
             case "_numeric":
               TildaType = ColumnType.NUMERIC;
-              break;         
+              break;
             case "_uuid":
               TildaType = ColumnType.UUID;
-              break;                  
+              break;
             case "_bpchar":
               TildaType = ColumnType.CHAR;
               break;
