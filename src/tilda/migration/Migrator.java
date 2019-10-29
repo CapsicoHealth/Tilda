@@ -348,8 +348,6 @@ public class Migrator
                             Actions.add(new ColumnAlterNumericSize(CMeta, Col));
                             NeedsDdlDependencyManagement = true;
                           }
-                        if (Col.getName().equals("referralProviderName") == true)
-                          LOG.debug("xxx");
 
                         boolean condition1 = Col.isCollection() == false
                         && (Col.getType() == ColumnType.BITFIELD && CMeta._TildaType != ColumnType.INTEGER
