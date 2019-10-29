@@ -48,11 +48,11 @@ public class MasterFactory
 
     static class ObjectMetaData
       {
-        protected ObjectMetaData(String PackageName, Object Obj)
+        protected ObjectMetaData(String PackageName, Object Obj, List<String> Warnings)
           throws Exception
           {
             _Obj = Obj;
-            
+
             String FactoryClassName = Helper.getFullBaseClassName(Obj) + "_Factory";
             _FactoryClass = Class.forName(FactoryClassName);
 
@@ -64,9 +64,18 @@ public class MasterFactory
             for (Column C : Obj._Columns)
               if (C != null && C._FCT.isManaged() == false && C._Mode != ColumnMode.CALCULATED)
                 {
-                  Field F = _ColsClass.getDeclaredField(C.getName().toUpperCase());
-                  ColumnDefinition CD = (ColumnDefinition) F.get(null);
-                  _Cols.add(CD);
+                  try
+                    {
+                      Field F = _ColsClass.getDeclaredField(C.getName().toUpperCase());
+                      ColumnDefinition CD = (ColumnDefinition) F.get(null);
+                      _Cols.add(CD);
+                    }
+                  catch (Throwable T)
+                    {
+                      String w = "No generated code for '"+C.getFullName()+"'.";
+                      LOG.warn(w+"\n", T);
+                      Warnings.add(w);
+                    }
                 }
 
             _RunSelectMethodList = _FactoryClass.getMethod("runSelect", Connection.class, SelectQuery.class, Integer.TYPE, Integer.TYPE);
@@ -79,70 +88,71 @@ public class MasterFactory
         public final Method                 _RunSelectMethodList;
         public final Method                 _RunSelectMethodOP;
         public final List<ColumnDefinition> _Cols = new ArrayList<ColumnDefinition>();
-        
+
         public String getColumnDefaultCreateValue(String columnName)
-         {
-           Column Col = _Obj.getColumn(columnName);
-           if (Col != null && Col._DefaultCreateValue != null)
-            return Col._DefaultCreateValue._Value;
-           return null;
-         }
+          {
+            Column Col = _Obj.getColumn(columnName);
+            if (Col != null && Col._DefaultCreateValue != null)
+              return Col._DefaultCreateValue._Value;
+            return null;
+          }
+
         public String getColumnDefaultUpdateValue(String columnName)
           {
             Column Col = _Obj.getColumn(columnName);
             if (Col != null && Col._DefaultUpdateValue != null)
-             return Col._DefaultUpdateValue._Value;
+              return Col._DefaultUpdateValue._Value;
             return null;
           }
-        
+
       }
 
     protected static Map<String, ObjectMetaData> _M = new HashMap<String, ObjectMetaData>();
-        
+
     public static ObjectMetaData getTableObject(String SchemaName, String TableName)
-    {    	  	  
-      if(_M.get(SchemaName.toUpperCase() + "." + TableName) != null)  	
-  	     return _M.get(SchemaName.toUpperCase() + "." + TableName);	
-  	  return null;
-    }
-  
+      {
+        if (_M.get(SchemaName.toUpperCase() + "." + TableName) != null)
+          return _M.get(SchemaName.toUpperCase() + "." + TableName);
+        return null;
+      }
+
     public static String getDefaultCreateValue(String SchemaName, String TableName, String ColumnName)
-    {
-	  ObjectMetaData omd = getTableObject(SchemaName, TableName);
-  	
-  	  String defaultCreateValue = omd.getColumnDefaultCreateValue(ColumnName);
-  	  if(defaultCreateValue != null)
-  	    return defaultCreateValue;
-  	  
-  	  LOG.error("No default create value found for " + SchemaName + "." + TableName + "." + ColumnName);
-  	  return null;    	
-    }
-    
+      {
+        ObjectMetaData omd = getTableObject(SchemaName, TableName);
+
+        String defaultCreateValue = omd.getColumnDefaultCreateValue(ColumnName);
+        if (defaultCreateValue != null)
+          return defaultCreateValue;
+
+        LOG.error("No default create value found for " + SchemaName + "." + TableName + "." + ColumnName);
+        return null;
+      }
+
     public static String getDefaultUpdateValue(String SchemaName, String TableName, String ColumnName)
-    {
-	  ObjectMetaData omd = getTableObject(SchemaName, TableName);
-	
-	  String defaultUpdateValue = omd.getColumnDefaultUpdateValue(ColumnName);
-	  if(defaultUpdateValue != null)
-	    return defaultUpdateValue;
-	  
-	  LOG.error("No default update value found for " + SchemaName + "." + TableName + "." + ColumnName);
-	  return null;    	
-    }
-  
-  
-    public static void register(String PackageName, Object Obj)
+      {
+        ObjectMetaData omd = getTableObject(SchemaName, TableName);
+
+        String defaultUpdateValue = omd.getColumnDefaultUpdateValue(ColumnName);
+        if (defaultUpdateValue != null)
+          return defaultUpdateValue;
+
+        LOG.error("No default update value found for " + SchemaName + "." + TableName + "." + ColumnName);
+        return null;
+      }
+
+
+    public static void register(String PackageName, Object Obj, List<String> warnings)
     throws Exception
       {
         String Key = Obj.getShortName();
-        if (_M.get(Key) != null) 
+        if (_M.get(Key) != null)
           {
             throw new Exception("Trying to register Tilda Object " + Key + " more than once!");
           }
 
         if (Obj._Mode != ObjectMode.DB_ONLY)
           {
-            ObjectMetaData OMD = new ObjectMetaData(PackageName, Obj);
+            ObjectMetaData OMD = new ObjectMetaData(PackageName, Obj, warnings);
             _M.put(Key, OMD);
           }
       }
