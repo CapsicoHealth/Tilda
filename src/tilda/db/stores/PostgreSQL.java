@@ -652,7 +652,7 @@ public class PostgreSQL implements DBType
             // Looks like we do not need the rtrim call. It slows things down and doesn't actually do anything in Postgres
             // if (ColMetaT == DBStringType.CHARACTER && ColT != DBStringType.CHARACTER)
             // Using = " USING rtrim(\"" + CMP._Col.getName() + "\")";
-            Q += "ALTER COLUMN \"" + CMP._Col.getName() + "\" TYPE "
+            Q += " ALTER COLUMN \"" + CMP._Col.getName() + "\" TYPE "
             + getColumnType(CMP._Col.getType(), CMP._Col._Size, CMP._Col._Mode, CMP._Col.isCollection(), CMP._Col._Precision, CMP._Col._Scale) + Using + ",";
           }
 
