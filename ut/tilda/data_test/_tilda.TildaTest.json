@@ -180,7 +180,7 @@
          ,{ "sameas": "Testing.a2"       , "name":"a2Min"  , "aggregate":"MIN"    , "filter":"a2 is not null" , "coalesce":"AAA" }
          ,{ "sameas": "Testing.a2"       , "name":"a2Max"  , "aggregate":"MAX"    , "filter":"a2 is not null" , "coalesce":"ZZZ"}
          ,{ "sameas": "Testing.a9"       ,                   "aggregate":"ARRAY"  , "orderBy":["lastUpdated asc"] }
-         ,{ "sameas": "Testing.a9c"      ,                   "aggregate":"ARRAY"}
+         ,{ "sameas": "Testing.a9c"      ,                   "aggregate":"ARRAY"  }
          ,{ "sameas": "Testing.a6"       , "name":"a6First", "aggregate":"FIRST"  , "orderBy":["lastUpdated asc"] }
          ,{ "sameas": "Testing.a6"       , "name":"a6Last" , "aggregate":"LAST"   , "orderBy":["lastUpdated asc"] }
         ]
