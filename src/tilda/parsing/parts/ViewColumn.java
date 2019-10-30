@@ -187,9 +187,13 @@ public class ViewColumn
           {
             if ((_Aggregate = AggregateType.parse(_AggregateStr)) == null)
               return PS.AddError("View Column '" + getFullName() + "' defined an invalid 'aggregate' '" + _AggregateStr + "'.");
-            // if (_SameAsObj != null && _SameAsObj._Type == ColumnType.DATETIME)
-            // return PS.AddError("View Column '" + getFullName() + "' defined an aggregate on DATETIME column '" + _SameAsObj.getName() + "' which is not supported as timezone
-            // information would not be retrievable.");
+            if (_SameAsObj != null && _SameAsObj._Type == ColumnType.DATETIME && _Aggregate.isZonedDateTimeCompatible() == false)
+              {
+                StringBuilder Str = new StringBuilder("View Column '" + getFullName() + "' declares a nonsensical " + _Aggregate.name() + " aggregate over type " + ColumnType.DATETIME.name() + ".");
+                if (_Aggregate == AggregateType.MIN || _Aggregate == AggregateType.MAX)
+                  Str.append(" Because of the way ZonedDateTimes are represented in the database as two columns, Min/Max are not supported as aggregates but you can use First/Last with orderBy instead to the same effect.");
+                PS.AddError(Str.toString());
+              }
           }
         if (_Aggregate == null)
           {
@@ -222,14 +226,14 @@ public class ViewColumn
         if (_TypeStr != null)
           {
             _Type = new TypeDef(_TypeStr, _Size, _Precision, _Scale);
-            _Type.Validate(PS, "View Column '"+getFullName()+"'", true, false);
+            _Type.Validate(PS, "View Column '" + getFullName() + "'", true, false);
           }
         // Checking that type information is only present when expression is specified and vice-versa.
         if (TextUtil.isNullOrEmpty(_Expression) == false && _Type == null)
           PS.AddError("View Column '" + getFullName() + "' defined an 'expression' but neglected to specify type information and optionally, size.");
         if (TextUtil.isNullOrEmpty(_Expression) == true && _Type != null)
           PS.AddError("View Column '" + getFullName() + "' defined extra type/size information without an 'expression': type and size are for expressions only.");
-        
+
         return Errs == PS.getErrorCount();
       }
 
@@ -340,15 +344,15 @@ public class ViewColumn
       }
 
     /**
-     * A view column of type 'DATETIME' needs an extra timezone support field if the underlying column needs one, and the 
+     * A view column of type 'DATETIME' needs an extra timezone support field if the underlying column needs one, and the
      * view column is not an aggregate, and does not have an expression unless it's of type datetime.
+     * 
      * @return
      */
     public boolean needsTZ()
       {
         return (_SameAsObj == null || _SameAsObj.needsTZ() == true)
-            && _Aggregate == null
-            && (TextUtil.isNullOrEmpty(_Expression) == true || _Type._Type == ColumnType.DATETIME)
-            ;
+        && (_Aggregate == null || _Aggregate.isZonedDateTimeCompatible() == true)
+        && (TextUtil.isNullOrEmpty(_Expression) == true || _Type._Type == ColumnType.DATETIME);
       }
   }
