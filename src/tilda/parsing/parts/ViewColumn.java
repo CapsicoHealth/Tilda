@@ -187,12 +187,12 @@ public class ViewColumn
           {
             if ((_Aggregate = AggregateType.parse(_AggregateStr)) == null)
               return PS.AddError("View Column '" + getFullName() + "' defined an invalid 'aggregate' '" + _AggregateStr + "'.");
-            if (_SameAsObj != null && _SameAsObj._Type == ColumnType.DATETIME && _Aggregate.isZonedDateTimeCompatible() == false)
+
+            if (_SameAsObj != null)
               {
-                StringBuilder Str = new StringBuilder("View Column '" + getFullName() + "' declares a nonsensical " + _Aggregate.name() + " aggregate over type " + ColumnType.DATETIME.name() + ".");
-                if (_Aggregate == AggregateType.MIN || _Aggregate == AggregateType.MAX)
-                  Str.append(" Because of the way ZonedDateTimes are represented in the database as two columns, Min/Max are not supported as aggregates but you can use First/Last with orderBy instead to the same effect.");
-                PS.AddError(Str.toString());
+                String Str = _Aggregate.isCompatible(this);
+                if (Str != null)
+                  PS.AddError(Str.toString());
               }
           }
         if (_Aggregate == null)
