@@ -195,9 +195,10 @@
   ,"description": "A pivoted view of SAT_01 forms"
   ,"columns":[
       { "sameas": "Form.type"    }
+     ,{ "sameas": "Form.fillDate", "joinOnly":true }
      ,{ "sameas": "Form.refnum"  , "name":"testCount"   , "aggregate":"COUNT", "distinct":true }
-     ,{ "sameas": "Form.fillDate", "name":"testFirst"   , "aggregate":"MIN"   }
-     ,{ "sameas": "Form.fillDate", "name":"testLast"    , "aggregate":"LAST"  }
+     ,{ "sameas": "Form.fillDate", "name":"testFirst"   , "aggregate":"FIRST", "orderBy":["fillDate"] }
+     ,{ "sameas": "Form.fillDate", "name":"testLast"    , "aggregate":"LAST" , "orderBy":["fillDate"] }
      ,{ "sameas": "User.refnum"  , "name":"userCount"   , "aggregate":"COUNT", "distinct":true }
      ,{ "sameas": "TestAnswer.correct"   , "name":"answerCount"          , "aggregate":"COUNT"   }
      ,{ "sameas": "TestAnswer.correct"   , "name":"answerCountCorrect"   , "aggregate":"COUNT", "filter":"correct = true"   }

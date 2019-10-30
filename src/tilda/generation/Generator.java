@@ -235,6 +235,9 @@ public class Generator
               Out.println();
               DG.MustNotBeModified(Out, G);
               Out.println();
+              if (C.getName().equals("a9") == true)
+                LOG.debug("xxx");
+                
 
               if (C._Mode != ColumnMode.CALCULATED || C._Mode == ColumnMode.CALCULATED && C._MapperDef != null)
                 {
