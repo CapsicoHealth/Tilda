@@ -159,7 +159,7 @@ public class Load
                 String tableName = DO._TableName;
                 String schemaPlusTable = schemaName + "." + tableName;
                 data[i][0] = schemaPlusTable.toUpperCase();
-                data[i][1] = new Boolean(false);
+                data[i][1] = Boolean.FALSE;
               }
 
             // Multi-Tenancy Logic
@@ -173,7 +173,7 @@ public class Load
                 String url = allConnections.get(id);
                 connections[i][0] = id;
                 connections[i][1] = url;
-                connections[i][2] = new Boolean(false);
+                connections[i][2] = Boolean.FALSE;
                 i++;
               }
 

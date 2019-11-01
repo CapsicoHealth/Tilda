@@ -15,8 +15,11 @@ import tilda.enums.*;
 import tilda.performance.*;
 import tilda.utils.*;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.*;
+
+import com.google.gson.*;
+import com.google.gson.annotations.*;
+import java.math.*;
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -168,18 +171,19 @@ This Table contains the following columns:<BLOCKQUOTE>
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__CONNECTION implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
-   protected static final Logger LOG = LogManager.getLogger(TILDA__CONNECTION.class.getName());
+   protected transient static final Logger LOG = LogManager.getLogger(TILDA__CONNECTION.class.getName());
 
-   public static final Class<TILDA__CONNECTION_Factory> FACTORY_CLASS= TILDA__CONNECTION_Factory.class;
-   public static final String TABLENAME = TextUtil.print("TILDA.Connection", "");
+   public transient static final Class<TILDA__CONNECTION_Factory> FACTORY_CLASS= TILDA__CONNECTION_Factory.class;
+   public transient static final String TABLENAME = TextUtil.print("TILDA.Connection", "");
 
    protected TILDA__CONNECTION() { }
 
-   InitMode __Init        = null;
-   private BitSet   __Nulls       = new BitSet(64);
-   BitSet   __Changes     = new BitSet(64);
-   private boolean  __NewlyCreated= false;
-   private int      __LookupId;
+   transient InitMode __Init        = null;
+   transient BitSet   __Nulls       = new BitSet(64);
+   transient BitSet   __Changes     = new BitSet(64);
+   transient boolean  __NewlyCreated= false;
+
+   transient int      __LookupId;
 
    public  boolean hasChanged    () { return __Changes.isEmpty() == false; }
    public  boolean isNewlyCreated() { return __NewlyCreated; }
@@ -219,7 +223,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   boolean _active;
+   @SerializedName("active")
+   Boolean _active=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -239,7 +244,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final boolean getActive()
-      { return _active; }
+      { return _active==null?false:_active; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -281,7 +286,7 @@ This is the setter for:<BR>
    public void setActive(boolean v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _active)
+       if (__Init == InitMode.CREATE || _active == null || v != _active)
         {
           __Changes.or(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask);
           __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask);
@@ -314,7 +319,7 @@ This is the null setter for:<BR>
         return;
        __Changes.or(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask);
        __Nulls.or(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask);
-       _active=false;
+       _active=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -362,7 +367,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _id;
+   @SerializedName("id")
+   String _id=null;
    protected String __Saved_id;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -413,13 +419,23 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.Connection.id: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 15.");
        else if (v.equals(_id) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Connection.id' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__CONNECTION_Factory.COLS.ID._Mask);
           __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.ID._Mask);
        _id = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+   /**
+    * Being invariant, the field id doesn't have a public setter. To support deserialization however, 
+    * we may need to set that field after a create/deserialization and before any write. The init methods allows
+    * to do so.
+   */
+   public void initId(String v) throws Exception
+     {
+       setId(v);
      }
 
 
@@ -446,7 +462,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _driver;
+   @SerializedName("driver")
+   String _driver=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -548,7 +565,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _db;
+   @SerializedName("db")
+   String _db=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -650,7 +668,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _user;
+   @SerializedName("user")
+   String _user=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -752,7 +771,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _pswd;
+   @SerializedName("pswd")
+   String _pswd=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -853,7 +873,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   int _initial= SystemValues.EVIL_VALUE;
+   @SerializedName("initial")
+   Integer _initial=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -873,7 +894,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final int getInitial()
-      { return _initial; }
+      { return _initial==null?0:_initial; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -895,7 +916,7 @@ This is the setter for:<BR>
    public void setInitial(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _initial)
+       if (__Init == InitMode.CREATE || _initial == null || v != _initial)
         {
           __Changes.or(TILDA__CONNECTION_Factory.COLS.INITIAL._Mask);
           __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.INITIAL._Mask);
@@ -947,7 +968,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   int _max= SystemValues.EVIL_VALUE;
+   @SerializedName("max")
+   Integer _max=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -967,7 +989,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final int getMax()
-      { return _max; }
+      { return _max==null?0:_max; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -989,7 +1011,7 @@ This is the setter for:<BR>
    public void setMax(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _max)
+       if (__Init == InitMode.CREATE || _max == null || v != _max)
         {
           __Changes.or(TILDA__CONNECTION_Factory.COLS.MAX._Mask);
           __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.MAX._Mask);
@@ -1042,6 +1064,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
+   @SerializedName("schemas")
    List<String> _schemas= new ArrayList<String>();
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1194,7 +1217,7 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   ZonedDateTime _created;
+   transient ZonedDateTime _created = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1254,7 +1277,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.Connection.created to null: it's not nullable.");
        else if (v.equals(_created) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Connection.created' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__CONNECTION_Factory.COLS.CREATED._Mask);
           __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.CREATED._Mask);
@@ -1407,7 +1430,7 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   ZonedDateTime _lastUpdated;
+   transient ZonedDateTime _lastUpdated = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1611,7 +1634,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   ZonedDateTime _deleted;
+   transient ZonedDateTime _deleted = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1835,7 +1858,130 @@ This is the hasChanged for:<BR>
 /**
  Writes the object to the data store if any changes has occurred since the object was initially
  read from the data store or last written. 
+ If the object was deserialized (i.e., not created via the factory lookup() or create() methods, 
+ then this method assumes a create() and will check that all non-null columns have been provided. If you 
+ need more flexibility for an upsert, use the upsert(Connection, boolean) version of write 
+ which will try a combination of insert/update to get the object to the DB. 
+ Note that if you use write() right after a create, lookup or deserialization initialization, only the
+ template fields (not null, natural identity and/or any field set prior to calling this method) exist 
+  in memory. Call refresh() to force a select and retrieve all the fields for that record.
 */
+   public final boolean write(Connection C) throws Exception
+     {
+       long T0 = System.nanoTime();
+
+       if (__Init == null && __LookupId==0) // Loaded via some other mechamism, e.g., Json or CSV loader
+        {
+          validateDeserialization();
+          initForCreate();
+        }
+
+       if (hasChanged() == false)
+        {
+          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.Connection has not changed: no writing will occur.");
+          QueryDetails.setLastQuery(TILDA__CONNECTION_Factory.SCHEMA_TABLENAME_LABEL, "");
+          return true;
+        }
+
+       if (beforeWrite(C) == false)
+        {
+          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.Connection object's beforeWrite() failed.");
+          QueryDetails.setLastQuery(TILDA__CONNECTION_Factory.SCHEMA_TABLENAME_LABEL, "");
+          return false;
+        }
+
+       String Q = getWriteQuery(C);
+
+       java.sql.PreparedStatement PS = null;
+       int count = 0;
+       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
+       try
+        {
+          PS = C.prepareStatement(Q);
+          int i = populatePreparedStatement(C, PS, AllocatedArrays);
+
+          switch (__LookupId)
+           {
+             case 0:
+               PS.setString    (++i, _id         );
+               break;
+             case -666: if (__Init == InitMode.CREATE) break;
+             default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
+           }
+
+          C.setSavepoint();
+          count = PS.executeUpdate();
+          C.releaseSavepoint(true);
+          if (count == 0)
+           return false;
+        }
+       catch (java.sql.SQLException E)
+        {
+          C.releaseSavepoint(false);
+          return C.handleCatch(E, "updated or inserted");
+        }
+       finally
+        {
+          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__CONNECTION_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+          PS = null;
+          AllocatedArrays = null;
+        }
+
+       stateUpdatePostWrite();
+       return true;
+     }
+
+   protected abstract boolean beforeWrite(Connection C) throws Exception;
+
+   protected void validateDeserialization() throws Exception
+     {
+
+       if (_active != null)
+        {
+          __Changes.or(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask);
+          __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask);
+        }
+
+       if (TextUtil.isNullOrEmpty(_id) == true)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.Connection.id' was null or empty. It's not nullable in the model.\n"+toString());
+          __Changes.or(TILDA__CONNECTION_Factory.COLS.ID._Mask);
+          __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.ID._Mask);
+
+       if (TextUtil.isNullOrEmpty(_driver) == true)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.Connection.driver' was null or empty. It's not nullable in the model.\n"+toString());
+          __Changes.or(TILDA__CONNECTION_Factory.COLS.DRIVER._Mask);
+          __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.DRIVER._Mask);
+
+       if (TextUtil.isNullOrEmpty(_db) == true)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.Connection.db' was null or empty. It's not nullable in the model.\n"+toString());
+          __Changes.or(TILDA__CONNECTION_Factory.COLS.DB._Mask);
+          __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.DB._Mask);
+
+       if (TextUtil.isNullOrEmpty(_user) == true)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.Connection.user' was null or empty. It's not nullable in the model.\n"+toString());
+          __Changes.or(TILDA__CONNECTION_Factory.COLS.USER._Mask);
+          __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.USER._Mask);
+
+       if (TextUtil.isNullOrEmpty(_pswd) == true)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.Connection.pswd' was null or empty. It's not nullable in the model.\n"+toString());
+          __Changes.or(TILDA__CONNECTION_Factory.COLS.PSWD._Mask);
+          __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.PSWD._Mask);
+
+       if (_initial == null)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.Connection.initial' was null or empty. It's not nullable in the model.\n"+toString());
+          __Changes.or(TILDA__CONNECTION_Factory.COLS.INITIAL._Mask);
+          __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.INITIAL._Mask);
+
+       if (_max == null)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.Connection.max' was null or empty. It's not nullable in the model.\n"+toString());
+          __Changes.or(TILDA__CONNECTION_Factory.COLS.MAX._Mask);
+          __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.MAX._Mask);
+
+       if (_schemas == null || _schemas.isEmpty() == true)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.Connection.schemas' was null or empty. It's not nullable in the model.\n"+toString());
+          __Changes.or(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask);
+          __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask);
+     }
    protected String getTimeStampSignature() throws Exception
      {
        StringBuilder S = new StringBuilder(1024);
@@ -2021,65 +2167,72 @@ This is the hasChanged for:<BR>
        __Changes.clear();
        __Nulls.clear();
      }
-   public final boolean write(Connection C) throws Exception
+/**
+ Writes the object to the data store using an upsert approach and assumes the object is either
+ in create or deserialized mode. 
+ The parameter createFirst controls whether the logic should do an insert first and if it fails, then do 
+ an update, or the opposite (update first and if it fails, then an insert). This is necessary for databases
+ without a robust upsert SQL syntax where separate insert/update statements must be issued.
+ The method will figure out based on the fields set which natural identity (a unique index) is applicable for
+ the lookup operation.
+ Note that when you use upsert() (right after a create or deserialization initialization), only the template
+ fields (not null, natural identity and/or any field set prior to calling this method) exist in memory. Call
+ refresh() to force a select and retrieve all the fields for that record.
+*/
+   public final boolean upsert(Connection C, boolean updateFirst) throws Exception
      {
-       long T0 = System.nanoTime();
-       if (hasChanged() == false)
+       boolean OK =    __Init == InitMode.CREATE && __NewlyCreated == true && __LookupId == SystemValues.EVIL_VALUE // Create() through factory
+                    || __Init == null && __LookupId==0 // Loaded via some deserialization mechamism, e.g., Json or CSV loader
+               ;
+       if (OK == false)
+        throw new Exception("Object has not been instanciated via deserialization or the factory create() method.");
+
+       if (__Init == null && __LookupId==0);  // object deserialized
+        validateDeserialization();
+
+       int lookupId = getFirstValidLookupBy();
+       if (lookupId == SystemValues.EVIL_VALUE)
+        throw new Exception("Object has not been intialized with sufficient data for any natural key to be available for a lookup.");
+
+       if (updateFirst == true)
         {
-          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.Connection has not changed: no writing will occur.");
-          QueryDetails.setLastQuery(TILDA__CONNECTION_Factory.SCHEMA_TABLENAME_LABEL, "");
-          return true;
-        }
-
-       if (beforeWrite(C) == false)
-        {
-          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.Connection object's beforeWrite() failed.");
-          QueryDetails.setLastQuery(TILDA__CONNECTION_Factory.SCHEMA_TABLENAME_LABEL, "");
-          return false;
-        }
-
-       String Q = getWriteQuery(C);
-
-       java.sql.PreparedStatement PS = null;
-       int count = 0;
-       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
-       try
-        {
-          PS = C.prepareStatement(Q);
-          int i = populatePreparedStatement(C, PS, AllocatedArrays);
-
-          switch (__LookupId)
+          initForLookup(lookupId);
+          if (write(C) == false)
            {
-             case 0:
-               PS.setString    (++i, _id         );
-               break;
-             case -666: if (__Init == InitMode.CREATE) break;
-             default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
+             initForCreate();
+             return write(C);
            }
-
-          C.setSavepoint();
-          count = PS.executeUpdate();
-          C.releaseSavepoint(true);
-          if (count == 0)
-           return false;
         }
-       catch (java.sql.SQLException E)
+       else
         {
-          C.releaseSavepoint(false);
-          return C.handleCatch(E, "updated or inserted");
-        }
-       finally
-        {
-          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__CONNECTION_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
-          PS = null;
-          AllocatedArrays = null;
+          initForCreate();
+          if (write(C) == false)
+           {
+             initForLookup(lookupId);
+             return write(C);
+           }
         }
 
-       stateUpdatePostWrite();
        return true;
      }
 
-   protected abstract boolean beforeWrite(Connection C) throws Exception;
+   /**
+   * Returns the first satisfied natural identify (i.e., unique indices), or if defined, the PK. by 'satisfied',
+   * we mean an identity whose columns have all been provided (i.e., not null). We prioritize natural identities
+   * over the PK since PKs are typically not stable across systems. For example, one might model a user with a PK
+   * but also an identify over an email address for example. That email address for a given logical user should be
+   * constant across multiple environments (e.g., a dev, staging or prod), where as a PK might be generated based
+   * on dynamic factors that are very likely to be different across systems.
+   */
+   protected int getFirstValidLookupBy() throws Exception
+     {
+
+       // Testing if primary key has been set - Id: 0
+       if (TextUtil.isNullOrEmpty(_id) == false)
+        return 0;
+
+       return SystemValues.EVIL_VALUE;
+     }
 
 
 

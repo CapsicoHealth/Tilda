@@ -15,8 +15,11 @@ import tilda.enums.*;
 import tilda.performance.*;
 import tilda.utils.*;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.*;
+
+import com.google.gson.*;
+import com.google.gson.annotations.*;
+import java.math.*;
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -171,18 +174,19 @@ This Table contains the following columns:<BLOCKQUOTE>
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__REFILLPERF implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
-   protected static final Logger LOG = LogManager.getLogger(TILDA__REFILLPERF.class.getName());
+   protected transient static final Logger LOG = LogManager.getLogger(TILDA__REFILLPERF.class.getName());
 
-   public static final Class<TILDA__REFILLPERF_Factory> FACTORY_CLASS= TILDA__REFILLPERF_Factory.class;
-   public static final String TABLENAME = TextUtil.print("TILDA.RefillPerf", "");
+   public transient static final Class<TILDA__REFILLPERF_Factory> FACTORY_CLASS= TILDA__REFILLPERF_Factory.class;
+   public transient static final String TABLENAME = TextUtil.print("TILDA.RefillPerf", "");
 
    protected TILDA__REFILLPERF() { }
 
-   InitMode __Init        = null;
-   private BitSet   __Nulls       = new BitSet(64);
-   BitSet   __Changes     = new BitSet(64);
-   private boolean  __NewlyCreated= false;
-   private int      __LookupId;
+   transient InitMode __Init        = null;
+   transient BitSet   __Nulls       = new BitSet(64);
+   transient BitSet   __Changes     = new BitSet(64);
+   transient boolean  __NewlyCreated= false;
+
+   transient int      __LookupId;
 
    public  boolean hasChanged    () { return __Changes.isEmpty() == false; }
    public  boolean isNewlyCreated() { return __NewlyCreated; }
@@ -223,7 +227,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _schemaName;
+   @SerializedName("schemaName")
+   String _schemaName=null;
    protected String __Saved_schemaName;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -274,13 +279,23 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.RefillPerf.schemaName: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
        else if (v.equals(_schemaName) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.RefillPerf.schemaName' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__REFILLPERF_Factory.COLS.SCHEMANAME._Mask);
           __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.SCHEMANAME._Mask);
        _schemaName = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+   /**
+    * Being invariant, the field schemaName doesn't have a public setter. To support deserialization however, 
+    * we may need to set that field after a create/deserialization and before any write. The init methods allows
+    * to do so.
+   */
+   public void initSchemaName(String v) throws Exception
+     {
+       setSchemaName(v);
      }
 
 
@@ -307,7 +322,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _objectName;
+   @SerializedName("objectName")
+   String _objectName=null;
    protected String __Saved_objectName;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -358,13 +374,23 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.RefillPerf.objectName: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
        else if (v.equals(_objectName) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.RefillPerf.objectName' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__REFILLPERF_Factory.COLS.OBJECTNAME._Mask);
           __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.OBJECTNAME._Mask);
        _objectName = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+   /**
+    * Being invariant, the field objectName doesn't have a public setter. To support deserialization however, 
+    * we may need to set that field after a create/deserialization and before any write. The init methods allows
+    * to do so.
+   */
+   public void initObjectName(String v) throws Exception
+     {
+       setObjectName(v);
      }
 
 
@@ -391,7 +417,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _startPeriodTZ;
+   String _startPeriodTZ=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -441,7 +467,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.RefillPerf.startPeriodTZ: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
        else if (v.equals(_startPeriodTZ) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.RefillPerf.startPeriodTZ' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__REFILLPERF_Factory.COLS.STARTPERIODTZ._Mask);
           __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.STARTPERIODTZ._Mask);
@@ -494,8 +520,12 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   ZonedDateTime _startPeriod;
-   protected ZonedDateTime __Saved_startPeriod;
+   @SerializedName("startPeriod")
+   String  Str_startPeriod;
+   public void initStartPeriod(String v) { Str_startPeriod = v; }
+   public String initStartPeriodVal() { return Str_startPeriod; }
+   transient ZonedDateTime _startPeriod = null;
+   transient ZonedDateTime __Saved_startPeriod;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -541,7 +571,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.RefillPerf.startPeriod to null: it's not nullable.");
        else if (v.equals(_startPeriod) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.RefillPerf.startPeriod' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__REFILLPERF_Factory.COLS.STARTPERIOD._Mask);
           __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.STARTPERIOD._Mask);
@@ -552,6 +582,16 @@ This is the setter for:<BR>
           setStartPeriodTZ(ZI.getId());
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+   /**
+    * Being invariant, the field startPeriod doesn't have a public setter. To support deserialization however, 
+    * we may need to set that field after a create/deserialization and before any write. The init methods allows
+    * to do so.
+   */
+   public void initStartPeriod(ZonedDateTime v) throws Exception
+     {
+       setStartPeriod(v);
      }
 
 
@@ -577,7 +617,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   long _timeCreateMs= SystemValues.EVIL_VALUE;
+   @SerializedName("timeCreateMs")
+   Long _timeCreateMs=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -597,7 +638,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final long getTimeCreateMs()
-      { return _timeCreateMs; }
+      { return _timeCreateMs==null?0l:_timeCreateMs; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -619,7 +660,7 @@ This is the setter for:<BR>
    public void setTimeCreateMs(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _timeCreateMs)
+       if (__Init == InitMode.CREATE || _timeCreateMs == null || v != _timeCreateMs)
         {
           __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMECREATEMS._Mask);
           __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMECREATEMS._Mask);
@@ -671,7 +712,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   long _timeIndexMs= SystemValues.EVIL_VALUE;
+   @SerializedName("timeIndexMs")
+   Long _timeIndexMs=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -691,7 +733,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final long getTimeIndexMs()
-      { return _timeIndexMs; }
+      { return _timeIndexMs==null?0l:_timeIndexMs; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -713,7 +755,7 @@ This is the setter for:<BR>
    public void setTimeIndexMs(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _timeIndexMs)
+       if (__Init == InitMode.CREATE || _timeIndexMs == null || v != _timeIndexMs)
         {
           __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMEINDEXMS._Mask);
           __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMEINDEXMS._Mask);
@@ -765,7 +807,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   long _timeAnalyzeMs= SystemValues.EVIL_VALUE;
+   @SerializedName("timeAnalyzeMs")
+   Long _timeAnalyzeMs=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -785,7 +828,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final long getTimeAnalyzeMs()
-      { return _timeAnalyzeMs; }
+      { return _timeAnalyzeMs==null?0l:_timeAnalyzeMs; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -807,7 +850,7 @@ This is the setter for:<BR>
    public void setTimeAnalyzeMs(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _timeAnalyzeMs)
+       if (__Init == InitMode.CREATE || _timeAnalyzeMs == null || v != _timeAnalyzeMs)
         {
           __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMEANALYZEMS._Mask);
           __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMEANALYZEMS._Mask);
@@ -859,7 +902,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   long _timeTotalMs= SystemValues.EVIL_VALUE;
+   @SerializedName("timeTotalMs")
+   Long _timeTotalMs=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -879,7 +923,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final long getTimeTotalMs()
-      { return _timeTotalMs; }
+      { return _timeTotalMs==null?0l:_timeTotalMs; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -901,7 +945,7 @@ This is the setter for:<BR>
    public void setTimeTotalMs(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _timeTotalMs)
+       if (__Init == InitMode.CREATE || _timeTotalMs == null || v != _timeTotalMs)
         {
           __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMETOTALMS._Mask);
           __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMETOTALMS._Mask);
@@ -953,7 +997,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   long _columnsMs= SystemValues.EVIL_VALUE;
+   @SerializedName("columnsMs")
+   Long _columnsMs=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -973,7 +1018,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final long getColumnsMs()
-      { return _columnsMs; }
+      { return _columnsMs==null?0l:_columnsMs; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -995,7 +1040,7 @@ This is the setter for:<BR>
    public void setColumnsMs(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _columnsMs)
+       if (__Init == InitMode.CREATE || _columnsMs == null || v != _columnsMs)
         {
           __Changes.or(TILDA__REFILLPERF_Factory.COLS.COLUMNSMS._Mask);
           __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.COLUMNSMS._Mask);
@@ -1054,7 +1099,7 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   ZonedDateTime _created;
+   transient ZonedDateTime _created = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1114,7 +1159,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.RefillPerf.created to null: it's not nullable.");
        else if (v.equals(_created) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.RefillPerf.created' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__REFILLPERF_Factory.COLS.CREATED._Mask);
           __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.CREATED._Mask);
@@ -1267,7 +1312,7 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   ZonedDateTime _lastUpdated;
+   transient ZonedDateTime _lastUpdated = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1471,7 +1516,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   ZonedDateTime _deleted;
+   transient ZonedDateTime _deleted = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1692,7 +1737,136 @@ This is the hasChanged for:<BR>
 /**
  Writes the object to the data store if any changes has occurred since the object was initially
  read from the data store or last written. 
+ If the object was deserialized (i.e., not created via the factory lookup() or create() methods, 
+ then this method assumes a create() and will check that all non-null columns have been provided. If you 
+ need more flexibility for an upsert, use the upsert(Connection, boolean) version of write 
+ which will try a combination of insert/update to get the object to the DB. 
+ Note that if you use write() right after a create, lookup or deserialization initialization, only the
+ template fields (not null, natural identity and/or any field set prior to calling this method) exist 
+  in memory. Call refresh() to force a select and retrieve all the fields for that record.
 */
+   public final boolean write(Connection C) throws Exception
+     {
+       long T0 = System.nanoTime();
+
+       if (__Init == null && __LookupId==0) // Loaded via some other mechamism, e.g., Json or CSV loader
+        {
+          validateDeserialization();
+          initForCreate();
+        }
+
+       if (hasChanged() == false)
+        {
+          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.RefillPerf has not changed: no writing will occur.");
+          QueryDetails.setLastQuery(TILDA__REFILLPERF_Factory.SCHEMA_TABLENAME_LABEL, "");
+          return true;
+        }
+
+       if (beforeWrite(C) == false)
+        {
+          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.RefillPerf object's beforeWrite() failed.");
+          QueryDetails.setLastQuery(TILDA__REFILLPERF_Factory.SCHEMA_TABLENAME_LABEL, "");
+          return false;
+        }
+
+       String Q = getWriteQuery(C);
+
+       java.sql.PreparedStatement PS = null;
+       int count = 0;
+       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
+       try
+        {
+          PS = C.prepareStatement(Q);
+          int i = populatePreparedStatement(C, PS, AllocatedArrays);
+
+          switch (__LookupId)
+           {
+             case 0:
+               PS.setString    (++i, _schemaName   );
+               PS.setString    (++i, _objectName   );
+               PS.setTimestamp(++i, new java.sql.Timestamp(_startPeriod.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+               break;
+             case -666: if (__Init == InitMode.CREATE) break;
+             default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
+           }
+
+          C.setSavepoint();
+          count = PS.executeUpdate();
+          C.releaseSavepoint(true);
+          if (count == 0)
+           return false;
+        }
+       catch (java.sql.SQLException E)
+        {
+          C.releaseSavepoint(false);
+          return C.handleCatch(E, "updated or inserted");
+        }
+       finally
+        {
+          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__REFILLPERF_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
+          PS = null;
+        }
+
+       stateUpdatePostWrite();
+       return true;
+     }
+
+   protected abstract boolean beforeWrite(Connection C) throws Exception;
+
+   protected void validateDeserialization() throws Exception
+     {
+
+       if (TextUtil.isNullOrEmpty(_schemaName) == true)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.RefillPerf.schemaName' was null or empty. It's not nullable in the model.\n"+toString());
+          __Changes.or(TILDA__REFILLPERF_Factory.COLS.SCHEMANAME._Mask);
+          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.SCHEMANAME._Mask);
+
+       if (TextUtil.isNullOrEmpty(_objectName) == true)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.RefillPerf.objectName' was null or empty. It's not nullable in the model.\n"+toString());
+          __Changes.or(TILDA__REFILLPERF_Factory.COLS.OBJECTNAME._Mask);
+          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.OBJECTNAME._Mask);
+
+       if (TextUtil.isNullOrEmpty(Str_startPeriod) == true)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.RefillPerf.startPeriod' was null or empty. It's not nullable in the model.\n"+toString());
+          __Changes.or(TILDA__REFILLPERF_Factory.COLS.STARTPERIOD._Mask);
+          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.STARTPERIOD._Mask);
+        {
+       _startPeriod = DateTimeUtil.parsefromJSON(Str_startPeriod);
+       if (   _startPeriod == null)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.RefillPerf.startPeriod' was not in the expected format. Dates should follow the ISO format.\n"+toString());
+       __Changes.or(TILDA__REFILLPERF_Factory.COLS.STARTPERIOD._Mask);
+       __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.STARTPERIOD._Mask);
+       tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(_startPeriod.getZone().getId());
+       if (ZI == null)
+        throw new Exception("Cannot set field 'tilda.data.TILDA.RefillPerf.startPeriod' because the timezone value '"+_startPeriod.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+          setStartPeriodTZ(ZI.getId());
+        }
+
+       if (_timeCreateMs == null)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.RefillPerf.timeCreateMs' was null or empty. It's not nullable in the model.\n"+toString());
+          __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMECREATEMS._Mask);
+          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMECREATEMS._Mask);
+
+       if (_timeIndexMs == null)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.RefillPerf.timeIndexMs' was null or empty. It's not nullable in the model.\n"+toString());
+          __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMEINDEXMS._Mask);
+          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMEINDEXMS._Mask);
+
+       if (_timeAnalyzeMs == null)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.RefillPerf.timeAnalyzeMs' was null or empty. It's not nullable in the model.\n"+toString());
+          __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMEANALYZEMS._Mask);
+          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMEANALYZEMS._Mask);
+
+       if (_timeTotalMs == null)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.RefillPerf.timeTotalMs' was null or empty. It's not nullable in the model.\n"+toString());
+          __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMETOTALMS._Mask);
+          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMETOTALMS._Mask);
+
+       if (_columnsMs == null)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.RefillPerf.columnsMs' was null or empty. It's not nullable in the model.\n"+toString());
+          __Changes.or(TILDA__REFILLPERF_Factory.COLS.COLUMNSMS._Mask);
+          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.COLUMNSMS._Mask);
+     }
    protected String getTimeStampSignature() throws Exception
      {
        StringBuilder S = new StringBuilder(1024);
@@ -1891,66 +2065,72 @@ This is the hasChanged for:<BR>
        __Changes.clear();
        __Nulls.clear();
      }
-   public final boolean write(Connection C) throws Exception
+/**
+ Writes the object to the data store using an upsert approach and assumes the object is either
+ in create or deserialized mode. 
+ The parameter createFirst controls whether the logic should do an insert first and if it fails, then do 
+ an update, or the opposite (update first and if it fails, then an insert). This is necessary for databases
+ without a robust upsert SQL syntax where separate insert/update statements must be issued.
+ The method will figure out based on the fields set which natural identity (a unique index) is applicable for
+ the lookup operation.
+ Note that when you use upsert() (right after a create or deserialization initialization), only the template
+ fields (not null, natural identity and/or any field set prior to calling this method) exist in memory. Call
+ refresh() to force a select and retrieve all the fields for that record.
+*/
+   public final boolean upsert(Connection C, boolean updateFirst) throws Exception
      {
-       long T0 = System.nanoTime();
-       if (hasChanged() == false)
+       boolean OK =    __Init == InitMode.CREATE && __NewlyCreated == true && __LookupId == SystemValues.EVIL_VALUE // Create() through factory
+                    || __Init == null && __LookupId==0 // Loaded via some deserialization mechamism, e.g., Json or CSV loader
+               ;
+       if (OK == false)
+        throw new Exception("Object has not been instanciated via deserialization or the factory create() method.");
+
+       if (__Init == null && __LookupId==0);  // object deserialized
+        validateDeserialization();
+
+       int lookupId = getFirstValidLookupBy();
+       if (lookupId == SystemValues.EVIL_VALUE)
+        throw new Exception("Object has not been intialized with sufficient data for any natural key to be available for a lookup.");
+
+       if (updateFirst == true)
         {
-          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.RefillPerf has not changed: no writing will occur.");
-          QueryDetails.setLastQuery(TILDA__REFILLPERF_Factory.SCHEMA_TABLENAME_LABEL, "");
-          return true;
-        }
-
-       if (beforeWrite(C) == false)
-        {
-          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.RefillPerf object's beforeWrite() failed.");
-          QueryDetails.setLastQuery(TILDA__REFILLPERF_Factory.SCHEMA_TABLENAME_LABEL, "");
-          return false;
-        }
-
-       String Q = getWriteQuery(C);
-
-       java.sql.PreparedStatement PS = null;
-       int count = 0;
-       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
-       try
-        {
-          PS = C.prepareStatement(Q);
-          int i = populatePreparedStatement(C, PS, AllocatedArrays);
-
-          switch (__LookupId)
+          initForLookup(lookupId);
+          if (write(C) == false)
            {
-             case 0:
-               PS.setString    (++i, _schemaName   );
-               PS.setString    (++i, _objectName   );
-               PS.setTimestamp(++i, new java.sql.Timestamp(_startPeriod.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
-               break;
-             case -666: if (__Init == InitMode.CREATE) break;
-             default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
+             initForCreate();
+             return write(C);
            }
-
-          C.setSavepoint();
-          count = PS.executeUpdate();
-          C.releaseSavepoint(true);
-          if (count == 0)
-           return false;
         }
-       catch (java.sql.SQLException E)
+       else
         {
-          C.releaseSavepoint(false);
-          return C.handleCatch(E, "updated or inserted");
-        }
-       finally
-        {
-          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__REFILLPERF_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
-          PS = null;
+          initForCreate();
+          if (write(C) == false)
+           {
+             initForLookup(lookupId);
+             return write(C);
+           }
         }
 
-       stateUpdatePostWrite();
        return true;
      }
 
-   protected abstract boolean beforeWrite(Connection C) throws Exception;
+   /**
+   * Returns the first satisfied natural identify (i.e., unique indices), or if defined, the PK. by 'satisfied',
+   * we mean an identity whose columns have all been provided (i.e., not null). We prioritize natural identities
+   * over the PK since PKs are typically not stable across systems. For example, one might model a user with a PK
+   * but also an identify over an email address for example. That email address for a given logical user should be
+   * constant across multiple environments (e.g., a dev, staging or prod), where as a PK might be generated based
+   * on dynamic factors that are very likely to be different across systems.
+   */
+   protected int getFirstValidLookupBy() throws Exception
+     {
+
+       // Testing if primary key has been set - Id: 0
+       if (TextUtil.isNullOrEmpty(_schemaName) == false && TextUtil.isNullOrEmpty(_objectName) == false && TextUtil.isNullOrEmpty(Str_startPeriod) == false)
+        return 0;
+
+       return SystemValues.EVIL_VALUE;
+     }
 
 
 

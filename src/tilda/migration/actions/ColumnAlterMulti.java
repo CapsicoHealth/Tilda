@@ -93,7 +93,7 @@ public class ColumnAlterMulti extends MigrationAction
         for(ColumnAlterType CAT : _L)
           {
             S += "\n                                                         -"
-            +"Alter Column "+CAT._Col.getName()+" type from "+CAT._CMeta._TypeSql+(CAT._CMeta._TildaType == ColumnType.STRING &&  CAT._CMeta._Size > 0 ? "("+CAT._CMeta._Size+")":"")
+            +" Alter Column "+CAT._Col.getName()+" type from "+CAT._CMeta._TypeSql+(CAT._CMeta._TildaType == ColumnType.STRING &&  CAT._CMeta._Size > 0 ? "("+CAT._CMeta._Size+")":"")
             +" to "+CAT._Col.getType();
           }
         

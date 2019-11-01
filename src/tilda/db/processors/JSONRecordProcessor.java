@@ -8,7 +8,7 @@ import tilda.db.SelectQuery;
 import tilda.db.processors.RecordProcessor;
 import tilda.enums.ColumnType;
 import tilda.types.ColumnDefinition;
-import tilda.utils.JSONUtil;
+import tilda.utils.json.JSONUtil;
 
 public class JSONRecordProcessor implements RecordProcessor
  {

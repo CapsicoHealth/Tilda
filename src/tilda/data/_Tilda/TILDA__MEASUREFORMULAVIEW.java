@@ -13,8 +13,11 @@ import tilda.enums.*;
 import tilda.performance.*;
 import tilda.utils.*;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.*;
+
+import com.google.gson.*;
+import com.google.gson.annotations.*;
+import java.math.*;
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -172,18 +175,19 @@ This View contains the following columns:<BLOCKQUOTE>
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__MEASUREFORMULAVIEW implements tilda.interfaces.ReaderObject
  {
-   protected static final Logger LOG = LogManager.getLogger(TILDA__MEASUREFORMULAVIEW.class.getName());
+   protected transient static final Logger LOG = LogManager.getLogger(TILDA__MEASUREFORMULAVIEW.class.getName());
 
-   public static final Class<TILDA__MEASUREFORMULAVIEW_Factory> FACTORY_CLASS= TILDA__MEASUREFORMULAVIEW_Factory.class;
-   public static final String TABLENAME = TextUtil.print("TILDA.MeasureFormulaView", "");
+   public transient static final Class<TILDA__MEASUREFORMULAVIEW_Factory> FACTORY_CLASS= TILDA__MEASUREFORMULAVIEW_Factory.class;
+   public transient static final String TABLENAME = TextUtil.print("TILDA.MeasureFormulaView", "");
 
    protected TILDA__MEASUREFORMULAVIEW() { }
 
-   InitMode __Init        = null;
-   private BitSet   __Nulls       = new BitSet(64);
-   BitSet   __Changes     = new BitSet(64);
-   private boolean  __NewlyCreated= false;
-   private int      __LookupId;
+   transient InitMode __Init        = null;
+   transient BitSet   __Nulls       = new BitSet(64);
+   transient BitSet   __Changes     = new BitSet(64);
+   transient boolean  __NewlyCreated= false;
+
+   transient int      __LookupId;
 
    public  boolean hasChanged    () { return __Changes.isEmpty() == false; }
    public  boolean isNewlyCreated() { return __NewlyCreated; }
@@ -223,7 +227,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   long _measureRefnum= SystemValues.EVIL_VALUE;
+   @SerializedName("measureRefnum")
+   Long _measureRefnum=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -243,7 +248,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final long getMeasureRefnum()
-      { return _measureRefnum; }
+      { return _measureRefnum==null?0l:_measureRefnum; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -265,15 +270,25 @@ This is the setter for:<BR>
     void setMeasureRefnum(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _measureRefnum)
+       if (__Init == InitMode.CREATE || _measureRefnum == null || v != _measureRefnum)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.MeasureFormulaView.measureRefnum' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.MEASUREREFNUM._Mask);
           __Nulls.andNot(TILDA__MEASUREFORMULAVIEW_Factory.COLS.MEASUREREFNUM._Mask);
        _measureRefnum = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+   /**
+    * Being invariant, the field measureRefnum doesn't have a public setter. To support deserialization however, 
+    * we may need to set that field after a create/deserialization and before any write. The init methods allows
+    * to do so.
+   */
+   public void initMeasureRefnum(long v) throws Exception
+     {
+       setMeasureRefnum(v);
      }
 
 
@@ -300,7 +315,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _measureSchema;
+   @SerializedName("measureSchema")
+   String _measureSchema=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -350,7 +366,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.measureSchema: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
        else if (v.equals(_measureSchema) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.MeasureFormulaView.measureSchema' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.MEASURESCHEMA._Mask);
           __Nulls.andNot(TILDA__MEASUREFORMULAVIEW_Factory.COLS.MEASURESCHEMA._Mask);
@@ -383,7 +399,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _measureName;
+   @SerializedName("measureName")
+   String _measureName=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -433,7 +450,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.measureName: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
        else if (v.equals(_measureName) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.MeasureFormulaView.measureName' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.MEASURENAME._Mask);
           __Nulls.andNot(TILDA__MEASUREFORMULAVIEW_Factory.COLS.MEASURENAME._Mask);
@@ -465,7 +482,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   long _formulaRefnum= SystemValues.EVIL_VALUE;
+   @SerializedName("formulaRefnum")
+   Long _formulaRefnum=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -485,7 +503,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final long getFormulaRefnum()
-      { return _formulaRefnum; }
+      { return _formulaRefnum==null?0l:_formulaRefnum; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -507,15 +525,25 @@ This is the setter for:<BR>
     void setFormulaRefnum(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _formulaRefnum)
+       if (__Init == InitMode.CREATE || _formulaRefnum == null || v != _formulaRefnum)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.MeasureFormulaView.formulaRefnum' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULAREFNUM._Mask);
           __Nulls.andNot(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULAREFNUM._Mask);
        _formulaRefnum = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+   /**
+    * Being invariant, the field formulaRefnum doesn't have a public setter. To support deserialization however, 
+    * we may need to set that field after a create/deserialization and before any write. The init methods allows
+    * to do so.
+   */
+   public void initFormulaRefnum(long v) throws Exception
+     {
+       setFormulaRefnum(v);
      }
 
 
@@ -542,7 +570,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _formulaLocation;
+   @SerializedName("formulaLocation")
+   String _formulaLocation=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -592,13 +621,23 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.formulaLocation: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
        else if (v.equals(_formulaLocation) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.MeasureFormulaView.formulaLocation' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULALOCATION._Mask);
           __Nulls.andNot(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULALOCATION._Mask);
        _formulaLocation = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+   /**
+    * Being invariant, the field formulaLocation doesn't have a public setter. To support deserialization however, 
+    * we may need to set that field after a create/deserialization and before any write. The init methods allows
+    * to do so.
+   */
+   public void initFormulaLocation(String v) throws Exception
+     {
+       setFormulaLocation(v);
      }
 
 
@@ -625,7 +664,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _formulaLocation2;
+   @SerializedName("formulaLocation2")
+   String _formulaLocation2=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -675,13 +715,23 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.formulaLocation2: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
        else if (v.equals(_formulaLocation2) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.MeasureFormulaView.formulaLocation2' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULALOCATION2._Mask);
           __Nulls.andNot(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULALOCATION2._Mask);
        _formulaLocation2 = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+   /**
+    * Being invariant, the field formulaLocation2 doesn't have a public setter. To support deserialization however, 
+    * we may need to set that field after a create/deserialization and before any write. The init methods allows
+    * to do so.
+   */
+   public void initFormulaLocation2(String v) throws Exception
+     {
+       setFormulaLocation2(v);
      }
 
 
@@ -708,7 +758,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _formulaName;
+   @SerializedName("formulaName")
+   String _formulaName=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -758,7 +809,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.formulaName: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
        else if (v.equals(_formulaName) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.MeasureFormulaView.formulaName' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULANAME._Mask);
           __Nulls.andNot(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULANAME._Mask);
@@ -791,7 +842,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _title;
+   @SerializedName("title")
+   String _title=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -841,7 +893,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.title: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 128.");
        else if (v.equals(_title) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.MeasureFormulaView.title' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.TITLE._Mask);
           __Nulls.andNot(TILDA__MEASUREFORMULAVIEW_Factory.COLS.TITLE._Mask);
@@ -874,7 +926,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _description;
+   @SerializedName("description")
+   String _description=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -924,7 +977,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.description: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 32000.");
        else if (v.equals(_description) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.MeasureFormulaView.description' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.DESCRIPTION._Mask);
           __Nulls.andNot(TILDA__MEASUREFORMULAVIEW_Factory.COLS.DESCRIPTION._Mask);
@@ -975,7 +1028,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   String _type;
+   @SerializedName("type")
+   String _type=null;
 /**
 These are the enumerated values for tilda.data.TILDA.MeasureFormulaView.type, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
 
@@ -1273,7 +1327,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.type: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 3.");
        else if (v.equals(_type) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.MeasureFormulaView.type' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.TYPE._Mask);
           __Nulls.andNot(TILDA__MEASUREFORMULAVIEW_Factory.COLS.TYPE._Mask);
@@ -1306,7 +1360,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _formula;
+   @SerializedName("formula")
+   String _formula=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1379,7 +1434,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.formula: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 32000.");
        else if (v.equals(_formula) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.MeasureFormulaView.formula' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULA._Mask);
           __Nulls.andNot(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULA._Mask);

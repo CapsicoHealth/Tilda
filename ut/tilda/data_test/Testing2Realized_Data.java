@@ -32,4 +32,20 @@ public class Testing2Realized_Data extends tilda.data_test._Tilda.TILDA__TESTING
        return true;
      }
 
+  @Override
+  public boolean touch(Connection C)
+  throws Exception
+    {
+      // TODO Auto-generated method stub
+      return false;
+    }
+
+  @Override
+  protected boolean beforeWrite(Connection C)
+  throws Exception
+    {
+      // TODO Auto-generated method stub
+      return false;
+    }
+
  }

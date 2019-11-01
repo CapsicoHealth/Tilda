@@ -231,7 +231,7 @@ public class Migrator
       {
         LOG.info("===> Migrating DB ( Url: " + C.getURL() + " )");
         LOG.info("Applying migration actions.");
-        DDLDependencyManager DdlDepMan = null;
+//        DDLDependencyManager DdlDepMan = null;
         MigrationAction lastAction = null;
         try
           {
@@ -241,32 +241,36 @@ public class Migrator
                   continue;
                 if (S._S != null && TextUtil.findElement(DependencySchemas, S._S._Name, true, 0) != -1)
                  continue;
+                String lastEntityName = null;
                 for (MigrationAction A : S._Actions)
                   {
                     lastAction = A;
-                    LOG.debug("Applying migration: " + lastAction.getDescription());
+                    String currentEntityName = A._SchemaName+"."+A._TableViewName;
+                    LOG.debug("Applying migration: " + A.getDescription());
                     if (A.process(C) == false)
                       throw new Exception("There was an error with the action '" + A.getDescription() + "'.");
-                    if (Migrate.isTesting() == false)
+                    if (Migrate.isTesting() == false && lastEntityName != null && currentEntityName.equals(lastEntityName) == false)
                       C.commit();
-                    if (A.getClass() == DDLDependencyPreManagement.class)
-                      DdlDepMan = ((DDLDependencyPreManagement) A)._DdlDepMan;
-                    else if (A.getClass() == DDLDependencyPostManagement.class)
-                      DdlDepMan = null;
+//                    if (A.getClass() == DDLDependencyPreManagement.class)
+//                      DdlDepMan = ((DDLDependencyPreManagement) A)._DdlDepMan;
+//                    else if (A.getClass() == DDLDependencyPostManagement.class)
+//                      DdlDepMan = null;
+                    lastEntityName = currentEntityName;
                   }
+                C.commit();
               }
           }
         catch (Exception E)
           {
             LOG.error("An exception occurred during migration: " + lastAction.getDescription());
             LOG.catching(E);
-            if (DdlDepMan != null)
-              {
+//            if (DdlDepMan != null)
+//              {
                 C.rollback();
-                LOG.debug("There were dropped dependencies that need to be restored now.");
-                DdlDepMan.restoreDependencies(C);
-                C.commit();
-              }
+//                LOG.debug("There were dropped dependencies that need to be restored now.");
+//                DdlDepMan.restoreDependencies(C);
+//                C.commit();
+//              }
             throw new Exception("Migration failed, and temporarily dropped dependencies were restored");
           }
       }
