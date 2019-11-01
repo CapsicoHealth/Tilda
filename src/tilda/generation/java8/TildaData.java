@@ -1227,13 +1227,22 @@ public class TildaData implements CodeGenTildaData
                 Out.println(ExtraPad + "       __Nulls.andNot(" + Mask + ");");
                 if (C.needsTZ() == true)
                   {
-                    Out.println(ExtraPad + "       tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(_" + C.getName() + ".getZone().getId());");
+                    if (C.isCollection() == true)
+                      {
+                        Out.println(ExtraPad + "       for (int pos = 0; pos < _" + C.getName() + ".size(); ++pos)");
+                        Out.println(ExtraPad + "         {");
+                      }
+                    Out.println(ExtraPad + "       tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(_" + C.getName() + (C.isCollection() == true==true?".get(pos)":"") + ".getZone().getId());");
                     Out.println(ExtraPad + "       if (ZI == null)");
-                    Out.println(ExtraPad + "        throw new Exception(\"Cannot set field '" + C.getFullName() + "' because the timezone value '\"+_" + C.getName() + ".getZone().getId()+\"' is unknown. Make sure it is mapped properly in the ZoneInfo table.\");");
+                    Out.println(ExtraPad + "        throw new Exception(\"Cannot set field '" + C.getFullName() + "' because the timezone value '\"+_" + C.getName() + (C.isCollection() == true==true?".get(pos)":"") + ".getZone().getId()+\"' is unknown. Make sure it is mapped properly in the ZoneInfo table.\");");
                     if (C.isCollection() == true)
                       Out.println("          addTo" + TextUtil.capitalizeFirstCharacter(C.getName()) + "TZ(pos, ZI.getId());");
                     else
                       Out.println("          set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "TZ(ZI.getId());");
+                    if (C.isCollection() == true)
+                      {
+                        Out.println(ExtraPad + "         }");
+                      }
                   }
                 Out.println("        }");
               }

@@ -57,6 +57,7 @@ public enum AggregateType
         switch (this)
           {
             case ARRAY:
+            case ARRAYCAT:
               return T;
             case AVG:
             case DEV:
