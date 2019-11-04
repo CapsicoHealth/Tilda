@@ -729,17 +729,16 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("     {");
         Out.println("       __MAPPINGS.clear();");
         Out.println("       ListResults<" + Helper.getFullAppDataClassName(O) + "> L = lookupWhereAll(C, 0, -1);");
-        Out.println("       boolean mismatch = false;");
+        Out.println("       StringBuilder Str = new StringBuilder();");
         Out.println("       for (" + Helper.getFullAppDataClassName(O) + " obj : L)");
         Out.println("        {");
         if (O.getColumn("group") != null)
           {
             Out.println("          if (TextUtil.findElement(" + Helper.getFullAppDataClassName(O) + "._group_Values, obj.getGroup(), 0, true, 0) == -1)");
             Out.println("           {");
-            Out.println("             if (mismatch == false)");
-            Out.println("              LOG.warn(\"Could not validate against the model.\");");
-            Out.println("             LOG.warn(\"    Invalid group value '\"+obj.getGroup()+\"' in object \"+obj+\".\");");
-            Out.println("             mismatch = true;");
+            Out.println("             if (Str.length() != 0)");
+            Out.println("              Str.append(\", \");");
+            Out.println("             Str.append(obj.getGroup());");
             Out.println("           }");
           }
         Out.print("          __MAPPINGS.put(");
@@ -755,8 +754,8 @@ public class TildaFactory implements CodeGenTildaFactory
             }
         Out.println(", obj);");
         Out.println("        }");
-        Out.println("       if (mismatch == true)");
-        Out.println("        LOG.warn(\"Currently modeled values are: \"+TextUtil.print(" + Helper.getFullAppDataClassName(O) + "._group_Values, 0)+\".\");");
+        Out.println("       if (Str.length() == 0)");
+        Out.println("        LOG.warn(\"Could not validate some mapping group values for "+O.getFullName()+" against the model.\\nInvalid group value(s): \"+Str.toString()+\"\\nCurrently modeled values are: \"+TextUtil.print(" + Helper.getFullAppDataClassName(O) + "._group_Values, 0)+\".\");");
         Out.println("     }");
 
         Out.println("   private static " + Helper.getFullAppDataClassName(O) + " getMapping(" + FuncParams + ")");
