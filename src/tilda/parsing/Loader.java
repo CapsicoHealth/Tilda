@@ -89,12 +89,19 @@ public class Loader
         Schema.ReorderTildaListWithDependencies(TildaList);
 
         // The first schema should be Tilda since it's a dependency to everything.
-        if (TildaList.get(1)._ResourceName.equals(Schema._BASE_TILDA_SCHEMA_RESOURCE) == false)
+        StringBuilder Str = new StringBuilder();
+        if (TildaList.get(0)._ResourceName.equals(Schema._BASE_TILDATMP_SCHEMA_RESOURCE) == false)
+         Str.append("Could not find find the base TildaTmp schema resource " + Schema._BASE_TILDATMP_SCHEMA_RESOURCE+"\n");
+        // The second schema should be Tilda since it's a dependency to everything.
+        if (TildaList.get(0)._ResourceName.equals(Schema._BASE_TILDA_SCHEMA_RESOURCE) == false && TildaList.get(1)._ResourceName.equals(Schema._BASE_TILDA_SCHEMA_RESOURCE) == false)
+         Str.append("Could not find find the base Tilda schema resource " + Schema._BASE_TILDA_SCHEMA_RESOURCE+"\n");
+
+        if (Str.length() != 0)
           {
-            LOG.error("Could not find find the base Tilda schema resource " + Schema._BASE_TILDA_SCHEMA_RESOURCE);
-            LOG.info("Loaded resources are:");
+            Str.append("Loaded resources are:\n");
             for (Schema S : TildaList)
-              LOG.info("    "+S._Name);
+              Str.append("    - "+S._Name+"\n");
+            LOG.error("Error locating all Tilda schema dependencies\n"+Str.toString());
             return null;
           }
         return TildaList;
