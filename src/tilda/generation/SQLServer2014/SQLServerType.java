@@ -24,6 +24,7 @@ public enum SQLServerType
     STRING  ("nvarchar"        , "nvarchar", ColumnType.STRING  ),
     JSON    ("nvarchar(max)"   , null      , ColumnType.JSON    ),
     CHAR    ("character"       , "nvarchar", ColumnType.CHAR    ),
+    SHORT   ("smallint"        , "varchar" , ColumnType.SHORT   ),
     INTEGER ("integer"         , "varchar" , ColumnType.INTEGER ),
     LONG    ("bigint"          , "varchar" , ColumnType.LONG    ),
     FLOAT   ("real"            , "varchar" , ColumnType.FLOAT   ),
@@ -32,7 +33,9 @@ public enum SQLServerType
     DATE    ("date"            , null      , ColumnType.DATE    ),
     DATETIME("datetimeoffset"  , null      , ColumnType.DATETIME),
     BINARY  ("varbinary"       , null      , ColumnType.BINARY  ),
-    BITFIELD("integer"         , null      , ColumnType.BITFIELD);
+    BITFIELD("integer"         , null      , ColumnType.BITFIELD),
+    NUMERIC ("numeric"         , null      , ColumnType.NUMERIC ),
+    GUID    ("guid"            , null      , ColumnType.UUID    );
     /*@formatter:on*/
 
     static {

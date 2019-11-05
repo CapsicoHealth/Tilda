@@ -75,9 +75,9 @@ public class TransactionInfo implements Info
         long TotalNano = getNanoTotal();
         Str.append("<TR style=\"background-color: #EFEFFF;\" valign=\"top\">")
             .append("<TD COLSPAN=\"2\">").append(_Name).append("&nbsp;&nbsp;&nbsp;</TD>")
-            .append("<TD>").append(DurationUtil.PrintDurationMilliSeconds(TotalNano)).append("&nbsp;(").append(NumberFormatUtil.PrintPercentWith2Dec(SuperNano, TotalNano)).append("%)").append("</TD>")
-            .append("<TD>").append(TotalCount).append("&nbsp;(").append(NumberFormatUtil.PrintPercentWith2Dec(SuperCount, TotalCount)).append("%)").append("</TD>")
-            .append("<TD>").append(DurationUtil.PrintPerformancePerSecond(TotalNano, TotalCount)).append("q/s\r\n").append("</TD>")
+            .append("<TD>").append(DurationUtil.printDurationMilliSeconds(TotalNano)).append("&nbsp;(").append(NumberFormatUtil.printPercentWith2Dec(SuperNano, TotalNano)).append("%)").append("</TD>")
+            .append("<TD>").append(TotalCount).append("&nbsp;(").append(NumberFormatUtil.printPercentWith2Dec(SuperCount, TotalCount)).append("%)").append("</TD>")
+            .append("<TD>").append(DurationUtil.printPerformancePerSecond(TotalNano, TotalCount)).append("q/s\r\n").append("</TD>")
             .append("<TD>&nbsp;</TD>")
             .append("</TR>\r\n");
         Str.append("<TR style=\"font-size: 50%;\"><TD colspan=\"6\">&nbsp;</TD></TR>\r\n");

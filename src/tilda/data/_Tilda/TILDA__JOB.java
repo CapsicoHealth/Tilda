@@ -15,8 +15,11 @@ import tilda.enums.*;
 import tilda.performance.*;
 import tilda.utils.*;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.*;
+
+import com.google.gson.*;
+import com.google.gson.annotations.*;
+import java.math.*;
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -218,18 +221,19 @@ This Table contains the following columns:<BLOCKQUOTE>
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__JOB implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
-   protected static final Logger LOG = LogManager.getLogger(TILDA__JOB.class.getName());
+   protected transient static final Logger LOG = LogManager.getLogger(TILDA__JOB.class.getName());
 
-   public static final Class<TILDA__JOB_Factory> FACTORY_CLASS= TILDA__JOB_Factory.class;
-   public static final String TABLENAME = TextUtil.Print("TILDA.Job", "");
+   public transient static final Class<TILDA__JOB_Factory> FACTORY_CLASS= TILDA__JOB_Factory.class;
+   public transient static final String TABLENAME = TextUtil.print("TILDA.Job", "");
 
    protected TILDA__JOB() { }
 
-   InitMode __Init        = null;
-   private BitSet   __Nulls       = new BitSet(64);
-   BitSet   __Changes     = new BitSet(64);
-   private boolean  __NewlyCreated= false;
-   private int      __LookupId;
+   transient InitMode __Init        = null;
+   transient BitSet   __Nulls       = new BitSet(64);
+   transient BitSet   __Changes     = new BitSet(64);
+   transient boolean  __NewlyCreated= false;
+
+   transient int      __LookupId;
 
    public  boolean hasChanged    () { return __Changes.isEmpty() == false; }
    public  boolean isNewlyCreated() { return __NewlyCreated; }
@@ -269,7 +273,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   long _refnum= SystemValues.EVIL_VALUE;
+   Long _refnum=null;
    protected long __Saved_refnum;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -290,7 +294,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final long getRefnum()
-      { return _refnum; }
+      { return _refnum==null?0l:_refnum; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -312,9 +316,9 @@ This is the setter for:<BR>
    protected void setRefnum(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _refnum)
+       if (__Init == InitMode.CREATE || _refnum == null || v != _refnum)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Job.refnum' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__JOB_Factory.COLS.REFNUM._Mask);
           __Nulls.andNot(TILDA__JOB_Factory.COLS.REFNUM._Mask);
@@ -347,7 +351,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _name;
+   @SerializedName("name")
+   String _name=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -394,7 +399,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.Job.name to null: it's not nullable.");
        else if (v.length() > 250)
-        throw new Exception("Cannot set tilda.data.TILDA.Job.name: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 250.");
+        throw new Exception("Cannot set tilda.data.TILDA.Job.name: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 250.");
        else if (v.equals(_name) == false)
         {
           __Changes.or(TILDA__JOB_Factory.COLS.NAME._Mask);
@@ -449,7 +454,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _type;
+   @SerializedName("type")
+   String _type=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -490,7 +496,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isNullType()
+   public final boolean isTypeNull()
      { return __Nulls.intersects(TILDA__JOB_Factory.COLS.TYPE._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -516,10 +522,10 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setNullType();
+          setTypeNull();
         }
        else if (v.length() > 250)
-        throw new Exception("Cannot set tilda.data.TILDA.Job.type: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 250.");
+        throw new Exception("Cannot set tilda.data.TILDA.Job.type: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 250.");
        else if (v.equals(_type) == false)
         {
           __Changes.or(TILDA__JOB_Factory.COLS.TYPE._Mask);
@@ -547,7 +553,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setNullType()
+   public void setTypeNull()
      {
        long T0 = System.nanoTime();
        if (__Nulls.intersects(TILDA__JOB_Factory.COLS.TYPE._Mask) == true) // already NULL
@@ -603,7 +609,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _userId;
+   @SerializedName("userId")
+   String _userId=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -644,7 +651,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isNullUserId()
+   public final boolean isUserIdNull()
      { return __Nulls.intersects(TILDA__JOB_Factory.COLS.USERID._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -670,10 +677,10 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setNullUserId();
+          setUserIdNull();
         }
        else if (v.length() > 250)
-        throw new Exception("Cannot set tilda.data.TILDA.Job.userId: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 250.");
+        throw new Exception("Cannot set tilda.data.TILDA.Job.userId: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 250.");
        else if (v.equals(_userId) == false)
         {
           __Changes.or(TILDA__JOB_Factory.COLS.USERID._Mask);
@@ -701,7 +708,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setNullUserId()
+   public void setUserIdNull()
      {
        long T0 = System.nanoTime();
        if (__Nulls.intersects(TILDA__JOB_Factory.COLS.USERID._Mask) == true) // already NULL
@@ -757,7 +764,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _dataStartTZ;
+   String _dataStartTZ=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -798,7 +805,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isNullDataStartTZ()
+   public final boolean isDataStartTZNull()
      { return __Nulls.intersects(TILDA__JOB_Factory.COLS.DATASTARTTZ._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -824,10 +831,10 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setNullDataStartTZ();
+          setDataStartTZNull();
         }
        else if (v.length() > 5)
-        throw new Exception("Cannot set tilda.data.TILDA.Job.dataStartTZ: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
+        throw new Exception("Cannot set tilda.data.TILDA.Job.dataStartTZ: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
        else if (v.equals(_dataStartTZ) == false)
         {
           __Changes.or(TILDA__JOB_Factory.COLS.DATASTARTTZ._Mask);
@@ -855,7 +862,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setNullDataStartTZ()
+    void setDataStartTZNull()
      {
        long T0 = System.nanoTime();
        if (__Nulls.intersects(TILDA__JOB_Factory.COLS.DATASTARTTZ._Mask) == true) // already NULL
@@ -910,7 +917,11 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   ZonedDateTime _dataStart;
+   @SerializedName("dataStart")
+   String  Str_dataStart;
+   public void initDataStart(String v) { Str_dataStart = v; }
+   public String initDataStartVal() { return Str_dataStart; }
+   transient ZonedDateTime _dataStart = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -949,7 +960,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isNullDataStart()
+   public final boolean isDataStartNull()
      { return __Nulls.intersects(TILDA__JOB_Factory.COLS.DATASTART._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -974,7 +985,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setNullDataStart();
+          setDataStartNull();
         }
        else if (v.equals(_dataStart) == false)
         {
@@ -1006,7 +1017,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setNullDataStart()
+   public void setDataStartNull()
      {
        long T0 = System.nanoTime();
        if (__Nulls.intersects(TILDA__JOB_Factory.COLS.DATASTART._Mask) == true) // already NULL
@@ -1014,7 +1025,7 @@ This is the null setter for:<BR>
        __Changes.or(TILDA__JOB_Factory.COLS.DATASTART._Mask);
        __Nulls.or(TILDA__JOB_Factory.COLS.DATASTART._Mask);
        _dataStart=null;
-       setNullDataStartTZ();
+       setDataStartTZNull();
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -1081,7 +1092,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 */
    public final void setDataStart(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
     {
-      setDataStart(DateTimeUtil.New(year, month, date, hourOfDay, minute, second, millis, z));
+      setDataStart(DateTimeUtil.newTZ(year, month, date, hourOfDay, minute, second, millis, z));
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1128,7 +1139,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _dataEndTZ;
+   String _dataEndTZ=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1169,7 +1180,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isNullDataEndTZ()
+   public final boolean isDataEndTZNull()
      { return __Nulls.intersects(TILDA__JOB_Factory.COLS.DATAENDTZ._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1195,10 +1206,10 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setNullDataEndTZ();
+          setDataEndTZNull();
         }
        else if (v.length() > 5)
-        throw new Exception("Cannot set tilda.data.TILDA.Job.dataEndTZ: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
+        throw new Exception("Cannot set tilda.data.TILDA.Job.dataEndTZ: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
        else if (v.equals(_dataEndTZ) == false)
         {
           __Changes.or(TILDA__JOB_Factory.COLS.DATAENDTZ._Mask);
@@ -1226,7 +1237,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setNullDataEndTZ()
+    void setDataEndTZNull()
      {
        long T0 = System.nanoTime();
        if (__Nulls.intersects(TILDA__JOB_Factory.COLS.DATAENDTZ._Mask) == true) // already NULL
@@ -1281,7 +1292,11 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   ZonedDateTime _dataEnd;
+   @SerializedName("dataEnd")
+   String  Str_dataEnd;
+   public void initDataEnd(String v) { Str_dataEnd = v; }
+   public String initDataEndVal() { return Str_dataEnd; }
+   transient ZonedDateTime _dataEnd = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1320,7 +1335,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isNullDataEnd()
+   public final boolean isDataEndNull()
      { return __Nulls.intersects(TILDA__JOB_Factory.COLS.DATAEND._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1345,7 +1360,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setNullDataEnd();
+          setDataEndNull();
         }
        else if (v.equals(_dataEnd) == false)
         {
@@ -1377,7 +1392,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setNullDataEnd()
+   public void setDataEndNull()
      {
        long T0 = System.nanoTime();
        if (__Nulls.intersects(TILDA__JOB_Factory.COLS.DATAEND._Mask) == true) // already NULL
@@ -1385,7 +1400,7 @@ This is the null setter for:<BR>
        __Changes.or(TILDA__JOB_Factory.COLS.DATAEND._Mask);
        __Nulls.or(TILDA__JOB_Factory.COLS.DATAEND._Mask);
        _dataEnd=null;
-       setNullDataEndTZ();
+       setDataEndTZNull();
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -1452,7 +1467,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 */
    public final void setDataEnd(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
     {
-      setDataEnd(DateTimeUtil.New(year, month, date, hourOfDay, minute, second, millis, z));
+      setDataEnd(DateTimeUtil.newTZ(year, month, date, hourOfDay, minute, second, millis, z));
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1499,7 +1514,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _startTZ;
+   String _startTZ=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1546,7 +1561,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.Job.startTZ to null: it's not nullable.");
        else if (v.length() > 5)
-        throw new Exception("Cannot set tilda.data.TILDA.Job.startTZ: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
+        throw new Exception("Cannot set tilda.data.TILDA.Job.startTZ: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
        else if (v.equals(_startTZ) == false)
         {
           __Changes.or(TILDA__JOB_Factory.COLS.STARTTZ._Mask);
@@ -1600,7 +1615,11 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   ZonedDateTime _start;
+   @SerializedName("start")
+   String  Str_start;
+   public void initStart(String v) { Str_start = v; }
+   public String initStartVal() { return Str_start; }
+   transient ZonedDateTime _start = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1720,7 +1739,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 */
    public final void setStart(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
     {
-      setStart(DateTimeUtil.New(year, month, date, hourOfDay, minute, second, millis, z));
+      setStart(DateTimeUtil.newTZ(year, month, date, hourOfDay, minute, second, millis, z));
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1767,7 +1786,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _endTZ;
+   String _endTZ=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1808,7 +1827,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isNullEndTZ()
+   public final boolean isEndTZNull()
      { return __Nulls.intersects(TILDA__JOB_Factory.COLS.ENDTZ._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1834,10 +1853,10 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setNullEndTZ();
+          setEndTZNull();
         }
        else if (v.length() > 5)
-        throw new Exception("Cannot set tilda.data.TILDA.Job.endTZ: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
+        throw new Exception("Cannot set tilda.data.TILDA.Job.endTZ: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
        else if (v.equals(_endTZ) == false)
         {
           __Changes.or(TILDA__JOB_Factory.COLS.ENDTZ._Mask);
@@ -1865,7 +1884,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setNullEndTZ()
+    void setEndTZNull()
      {
        long T0 = System.nanoTime();
        if (__Nulls.intersects(TILDA__JOB_Factory.COLS.ENDTZ._Mask) == true) // already NULL
@@ -1920,7 +1939,11 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   ZonedDateTime _end;
+   @SerializedName("end")
+   String  Str_end;
+   public void initEnd(String v) { Str_end = v; }
+   public String initEndVal() { return Str_end; }
+   transient ZonedDateTime _end = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1959,7 +1982,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isNullEnd()
+   public final boolean isEndNull()
      { return __Nulls.intersects(TILDA__JOB_Factory.COLS.END._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1984,7 +2007,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setNullEnd();
+          setEndNull();
         }
        else if (v.equals(_end) == false)
         {
@@ -2016,7 +2039,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setNullEnd()
+   public void setEndNull()
      {
        long T0 = System.nanoTime();
        if (__Nulls.intersects(TILDA__JOB_Factory.COLS.END._Mask) == true) // already NULL
@@ -2024,7 +2047,7 @@ This is the null setter for:<BR>
        __Changes.or(TILDA__JOB_Factory.COLS.END._Mask);
        __Nulls.or(TILDA__JOB_Factory.COLS.END._Mask);
        _end=null;
-       setNullEndTZ();
+       setEndTZNull();
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -2091,7 +2114,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 */
    public final void setEnd(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
     {
-      setEnd(DateTimeUtil.New(year, month, date, hourOfDay, minute, second, millis, z));
+      setEnd(DateTimeUtil.newTZ(year, month, date, hourOfDay, minute, second, millis, z));
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2137,7 +2160,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   boolean _status;
+   @SerializedName("status")
+   Boolean _status=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2157,7 +2181,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final boolean getStatus()
-      { return _status; }
+      { return _status==null?false:_status; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2176,7 +2200,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isNullStatus()
+   public final boolean isStatusNull()
      { return __Nulls.intersects(TILDA__JOB_Factory.COLS.STATUS._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2199,7 +2223,7 @@ This is the setter for:<BR>
    public void setStatus(boolean v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _status)
+       if (__Init == InitMode.CREATE || _status == null || v != _status)
         {
           __Changes.or(TILDA__JOB_Factory.COLS.STATUS._Mask);
           __Nulls.andNot(TILDA__JOB_Factory.COLS.STATUS._Mask);
@@ -2225,14 +2249,14 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setNullStatus()
+   public void setStatusNull()
      {
        long T0 = System.nanoTime();
        if (__Nulls.intersects(TILDA__JOB_Factory.COLS.STATUS._Mask) == true) // already NULL
         return;
        __Changes.or(TILDA__JOB_Factory.COLS.STATUS._Mask);
        __Nulls.or(TILDA__JOB_Factory.COLS.STATUS._Mask);
-       _status=false;
+       _status=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -2280,7 +2304,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _msg;
+   @SerializedName("msg")
+   String _msg=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2321,7 +2346,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isNullMsg()
+   public final boolean isMsgNull()
      { return __Nulls.intersects(TILDA__JOB_Factory.COLS.MSG._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2347,10 +2372,10 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setNullMsg();
+          setMsgNull();
         }
        else if (v.length() > 8192)
-        throw new Exception("Cannot set tilda.data.TILDA.Job.msg: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 8192.");
+        throw new Exception("Cannot set tilda.data.TILDA.Job.msg: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 8192.");
        else if (v.equals(_msg) == false)
         {
           __Changes.or(TILDA__JOB_Factory.COLS.MSG._Mask);
@@ -2378,7 +2403,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setNullMsg()
+   public void setMsgNull()
      {
        long T0 = System.nanoTime();
        if (__Nulls.intersects(TILDA__JOB_Factory.COLS.MSG._Mask) == true) // already NULL
@@ -2440,7 +2465,7 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   ZonedDateTime _created;
+   transient ZonedDateTime _created = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2500,7 +2525,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.Job.created to null: it's not nullable.");
        else if (v.equals(_created) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Job.created' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__JOB_Factory.COLS.CREATED._Mask);
           __Nulls.andNot(TILDA__JOB_Factory.COLS.CREATED._Mask);
@@ -2593,7 +2618,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 */
     final void setCreated(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
     {
-      setCreated(DateTimeUtil.New(year, month, date, hourOfDay, minute, second, millis, z));
+      setCreated(DateTimeUtil.newTZ(year, month, date, hourOfDay, minute, second, millis, z));
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2653,7 +2678,7 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   ZonedDateTime _lastUpdated;
+   transient ZonedDateTime _lastUpdated = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2804,7 +2829,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 */
    public final void setLastUpdated(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
     {
-      setLastUpdated(DateTimeUtil.New(year, month, date, hourOfDay, minute, second, millis, z));
+      setLastUpdated(DateTimeUtil.newTZ(year, month, date, hourOfDay, minute, second, millis, z));
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2857,7 +2882,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   ZonedDateTime _deleted;
+   transient ZonedDateTime _deleted = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2896,7 +2921,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isNullDeleted()
+   public final boolean isDeletedNull()
      { return __Nulls.intersects(TILDA__JOB_Factory.COLS.DELETED._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2921,7 +2946,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setNullDeleted();
+          setDeletedNull();
         }
        else if (v.equals(_deleted) == false)
         {
@@ -2949,7 +2974,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final void setNullDeleted()
+   public final void setDeletedNull()
      {
        long T0 = System.nanoTime();
        if (__Nulls.intersects(TILDA__JOB_Factory.COLS.DELETED._Mask) == true) // already NULL
@@ -3023,7 +3048,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 */
    public final void setDeleted(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
     {
-      setDeleted(DateTimeUtil.New(year, month, date, hourOfDay, minute, second, millis, z));
+      setDeleted(DateTimeUtil.newTZ(year, month, date, hourOfDay, minute, second, millis, z));
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3055,38 +3080,200 @@ This is the hasChanged for:<BR>
  Copies all the field which are not part of the primary key, not are CALCULATED and not invariant, from the 
  current object to the destination. 
 */
-   public void CopyTo(tilda.data._Tilda.TILDA__JOB Dst) throws Exception
+   public void copyTo(tilda.data._Tilda.TILDA__JOB Dst) throws Exception
      {
        Dst.setName       (_name       );
-       if (__Changes.intersects(TILDA__JOB_Factory.COLS.TYPE._Mask) == true) Dst.setNullType       (); else        Dst.setType       (_type       );
-       if (__Changes.intersects(TILDA__JOB_Factory.COLS.USERID._Mask) == true) Dst.setNullUserId     (); else        Dst.setUserId     (_userId     );
-       if (__Changes.intersects(TILDA__JOB_Factory.COLS.DATASTARTTZ._Mask) == true) Dst.setNullDataStartTZ(); else        Dst.setDataStartTZ(_dataStartTZ);
-       if (__Changes.intersects(TILDA__JOB_Factory.COLS.DATASTART._Mask) == true) Dst.setNullDataStart  (); else        Dst.setDataStart  (_dataStart  );
-       if (__Changes.intersects(TILDA__JOB_Factory.COLS.DATAENDTZ._Mask) == true) Dst.setNullDataEndTZ  (); else        Dst.setDataEndTZ  (_dataEndTZ  );
-       if (__Changes.intersects(TILDA__JOB_Factory.COLS.DATAEND._Mask) == true) Dst.setNullDataEnd    (); else        Dst.setDataEnd    (_dataEnd    );
+       if (__Changes.intersects(TILDA__JOB_Factory.COLS.TYPE._Mask) == true) Dst.setTypeNull       (); else        Dst.setType       (_type       );
+       if (__Changes.intersects(TILDA__JOB_Factory.COLS.USERID._Mask) == true) Dst.setUserIdNull     (); else        Dst.setUserId     (_userId     );
+       if (__Changes.intersects(TILDA__JOB_Factory.COLS.DATASTARTTZ._Mask) == true) Dst.setDataStartTZNull(); else        Dst.setDataStartTZ(_dataStartTZ);
+       if (__Changes.intersects(TILDA__JOB_Factory.COLS.DATASTART._Mask) == true) Dst.setDataStartNull  (); else        Dst.setDataStart  (_dataStart  );
+       if (__Changes.intersects(TILDA__JOB_Factory.COLS.DATAENDTZ._Mask) == true) Dst.setDataEndTZNull  (); else        Dst.setDataEndTZ  (_dataEndTZ  );
+       if (__Changes.intersects(TILDA__JOB_Factory.COLS.DATAEND._Mask) == true) Dst.setDataEndNull    (); else        Dst.setDataEnd    (_dataEnd    );
        Dst.setStartTZ    (_startTZ    );
        Dst.setStart      (_start      );
-       if (__Changes.intersects(TILDA__JOB_Factory.COLS.ENDTZ._Mask) == true) Dst.setNullEndTZ      (); else        Dst.setEndTZ      (_endTZ      );
-       if (__Changes.intersects(TILDA__JOB_Factory.COLS.END._Mask) == true) Dst.setNullEnd        (); else        Dst.setEnd        (_end        );
-       if (__Changes.intersects(TILDA__JOB_Factory.COLS.STATUS._Mask) == true) Dst.setNullStatus     (); else        Dst.setStatus     (_status     );
-       if (__Changes.intersects(TILDA__JOB_Factory.COLS.MSG._Mask) == true) Dst.setNullMsg        (); else        Dst.setMsg        (_msg        );
+       if (__Changes.intersects(TILDA__JOB_Factory.COLS.ENDTZ._Mask) == true) Dst.setEndTZNull      (); else        Dst.setEndTZ      (_endTZ      );
+       if (__Changes.intersects(TILDA__JOB_Factory.COLS.END._Mask) == true) Dst.setEndNull        (); else        Dst.setEnd        (_end        );
+       if (__Changes.intersects(TILDA__JOB_Factory.COLS.STATUS._Mask) == true) Dst.setStatusNull     (); else        Dst.setStatus     (_status     );
+       if (__Changes.intersects(TILDA__JOB_Factory.COLS.MSG._Mask) == true) Dst.setMsgNull        (); else        Dst.setMsg        (_msg        );
        Dst.setLastUpdated(_lastUpdated);
-       if (__Changes.intersects(TILDA__JOB_Factory.COLS.DELETED._Mask) == true) Dst.setNullDeleted    (); else        Dst.setDeleted    (_deleted    );
+       if (__Changes.intersects(TILDA__JOB_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull    (); else        Dst.setDeleted    (_deleted    );
      }
 
 /**
  Sets the 'lastUpdated' column to now and causes a Write to occur to update the object in the data store.
 */
-   public final boolean Touch(Connection C) throws Exception
+   public final boolean touch(Connection C) throws Exception
      {
        setLastUpdatedNow();
-       return Write(C);
+       return write(C);
      }
 
 /**
  Writes the object to the data store if any changes has occurred since the object was initially
  read from the data store or last written. 
+ If the object was deserialized (i.e., not created via the factory lookup() or create() methods, 
+ then this method assumes a create() and will check that all non-null columns have been provided. If you 
+ need more flexibility for an upsert, use the upsert(Connection, boolean) version of write 
+ which will try a combination of insert/update to get the object to the DB. 
+ Note that if you use write() right after a create, lookup or deserialization initialization, only the
+ template fields (not null, natural identity and/or any field set prior to calling this method) exist 
+  in memory. Call refresh() to force a select and retrieve all the fields for that record.
 */
+   public final boolean write(Connection C) throws Exception
+     {
+       long T0 = System.nanoTime();
+
+       if (__Init == null && __LookupId==0) // Loaded via some other mechamism, e.g., Json or CSV loader
+        {
+          validateDeserialization();
+          initForCreate();
+          // Auto PK
+          setRefnum(tilda.db.KeysManager.getKey("TILDA.JOB"));
+        }
+
+       if (hasChanged() == false)
+        {
+          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.Job has not changed: no writing will occur.");
+          QueryDetails.setLastQuery(TILDA__JOB_Factory.SCHEMA_TABLENAME_LABEL, "");
+          return true;
+        }
+
+       if (beforeWrite(C) == false)
+        {
+          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.Job object's beforeWrite() failed.");
+          QueryDetails.setLastQuery(TILDA__JOB_Factory.SCHEMA_TABLENAME_LABEL, "");
+          return false;
+        }
+
+       String Q = getWriteQuery(C);
+
+       java.sql.PreparedStatement PS = null;
+       int count = 0;
+       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
+       try
+        {
+          PS = C.prepareStatement(Q);
+          int i = populatePreparedStatement(C, PS, AllocatedArrays);
+
+          switch (__LookupId)
+           {
+             case 0:
+               PS.setLong      (++i, _refnum     );
+               break;
+             case -666: if (__Init == InitMode.CREATE) break;
+             default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
+           }
+
+          C.setSavepoint();
+          count = PS.executeUpdate();
+          C.releaseSavepoint(true);
+          if (count == 0)
+           return false;
+        }
+       catch (java.sql.SQLException E)
+        {
+          C.releaseSavepoint(false);
+          return C.handleCatch(E, "updated or inserted");
+        }
+       finally
+        {
+          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__JOB_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
+          PS = null;
+        }
+
+       stateUpdatePostWrite();
+       return true;
+     }
+
+   protected abstract boolean beforeWrite(Connection C) throws Exception;
+
+   protected void validateDeserialization() throws Exception
+     {
+
+       if (TextUtil.isNullOrEmpty(_name) == true)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.Job.name' was null or empty. It's not nullable in the model.\n"+toString());
+          __Changes.or(TILDA__JOB_Factory.COLS.NAME._Mask);
+          __Nulls.andNot(TILDA__JOB_Factory.COLS.NAME._Mask);
+
+       if (TextUtil.isNullOrEmpty(_type) == false)
+        {
+          __Changes.or(TILDA__JOB_Factory.COLS.TYPE._Mask);
+          __Nulls.andNot(TILDA__JOB_Factory.COLS.TYPE._Mask);
+        }
+
+       if (TextUtil.isNullOrEmpty(_userId) == false)
+        {
+          __Changes.or(TILDA__JOB_Factory.COLS.USERID._Mask);
+          __Nulls.andNot(TILDA__JOB_Factory.COLS.USERID._Mask);
+        }
+
+       if (TextUtil.isNullOrEmpty(Str_dataStart) == false)
+        {
+          _dataStart = DateTimeUtil.parsefromJSON(Str_dataStart);
+          if (   _dataStart == null)
+           throw new Exception("Incoming value for 'tilda.data.TILDA.Job.dataStart' was not in the expected format. Dates should follow the ISO format.\n"+toString());
+          __Changes.or(TILDA__JOB_Factory.COLS.DATASTART._Mask);
+          __Nulls.andNot(TILDA__JOB_Factory.COLS.DATASTART._Mask);
+          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(_dataStart.getZone().getId());
+          if (ZI == null)
+           throw new Exception("Cannot set field 'tilda.data.TILDA.Job.dataStart' because the timezone value '"+_dataStart.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+          setDataStartTZ(ZI.getId());
+        }
+
+       if (TextUtil.isNullOrEmpty(Str_dataEnd) == false)
+        {
+          _dataEnd = DateTimeUtil.parsefromJSON(Str_dataEnd);
+          if (   _dataEnd == null)
+           throw new Exception("Incoming value for 'tilda.data.TILDA.Job.dataEnd' was not in the expected format. Dates should follow the ISO format.\n"+toString());
+          __Changes.or(TILDA__JOB_Factory.COLS.DATAEND._Mask);
+          __Nulls.andNot(TILDA__JOB_Factory.COLS.DATAEND._Mask);
+          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(_dataEnd.getZone().getId());
+          if (ZI == null)
+           throw new Exception("Cannot set field 'tilda.data.TILDA.Job.dataEnd' because the timezone value '"+_dataEnd.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+          setDataEndTZ(ZI.getId());
+        }
+
+       if (TextUtil.isNullOrEmpty(Str_start) == true)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.Job.start' was null or empty. It's not nullable in the model.\n"+toString());
+          __Changes.or(TILDA__JOB_Factory.COLS.START._Mask);
+          __Nulls.andNot(TILDA__JOB_Factory.COLS.START._Mask);
+        {
+       _start = DateTimeUtil.parsefromJSON(Str_start);
+       if (   _start == null)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.Job.start' was not in the expected format. Dates should follow the ISO format.\n"+toString());
+       __Changes.or(TILDA__JOB_Factory.COLS.START._Mask);
+       __Nulls.andNot(TILDA__JOB_Factory.COLS.START._Mask);
+       tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(_start.getZone().getId());
+       if (ZI == null)
+        throw new Exception("Cannot set field 'tilda.data.TILDA.Job.start' because the timezone value '"+_start.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+          setStartTZ(ZI.getId());
+        }
+
+       if (TextUtil.isNullOrEmpty(Str_end) == false)
+        {
+          _end = DateTimeUtil.parsefromJSON(Str_end);
+          if (   _end == null)
+           throw new Exception("Incoming value for 'tilda.data.TILDA.Job.end' was not in the expected format. Dates should follow the ISO format.\n"+toString());
+          __Changes.or(TILDA__JOB_Factory.COLS.END._Mask);
+          __Nulls.andNot(TILDA__JOB_Factory.COLS.END._Mask);
+          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(_end.getZone().getId());
+          if (ZI == null)
+           throw new Exception("Cannot set field 'tilda.data.TILDA.Job.end' because the timezone value '"+_end.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+          setEndTZ(ZI.getId());
+        }
+
+       if (_status != null)
+        {
+          __Changes.or(TILDA__JOB_Factory.COLS.STATUS._Mask);
+          __Nulls.andNot(TILDA__JOB_Factory.COLS.STATUS._Mask);
+        }
+
+       if (TextUtil.isNullOrEmpty(_msg) == false)
+        {
+          __Changes.or(TILDA__JOB_Factory.COLS.MSG._Mask);
+          __Nulls.andNot(TILDA__JOB_Factory.COLS.MSG._Mask);
+        }
+     }
    protected String getTimeStampSignature() throws Exception
      {
        StringBuilder S = new StringBuilder(1024);
@@ -3254,23 +3441,23 @@ This is the hasChanged for:<BR>
        int i = 0;
        if (__Changes.intersects(TILDA__JOB_Factory.COLS.REFNUM._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOB_Factory.COLS.REFNUM._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _refnum);
+          if (__Nulls.intersects(TILDA__JOB_Factory.COLS.REFNUM._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT    ); else PS.setLong      (++i, _refnum);
         } 
        if (__Changes.intersects(TILDA__JOB_Factory.COLS.NAME._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOB_Factory.COLS.NAME._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _name);
+          if (__Nulls.intersects(TILDA__JOB_Factory.COLS.NAME._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _name);
         } 
        if (__Changes.intersects(TILDA__JOB_Factory.COLS.TYPE._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOB_Factory.COLS.TYPE._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _type);
+          if (__Nulls.intersects(TILDA__JOB_Factory.COLS.TYPE._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _type);
         } 
        if (__Changes.intersects(TILDA__JOB_Factory.COLS.USERID._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOB_Factory.COLS.USERID._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _userId);
+          if (__Nulls.intersects(TILDA__JOB_Factory.COLS.USERID._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _userId);
         } 
        if (__Changes.intersects(TILDA__JOB_Factory.COLS.DATASTARTTZ._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOB_Factory.COLS.DATASTARTTZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _dataStartTZ);
+          if (__Nulls.intersects(TILDA__JOB_Factory.COLS.DATASTARTTZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _dataStartTZ);
         } 
        if (__Changes.intersects(TILDA__JOB_Factory.COLS.DATASTART._Mask) == true) 
         { 
@@ -3278,7 +3465,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__JOB_Factory.COLS.DATAENDTZ._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOB_Factory.COLS.DATAENDTZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _dataEndTZ);
+          if (__Nulls.intersects(TILDA__JOB_Factory.COLS.DATAENDTZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _dataEndTZ);
         } 
        if (__Changes.intersects(TILDA__JOB_Factory.COLS.DATAEND._Mask) == true) 
         { 
@@ -3286,7 +3473,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__JOB_Factory.COLS.STARTTZ._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOB_Factory.COLS.STARTTZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _startTZ);
+          if (__Nulls.intersects(TILDA__JOB_Factory.COLS.STARTTZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _startTZ);
         } 
        if (__Changes.intersects(TILDA__JOB_Factory.COLS.START._Mask) == true) 
         { 
@@ -3294,7 +3481,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__JOB_Factory.COLS.ENDTZ._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOB_Factory.COLS.ENDTZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _endTZ);
+          if (__Nulls.intersects(TILDA__JOB_Factory.COLS.ENDTZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _endTZ);
         } 
        if (__Changes.intersects(TILDA__JOB_Factory.COLS.END._Mask) == true) 
         { 
@@ -3302,11 +3489,11 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__JOB_Factory.COLS.STATUS._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOB_Factory.COLS.STATUS._Mask) == true) PS.setNull(++i, java.sql.Types.BOOLEAN); else PS.setBoolean  (++i, _status);
+          if (__Nulls.intersects(TILDA__JOB_Factory.COLS.STATUS._Mask) == true) PS.setNull(++i, java.sql.Types.BOOLEAN   ); else PS.setBoolean   (++i, _status);
         } 
        if (__Changes.intersects(TILDA__JOB_Factory.COLS.MSG._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOB_Factory.COLS.MSG._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _msg);
+          if (__Nulls.intersects(TILDA__JOB_Factory.COLS.MSG._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _msg);
         } 
        if (__Changes.intersects(TILDA__JOB_Factory.COLS.CREATED._Mask) == true) 
         { 
@@ -3346,86 +3533,27 @@ This is the hasChanged for:<BR>
        __Changes.clear();
        __Nulls.clear();
      }
-   public final boolean Write(Connection C) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (hasChanged() == false)
-        {
-          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.Job has not changed: no writing will occur.");
-          QueryDetails.setLastQuery(TILDA__JOB_Factory.SCHEMA_TABLENAME_LABEL, "");
-          return true;
-        }
-
-       if (BeforeWrite(C) == false)
-        {
-          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.Job object's BeforeWrite() failed.");
-          QueryDetails.setLastQuery(TILDA__JOB_Factory.SCHEMA_TABLENAME_LABEL, "");
-          return false;
-        }
-
-       String Q = getWriteQuery(C);
-
-       java.sql.PreparedStatement PS = null;
-       int count = 0;
-       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
-       try
-        {
-          PS = C.prepareStatement(Q);
-          int i = populatePreparedStatement(C, PS, AllocatedArrays);
-
-          switch (__LookupId)
-           {
-             case 0:
-               PS.setLong     (++i, _refnum     );
-               break;
-             case -666: if (__Init == InitMode.CREATE) break;
-             default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
-           }
-
-          C.setSavepoint();
-          count = PS.executeUpdate();
-          C.releaseSavepoint(true);
-          if (count == 0)
-           return false;
-        }
-       catch (java.sql.SQLException E)
-        {
-          C.releaseSavepoint(false);
-          return C.handleCatch(E, "updated or inserted");
-        }
-       finally
-        {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__JOB_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
-          PS = null;
-        }
-
-       stateUpdatePostWrite();
-       return true;
-     }
-
-   protected abstract boolean BeforeWrite(Connection C) throws Exception;
-
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-   public final boolean Refresh(Connection C) throws Exception
+   public final boolean refresh(Connection C) throws Exception
      {
-       return ReadOne(C, true);
+       return readOne(C, true);
      }
 
-   public final boolean Read(Connection C) throws Exception
+   public final boolean read(Connection C) throws Exception
      {
-       return ReadOne(C, false);
+       return readOne(C, false);
      }
 
-   private final boolean ReadOne(Connection C, boolean Force) throws Exception
+   private final boolean readOne(Connection C, boolean Force) throws Exception
      {
        long T0 = System.nanoTime();
        if (__Init == InitMode.CREATE)
-        throw new Exception("This TILDA.Job object is being Read() after a Create(), which doesn't make sense.");
+        throw new Exception("This TILDA.Job object is being read() after a create(), which doesn't make sense.");
        if (__Init == InitMode.READ == true && Force == false && hasChanged()==false)
         {
           LOG.debug(QueryDetails._LOGGING_HEADER + "This TILDA.Job object has already been read.");
@@ -3478,7 +3606,7 @@ This is the hasChanged for:<BR>
           switch (__LookupId)
            {
              case 0:
-               PS.setLong     (++i, _refnum     );
+               PS.setLong      (++i, _refnum     );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -3492,7 +3620,7 @@ This is the hasChanged for:<BR>
               return false;
             }
           count = 1;
-          return Init(C, RS);
+          return init(C, RS);
         }
        catch (java.sql.SQLException E)
         {
@@ -3500,39 +3628,39 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__JOB_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__JOB_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
     }
 
-   boolean Init(Connection C, java.sql.ResultSet RS) throws Exception
+   boolean init(Connection C, java.sql.ResultSet RS) throws Exception
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-      __Saved_refnum      = _refnum      =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOB_Factory.COLS.REFNUM._Mask     );
-                            _name        = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOB_Factory.COLS.NAME._Mask       );
-                            _type        = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOB_Factory.COLS.TYPE._Mask       );
-                            _userId      = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOB_Factory.COLS.USERID._Mask     );
-                            _dataStartTZ = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOB_Factory.COLS.DATASTARTTZ._Mask); else _dataStartTZ = _dataStartTZ.trim();
-                            _dataStart   = ProcessZDT(_dataStartTZ  , "tilda.data.TILDA.Job.dataStart"  , RS, ++i, TILDA__JOB_Factory.COLS.DATASTART  , TILDA__JOB_Factory.COLS.DATASTARTTZ  ); if (RS.wasNull() == true) __Nulls.or(TILDA__JOB_Factory.COLS.DATASTART._Mask  );
-                            _dataEndTZ   = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOB_Factory.COLS.DATAENDTZ._Mask  ); else _dataEndTZ   = _dataEndTZ  .trim();
-                            _dataEnd     = ProcessZDT(_dataEndTZ    , "tilda.data.TILDA.Job.dataEnd"    , RS, ++i, TILDA__JOB_Factory.COLS.DATAEND    , TILDA__JOB_Factory.COLS.DATAENDTZ    ); if (RS.wasNull() == true) __Nulls.or(TILDA__JOB_Factory.COLS.DATAEND._Mask    );
-                            _startTZ     = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOB_Factory.COLS.STARTTZ._Mask    ); else _startTZ     = _startTZ    .trim();
-                            _start       = ProcessZDT(_startTZ      , "tilda.data.TILDA.Job.start"      , RS, ++i, TILDA__JOB_Factory.COLS.START      , TILDA__JOB_Factory.COLS.STARTTZ      ); if (RS.wasNull() == true) __Nulls.or(TILDA__JOB_Factory.COLS.START._Mask      );
-                            _endTZ       = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOB_Factory.COLS.ENDTZ._Mask      ); else _endTZ       = _endTZ      .trim();
-                            _end         = ProcessZDT(_endTZ        , "tilda.data.TILDA.Job.end"        , RS, ++i, TILDA__JOB_Factory.COLS.END        , TILDA__JOB_Factory.COLS.ENDTZ        ); if (RS.wasNull() == true) __Nulls.or(TILDA__JOB_Factory.COLS.END._Mask        );
-                            _status      =                              RS.getBoolean  (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOB_Factory.COLS.STATUS._Mask     );
-                            _msg         = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOB_Factory.COLS.MSG._Mask        );
+      __Saved_refnum      = _refnum      =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOB_Factory.COLS.REFNUM._Mask     );
+                            _name        = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOB_Factory.COLS.NAME._Mask       );
+                            _type        = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOB_Factory.COLS.TYPE._Mask       );
+                            _userId      = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOB_Factory.COLS.USERID._Mask     );
+                            _dataStartTZ = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOB_Factory.COLS.DATASTARTTZ._Mask); else _dataStartTZ = _dataStartTZ.trim();
+                            _dataStart   = processZDT(_dataStartTZ  , "tilda.data.TILDA.Job.dataStart"  , RS, ++i, TILDA__JOB_Factory.COLS.DATASTART  , TILDA__JOB_Factory.COLS.DATASTARTTZ  ); if (RS.wasNull() == true) __Nulls.or(TILDA__JOB_Factory.COLS.DATASTART._Mask  );
+                            _dataEndTZ   = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOB_Factory.COLS.DATAENDTZ._Mask  ); else _dataEndTZ   = _dataEndTZ  .trim();
+                            _dataEnd     = processZDT(_dataEndTZ    , "tilda.data.TILDA.Job.dataEnd"    , RS, ++i, TILDA__JOB_Factory.COLS.DATAEND    , TILDA__JOB_Factory.COLS.DATAENDTZ    ); if (RS.wasNull() == true) __Nulls.or(TILDA__JOB_Factory.COLS.DATAEND._Mask    );
+                            _startTZ     = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOB_Factory.COLS.STARTTZ._Mask    ); else _startTZ     = _startTZ    .trim();
+                            _start       = processZDT(_startTZ      , "tilda.data.TILDA.Job.start"      , RS, ++i, TILDA__JOB_Factory.COLS.START      , TILDA__JOB_Factory.COLS.STARTTZ      ); if (RS.wasNull() == true) __Nulls.or(TILDA__JOB_Factory.COLS.START._Mask      );
+                            _endTZ       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOB_Factory.COLS.ENDTZ._Mask      ); else _endTZ       = _endTZ      .trim();
+                            _end         = processZDT(_endTZ        , "tilda.data.TILDA.Job.end"        , RS, ++i, TILDA__JOB_Factory.COLS.END        , TILDA__JOB_Factory.COLS.ENDTZ        ); if (RS.wasNull() == true) __Nulls.or(TILDA__JOB_Factory.COLS.END._Mask        );
+                            _status      =                              RS.getBoolean   (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOB_Factory.COLS.STATUS._Mask     );
+                            _msg         = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOB_Factory.COLS.MSG._Mask        );
                             _created     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__JOB_Factory.COLS.CREATED._Mask    );
                             _lastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__JOB_Factory.COLS.LASTUPDATED._Mask);
                             _deleted     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__JOB_Factory.COLS.DELETED._Mask    );
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();
-     return AfterRead(C);
+     return afterRead(C);
    }
 
-  private final ZonedDateTime ProcessZDT(String TimezoneId, String DTFieldName, java.sql.ResultSet RS, int ColumnPos, tilda.types.ColumnDefinition DTField, tilda.types.ColumnDefinition TZField)
+  private final ZonedDateTime processZDT(String TimezoneId, String DTFieldName, java.sql.ResultSet RS, int ColumnPos, tilda.types.ColumnDefinition DTField, tilda.types.ColumnDefinition TZField)
   throws Exception
    {
      tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationById(TimezoneId);
@@ -3551,22 +3679,22 @@ This is the hasChanged for:<BR>
      return ZDT;
    }
 
-   protected abstract boolean AfterRead(Connection C) throws Exception;
+   protected abstract boolean afterRead(Connection C) throws Exception;
 
    public String toString()
     {
       long T0 = System.nanoTime();
       String Str = 
                    "refnum: "                                                                                       +                                   getRefnum     () 
-               + "; name: "                                                                                         + TextUtil.PrintVariableStr        (getName       ())
-               + "; type"          + (__Nulls.intersects(TILDA__JOB_Factory.COLS.TYPE._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getType       ()))
-               + "; userId"        + (__Nulls.intersects(TILDA__JOB_Factory.COLS.USERID._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getUserId     ()))
+               + "; name: "                                                                                         + TextUtil.printVariableStr        (getName       ())
+               + "; type"          + (__Nulls.intersects(TILDA__JOB_Factory.COLS.TYPE._Mask) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getType       ()))
+               + "; userId"        + (__Nulls.intersects(TILDA__JOB_Factory.COLS.USERID._Mask) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getUserId     ()))
                + "; dataStart"     + (__Nulls.intersects(TILDA__JOB_Factory.COLS.DATASTART._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDataStart  ()))
                + "; dataEnd"       + (__Nulls.intersects(TILDA__JOB_Factory.COLS.DATAEND._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDataEnd    ()))
                + "; start: "                                                                                        + DateTimeUtil.printDateTimeForJSON(getStart      ())
                + "; end"           + (__Nulls.intersects(TILDA__JOB_Factory.COLS.END._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getEnd        ()))
                + "; status"        + (__Nulls.intersects(TILDA__JOB_Factory.COLS.STATUS._Mask) == true ? ": NULL" : ": " +                                   getStatus     () )
-               + "; msg"           + (__Nulls.intersects(TILDA__JOB_Factory.COLS.MSG._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getMsg        ()))
+               + "; msg"           + (__Nulls.intersects(TILDA__JOB_Factory.COLS.MSG._Mask) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getMsg        ()))
                + "; created: "                                                                                      + DateTimeUtil.printDateTimeForJSON(getCreated    ())
                + "; lastUpdated: "                                                                                  + DateTimeUtil.printDateTimeForJSON(getLastUpdated())
                + "; deleted"       + (__Nulls.intersects(TILDA__JOB_Factory.COLS.DELETED._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDeleted    ()))

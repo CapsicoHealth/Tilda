@@ -15,8 +15,11 @@ import tilda.enums.*;
 import tilda.performance.*;
 import tilda.utils.*;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.*;
+
+import com.google.gson.*;
+import com.google.gson.annotations.*;
+import java.math.*;
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -133,18 +136,19 @@ This Table contains the following columns:<BLOCKQUOTE>
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__JOBPARTMESSAGE implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
-   protected static final Logger LOG = LogManager.getLogger(TILDA__JOBPARTMESSAGE.class.getName());
+   protected transient static final Logger LOG = LogManager.getLogger(TILDA__JOBPARTMESSAGE.class.getName());
 
-   public static final Class<TILDA__JOBPARTMESSAGE_Factory> FACTORY_CLASS= TILDA__JOBPARTMESSAGE_Factory.class;
-   public static final String TABLENAME = TextUtil.Print("TILDA.JobPartMessage", "");
+   public transient static final Class<TILDA__JOBPARTMESSAGE_Factory> FACTORY_CLASS= TILDA__JOBPARTMESSAGE_Factory.class;
+   public transient static final String TABLENAME = TextUtil.print("TILDA.JobPartMessage", "");
 
    protected TILDA__JOBPARTMESSAGE() { }
 
-   InitMode __Init        = null;
-   private BitSet   __Nulls       = new BitSet(64);
-   BitSet   __Changes     = new BitSet(64);
-   private boolean  __NewlyCreated= false;
-   private int      __LookupId;
+   transient InitMode __Init        = null;
+   transient BitSet   __Nulls       = new BitSet(64);
+   transient BitSet   __Changes     = new BitSet(64);
+   transient boolean  __NewlyCreated= false;
+
+   transient int      __LookupId;
 
    public  boolean hasChanged    () { return __Changes.isEmpty() == false; }
    public  boolean isNewlyCreated() { return __NewlyCreated; }
@@ -184,7 +188,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   long _refnum= SystemValues.EVIL_VALUE;
+   Long _refnum=null;
    protected long __Saved_refnum;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -205,7 +209,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final long getRefnum()
-      { return _refnum; }
+      { return _refnum==null?0l:_refnum; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -227,9 +231,9 @@ This is the setter for:<BR>
    protected void setRefnum(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _refnum)
+       if (__Init == InitMode.CREATE || _refnum == null || v != _refnum)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.JobPartMessage.refnum' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__JOBPARTMESSAGE_Factory.COLS.REFNUM._Mask);
           __Nulls.andNot(TILDA__JOBPARTMESSAGE_Factory.COLS.REFNUM._Mask);
@@ -261,7 +265,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   long _jobRefnum= SystemValues.EVIL_VALUE;
+   @SerializedName("jobRefnum")
+   Long _jobRefnum=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -281,7 +286,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final long getJobRefnum()
-      { return _jobRefnum; }
+      { return _jobRefnum==null?0l:_jobRefnum; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -303,7 +308,7 @@ This is the setter for:<BR>
    public void setJobRefnum(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _jobRefnum)
+       if (__Init == InitMode.CREATE || _jobRefnum == null || v != _jobRefnum)
         {
           __Changes.or(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBREFNUM._Mask);
           __Nulls.andNot(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBREFNUM._Mask);
@@ -355,7 +360,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   long _jobPartRefnum= SystemValues.EVIL_VALUE;
+   @SerializedName("jobPartRefnum")
+   Long _jobPartRefnum=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -375,7 +381,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final long getJobPartRefnum()
-      { return _jobPartRefnum; }
+      { return _jobPartRefnum==null?0l:_jobPartRefnum; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -394,7 +400,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isNullJobPartRefnum()
+   public final boolean isJobPartRefnumNull()
      { return __Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -417,7 +423,7 @@ This is the setter for:<BR>
    public void setJobPartRefnum(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _jobPartRefnum)
+       if (__Init == InitMode.CREATE || _jobPartRefnum == null || v != _jobPartRefnum)
         {
           __Changes.or(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask);
           __Nulls.andNot(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask);
@@ -443,14 +449,14 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setNullJobPartRefnum()
+   public void setJobPartRefnumNull()
      {
        long T0 = System.nanoTime();
        if (__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask) == true) // already NULL
         return;
        __Changes.or(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask);
        __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask);
-       _jobPartRefnum=0L;
+       _jobPartRefnum=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -497,7 +503,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   boolean _notify;
+   @SerializedName("notify")
+   Boolean _notify=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -517,7 +524,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final boolean getNotify()
-      { return _notify; }
+      { return _notify==null?false:_notify; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -539,7 +546,7 @@ This is the setter for:<BR>
    public void setNotify(boolean v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _notify)
+       if (__Init == InitMode.CREATE || _notify == null || v != _notify)
         {
           __Changes.or(TILDA__JOBPARTMESSAGE_Factory.COLS.NOTIFY._Mask);
           __Nulls.andNot(TILDA__JOBPARTMESSAGE_Factory.COLS.NOTIFY._Mask);
@@ -592,7 +599,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _msg;
+   @SerializedName("msg")
+   String _msg=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -639,7 +647,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.JobPartMessage.msg to null: it's not nullable.");
        else if (v.length() > 8192)
-        throw new Exception("Cannot set tilda.data.TILDA.JobPartMessage.msg: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 8192.");
+        throw new Exception("Cannot set tilda.data.TILDA.JobPartMessage.msg: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 8192.");
        else if (v.equals(_msg) == false)
         {
           __Changes.or(TILDA__JOBPARTMESSAGE_Factory.COLS.MSG._Mask);
@@ -700,7 +708,7 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   ZonedDateTime _created;
+   transient ZonedDateTime _created = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -760,7 +768,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.JobPartMessage.created to null: it's not nullable.");
        else if (v.equals(_created) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.JobPartMessage.created' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__JOBPARTMESSAGE_Factory.COLS.CREATED._Mask);
           __Nulls.andNot(TILDA__JOBPARTMESSAGE_Factory.COLS.CREATED._Mask);
@@ -853,7 +861,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 */
     final void setCreated(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
     {
-      setCreated(DateTimeUtil.New(year, month, date, hourOfDay, minute, second, millis, z));
+      setCreated(DateTimeUtil.newTZ(year, month, date, hourOfDay, minute, second, millis, z));
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -913,7 +921,7 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   ZonedDateTime _lastUpdated;
+   transient ZonedDateTime _lastUpdated = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1064,7 +1072,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 */
    public final void setLastUpdated(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
     {
-      setLastUpdated(DateTimeUtil.New(year, month, date, hourOfDay, minute, second, millis, z));
+      setLastUpdated(DateTimeUtil.newTZ(year, month, date, hourOfDay, minute, second, millis, z));
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1117,7 +1125,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   ZonedDateTime _deleted;
+   transient ZonedDateTime _deleted = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1156,7 +1164,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isNullDeleted()
+   public final boolean isDeletedNull()
      { return __Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1181,7 +1189,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setNullDeleted();
+          setDeletedNull();
         }
        else if (v.equals(_deleted) == false)
         {
@@ -1209,7 +1217,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final void setNullDeleted()
+   public final void setDeletedNull()
      {
        long T0 = System.nanoTime();
        if (__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED._Mask) == true) // already NULL
@@ -1283,7 +1291,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 */
    public final void setDeleted(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
     {
-      setDeleted(DateTimeUtil.New(year, month, date, hourOfDay, minute, second, millis, z));
+      setDeleted(DateTimeUtil.newTZ(year, month, date, hourOfDay, minute, second, millis, z));
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1315,29 +1323,128 @@ This is the hasChanged for:<BR>
  Copies all the field which are not part of the primary key, not are CALCULATED and not invariant, from the 
  current object to the destination. 
 */
-   public void CopyTo(tilda.data._Tilda.TILDA__JOBPARTMESSAGE Dst) throws Exception
+   public void copyTo(tilda.data._Tilda.TILDA__JOBPARTMESSAGE Dst) throws Exception
      {
        Dst.setJobRefnum    (_jobRefnum    );
-       if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask) == true) Dst.setNullJobPartRefnum(); else        Dst.setJobPartRefnum(_jobPartRefnum);
+       if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask) == true) Dst.setJobPartRefnumNull(); else        Dst.setJobPartRefnum(_jobPartRefnum);
        Dst.setNotify       (_notify       );
        Dst.setMsg          (_msg          );
        Dst.setLastUpdated  (_lastUpdated  );
-       if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED._Mask) == true) Dst.setNullDeleted      (); else        Dst.setDeleted      (_deleted      );
+       if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull      (); else        Dst.setDeleted      (_deleted      );
      }
 
 /**
  Sets the 'lastUpdated' column to now and causes a Write to occur to update the object in the data store.
 */
-   public final boolean Touch(Connection C) throws Exception
+   public final boolean touch(Connection C) throws Exception
      {
        setLastUpdatedNow();
-       return Write(C);
+       return write(C);
      }
 
 /**
  Writes the object to the data store if any changes has occurred since the object was initially
  read from the data store or last written. 
+ If the object was deserialized (i.e., not created via the factory lookup() or create() methods, 
+ then this method assumes a create() and will check that all non-null columns have been provided. If you 
+ need more flexibility for an upsert, use the upsert(Connection, boolean) version of write 
+ which will try a combination of insert/update to get the object to the DB. 
+ Note that if you use write() right after a create, lookup or deserialization initialization, only the
+ template fields (not null, natural identity and/or any field set prior to calling this method) exist 
+  in memory. Call refresh() to force a select and retrieve all the fields for that record.
 */
+   public final boolean write(Connection C) throws Exception
+     {
+       long T0 = System.nanoTime();
+
+       if (__Init == null && __LookupId==0) // Loaded via some other mechamism, e.g., Json or CSV loader
+        {
+          validateDeserialization();
+          initForCreate();
+          // Auto PK
+          setRefnum(tilda.db.KeysManager.getKey("TILDA.JOBPARTMESSAGE"));
+        }
+
+       if (hasChanged() == false)
+        {
+          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.JobPartMessage has not changed: no writing will occur.");
+          QueryDetails.setLastQuery(TILDA__JOBPARTMESSAGE_Factory.SCHEMA_TABLENAME_LABEL, "");
+          return true;
+        }
+
+       if (beforeWrite(C) == false)
+        {
+          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.JobPartMessage object's beforeWrite() failed.");
+          QueryDetails.setLastQuery(TILDA__JOBPARTMESSAGE_Factory.SCHEMA_TABLENAME_LABEL, "");
+          return false;
+        }
+
+       String Q = getWriteQuery(C);
+
+       java.sql.PreparedStatement PS = null;
+       int count = 0;
+       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
+       try
+        {
+          PS = C.prepareStatement(Q);
+          int i = populatePreparedStatement(C, PS, AllocatedArrays);
+
+          switch (__LookupId)
+           {
+             case 0:
+               PS.setLong      (++i, _refnum       );
+               break;
+             case -666: if (__Init == InitMode.CREATE) break;
+             default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
+           }
+
+          C.setSavepoint();
+          count = PS.executeUpdate();
+          C.releaseSavepoint(true);
+          if (count == 0)
+           return false;
+        }
+       catch (java.sql.SQLException E)
+        {
+          C.releaseSavepoint(false);
+          return C.handleCatch(E, "updated or inserted");
+        }
+       finally
+        {
+          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__JOBPARTMESSAGE_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
+          PS = null;
+        }
+
+       stateUpdatePostWrite();
+       return true;
+     }
+
+   protected abstract boolean beforeWrite(Connection C) throws Exception;
+
+   protected void validateDeserialization() throws Exception
+     {
+
+       if (_jobRefnum == null)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.JobPartMessage.jobRefnum' was null or empty. It's not nullable in the model.\n"+toString());
+          __Changes.or(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBREFNUM._Mask);
+          __Nulls.andNot(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBREFNUM._Mask);
+
+       if (_jobPartRefnum != null)
+        {
+          __Changes.or(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask);
+          __Nulls.andNot(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask);
+        }
+
+       if (_notify == null)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.JobPartMessage.notify' was null or empty. It's not nullable in the model.\n"+toString());
+          __Changes.or(TILDA__JOBPARTMESSAGE_Factory.COLS.NOTIFY._Mask);
+          __Nulls.andNot(TILDA__JOBPARTMESSAGE_Factory.COLS.NOTIFY._Mask);
+
+       if (TextUtil.isNullOrEmpty(_msg) == true)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.JobPartMessage.msg' was null or empty. It's not nullable in the model.\n"+toString());
+          __Changes.or(TILDA__JOBPARTMESSAGE_Factory.COLS.MSG._Mask);
+          __Nulls.andNot(TILDA__JOBPARTMESSAGE_Factory.COLS.MSG._Mask);
+     }
    protected String getTimeStampSignature() throws Exception
      {
        StringBuilder S = new StringBuilder(1024);
@@ -1443,23 +1550,23 @@ This is the hasChanged for:<BR>
        int i = 0;
        if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.REFNUM._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.REFNUM._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _refnum);
+          if (__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.REFNUM._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT    ); else PS.setLong      (++i, _refnum);
         } 
        if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBREFNUM._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBREFNUM._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _jobRefnum);
+          if (__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBREFNUM._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT    ); else PS.setLong      (++i, _jobRefnum);
         } 
        if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _jobPartRefnum);
+          if (__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT    ); else PS.setLong      (++i, _jobPartRefnum);
         } 
        if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.NOTIFY._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.NOTIFY._Mask) == true) PS.setNull(++i, java.sql.Types.BOOLEAN); else PS.setBoolean  (++i, _notify);
+          if (__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.NOTIFY._Mask) == true) PS.setNull(++i, java.sql.Types.BOOLEAN   ); else PS.setBoolean   (++i, _notify);
         } 
        if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.MSG._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.MSG._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _msg);
+          if (__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.MSG._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _msg);
         } 
        if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.CREATED._Mask) == true) 
         { 
@@ -1499,86 +1606,27 @@ This is the hasChanged for:<BR>
        __Changes.clear();
        __Nulls.clear();
      }
-   public final boolean Write(Connection C) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (hasChanged() == false)
-        {
-          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.JobPartMessage has not changed: no writing will occur.");
-          QueryDetails.setLastQuery(TILDA__JOBPARTMESSAGE_Factory.SCHEMA_TABLENAME_LABEL, "");
-          return true;
-        }
-
-       if (BeforeWrite(C) == false)
-        {
-          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.JobPartMessage object's BeforeWrite() failed.");
-          QueryDetails.setLastQuery(TILDA__JOBPARTMESSAGE_Factory.SCHEMA_TABLENAME_LABEL, "");
-          return false;
-        }
-
-       String Q = getWriteQuery(C);
-
-       java.sql.PreparedStatement PS = null;
-       int count = 0;
-       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
-       try
-        {
-          PS = C.prepareStatement(Q);
-          int i = populatePreparedStatement(C, PS, AllocatedArrays);
-
-          switch (__LookupId)
-           {
-             case 0:
-               PS.setLong     (++i, _refnum       );
-               break;
-             case -666: if (__Init == InitMode.CREATE) break;
-             default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
-           }
-
-          C.setSavepoint();
-          count = PS.executeUpdate();
-          C.releaseSavepoint(true);
-          if (count == 0)
-           return false;
-        }
-       catch (java.sql.SQLException E)
-        {
-          C.releaseSavepoint(false);
-          return C.handleCatch(E, "updated or inserted");
-        }
-       finally
-        {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__JOBPARTMESSAGE_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
-          PS = null;
-        }
-
-       stateUpdatePostWrite();
-       return true;
-     }
-
-   protected abstract boolean BeforeWrite(Connection C) throws Exception;
-
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-   public final boolean Refresh(Connection C) throws Exception
+   public final boolean refresh(Connection C) throws Exception
      {
-       return ReadOne(C, true);
+       return readOne(C, true);
      }
 
-   public final boolean Read(Connection C) throws Exception
+   public final boolean read(Connection C) throws Exception
      {
-       return ReadOne(C, false);
+       return readOne(C, false);
      }
 
-   private final boolean ReadOne(Connection C, boolean Force) throws Exception
+   private final boolean readOne(Connection C, boolean Force) throws Exception
      {
        long T0 = System.nanoTime();
        if (__Init == InitMode.CREATE)
-        throw new Exception("This TILDA.JobPartMessage object is being Read() after a Create(), which doesn't make sense.");
+        throw new Exception("This TILDA.JobPartMessage object is being read() after a create(), which doesn't make sense.");
        if (__Init == InitMode.READ == true && Force == false && hasChanged()==false)
         {
           LOG.debug(QueryDetails._LOGGING_HEADER + "This TILDA.JobPartMessage object has already been read.");
@@ -1622,7 +1670,7 @@ This is the hasChanged for:<BR>
           switch (__LookupId)
            {
              case 0:
-               PS.setLong     (++i, _refnum       );
+               PS.setLong      (++i, _refnum       );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -1636,7 +1684,7 @@ This is the hasChanged for:<BR>
               return false;
             }
           count = 1;
-          return Init(C, RS);
+          return init(C, RS);
         }
        catch (java.sql.SQLException E)
         {
@@ -1644,30 +1692,30 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__JOBPARTMESSAGE_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__JOBPARTMESSAGE_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
     }
 
-   boolean Init(Connection C, java.sql.ResultSet RS) throws Exception
+   boolean init(Connection C, java.sql.ResultSet RS) throws Exception
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-      __Saved_refnum        = _refnum        =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.REFNUM._Mask       );
-                              _jobRefnum     =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBREFNUM._Mask    );
-                              _jobPartRefnum =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask);
-                              _notify        =                              RS.getBoolean  (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.NOTIFY._Mask       );
-                              _msg           = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.MSG._Mask          );
+      __Saved_refnum        = _refnum        =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.REFNUM._Mask       );
+                              _jobRefnum     =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBREFNUM._Mask    );
+                              _jobPartRefnum =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask);
+                              _notify        =                              RS.getBoolean   (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.NOTIFY._Mask       );
+                              _msg           = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.MSG._Mask          );
                               _created       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.CREATED._Mask      );
                               _lastUpdated   = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.LASTUPDATED._Mask  );
                               _deleted       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED._Mask      );
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();
-     return AfterRead(C);
+     return afterRead(C);
    }
 
-   protected abstract boolean AfterRead(Connection C) throws Exception;
+   protected abstract boolean afterRead(Connection C) throws Exception;
 
    public String toString()
     {
@@ -1677,7 +1725,7 @@ This is the hasChanged for:<BR>
                + "; jobRefnum: "                                                                                                   +                                   getJobRefnum    () 
                + "; jobPartRefnum"   + (__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask) == true ? ": NULL" : ": " +                                   getJobPartRefnum() )
                + "; notify: "                                                                                                      +                                   getNotify       () 
-               + "; msg: "                                                                                                         + TextUtil.PrintVariableStr        (getMsg          ())
+               + "; msg: "                                                                                                         + TextUtil.printVariableStr        (getMsg          ())
                + "; created: "                                                                                                     + DateTimeUtil.printDateTimeForJSON(getCreated      ())
                + "; lastUpdated: "                                                                                                 + DateTimeUtil.printDateTimeForJSON(getLastUpdated  ())
                + "; deleted"         + (__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDeleted      ()))

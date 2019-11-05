@@ -13,8 +13,11 @@ import tilda.enums.*;
 import tilda.performance.*;
 import tilda.utils.*;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.*;
+
+import com.google.gson.*;
+import com.google.gson.annotations.*;
+import java.math.*;
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -142,12 +145,15 @@ This View contains the following columns:<BLOCKQUOTE>
   <TR bgcolor="#fff6fc"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>String</B>&nbsp;&nbsp;</TD><TD>STR&nbsp;&nbsp;</TD><TD>String&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>String</TD></TR>
   <TR bgcolor="#FFFFFF"><TD>2&nbsp;&nbsp;</TD><TD align="right"><B>Character</B>&nbsp;&nbsp;</TD><TD>CHR&nbsp;&nbsp;</TD><TD>Character&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Character</TD></TR>
   <TR bgcolor="#fff6fc"><TD>3&nbsp;&nbsp;</TD><TD align="right"><B>Boolean</B>&nbsp;&nbsp;</TD><TD>BOL&nbsp;&nbsp;</TD><TD>Boolean&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Boolean</TD></TR>
-  <TR bgcolor="#FFFFFF"><TD>4&nbsp;&nbsp;</TD><TD align="right"><B>Integer</B>&nbsp;&nbsp;</TD><TD>INT&nbsp;&nbsp;</TD><TD>Integer&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Integer</TD></TR>
-  <TR bgcolor="#fff6fc"><TD>5&nbsp;&nbsp;</TD><TD align="right"><B>Long</B>&nbsp;&nbsp;</TD><TD>LNG&nbsp;&nbsp;</TD><TD>Long&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Long</TD></TR>
-  <TR bgcolor="#FFFFFF"><TD>6&nbsp;&nbsp;</TD><TD align="right"><B>Float</B>&nbsp;&nbsp;</TD><TD>FLT&nbsp;&nbsp;</TD><TD>Float&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Float</TD></TR>
-  <TR bgcolor="#fff6fc"><TD>7&nbsp;&nbsp;</TD><TD align="right"><B>Double</B>&nbsp;&nbsp;</TD><TD>DBL&nbsp;&nbsp;</TD><TD>Double&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Double</TD></TR>
-  <TR bgcolor="#FFFFFF"><TD>8&nbsp;&nbsp;</TD><TD align="right"><B>Date</B>&nbsp;&nbsp;</TD><TD>DT&nbsp;&nbsp;</TD><TD>Date&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Date</TD></TR>
-  <TR bgcolor="#fff6fc"><TD>9&nbsp;&nbsp;</TD><TD align="right"><B>DateTime</B>&nbsp;&nbsp;</TD><TD>DTM&nbsp;&nbsp;</TD><TD>DateTime&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>DateTime</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>4&nbsp;&nbsp;</TD><TD align="right"><B>Short</B>&nbsp;&nbsp;</TD><TD>SHT&nbsp;&nbsp;</TD><TD>Short&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Short</TD></TR>
+  <TR bgcolor="#fff6fc"><TD>5&nbsp;&nbsp;</TD><TD align="right"><B>Integer</B>&nbsp;&nbsp;</TD><TD>INT&nbsp;&nbsp;</TD><TD>Integer&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Integer</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>6&nbsp;&nbsp;</TD><TD align="right"><B>Long</B>&nbsp;&nbsp;</TD><TD>LNG&nbsp;&nbsp;</TD><TD>Long&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Long</TD></TR>
+  <TR bgcolor="#fff6fc"><TD>7&nbsp;&nbsp;</TD><TD align="right"><B>Float</B>&nbsp;&nbsp;</TD><TD>FLT&nbsp;&nbsp;</TD><TD>Float&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Float</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>8&nbsp;&nbsp;</TD><TD align="right"><B>Double</B>&nbsp;&nbsp;</TD><TD>DBL&nbsp;&nbsp;</TD><TD>Double&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Double</TD></TR>
+  <TR bgcolor="#fff6fc"><TD>9&nbsp;&nbsp;</TD><TD align="right"><B>Date</B>&nbsp;&nbsp;</TD><TD>DT&nbsp;&nbsp;</TD><TD>Date&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Date</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>10&nbsp;&nbsp;</TD><TD align="right"><B>DateTime</B>&nbsp;&nbsp;</TD><TD>DTM&nbsp;&nbsp;</TD><TD>DateTime&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>DateTime</TD></TR>
+  <TR bgcolor="#fff6fc"><TD>11&nbsp;&nbsp;</TD><TD align="right"><B>Numeric</B>&nbsp;&nbsp;</TD><TD>NUM&nbsp;&nbsp;</TD><TD>Numeric&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Numeric</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>12&nbsp;&nbsp;</TD><TD align="right"><B>Uuid</B>&nbsp;&nbsp;</TD><TD>UI&nbsp;&nbsp;</TD><TD>Uuid&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Uuid</TD></TR>
 </TABLE>
 </BLOCKQUOTE>
 </TD>
@@ -169,18 +175,19 @@ This View contains the following columns:<BLOCKQUOTE>
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__MEASUREFORMULAVIEW implements tilda.interfaces.ReaderObject
  {
-   protected static final Logger LOG = LogManager.getLogger(TILDA__MEASUREFORMULAVIEW.class.getName());
+   protected transient static final Logger LOG = LogManager.getLogger(TILDA__MEASUREFORMULAVIEW.class.getName());
 
-   public static final Class<TILDA__MEASUREFORMULAVIEW_Factory> FACTORY_CLASS= TILDA__MEASUREFORMULAVIEW_Factory.class;
-   public static final String TABLENAME = TextUtil.Print("TILDA.MeasureFormulaView", "");
+   public transient static final Class<TILDA__MEASUREFORMULAVIEW_Factory> FACTORY_CLASS= TILDA__MEASUREFORMULAVIEW_Factory.class;
+   public transient static final String TABLENAME = TextUtil.print("TILDA.MeasureFormulaView", "");
 
    protected TILDA__MEASUREFORMULAVIEW() { }
 
-   InitMode __Init        = null;
-   private BitSet   __Nulls       = new BitSet(64);
-   BitSet   __Changes     = new BitSet(64);
-   private boolean  __NewlyCreated= false;
-   private int      __LookupId;
+   transient InitMode __Init        = null;
+   transient BitSet   __Nulls       = new BitSet(64);
+   transient BitSet   __Changes     = new BitSet(64);
+   transient boolean  __NewlyCreated= false;
+
+   transient int      __LookupId;
 
    public  boolean hasChanged    () { return __Changes.isEmpty() == false; }
    public  boolean isNewlyCreated() { return __NewlyCreated; }
@@ -220,7 +227,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   long _measureRefnum= SystemValues.EVIL_VALUE;
+   @SerializedName("measureRefnum")
+   Long _measureRefnum=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -240,7 +248,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final long getMeasureRefnum()
-      { return _measureRefnum; }
+      { return _measureRefnum==null?0l:_measureRefnum; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -262,15 +270,25 @@ This is the setter for:<BR>
     void setMeasureRefnum(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _measureRefnum)
+       if (__Init == InitMode.CREATE || _measureRefnum == null || v != _measureRefnum)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.MeasureFormulaView.measureRefnum' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.MEASUREREFNUM._Mask);
           __Nulls.andNot(TILDA__MEASUREFORMULAVIEW_Factory.COLS.MEASUREREFNUM._Mask);
        _measureRefnum = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+   /**
+    * Being invariant, the field measureRefnum doesn't have a public setter. To support deserialization however, 
+    * we may need to set that field after a create/deserialization and before any write. The init methods allows
+    * to do so.
+   */
+   public void initMeasureRefnum(long v) throws Exception
+     {
+       setMeasureRefnum(v);
      }
 
 
@@ -297,7 +315,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _measureSchema;
+   @SerializedName("measureSchema")
+   String _measureSchema=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -344,10 +363,10 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.measureSchema to null: it's not nullable.");
        else if (v.length() > 64)
-        throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.measureSchema: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
+        throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.measureSchema: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
        else if (v.equals(_measureSchema) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.MeasureFormulaView.measureSchema' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.MEASURESCHEMA._Mask);
           __Nulls.andNot(TILDA__MEASUREFORMULAVIEW_Factory.COLS.MEASURESCHEMA._Mask);
@@ -380,7 +399,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _measureName;
+   @SerializedName("measureName")
+   String _measureName=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -427,10 +447,10 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.measureName to null: it's not nullable.");
        else if (v.length() > 64)
-        throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.measureName: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
+        throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.measureName: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
        else if (v.equals(_measureName) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.MeasureFormulaView.measureName' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.MEASURENAME._Mask);
           __Nulls.andNot(TILDA__MEASUREFORMULAVIEW_Factory.COLS.MEASURENAME._Mask);
@@ -462,7 +482,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   long _formulaRefnum= SystemValues.EVIL_VALUE;
+   @SerializedName("formulaRefnum")
+   Long _formulaRefnum=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -482,7 +503,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final long getFormulaRefnum()
-      { return _formulaRefnum; }
+      { return _formulaRefnum==null?0l:_formulaRefnum; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -504,15 +525,25 @@ This is the setter for:<BR>
     void setFormulaRefnum(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _formulaRefnum)
+       if (__Init == InitMode.CREATE || _formulaRefnum == null || v != _formulaRefnum)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.MeasureFormulaView.formulaRefnum' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULAREFNUM._Mask);
           __Nulls.andNot(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULAREFNUM._Mask);
        _formulaRefnum = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+   /**
+    * Being invariant, the field formulaRefnum doesn't have a public setter. To support deserialization however, 
+    * we may need to set that field after a create/deserialization and before any write. The init methods allows
+    * to do so.
+   */
+   public void initFormulaRefnum(long v) throws Exception
+     {
+       setFormulaRefnum(v);
      }
 
 
@@ -539,7 +570,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _formulaLocation;
+   @SerializedName("formulaLocation")
+   String _formulaLocation=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -586,16 +618,26 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.formulaLocation to null: it's not nullable.");
        else if (v.length() > 64)
-        throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.formulaLocation: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
+        throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.formulaLocation: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
        else if (v.equals(_formulaLocation) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.MeasureFormulaView.formulaLocation' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULALOCATION._Mask);
           __Nulls.andNot(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULALOCATION._Mask);
        _formulaLocation = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+   /**
+    * Being invariant, the field formulaLocation doesn't have a public setter. To support deserialization however, 
+    * we may need to set that field after a create/deserialization and before any write. The init methods allows
+    * to do so.
+   */
+   public void initFormulaLocation(String v) throws Exception
+     {
+       setFormulaLocation(v);
      }
 
 
@@ -622,7 +664,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _formulaLocation2;
+   @SerializedName("formulaLocation2")
+   String _formulaLocation2=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -669,16 +712,26 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.formulaLocation2 to null: it's not nullable.");
        else if (v.length() > 64)
-        throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.formulaLocation2: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
+        throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.formulaLocation2: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
        else if (v.equals(_formulaLocation2) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.MeasureFormulaView.formulaLocation2' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULALOCATION2._Mask);
           __Nulls.andNot(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULALOCATION2._Mask);
        _formulaLocation2 = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+   /**
+    * Being invariant, the field formulaLocation2 doesn't have a public setter. To support deserialization however, 
+    * we may need to set that field after a create/deserialization and before any write. The init methods allows
+    * to do so.
+   */
+   public void initFormulaLocation2(String v) throws Exception
+     {
+       setFormulaLocation2(v);
      }
 
 
@@ -705,7 +758,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _formulaName;
+   @SerializedName("formulaName")
+   String _formulaName=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -752,10 +806,10 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.formulaName to null: it's not nullable.");
        else if (v.length() > 64)
-        throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.formulaName: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
+        throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.formulaName: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
        else if (v.equals(_formulaName) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.MeasureFormulaView.formulaName' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULANAME._Mask);
           __Nulls.andNot(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULANAME._Mask);
@@ -788,7 +842,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _title;
+   @SerializedName("title")
+   String _title=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -835,10 +890,10 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.title to null: it's not nullable.");
        else if (v.length() > 128)
-        throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.title: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 128.");
+        throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.title: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 128.");
        else if (v.equals(_title) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.MeasureFormulaView.title' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.TITLE._Mask);
           __Nulls.andNot(TILDA__MEASUREFORMULAVIEW_Factory.COLS.TITLE._Mask);
@@ -871,7 +926,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _description;
+   @SerializedName("description")
+   String _description=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -918,10 +974,10 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.description to null: it's not nullable.");
        else if (v.length() > 32000)
-        throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.description: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 32000.");
+        throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.description: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 32000.");
        else if (v.equals(_description) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.MeasureFormulaView.description' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.DESCRIPTION._Mask);
           __Nulls.andNot(TILDA__MEASUREFORMULAVIEW_Factory.COLS.DESCRIPTION._Mask);
@@ -958,18 +1014,22 @@ This is the definition for:<BR>
   <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>String</B>&nbsp;&nbsp;</TD><TD>STR&nbsp;&nbsp;</TD><TD>String&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>String</TD></TR>
   <TR bgcolor="#EEEEEE"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Character</B>&nbsp;&nbsp;</TD><TD>CHR&nbsp;&nbsp;</TD><TD>Character&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Character</TD></TR>
   <TR bgcolor="#FFFFFF"><TD>2&nbsp;&nbsp;</TD><TD align="right"><B>Boolean</B>&nbsp;&nbsp;</TD><TD>BOL&nbsp;&nbsp;</TD><TD>Boolean&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Boolean</TD></TR>
-  <TR bgcolor="#EEEEEE"><TD>3&nbsp;&nbsp;</TD><TD align="right"><B>Integer</B>&nbsp;&nbsp;</TD><TD>INT&nbsp;&nbsp;</TD><TD>Integer&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Integer</TD></TR>
-  <TR bgcolor="#FFFFFF"><TD>4&nbsp;&nbsp;</TD><TD align="right"><B>Long</B>&nbsp;&nbsp;</TD><TD>LNG&nbsp;&nbsp;</TD><TD>Long&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Long</TD></TR>
-  <TR bgcolor="#EEEEEE"><TD>5&nbsp;&nbsp;</TD><TD align="right"><B>Float</B>&nbsp;&nbsp;</TD><TD>FLT&nbsp;&nbsp;</TD><TD>Float&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Float</TD></TR>
-  <TR bgcolor="#FFFFFF"><TD>6&nbsp;&nbsp;</TD><TD align="right"><B>Double</B>&nbsp;&nbsp;</TD><TD>DBL&nbsp;&nbsp;</TD><TD>Double&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Double</TD></TR>
-  <TR bgcolor="#EEEEEE"><TD>7&nbsp;&nbsp;</TD><TD align="right"><B>Date</B>&nbsp;&nbsp;</TD><TD>DT&nbsp;&nbsp;</TD><TD>Date&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Date</TD></TR>
-  <TR bgcolor="#FFFFFF"><TD>8&nbsp;&nbsp;</TD><TD align="right"><B>DateTime</B>&nbsp;&nbsp;</TD><TD>DTM&nbsp;&nbsp;</TD><TD>DateTime&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>DateTime</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>3&nbsp;&nbsp;</TD><TD align="right"><B>Short</B>&nbsp;&nbsp;</TD><TD>SHT&nbsp;&nbsp;</TD><TD>Short&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Short</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>4&nbsp;&nbsp;</TD><TD align="right"><B>Integer</B>&nbsp;&nbsp;</TD><TD>INT&nbsp;&nbsp;</TD><TD>Integer&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Integer</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>5&nbsp;&nbsp;</TD><TD align="right"><B>Long</B>&nbsp;&nbsp;</TD><TD>LNG&nbsp;&nbsp;</TD><TD>Long&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Long</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>6&nbsp;&nbsp;</TD><TD align="right"><B>Float</B>&nbsp;&nbsp;</TD><TD>FLT&nbsp;&nbsp;</TD><TD>Float&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Float</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>7&nbsp;&nbsp;</TD><TD align="right"><B>Double</B>&nbsp;&nbsp;</TD><TD>DBL&nbsp;&nbsp;</TD><TD>Double&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Double</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>8&nbsp;&nbsp;</TD><TD align="right"><B>Date</B>&nbsp;&nbsp;</TD><TD>DT&nbsp;&nbsp;</TD><TD>Date&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Date</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>9&nbsp;&nbsp;</TD><TD align="right"><B>DateTime</B>&nbsp;&nbsp;</TD><TD>DTM&nbsp;&nbsp;</TD><TD>DateTime&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>DateTime</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>10&nbsp;&nbsp;</TD><TD align="right"><B>Numeric</B>&nbsp;&nbsp;</TD><TD>NUM&nbsp;&nbsp;</TD><TD>Numeric&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Numeric</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>11&nbsp;&nbsp;</TD><TD align="right"><B>Uuid</B>&nbsp;&nbsp;</TD><TD>UI&nbsp;&nbsp;</TD><TD>Uuid&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Uuid</TD></TR>
 </TABLE>
 </TD></TR>
 
 </TABLE>
 */
-   String _type;
+   @SerializedName("type")
+   String _type=null;
 /**
 These are the enumerated values for tilda.data.TILDA.MeasureFormulaView.type, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
 
@@ -977,34 +1037,43 @@ These are the enumerated values for tilda.data.TILDA.MeasureFormulaView.type, wh
   <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>String</B>&nbsp;&nbsp;</TD><TD>STR&nbsp;&nbsp;</TD><TD>String&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>String</TD></TR>
   <TR bgcolor="#EEEEEE"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Character</B>&nbsp;&nbsp;</TD><TD>CHR&nbsp;&nbsp;</TD><TD>Character&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Character</TD></TR>
   <TR bgcolor="#FFFFFF"><TD>2&nbsp;&nbsp;</TD><TD align="right"><B>Boolean</B>&nbsp;&nbsp;</TD><TD>BOL&nbsp;&nbsp;</TD><TD>Boolean&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Boolean</TD></TR>
-  <TR bgcolor="#EEEEEE"><TD>3&nbsp;&nbsp;</TD><TD align="right"><B>Integer</B>&nbsp;&nbsp;</TD><TD>INT&nbsp;&nbsp;</TD><TD>Integer&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Integer</TD></TR>
-  <TR bgcolor="#FFFFFF"><TD>4&nbsp;&nbsp;</TD><TD align="right"><B>Long</B>&nbsp;&nbsp;</TD><TD>LNG&nbsp;&nbsp;</TD><TD>Long&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Long</TD></TR>
-  <TR bgcolor="#EEEEEE"><TD>5&nbsp;&nbsp;</TD><TD align="right"><B>Float</B>&nbsp;&nbsp;</TD><TD>FLT&nbsp;&nbsp;</TD><TD>Float&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Float</TD></TR>
-  <TR bgcolor="#FFFFFF"><TD>6&nbsp;&nbsp;</TD><TD align="right"><B>Double</B>&nbsp;&nbsp;</TD><TD>DBL&nbsp;&nbsp;</TD><TD>Double&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Double</TD></TR>
-  <TR bgcolor="#EEEEEE"><TD>7&nbsp;&nbsp;</TD><TD align="right"><B>Date</B>&nbsp;&nbsp;</TD><TD>DT&nbsp;&nbsp;</TD><TD>Date&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Date</TD></TR>
-  <TR bgcolor="#FFFFFF"><TD>8&nbsp;&nbsp;</TD><TD align="right"><B>DateTime</B>&nbsp;&nbsp;</TD><TD>DTM&nbsp;&nbsp;</TD><TD>DateTime&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>DateTime</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>3&nbsp;&nbsp;</TD><TD align="right"><B>Short</B>&nbsp;&nbsp;</TD><TD>SHT&nbsp;&nbsp;</TD><TD>Short&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Short</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>4&nbsp;&nbsp;</TD><TD align="right"><B>Integer</B>&nbsp;&nbsp;</TD><TD>INT&nbsp;&nbsp;</TD><TD>Integer&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Integer</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>5&nbsp;&nbsp;</TD><TD align="right"><B>Long</B>&nbsp;&nbsp;</TD><TD>LNG&nbsp;&nbsp;</TD><TD>Long&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Long</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>6&nbsp;&nbsp;</TD><TD align="right"><B>Float</B>&nbsp;&nbsp;</TD><TD>FLT&nbsp;&nbsp;</TD><TD>Float&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Float</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>7&nbsp;&nbsp;</TD><TD align="right"><B>Double</B>&nbsp;&nbsp;</TD><TD>DBL&nbsp;&nbsp;</TD><TD>Double&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Double</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>8&nbsp;&nbsp;</TD><TD align="right"><B>Date</B>&nbsp;&nbsp;</TD><TD>DT&nbsp;&nbsp;</TD><TD>Date&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Date</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>9&nbsp;&nbsp;</TD><TD align="right"><B>DateTime</B>&nbsp;&nbsp;</TD><TD>DTM&nbsp;&nbsp;</TD><TD>DateTime&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>DateTime</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>10&nbsp;&nbsp;</TD><TD align="right"><B>Numeric</B>&nbsp;&nbsp;</TD><TD>NUM&nbsp;&nbsp;</TD><TD>Numeric&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Numeric</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>11&nbsp;&nbsp;</TD><TD align="right"><B>Uuid</B>&nbsp;&nbsp;</TD><TD>UI&nbsp;&nbsp;</TD><TD>Uuid&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Uuid</TD></TR>
 </TABLE>
 */
    public static final String[][] _type_Values = {
                                                { "STR", "String", "String", "" }
                                              , { "CHR", "Character", "Character", "" }
                                              , { "BOL", "Boolean", "Boolean", "" }
+                                             , { "SHT", "Short", "Short", "" }
                                              , { "INT", "Integer", "Integer", "" }
                                              , { "LNG", "Long", "Long", "" }
                                              , { "FLT", "Float", "Float", "" }
                                              , { "DBL", "Double", "Double", "" }
                                              , { "DT" , "Date", "Date", "" }
                                              , { "DTM", "DateTime", "DateTime", "" }
+                                             , { "NUM", "Numeric", "Numeric", "" }
+                                             , { "UI" , "Uuid", "Uuid", "" }
                                   };
    public static final String _typeString    = "STR";
    public static final String _typeCharacter = "CHR";
    public static final String _typeBoolean   = "BOL";
+   public static final String _typeShort     = "SHT";
    public static final String _typeInteger   = "INT";
    public static final String _typeLong      = "LNG";
    public static final String _typeFloat     = "FLT";
    public static final String _typeDouble    = "DBL";
    public static final String _typeDate      = "DT";
    public static final String _typeDateTime  = "DTM";
+   public static final String _typeNumeric   = "NUM";
+   public static final String _typeUuid      = "UI";
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1028,12 +1097,15 @@ This is the getter for:<BR>
   <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>String</B>&nbsp;&nbsp;</TD><TD>STR&nbsp;&nbsp;</TD><TD>String&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>String</TD></TR>
   <TR bgcolor="#EEEEEE"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Character</B>&nbsp;&nbsp;</TD><TD>CHR&nbsp;&nbsp;</TD><TD>Character&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Character</TD></TR>
   <TR bgcolor="#FFFFFF"><TD>2&nbsp;&nbsp;</TD><TD align="right"><B>Boolean</B>&nbsp;&nbsp;</TD><TD>BOL&nbsp;&nbsp;</TD><TD>Boolean&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Boolean</TD></TR>
-  <TR bgcolor="#EEEEEE"><TD>3&nbsp;&nbsp;</TD><TD align="right"><B>Integer</B>&nbsp;&nbsp;</TD><TD>INT&nbsp;&nbsp;</TD><TD>Integer&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Integer</TD></TR>
-  <TR bgcolor="#FFFFFF"><TD>4&nbsp;&nbsp;</TD><TD align="right"><B>Long</B>&nbsp;&nbsp;</TD><TD>LNG&nbsp;&nbsp;</TD><TD>Long&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Long</TD></TR>
-  <TR bgcolor="#EEEEEE"><TD>5&nbsp;&nbsp;</TD><TD align="right"><B>Float</B>&nbsp;&nbsp;</TD><TD>FLT&nbsp;&nbsp;</TD><TD>Float&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Float</TD></TR>
-  <TR bgcolor="#FFFFFF"><TD>6&nbsp;&nbsp;</TD><TD align="right"><B>Double</B>&nbsp;&nbsp;</TD><TD>DBL&nbsp;&nbsp;</TD><TD>Double&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Double</TD></TR>
-  <TR bgcolor="#EEEEEE"><TD>7&nbsp;&nbsp;</TD><TD align="right"><B>Date</B>&nbsp;&nbsp;</TD><TD>DT&nbsp;&nbsp;</TD><TD>Date&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Date</TD></TR>
-  <TR bgcolor="#FFFFFF"><TD>8&nbsp;&nbsp;</TD><TD align="right"><B>DateTime</B>&nbsp;&nbsp;</TD><TD>DTM&nbsp;&nbsp;</TD><TD>DateTime&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>DateTime</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>3&nbsp;&nbsp;</TD><TD align="right"><B>Short</B>&nbsp;&nbsp;</TD><TD>SHT&nbsp;&nbsp;</TD><TD>Short&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Short</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>4&nbsp;&nbsp;</TD><TD align="right"><B>Integer</B>&nbsp;&nbsp;</TD><TD>INT&nbsp;&nbsp;</TD><TD>Integer&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Integer</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>5&nbsp;&nbsp;</TD><TD align="right"><B>Long</B>&nbsp;&nbsp;</TD><TD>LNG&nbsp;&nbsp;</TD><TD>Long&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Long</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>6&nbsp;&nbsp;</TD><TD align="right"><B>Float</B>&nbsp;&nbsp;</TD><TD>FLT&nbsp;&nbsp;</TD><TD>Float&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Float</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>7&nbsp;&nbsp;</TD><TD align="right"><B>Double</B>&nbsp;&nbsp;</TD><TD>DBL&nbsp;&nbsp;</TD><TD>Double&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Double</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>8&nbsp;&nbsp;</TD><TD align="right"><B>Date</B>&nbsp;&nbsp;</TD><TD>DT&nbsp;&nbsp;</TD><TD>Date&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Date</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>9&nbsp;&nbsp;</TD><TD align="right"><B>DateTime</B>&nbsp;&nbsp;</TD><TD>DTM&nbsp;&nbsp;</TD><TD>DateTime&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>DateTime</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>10&nbsp;&nbsp;</TD><TD align="right"><B>Numeric</B>&nbsp;&nbsp;</TD><TD>NUM&nbsp;&nbsp;</TD><TD>Numeric&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Numeric</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>11&nbsp;&nbsp;</TD><TD align="right"><B>Uuid</B>&nbsp;&nbsp;</TD><TD>UI&nbsp;&nbsp;</TD><TD>Uuid&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Uuid</TD></TR>
 </TABLE>
 </TD></TR>
 
@@ -1083,6 +1155,20 @@ This is the value is-a for tilda.data.TILDA.MeasureFormulaView.type:<BR>
 */
    public final boolean isTypeBoolean()
       { return _type != null && _type.equals(_typeBoolean); }
+
+/**
+This is the value is-a for tilda.data.TILDA.MeasureFormulaView.type:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>Short</TD></TR>
+  <TR><TD align="right"><B>Value</B></TD><TD>SHT</TD></TR>
+  <TR><TD align="right"><B>Default</B></TD><TD>NONE</TD></TR>
+  <TR><TD align="right"><B>Label</B></TD><TD>Short</TD></TR>
+  <TR><TD align="right"><B>Groupings</B></TD><TD></TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Short</TD></TR>
+</TABLE>
+*/
+   public final boolean isTypeShort()
+      { return _type != null && _type.equals(_typeShort); }
 
 /**
 This is the value is-a for tilda.data.TILDA.MeasureFormulaView.type:<BR>
@@ -1168,6 +1254,34 @@ This is the value is-a for tilda.data.TILDA.MeasureFormulaView.type:<BR>
    public final boolean isTypeDateTime()
       { return _type != null && _type.equals(_typeDateTime); }
 
+/**
+This is the value is-a for tilda.data.TILDA.MeasureFormulaView.type:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>Numeric</TD></TR>
+  <TR><TD align="right"><B>Value</B></TD><TD>NUM</TD></TR>
+  <TR><TD align="right"><B>Default</B></TD><TD>NONE</TD></TR>
+  <TR><TD align="right"><B>Label</B></TD><TD>Numeric</TD></TR>
+  <TR><TD align="right"><B>Groupings</B></TD><TD></TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Numeric</TD></TR>
+</TABLE>
+*/
+   public final boolean isTypeNumeric()
+      { return _type != null && _type.equals(_typeNumeric); }
+
+/**
+This is the value is-a for tilda.data.TILDA.MeasureFormulaView.type:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>Uuid</TD></TR>
+  <TR><TD align="right"><B>Value</B></TD><TD>UI</TD></TR>
+  <TR><TD align="right"><B>Default</B></TD><TD>NONE</TD></TR>
+  <TR><TD align="right"><B>Label</B></TD><TD>Uuid</TD></TR>
+  <TR><TD align="right"><B>Groupings</B></TD><TD></TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Uuid</TD></TR>
+</TABLE>
+*/
+   public final boolean isTypeUuid()
+      { return _type != null && _type.equals(_typeUuid); }
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.MeasureFormulaView.type -> TILDA.MeasureFormulaView."type"
@@ -1190,12 +1304,15 @@ This is the setter for:<BR>
   <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>String</B>&nbsp;&nbsp;</TD><TD>STR&nbsp;&nbsp;</TD><TD>String&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>String</TD></TR>
   <TR bgcolor="#EEEEEE"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Character</B>&nbsp;&nbsp;</TD><TD>CHR&nbsp;&nbsp;</TD><TD>Character&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Character</TD></TR>
   <TR bgcolor="#FFFFFF"><TD>2&nbsp;&nbsp;</TD><TD align="right"><B>Boolean</B>&nbsp;&nbsp;</TD><TD>BOL&nbsp;&nbsp;</TD><TD>Boolean&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Boolean</TD></TR>
-  <TR bgcolor="#EEEEEE"><TD>3&nbsp;&nbsp;</TD><TD align="right"><B>Integer</B>&nbsp;&nbsp;</TD><TD>INT&nbsp;&nbsp;</TD><TD>Integer&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Integer</TD></TR>
-  <TR bgcolor="#FFFFFF"><TD>4&nbsp;&nbsp;</TD><TD align="right"><B>Long</B>&nbsp;&nbsp;</TD><TD>LNG&nbsp;&nbsp;</TD><TD>Long&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Long</TD></TR>
-  <TR bgcolor="#EEEEEE"><TD>5&nbsp;&nbsp;</TD><TD align="right"><B>Float</B>&nbsp;&nbsp;</TD><TD>FLT&nbsp;&nbsp;</TD><TD>Float&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Float</TD></TR>
-  <TR bgcolor="#FFFFFF"><TD>6&nbsp;&nbsp;</TD><TD align="right"><B>Double</B>&nbsp;&nbsp;</TD><TD>DBL&nbsp;&nbsp;</TD><TD>Double&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Double</TD></TR>
-  <TR bgcolor="#EEEEEE"><TD>7&nbsp;&nbsp;</TD><TD align="right"><B>Date</B>&nbsp;&nbsp;</TD><TD>DT&nbsp;&nbsp;</TD><TD>Date&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Date</TD></TR>
-  <TR bgcolor="#FFFFFF"><TD>8&nbsp;&nbsp;</TD><TD align="right"><B>DateTime</B>&nbsp;&nbsp;</TD><TD>DTM&nbsp;&nbsp;</TD><TD>DateTime&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>DateTime</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>3&nbsp;&nbsp;</TD><TD align="right"><B>Short</B>&nbsp;&nbsp;</TD><TD>SHT&nbsp;&nbsp;</TD><TD>Short&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Short</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>4&nbsp;&nbsp;</TD><TD align="right"><B>Integer</B>&nbsp;&nbsp;</TD><TD>INT&nbsp;&nbsp;</TD><TD>Integer&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Integer</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>5&nbsp;&nbsp;</TD><TD align="right"><B>Long</B>&nbsp;&nbsp;</TD><TD>LNG&nbsp;&nbsp;</TD><TD>Long&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Long</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>6&nbsp;&nbsp;</TD><TD align="right"><B>Float</B>&nbsp;&nbsp;</TD><TD>FLT&nbsp;&nbsp;</TD><TD>Float&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Float</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>7&nbsp;&nbsp;</TD><TD align="right"><B>Double</B>&nbsp;&nbsp;</TD><TD>DBL&nbsp;&nbsp;</TD><TD>Double&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Double</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>8&nbsp;&nbsp;</TD><TD align="right"><B>Date</B>&nbsp;&nbsp;</TD><TD>DT&nbsp;&nbsp;</TD><TD>Date&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Date</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>9&nbsp;&nbsp;</TD><TD align="right"><B>DateTime</B>&nbsp;&nbsp;</TD><TD>DTM&nbsp;&nbsp;</TD><TD>DateTime&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>DateTime</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>10&nbsp;&nbsp;</TD><TD align="right"><B>Numeric</B>&nbsp;&nbsp;</TD><TD>NUM&nbsp;&nbsp;</TD><TD>Numeric&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Numeric</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>11&nbsp;&nbsp;</TD><TD align="right"><B>Uuid</B>&nbsp;&nbsp;</TD><TD>UI&nbsp;&nbsp;</TD><TD>Uuid&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Uuid</TD></TR>
 </TABLE>
 </TD></TR>
 
@@ -1207,10 +1324,10 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.type to null: it's not nullable.");
        else if (v.length() > 3)
-        throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.type: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 3.");
+        throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.type: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 3.");
        else if (v.equals(_type) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.MeasureFormulaView.type' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.TYPE._Mask);
           __Nulls.andNot(TILDA__MEASUREFORMULAVIEW_Factory.COLS.TYPE._Mask);
@@ -1243,7 +1360,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _formula;
+   @SerializedName("formula")
+   String _formula=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1284,7 +1402,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isNullFormula()
+   public final boolean isFormulaNull()
      { return __Nulls.intersects(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULA._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1310,13 +1428,13 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setNullFormula();
+          setFormulaNull();
         }
        else if (v.length() > 32000)
-        throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.formula: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 32000.");
+        throw new Exception("Cannot set tilda.data.TILDA.MeasureFormulaView.formula: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 32000.");
        else if (v.equals(_formula) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.MeasureFormulaView.formula' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULA._Mask);
           __Nulls.andNot(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULA._Mask);
@@ -1343,7 +1461,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setNullFormula()
+    void setFormulaNull()
      {
        long T0 = System.nanoTime();
        if (__Nulls.intersects(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULA._Mask) == true) // already NULL
@@ -1364,21 +1482,21 @@ This is the null setter for:<BR>
 // THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-   public final boolean Refresh(Connection C) throws Exception
+   public final boolean refresh(Connection C) throws Exception
      {
-       return ReadOne(C, true);
+       return readOne(C, true);
      }
 
-   public final boolean Read(Connection C) throws Exception
+   public final boolean read(Connection C) throws Exception
      {
-       return ReadOne(C, false);
+       return readOne(C, false);
      }
 
-   private final boolean ReadOne(Connection C, boolean Force) throws Exception
+   private final boolean readOne(Connection C, boolean Force) throws Exception
      {
        long T0 = System.nanoTime();
        if (__Init == InitMode.CREATE)
-        throw new Exception("This TILDA.MeasureFormulaView object is being Read() after a Create(), which doesn't make sense.");
+        throw new Exception("This TILDA.MeasureFormulaView object is being read() after a create(), which doesn't make sense.");
        if (__Init == InitMode.READ == true && Force == false && hasChanged()==false)
         {
           LOG.debug(QueryDetails._LOGGING_HEADER + "This TILDA.MeasureFormulaView object has already been read.");
@@ -1432,7 +1550,7 @@ This is the null setter for:<BR>
               return false;
             }
           count = 1;
-          return Init(C, RS);
+          return init(C, RS);
         }
        catch (java.sql.SQLException E)
         {
@@ -1440,49 +1558,49 @@ This is the null setter for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__MEASUREFORMULAVIEW_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__MEASUREFORMULAVIEW_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
     }
 
-   boolean Init(Connection C, java.sql.ResultSet RS) throws Exception
+   boolean init(Connection C, java.sql.ResultSet RS) throws Exception
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-                                 _measureRefnum    =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.MEASUREREFNUM._Mask   );
-                                 _measureSchema    = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.MEASURESCHEMA._Mask   );
-                                 _measureName      = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.MEASURENAME._Mask     );
-                                 _formulaRefnum    =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULAREFNUM._Mask   );
-                                 _formulaLocation  = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULALOCATION._Mask );
-                                 _formulaLocation2 = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULALOCATION2._Mask);
-                                 _formulaName      = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULANAME._Mask     );
-                                 _title            = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.TITLE._Mask           );
-                                 _description      = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.DESCRIPTION._Mask     );
-                                 _type             = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.TYPE._Mask            ); else _type             = _type            .trim();
-                                 _formula          = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULA._Mask         );
+                                 _measureRefnum    =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.MEASUREREFNUM._Mask   );
+                                 _measureSchema    = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.MEASURESCHEMA._Mask   );
+                                 _measureName      = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.MEASURENAME._Mask     );
+                                 _formulaRefnum    =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULAREFNUM._Mask   );
+                                 _formulaLocation  = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULALOCATION._Mask );
+                                 _formulaLocation2 = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULALOCATION2._Mask);
+                                 _formulaName      = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULANAME._Mask     );
+                                 _title            = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.TITLE._Mask           );
+                                 _description      = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.DESCRIPTION._Mask     );
+                                 _type             = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.TYPE._Mask            ); else _type             = _type            .trim();
+                                 _formula          = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULA._Mask         );
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();
-     return AfterRead(C);
+     return afterRead(C);
    }
 
-   protected abstract boolean AfterRead(Connection C) throws Exception;
+   protected abstract boolean afterRead(Connection C) throws Exception;
 
    public String toString()
     {
       long T0 = System.nanoTime();
       String Str = 
                    "measureRefnum: "                                                                                                         +                                   getMeasureRefnum   () 
-               + "; measureSchema: "                                                                                                         + TextUtil.PrintVariableStr        (getMeasureSchema   ())
-               + "; measureName: "                                                                                                           + TextUtil.PrintVariableStr        (getMeasureName     ())
+               + "; measureSchema: "                                                                                                         + TextUtil.printVariableStr        (getMeasureSchema   ())
+               + "; measureName: "                                                                                                           + TextUtil.printVariableStr        (getMeasureName     ())
                + "; formulaRefnum: "                                                                                                         +                                   getFormulaRefnum   () 
-               + "; formulaLocation: "                                                                                                       + TextUtil.PrintVariableStr        (getFormulaLocation ())
-               + "; formulaLocation2: "                                                                                                      + TextUtil.PrintVariableStr        (getFormulaLocation2())
-               + "; formulaName: "                                                                                                           + TextUtil.PrintVariableStr        (getFormulaName     ())
-               + "; title: "                                                                                                                 + TextUtil.PrintVariableStr        (getTitle           ())
-               + "; description: "                                                                                                           + TextUtil.PrintVariableStr        (getDescription     ())
-               + "; type: "                                                                                                                  + TextUtil.PrintVariableStr        (getType            ())
-               + "; formula"            + (__Nulls.intersects(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULA._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getFormula         ()))
+               + "; formulaLocation: "                                                                                                       + TextUtil.printVariableStr        (getFormulaLocation ())
+               + "; formulaLocation2: "                                                                                                      + TextUtil.printVariableStr        (getFormulaLocation2())
+               + "; formulaName: "                                                                                                           + TextUtil.printVariableStr        (getFormulaName     ())
+               + "; title: "                                                                                                                 + TextUtil.printVariableStr        (getTitle           ())
+               + "; description: "                                                                                                           + TextUtil.printVariableStr        (getDescription     ())
+               + "; type: "                                                                                                                  + TextUtil.printVariableStr        (getType            ())
+               + "; formula"            + (__Nulls.intersects(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULA._Mask) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getFormula         ()))
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;

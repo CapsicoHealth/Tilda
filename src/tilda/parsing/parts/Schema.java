@@ -36,29 +36,35 @@ import tilda.utils.TextUtil;
 
 public class Schema
   {
-    protected static final Logger  LOG                = LogManager.getLogger(Schema.class.getName());
+    protected static final Logger LOG                         = LogManager.getLogger(Schema.class.getName());
 
     /*@formatter:off*/
     @SerializedName("package"      ) public String            _Package;
     @SerializedName("documentation") public Documentation     _Documentation = new Documentation();
     @SerializedName("extraDDL"     ) public ExtraDDL          _ExtraDDL      = new ExtraDDL();
-    @SerializedName("dependencies" ) public String[]          _Dependencies;
-    @SerializedName("interfaces"   ) public List<Interface  > _Interfaces  = new ArrayList<Interface  >();
-    @SerializedName("enumerations" ) public List<Enumeration> _Enumerations= new ArrayList<Enumeration>();
-    @SerializedName("mappers"      ) public List<Mapper     > _Mappers     = new ArrayList<Mapper     >();
-    @SerializedName("objects"      ) public List<Object     > _Objects     = new ArrayList<Object     >();
-    @SerializedName("views"        ) public List<View       > _Views       = new ArrayList<View       >();
-    @SerializedName("importers"    ) public List<Importer   > _Importers   = new ArrayList<Importer   >();
+    @SerializedName("dependencies" ) public String[]          _Dependencies  = new String[] { };
+    @SerializedName("interfaces"   ) public List<Interface  > _Interfaces    = new ArrayList<Interface  >();
+    @SerializedName("enumerations" ) public List<Enumeration> _Enumerations  = new ArrayList<Enumeration>();
+    @SerializedName("mappers"      ) public List<Mapper     > _Mappers       = new ArrayList<Mapper     >();
+    @SerializedName("objects"      ) public List<Object     > _Objects       = new ArrayList<Object     >();
+    @SerializedName("views"        ) public List<View       > _Views         = new ArrayList<View       >();
+    @SerializedName("importers"    ) public List<Importer   > _Importers     = new ArrayList<Importer   >();
     /*@formatter:on*/
 
-    transient public String        _Name;
-    transient public String        _ResourceName;
-    transient public String        _ResourceNameShort;
-    transient public String        _ProjectRoot;
-    transient public List<Schema>  _DependencySchemas = new ArrayList<Schema>();
-    transient public Boolean       _Validated         = null;
+    transient public String       _Name;
+    transient public String       _ResourceName;
+    transient public String       _ResourceNameShort;
+    transient public String       _ProjectRoot;
+    transient public List<Schema> _DependencySchemas          = new ArrayList<Schema>();
+    transient public Boolean      _Validated                  = null;
 
-    protected static final Pattern P                  = Pattern.compile("/?_tilda\\.(\\w+)\\.json");
+    @Override
+    public String toString()
+      {
+        return _Name + " (" + super.toString() + ")";
+      }
+
+    protected static final Pattern P = Pattern.compile("/?_tilda\\.(\\w+)\\.json");
 
     public void setOrigin(String ResourceName)
     throws Exception
@@ -186,7 +192,7 @@ public class Schema
           return null;
         return V.getFormula(C._Name, true);
       }
-    
+
     public Mapper getMapper(String Name)
       {
         for (Mapper M : _Mappers)
@@ -202,11 +208,14 @@ public class Schema
       }
 
 
-    public boolean Validate(ParserSession PS)
+    public boolean Validate(ParserSession PS) throws Exception
       {
         LOG.info("Validating Tilda Schema '" + getFullName() + "'.");
         int Errs = PS.getErrorCount();
         int i = -1;
+
+        setDefaultDependencies(PS);
+
         for (Enumeration E : _Enumerations)
           if (E != null)
             {
@@ -218,13 +227,16 @@ public class Schema
               M.Validate(PS, this, ++i);
             }
         Set<String> ThingNames = new HashSet<String>();
-        for (Object O : _Objects)
-          if (O != null)
-            {
-              if (ThingNames.add(O._Name.toUpperCase()) == false)
-                PS.AddError("The Object '" + O._Name + "' conflicts with another Thing already defined with the same name in Schema '" + getFullName() + "'.");
-              O.Validate(PS, this);
-            }
+        for (i = 0; i < _Objects.size(); ++i)
+          {
+            Object O = _Objects.get(i);
+            if (O != null)
+              {
+                if (ThingNames.add(O._Name.toUpperCase()) == false)
+                  PS.AddError("The Object '" + O._Name + "' conflicts with another Thing already defined with the same name in Schema '" + getFullName() + "'.");
+                O.Validate(PS, this);
+              }
+          }
 
         // boolean hasFormulas = false;
         Map<String, Formula> Measures = new HashMap<String, Formula>();
@@ -253,6 +265,22 @@ public class Schema
          */
         _Validated = Errs == PS.getErrorCount();
         return _Validated;
+      }
+
+    public static final String    _BASE_TILDA_SCHEMA_RESOURCE = "tilda/data/_tilda.Tilda.json";
+    
+    public void setDefaultDependencies(ParserSession PS) throws Exception
+      {
+        if (_Name.equals("TILDA") == false && _Name.equals("TILDATMP") == false && TextUtil.isNullOrEmpty(_Dependencies) == true)
+          {
+            _Dependencies = new String[] { _BASE_TILDA_SCHEMA_RESOURCE
+            };
+            Schema TildaSchema = PS.getSchema(_BASE_TILDA_SCHEMA_RESOURCE);
+            if (TildaSchema != null)
+              _DependencySchemas.add(TildaSchema);
+            else
+              throw new Exception("Cannot find Tilda schema '"+_BASE_TILDA_SCHEMA_RESOURCE+"' in the dependencies!!!");
+          }
       }
 
     /*
@@ -492,7 +520,7 @@ public class Schema
             LOG.info("   " + X._Name);
             if (recurse == true)
               for (Object O : X._Objects)
-                LOG.info("       " + O._Name + ": " + TextUtil.Print(O.getColumnNames()));
+                LOG.info("       " + O._Name + ": " + TextUtil.print(O.getColumnNames()));
           }
       }
 

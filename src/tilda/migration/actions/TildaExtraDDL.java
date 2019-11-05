@@ -56,11 +56,11 @@ public class TildaExtraDDL extends MigrationAction
         if (C.executeDDL(_SchemaName, "*", Str) == false)
           return false;
 
-        Maintenance_Data M = Maintenance_Factory.LookupByPrimaryKey("EXTERNAL_DDL", _ResourceName);
-        if (M.Read(C) == false)
-          M = Maintenance_Factory.Create("EXTERNAL_DDL", _ResourceName);
+        Maintenance_Data M = Maintenance_Factory.lookupByPrimaryKey("EXTERNAL_DDL", _ResourceName);
+        if (M.read(C) == false)
+          M = Maintenance_Factory.create("EXTERNAL_DDL", _ResourceName);
         M.setValue(Str);
-        return M.Write(C);
+        return M.write(C);
       }
 
     @Override
@@ -78,7 +78,7 @@ public class TildaExtraDDL extends MigrationAction
         String Str = FileUtil.getFileOfResourceContents(_ResourceName);
         if (TextUtil.isNullOrEmpty(Str) == true)
           return false;
-        Maintenance_Data M = Maintenance_Factory.LookupByPrimaryKey("EXTERNAL_DDL", _ResourceName);
-        return M.Read(C) == false || M.getValue().equals(Str.trim()) == false;
+        Maintenance_Data M = Maintenance_Factory.lookupByPrimaryKey("EXTERNAL_DDL", _ResourceName);
+        return M.read(C) == false || M.getValue().equals(Str.trim()) == false;
       }
   }

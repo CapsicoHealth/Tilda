@@ -21,7 +21,18 @@ public class Type_DatetimePrimitiveNull extends Type_DatetimePrimitive implement
   {
     public Type_DatetimePrimitiveNull(String SchemaName, String TableName, String ColumnName, int Count, String Description)
       {
-        super(SchemaName, TableName, ColumnName, Count, Description);
+        this(SchemaName, TableName, ColumnName, Count, Description, null);
       }
+    public Type_DatetimePrimitiveNull(String SchemaName, String TableName, String ColumnName, int Count, String Description, Type_StringPrimitiveNull TZCol)
+      {
+        super(SchemaName, TableName, ColumnName, Count, Description, TZCol);
+      }
+    
+    public Type_DatetimePrimitiveNull(Type_DatetimePrimitive notNullDateTime)
+      {
+        super(notNullDateTime._SchemaName, notNullDateTime._TableName, notNullDateTime._ColumnName, notNullDateTime._Mask.nextSetBit(0), notNullDateTime._Description);
+      }
+    
+    
     
   }

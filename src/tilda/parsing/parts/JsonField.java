@@ -33,6 +33,14 @@ public class JsonField extends TypeDef
     @SerializedName("description") public String  _Description;
     /*@formatter:on*/
 
+    public JsonField(JsonField jf)
+      {
+        super(jf);
+        _Name = jf._Name;
+        _Nullable = jf._Nullable;
+        _Description = jf._Description;
+      }
+
     public boolean Validate(ParserSession PS, Column C)
       {
         if (TextUtil.isNullOrEmpty(_Name) == true)
@@ -43,13 +51,13 @@ public class JsonField extends TypeDef
 
         if (_Nullable == null)
           _Nullable = Boolean.TRUE;
-        
+
         if (TextUtil.isNullOrEmpty(_Description) == true)
-          PS.AddError("Column '" + C.getFullName() + " defined a jsonSchema with field '"+_Name+"' without a description.");
+          PS.AddError("Column '" + C.getFullName() + " defined a jsonSchema with field '" + _Name + "' without a description.");
 
         if (super.Validate(PS, "JsonSchema field", true, true) == false)
-         return false;
-        
+          return false;
+
         return true;
       }
   }

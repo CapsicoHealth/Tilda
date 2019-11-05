@@ -23,7 +23,7 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.data.Key_Data;
 import tilda.data.Key_Factory;
-import tilda.data.Testing_Factory;
+import tilda.data_test.Testing_Factory;
 import tilda.db.Connection;
 import tilda.db.ConnectionPool;
 import tilda.db.SelectQuery;
@@ -46,7 +46,7 @@ public class QueryTest extends Key_Factory
           {
             C = ConnectionPool.get("MAIN");
 
-            Key_Data K = Key_Factory.Create(-3, "TOTO", 0, 100);
+            Key_Data K = Key_Factory.create(-3, "TOTO", 0, 100);
 
               {
                 UpdateQuery Q = newUpdateQuery(C);

@@ -44,6 +44,7 @@ public abstract class Base
     @SerializedName("queries"    ) public List<SubWhereClause> _Queries    = new ArrayList<SubWhereClause>();
     @SerializedName("json"       ) public List<OutputMapping>  _JsonDEPRECATED = new ArrayList<OutputMapping >();
     @SerializedName("outputMaps" ) public List<OutputMapping>  _OutputMaps = new ArrayList<OutputMapping>();
+    @SerializedName("tenantInit" ) public Boolean              _TenantInit = Boolean.FALSE;
     /*@formatter:on*/
 
     public transient Schema          _ParentSchema;
@@ -68,6 +69,28 @@ public abstract class Base
       {
         _TildaType = Type;
       }
+
+    public Base(Base b)
+      {
+        _Name = b._Name;
+        _Description = b._Description;
+
+        // SubWhereClauses are being modified as part of validation, and so we need a clean copy here.
+        _Queries = new ArrayList<SubWhereClause>();
+        for (SubWhereClause SWC : b._Queries)
+          if (SWC != null)
+            _Queries.add(new SubWhereClause(SWC));
+
+        // OutputMaps are being modified as part of validation, and so we need a clean copy here.
+        for (OutputMapping OM : b._JsonDEPRECATED)
+          _JsonDEPRECATED.add(new OutputMapping(OM));
+        for (OutputMapping OM : b._OutputMaps)
+          _OutputMaps.add(new OutputMapping(OM));
+
+        _TenantInit = b._TenantInit;
+        _TildaType = b._TildaType;
+      }
+
 
     /**
      * 
@@ -144,7 +167,7 @@ public abstract class Base
 
         if (_Name.length() > PS._CGSql.getMaxTableNameSize())
           PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring " + _TildaType.name() + " '" + getBaseName() + "' with a name that's too long: max allowed by your database is " + PS._CGSql.getMaxColumnNameSize() + " vs " + _Name.length() + " for this identifier.");
-        if (_Name.equals(TextUtil.SanitizeName(_Name)) == false)
+        if (_Name.equals(TextUtil.sanitizeName(_Name)) == false)
           PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring " + _TildaType.name() + " '" + getBaseName() + "' with a name containing invalid characters (must all be alphanumeric or underscore).");
         if (ValidationHelper.isValidIdentifier(_Name) == false)
           PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring " + _TildaType.name() + " '" + getBaseName() + "' with a name '" + _Name + "' which is not valid. " + ValidationHelper._ValidIdentifierMessage);
@@ -164,9 +187,12 @@ public abstract class Base
         // artifacts won't exist yet at this point.
 
         if (_JsonDEPRECATED.isEmpty() == false)
-          for (OutputMapping J : _JsonDEPRECATED)
-            _OutputMaps.add(J);
-
+          {
+            for (OutputMapping J : _JsonDEPRECATED)
+              _OutputMaps.add(J);
+            _JsonDEPRECATED.clear();
+          }
+        
         _Validated = Errs == PS.getErrorCount();
         return _Validated;
       }
@@ -189,20 +215,22 @@ public abstract class Base
 
     /**
      * "colA", "abc*"
+     * 
      * @param vals
      * @return
      */
     protected List<String> expandColumnNames(String[] vals)
       {
-        String[] colNames = getColumnNames(); 
+        String[] colNames = getColumnNames();
         List<String> L = new ArrayList<String>();
         for (String val : vals)
           {
-            String[] valsA = new String[] { val };
-            for (String colName : colNames) 
+            String[] valsA = new String[] { val
+            };
+            for (String colName : colNames)
               {
-                if (TextUtil.FindStarElement(valsA, colName, false, 0) != -1)
-                 L.add(colName);
+                if (TextUtil.findStarElement(valsA, colName, false, 0) != -1)
+                  L.add(colName);
               }
           }
         return L;

@@ -142,7 +142,7 @@ public class MSSQL implements DBType
       }
 
     @Override
-    public boolean FullIdentifierOnUpdate()
+    public boolean fullIdentifierOnUpdate()
       {
         return false;
       }
@@ -263,6 +263,13 @@ public class MSSQL implements DBType
       }
 
     @Override
+    public boolean alterTableAlterColumnNumericSize(Connection connection, ColumnMeta colMeta, Column col)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }    
+
+    @Override
     public boolean alterTableAlterColumnStringSize(Connection Con, ColumnMeta ColMeta, Column Col)
     throws Exception
       {
@@ -308,6 +315,8 @@ public class MSSQL implements DBType
                   case "_bpchar": TildaType = ColumnType.CHAR; break;
                   case "_text"  : TildaType = ColumnType.STRING; break;
                   case "_bool"  : TildaType = ColumnType.BOOLEAN; break;
+                  case "_uuid"  : TildaType = ColumnType.UUID; break;
+                  
                   default: throw new Exception("Cannot map SQL TypeName "+TypeName+" for array column '"+Name+"'.");
                 }
                break;
@@ -381,7 +390,7 @@ public class MSSQL implements DBType
       }
 
     @Override
-    public void getColumnType(StringBuilder Str, ColumnType T, Integer S, ColumnMode M, boolean Collection)
+    public void getColumnType(StringBuilder Str, ColumnType T, Integer S, ColumnMode M, boolean Collection, Integer Precision, Integer Scale)
       {
         throw new UnsupportedOperationException();        
       }
@@ -391,7 +400,7 @@ public class MSSQL implements DBType
     throws Exception
       {
         StringBuilder Str = new StringBuilder();
-        TextUtil.EscapeSingleQuoteForSQL(Str, val, true);
+        TextUtil.escapeSingleQuoteForSQL(Str, val, true);
         PS.setString(i, Str.toString());
       }
 

@@ -30,7 +30,6 @@ import tilda.enums.FrameworkSourcedType;
 import tilda.enums.MultiType;
 import tilda.enums.ObjectLifecycle;
 import tilda.enums.ObjectMode;
-import tilda.enums.TildaType;
 import tilda.generation.interfaces.CodeGenAppData;
 import tilda.generation.interfaces.CodeGenAppFactory;
 import tilda.generation.interfaces.CodeGenAppJson;
@@ -47,8 +46,8 @@ import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ColumnValue;
 import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
-import tilda.parsing.parts.OutputMapping;
 import tilda.parsing.parts.Object;
+import tilda.parsing.parts.OutputMapping;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.SubWhereClause;
 import tilda.parsing.parts.View;
@@ -82,10 +81,10 @@ public class Generator
               LOG.debug("  Generating Tilda classes for Object '" + O.getFullName() + "'.");
               genTildaData(G, GenFolder, O);
               genTildaFactory(G, GenFolder, O);
-              genTildaJson(G, GenFolder, O);
+//              genTildaJson(G, GenFolder, O);
               genAppData(G, Res.getParentFile(), O);
               genAppFactory(G, Res.getParentFile(), O);
-              genAppJson(G, Res.getParentFile(), O);
+//              genAppJson(G, Res.getParentFile(), O);
             }
         return true;
       }
@@ -105,7 +104,7 @@ public class Generator
         if (B == null)
           {
             B = new Object();
-            B._ParentSchema = S;            
+            B._ParentSchema = S;
           }
 
         File f = new File(GenFolder.getAbsolutePath() + File.separator + CG.getFileName(B));
@@ -236,6 +235,9 @@ public class Generator
               Out.println();
               DG.MustNotBeModified(Out, G);
               Out.println();
+              if (C.getName().equals("a9") == true)
+                LOG.debug("xxx");
+                
 
               if (C._Mode != ColumnMode.CALCULATED || C._Mode == ColumnMode.CALCULATED && C._MapperDef != null)
                 {
@@ -355,6 +357,11 @@ public class Generator
             Out.println();
             DG.docMethodWrite(Out, G, O);
             CG.genMethodWrite(Out, G, O);
+            if (O._HasNaturalIdentity == true) // There is a natural Id for this object
+              {
+                DG.docMethodUpsert(Out, G, O);
+                CG.genMethodUpsert(Out, G, O);
+              }
           }
 
         Out.println();
@@ -409,7 +416,7 @@ public class Generator
             Out.println();
             DG.docMethodCreate(Out, G, O, CreateColumns);
             CG.genMethodCreate(Out, G, O, CreateColumns, DefaultCreateColumns);
-            
+
             CG.genBatchWrite(Out, G, O);
           }
 
@@ -470,15 +477,26 @@ public class Generator
 
         if (O._FST == FrameworkSourcedType.MAPPER)
           {
+            Out.println();
             DG.docMappingSupport(Out, G, O);
             CG.genMappingSupport(Out, G, O);
           }
         else if (O._FST == FrameworkSourcedType.ENUMERATION)
           {
+            Out.println();
             DG.docEnumerationSupport(Out, G, O);
             CG.genEnumerationSupport(Out, G, O);
           }
-              
+
+        for (OutputMapping OM : O._OutputMaps)
+          if (OM != null)
+            {
+              Out.println();
+              DG.docMethodOutput(Out, G, OM);
+              CG.genMethodToOutput(Out, G, OM);
+            }
+
+        Out.println();
         CG.genClassEnd(Out, G);
         Out.close();
       }
@@ -510,22 +528,7 @@ public class Generator
             Out.println();
             CG.genMethodToString(Out, G, O);
           }
-        for (OutputMapping OM : O._OutputMaps)
-          if (OM != null)
-            {
-              Out.println();
-              DG.docMethodOutput(Out, G, OM);
-              CG.genMethodToOutput(Out, G, OM);
-            }
         Out.println();
-        for (Column Col : O._Columns)
-          {
-            if (Col != null && Col._JsonSchema != null)
-              {
-                DG.docMethodJSONSchema(Out, G, Col);
-                CG.genMethodJSONSchema(Out, G, Col);
-              }
-          }
         CG.genClassEnd(Out, G);
         Out.close();
       }

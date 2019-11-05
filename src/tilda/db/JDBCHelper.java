@@ -69,7 +69,7 @@ public class JDBCHelper
     public static int process(ResultSet RS, RecordProcessor RP, int Start, boolean Offsetted, int Size, boolean Limited, boolean CountAll)
     throws Exception
       {
-        RP.Start();
+        RP.start();
         int count = 0;
         if (Offsetted == false && Start > 0 && RS.relative(Start) == false)
           return -1;
@@ -77,13 +77,13 @@ public class JDBCHelper
           {
             if (RS.next() == false)
               break;
-            if (RP.Process(count, RS) == false)
+            if (RP.process(count, RS) == false)
               return -1;
             ++count;
           }
         boolean More = RS.next();
         int MaxCount = CountAll == true && RS.last() == true ? RS.getRow() : SystemValues.EVIL_VALUE;
-        RP.End(More, MaxCount);
+        RP.end(More, MaxCount);
         return count;
       }
 

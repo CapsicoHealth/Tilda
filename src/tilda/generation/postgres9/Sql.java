@@ -93,13 +93,13 @@ public class Sql extends PostgreSQL implements CodeGenSql
     @Override
     public String getColumnType(Column C)
       {
-        return getColumnType(C.getType(), C._Size, C._Mode, C.isCollection());
+        return getColumnType(C.getType(), C._Size, C._Mode, C.isCollection(), C._Precision, C._Scale);
       }
 
     @Override
     public String getColumnType(Column C, ColumnType AggregateType)
       {
-        return getColumnType(AggregateType, C._Size, C._Mode, C.isCollection());
+        return getColumnType(AggregateType, C._Size, C._Mode, C.isCollection(), C._Precision, C._Scale);
       }
 
     @Override
@@ -244,10 +244,10 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 Out.println(") REFERENCES " + FK._DestObjectObj._ParentSchema._Name + "." + FK._DestObjectObj._Name + " ON DELETE restrict ON UPDATE cascade");
               }
         Out.println(" );");
-        Out.println("COMMENT ON TABLE " + O.getShortName() + " IS E" + TextUtil.EscapeSingleQuoteForSQL(O._Description) + ";");
+        Out.println("COMMENT ON TABLE " + O.getShortName() + " IS E" + TextUtil.escapeSingleQuoteForSQL(O._Description) + ";");
         for (Column C : O._Columns)
           if (C != null && C._Mode != ColumnMode.CALCULATED)
-            Out.println("COMMENT ON COLUMN " + O.getShortName() + ".\"" + C.getName() + "\" IS E" + TextUtil.EscapeSingleQuoteForSQL(C._Description) + ";");
+            Out.println("COMMENT ON COLUMN " + O.getShortName() + ".\"" + C.getName() + "\" IS E" + TextUtil.escapeSingleQuoteForSQL(C._Description) + ";");
       }
 
 
@@ -286,7 +286,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         List<TotalMess> FuckList = TotalMess.ScanView(V); // Sorry for the explitives here, but this code is really messed up in very impolite ways!!!
 
         StringBuilder Str = new StringBuilder();
-        Str.append("-- " + TextUtil.EscapeSingleQuoteForSQL(V._Description) + "\n");
+        Str.append("-- " + TextUtil.escapeSingleQuoteForSQL(V._Description) + "\n");
         Str.append("select ");
         if (V._DistinctOn != null)
           {
@@ -774,7 +774,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                     OutFinal.append("\"").append(VC._Name).append("\"");
                   }
                 OutFinal.append(")");
-                OutFinal.append("\n  DO UPDATE SET\n");
+                OutFinal.append("  DO UPDATE SET\n");
                 First = true;
                 for (String ColNames : V._Realize._ParentRealized.getColumnNames())
                   {
@@ -836,7 +836,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
               continue;
             if (VC._SameAsObj != null && VC._SameAsObj._Mode == ColumnMode.CALCULATED || VC._JoinOnly == true)
               continue;
-            if (TextUtil.FindStarElement(V._Realize._Exclude_DEPRECATED, VC._Name, true, 0) != -1)
+            if (TextUtil.findStarElement(V._Realize._Exclude_DEPRECATED, VC._Name, true, 0) != -1)
               continue;
             if (V.isPivotColumn(VC) == true || V.isPivotAggregate(VC) == true)
               continue;
@@ -850,7 +850,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         for (Formula F : V._Formulas)
           if (F != null)
             {
-              if (TextUtil.FindStarElement(V._Realize._Exclude_DEPRECATED, F._Name, true, 0) != -1)
+              if (TextUtil.findStarElement(V._Realize._Exclude_DEPRECATED, F._Name, true, 0) != -1)
                 continue;
               if (First == true)
                 First = false;
@@ -861,7 +861,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
 
         for (Column C : V._PivotColumns)
           {
-            if (TextUtil.FindStarElement(V._Realize._Exclude_DEPRECATED, C.getName(), true, 0) != -1)
+            if (TextUtil.findStarElement(V._Realize._Exclude_DEPRECATED, C.getName(), true, 0) != -1)
               continue;
             if (First == true)
               First = false;
@@ -884,7 +884,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 b.append("--     \"").append(VC._Name).append("\"  BLOCKED\n");
                 continue;
               }
-            if (Realize == true && TextUtil.FindStarElement(V._Realize._Exclude_DEPRECATED, VC.getName(), true, 0) != -1)
+            if (Realize == true && TextUtil.findStarElement(V._Realize._Exclude_DEPRECATED, VC.getName(), true, 0) != -1)
               {
                 b.append("--     \"").append(VC._Name).append("\"  REALIZE-EXCLUDED\n");
                 continue;
@@ -912,7 +912,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
           {
             if (F == null)
               continue;
-            String FormulaType = getColumnType(F.getType(), 8192, null, false);
+            String FormulaType = getColumnType(F.getType(), 8192, null, false, F._Precision, F._Scale);
             b.append("     -- ").append(String.join("\n     -- ", F._Description)).append("\n");
             if (First == true)
               First = false;
@@ -1007,12 +1007,12 @@ public class Sql extends PostgreSQL implements CodeGenSql
         String aggr = VC._Aggregate == AggregateType.COUNT ? AggregateType.SUM.name()
         : VC._Aggregate == AggregateType.ARRAY ? "array_agg"
         : VC._Aggregate.name();
-        String Expr = aggr + "(\"" + VC.getName() + "\") filter (where \"" + P._VC.getName() + "\"= '" + TextUtil.EscapeSingleQuoteBaseForSQL(VPV._Value) + "') ";
+        String Expr = aggr + "(\"" + VC.getName() + "\") filter (where \"" + P._VC.getName() + "\"= " + TextUtil.escapeSingleQuoteForSQL(VPV._Value) + ") ";
 
         if (TextUtil.isNullOrEmpty(VPV._Expression) == false)
           Expr = VPV._Expression.replaceAll("\\?", Expr);
         if (VPV._Type != null)
-          Expr = "(" + Expr + ")::" + getColumnType(VPV._Type.getType(), VPV._Type._Size, ColumnMode.NORMAL, VPV._Type.isCollection());
+          Expr = "(" + Expr + ")::" + getColumnType(VPV._Type.getType(), VPV._Type._Size, ColumnMode.NORMAL, VPV._Type.isCollection(), VPV._Precision, VPV._Scale);
         return "\n     , " + Expr + " as \"" + A.makeName(VPV) + "\"";
       }
 
@@ -1037,7 +1037,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         PrintWriter Out = new PrintWriter(Str);
         genDDL(Out, V);
 
-        OutFinal.println("COMMENT ON VIEW " + V._ParentSchema._Name + "." + V._Name + " IS E" + TextUtil.EscapeSingleQuoteForSQL(Str.toString().replace("\r\n", "\\n").replace("\n", "\\n")) + ";");
+        OutFinal.println("COMMENT ON VIEW " + V._ParentSchema._Name + "." + V._Name + " IS E" + TextUtil.escapeSingleQuoteForSQL(Str.toString().replace("\r\n", "\\n").replace("\n", "\\n")) + ";");
         OutFinal.println();
         for (int i = 0; i < V._ViewColumns.size(); ++i)
           {
@@ -1045,7 +1045,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
             if (V._Pivots.isEmpty() == false && (V.isPivotColumn(VC) == true || V.isPivotAggregate(VC) == true))
               continue;
             if (VC != null && VC._SameAsObj != null && VC._SameAsObj._Mode != ColumnMode.CALCULATED && VC._JoinOnly == false && VC._FormulaOnly == false)
-              OutFinal.println("COMMENT ON COLUMN " + V.getShortName() + ".\"" + VC.getName() + "\" IS E" + TextUtil.EscapeSingleQuoteForSQL(VC._SameAsObj._Description) + ";");
+              OutFinal.println("COMMENT ON COLUMN " + V.getShortName() + ".\"" + VC.getName() + "\" IS E" + TextUtil.escapeSingleQuoteForSQL(VC._SameAsObj._Description) + ";");
           }
         for (ViewPivot P : V._Pivots)
           if (P != null)
@@ -1055,15 +1055,15 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 for (ViewPivotValue VPV : P._Values)
                   if (VPV != null)
                     OutFinal.println("COMMENT ON COLUMN " + V.getShortName() + ".\"" + A.makeName(VPV) + "\" IS E"
-                    + TextUtil.EscapeSingleQuoteForSQL(VPV._Description + " (pivot of " + VC.getAggregateName() + " on " + P._VC._SameAsObj.getShortName() + "='" + VPV._Value + "')")
-                    // + TextUtil.EscapeSingleQuoteForSQL("The pivoted column count from '" + P._ColumnName + "'='" + P._Values[i]._Value + "', " + P._Values[i]._Description)
+                    + TextUtil.escapeSingleQuoteForSQL(VPV._Description + " (pivot of " + VC.getAggregateName() + " on " + P._VC._SameAsObj.getShortName() + "='" + VPV._Value + "')")
+                    // + TextUtil.escapeSingleQuoteForSQL("The pivoted column count from '" + P._ColumnName + "'='" + P._Values[i]._Value + "', " + P._Values[i]._Description)
                     + ";");
               }
         if (V._Formulas != null)
           for (Formula F : V._Formulas)
             if (F != null)
               OutFinal.println("COMMENT ON COLUMN " + V.getShortName() + ".\"" + F._Name + "\" IS E"
-              + TextUtil.EscapeSingleQuoteForSQL("The calculated formula: " + String.join("\\n", F._Description))
+              + TextUtil.escapeSingleQuoteForSQL("The calculated formula: " + String.join("\\n", F._Description))
               + ";");
       }
 
@@ -1085,7 +1085,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
             OutFinal.println("  ts timestamp;");
             OutFinal.println("BEGIN");
             OutFinal.println("  select into ts current_timestamp;");
-            OutFinal.println("  UPDATE TILDA.Formula set deleted = current_timestamp where \"location\" = " + TextUtil.EscapeSingleQuoteForSQL(V.getShortName()) + " AND \"lastUpdated\" < ts;");
+            OutFinal.println("  UPDATE TILDA.Formula set deleted = current_timestamp where \"location\" = " + TextUtil.escapeSingleQuoteForSQL(V.getShortName()) + " AND \"lastUpdated\" < ts;");
             OutFinal.println("END; $$");
             OutFinal.println("LANGUAGE PLPGSQL;");
             return;
@@ -1129,14 +1129,14 @@ public class Sql extends PostgreSQL implements CodeGenSql
             if (F._Measure == true)
               ++MeasureCount;
             OutFinal.print("k+" + count);
-            OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(V.getShortName()));
-            OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(RealizedTable));
-            OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(F._Name));
-            OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(F.getType()._ShortName));
-            OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(F._Title));
-            OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(String.join("\n", F._Description)));
-            OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(String.join("\n", F._FormulaStrs)));
-            OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL("<B>N/A</B>"));
+            OutFinal.print(", " + TextUtil.escapeSingleQuoteForSQL(V.getShortName()));
+            OutFinal.print(", " + TextUtil.escapeSingleQuoteForSQL(RealizedTable));
+            OutFinal.print(", " + TextUtil.escapeSingleQuoteForSQL(F._Name));
+            OutFinal.print(", " + TextUtil.escapeSingleQuoteForSQL(F.getType()._ShortName));
+            OutFinal.print(", " + TextUtil.escapeSingleQuoteForSQL(F._Title));
+            OutFinal.print(", " + TextUtil.escapeSingleQuoteForSQL(String.join("\n", F._Description)));
+            OutFinal.print(", " + TextUtil.escapeSingleQuoteForSQL(String.join("\n", F._FormulaStrs)));
+            OutFinal.print(", " + TextUtil.escapeSingleQuoteForSQL("<B>N/A</B>"));
             List<ViewColumn> L = F.getDependencyColumns();
             if (L.isEmpty() == false)
               {
@@ -1145,7 +1145,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                   {
                     VCNames[i] =  L.get(i)._ParentView.getShortName() + "." + L.get(i)._Name;
                   }
-                OutFinal.print(", ARRAY[" + TextUtil.EscapeSingleQuoteForSQL(VCNames, true) + "]");
+                OutFinal.print(", ARRAY[" + TextUtil.escapeSingleQuoteForSQL(VCNames, true) + "]");
               }
             else
               {
@@ -1167,7 +1167,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
             OutFinal.println("      , \"deleted\" = null");
             OutFinal.println("   ;");
           }
-        OutFinal.println("UPDATE TILDA.Formula set deleted = current_timestamp where \"location\" = " + TextUtil.EscapeSingleQuoteForSQL(V.getShortName()) + " AND \"lastUpdated\" < ts;");
+        OutFinal.println("UPDATE TILDA.Formula set deleted = current_timestamp where \"location\" = " + TextUtil.escapeSingleQuoteForSQL(V.getShortName()) + " AND \"lastUpdated\" < ts;");
         OutFinal.println();
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1188,9 +1188,9 @@ public class Sql extends PostgreSQL implements CodeGenSql
                     {
                       OutFinal.print("          ,(");
                     }
-                  OutFinal.print("(select refnum from TILDA.Formula where \"location\" = " + TextUtil.EscapeSingleQuoteForSQL(V.getShortName()) + " AND \"name\" = " + TextUtil.EscapeSingleQuoteForSQL(F._Name) + ")");
-                  OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(Val._Value));
-                  OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(Val._Description));
+                  OutFinal.print("(select refnum from TILDA.Formula where \"location\" = " + TextUtil.escapeSingleQuoteForSQL(V.getShortName()) + " AND \"name\" = " + TextUtil.escapeSingleQuoteForSQL(F._Name) + ")");
+                  OutFinal.print(", " + TextUtil.escapeSingleQuoteForSQL(Val._Value));
+                  OutFinal.print(", " + TextUtil.escapeSingleQuoteForSQL(Val._Description));
                   OutFinal.println(", current_timestamp, current_timestamp, null)");
                 }
           }
@@ -1206,7 +1206,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         OutFinal.println("   set deleted = current_timestamp");
         OutFinal.println(" where \"formulaRefnum\" in (select refnum");
         OutFinal.println("                               from TILDA.Formula");
-        OutFinal.println("                              where \"location\" = " + TextUtil.EscapeSingleQuoteForSQL(V.getShortName()));
+        OutFinal.println("                              where \"location\" = " + TextUtil.escapeSingleQuoteForSQL(V.getShortName()));
         OutFinal.println("                                and \"deleted\" is not null");
         OutFinal.println("                            );");
         OutFinal.println();
@@ -1231,8 +1231,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
                     {
                       OutFinal.print("          ,(");
                     }
-                  OutFinal.println(" (select refnum from TILDA.Formula where \"location\" = " + TextUtil.EscapeSingleQuoteForSQL(V.getShortName()) + " AND \"name\" = " + TextUtil.EscapeSingleQuoteForSQL(F._Name) + ")");
-                  OutFinal.println("            ,(select refnum from TILDA.Formula where \"location\" = " + TextUtil.EscapeSingleQuoteForSQL(V.getShortName()) + " AND \"name\" = " + TextUtil.EscapeSingleQuoteForSQL(F2._Name) + ")");
+                  OutFinal.println(" (select refnum from TILDA.Formula where \"location\" = " + TextUtil.escapeSingleQuoteForSQL(V.getShortName()) + " AND \"name\" = " + TextUtil.escapeSingleQuoteForSQL(F._Name) + ")");
+                  OutFinal.println("            ,(select refnum from TILDA.Formula where \"location\" = " + TextUtil.escapeSingleQuoteForSQL(V.getShortName()) + " AND \"name\" = " + TextUtil.escapeSingleQuoteForSQL(F2._Name) + ")");
                   OutFinal.println("            ,current_timestamp, current_timestamp, null");
                   OutFinal.println("           )");
                 }
@@ -1248,7 +1248,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         OutFinal.println("   set deleted = current_timestamp");
         OutFinal.println(" where \"formulaRefnum\" in (select refnum");
         OutFinal.println("                               from TILDA.Formula");
-        OutFinal.println("                              where \"location\" = " + TextUtil.EscapeSingleQuoteForSQL(V.getShortName()));
+        OutFinal.println("                              where \"location\" = " + TextUtil.escapeSingleQuoteForSQL(V.getShortName()));
         OutFinal.println("                                and \"deleted\" is not null");
         OutFinal.println("                            );");
         OutFinal.println();
@@ -1271,8 +1271,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
                   OutFinal.print("          ,(");
                 }
               OutFinal.print("k+" + count);
-              OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(V._ParentSchema._Name));
-              OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(F._Title));
+              OutFinal.print(", " + TextUtil.escapeSingleQuoteForSQL(V._ParentSchema._Name));
+              OutFinal.print(", " + TextUtil.escapeSingleQuoteForSQL(F._Title));
               OutFinal.println(", current_timestamp, current_timestamp, null)");
             }
         if (count >= 0)
@@ -1301,8 +1301,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 {
                   OutFinal.print("          ,(");
                 }
-              OutFinal.println(" (select refnum from TILDA.Measure where \"name\" = " + TextUtil.EscapeSingleQuoteForSQL(F._Title) + " and \"schema\" = " + TextUtil.EscapeSingleQuoteForSQL(V._ParentSchema._Name) + ")");
-              OutFinal.println("            ,(select refnum from TILDA.Formula where \"location\" = " + TextUtil.EscapeSingleQuoteForSQL(V.getShortName()) + " AND \"name\" = " + TextUtil.EscapeSingleQuoteForSQL(F._Name) + ")");
+              OutFinal.println(" (select refnum from TILDA.Measure where \"name\" = " + TextUtil.escapeSingleQuoteForSQL(F._Title) + " and \"schema\" = " + TextUtil.escapeSingleQuoteForSQL(V._ParentSchema._Name) + ")");
+              OutFinal.println("            ,(select refnum from TILDA.Formula where \"location\" = " + TextUtil.escapeSingleQuoteForSQL(V.getShortName()) + " AND \"name\" = " + TextUtil.escapeSingleQuoteForSQL(F._Name) + ")");
               OutFinal.println(", current_timestamp, current_timestamp, null)");
             }
         if (count >= 0)
@@ -1316,7 +1316,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         OutFinal.println("DELETE FROM TILDA.MeasureFormula");
         OutFinal.println(" where \"formulaRefnum\" in (select refnum");
         OutFinal.println("                               from TILDA.Formula");
-        OutFinal.println("                              where \"location\" = " + TextUtil.EscapeSingleQuoteForSQL(V.getShortName()));
+        OutFinal.println("                              where \"location\" = " + TextUtil.escapeSingleQuoteForSQL(V.getShortName()));
         OutFinal.println("                                and \"deleted\" is not null");
         OutFinal.println("                            );");
         OutFinal.println();
@@ -1333,7 +1333,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
 
     private String genFormulaCode(View ParentView, Formula F)
       {
-        String FormulaStr = TextUtil.JoinTrim(F._FormulaStrs, " ");
+        String FormulaStr = TextUtil.joinTrim(F._FormulaStrs, " ");
 
         if (F._Name.startsWith("x_") == true)
          LOG.debug("xxxx");
@@ -1384,7 +1384,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 for (Formula F2 : ParentView._Formulas)
                   if (s.equals(F2._Name) == true && s.equals(F._Name) == false)
                     {
-                      String FormulaType = getColumnType(F2.getType(), F2._Size, null, false);
+                      String FormulaType = getColumnType(F2.getType(), F2._Size, null, false, F2._Precision, F2._Scale);
                       M.appendReplacement(Str, "(" + genFormulaCode(ParentView, F2) + ")::" + FormulaType);
                       break;
                     }
@@ -1400,7 +1400,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         Str.append("/*genRealizedColumnList*/");
         boolean First = true;
         boolean Blocked = false;
-        // LOG.debug("View " + V._Name + ": " + TextUtil.Print(V.getColumnNames()));
+        // LOG.debug("View " + V._Name + ": " + TextUtil.print(V.getColumnNames()));
         for (ViewColumn VC : V._ViewColumns)
           {
             if (V.isPivotColumn(VC) == true || V.isPivotAggregate(VC) == true)
@@ -1414,7 +1414,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                   }
                 continue;
               }
-            if (TextUtil.FindStarElement(V._Realize._Exclude_DEPRECATED, VC.getName(), true, 0) == -1)
+            if (TextUtil.findStarElement(V._Realize._Exclude_DEPRECATED, VC.getName(), true, 0) == -1)
               {
                 if (First == false)
                   Str.append(Lead).append(",");
@@ -1440,7 +1440,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
           {
             if (F == null)
               continue;
-            if (TextUtil.FindStarElement(V._Realize._Exclude_DEPRECATED, F._Name, true, 0) == -1)
+            if (TextUtil.findStarElement(V._Realize._Exclude_DEPRECATED, F._Name, true, 0) == -1)
               {
                 if (First == false)
                   Str.append(Lead).append(",");
@@ -1459,7 +1459,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
           }
         for (Column C : V._PivotColumns)
           {
-            if (TextUtil.FindStarElement(V._Realize._Exclude_DEPRECATED, C.getName(), true, 0) != -1)
+            if (TextUtil.findStarElement(V._Realize._Exclude_DEPRECATED, C.getName(), true, 0) != -1)
               continue;
             // ViewRealizeMapping VRM = V._Realize.getMapping(C.getName());
             // if (VRM == null)
@@ -1482,7 +1482,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
             String Pad = "";
             if (trimNeeded == true)
               Pad = PaddingUtil.getPad(P._VC._SameAsObj._Size - P._Values[i]._Value.length());
-            Str.append(TextUtil.EscapeSingleQuoteForSQL(P._Values[i]._Value + Pad));
+            Str.append(TextUtil.escapeSingleQuoteForSQL(P._Values[i]._Value + Pad));
           }
         return Str.toString();
       }

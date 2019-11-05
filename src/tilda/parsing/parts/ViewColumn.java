@@ -49,6 +49,8 @@ public class ViewColumn
     @SerializedName("as"         ) public String         _As           ;
     @SerializedName("expression" ) public String         _Expression   ;
     @SerializedName("type"       ) public String         _TypeStr      ;
+    @SerializedName("precision"  ) public Integer        _Precision    ;
+    @SerializedName("scale"      ) public Integer        _Scale        ;
     @SerializedName("size"       ) public Integer        _Size         ;
     @SerializedName("prefix"     ) public String         _Prefix       ;
     @SerializedName("exclude"    ) public String[]       _Exclude       = new String[] { };
@@ -65,6 +67,7 @@ public class ViewColumn
     @SerializedName("useEnum"    ) public boolean        _UseEnum       = false;
     @SerializedName("description") public String         _Description   = null;
     /*@formatter:on*/
+
 
 
     public ViewColumn()
@@ -170,7 +173,7 @@ public class ViewColumn
 
         if (_Name.length() > PS._CGSql.getMaxColumnNameSize())
           PS.AddError("View Column '" + getFullName() + "' has a name that's too long: max allowed by your database is " + PS._CGSql.getMaxColumnNameSize() + " vs " + _Name.length() + " for this identifier.");
-        if (_Name.equals(TextUtil.SanitizeName(_Name)) == false)
+        if (_Name.equals(TextUtil.sanitizeName(_Name)) == false)
           PS.AddError("View Column '" + getFullName() + "' has a name containing invalid characters (must all be alphanumeric or underscore).");
         if (ValidationHelper.isValidIdentifier(_Name) == false)
           PS.AddError("View Column '" + getFullName() + "' has a name '" + _Name + "' which is not valid. " + ValidationHelper._ValidIdentifierMessage);
@@ -184,9 +187,13 @@ public class ViewColumn
           {
             if ((_Aggregate = AggregateType.parse(_AggregateStr)) == null)
               return PS.AddError("View Column '" + getFullName() + "' defined an invalid 'aggregate' '" + _AggregateStr + "'.");
-            // if (_SameAsObj != null && _SameAsObj._Type == ColumnType.DATETIME)
-            // return PS.AddError("View Column '" + getFullName() + "' defined an aggregate on DATETIME column '" + _SameAsObj.getName() + "' which is not supported as timezone
-            // information would not be retrievable.");
+
+            if (_SameAsObj != null)
+              {
+                String Str = _Aggregate.isCompatible(this);
+                if (Str != null)
+                  PS.AddError(Str.toString());
+              }
           }
         if (_Aggregate == null)
           {
@@ -218,15 +225,15 @@ public class ViewColumn
         // Parsing the extra type information if present.
         if (_TypeStr != null)
           {
-            _Type = new TypeDef(_TypeStr, _Size);
-            _Type.Validate(PS, "View Column '"+getFullName()+"'", true, false);
+            _Type = new TypeDef(_TypeStr, _Size, _Precision, _Scale);
+            _Type.Validate(PS, "View Column '" + getFullName() + "'", true, false);
           }
         // Checking that type information is only present when expression is specified and vice-versa.
         if (TextUtil.isNullOrEmpty(_Expression) == false && _Type == null)
           PS.AddError("View Column '" + getFullName() + "' defined an 'expression' but neglected to specify type information and optionally, size.");
         if (TextUtil.isNullOrEmpty(_Expression) == true && _Type != null)
           PS.AddError("View Column '" + getFullName() + "' defined extra type/size information without an 'expression': type and size are for expressions only.");
-        
+
         return Errs == PS.getErrorCount();
       }
 
@@ -311,7 +318,7 @@ public class ViewColumn
         return L;
       }
 
-
+    @Override
     public String toString()
       {
         return getClass().getName() + ":" + _ParentView != null ? getFullName() : _Sameas_DEPRECATED != null ? _Sameas_DEPRECATED : _SameAs;
@@ -337,15 +344,15 @@ public class ViewColumn
       }
 
     /**
-     * A view column of type 'DATETIME' needs an extra timezone support field if the underlying column needs one, and the 
+     * A view column of type 'DATETIME' needs an extra timezone support field if the underlying column needs one, and the
      * view column is not an aggregate, and does not have an expression unless it's of type datetime.
+     * 
      * @return
      */
     public boolean needsTZ()
       {
         return (_SameAsObj == null || _SameAsObj.needsTZ() == true)
-            && _Aggregate == null
-            && (TextUtil.isNullOrEmpty(_Expression) == true || _Type._Type == ColumnType.DATETIME)
-            ;
+        && (_Aggregate == null || _Aggregate.isZonedDateTimeCompatible() == true)
+        && (TextUtil.isNullOrEmpty(_Expression) == true || _Type._Type == ColumnType.DATETIME);
       }
   }

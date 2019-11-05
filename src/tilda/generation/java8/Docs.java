@@ -27,11 +27,10 @@ import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ColumnValue;
 import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
-import tilda.parsing.parts.OutputMapping;
 import tilda.parsing.parts.Object;
+import tilda.parsing.parts.OutputMapping;
 import tilda.parsing.parts.PrimaryKey;
 import tilda.parsing.parts.SubWhereClause;
-import tilda.utils.DateTimeUtil;
 import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
 
@@ -162,7 +161,7 @@ public class Docs implements CodeGenDocs
                     + "<TD>" + V._Value + "&nbsp;&nbsp;</TD>"
                     + "<TD>" + V._Label + "&nbsp;&nbsp;</TD>"
                     + "<TD>" + V._Default + "&nbsp;&nbsp;</TD>"
-                    + "<TD>" + TextUtil.Print(V._Groupings) + "&nbsp;&nbsp;</TD>"
+                    + "<TD>" + TextUtil.print(V._Groupings) + "&nbsp;&nbsp;</TD>"
                     // + "<TD>" + V._Raw + "</TD>"
                     + "<TD>" + V._Description + "</TD>"
                     +"</TR>"
@@ -248,7 +247,7 @@ public class Docs implements CodeGenDocs
                 + "  <TR><TD align=\"right\"><B>Value</B></TD><TD>" + V._Value + "</TD></TR>" + SystemValues.NEWLINE
                 + "  <TR><TD align=\"right\"><B>Default</B></TD><TD>" + V._Default + "</TD></TR>" + SystemValues.NEWLINE
                 + "  <TR><TD align=\"right\"><B>Label</B></TD><TD>" + V._Label + "</TD></TR>" + SystemValues.NEWLINE
-                + "  <TR><TD align=\"right\"><B>Groupings</B></TD><TD>" + TextUtil.Print(V._Groupings) + "</TD></TR>" + SystemValues.NEWLINE
+                + "  <TR><TD align=\"right\"><B>Groupings</B></TD><TD>" + TextUtil.print(V._Groupings) + "</TD></TR>" + SystemValues.NEWLINE
                 + "  <TR valign=\"top\"><TD align=\"right\"><B>Description</B></TD><TD>" + V._Description + "</TD></TR>" + SystemValues.NEWLINE
                 + "</TABLE>" + SystemValues.NEWLINE
                 + Helper.getMultiLineCommentEnd()
@@ -272,7 +271,7 @@ public class Docs implements CodeGenDocs
       {
         Out.println(
             Helper.getMultiLineDocCommentStart() + SystemValues.NEWLINE
-                + " Creates a new object in memory, which you can subsequently {@link #Write()} to the data store." + SystemValues.NEWLINE
+                + " Creates a new object in memory, which you can subsequently {@link #write()} to the data store." + SystemValues.NEWLINE
                 + " current object to the destination. "
             );
         for (Column C : CreateColumns)
@@ -302,10 +301,36 @@ public class Docs implements CodeGenDocs
             Helper.getMultiLineDocCommentStart() + SystemValues.NEWLINE
                 + " Writes the object to the data store if any changes has occurred since the object was initially" + SystemValues.NEWLINE
                 + " read from the data store or last written. " + SystemValues.NEWLINE
+                + " If the object was deserialized (i.e., not created via the factory lookup() or create() methods, " + SystemValues.NEWLINE
+                + " then this method assumes a create() and will check that all non-null columns have been provided. If you " + SystemValues.NEWLINE
+                + " need more flexibility for an upsert, use the upsert(Connection, boolean) version of write " + SystemValues.NEWLINE
+                + " which will try a combination of insert/update to get the object to the DB. " + SystemValues.NEWLINE
+                + " Note that if you use write() right after a create, lookup or deserialization initialization, only the" + SystemValues.NEWLINE
+                + " template fields (not null, natural identity and/or any field set prior to calling this method) exist " + SystemValues.NEWLINE
+                +"  in memory. Call refresh() to force a select and retrieve all the fields for that record." + SystemValues.NEWLINE
                 + Helper.getMultiLineCommentEnd()
             );
       }
 
+    @Override
+    public void docMethodUpsert(PrintWriter Out, GeneratorSession G, Object O)
+      {
+        Out.println(
+            Helper.getMultiLineDocCommentStart() + SystemValues.NEWLINE
+                + " Writes the object to the data store using an upsert approach and assumes the object is either" + SystemValues.NEWLINE
+                + " in create or deserialized mode. " + SystemValues.NEWLINE
+                + " The parameter createFirst controls whether the logic should do an insert first and if it fails, then do " + SystemValues.NEWLINE
+                + " an update, or the opposite (update first and if it fails, then an insert). This is necessary for databases" + SystemValues.NEWLINE
+                + " without a robust upsert SQL syntax where separate insert/update statements must be issued." + SystemValues.NEWLINE
+                + " The method will figure out based on the fields set which natural identity (a unique index) is applicable for" + SystemValues.NEWLINE
+                + " the lookup operation." + SystemValues.NEWLINE
+                + " Note that when you use upsert() (right after a create or deserialization initialization), only the template" + SystemValues.NEWLINE
+                + " fields (not null, natural identity and/or any field set prior to calling this method) exist in memory. Call" + SystemValues.NEWLINE
+                + " refresh() to force a select and retrieve all the fields for that record." + SystemValues.NEWLINE
+                + Helper.getMultiLineCommentEnd()
+            );
+      }
+    
 
     @Override
     public void docMethodLookupByPrimaryKey(PrintWriter Out, GeneratorSession G, PrimaryKey _PrimaryKey)

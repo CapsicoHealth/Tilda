@@ -1,0 +1,298 @@
+{
+  "package": "tilda.data_tutorial"
+ ,"dependencies": ["com/capsico/organizations/data/_tilda.Organizations.json"
+                  ]
+ ,"documentation": {
+     "graph":"complex",
+     "description": [
+         "This schema blah blah blah.<BR>"
+        ,"<B>Copyright (c) 2017, CapsicoHealth Inc., All rights reserved.</B>"
+      ]
+   }
+
+ ,"objects":[
+
+ { "name":"User"
+  ,"description":"Users"
+  ,"columns":[
+      { "name":"id"   , "type":"STRING", "size": 40, "nullable":false, "description":"The user's id"    }
+     ,{ "name":"email", "type":"STRING", "size":255, "nullable":false, "description":"The user's email" }
+    ]
+  ,"primary": { "autogen": true, "keyBatch": 500 }
+  ,"indices": [ 
+      { "name":"Id"   , "columns": ["id"   ] }
+     ,{ "name":"Email", "columns": ["email"] }
+     ,{ "name":"All"                        , "orderBy": ["lastUpdated"]}
+    ]
+ }
+
+,{ "name": "Form"
+  ,"description": "User-entered forms"
+  ,"columns":[
+      { "name":"userRefnum", "sameas":"User.refnum"    , "nullable":false, "description":"The user who created the form" }
+     ,{ "name":"type"      , "type":"STRING", "size":40, "nullable":false, "description":"Form template type" }
+     ,{ "name":"fillDate"  , "type":"DATETIME"         , "nullable":true , "description":"The date the form was filled" }
+    ]
+  ,"primary": { "autogen": true, "keyBatch": 500 }
+  ,"foreign": [
+      { "name":"User"  , "srcColumns":["userRefnum"   ], "destObject": "User"    }
+    ]
+  ,"indices": [ 
+      { "name": "Type" , "columns": ["type"], "orderBy": ["fillDate"]}
+     ,{ "name": "All"                       , "orderBy": ["lastUpdated"]}
+    ]
+ }
+
+,{ "name": "FormAnswer"
+  ,"description": "Form answers"
+  ,"columns":[
+      { "name":"formRefnum", "sameas":"Form.refnum"       , "nullable": false, "invariant": true, "description":"The form's refnum" }
+     ,{ "name":"field"     , "type":"STRING", "size": 60  , "nullable": false                   , "description":"question/field id" }
+     ,{ "name":"value"     , "type":"STRING", "size": 4000, "nullable": true                    , "description":"answer value" }
+    ]
+  ,"primary": { "autogen": true, "keyBatch": 500 }
+  ,"foreign": [
+      { "name":"Form" ,  "srcColumns":["formRefnum"], "destObject": "Form" }
+    ]
+  ,"indices": [ 
+      { "name":"FormAnswer", "columns":["formRefnum", "field"]}
+     ,{ "name":"All"       , "columns":[]                     , "orderBy":["lastUpdated"]}
+    ]
+ }
+
+/*
+ * **TestQuestionAnswer**: Let's assume there is some meta-data model for tests that essentially boils down to tests, questions and answers. One could build a normalized model with 3 tables, but for simplicity here and the purpose of this example, let's adopt a more analytical approach and build a dimension for a traditional star-schema data warehouse that would be populated by some ETL process. The resulting table therefore doesn't care so much about normalization and is simpler to use at runtime for our purpose. That table simply lists all the questions and answers in order (sequences) for a given test "type". You can imagine a simple UI that would popup questions in order, display all the answers in a multiple-choice type questionaire.
+ * **TestAnswer**: We'll then capture a simple data set for students taking tests and answering questions.
+*/
+,{ "name": "TestQuestionAnswer"
+  ,"description": "Questions and answers for multiple-choice tests"
+  ,"columns":[
+      { "name":"type"         , "type":"STRING" , "size":  60, "nullable":false        , "description":"Form template type" }
+     ,{ "name":"questionSeq"  , "type":"INTEGER"             , "nullable":false        , "description":"Sequence of the question for the test" }
+     ,{ "name":"questionId"   , "type":"STRING" , "size":  60, "nullable":false        , "description":"Question id" }
+     ,{ "name":"questionLabel", "type":"STRING" , "size": 256, "nullable":false        , "description":"Question label" }
+     ,{ "name":"answerSeq"    , "type":"INTEGER"             , "nullable":false        , "description":"Sequence of the answer for the question in the test" }
+     ,{ "name":"answerId"     , "type":"STRING" , "size":  60, "nullable":false        , "description":"Answer id" }
+     ,{ "name":"answerLabel"  , "type":"STRING" , "size": 256, "nullable":false        , "description":"Answer label" }
+     ,{ "name":"correct"      , "type":"BOOLEAN"             , "nullable":false        , "description":"Whether the answer is a correct one or not for that question (technically, there could be more than one)" }
+    ]
+  ,"primary": { "autogen": true, "keyBatch": 500 }
+  ,"indices": [ 
+      { "name":"FormAnswer", "columns":["type", "questionId", "answerSeq"] }
+     ,{ "name":"Form"      , "columns":["type"]                          , "orderBy":["questionId", "answerSeq"], "db":false }
+    ]
+ }
+
+,{ "name": "TestAnswer"
+  ,"description": "Test answers"
+  ,"columns":[
+      { "name":"formRefnum", "sameas":"Form.refnum"                  , "nullable": false, "invariant": true, "description":"The form's refnum" }
+     ,{ "name":"questionId", "sameas":"TestQuestionAnswer.questionId", "nullable":false, "description":"Question id" }
+     ,{ "name":"answerId"  , "sameas":"TestQuestionAnswer.answerId"  , "nullable":true , "description":"Answer value" }
+     ,{ "name":"timeMillis", "type":"INTEGER"                        , "nullable":false, "description":"Time in milliseconds for the time spent answering the question" }
+     ,{ "name":"correct"   , "type":"BOOLEAN"             , "nullable":false, "description":"Whether the answer is correct or not" }
+    ]
+  ,"primary": { "autogen": true, "keyBatch": 500 }
+  ,"foreign": [
+      { "name":"Form" ,  "srcColumns":["formRefnum"], "destObject": "Form" }
+    ]
+  ,"indices": [ 
+      { "name":"FormAnswer", "columns":["formRefnum", "questionId"]}
+     ,{ "name":"Form"      , "columns":["formRefnum"]              , "orderBy":["questionId"]}
+    ]
+ }
+
+
+]
+   
+   
+ ,"views": [
+
+ { "name": "Form_SAT01_PivotView"
+  ,"description": "A pivoted view of SAT_01 forms"
+  ,"columns":[
+      { "sameas": "Form.refnum"     , "name":"formRefnum"     }
+     ,{ "sameas": "Form.fillDate"   , "name":"formFillDate"   }
+     ,{ "sameas": "User.refnum"     , "name":"formUserRefnum" }
+     ,{ "sameas": "User.email"      , "name":"formUserEmail"  }
+     ,{ "sameas": "FormAnswer.value", "aggregate":"MAX"       }
+    ]
+  ,"subWhereX":{
+      "clause":["    Form.type = 'SAT_01'" 
+               ,"and Form.deleted is null"
+               ,"and FormAnswer.deleted is null"
+               ]
+     ,"description":["Only look at SAT_01 forms and answers that have not been deleted."
+                    ]
+    }
+  ,"pivots":[
+      { "on": "FormAnswer.field" 
+       ,"aggregates":[
+           { "name":"value", "prefix":"" }
+         ]
+       ,"values":[ { "value":"Q1", "expression":"Tilda.toInt(?,null)", "type":"INTEGER", "description":"Q1" }
+                  ,{ "value":"Q2", "expression":"Tilda.toInt(?,null)", "type":"INTEGER", "description":"Q2" }
+                  ,{ "value":"Q3", "expression":"Tilda.toInt(?,null)", "type":"INTEGER", "description":"Q3" }
+                  ,{ "value":"Q4"                                                      , "description":"Q4" }
+                ]
+      }
+    ]
+ }      
+
+,{ "name": "Test_XYZ_PivotView"
+  ,"description": "A pivoted view of XYZ forms"
+  ,"columns":[
+      { "sameas": "Form.refnum"  , "name":"formRefnum"     }
+     ,{ "sameas": "Form.type"    , "name":"formType"       }
+     ,{ "sameas": "Form.fillDate", "name":"formFillDate"   }
+     ,{ "sameas": "User.refnum"  , "name":"formUserRefnum" }
+     ,{ "sameas": "User.email"   , "name":"formUserEmail"  }
+     ,{ "sameas": "TestAnswer.correct"   , "name":"countCorrect"        , "aggregate":"COUNT", "filter":"correct = true"   }
+     ,{ "sameas": "TestAnswer.correct"   , "name":"countIncorrect"      , "aggregate":"COUNT", "filter":"correct = false"  }
+     ,{ "sameas": "TestAnswer.timeMillis", "name":"timeMillisTotal", "aggregate":"SUM"  }
+     ,{ "sameas": "TestAnswer.timeMillis", "name":"timeMillisAvg"  , "aggregate":"AVG"  }
+     ,{ "sameas": "TestAnswer.timeMillis", "name":"timeMillisMin"  , "aggregate":"MIN"  }
+     ,{ "sameas": "TestAnswer.timeMillis", "name":"timeMillisMax"  , "aggregate":"MAX"  }
+     ,{ "sameas": "TestAnswer.correct"                             , "aggregate":"MIN", "joinOnly":true  }
+    ]
+  ,"subWhereX":{
+      "clause":["    Form.type = 'XYZ'" 
+               ,"and Form.deleted is null"
+               ,"and TestAnswer.deleted is null"
+               ]
+     ,"description":["Only look at XYZ forms and answers that have not been deleted."
+                    ]
+    }
+  ,"pivots":[
+      { "on": "TestAnswer.questionId" 
+       ,"aggregates":[
+           { "name":"correct"      , "suffix":"_correct"    }
+          ,{ "name":"timeMillisMax", "suffix":"_timeMillis" }
+         ]
+       ,"values":[ { "value":"QX", "description":"Question X" }
+                  ,{ "value":"QY", "description":"Question Y" }
+                  ,{ "value":"QZ", "description":"Question Z" }
+                ]
+       ,"interleave":true
+      }
+    ]
+  ,"realize":{
+       "primary":{ "columns":["formRefnum"] }
+      ,"foreign":[
+          { "name":"Form" ,  "srcColumns":["formRefnum"    ], "destObject": "Form" }
+         ,{ "name":"User"  , "srcColumns":["formUserRefnum"], "destObject": "User" }
+        ]
+      ,"indices":[
+          { "name":"User", "columns":["formUserRefnum"], "orderBy":["formFillDate desc"] }
+         ,{ "name":"Type", "columns":["formType"      ], "orderBy":["formFillDate desc"] }
+        ]
+    }
+ }      
+
+
+
+,{ "name": "Test_View"
+  ,"description": "A pivoted view of SAT_01 forms"
+  ,"columns":[
+      { "sameas": "Form.type"    }
+     ,{ "sameas": "Form.fillDate", "joinOnly":true }
+     ,{ "sameas": "Form.refnum"  , "name":"testCount"   , "aggregate":"COUNT", "distinct":true }
+     ,{ "sameas": "Form.fillDate", "name":"testFirst"   , "aggregate":"FIRST", "orderBy":["fillDate"] }
+     ,{ "sameas": "Form.fillDate", "name":"testLast"    , "aggregate":"LAST" , "orderBy":["fillDate"] }
+     ,{ "sameas": "User.refnum"  , "name":"userCount"   , "aggregate":"COUNT", "distinct":true }
+     ,{ "sameas": "TestAnswer.correct"   , "name":"answerCount"          , "aggregate":"COUNT"   }
+     ,{ "sameas": "TestAnswer.correct"   , "name":"answerCountCorrect"   , "aggregate":"COUNT", "filter":"correct = true"   }
+     ,{ "sameas": "TestAnswer.correct"   , "name":"answerCountIncorrect" , "aggregate":"COUNT", "filter":"correct = false"  }
+     ,{ "sameas": "TestAnswer.timeMillis", "name":"timeMillisTotal", "aggregate":"SUM"  }
+     ,{ "sameas": "TestAnswer.timeMillis", "name":"timeMillisAvg"  , "aggregate":"AVG"  }
+     ,{ "sameas": "TestAnswer.timeMillis", "name":"timeMillisMin"  , "aggregate":"MIN"  }
+     ,{ "sameas": "TestAnswer.timeMillis", "name":"timeMillisMax"  , "aggregate":"MAX"  }
+    ]
+  ,"subWhereX":{
+      "clause":["    Form.deleted is null"
+               ,"and TestAnswer.deleted is null"
+               ]
+     ,"description":["Look at all forms and answers that have not been deleted."
+                    ]
+    }
+  ,"realize":{
+       "primary":{ "columns":["type"] }
+    }
+ }
+ 
+,{ "name": "Test_XYZ_Analytics_View"
+  ,"description": "A view of XYZ forms with analytics"
+  ,"columns":[
+      { "sameas": "Test_XYZ_PivotView.formRefnum"      }
+     ,{ "sameas": "Test_XYZ_PivotView.formType"        }
+     ,{ "sameas": "Test_XYZ_PivotView.formFillDate"    }
+     ,{ "sameas": "Test_XYZ_PivotView.formUserRefnum"  }
+     ,{ "sameas": "Test_XYZ_PivotView.formUserEmail"   }
+     ,{ "sameas": "Test_XYZ_PivotView.countCorrect"    , "name":"formCountCorrect"    }
+     ,{ "sameas": "Test_XYZ_PivotView.timeMillisTotal" , "name":"formTimeMillisTotal" }
+     ,{ "sameas": "Test_View.testCount"                }
+     ,{ "sameas": "Test_View.answerCountCorrect"       , "name":"testAnswerCountCorrect" }
+     ,{ "sameas": "Test_View.timeMillisAvg"            , "name":"testTimeMillisAvg"      }
+     
+    ]
+  ,"joins": [
+      { "object": "Test_View"
+      , "joinType": "INNER"
+      , "on": [ { "db":"*", "clause":"Test_View.\"type\" = Test_XYZ_PivotView.\"formType\"" }
+              ]
+      }
+    ]
+ ,"formulaColumns":[
+     { "name": "isPassed"
+      ,"type": "INTEGER"
+      ,"formula":[ 
+          "formCountCorrect >= 2"
+        ]
+      ,"title": "Test Passed"
+      ,"description":[
+          "Whether the test was passed or not by answering at least 2 out of the 3 questions."
+        ]
+     }
+    ,{ "name": "tookLongerThanAverage"
+      ,"type": "INTEGER"
+      ,"formula":[ 
+          "formTimeMillisTotal > testTimeMillisAvg"
+        ]
+      ,"title": "Test Took Longer Than Average"
+      ,"description":[
+          "Whether the test took longer that the average time spent across all tests."
+        ]
+     }
+    ,{ "name": "wasChallenging"
+      ,"type": "INTEGER"
+      ,"formula":[ 
+          "    isPassed=1"
+         ,"AND testAnswerCountCorrect < testCount*3/2"
+        ]
+      ,"title": "Test Was Challenging"
+      ,"description":[
+          "Whether the test was challenging in that:<LI>"
+         ,"  <LI>it was passed,</LI>"
+         ,"  <LI>and overall, less than a third of answers across all tests were answered correctly.</LI>"
+         ,"</UL>"
+        ]
+      ,"values":[
+           { "value":"0", "description":"The test was not challenging" }
+          ,{ "value":"1", "description":"The test was challenging" }
+        ]
+     }
+   ]
+ ,"realize":{
+       "primary":{ "columns":["formRefnum"] }
+      ,"foreign":[
+          { "name":"Form" ,  "srcColumns":["formRefnum"    ], "destObject": "Form" }
+         ,{ "name":"User"  , "srcColumns":["formUserRefnum"], "destObject": "User" }
+        ]
+      ,"indices":[
+          { "name":"User", "columns":["formUserRefnum"], "orderBy":["formFillDate desc"] }
+         ,{ "name":"Type", "columns":["formType"      ], "orderBy":["formFillDate desc"] }
+        ]
+    }
+ }      
+    ]
+}

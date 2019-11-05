@@ -44,7 +44,7 @@ public class PerfTests
              ++x;
           }
         T0 = System.nanoTime() - T0;
-        System.out.println("if (x1+x2 == 0L): " + DurationUtil.PrintDurationSeconds(T0)+ " ("+DurationUtil.PrintPerformancePerSecond(T0, Max)+" loops/s).");
+        System.out.println("if (x1+x2 == 0L): " + DurationUtil.printDurationSeconds(T0)+ " ("+DurationUtil.printPerformancePerSecond(T0, Max)+" loops/s).");
         
         
         T0 = System.nanoTime();
@@ -54,7 +54,7 @@ public class PerfTests
              ++x;
           }
         T0 = System.nanoTime() - T0;
-        System.out.println("if (x1 == 0L && x2 == 0L): " + DurationUtil.PrintDurationSeconds(T0)+ " ("+DurationUtil.PrintPerformancePerSecond(T0, Max)+" loops/s).");
+        System.out.println("if (x1 == 0L && x2 == 0L): " + DurationUtil.printDurationSeconds(T0)+ " ("+DurationUtil.printPerformancePerSecond(T0, Max)+" loops/s).");
         
       }
   }

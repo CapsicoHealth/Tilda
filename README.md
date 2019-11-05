@@ -1,49 +1,29 @@
-<P align="center"><IMG src="Tilda.jpg"></P>
+<P align="center"><IMG height="150px" src="docs/documentation/tilda-logo.gif">&nbsp;&nbsp;&nbsp;&nbsp;<IMG height="150px" src="docs/documentation/tilda.gif">
+</P>
 <H1>Intro</H1>
-Tilda (Transparent Integrated Light Data Architecture) is not an ORM, but an integrated data platform that
-takes a base-level view from the database schema level, and projects it in Java and JavaScript in a classic 
-3-tier architecture. It provides a JSON-based configuration language to define basic tables/objects, and higher 
-level patterns such as Importers, Exporters, Interfaces, History, Mergers etc... It generates code so you don't 
-have to write it all and focus on your business logic.<BR>
+Tilda (Transparent Iterative Light Data Architecture) is not an ORM but a data-oriented platform that takes a model-driven approach at the database schema level and projects it out to various programming environments. It provides a JSON-based configuration language to define tables and higher level patterns such as complex views, exporters, history/versioning support, datamarts, pivots, formulas etc... It generates code so can focus on your business logic. It automates migration, deployments (in single-database or multi-tenant fashion), documentation, and increases team velocity by supporting iterative development cycles working with complex data models from design to deployment.<BR>
 <BR>
-This work is based on ideas and experience gathered over the past 15 years building large data systems and complex
-applications, from CORBA runtimes and EJB containers, to Hibernate-based or myBatis systems, and more recently, a 
-full-fledged real-time clinical analytics platform. Tilda aims to be as transparent and simple as possible for the 
-application programmer, providing a fairly flat view of your data and projecting across multiple tiers of your 
-application. For example, the platform only support minimal joins at the application level and requires you to define 
-Views in the database, and appropriate indices, to structure your system. The code generated is human-readable from 
-the get go and is easy to walk through and understand if need be. But you don't have to! Tilda also provides a runtime 
-environment to allow for caching, model introspection, data validation, security, performance reporting and notifications.<BR>
+This work is based on ideas and experience building complex data systems and applications using at times EJBs, Hibernate, myBatis or even plain JDBC. Those systems have included real-time predictive modeling, standard 3-tier transactional web applications, and classical data warehousing. Tilda aims to be as transparent and simple as possible for the modern data engineer. Its transparency is critical in helping use Tilda simply as a model management tool with minimal adoption risk, or as a full fledge data application building block (the all-in approach). All assets generated are human-readable from the get go and are easy to walk through and understand if need be (but you don't have to). Tilda takes a decidely model- and data-centric view of the world: we believe you cannot build a complex data application without thinking about your data model. <B>We believe that no framework can hide your database, so why try</B>? This is Data to the metal, all the way up full stack.<BR>
 <BR>
-Contrary to ORMs such as Hibernate or myBatis, Tilda takes a decidely database-centric view of the world: we believe
-you cannot build a complex large-scale performing data application without thinking about it full-stack, and it all 
-starts at the database level. Without understanding that level, it's easy to write code and grow your application 
-with complete disregard to the performance and scalability constraints of your backend. In essence, <B>we believe that
-no framework can hide your database, so why try</B>? This is Data to the metal, and all the way up full stack. Rather than
-try to bridge the OO-Relational impedance mismatch as so many ORM frameworks try to do ,(and fail at), all Tilda aspires 
-to do is to render data elements (whether relational or not) at compile-time levels in your application and manage a 
-whole lot of boiler plate code, connectivity and higher level data access patterns.<BR>
-<BR>
-At this time, Tilda only supports Java 1.8 as a target language, and Postgres 9.x as a target Database. However, the
-framework was built to support targeting other languages (such as JavaSCript or .Net for example), and other databases (MS SQL Server 
-is a priority to be built soon, and other databases, including NOSQL backends such as Cassandra and MongoDB are in the works). 
-Ultimately, we are aiming for an extensible data architecture that would enable integration with different formats, such as 
-CSV, or HL7 (a standard healthcare data exchange format), and the ability to extend the patterns supported (for example, 
-automatically generating mini data marts for local reporting needs). Tilda ultimately strives at identifying core patterns 
-used in a complex data-driver application, and capture them as reusable declarative bits so you can assemble them to match 
-your needs.<BR>
-<BR>
-Over the next few months, we will be trying to add more documentation and sample apps, but we are prioritizing work 
-that directly affects production-ready features for our own Healthcare data platform currently deployed at several 
-customers.
+At this time, Tilda only supports Java 1.8+ as a target language, and Postgres 9.5+ as a target Database (while exploiting features from V10, V11 and V12 if available). However, it may not be too hard to implement other target languages in the future  (such as JavaSCript or .Net for example), and other data stores (MS SQL Server, mySQL, and also non-relational backends such as Cassandra,  MongoDB or Hadoop). Ultimately, we are aiming for an extensible data architecture that would enable integration with different formats, such as CSV, or HL7 (a standard healthcare data exchange format), and the ability to extend the patterns supported (feeding data to predictive models for example). Tilda ultimately strives at identifying core patterns used in a complex data-driven application, and capture them as reusable declarative bits so you can assemble them to match your needs.<BR>
 
+<H1>Docs</H1>
+We are making progress on the overall documentation for the project:
+<UL><LI>The <A href="https://github.com/CapsicoHealth/Tilda/wiki">Wiki</A></LI>
+    <LI>The <A href="https://capsicohealth.github.io/Tilda/javadocs/index.html">JavaDocs</A></LI>
+    <LI>The project's <A href="https://capsicohealth.github.io/Tilda/index.html">home page</A></LI>
+</UL>
+
+<H1>Releases</H1>
+Releases are posted in the standard Github location <A href="https://github.com/CapsicoHealth/Tilda/releases">here</A>.
+</H1>
+ 
 <H1>License</H1>
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this code except in compliance with the License. You may obtain a copy of the License at
 
 http://www.apache.org/licenses/LICENSE-2.0
 
-Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF 
-ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
 The copyright is retained by CapsicoHealth Inc as Copyright (C) 2015 CapsicoHealth Inc.
 
@@ -53,19 +33,19 @@ import the project into your workspace. Tilda is all self-contained at this time
 a base project, for your application. You can also of course build your own JAR and take the libraries independently.
 
 <H1>Dependencies</H1>
-Tilda is currently dependent on several other libraries both for the tooling and at runtime:
-  * <A href="https://commons.apache.org/proper/commons-dbcp/">Apache Commons DPCP2 V2.1</A>
-  * <A href="https://commons.apache.org/proper/commons-io/">Apache Commons IO V2.4</A>
-  * <A href="https://commons.apache.org/proper/commons-logging/">Apache Commons Logging V1.2</A>
-  * <A href="https://commons.apache.org/proper/commons-pool/">Apache Commons Pool2 V2.3</A>
-  * <A href="http://lmax-exchange.github.io/disruptor/">LMAX Disruptor V3.3.0</A>
-  * <A href="https://code.google.com/p/google-gson/">GSON V2.3.1</A>
-  * <A href="http://logging.apache.org/log4j/2.x/">Apache Log4j 2 V2.3</A>
-  * <A href="https://jdbc.postgresql.org/">Postgres 9.4 JDBC 4.1 driver</A>
+Tilda is currently dependent on several other <A href="https://github.com/CapsicoHealth/Tilda/tree/master/lib">libraries</A> both for the tooling and at runtime such as:
+  <UL><LI><A href="https://commons.apache.org/proper/commons-dbcp/">Apache Commons DPCP2</A>
+      <LI> <A href="https://commons.apache.org/proper/commons-io/">Apache Commons IO</A>
+      <LI> <A href="https://commons.apache.org/proper/commons-logging/">Apache Commons Logging</A>
+      <LI> <A href="https://commons.apache.org/proper/commons-pool/">Apache Commons Pool2</A>
+      <LI> <A href="http://lmax-exchange.github.io/disruptor/">LMAX Disruptor</A>
+      <LI> <A href="https://code.google.com/p/google-gson/">GSON</A>
+      <LI> <A href="http://logging.apache.org/log4j/2.x/">Apache Log4j 2</A>
+      <LI> <A href="https://jdbc.postgresql.org/">Postgres JDBC driver</A>
+  </UL>
 
-We expect to stay up to date with all those libraries and will update them regularly.<BR>
 <H1>Additional utilities</H1>
-In order to support its tooling and runtime, Tilda also includes a number of utilities such as:
+In order to support its tooling and runtime, Tilda also includes a number of <A href="https://github.com/CapsicoHealth/Tilda/tree/master/src/tilda/utils">utilities</A> such as:
   * DateTime and Timezone support
   * Text for formating utilities
   * Encryption
@@ -74,15 +54,6 @@ In order to support its tooling and runtime, Tilda also includes a number of uti
 
 You are free to use those in your application if they fit your needs. However, we are always in the lookout to use other libraries if their functionality matches our needs, so it's very possible that over time, some of the Tilda utilities get deprecated and phased out.
 
-<H1>To-Do's</H1>
-Tilda is currently used in high-performance production environments and runtime features have been priviledged to get off the ground as fast as possible. However, there is still a lot of work to be done, and we expect to have a stable V1.0 before the end of 2015. In the meantime, changes in runtime implementation, APIs and features are to be expected. In particular, there are several features that we are looking to build and would love to have contributors:
-  * A utility to generate database migration scripts (using <A href="http://schemaspy.sourceforge.net/">SchemaSpy</A> for example.
-  * A stand-alone browser-based tool (using something like a Chrome App) to allow developers to easily create/edit the JSON Tilda configuration file.
-  * Runtime checks to make sure the database matches the application's data model (i.e., a runtime version of the migration tool in some way)
-  * Implementation for SQLServer, Cassandra and MongoDB
-  * Extension of the Postgres support to access the NOSQL features such as the JSON store.
-  * Updating the JSON parsing code to make it dynamic so that handlers could be separately generated to extend the platform (the code is currently a bit too monolythic on the parsing side).
-  * Implementing additional patterns such as Smart Objects, distributed caching, HL7 integration etc...
-  * Creating stand-alone HTML documentation, including ER diagrams, so share with customers for example, and auto-document the data models in addition to the code documentation.
-  * Help with docs, tests and automated builds etc... :)
-  
+<H1>Getting started</H1>
+We are working on getting-started tutorials and videos that will live in the <a href="https://github.com/CapsicoHealth/Tilda/wiki">Wiki</A>.
+

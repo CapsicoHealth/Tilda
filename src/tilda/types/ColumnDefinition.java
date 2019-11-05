@@ -90,18 +90,17 @@ public class ColumnDefinition
       }
 
 
-    public void getColumnType(Connection C, StringBuilder Str, ColumnType T, Integer S, ColumnMode M, boolean Collection)
+    public void getColumnType(Connection C, StringBuilder Str, ColumnType T, Integer S, ColumnMode M, boolean Collection, Integer Precision, Integer Scale)
       {
-        C.getColumnType(Str, T, S, M, Collection);
+        C.getColumnType(Str, T, S, M, Collection, Precision, Scale);
       }
 
-    public String getColumnType(Connection C, ColumnType T, Integer S, ColumnMode M, boolean Collection)
+    public String getColumnType(Connection C, ColumnType T, Integer S, ColumnMode M, boolean Collection, Integer Precision, Integer Scale)
       {
         StringBuilder Str = new StringBuilder();
-        getColumnType(C, Str, T, S, M, Collection);
+        getColumnType(C, Str, T, S, M, Collection, Precision, Scale);
         return Str.toString();
       }
-
 
 
     public void getFullColumnVarForInsert(Connection C, StringBuilder Str)
@@ -138,7 +137,7 @@ public class ColumnDefinition
     // return Create(null, TableName, ColumnName, Type, Collection, Nullable, Description);
     // }
 
-    public static ColumnDefinition Create(String SchemaName, String TableName, String ColumnName, ColumnType Type, boolean Collection, boolean Nullable, String Description)
+    public static ColumnDefinition create(String SchemaName, String TableName, String ColumnName, ColumnType Type, boolean Collection, boolean Nullable, String Description)
       {
         String ClassName = "tilda.types.Type_" + Type._SimpleName + (Collection == true ? "Collection" : "Primitive") + (Nullable == true ? "Null" : "");
         try

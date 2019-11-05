@@ -1,17 +1,21 @@
 
 package tilda.data._Tilda;
 
-import java.time.*;
+import java.math.*;
 import java.util.*;
+import java.time.*;
+
+import org.apache.logging.log4j.*;
+
+import com.google.gson.annotations.*;
 
 import tilda.db.*;
 import tilda.enums.*;
+import tilda.performance.*;
 import tilda.types.*;
 import tilda.utils.*;
+import tilda.utils.json.*;
 import tilda.utils.pairs.*;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -26,9 +30,9 @@ public class TILDA__CONNECTION_Factory
    protected TILDA__CONNECTION_Factory() { }
 
    public static final Class<TILDA__CONNECTION> DATA_CLASS= TILDA__CONNECTION.class;
-   public static final String SCHEMA_LABEL = TextUtil.Print("TILDA", "");
-   public static final String TABLENAME_LABEL = TextUtil.Print("Connection", "");
-   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.Print("TILDA.Connection", "");
+   public static final String SCHEMA_LABEL = TextUtil.print("TILDA", "");
+   public static final String TABLENAME_LABEL = TextUtil.print("Connection", "");
+   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.print("TILDA.Connection", "");
    public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "Connection"); }
 
    public static abstract class COLS {
@@ -308,35 +312,35 @@ This is the column definition for:<BR>
        protected Connection _C = null;
        protected tilda.db.processors.ObjectProcessor<tilda.data.Connection_Data> _OP;
        protected ArrayListResults<tilda.data.Connection_Data> _L = null;
-       public void    Start  () { }
-       public void    End    (boolean HasMore, int Max) { if (_OP == null) _L.wrapup(HasMore, Max); }
-       public boolean Process(int Index, java.sql.ResultSet RS) throws Exception
+       public void    start  () { }
+       public void    end    (boolean HasMore, int Max) { if (_OP == null) _L.wrapup(HasMore, Max); }
+       public boolean process(int Index, java.sql.ResultSet RS) throws Exception
         {
           tilda.data.Connection_Data Obj = new tilda.data.Connection_Data();
-          boolean OK = ((tilda.data._Tilda.TILDA__CONNECTION)Obj).Init(_C, RS);
+          boolean OK = ((tilda.data._Tilda.TILDA__CONNECTION)Obj).init(_C, RS);
           if (OK == true)
            {
              if (_OP == null)
               _L.add(Obj);
              else
-              _OP.Process(Index, Obj);
+              _OP.process(Index, Obj);
            }
           return OK;
         }
      }
 
-   protected static final void ProcessMany(Connection C, String FullSelectQuery, int Start, int Size, tilda.db.processors.RecordProcessor RP) throws Exception
+   protected static final void processMany(Connection C, String FullSelectQuery, int Start, int Size, tilda.db.processors.RecordProcessor RP) throws Exception
      {
-       ReadMany(C, -77, RP, null, FullSelectQuery, Start, Size);
+       readMany(C, -77, RP, null, FullSelectQuery, Start, Size);
      }
-   protected static final ListResults<tilda.data.Connection_Data> ReadMany(Connection C, String FullSelectQuery, int Start, int Size) throws Exception
+   protected static final ListResults<tilda.data.Connection_Data> readMany(Connection C, String FullSelectQuery, int Start, int Size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
-       ReadMany(C, -77, RPI, null, FullSelectQuery, Start, Size);
+       readMany(C, -77, RPI, null, FullSelectQuery, Start, Size);
        return RPI._L;
      }
 
-   private static final void ReadMany(Connection C, int LookupId, tilda.db.processors.RecordProcessor RP, tilda.data._Tilda.TILDA__CONNECTION Obj, Object ExtraParams, int Start, int Size) throws Exception
+   private static final void readMany(Connection C, int LookupId, tilda.db.processors.RecordProcessor RP, tilda.data._Tilda.TILDA__CONNECTION Obj, Object ExtraParams, int Start, int Size) throws Exception
      {
        long T0 = System.nanoTime();
        StringBuilder S = new StringBuilder(1024);
@@ -414,7 +418,7 @@ This is the column definition for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__CONNECTION_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, AllocatedArrays);
+          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__CONNECTION_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, AllocatedArrays);
           PS = null;
           AllocatedArrays = null;
         }
@@ -427,7 +431,7 @@ This is the column definition for:<BR>
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- Creates a new object in memory, which you can subsequently {@link #Write()} to the data store.
+ Creates a new object in memory, which you can subsequently {@link #write()} to the data store.
  current object to the destination. 
  @param id          (max size 15) Connection ID
  @param driver      (max size 100) DB Driver
@@ -438,7 +442,7 @@ This is the column definition for:<BR>
  @param max         Maximum Connections
  @param schemas     Schemas
 */
-   static public tilda.data.Connection_Data Create(String id, String driver, String db, String user, String pswd, int initial, int max, List<String> schemas) throws Exception
+   static public tilda.data.Connection_Data create(String id, String driver, String db, String user, String pswd, int initial, int max, List<String> schemas) throws Exception
      {
        tilda.data._Tilda.TILDA__CONNECTION Obj = new tilda.data.Connection_Data();
        Obj.initForCreate();
@@ -461,7 +465,7 @@ This is the column definition for:<BR>
        return (tilda.data.Connection_Data) Obj;
      }
 
-   static public tilda.data.Connection_Data Create(Map<String, String> Values, List<StringStringPair> Errors)
+   static public tilda.data.Connection_Data create(Map<String, String> Values, List<StringStringPair> Errors)
    throws Exception
      {
        int IncomingErrors = Errors.size();
@@ -479,13 +483,13 @@ This is the column definition for:<BR>
        if (IncomingErrors != Errors.size())
         return null;
 
-      tilda.data.Connection_Data Obj = tilda.data.Connection_Factory.Create(_id, _driver, _db, _user, _pswd, _initial, _max, _schemas);
+      tilda.data.Connection_Data Obj = tilda.data.Connection_Factory.create(_id, _driver, _db, _user, _pswd, _initial, _max, _schemas);
 
       if (_active     != null) Obj.setActive     (_active     );
 
       return Obj;
      }
-   public static int WriteBatch(Connection C, List<tilda.data.Connection_Data> L, int batchSize, int commitSize) throws Exception
+   public static int writeBatch(Connection C, List<tilda.data.Connection_Data> L, int batchSize, int commitSize) throws Exception
      {
        long T0 = System.nanoTime();
 
@@ -523,9 +527,9 @@ This is the column definition for:<BR>
                    return index;
                  }
 
-               if (((TILDA__CONNECTION) d).BeforeWrite(C) == false)
+               if (((TILDA__CONNECTION) d).beforeWrite(C) == false)
                  {
-                   LOG.debug(QueryDetails._LOGGING_HEADER + "The 'tilda.data.Connection_Data' object at positon #" + index + " failed in its BeforeWrite() method.");
+                   LOG.debug(QueryDetails._LOGGING_HEADER + "The 'tilda.data.Connection_Data' object at positon #" + index + " failed in its beforeWrite() method.");
                    QueryDetails.setLastQuery(TILDA__CONNECTION_Factory.SCHEMA_TABLENAME_LABEL, "");
                    return index;
                  }
@@ -570,7 +574,7 @@ This is the column definition for:<BR>
                PS.clearParameters();
              }
 
-           if (index != 0 && (index + 1) % batchSize != 0)
+           if ((index + 1) % batchSize != 0)
              {
                int[] results = PS.executeBatch();
                int failedRec = JDBCHelper.batchWriteDone(results, L.size() - insertCount);
@@ -601,13 +605,13 @@ This is the column definition for:<BR>
          }
        finally
          {
-           TILDA__1_0.HandleFinally(PS, T0, TILDA__CONNECTION_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+           TILDA__1_0.handleFinally(PS, T0, TILDA__CONNECTION_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
            PS = null;
            AllocatedArrays = null;
          }
        }
 
-   static public tilda.data.Connection_Data LookupByPrimaryKey(String id) throws Exception
+   static public tilda.data.Connection_Data lookupByPrimaryKey(String id) throws Exception
      {
        tilda.data._Tilda.TILDA__CONNECTION Obj = new tilda.data.Connection_Data();
        Obj.initForLookup(0);
@@ -617,7 +621,7 @@ This is the column definition for:<BR>
        return (tilda.data.Connection_Data) Obj;
      }
 
-   static public ListResults<tilda.data.Connection_Data> LookupWhereAllById(Connection C, int Start, int Size) throws Exception
+   static public ListResults<tilda.data.Connection_Data> lookupWhereAllById(Connection C, int Start, int Size) throws Exception
      {
        tilda.data._Tilda.TILDA__CONNECTION Obj = new tilda.data.Connection_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -625,11 +629,11 @@ This is the column definition for:<BR>
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
-       ReadMany(C, 1, RPI, Obj, null, Start, Size);
+       readMany(C, 1, RPI, Obj, null, Start, Size);
        return RPI._L;
      }
 
-   static public void LookupWhereAllById(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Connection_Data> OP, int Start, int Size) throws Exception
+   static public void lookupWhereAllById(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Connection_Data> OP, int Start, int Size) throws Exception
      {
        tilda.data._Tilda.TILDA__CONNECTION Obj = new tilda.data.Connection_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -637,18 +641,18 @@ This is the column definition for:<BR>
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       ReadMany(C, 1, RPI, Obj, null, Start, Size);
+       readMany(C, 1, RPI, Obj, null, Start, Size);
      }
 
 
-   static public ListResults<tilda.data.Connection_Data> LookupWhereActive(Connection C, int Start, int Size) throws Exception
+   static public ListResults<tilda.data.Connection_Data> lookupWhereActive(Connection C, int Start, int Size) throws Exception
      {
        tilda.data._Tilda.TILDA__CONNECTION Obj = new tilda.data.Connection_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
-       ReadMany(C, 2, RPI, Obj, null, Start, Size);
+       readMany(C, 2, RPI, Obj, null, Start, Size);
        return RPI._L;
      }
 
@@ -658,15 +662,16 @@ This is the column definition for:<BR>
    public static ListResults<tilda.data.Connection_Data> runSelect(Connection C, SelectQuery Q, int Start, int Size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
-       ReadMany(C, -7, RPI, null, Q, Start, Size);
+       readMany(C, -7, RPI, null, Q, Start, Size);
        return RPI._L;
      }
    public static void runSelect(Connection C, SelectQuery Q, tilda.db.processors.ObjectProcessor<tilda.data.Connection_Data> OP, int Start, int Size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       ReadMany(C, -7, RPI, null, Q, Start, Size);
+       readMany(C, -7, RPI, null, Q, Start, Size);
      }
    public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
    public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
+
 
  }

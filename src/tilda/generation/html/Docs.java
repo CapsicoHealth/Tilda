@@ -68,7 +68,7 @@ public class Docs
 
     protected static String coolPrint(String Name)
       {
-        return TextUtil.SearchReplace(Name, ".", "<B>&nbsp;&#8226;&nbsp;</B>");
+        return TextUtil.searchReplace(Name, ".", "<B>&nbsp;&#8226;&nbsp;</B>");
       }
 
     public static String makeSchemaLink(Schema S)
@@ -144,6 +144,11 @@ public class Docs
           {
             Object OR = O._ParentSchema.getObject(O._SourceView._Name);
             Out.println("<LI>Is Realized from <B>" + makeObjectLink(OR) + "</B> through DB function <B>" + coolPrint(O._ParentSchema.getShortName() + ".Refill_" + O._Name) + "()</B>.</LI>");
+          }
+        else if (O._FST == FrameworkSourcedType.CLONED)
+          {
+            Object OR = O._ParentSchema.getObject(O._SourceObject._Name);
+            Out.println("<LI>Is Cloned from <B>" + makeObjectLink(OR) + "</B>.</LI>");
           }
 
         if (view == null)
@@ -255,7 +260,7 @@ public class Docs
             if (C == null)
               continue;
             String FieldType = view != null && view.getFormula(C.getName()) != null ? "formulae" : "columns";
-            if (view != null && view._Realize != null && TextUtil.FindStarElement(view._Realize._Exclude_DEPRECATED, C.getName(), false, 0) == -1)
+            if (view != null && view._Realize != null && TextUtil.findStarElement(view._Realize._Exclude_DEPRECATED, C.getName(), false, 0) == -1)
               FieldType = FieldType + " realized" + FieldType;
             Out.println("  <TR valign=\"top\" bgcolor=\"" + (i % 2 == 0 ? "#FFFFFF" : "#DFECF8") + "\">");
             Out.println("    <TD>" + i + "&nbsp;&nbsp;</TD>");
@@ -282,7 +287,7 @@ public class Docs
             Out.println("<TD align=\"center\">" + (C._Nullable == true ? "&#x2611;" : "&#x2610") + "&nbsp;&nbsp;</TD>");
             if (view != null && view._Realize != null)
               {
-                Out.print("<TD align=\"center\">" + (TextUtil.FindStarElement(view._Realize._Exclude_DEPRECATED, C.getName(), false, 0) == -1 ? "&#x2611;<!--R-->" : "&#x2610;") + "&nbsp;&nbsp;</TD>");
+                Out.print("<TD align=\"center\">" + (TextUtil.findStarElement(view._Realize._Exclude_DEPRECATED, C.getName(), false, 0) == -1 ? "&#x2611;<!--R-->" : "&#x2610;") + "&nbsp;&nbsp;</TD>");
               }
             if (O._Mode != ObjectMode.DB_ONLY)
               {
@@ -562,9 +567,9 @@ public class Docs
         Out.println("<td>" + indentedBody + "<a href='" + tableName + "'>" + C._ParentObject._OriginalName + "</a></td>");
 
         if (isLast)
-          Out.println("<td>" + indentedBody + "<a href='" + columnName + "'>" + C.getName() + "</a>" + TextUtil.Print(valueToAppend, "") + " -- " + C._TypeStr + "</td>");
+          Out.println("<td>" + indentedBody + "<a href='" + columnName + "'>" + C.getName() + "</a>" + TextUtil.print(valueToAppend, "") + " -- " + C._TypeStr + "</td>");
         else
-          Out.println("<td>" + indentedBody + "<a href='" + columnName + "'>" + C.getName() + "</a>" + TextUtil.Print(valueToAppend, "") + "</td>");
+          Out.println("<td>" + indentedBody + "<a href='" + columnName + "'>" + C.getName() + "</a>" + TextUtil.print(valueToAppend, "") + "</td>");
         Out.println("</tr>");
       }
 
@@ -606,9 +611,9 @@ public class Docs
         Out.println("<td>" + indentedBody + "<a href='" + tableName + "'>" + VC._ParentView._OriginalName + "</a></td>");
 
         if (isLast)
-          Out.println("<td>" + indentedBody + "<a href='" + columnName + "'>" + VC.getName() + "</a>" + TextUtil.Print(valueToAppend, "") + (VC._SameAsObj == null ? "" : " -- " + VC._SameAsObj._TypeStr) + "</td>");
+          Out.println("<td>" + indentedBody + "<a href='" + columnName + "'>" + VC.getName() + "</a>" + TextUtil.print(valueToAppend, "") + (VC._SameAsObj == null ? "" : " -- " + VC._SameAsObj._TypeStr) + "</td>");
         else
-          Out.println("<td>" + indentedBody + "<a href='" + columnName + "'>" + VC.getName() + "</a>" + TextUtil.Print(valueToAppend, "") + "</td>");
+          Out.println("<td>" + indentedBody + "<a href='" + columnName + "'>" + VC.getName() + "</a>" + TextUtil.print(valueToAppend, "") + "</td>");
         Out.println("</tr>");
       }
 
@@ -649,9 +654,9 @@ public class Docs
         Out.println("<td>" + indentedBody + "<a href='" + tableName + "'>" + pivotColumn._ParentView._OriginalName + "</a></td>");
 
         if (isLast)
-          Out.println("<td>" + indentedBody + pivotColumn.getAggregateName() + TextUtil.Print(valueToAppend, "") + "</td>");
+          Out.println("<td>" + indentedBody + pivotColumn.getAggregateName() + TextUtil.print(valueToAppend, "") + "</td>");
         else
-          Out.println("<td>" + indentedBody + pivotColumn.getAggregateName() + TextUtil.Print(valueToAppend, "") + "</td>");
+          Out.println("<td>" + indentedBody + pivotColumn.getAggregateName() + TextUtil.print(valueToAppend, "") + "</td>");
         Out.println("</tr>");
       }
 
@@ -715,7 +720,7 @@ public class Docs
             + "<TD>" + V._Value + "&nbsp;&nbsp;</TD>"
             + "<TD>" + V._Label + "&nbsp;&nbsp;</TD>"
             + "<TD>" + V._Default + "&nbsp;&nbsp;</TD>"
-            + "<TD>" + TextUtil.Print(V._Groupings) + "&nbsp;&nbsp;</TD>"
+            + "<TD>" + TextUtil.print(V._Groupings) + "&nbsp;&nbsp;</TD>"
             // + "<TD>" + V._Raw + "</TD>"
             + "<TD>" + V._Description + "</TD>"
             + "</TR>");
@@ -1030,7 +1035,7 @@ public class Docs
       {
         Graph<View.DepWrapper> G = V.getDependencyGraph(false);
         DependencyPrinter DepPrinter = new DependencyPrinter(Sql);
-        G.Traverse(DepPrinter, true);
+        G.traverse(DepPrinter, true);
 
         /*
          * if (V._SubWhereX != null)
@@ -1121,7 +1126,7 @@ public class Docs
             {
               Graph<DepWrapper> G = V.getDependencyGraph(true);
               GL.add(G);
-              G.Traverse(new Visitor<DepWrapper>()
+              G.traverse(new Visitor<DepWrapper>()
                 {
                   @Override
                   public void visitNode(int level, int FirstMiddleLast, DepWrapper v, List<DepWrapper> Path)

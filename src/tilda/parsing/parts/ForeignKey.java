@@ -38,8 +38,18 @@ public class ForeignKey
 
     public transient List<Column> _SrcColumnObjs = new ArrayList<Column>();
     public transient Object       _DestObjectObj;
-
     public transient Object       _ParentObject;
+
+    public ForeignKey()
+      {
+      }
+
+    public ForeignKey(ForeignKey fk)
+      {
+        _Name = fk._Name;
+        _SrcColumns = fk._SrcColumns;
+        _DestObject = fk._DestObject;
+      }
 
     public String getName()
       {
@@ -55,15 +65,15 @@ public class ForeignKey
         if (TextUtil.isNullOrEmpty(_Name) == true)
           return PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a foreign key without a name.");
 
-        if (_Name.equals(TextUtil.SanitizeName(_Name)) == false)
+        if (_Name.equals(TextUtil.sanitizeName(_Name)) == false)
           PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining foreign key '" + _Name + "' with a name containing invalid characters (must all be alphanumeric or underscore).");
 
         if (TextUtil.isJavaIdentifier(_Name) == false)
           PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining foreign key '" + _Name + "' with a name that is imcompatible with standard identifier convensions (for example, Java, JavaScript since Foreign Keys have programmatic equivalents in those languages).");
 
         if (_Name.length() > PS._CGSql.getMaxColumnNameSize())
-          PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining foreign key '" + _Name + "' with a name that's too long: max allowed by your database is "+PS._CGSql.getMaxColumnNameSize()+" vs "+_Name.length()+" for this identifier.");
-        
+          PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining foreign key '" + _Name + "' with a name that's too long: max allowed by your database is " + PS._CGSql.getMaxColumnNameSize() + " vs " + _Name.length() + " for this identifier.");
+
         ValidateSourceColumns(PS);
         ValidateDestinationObject(PS);
 
@@ -138,7 +148,7 @@ public class ForeignKey
 
     public String getColumnList()
       {
-        return TextUtil.Print(_SrcColumns);
+        return TextUtil.print(_SrcColumns);
       }
 
     public String getSignature()

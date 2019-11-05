@@ -82,25 +82,53 @@ public class Column extends TypeDef
 
     public Column()
       {
-
       }
 
-    public Column(String Name, String TypeStr, Integer Size, String Description)
+    public Column(Column c)
       {
-        super(TypeStr, Size);
+        super(c);
+        _Name = c._Name;
+        _SameAs__DEPRECATED = c._SameAs__DEPRECATED;
+        _SameAs = c._SameAs;
+        _Nullable = c._Nullable;
+        _ModeStr = c._ModeStr;
+        _Invariant = c._Invariant;
+        _ProtectStr = c._ProtectStr;
+        _Description = c._Description;
+        if (c._Mapper != null)
+          _Mapper = new ColumnMapper(c._Mapper);
+        if (c._Enum != null)
+          _Enum = new ColumnEnum(c._Enum);
+        if (c._Values != null)
+          {
+            _Values = new ColumnValue[c._Values.length];
+            for (int i = 0; i < c._Values.length; ++i)
+              _Values[i] = new ColumnValue(c._Values[i]);
+          }
+        _Default = c._Default;
+        if (c._JsonSchema != null)
+          _JsonSchema = new JsonSchema(c._JsonSchema);
+      }
+
+    public Column(String Name, String TypeStr, Integer Size, String Description, Integer Precision, Integer Scale)
+      {
+        super(TypeStr, Size, Precision, Scale);
         _Name = Name;
         _Description = Description;
+
       }
 
-    public Column(String Name, String TypeStr, Integer Size, boolean Nullable, ColumnMode Mode, boolean Invariant, ProtectionType Protect, String Description)
+    public Column(String Name, String TypeStr, Integer Size, boolean Nullable, ColumnMode Mode, boolean Invariant, ProtectionType Protect, String Description, Integer Precision, Integer Scale)
       {
-        super(TypeStr, Size);
+        super(TypeStr, Size, Precision, Scale);
         _Name = Name;
         _Nullable = Nullable;
         _ModeStr = Mode == null ? null : Mode.name();
         _Invariant = Invariant;
         _ProtectStr = Protect == null ? null : Protect.name();
         _Description = Description;
+        _Precision = Precision;
+        _Scale = Scale;
       }
 
     public Column(String Name, ColumnType Type, String Description)
@@ -135,6 +163,7 @@ public class Column extends TypeDef
 
     /**
      * Gets the full Tilda name of the column, which includes the package name
+     * 
      * @return The full Tilda name of the column, i.e., Package.Schema.Table.Column
      */
     public String getFullName()
@@ -144,6 +173,7 @@ public class Column extends TypeDef
 
     /**
      * Gets the full SQL name of the column, i.e., Schema.Table.Column
+     * 
      * @return the full SQL name of the column, i.e., Schema.Table.Column
      */
     public String getShortName()
@@ -153,6 +183,7 @@ public class Column extends TypeDef
 
     /**
      * Gets the name of the column.
+     * 
      * @return The name of the column
      */
     public String getName()
@@ -322,6 +353,12 @@ public class Column extends TypeDef
          * }
          */
 
+        if (_SameAsObj._Precision != null)
+          _Precision = _SameAsObj._Precision;
+
+        if (_SameAsObj._Scale != null)
+          _Scale = _SameAsObj._Scale;
+
         if (_Size != null && _Size != 0 && _Size < _SameAsObj._Size)
           PS.AddError("Column '" + getFullName() + "' is a 'sameas' and is redefining a size '" + _Size + "' that is lower that the origianal column's size '" + _SameAsObj._Size + "'. You can only enlarge a column (for example to go from a CHAR to a VARCHAR), not shrink it.");
         else if (_Mapper != null && _Mapper._Multi != MultiType.NONE)
@@ -394,7 +431,8 @@ public class Column extends TypeDef
           return PS.AddError("Column '" + getFullName() + "' defines a 'default' and 'values' attributes. Only one or the other is alowed.");
 
         if (TextUtil.isNullOrEmpty(_Default) == false)
-          _Values = new ColumnValue[] { new ColumnValue(_Name + "_CreateDefault", _Default, null, null, null, DefaultType.CREATE) };
+          _Values = new ColumnValue[] { new ColumnValue(_Name + "_CreateDefault", _Default, null, null, null, DefaultType.CREATE)
+          };
 
         if (_Values == null || _Values.length == 0)
           return true;
@@ -534,6 +572,7 @@ public class Column extends TypeDef
 
     /**
      * returns a comma-separated string containing the <B>unescaped</B> column short names
+     * 
      * @param L
      * @return
      */
@@ -545,9 +584,11 @@ public class Column extends TypeDef
         return Str.toString();
       }
 
+    @Override
     public String toString()
       {
-        return getClass().getName() + ":" + getFullName();
+        return getClass().getName() + ":" + getFullName() + " (" + super.toString() + ")";
+
       }
 
     String getLogicalName()
@@ -565,7 +606,8 @@ public class Column extends TypeDef
       }
 
     /**
-     * A column needs an extra timezone support column if it is of type DATETIME and was not framework-generated (e.g., created, lastUpdated...) 
+     * A column needs an extra timezone support column if it is of type DATETIME and was not framework-generated (e.g., created, lastUpdated...)
+     * 
      * @return
      */
     public boolean needsTZ()

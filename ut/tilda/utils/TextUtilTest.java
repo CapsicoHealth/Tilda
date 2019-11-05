@@ -18,7 +18,6 @@ package tilda.utils;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -34,14 +33,14 @@ public class TextUtilTest
     public static void main(String[] args)
       {
 //        Test_SimplifyName();
-//        Test1();
+        Test_SearchReplace();
 //        Test2();
 //        Test3();
 //        Test4();
 //        Test_Perf_toString_type_vs_cast();
 //          Test_FindLikeElement();
 //          Test_Perf_endsWith_vs_charAt();
-          Test_isNullOrEmpty();
+//          Test_isNullOrEmpty();
       }
 
     private static void Test_isNullOrEmpty()
@@ -81,7 +80,7 @@ public class TextUtilTest
     private static void Test_Perf_endsWith_vs_charAt()
       {
         String[] A = new String[1000000];
-        System.out.println("Initializing Test_Perf_endsWith_vs_charAt with "+NumberFormatUtil.PrintWith000Sep(A.length)+" elements");
+        System.out.println("Initializing Test_Perf_endsWith_vs_charAt with "+NumberFormatUtil.printWith000Sep(A.length)+" elements");
         for (int i = 0; i < A.length; ++i)
          A[i] = (i%10 == 0 ? "*":"")+EncryptionUtil.getToken(RandomUtil.pick(10, 100))+(i%5 == 0 && i%10 != 0 ? "*":"");
 
@@ -93,7 +92,7 @@ public class TextUtilTest
             if (A[i].endsWith("*") == true)
              ++count;
           }
-        System.out.println("count: "+count+"; endsWith: " + DurationUtil.PrintDuration(System.nanoTime() - T0));
+        System.out.println("count: "+count+"; endsWith: " + DurationUtil.printDuration(System.nanoTime() - T0));
 
         T0 = System.nanoTime();
         count = 0;
@@ -102,7 +101,7 @@ public class TextUtilTest
             if (A[i].charAt(A[i].length()-1) == '*')
              ++count;
           }              
-        System.out.println("count: "+count+"; charAt(length-1): " + DurationUtil.PrintDuration(System.nanoTime() - T0));
+        System.out.println("count: "+count+"; charAt(length-1): " + DurationUtil.printDuration(System.nanoTime() - T0));
         
         T0 = System.nanoTime();
         count = 0;
@@ -111,7 +110,7 @@ public class TextUtilTest
             if (A[i].startsWith("*") == true)
              ++count;
           }
-        System.out.println("count: "+count+"; startsWith: " + DurationUtil.PrintDuration(System.nanoTime() - T0));
+        System.out.println("count: "+count+"; startsWith: " + DurationUtil.printDuration(System.nanoTime() - T0));
 
         T0 = System.nanoTime();
         count = 0;
@@ -120,7 +119,7 @@ public class TextUtilTest
             if (A[i].charAt(0) == '*')
              ++count;
           }              
-        System.out.println("charAt(0): " + DurationUtil.PrintDuration(System.nanoTime() - T0));
+        System.out.println("charAt(0): " + DurationUtil.printDuration(System.nanoTime() - T0));
 
       }
     
@@ -133,7 +132,7 @@ public class TextUtilTest
         
         for (int i = 0; i < ValArray.length; ++i)
           {
-            int pos = TextUtil.FindStarElement(A, ValArray[i], false, 0);
+            int pos = TextUtil.findStarElement(A, ValArray[i], false, 0);
             String Msg = "i: "+i+"; Val: "+ValArray[i]+"; Pos: "+pos+"; ExpectedPos: "+PosArray[i]+"; Status: "+(pos == PosArray[i] ? "OK":"ERROR");
             if (pos == PosArray[i])
              LOG.debug(Msg);
@@ -147,7 +146,7 @@ public class TextUtilTest
         
         for (int i = 0; i < ValArray.length; ++i)
           {
-            int pos = TextUtil.FindStarElement(A, ValArray[i], true, 0);
+            int pos = TextUtil.findStarElement(A, ValArray[i], true, 0);
             String Msg = "i: "+i+"; Val: "+ValArray[i]+"; Pos: "+pos+"; ExpectedPos: "+PosArray[i]+"; Status: "+(pos == PosArray[i] ? "OK":"ERROR");
             if (pos == PosArray[i])
              LOG.debug(Msg);
@@ -158,7 +157,7 @@ public class TextUtilTest
         PosArray = new int[] {-1, -1, -1, -1,-1, -1, -1};
         for (int i = 0; i < ValArray.length; ++i)
           {
-            int pos = TextUtil.FindStarElement(A, ValArray[i], false, 0);
+            int pos = TextUtil.findStarElement(A, ValArray[i], false, 0);
             String Msg = "i: "+i+"; Val: "+ValArray[i]+"; Pos: "+pos+"; ExpectedPos: "+PosArray[i]+"; Status: "+(pos == PosArray[i] ? "OK":"ERROR");
             if (pos == PosArray[i])
              LOG.debug(Msg);
@@ -180,7 +179,7 @@ public class TextUtilTest
                 Str.append(Integer.toString(1233463576));
                 Str.append(Double.toString(235625624.256));
               }
-            System.out.println("Type-based toString(): " + DurationUtil.PrintDuration(System.nanoTime() - T0));
+            System.out.println("Type-based toString(): " + DurationUtil.printDuration(System.nanoTime() - T0));
           }
 
           {
@@ -192,7 +191,7 @@ public class TextUtilTest
                 Str.append(((Integer)1233463576).toString());
                 Str.append(((Double)235625624.256).toString());
               }
-            System.out.println("cast-based toString(): " + DurationUtil.PrintDuration(System.nanoTime() - T0));
+            System.out.println("cast-based toString(): " + DurationUtil.printDuration(System.nanoTime() - T0));
           }
       }
 
@@ -231,7 +230,7 @@ public class TextUtilTest
                     Out.print("=?");
                   }
               }
-            System.out.println("PrintWriter.print: " + DurationUtil.PrintDuration(System.nanoTime() - T0));
+            System.out.println("PrintWriter.print: " + DurationUtil.printDuration(System.nanoTime() - T0));
           }
           {
             long T0 = System.nanoTime();
@@ -246,7 +245,7 @@ public class TextUtilTest
                     Out.write("=?");
                   }
               }
-            System.out.println("PrintWriter.write: " + DurationUtil.PrintDuration(System.nanoTime() - T0));
+            System.out.println("PrintWriter.write: " + DurationUtil.printDuration(System.nanoTime() - T0));
           }
       }
 
@@ -266,7 +265,7 @@ public class TextUtilTest
                   Str.append(", ").append("1234567890").append("=?");
                 Str.setLength(0);
               }
-            System.out.println("All 3 parts separate litteral: " + DurationUtil.PrintDuration(System.nanoTime() - T0));
+            System.out.println("All 3 parts separate litteral: " + DurationUtil.printDuration(System.nanoTime() - T0));
           }
 
           {
@@ -278,7 +277,7 @@ public class TextUtilTest
                   Str.append(", 1234567890=?");
                 Str.setLength(0);
               }
-            System.out.println("All 3 parts together in single litteral: " + DurationUtil.PrintDuration(System.nanoTime() - T0));
+            System.out.println("All 3 parts together in single litteral: " + DurationUtil.printDuration(System.nanoTime() - T0));
           }
 
           {
@@ -290,28 +289,30 @@ public class TextUtilTest
                   Str.append(CommaSpace).append(Txt).append(EqualsQuestion);
                 Str.setLength(0);
               }
-            System.out.println("All 3 parts separate as constants: " + DurationUtil.PrintDuration(System.nanoTime() - T0));
+            System.out.println("All 3 parts separate as constants: " + DurationUtil.printDuration(System.nanoTime() - T0));
           }
 
       }
 
-    private static void Test1()
+    private static void Test_SearchReplace()
       {
         String Str = "update TILDA.KEY set TILDA.KEY.\"max\"=TILDA.KEY.\"max\"+TILDA.KEY.\"count\"";
-        String TableName = "TILDA.KEY";
+        String TableName = "TILDA.KEY.";
         long T0 = System.nanoTime();
-        for (int i = 0; i < 1000000; ++i)
+        int runs = 10_000_000;
+        for (int i = 0; i < runs; ++i)
           {
-            TextUtil.SearchReplace(Str, TableName + ".", "");
+            TextUtil.searchReplace(Str, TableName, "");
           }
-        System.out.println("TextUtil.SearchReplace: " + DurationUtil.PrintDuration(System.nanoTime() - T0));
+        System.out.println("TextUtil.SearchReplace: " + DurationUtil.printDuration(System.nanoTime() - T0));
 
         T0 = System.nanoTime();
-        for (int i = 0; i < 1000000; ++i)
+        TableName = "TILDA\\.KEY\\.";
+        for (int i = 0; i < runs; ++i)
           {
-            Str.replaceAll(TableName.replaceAll("\\.", "\\.") + ".", "");
+            Str.replaceAll(TableName, "");
           }
-        System.out.println("String.replaceAll: " + DurationUtil.PrintDuration(System.nanoTime() - T0));
+        System.out.println("String.replaceAll: " + DurationUtil.printDuration(System.nanoTime() - T0));
       }
     
     
@@ -432,41 +433,41 @@ public class TextUtilTest
          {
            SimplifyName_Custom1(test);
          }
-       LOG.info("SimplifyName_Custom1: " + DurationUtil.PrintPerformancePerSecond(System.nanoTime() - T0, count)+" ops.");
+       LOG.info("SimplifyName_Custom1: " + DurationUtil.printPerformancePerSecond(System.nanoTime() - T0, count)+" ops.");
 
        T0 = System.nanoTime();
        for (int i = 0; i < count; ++i)
          {
            SimplifyName_Custom2(test);
          }
-       LOG.info("SimplifyName_Custom2: " + DurationUtil.PrintPerformancePerSecond(System.nanoTime() - T0, count)+" ops.");
+       LOG.info("SimplifyName_Custom2: " + DurationUtil.printPerformancePerSecond(System.nanoTime() - T0, count)+" ops.");
        
        T0 = System.nanoTime();
        for (int i = 0; i < count; ++i)
          {
            SimplifyName_Regex1(test);
          }
-       LOG.info("SimplifyName_Regex1: " + DurationUtil.PrintPerformancePerSecond(System.nanoTime() - T0, count)+" ops.");
+       LOG.info("SimplifyName_Regex1: " + DurationUtil.printPerformancePerSecond(System.nanoTime() - T0, count)+" ops.");
        
        T0 = System.nanoTime();
        for (int i = 0; i < count; ++i)
          {
            SimplifyName_Regex2(test);
          }
-       LOG.info("SimplifyName_Regex2: " + DurationUtil.PrintPerformancePerSecond(System.nanoTime() - T0, count)+" ops.");
+       LOG.info("SimplifyName_Regex2: " + DurationUtil.printPerformancePerSecond(System.nanoTime() - T0, count)+" ops.");
        
        T0 = System.nanoTime();
        for (int i = 0; i < count; ++i)
          {
            SimplifyName_Regex3(test);
          }
-       LOG.info("SimplifyName_Regex3: " + DurationUtil.PrintPerformancePerSecond(System.nanoTime() - T0, count)+" ops.");
+       LOG.info("SimplifyName_Regex3: " + DurationUtil.printPerformancePerSecond(System.nanoTime() - T0, count)+" ops.");
        
        T0 = System.nanoTime();
        for (int i = 0; i < count; ++i)
          {
            SimplifyName_Regex4(test);
          }
-       LOG.info("SimplifyName_Regex4: " + DurationUtil.PrintPerformancePerSecond(System.nanoTime() - T0, count)+" ops.");
+       LOG.info("SimplifyName_Regex4: " + DurationUtil.printPerformancePerSecond(System.nanoTime() - T0, count)+" ops.");
      }
   }

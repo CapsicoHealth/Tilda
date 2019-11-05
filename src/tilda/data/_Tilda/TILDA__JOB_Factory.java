@@ -1,17 +1,21 @@
 
 package tilda.data._Tilda;
 
-import java.time.*;
+import java.math.*;
 import java.util.*;
+import java.time.*;
+
+import org.apache.logging.log4j.*;
+
+import com.google.gson.annotations.*;
 
 import tilda.db.*;
 import tilda.enums.*;
+import tilda.performance.*;
 import tilda.types.*;
 import tilda.utils.*;
+import tilda.utils.json.*;
 import tilda.utils.pairs.*;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -26,9 +30,9 @@ public class TILDA__JOB_Factory
    protected TILDA__JOB_Factory() { }
 
    public static final Class<TILDA__JOB> DATA_CLASS= TILDA__JOB.class;
-   public static final String SCHEMA_LABEL = TextUtil.Print("TILDA", "");
-   public static final String TABLENAME_LABEL = TextUtil.Print("Job", "");
-   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.Print("TILDA.Job", "");
+   public static final String SCHEMA_LABEL = TextUtil.print("TILDA", "");
+   public static final String TABLENAME_LABEL = TextUtil.print("Job", "");
+   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.print("TILDA.Job", "");
    public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "Job"); }
 
    public static abstract class COLS {
@@ -143,7 +147,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  DATASTART  = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "dataStart"  , 5/*5*/, "StartTime");
+     public static Type_DatetimePrimitiveNull  DATASTART  = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "dataStart"  , 5/*5*/, "StartTime", DATASTARTTZ);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Job.dataEndTZ -> TILDA.Job."dataEndTZ"
@@ -180,7 +184,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  DATAEND    = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "dataEnd"    , 7/*7*/, "StartTime");
+     public static Type_DatetimePrimitiveNull  DATAEND    = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "dataEnd"    , 7/*7*/, "StartTime", DATAENDTZ);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Job.startTZ -> TILDA.Job."startTZ"
@@ -217,7 +221,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitive      START      = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "start"      , 9/*9*/, "StartTime");
+     public static Type_DatetimePrimitive      START      = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "start"      , 9/*9*/, "StartTime", STARTTZ);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Job.endTZ -> TILDA.Job."endTZ"
@@ -254,7 +258,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  END        = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "end"        , 11/*11*/, "EndTime");
+     public static Type_DatetimePrimitiveNull  END        = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "end"        , 11/*11*/, "EndTime", ENDTZ);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Job.status -> TILDA.Job."status"
@@ -400,35 +404,35 @@ This is the column definition for:<BR>
        protected Connection _C = null;
        protected tilda.db.processors.ObjectProcessor<tilda.data.Job_Data> _OP;
        protected ArrayListResults<tilda.data.Job_Data> _L = null;
-       public void    Start  () { }
-       public void    End    (boolean HasMore, int Max) { if (_OP == null) _L.wrapup(HasMore, Max); }
-       public boolean Process(int Index, java.sql.ResultSet RS) throws Exception
+       public void    start  () { }
+       public void    end    (boolean HasMore, int Max) { if (_OP == null) _L.wrapup(HasMore, Max); }
+       public boolean process(int Index, java.sql.ResultSet RS) throws Exception
         {
           tilda.data.Job_Data Obj = new tilda.data.Job_Data();
-          boolean OK = ((tilda.data._Tilda.TILDA__JOB)Obj).Init(_C, RS);
+          boolean OK = ((tilda.data._Tilda.TILDA__JOB)Obj).init(_C, RS);
           if (OK == true)
            {
              if (_OP == null)
               _L.add(Obj);
              else
-              _OP.Process(Index, Obj);
+              _OP.process(Index, Obj);
            }
           return OK;
         }
      }
 
-   protected static final void ProcessMany(Connection C, String FullSelectQuery, int Start, int Size, tilda.db.processors.RecordProcessor RP) throws Exception
+   protected static final void processMany(Connection C, String FullSelectQuery, int Start, int Size, tilda.db.processors.RecordProcessor RP) throws Exception
      {
-       ReadMany(C, -77, RP, null, FullSelectQuery, Start, Size);
+       readMany(C, -77, RP, null, FullSelectQuery, Start, Size);
      }
-   protected static final ListResults<tilda.data.Job_Data> ReadMany(Connection C, String FullSelectQuery, int Start, int Size) throws Exception
+   protected static final ListResults<tilda.data.Job_Data> readMany(Connection C, String FullSelectQuery, int Start, int Size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
-       ReadMany(C, -77, RPI, null, FullSelectQuery, Start, Size);
+       readMany(C, -77, RPI, null, FullSelectQuery, Start, Size);
        return RPI._L;
      }
 
-   private static final void ReadMany(Connection C, int LookupId, tilda.db.processors.RecordProcessor RP, tilda.data._Tilda.TILDA__JOB Obj, Object ExtraParams, int Start, int Size) throws Exception
+   private static final void readMany(Connection C, int LookupId, tilda.db.processors.RecordProcessor RP, tilda.data._Tilda.TILDA__JOB Obj, Object ExtraParams, int Start, int Size) throws Exception
      {
        long T0 = System.nanoTime();
        StringBuilder S = new StringBuilder(1024);
@@ -494,11 +498,11 @@ This is the column definition for:<BR>
              case -7:
                 break;
              case 1: {
-               PS.setString   (++i, Obj._name       );
+               PS.setString    (++i, Obj._name       );
                break;
              }
              case 2: {
-               if (Obj.isNullType() == true) PS.setNull(++i, java.sql.Types.CHAR   );  else PS.setString   (++i, Obj._type       );
+               if (Obj.isTypeNull() == true) PS.setNull(++i, java.sql.Types.CHAR      );  else PS.setString    (++i, Obj._type       );
                break;
              }
              case -666: break;
@@ -514,7 +518,7 @@ This is the column definition for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__JOB_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__JOB_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
 
@@ -526,12 +530,12 @@ This is the column definition for:<BR>
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- Creates a new object in memory, which you can subsequently {@link #Write()} to the data store.
+ Creates a new object in memory, which you can subsequently {@link #write()} to the data store.
  current object to the destination. 
  @param name        (max size 250) Name
  @param start       StartTime
 */
-   static public tilda.data.Job_Data Create(String name, ZonedDateTime start) throws Exception
+   static public tilda.data.Job_Data create(String name, ZonedDateTime start) throws Exception
      {
        tilda.data._Tilda.TILDA__JOB Obj = new tilda.data.Job_Data();
        Obj.initForCreate();
@@ -551,7 +555,7 @@ This is the column definition for:<BR>
        return (tilda.data.Job_Data) Obj;
      }
 
-   static public tilda.data.Job_Data Create(Map<String, String> Values, List<StringStringPair> Errors)
+   static public tilda.data.Job_Data create(Map<String, String> Values, List<StringStringPair> Errors)
    throws Exception
      {
        int IncomingErrors = Errors.size();
@@ -570,7 +574,7 @@ This is the column definition for:<BR>
        if (IncomingErrors != Errors.size())
         return null;
 
-      tilda.data.Job_Data Obj = tilda.data.Job_Factory.Create(_name, _start);
+      tilda.data.Job_Data Obj = tilda.data.Job_Factory.create(_name, _start);
 
       if (_refnum     != null) Obj.setRefnum     (_refnum     );
       if (_type       != null) Obj.setType       (_type       );
@@ -583,7 +587,7 @@ This is the column definition for:<BR>
 
       return Obj;
      }
-   public static int WriteBatch(Connection C, List<tilda.data.Job_Data> L, int batchSize, int commitSize) throws Exception
+   public static int writeBatch(Connection C, List<tilda.data.Job_Data> L, int batchSize, int commitSize) throws Exception
      {
        long T0 = System.nanoTime();
 
@@ -621,9 +625,9 @@ This is the column definition for:<BR>
                    return index;
                  }
 
-               if (((TILDA__JOB) d).BeforeWrite(C) == false)
+               if (((TILDA__JOB) d).beforeWrite(C) == false)
                  {
-                   LOG.debug(QueryDetails._LOGGING_HEADER + "The 'tilda.data.Job_Data' object at positon #" + index + " failed in its BeforeWrite() method.");
+                   LOG.debug(QueryDetails._LOGGING_HEADER + "The 'tilda.data.Job_Data' object at positon #" + index + " failed in its beforeWrite() method.");
                    QueryDetails.setLastQuery(TILDA__JOB_Factory.SCHEMA_TABLENAME_LABEL, "");
                    return index;
                  }
@@ -668,7 +672,7 @@ This is the column definition for:<BR>
                PS.clearParameters();
              }
 
-           if (index != 0 && (index + 1) % batchSize != 0)
+           if ((index + 1) % batchSize != 0)
              {
                int[] results = PS.executeBatch();
                int failedRec = JDBCHelper.batchWriteDone(results, L.size() - insertCount);
@@ -699,13 +703,13 @@ This is the column definition for:<BR>
          }
        finally
          {
-           TILDA__1_0.HandleFinally(PS, T0, TILDA__JOB_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+           TILDA__1_0.handleFinally(PS, T0, TILDA__JOB_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
            PS = null;
            AllocatedArrays = null;
          }
        }
 
-   static public tilda.data.Job_Data LookupByPrimaryKey(long refnum) throws Exception
+   static public tilda.data.Job_Data lookupByPrimaryKey(long refnum) throws Exception
      {
        tilda.data._Tilda.TILDA__JOB Obj = new tilda.data.Job_Data();
        Obj.initForLookup(0);
@@ -715,7 +719,7 @@ This is the column definition for:<BR>
        return (tilda.data.Job_Data) Obj;
      }
 
-   static public ListResults<tilda.data.Job_Data> LookupWhereJobName(Connection C, String name, int Start, int Size) throws Exception
+   static public ListResults<tilda.data.Job_Data> lookupWhereJobName(Connection C, String name, int Start, int Size) throws Exception
      {
        tilda.data._Tilda.TILDA__JOB Obj = new tilda.data.Job_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -724,11 +728,11 @@ This is the column definition for:<BR>
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
-       ReadMany(C, 1, RPI, Obj, null, Start, Size);
+       readMany(C, 1, RPI, Obj, null, Start, Size);
        return RPI._L;
      }
 
-   static public void LookupWhereJobName(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Job_Data> OP, String name, int Start, int Size) throws Exception
+   static public void lookupWhereJobName(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Job_Data> OP, String name, int Start, int Size) throws Exception
      {
        tilda.data._Tilda.TILDA__JOB Obj = new tilda.data.Job_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -737,11 +741,11 @@ This is the column definition for:<BR>
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       ReadMany(C, 1, RPI, Obj, null, Start, Size);
+       readMany(C, 1, RPI, Obj, null, Start, Size);
      }
 
 
-   static public ListResults<tilda.data.Job_Data> LookupWhereJobType(Connection C, String type, int Start, int Size) throws Exception
+   static public ListResults<tilda.data.Job_Data> lookupWhereJobType(Connection C, String type, int Start, int Size) throws Exception
      {
        tilda.data._Tilda.TILDA__JOB Obj = new tilda.data.Job_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -750,11 +754,11 @@ This is the column definition for:<BR>
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
-       ReadMany(C, 2, RPI, Obj, null, Start, Size);
+       readMany(C, 2, RPI, Obj, null, Start, Size);
        return RPI._L;
      }
 
-   static public void LookupWhereJobType(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Job_Data> OP, String type, int Start, int Size) throws Exception
+   static public void lookupWhereJobType(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Job_Data> OP, String type, int Start, int Size) throws Exception
      {
        tilda.data._Tilda.TILDA__JOB Obj = new tilda.data.Job_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -763,7 +767,7 @@ This is the column definition for:<BR>
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       ReadMany(C, 2, RPI, Obj, null, Start, Size);
+       readMany(C, 2, RPI, Obj, null, Start, Size);
      }
 
 
@@ -772,15 +776,16 @@ This is the column definition for:<BR>
    public static ListResults<tilda.data.Job_Data> runSelect(Connection C, SelectQuery Q, int Start, int Size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
-       ReadMany(C, -7, RPI, null, Q, Start, Size);
+       readMany(C, -7, RPI, null, Q, Start, Size);
        return RPI._L;
      }
    public static void runSelect(Connection C, SelectQuery Q, tilda.db.processors.ObjectProcessor<tilda.data.Job_Data> OP, int Start, int Size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       ReadMany(C, -7, RPI, null, Q, Start, Size);
+       readMany(C, -7, RPI, null, Q, Start, Size);
      }
    public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
    public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
+
 
  }

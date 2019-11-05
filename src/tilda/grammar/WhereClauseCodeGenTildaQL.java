@@ -197,7 +197,7 @@ public class WhereClauseCodeGenTildaQL implements WhereClauseCodeGen
     @Override
     public void valueLiteralString(String Str)
       {
-        TextUtil.EscapeDoubleQuoteWithSlash(_CodeGen, Str);
+        TextUtil.escapeDoubleQuoteWithSlash(_CodeGen, Str);
       }
 
     @Override

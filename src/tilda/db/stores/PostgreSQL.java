@@ -101,22 +101,24 @@ public class PostgreSQL implements DBType
     /**
      * Postgres Cancellation codes, from <A href="https://www.postgresql.org/docs/11/errcodes-appendix.html">https://www.postgresql.org/docs/11/errcodes-appendix.html</A>
      * <P>
-     * <UL><LI><B>57000</B>: operator_intervention.</LI>
-     *     <LI><B>57014</B>: query_canceled.</LI>
-     *     <LI><B>57P01</B>: admin_shutdown.</LI>
-     *     <LI><B>57P02</B>: crash_shutdown.</LI>
-     *     <LI><B>57P03</B>: cannot_connect_now.</LI>
-     *     <LI><B>57P04</B>: database_dropped.</LI>
+     * <UL>
+     * <LI><B>57000</B>: operator_intervention.</LI>
+     * <LI><B>57014</B>: query_canceled.</LI>
+     * <LI><B>57P01</B>: admin_shutdown.</LI>
+     * <LI><B>57P02</B>: crash_shutdown.</LI>
+     * <LI><B>57P03</B>: cannot_connect_now.</LI>
+     * <LI><B>57P04</B>: database_dropped.</LI>
      * </UL>
      */
-    protected static final String[] _CANCEL_SQL_STATES = { "57000", "57014", "57P01", "57P02", "57P03", "57P04" };
-    
+    protected static final String[] _CANCEL_SQL_STATES = { "57000", "57014", "57P01", "57P02", "57P03", "57P04"
+    };
+
     @Override
     public boolean isCanceledError(SQLException E)
       {
         return TextUtil.indexOf(E.getSQLState(), _CANCEL_SQL_STATES);
       }
-    
+
     @Override
     public boolean needsSavepoint()
       {
@@ -184,6 +186,8 @@ public class PostgreSQL implements DBType
               return "variance";
             case ARRAY:
               return "array_agg";
+            case ARRAYCAT:
+              return "array_cat_agg";
             default:
               throw new Error("Cannot convert AggregateType " + AT + " to a database aggregate function name.");
           }
@@ -191,7 +195,7 @@ public class PostgreSQL implements DBType
 
 
     @Override
-    public boolean FullIdentifierOnUpdate()
+    public boolean fullIdentifierOnUpdate()
       {
         return true;
       }
@@ -293,7 +297,7 @@ public class PostgreSQL implements DBType
             if (RP.getResult() > 0)
               throw new Exception("Cannot add new 'not null' column '" + Col.getFullName() + "' to a table without a default value. Add a default value in the model, or manually migrate your database.");
           }
-        String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ADD COLUMN \"" + Col.getName() + "\" " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection());
+        String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ADD COLUMN \"" + Col.getName() + "\" " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection(), Col._Precision, Col._Scale);
         if (Col._Nullable == false && DefaultValue != null)
           {
             Q += " not null DEFAULT " + ValueHelper.printValue(Col.getName(), Col.getType(), DefaultValue);
@@ -323,7 +327,7 @@ public class PostgreSQL implements DBType
     public boolean alterTableAlterColumnComment(Connection Con, Column Col)
     throws Exception
       {
-        String Q = "COMMENT ON COLUMN " + Col._ParentObject.getShortName() + ".\"" + Col.getName() + "\" IS " + TextUtil.EscapeSingleQuoteForSQL(Col._Description) + ";";
+        String Q = "COMMENT ON COLUMN " + Col._ParentObject.getShortName() + ".\"" + Col.getName() + "\" IS " + TextUtil.escapeSingleQuoteForSQL(Col._Description) + ";";
         return Con.executeDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
       }
 
@@ -368,12 +372,12 @@ public class PostgreSQL implements DBType
       }
 
     @Override
-    public void getColumnType(StringBuilder Str, ColumnType T, Integer S, ColumnMode M, boolean Collection)
+    public void getColumnType(StringBuilder Str, ColumnType T, Integer S, ColumnMode M, boolean Collection, Integer Precision, Integer Scale)
       {
-        Str.append(getColumnType(T, S, M, Collection));
+        Str.append(getColumnType(T, S, M, Collection, Precision, Scale));
       }
 
-    public String getColumnType(ColumnType T, Integer S, ColumnMode M, boolean Collection)
+    public String getColumnType(ColumnType T, Integer S, ColumnMode M, boolean Collection, Integer Precision, Integer Scale)
       {
         if (T == ColumnType.STRING && M != ColumnMode.CALCULATED)
           {
@@ -382,7 +386,10 @@ public class PostgreSQL implements DBType
             : getDBStringType(S) == DBStringType.VARCHAR ? PostgresType.STRING._SQLType + "(" + S + ")"
             : "text";
           }
-        return PostgresType.get(T)._SQLType + (T != ColumnType.JSON && Collection == true ? "[]" : "");
+
+        return PostgresType.get(T)._SQLType
+        + (T == ColumnType.NUMERIC && Precision != null ? "(" + Precision + (Scale != null ? "," + Scale : "") + ")" : "")
+        + (T != ColumnType.JSON && Collection == true ? "[]" : "");
       }
 
     @Override
@@ -419,7 +426,71 @@ public class PostgreSQL implements DBType
         // if (ColMetaT == DBStringType.CHARACTER && ColT != DBStringType.CHARACTER)
         // Using = " USING rtrim(\"" + Col.getName() + "\")";
         String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName() + "\" TYPE "
-        + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection()) + Using + ";";
+
+        + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection(), Col._Precision, Col._Scale) + Using + ";";
+        return Con.executeDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
+
+      }
+
+    @Override
+    public boolean alterTableAlterColumnNumericSize(Connection Con, ColumnMeta ColMeta, Column Col)
+    throws Exception
+      {
+        // // Is precision shrinking?
+        // if (Col._Precision < ColMeta._Precision)
+        // {
+        // String Q = "SELECT length(max(\"" + Col.getName() + "\")::varchar) from " + Col._ParentObject.getShortName();
+        // ScalarRP RP = new ScalarRP();
+        // Con.executeSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, RP);
+        // if (RP.getResult() > Col._Precision+1) //add 1 because varchar conversion includes the decimal in length
+        // {
+        // Q = "select \"" + Col.getName() + "\" || ' (' || length(\"" + Col.getName() + "\"::varchar) || ')' as _x from " + Col._ParentObject.getShortName()
+        // + " group by \"" + Col.getName() + "\""
+        // + " order by length(\"" + Col.getName() + "\"::varchar) desc"
+        // + " limit 10";
+        // StringListRP SLRP = new StringListRP();
+        // Con.executeSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, SLRP);
+        // LOG.error("Column sample:");
+        // for (String s : SLRP.getResult())
+        // LOG.error(" - " + s);
+        // throw new Exception("Cannot alter Numeric column '" + Col.getFullName() + "' from precision " + ColMeta._Precision + " down to " + Col._Precision + " because there are
+        // values with precision lengths up to " + RP.getResult()
+        // + " that would cause errors. You need to manually migrate your database.");
+        // }
+        // }
+
+        // // Is scale expanding?
+        // if (Col._Scale > ColMeta._Scale)
+        // {
+        // String Q = "";
+        //
+        // if(ColMeta.isArray() == true)
+        // Q = "SELECT length(max(\"" + Col.getName() + "\"::int)::varchar) from (select unnest(\"" + Col.getName() + "\") as \"" + Col.getName() + "\" from "+
+        // Col._ParentObject.getShortName() +") as t";
+        // else
+        // Q = "SELECT length((max(\"" + Col.getName() + "\")::int)::varchar) from " + Col._ParentObject.getShortName();
+        // ScalarRP RP = new ScalarRP();
+        // Con.executeSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, RP);
+        // long i = RP.getResult();
+        // if (RP.getResult() > (Col._Precision - Col._Scale)) //digits available for before the decimal
+        // {
+        // Q = "select \"" + Col.getName() + "\" || ' (' || length((max(\"" + Col.getName() + "\")::int)::varchar) || ')' as _x from " + Col._ParentObject.getShortName()
+        // + " group by \"" + Col.getName() + "\""
+        // + " order by length(\"" + Col.getName() + "\"::varchar) desc"
+        // + " limit 10";
+        // StringListRP SLRP = new StringListRP();
+        // Con.executeSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, SLRP);
+        // LOG.error("Column sample:");
+        // for (String s : SLRP.getResult())
+        // LOG.error(" - " + s);
+        // throw new Exception("Cannot alter Numeric column '" + Col.getFullName() + "' from scale " + Col._Scale + " up to " + ColMeta._Scale + " because there are pre-decimal
+        // value lengths up to " + RP.getResult()
+        // + " that would cause errors. You need to manually migrate your database.");
+        // }
+        // }
+
+        String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName() + "\" TYPE "
+        + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection(), Col._Precision, Col._Scale) + ";";
         return Con.executeDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
       }
 
@@ -428,25 +499,16 @@ public class PostgreSQL implements DBType
     public boolean alterTableAlterColumnType(Connection Con, ColumnMeta ColMeta, Column Col, ZoneInfo_Data defaultZI)
     throws Exception
       {
-        
+
         if (ColMeta._TildaType == ColumnType.STRING)
           {
-            /*
-             * String Q = "SELECT count(*)\n"
-             * +"  FROM " + Col._ParentObject.getShortName()+"\n"
-             * +" WHERE trim(\"" + Col.getName() + "\")::" + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection()) +" is null or 1=1"
-             * ;
-             * ScalarRP RP = new ScalarRP();
-             * // Will throw if it fails.
-             * Con.ExecuteSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, RP);
-             */
             if (Col.getType() == ColumnType.DATETIME || Col.getType() == ColumnType.DATE
             || Col.getType() == ColumnType.INTEGER || Col.getType() == ColumnType.LONG || Col.getType() == ColumnType.FLOAT || Col.getType() == ColumnType.DOUBLE
-            || Col.getType() == ColumnType.BOOLEAN)
+            || Col.getType() == ColumnType.BOOLEAN || Col.getType() == ColumnType.UUID)
               {
                 String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName()
-                + "\" TYPE " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection())
-                + " USING (trim(\"" + Col.getName() + "\")::" + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection()) + ");";
+                + "\" TYPE " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection(), Col._Precision, Col._Scale)
+                + " USING (trim(\"" + Col.getName() + "\")::" + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection(), Col._Precision, Col._Scale) + ");";
 
                 boolean res = Con.executeDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
                 if (Col.getType() != ColumnType.DATETIME || res == false)
@@ -484,16 +546,18 @@ public class PostgreSQL implements DBType
          * Con.ExecuteSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, RP);
          */
         String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName()
-        + "\" TYPE " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection());
+
+        + "\" TYPE " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection(), Col._Precision, Col._Scale);
         // going to boolean, must use a more elaborate expression to convert
         if (Col.getType() == ColumnType.BOOLEAN)
           Q += " USING (case when \"" + Col.getName() + "\"=0 then true when \"" + Col.getName() + "\" is null then null else false end)";
         else if (ColMeta._TildaType == ColumnType.BOOLEAN)
-          Q += " USING \"" + Col.getName() + "\"::INTEGER::" + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection()) + ";";
+          Q += " USING \"" + Col.getName() + "\"::INTEGER::" + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection(), Col._Precision, Col._Scale) + ";";
         else
-          Q += " USING \"" + Col.getName() + "\"::" + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection()) + ";";
+          Q += " USING \"" + Col.getName() + "\"::" + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection(), Col._Precision, Col._Scale) + ";";
 
         return Con.executeDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
+
       }
 
     @Override
@@ -502,13 +566,13 @@ public class PostgreSQL implements DBType
       {
         if ((BatchTypeCols == null || BatchTypeCols.size() == 0) && (BatchSizeCols == null || BatchSizeCols.size() == 0))
           LOG.error("There are no columns to process for alterTableAlterColumnMulti. Something has gone wrong when adding columns to the AlterColumnMulti migration action.");
-        
-        String Q = "ALTER TABLE "; 
-        if(BatchTypeCols.size() > 0)
+
+        String Q = "ALTER TABLE ";
+        if (BatchTypeCols.size() > 0)
           Q += BatchTypeCols.get(0)._Col._ParentObject.getShortName();
         else
           Q += BatchSizeCols.get(0)._Col._ParentObject.getShortName();
-        
+
         ArrayList<String> QU = new ArrayList<String>();
 
         // Batch changing ColumnTypes
@@ -516,13 +580,14 @@ public class PostgreSQL implements DBType
           {
             if (CMP._CMeta._TildaType == ColumnType.STRING)
               {
-                if (CMP._Col.getType() == ColumnType.DATETIME || CMP._Col.getType() == ColumnType.DATE
+                if (CMP._Col.getType() == ColumnType.DATETIME || CMP._Col.getType() == ColumnType.DATE || CMP._Col.getType() == ColumnType.UUID
                 || CMP._Col.getType() == ColumnType.INTEGER || CMP._Col.getType() == ColumnType.LONG || CMP._Col.getType() == ColumnType.FLOAT || CMP._Col.getType() == ColumnType.DOUBLE
-                || CMP._Col.getType() == ColumnType.BOOLEAN)
+                || CMP._Col.getType() == ColumnType.BOOLEAN || CMP._Col.getType() == ColumnType.NUMERIC || CMP._Col.getType() == ColumnType.SHORT
+                || CMP._Col.getType() == ColumnType.STRING && CMP._Col._Size != CMP._CMeta._Size)
                   {
                     Q += " ALTER COLUMN \"" + CMP._Col.getName()
-                    + "\" TYPE " + getColumnType(CMP._Col.getType(), CMP._Col._Size, CMP._Col._Mode, CMP._Col.isCollection())
-                    + " USING (trim(\"" + CMP._Col.getName() + "\")::" + getColumnType(CMP._Col.getType(), CMP._Col._Size, CMP._Col._Mode, CMP._Col.isCollection()) + "),";
+                    + "\" TYPE " + getColumnType(CMP._Col.getType(), CMP._Col._Size, CMP._Col._Mode, CMP._Col.isCollection(), CMP._Col._Precision, CMP._Col._Scale)
+                    + " USING (trim(\"" + CMP._Col.getName() + "\")::" + getColumnType(CMP._Col.getType(), CMP._Col._Size, CMP._Col._Mode, CMP._Col.isCollection(), CMP._Col._Precision, CMP._Col._Scale) + "),";
 
                     // boolean res = Con.ExecuteDDL(CMP._Col._ParentObject._ParentSchema._Name, CMP._Col._ParentObject.getBaseName(), Q);
                     if (CMP._Col.getType() == ColumnType.DATETIME)
@@ -546,20 +611,20 @@ public class PostgreSQL implements DBType
                   }
 
                 Q += " ALTER COLUMN \"" + CMP._Col.getName()
-                + "\" TYPE " + getColumnType(CMP._Col.getType(), CMP._Col._Size, CMP._Col._Mode, CMP._Col.isCollection());
+                + "\" TYPE " + getColumnType(CMP._Col.getType(), CMP._Col._Size, CMP._Col._Mode, CMP._Col.isCollection(), CMP._Col._Precision, CMP._Col._Scale);
                 // going to boolean, must use a more elaborate expression to convert
                 if (CMP._Col.getType() == ColumnType.BOOLEAN)
                   Q += " USING (case when \"" + CMP._Col.getName() + "\"=0 then true when \"" + CMP._Col.getName() + "\" is null then null else false end),";
                 else if (CMP._CMeta._TildaType == ColumnType.BOOLEAN)
-                  Q += " USING \"" + CMP._Col.getName() + "\"::INTEGER::" + getColumnType(CMP._Col.getType(), CMP._Col._Size, CMP._Col._Mode, CMP._Col.isCollection()) + ",";
+                  Q += " USING \"" + CMP._Col.getName() + "\"::INTEGER::" + getColumnType(CMP._Col.getType(), CMP._Col._Size, CMP._Col._Mode, CMP._Col.isCollection(), CMP._Col._Precision, CMP._Col._Scale) + ",";
                 else
-                  Q += " USING \"" + CMP._Col.getName() + "\"::" + getColumnType(CMP._Col.getType(), CMP._Col._Size, CMP._Col._Mode, CMP._Col.isCollection()) + ",";
+                  Q += " USING \"" + CMP._Col.getName() + "\"::" + getColumnType(CMP._Col.getType(), CMP._Col._Size, CMP._Col._Mode, CMP._Col.isCollection(), CMP._Col._Precision, CMP._Col._Scale) + ",";
               }
           }
-        
-        //Batch changing ColumnSize
+
+        // Batch changing ColumnSize
         for (ColMetaColPair CMP : BatchSizeCols)
-          {         
+          {
             DBStringType ColT = getDBStringType(CMP._Col._Size);
             DBStringType ColMetaT = getDBStringType(CMP._CMeta._Size);
             // Is it shrinking?
@@ -589,10 +654,10 @@ public class PostgreSQL implements DBType
             // Looks like we do not need the rtrim call. It slows things down and doesn't actually do anything in Postgres
             // if (ColMetaT == DBStringType.CHARACTER && ColT != DBStringType.CHARACTER)
             // Using = " USING rtrim(\"" + CMP._Col.getName() + "\")";
-            Q += "ALTER COLUMN \"" + CMP._Col.getName() + "\" TYPE "
-            + getColumnType(CMP._Col.getType(), CMP._Col._Size, CMP._Col._Mode, CMP._Col.isCollection()) + Using + ",";                   
+            Q += " ALTER COLUMN \"" + CMP._Col.getName() + "\" TYPE "
+            + getColumnType(CMP._Col.getType(), CMP._Col._Size, CMP._Col._Mode, CMP._Col.isCollection(), CMP._Col._Precision, CMP._Col._Scale) + Using + ",";
           }
-        
+
         Q = Q.substring(0, Q.length() - 1) + ";";
         LOG.info(Q);
         if (QU.size() > 0)
@@ -605,7 +670,13 @@ public class PostgreSQL implements DBType
             return true;
           }
         else
-          return Con.executeDDL(BatchTypeCols.get(0)._Col._ParentObject._ParentSchema._Name, BatchTypeCols.get(0)._Col._ParentObject.getBaseName(), Q);
+          {
+            String Schema = BatchTypeCols != null && BatchTypeCols.isEmpty() == false ? BatchTypeCols.get(0)._Col._ParentObject._ParentSchema._Name
+                                                                                      : BatchSizeCols.get(0)._Col._ParentObject._ParentSchema._Name;
+            String Table = BatchTypeCols != null && BatchTypeCols.isEmpty() == false ? BatchTypeCols.get(0)._Col._ParentObject.getBaseName()
+                                                                                     : BatchSizeCols.get(0)._Col._ParentObject.getBaseName();
+            return Con.executeDDL(Schema, Table, Q);
+          }
       }
 
     protected static void PrintFunctionIn(StringBuilder Str, String Type)
@@ -840,7 +911,7 @@ public class PostgreSQL implements DBType
         Role = Role.toLowerCase();
         Str.append("DO $body$\n");
         Str.append("BEGIN\n");
-        Str.append("   IF NOT EXISTS (SELECT FROM pg_catalog.pg_authid WHERE rolname = " + TextUtil.EscapeSingleQuoteForSQL(Role) + ")\n");
+        Str.append("   IF NOT EXISTS (SELECT FROM pg_catalog.pg_authid WHERE rolname = " + TextUtil.escapeSingleQuoteForSQL(Role) + ")\n");
         Str.append("   THEN\n");
         Str.append("      CREATE ROLE " + Role + ";\n");
         Str.append("   END IF;\n");
@@ -901,6 +972,7 @@ public class PostgreSQL implements DBType
             case java.sql.Types.DECIMAL      : TypeSql = "DECIMAL"      ; TildaType = ColumnType.DOUBLE; break;
             case java.sql.Types.DOUBLE       : TypeSql = "DOUBLE"       ; TildaType = ColumnType.DOUBLE; break;
             case java.sql.Types.FLOAT        : TypeSql = "FLOAT"        ; TildaType = ColumnType.FLOAT; break;
+            case java.sql.Types.SMALLINT     : TypeSql = "SMALLINT"     ; TildaType = ColumnType.SHORT; break;
             case java.sql.Types.INTEGER      : TypeSql = "INTEGER"      ; TildaType = ColumnType.INTEGER; break;
             case java.sql.Types.JAVA_OBJECT  : TypeSql = "JAVA_OBJECT"  ; TildaType = null; break;
             case java.sql.Types.LONGNVARCHAR : TypeSql = "LONGNVARCHAR" ; TildaType = ColumnType.STRING; break;
@@ -909,13 +981,18 @@ public class PostgreSQL implements DBType
             case java.sql.Types.NCHAR        : TypeSql = "NCHAR"        ; TildaType = Size==1 ? ColumnType.CHAR : ColumnType.STRING; break;
             case java.sql.Types.NCLOB        : TypeSql = "NCLOB"        ; TildaType = ColumnType.STRING; break;
             case java.sql.Types.NULL         : TypeSql = "NULL"         ; TildaType = null; break;
-            case java.sql.Types.NUMERIC      : TypeSql = "NUMERIC"      ; TildaType = ColumnType.DOUBLE; break;
+            case java.sql.Types.NUMERIC      : TypeSql = "NUMERIC"      ; TildaType = ColumnType.NUMERIC; break;
             case java.sql.Types.NVARCHAR     : TypeSql = "NVARCHAR"     ; TildaType = ColumnType.STRING; break;
             case java.sql.Types.OTHER        :
               if (TypeName != null && TypeName.equalsIgnoreCase("jsonb") == true)
                 {
                   TypeSql = "JSONB";
                   TildaType = ColumnType.JSON;
+                }
+              else if (TypeName != null && TypeName.equalsIgnoreCase("uuid") == true)
+                {
+                  TypeSql = "UUID";
+                  TildaType = ColumnType.UUID;
                 }
               else
                 {
@@ -926,7 +1003,6 @@ public class PostgreSQL implements DBType
             case java.sql.Types.REAL         : TypeSql = "REAL"         ; TildaType = ColumnType.FLOAT; break;
             case java.sql.Types.REF          : TypeSql = "REF"          ; TildaType = null; break;
             case java.sql.Types.ROWID        : TypeSql = "ROWID"        ; TildaType = null; break;
-            case java.sql.Types.SMALLINT     : TypeSql = "SMALLINT"     ; TildaType = null; break;
             case java.sql.Types.SQLXML       : TypeSql = "SQLXML"       ; TildaType = null; break;
             case java.sql.Types.STRUCT       : TypeSql = "STRUCT"       ; TildaType = null; break;
             case java.sql.Types.TIME         : TypeSql = "TIME"         ; TildaType = null; break;
@@ -934,7 +1010,9 @@ public class PostgreSQL implements DBType
             case java.sql.Types.TINYINT      : TypeSql = "TINYINT"      ; TildaType = null; break;
             case java.sql.Types.VARBINARY    : TypeSql = "VARBINARY"    ; TildaType = ColumnType.BINARY; break;
             case java.sql.Types.VARCHAR      : TypeSql = "VARCHAR"      ; TildaType = ColumnType.STRING; break;
-            default: throw new Exception("Cannot map SQL Type "+Type+" for column "+Name+"("+TypeName+").");
+            default:
+              TildaType = null;
+              LOG.warn("Cannot map SQL Type "+Type+" for column "+Name+"("+TypeName+"). Has been set to UNMAPPED column type.");
             /*@formatter:on*/
           }
         return new StringStringPair(TypeSql, TildaType == null ? null : TildaType.name());
@@ -946,6 +1024,9 @@ public class PostgreSQL implements DBType
       {
         switch (TypeName)
           {
+            case "_int2":
+              TildaType = ColumnType.SHORT;
+              break;
             case "_int4":
               TildaType = ColumnType.INTEGER;
               break;
@@ -957,6 +1038,12 @@ public class PostgreSQL implements DBType
               break;
             case "_float8":
               TildaType = ColumnType.DOUBLE;
+              break;
+            case "_numeric":
+              TildaType = ColumnType.NUMERIC;
+              break;
+            case "_uuid":
+              TildaType = ColumnType.UUID;
               break;
             case "_bpchar":
               TildaType = ColumnType.CHAR;
@@ -1087,7 +1174,7 @@ public class PostgreSQL implements DBType
     public boolean alterTableComment(Connection Con, Object Obj)
     throws Exception
       {
-        String Q = "COMMENT ON TABLE " + Obj.getShortName() + " IS " + TextUtil.EscapeSingleQuoteForSQL(Obj._Description) + ";";
+        String Q = "COMMENT ON TABLE " + Obj.getShortName() + " IS " + TextUtil.escapeSingleQuoteForSQL(Obj._Description) + ";";
         return Con.executeDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q);
       }
 
@@ -1157,7 +1244,7 @@ public class PostgreSQL implements DBType
           Out.print("-- app-level index only -- ");
         Out.print("CREATE" + (IX._Unique == true ? " UNIQUE" : "") + " INDEX IF NOT EXISTS " + IX.getName() + " ON " + IX._Parent.getShortName() + (Gin ? " USING gin " : "") + " (");
         if (IX._ColumnObjs.isEmpty() == false)
-          _SQL.PrintColumnList(Out, IX._ColumnObjs);
+          Sql.PrintColumnList(Out, IX._ColumnObjs);
         if (IX._OrderByObjs.isEmpty() == false)
           {
             boolean First = IX._ColumnObjs.isEmpty();
@@ -1187,7 +1274,7 @@ public class PostgreSQL implements DBType
     throws Exception
       {
         // If the DB Name comes in as all lower case, it's case-insensitive. Otherwise, we have to quote.
-        if (OldName.equals(OldName.toLowerCase()) == false || OldName.equals(TextUtil.SanitizeName(OldName)) == false)
+        if (OldName.equals(OldName.toLowerCase()) == false || OldName.equals(TextUtil.sanitizeName(OldName)) == false)
           OldName = "\"" + OldName + "\"";
 
         String Q = "ALTER INDEX " + Obj._ParentSchema._Name + "." + OldName + " RENAME TO " + NewName + ";";
@@ -1275,6 +1362,7 @@ public class PostgreSQL implements DBType
         return 63;
       }
 
+
     @Override
     public int getMaxCores(Connection Con)
     throws Exception
@@ -1290,5 +1378,4 @@ public class PostgreSQL implements DBType
       {
         return null;
       }
-
   }

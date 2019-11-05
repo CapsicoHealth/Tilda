@@ -53,7 +53,7 @@ public class LineCount
                       {
                         ++i;
                         if (i % 5_000_000 == 0)
-                          LOG.info("Processed " + NumberFormatUtil.PrintWith000Sep(i) + " lines so far at " + NumberFormatUtil.PrintWith1DecAnd000Sep(DurationUtil.perSecond(System.nanoTime() - TS, i)) + " lines/s.");
+                          LOG.info("Processed " + NumberFormatUtil.printWith000Sep(i) + " lines so far at " + NumberFormatUtil.printWith1DecAnd000Sep(DurationUtil.perSecond(System.nanoTime() - TS, i)) + " lines/s.");
                         line = In.readLine();
                       }
                   }
@@ -63,7 +63,7 @@ public class LineCount
                      In.close();
                   }
                 TS = System.nanoTime() - TS;
-                LOG.info("Processed " + NumberFormatUtil.PrintWith000Sep(i) + " lines for '" + fileName + "' in " + DurationUtil.PrintDuration(TS) + " (" + NumberFormatUtil.PrintWith1DecAnd000Sep(DurationUtil.perSecond(TS, i)) + " lines/s).");
+                LOG.info("Processed " + NumberFormatUtil.printWith000Sep(i) + " lines for '" + fileName + "' in " + DurationUtil.printDuration(TS) + " (" + NumberFormatUtil.printWith1DecAnd000Sep(DurationUtil.perSecond(TS, i)) + " lines/s).");
               }
           }
         catch (Throwable T)

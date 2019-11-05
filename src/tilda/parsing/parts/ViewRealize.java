@@ -32,7 +32,6 @@ import tilda.enums.ObjectLifecycle;
 import tilda.enums.ObjectMode;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ValidationHelper;
-import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
 
 public class ViewRealize
@@ -114,7 +113,7 @@ public class ViewRealize
                 PS.AddError("Mapping '" + VRM._Name + "' is duplicated in the realize section for view '" + ParentView.getFullName() + "'.");
               if (ParentView.getColumn(VRM._Name) == null && ParentView.getFormula(VRM._Name) == null && ParentView.getPivottedColumn(VRM._Name) == null)
                 PS.AddError("Mapping for column '" + VRM._Name + "' is defined without a matching column/formula/pivot in the main view '" + ParentView.getFullName() + "'.");
-              if (TextUtil.FindStarElement(_Exclude_DEPRECATED, VRM._Name, true, 0) != -1)
+              if (TextUtil.findStarElement(_Exclude_DEPRECATED, VRM._Name, true, 0) != -1)
                 PS.AddError("Mapping for column '" + VRM._Name + "' is defined while also being excluded.");
             }
 */
@@ -126,7 +125,7 @@ public class ViewRealize
         // If we don't do this and an error occurs, the user will get a message during the validation for the created object which will feel out of context.
         if (O._Name.length() > PS._CGSql.getMaxTableNameSize())
           PS.AddError("View '" + ParentView.getFullName() + "' is being realized to table '"+O._Name+"' with a name that's too long: max allowed by your database is " + PS._CGSql.getMaxColumnNameSize() + " vs "+O._Name.length()+" for this identifier.");
-        if (O._Name.equals(TextUtil.SanitizeName(O._Name)) == false)
+        if (O._Name.equals(TextUtil.sanitizeName(O._Name)) == false)
           PS.AddError("View '" + ParentView.getFullName() + "' is being realized to table '"+O._Name+"' with a name containing invalid characters (must all be alphanumeric or underscore).");
         if (ValidationHelper.isValidIdentifier(O._Name) == false)
           PS.AddError("View '" + ParentView.getFullName() + "' is being realized to table '"+O._Name+"' with a name which is not valid. " + ValidationHelper._ValidIdentifierMessage);
@@ -134,16 +133,16 @@ public class ViewRealize
         O._Description = "Realized table for view "+ParentView.getShortName()+": "+ParentRealized._O._Description;
         O.addQueries(ParentView._Queries);
         O._OutputMaps = OutputMapping.newInstances(ParentView._OutputMaps);
-        O._LCStr = ObjectLifecycle.READONLY.name();
+        O._LCStr = ObjectLifecycle.NORMAL.name();
         O._PrimaryKey = _PrimaryKey;
         O._ForeignKeys = _ForeignKeys;
         O._Indices = _Indices;
         
         boolean OCC = false;
-//        LOG.debug(ParentRealized._O.getFullName()+": "+TextUtil.Print(ParentRealized._O.getColumnNames()));
+//        LOG.debug(ParentRealized._O.getFullName()+": "+TextUtil.print(ParentRealized._O.getColumnNames()));
         for (Column C : ParentRealized._O._Columns)
           {
-            if (TextUtil.FindStarElement(_Exclude_DEPRECATED, C._Name, false, 0) == -1)
+            if (TextUtil.findStarElement(_Exclude_DEPRECATED, C._Name, false, 0) == -1)
               {
                 if (C._FCT.isOCC() == true)
                  OCC = true;
@@ -153,19 +152,27 @@ public class ViewRealize
                 //         make realized tables friendly to data scientists and dealing with trailing blanks (from CHAR values) is not good.
                 //         Here, we are effectively changing the type of the final column to be a VARCHAR instead of a CHAR and will do a trim
                 //         at GEN time. Gotta encode this better in the model.
-                if (C._Type == ColumnType.STRING && C._Size != null && C._Size <= 8)
+                if (C._Type == ColumnType.STRING && C.isCollection() == false && C._Size != null && C._Size <= 8)
                  C._Size = 10;
-//              Column newCol = new Column(C._Name, C._TypeStr, C._Size, true, C._Mode, C._Invariant, C._Protect, C._Description);
-                Column newCol = new Column(C._Name, C._TypeStr, C._Size, C._Description);
+                // Make sure that the type is managed through the getType() method to account for aggregates.
+                Column newCol = new Column(C._Name, C.getType().name()+(C.isList()?"[]":C.isSet()?"{}":""), C._Size, C._Description +" (from "+C.getShortName()+")", C._Precision, C._Scale);
+                // If the final type is not a String or is a collection, we must clear the possible size since the aggregate changed the type.
+                if (newCol._TypeStr.startsWith("STRING") == false || C.isCollection() == true)
+                  newCol._Size = null;
                 newCol._Nullable = O.isUniqueIndexColumn(C._Name) == false && O.isPrimaryKey(C._Name) == false;
                 newCol._Invariant = O.isPrimaryKey(C._Name)==true;
+                newCol._ProtectStr = C._ProtectStr;
                 newCol._FCT = C._FCT;
-                newCol._SameAs = C._SameAs;
-                newCol._SameAsObj = C._SameAsObj;
+//LDH-NOTE: Not sure why we need to define SAME_AS here given that we specify all the information previously. This is causing issues with some aggregates...
+//                newCol._SameAs = C._SameAs;
+//                newCol._SameAsObj = C._SameAsObj;
                 O._Columns.add(newCol);
               }
           }
-        O._OCC = OCC;
+        
+        // We can't just copy the OCC status of the view because we don't know which columns are actually used.
+        O._OCC = O.getColumn("created") != null && O.getColumn("lastUpdated") != null && O.getColumn("deleted") != null;
+        
         O._ModeStr = ParentView._DBOnly==true?ObjectMode.DB_ONLY.toString():ObjectMode.NORMAL.toString();
         ParentView._ParentSchema._Objects.add(O);
         O.Validate(PS, ParentView._ParentSchema);

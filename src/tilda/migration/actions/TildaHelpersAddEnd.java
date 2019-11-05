@@ -45,11 +45,11 @@ public class TildaHelpersAddEnd extends MigrationAction
           return false;
 
         Str = C.getHelperFunctionsScript(true)+"\n"+Str;
-        Maintenance_Data M = Maintenance_Factory.LookupByPrimaryKey("TILDA_HELPERS", "TILDA_HELPERS");
-        if (M.Read(C) == false)
-          M = Maintenance_Factory.Create("TILDA_HELPERS", "TILDA_HELPERS");
+        Maintenance_Data M = Maintenance_Factory.lookupByPrimaryKey("TILDA_HELPERS", "TILDA_HELPERS");
+        if (M.read(C) == false)
+          M = Maintenance_Factory.create("TILDA_HELPERS", "TILDA_HELPERS");
         M.setValue(Str);
-        return M.Write(C);
+        return M.write(C);
       }
 
     @Override

@@ -77,11 +77,18 @@ public class View extends Base
     public transient Pattern           _FormulasRegEx;
     public transient Map<String, Base> _Dependencies     = new HashMap<String, Base>();
     public transient List<Column>      _PivotColumns     = new ArrayList<Column>();
-
+    
     public View()
       {
         super(TildaType.VIEW);
       }
+    
+    @Override
+    public String toString()
+      {
+        return getFullName() + " (" + super.toString() + ")";
+      }
+    
 
     @Override
     public Column getColumn(String name)
@@ -187,7 +194,7 @@ public class View extends Base
         String LastUpdatedColObjName = null;
         String LastUpdatedETLColObjName = null;
         String DeletedColObjName = null;
-
+        
         // First, let's construct the actual view and validate its fields
         boolean err = false;
         for (int i = 0; i < _ViewColumns.size(); ++i)
@@ -206,11 +213,11 @@ public class View extends Base
             // dependency (.*) expansion
             if (VC._SameAs != null && VC._SameAs.endsWith("*") == true)
               {
-                // LOG.debug("View "+_Name+": "+TextUtil.Print(getColumnNames()));
+                // LOG.debug("View "+_Name+": "+TextUtil.print(getColumnNames()));
                 if (HandleStarExpansion(PS, i, VC) == false)
                   return false;
                 --i;
-                // LOG.debug("View "+_Name+": "+TextUtil.Print(getColumnNames()));
+                // LOG.debug("View "+_Name+": "+TextUtil.print(getColumnNames()));
                 continue;
               }
             else if (TextUtil.isNullOrEmpty(VC._Prefix) == false)
@@ -356,9 +363,9 @@ public class View extends Base
           PS.AddError("View '" + getFullName() + "' is defining a 'countStar' element which is deprecated. Please use a standard column definition with an aggregate of 'COUNT'.");
 
         // gotta construct a shadow Object for code-gen.
-        // LOG.debug("View " + _Name + ": " + TextUtil.Print(getColumnNames()));
+        // LOG.debug("View " + _Name + ": " + TextUtil.print(getColumnNames()));
         Object O = MakeObjectProxy(PS);
-        // LOG.debug("Object " + O._Name + ": " + TextUtil.Print(O.getColumnNames()));
+        // LOG.debug("Object " + O._Name + ": " + TextUtil.print(O.getColumnNames()));
 
         if (_Realize != null)
           _Realize.Validate(PS, this, new ViewRealizedWrapper(O));
@@ -376,7 +383,7 @@ public class View extends Base
         ReferenceHelper R = ReferenceHelper.parseObjectReference(VC._SameAs, _ParentSchema);
         if (TextUtil.isNullOrEmpty(R._S) == true || TextUtil.isNullOrEmpty(R._O) == true)
           return PS.AddError("View '" + getFullName() + "' is defining a .* view column as " + VC._SameAs + " with an incorrect syntax. It should be '((package\\.)?schema\\.)?object\\.\\*'.");
-        String Prefix = TextUtil.Print(VC._Prefix, "");
+        String Prefix = TextUtil.print(VC._Prefix, "");
         Schema S = PS.getSchema(R._P, R._S);
         if (S == null)
           return PS.AddError("View '" + getFullName() + "' is defining a .* view column as " + VC._SameAs + " resolving to '" + R.getFullName() + "' with a schema which cannot be found. Please check the declared dependencies for this schema.");
@@ -414,7 +421,7 @@ public class View extends Base
               PS.AddError("View '" + getFullName() + "' is defining a duplicate Pivot on column " + P._VC.getShortName() + ".");
             for (ViewPivotAggregate F : P._Aggregates)
               {
-                String fixes = TextUtil.Print(F._Prefix, "") + TextUtil.Print(F._Suffix, "");
+                String fixes = TextUtil.print(F._Prefix, "") + TextUtil.print(F._Suffix, "");
                 if (TextUtil.isNullOrEmpty(fixes) == false && PivotFixes.add(fixes) == false)
                   PS.AddError("View '" + getFullName() + "' is defining a Pivot on column " + P._VC.getShortName() + " with an aggregate-prefix/suffix combination '" + fixes + "' which has already been used.");
               }
@@ -524,7 +531,7 @@ public class View extends Base
         O._LCStr = ObjectLifecycle.READONLY.name();
         O._OCC = _OCC;
 
-        // LOG.debug(getFullName()+": "+TextUtil.Print(getColumnNames()));
+        // LOG.debug(getFullName()+": "+TextUtil.print(getColumnNames()));
         int Counter = -1;
         for (ViewColumn VC : _ViewColumns)
           {
@@ -553,12 +560,12 @@ public class View extends Base
         if (_TimeSeries != null)
           {
             ColumnType Type = ColumnType.DATE;
-            Column C = new Column(_TimeSeries._Name, Type.name(), 0, true, ColumnMode.NORMAL, true, null, "Timeseries period");
+            Column C = new Column(_TimeSeries._Name, Type.name(), 0, true, ColumnMode.NORMAL, true, null, "Timeseries period", null, null);
             C._FCT = FrameworkColumnType.TS;
             O._Columns.add(C);
           }
 
-        // LOG.debug(O._Name+": "+TextUtil.Print(O.getColumnNames()));
+        // LOG.debug(O._Name+": "+TextUtil.print(O.getColumnNames()));
         genPivotColumns(PS, O);
         
         if (_ImportFormulas != null)
@@ -594,12 +601,12 @@ public class View extends Base
                   continue;
                 try
                   {
-                    Class<?> patternClass = Class.forName("tilda.parsing.parts.formulaTemplates." + TextUtil.CapitalizeFirstCharacter(FT._PatternStr.toLowerCase()));
+                    Class<?> patternClass = Class.forName("tilda.parsing.parts.formulaTemplates." + TextUtil.capitalizeFirstCharacter(FT._PatternStr.toLowerCase()));
                     Gson gson = new Gson();
                     for (JSONObject JO : FT._Impls)
                       {
                         PatternObject obj = (PatternObject) gson.fromJson(JO.toString(), patternClass);
-                        obj.Validate(PS, this);
+                        obj.validate(PS, this);
                       }
                   }
                 catch (Exception e)
@@ -618,7 +625,7 @@ public class View extends Base
                 else
                   {
                     F.Validate(PS, this);
-                    Column C = new Column(F._Name, F._TypeStr, F._Size, true, ColumnMode.NORMAL, true, null, "Formula column '<B>" + F._Title + "</B>'");
+                    Column C = new Column(F._Name, F._TypeStr, F._Size, true, ColumnMode.NORMAL, true, null, "Formula column '<B>" + F._Title+"</B>'", F._Precision, F._Scale);
                     if (F.getType() == ColumnType.DATETIME)
                       C._FCT = FrameworkColumnType.DT_FORMULA;
                     else if (F._FormulaTemplate == true)
@@ -741,7 +748,7 @@ public class View extends Base
                       {
                         ColumnType Type = VPV._Type != null ? VPV._Type._Type : AggregateType;
                         Column C = new Column(A.makeName(VPV), Type.name(), Type == ColumnType.STRING ? A._VC._SameAsObj._Size : 0, true, ColumnMode.NORMAL, true, null,
-                        VPV._Description + " (pivot of " + VC.getAggregateName() + " on " + P._VC._SameAsObj.getShortName() + "='" + VPV._Value + "')");
+                        VPV._Description + " (pivot of " + VC.getAggregateName() + " on " + P._VC._SameAsObj.getShortName() + "='" + VPV._Value + "')", A._VC._SameAsObj._Precision, A._VC._SameAsObj._Scale);
                         O._Columns.add(C);
                         _PivotColumns.add(C);
                       }
@@ -766,7 +773,7 @@ public class View extends Base
                         ColumnType AggregateType = VC.getAggregateType();
                         ColumnType Type = VPV._Type != null ? VPV._Type._Type : AggregateType;
                         Column C = new Column(A.makeName(VPV), Type.name(), Type == ColumnType.STRING ? A._VC._SameAsObj._Size : 0, true, ColumnMode.NORMAL, true, null,
-                        VPV._Description + " (pivot of " + VC.getAggregateName() + " on " + P._VC._SameAsObj.getShortName() + "='" + VPV._Value + "')");
+                        VPV._Description + " (pivot of " + VC.getAggregateName() + " on " + P._VC._SameAsObj.getShortName() + "='" + VPV._Value + "')", A._VC._SameAsObj._Precision, A._VC._SameAsObj._Scale);
                         O._Columns.add(C);
                         _PivotColumns.add(C);
                       }
@@ -781,7 +788,7 @@ public class View extends Base
       {
         List<String> Path = new ArrayList<String>();
         if (checkInfiniteRecursion(F, Path) == false)
-          return TextUtil.Print(Path.iterator());
+          return TextUtil.print(Path.iterator());
         return null;
       }
 
@@ -794,7 +801,7 @@ public class View extends Base
             Path.add(F._Name);
             return false;
           }
-        String FormulaStr = TextUtil.JoinTrim(F._FormulaStrs, " ");
+        String FormulaStr = TextUtil.joinTrim(F._FormulaStrs, " ");
         Matcher M = F.getParentView()._FormulasRegEx.matcher(FormulaStr);
         while (M.find() == true)
           {
@@ -821,12 +828,12 @@ public class View extends Base
             || col._FCT != FrameworkColumnType.NONE && col._FCT != FrameworkColumnType.TS && col._FCT.isOCC() == false)
               // if (col._FrameworkManaged == true)
               continue;
-            if (TextUtil.FindStarElement(VC._Exclude, col._Name, false, 0) != -1)
+            if (TextUtil.findStarElement(VC._Exclude, col._Name, false, 0) != -1)
               continue;
             if (col._Name.startsWith(startingWith) == false)
               continue;
             ViewColumn NewVC = new ViewColumn();
-            if (TextUtil.FindStarElement(VC._Block, col._Name, false, 0) != -1)
+            if (TextUtil.findStarElement(VC._Block, col._Name, false, 0) != -1)
               NewVC._FormulaOnly = true;
             NewVC._SameAs = col.getFullName();
             NewVC._As = VC._As;
@@ -846,7 +853,7 @@ public class View extends Base
             if (col._FCT == FrameworkColumnType.TZ
             || col._FCT != FrameworkColumnType.NONE && col._FCT != FrameworkColumnType.TS && col._FCT.isOCC() == false)
               continue;
-            if (TextUtil.FindStarElement(VC._Exclude, col._Name, false, 0) != -1)
+            if (TextUtil.findStarElement(VC._Exclude, col._Name, false, 0) != -1)
               continue;
             if (col._JoinOnly == true || col._FormulaOnly == true)
               continue;
@@ -860,7 +867,7 @@ public class View extends Base
             NewVC._As = VC._As;
             NewVC._Name = Prefix + col._Name;
             NewVC._FCT = col._FCT;
-            if (TextUtil.FindStarElement(VC._Block, col._Name, false, 0) != -1)
+            if (TextUtil.findStarElement(VC._Block, col._Name, false, 0) != -1)
               NewVC._FormulaOnly = true;
             _ViewColumns.add(i + j, NewVC);
             _PadderColumnNames.track(NewVC.getName());
@@ -876,7 +883,7 @@ public class View extends Base
                 for (ViewPivotAggregate A : P._Aggregates)
                   for (Value VPV : P._Values)
                     {
-                      if (TextUtil.FindStarElement(VC._Exclude, TextUtil.Print(VPV._Name, VPV._Value), false, 0) != -1)
+                      if (TextUtil.findStarElement(VC._Exclude, TextUtil.print(VPV._Name, VPV._Value), false, 0) != -1)
                         continue;
                       String SrcColName = A.makeName(VPV);
                       if (SrcColName.startsWith(startingWith) == false)
@@ -895,7 +902,7 @@ public class View extends Base
                 for (Value VPV : P._Values)
                   for (ViewPivotAggregate A : P._Aggregates)
                     {
-                      if (TextUtil.FindStarElement(VC._Exclude, TextUtil.Print(VPV._Name, VPV._Value), false, 0) != -1)
+                      if (TextUtil.findStarElement(VC._Exclude, TextUtil.print(VPV._Name, VPV._Value), false, 0) != -1)
                         continue;
                       String SrcColName = A.makeName(VPV);
                       if (SrcColName.startsWith(startingWith) == false)
@@ -912,7 +919,7 @@ public class View extends Base
           }
         for (Formula F : V._Formulas)
           {
-            if (TextUtil.FindStarElement(VC._Exclude, F._Name, false, 0) != -1)
+            if (TextUtil.findStarElement(VC._Exclude, F._Name, false, 0) != -1)
               continue;
             if (F._Name.startsWith(startingWith) == false)
               continue;
@@ -921,7 +928,7 @@ public class View extends Base
             NewVC._Name = Prefix + F._Name;
             NewVC._As = VC._As;
             NewVC._FCT = VC._FCT;
-            if (TextUtil.FindStarElement(VC._Block, F._Name, false, 0) != -1)
+            if (TextUtil.findStarElement(VC._Block, F._Name, false, 0) != -1)
               NewVC._FormulaOnly = true;
             _ViewColumns.add(i + j, NewVC);
             _PadderColumnNames.track(NewVC.getName());

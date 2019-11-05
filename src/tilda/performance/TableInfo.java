@@ -110,10 +110,10 @@ public class TableInfo implements Info
         return;
        Str.append("<TR style=\"font-size: 80%;\">")
           .append("<TD>&nbsp;</TD><TD align=\"right\">").append(StatementType).append("&nbsp;&nbsp;&nbsp;</TD>")
-          .append("<TD>").append(DurationUtil.PrintDurationMilliSeconds(Nano)).append(" (").append(NumberFormatUtil.PrintPercentWith2Dec(TotalNano, Nano)).append("%)").append("</TD>")
-          .append("<TD>").append(Count  ).append(" (").append(NumberFormatUtil.PrintPercentWith2Dec(TotalCount  , Count  )).append("%)").append("</TD>")
-          .append("<TD>").append(DurationUtil.PrintPerformancePerSecond(Nano, Count)).append("q/s\r\n").append("</TD>")
-          .append("<TD>").append(Records).append(" (").append(NumberFormatUtil.PrintPercentWith2Dec(TotalRecords, Records)).append("%)").append("</TD>")
+          .append("<TD>").append(DurationUtil.printDurationMilliSeconds(Nano)).append(" (").append(NumberFormatUtil.printPercentWith2Dec(TotalNano, Nano)).append("%)").append("</TD>")
+          .append("<TD>").append(Count  ).append(" (").append(NumberFormatUtil.printPercentWith2Dec(TotalCount  , Count  )).append("%)").append("</TD>")
+          .append("<TD>").append(DurationUtil.printPerformancePerSecond(Nano, Count)).append("q/s\r\n").append("</TD>")
+          .append("<TD>").append(Records).append(" (").append(NumberFormatUtil.printPercentWith2Dec(TotalRecords, Records)).append("%)").append("</TD>")
           .append("</TR>\r\n");
      }
     
@@ -125,10 +125,10 @@ public class TableInfo implements Info
         long TotalNano   = getNanoTotal    ();
         Str.append("<TR style=\"background-color: #EFEFFF;\" valign=\"top\">")
            .append("<TD COLSPAN=\"2\">").append(_Name).append("&nbsp;&nbsp;&nbsp;</TD>")
-           .append("<TD>").append(DurationUtil.PrintDurationMilliSeconds(TotalNano)).append("&nbsp;(").append(NumberFormatUtil.PrintPercentWith2Dec(SuperNano, TotalNano)).append("%)").append("</TD>")
-           .append("<TD>").append(TotalCount  ).append("&nbsp;(").append(NumberFormatUtil.PrintPercentWith2Dec(SuperCount  , TotalCount  )).append("%)").append("</TD>")
-           .append("<TD>").append(DurationUtil.PrintPerformancePerSecond(TotalNano, TotalCount)).append("q/s\r\n").append("</TD>")
-           .append("<TD>").append(TotalRecords).append("&nbsp;(").append(NumberFormatUtil.PrintPercentWith2Dec(SuperRecords, TotalRecords)).append("%)").append("</TD>")
+           .append("<TD>").append(DurationUtil.printDurationMilliSeconds(TotalNano)).append("&nbsp;(").append(NumberFormatUtil.printPercentWith2Dec(SuperNano, TotalNano)).append("%)").append("</TD>")
+           .append("<TD>").append(TotalCount  ).append("&nbsp;(").append(NumberFormatUtil.printPercentWith2Dec(SuperCount  , TotalCount  )).append("%)").append("</TD>")
+           .append("<TD>").append(DurationUtil.printPerformancePerSecond(TotalNano, TotalCount)).append("q/s\r\n").append("</TD>")
+           .append("<TD>").append(TotalRecords).append("&nbsp;(").append(NumberFormatUtil.printPercentWith2Dec(SuperRecords, TotalRecords)).append("%)").append("</TD>")
            .append("</TR>\r\n");
         printHelper(Str, "INSERT", _InsertCount.get(), _InsertCount  .get(), _InsertNano.get(), TotalCount, TotalRecords, TotalNano);
         printHelper(Str, "SELECT", _SelectCount.get(), _SelectRecords.get(), _SelectNano.get(), TotalCount, TotalRecords, TotalNano);

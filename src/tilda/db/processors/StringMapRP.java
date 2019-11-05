@@ -26,12 +26,13 @@ import tilda.utils.TextUtil;
 
 public class StringMapRP implements RecordProcessor
   {
-    public void Start()
+    @Override
+    public void start()
       {
-      };
+      }
 
     @Override
-    public boolean Process(int Index, ResultSet RS)
+    public boolean process(int Index, ResultSet RS)
       throws SQLException
       {
         String Val = RS.getString(1);
@@ -44,7 +45,7 @@ public class StringMapRP implements RecordProcessor
       }
 
     @Override
-    public void End(boolean hasMore, int MaxIndex)
+    public void end(boolean hasMore, int MaxIndex)
       {
       }
 

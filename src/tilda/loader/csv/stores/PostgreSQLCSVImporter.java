@@ -74,21 +74,21 @@ public class PostgreSQLCSVImporter extends CSVImporter
                     continue;
                   }
   
-                ZonedDateTime Now = DateTimeUtil.NowUTC();
+                ZonedDateTime Now = DateTimeUtil.nowUTC();
                 int x = 0;
                 if (DBColumns != null && DBColumns.get("refnum") != null 
-                  && TextUtil.FindElement(columns, "refnum", false, 0) == -1)
+                  && TextUtil.findElement(columns, "refnum", false, 0) == -1)
                   {
                     Pst.setLong(++x, tilda.db.KeysManager.getKey(schemaName.toUpperCase() + "." + tableName.toUpperCase()));
                   }
                 if (DBColumns != null && DBColumns.get("lastupdated") != null 
-                  && TextUtil.FindElement(columns, "lastUpdated", false, 0) == -1)
+                  && TextUtil.findElement(columns, "lastUpdated", false, 0) == -1)
                   {
                     Pst.setTimestamp(++x, new java.sql.Timestamp(Now.toInstant().toEpochMilli()),
                     DateTimeUtil._UTC_CALENDAR);
                   }
                 if (DBColumns != null && DBColumns.get("created") != null 
-                  && TextUtil.FindElement(columns, "created", false, 0) == -1)
+                  && TextUtil.findElement(columns, "created", false, 0) == -1)
                   {
                     Pst.setTimestamp(++x, new java.sql.Timestamp(Now.toInstant().toEpochMilli()),
                     DateTimeUtil._UTC_CALENDAR);
@@ -119,7 +119,7 @@ public class PostgreSQLCSVImporter extends CSVImporter
                     	      colVal = columnMap.get(c)._DefaultValue;
                             else if (DBColumns.get(c.toLowerCase())._Nullable != 1) 
                               {
-                    	        String defaultCreateValue = MasterFactory.GetDefaultCreateValue(schemaName, tableName, c);
+                    	        String defaultCreateValue = MasterFactory.getDefaultCreateValue(schemaName, tableName, c);
                     	   
                     	        if(TextUtil.isNullOrEmpty(defaultCreateValue) == false)
                     	          colVal = defaultCreateValue;
@@ -180,7 +180,7 @@ public class PostgreSQLCSVImporter extends CSVImporter
                                 value = value.trim();
                                 if (value.startsWith("{") == true && value.endsWith("}") == true)
                                  value = value.substring(1, value.length()-1);
-                                String[] colDataArray = TextUtil.Split(value, multiValueDelim, true, false);
+                                String[] colDataArray = TextUtil.split(value, multiValueDelim, true, false);
                                 if (colDataArray != null && colDataArray.length > 0)
                                   {
                                     ColumnMeta CI = ColumnsMap.get(c.toLowerCase());
@@ -364,7 +364,7 @@ public class PostgreSQLCSVImporter extends CSVImporter
                   {
                     C.commit();
                     long t = System.nanoTime() - t0;
-                    LOG.debug("Processed " + NumberFormatUtil.PrintWith000Sep(NumOfRecs) + " records so far in " + DurationUtil.PrintDuration(t) + " (" + DurationUtil.PrintPerformancePerMinute(t, NumOfRecs) + " Records/min)");
+                    LOG.debug("Processed " + NumberFormatUtil.printWith000Sep(NumOfRecs) + " records so far in " + DurationUtil.printDuration(t) + " (" + DurationUtil.printPerformancePerMinute(t, NumOfRecs) + " Records/min)");
                   }
                 HandleFinally(AllocatedArrays);
               }
@@ -427,7 +427,7 @@ public class PostgreSQLCSVImporter extends CSVImporter
             first = true;
             for (int i = 0; i < columns.length; ++i)
               {
-                if (TextUtil.FindElement(uniqueColumns, columns[i], false, 0) != -1)
+                if (TextUtil.findElement(uniqueColumns, columns[i], false, 0) != -1)
                  continue;
                 first = false;
                 break;
@@ -441,7 +441,7 @@ public class PostgreSQLCSVImporter extends CSVImporter
             first = true;
             for (int i = 0; i < columns.length; ++i)
               {
-                if (TextUtil.FindElement(uniqueColumns, columns[i], false, 0) != -1)
+                if (TextUtil.findElement(uniqueColumns, columns[i], false, 0) != -1)
                  continue;
                 if (first == false) {
                   Str.append(",");
@@ -450,7 +450,7 @@ public class PostgreSQLCSVImporter extends CSVImporter
                 first = false;
               }
             
-            if (first == false && DBColumns != null && DBColumns.get("lastupdated") != null && TextUtil.FindElement(columns, "lastUpdated", false, 0) == -1)
+            if (first == false && DBColumns != null && DBColumns.get("lastupdated") != null && TextUtil.findElement(columns, "lastUpdated", false, 0) == -1)
               {
                 Str.append(",");
                 Str.append(" \"lastUpdated\"=current_timestamp");

@@ -19,7 +19,6 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.enums.FrameworkSourcedType;
 import tilda.generation.GeneratorSession;
-import tilda.generation.graphviz.GraphvizUtil;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Formula;
@@ -28,8 +27,8 @@ import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
 import tilda.utils.CollectionUtil;
 import tilda.utils.FileUtil;
-import tilda.utils.JSONUtil;
 import tilda.utils.TextUtil;
+import tilda.utils.json.JSONUtil;
 
 public class DocGen
   {
@@ -66,13 +65,14 @@ public class DocGen
 
     public void writeSchema(ParserSession PS)
       {
-        File file = new File(getSchemaChromeAppGenHTML(schema, ".html"));
-        if (!file.exists())
-          {
-            new GraphvizUtil(this.schema, G).writeSchema(this, PS);
-          }
-        else
-          {
+// We don't need to deal with GraphViz anymore        
+//        File file = new File(getSchemaChromeAppGenHTML(schema, ".html"));
+//        if (!file.exists())
+//          {
+//            new GraphvizUtil(this.schema, G).writeSchema(this, PS);
+//          }
+//        else
+//          {
             try
               {
                 writeHTML(PS);
@@ -82,7 +82,7 @@ public class DocGen
                 e.printStackTrace();
               }
 
-          }
+//          }
       }
 
     private void writeHTML(ParserSession PS)
@@ -162,8 +162,9 @@ public class DocGen
         WriteObjectDocsList(writer, FrameworkSourcedType.ENUMERATION, "Enumerations");
         WriteObjectDocsList(writer, FrameworkSourcedType.MAPPER, "Mappers");
         WriteObjectDocsList(writer, FrameworkSourcedType.NONE, "Tables");
-        WriteObjectDocsList(writer, FrameworkSourcedType.REALIZED, "Realized Tables");
+        WriteObjectDocsList(writer, FrameworkSourcedType.CLONED, "Cloned Tables");
         WriteObjectDocsList(writer, FrameworkSourcedType.VIEW, "Views");
+        WriteObjectDocsList(writer, FrameworkSourcedType.REALIZED, "Realized Views");
         /*
          * boolean First = true;
          * for (View V : schema._Views)
@@ -255,7 +256,7 @@ public class DocGen
         + "</SCRIPT>\n"
         + "</HEAD>\n"
         + "<BODY onkeyup=\"MasterIndex.keyup(event);\">\n");
-        writer.println("<H1>"+TextUtil.Print(MC._Title, "Master Database Documentation")+"</H1>");
+        writer.println("<H1>"+TextUtil.print(MC._Title, "Master Database Documentation")+"</H1>");
         writer.println(String.join("\n", MC._Descriptions)+"<BR>");
         writeSearchHTML(writer, false); // Add Search Box
         writer.println("<BR>");
@@ -266,8 +267,8 @@ public class DocGen
         for (tilda.Docs.MasterConfig.Group G : MC._Groups)
           {
             writer.print(++g == 0 ? "  {" : " ,{");
-            JSONUtil.Print(writer, "name", true, G._Name);
-            JSONUtil.Print(writer, "docs", false, G._Descriptions == null ? null : String.join("<BR>\n", G._Descriptions));
+            JSONUtil.print(writer, "name", true, G._Name);
+            JSONUtil.print(writer, "docs", false, G._Descriptions == null ? null : String.join("<BR>\n", G._Descriptions));
             writer.println(", \"schemas\":[ ");
             int s = -1;
             for (Schema S : selectedSchemas)
@@ -276,12 +277,12 @@ public class DocGen
                 if (ST == null || S._Objects.isEmpty() == true)
                   continue;
                 writer.print(++s == 0 ? "    {" : "   ,{");
-                JSONUtil.Print(writer, "name", true, S.getShortName());
-                JSONUtil.Print(writer, "docs", false, S.getDocumentation()._Description == null ? null : String.join("<BR>\n", S.getDocumentation()._Description));
-                JSONUtil.Print(writer, "explicit", false, ST == tilda.Docs.MasterConfig.Group.SchemaType.PRIMARY);
+                JSONUtil.print(writer, "name", true, S.getShortName());
+                JSONUtil.print(writer, "docs", false, S.getDocumentation()._Description == null ? null : String.join("<BR>\n", S.getDocumentation()._Description));
+                JSONUtil.print(writer, "explicit", false, ST == tilda.Docs.MasterConfig.Group.SchemaType.PRIMARY);
                 Set<String> deps = new HashSet<String>();
                 S.getFullDependencies(selectedSchemas, deps);
-                JSONUtil.Print(writer, "deps", false, CollectionUtil.toStringArray(deps));
+                JSONUtil.print(writer, "deps", false, CollectionUtil.toStringArray(deps));
                 writer.println(", \"objs\":[ ");
                 int o = -1;
                 S._Objects.sort(new Comparator<Object>()
@@ -296,8 +297,8 @@ public class DocGen
                   if (O != null)
                     {
                       writer.print(++o == 0 ? "        {" : "       ,{");
-                      JSONUtil.Print(writer, "name", true, O.getBaseName());
-                      JSONUtil.Print(writer, "docs", false, O._Description == null ? null : O._Description);
+                      JSONUtil.print(writer, "name", true, O.getBaseName());
+                      JSONUtil.print(writer, "docs", false, O._Description == null ? null : O._Description);
                       writer.println(", \"cols\":[ ");
                       int c = -1;
                       O._Columns.sort(new Comparator<Column>()
@@ -312,22 +313,21 @@ public class DocGen
                         if (C != null)
                           {
                             writer.print(++c == 0 ? "            {" : "           ,{");
-                            JSONUtil.Print(writer, "name", true, C.getName());
-                            JSONUtil.Print(writer, "type", false, C._Size == null ? C._TypeStr : C._TypeStr + "(" + C._Size + ")");
-                            JSONUtil.Print(writer, "nullable", false, C._Nullable);
-                            // if (C.getName().equals("isReferral") == true)
-                            // LOG.debug("xxx");
+                            JSONUtil.print(writer, "name", true, C.getName());
+                            JSONUtil.print(writer, "type", false, C._Size == null ? C._TypeStr : C._TypeStr + "(" + C._Size + ")");
+                            JSONUtil.print(writer, "nullable", false, C._Nullable);
+
                             Formula F = O._ParentSchema.getSourceFormula(C);
                             if (F == null)
-                              JSONUtil.Print(writer, "docs", false, C._Description);
+                              JSONUtil.print(writer, "docs", false, C._Description);
                             else
                               {
                                 SortedSet<String> ColumnMatches = new TreeSet<String>();
                                 SortedSet<String> FormulaMatches = new TreeSet<String>();
-                                JSONUtil.Print(writer, "formula", false, true);
-                                JSONUtil.Print(writer, "docs", false, F._Title + (F._Measure == false ? "" : "&nbsp;<SUP class=\"Measure\"></SUP>") + "<BR><BR>" + String.join(" ", F._Description) + "<PRE style=\"padding-top: 3px;\">" + Docs.printFormulaCodeHTML(F, ColumnMatches, FormulaMatches, true) + "</PRE>");
+                                JSONUtil.print(writer, "formula", false, true);
+                                JSONUtil.print(writer, "docs", false, F._Title + (F._Measure == false ? "" : "&nbsp;<SUP class=\"Measure\"></SUP>") + "<BR><BR>" + String.join(" ", F._Description) + "<PRE style=\"padding-top: 3px;\">" + Docs.printFormulaCodeHTML(F, ColumnMatches, FormulaMatches, true) + "</PRE>");
                               }
-                            JSONUtil.Print(writer, "url", false, Docs.makeColumnHref(C));
+                            JSONUtil.print(writer, "url", false, Docs.makeColumnHref(C));
                             writer.println(" }");
                           }
                       writer.println("        ]}");

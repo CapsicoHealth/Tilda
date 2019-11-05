@@ -1,17 +1,21 @@
 
 package tilda.data._Tilda;
 
-import java.time.*;
+import java.math.*;
 import java.util.*;
+import java.time.*;
+
+import org.apache.logging.log4j.*;
+
+import com.google.gson.annotations.*;
 
 import tilda.db.*;
 import tilda.enums.*;
+import tilda.performance.*;
 import tilda.types.*;
 import tilda.utils.*;
+import tilda.utils.json.*;
 import tilda.utils.pairs.*;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -26,9 +30,9 @@ public class TILDA__DEPENDENCYDDLDUMMYTABLE_Factory
    protected TILDA__DEPENDENCYDDLDUMMYTABLE_Factory() { }
 
    public static final Class<TILDA__DEPENDENCYDDLDUMMYTABLE> DATA_CLASS= TILDA__DEPENDENCYDDLDUMMYTABLE.class;
-   public static final String SCHEMA_LABEL = TextUtil.Print("TILDA", "");
-   public static final String TABLENAME_LABEL = TextUtil.Print("DependencyDDLDummyTable", "");
-   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.Print("TILDA.DependencyDDLDummyTable", "");
+   public static final String SCHEMA_LABEL = TextUtil.print("TILDA", "");
+   public static final String TABLENAME_LABEL = TextUtil.print("DependencyDDLDummyTable", "");
+   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.print("TILDA.DependencyDDLDummyTable", "");
    public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "DependencyDDLDummyTable"); }
 
    public static abstract class COLS {
@@ -255,35 +259,35 @@ This is the column definition for:<BR>
        protected Connection _C = null;
        protected tilda.db.processors.ObjectProcessor<tilda.data.DependencyDDLDummyTable_Data> _OP;
        protected ArrayListResults<tilda.data.DependencyDDLDummyTable_Data> _L = null;
-       public void    Start  () { }
-       public void    End    (boolean HasMore, int Max) { if (_OP == null) _L.wrapup(HasMore, Max); }
-       public boolean Process(int Index, java.sql.ResultSet RS) throws Exception
+       public void    start  () { }
+       public void    end    (boolean HasMore, int Max) { if (_OP == null) _L.wrapup(HasMore, Max); }
+       public boolean process(int Index, java.sql.ResultSet RS) throws Exception
         {
           tilda.data.DependencyDDLDummyTable_Data Obj = new tilda.data.DependencyDDLDummyTable_Data();
-          boolean OK = ((tilda.data._Tilda.TILDA__DEPENDENCYDDLDUMMYTABLE)Obj).Init(_C, RS);
+          boolean OK = ((tilda.data._Tilda.TILDA__DEPENDENCYDDLDUMMYTABLE)Obj).init(_C, RS);
           if (OK == true)
            {
              if (_OP == null)
               _L.add(Obj);
              else
-              _OP.Process(Index, Obj);
+              _OP.process(Index, Obj);
            }
           return OK;
         }
      }
 
-   protected static final void ProcessMany(Connection C, String FullSelectQuery, int Start, int Size, tilda.db.processors.RecordProcessor RP) throws Exception
+   protected static final void processMany(Connection C, String FullSelectQuery, int Start, int Size, tilda.db.processors.RecordProcessor RP) throws Exception
      {
-       ReadMany(C, -77, RP, null, FullSelectQuery, Start, Size);
+       readMany(C, -77, RP, null, FullSelectQuery, Start, Size);
      }
-   protected static final ListResults<tilda.data.DependencyDDLDummyTable_Data> ReadMany(Connection C, String FullSelectQuery, int Start, int Size) throws Exception
+   protected static final ListResults<tilda.data.DependencyDDLDummyTable_Data> readMany(Connection C, String FullSelectQuery, int Start, int Size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
-       ReadMany(C, -77, RPI, null, FullSelectQuery, Start, Size);
+       readMany(C, -77, RPI, null, FullSelectQuery, Start, Size);
        return RPI._L;
      }
 
-   private static final void ReadMany(Connection C, int LookupId, tilda.db.processors.RecordProcessor RP, tilda.data._Tilda.TILDA__DEPENDENCYDDLDUMMYTABLE Obj, Object ExtraParams, int Start, int Size) throws Exception
+   private static final void readMany(Connection C, int LookupId, tilda.db.processors.RecordProcessor RP, tilda.data._Tilda.TILDA__DEPENDENCYDDLDUMMYTABLE Obj, Object ExtraParams, int Start, int Size) throws Exception
      {
        long T0 = System.nanoTime();
        StringBuilder S = new StringBuilder(1024);
@@ -344,7 +348,7 @@ This is the column definition for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
 
@@ -356,7 +360,7 @@ This is the column definition for:<BR>
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- Creates a new object in memory, which you can subsequently {@link #Write()} to the data store.
+ Creates a new object in memory, which you can subsequently {@link #write()} to the data store.
  current object to the destination. 
  @param srcSchemaName (max size 100) The result value.
  @param srcTVName     (max size 100) The result value.
@@ -365,7 +369,7 @@ This is the column definition for:<BR>
  @param depViewName   (max size 100) The result value.
  @param restoreScript (max size 30000) The result value.
 */
-   static public tilda.data.DependencyDDLDummyTable_Data Create(String srcSchemaName, String srcTVName, int seq, String depSchemaName, String depViewName, String restoreScript) throws Exception
+   static public tilda.data.DependencyDDLDummyTable_Data create(String srcSchemaName, String srcTVName, int seq, String depSchemaName, String depViewName, String restoreScript) throws Exception
      {
        tilda.data._Tilda.TILDA__DEPENDENCYDDLDUMMYTABLE Obj = new tilda.data.DependencyDDLDummyTable_Data();
        Obj.initForCreate();
@@ -386,7 +390,7 @@ This is the column definition for:<BR>
        return (tilda.data.DependencyDDLDummyTable_Data) Obj;
      }
 
-   static public tilda.data.DependencyDDLDummyTable_Data Create(Map<String, String> Values, List<StringStringPair> Errors)
+   static public tilda.data.DependencyDDLDummyTable_Data create(Map<String, String> Values, List<StringStringPair> Errors)
    throws Exception
      {
        int IncomingErrors = Errors.size();
@@ -401,12 +405,12 @@ This is the column definition for:<BR>
        if (IncomingErrors != Errors.size())
         return null;
 
-      tilda.data.DependencyDDLDummyTable_Data Obj = tilda.data.DependencyDDLDummyTable_Factory.Create(_srcSchemaName, _srcTVName, _seq, _depSchemaName, _depViewName, _restoreScript);
+      tilda.data.DependencyDDLDummyTable_Data Obj = tilda.data.DependencyDDLDummyTable_Factory.create(_srcSchemaName, _srcTVName, _seq, _depSchemaName, _depViewName, _restoreScript);
 
 
       return Obj;
      }
-   public static int WriteBatch(Connection C, List<tilda.data.DependencyDDLDummyTable_Data> L, int batchSize, int commitSize) throws Exception
+   public static int writeBatch(Connection C, List<tilda.data.DependencyDDLDummyTable_Data> L, int batchSize, int commitSize) throws Exception
      {
        long T0 = System.nanoTime();
 
@@ -444,9 +448,9 @@ This is the column definition for:<BR>
                    return index;
                  }
 
-               if (((TILDA__DEPENDENCYDDLDUMMYTABLE) d).BeforeWrite(C) == false)
+               if (((TILDA__DEPENDENCYDDLDUMMYTABLE) d).beforeWrite(C) == false)
                  {
-                   LOG.debug(QueryDetails._LOGGING_HEADER + "The 'tilda.data.DependencyDDLDummyTable_Data' object at positon #" + index + " failed in its BeforeWrite() method.");
+                   LOG.debug(QueryDetails._LOGGING_HEADER + "The 'tilda.data.DependencyDDLDummyTable_Data' object at positon #" + index + " failed in its beforeWrite() method.");
                    QueryDetails.setLastQuery(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.SCHEMA_TABLENAME_LABEL, "");
                    return index;
                  }
@@ -491,7 +495,7 @@ This is the column definition for:<BR>
                PS.clearParameters();
              }
 
-           if (index != 0 && (index + 1) % batchSize != 0)
+           if ((index + 1) % batchSize != 0)
              {
                int[] results = PS.executeBatch();
                int failedRec = JDBCHelper.batchWriteDone(results, L.size() - insertCount);
@@ -522,13 +526,13 @@ This is the column definition for:<BR>
          }
        finally
          {
-           TILDA__1_0.HandleFinally(PS, T0, TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+           TILDA__1_0.handleFinally(PS, T0, TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
            PS = null;
            AllocatedArrays = null;
          }
        }
 
-   static public tilda.data.DependencyDDLDummyTable_Data LookupByDepedencySequence(String srcSchemaName, String srcTVName, int seq) throws Exception
+   static public tilda.data.DependencyDDLDummyTable_Data lookupByDepedencySequence(String srcSchemaName, String srcTVName, int seq) throws Exception
      {
        tilda.data._Tilda.TILDA__DEPENDENCYDDLDUMMYTABLE Obj = new tilda.data.DependencyDDLDummyTable_Data();
        Obj.initForLookup(0);
@@ -540,7 +544,7 @@ This is the column definition for:<BR>
        return (tilda.data.DependencyDDLDummyTable_Data) Obj;
      }
 
-   static public tilda.data.DependencyDDLDummyTable_Data LookupByDepedencySTV(String srcSchemaName, String srcTVName, String depSchemaName, String depViewName) throws Exception
+   static public tilda.data.DependencyDDLDummyTable_Data lookupByDepedencySTV(String srcSchemaName, String srcTVName, String depSchemaName, String depViewName) throws Exception
      {
        tilda.data._Tilda.TILDA__DEPENDENCYDDLDUMMYTABLE Obj = new tilda.data.DependencyDDLDummyTable_Data();
        Obj.initForLookup(1);
@@ -558,15 +562,16 @@ This is the column definition for:<BR>
    public static ListResults<tilda.data.DependencyDDLDummyTable_Data> runSelect(Connection C, SelectQuery Q, int Start, int Size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
-       ReadMany(C, -7, RPI, null, Q, Start, Size);
+       readMany(C, -7, RPI, null, Q, Start, Size);
        return RPI._L;
      }
    public static void runSelect(Connection C, SelectQuery Q, tilda.db.processors.ObjectProcessor<tilda.data.DependencyDDLDummyTable_Data> OP, int Start, int Size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       ReadMany(C, -7, RPI, null, Q, Start, Size);
+       readMany(C, -7, RPI, null, Q, Start, Size);
      }
    public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
    public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
+
 
  }

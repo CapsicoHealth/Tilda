@@ -75,10 +75,10 @@ public class TildaSupport implements CodeGenTildaSupport
 
     public void genSupportCode(PrintWriter Out, GeneratorSession G, Schema S)
       {
-        Out.println("   protected static final String _COMMAQUESTION            =TextUtil.Identity(\",?\");");
-        Out.println("   protected static final String _EQUALQUESTION            =TextUtil.Identity(\"=?\");");
+        Out.println("   protected static final String _COMMAQUESTION            =TextUtil.identity(\",?\");");
+        Out.println("   protected static final String _EQUALQUESTION            =TextUtil.identity(\"=?\");");
         Out.println();
-        Out.println("   protected static void HandleFinally(java.sql.PreparedStatement PS, long T0, String TableName, StatementType ST, int count, List<java.sql.Array> AllocatedArrays) throws java.sql.SQLException");
+        Out.println("   protected static void handleFinally(java.sql.PreparedStatement PS, long T0, String TableName, StatementType ST, int count, List<java.sql.Array> AllocatedArrays) throws java.sql.SQLException");
         Out.println("     {");
         Out.println("       if (PS != null)");
         Out.println("        PS.close();");

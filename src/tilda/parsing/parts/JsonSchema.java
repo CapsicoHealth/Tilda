@@ -34,6 +34,20 @@ public class JsonSchema
     @SerializedName("validation" ) public JsonValidation _Validation ;
     /*@formatter:on*/
 
+    public JsonSchema(JsonSchema js)
+      {
+        _TypeName = js._TypeName;
+        _Descr = js._Descr;
+        if (js._Fields != null)
+          {
+            _Fields = new JsonField[js._Fields.length];
+            for (int i = 0; i < js._Fields.length; ++i)
+              _Fields[i] = new JsonField(js._Fields[i]);
+          }
+        if (js._Validation != null)
+          _Validation = new JsonValidation(js._Validation);
+      }
+
     public boolean Validate(ParserSession PS, Column C)
       {
         boolean Success = true;

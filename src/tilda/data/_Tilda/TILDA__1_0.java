@@ -18,10 +18,10 @@ public final class TILDA__1_0
  {
    protected static final Logger LOG = LogManager.getLogger(TILDA__1_0.class.getName());
 
-   protected static final String _COMMAQUESTION            =TextUtil.Identity(",?");
-   protected static final String _EQUALQUESTION            =TextUtil.Identity("=?");
+   protected static final String _COMMAQUESTION            =TextUtil.identity(",?");
+   protected static final String _EQUALQUESTION            =TextUtil.identity("=?");
 
-   protected static void HandleFinally(java.sql.PreparedStatement PS, long T0, String TableName, StatementType ST, int count, List<java.sql.Array> AllocatedArrays) throws java.sql.SQLException
+   protected static void handleFinally(java.sql.PreparedStatement PS, long T0, String TableName, StatementType ST, int count, List<java.sql.Array> AllocatedArrays) throws java.sql.SQLException
      {
        if (PS != null)
         PS.close();
@@ -55,17 +55,10 @@ public final class TILDA__1_0
       tilda.data._Tilda.TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.initObject(C);
       tilda.data._Tilda.TILDA__DATEDIM_Factory.initObject(C);
       tilda.data._Tilda.TILDA__DATELIMITDIM_Factory.initObject(C);
-      tilda.data._Tilda.TILDA__TESTING_Factory.initObject(C);
       tilda.data._Tilda.TILDA__FORMULARESULTVIEW_Factory.initObject(C);
       tilda.data._Tilda.TILDA__FORMULADEPENDENCYVIEW_Factory.initObject(C);
       tilda.data._Tilda.TILDA__MEASUREFORMULAVIEW_Factory.initObject(C);
-      tilda.data._Tilda.TILDA__TESTINGVIEW_Factory.initObject(C);
-      tilda.data._Tilda.TILDA__TESTING2VIEW_Factory.initObject(C);
-      tilda.data._Tilda.TILDA__TESTING2REALIZED_Factory.initObject(C);
-      tilda.data._Tilda.TILDA__TESTING3VIEW_Factory.initObject(C);
-      tilda.data._Tilda.TILDA__TESTING3REALIZED_Factory.initObject(C);
-      tilda.data._Tilda.TILDA__TESTING4VIEW_Factory.initObject(C);
-      tilda.data._Tilda.TILDA__TESTING4REALIZED_Factory.initObject(C);
+      tilda.data._Tilda.TILDA__JOBVIEW_Factory.initObject(C);
     }
 
  }

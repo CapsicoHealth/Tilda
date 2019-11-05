@@ -19,18 +19,17 @@ package tilda.parsing.parts;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.annotations.SerializedName;
+
 import tilda.enums.ColumnMapperMode;
 import tilda.enums.ColumnMode;
 import tilda.enums.FrameworkColumnType;
-import tilda.enums.FrameworkSourcedType;
 import tilda.enums.MultiType;
 import tilda.enums.ValidationStatus;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ReferenceHelper;
 import tilda.parsing.parts.helpers.ValidationHelper;
 import tilda.utils.TextUtil;
-
-import com.google.gson.annotations.SerializedName;
 
 public class ColumnMapper
   {
@@ -118,7 +117,7 @@ public class ColumnMapper
             else
               {
                 Column Col = new Column(_ParentColumn.getName() + "MappedGroup", null, 0, _ParentColumn._Nullable, _Group == ColumnMapperMode.DB ? ColumnMode.AUTO : ColumnMode.CALCULATED,
-                false, null, "Mapped group for '" + _ParentColumn.getName() + "' through '" + _DestObjectObj.getFullName() + "'.");
+                false, null, "Mapped group for '" + _ParentColumn.getName() + "' through '" + _DestObjectObj.getFullName() + "'.", _ParentColumn._Precision, _ParentColumn._Scale);
                 Col._SameAs = _DestObjectObj.getColumn("group").getFullName();
                 Col._FCT = FrameworkColumnType.MAPPER_GROUP;
                 Col._MapperDef = this;
@@ -138,7 +137,7 @@ public class ColumnMapper
             else
               {
                 Column Col = new Column(_ParentColumn.getName() + "MappedName", null, 0, _ParentColumn._Nullable, _Name == ColumnMapperMode.DB ? ColumnMode.AUTO : ColumnMode.CALCULATED,
-                _ParentColumn._Invariant, null, "Mapped name for '" + _ParentColumn.getName() + "' through '" + _DestObjectObj.getFullName() + "'.");
+                _ParentColumn._Invariant, null, "Mapped name for '" + _ParentColumn.getName() + "' through '" + _DestObjectObj.getFullName() + "'.", _ParentColumn._Precision, _ParentColumn._Scale);
                 Col._SameAs = _DestObjectObj.getColumn("name").getFullName();
                 Col._FCT = FrameworkColumnType.MAPPER_NAME;
                 Col._MapperDef = this;

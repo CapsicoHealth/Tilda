@@ -58,7 +58,7 @@ public class ViewPivotAggregate
         StringBuilder Str = new StringBuilder();
         if (TextUtil.isNullOrEmpty(_Prefix) == false)
          Str.append(_Prefix);
-        Str.append(TextUtil.CapitalizeFirstCharacter(TextUtil.Print(V._Name, V._Value)));
+        Str.append(TextUtil.capitalizeFirstCharacter(TextUtil.print(V._Name, V._Value)));
         if (TextUtil.isNullOrEmpty(_Suffix) == false)
           Str.append(_Suffix);
         return Str.toString();

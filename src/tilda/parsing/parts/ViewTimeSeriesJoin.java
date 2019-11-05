@@ -54,11 +54,6 @@ public class ViewTimeSeriesJoin
         int Errs = PS.getErrorCount();
         _ParentView = ParentView;
 
-        if (_Object.equalsIgnoreCase("patients.score") == true)
-          {
-            LOG.debug("xxx");
-          }
-
         // Mandatories
         if (TextUtil.isNullOrEmpty(_Object) == true)
           return PS.AddError("View '" + ParentView.getFullName() + "' is defining a join without any 'object' specified.");

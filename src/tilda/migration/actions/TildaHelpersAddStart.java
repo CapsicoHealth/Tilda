@@ -66,8 +66,8 @@ public class TildaHelpersAddStart extends MigrationAction
         if (EndScript == null)
           throw new Exception("Cannot load Tilda helper end script.");
         String Str = StartScript+"\n"+EndScript;
-        Maintenance_Data M = Maintenance_Factory.LookupByPrimaryKey("TILDA_HELPERS", "TILDA_HELPERS");
-        return M.Read(C) == false || M.getValue().equals(Str.trim()) == false;
+        Maintenance_Data M = Maintenance_Factory.lookupByPrimaryKey("TILDA_HELPERS", "TILDA_HELPERS");
+        return M.read(C) == false || M.getValue().equals(Str.trim()) == false;
       }
 
   }

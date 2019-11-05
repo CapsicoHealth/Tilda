@@ -21,18 +21,21 @@ import tilda.enums.ColumnType;
 public enum PostgresType
   {
     /*@formatter:off*/
-    STRING  ("varchar"         , "varchar"    , ColumnType.STRING  ),
-    JSON    ("jsonb"           , null         , ColumnType.JSON    ),
-    CHAR    ("character"       , "bpchar"     , ColumnType.CHAR    ),
-    INTEGER ("integer"         , "int4"       , ColumnType.INTEGER ),
-    LONG    ("bigint"          , "int8"       , ColumnType.LONG    ),
-    FLOAT   ("real"            , "float4"     , ColumnType.FLOAT   ),
-    DOUBLE  ("double precision", "float8"     , ColumnType.DOUBLE  ),
-    BOOLEAN ("boolean"         , "bool"       , ColumnType.BOOLEAN ),
-    DATE    ("date"            , "date"       , ColumnType.DATE    ),
-    DATETIME("timestamptz"     , "timestamptz", ColumnType.DATETIME),
-    BINARY  ("BYTEA"           , null         , ColumnType.BINARY  ),
-    BITFIELD("INTEGER"         , "int4"       , ColumnType.BITFIELD);
+    STRING  ("varchar"         , "varchar"    , ColumnType.STRING    ),
+    JSON    ("jsonb"           , null         , ColumnType.JSON      ),
+    CHAR    ("character"       , "bpchar"     , ColumnType.CHAR      ),
+    SHORT   ("smallint"        , "int2"       , ColumnType.SHORT     ),
+    INTEGER ("integer"         , "int4"       , ColumnType.INTEGER   ),
+    LONG    ("bigint"          , "int8"       , ColumnType.LONG      ),
+    FLOAT   ("real"            , "float4"     , ColumnType.FLOAT     ),
+    DOUBLE  ("double precision", "float8"     , ColumnType.DOUBLE    ),
+    NUMERIC ("numeric"         , "numeric"    , ColumnType.NUMERIC   ),
+    BOOLEAN ("boolean"         , "bool"       , ColumnType.BOOLEAN   ),
+    DATE    ("date"            , "date"       , ColumnType.DATE      ),
+    DATETIME("timestamptz"     , "timestamptz", ColumnType.DATETIME  ),
+    BINARY  ("BYTEA"           , null         , ColumnType.BINARY    ),
+    BITFIELD("INTEGER"         , "int4"       , ColumnType.BITFIELD  ),
+    UUID    ("UUID"            , "uuid"       , ColumnType.UUID      );
     /*@formatter:on*/
 
     static

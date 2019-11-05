@@ -73,7 +73,7 @@ public class Binning implements PatternObject
       }
     
     @Override
-    public boolean Validate(ParserSession PS, View ParentView)
+    public boolean validate(ParserSession PS, View ParentView)
     {  
       _ParentView = ParentView; 
       int Errs = PS.getErrorCount();

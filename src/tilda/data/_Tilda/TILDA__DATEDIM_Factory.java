@@ -1,17 +1,21 @@
 
 package tilda.data._Tilda;
 
-import java.time.*;
+import java.math.*;
 import java.util.*;
+import java.time.*;
+
+import org.apache.logging.log4j.*;
+
+import com.google.gson.annotations.*;
 
 import tilda.db.*;
 import tilda.enums.*;
+import tilda.performance.*;
 import tilda.types.*;
 import tilda.utils.*;
+import tilda.utils.json.*;
 import tilda.utils.pairs.*;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -26,9 +30,9 @@ public class TILDA__DATEDIM_Factory
    protected TILDA__DATEDIM_Factory() { }
 
    public static final Class<TILDA__DATEDIM> DATA_CLASS= TILDA__DATEDIM.class;
-   public static final String SCHEMA_LABEL = TextUtil.Print("TILDA", "");
-   public static final String TABLENAME_LABEL = TextUtil.Print("DateDim", "");
-   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.Print("TILDA.DateDim", "");
+   public static final String SCHEMA_LABEL = TextUtil.print("TILDA", "");
+   public static final String TABLENAME_LABEL = TextUtil.print("DateDim", "");
+   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.print("TILDA.DateDim", "");
    public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "DateDim"); }
 
    public static abstract class COLS {
@@ -544,35 +548,35 @@ This is the column definition for:<BR>
        protected Connection _C = null;
        protected tilda.db.processors.ObjectProcessor<tilda.data.DateDim_Data> _OP;
        protected ArrayListResults<tilda.data.DateDim_Data> _L = null;
-       public void    Start  () { }
-       public void    End    (boolean HasMore, int Max) { if (_OP == null) _L.wrapup(HasMore, Max); }
-       public boolean Process(int Index, java.sql.ResultSet RS) throws Exception
+       public void    start  () { }
+       public void    end    (boolean HasMore, int Max) { if (_OP == null) _L.wrapup(HasMore, Max); }
+       public boolean process(int Index, java.sql.ResultSet RS) throws Exception
         {
           tilda.data.DateDim_Data Obj = new tilda.data.DateDim_Data();
-          boolean OK = ((tilda.data._Tilda.TILDA__DATEDIM)Obj).Init(_C, RS);
+          boolean OK = ((tilda.data._Tilda.TILDA__DATEDIM)Obj).init(_C, RS);
           if (OK == true)
            {
              if (_OP == null)
               _L.add(Obj);
              else
-              _OP.Process(Index, Obj);
+              _OP.process(Index, Obj);
            }
           return OK;
         }
      }
 
-   protected static final void ProcessMany(Connection C, String FullSelectQuery, int Start, int Size, tilda.db.processors.RecordProcessor RP) throws Exception
+   protected static final void processMany(Connection C, String FullSelectQuery, int Start, int Size, tilda.db.processors.RecordProcessor RP) throws Exception
      {
-       ReadMany(C, -77, RP, null, FullSelectQuery, Start, Size);
+       readMany(C, -77, RP, null, FullSelectQuery, Start, Size);
      }
-   protected static final ListResults<tilda.data.DateDim_Data> ReadMany(Connection C, String FullSelectQuery, int Start, int Size) throws Exception
+   protected static final ListResults<tilda.data.DateDim_Data> readMany(Connection C, String FullSelectQuery, int Start, int Size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
-       ReadMany(C, -77, RPI, null, FullSelectQuery, Start, Size);
+       readMany(C, -77, RPI, null, FullSelectQuery, Start, Size);
        return RPI._L;
      }
 
-   private static final void ReadMany(Connection C, int LookupId, tilda.db.processors.RecordProcessor RP, tilda.data._Tilda.TILDA__DATEDIM Obj, Object ExtraParams, int Start, int Size) throws Exception
+   private static final void readMany(Connection C, int LookupId, tilda.db.processors.RecordProcessor RP, tilda.data._Tilda.TILDA__DATEDIM Obj, Object ExtraParams, int Start, int Size) throws Exception
      {
        long T0 = System.nanoTime();
        StringBuilder S = new StringBuilder(1024);
@@ -649,7 +653,7 @@ This is the column definition for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__DATEDIM_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__DATEDIM_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
 
@@ -661,12 +665,12 @@ This is the column definition for:<BR>
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- Creates a new object in memory, which you can subsequently {@link #Write()} to the data store.
+ Creates a new object in memory, which you can subsequently {@link #write()} to the data store.
  current object to the destination. 
  @param dt             The Date date
  @param epoch          The epoch date
 */
-   static public tilda.data.DateDim_Data Create(LocalDate dt, long epoch) throws Exception
+   static public tilda.data.DateDim_Data create(LocalDate dt, long epoch) throws Exception
      {
        tilda.data._Tilda.TILDA__DATEDIM Obj = new tilda.data.DateDim_Data();
        Obj.initForCreate();
@@ -683,7 +687,7 @@ This is the column definition for:<BR>
        return (tilda.data.DateDim_Data) Obj;
      }
 
-   static public tilda.data.DateDim_Data Create(Map<String, String> Values, List<StringStringPair> Errors)
+   static public tilda.data.DateDim_Data create(Map<String, String> Values, List<StringStringPair> Errors)
    throws Exception
      {
        int IncomingErrors = Errors.size();
@@ -714,7 +718,7 @@ This is the column definition for:<BR>
        if (IncomingErrors != Errors.size())
         return null;
 
-      tilda.data.DateDim_Data Obj = tilda.data.DateDim_Factory.Create(_dt, _epoch);
+      tilda.data.DateDim_Data Obj = tilda.data.DateDim_Factory.create(_dt, _epoch);
 
       if (_dayName       != null) Obj.setDayName       (_dayName       );
       if (_dayOfWeek     != null) Obj.setDayOfWeek     (_dayOfWeek     );
@@ -739,7 +743,7 @@ This is the column definition for:<BR>
 
       return Obj;
      }
-   public static int WriteBatch(Connection C, List<tilda.data.DateDim_Data> L, int batchSize, int commitSize) throws Exception
+   public static int writeBatch(Connection C, List<tilda.data.DateDim_Data> L, int batchSize, int commitSize) throws Exception
      {
        long T0 = System.nanoTime();
 
@@ -777,9 +781,9 @@ This is the column definition for:<BR>
                    return index;
                  }
 
-               if (((TILDA__DATEDIM) d).BeforeWrite(C) == false)
+               if (((TILDA__DATEDIM) d).beforeWrite(C) == false)
                  {
-                   LOG.debug(QueryDetails._LOGGING_HEADER + "The 'tilda.data.DateDim_Data' object at positon #" + index + " failed in its BeforeWrite() method.");
+                   LOG.debug(QueryDetails._LOGGING_HEADER + "The 'tilda.data.DateDim_Data' object at positon #" + index + " failed in its beforeWrite() method.");
                    QueryDetails.setLastQuery(TILDA__DATEDIM_Factory.SCHEMA_TABLENAME_LABEL, "");
                    return index;
                  }
@@ -824,7 +828,7 @@ This is the column definition for:<BR>
                PS.clearParameters();
              }
 
-           if (index != 0 && (index + 1) % batchSize != 0)
+           if ((index + 1) % batchSize != 0)
              {
                int[] results = PS.executeBatch();
                int failedRec = JDBCHelper.batchWriteDone(results, L.size() - insertCount);
@@ -855,13 +859,13 @@ This is the column definition for:<BR>
          }
        finally
          {
-           TILDA__1_0.HandleFinally(PS, T0, TILDA__DATEDIM_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+           TILDA__1_0.handleFinally(PS, T0, TILDA__DATEDIM_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
            PS = null;
            AllocatedArrays = null;
          }
        }
 
-   static public tilda.data.DateDim_Data LookupByPrimaryKey(LocalDate dt) throws Exception
+   static public tilda.data.DateDim_Data lookupByPrimaryKey(LocalDate dt) throws Exception
      {
        tilda.data._Tilda.TILDA__DATEDIM Obj = new tilda.data.DateDim_Data();
        Obj.initForLookup(0);
@@ -876,15 +880,16 @@ This is the column definition for:<BR>
    public static ListResults<tilda.data.DateDim_Data> runSelect(Connection C, SelectQuery Q, int Start, int Size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
-       ReadMany(C, -7, RPI, null, Q, Start, Size);
+       readMany(C, -7, RPI, null, Q, Start, Size);
        return RPI._L;
      }
    public static void runSelect(Connection C, SelectQuery Q, tilda.db.processors.ObjectProcessor<tilda.data.DateDim_Data> OP, int Start, int Size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       ReadMany(C, -7, RPI, null, Q, Start, Size);
+       readMany(C, -7, RPI, null, Q, Start, Size);
      }
    public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
    public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
+
 
  }

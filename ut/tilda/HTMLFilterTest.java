@@ -65,29 +65,29 @@ public class HTMLFilterTest
       long T0 = System.nanoTime();
       for (int i = 0; i < 10000000; ++i)
         {
-          HTMLFilter.CleanAbsolute(TestHTML);
+          HTMLFilter.cleanAbsolute(TestHTML);
         }
-      System.out.println("FilterCleanAbsolute: "+DurationUtil.PrintDuration(System.nanoTime()-T0));
+      System.out.println("FilterCleanAbsolute: "+DurationUtil.printDuration(System.nanoTime()-T0));
       
       T0 = System.nanoTime();
       for (int i = 0; i < 10000000; ++i)
         {
           CleanAbsolute2(TestHTML);
         }
-      System.out.println("FilterCleanAbsolute2: "+DurationUtil.PrintDuration(System.nanoTime()-T0));
+      System.out.println("FilterCleanAbsolute2: "+DurationUtil.printDuration(System.nanoTime()-T0));
       
       T0 = System.nanoTime();
       for (int i = 0; i < 10000000; ++i)
         {
           TestHTML.replaceAll("\\<", "&lt;").replaceAll("\\>", "&gt;");
         }
-      System.out.println("replaceAll: "+DurationUtil.PrintDuration(System.nanoTime()-T0));
+      System.out.println("replaceAll: "+DurationUtil.printDuration(System.nanoTime()-T0));
       
       T0 = System.nanoTime();
       for (int i = 0; i < 10000000; ++i)
         {
-          HTMLFilter.CleanSmart("blah", TestHTML);
+          HTMLFilter.cleanSmart("blah", TestHTML);
         }
-      System.out.println("FilterCleanSmart: "+DurationUtil.PrintDuration(System.nanoTime()-T0));
+      System.out.println("FilterCleanSmart: "+DurationUtil.printDuration(System.nanoTime()-T0));
     }
   }

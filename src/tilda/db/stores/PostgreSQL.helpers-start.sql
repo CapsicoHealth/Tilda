@@ -23,6 +23,7 @@
 -----------------------------------------------------------------------------------------------------------------
 create schema IF NOT EXISTS TILDA;
 
+SET search_path TO TILDA;
 
 -----------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------
@@ -333,7 +334,7 @@ RETURNS anyelement LANGUAGE SQL IMMUTABLE STRICT AS $$
 $$;
 
 DO $$ BEGIN
-if not exists (SELECT 1 FROM pg_aggregate WHERE aggfnoid::TEXT = 'first') THEN
+if not exists (SELECT 1 FROM pg_aggregate WHERE aggfnoid::TEXT = 'public.first') THEN
 CREATE AGGREGATE public.FIRST (
         sfunc    = TILDA.first_agg,
         basetype = anyelement,
@@ -349,7 +350,7 @@ RETURNS anyelement LANGUAGE SQL IMMUTABLE STRICT AS $$
         SELECT $2;
 $$;
 DO $$ BEGIN
-if not exists (SELECT 1 FROM pg_aggregate WHERE aggfnoid::TEXT = 'last') THEN
+if not exists (SELECT 1 FROM pg_aggregate WHERE aggfnoid::TEXT = 'public.last') THEN
 CREATE AGGREGATE public.LAST (
         sfunc    = TILDA.last_agg,
         basetype = anyelement,
@@ -361,7 +362,7 @@ END $$;
 ---------------------
 -- array_cat_agg
 DO $$ BEGIN
-if not exists (SELECT 1 FROM pg_aggregate WHERE aggfnoid::TEXT = 'array_cat_agg') THEN
+if not exists (SELECT 1 FROM pg_aggregate WHERE aggfnoid::TEXT = 'public.array_cat_agg') THEN
 CREATE AGGREGATE public.array_cat_agg (anyarray)
 (
     sfunc = array_cat,

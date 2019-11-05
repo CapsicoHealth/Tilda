@@ -11,11 +11,15 @@ public class ColumnMeta
     protected ColumnMeta(Connection C, ResultSet RS, TableMeta T, ViewMeta V)
       throws Exception
       {
-//        System.out.println(JDBCHelper.PrintResultSet(RS));
+        //System.out.println(JDBCHelper.printResultSet(RS));        
         _NameOriginal = RS.getString("COLUMN_NAME");
         _Name = _NameOriginal.toLowerCase();
         _Nullable = RS.getInt("NULLABLE");
         _Size = RS.getInt("COLUMN_SIZE");
+        //if(_Name.equals("a11"))
+        //  System.out.println(JDBCHelper.printResultSet(RS));   
+        _Precision = RS.getInt("COLUMN_SIZE");
+        _Scale = RS.getInt("DECIMAL_DIGITS");
         _TypeName = RS.getString("TYPE_NAME");
         _Type = RS.getInt("DATA_TYPE");
         _Descr = RS.getString("REMARKS");
@@ -31,6 +35,8 @@ public class ColumnMeta
     public final String     _NameOriginal;
     public final int        _Nullable;
     public final int        _Size;
+    public final int        _Precision;
+    public final int        _Scale;
     public final int        _Type;
     public final ColumnType _TildaType;
     public final String     _TypeSql;

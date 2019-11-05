@@ -22,7 +22,7 @@ import tilda.db.Connection;
 
 public interface ReaderObject
   {
-    public boolean Refresh(Connection C) throws Exception;
-    public boolean Read   (Connection C) throws Exception;
+    public boolean refresh(Connection C) throws Exception;
+    public boolean read   (Connection C) throws Exception;
     public String toString();
   }

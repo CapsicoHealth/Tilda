@@ -108,16 +108,16 @@ public class MasterFactory
 
     protected static Map<String, ObjectMetaData> _M = new HashMap<String, ObjectMetaData>();
 
-    public static ObjectMetaData GetTableObject(String SchemaName, String TableName)
+    public static ObjectMetaData getTableObject(String SchemaName, String TableName)
       {
         if (_M.get(SchemaName.toUpperCase() + "." + TableName) != null)
           return _M.get(SchemaName.toUpperCase() + "." + TableName);
         return null;
       }
 
-    public static String GetDefaultCreateValue(String SchemaName, String TableName, String ColumnName)
+    public static String getDefaultCreateValue(String SchemaName, String TableName, String ColumnName)
       {
-        ObjectMetaData omd = GetTableObject(SchemaName, TableName);
+        ObjectMetaData omd = getTableObject(SchemaName, TableName);
 
         String defaultCreateValue = omd.getColumnDefaultCreateValue(ColumnName);
         if (defaultCreateValue != null)
@@ -127,9 +127,9 @@ public class MasterFactory
         return null;
       }
 
-    public static String GetDefaultUpdateValue(String SchemaName, String TableName, String ColumnName)
+    public static String getDefaultUpdateValue(String SchemaName, String TableName, String ColumnName)
       {
-        ObjectMetaData omd = GetTableObject(SchemaName, TableName);
+        ObjectMetaData omd = getTableObject(SchemaName, TableName);
 
         String defaultUpdateValue = omd.getColumnDefaultUpdateValue(ColumnName);
         if (defaultUpdateValue != null)
@@ -140,7 +140,7 @@ public class MasterFactory
       }
 
 
-    public static void register(String PackageName, Object Obj, List<String> WarningList)
+    public static void register(String PackageName, Object Obj, List<String> warnings)
     throws Exception
       {
         String Key = Obj.getShortName();
@@ -151,12 +151,12 @@ public class MasterFactory
 
         if (Obj._Mode != ObjectMode.DB_ONLY)
           {
-            ObjectMetaData OMD = new ObjectMetaData(PackageName, Obj, WarningList);
+            ObjectMetaData OMD = new ObjectMetaData(PackageName, Obj, warnings);
             _M.put(Key, OMD);
           }
       }
 
-    public static <T> List<T> LookupWhere(Connection C, Class<T> DataClass, String WhereClause, int Start, int Size)
+    public static <T> List<T> lookupWhere(Connection C, Class<T> DataClass, String WhereClause, int Start, int Size)
     throws Exception
       {
         String ObjectName = (String) DataClass.getField("TABLENAME").get(null);
@@ -170,7 +170,7 @@ public class MasterFactory
         return SQPV.execute(C, Start, Size);
       }
 
-    public static <T> void LookupWhere(Connection C, Class<T> DataClass, ObjectProcessor<T> OP, String WhereClause, int Start, int Size)
+    public static <T> void lookupWhere(Connection C, Class<T> DataClass, ObjectProcessor<T> OP, String WhereClause, int Start, int Size)
     throws Exception
       {
         String ObjectName = (String) DataClass.getField("TABLENAME").get(null);

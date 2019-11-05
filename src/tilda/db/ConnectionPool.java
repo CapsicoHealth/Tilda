@@ -28,11 +28,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.logging.log4j.Level;
@@ -41,11 +39,13 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.annotations.SerializedName;
 
 import tilda.Migrate;
 import tilda.data.Connection_Data;
 import tilda.data.Connection_Factory;
+import tilda.db.config.Bootstrappers;
+import tilda.db.config.Conn;
+import tilda.db.config.ConnDefs;
 import tilda.db.metadata.DatabaseMeta;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.migration.Migrator;
@@ -69,88 +69,19 @@ public class ConnectionPool
       {
       }
 
-    private static class ConnDefs
-      {
-        /*@formatter:off*/
-       @SerializedName("connections"   ) public Conn[]      _Conns       = new Conn[0];
-       @SerializedName("email"         ) public EmailConfig _EmailConfig;
-       @SerializedName("initDebug"     ) public boolean     _InitDebug = false;
-       @SerializedName("skipValidation") public boolean     _SkipValidation = false;
-       /*@formatter:on*/
-
-        public boolean validate()
-          {
-            if (_Conns == null || _Conns.length == 0)
-              {
-                LOG.error("No connections were defined in the Tilda configuration file");
-                return false;
-              }
-            Set<String> IDs = new HashSet<String>();
-            boolean OK = true;
-            for (Conn C : _Conns)
-              {
-                if (IDs.add(C._Id) == false)
-                  {
-                    LOG.error("A duplicate connection with id=" + C._Id + " has been defined.");
-                    OK = false;
-                  }
-                if (TextUtil.isNullOrEmpty(C._Driver) == true)
-                  {
-                    LOG.error("Connection id=" + C._Id + " didn't define a driver!");
-                    OK = false;
-                  }
-                if (TextUtil.isNullOrEmpty(C._DB) == true)
-                  {
-                    LOG.error("Connection id=" + C._Id + " didn't define a DB connection string!");
-                    OK = false;
-                  }
-              }
-            return OK;
-          }
-      }
-
-    private static class EmailConfig
-      {
-        /*@formatter:off*/
-        @SerializedName("smtp"        ) public String _SMTP      = null;
-        @SerializedName("userId"      ) public String _UserId    = null;
-        @SerializedName("pswd"        ) public String _Pswd      = null;
-        /*@formatter:on*/
-      }
-
-    private static class Conn
-      {
-      /*@formatter:off*/
-      @SerializedName("id"     ) public String   _Id      = null;
-      @SerializedName("driver" ) public String   _Driver  = null;
-      @SerializedName("db"     ) public String   _DB      = null;
-      @SerializedName("user"   ) public String   _User    = null;
-      @SerializedName("pswd"   ) public String   _Pswd    = null;
-      @SerializedName("initial") public int      _Initial =  3;
-      @SerializedName("max"    ) public int      _Max     = 30;
-      @SerializedName("schemas") public String[] _Schemas = new String[]{};
-      /*@formatter:on*/
-      }
-
-    private static class Bootstrappers
-      {
-        /*@formatter:off*/
-        @SerializedName("classNames") public String[]  _classNames = { };
-        /*@formatter:on*/
-      }
-
-
     static final Logger                           LOG                  = LogManager.getLogger(ConnectionPool.class.getName());
 
     // _UniqueDataSourceIds is a helper object. Used mainly to retrieve Unique ConnectionID's
     // contains ConnectionId & Connection URL in each entry.
     protected static Map<String, String>          _UniqueDataSourceIds = new HashMap<String, String>();
 
+    protected static Map<String, BasicDataSource> _DataSourcesById     = new HashMap<String, BasicDataSource>();
     protected static Map<String, BasicDataSource> _DataSourcesBySig    = new HashMap<String, BasicDataSource>();
     protected static Map<String, Schema>          _Schemas             = new HashMap<String, Schema>();
     protected static Map<String, String>          _EmailConfigDetails  = null;
     protected static boolean                      _InitDebug           = false;
     protected static boolean                      _SkipValidation      = false;
+    protected static String[]                     _DependencySchemas   = { };
 
     public static void autoInit()
       {
@@ -163,8 +94,8 @@ public class ConnectionPool
         Connection Keys = null;
         try
           {
-            InitBootstrappers();
-            ReadConfig();
+            initBootstrappers();
+            readConfig();
             if (_InitDebug == false && Migrate.isMigrationActive() == false)
               {
                 LOG.info("The initDebug flag in the tilda.config.json file is set to false, and so detailed debugging is turned off during system initialization");
@@ -173,7 +104,7 @@ public class ConnectionPool
             if (isTildaEnabled() == true)
               {
                 Keys = get("KEYS");
-                ReadConnections(Keys);
+                readConnections(Keys);
 
                 if (Migrate.isMigrationActive() == true)
                   {
@@ -205,7 +136,6 @@ public class ConnectionPool
                     LOG.info("\n");
                   }
 
-
                 boolean first = true;
                 List<Schema> TildaList = null;
                 Iterator<String> connectionIds = getUniqueDataSourceIds().keySet().iterator();
@@ -215,7 +145,7 @@ public class ConnectionPool
                     String connectionId = connectionIds.next();
                     C = get(connectionId);
                     if (TildaList == null)
-                      TildaList = LoadTildaResources(C);
+                      TildaList = loadTildaResources(C);
                     if (C.isSuperUser() == true)
                       {
                         LOG.warn("###################################################################################################################");
@@ -234,15 +164,15 @@ public class ConnectionPool
 
                     if (Migrate.isMigrationActive() == true || _SkipValidation == false)
                       {
-                        DatabaseMeta DBMeta = LoadDatabaseMetaData(C, TildaList);
-                        Migrator.MigrateDatabase(C, Migrate.isMigrationActive() == false, TildaList, DBMeta, first, connectionUrls);
+                        DatabaseMeta DBMeta = loadDatabaseMetaData(C, TildaList);
+                        Migrator.MigrateDatabase(C, Migrate.isMigrationActive() == false, TildaList, DBMeta, first, connectionUrls, _DependencySchemas);
                       }
                     if (/* first == true && */ Migrate.isMigrationActive() == false)
                       {
-                        LOG.info("Initializing Schemas.");
+                        LOG.info("Initializing Schemas for " + C._Url);
                         for (Schema S : TildaList)
                           {
-                            LOG.debug("  " + S.getFullName());
+                            LOG.debug("  Initializing Schema " + S.getFullName());
                             Method M = Class.forName(tilda.generation.java8.Helper.getSupportClassFullName(S)).getMethod("initSchema", Connection.class);
                             M.invoke(null, C);
                             if (_Schemas.get(S._Name.toUpperCase()) == null)
@@ -261,6 +191,16 @@ public class ConnectionPool
         catch (Throwable T)
           {
             LOG.error("Cannot initialize Tilda\n", T);
+            if (T.getCause() != null)
+              {
+                T = T.getCause();
+                LOG.catching(T);
+                if (T.getCause() != null)
+                  {
+                    T = T.getCause();
+                    LOG.catching(T.getCause());
+                  }
+              }
             throw new Error(T);
           }
         finally
@@ -282,7 +222,7 @@ public class ConnectionPool
           LogUtil.resetLogLevel();
       }
 
-    private static void ReadConnections(Connection Keys)
+    private static void readConnections(Connection Keys)
     throws Exception
       {
         LOG.info("Adding Connections from tilda.CONNECTIONS table to Pool");
@@ -291,7 +231,7 @@ public class ConnectionPool
         ListResults<Connection_Data> connections = null;
         try
           {
-            connections = Connection_Factory.LookupWhereActive(Keys, 0, 10000);
+            connections = Connection_Factory.lookupWhereActive(Keys, 0, 10000);
           }
         catch (Exception e)
           {
@@ -302,12 +242,12 @@ public class ConnectionPool
         while (iterator.hasNext())
           {
             connection = iterator.next();
-            AddDatasource(connection.getId(), connection.getDriver(), connection.getDb(), connection.getUser(), connection.getPswd(), connection.getInitial(), connection.getMax());
+            addDatasource(connection.getId(), connection.getDriver(), connection.getDb(), connection.getUser(), connection.getPswd(), connection.getInitial(), connection.getMax());
           }
         LOG.info("Completed Adding Connections from tilda.CONNECTIONS table to Pool");
       }
 
-    private static void ReadConfig()
+    private static void readConfig()
     throws Exception
       {
         LOG.info("Initializing Tilda: loading configuration file '/tilda.config.json'.");
@@ -340,9 +280,10 @@ public class ConnectionPool
               {
                 _InitDebug = Defs._InitDebug;
                 _SkipValidation = Defs._SkipValidation;
+                _DependencySchemas = Defs._DependencySchemas;
                 for (Conn Co : Defs._Conns)
                   {
-                    AddDatasource(Co._Id, Co._Driver, Co._DB, Co._User, Co._Pswd, Co._Initial, Co._Max);
+                    addDatasource(Co._Id, Co._Driver, Co._DB, Co._User, Co._Pswd, Co._Initial, Co._Max);
                   }
                 if (Defs._EmailConfig != null)
                   {
@@ -360,7 +301,7 @@ public class ConnectionPool
           }
       }
 
-    private static void InitBootstrappers()
+    private static void initBootstrappers()
     throws IOException
       {
         LOG.info("Initializing Tilda: loading configuration file '/tilda.bootstrappers.config.json'.");
@@ -410,7 +351,7 @@ public class ConnectionPool
         return BDS;
       }
 
-    private static void AddDatasource(String id, String driver, String db, String user, String pswd, int initial, int max)
+    private static void addDatasource(String id, String driver, String db, String user, String pswd, int initial, int max)
     throws Exception
       {
         if (ConnectionPoolStateInternal._DataSourcesById.get(id) != null)
@@ -460,7 +401,6 @@ public class ConnectionPool
           }
       }
 
-
     protected static class SchemaRunnable extends SimpleRunnableDB
       {
         public SchemaRunnable(String PoolId, DatabaseMeta DBMeta, String SchemaPattern)
@@ -483,7 +423,7 @@ public class ConnectionPool
           }
       }
 
-    private static DatabaseMeta LoadDatabaseMetaData(Connection C, List<Schema> TildaList)
+    private static DatabaseMeta loadDatabaseMetaData(Connection C, List<Schema> TildaList)
     throws Exception
       {
         DatabaseMeta DBMeta = new DatabaseMeta();
@@ -507,23 +447,23 @@ public class ConnectionPool
         else
           LOG.info("COMPLETED SUCCESSFULLY");
 
-        LOG.debug("Loaded " + TildaList.size() + " schemas in " + DurationUtil.PrintDuration(System.nanoTime() - T0));
+        LOG.debug("Loaded " + TildaList.size() + " schemas in " + DurationUtil.printDuration(System.nanoTime() - T0));
         return DBMeta;
       }
 
-    private static List<Schema> LoadTildaResources(Connection C)
+    private static List<Schema> loadTildaResources(Connection C)
     throws Exception
       {
         List<Schema> TildaList = Loader.LoadTildaResources();
-        if (TildaList == null)
+        if (TildaList == null || TildaList.isEmpty() == true)
           throw new Exception("Tilda cannot start as we didn't find the necessary Tilda resources.");
 
-        List<String> WarningList = new ArrayList<String>();
+        List<String> Warnings = new ArrayList<String>();
         for (Schema S : TildaList)
           {
             CodeGenSql Sql = C.getSQlCodeGen();
             ParserSession PS = new ParserSession(S, Sql);
-            if (S._Dependencies != null)
+            if (TextUtil.isNullOrEmpty(S._Dependencies) == false)
               for (String DepdencySchemaName : S._Dependencies)
                 {
                   boolean Found = false;
@@ -548,26 +488,33 @@ public class ConnectionPool
                 }
             else // if (S._Name.equals("TILDATMP") == false)
               {
-                PS.addDependencySchema(TildaList.get(0));
-                PS.addDependencySchema(TildaList.get(1));
+                PS.addDependencySchema(TildaList.get(0)); // Should be TILDATMP
+                PS.addDependencySchema(TildaList.get(1)); // Should be TILDA
                 PS.addDependencySchema(S);
+                S.setDefaultDependencies(PS);
               }
+
             if (S._Name.equals("TILDA") == false && S._Name.equals("TILDATMP") == false)
               S._DependencySchemas.add(TildaList.get(1));
+
             if (S.Validate(PS) == false)
               throw new Exception("Schema " + S._Name + " from resource " + S._ResourceName + " failed validation.");
+            
             for (Object Obj : S._Objects)
               if (Obj != null)
-                MasterFactory.register(S._Package, Obj, WarningList);
+                MasterFactory.register(S._Package, Obj, Warnings);
           }
-        if (WarningList.isEmpty() == false)
+        if (Warnings.isEmpty() == false)
           {
-            LOG.warn("\n\n\n");
-            LOG.warn("*******************************************************************************************************************************************************");
-            LOG.warn("*** There were " + WarningList.size() + " important warning(s) while loading Tilda resources:");
-            for (int i = 0; i < WarningList.size(); ++i)
-              LOG.warn("***    " + (i + 1) + " - " + WarningList.get(i));
-            LOG.warn("*******************************************************************************************************************************************************\n\n\n");
+            StringBuilder Str = new StringBuilder();
+            Str.append("\n\n#############################################################################################################################\n");
+            Str.append("There were "+Warnings.size()+" runtime warnings:\n");
+            for (String w : Warnings)
+              Str.append("    - "+w+"\n");
+            Str.append("These errors are typically due to the model having been updated but\n");
+            Str.append("the Gen utility was not run, or the workspace was not refreshed and built.\n");
+            Str.append("#############################################################################################################################\n\n");
+            LOG.warn(Str.toString());
           }
 
         return TildaList;

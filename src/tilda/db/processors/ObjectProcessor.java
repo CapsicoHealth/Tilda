@@ -18,5 +18,5 @@ package tilda.db.processors;
 
 public interface ObjectProcessor<T>
   {
-    public boolean Process(int Index, T Obj) throws Exception;
+    public boolean process(int Index, T Obj) throws Exception;
   }
