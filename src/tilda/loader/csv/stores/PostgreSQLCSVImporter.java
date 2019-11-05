@@ -16,6 +16,7 @@ import org.apache.commons.csv.CSVRecord;
 
 import tilda.data.ZoneInfo_Factory;
 import tilda.db.Connection;
+import tilda.db.MasterFactory;
 import tilda.db.QueryDetails;
 import tilda.db.metadata.ColumnMeta;
 import tilda.db.metadata.TableMeta;
@@ -42,20 +43,22 @@ public class PostgreSQLCSVImporter extends CSVImporter
       }
 
     @Override
-    protected long insertData(boolean isUpsert, long t0, Map<String, ColumnMeta> DBColumns, boolean withHeader, Iterable<CSVRecord> records, StringBuilder Str, String schemaName, String tableName, String[] headers, String[] columns, Map<String, ColumnHeader> columnMap, String[] completeHeaders, String[] uniqueColumns, String DateTimePattern, String DateTimeZoneInfoId, String DatePattern) 
+    protected long insertData(boolean isUpsert, long t0, Map<String, ColumnMeta> DBColumns, boolean withHeader, Iterable<CSVRecord> records, StringBuilder Str, String schemaName, String tableName, 
+    		String[] headers, String[] columns, Map<String, ColumnHeader> columnMap, String[] completeHeaders, String[] uniqueColumns, String DateTimePattern, String DateTimeZoneInfoId, 
+    		String DatePattern) 
     throws Exception
       {
         TableMeta TM = new TableMeta(schemaName, tableName, "");
         TM.load(C);
-        Map<String, ColumnMeta> ColumnsMap = TM._Columns;
+        Map<String, ColumnMeta> ColumnsMap = TM.getColumnMetaMap();
         PreparedStatement Pst = C.prepareStatement(Str.toString());
         List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
         long NumOfRecs = 0;
         int batchCount = 0;
   
         CSVRecord currentRecord = null;
-        String h = null;
-        String v = null;
+        String col = null;
+        String colVal = null;
 
         Map<String, GenericLoader> LoaderMap = initializeLoaders(C, columnMap);
         try
@@ -71,21 +74,21 @@ public class PostgreSQLCSVImporter extends CSVImporter
                     continue;
                   }
   
-                ZonedDateTime Now = DateTimeUtil.NowUTC();
+                ZonedDateTime Now = DateTimeUtil.nowUTC();
                 int x = 0;
                 if (DBColumns != null && DBColumns.get("refnum") != null 
-                  && TextUtil.FindElement(columns, "refnum", false, 0) == -1)
+                  && TextUtil.findElement(columns, "refnum", false, 0) == -1)
                   {
                     Pst.setLong(++x, tilda.db.KeysManager.getKey(schemaName.toUpperCase() + "." + tableName.toUpperCase()));
                   }
                 if (DBColumns != null && DBColumns.get("lastupdated") != null 
-                  && TextUtil.FindElement(columns, "lastUpdated", false, 0) == -1)
+                  && TextUtil.findElement(columns, "lastUpdated", false, 0) == -1)
                   {
                     Pst.setTimestamp(++x, new java.sql.Timestamp(Now.toInstant().toEpochMilli()),
                     DateTimeUtil._UTC_CALENDAR);
                   }
                 if (DBColumns != null && DBColumns.get("created") != null 
-                  && TextUtil.FindElement(columns, "created", false, 0) == -1)
+                  && TextUtil.findElement(columns, "created", false, 0) == -1)
                   {
                     Pst.setTimestamp(++x, new java.sql.Timestamp(Now.toInstant().toEpochMilli()),
                     DateTimeUtil._UTC_CALENDAR);
@@ -98,8 +101,44 @@ public class PostgreSQLCSVImporter extends CSVImporter
                 for ( i = 0; i < columns.length; ++i)
                   {
                     String c = columns[i];
-                    h = headers[i];
-                    v = record.get(h);
+                    col = headers[i]; 
+                    colVal = null;
+
+                    if(DBColumns.get(c.toLowerCase()) != null)
+                      {                    
+	                    if(record.isMapped(col))
+	                      {
+	                        colVal = record.get(col);
+	                        if (colVal.equals("") == true)
+	                         colVal = null;
+	                      }
+                    	
+                        if(record.isMapped(col) == false || (TextUtil.isNullOrEmpty(colVal) && DBColumns.get(c.toLowerCase())._Nullable != 1)) 
+                          {                       
+                            if(columnMap.get(c)._DefaultValue != null)                    	
+                    	      colVal = columnMap.get(c)._DefaultValue;
+                            else if (DBColumns.get(c.toLowerCase())._Nullable != 1) 
+                              {
+                    	        String defaultCreateValue = MasterFactory.getDefaultCreateValue(schemaName, tableName, c);
+                    	   
+                    	        if(TextUtil.isNullOrEmpty(defaultCreateValue) == false)
+                    	          colVal = defaultCreateValue;
+                    	        else
+                    	          {
+                    	            LOG.error("The header " + col + " mapped to column "+ c +" does not have a default create value in the Tilda definition or a default value in the mapping file and is not nullable.");                  	  
+                    	            throw new Exception("Not null constraint will be violated.");
+                    	          }
+                              }
+                             else
+                               LOG.info("The column " + c + " does not exist in the CSV file and does not have a default value in the mapping file.");  
+                           }
+                      }
+                    else 
+                      {
+                        LOG.error("The header " + col + " mapped to column " + c + " is not found in the database for the table " + schemaName + "." + tableName + ".");                              
+                        throw new Exception("Column '" + c + "' not found in the database.");
+                      }
+                    
                     ColumnHeader cHeader = columnMap.get(c);
                     if (cHeader != null && cHeader._Multi == true)
                       {
@@ -111,12 +150,12 @@ public class PostgreSQLCSVImporter extends CSVImporter
                             List<String> Values = new ArrayList<String>();
                             while (true)
                               {
-                                String value = record.get(h + "_" + (j + 1));
+                                String value = record.get(col + "_" + (j + 1));
                                 if (TextUtil.isNullOrEmpty(value) == false)
                                   Values.add(value);
                                 ++j;
                                 if (i + k + 1 == completeHeaders.length
-                                || completeHeaders[i + k + 1].equals(h + "_" + (j + 1)) == false)
+                                || completeHeaders[i + k + 1].equals(col + "_" + (j + 1)) == false)
                                   break;
                                 ++k;
                               }
@@ -132,7 +171,7 @@ public class PostgreSQLCSVImporter extends CSVImporter
                           }
                         else if (multiValueDelim != null)
                           {
-                            String value = record.get(h);
+                            String value = record.get(col);
                             if (TextUtil.isNullOrEmpty(value) == false)
                               {
                                 // LDH-NOTE: Some CSV data files may encode multi-value columns as direct outputs from a database like Postgres, 
@@ -141,7 +180,7 @@ public class PostgreSQLCSVImporter extends CSVImporter
                                 value = value.trim();
                                 if (value.startsWith("{") == true && value.endsWith("}") == true)
                                  value = value.substring(1, value.length()-1);
-                                String[] colDataArray = TextUtil.TrimSplit(value, multiValueDelim);
+                                String[] colDataArray = TextUtil.split(value, multiValueDelim, true, false);
                                 if (colDataArray != null && colDataArray.length > 0)
                                   {
                                     ColumnMeta CI = ColumnsMap.get(c.toLowerCase());
@@ -197,10 +236,11 @@ public class PostgreSQLCSVImporter extends CSVImporter
                       }
                     else
                       {
-                        String value = record.get(h);
+                    	String value = colVal;
+                    	
                         if (cHeader._Split == true)
                           {
-                            if (TextUtil.isNullOrEmpty(value) == false)
+                            if (value != null)
                               {
                                 int upperBound = cHeader._SplitEndIndex != -1 ? cHeader._SplitEndIndex
                                 : value.length();
@@ -215,7 +255,9 @@ public class PostgreSQLCSVImporter extends CSVImporter
                           }
   
                         ColumnMeta CI = ColumnsMap.get(c.toLowerCase());
-                        if (TextUtil.isNullOrEmpty(value) == false)
+                        if (   TextUtil.isNullOrEmpty(value) == false
+                            || (CI._TildaType == ColumnType.STRING || CI._TildaType == ColumnType.CHAR) && value != null && value.equals("") 
+                           )
                           {
                             value = value.trim();
                             if (CI != null)
@@ -224,22 +266,28 @@ public class PostgreSQLCSVImporter extends CSVImporter
                                   {
                                     int V = ParseUtil.parseIntegerFlexible(value, SystemValues.EVIL_VALUE);
                                     if (V == SystemValues.EVIL_VALUE)
-                                     throw new Exception("Couldn't parse '"+value+"' as an Integer.");
+                                     throw new Exception("Couldn't parse '"+value+"' as an Integer for column '"+CI._Name+"'.");
                                     Pst.setInt(i + x, V);
                                   }                                  
                                 else if (CI._TildaType == ColumnType.LONG)
                                   {
                                     long V = ParseUtil.parseLongFlexible(value, SystemValues.EVIL_VALUE);
                                     if (V == SystemValues.EVIL_VALUE)
-                                     throw new Exception("Couldn't parse '"+value+"' as a Long.");
+                                     throw new Exception("Couldn't parse '"+value+"' as a Long for column '"+CI._Name+"'.");
                                     Pst.setLong(i + x, V);
                                   }                                  
                                 else if (CI._TildaType == ColumnType.FLOAT)
                                   {
+                                    float V = ParseUtil.parseFloat(value, SystemValues.EVIL_VALUE);
+                                    if (V == SystemValues.EVIL_VALUE)
+                                     throw new Exception("Couldn't parse '"+value+"' as a Float for column '"+CI._Name+"'.");
                                     Pst.setFloat(i + x, Float.parseFloat(value));
                                   }                                  
                                 else if (CI._TildaType == ColumnType.DOUBLE)
                                   {
+                                    double V = ParseUtil.parseDouble(value, SystemValues.EVIL_VALUE);
+                                    if (V == SystemValues.EVIL_VALUE)
+                                     throw new Exception("Couldn't parse '"+value+"' as a Double for column '"+CI._Name+"'.");
                                     Pst.setDouble(i + x, Double.parseDouble(value));
                                   }                                  
                                 else if (CI._TildaType == ColumnType.DATETIME)
@@ -292,8 +340,8 @@ public class PostgreSQLCSVImporter extends CSVImporter
                       }
                   }
                 
-                h = null;
-                v = null;
+                col = null;
+                colVal = null;
                 
                 QueryDetails.setLastQuery(TM._SchemaName + "." + TM._TableName, Str.toString());
                 if (NumOfRecs < 5)
@@ -305,18 +353,18 @@ public class PostgreSQLCSVImporter extends CSVImporter
                 ++batchCount;
                 ++NumOfRecs;
   
-                if (batchCount == 100)
+                if (batchCount == BATCH_SIZE)
                   {
                     Pst.executeBatch();
                     batchCount = 0;
                   }
                 Pst.clearParameters();
   
-                if (NumOfRecs % PERFORMANCE_NUMBER == 0)
+                if (NumOfRecs % COMMIT_SIZE == 0)
                   {
                     C.commit();
                     long t = System.nanoTime() - t0;
-                    LOG.debug("Processed " + NumberFormatUtil.PrintWith000Sep(NumOfRecs) + " records so far in " + DurationUtil.PrintDuration(t) + " (" + DurationUtil.PrintPerformancePerMinute(t, NumOfRecs) + " Records/min)");
+                    LOG.debug("Processed " + NumberFormatUtil.printWith000Sep(NumOfRecs) + " records so far in " + DurationUtil.printDuration(t) + " (" + DurationUtil.printPerformancePerMinute(t, NumOfRecs) + " Records/min)");
                   }
                 HandleFinally(AllocatedArrays);
               }
@@ -327,7 +375,7 @@ public class PostgreSQLCSVImporter extends CSVImporter
           }
         catch (SQLException E)
           {
-            C.HandleCatch(E, "inserted");
+            C.handleCatch(E, "inserted");
             throw E;
           }
         catch (Exception E)
@@ -335,9 +383,9 @@ public class PostgreSQLCSVImporter extends CSVImporter
             if (currentRecord != null)
               {
                 LOG.error("An error occurred parsing record #" + currentRecord.getRecordNumber()+".");
-                if (h != null)
+                if (col != null)
                  {
-                  LOG.error("An error occurred parsing column '" + h+"'='"+v+"'.");
+                  LOG.error("An error occurred parsing column '" + col+" ' = '"+colVal+"'.");
                   if (E instanceof DateTimeParseException == true)
                     LOG.error("Cannot parse data with pattern "+DateTimePattern);
                  }
@@ -379,7 +427,7 @@ public class PostgreSQLCSVImporter extends CSVImporter
             first = true;
             for (int i = 0; i < columns.length; ++i)
               {
-                if (TextUtil.FindElement(uniqueColumns, columns[i], false, 0) != -1)
+                if (TextUtil.findElement(uniqueColumns, columns[i], false, 0) != -1)
                  continue;
                 first = false;
                 break;
@@ -393,7 +441,7 @@ public class PostgreSQLCSVImporter extends CSVImporter
             first = true;
             for (int i = 0; i < columns.length; ++i)
               {
-                if (TextUtil.FindElement(uniqueColumns, columns[i], false, 0) != -1)
+                if (TextUtil.findElement(uniqueColumns, columns[i], false, 0) != -1)
                  continue;
                 if (first == false) {
                   Str.append(",");
@@ -402,7 +450,7 @@ public class PostgreSQLCSVImporter extends CSVImporter
                 first = false;
               }
             
-            if (first == false && DBColumns != null && DBColumns.get("lastupdated") != null && TextUtil.FindElement(columns, "lastUpdated", false, 0) == -1)
+            if (first == false && DBColumns != null && DBColumns.get("lastupdated") != null && TextUtil.findElement(columns, "lastUpdated", false, 0) == -1)
               {
                 Str.append(",");
                 Str.append(" \"lastUpdated\"=current_timestamp");

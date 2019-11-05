@@ -60,7 +60,7 @@ public class SearchAndReplace
                     Out.println(newLine);
                     ++i;
                     if (i % 1000000 == 0)
-                      LOG.info("Processed "+NumberFormatUtil.PrintWith000Sep(i)+" lines so far at "+NumberFormatUtil.PrintWith1DecAnd000Sep(DurationUtil.perSecond(System.nanoTime()-TS, i))+" lines/s.");
+                      LOG.info("Processed "+NumberFormatUtil.printWith000Sep(i)+" lines so far at "+NumberFormatUtil.printWith1DecAnd000Sep(DurationUtil.perSecond(System.nanoTime()-TS, i))+" lines/s.");
                     line = In.readLine();
                   }
               }
@@ -71,7 +71,7 @@ public class SearchAndReplace
                 Out.close();
               }
             TS = System.nanoTime()-TS;
-            LOG.info("Processed "+NumberFormatUtil.PrintWith000Sep(i)+" lines in total in "+DurationUtil.PrintDuration(TS)+" ("+NumberFormatUtil.PrintWith1DecAnd000Sep(DurationUtil.perSecond(TS, i))+" lines/s).");
+            LOG.info("Processed "+NumberFormatUtil.printWith000Sep(i)+" lines in total in "+DurationUtil.printDuration(TS)+" ("+NumberFormatUtil.printWith1DecAnd000Sep(DurationUtil.perSecond(TS, i))+" lines/s).");
           }
         catch (Throwable T)
           {

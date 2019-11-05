@@ -42,22 +42,22 @@ public class DurationUtil
 
     static protected NumberFormat F1                       = new DecimalFormat("###,###.00");
 
-    public static String PrintDurationMilliSeconds(long NanoSeconds)
+    public static String printDurationMilliSeconds(long NanoSeconds)
       {
         return F1.format(NanoSeconds / NANOSECS_PER_MILLISECOND) + "ms";
       }
 
-    public static String PrintDurationSeconds(long NanoSeconds)
+    public static String printDurationSeconds(long NanoSeconds)
       {
         return F1.format(NanoSeconds / NANOSECS_PER_SECOND) + "s";
       }
 
-    public static String PrintDurationMinutes(long NanoSeconds)
+    public static String printDurationMinutes(long NanoSeconds)
       {
         return F1.format(NanoSeconds / NANOSECS_PER_MINUTE) + "mn";
       }
 
-    public static String PrintDurationHours(long NanoSeconds)
+    public static String printDurationHours(long NanoSeconds)
       {
         return F1.format(NanoSeconds / NANOSECS_PER_HOUR) + "h";
       }
@@ -72,7 +72,7 @@ public class DurationUtil
         return 1.0 * NanoSeconds / NANOSECS_PER_MINUTE;
       }
 
-    public static String PrintDuration(long NanoSeconds)
+    public static String printDuration(long NanoSeconds)
       {
         long d = (long) Math.floor(NanoSeconds / (24 * 60 * 60 * 1000000000.0));
         NanoSeconds -= d * 24 * 60 * 60 * 1000000000;
@@ -102,7 +102,7 @@ public class DurationUtil
      * user friendly translation into [days] [hours] minutes (hours and
      * days only printed if necessary)
      */
-    public static String PrintDurationConciseFromMs(long MilliSeconds)
+    public static String printDurationConciseFromMs(long MilliSeconds)
       {
         long d = (long) Math.floor(MilliSeconds / (24 * 60 * 60 * 1000.0));
         MilliSeconds -= d * 24 * 60 * 60 * 1000;
@@ -122,29 +122,29 @@ public class DurationUtil
       }
     
     
-    public static String PrintPerformancePerSecond(long DurationNano, double Count)
+    public static String printPerformancePerSecond(long DurationNano, double Count)
       {
-        return NumberFormatUtil.PrintWith2DecAnd000Sep(1000000000.0 * Count / DurationNano);
+        return NumberFormatUtil.printWith2DecAnd000Sep(1000000000.0 * Count / DurationNano);
       }
 
-    public static String PrintPerformancePerMinute(long DurationNano, double Count)
+    public static String printPerformancePerMinute(long DurationNano, double Count)
       {
-        return NumberFormatUtil.PrintWith2DecAnd000Sep(60 * 1000000000.0 * Count / DurationNano);
+        return NumberFormatUtil.printWith2DecAnd000Sep(60 * 1000000000.0 * Count / DurationNano);
       }
 
-    public static String PrintPerformancePerHour(long DurationNano, double Count)
+    public static String printPerformancePerHour(long DurationNano, double Count)
       {
-        return NumberFormatUtil.PrintWith2DecAnd000Sep(60 * 60 * 1000000000.0 * Count / DurationNano);
+        return NumberFormatUtil.printWith2DecAnd000Sep(60 * 60 * 1000000000.0 * Count / DurationNano);
       }
 
-    public static String PrintPerformancePerDay(long DurationNano, double Count)
+    public static String printPerformancePerDay(long DurationNano, double Count)
       {
-        return NumberFormatUtil.PrintWith2DecAnd000Sep(24 * 60 * 60 * 1000000000.0 * Count / DurationNano);
+        return NumberFormatUtil.printWith2DecAnd000Sep(24 * 60 * 60 * 1000000000.0 * Count / DurationNano);
       }
 
-    public static String PrintExpectedRemainingTimeInMinutes(long DurationNano, int Count, int Total)
+    public static String printExpectedRemainingTimeInMinutes(long DurationNano, int Count, int Total)
       {
-        return NumberFormatUtil.PrintWith2DecAnd000Sep((Total - Count) / (60 * 1000000000.0 * Count / DurationNano));
+        return NumberFormatUtil.printWith2DecAnd000Sep((Total - Count) / (60 * 1000000000.0 * Count / DurationNano));
       }
     
     
@@ -155,7 +155,7 @@ public class DurationUtil
 //     * @param End
 //     * @return
 //     */
-//    public static int NumberOfDays(Calendar Start, Calendar End)
+//    public static int numberOfDays(Calendar Start, Calendar End)
 //      {
 //        if (Start == null || End == null)
 //          return -1;
@@ -175,14 +175,14 @@ public class DurationUtil
 //        return (int) ((endL - startL) / MILLISECS_PER_DAY) + 1;
 //      }
 
-//    public static int NumberOfHours(Calendar Start, Calendar End)
+//    public static int numberOfHours(Calendar Start, Calendar End)
 //      {
 //        long startL = Start.getTimeInMillis() + Start.getTimeZone().getOffset(Start.getTimeInMillis());
 //        long endL = End.getTimeInMillis() + End.getTimeZone().getOffset(End.getTimeInMillis());
 //        return (int) ((endL - startL) / MILLISECS_PER_HOUR);
 //      }
 
-//    public static int NumberOfMinutes(Calendar Start, Calendar End)
+//    public static int numberOfMinutes(Calendar Start, Calendar End)
 //      {
 //        long startL = Start.getTimeInMillis() + Start.getTimeZone().getOffset(Start.getTimeInMillis());
 //        long endL = End.getTimeInMillis() + End.getTimeZone().getOffset(End.getTimeInMillis());

@@ -36,9 +36,10 @@ public class MailUtil
      * @param Subject The Subject
      * @param Message The message (HTML allowed)
      * @param Urgent Whether to send the message as urgent or not.
+     * @param Confidential Whether to send the message as confidential or not.
      * @return
      */
-    public static boolean send(String SmtpInfo, String From, String Password, String[] To, String[] Cc, String[] Bcc, String Subject, String Message, boolean Urgent)
+    public static boolean send(String SmtpInfo, String From, String Password, String[] To, String[] Cc, String[] Bcc, String Subject, String Message, boolean Urgent, boolean Confidential)
       {
         String LastAddress = null;
         try
@@ -96,11 +97,13 @@ public class MailUtil
                 LOG.debug("No recipient. Not sending anything.");
                 return true;
               }
+            LastAddress = "FROM: "+From;
             email.setFrom(From);
-            LastAddress = From;
             email.setHtmlMsg(Message);
             if (Urgent == true)
               email.addHeader("X-Priority", "1");
+            if (Confidential == true)
+              email.addHeader("Sensitivity", "company-confidential");
             LastAddress = null;
             email.send();
             return true;
@@ -110,6 +113,9 @@ public class MailUtil
             if (LastAddress != null)
               LOG.debug("Email address '" + LastAddress + "' seems to be invalid.");
             LOG.error("Cannot send email", E);
+            Throwable t = E.getCause();
+            if (t != null)
+              LOG.catching(t);
             return false;
           }
       }

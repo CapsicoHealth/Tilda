@@ -64,7 +64,7 @@ public class ViewPivotColumn
             _Source = PS.getView(R._P, R._S, R._O);
             if (_Source == null)
               return PS.AddError("View '" + ParentView.getFullName() + "' is defining a pivot column with a source '" + _SourceStr + "' resolving to '" + R.getFullName() + "' which cannot be found.");
-            if (_Source._Pivot == null)
+            if (_Source._Pivots.isEmpty() == true)
               return PS.AddError("View '" + ParentView.getFullName() + "' is defining a pivot column with a source '" + _SourceStr + "' which is not a pivot view.");
             if (_Source._Validated == false)
               return PS.AddError("View '" + ParentView.getFullName() + "' is defining a pivot column with a source '" + _SourceStr + "' which has failed validation.");

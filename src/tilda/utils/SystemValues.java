@@ -25,7 +25,7 @@ public abstract class SystemValues
   {
 
     /** Using -1 or 0 for an error value is so boring.... -666 is so much more attention-grabbing. */
-    public static final int           EVIL_VALUE      = -666;
+    public static final short           EVIL_VALUE      = -666;
 
     public static final ZonedDateTime STARTUP_DATE    = ZonedDateTime.now();
     public static final String        STARTUP_DATE_STR= DateTimeUtil.printDateTimeSuperCompact(STARTUP_DATE);
@@ -33,6 +33,8 @@ public abstract class SystemValues
 
     public static final String        NEWLINE         = System.getProperty("line.separator");
     public static final String        NEWLINEx2       = NEWLINE + NEWLINE;
+    public static final String        NEWLINEx3       = NEWLINE + NEWLINE + NEWLINE;
+    public static final String        NEWLINEx4       = NEWLINE + NEWLINE + NEWLINE + NEWLINE;
 
     static final Logger               LOG             = LogManager.getLogger(SystemValues.class.getName());
 

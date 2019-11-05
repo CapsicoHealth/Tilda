@@ -26,19 +26,19 @@ class LookupParams
         _NoLock = false;
       }
 
-    public LookupParams CountTotalRows()
+    public LookupParams countTotalRows()
       {
         _CountTotalRows = true;
         return this;
       }
 
-    public LookupParams ReadOnly()
+    public LookupParams readOnly()
       {
         _ReadOnly = true;
         return this;
       }
 
-    public LookupParams NoLock()
+    public LookupParams noLock()
       {
         _NoLock = true;
         return this;

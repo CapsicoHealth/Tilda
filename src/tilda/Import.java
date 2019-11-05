@@ -47,83 +47,90 @@ public class Import
         Connection C = null;
         ArrayList<String> arguments = new ArrayList<>(Arrays.asList(args));
         ValidateParams(arguments);
-        
+
         LOG.info("\n*************************************************************************************************************************************");
         ConnectionPool.autoInit();
         LOG.info("\n*************************************************************************************************************************************\n");
 
+        String currentFile = null;
         try
           {
             long timeTaken = System.nanoTime();
             int RecordsCount = 0;
-            
-            for(int i=0; i < arguments.size() ; i += 4)
+
+            for (int i = 0; i < arguments.size(); i += 4)
               {
-                if("-f".equals(arguments.get(i)))
+                if ("-f".equals(arguments.get(i)))
                   {
-                    Importer I = getFileImporter(null, arguments.get(i+1));
-                    String[] connectionIdsArr = arguments.get(i+3).split(",");
+                    currentFile = arguments.get(i + 1);
+                    Importer I = getFileImporter(null, currentFile);
+                    String[] connectionIdsArr = arguments.get(i + 3).split(",");
                     List<String> connectionIds = new ArrayList<>(Arrays.asList(connectionIdsArr));
                     Iterator<String> iterator = connectionIds.iterator();
 
-                    if ( "ALL".equals(connectionIds.get(0)) )
+                    if ("ALL".equals(connectionIds.get(0)))
                       {
                         iterator = ConnectionPool.getAllDataSourceIds().keySet().iterator();
-                      }                      
-                    else if ( "ALL_TENANTS".equals(connectionIds.get(0)) )
+                      }
+                    else if ("ALL_TENANTS".equals(connectionIds.get(0)))
                       {
-                        iterator = ConnectionPool.getAllTenantDataSourceIds().keySet().iterator(); 
+                        iterator = ConnectionPool.getAllTenantDataSourceIds().keySet().iterator();
                       }
 
                     // Loop connectionIds and run Import
-                    while(iterator.hasNext())
+                    while (iterator.hasNext())
                       {
                         C = ConnectionPool.get(iterator.next());
                         RecordsCount += Do(I, C);
                         C.commit();
                         C.close();
-                        C = null;                        
+                        C = null;
                       }
                   }
-                else { throw new Exception("Cannot find a -f parameter starting the command line"); }
+                else
+                  {
+                    throw new Exception("Cannot find a -f parameter starting the command line");
+                  }
               }
-            
+
             timeTaken = System.nanoTime() - timeTaken;
             LOG.info("");
             LOG.info("");
             LOG.info("");
-            LOG.info("Processed a total of " + RecordsCount + " records in " + DurationUtil.getDurationSeconds(timeTaken) + "s (" + DurationUtil.PrintPerformancePerMinute(timeTaken, RecordsCount) + " records/mn).");
+            LOG.info("Processed a total of " + RecordsCount + " records in " + DurationUtil.getDurationSeconds(timeTaken) + "s (" + DurationUtil.printPerformancePerMinute(timeTaken, RecordsCount) + " records/mn).");
             StringBuilder Str = new StringBuilder();
             Str.setLength(0);
             PerfTracker.print(Str);
-            //LDH-NOTE: there is a bug in the Log4j code with a limit on buffer size if out to a file!
-            LOG.info(TextUtil.toMaxLength(Str.toString(), 20000));
+            // LDH-NOTE: there is a bug in the Log4j code with a limit on buffer size if out to a file!
+            LOG.info(TextUtil.toMaxLength(Str.toString(), 50000));
           }
         catch (Throwable T)
           {
-            LOG.error("An exception occurred\n", T);
+            LOG.error("An exception occurred importing file " + currentFile + "\n", T);
             try
               {
                 C.rollback();
               }
             catch (SQLException X)
-              { }
+              {
+              }
           }
         finally
-        {
-          if (C != null)
-            try
-              {
-                C.close();
-              }
-            catch (SQLException E)
-              { }
-      }
+          {
+            if (C != null)
+              try
+                {
+                  C.close();
+                }
+              catch (SQLException E)
+                {
+                }
+          }
 
 
         LOG.info("Import completed.");
       }
-    
+
     private static void ValidateParams(ArrayList<String> arguments)
       {
         if (arguments.size() % 4 != 0)
@@ -131,11 +138,11 @@ public class Import
             PrintUsageHint();
             System.exit(-1);
           }
-        
-        for (int i = 0 ; i < arguments.size() ; )
+
+        for (int i = 0; i < arguments.size();)
           {
-            if ( !"-f".equals(arguments.get(i)) || TextUtil.isNullOrEmpty(arguments.get(i+1)) 
-              || !"-c".equals(arguments.get(i+2)) || TextUtil.isNullOrEmpty(arguments.get(i+3)) )
+            if (!"-f".equals(arguments.get(i)) || TextUtil.isNullOrEmpty(arguments.get(i + 1))
+            || !"-c".equals(arguments.get(i + 2)) || TextUtil.isNullOrEmpty(arguments.get(i + 3)))
               {
                 PrintUsageHint();
                 System.exit(-1);
@@ -155,24 +162,24 @@ public class Import
         LOG.error("    ALL_TENANTS   = All Connection Ids. Except 'MAIN' & 'KEYS'");
         LOG.error("");
       }
-    
+
     protected static int Do(Importer I, Connection C)
-      throws Exception
+    throws Exception
       {
         LOG.info("");
         LOG.info("");
         LOG.info("");
         LOG.info("=======================================================================================================================");
-        LOG.info("== Importing into DB ( Url: "+C.getURL()+" )");
+        LOG.info("== Importing into DB ( Url: " + C.getURL() + " )");
         LOG.info("=======================================================================================================================");
         long T = System.nanoTime();
         int Total = I.process(C);
         T = System.nanoTime() - T;
-        
-        LOG.info("Processed " + Total + " records in " + DurationUtil.getDurationSeconds(T) + "s (" + DurationUtil.PrintPerformancePerMinute(T, Total) + " records/mn).");
+
+        LOG.info("Processed " + Total + " records in " + DurationUtil.getDurationSeconds(T) + "s (" + DurationUtil.printPerformancePerMinute(T, Total) + " records/mn).");
         return Total;
       }
-    
+
     protected static Importer getFileImporter(String OverridePackageName, String ImportFileName)
     throws Exception
       {
@@ -180,7 +187,7 @@ public class Import
         LOG.info("");
         LOG.info("");
         LOG.info("=======================================================================================================================");
-        LOG.info("== Reading Import file: "+ImportFileName);
+        LOG.info("== Reading Import file: " + ImportFileName);
         LOG.info("=======================================================================================================================");
         Reader R = FileUtil.getReaderFromFileOrResource(ImportFileName);
 
@@ -203,7 +210,7 @@ public class Import
           }
         catch (ClassNotFoundException E)
           {
-            throw new Exception("The root importer class '"+RootClassName+"' as inferred from the input file '" + ImportFileName + "' cannot be found in the classpath.");
+            throw new Exception("The root importer class '" + RootClassName + "' as inferred from the input file '" + ImportFileName + "' cannot be found in the classpath.");
           }
 
         // long T = System.nanoTime();
@@ -211,6 +218,6 @@ public class Import
         Importer I = (Importer) gson.fromJson(R, RootClass);
         // TODO OPTIONAL: Print Time taken to read File
         R.close();
-        return I;        
+        return I;
       }
   }

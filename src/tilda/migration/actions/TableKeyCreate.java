@@ -21,22 +21,22 @@ import tilda.migration.MigrationAction;
 
 public class TableKeyCreate extends MigrationAction
   {
-    public TableKeyCreate(tilda.parsing.parts.Object O)
+    public TableKeyCreate(tilda.parsing.parts.Object Obj)
       {
-        super(false);
-        _O = O;
+        super(Obj._ParentSchema._Name, Obj._Name, false);
+        _Obj = Obj;
       }
 
-    protected tilda.parsing.parts.Object _O;
+    protected tilda.parsing.parts.Object _Obj;
 
     public boolean process(Connection C)
     throws Exception
       {
-        return C.createKeysEntry(_O);
+        return C.createKeysEntry(_Obj);
       }
 
     public String getDescription()
       {
-        return "Create/update TILDA.KEY entries for table "+_O.getFullName();
+        return "Create/update TILDA.Key entries for table "+_Obj.getFullName();
       }
   }

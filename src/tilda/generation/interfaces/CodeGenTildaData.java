@@ -165,6 +165,15 @@ public interface CodeGenTildaData extends CodeGenBase
     /**
      * 
      * @param Out
+     * @param O
+     * @throws Exception
+     */
+    public void genMethodUpsert(PrintWriter Out, GeneratorSession G, Object O)
+    throws Exception;
+
+    /**
+     * 
+     * @param Out
      * @param G
      * @param O
      * @param CopyToColumns
@@ -204,7 +213,6 @@ public interface CodeGenTildaData extends CodeGenBase
      * @param g
      * @param _Json
      */
-    public void genMethodToJSON(PrintWriter Out, GeneratorSession G, Object O);
-
+    public void genMethodOutput(PrintWriter Out, GeneratorSession G, Object O);
 
   }

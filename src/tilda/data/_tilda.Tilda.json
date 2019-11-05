@@ -1,17 +1,21 @@
 {
-  "package": "tilda.data",
-  "dependencies": null,
-
-  "enumerations": [
+  "package": "tilda.data"
+ ,"dependencies":["tilda/data/tmp/_tilda.TildaTmp.json"]
+ ,"extraDDL":{
+     "before":[]
+    ,"after":["_tilda.Tilda.postgres.helpers-after.sql"]
+   }
+  
+ ,"enumerations": [
 
     { "name": "ZoneInfo",
       "description": "blah blah",
       "id"    : { "type": "STRING", "size":  5  },
       "value" : { "type": "STRING", "size":  50 }
     }
-   ],
+   ]
 
-  "objects":[
+ ,"objects":[
     { "name": "Key", "occ": false,
       "description": "The table to keep track of unique keys across distributed objects/tables",
       "columns":[
@@ -52,50 +56,68 @@
     },
 
 
-    { "name": "ObjectPerf", "occ": true,
-      "description": "Performance logs for the Tilda framework",
-      "columns":[
-        { "name": "schemaName"         , "type": "STRING"     , "nullable": false, "size": 64, "invariant": true, "description": "The name of the schema tracked" },
-        { "name": "objectName"         , "type": "STRING"     , "nullable": false, "size": 64, "invariant": true, "description": "The name of the table/object tracked" },
-        { "name": "startPeriod"        , "type": "DATETIME"   , "nullable": false,             "invariant": true, "description": "The timestamp for when the record was created." },
-        { "name": "endPeriod"          , "type": "DATETIME"   , "nullable": false,                            "description": "The timestamp for when the record was created." },
-        { "name": "selectNano"         , "type": "LONG"       , "nullable": false,                            "description": "Blah..." },
-        { "name": "selectCount"        , "type": "LONG"       , "nullable": false,                            "description": "Blah..." },
-        { "name": "selectRecords"      , "type": "LONG"       , "nullable": false,                            "description": "Blah..." },
-        { "name": "insertNano"         , "type": "LONG"       , "nullable": false,                            "description": "Blah..." },
-        { "name": "insertCount"        , "type": "LONG"       , "nullable": false,                            "description": "Blah..." },
-        { "name": "insertRecords"      , "type": "LONG"       , "nullable": false,                            "description": "Blah..." },
-        { "name": "updateNano"         , "type": "LONG"       , "nullable": false,                            "description": "Blah..." },
-        { "name": "updateCount"        , "type": "LONG"       , "nullable": false,                            "description": "Blah..." },
-        { "name": "updateRecords"      , "type": "LONG"       , "nullable": false,                            "description": "Blah..." },
-        { "name": "deleteNano"         , "type": "LONG"       , "nullable": false,                            "description": "Blah..." },
-        { "name": "deleteCount"        , "type": "LONG"       , "nullable": false,                            "description": "Blah..." },
-        { "name": "deleteRecords"      , "type": "LONG"       , "nullable": false,                            "description": "Blah..." }
-      ],
-      "primary": { "columns": ["schemaName", "objectName", "startPeriod"], "autogen": false },
-      "indices":[ 
-      	{ "name": "SchemaByObjectStart", "columns": ["schemaName"], "orderBy": ["objectName", "startPeriod desc"], "db": true },
-      	{ "name": "SchemaObjectByStart", "columns": ["schemaName", "objectName"], "orderBy": ["startPeriod desc"], "db": false }
+    { "name":"ObjectPerf"
+     ,"occ":true
+     ,"description":"Performance logs for the Tilda framework"
+     ,"columns":[
+         { "name":"schemaName"   , "type":"STRING"  , "nullable":false, "size": 64, "invariant":true, "description":"The name of the schema tracked" }
+        ,{ "name":"objectName"   , "type":"STRING"  , "nullable":false, "size": 64, "invariant":true, "description":"The name of the table/object tracked" }
+        ,{ "name":"startPeriod"  , "type":"DATETIME", "nullable":false,             "invariant":true, "description":"The timestamp for when the record was created." }
+        ,{ "name":"endPeriod"    , "type":"DATETIME", "nullable":false,                               "description":"The timestamp for when the record was created." }
+        ,{ "name":"selectNano"   , "type":"LONG"    , "nullable":false, "default":"0",                "description":"Blah..." }
+        ,{ "name":"selectCount"  , "type":"INTEGER" , "nullable":false, "default":"0",                "description":"Blah..." }
+        ,{ "name":"selectRecords", "type":"INTEGER" , "nullable":false, "default":"0",                "description":"Blah..." }
+        ,{ "name":"insertNano"   , "type":"LONG"    , "nullable":false, "default":"0",                "description":"Blah..." }
+        ,{ "name":"insertCount"  , "type":"INTEGER" , "nullable":false, "default":"0",                "description":"Blah..." }
+        ,{ "name":"insertRecords", "type":"INTEGER" , "nullable":false, "default":"0",                "description":"Blah..." }
+        ,{ "name":"updateNano"   , "type":"LONG"    , "nullable":false, "default":"0",                "description":"Blah..." }
+        ,{ "name":"updateCount"  , "type":"INTEGER" , "nullable":false, "default":"0",                "description":"Blah..." }
+        ,{ "name":"updateRecords", "type":"INTEGER" , "nullable":false, "default":"0",                "description":"Blah..." }
+        ,{ "name":"deleteNano"   , "type":"LONG"    , "nullable":false, "default":"0",                "description":"Blah..." }
+        ,{ "name":"deleteCount"  , "type":"INTEGER" , "nullable":false, "default":"0",                "description":"Blah..." }
+        ,{ "name":"deleteRecords", "type":"INTEGER" , "nullable":false, "default":"0",                "description":"Blah..." }
+       ]
+     ,"primary":{ "columns":["schemaName", "objectName", "startPeriod"], "autogen":false }
+     ,"indices":[ 
+      	 { "name":"SchemaByObjectStart", "columns":["schemaName"              ], "orderBy":["objectName", "startPeriod desc"], "db":true  }
+      	,{ "name":"SchemaObjectByStart", "columns":["schemaName", "objectName"], "orderBy":["startPeriod desc"              ], "db":false }
       ]
     },
     
-    { "name": "TransPerf", "occ": true,
-      "description": "Performance logs for the Tilda framework",
-      "columns":[
-        { "name": "schemaName"         , "type": "STRING"     , "nullable": false, "size": 64, "invariant": true, "description": "The name of the schema tracked" },
-        { "name": "objectName"         , "type": "STRING"     , "nullable": false, "size": 64, "invariant": true, "description": "The name of the table/object tracked" },
-	    { "name": "startPeriod"        , "type": "DATETIME"   , "nullable": false,             "invariant": true, "description": "The timestamp for when the record was created." },
-        { "name": "endPeriod"          , "type": "DATETIME"   , "nullable": false,                                "description": "The timestamp for when the record was created." },
-        { "name": "commitNano"         , "type": "LONG"       , "nullable": false,                                "description": "Blah..." },
-        { "name": "commitCount"        , "type": "LONG"       , "nullable": false,                                "description": "Blah..." },
-        { "name": "rollbackNano"       , "type": "LONG"       , "nullable": false,                                "description": "Blah..." },
-        { "name": "rollbackCount"      , "type": "LONG"       , "nullable": false,                                "description": "Blah..." }
-      ],
-      "primary": { "columns": ["schemaName", "objectName", "startPeriod"], "autogen": false },
+    { "name":"TransPerf"
+     ,"occ":true
+     ,"description":"Performance logs for the Tilda framework"
+     ,"columns":[
+	      { "name":"startPeriod"           , "type":"DATETIME"   , "nullable":false,             "invariant": true, "description":"The timestamp for when the record was created." }
+         ,{ "name":"endPeriod"             , "type":"DATETIME"   , "nullable":false,                                "description":"The timestamp for when the record was created." }
+         ,{ "name":"commitNano"            , "type":"LONG"       , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"commitCount"           , "type":"INTEGER"    , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"rollbackNano"          , "type":"LONG"       , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"rollbackCount"         , "type":"INTEGER"    , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"savepointSetNano"      , "type":"LONG"       , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"savepointSetCount"     , "type":"INTEGER"    , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"savepointCommitNano"   , "type":"LONG"       , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"savepointCommitCount"  , "type":"INTEGER"    , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"savepointRollbackNano" , "type":"LONG"       , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"savepointRollbackCount", "type":"INTEGER"    , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"statementCloseNano"    , "type":"LONG"       , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"statementCloseCount"   , "type":"INTEGER"    , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"connectionCloseNano"   , "type":"LONG"       , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"connectionCloseCount"  , "type":"INTEGER"    , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"connectionGetNano"     , "type":"LONG"       , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"connectionGetCount"    , "type":"INTEGER"    , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"tildaSetterNano"       , "type":"LONG"       , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"tildaSetterCount"      , "type":"INTEGER"    , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"tildaToStringNano"     , "type":"LONG"       , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"tildaToStringCount"    , "type":"INTEGER"    , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"tildaToJsonNano"       , "type":"LONG"       , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"tildaToJsonCount"      , "type":"INTEGER"    , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"tildaToCsvNano"        , "type":"LONG"       , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"tildaToCsvCount"       , "type":"INTEGER"    , "nullable":false, "default":"0",                 "description":"Blah..." }
+       ],
+      "primary": { "columns": ["startPeriod"], "autogen": false },
       "indices":[ 
-      	{ "name": "AllBySchemaName", "columns": ["schemaName"], "orderBy": ["objectName", "startPeriod desc"], "db": true },
-      	{ "name": "AllByObjectName", "columns": ["schemaName", "objectName"], "orderBy": ["startPeriod desc"], "db": false }
-      ]
+       ]
     },
     {
       "name": "Connection",
@@ -129,36 +151,67 @@
       
     }
     
-   ,{ "name":"Jobs",
-      "description":"Kettle Jobs",
-      "columns":[
-        { "name":"Id"                                   , "type":"INTEGER" , "nullable": false,                 "description":"Id" },        
-        { "name":"Name"                                 , "type":"STRING"  , "nullable": true,  "size":   120,  "description":"Name" },
-        { "name":"StartTime"                            , "type":"DATETIME", "nullable": true,                  "description":"StartTime" },
-        { "name":"EndTime"                              , "type":"DATETIME", "nullable": true,                  "description":"EndTime" },
-        { "name":"TotalRecords"                         , "type":"INTEGER" , "nullable": true,                  "description":"TotalRecords" },
-        { "name":"Status"                               , "type":"STRING"  , "nullable": true,  "size":   200,  "description":"Status" },
-        { "name":"Error"                                , "type":"STRING"  , "nullable": true,  "size":   1000, "description":"Error" }
+   ,{ "name":"Job"
+     ,"description":"Jobs details"
+     ,"tzFk": false
+     ,"columns":[
+          { "name":"name"                             , "type":"STRING"  , "nullable": false, "size": 250,  "description":"Name" }
+         ,{ "name":"type"                             , "type":"STRING"  , "nullable": true , "size": 250,  "description":"Job type" }
+         ,{ "name":"userId"                           , "type":"STRING"  , "nullable": true , "size": 250,  "description":"Job user Id" }
+         ,{ "name":"dataStart"                        , "type":"DATETIME", "nullable": true ,               "description":"StartTime" }
+         ,{ "name":"dataEnd"                          , "type":"DATETIME", "nullable": true ,               "description":"StartTime" }
+         ,{ "name":"start"                            , "type":"DATETIME", "nullable": false,               "description":"StartTime" }
+         ,{ "name":"end"                              , "type":"DATETIME", "nullable": true ,               "description":"EndTime" }
+         ,{ "name":"status"                           , "type":"BOOLEAN" , "nullable": true ,               "description":"Status" }
+         ,{ "name":"msg"                              , "type":"STRING"  , "nullable": true , "size":8192,  "description":"Message details" }
+        ]
+     ,"primary": { "autogen": true }
+     ,"indices":[ 
+          { "name":"JobName", "columns":["name"], "orderBy":["start desc"] }
+         ,{ "name":"JobType", "columns":["type"], "orderBy":["start desc"] }
+        ]         
+    }
+   ,{ "name":"JobPart"
+     ,"description":"Job part details"
+     ,"tzFk": false
+     ,"columns":[
+          { "name":"jobRefnum"                        , "sameAs":"Job.refnum" ,                                 "description":"Parent Job Refnum" }       
+         ,{ "name":"name"                             , "type":"STRING"       , "nullable": false, "size": 250, "description":"Job part name" }
+         ,{ "name":"type"                             , "type":"STRING"       , "nullable": true , "size": 250, "description":"Job part type" }
+         ,{ "name":"dataStart"                        , "type":"DATETIME"     , "nullable": true ,              "description":"Job part data start" }
+         ,{ "name":"dataEnd"                          , "type":"DATETIME"     , "nullable": true ,              "description":"Job part data end" }
+         ,{ "name":"start"                            , "type":"DATETIME"     , "nullable": false,              "description":"Job part execution start" }
+         ,{ "name":"end"                              , "type":"DATETIME"     , "nullable": true ,              "description":"Job part execution end" }
+         ,{ "name":"recordsCount"                     , "type":"INTEGER"      , "nullable": true ,              "description":"count of database or file or ... records." }
+         ,{ "name":"status"                           , "type":"BOOLEAN"      , "nullable": true ,              "description":"Status flag, i.e., success=true and failure-false" }
        ]
-       ,"indices":[ 
-        { "name":"Job_Id", "columns":["Id"] }
-      ]         
-    }, 
-    { "name":"Job_Detail",
-      "description":"Job Detail",
-      "columns":[
-        { "name":"Id"                                   , "type":"INTEGER" , "nullable": false,                 "description":"Id" },        
-        { "name":"Job_Id"                               , "type":"INTEGER" , "nullable": false,                 "description":"Job Id" },       
-        { "name":"FileName"                             , "type":"STRING"  , "nullable": true,  "size":   200,  "description":"FileName" },
-        { "name":"FileRecords"                          , "type":"INTEGER" , "nullable": true,                  "description":"FileRecords" },
-        { "name":"FileProcessStartTime"                 , "type":"DATETIME", "nullable": true,                  "description":"FileProcessStartTime" },
-        { "name":"FileProcessEndTime"                   , "type":"DATETIME", "nullable": true,                  "description":"FileProcessEndTime" },
-        { "name":"Status"                               , "type":"STRING"  , "nullable": true,  "size":   200,  "description":"Status" },
-        { "name":"Error"                                , "type":"STRING"  , "nullable": true,  "size":   1000, "description":"Error" }
+     ,"primary": { "autogen": true }
+     ,"foreign": [
+         { "name":"Job",  "srcColumns":["jobRefnum"], "destObject": "Job" }
        ]
-       ,"indices":[ 
-        { "name":"Job_File_Id", "columns":["Id","Job_Id"] }
-      ]         
+     ,"indices":[ 
+         { "name":"Job"        , "columns":["jobRefnum"], "orderBy":["start desc"] }
+        ,{ "name":"JobPartName", "columns":["name"]     , "orderBy":["start desc"] }
+        ,{ "name":"JobPartType", "columns":["type"]     , "orderBy":["start desc"] }
+       ]         
+    }
+   ,{ "name":"JobPartMessage"
+     ,"description":"Job part message details"
+     ,"columns":[
+          { "name":"jobRefnum"                        , "sameAs":"Job.refnum"     ,                                 "description":"Parent Job Refnum" }       
+         ,{ "name":"jobPartRefnum"                    , "sameAs":"JobPart.refnum" , "nullable": true ,              "description":"Parent Job Part Refnum" }       
+         ,{ "name":"notify"                           , "type":"BOOLEAN"          , "nullable": false,              "description":"Notification flag" }
+         ,{ "name":"msg"                              , "type":"STRING"           , "nullable": false, "size":8192, "description":"Message details" }
+       ]
+     ,"primary": { "autogen": true }
+     ,"foreign": [
+         { "name":"Job",  "srcColumns":["jobRefnum"], "destObject": "Job" }
+        ,{ "name":"JobPart",  "srcColumns":["jobPartRefnum"], "destObject": "JobPart" }
+       ]
+     ,"indices":[ 
+         { "name":"Job"        , "columns":["jobRefnum"], "orderBy":["created desc"] }
+        ,{ "name":"JobPart"    , "columns":["jobPartRefnum"], "orderBy":["created desc"] }
+       ]         
     }
     
     
@@ -198,29 +251,34 @@
      ,"occ":true
      ,"description":"Master formula information"
      ,"columns":[
-         { "name":"location"   , "type":"STRING" , "nullable":false, "size":   64, "invariant":true, "description":"The name of the primary table/view this formula is defined in."  }
-        ,{ "name":"location2"  , "type":"STRING" , "nullable":false, "size":   64, "invariant":true, "description":"The name of the secondary table/view (a derived view, a realized table), if appropriate."   }
-        ,{ "name":"name"       , "type":"STRING" , "nullable":false, "size":   64,                   "description":"The name of the formula/column."  }
-        ,{ "name":"type"       , "type":"STRING" , "nullable":false, "size":    3,                   "description":"The type of the formula/column value/outcome."
-                               , "values": [ { "name":"String"   , "value":"STR", "description": "String"    }
-                                            ,{ "name":"Character", "value":"CHR", "description": "Character" }
-                                            ,{ "name":"Boolean"  , "value":"BOL", "description": "Boolean"   }
-                                            ,{ "name":"Integer"  , "value":"INT", "description": "Integer"   }
-                                            ,{ "name":"Long"     , "value":"LNG", "description": "Long"      }
-                                            ,{ "name":"Float"    , "value":"FLT", "description": "Float"     }
-                                            ,{ "name":"Double"   , "value":"DBL", "description": "Double"    }
-                                            ,{ "name":"Date"     , "value":"DT" , "description": "Date"      }
-                                            ,{ "name":"DateTime" , "value":"DTM", "description": "DateTime"  }
-                                           ]
+         { "name":"location"         , "type":"STRING"  , "nullable":false, "size":   64, "invariant":true, "description":"The name of the primary table/view this formula is defined in."  }
+        ,{ "name":"location2"        , "type":"STRING"  , "nullable":false, "size":   64, "invariant":true, "description":"The name of the secondary table/view (a derived view, a realized table), if appropriate."   }
+        ,{ "name":"name"             , "type":"STRING"  , "nullable":false, "size":   64,                   "description":"The name of the formula/column."  }
+        ,{ "name":"type"             , "type":"STRING"  , "nullable":false, "size":    3,                   "description":"The type of the formula/column value/outcome."
+                                     , "values": [ { "name":"String"   , "value":"STR", "description": "String"    }
+                                                  ,{ "name":"Character", "value":"CHR", "description": "Character" }
+                                                  ,{ "name":"Boolean"  , "value":"BOL", "description": "Boolean"   }
+                                                  ,{ "name":"Short"    , "value":"SHT", "description": "Short"     }
+                                                  ,{ "name":"Integer"  , "value":"INT", "description": "Integer"   }
+                                                  ,{ "name":"Long"     , "value":"LNG", "description": "Long"      }
+                                                  ,{ "name":"Float"    , "value":"FLT", "description": "Float"     }
+                                                  ,{ "name":"Double"   , "value":"DBL", "description": "Double"    }
+                                                  ,{ "name":"Date"     , "value":"DT" , "description": "Date"      }
+                                                  ,{ "name":"DateTime" , "value":"DTM", "description": "DateTime"  }
+                                                  ,{ "name":"Numeric"  , "value":"NUM", "description": "Numeric"   }
+                                                  ,{ "name":"Uuid"     , "value":"UI" , "description": "Uuid"      }
+                                                 ]
          }
-        ,{ "name":"title"      , "type":"STRING" , "nullable":false, "size":  128,                   "description":"The title of the formula/column."  }
-        ,{ "name":"description", "type":"STRING" , "nullable":false, "size":32000,                   "description":"The description of the formula/column."  }
-        ,{ "name":"formula"    , "type":"STRING" , "nullable":true , "size":32000,                   "description":"The formula."  }
-        ,{ "name":"htmlDoc"    , "type":"STRING" , "nullable":true , "size":32000,                   "description":"Pre-rendered html fragment with the full documentation for this formula."  }
+        ,{ "name":"title"            , "type":"STRING"  , "nullable":false, "size":  128,                   "description":"The title of the formula/column."  }
+        ,{ "name":"description"      , "type":"STRING"  , "nullable":false, "size":32000,                   "description":"The description of the formula/column."  }
+        ,{ "name":"formula"          , "type":"STRING"  , "nullable":true , "size":32000,                   "description":"The formula."  }
+        ,{ "name":"htmlDoc"          , "type":"STRING"  , "nullable":true , "size":32000,                   "description":"Pre-rendered html fragment with the full documentation for this formula."  }
+        ,{ "name":"referencedColumns", "type":"STRING[]", "nullable":true ,                                 "description":"The list of columns this formula depends on."  }
        ]
      ,"primary": { "autogen": true }
      ,"indices":[
          { "name": "Formula", "columns": ["location" , "name"], "db": true }
+        ,{ "name": "RefCols", "orderBy": ["referencedColumns"], "db": true }
       ]
     }
     
@@ -285,65 +343,67 @@
        ]
     }
 
-   ,{ "name": "Testing",
-      "description": "blah blah",
-      "columns":[
-        { "name": "refnum2"      , "type": "LONG[]"     , "nullable": false,                "invariant": true , "description": "The person's primary key" },
-        { "name": "name"         , "type": "STRING"     , "nullable": false, "size":    10,                     "description": "Medical system unique enterprise id" },
-        { "name": "description"  , "type": "STRING"     ,                    "size":   250,                     "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
-        { "name": "desc2"        , "type": "STRING"     ,                    "size":  3000,                     "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
-        { "name": "desc3"        , "type": "STRING"     ,                    "size":  5000,                     "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
-        { "name": "desc4"        , "type": "STRING"     ,                    "size":  9000,                     "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
-        { "name": "desc5"        , "type": "STRING"     ,                    "size": 17000,                     "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
-        { "name": "desc6"        , "type": "STRING"     ,                    "size": 33000, "protect":"SMART",  "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
-        { "name": "tops"         , "type": "STRING[]"   ,                                                       "description": "The blah"},
-        { "name": "tops2"        , "type": "STRING{}"   ,                                                       "description": "The blah"},
-        { "name": "a1"           , "type": "BITFIELD"   ,                                                       "description": "The blah"},
-        { "name": "a2"           , "type": "CHAR"       ,                                                       "description": "The blah"},
-        { "name": "a2b"          , "type": "CHAR[]"     ,                                                       "description": "The blah"},
-        { "name": "a2c"          , "type": "CHAR{}"     ,                                                       "description": "The blah"},
-        { "name": "a3"           , "type": "BOOLEAN"    ,                                                       "description": "The blah"},
-        { "name": "a3b"          , "type": "BOOLEAN[]"  ,                                                       "description": "The blah"},
-        { "name": "a4"           , "type": "DOUBLE"     ,                                                       "description": "The blah"},
-        { "name": "a4b"          , "type": "DOUBLE[]"   ,                                                       "description": "The blah"},
-        { "name": "a5"           , "type": "FLOAT"      ,                                                       "description": "The blah"},
-        { "name": "a5b"          , "type": "FLOAT[]"    ,                                                       "description": "The blah"},
-        { "name": "a6"           , "type": "LONG"       ,                                                       "description": "The blah"},
-        { "name": "a6b"          , "type": "LONG[]"     ,                                                       "description": "The blah"},
-        { "name": "a6c"          , "type": "LONG{}"     ,                                                       "description": "The blah"},
-        { "name": "a7"           , "type": "INTEGER"    ,                                                       "description": "The blah"},
-        { "name": "a7b"          , "type": "INTEGER[]"  ,                                                       "description": "The blah"},
-        { "name": "a8"           , "type": "BINARY"     ,                                                       "description": "The blah"},
-        { "name": "a9"           , "type": "DATETIME"   ,                                                       "description": "The blah"}
-      ],
-      "primary": { "autogen": true },
-      "indices":[ 
-        { "name": "AllByName" , "orderBy": ["name asc"], "db": false       },
-        { "name": "AllByName2", "orderBy": ["name asc"], "db": true        },
-        { "name": "AllByName3", "orderBy": ["name desc"], "db": true       },
-        { "name": "AllByName4", "orderBy": ["name asc", "description desc"], "db": true
-        																  , "subWhere": "deleted is null and name = 'Hello' and created > '2018-01-01'"
-        }
-      ],
-      "json":[
-        { "name": "AAA", "columns": ["refnum", "refnum2", "name", "description", "desc2", "desc3", "desc4", "desc5", "desc6", "tops", "tops2", "a1", "a2", "a2b", "a2c", "a3", "a3b", "a4", "a4b", "a5", "a5b", "a6", "a6b", "a6c", "a7", "a7b", "a9", "created", "lastUpdated"] }
-       ,{ "name": "BBB", "columns": ["refnum", "refnum2", "name", "description", "desc2", "desc3"] }
-      ],
-      "http":[
-        { "name": "", "mandatories": ["refnum", "name", "description"] }
-      ]
-    }
-    
-   ,{ "name":"Testing2",
-      "lc": "READONLY",
-      "dbOnly":true,
-      "description":"Testing",
-      "columns":[
-         { "name":"t1"  , "type":"STRING"  , "nullable": false, "size":   2, "description":"State code" }
-        ,{ "name":"t2"  , "type":"STRING"  , "nullable": false, "size":  60, "description":"State name" }
+    ,{ "name": "DependencyDDLDummyTable"
+      ,"description": "A dummy Table created to generate JavaCode to handle results from the Tilda.getDependenciesDDLs() function output."
+      ,"columns":[
+           { "name":"srcSchemaName", "type":"STRING" , "nullable":false, "size":  100, "description":"The result value."  }
+          ,{ "name":"srcTVName"    , "type":"STRING" , "nullable":false, "size":  100, "description":"The result value."  }
+          ,{ "name":"seq"          , "type":"INTEGER", "nullable":false              , "description": "The blah"          }
+          ,{ "name":"depSchemaName", "type":"STRING" , "nullable":false, "size":  100, "description":"The result value."  }
+          ,{ "name":"depViewName"  , "type":"STRING" , "nullable":false, "size":  100, "description":"The result value."  }
+          ,{ "name":"restoreScript", "type":"STRING" , "nullable":false, "size":30000, "description":"The result value."  }
        ]
-     ,"indices":[ 
-         { "name":"T1"   , "columns":["t1"] }
+      ,"indices":[
+           { "name": "DepedencySequence", "columns": ["srcSchemaName" , "srcTVName", "seq"], "db": true }
+          ,{ "name": "DepedencySTV"     , "columns": ["srcSchemaName" , "srcTVName", "depSchemaName", "depViewName"], "db": true }
+       ]
+     }    
+
+
+   ,{ "name": "DateDim"
+     ,"description": "The Date dimension, capturing pre-calculated metrics on dates"
+     ,"columns":[
+          { "name":"dt"            , "type":"DATE"   , "nullable":false, "invariant":true, "description":"The Date date"  }
+         ,{ "name":"epoch"         , "type":"LONG"   , "nullable":false,             "description":"The epoch date"  }
+         ,{ "name":"dayName"       , "type":"STRING" , "nullable":true , "size":255, "description":"Day name (i.e., Monday, Tuesday...) of the date"  }
+         ,{ "name":"dayOfWeek"     , "type":"INTEGER", "nullable":true ,             "description":"ISO 8601 day of the week (Monday=1 to Sunday=7) of the date"  }
+         ,{ "name":"dayOfMonth"    , "type":"INTEGER", "nullable":true ,             "description":"ISO 8601 day of the month (starting with 1) of the date"  }
+         ,{ "name":"dayOfQuarter"  , "type":"INTEGER", "nullable":true ,             "description":"ISO 8601 day of the quarter (starting with 1) of the date"  }
+         ,{ "name":"dayOfYear"     , "type":"INTEGER", "nullable":true ,             "description":"ISO 8601 day of the year (starting with 1) of the date"  }
+         ,{ "name":"weekOfMonth"   , "type":"INTEGER", "nullable":true ,             "description":"ISO 8601 week of the month (starting with 1) of the date"  }
+         ,{ "name":"weekOfYear"    , "type":"INTEGER", "nullable":true ,             "description":"ISO 8601 week of the year (starting with 1) of the date"  }
+         ,{ "name":"monthOfYear"   , "type":"INTEGER", "nullable":true ,             "description":"ISO 8601 month of the year (starting with 1) of the date"  }
+         ,{ "name":"monthName"     , "type":"STRING" , "nullable":true , "size":255, "description":"Month name (i.e., January, February...) of the date."  }
+         ,{ "name":"monthNameShort", "type":"STRING" , "nullable":true , "size":255, "description":"Monday short name (i.e., Jan, Feb...) of the date."  }
+         ,{ "name":"quarterOfYear" , "type":"INTEGER", "nullable":true ,             "description":"ISO 8601 quarter of the year (starting with 1) of the date."  }
+         ,{ "name":"quarterName"   , "type":"STRING" , "nullable":true , "size":255, "description":"Quarter name (i.e., Q1, Q2...) of the date."  }
+         ,{ "name":"year"          , "type":"INTEGER", "nullable":true ,             "description":"ISO 8601 year (1.e., 2018) of the date."  }
+         ,{ "name":"mmyyyy"        , "type":"STRING" , "nullable":true , "size":  6, "description":"The mmyyyy printable version of a date."  }
+         ,{ "name":"mmddyyyy"      , "type":"STRING" , "nullable":true , "size":  8, "description":"The mmddyyyy printable version of a date."  }
+         ,{ "name":"yyyymmdd"      , "type":"STRING" , "nullable":true , "size":  8, "description":"The yyyymmdd sortable printable version of a date."  }
+         ,{ "name":"isWeekend"     , "type":"INTEGER", "nullable":true ,             "description":"1 if this is a weekend day, 0 otherwise."  }
+         ,{ "name":"isBusinessDay" , "type":"INTEGER", "nullable":true ,             "description":"1 if this is a business day, 0 otherwise."  }
+         ,{ "name":"isHoliday"     , "type":"INTEGER", "nullable":true ,             "description":"1 if this is a holiday, 0 otherwise."  }
+         ,{ "name":"holidayName"   , "type":"STRING" , "nullable":true , "size":255, "description":"The name of the holiday if applicable."  }
+      ]
+     ,"primary": { "autogen": false, "columns": ["dt"] } 
+    }
+
+   ,{ "name": "DateLimitDim"
+     ,"occ":false
+     ,"description": "A single row for min, max and invalid dates for the Date_Dim"
+     ,"columns":[
+          { "name":"invalidDate", "sameas":"DateDim.dt", "nullable":false, "description":"The invalid date"  }
+         ,{ "name":"minDate"    , "sameas":"DateDim.dt", "nullable":false, "description":"The min date"  }
+         ,{ "name":"maxDate"    , "sameas":"DateDim.dt", "nullable":false, "description":"The max date"  }
+      ]
+     ,"foreign": [
+          { "name":"InvalidDt" , "srcColumns":["invalidDate" ], "destObject": "DateDim" }
+         ,{ "name":"MinDt"     , "srcColumns":["minDate"     ], "destObject": "DateDim" }
+         ,{ "name":"MaxDt"     , "srcColumns":["maxDate"     ], "destObject": "DateDim" }
+       ]
+     ,"indices": [ 
+          { "name":"InvalidDate"  , "columns": ["invalidDate"] }
        ]
     }
   ]
@@ -367,20 +427,42 @@
      }    
 
     ,{ "name": "FormulaDependencyView"
-      ,"description": "A view of formulas and their dependencies."
+      ,"description": "A view of formulas and their direct dependencies."
       ,"columns":[
           { "sameas": "FormulaDependency.formulaRefnum"    }
          ,{ "sameas": "Formula.location"                   }
          ,{ "sameas": "Formula.name"                       }
+         ,{ "sameas": "Formula.referencedColumns"          }
          ,{ "sameas": "FormulaDependency.dependencyRefnum" }
          ,{ "sameas": "Formula.name"                       , "name":"dependentFormulaName"}
+         ,{ "sameas": "Formula.location"                   , "name":"dependentFormulaLocation"}
+         ,{ "sameas": "Formula.referencedColumns"          , "name":"dependentReferencedColumns"}
         ]
       ,"subWhereX":{
           "clause":["Formula.deleted is null"
                    ]
          ,"description":["Active formulas and their sub-formulas"]
         }
+     }
+
+/*
+    ,{ "name": "FormulaDependencyFullView"
+      ,"dbOnly": true
+      ,"description": "A view of formulas and their full hierarchical formula dna column dependencies."
+      ,"columns":[
+          { "sameas": "FormulaDependencyView.formulaRefnum"                                             }
+         ,{ "sameas": "FormulaDependencyView.location"                   , "name":"formulaLocation"     }
+         ,{ "sameas": "FormulaDependencyView.name"                       , "name":"formulaName"         }
+         ,{ "sameas": "FormulaDependencyView.dependentReferencedColumns" , "name":"formulaDependencies" }
+         ,{ "sameas": "FormulaDependencyView.referencedColumns"          , "name":"columnDependencies"  }
+        ]
+      ,"subWhereX":{
+          "clause":["Formula.deleted is null"
+                   ]
+         ,"description":["Active formulas and their full hierarchical dependent formulas and columns"]
+        }
      }    
+*/     
 
     ,{ "name": "MeasureFormulaView"
       ,"description": "A view of formulas and their dependencies."
@@ -402,6 +484,34 @@
                    ]
          ,"description":["Active formulas and their sub-formulas"]
         }
-     }    
+     }       
+     
+     
+    ,{ "name": "JobView"
+      ,"description": "A view of the job data."
+      ,"columns":[
+          { "sameas": "Job.refnum"            , "name":"jobRefnum"           }
+         ,{ "sameas": "Job.name"              , "name":"jobName"             }
+         ,{ "sameas": "Job.type"              , "name":"jobType"             }
+         ,{ "sameas": "Job.userId"            , "name":"jobUserId"           }
+         ,{ "sameas": "Job.dataStart"         , "name":"jobDataStart"        }
+         ,{ "sameas": "Job.dataEnd"           , "name":"jobDataEnd"          }
+         ,{ "sameas": "Job.start"             , "name":"jobStart"            }
+         ,{ "sameas": "Job.end"               , "name":"jobEnd"              }
+         ,{ "sameas": "Job.status"            , "name":"jobStatus"           }
+         ,{ "sameas": "Job.msg"               , "name":"jobMsg"              }
+         ,{ "sameas": "JobPart.name"          , "name":"jobPartName"         }
+         ,{ "sameas": "JobPart.type"          , "name":"jobPartType"         }
+         ,{ "sameas": "JobPart.dataStart"     , "name":"jobPartDataStart"    }
+         ,{ "sameas": "JobPart.dataEnd"       , "name":"jobPartDataEnd"      }
+         ,{ "sameas": "JobPart.start"         , "name":"jobPartStart"        }
+         ,{ "sameas": "JobPart.end"           , "name":"jobPartEnd"          }
+         ,{ "sameas": "JobPart.recordsCount"  , "name":"jobPartRecordsCount" }
+         ,{ "sameas": "JobPart.status"        , "name":"jobPartStatus"       }
+         ,{ "sameas": "JobPartMessage.notify" , "name":"jobPartNotify"       }
+         ,{ "sameas": "JobPartMessage.msg"    , "name":"jobPartMessage"      }
+        ]
+     }
+
    ]
 }

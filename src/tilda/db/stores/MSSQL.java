@@ -30,15 +30,18 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
+import tilda.db.metadata.ColumnMeta;
 import tilda.db.metadata.FKMeta;
 import tilda.db.metadata.IndexMeta;
 import tilda.db.metadata.PKMeta;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
+import tilda.enums.DBStringType;
 import tilda.generation.Generator;
 import tilda.generation.SQLServer2014.SQLServerType;
 import tilda.generation.interfaces.CodeGenSql;
+import tilda.generation.postgres9.PostgresType;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
@@ -50,6 +53,7 @@ import tilda.types.ColumnDefinition;
 import tilda.types.Type_DatetimePrimitive;
 import tilda.utils.DurationUtil.IntervalEnum;
 import tilda.utils.TextUtil;
+import tilda.utils.pairs.ColMetaColPair;
 import tilda.utils.pairs.StringStringPair;
 
 public class MSSQL implements DBType
@@ -63,9 +67,9 @@ public class MSSQL implements DBType
       }
 
     @Override
-    public boolean isErrNoData(String SQLState, int ErrorCode)
+    public boolean isErrNoData(SQLException E)
       {
-        return SQLState.equals("23000") || ErrorCode == 2601;
+        return E.getSQLState().equals("23000") || E.getErrorCode() == 2601;
       }
 
 
@@ -138,7 +142,7 @@ public class MSSQL implements DBType
       }
 
     @Override
-    public boolean FullIdentifierOnUpdate()
+    public boolean fullIdentifierOnUpdate()
       {
         return false;
       }
@@ -158,7 +162,7 @@ public class MSSQL implements DBType
         StringWriter Str = new StringWriter();
         PrintWriter Out = new PrintWriter(Str);
         getSQlCodeGen().genFileStart(Out, S);
-        Con.ExecuteDDL(S.getShortName(), null, Str.toString());
+        Con.executeDDL(S.getShortName(), null, Str.toString());
         return true;
       }
 
@@ -169,7 +173,7 @@ public class MSSQL implements DBType
         StringWriter Str = new StringWriter();
         PrintWriter Out = new PrintWriter(Str);
         Generator.getTableDDL(getSQlCodeGen(), Out, Obj, true, true);
-        Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getShortName(), Str.toString());
+        Con.executeDDL(Obj._ParentSchema._Name, Obj.getShortName(), Str.toString());
         return true;
       }
 
@@ -180,7 +184,7 @@ public class MSSQL implements DBType
         StringWriter Str = new StringWriter();
         PrintWriter Out = new PrintWriter(Str);
         Generator.getTableDDL(getSQlCodeGen(), Out, Obj, false, true);
-        Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getShortName(), Str.toString());
+        Con.executeDDL(Obj._ParentSchema._Name, Obj.getShortName(), Str.toString());
         return true;
       }
 
@@ -188,7 +192,7 @@ public class MSSQL implements DBType
     public boolean dropView(Connection Con, View V)
     throws Exception
       {
-        Con.ExecuteDDL(V._ParentSchema._Name, V.getShortName(), "DROP VIEW [" + V._ParentSchema._Name + "].[" + V._Name + "]");
+        Con.executeDDL(V._ParentSchema._Name, V.getShortName(), "DROP VIEW [" + V._ParentSchema._Name + "].[" + V._Name + "]");
         return true;
       }
 
@@ -199,7 +203,7 @@ public class MSSQL implements DBType
         StringWriter Str = new StringWriter();
         PrintWriter Out = new PrintWriter(Str);
         Generator.getFullViewDDL(getSQlCodeGen(), Out, V);
-        Con.ExecuteDDL(V._ParentSchema._Name, V.getShortName(), Str.toString());
+        Con.executeDDL(V._ParentSchema._Name, V.getShortName(), Str.toString());
         return true;
       }
 
@@ -207,8 +211,15 @@ public class MSSQL implements DBType
       {
         if (Collection == true)
           return "nvarchar(max)";
+        
         if (T == ColumnType.STRING && M != ColumnMode.CALCULATED)
-          return S < getVarCharThreshhold() ? SQLServerType.CHAR._SQLType + "(" + S + ")" : S < getCLOBThreshhold() ? SQLServerType.STRING._SQLType + "(" + S + ")" : "nvarchar(max)";
+          {
+            DBStringType DBT = getDBStringType(S);
+            return DBT == DBStringType.CHARACTER ? PostgresType.CHAR._SQLType + "(" + S + ")"
+            : DBT == DBStringType.VARCHAR ? PostgresType.STRING._SQLType + "(" + S + ")"
+            : "nvarchar(max)";
+          }
+
         return SQLServerType.get(T)._SQLType;
       }
 
@@ -221,10 +232,10 @@ public class MSSQL implements DBType
         String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ADD \"" + Col.getName() + "\" " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection());
         if (Col._Nullable == false)
           {
-            Q += " not null DEFAULT " + ValueHelper.printValue(Col, DefaultValue);
+            Q += " not null DEFAULT " + ValueHelper.printValue(Col.getName(), Col.getType(), DefaultValue);
           }
 
-        Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
+        Con.executeDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
         return true;
       }
 
@@ -244,32 +255,41 @@ public class MSSQL implements DBType
       }
 
     @Override
-    public int getVarCharThreshhold()
+    public DBStringType getDBStringType(int Size)
       {
-        return 20;
+        return Size < 20 ? DBStringType.CHARACTER
+        : Size < 4096 ? DBStringType.VARCHAR
+        : DBStringType.TEXT;
       }
 
     @Override
-    public int getCLOBThreshhold()
+    public boolean alterTableAlterColumnNumericSize(Connection connection, ColumnMeta colMeta, Column col)
+    throws Exception
       {
-        return 4096;
-      }
+        throw new UnsupportedOperationException();
+      }    
 
     @Override
-    public boolean alterTableAlterColumnStringSize(Connection Con, Column Col, int DBSize)
+    public boolean alterTableAlterColumnStringSize(Connection Con, ColumnMeta ColMeta, Column Col)
     throws Exception
       {
         throw new UnsupportedOperationException();
       }
 
     @Override
-    public boolean alterTableAlterColumnType(Connection Con, ColumnType fromType, Column Col, ZoneInfo_Data defaultZI)
+    public boolean alterTableAlterColumnType(Connection Con, ColumnMeta ColMeta, Column Col, ZoneInfo_Data defaultZI)
+      {
+        throw new UnsupportedOperationException();
+      }  
+    
+    @Override
+    public boolean alterTableAlterColumnMulti(Connection Con, List<ColMetaColPair> BatchTypeCols, List<ColMetaColPair> BatchSizeCols, ZoneInfo_Data defaultZI)
       {
         return false;
       }
 
     @Override
-    public String getHelperFunctionsScript(Connection Con)
+    public String getHelperFunctionsScript(Connection Con, boolean Start)
     throws Exception
       {
         throw new UnsupportedOperationException();
@@ -295,6 +315,8 @@ public class MSSQL implements DBType
                   case "_bpchar": TildaType = ColumnType.CHAR; break;
                   case "_text"  : TildaType = ColumnType.STRING; break;
                   case "_bool"  : TildaType = ColumnType.BOOLEAN; break;
+                  case "_uuid"  : TildaType = ColumnType.UUID; break;
+                  
                   default: throw new Exception("Cannot map SQL TypeName "+TypeName+" for array column '"+Name+"'.");
                 }
                break;
@@ -368,7 +390,7 @@ public class MSSQL implements DBType
       }
 
     @Override
-    public void getColumnType(StringBuilder Str, ColumnType T, Integer S, ColumnMode M, boolean Collection)
+    public void getColumnType(StringBuilder Str, ColumnType T, Integer S, ColumnMode M, boolean Collection, Integer Precision, Integer Scale)
       {
         throw new UnsupportedOperationException();        
       }
@@ -378,7 +400,7 @@ public class MSSQL implements DBType
     throws Exception
       {
         StringBuilder Str = new StringBuilder();
-        TextUtil.EscapeSingleQuoteForSQL(Str, val, true);
+        TextUtil.escapeSingleQuoteForSQL(Str, val, true);
         PS.setString(i, Str.toString());
       }
 
@@ -447,7 +469,7 @@ public class MSSQL implements DBType
         StringBuilder Str = new StringBuilder();
         Str.append("TRUNCATE TABLE ");
         getFullTableVar(Str, schemaName, tableName);
-        C.ExecuteUpdate(schemaName, tableName, Str.toString());
+        C.executeUpdate(schemaName, tableName, Str.toString());
       }
 
     @Override
@@ -526,6 +548,51 @@ public class MSSQL implements DBType
     @Override
     public boolean isSuperUser(Connection C)
     throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public int getMaxColumnNameSize()
+      {
+        return 63;
+      }
+    @Override
+    public int getMaxTableNameSize()
+      {
+        return 63;
+      }
+
+    @Override
+    public String alterTableAddIndexDDL(Index IX)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+    
+    @Override
+    public boolean alterTableAlterColumnDefault(Connection Con, Column Col)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public String getBackendConnectionId(Connection connection)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public void cancel(Connection C)
+    throws SQLException
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public boolean isCanceledError(SQLException t)
       {
         throw new UnsupportedOperationException();
       }

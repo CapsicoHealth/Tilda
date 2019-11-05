@@ -50,7 +50,7 @@ public class ViewMeta
         ResultSet RS = meta.getColumns(null, _SchemaName.toLowerCase(), _ViewName.toLowerCase(), null);
         while (RS.next() != false)
           {
-            ColumnMeta CI = new ColumnMeta(C, RS);
+            ColumnMeta CI = new ColumnMeta(C, RS, null, this);
             _DBColumns.put(CI._Name, CI);
           }
       }

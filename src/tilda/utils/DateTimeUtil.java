@@ -26,6 +26,7 @@ import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -43,7 +44,7 @@ public class DateTimeUtil
 
     protected static final ZoneId     _UTC                = ZoneId.of("Etc/UTC");
 
-    public static final ZonedDateTime NOW_PLACEHOLDER_ZDT = NewUTC(999, 12, 31, 23, 59, 0, 0);
+    public static final ZonedDateTime NOW_PLACEHOLDER_ZDT = newUTC(999, 12, 31, 23, 59, 0, 0);
     public static final LocalDate     NOW_PLACEHOLDER_D   = LocalDate.of(999, 12, 31);
 
     public static boolean isNowPlaceholder(ZonedDateTime ZDT)
@@ -57,8 +58,8 @@ public class DateTimeUtil
       }
 
 
-    public static final ZonedDateTime UNDEFINED_PLACEHOLDER_ZDT = NewUTC(1, 1, 1, 0, 0, 0, 0);
-    public static final LocalDate     UNDEFINED_PLACEHOLDER_D   = LocalDate.of(1, 1, 1);
+    public static final ZonedDateTime UNDEFINED_PLACEHOLDER_ZDT = newUTC(1111, 11, 11, 0, 0, 0, 0);
+    public static final LocalDate     UNDEFINED_PLACEHOLDER_D   = LocalDate.of(1111, 11, 11);
 
     public static boolean isUndefinedPlaceholder(ZonedDateTime ZDT)
       {
@@ -77,56 +78,68 @@ public class DateTimeUtil
      * Returns a new ZonedDateTime object in the UTC timezone, based on the information provided using
      * the ZonedDateTime class conventions.
      */
-    public static ZonedDateTime NewUTC(int Year, int Month, int Day, int Hour, int Minutes, int Seconds, int Milliseconds)
+    public static ZonedDateTime newUTC(int Year, int Month, int Day, int Hour, int Minutes, int Seconds, int Milliseconds)
       {
-        return New(Year, Month, Day, Hour, Minutes, Seconds, Milliseconds * 1000000, _UTC);
+        return newTZ(Year, Month, Day, Hour, Minutes, Seconds, Milliseconds * 1000000, _UTC);
       }
 
     /**
      * Returns a new ZonedDateTime object based on the information provided using
      * the ZonedDateTime class conventions.
      */
-    public static ZonedDateTime New(int Year, int Month, int Day, int Hour, int Minutes, int Seconds, int Milliseconds, ZoneId Z)
+    public static ZonedDateTime newTZ(int Year, int Month, int Day, int Hour, int Minutes, int Seconds, int Milliseconds, ZoneId Z)
       {
         return ZonedDateTime.of(Year, Month, Day, Hour, Minutes, Seconds, Milliseconds * 1000000, Z);
       }
 
-    public static ZonedDateTime New(int Year, int Month, int Day, int Hour, int Minutes, int Seconds, int Milliseconds, DateTimeZone Z)
+    public static ZonedDateTime newTZ(int Year, int Month, int Day, int Hour, int Minutes, int Seconds, int Milliseconds, DateTimeZone Z)
       {
         return ZonedDateTime.of(Year, Month, Day, Hour, Minutes, Seconds, Milliseconds * 1000000, Z._ZoneId);
       }
+
+    public static LocalDate newYMD(int Year, int Month, int Day)
+      {
+        return LocalDate.of(Year, Month, Day);
+      }
+
 
     public static String getCurrentZoneOffset()
       {
         return ZonedDateTime.now().getOffset().getId();
       }
 
-    public static ZonedDateTime NowLocal()
+    public static ZonedDateTime nowLocal()
       {
         return ZonedDateTime.now();
       }
 
-    public static ZonedDateTime NowUTC()
+    public static ZonedDateTime nowUTC()
       {
         return ZonedDateTime.now(_UTC);
       }
 
-    public static ZonedDateTime Now(ZoneId Z)
+    public static ZonedDateTime nowTZ(ZoneId Z)
       {
         return ZonedDateTime.now(Z);
       }
 
-    public static ZonedDateTime Now(DateTimeZone Z)
+    public static ZonedDateTime nowTZ(DateTimeZone Z)
       {
         return ZonedDateTime.now(Z._ZoneId);
       }
 
-    public static ZonedDateTime Oldest(ZonedDateTime ZDT1, ZonedDateTime ZDT2)
+    public static LocalDate nowLocalDate()
+      {
+        return LocalDate.now();
+      }
+
+
+    public static ZonedDateTime oldest(ZonedDateTime ZDT1, ZonedDateTime ZDT2)
       {
         return ZDT1 == null ? ZDT2 : ZDT2 == null ? ZDT1 : ZDT1.compareTo(ZDT2) < 0 ? ZDT1 : ZDT2;
       }
 
-    public static ZonedDateTime Youngest(ZonedDateTime ZDT1, ZonedDateTime ZDT2)
+    public static ZonedDateTime youngest(ZonedDateTime ZDT1, ZonedDateTime ZDT2)
       {
         return ZDT1 == null ? ZDT2 : ZDT2 == null ? ZDT1 : ZDT1.compareTo(ZDT2) > 0 ? ZDT1 : ZDT2;
       }
@@ -139,7 +152,7 @@ public class DateTimeUtil
       }
 
     /**
-     * Simple method to get a Calendar object out of a string and a pattern
+     * Simple method to get a ZonedDateTime object out of a string and a pattern
      */
     public static ZonedDateTime parse(String DateTimeStr, String Pattern)
       {
@@ -151,7 +164,30 @@ public class DateTimeUtil
           }
         catch (DateTimeParseException E)
           {
-            LOG.warn("Cannot parse "+DateTimeStr+" with pattern "+Pattern+": "+E.getMessage());
+            LOG.warn("Cannot parse " + DateTimeStr + " with pattern " + Pattern + ": " + E.getMessage());
+            return null;
+          }
+      }
+
+    /**
+     * Simple method to get a LocalDate object out of a string and a pattern.
+     * <P>
+     * This method returns a LocalDate based on a string value and a standard pattern. It avoids throwing an exception
+     * if the data cannot be parsed and will return NULL instead with a warning in the logs.
+     * 
+     * @return a LocalDate object if the string could be parsed, or null otherwise.
+     */
+    public static LocalDate parseDate(String DateStr, String Pattern)
+      {
+        if (TextUtil.isNullOrEmpty(DateStr) == true)
+          return null;
+        try
+          {
+            return LocalDate.parse(DateStr, DateTimeFormatter.ofPattern(Pattern));
+          }
+        catch (DateTimeParseException E)
+          {
+            LOG.warn("Cannot parse " + DateStr + " with pattern " + Pattern + ": " + E.getMessage());
             return null;
           }
       }
@@ -191,6 +227,17 @@ public class DateTimeUtil
         return ZDT == null ? null : ZDT.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
       }
 
+    public static List<String> printDateTimeForSQL(List<ZonedDateTime> ZDTs)
+      {
+        if (ZDTs == null)
+          return null;
+        List<String> L = new ArrayList<String>();
+        for (ZonedDateTime ZDT : ZDTs)
+          L.add(printDateTimeForSQL(ZDT));
+        return L;
+      }
+
+
     public static String printDateTimeForJSON(ZonedDateTime ZDT)
       {
         return ZDT == null ? null : ZDT.format(DateTimeFormatter.ISO_ZONED_DATE_TIME);
@@ -198,12 +245,12 @@ public class DateTimeUtil
 
     public static String printDate(LocalDate D)
       {
-        return D.format(DateTimeFormatter.ISO_DATE);
+        return D == null ? null : D.format(DateTimeFormatter.ISO_DATE);
       }
 
     public static String printDateForJSON(LocalDate D)
       {
-        return D.format(DateTimeFormatter.ISO_DATE);
+        return D == null ? null : D.format(DateTimeFormatter.ISO_DATE);
       }
 
     public static String printDate(List<LocalDate> L)
@@ -242,19 +289,28 @@ public class DateTimeUtil
         ZonedDateTime ZDT = null;
         if (DateTimeStr.length() < 25)
           ZDT = parseWithoutZone(DateTimeStr);
-        if (ZDT != null)
-          return ZDT;
-
-        try
-          {
-            return ZonedDateTime.parse(DateTimeStr, DateTimeFormatter.ISO_ZONED_DATE_TIME);
-          }
-        catch (Exception E)
-          {
-            LOG.catching(E);
-          }
-        return null;
+        if (ZDT == null)
+          try
+            {
+              return ZonedDateTime.parse(DateTimeStr, DateTimeFormatter.ISO_ZONED_DATE_TIME);
+            }
+          catch (Exception E)
+            {
+              LOG.catching(E);
+            }
+        return ZDT;
       }
+
+    public static List<ZonedDateTime> parsefromJSON(List<String> DateTimeStr)
+      {
+        if (TextUtil.isNullOrEmpty(DateTimeStr) == true)
+          return null;
+        List<ZonedDateTime> L = new ArrayList<ZonedDateTime>();
+        for (String Str : DateTimeStr)
+          L.add(parsefromJSON(Str));
+        return L;
+      }
+
 
     private static Pattern _ISO_NOZONE_DATETIME = Pattern.compile("(\\d{4}).(\\d{2}).(\\d{2}).(\\d{2}).(\\d{2}).(\\d{2})");
 
@@ -311,7 +367,7 @@ public class DateTimeUtil
 
         try
           {
-            return New(year, month, day, hours, minutes, seconds, 0, ZoneId.systemDefault());
+            return newTZ(year, month, day, hours, minutes, seconds, 0, ZoneId.systemDefault());
           }
         catch (Exception E)
           {
@@ -413,7 +469,6 @@ public class DateTimeUtil
         // LOG.debug("y: "+D.getYear()+"; m: "+D.getMonth()+"; d: "+D.getDate());
         return D == null ? null : LocalDate.of(D.getYear() + 1900, D.getMonth() + 1, D.getDate());
       }
-
 
 
 
@@ -599,28 +654,42 @@ public class DateTimeUtil
 
         return printDateTimeForJSON(BaseTimeMarker);
       }
-    
+
     public static boolean validateBoundary(TimeSeriesType Type, boolean Start, ZonedDateTime ZDT)
       {
         Month m = ZDT.getMonth();
-        int   d = ZDT.getDayOfMonth();
-        long  dMax = ZDT.range(ChronoField.DAY_OF_MONTH).getMaximum();
+        int d = ZDT.getDayOfMonth();
+        long dMax = ZDT.range(ChronoField.DAY_OF_MONTH).getMaximum();
         switch (Type)
           {
             case YEARLY:
-              return  Start == true  && m == Month.JANUARY  && d == 1
-                   || Start == false && m == Month.DECEMBER && d == dMax;
+              return Start == true && m == Month.JANUARY && d == 1
+              || Start == false && m == Month.DECEMBER && d == dMax;
             case QUARTERLY:
-              return  Start == true  && (m == Month.JANUARY || m == Month.APRIL || m == Month.JULY      || m == Month.OCTOBER ) && d == 1
-                   || Start == false && (m == Month.MARCH   || m == Month.JUNE  || m == Month.SEPTEMBER || m == Month.DECEMBER) && d == dMax;
+              return Start == true && (m == Month.JANUARY || m == Month.APRIL || m == Month.JULY || m == Month.OCTOBER) && d == 1
+              || Start == false && (m == Month.MARCH || m == Month.JUNE || m == Month.SEPTEMBER || m == Month.DECEMBER) && d == dMax;
             case MONTHLY:
-              return Start == true  && d == 1
-                  || Start == false && d == dMax;
+              return Start == true && d == 1
+              || Start == false && d == dMax;
             case DAILY:
               return true;
             default:
               throw new Error("Switch statement on TimeSeriesType does not handle the case '" + Type + "'.");
           }
       }
-    
+
+    public static List<java.sql.Timestamp> toSQLTimeStamps(List<ZonedDateTime> L)
+      {
+        if (L == null)
+          return null;
+        List<java.sql.Timestamp> newL = new ArrayList<java.sql.Timestamp>();
+        for (ZonedDateTime ZDT : L)
+          {
+            newL.add(ZDT == null ? null : new java.sql.Timestamp(ZDT.toInstant().toEpochMilli()));
+          }
+        LOG.debug("L: " + TextUtil.print(L.iterator()));
+        LOG.debug("newL: " + TextUtil.print(newL.iterator()));
+        return newL;
+      }
+
   }

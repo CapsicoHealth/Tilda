@@ -1,4 +1,5 @@
 Manifest-Version: 1.0
-Tilda: tilda/data/_tilda.Tilda.json; 
 Class-Path: 
+Tilda: tilda/data/_tilda.Tilda.json;tilda/data/tmp/_tilda.TildaTmp.json;
+  
 

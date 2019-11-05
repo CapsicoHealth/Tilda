@@ -48,9 +48,9 @@ public class Log4JTest
               }
           }
         T0 = System.nanoTime() - T0;
-        Log.info("Printed " + NumberFormatUtil.PrintWith000Sep(count)
-            + " records to the log file in " + DurationUtil.PrintDuration(T0) 
-            + " ("+DurationUtil.PrintPerformancePerSecond(T0, count)+" msg/s).");
+        Log.info("Printed " + NumberFormatUtil.printWith000Sep(count)
+            + " records to the log file in " + DurationUtil.printDuration(T0) 
+            + " ("+DurationUtil.printPerformancePerSecond(T0, count)+" msg/s).");
       }
   }
     

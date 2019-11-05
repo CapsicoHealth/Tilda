@@ -41,7 +41,17 @@ public abstract class Parser
   {
     protected static final Logger LOG = LogManager.getLogger(Parser.class.getName());
 
-    public static ParserSession parse(String FilePath, CodeGenSql CGSql)
+    public static ParserSession init(CodeGenSql CGSql, List<Schema> SchemaList) throws Exception
+     {
+       ParserSession PS = new ParserSession(SchemaList.get(SchemaList.size()-1), CGSql);;
+       for (Schema S : SchemaList)
+        PS.addDependencySchema(S);
+       for (Schema S : SchemaList)
+        S.Validate(PS);
+       return PS;
+     }
+
+    public static ParserSession parse(String FilePath, CodeGenSql CGSql) throws Exception
       {
         LOG.info("\n\n\n-----------------------------------------------------------------------------------------------------------------------------------------------");
         LOG.info("Loading Tilda schema '" + FilePath + "'.");
@@ -52,17 +62,7 @@ public abstract class Parser
         ParserSession PS = new ParserSession(S, CGSql);
         if (loadDependencies(PS, S) == false)
           return null;
-
-        if (PS.getErrorCount() != 0)
-          {
-            LOG.error("==============================================================================================");
-            LOG.error("There were " + PS.getErrorCount() + " errors when trying to validate the schema set");
-            int i = 0;
-            for (String Err : PS._Errors)
-              LOG.error("    " + (++i) + " - " + Err);
-            return null;
-          }
-
+        
         return PS;
       }
 
@@ -130,15 +130,13 @@ public abstract class Parser
           }
       }
 
-    public static final String _BASE_TILDA_SCHEMA_RESOURCE = "tilda/data/_tilda.Tilda.json";
-    
-    public static boolean loadDependencies(ParserSession PS, Schema BaseSchema)
+    public static boolean loadDependencies(ParserSession PS, Schema BaseSchema) throws Exception
       {
         Schema BaseTilda = null;
-        if (BaseSchema._ResourceName.endsWith(_BASE_TILDA_SCHEMA_RESOURCE) == false)
+        if (BaseSchema._ResourceName.endsWith(Schema._BASE_TILDA_SCHEMA_RESOURCE) == false)
           {
-            LOG.info("Loading base Tilda schema from '" + _BASE_TILDA_SCHEMA_RESOURCE + "'.");
-            BaseTilda = fromResource(_BASE_TILDA_SCHEMA_RESOURCE);
+            LOG.info("Loading base Tilda schema from '" + Schema._BASE_TILDA_SCHEMA_RESOURCE + "'.");
+            BaseTilda = fromResource(Schema._BASE_TILDA_SCHEMA_RESOURCE);
             if (BaseTilda == null)
               return false;
             PS.addDependencySchema(BaseTilda);
@@ -163,7 +161,7 @@ public abstract class Parser
             break;
         if (PS.getErrorCount() == 0)
           {
-            if (PS.getSchema(BaseSchema._Package, BaseSchema._Name) == null)
+            if (PS.getSchemaForDependency(BaseSchema._Package, BaseSchema._Name) == null)
               {
                 PS.addDependencySchema(BaseSchema);
               }
@@ -198,5 +196,5 @@ public abstract class Parser
             }
         return true;
       }
-
+    
   }

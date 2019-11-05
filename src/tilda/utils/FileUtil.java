@@ -49,13 +49,13 @@ public class FileUtil
         throws Exception;
       }
 
-    public static void Iterate(File StartingFolder, FileProcessor FP, String[] Excludes)
+    public static void iterate(File StartingFolder, FileProcessor FP, String[] Excludes)
     throws Exception
       {
-        Iterate(StartingFolder, FP, Excludes, 0);
+        iterate(StartingFolder, FP, Excludes, 0);
       }
 
-    public static void Iterate(File StartingFolder, FileProcessor FP, String[] Excludes, int Level)
+    public static void iterate(File StartingFolder, FileProcessor FP, String[] Excludes, int Level)
     throws Exception
       {
         File[] Files = StartingFolder.listFiles();
@@ -72,7 +72,7 @@ public class FileUtil
             for (File F : Files)
               {
                 if (isExcluded(F, Excludes) == false && F.isDirectory() == true)
-                  Iterate(F, FP, Excludes, Level + 1);
+                  iterate(F, FP, Excludes, Level + 1);
               }
           }
         FP.endFolder(StartingFolder);
@@ -82,7 +82,7 @@ public class FileUtil
       {
         if (Excludes != null)
           for (String s : Excludes)
-            if (TextUtil.StarEqual(f.getName(), s) == true)
+            if (TextUtil.starEqual(f.getName(), s) == true)
               return true;
         return false;
       }

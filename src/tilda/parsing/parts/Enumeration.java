@@ -68,16 +68,16 @@ public class Enumeration
         O._Name = _Name;
         O._Description = _Description;
         
-        Column C = new Column("id", _Id._TypeStr, _Id._Size, false, ColumnMode.NORMAL, true, null, "The id for this enumeration.");
+        Column C = new Column("id", _Id._TypeStr, _Id._Size, false, ColumnMode.NORMAL, true, null, "The id for this enumeration.", _Id._Precision, _Id._Scale);
         O._Columns.add(C);
         
-        C = new Column("value", _Value._TypeStr, _Value._Size, false, ColumnMode.NORMAL, false, null, "The value for this enumeration.");
+        C = new Column("value", _Value._TypeStr, _Value._Size, false, ColumnMode.NORMAL, false, null, "The value for this enumeration.", _Value._Precision, _Value._Scale);
         O._Columns.add(C);
         
-        C = new Column("label", ColumnType.STRING.toString(), 254, false, ColumnMode.NORMAL, false, ProtectionType.ABSOLUTE, "The label for this enumeration.");
+        C = new Column("label", ColumnType.STRING.toString(), 254, false, ColumnMode.NORMAL, false, ProtectionType.ABSOLUTE, "The label for this enumeration.", null, null);
         O._Columns.add(C);
         
-        C = new Column("deactivated", ColumnType.DATETIME.toString(), null, true, ColumnMode.NORMAL, false, null, "The label for this enumeration.");
+        C = new Column("deactivated", ColumnType.DATETIME.toString(), null, true, ColumnMode.NORMAL, false, null, "The label for this enumeration.", null, null);
 //        C._FrameworkManaged = true;
         O._Columns.add(C);
         

@@ -23,69 +23,69 @@ public class NumberFormatUtil
   {
     protected static final NumberFormat F1a = new DecimalFormat("#0.0");
 
-    public static final String PrintWith1Dec(double Number)
+    public static final String printWith1Dec(double Number)
       {
         return F1a.format(Number);
       }
 
     protected static final NumberFormat F1b = new DecimalFormat("#0.00");
 
-    public static final String PrintWith2Dec(double Number)
+    public static final String printWith2Dec(double Number)
       {
         return F1b.format(Number);
       }
 
     protected static final NumberFormat F1c = new DecimalFormat("#0.000");
 
-    public static final String PrintWith3Decimals(double Number)
+    public static final String printWith3Decimals(double Number)
       {
         return F1c.format(Number);
       }
 
-    public static final String PrintPercentWith1Dec(long Total, long Sub)
+    public static final String printPercentWith1Dec(long Total, long Sub)
       {
         return F1a.format(100.0d * ((Sub * 1.0d) / (Total * 1.0d)));
       }
 
-    public static final String PrintPercentWith2Dec(long Total, long Sub)
+    public static final String printPercentWith2Dec(long Total, long Sub)
       {
         return F1b.format(100.0d * ((Sub * 1.0d) / (Total * 1.0d)));
       }
 
-    public static final String PrintPercentWith3Dec(long Total, long Sub)
+    public static final String printPercentWith3Dec(long Total, long Sub)
       {
         return F1c.format(100.0d * ((Sub * 1.0d) / (Total * 1.0d)));
       }
 
     protected static final NumberFormat F2a = new DecimalFormat("###,###");
 
-    public static final String PrintWith000Sep(long Number)
+    public static final String printWith000Sep(long Number)
       {
         return F2a.format(Number);
       }
 
     protected static final NumberFormat F2b = new DecimalFormat("###,###.0");
 
-    public static final String PrintWith1DecAnd000Sep(double Number)
+    public static final String printWith1DecAnd000Sep(double Number)
       {
         return F2b.format(Number);
       }
 
     protected static final NumberFormat F2c = new DecimalFormat("###,###.00");
 
-    public static final String PrintWith2DecAnd000Sep(double Number)
+    public static final String printWith2DecAnd000Sep(double Number)
       {
         return F2c.format(Number);
       }
     
-    public static final String LeadingZero1(long X)
+    public static final String leadingZero1(long X)
       {
         return X >= 10 || X <= -10 ? Long.toString(X) 
              : X >= 0 ? "0"+X 
              : "-0"+(-X);
       }
 
-    public static final String LeadingZero2(long X)
+    public static final String leadingZero2(long X)
       {
         return X >= 100 || X <= -100 ? Long.toString(X) 
              : X > -100 && X <= -10 ? "-0"+(-X)
@@ -94,7 +94,7 @@ public class NumberFormatUtil
              : "0"+X;
       }
 
-    public static final String LeadingZero3(long X)
+    public static final String leadingZero3(long X)
       {
         return X >=  1000 || X <= -1000 ? Long.toString(X) 
              : X >  -1000 && X <=  -100 ?   "-0"+(-X) 
@@ -103,6 +103,12 @@ public class NumberFormatUtil
              : X >=     0 && X <     10 ?  "000"+X
              : X >=    10 && X <    100 ?   "00"+X
              : "0"+X;
+      }
+
+    public static final String leadingSpace(long X, int spaces)
+      {
+        int length = String.valueOf(X).length();
+        return (length < spaces ? PaddingUtil.getPad(spaces-length):"")+X;
       }
     
   }

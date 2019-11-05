@@ -22,6 +22,6 @@ import tilda.db.Connection;
 
 public interface WriterObject extends ReaderObject
   {
-    public boolean Touch(Connection C) throws Exception;
-    public boolean Write(Connection C) throws Exception;
+    public boolean touch(Connection C) throws Exception;
+    public boolean write(Connection C) throws Exception;
   }

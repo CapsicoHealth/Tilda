@@ -72,7 +72,7 @@ public class AppData implements CodeGenAppData
             {
               Out.println();
               Out.println("   @Override");
-              Out.println("   public " + JavaJDBCType.getFieldType(C) + " get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()");
+              Out.println("   public " + JavaJDBCType.getFieldType(C) + " get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "()");
               Out.println("    {");
               Out.println("      // return something");
               Out.println("    }");
@@ -81,7 +81,7 @@ public class AppData implements CodeGenAppData
           {
             Out.println();
             Out.println("   @Override");
-            Out.println("   protected boolean BeforeWrite(Connection C) throws Exception");
+            Out.println("   protected boolean beforeWrite(Connection C) throws Exception");
             Out.println("     {");
             Out.println("       // Do things before writing the object to disk, for example, take care of AUTO fields.");
             Out.println("       return true;");
@@ -89,7 +89,7 @@ public class AppData implements CodeGenAppData
           }
         Out.println();
         Out.println("   @Override");
-        Out.println("   protected boolean AfterRead(Connection C) throws Exception");
+        Out.println("   protected boolean afterRead(Connection C) throws Exception");
         Out.println("     {");
         Out.println("       // Do things after an object has just been read form the data store, for example, take care of AUTO fields.");
         Out.println("       return true;");

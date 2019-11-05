@@ -23,7 +23,7 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.data.Key_Data;
 import tilda.data.Key_Factory;
-import tilda.data.Testing_Factory;
+import tilda.data_test.Testing_Factory;
 import tilda.db.Connection;
 import tilda.db.ConnectionPool;
 import tilda.db.SelectQuery;
@@ -46,7 +46,7 @@ public class QueryTest extends Key_Factory
           {
             C = ConnectionPool.get("MAIN");
 
-            Key_Data K = Key_Factory.Create(-3, "TOTO", 0, 100);
+            Key_Data K = Key_Factory.create(-3, "TOTO", 0, 100);
 
               {
                 UpdateQuery Q = newUpdateQuery(C);
@@ -68,7 +68,7 @@ public class QueryTest extends Key_Factory
             Q.append(" set ").append(COLS.MAX).append("=").append(COLS.MAX).append("+").append(COLS.COUNT)
              .append(" where ").append(COLS.REFNUM).append("=").append(K.getRefnum())
              ;            
-            C.ExecuteUpdate(Key_Factory.SCHEMA_LABEL, Key_Factory.TABLENAME_LABEL, Q.toString());
+            C.executeUpdate(Key_Factory.SCHEMA_LABEL, Key_Factory.TABLENAME_LABEL, Q.toString());
 
             C.rollback();
           }

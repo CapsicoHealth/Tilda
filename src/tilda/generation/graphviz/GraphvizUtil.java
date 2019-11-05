@@ -212,6 +212,8 @@ public class GraphvizUtil
     private LinkedHashSet<String> getViewObjects(View view)
       {
         LinkedHashSet<String> lhs = new LinkedHashSet<String>();
+        if (view == null)
+          return lhs;
         for (ViewColumn viewColumn : view._ViewColumns)
           {
             if (viewColumn._SameAsObj == null)
@@ -933,7 +935,7 @@ public class GraphvizUtil
         writer.println("</HEAD>");
         writer.println("<BODY>");
         
-        DG.writeSearchHTML(writer); // Add Search Box
+        DocGen.writeSearchHTML(writer, true); // Add Search Box
         
         writer.println("<BR><BR><HR>");
         writer.println("<DIV class='svgs'>");

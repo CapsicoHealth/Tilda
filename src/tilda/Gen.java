@@ -17,6 +17,8 @@
 package tilda;
 
 import java.util.Iterator;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -31,9 +33,24 @@ import tilda.parsing.parts.Schema;
 import tilda.utils.AsciiArt;
 import tilda.utils.SystemValues;
 
+/**
+ * This command line utility will generate necessary artifacts from a tilda schema definition file as defined in
+ * <A href="https://github.com/CapsicoHealth/Tilda/wiki/Tilda-JSON-Syntax">the Tilda Wiki</A>.
+ * <P>
+ * It takes one or more parameters that represent the paths to the Tilda JSON files to be processed.
+ * This utility automatically handles dependencies for any listed schemas. For example:
+ * <PRE>
+ *   tilda.Gen C:/projects/Xyz/src/com/myCo/package/schema1/_tilda.Schema1.json
+ * </PRE>
+ * 
+ * @author Laurent Hasson
+ *
+ */
 public class Gen
   {
-    static final Logger LOG = LogManager.getLogger(Gen.class.getName());
+    static final Logger      LOG   = LogManager.getLogger(Gen.class.getName());
+
+    static final Set<String> NOTES = new TreeSet<String>();
 
     public static void main(String[] Args)
       {
@@ -44,54 +61,69 @@ public class Gen
             LOG.error("The utility must be called with a path to a Tilda json file");
             System.exit(-1);
           }
-
+        
         for (String path : Args)
           {
             try
               {
                 GeneratorSession G = new GeneratorSession("java", 8, -1, "postgres", 9, -1);
-                
+
                 ParserSession PS = Parser.parse(path, G.getSql());
                 if (PS == null)
+                  throw new Exception("An error occurred trying to process Tilda file '" + path + "'.");
+                if (PS.getErrorCount() > 0)
                   {
-                    throw new Exception("An error occurred trying to process Tilda file '" + path + "'.");
+                    PS.printErrors();
+                    throw new java.lang.RuntimeException("There were "+PS.getErrorCount()+" errors detected during gen.");
                   }
-                else
+
+                LOG.info("Loaded Tilda schema '" + PS._Main.getFullName() + "'.");
+                if (PS.hasDependencies() == true)
                   {
-                    LOG.info("Loaded Tilda schema '" + PS._Main.getFullName() + "'.");
-                    if (PS.hasDependencies() == true)
-                      {
-                        LOG.info("  Loaded and validated dependencies:");
-                        Iterator<Schema> I = PS.getDependenciesIterator();
-                        while (I.hasNext() == true)
-                          LOG.debug("    - " + I.next().getFullName() + ".");
-                      }
-                    Generator.generate(PS._Main, G);
-                    Manifest.update(PS);
-                    // new GraphvizUtil(PS._Main, G).writeSchema();
-                    new DocGen(PS._Main, G).writeSchema(PS);
-                    LOG.info("Generated Tilda code for schema '" + PS._Main.getFullName() + "'.");
+                    LOG.info("  Loaded and validated dependencies:");
+                    Iterator<Schema> I = PS.getDependenciesIterator();
+                    while (I.hasNext() == true)
+                      LOG.debug("    - " + I.next().getFullName() + ".");
+                  }
+                Generator.generate(PS._Main, G);
+                Manifest.update(PS);
+                // new GraphvizUtil(PS._Main, G).writeSchema();
+                new DocGen(PS._Main, G).writeSchema(PS);
+                LOG.info("Generated Tilda code for schema '" + PS._Main.getFullName() + "'.");
+
+                if (PS.getNoteCount() > 0)
+                  {
+                    NOTES.addAll(PS._Notes);
                   }
               }
             catch (Throwable T)
               {
                 LOG.info("\n"
-                        +"          ======================================================================================\n"
-                        +AsciiArt.Error("               ")
-                        +"\n"
-                        +"                Couldn't load the Tilda definition file " + path + ".\n"
-                        +"          ======================================================================================\n"
-                        , T);
+                + "          ======================================================================================\n"
+                + AsciiArt.Error("               ")
+                + "\n"
+                + "                Couldn't load the Tilda definition file " + path + ".\n"
+                + "          ======================================================================================\n", T);
                 System.exit(-1);
               }
           }
-        
+
+        if (NOTES.size() > 0)
+          {
+            LOG.info("\n");
+            LOG.info("================================================ Gen Notes ================================================");
+            LOG.info("There were " + NOTES.size() + " notes raised when validating the generated code.");
+            int i = 0;
+            for (String Note : NOTES)
+              LOG.info("    " + (++i) + (i < 10 ? " " : "") + " - " + Note);
+            LOG.info("\n");
+          }
+
         LOG.info("\n"
-                +"          ======================================================================================\n"
-                +AsciiArt.Woohoo("                       ")
-                +"\n"
-                +"              All Tilda code, migration scripts and documentation was generated succesfully.    \n"
-                +"          ======================================================================================"
-                );
+        + "          ======================================================================================\n"
+        + AsciiArt.Woohoo("                       ")
+        + "\n"
+        + "              All Tilda code, migration scripts and documentation was generated succesfully.    \n"
+        + "          ======================================================================================");
       }
   }

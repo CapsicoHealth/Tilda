@@ -18,32 +18,39 @@ package tilda.migration.actions;
 
 import tilda.data.ZoneInfo_Factory;
 import tilda.db.Connection;
+import tilda.db.metadata.ColumnMeta;
 import tilda.enums.ColumnType;
 import tilda.migration.MigrationAction;
 import tilda.parsing.parts.Column;
 
 public class ColumnAlterType extends MigrationAction
   {
-    public ColumnAlterType(Column Col, ColumnType CurrentType)
+    public ColumnAlterType(Connection C, ColumnMeta CMeta, Column Col)
       {
-        super(false);
+        super(Col._ParentObject._ParentSchema._Name, Col._ParentObject._Name, false);
         _Col = Col;
-        _CurrentType = CurrentType;
+        _CMeta = CMeta;
+        StringBuilder Str = new StringBuilder();
+        C.getColumnType(Str, Col.getType(), Col._Size, Col._Mode, Col.isCollection(), Col._Precision, Col._Scale);
+        _ColTypeStr = Str.toString();
       }
 
     protected Column _Col;
-    protected ColumnType _CurrentType;
+    protected String _ColTypeStr;
+    protected ColumnMeta _CMeta;
 
     public boolean process(Connection C)
     throws Exception
-      {
-        return C.alterTableAlterColumnType(_CurrentType, _Col, ZoneInfo_Factory.getEnumerationById("UTC"));
+      {       
+        return C.alterTableAlterColumnType(C, _CMeta, _Col, ZoneInfo_Factory.getEnumerationById("UTC"));
       }
+
 
     @Override
     public String getDescription()
       {
         return "Alter table "+_Col._ParentObject.getFullName()
-              +" alter column "+_Col.getName()+" type from "+_CurrentType.toString()+" to "+_Col.getType().toString();
+              +" alter column "+_Col.getName()+" type from "+_CMeta._TypeSql+(_CMeta._TildaType == ColumnType.STRING &&  _CMeta._Size > 0 ? "("+_CMeta._Size+")":"")
+              +" to "+_ColTypeStr;
       }
   }

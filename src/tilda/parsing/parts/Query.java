@@ -69,6 +69,13 @@ public class Query
       }
 
 
+    public Query(Query q)
+      {
+        _DB = q._DB;
+        _Clause = q._Clause;
+      }
+
+
     protected static class Match
       {
         public Match(int start, int end, String name, char type)
@@ -114,7 +121,7 @@ public class Query
         if (TextUtil.isNullOrEmpty(_Clause) == true)
           return PS.AddError(OwnerObjName + " is defining an subWhereclause without a query value.");
 
-        if (TextUtil.CrudeStringValidation(_Clause, '\'', '\'') == false)
+        if (TextUtil.crudeStringValidation(_Clause, '\'', '\'') == false)
           PS.AddError(OwnerObjName + " is defining a subWhereclause '" + _Clause + "' which has an unterminated string sequence.");
 
         // LOG.debug("Start clause: "+_Clause+";");
@@ -171,7 +178,7 @@ public class Query
             if (clauseStrIndex <  m._start)
              {
                NewClauseStatic .append(_Clause, clauseStrIndex, m._start);
-               String Sub = TextUtil.EscapeDoubleQuoteWithSlash(_Clause.substring(clauseStrIndex, m._start));
+               String Sub = TextUtil.escapeDoubleQuoteWithSlash(_Clause.substring(clauseStrIndex, m._start));
                if (clauseStrIndex == 0)
                 NewClauseDynamic.append(Sub.substring(1, Sub.length()-1));
                else
@@ -187,7 +194,7 @@ public class Query
                 NewClauseStatic.append("?");
                 NewClauseDynamic.append(").append(\"?\").append(");
                 String var = m._name;
-                if (TextUtil.FindElement(ColumnNames, var, false, 0) != -1)
+                if (TextUtil.findElement(ColumnNames, var, false, 0) != -1)
                   {
                     PS.AddError(OwnerObjName + " is defining a subWhereclause '" + _Clause + "' which has a parameter marker '?(" + m._name + ")' which is already taken as a column name.");
                     break;
@@ -196,7 +203,7 @@ public class Query
                 if (TextUtil.isNullOrEmpty(var) == true)
                   var = lastColumnMatch.getName();
                 else
-                  var = lastColumnMatch.getName() + TextUtil.CapitalizeFirstCharacter(var);
+                  var = lastColumnMatch.getName() + TextUtil.capitalizeFirstCharacter(var);
                 _Attributes.add(new Attribute(lastColumnMatch, var, m._type == 'A'));
               }
             else if (m._type == 'C')
@@ -232,7 +239,7 @@ public class Query
         if (clauseStrIndex < _Clause.length())
           {
             NewClauseStatic .append(_Clause, clauseStrIndex, _Clause.length());
-            String Sub = TextUtil.EscapeDoubleQuoteWithSlash(_Clause.substring(clauseStrIndex, _Clause.length()));
+            String Sub = TextUtil.escapeDoubleQuoteWithSlash(_Clause.substring(clauseStrIndex, _Clause.length()));
             NewClauseDynamic.append(Sub.substring(clauseStrIndex == 0 ? 1 : 0, Sub.length()-1));
           }
         

@@ -21,23 +21,23 @@ import tilda.migration.MigrationAction;
 
 public class TableCreate extends MigrationAction
   {
-    public TableCreate(tilda.parsing.parts.Object O)
+    public TableCreate(tilda.parsing.parts.Object Obj)
       {
-        super(false);
-        _O = O;
+        super(Obj._ParentSchema._Name, Obj._Name, false);
+        _Obj = Obj;
       }
 
-    protected tilda.parsing.parts.Object _O;
+    protected tilda.parsing.parts.Object _Obj;
 
     public boolean process(Connection C)
     throws Exception
       {
-        return C.createTable(_O);
+        return C.createTable(_Obj);
       }
 
     @Override
     public String getDescription()
       {
-        return "Create table "+_O.getFullName();
+        return "Create table "+_Obj.getFullName();
       }
   }

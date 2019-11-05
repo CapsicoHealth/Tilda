@@ -30,26 +30,26 @@ public class NumberFormatUtilTest
 
     private static void Test1()
       {
-        System.out.println(NumberFormatUtil.LeadingZero1(-10));
-        System.out.println(NumberFormatUtil.LeadingZero1(- 1));
-        System.out.println(NumberFormatUtil.LeadingZero1(  1));
-        System.out.println(NumberFormatUtil.LeadingZero1( 10));
+        System.out.println(NumberFormatUtil.leadingZero1(-10));
+        System.out.println(NumberFormatUtil.leadingZero1(- 1));
+        System.out.println(NumberFormatUtil.leadingZero1(  1));
+        System.out.println(NumberFormatUtil.leadingZero1( 10));
         
-        System.out.println(NumberFormatUtil.LeadingZero2(-200));
-        System.out.println(NumberFormatUtil.LeadingZero2(- 20));
-        System.out.println(NumberFormatUtil.LeadingZero2(-  2));
-        System.out.println(NumberFormatUtil.LeadingZero2(   2));
-        System.out.println(NumberFormatUtil.LeadingZero2(  20));
-        System.out.println(NumberFormatUtil.LeadingZero2( 200));
+        System.out.println(NumberFormatUtil.leadingZero2(-200));
+        System.out.println(NumberFormatUtil.leadingZero2(- 20));
+        System.out.println(NumberFormatUtil.leadingZero2(-  2));
+        System.out.println(NumberFormatUtil.leadingZero2(   2));
+        System.out.println(NumberFormatUtil.leadingZero2(  20));
+        System.out.println(NumberFormatUtil.leadingZero2( 200));
         
-        System.out.println(NumberFormatUtil.LeadingZero3(-3000));
-        System.out.println(NumberFormatUtil.LeadingZero3(- 300));
-        System.out.println(NumberFormatUtil.LeadingZero3(-  30));
-        System.out.println(NumberFormatUtil.LeadingZero3(-   3));
-        System.out.println(NumberFormatUtil.LeadingZero3(    3));
-        System.out.println(NumberFormatUtil.LeadingZero3(   30));
-        System.out.println(NumberFormatUtil.LeadingZero3(  300));
-        System.out.println(NumberFormatUtil.LeadingZero3( 3000));
+        System.out.println(NumberFormatUtil.leadingZero3(-3000));
+        System.out.println(NumberFormatUtil.leadingZero3(- 300));
+        System.out.println(NumberFormatUtil.leadingZero3(-  30));
+        System.out.println(NumberFormatUtil.leadingZero3(-   3));
+        System.out.println(NumberFormatUtil.leadingZero3(    3));
+        System.out.println(NumberFormatUtil.leadingZero3(   30));
+        System.out.println(NumberFormatUtil.leadingZero3(  300));
+        System.out.println(NumberFormatUtil.leadingZero3( 3000));
         
       }
   }

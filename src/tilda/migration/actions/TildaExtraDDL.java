@@ -16,8 +16,6 @@
 
 package tilda.migration.actions;
 
-import java.sql.SQLException;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -38,7 +36,7 @@ public class TildaExtraDDL extends MigrationAction
     public TildaExtraDDL(Schema S, String ResourceName)
       throws Exception
       {
-        super(false);
+        super(S._Name, null, false);
         _ResourceName = FileUtil.getBasePathFromFileOrResource(S._ResourceName) + ResourceName;
         _SchemaName = S._Name;
       }
@@ -53,16 +51,16 @@ public class TildaExtraDDL extends MigrationAction
 
         String Str = FileUtil.getFileOfResourceContents(_ResourceName);
         if (TextUtil.isNullOrEmpty(Str) == true)
+          return true;
+
+        if (C.executeDDL(_SchemaName, "*", Str) == false)
           return false;
 
-        if (C.ExecuteDDL(_SchemaName, "*", Str) == false)
-          return false;
-
-        Maintenance_Data M = Maintenance_Factory.LookupByPrimaryKey("EXTERNAL_DDL", _ResourceName);
-        if (M.Read(C) == false)
-          M = Maintenance_Factory.Create("EXTERNAL_DDL", _ResourceName);
+        Maintenance_Data M = Maintenance_Factory.lookupByPrimaryKey("EXTERNAL_DDL", _ResourceName);
+        if (M.read(C) == false)
+          M = Maintenance_Factory.create("EXTERNAL_DDL", _ResourceName);
         M.setValue(Str);
-        return M.Write(C);
+        return M.write(C);
       }
 
     @Override
@@ -78,9 +76,9 @@ public class TildaExtraDDL extends MigrationAction
         if (DBMeta.getTableMeta(Maintenance_Factory.SCHEMA_LABEL, Maintenance_Factory.TABLENAME_LABEL) == null)
           return true;
         String Str = FileUtil.getFileOfResourceContents(_ResourceName);
-        if (Str == null)
+        if (TextUtil.isNullOrEmpty(Str) == true)
           return false;
-        Maintenance_Data M = Maintenance_Factory.LookupByPrimaryKey("EXTERNAL_DDL", _ResourceName);
-        return M.Read(C) == false || M.getValue().equals(Str.trim()) == false;
+        Maintenance_Data M = Maintenance_Factory.lookupByPrimaryKey("EXTERNAL_DDL", _ResourceName);
+        return M.read(C) == false || M.getValue().equals(Str.trim()) == false;
       }
   }

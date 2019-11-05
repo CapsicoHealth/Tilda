@@ -23,10 +23,13 @@ import java.util.Set;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.google.gson.annotations.SerializedName;
+
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.enums.DefaultType;
+import tilda.enums.FrameworkColumnType;
 import tilda.enums.MultiType;
 import tilda.enums.ObjectLifecycle;
 import tilda.enums.ProtectionType;
@@ -38,15 +41,14 @@ import tilda.parsing.parts.helpers.ValidationHelper;
 import tilda.utils.PaddingTracker;
 import tilda.utils.TextUtil;
 
-import com.google.gson.annotations.SerializedName;
-
 public class Column extends TypeDef
   {
-    static final Logger                LOG                = LogManager.getLogger(Column.class.getName());
+    static final Logger                  LOG                = LogManager.getLogger(Column.class.getName());
 
     /*@formatter:off*/
 	@SerializedName("name"       ) protected String      _Name       ;
-	@SerializedName("sameas"     ) public String         _SameAs     ;
+	@SerializedName("sameas"     ) public String         _SameAs__DEPRECATED;
+    @SerializedName("sameAs"     ) public String         _SameAs     ;
     @SerializedName("nullable"   ) public Boolean        _Nullable   ;
     @SerializedName("mode"       ) public String         _ModeStr    ;
     @SerializedName("invariant"  ) public Boolean        _Invariant  ;
@@ -55,42 +57,78 @@ public class Column extends TypeDef
     @SerializedName("mapper"     ) public ColumnMapper   _Mapper     ;
     @SerializedName("enum"       ) public ColumnEnum     _Enum       ;
     @SerializedName("values"     ) public ColumnValue[]  _Values     ;
+    @SerializedName("default"    ) public String         _Default    ;
     @SerializedName("jsonSchema" ) public JsonSchema     _JsonSchema ;
     /*@formatter:on*/
 
-    public transient boolean           _FrameworkManaged  = false;
-    public transient AggregateType     _Aggregate         = null;                                        // For view columns really.
-    public transient ColumnMode        _Mode;
-    public transient ProtectionType    _Protect;
-    public transient Column            _SameAsObj;
-    public transient Object            _ParentObject;
-    public transient PaddingTracker    _PadderValueNames  = new PaddingTracker();
-    public transient PaddingTracker    _PadderValueValues = new PaddingTracker();
-    public transient boolean           _PrimaryKey        = false;
-    public transient boolean           _UniqueIndex       = false;
-    public transient ColumnMapper      _MapperDef;
-    public transient ColumnValue       _DefaultCreateValue;
-    public transient ColumnValue       _DefaultUpdateValue;
+    public transient FrameworkColumnType _FCT               = FrameworkColumnType.NONE;
+    public transient AggregateType       _Aggregate         = null;                                        // For view columns really.
+    public transient ColumnMode          _Mode;
+    public transient ProtectionType      _Protect;
+    public transient Column              _SameAsObj;
+    public transient Object              _ParentObject;
+    public transient PaddingTracker      _PadderValueNames  = new PaddingTracker();
+    public transient PaddingTracker      _PadderValueValues = new PaddingTracker();
+    public transient boolean             _PrimaryKey        = false;
+    public transient boolean             _ForeignKey        = false;
+    public transient boolean             _UniqueIndex       = false;
+    public transient ColumnMapper        _MapperDef;
+    public transient ColumnValue         _DefaultCreateValue;
+    public transient ColumnValue         _DefaultUpdateValue;
 
+    protected transient int              _SequenceOrder     = -1;
 
-    protected transient int            _SequenceOrder     = -1;
-
-    private transient ValidationStatus _Validation        = ValidationStatus.NONE;
+    private transient ValidationStatus   _Validation        = ValidationStatus.NONE;
 
     public Column()
       {
+      }
+
+    public Column(Column c)
+      {
+        super(c);
+        _Name = c._Name;
+        _SameAs__DEPRECATED = c._SameAs__DEPRECATED;
+        _SameAs = c._SameAs;
+        _Nullable = c._Nullable;
+        _ModeStr = c._ModeStr;
+        _Invariant = c._Invariant;
+        _ProtectStr = c._ProtectStr;
+        _Description = c._Description;
+        if (c._Mapper != null)
+          _Mapper = new ColumnMapper(c._Mapper);
+        if (c._Enum != null)
+          _Enum = new ColumnEnum(c._Enum);
+        if (c._Values != null)
+          {
+            _Values = new ColumnValue[c._Values.length];
+            for (int i = 0; i < c._Values.length; ++i)
+              _Values[i] = new ColumnValue(c._Values[i]);
+          }
+        _Default = c._Default;
+        if (c._JsonSchema != null)
+          _JsonSchema = new JsonSchema(c._JsonSchema);
+      }
+
+    public Column(String Name, String TypeStr, Integer Size, String Description, Integer Precision, Integer Scale)
+      {
+        super(TypeStr, Size, Precision, Scale);
+        _Name = Name;
+        _Description = Description;
 
       }
 
-    public Column(String Name, String TypeStr, Integer Size, boolean Nullable, ColumnMode Mode, boolean Invariant, ProtectionType Protect, String Description)
+    public Column(String Name, String TypeStr, Integer Size, boolean Nullable, ColumnMode Mode, boolean Invariant, ProtectionType Protect, String Description, Integer Precision, Integer Scale)
       {
-        super(TypeStr, Size);
+        super(TypeStr, Size, Precision, Scale);
         _Name = Name;
         _Nullable = Nullable;
         _ModeStr = Mode == null ? null : Mode.name();
         _Invariant = Invariant;
         _ProtectStr = Protect == null ? null : Protect.name();
         _Description = Description;
+        _Precision = Precision;
+        _Scale = Scale;
       }
 
     public Column(String Name, ColumnType Type, String Description)
@@ -123,16 +161,31 @@ public class Column extends TypeDef
         // _Values = ColumnValue.deepCopy(Values);
       }
 
+    /**
+     * Gets the full Tilda name of the column, which includes the package name
+     * 
+     * @return The full Tilda name of the column, i.e., Package.Schema.Table.Column
+     */
     public String getFullName()
       {
         return _ParentObject.getFullName() + "." + _Name;
       }
 
+    /**
+     * Gets the full SQL name of the column, i.e., Schema.Table.Column
+     * 
+     * @return the full SQL name of the column, i.e., Schema.Table.Column
+     */
     public String getShortName()
       {
         return _ParentObject.getShortName() + "." + _Name;
       }
 
+    /**
+     * Gets the name of the column.
+     * 
+     * @return The name of the column
+     */
     public String getName()
       {
         return _Name;
@@ -151,19 +204,18 @@ public class Column extends TypeDef
 
     private void ValidateBase(ParserSession PS, Object ParentObject)
       {
-        
-        String N = getLogicalName();        
+
+        String N = getLogicalName();
         if (TextUtil.isNullOrEmpty(N) == true)
           {
             PS.AddError("Column '" + getFullName() + "' didn't define a 'name'. It is mandatory.");
             return;
           }
+        if (N.length() > PS._CGSql.getMaxColumnNameSize())
+          PS.AddError("Column '" + getFullName() + "' has a name that's too long: max allowed by your database is " + PS._CGSql.getMaxColumnNameSize() + " vs " + N.length() + " for this identifier.");
 
         if (ValidationHelper.isValidIdentifier(N) == false)
-          {
-            PS.AddError("Column '" + getFullName() + "' has a name '" + N + "' which is not valid. " + ValidationHelper._ValidIdentifierMessage);
-            return;
-          }
+          PS.AddError("Column '" + getFullName() + "' has a name '" + N + "' which is not valid. " + ValidationHelper._ValidIdentifierMessage);
 
         if (ValidateSameAs(PS) == false)
           return;
@@ -212,18 +264,34 @@ public class Column extends TypeDef
           PS.AddError("Column '" + getFullName() + "' is defining a jsonSchema, but is not of type JSON.");
         if (_JsonSchema != null)
           _JsonSchema.Validate(PS, this);
+
+        // if ((_Nullable == null || _Nullable == true)
+        // && _Values != null
+        // && (!_Name.equals("created") && !_Name.equals("lastUpdated"))
+        // && _SameAs == null)
+        // {
+        // PS.AddNote("Column '" + getFullName() + "' is defining a default value for a nullable column.");
+        // }
       }
 
 
     private boolean ValidateSameAs(ParserSession PS)
       {
-        if (TextUtil.isNullOrEmpty(_SameAs) == true)
+        if (TextUtil.isNullOrEmpty(_SameAs) == true && TextUtil.isNullOrEmpty(_SameAs__DEPRECATED) == true)
           return true;
 
         int Errs = PS.getErrorCount();
 
+        if (TextUtil.isNullOrEmpty(_SameAs__DEPRECATED) == false)
+          {
+            if (TextUtil.isNullOrEmpty(_SameAs) == false)
+              return PS.AddError("Column '" + getFullName() + "' is declaring both 'sameas' and 'sameAs'. Use 'sameAs' only since 'sameas' is deprecated.");
+            _SameAs = _SameAs__DEPRECATED;
+            _SameAs__DEPRECATED = null;
+          }
+
         ReferenceHelper R = ReferenceHelper.parseColumnReference(_SameAs, _ParentObject);
-        
+
         if (TextUtil.isNullOrEmpty(R._S) == true || TextUtil.isNullOrEmpty(R._O) == true || TextUtil.isNullOrEmpty(R._C) == true)
           PS.AddError("Column '" + getFullName() + "' is declaring sameas '" + _SameAs + "' with an incorrect syntax. It should be '(((package\\.)?schema\\.)?object\\.)?column'.");
         else
@@ -285,8 +353,14 @@ public class Column extends TypeDef
          * }
          */
 
-        if (_Size != null && _Size != 0 && _Size != _SameAsObj._Size)
-          PS.AddError("Column '" + getFullName() + "' is a 'sameas' and is redefining a size '" + _Size + "' which doesn't match the destination column's size '" + _SameAsObj._Size + "'. Note that redefining a size for a sameas column is superfluous in the first place.");
+        if (_SameAsObj._Precision != null)
+          _Precision = _SameAsObj._Precision;
+
+        if (_SameAsObj._Scale != null)
+          _Scale = _SameAsObj._Scale;
+
+        if (_Size != null && _Size != 0 && _Size < _SameAsObj._Size)
+          PS.AddError("Column '" + getFullName() + "' is a 'sameas' and is redefining a size '" + _Size + "' that is lower that the origianal column's size '" + _SameAsObj._Size + "'. You can only enlarge a column (for example to go from a CHAR to a VARCHAR), not shrink it.");
         else if (_Mapper != null && _Mapper._Multi != MultiType.NONE)
           {
             _TypeStr += _Mapper._Multi == MultiType.LIST ? "[]"
@@ -318,7 +392,7 @@ public class Column extends TypeDef
               _Values = ColumnValue.deepCopy(_SameAsObj._Values);
           }
 
-        if (_ProtectStr != null)
+        if (_ProtectStr != null && _ProtectStr.equals(_SameAsObj._ProtectStr) == false)
           PS.AddError("Column '" + getFullName() + "' is a 'sameas' and is redefining 'protect', which is not allowed.");
         else
           _ProtectStr = _SameAsObj._ProtectStr;
@@ -353,6 +427,13 @@ public class Column extends TypeDef
 
     private boolean ValidateValues(ParserSession PS)
       {
+        if (_Values != null && _Values.length > 0 && TextUtil.isNullOrEmpty(_Default) == false)
+          return PS.AddError("Column '" + getFullName() + "' defines a 'default' and 'values' attributes. Only one or the other is alowed.");
+
+        if (TextUtil.isNullOrEmpty(_Default) == false)
+          _Values = new ColumnValue[] { new ColumnValue(_Name + "_CreateDefault", _Default, null, null, null, DefaultType.CREATE)
+          };
+
         if (_Values == null || _Values.length == 0)
           return true;
 
@@ -399,19 +480,41 @@ public class Column extends TypeDef
 
     public boolean isCreateColumn()
       {
-        return _FrameworkManaged == false
+        return _FCT == FrameworkColumnType.NONE
         && _Mode == ColumnMode.NORMAL
         && _ParentObject.isAutoGenPrimaryKey(this) == false
         && _DefaultCreateValue == null
         && (_Invariant == false && _Nullable == false
         || _Invariant == true);
-
       }
+
+    /*
+     * public boolean isOCCGenerated()
+     * {
+     * return _ParentObject.isOCC() == true && _Type == ColumnType.DATETIME && (_Name.equalsIgnoreCase("created") == true || _Name.equalsIgnoreCase("lastUpdated") == true ||
+     * _Name.equalsIgnoreCase("createdETL") == true || _Name.equalsIgnoreCase("lastUpdatedETL") == true || _Name.equalsIgnoreCase("deleted") == true);
+     * }
+     * 
+     * public boolean isOCCLastUpdated()
+     * {
+     * return _ParentObject.isOCC() == true && _Type == ColumnType.DATETIME && _Name.equalsIgnoreCase("lastUpdated") == true;
+     * }
+     * 
+     * public boolean isOCCDeleted()
+     * {
+     * return _ParentObject.isOCC() == true && _Type == ColumnType.DATETIME && _Name.equalsIgnoreCase("deleted") == true;
+     * }
+     * 
+     * public static boolean isOCCColumnName(String Name)
+     * {
+     * return Name.equalsIgnoreCase("created") || Name.equalsIgnoreCase("lastUpdated") || Name.equalsIgnoreCase("deleted");
+     * }
+     */
 
     public VisibilityType getVisibility()
       {
-        return _ParentObject.getLifecycle() == ObjectLifecycle.READONLY || _MapperDef != null || (_FrameworkManaged == true && isOCCLastUpdated()==false && isOCCDeleted()==false) ? VisibilityType.PRIVATE
-        : _Invariant == true || _PrimaryKey == true || (_Mode == ColumnMode.AUTO && isOCCLastUpdated()==false && isOCCDeleted()==false) ? VisibilityType.PROTECTED
+        return _ParentObject.getLifecycle() == ObjectLifecycle.READONLY || _MapperDef != null || (_FCT != FrameworkColumnType.NONE && _FCT != FrameworkColumnType.OCC_LASTUPDATED && _FCT != FrameworkColumnType.OCC_DELETED) ? VisibilityType.PRIVATE
+        : _Invariant == true || _PrimaryKey == true || (_Mode == ColumnMode.AUTO && _FCT != FrameworkColumnType.OCC_LASTUPDATED && _FCT != FrameworkColumnType.OCC_DELETED) ? VisibilityType.PROTECTED
         : VisibilityType.PUBLIC;
       }
 
@@ -425,23 +528,20 @@ public class Column extends TypeDef
         return _PrimaryKey == true || _UniqueIndex == true;
       }
 
-    public boolean isOCCGenerated()
-      {
-        return _ParentObject.isOCC() == true && _Type == ColumnType.DATETIME && (_Name.equals("created") == true || _Name.equals("lastUpdated") == true || _Name.equals("createdETL") == true || _Name.equals("lastUpdatedETL") == true || _Name.equals("deleted") == true);
-      }
-    public boolean isOCCLastUpdated()
-      {
-        return _ParentObject.isOCC() == true && _Type == ColumnType.DATETIME && _Name.equals("lastUpdated") == true;
-      }
-    public boolean isOCCDeleted()
-      {
-        return _ParentObject.isOCC() == true && _Type == ColumnType.DATETIME && _Name.equals("deleted") == true;
-      }
-
     public boolean isJSONColumn()
       {
         return (_PrimaryKey == false || _ParentObject.isAutoGenPrimaryKey(this) == false)
-        && _Mode == ColumnMode.NORMAL && _FrameworkManaged == false && _Name.equals("deleted") == false;
+        && _Mode == ColumnMode.NORMAL && _FCT == FrameworkColumnType.NONE && _Name.equals("deleted") == false;
+      }
+
+    public boolean isPrimaryKey()
+      {
+        return _PrimaryKey;
+      }
+
+    public boolean isForeignKey()
+      {
+        return _ForeignKey;
       }
 
     public boolean hasBeenValidatedSuccessfully()
@@ -470,6 +570,12 @@ public class Column extends TypeDef
         return _SequenceOrder;
       }
 
+    /**
+     * returns a comma-separated string containing the <B>unescaped</B> column short names
+     * 
+     * @param L
+     * @return
+     */
     public static String PrintColumnList(List<Column> L)
       {
         StringBuilder Str = new StringBuilder();
@@ -478,17 +584,34 @@ public class Column extends TypeDef
         return Str.toString();
       }
 
+    @Override
     public String toString()
       {
-        return getClass().getName() + ":" + getFullName();
+        return getClass().getName() + ":" + getFullName() + " (" + super.toString() + ")";
+
       }
 
     String getLogicalName()
       {
         String N = getName();
-        if (N == null && _SameAs != null)
-          N = _SameAs.substring(_SameAs.lastIndexOf('.') + 1);
+        if (N == null)
+          {
+            // This method could be called before validation of columns, and so sameas may not have been validated yet
+            if (_SameAs != null)
+              N = _SameAs.substring(_SameAs.lastIndexOf('.') + 1);
+            else if (_SameAs__DEPRECATED != null)
+              N = _SameAs__DEPRECATED.substring(_SameAs__DEPRECATED.lastIndexOf('.') + 1);
+          }
         return N;
       }
 
+    /**
+     * A column needs an extra timezone support column if it is of type DATETIME and was not framework-generated (e.g., created, lastUpdated...)
+     * 
+     * @return
+     */
+    public boolean needsTZ()
+      {
+        return getType() == ColumnType.DATETIME && _FCT == FrameworkColumnType.NONE;
+      }
   }

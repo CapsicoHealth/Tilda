@@ -20,7 +20,9 @@ import java.sql.ResultSet;
 
 public interface RecordProcessor
  {
-   public void    Start  ();
-   public boolean Process(int Index, ResultSet RS) throws Exception;
-   public void    End    (boolean hasMore, int MaxIndex);
+   public void    start  ();
+   public boolean process(int Index, ResultSet RS) throws Exception;
+   default void   end    (boolean hasMore, int MaxIndex)
+    {
+    }
  }

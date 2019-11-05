@@ -26,7 +26,7 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import tilda.utils.JSONUtil;
+import tilda.utils.json.JSONUtil;
 
 public class ErrorList
   {
@@ -64,10 +64,10 @@ public class ErrorList
         throws IOException
           {
             Out.append("{");
-            JSONUtil.Print(Out, "m", true, _Msg);
-            JSONUtil.Print(Out, "l", false, _Line);
-            JSONUtil.Print(Out, "c1", false, _ColumnFrom);
-            JSONUtil.Print(Out, "c2", false, _ColumnTo);
+            JSONUtil.print(Out, "m", true, _Msg);
+            JSONUtil.print(Out, "l", false, _Line);
+            JSONUtil.print(Out, "c1", false, _ColumnFrom);
+            JSONUtil.print(Out, "c2", false, _ColumnTo);
             Out.append("}");
           }
 

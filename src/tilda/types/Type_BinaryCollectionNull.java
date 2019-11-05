@@ -18,7 +18,7 @@ package tilda.types;
 
 public class Type_BinaryCollectionNull extends Type_BinaryCollection implements Nullable
   {
-    public Type_BinaryCollectionNull(String SchemaName, String TableName, String ColumnName, long Count, String Description)
+    public Type_BinaryCollectionNull(String SchemaName, String TableName, String ColumnName, int Count, String Description)
       {
         super(SchemaName, TableName, ColumnName, Count, Description);
       }

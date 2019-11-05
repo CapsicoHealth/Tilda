@@ -47,6 +47,13 @@ public class JsonValidation
     @SerializedName("descr") public String   _Descr;
     /*@formatter:on*/
 
+    public JsonValidation(JsonValidation jv)
+      {
+        _Rule = jv._Rule;
+        _Descr = jv._Descr;
+      }
+    
+    
     public transient String _JavaCodeGenStr = null;
 
     public boolean Validate(ParserSession PS, Column C)
@@ -65,7 +72,7 @@ public class JsonValidation
         List<ColumnDefinition> ColDefs = new ArrayList<ColumnDefinition>();
         for (JsonField f : C._JsonSchema._Fields)
           {
-            ColumnDefinition Col = ColumnDefinition.Create(null, null, f._Name, f._Type, f._TypeCollection != MultiType.NONE, f._Nullable, f._Description);
+            ColumnDefinition Col = ColumnDefinition.create(null, null, f._Name, f._Type, f._TypeCollection != MultiType.NONE, f._Nullable, f._Description);
             ColDefs.add(Col);
           }
 

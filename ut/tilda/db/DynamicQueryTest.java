@@ -31,7 +31,6 @@ public class DynamicQueryTest
 
     public static void main(String[] args)
       {
-
         Connection C = null;
         try
           {
@@ -62,7 +61,7 @@ public class DynamicQueryTest
     private static void Test1(Connection C)
     throws Exception
       {
-        List<Key_Data> L = (List<Key_Data>) MasterFactory.LookupWhere(C, Key_Data.class, "NAME like 'PATIENTS.%' AND MAX <> 1", 0, -1);
+        List<Key_Data> L = (List<Key_Data>) MasterFactory.lookupWhere(C, Key_Data.class, "NAME like 'PATIENTS.%' AND MAX <> 1", 0, -1);
         for (Key_Data D : L)
           LOG.debug(D.toString());
       }
@@ -71,7 +70,7 @@ public class DynamicQueryTest
       {
 
       @Override
-      public boolean Process(int Index, Key_Data Obj)
+      public boolean process(int Index, Key_Data Obj)
       throws Exception
         {
           LOG.debug(Obj.toString());
@@ -84,7 +83,7 @@ public class DynamicQueryTest
     throws Exception
       {
         ObjProc OP = new ObjProc();
-        MasterFactory.LookupWhere(C, Key_Data.class, OP, "NAME like 'PATIENTS.%' AND MAX <> 1", 0, -1);
+        MasterFactory.lookupWhere(C, Key_Data.class, OP, "NAME like 'PATIENTS.%' AND MAX <> 1", 0, -1);
       }
 
   }

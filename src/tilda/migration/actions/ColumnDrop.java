@@ -24,7 +24,7 @@ public class ColumnDrop extends MigrationAction
   {
     public ColumnDrop(Object Obj, String ColumnName)
       {
-        super(false);
+        super(Obj._ParentSchema._Name, Obj._Name, false);
         _Obj = Obj;
         _ColumnName = ColumnName;
       }

@@ -58,9 +58,9 @@ public abstract class PerfTracker
             }
         I.add(Type, DurationNano, Count);
         if (Count == 0)
-         LOG.warn(QueryDetails._LOGGING_HEADER+"   "+AnsiUtil.UNDERLINE+"No record "+Type._PP+" "+AnsiUtil.UNDERLINE_OFF+" in "+DurationUtil.PrintDurationMilliSeconds(DurationNano));
+         LOG.warn(QueryDetails._LOGGING_HEADER+"   "+AnsiUtil.UNDERLINE+"No record "+Type._PP+" "+AnsiUtil.UNDERLINE_OFF+" in "+DurationUtil.printDurationMilliSeconds(DurationNano));
         else
-         LOG.debug(QueryDetails._LOGGING_HEADER+"   "+Type._PP+" "+Count+" records in "+DurationUtil.PrintDurationMilliSeconds(DurationNano));
+         LOG.debug(QueryDetails._LOGGING_HEADER+"   "+Type._PP+" "+Count+" records in "+DurationUtil.printDurationMilliSeconds(DurationNano));
       }
 
     /**
@@ -82,7 +82,7 @@ public abstract class PerfTracker
                 }
             }
         I.add(DurationNano);
-//        LOG.debug("   query time: "+DurationUtil.PrintDurationMilliSeconds(DurationNano));
+//        LOG.debug("   query time: "+DurationUtil.printDurationMilliSeconds(DurationNano));
       }
 
     public static void print(StringBuilder Str)
@@ -108,9 +108,9 @@ public abstract class PerfTracker
         Str.append("<BR>\r\n\r\n")
             .append("=========================================================================================================================<BR>\r\n")
             .append("==  Summary database performance numbers<BR>\r\n")
-            .append("==  # of queries=").append(TotalCount).append("; # affected records=").append(TotalRecords).append("; time=").append(DurationUtil.PrintDuration(TotalNano))
-            .append("; perf=").append(DurationUtil.PrintPerformancePerSecond(TotalNano, TotalCount)).append("q/s ")
-            .append("; perf=").append(DurationUtil.PrintDurationMilliSeconds(TotalCount == 0 ? 0 : TotalNano / TotalCount)).append("/q; ").append("<BR>\r\n")
+            .append("==  # of queries=").append(TotalCount).append("; # affected records=").append(TotalRecords).append("; time=").append(DurationUtil.printDuration(TotalNano))
+            .append("; perf=").append(DurationUtil.printPerformancePerSecond(TotalNano, TotalCount)).append("q/s ")
+            .append("; perf=").append(DurationUtil.printDurationMilliSeconds(TotalCount == 0 ? 0 : TotalNano / TotalCount)).append("/q; ").append("<BR>\r\n")
             .append("=========================================================================================================================<BR>\r\n")
             .append("<TABLE style=\"font-size: 70%;\" cellpadding=\"3px\" cellspacing=\"0px\" border=\"0px\">\r\n")
             .append("<TR style=\"background-color: #000; color: #FFF; font-weight: bold;\">\r\n")

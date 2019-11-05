@@ -17,6 +17,7 @@
 package tilda.types;
 
 import java.lang.reflect.Constructor;
+import java.util.BitSet;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,84 +25,26 @@ import org.apache.logging.log4j.Logger;
 import tilda.db.Connection;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
+import tilda.utils.TextUtil;
 
 public class ColumnDefinition
   {
     protected static final Logger LOG = LogManager.getLogger(ColumnDefinition.class.getName());
 
-    public ColumnDefinition(String SchemaName, String TableName, String ColumnName, long Count, ColumnType Type, boolean Collection, String Description)
+    public ColumnDefinition(String SchemaName, String TableName, String ColumnName, int Count, ColumnType Type, boolean Collection, String Description)
       {
         _SchemaName = SchemaName;
         _TableName = TableName;
         _ColumnName = ColumnName;
         _Type = Type;
         _Collection = Collection;
-        if (Count < 64)
-          {
-            _MaskId = 1;
-            _Mask1 = 1L << Count;
-            _Mask2 = 0;
-            _Mask3 = 0;
-            _Mask4 = 0;
-            _Mask5 = 0;
-            _Mask6 = 0;
-          }
-        else if (Count < 64*2)
-          {
-            _MaskId = 2;
-            _Mask1 = 0;
-            _Mask2 = 1L << Count;
-            _Mask3 = 0;
-            _Mask4 = 0;
-            _Mask5 = 0;
-            _Mask6 = 0;
-          }
-        else if (Count < 64*3)
-          {
-            _MaskId = 3;
-            _Mask1 = 0;
-            _Mask2 = 0;
-            _Mask3 = 1L << Count;
-            _Mask4 = 0;
-            _Mask5 = 0;
-            _Mask6 = 0;
-          }
-        else if (Count < 64*4)
-          {
-            _MaskId = 4;
-            _Mask1 = 0;
-            _Mask2 = 0;
-            _Mask3 = 0;
-            _Mask4 = 1L << Count;
-            _Mask5 = 0;
-            _Mask6 = 0;
-          }
-        else if (Count < 64*5)
-          {
-            _MaskId = 5;
-            _Mask1 = 0;
-            _Mask2 = 0;
-            _Mask3 = 0;
-            _Mask4 = 0;
-            _Mask5 = 1L << Count;
-            _Mask6 = 0;
-          }
-        else if (Count < 64*6)
-          {
-            _MaskId = 6;
-            _Mask1 = 0;
-            _Mask2 = 0;
-            _Mask3 = 0;
-            _Mask4 = 0;
-            _Mask5 = 0;
-            _Mask6 = 1L << Count;
-          }
-        else
-          {
-            throw new Error("Trying to instanciate a column that requires a _Mask with more than 192 bits.");
-          }
+        _Mask.set(Count);
+        if (Count > _MAX_COL_COUNT)
+          throw new Error("Trying to instanciate a column that requires a _Mask with more than " + _MAX_COL_COUNT + " bits.");
         _Description = Description;
       }
+
+    public static final int _MAX_COL_COUNT = 512;
 
     final String            _SchemaName;
     final String            _TableName;
@@ -110,14 +53,8 @@ public class ColumnDefinition
 
     public final ColumnType _Type;
     public final boolean    _Collection;
-    public final int        _MaskId;  
-    public final long       _Mask1;
-    public final long       _Mask2;
-    public final long       _Mask3;
-    public final long       _Mask4;
-    public final long       _Mask5;
-    public final long       _Mask6;
-    
+    public final BitSet     _Mask          = new BitSet(64);
+
     public String getSchemaName()
       {
         return _SchemaName;
@@ -132,6 +69,7 @@ public class ColumnDefinition
       {
         C.getFullColumnVar(Str, null, _TableName, _ColumnName);
       }
+
     public String getFullColumnVarForSelect(Connection C)
       {
         StringBuilder Str = new StringBuilder();
@@ -143,25 +81,26 @@ public class ColumnDefinition
       {
         C.getFullColumnVar(Str, null, null, _ColumnName);
       }
+
     public String getShortColumnVarForSelect(Connection C)
       {
         StringBuilder Str = new StringBuilder();
         C.getFullColumnVar(Str, null, null, _ColumnName);
         return Str.toString();
       }
-    
-    
-    public void getColumnType(Connection C, StringBuilder Str, ColumnType T, Integer S, ColumnMode M, boolean Collection)
+
+
+    public void getColumnType(Connection C, StringBuilder Str, ColumnType T, Integer S, ColumnMode M, boolean Collection, Integer Precision, Integer Scale)
       {
-        C.getColumnType(Str, T, S, M, Collection);
+        C.getColumnType(Str, T, S, M, Collection, Precision, Scale);
       }
-    public String getColumnType(Connection C, ColumnType T, Integer S, ColumnMode M, boolean Collection)
+
+    public String getColumnType(Connection C, ColumnType T, Integer S, ColumnMode M, boolean Collection, Integer Precision, Integer Scale)
       {
         StringBuilder Str = new StringBuilder();
-        getColumnType(C, Str, T, S, M, Collection);
+        getColumnType(C, Str, T, S, M, Collection, Precision, Scale);
         return Str.toString();
       }
-    
 
 
     public void getFullColumnVarForInsert(Connection C, StringBuilder Str)
@@ -182,29 +121,29 @@ public class ColumnDefinition
       {
         return _ColumnName;
       }
-    
+
     public boolean isNullable()
-     {
-       return this instanceof Nullable;
-     }
+      {
+        return this instanceof Nullable;
+      }
 
-//    public static ColumnDefinition Create(String ColumnName, ColumnType Type, boolean Collection, boolean Nullable, String Description)
-//      {
-//        return Create(null, null, ColumnName, Type, Collection, Nullable, Description);
-//      }
+    // public static ColumnDefinition Create(String ColumnName, ColumnType Type, boolean Collection, boolean Nullable, String Description)
+    // {
+    // return Create(null, null, ColumnName, Type, Collection, Nullable, Description);
+    // }
 
-//    public static ColumnDefinition Create(String TableName, String ColumnName, ColumnType Type, boolean Collection, boolean Nullable, String Description)
-//      {
-//        return Create(null, TableName, ColumnName, Type, Collection, Nullable, Description);
-//      }
+    // public static ColumnDefinition Create(String TableName, String ColumnName, ColumnType Type, boolean Collection, boolean Nullable, String Description)
+    // {
+    // return Create(null, TableName, ColumnName, Type, Collection, Nullable, Description);
+    // }
 
-    public static ColumnDefinition Create(String SchemaName, String TableName, String ColumnName, ColumnType Type, boolean Collection, boolean Nullable, String Description)
+    public static ColumnDefinition create(String SchemaName, String TableName, String ColumnName, ColumnType Type, boolean Collection, boolean Nullable, String Description)
       {
         String ClassName = "tilda.types.Type_" + Type._SimpleName + (Collection == true ? "Collection" : "Primitive") + (Nullable == true ? "Null" : "");
         try
           {
             Class<?> C = Class.forName(ClassName);
-            Constructor<?> cons = C.getConstructor(String.class, String.class, String.class, Long.TYPE, String.class);
+            Constructor<?> cons = C.getConstructor(String.class, String.class, String.class, Integer.TYPE, String.class);
             return (ColumnDefinition) cons.newInstance(SchemaName, TableName, ColumnName, 0, Description);
           }
         catch (Exception E)
@@ -212,7 +151,63 @@ public class ColumnDefinition
             LOG.error("Cannot instanciate type '" + ClassName + " as a ColumnDefinition descendant with a proper constructor'\n", E);
             return null;
           }
+      }
+
+    public static String printColumns(Connection C, ColumnDefinition[] A, boolean shortName, String templateStr)
+      {
+        StringBuilder Str = new StringBuilder();
+        printColumns(C, A, shortName, templateStr, Str);
+        return Str.toString();
+      }
+
+    /*
+     * Returns a string that includes a comma-separated list of column names in short of long (with the table name) form.
+     * If templateStr is provided, all instances of the character '?' will be replaced with the column name.
+     */
+    public static void printColumns(Connection C, ColumnDefinition[] A, boolean shortName, String templateStr, StringBuilder Str)
+      {
+        boolean First = true;
+        if (A == null || A.length == 0)
+          return;
+
+        // Two implementations depending on whether we have the templateStr or not. Without it, the method is quite faster.
+        if (TextUtil.isNullOrEmpty(templateStr) == true)
+          for (ColumnDefinition cd : A)
+            {
+              if (First == true)
+                First = false;
+              else
+                Str.append(", ");
+              if (shortName == true)
+                cd.getShortColumnVarForSelect(C, Str);
+              else
+                cd.getFullColumnVarForSelect(C, Str);
+            }
+        else
+          for (ColumnDefinition cd : A)
+            {
+              if (First == true)
+                First = false;
+              else
+                Str.append(", ");
+              String Name = shortName == true ? cd.getShortColumnVarForSelect(C) : cd.getFullColumnVarForSelect(C);
+              Str.append(templateStr.replaceAll("\\?", Name));
+            }
 
       }
+
+    public static String[] getColumnNames(ColumnDefinition[] A)
+      {
+        if (A == null)
+          return null;
+
+        String[] Names = new String[A.length];
+
+        for (int i = 0; i < A.length; ++i)
+          Names[i] = A[i]._ColumnName;
+
+        return Names;
+      }
+
 
   }

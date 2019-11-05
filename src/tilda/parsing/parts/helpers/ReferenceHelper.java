@@ -36,10 +36,10 @@ public class ReferenceHelper
         _C = C;
       }
 
-    public final String _P;
-    public final String _S;
-    public final String _O;
-    public final String _C;
+    public final String _P; // Package
+    public final String _S; // Schema
+    public final String _O; // Object
+    public final String _C; // Column
 
     public String getFullName()
       {
@@ -49,6 +49,11 @@ public class ReferenceHelper
     public String getFullSchemaName()
       {
         return _P + "." + _S;
+      }
+
+    public String getFullObjectName()
+      {
+        return _S + "." + _O;
       }
 
 

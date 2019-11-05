@@ -1,23 +1,28 @@
 
 package tilda.data._Tilda;
 
-import java.time.*;
+import java.math.*;
 import java.util.*;
+import java.time.*;
+
+import org.apache.logging.log4j.*;
+
+import com.google.gson.annotations.*;
 
 import tilda.db.*;
 import tilda.enums.*;
+import tilda.performance.*;
 import tilda.types.*;
 import tilda.utils.*;
+import tilda.utils.json.*;
 import tilda.utils.pairs.*;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+@SuppressWarnings({ "unused" })
 public class TILDA__KEY_Factory
  {
    protected static final Logger LOG = LogManager.getLogger(TILDA__KEY_Factory.class.getName());
@@ -25,21 +30,21 @@ public class TILDA__KEY_Factory
    protected TILDA__KEY_Factory() { }
 
    public static final Class<TILDA__KEY> DATA_CLASS= TILDA__KEY.class;
-   public static final String SCHEMA_LABEL = TextUtil.Print("TILDA", "");
-   public static final String TABLENAME_LABEL = TextUtil.Print("KEY", "");
-   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.Print("TILDA.KEY", "");
-   public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "KEY"); }
+   public static final String SCHEMA_LABEL = TextUtil.print("TILDA", "");
+   public static final String TABLENAME_LABEL = TextUtil.print("Key", "");
+   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.print("TILDA.Key", "");
+   public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "Key"); }
 
    public static abstract class COLS {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.KEY.refnum -> TILDA.KEY."refnum"
+//   Field tilda.data.TILDA.Key.refnum -> TILDA.Key."refnum"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.KEY.refnum of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.KEY.refnum of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Key.refnum of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Key.refnum of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
@@ -51,13 +56,13 @@ This is the column definition for:<BR>
      public static Type_LongPrimitive          REFNUM        = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"        , 0/*0*/, "The primary key for this record");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.KEY.name -> TILDA.KEY."name"
+//   Field tilda.data.TILDA.Key.name -> TILDA.Key."name"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.KEY.name of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.KEY.name of type varchar(128)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Key.name of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Key.name of type varchar(128)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>128</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -70,13 +75,13 @@ This is the column definition for:<BR>
      public static Type_StringPrimitive        NAME          = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "name"          , 1/*1*/, "The name of the table/object tracked");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.KEY.max -> TILDA.KEY."max"
+//   Field tilda.data.TILDA.Key.max -> TILDA.Key."max"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.KEY.max of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.KEY.max of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Key.max of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Key.max of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The pre-allocated max RefNum for this table/object.</TD></TR>
@@ -88,13 +93,13 @@ This is the column definition for:<BR>
      public static Type_LongPrimitive          MAX           = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "max"           , 2/*2*/, "The pre-allocated max RefNum for this table/object.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.KEY.count -> TILDA.KEY."count"
+//   Field tilda.data.TILDA.Key.count -> TILDA.Key."count"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.KEY.count of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.KEY.count of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Key.count of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Key.count of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The size of the pre-allocation required by this table/object.</TD></TR>
@@ -106,13 +111,13 @@ This is the column definition for:<BR>
      public static Type_IntegerPrimitive       COUNT         = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "count"         , 3/*3*/, "The size of the pre-allocation required by this table/object.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.KEY.created -> TILDA.KEY."created"
+//   Field tilda.data.TILDA.Key.created -> TILDA.Key."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.KEY.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.KEY.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Key.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Key.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -131,13 +136,13 @@ This is the column definition for:<BR>
      public static Type_DatetimePrimitive      CREATED       = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"       , 4/*4*/, "The timestamp for when the record was created.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.KEY.lastUpdated -> TILDA.KEY."lastUpdated"
+//   Field tilda.data.TILDA.Key.lastUpdated -> TILDA.Key."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.KEY.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.KEY.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Key.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Key.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
@@ -156,13 +161,13 @@ This is the column definition for:<BR>
      public static Type_DatetimePrimitive      LASTUPDATED   = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"   , 5/*5*/, "The timestamp for when the record was last updated.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.KEY.deleted -> TILDA.KEY."deleted"
+//   Field tilda.data.TILDA.Key.deleted -> TILDA.Key."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.KEY.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.KEY.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Key.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Key.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
@@ -174,6 +179,16 @@ This is the column definition for:<BR>
      public static Type_DatetimePrimitiveNull  DELETED       = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"       , 6/*6*/, "The timestamp for when the record was deleted.");
 ;
    }
+
+   public static final ColumnDefinition[] COLUMNS = { COLS.REFNUM,COLS.NAME,COLS.MAX,COLS.COUNT,COLS.CREATED,COLS.LASTUPDATED,COLS.DELETED };
+
+   public static final ColumnDefinition[] COLUMNS_PRIMARY = { COLS.REFNUM };
+
+   public static final ColumnDefinition[][] COLUMNS_UNIQUE_INDICES = { 
+                   {COLS.NAME}
+        };
+
+   public static final ColumnDefinition[] COLUMNS_FIRST_IDENTITY = COLUMNS_UNIQUE_INDICES[0];
 
    private static Boolean  __INITIALIZED = false;
    protected static void initObject(Connection C) throws Exception
@@ -203,56 +218,74 @@ This is the column definition for:<BR>
        protected Connection _C = null;
        protected tilda.db.processors.ObjectProcessor<tilda.data.Key_Data> _OP;
        protected ArrayListResults<tilda.data.Key_Data> _L = null;
-       public void    Start  () { }
-       public void    End    (boolean HasMore, int Max) { if (_OP == null) _L.wrapup(HasMore, Max); }
-       public boolean Process(int Index, java.sql.ResultSet RS) throws Exception
+       public void    start  () { }
+       public void    end    (boolean HasMore, int Max) { if (_OP == null) _L.wrapup(HasMore, Max); }
+       public boolean process(int Index, java.sql.ResultSet RS) throws Exception
         {
           tilda.data.Key_Data Obj = new tilda.data.Key_Data();
-          boolean OK = ((tilda.data._Tilda.TILDA__KEY)Obj).Init(_C, RS);
+          boolean OK = ((tilda.data._Tilda.TILDA__KEY)Obj).init(_C, RS);
           if (OK == true)
            {
              if (_OP == null)
               _L.add(Obj);
              else
-              _OP.Process(Index, Obj);
+              _OP.process(Index, Obj);
            }
           return OK;
         }
      }
 
-   private static final void ReadMany(Connection C, int LookupId, tilda.db.processors.RecordProcessor RP, tilda.data._Tilda.TILDA__KEY Obj, Object ExtraParams, int Start, int Size) throws Exception
+   protected static final void processMany(Connection C, String FullSelectQuery, int Start, int Size, tilda.db.processors.RecordProcessor RP) throws Exception
+     {
+       readMany(C, -77, RP, null, FullSelectQuery, Start, Size);
+     }
+   protected static final ListResults<tilda.data.Key_Data> readMany(Connection C, String FullSelectQuery, int Start, int Size) throws Exception
+     {
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
+       readMany(C, -77, RPI, null, FullSelectQuery, Start, Size);
+       return RPI._L;
+     }
+
+   private static final void readMany(Connection C, int LookupId, tilda.db.processors.RecordProcessor RP, tilda.data._Tilda.TILDA__KEY Obj, Object ExtraParams, int Start, int Size) throws Exception
      {
        long T0 = System.nanoTime();
        StringBuilder S = new StringBuilder(1024);
-       S.append("select ");
-       S.append(" "); C.getFullColumnVar(S, "TILDA", "KEY", "refnum");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "KEY", "name");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "KEY", "max");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "KEY", "count");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "KEY", "created");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "KEY", "lastUpdated");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "KEY", "deleted");
-       S.append(" from "); C.getFullTableVar(S, "TILDA", "KEY");
-       switch (LookupId)
+       if (LookupId == -77)
         {
-          case -7:
-             String clause = ((SelectQuery)ExtraParams).getWhereClause();
-             if (TextUtil.isNullOrEmpty(clause) == false) S.append(clause);
-             break;
-          case 2:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "KEY", "deleted"); S.append(" is null)");
-             S.append(" order by "); C.getFullColumnVar(S, "TILDA", "KEY", "name"); S.append(" ASC");
-             break;
-          case -666: break;
-          default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot create where clause.");
+          S.append((String)ExtraParams);
+        }
+       else
+        {
+          S.append("select ");
+          S.append(" "); C.getFullColumnVar(S, "TILDA", "Key", "refnum");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Key", "name");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Key", "max");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Key", "count");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Key", "created");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Key", "lastUpdated");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Key", "deleted");
+          S.append(" from "); C.getFullTableVar(S, "TILDA", "Key");
+          switch (LookupId)
+           {
+             case -7:
+                String clause = ((SelectQuery)ExtraParams).getWhereClause();
+                if (TextUtil.isNullOrEmpty(clause) == false) S.append(clause);
+                break;
+             case 2:
+                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Key", "deleted"); S.append(" is null)");
+                S.append(" order by "); C.getFullColumnVar(S, "TILDA", "Key", "name"); S.append(" ASC");
+                break;
+             case -77: 
+             case -666: break;
+             default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot create where clause.");
+           }
         }
 
-       
        String Q = S.toString() + C.getSelectLimitClause(Start, Size+1);
        S.setLength(0);
        S = null;
        QueryDetails.setLastQuery(SCHEMA_TABLENAME_LABEL, Q);
-       QueryDetails.logQuery("TILDA.KEY", Q, null);
+       QueryDetails.logQuery("TILDA.Key", Q, null);
        java.sql.PreparedStatement PS=null;
        int count = 0;
        try
@@ -260,6 +293,7 @@ This is the column definition for:<BR>
           PS = C.prepareStatement(Q);
           switch (LookupId)
            {
+             case -77:
              case -7:
                 break;
              case 2: {
@@ -270,15 +304,15 @@ This is the column definition for:<BR>
            }
 
 
-          count = JDBCHelper.Process(PS.executeQuery(), RP, Start, true, Size, true);
+          count = JDBCHelper.process(PS.executeQuery(), RP, Start, true, Size, true);
         }
        catch (java.sql.SQLException E)
         {
-          tilda.data._Tilda.TILDA__1_0.HandleCatch(C, E, "selected");
+          C.handleCatch(E, "selected");
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__KEY_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__KEY_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
 
@@ -290,14 +324,14 @@ This is the column definition for:<BR>
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- Creates a new object in memory, which you can subsequently {@link #Write()} to the data store.
+ Creates a new object in memory, which you can subsequently {@link #write()} to the data store.
  current object to the destination. 
  @param refnum         The primary key for this record
  @param name           (max size 128) The name of the table/object tracked
  @param max            The pre-allocated max RefNum for this table/object.
  @param count          The size of the pre-allocation required by this table/object.
 */
-   static public tilda.data.Key_Data Create(long refnum, String name, long max, int count) throws Exception
+   static public tilda.data.Key_Data create(long refnum, String name, long max, int count) throws Exception
      {
        tilda.data._Tilda.TILDA__KEY Obj = new tilda.data.Key_Data();
        Obj.initForCreate();
@@ -316,7 +350,7 @@ This is the column definition for:<BR>
        return (tilda.data.Key_Data) Obj;
      }
 
-   static public tilda.data.Key_Data Create(Map<String, String> Values, List<StringStringPair> Errors)
+   static public tilda.data.Key_Data create(Map<String, String> Values, List<StringStringPair> Errors)
    throws Exception
      {
        int IncomingErrors = Errors.size();
@@ -325,19 +359,138 @@ This is the column definition for:<BR>
        String        _name           =                       ParseUtil.parseString("name"          , true , Values.get("name"          ), Errors );
        Long        _max            =                       ParseUtil.parseLong("max"           , true , Values.get("max"           ), Errors );
        Integer        _count          =                       ParseUtil.parseInteger("count"         , true , Values.get("count"         ), Errors );
-       ZonedDateTime        _deleted        =                       ParseUtil.parseZonedDateTime("deleted"       , false, Values.get("deleted"       ), Errors );
 
        if (IncomingErrors != Errors.size())
         return null;
 
-      tilda.data.Key_Data Obj = tilda.data.Key_Factory.Create(_refnum, _name, _max, _count);
+      tilda.data.Key_Data Obj = tilda.data.Key_Factory.create(_refnum, _name, _max, _count);
 
-      if (_deleted       != null) Obj.setDeleted       (_deleted       );
 
       return Obj;
      }
+   public static int writeBatch(Connection C, List<tilda.data.Key_Data> L, int batchSize, int commitSize) throws Exception
+     {
+       long T0 = System.nanoTime();
 
-   static public tilda.data.Key_Data LookupByPrimaryKey(long refnum) throws Exception
+       if (L == null || L.isEmpty() == true)
+         return -1;
+
+       java.sql.PreparedStatement PS = null;
+       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
+       int count = 0;
+       int batchStart = 0;
+       TILDA__KEY lastObj = null;
+       BitSet firstChangeList = (BitSet) ((TILDA__KEY) L.get(0)).__Changes.clone();
+       String firstTimeStampSignature = ((TILDA__KEY) L.get(0)).getTimeStampSignature();
+
+       try
+         {
+           C.setSavepoint();
+           String Q = L.get(0).getWriteQuery(C);
+           PS = C.prepareStatement(Q);
+           int insertCount = 0;
+
+           int index = -1;
+           for (tilda.data.Key_Data d : L)
+             {
+               ++index;
+               if (d == null || d.hasChanged() == false)
+                 continue;
+
+               lastObj = ((TILDA__KEY) d);
+
+               if (((TILDA__KEY) d).__Init != InitMode.CREATE)
+                 {
+                   LOG.debug(QueryDetails._LOGGING_HEADER + "The 'tilda.data.Key_Data' object at positon #" + index + " was not in an insertable state. Only inserts are allowed in batch writes (i.e., no updates).");
+                   QueryDetails.setLastQuery(TILDA__KEY_Factory.SCHEMA_TABLENAME_LABEL, "");
+                   return index;
+                 }
+
+               if (((TILDA__KEY) d).beforeWrite(C) == false)
+                 {
+                   LOG.debug(QueryDetails._LOGGING_HEADER + "The 'tilda.data.Key_Data' object at positon #" + index + " failed in its beforeWrite() method.");
+                   QueryDetails.setLastQuery(TILDA__KEY_Factory.SCHEMA_TABLENAME_LABEL, "");
+                   return index;
+                 }
+
+               if (firstChangeList.equals(((TILDA__KEY) d).__Changes) == false)
+                 {
+                   LOG.debug(QueryDetails._LOGGING_HEADER + "The 'tilda.data.Key_Data' object at positon #" + index + " failed matching the list of columns being changed compared to the first object passed.");
+                   QueryDetails.setLastQuery(TILDA__KEY_Factory.SCHEMA_TABLENAME_LABEL, "");
+                   return index;
+                 }
+
+               if (firstTimeStampSignature.equals(((TILDA__KEY) d).getTimeStampSignature()) == false)
+                 {
+                   LOG.debug(QueryDetails._LOGGING_HEADER + "The 'tilda.data.Key_Data' object at positon #" + index + " failed matching the list of updated current vs value based timestamps.");
+                   QueryDetails.setLastQuery(TILDA__KEY_Factory.SCHEMA_TABLENAME_LABEL, "");
+                   return index;
+                 }
+
+               int i = d.populatePreparedStatement(C, PS, AllocatedArrays);
+
+               PS.addBatch();
+               if (index != 0 && (index + 1) % batchSize == 0)
+                 {
+                   int[] results = PS.executeBatch();
+                   int failedRec = JDBCHelper.batchWriteDone(results, batchSize);
+                   if (failedRec != -1)
+                     {
+                       LOG.debug(QueryDetails._LOGGING_HEADER + "A batch of tilda.data.Key_Data objects between positions #" + batchStart + " and #" + index + " failed being written to the database.");
+                       return insertCount+failedRec;
+                     }
+                   for (int index2 = batchStart; index2 <= index; ++index2)
+                     L.get(index2).stateUpdatePostWrite();
+                   LOG.debug("Batch-inserted objects between positions #" + insertCount + " and #" + index + ".");
+                   batchStart = 0;
+                   insertCount+=batchSize;
+                 }
+               if (commitSize > 0 && index != 0 && (index + 1) % commitSize == 0)
+                 {
+                   C.commit();
+                   LOG.debug("Commited " + commitSize + " batch records. At insert count " + (index-commitSize+1));
+                 }
+               PS.clearParameters();
+             }
+
+           if ((index + 1) % batchSize != 0)
+             {
+               int[] results = PS.executeBatch();
+               int failedRec = JDBCHelper.batchWriteDone(results, L.size() - insertCount);
+               if (failedRec != -1)
+                 {
+                   LOG.debug(QueryDetails._LOGGING_HEADER + "A batch of 'Key_Data' objects ending at position #" + index + " failed being written to the database.");
+                   return L.size() - insertCount+failedRec;
+                 }
+               for (int index2 = batchStart; index2 <= index; ++index2)
+                 L.get(index2).stateUpdatePostWrite();
+
+               if(commitSize > 0)
+                 {
+                   C.commit();
+                   LOG.debug("Commited " + insertCount + " batch records.");
+                 }
+               LOG.debug("Final Batch-inserted objects between positions #" + insertCount + " and #" + index + ".");
+             }
+
+           C.releaseSavepoint(true);
+           return -1;
+         }
+       catch (java.sql.SQLException E)
+         {
+           C.releaseSavepoint(false);
+           C.handleCatch(E, "updated or inserted");
+           return 1;
+         }
+       finally
+         {
+           TILDA__1_0.handleFinally(PS, T0, TILDA__KEY_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+           PS = null;
+           AllocatedArrays = null;
+         }
+       }
+
+   static public tilda.data.Key_Data lookupByPrimaryKey(long refnum) throws Exception
      {
        tilda.data._Tilda.TILDA__KEY Obj = new tilda.data.Key_Data();
        Obj.initForLookup(0);
@@ -347,7 +500,7 @@ This is the column definition for:<BR>
        return (tilda.data.Key_Data) Obj;
      }
 
-   static public tilda.data.Key_Data LookupByName(String name) throws Exception
+   static public tilda.data.Key_Data lookupByName(String name) throws Exception
      {
        tilda.data._Tilda.TILDA__KEY Obj = new tilda.data.Key_Data();
        Obj.initForLookup(1);
@@ -357,7 +510,7 @@ This is the column definition for:<BR>
        return (tilda.data.Key_Data) Obj;
      }
 
-   static public ListResults<tilda.data.Key_Data> LookupWhereAllByName(Connection C, int Start, int Size) throws Exception
+   static public ListResults<tilda.data.Key_Data> lookupWhereAllByName(Connection C, int Start, int Size) throws Exception
      {
        tilda.data._Tilda.TILDA__KEY Obj = new tilda.data.Key_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -365,11 +518,11 @@ This is the column definition for:<BR>
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
-       ReadMany(C, 2, RPI, Obj, null, Start, Size);
+       readMany(C, 2, RPI, Obj, null, Start, Size);
        return RPI._L;
      }
 
-   static public void LookupWhereAllByName(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Key_Data> OP, int Start, int Size) throws Exception
+   static public void lookupWhereAllByName(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Key_Data> OP, int Start, int Size) throws Exception
      {
        tilda.data._Tilda.TILDA__KEY Obj = new tilda.data.Key_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -377,7 +530,7 @@ This is the column definition for:<BR>
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       ReadMany(C, 2, RPI, Obj, null, Start, Size);
+       readMany(C, 2, RPI, Obj, null, Start, Size);
      }
 
 
@@ -386,15 +539,16 @@ This is the column definition for:<BR>
    public static ListResults<tilda.data.Key_Data> runSelect(Connection C, SelectQuery Q, int Start, int Size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
-       ReadMany(C, -7, RPI, null, Q, Start, Size);
+       readMany(C, -7, RPI, null, Q, Start, Size);
        return RPI._L;
      }
    public static void runSelect(Connection C, SelectQuery Q, tilda.db.processors.ObjectProcessor<tilda.data.Key_Data> OP, int Start, int Size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       ReadMany(C, -7, RPI, null, Q, Start, Size);
+       readMany(C, -7, RPI, null, Q, Start, Size);
      }
    public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
    public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
+
 
  }

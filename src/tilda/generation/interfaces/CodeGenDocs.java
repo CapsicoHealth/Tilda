@@ -24,7 +24,7 @@ import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ColumnValue;
 import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
-import tilda.parsing.parts.JsonMapping;
+import tilda.parsing.parts.OutputMapping;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.PrimaryKey;
 import tilda.parsing.parts.SubWhereClause;
@@ -43,7 +43,7 @@ public interface CodeGenDocs
 
     public void JsonClassDocs(PrintWriter out, GeneratorSession g, Object o);
 
-    public void docMethodToJSON(PrintWriter Out, GeneratorSession G, JsonMapping J);
+    public void docMethodOutput(PrintWriter Out, GeneratorSession G, OutputMapping J);
 
     
     public void AppFileDocs (PrintWriter Out, GeneratorSession G) throws Exception;
@@ -95,12 +95,14 @@ public interface CodeGenDocs
     public void docMethodLookupWhereIndex(PrintWriter Out, GeneratorSession G, Index I);
     
     public void docMethodLookupByUniqueQuery(PrintWriter Out, GeneratorSession G, SubWhereClause Q);
-    public void docMethodLookupWhereQuery(PrintWriter out, GeneratorSession g, SubWhereClause q);
+    public void docMethodLookupWhereQuery(PrintWriter Out, GeneratorSession G, SubWhereClause Q);
 
     public void docMethodLookupParent(PrintWriter Out, GeneratorSession G, ForeignKey FK);
 
-    public void docMethodToJSON(PrintWriter Out, GeneratorSession G, Object O);
+    public void docMethodOutput(PrintWriter Out, GeneratorSession G, Object O);
 
-    public void docMethodJSONSchema(PrintWriter out, GeneratorSession g, Column col);
+    public void docMethodJSONSchema(PrintWriter Out, GeneratorSession G, Column col);
+
+    public void docMethodUpsert(PrintWriter Out, GeneratorSession G, Object O);
     
   }

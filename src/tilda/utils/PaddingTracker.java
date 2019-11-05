@@ -32,7 +32,7 @@ public class PaddingTracker
 
     public String pad(String str)
       {
-        return PaddingUtil.Pad(str,  _Max);
+        return PaddingUtil.pad(str,  _Max);
       }
     
     public String getPad(String Str)
@@ -40,4 +40,8 @@ public class PaddingTracker
         return PaddingUtil.getPad(_Max-Str.length());
       }
     
+    public void clear()
+      {
+        _Max = 0;
+      }
   }

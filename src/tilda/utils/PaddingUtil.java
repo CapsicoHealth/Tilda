@@ -30,12 +30,12 @@ public class PaddingUtil
           }
       }
 
-    public static final String Pad(String S, int Padding)
+    public static final String pad(String S, int Padding)
       {
         return Padding >= 0 && Padding < _PADS.length ? S+_PADS[Padding-S.length()] : S;
       }
 
-    public static final void Pad(StringBuilder Str, String S, int MaxLen)
+    public static final void pad(StringBuilder Str, String S, int MaxLen)
       {
         String Pad = getPad(MaxLen - S.length());
         Str.append(S).append(Pad);
@@ -47,5 +47,4 @@ public class PaddingUtil
               : Padding < _PADS.length ? _PADS[Padding]
               : _PADS[_PADS.length-1];
       }
-
   }

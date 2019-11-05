@@ -88,7 +88,7 @@ public class DateTimeUtilTest
           {
             DateTimeUtil.PrintSQLTimestamp(Cal);
           }
-        System.out.println("CalendarUtil.PrintSQLTimestamp: " + DurationUtil.PrintDuration(System.nanoTime() - T0));
+        System.out.println("CalendarUtil.PrintSQLTimestamp: " + DurationUtil.printDuration(System.nanoTime() - T0));
 
         Cal = DateTimeUtil.parseDefault(CalStr);
         System.out.println("Roundtrip conversion: " + DateTimeUtil.PrintSQLTimestamp(Cal));
@@ -103,7 +103,7 @@ public class DateTimeUtilTest
           {
             F.format(Cal.getTime());
           }
-        System.out.println("SimpleDateFormat: " + DurationUtil.PrintDuration(System.nanoTime() - T0));
+        System.out.println("SimpleDateFormat: " + DurationUtil.printDuration(System.nanoTime() - T0));
 
         Cal.setTimeZone(TimeZone.getTimeZone("IST"));
         CalStr = DateTimeUtil.PrintSQLTimestamp(Cal);
@@ -215,21 +215,21 @@ public class DateTimeUtilTest
         int offsetMinutes = offsetSeconds / 60 - offsetHours * 60;
 
         return ODT.getYear() + "-"
-        + NumberFormatUtil.LeadingZero1(ODT.getMonthValue())
+        + NumberFormatUtil.leadingZero1(ODT.getMonthValue())
         + "-"
-        + NumberFormatUtil.LeadingZero1(ODT.getDayOfMonth())
+        + NumberFormatUtil.leadingZero1(ODT.getDayOfMonth())
         + "T"
-        + NumberFormatUtil.LeadingZero1(ODT.getHour())
+        + NumberFormatUtil.leadingZero1(ODT.getHour())
         + ":"
-        + NumberFormatUtil.LeadingZero1(ODT.getMinute())
+        + NumberFormatUtil.leadingZero1(ODT.getMinute())
         + ":"
-        + NumberFormatUtil.LeadingZero1(ODT.getSecond())
+        + NumberFormatUtil.leadingZero1(ODT.getSecond())
         + "."
-        + NumberFormatUtil.LeadingZero2(ODT.getNano() / 1000000)
+        + NumberFormatUtil.leadingZero2(ODT.getNano() / 1000000)
         + PlusMinus
-        + NumberFormatUtil.LeadingZero1(offsetHours)
+        + NumberFormatUtil.leadingZero1(offsetHours)
         + ":"
-        + NumberFormatUtil.LeadingZero1(offsetMinutes);
+        + NumberFormatUtil.leadingZero1(offsetMinutes);
       }
 
     private static void Test3()
@@ -270,7 +270,7 @@ public class DateTimeUtilTest
              s = "Error";
           }
         long T1 = System.nanoTime() - T0;
-        LOG.info("DateTimeFormatter did " + DurationUtil.PrintPerformancePerSecond(T1, count) + " iterations/s.");
+        LOG.info("DateTimeFormatter did " + DurationUtil.printPerformancePerSecond(T1, count) + " iterations/s.");
 
         T0 = System.nanoTime();
         for (int i = 0; i < count; ++i)
@@ -280,7 +280,7 @@ public class DateTimeUtilTest
               s = "Error";
           }
         long T2 = System.nanoTime() - T0;
-        LOG.info("Custom format did " + DurationUtil.PrintPerformancePerSecond(T2, count) + " iterations/s.");
+        LOG.info("Custom format did " + DurationUtil.printPerformancePerSecond(T2, count) + " iterations/s.");
 
         if (T2 > T1)
           LOG.info("Beat the JDK implementation :)");
@@ -302,7 +302,7 @@ public class DateTimeUtilTest
         PS.setString(3, "etc/zulu");
         ZoneId Z = DateTimeZone.USPacific._ZoneId;
         LOG.debug("Zone: " + Z.getId());
-        ZonedDateTime ZDT = DateTimeUtil.New(2000, 1, 1, 1, 0, 0, 0, Z);
+        ZonedDateTime ZDT = DateTimeUtil.newTZ(2000, 1, 1, 1, 0, 0, 0, Z);
         LOG.debug("ZDT: " + DateTimeUtil.printDateTimeForSQL(ZDT));
         PS.setTimestamp(4, new java.sql.Timestamp(ZDT.toInstant().toEpochMilli()), UTC_CALENDAR);
         LOG.debug(Q);

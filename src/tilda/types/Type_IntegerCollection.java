@@ -20,7 +20,7 @@ import tilda.enums.ColumnType;
 
 public class Type_IntegerCollection extends ColumnDefinition
   {
-    public Type_IntegerCollection(String SchemaName, String TableName, String ColumnName, long Count, String Description)
+    public Type_IntegerCollection(String SchemaName, String TableName, String ColumnName, int Count, String Description)
       {
         super(SchemaName, TableName, ColumnName, Count, ColumnType.INTEGER, true, Description);
       }

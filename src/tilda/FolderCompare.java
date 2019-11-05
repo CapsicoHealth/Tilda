@@ -111,7 +111,7 @@ public class FolderCompare
                 if (f.isDirectory() == false)
                  continue;
                 FolderStatsProcessor FSP1 = new FolderStatsProcessor();
-                FileUtil.Iterate(f, FSP1, new String[] {".*", "bin" });
+                FileUtil.iterate(f, FSP1, new String[] {".*", "bin" });
                 BufferedWriter Out = new BufferedWriter(new FileWriter(D1.getAbsolutePath()+"\\"+f.getName()+".filecounts.csv"));
                 Out.write("Path, FileCount, FileSize, Oldest, Newest, TotalCount, TotalSize\r\n");
                 Print(Out, FSP1._Root, 0);

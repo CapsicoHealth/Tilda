@@ -85,11 +85,11 @@ public class ImportProcessor
           {
             totalCount += R._RecordsCount;
             totalNano += R._TimeNano;
-            LOG.debug("Processed file " + R._FileName + " into table " + R._TableName + " with " + NumberFormatUtil.PrintWith000Sep(R._RecordsCount) + " records in CPU-Time of " + DurationUtil.PrintDuration(R._TimeNano) +
-            " (" + DurationUtil.PrintPerformancePerMinute(R._TimeNano, R._RecordsCount) + " Records/min)");
+            LOG.debug("Processed file " + R._FileName + " into table " + R._TableName + " with " + NumberFormatUtil.printWith000Sep(R._RecordsCount) + " records in CPU-Time of " + DurationUtil.printDuration(R._TimeNano) +
+            " (" + DurationUtil.printPerformancePerMinute(R._TimeNano, R._RecordsCount) + " Records/min)");
           }
         LOG.debug("--------------------------------------------------------------------------------------------------------------");
-        LOG.debug("In total, processed " + NumberFormatUtil.PrintWith000Sep(totalCount) + " records in CPU-Time of " + DurationUtil.PrintDuration(totalNano) + " (" + DurationUtil.PrintPerformancePerMinute(totalNano, totalCount) + " Records/min)");
+        LOG.debug("In total, processed " + NumberFormatUtil.printWith000Sep(totalCount) + " records in CPU-Time of " + DurationUtil.printDuration(totalNano) + " (" + DurationUtil.printPerformancePerMinute(totalNano, totalCount) + " Records/min)");
         return totalCount;
       }
 

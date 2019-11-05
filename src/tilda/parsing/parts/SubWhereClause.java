@@ -17,6 +17,7 @@
 package tilda.parsing.parts;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -34,7 +35,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class SubWhereClause
   {
-    protected static final Logger LOG         = LogManager.getLogger(SubWhereClause.class.getName());
+    protected static final Logger          LOG            = LogManager.getLogger(SubWhereClause.class.getName());
 
     /*@formatter:off*/
     @SerializedName("name"       ) public String   _Name       ;
@@ -49,16 +50,29 @@ public class SubWhereClause
     public transient List<Column>          _OrderByObjs   = new ArrayList<Column>();
     public transient List<OrderType>       _OrderByOrders = new ArrayList<OrderType>();
     public transient boolean               _Unique;
-    
 
-    public transient Base          _ParentObject;
-    
+
+    public transient Base                  _ParentObject;
+
     public SubWhereClause()
       {
       }
+
     public SubWhereClause(String _SubWhere)
       {
-        _Wheres = new Query[] { new Query(_SubWhere) };
+        _Wheres = new Query[] { new Query(_SubWhere)
+        };
+      }
+
+    public SubWhereClause(SubWhereClause SWC)
+      {
+        _Name = SWC._Name;
+        _Description = SWC._Description;
+        _From = Arrays.copyOf(SWC._From, SWC._From.length);
+        _Wheres = new Query[SWC._Wheres.length];
+        for (int i = 0; i < SWC._Wheres.length; ++i)
+          _Wheres[i] = new Query(SWC._Wheres[i]);
+        _OrderBy = Arrays.copyOf(SWC._OrderBy, SWC._OrderBy.length);
       }
 
     public boolean Validate(ParserSession PS, Base ParentObject, String What, boolean TopLevel)
@@ -69,7 +83,7 @@ public class SubWhereClause
           return PS.AddError(What + " is defining a SubWhereClause without a name.");
 
         if (TopLevel == true && TextUtil.isNullOrEmpty(_Description) == true)
-          return PS.AddError(What + " is defining a SubWhereClause '"+_Name+"' without a description.");
+          return PS.AddError(What + " is defining a SubWhereClause '" + _Name + "' without a description.");
 
         if (_Wheres.length == 0)
           {
@@ -154,7 +168,7 @@ public class SubWhereClause
         Index.processOrderBy(PS, "Object '" + _ParentObject.getFullName() + "' defines Query '" + _Name + "'", new HashSet<String>(), _ParentObject, _OrderBy, _OrderByObjs, _OrderByOrders);
 
         _Unique = _OrderBy == null || _OrderBy.length == 0;
-        
+
         return Errs == PS.getErrorCount();
       }
 

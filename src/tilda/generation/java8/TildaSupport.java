@@ -21,12 +21,14 @@ import java.io.PrintWriter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.enums.ObjectMode;
 import tilda.generation.Generator;
 import tilda.generation.GeneratorSession;
 import tilda.generation.interfaces.CodeGenTildaSupport;
 import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
+import tilda.utils.SystemValues;
 
 public class TildaSupport implements CodeGenTildaSupport
   {
@@ -40,7 +42,7 @@ public class TildaSupport implements CodeGenTildaSupport
 
     @Override
     public void genFileStart(PrintWriter Out, Schema S)
-      throws Exception
+    throws Exception
       {
         Out.println("package " + S._Package + "." + Helper.TILDA_GEN_PACKAGE + ";");
         Out.println();
@@ -57,8 +59,15 @@ public class TildaSupport implements CodeGenTildaSupport
 
     @Override
     public void genClassStart(PrintWriter Out, GeneratorSession G, Object O)
-      throws Exception
+    throws Exception
       {
+        Out.println(Helper.getMultiLineDocCommentStart()
+        + " @author    Tilda code gen for " + Helper.getCodeGenLanguage() + "/" + G.getSql().getName() + SystemValues.NEWLINE
+        + "    @version   Tilda 1.0" + SystemValues.NEWLINE
+// LDH-NOTE: @generated doesn't seem to be working properly with JavaDocs. Can't figure it out for now.
+//        + "    @generated " + DateTimeUtil.printDateTimeFriendly(SystemValues.STARTUP_DATE, true, true) + SystemValues.NEWLINE
+        + Helper.getMultiLineCommentEnd()
+        );
         Out.println("public final class TILDA__" + Generator.TILDA_VERSION_VAROK);
         Out.println(" {");
         Out.println("   protected static final Logger LOG = LogManager.getLogger(TILDA__" + Generator.TILDA_VERSION_VAROK + ".class.getName());");
@@ -66,31 +75,10 @@ public class TildaSupport implements CodeGenTildaSupport
 
     public void genSupportCode(PrintWriter Out, GeneratorSession G, Schema S)
       {
-        Out.println("   protected static final String _COMMAQUESTION            =TextUtil.Identity(\",?\");");
-        Out.println("   protected static final String _EQUALQUESTION            =TextUtil.Identity(\"=?\");");
+        Out.println("   protected static final String _COMMAQUESTION            =TextUtil.identity(\",?\");");
+        Out.println("   protected static final String _EQUALQUESTION            =TextUtil.identity(\"=?\");");
         Out.println();
-        Out.println("   protected static boolean HandleCatch(Connection C, java.sql.SQLException E, String OperationDebugStr) throws java.sql.SQLException");
-        Out.println("     {");
-        Out.println("       if (C.isLockOrConnectionError(E) == true)");
-        Out.println("        QueryDetails.setLastQueryDeadlocked();");
-        Out.println("       else if (E.getSQLState() == null)");
-        Out.println("        {");
-        Out.println("          LOG.warn(\"JDBC Error: No row \"+OperationDebugStr+\": SQLState is null, ErrorCode=\"+E.getErrorCode());");
-        Out.println("          LOG.warn(\"JDBC Message: \"+E.getMessage());");
-        Out.println("          return false;");
-        Out.println("        }");
-        Out.println("       else if (C.isErrNoData(E.getSQLState(), E.getErrorCode()) == true)");
-        Out.println("        {");
-        Out.println("          LOG.warn(\"JDBC Error: No row \"+OperationDebugStr+\": SQLState=\"+E.getSQLState()+\", ErrorCode=\"+E.getErrorCode());");
-        Out.println("          LOG.warn(\"JDBC Message: \"+E.getMessage());");
-        Out.println("          return false;");
-        Out.println("        }");
-        Out.println("       LOG.error(\"JDBC Error: Fatal sql error: SQLState=\"+E.getSQLState()+\", ErrorCode=\"+E.getErrorCode());");
-        Out.println("       LOG.catching(E);");
-        Out.println("       throw E;");
-        Out.println("     }");
-        Out.println();
-        Out.println("   protected static void HandleFinally(java.sql.PreparedStatement PS, long T0, String TableName, StatementType ST, int count, List<java.sql.Array> AllocatedArrays) throws java.sql.SQLException");
+        Out.println("   protected static void handleFinally(java.sql.PreparedStatement PS, long T0, String TableName, StatementType ST, int count, List<java.sql.Array> AllocatedArrays) throws java.sql.SQLException");
         Out.println("     {");
         Out.println("       if (PS != null)");
         Out.println("        PS.close();");
@@ -110,14 +98,14 @@ public class TildaSupport implements CodeGenTildaSupport
         Out.println("   public static void initSchema(Connection C) throws Exception");
         Out.println("    {");
         for (Object O : S._Objects)
-          if (O != null && O._DBOnly == false)
-           Out.println("      " + Helper.getFullBaseClassName(O) + "_Factory.initObject(C);");
+          if (O != null && O._Mode != ObjectMode.DB_ONLY)
+            Out.println("      " + Helper.getFullBaseClassName(O) + "_Factory.initObject(C);");
         Out.println("    }");
       }
 
     @Override
     public void genClassEnd(PrintWriter Out, GeneratorSession G)
-      throws Exception
+    throws Exception
       {
         Out.println(" }");
       }

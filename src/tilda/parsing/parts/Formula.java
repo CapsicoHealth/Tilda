@@ -27,13 +27,12 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
-import tilda.enums.ColumnType;
 import tilda.parsing.ParserSession;
 import tilda.utils.TextUtil;
 
 public class Formula extends TypeDef
   {
-    protected static final Logger LOG = LogManager.getLogger(Formula.class.getName());
+    protected static final Logger LOG              = LogManager.getLogger(Formula.class.getName());
 
     /*@formatter:off*/
     @SerializedName("name"       ) public String   _Name       ;
@@ -45,7 +44,9 @@ public class Formula extends TypeDef
     @SerializedName("values"     ) public Value[] _Values;
     /*@formatter:on*/
 
-    protected transient View      _ParentView;
+    public transient View         _ParentView;
+    public transient boolean      _FormulaTemplate = false;
+    public transient Column       _ProxyCol;
 
     public Formula()
       {
@@ -53,7 +54,7 @@ public class Formula extends TypeDef
 
     public Formula(Formula F)
       {
-        super(F._TypeStr, F._Size);
+        super(F._TypeStr, F._Size, F._Scale, F._Precision);
         _Name = F._Name;
         _FormulaStrs = F._FormulaStrs;
         _Title = F._Title;
@@ -65,6 +66,7 @@ public class Formula extends TypeDef
             for (int i = 0; i < F._Values.length; ++i)
               _Values[i] = new Value(F._Values[i]);
           }
+        _FormulaTemplate = F._FormulaTemplate;
       }
 
     public View getParentView()
@@ -85,11 +87,13 @@ public class Formula extends TypeDef
 
         if (TextUtil.isNullOrEmpty(_Name) == true)
           PS.AddError("View " + _ParentView.getShortName() + " is defining a formula without a name.");
+        else if (_Name.length() > PS._CGSql.getMaxColumnNameSize())
+          PS.AddError("View " + _ParentView.getShortName() + " is defining a formula '" + _Name + "' with a name that's too long: max allowed by your database is " + PS._CGSql.getMaxColumnNameSize() + " vs " + _Name.length() + " for this identifier.");
 
-        if (TextUtil.isNullOrEmpty(_TypeStr) == true)
-          PS.AddError("View " + _ParentView.getShortName() + " is defining a formula '" + _Name + "' without a type.");
-        else if ((_Type = ColumnType.parse(_TypeStr)) == null)
-          PS.AddError("View " + _ParentView.getShortName() + " defined a formula '" + _Name + "' with an invalid type '" + _TypeStr + "'.");
+        // if (TextUtil.isNullOrEmpty(_TypeStr) == true)
+        // PS.AddError("View " + _ParentView.getShortName() + " is defining a formula '" + _Name + "' without a type.");
+        // else if ((_Type = ColumnType.parse(_TypeStr)) == null)
+        // PS.AddError("View " + _ParentView.getShortName() + " defined a formula '" + _Name + "' with an invalid type '" + _TypeStr + "'.");
 
         if (_FormulaStrs == null || _FormulaStrs.length == 0)
           PS.AddError("View " + _ParentView.getShortName() + " is defining a formula '" + _Name + "' without a formula.");
@@ -115,6 +119,8 @@ public class Formula extends TypeDef
     public List<ViewColumn> getDependencyColumns()
       {
         List<ViewColumn> L = new ArrayList<ViewColumn>();
+        if (getParentView()._ViewColumnsRegEx == null)
+          return L;
         Matcher M = getParentView()._ViewColumnsRegEx.matcher(String.join("\n", _FormulaStrs));
         Set<String> Names = new HashSet<String>();
         while (M.find() == true)
@@ -122,7 +128,9 @@ public class Formula extends TypeDef
             String s = M.group(1);
             if (Names.add(s) == false)
               continue;
-            L.add(getParentView().getViewColumn(s));
+            ViewColumn vc = getParentView().getViewColumn(s);
+            if (vc != null)
+              L.add(vc);
           }
         return L;
       }
@@ -130,6 +138,8 @@ public class Formula extends TypeDef
     public List<Formula> getDependencyFormulas()
       {
         List<Formula> L = new ArrayList<Formula>();
+        if (getParentView()._FormulasRegEx == null)
+          return L;
         Matcher M = getParentView()._FormulasRegEx.matcher(String.join("\n", _FormulaStrs));
         Set<String> Names = new HashSet<String>();
         while (M.find() == true)
@@ -137,7 +147,9 @@ public class Formula extends TypeDef
             String s = M.group(1);
             if (Names.add(s) == false)
               continue;
-            L.add(getParentView().getFormula(s));
+            Formula f = getParentView().getFormula(s);
+            if (f != null)
+              L.add(f);
           }
         return L;
       }

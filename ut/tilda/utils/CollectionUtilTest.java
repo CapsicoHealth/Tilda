@@ -32,11 +32,19 @@ public class CollectionUtilTest
 
     public static void main(String[] args)
       {
-        Test3ListToArray();
-        Test3SetToArray();
-        Test3ArrayToListAndSet();
-        Test1();
-        Test2();
+        TestArrayAppent();
+//        Test3ListToArray();
+//        Test3SetToArray();
+//        Test3ArrayToListAndSet();
+//        Test1();
+//        Test2();
+      }
+
+    private static void TestArrayAppent()
+      {
+        String[] A1 = {null,"aaaaa","bbbbbb","cccccc","ddddddd", null};
+        String[] A2 = {"11111","22222","33333", null};
+        LOG.debug(TextUtil.print(CollectionUtil.append(A1, A2)));
       }
 
     private static void Test1()
@@ -106,12 +114,12 @@ public class CollectionUtilTest
         long T0 = System.nanoTime();
         for (int i = 0; i < _Iterations; ++i)
           toObjectArrayNative(L);
-        LOG.debug("toObjectArrayNative(List): " + DurationUtil.PrintPerformancePerSecond(System.nanoTime() - T0, _Iterations) + " iterations/s");
+        LOG.debug("toObjectArrayNative(List): " + DurationUtil.printPerformancePerSecond(System.nanoTime() - T0, _Iterations) + " iterations/s");
 
         T0 = System.nanoTime();
         for (int i = 0; i < _Iterations; ++i)
           toObjectArrayCustom(L);
-        LOG.debug("toObjectArrayCustom(List): " + DurationUtil.PrintPerformancePerSecond(System.nanoTime() - T0, _Iterations) + " iterations/s");
+        LOG.debug("toObjectArrayCustom(List): " + DurationUtil.printPerformancePerSecond(System.nanoTime() - T0, _Iterations) + " iterations/s");
       }
 
     private static Object[] toObjectArrayNative(Set<?> S)
@@ -142,12 +150,12 @@ public class CollectionUtilTest
         long T0 = System.nanoTime();
         for (int i = 0; i < _Iterations; ++i)
           toObjectArrayNative(S);
-        LOG.debug("toObjectArrayNative(Set): " + DurationUtil.PrintPerformancePerSecond(System.nanoTime() - T0, _Iterations) + " iterations/s");
+        LOG.debug("toObjectArrayNative(Set): " + DurationUtil.printPerformancePerSecond(System.nanoTime() - T0, _Iterations) + " iterations/s");
 
         T0 = System.nanoTime();
         for (int i = 0; i < _Iterations; ++i)
           toObjectArrayCustom(S);
-        LOG.debug("toObjectArrayCustom(Set): " + DurationUtil.PrintPerformancePerSecond(System.nanoTime() - T0, _Iterations) + " iterations/s");
+        LOG.debug("toObjectArrayCustom(Set): " + DurationUtil.printPerformancePerSecond(System.nanoTime() - T0, _Iterations) + " iterations/s");
       }
 
     private static <T> List<T> toListNativeCollections(T[] A)
@@ -199,29 +207,29 @@ public class CollectionUtilTest
         long T0 = System.nanoTime();
         for (int i = 0; i < _Iterations; ++i)
           toListNativeCollections(A);
-        LOG.debug("toListNativeCollections: " + DurationUtil.PrintPerformancePerSecond(System.nanoTime() - T0, _Iterations) + " iterations/s");
+        LOG.debug("toListNativeCollections: " + DurationUtil.printPerformancePerSecond(System.nanoTime() - T0, _Iterations) + " iterations/s");
 
         T0 = System.nanoTime();
         for (int i = 0; i < _Iterations; ++i)
           toListNativeArrays(A);
-        LOG.debug("toListNativeArrays     : " + DurationUtil.PrintPerformancePerSecond(System.nanoTime() - T0, _Iterations) + " iterations/s");
+        LOG.debug("toListNativeArrays     : " + DurationUtil.printPerformancePerSecond(System.nanoTime() - T0, _Iterations) + " iterations/s");
 
         T0 = System.nanoTime();
         for (int i = 0; i < _Iterations; ++i)
           toListCustom(A);
-        LOG.debug("toListCustom           : " + DurationUtil.PrintPerformancePerSecond(System.nanoTime() - T0, _Iterations) + " iterations/s");
+        LOG.debug("toListCustom           : " + DurationUtil.printPerformancePerSecond(System.nanoTime() - T0, _Iterations) + " iterations/s");
 
 
         LOG.debug("");
         T0 = System.nanoTime();
         for (int i = 0; i < _Iterations; ++i)
           toSetNative(A);
-        LOG.debug("toSetNative: " + DurationUtil.PrintPerformancePerSecond(System.nanoTime() - T0, _Iterations) + " iterations/s");
+        LOG.debug("toSetNative: " + DurationUtil.printPerformancePerSecond(System.nanoTime() - T0, _Iterations) + " iterations/s");
 
         T0 = System.nanoTime();
         for (int i = 0; i < _Iterations; ++i)
           toSetCustom(A);
-        LOG.debug("toSetCustom: " + DurationUtil.PrintPerformancePerSecond(System.nanoTime() - T0, _Iterations) + " iterations/s");
+        LOG.debug("toSetCustom: " + DurationUtil.printPerformancePerSecond(System.nanoTime() - T0, _Iterations) + " iterations/s");
       }
 
   }

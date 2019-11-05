@@ -28,12 +28,14 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
+import tilda.db.metadata.ColumnMeta;
 import tilda.db.metadata.FKMeta;
 import tilda.db.metadata.IndexMeta;
 import tilda.db.metadata.PKMeta;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
+import tilda.enums.DBStringType;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
@@ -45,6 +47,7 @@ import tilda.types.ColumnDefinition;
 import tilda.types.Type_DatetimePrimitive;
 import tilda.utils.DurationUtil.IntervalEnum;
 import tilda.utils.TextUtil;
+import tilda.utils.pairs.ColMetaColPair;
 import tilda.utils.pairs.StringStringPair;
 
 public class IBMDB2 implements DBType
@@ -60,9 +63,9 @@ public class IBMDB2 implements DBType
 
 
     @Override
-    public boolean isErrNoData(String SQLState, int ErrorCode)
+    public boolean isErrNoData(SQLException E)
       {
-        return SQLState.equals("23505");
+        return E.getSQLState().equals("23505");
       }
 
     @Override
@@ -105,7 +108,7 @@ public class IBMDB2 implements DBType
       }
 
     @Override
-    public boolean FullIdentifierOnUpdate()
+    public boolean fullIdentifierOnUpdate()
       {
         return false;
       }
@@ -197,32 +200,41 @@ public class IBMDB2 implements DBType
       }
 
     @Override
-    public int getVarCharThreshhold()
+    public DBStringType getDBStringType(int Size)
       {
-        return 20;
+        return Size < 20 ? DBStringType.CHARACTER
+        : Size < 4096 ? DBStringType.VARCHAR
+        : DBStringType.TEXT;
       }
+    
+    @Override
+    public boolean alterTableAlterColumnNumericSize(Connection connection, ColumnMeta colMeta, Column col)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }    
 
     @Override
-    public int getCLOBThreshhold()
-      {
-        return 4096;
-      }
-
-    @Override
-    public boolean alterTableAlterColumnStringSize(Connection Con, Column Col, int DBSize)
+    public boolean alterTableAlterColumnStringSize(Connection Con, ColumnMeta ColMeta, Column Col)
     throws Exception
       {
         throw new UnsupportedOperationException();
       }
 
     @Override
-    public boolean alterTableAlterColumnType(Connection Con, ColumnType fromType, Column Col, ZoneInfo_Data defaultZI)
+    public boolean alterTableAlterColumnType(Connection Con, ColumnMeta ColMeta, Column Col, ZoneInfo_Data defaultZI)
+      {
+        throw new UnsupportedOperationException();
+      }  
+    
+    @Override
+    public boolean alterTableAlterColumnMulti(Connection Con, List<ColMetaColPair> BatchTypeCols, List<ColMetaColPair> BatchSizeCols, ZoneInfo_Data defaultZI)
       {
         throw new UnsupportedOperationException();
       }
 
     @Override
-    public String getHelperFunctionsScript(Connection Con)
+    public String getHelperFunctionsScript(Connection Con, boolean Start)
     throws Exception
       {
         throw new UnsupportedOperationException();
@@ -254,7 +266,7 @@ public class IBMDB2 implements DBType
       }
 
     @Override
-    public void getColumnType(StringBuilder Str, ColumnType T, Integer S, ColumnMode M, boolean Collection)
+    public void getColumnType(StringBuilder Str, ColumnType T, Integer S, ColumnMode M, boolean Collection, Integer Precision, Integer Scale)
       {
         throw new UnsupportedOperationException();        
       }
@@ -396,6 +408,56 @@ public class IBMDB2 implements DBType
     @Override
     public boolean alterTableRenameIndex(Connection Con, Object Obj, String OldName, String NewName)
     throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+    
+    @Override
+    public int getMaxColumnNameSize()
+      {
+        return 63;
+      }
+    @Override
+    public int getMaxTableNameSize()
+      {
+        return 63;
+      }
+
+
+    @Override
+    public String alterTableAddIndexDDL(Index IX)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+
+    @Override
+    public boolean alterTableAlterColumnDefault(Connection Con, Column Col)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+
+    @Override
+    public String getBackendConnectionId(Connection connection)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+
+    @Override
+    public void cancel(Connection C)
+    throws SQLException
+      {
+        throw new UnsupportedOperationException();
+      }
+
+
+    @Override
+    public boolean isCanceledError(SQLException t)
       {
         throw new UnsupportedOperationException();
       }
