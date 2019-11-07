@@ -2,7 +2,7 @@
  Tilda V1.0 template application class.
 */
 
-package tilda.data_tutorial;
+package tilda.tutorial.data;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,20 +10,27 @@ import org.apache.logging.log4j.Logger;
 import tilda.db.Connection;
 
 /**
-This is the application class <B>Data_Test_XYZ_Analytics_View</B> mapped to the table <B>TILDATUTORIAL.Test_XYZ_Analytics_View</B>.
-@see tilda.data_tutorial._Tilda.TILDA__TEST_XYZ_ANALYTICS_VIEW
+This is the application class <B>Data_TestAnswer</B> mapped to the table <B>TILDATUTORIAL.TestAnswer</B>.
+@see tilda.tutorial.data._Tilda.TILDA__TESTANSWER
 */
-public class Test_XYZ_Analytics_View_Data extends tilda.data_tutorial._Tilda.TILDA__TEST_XYZ_ANALYTICS_VIEW
+public class TestAnswer_Data extends tilda.tutorial.data._Tilda.TILDA__TESTANSWER
  {
-   protected static final Logger LOG = LogManager.getLogger(Test_XYZ_Analytics_View_Data.class.getName());
+   protected static final Logger LOG = LogManager.getLogger(TestAnswer_Data.class.getName());
 
-   public Test_XYZ_Analytics_View_Data() { }
+   public TestAnswer_Data() { }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Implement your customizations, if any, below.
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+   @Override
+   protected boolean beforeWrite(Connection C) throws Exception
+     {
+       // Do things before writing the object to disk, for example, take care of AUTO fields.
+       return true;
+     }
 
    @Override
    protected boolean afterRead(Connection C) throws Exception

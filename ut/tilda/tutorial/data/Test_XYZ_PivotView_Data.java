@@ -2,7 +2,7 @@
  Tilda V1.0 template application class.
 */
 
-package tilda.data_tutorial;
+package tilda.tutorial.data;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,9 +11,9 @@ import tilda.db.Connection;
 
 /**
 This is the application class <B>Data_Test_XYZ_PivotView</B> mapped to the table <B>TILDATUTORIAL.Test_XYZ_PivotView</B>.
-@see tilda.data_tutorial._Tilda.TILDA__TEST_XYZ_PIVOTVIEW
+@see tilda.tutorial.data._Tilda.TILDA__TEST_XYZ_PIVOTVIEW
 */
-public class Test_XYZ_PivotView_Data extends tilda.data_tutorial._Tilda.TILDA__TEST_XYZ_PIVOTVIEW
+public class Test_XYZ_PivotView_Data extends tilda.tutorial.data._Tilda.TILDA__TEST_XYZ_PIVOTVIEW
  {
    protected static final Logger LOG = LogManager.getLogger(Test_XYZ_PivotView_Data.class.getName());
 

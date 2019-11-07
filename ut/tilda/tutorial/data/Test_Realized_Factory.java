@@ -2,7 +2,7 @@
  Tilda V1.0 template application class.
 */
 
-package tilda.data_tutorial;
+package tilda.tutorial.data;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,14 +10,14 @@ import org.apache.logging.log4j.Logger;
 import tilda.db.*;
 
 /**
-This is the application class <B>Data_Test_XYZ_Analytics_View</B> mapped to the table <B>TILDATUTORIAL.Test_XYZ_Analytics_View</B>.
-@see tilda.data_tutorial._Tilda.TILDA__TEST_XYZ_ANALYTICS_VIEW
+This is the application class <B>Data_Test_Realized</B> mapped to the table <B>TILDATUTORIAL.Test_Realized</B>.
+@see tilda.tutorial.data._Tilda.TILDA__TEST_REALIZED
 */
-public class Test_XYZ_Analytics_View_Factory extends tilda.data_tutorial._Tilda.TILDA__TEST_XYZ_ANALYTICS_VIEW_Factory
+public class Test_Realized_Factory extends tilda.tutorial.data._Tilda.TILDA__TEST_REALIZED_Factory
  {
-   protected static final Logger LOG = LogManager.getLogger(Test_XYZ_Analytics_View_Factory.class.getName());
+   protected static final Logger LOG = LogManager.getLogger(Test_Realized_Factory.class.getName());
 
-   protected Test_XYZ_Analytics_View_Factory() { }
+   protected Test_Realized_Factory() { }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
