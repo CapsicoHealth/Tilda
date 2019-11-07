@@ -2,7 +2,7 @@
  Tilda V1.0 template application class.
 */
 
-package tilda.data_tutorial;
+package tilda.tutorial.data;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,14 +10,14 @@ import org.apache.logging.log4j.Logger;
 import tilda.db.Connection;
 
 /**
-This is the application class <B>Data_FormAnswer</B> mapped to the table <B>TILDATUTORIAL.FormAnswer</B>.
-@see tilda.data_tutorial._Tilda.TILDA__FORMANSWER
+This is the application class <B>Data_TestAnswer</B> mapped to the table <B>TILDATUTORIAL.TestAnswer</B>.
+@see tilda.tutorial.data._Tilda.TILDA__TESTANSWER
 */
-public class FormAnswer_Data extends tilda.data_tutorial._Tilda.TILDA__FORMANSWER
+public class TestAnswer_Data extends tilda.tutorial.data._Tilda.TILDA__TESTANSWER
  {
-   protected static final Logger LOG = LogManager.getLogger(FormAnswer_Data.class.getName());
+   protected static final Logger LOG = LogManager.getLogger(TestAnswer_Data.class.getName());
 
-   public FormAnswer_Data() { }
+   public TestAnswer_Data() { }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
