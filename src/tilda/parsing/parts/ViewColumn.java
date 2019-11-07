@@ -125,6 +125,19 @@ public class ViewColumn
         return _Aggregate.name() + (_Distinct == true ? "(DISTINCT " : "(") + (_SameAsObj == null ? getShortName() : _SameAsObj.getShortName()) + ")";
       }
 
+    /**
+     * If the ViewColumn defines an expression and type, returns that. Otherwise, it returns the aggregate or original type.
+     * @return
+     */
+    public ColumnType getType()
+      {
+        return _Type != null ? _Type._Type : getAggregateType();
+      }
+
+    /**
+     * if it's not an aggregate, returns the original type of the sameAs obj, otherwise, returns the aggregate type.
+     * @return
+     */
     public ColumnType getAggregateType()
       {
         return _Aggregate == null ? _SameAsObj.getType()
