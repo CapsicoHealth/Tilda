@@ -16,6 +16,9 @@
 
 package tilda.enums;
 
+import tilda.parsing.parts.Column;
+import tilda.parsing.parts.ViewColumn;
+
 public enum AggregateType
   {
   SUM,
@@ -36,7 +39,9 @@ public enum AggregateType
 
   COUNT,
 
-  ARRAY;
+  ARRAY,
+
+  ARRAYCAT;
 
     public static AggregateType parse(String Str)
       {
@@ -48,9 +53,11 @@ public enum AggregateType
 
     public ColumnType getType(ColumnType T)
       {
+        // This method needs to be kept in sync with
         switch (this)
           {
             case ARRAY:
+            case ARRAYCAT:
               return T;
             case AVG:
             case DEV:
@@ -61,8 +68,10 @@ public enum AggregateType
             case COUNT:
               return ColumnType.LONG;
             case MIN:
-            case FIRST:
             case MAX:
+              if (T != ColumnType.DATETIME)
+                return T;
+            case FIRST:
             case LAST:
               return T;
             case SUM:
@@ -72,10 +81,28 @@ public enum AggregateType
                 return ColumnType.LONG;
               break;
             default:
-              throw new Error("Incomplete Switch statment: unknown ColumnType " + this.name() + ";");
+              throw new Error("Incomplete Switch statment: unknown Aggregate " + this.name() + ";");
           }
         throw new Error("Cannot do a " + name() + " aggregate on type " + T.name() + ".");
       }
+
+    public String isCompatible(ViewColumn VC)
+      {
+        try
+          {
+            getType(VC._SameAsObj.getType());
+            return null;
+          }
+        catch (Throwable T)
+          {
+            StringBuilder Str = new StringBuilder("View Column '" + VC.getFullName() + "' declares a nonsensical aggregate " + VC._Aggregate.name() + " over type " + VC._SameAsObj.getType().name() + ".");
+            if (VC._SameAsObj.getType() == ColumnType.DATETIME && (this == AggregateType.MIN || this == AggregateType.MAX))
+              Str.append(" Because of the way ZonedDateTimes are represented in the database as two columns, Min/Max are not supported as aggregates but you can use First/Last with orderBy instead to the same effect.");
+            return Str.toString();
+          }
+
+      }
+
 
     public boolean isComposable()
       {
@@ -125,6 +152,19 @@ public enum AggregateType
             default:
               throw new Error("Incomplete Switch statment: unknown ColumnType " + this.name() + ";");
           }
+      }
+
+    /**
+     * Tests whether an aggregate is friendly with DateTime columns. Because DateTime columns have a companion
+     * TZ column to maintain the timezone information, aggregates that cannot be ordered essentially are not usable.
+     * This method simply wraps isOrderable() in case we later need to make some modifications, i.e., the
+     * isTimeZoneCompatible is semantically different enough from isOrderable that we didn't want to alias them.
+     * 
+     * @return
+     */
+    public boolean isZonedDateTimeCompatible()
+      {
+        return isOrderable() == true;
       }
 
   }

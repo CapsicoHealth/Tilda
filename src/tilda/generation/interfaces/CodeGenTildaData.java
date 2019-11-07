@@ -165,6 +165,15 @@ public interface CodeGenTildaData extends CodeGenBase
     /**
      * 
      * @param Out
+     * @param O
+     * @throws Exception
+     */
+    public void genMethodUpsert(PrintWriter Out, GeneratorSession G, Object O)
+    throws Exception;
+
+    /**
+     * 
+     * @param Out
      * @param G
      * @param O
      * @param CopyToColumns

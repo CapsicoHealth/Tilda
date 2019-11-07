@@ -28,4 +28,11 @@ public class Type_DatetimePrimitiveNull extends Type_DatetimePrimitive implement
         super(SchemaName, TableName, ColumnName, Count, Description, TZCol);
       }
     
+    public Type_DatetimePrimitiveNull(Type_DatetimePrimitive notNullDateTime)
+      {
+        super(notNullDateTime._SchemaName, notNullDateTime._TableName, notNullDateTime._ColumnName, notNullDateTime._Mask.nextSetBit(0), notNullDateTime._Description);
+      }
+    
+    
+    
   }

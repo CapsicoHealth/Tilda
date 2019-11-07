@@ -174,6 +174,7 @@ public class DateTimeUtil
      * <P>
      * This method returns a LocalDate based on a string value and a standard pattern. It avoids throwing an exception
      * if the data cannot be parsed and will return NULL instead with a warning in the logs.
+     * 
      * @return a LocalDate object if the string could be parsed, or null otherwise.
      */
     public static LocalDate parseDate(String DateStr, String Pattern)
@@ -244,12 +245,12 @@ public class DateTimeUtil
 
     public static String printDate(LocalDate D)
       {
-        return D==null ? null : D.format(DateTimeFormatter.ISO_DATE);
+        return D == null ? null : D.format(DateTimeFormatter.ISO_DATE);
       }
 
     public static String printDateForJSON(LocalDate D)
       {
-        return D==null ? null : D.format(DateTimeFormatter.ISO_DATE);
+        return D == null ? null : D.format(DateTimeFormatter.ISO_DATE);
       }
 
     public static String printDate(List<LocalDate> L)
@@ -288,18 +289,16 @@ public class DateTimeUtil
         ZonedDateTime ZDT = null;
         if (DateTimeStr.length() < 25)
           ZDT = parseWithoutZone(DateTimeStr);
-        if (ZDT != null)
-          return ZDT;
-
-        try
-          {
-            return ZonedDateTime.parse(DateTimeStr, DateTimeFormatter.ISO_ZONED_DATE_TIME);
-          }
-        catch (Exception E)
-          {
-            LOG.catching(E);
-          }
-        return null;
+        if (ZDT == null)
+          try
+            {
+              return ZonedDateTime.parse(DateTimeStr, DateTimeFormatter.ISO_ZONED_DATE_TIME);
+            }
+          catch (Exception E)
+            {
+              LOG.catching(E);
+            }
+        return ZDT;
       }
 
     public static List<ZonedDateTime> parsefromJSON(List<String> DateTimeStr)
@@ -688,8 +687,8 @@ public class DateTimeUtil
           {
             newL.add(ZDT == null ? null : new java.sql.Timestamp(ZDT.toInstant().toEpochMilli()));
           }
-        LOG.debug("L: "+TextUtil.print(L.iterator()));
-        LOG.debug("newL: "+TextUtil.print(newL.iterator()));
+        LOG.debug("L: " + TextUtil.print(L.iterator()));
+        LOG.debug("newL: " + TextUtil.print(newL.iterator()));
         return newL;
       }
 

@@ -77,11 +77,18 @@ public class View extends Base
     public transient Pattern           _FormulasRegEx;
     public transient Map<String, Base> _Dependencies     = new HashMap<String, Base>();
     public transient List<Column>      _PivotColumns     = new ArrayList<Column>();
-
+    
     public View()
       {
         super(TildaType.VIEW);
       }
+    
+    @Override
+    public String toString()
+      {
+        return getFullName() + " (" + super.toString() + ")";
+      }
+    
 
     @Override
     public Column getColumn(String name)

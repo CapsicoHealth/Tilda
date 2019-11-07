@@ -15,8 +15,11 @@ import tilda.enums.*;
 import tilda.performance.*;
 import tilda.utils.*;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.*;
+
+import com.google.gson.*;
+import com.google.gson.annotations.*;
+import java.math.*;
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -335,18 +338,19 @@ This Table contains the following columns:<BLOCKQUOTE>
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__OBJECTPERF implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
-   protected static final Logger LOG = LogManager.getLogger(TILDA__OBJECTPERF.class.getName());
+   protected transient static final Logger LOG = LogManager.getLogger(TILDA__OBJECTPERF.class.getName());
 
-   public static final Class<TILDA__OBJECTPERF_Factory> FACTORY_CLASS= TILDA__OBJECTPERF_Factory.class;
-   public static final String TABLENAME = TextUtil.print("TILDA.ObjectPerf", "");
+   public transient static final Class<TILDA__OBJECTPERF_Factory> FACTORY_CLASS= TILDA__OBJECTPERF_Factory.class;
+   public transient static final String TABLENAME = TextUtil.print("TILDA.ObjectPerf", "");
 
    protected TILDA__OBJECTPERF() { }
 
-   InitMode __Init        = null;
-   private BitSet   __Nulls       = new BitSet(64);
-   BitSet   __Changes     = new BitSet(64);
-   private boolean  __NewlyCreated= false;
-   private int      __LookupId;
+   transient InitMode __Init        = null;
+   transient BitSet   __Nulls       = new BitSet(64);
+   transient BitSet   __Changes     = new BitSet(64);
+   transient boolean  __NewlyCreated= false;
+
+   transient int      __LookupId;
 
    public  boolean hasChanged    () { return __Changes.isEmpty() == false; }
    public  boolean isNewlyCreated() { return __NewlyCreated; }
@@ -387,7 +391,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _schemaName;
+   @SerializedName("schemaName")
+   String _schemaName=null;
    protected String __Saved_schemaName;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -438,13 +443,23 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.ObjectPerf.schemaName: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
        else if (v.equals(_schemaName) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.ObjectPerf.schemaName' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask);
           __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask);
        _schemaName = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+   /**
+    * Being invariant, the field schemaName doesn't have a public setter. To support deserialization however, 
+    * we may need to set that field after a create/deserialization and before any write. The init methods allows
+    * to do so.
+   */
+   public void initSchemaName(String v) throws Exception
+     {
+       setSchemaName(v);
      }
 
 
@@ -471,7 +486,8 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _objectName;
+   @SerializedName("objectName")
+   String _objectName=null;
    protected String __Saved_objectName;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -522,13 +538,23 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.ObjectPerf.objectName: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
        else if (v.equals(_objectName) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.ObjectPerf.objectName' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask);
           __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask);
        _objectName = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+   /**
+    * Being invariant, the field objectName doesn't have a public setter. To support deserialization however, 
+    * we may need to set that field after a create/deserialization and before any write. The init methods allows
+    * to do so.
+   */
+   public void initObjectName(String v) throws Exception
+     {
+       setObjectName(v);
      }
 
 
@@ -555,7 +581,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _startPeriodTZ;
+   String _startPeriodTZ=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -605,7 +631,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.ObjectPerf.startPeriodTZ: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
        else if (v.equals(_startPeriodTZ) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.ObjectPerf.startPeriodTZ' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask);
           __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask);
@@ -658,8 +684,12 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   ZonedDateTime _startPeriod;
-   protected ZonedDateTime __Saved_startPeriod;
+   @SerializedName("startPeriod")
+   String  Str_startPeriod;
+   public void initStartPeriod(String v) { Str_startPeriod = v; }
+   public String initStartPeriodVal() { return Str_startPeriod; }
+   transient ZonedDateTime _startPeriod = null;
+   transient ZonedDateTime __Saved_startPeriod;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -705,7 +735,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.ObjectPerf.startPeriod to null: it's not nullable.");
        else if (v.equals(_startPeriod) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.ObjectPerf.startPeriod' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask);
           __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask);
@@ -716,6 +746,16 @@ This is the setter for:<BR>
           setStartPeriodTZ(ZI.getId());
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+   /**
+    * Being invariant, the field startPeriod doesn't have a public setter. To support deserialization however, 
+    * we may need to set that field after a create/deserialization and before any write. The init methods allows
+    * to do so.
+   */
+   public void initStartPeriod(ZonedDateTime v) throws Exception
+     {
+       setStartPeriod(v);
      }
 
 
@@ -742,7 +782,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _endPeriodTZ;
+   String _endPeriodTZ=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -843,7 +883,11 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   ZonedDateTime _endPeriod;
+   @SerializedName("endPeriod")
+   String  Str_endPeriod;
+   public void initEndPeriod(String v) { Str_endPeriod = v; }
+   public String initEndPeriodVal() { return Str_endPeriod; }
+   transient ZonedDateTime _endPeriod = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1016,7 +1060,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   long _selectNano= SystemValues.EVIL_VALUE;
+   @SerializedName("selectNano")
+   Long _selectNano=null;
 /**
 These are the enumerated values for tilda.data.TILDA.ObjectPerf.selectNano, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
 
@@ -1054,7 +1099,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final long getSelectNano()
-      { return _selectNano; }
+      { return _selectNano==null?0l:_selectNano; }
 
 /**
 This is the value is-a for tilda.data.TILDA.ObjectPerf.selectNano:<BR>
@@ -1068,7 +1113,7 @@ This is the value is-a for tilda.data.TILDA.ObjectPerf.selectNano:<BR>
 </TABLE>
 */
    public final boolean isSelectNanoSelectNano_CreateDefault()
-      { return _selectNano == _selectNanoSelectNano_CreateDefault; }
+      { return _selectNano != null && _selectNano.equals(_selectNanoSelectNano_CreateDefault); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1097,7 +1142,7 @@ This is the setter for:<BR>
    public void setSelectNano(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _selectNano)
+       if (__Init == InitMode.CREATE || _selectNano == null || v != _selectNano)
         {
           __Changes.or(TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask);
           __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask);
@@ -1177,7 +1222,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   int _selectCount= SystemValues.EVIL_VALUE;
+   @SerializedName("selectCount")
+   Integer _selectCount=null;
 /**
 These are the enumerated values for tilda.data.TILDA.ObjectPerf.selectCount, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
 
@@ -1215,7 +1261,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final int getSelectCount()
-      { return _selectCount; }
+      { return _selectCount==null?0:_selectCount; }
 
 /**
 This is the value is-a for tilda.data.TILDA.ObjectPerf.selectCount:<BR>
@@ -1229,7 +1275,7 @@ This is the value is-a for tilda.data.TILDA.ObjectPerf.selectCount:<BR>
 </TABLE>
 */
    public final boolean isSelectCountSelectCount_CreateDefault()
-      { return _selectCount == _selectCountSelectCount_CreateDefault; }
+      { return _selectCount != null && _selectCount.equals(_selectCountSelectCount_CreateDefault); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1258,7 +1304,7 @@ This is the setter for:<BR>
    public void setSelectCount(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _selectCount)
+       if (__Init == InitMode.CREATE || _selectCount == null || v != _selectCount)
         {
           __Changes.or(TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask);
           __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask);
@@ -1338,7 +1384,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   int _selectRecords= SystemValues.EVIL_VALUE;
+   @SerializedName("selectRecords")
+   Integer _selectRecords=null;
 /**
 These are the enumerated values for tilda.data.TILDA.ObjectPerf.selectRecords, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
 
@@ -1376,7 +1423,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final int getSelectRecords()
-      { return _selectRecords; }
+      { return _selectRecords==null?0:_selectRecords; }
 
 /**
 This is the value is-a for tilda.data.TILDA.ObjectPerf.selectRecords:<BR>
@@ -1390,7 +1437,7 @@ This is the value is-a for tilda.data.TILDA.ObjectPerf.selectRecords:<BR>
 </TABLE>
 */
    public final boolean isSelectRecordsSelectRecords_CreateDefault()
-      { return _selectRecords == _selectRecordsSelectRecords_CreateDefault; }
+      { return _selectRecords != null && _selectRecords.equals(_selectRecordsSelectRecords_CreateDefault); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1419,7 +1466,7 @@ This is the setter for:<BR>
    public void setSelectRecords(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _selectRecords)
+       if (__Init == InitMode.CREATE || _selectRecords == null || v != _selectRecords)
         {
           __Changes.or(TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask);
           __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask);
@@ -1499,7 +1546,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   long _insertNano= SystemValues.EVIL_VALUE;
+   @SerializedName("insertNano")
+   Long _insertNano=null;
 /**
 These are the enumerated values for tilda.data.TILDA.ObjectPerf.insertNano, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
 
@@ -1537,7 +1585,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final long getInsertNano()
-      { return _insertNano; }
+      { return _insertNano==null?0l:_insertNano; }
 
 /**
 This is the value is-a for tilda.data.TILDA.ObjectPerf.insertNano:<BR>
@@ -1551,7 +1599,7 @@ This is the value is-a for tilda.data.TILDA.ObjectPerf.insertNano:<BR>
 </TABLE>
 */
    public final boolean isInsertNanoInsertNano_CreateDefault()
-      { return _insertNano == _insertNanoInsertNano_CreateDefault; }
+      { return _insertNano != null && _insertNano.equals(_insertNanoInsertNano_CreateDefault); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1580,7 +1628,7 @@ This is the setter for:<BR>
    public void setInsertNano(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _insertNano)
+       if (__Init == InitMode.CREATE || _insertNano == null || v != _insertNano)
         {
           __Changes.or(TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask);
           __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask);
@@ -1660,7 +1708,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   int _insertCount= SystemValues.EVIL_VALUE;
+   @SerializedName("insertCount")
+   Integer _insertCount=null;
 /**
 These are the enumerated values for tilda.data.TILDA.ObjectPerf.insertCount, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
 
@@ -1698,7 +1747,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final int getInsertCount()
-      { return _insertCount; }
+      { return _insertCount==null?0:_insertCount; }
 
 /**
 This is the value is-a for tilda.data.TILDA.ObjectPerf.insertCount:<BR>
@@ -1712,7 +1761,7 @@ This is the value is-a for tilda.data.TILDA.ObjectPerf.insertCount:<BR>
 </TABLE>
 */
    public final boolean isInsertCountInsertCount_CreateDefault()
-      { return _insertCount == _insertCountInsertCount_CreateDefault; }
+      { return _insertCount != null && _insertCount.equals(_insertCountInsertCount_CreateDefault); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1741,7 +1790,7 @@ This is the setter for:<BR>
    public void setInsertCount(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _insertCount)
+       if (__Init == InitMode.CREATE || _insertCount == null || v != _insertCount)
         {
           __Changes.or(TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask);
           __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask);
@@ -1821,7 +1870,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   int _insertRecords= SystemValues.EVIL_VALUE;
+   @SerializedName("insertRecords")
+   Integer _insertRecords=null;
 /**
 These are the enumerated values for tilda.data.TILDA.ObjectPerf.insertRecords, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
 
@@ -1859,7 +1909,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final int getInsertRecords()
-      { return _insertRecords; }
+      { return _insertRecords==null?0:_insertRecords; }
 
 /**
 This is the value is-a for tilda.data.TILDA.ObjectPerf.insertRecords:<BR>
@@ -1873,7 +1923,7 @@ This is the value is-a for tilda.data.TILDA.ObjectPerf.insertRecords:<BR>
 </TABLE>
 */
    public final boolean isInsertRecordsInsertRecords_CreateDefault()
-      { return _insertRecords == _insertRecordsInsertRecords_CreateDefault; }
+      { return _insertRecords != null && _insertRecords.equals(_insertRecordsInsertRecords_CreateDefault); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1902,7 +1952,7 @@ This is the setter for:<BR>
    public void setInsertRecords(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _insertRecords)
+       if (__Init == InitMode.CREATE || _insertRecords == null || v != _insertRecords)
         {
           __Changes.or(TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask);
           __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask);
@@ -1982,7 +2032,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   long _updateNano= SystemValues.EVIL_VALUE;
+   @SerializedName("updateNano")
+   Long _updateNano=null;
 /**
 These are the enumerated values for tilda.data.TILDA.ObjectPerf.updateNano, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
 
@@ -2020,7 +2071,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final long getUpdateNano()
-      { return _updateNano; }
+      { return _updateNano==null?0l:_updateNano; }
 
 /**
 This is the value is-a for tilda.data.TILDA.ObjectPerf.updateNano:<BR>
@@ -2034,7 +2085,7 @@ This is the value is-a for tilda.data.TILDA.ObjectPerf.updateNano:<BR>
 </TABLE>
 */
    public final boolean isUpdateNanoUpdateNano_CreateDefault()
-      { return _updateNano == _updateNanoUpdateNano_CreateDefault; }
+      { return _updateNano != null && _updateNano.equals(_updateNanoUpdateNano_CreateDefault); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2063,7 +2114,7 @@ This is the setter for:<BR>
    public void setUpdateNano(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _updateNano)
+       if (__Init == InitMode.CREATE || _updateNano == null || v != _updateNano)
         {
           __Changes.or(TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask);
           __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask);
@@ -2143,7 +2194,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   int _updateCount= SystemValues.EVIL_VALUE;
+   @SerializedName("updateCount")
+   Integer _updateCount=null;
 /**
 These are the enumerated values for tilda.data.TILDA.ObjectPerf.updateCount, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
 
@@ -2181,7 +2233,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final int getUpdateCount()
-      { return _updateCount; }
+      { return _updateCount==null?0:_updateCount; }
 
 /**
 This is the value is-a for tilda.data.TILDA.ObjectPerf.updateCount:<BR>
@@ -2195,7 +2247,7 @@ This is the value is-a for tilda.data.TILDA.ObjectPerf.updateCount:<BR>
 </TABLE>
 */
    public final boolean isUpdateCountUpdateCount_CreateDefault()
-      { return _updateCount == _updateCountUpdateCount_CreateDefault; }
+      { return _updateCount != null && _updateCount.equals(_updateCountUpdateCount_CreateDefault); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2224,7 +2276,7 @@ This is the setter for:<BR>
    public void setUpdateCount(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _updateCount)
+       if (__Init == InitMode.CREATE || _updateCount == null || v != _updateCount)
         {
           __Changes.or(TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask);
           __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask);
@@ -2304,7 +2356,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   int _updateRecords= SystemValues.EVIL_VALUE;
+   @SerializedName("updateRecords")
+   Integer _updateRecords=null;
 /**
 These are the enumerated values for tilda.data.TILDA.ObjectPerf.updateRecords, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
 
@@ -2342,7 +2395,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final int getUpdateRecords()
-      { return _updateRecords; }
+      { return _updateRecords==null?0:_updateRecords; }
 
 /**
 This is the value is-a for tilda.data.TILDA.ObjectPerf.updateRecords:<BR>
@@ -2356,7 +2409,7 @@ This is the value is-a for tilda.data.TILDA.ObjectPerf.updateRecords:<BR>
 </TABLE>
 */
    public final boolean isUpdateRecordsUpdateRecords_CreateDefault()
-      { return _updateRecords == _updateRecordsUpdateRecords_CreateDefault; }
+      { return _updateRecords != null && _updateRecords.equals(_updateRecordsUpdateRecords_CreateDefault); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2385,7 +2438,7 @@ This is the setter for:<BR>
    public void setUpdateRecords(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _updateRecords)
+       if (__Init == InitMode.CREATE || _updateRecords == null || v != _updateRecords)
         {
           __Changes.or(TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask);
           __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask);
@@ -2465,7 +2518,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   long _deleteNano= SystemValues.EVIL_VALUE;
+   @SerializedName("deleteNano")
+   Long _deleteNano=null;
 /**
 These are the enumerated values for tilda.data.TILDA.ObjectPerf.deleteNano, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
 
@@ -2503,7 +2557,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final long getDeleteNano()
-      { return _deleteNano; }
+      { return _deleteNano==null?0l:_deleteNano; }
 
 /**
 This is the value is-a for tilda.data.TILDA.ObjectPerf.deleteNano:<BR>
@@ -2517,7 +2571,7 @@ This is the value is-a for tilda.data.TILDA.ObjectPerf.deleteNano:<BR>
 </TABLE>
 */
    public final boolean isDeleteNanoDeleteNano_CreateDefault()
-      { return _deleteNano == _deleteNanoDeleteNano_CreateDefault; }
+      { return _deleteNano != null && _deleteNano.equals(_deleteNanoDeleteNano_CreateDefault); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2546,7 +2600,7 @@ This is the setter for:<BR>
    public void setDeleteNano(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _deleteNano)
+       if (__Init == InitMode.CREATE || _deleteNano == null || v != _deleteNano)
         {
           __Changes.or(TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask);
           __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask);
@@ -2626,7 +2680,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   int _deleteCount= SystemValues.EVIL_VALUE;
+   @SerializedName("deleteCount")
+   Integer _deleteCount=null;
 /**
 These are the enumerated values for tilda.data.TILDA.ObjectPerf.deleteCount, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
 
@@ -2664,7 +2719,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final int getDeleteCount()
-      { return _deleteCount; }
+      { return _deleteCount==null?0:_deleteCount; }
 
 /**
 This is the value is-a for tilda.data.TILDA.ObjectPerf.deleteCount:<BR>
@@ -2678,7 +2733,7 @@ This is the value is-a for tilda.data.TILDA.ObjectPerf.deleteCount:<BR>
 </TABLE>
 */
    public final boolean isDeleteCountDeleteCount_CreateDefault()
-      { return _deleteCount == _deleteCountDeleteCount_CreateDefault; }
+      { return _deleteCount != null && _deleteCount.equals(_deleteCountDeleteCount_CreateDefault); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2707,7 +2762,7 @@ This is the setter for:<BR>
    public void setDeleteCount(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _deleteCount)
+       if (__Init == InitMode.CREATE || _deleteCount == null || v != _deleteCount)
         {
           __Changes.or(TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask);
           __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask);
@@ -2787,7 +2842,8 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   int _deleteRecords= SystemValues.EVIL_VALUE;
+   @SerializedName("deleteRecords")
+   Integer _deleteRecords=null;
 /**
 These are the enumerated values for tilda.data.TILDA.ObjectPerf.deleteRecords, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
 
@@ -2825,7 +2881,7 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final int getDeleteRecords()
-      { return _deleteRecords; }
+      { return _deleteRecords==null?0:_deleteRecords; }
 
 /**
 This is the value is-a for tilda.data.TILDA.ObjectPerf.deleteRecords:<BR>
@@ -2839,7 +2895,7 @@ This is the value is-a for tilda.data.TILDA.ObjectPerf.deleteRecords:<BR>
 </TABLE>
 */
    public final boolean isDeleteRecordsDeleteRecords_CreateDefault()
-      { return _deleteRecords == _deleteRecordsDeleteRecords_CreateDefault; }
+      { return _deleteRecords != null && _deleteRecords.equals(_deleteRecordsDeleteRecords_CreateDefault); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2868,7 +2924,7 @@ This is the setter for:<BR>
    public void setDeleteRecords(int v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || v != _deleteRecords)
+       if (__Init == InitMode.CREATE || _deleteRecords == null || v != _deleteRecords)
         {
           __Changes.or(TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask);
           __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask);
@@ -2948,7 +3004,7 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   ZonedDateTime _created;
+   transient ZonedDateTime _created = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3008,7 +3064,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.ObjectPerf.created to null: it's not nullable.");
        else if (v.equals(_created) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.ObjectPerf.created' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask);
           __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask);
@@ -3161,7 +3217,7 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   ZonedDateTime _lastUpdated;
+   transient ZonedDateTime _lastUpdated = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3365,7 +3421,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   ZonedDateTime _deleted;
+   transient ZonedDateTime _deleted = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3595,7 +3651,187 @@ This is the hasChanged for:<BR>
 /**
  Writes the object to the data store if any changes has occurred since the object was initially
  read from the data store or last written. 
+ If the object was deserialized (i.e., not created via the factory lookup() or create() methods, 
+ then this method assumes a create() and will check that all non-null columns have been provided. If you 
+ need more flexibility for an upsert, use the upsert(Connection, boolean) version of write 
+ which will try a combination of insert/update to get the object to the DB. 
+ Note that if you use write() right after a create, lookup or deserialization initialization, only the
+ template fields (not null, natural identity and/or any field set prior to calling this method) exist 
+  in memory. Call refresh() to force a select and retrieve all the fields for that record.
 */
+   public final boolean write(Connection C) throws Exception
+     {
+       long T0 = System.nanoTime();
+
+       if (__Init == null && __LookupId==0) // Loaded via some other mechamism, e.g., Json or CSV loader
+        {
+          validateDeserialization();
+          initForCreate();
+        }
+
+       if (hasChanged() == false)
+        {
+          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.ObjectPerf has not changed: no writing will occur.");
+          QueryDetails.setLastQuery(TILDA__OBJECTPERF_Factory.SCHEMA_TABLENAME_LABEL, "");
+          return true;
+        }
+
+       if (beforeWrite(C) == false)
+        {
+          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.ObjectPerf object's beforeWrite() failed.");
+          QueryDetails.setLastQuery(TILDA__OBJECTPERF_Factory.SCHEMA_TABLENAME_LABEL, "");
+          return false;
+        }
+
+       String Q = getWriteQuery(C);
+
+       java.sql.PreparedStatement PS = null;
+       int count = 0;
+       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
+       try
+        {
+          PS = C.prepareStatement(Q);
+          int i = populatePreparedStatement(C, PS, AllocatedArrays);
+
+          switch (__LookupId)
+           {
+             case 0:
+               PS.setString    (++i, _schemaName   );
+               PS.setString    (++i, _objectName   );
+               PS.setTimestamp(++i, new java.sql.Timestamp(_startPeriod.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+               break;
+             case -666: if (__Init == InitMode.CREATE) break;
+             default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
+           }
+
+          C.setSavepoint();
+          count = PS.executeUpdate();
+          C.releaseSavepoint(true);
+          if (count == 0)
+           return false;
+        }
+       catch (java.sql.SQLException E)
+        {
+          C.releaseSavepoint(false);
+          return C.handleCatch(E, "updated or inserted");
+        }
+       finally
+        {
+          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__OBJECTPERF_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
+          PS = null;
+        }
+
+       stateUpdatePostWrite();
+       return true;
+     }
+
+   protected abstract boolean beforeWrite(Connection C) throws Exception;
+
+   protected void validateDeserialization() throws Exception
+     {
+
+       if (TextUtil.isNullOrEmpty(_schemaName) == true)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.ObjectPerf.schemaName' was null or empty. It's not nullable in the model.\n"+toString());
+          __Changes.or(TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask);
+          __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask);
+
+       if (TextUtil.isNullOrEmpty(_objectName) == true)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.ObjectPerf.objectName' was null or empty. It's not nullable in the model.\n"+toString());
+          __Changes.or(TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask);
+          __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask);
+
+       if (TextUtil.isNullOrEmpty(Str_startPeriod) == true)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.ObjectPerf.startPeriod' was null or empty. It's not nullable in the model.\n"+toString());
+          __Changes.or(TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask);
+          __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask);
+        {
+       _startPeriod = DateTimeUtil.parsefromJSON(Str_startPeriod);
+       if (   _startPeriod == null)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.ObjectPerf.startPeriod' was not in the expected format. Dates should follow the ISO format.\n"+toString());
+       __Changes.or(TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask);
+       __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask);
+       tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(_startPeriod.getZone().getId());
+       if (ZI == null)
+        throw new Exception("Cannot set field 'tilda.data.TILDA.ObjectPerf.startPeriod' because the timezone value '"+_startPeriod.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+          setStartPeriodTZ(ZI.getId());
+        }
+
+       if (TextUtil.isNullOrEmpty(Str_endPeriod) == true)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.ObjectPerf.endPeriod' was null or empty. It's not nullable in the model.\n"+toString());
+          __Changes.or(TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask);
+          __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask);
+        {
+       _endPeriod = DateTimeUtil.parsefromJSON(Str_endPeriod);
+       if (   _endPeriod == null)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.ObjectPerf.endPeriod' was not in the expected format. Dates should follow the ISO format.\n"+toString());
+       __Changes.or(TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask);
+       __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask);
+       tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(_endPeriod.getZone().getId());
+       if (ZI == null)
+        throw new Exception("Cannot set field 'tilda.data.TILDA.ObjectPerf.endPeriod' because the timezone value '"+_endPeriod.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+          setEndPeriodTZ(ZI.getId());
+        }
+
+       if (_selectNano == null)
+        _selectNano=0l;
+          __Changes.or(TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask);
+          __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask);
+
+       if (_selectCount == null)
+        _selectCount=0;
+          __Changes.or(TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask);
+          __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask);
+
+       if (_selectRecords == null)
+        _selectRecords=0;
+          __Changes.or(TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask);
+          __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask);
+
+       if (_insertNano == null)
+        _insertNano=0l;
+          __Changes.or(TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask);
+          __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask);
+
+       if (_insertCount == null)
+        _insertCount=0;
+          __Changes.or(TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask);
+          __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask);
+
+       if (_insertRecords == null)
+        _insertRecords=0;
+          __Changes.or(TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask);
+          __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask);
+
+       if (_updateNano == null)
+        _updateNano=0l;
+          __Changes.or(TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask);
+          __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask);
+
+       if (_updateCount == null)
+        _updateCount=0;
+          __Changes.or(TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask);
+          __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask);
+
+       if (_updateRecords == null)
+        _updateRecords=0;
+          __Changes.or(TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask);
+          __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask);
+
+       if (_deleteNano == null)
+        _deleteNano=0l;
+          __Changes.or(TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask);
+          __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask);
+
+       if (_deleteCount == null)
+        _deleteCount=0;
+          __Changes.or(TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask);
+          __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask);
+
+       if (_deleteRecords == null)
+        _deleteRecords=0;
+          __Changes.or(TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask);
+          __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask);
+     }
    protected String getTimeStampSignature() throws Exception
      {
        StringBuilder S = new StringBuilder(1024);
@@ -3859,66 +4095,72 @@ This is the hasChanged for:<BR>
        __Changes.clear();
        __Nulls.clear();
      }
-   public final boolean write(Connection C) throws Exception
+/**
+ Writes the object to the data store using an upsert approach and assumes the object is either
+ in create or deserialized mode. 
+ The parameter createFirst controls whether the logic should do an insert first and if it fails, then do 
+ an update, or the opposite (update first and if it fails, then an insert). This is necessary for databases
+ without a robust upsert SQL syntax where separate insert/update statements must be issued.
+ The method will figure out based on the fields set which natural identity (a unique index) is applicable for
+ the lookup operation.
+ Note that when you use upsert() (right after a create or deserialization initialization), only the template
+ fields (not null, natural identity and/or any field set prior to calling this method) exist in memory. Call
+ refresh() to force a select and retrieve all the fields for that record.
+*/
+   public final boolean upsert(Connection C, boolean updateFirst) throws Exception
      {
-       long T0 = System.nanoTime();
-       if (hasChanged() == false)
+       boolean OK =    __Init == InitMode.CREATE && __NewlyCreated == true && __LookupId == SystemValues.EVIL_VALUE // Create() through factory
+                    || __Init == null && __LookupId==0 // Loaded via some deserialization mechamism, e.g., Json or CSV loader
+               ;
+       if (OK == false)
+        throw new Exception("Object has not been instanciated via deserialization or the factory create() method.");
+
+       if (__Init == null && __LookupId==0);  // object deserialized
+        validateDeserialization();
+
+       int lookupId = getFirstValidLookupBy();
+       if (lookupId == SystemValues.EVIL_VALUE)
+        throw new Exception("Object has not been intialized with sufficient data for any natural key to be available for a lookup.");
+
+       if (updateFirst == true)
         {
-          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.ObjectPerf has not changed: no writing will occur.");
-          QueryDetails.setLastQuery(TILDA__OBJECTPERF_Factory.SCHEMA_TABLENAME_LABEL, "");
-          return true;
-        }
-
-       if (beforeWrite(C) == false)
-        {
-          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.ObjectPerf object's beforeWrite() failed.");
-          QueryDetails.setLastQuery(TILDA__OBJECTPERF_Factory.SCHEMA_TABLENAME_LABEL, "");
-          return false;
-        }
-
-       String Q = getWriteQuery(C);
-
-       java.sql.PreparedStatement PS = null;
-       int count = 0;
-       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
-       try
-        {
-          PS = C.prepareStatement(Q);
-          int i = populatePreparedStatement(C, PS, AllocatedArrays);
-
-          switch (__LookupId)
+          initForLookup(lookupId);
+          if (write(C) == false)
            {
-             case 0:
-               PS.setString    (++i, _schemaName   );
-               PS.setString    (++i, _objectName   );
-               PS.setTimestamp(++i, new java.sql.Timestamp(_startPeriod.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
-               break;
-             case -666: if (__Init == InitMode.CREATE) break;
-             default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
+             initForCreate();
+             return write(C);
            }
-
-          C.setSavepoint();
-          count = PS.executeUpdate();
-          C.releaseSavepoint(true);
-          if (count == 0)
-           return false;
         }
-       catch (java.sql.SQLException E)
+       else
         {
-          C.releaseSavepoint(false);
-          return C.handleCatch(E, "updated or inserted");
-        }
-       finally
-        {
-          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__OBJECTPERF_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
-          PS = null;
+          initForCreate();
+          if (write(C) == false)
+           {
+             initForLookup(lookupId);
+             return write(C);
+           }
         }
 
-       stateUpdatePostWrite();
        return true;
      }
 
-   protected abstract boolean beforeWrite(Connection C) throws Exception;
+   /**
+   * Returns the first satisfied natural identify (i.e., unique indices), or if defined, the PK. by 'satisfied',
+   * we mean an identity whose columns have all been provided (i.e., not null). We prioritize natural identities
+   * over the PK since PKs are typically not stable across systems. For example, one might model a user with a PK
+   * but also an identify over an email address for example. That email address for a given logical user should be
+   * constant across multiple environments (e.g., a dev, staging or prod), where as a PK might be generated based
+   * on dynamic factors that are very likely to be different across systems.
+   */
+   protected int getFirstValidLookupBy() throws Exception
+     {
+
+       // Testing if primary key has been set - Id: 0
+       if (TextUtil.isNullOrEmpty(_schemaName) == false && TextUtil.isNullOrEmpty(_objectName) == false && TextUtil.isNullOrEmpty(Str_startPeriod) == false)
+        return 0;
+
+       return SystemValues.EVIL_VALUE;
+     }
 
 
 

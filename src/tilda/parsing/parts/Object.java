@@ -63,6 +63,7 @@ public class Object extends Base
 
     public transient boolean              _HasUniqueIndex;
     public transient boolean              _HasUniqueQuery;
+    public transient boolean              _HasNaturalIdentity;
     public transient FrameworkSourcedType _FST          = FrameworkSourcedType.NONE;
     public transient View                 _SourceView   = null;                                        // For tables such as Realized tables generated out of views.
     public transient Object               _SourceObject = null;                                        // For tables such as Realized tables generated out of views.
@@ -104,7 +105,7 @@ public class Object extends Base
     @Override
     public String toString()
       {
-        return super.toString() + ": " + getFullName();
+        return getFullName() + " (" + super.toString() + ")";
       }
 
     @Override
@@ -143,7 +144,7 @@ public class Object extends Base
       {
         if (_Validated == true)
           return true;
-        
+
         if (super.Validate(PS, ParentSchema) == false)
           return false;
 
@@ -153,7 +154,7 @@ public class Object extends Base
           for (Cloner C : _CloneAs)
             {
               if (C.Validate(PS, this) == false)
-               return false;
+                return false;
               Object obj = new Object(this);
               obj._Name = _Name + "_" + C._Name;
               obj._Description = C._Description;
@@ -161,7 +162,7 @@ public class Object extends Base
               obj._SourceObject = this;
               ParentSchema._Objects.add(obj);
             }
-        
+
         if (getFullName().equals("tilda.data.TILDA.Key") == true)
           {
             Column created = getColumn("created");
@@ -346,6 +347,8 @@ public class Object extends Base
           PS.AddError("Object '" + getFullName() + "' doesn't have any identity. You must define at least a primary key or a unique index.");
 
         _Validated = Errs == PS.getErrorCount();
+        
+        _HasNaturalIdentity = _HasUniqueIndex == true || _PrimaryKey != null && _PrimaryKey._Autogen == false;
 
         return _Validated;
       }
@@ -560,14 +563,32 @@ public class Object extends Base
         return FKs;
       }
 
+    /**
+     * Checks if there any JSON output maps
+     * @return
+     */
     public boolean isJsonable()
       {
         for (OutputMapping OM : _OutputMaps)
-          if (OM._OutputTypes.contains(OutputFormatType.JSON) == true)
+          if (OM != null && OM._OutputTypes.contains(OutputFormatType.JSON) == true)
             return true;
         return false;
       }
 
+    /**
+     * Checks if there any JSON or CSV output maps. If more methods of serializations are added in the future,
+     * this method will add extra checks.
+     * @return
+     */
+    public boolean isSerializable()
+      {
+        for (OutputMapping OM : _OutputMaps)
+          if (OM != null && (OM._OutputTypes.contains(OutputFormatType.JSON) == true || OM._OutputTypes.contains(OutputFormatType.CSV) == true))
+            return true;
+        return false;
+      }
+
+    
     public void addQuery(SubWhereClause SWC)
       {
         if (SWC != null)

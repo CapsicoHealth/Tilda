@@ -1,20 +1,21 @@
 
 package tilda.data._Tilda;
 
-import java.time.*;
+import java.math.*;
 import java.util.*;
+import java.time.*;
+
+import org.apache.logging.log4j.*;
+
+import com.google.gson.annotations.*;
 
 import tilda.db.*;
 import tilda.enums.*;
 import tilda.performance.*;
 import tilda.types.*;
 import tilda.utils.*;
+import tilda.utils.json.*;
 import tilda.utils.pairs.*;
-
-import com.google.gson.annotations.SerializedName;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -359,7 +360,7 @@ This is the column definition for:<BR>
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- Creates a new object in memory, which you can subsequently {@link #Write()} to the data store.
+ Creates a new object in memory, which you can subsequently {@link #write()} to the data store.
  current object to the destination. 
  @param srcSchemaName (max size 100) The result value.
  @param srcTVName     (max size 100) The result value.
@@ -449,7 +450,7 @@ This is the column definition for:<BR>
 
                if (((TILDA__DEPENDENCYDDLDUMMYTABLE) d).beforeWrite(C) == false)
                  {
-                   LOG.debug(QueryDetails._LOGGING_HEADER + "The 'tilda.data.DependencyDDLDummyTable_Data' object at positon #" + index + " failed in its BeforeWrite() method.");
+                   LOG.debug(QueryDetails._LOGGING_HEADER + "The 'tilda.data.DependencyDDLDummyTable_Data' object at positon #" + index + " failed in its beforeWrite() method.");
                    QueryDetails.setLastQuery(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.SCHEMA_TABLENAME_LABEL, "");
                    return index;
                  }
@@ -571,5 +572,6 @@ This is the column definition for:<BR>
      }
    public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
    public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
+
 
  }

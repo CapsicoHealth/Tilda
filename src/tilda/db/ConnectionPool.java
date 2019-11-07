@@ -172,7 +172,7 @@ public class ConnectionPool
                         LOG.info("Initializing Schemas for " + C._Url);
                         for (Schema S : TildaList)
                           {
-                            LOG.debug("  " + S.getFullName());
+                            LOG.debug("  Initializing Schema " + S.getFullName());
                             Method M = Class.forName(tilda.generation.java8.Helper.getSupportClassFullName(S)).getMethod("initSchema", Connection.class);
                             M.invoke(null, C);
                             if (_Schemas.get(S._Name.toUpperCase()) == null)
@@ -191,6 +191,16 @@ public class ConnectionPool
         catch (Throwable T)
           {
             LOG.error("Cannot initialize Tilda\n", T);
+            if (T.getCause() != null)
+              {
+                T = T.getCause();
+                LOG.catching(T);
+                if (T.getCause() != null)
+                  {
+                    T = T.getCause();
+                    LOG.catching(T.getCause());
+                  }
+              }
             throw new Error(T);
           }
         finally
@@ -401,14 +411,15 @@ public class ConnectionPool
     throws Exception
       {
         List<Schema> TildaList = Loader.LoadTildaResources();
-        if (TildaList == null)
+        if (TildaList == null || TildaList.isEmpty() == true)
           throw new Exception("Tilda cannot start as we didn't find the necessary Tilda resources.");
 
+        List<String> Warnings = new ArrayList<String>();
         for (Schema S : TildaList)
           {
             CodeGenSql Sql = C.getSQlCodeGen();
             ParserSession PS = new ParserSession(S, Sql);
-            if (S._Dependencies != null)
+            if (TextUtil.isNullOrEmpty(S._Dependencies) == false)
               for (String DepdencySchemaName : S._Dependencies)
                 {
                   boolean Found = false;
@@ -433,17 +444,30 @@ public class ConnectionPool
                 }
             else //if (S._Name.equals("TILDATMP") == false)
               {
-                PS.addDependencySchema(TildaList.get(0));
-                PS.addDependencySchema(TildaList.get(1));
+                PS.addDependencySchema(TildaList.get(0)); // Should be TILDATMP
+                PS.addDependencySchema(TildaList.get(1)); // Should be TILDA
                 PS.addDependencySchema(S);
+                S.setDefaultDependencies(PS);
               }
-            if (S._Name.equals("TILDA") == false && S._Name.equals("TILDATMP") == false)
-             S._DependencySchemas.add(TildaList.get(1));
+
             if (S.Validate(PS) == false)
               throw new Exception("Schema " + S._Name + " from resource " + S._ResourceName + " failed validation.");
+            
             for (Object Obj : S._Objects)
               if (Obj != null)
-                MasterFactory.register(S._Package, Obj);
+                MasterFactory.register(S._Package, Obj, Warnings);
+          }
+        if (Warnings.isEmpty() == false)
+          {
+            StringBuilder Str = new StringBuilder();
+            Str.append("\n\n#############################################################################################################################\n");
+            Str.append("There were "+Warnings.size()+" runtime warnings:\n");
+            for (String w : Warnings)
+              Str.append("    - "+w+"\n");
+            Str.append("These errors are typically due to the model having been updated but\n");
+            Str.append("the Gen utility was not run, or the workspace was not refreshed and built.\n");
+            Str.append("#############################################################################################################################\n\n");
+            LOG.warn(Str.toString());
           }
 
         return TildaList;

@@ -33,11 +33,13 @@ import tilda.enums.MultiType;
 import tilda.enums.ObjectLifecycle;
 import tilda.enums.OutputFormatType;
 import tilda.enums.ProtectionType;
+import tilda.enums.VisibilityType;
 import tilda.generation.GeneratorSession;
 import tilda.generation.interfaces.CodeGenTildaData;
 import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ColumnValue;
+import tilda.parsing.parts.Index;
 import tilda.parsing.parts.JsonField;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.OutputMapping;
@@ -54,7 +56,6 @@ public class TildaData implements CodeGenTildaData
       {
         return O._BaseClassName + ".java";
       }
-
 
     @Override
     public void genFileStart(PrintWriter Out, Object O)
@@ -80,31 +81,11 @@ public class TildaData implements CodeGenTildaData
         Out.println("import tilda.performance.*;");
         Out.println("import tilda.utils.*;");
         Out.println();
-        Out.println("import org.apache.logging.log4j.LogManager;");
-        Out.println("import org.apache.logging.log4j.Logger;");
-        for (Column C : O._Columns) 
-          {
-            if (C._JsonSchema != null)
-              {
-                Out.println();
-                Out.println("import com.google.gson.Gson;");
-                Out.println("import com.google.gson.GsonBuilder;");
-                Out.println("import com.google.gson.annotations.SerializedName;");
-                break;
-              }
-          }
-        
-        for (Column C : O._Columns)
-          {
-            if (C == null)
-              continue;
-            if(C.getType() == ColumnType.NUMERIC)
-              {
-                Out.println();
-                Out.println("import java.math.BigDecimal;");
-                break;
-              } 
-          }      
+        Out.println("import org.apache.logging.log4j.*;");
+        Out.println();
+        Out.println("import com.google.gson.*;");
+        Out.println("import com.google.gson.annotations.*;");
+        Out.println("import java.math.*;");
         Out.println();
       }
 
@@ -125,18 +106,37 @@ public class TildaData implements CodeGenTildaData
           Out.print(", tilda.interfaces.JSONable");
         Out.println();
         Out.println(" {");
-        Out.println("   protected static final Logger LOG = LogManager.getLogger(" + O._BaseClassName + ".class.getName());");
+        Out.println("   protected transient static final Logger LOG = LogManager.getLogger(" + O._BaseClassName + ".class.getName());");
         Out.println();
-        Out.println("   public static final Class<" + O._BaseClassName + "_Factory> FACTORY_CLASS= " + O._BaseClassName + "_Factory.class;");
-        Out.println("   public static final String TABLENAME = TextUtil.print(" + TextUtil.escapeDoubleQuoteWithSlash(O.getShortName()) + ", \"\");");
+        Out.println("   public transient static final Class<" + O._BaseClassName + "_Factory> FACTORY_CLASS= " + O._BaseClassName + "_Factory.class;");
+        Out.println("   public transient static final String TABLENAME = TextUtil.print(" + TextUtil.escapeDoubleQuoteWithSlash(O.getShortName()) + ", \"\");");
         Out.println();
         Out.println("   protected " + O._BaseClassName + "() { }");
         Out.println();
-        Out.println("   InitMode __Init        = null;");
-        Out.println("   private BitSet   __Nulls       = new BitSet(64);");
-        Out.println("   BitSet   __Changes     = new BitSet(64);");
-        Out.println("   private boolean  __NewlyCreated= false;");
-        Out.println("   private int      __LookupId;");
+        Out.println("   transient InitMode __Init        = null;");
+        Out.println("   transient BitSet   __Nulls       = new BitSet(64);");
+        Out.println("   transient BitSet   __Changes     = new BitSet(64);");
+        Out.println("   transient boolean  __NewlyCreated= false;");
+        Out.println();
+        /*
+         * Out.println("   public static enum LookupByMethod");
+         * Out.println("     {");
+         * int LookupId = -1;
+         * if (O._PrimaryKey != null)
+         * Out.println("         PrimaryKey // Lookup by primary key - Id: " + (++LookupId));
+         * if (O._Indices != null)
+         * for (Index I : O._Indices)
+         * if (I != null && I._Unique == true)
+         * {
+         * if (LookupId == -1)
+         * Out.print("         ");
+         * else
+         * Out.print("       , ");
+         * Out.println(I._Name + " // Lookup by " + I._Name + " - Id: " + (++LookupId));
+         * }
+         * Out.println("     };");
+         */
+        Out.println("   transient int      __LookupId;");
         Out.println();
         Out.println("   public  boolean hasChanged    () { return __Changes.isEmpty() == false; }");
         Out.println("   public  boolean isNewlyCreated() { return __NewlyCreated; }");
@@ -162,7 +162,9 @@ public class TildaData implements CodeGenTildaData
 
         if (C.getType() == ColumnType.JSON && C._JsonSchema != null)
           {
-            Out.println("   String _" + C.getName() + ";");
+            Out.println("   transient String _" + C.getName() + ";");
+            if (C.isJSONColumn() == true)
+              Out.println("   @SerializedName(\"" + C.getName() + "\"" + ")");
             if (C.isCollection() == false)
               Out.println("   " + C._JsonSchema._TypeName + " _" + C.getName() + "Obj;");
             else
@@ -189,39 +191,30 @@ public class TildaData implements CodeGenTildaData
             Out.println("       }");
             Out.println("    }");
           }
+        else if (C.getType() == ColumnType.DATETIME)
+          {
+            if (C.isJSONColumn() == true)
+              {
+                Out.println("   @SerializedName(\"" + C.getName() + "\"" + ")");
+                Out.println("   " + (C.isList() == true ? "List<String>" : C.isSet() == true ? "Set<String>" : "String") + "  Str_" + C.getName() + ";");
+                Out.println("   public void init" + TextUtil.capitalizeFirstCharacter(C.getName()) + "(" + (C.isList() == true ? "List<String>" : C.isSet() == true ? "Set<String>" : "String") + " v) { Str_" + C.getName() + " = v; }");
+                Out.println("   public " + (C.isList() == true ? "List<String>" : C.isSet() == true ? "Set<String>" : "String") + " init" + TextUtil.capitalizeFirstCharacter(C.getName()) + "Val(" + ") { return Str_" + C.getName() + "; }");
+              }
+            Out.println("   transient " + JavaJDBCType.getFieldType(C) + " _" + C.getName() + " = null;");
+            if (C.isSavedField() == true)
+              Out.println("   transient " + JavaJDBCType.getFieldType(C) + " __Saved_" + C.getName() + ";");
+          }
         else
           {
-            Out.print("   " + JavaJDBCType.getFieldType(C) + " _" + C.getName());
+            if (C.isJSONColumn() == true)
+              Out.println("   @SerializedName(\"" + C.getName() + "\"" + ")");
+            if (C.isCollection() == true)
+              Out.print("   " + JavaJDBCType.getFieldType(C) + " _" + C.getName());
+            else
+              Out.print("   " + JavaJDBCType.getFieldTypeBaseClass(C) + " _" + C.getName());
+
             if (C.isCollection() == false)
-              switch (C.getType())
-                {
-                  case BINARY:
-                  case BITFIELD:
-                  case BOOLEAN:
-                    break;
-                  case CHAR:
-                    Out.print("= Character.UNASSIGNED");
-                    break;
-                  case DOUBLE:
-                  case FLOAT:
-                  case INTEGER:
-                  case SHORT: 
-                  case LONG:
-                    Out.print("= SystemValues.EVIL_VALUE");
-                    break;
-                  case NUMERIC: 
-                    Out.print("= new BigDecimal(SystemValues.EVIL_VALUE)");
-                    break;
-                  case UUID: 
-                    Out.print("= new UUID(0L, 0L)");
-                    break;                    
-                  case DATETIME:  
-                  case STRING:
-                  case JSON:
-                    break;
-                  default:
-                    break;
-                }
+              Out.print("=null"); // " + C.getType().getDefaultNullValue() + ";");
             else if (C._Nullable == false)
               {
                 if (C.isList() == true)
@@ -306,12 +299,12 @@ public class TildaData implements CodeGenTildaData
             case INTEGER:
               return V;
             case FLOAT:
-              return V+"f";
+              return V + "f";
             case LONG:
-              return V+"l";
+              return V + "l";
             case NUMERIC:
             case DOUBLE:
-              return V+"d";
+              return V + "d";
             case CHAR:
               return TextUtil.escapeSingleQuoteForSQL(V);
             case DATETIME:
@@ -365,7 +358,20 @@ public class TildaData implements CodeGenTildaData
         else if (C.isCollection() == false)
           {
             Out.println("   public final " + JavaJDBCType.getFieldType(C) + " get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "()");
-            Out.println("      { return _" + C.getName() + "; }");
+            if (C.getType() == ColumnType.BOOLEAN)
+              Out.println("      { return _" + C.getName() + "==null?false:_" + C.getName() + "; }");
+            else if (C.getType() == ColumnType.SHORT || C.getType() == ColumnType.INTEGER)
+              Out.println("      { return _" + C.getName() + "==null?0:_" + C.getName() + "; }");
+            else if (C.getType() == ColumnType.LONG)
+              Out.println("      { return _" + C.getName() + "==null?0l:_" + C.getName() + "; }");
+            else if (C.getType() == ColumnType.FLOAT)
+              Out.println("      { return _" + C.getName() + "==null?0f:_" + C.getName() + "; }");
+            else if (C.getType() == ColumnType.DOUBLE)
+              Out.println("      { return _" + C.getName() + "==null?0d:_" + C.getName() + "; }");
+            else if (C.getType() == ColumnType.CHAR)
+              Out.println("      { return _" + C.getName() + "==null?(char)Character.UNASSIGNED:_" + C.getName() + "; }");
+            else
+              Out.println("      { return _" + C.getName() + "; }");
           }
         else
           {
@@ -397,7 +403,7 @@ public class TildaData implements CodeGenTildaData
               case LONG:
               case NUMERIC:
               case UUID:
-                Out.println("      { return _" + V._ParentColumn.getName() + " == " + ValueNameVar + "; }");
+                Out.println("      { return _" + V._ParentColumn.getName() + " != null && _" + V._ParentColumn.getName() + ".equals(" + ValueNameVar + "); }");
                 break;
               case DATETIME:
               case DATE:
@@ -442,7 +448,7 @@ public class TildaData implements CodeGenTildaData
             Out.println("       long T0 = System.nanoTime();");
             if (C._Invariant == true || C._ParentObject.getLifecycle() != ObjectLifecycle.NORMAL)
               {
-                Out.println("       if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)");
+                Out.println("       if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)");
                 Out.println("        throw new Exception(\"Cannot set field '" + C.getFullName() + "' that is invariant, or part of a read-only or pre-existing WORM object.\");");
               }
             Out.println("       if (v == null " + (C._Nullable == true ? " || v.isEmpty() == true" : "") + ")");
@@ -608,16 +614,16 @@ public class TildaData implements CodeGenTildaData
                 case LONG:
                 case SHORT:
                 case INTEGER:
-                case NUMERIC:                  
+                case NUMERIC:
                   if (C.isSet() == true)
                     Out.println("       if (_" + C.getName() + ".contains(v) == false)");
                   else if (C.isList() == true)
                     Out.println("       if (pos >= _" + C.getName() + ".size() || _" + C.getName() + ".get(pos).equals(v) == false)");
                   else
-                    Out.println("       if (__Init == InitMode.CREATE || v != _" + C.getName() + ")");
+                    Out.println("       if (__Init == InitMode.CREATE || _" + C.getName() + " == null || v != _" + C.getName() + ")");
                   Out.println("        {");
                   break;
-                case UUID:                      
+                case UUID:
                 case DATE:
                 case DATETIME:
                 case STRING:
@@ -662,7 +668,7 @@ public class TildaData implements CodeGenTildaData
 
             if (C._Invariant == true || C._ParentObject.getLifecycle() != ObjectLifecycle.NORMAL)
               {
-                Out.println("          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)");
+                Out.println("          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)");
                 Out.println("           throw new Exception(\"Cannot set field '" + C.getFullName() + "' that is invariant, or part of a read-only or pre-existing WORM object.\");");
               }
             if (C._Mode != ColumnMode.CALCULATED)
@@ -766,7 +772,7 @@ public class TildaData implements CodeGenTildaData
             Out.println("       long T0 = System.nanoTime();");
             if (C._Invariant == true || C._ParentObject.getLifecycle() != ObjectLifecycle.NORMAL)
               {
-                Out.println("       if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)");
+                Out.println("       if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)");
                 Out.println("        throw new Exception(\"Cannot set field '" + C.getFullName() + "' that is invariant, or part of a read-only or pre-existing WORM object.\");");
               }
             Out.println("       if (v == null " + (C.isCollection() == true && C._Nullable == true ? " || v.isEmpty() == true" : "") + ")");
@@ -783,6 +789,20 @@ public class TildaData implements CodeGenTildaData
             Out.println("          _" + C.getName() + "Obj = v;");
             Out.println("        }");
             Out.println("       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);");
+            Out.println("     }");
+          }
+
+        if (C.isJSONColumn() == true && C.getVisibility() != VisibilityType.PUBLIC && C._Invariant == true)
+          {
+            Out.println();
+            Out.println("   /**");
+            Out.println("    * Being invariant, the field " + C.getName() + " doesn't have a public setter. To support deserialization however, ");
+            Out.println("    * we may need to set that field after a create/deserialization and before any write. The init methods allows");
+            Out.println("    * to do so.");
+            Out.println("   */");
+            Out.println("   public void init" + TextUtil.capitalizeFirstCharacter(C.getName()) + "(" + JavaJDBCType.getFieldType(C) + " v) throws Exception");
+            Out.println("     {");
+            Out.println("       set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "(v);");
             Out.println("     }");
           }
       }
@@ -876,41 +896,10 @@ public class TildaData implements CodeGenTildaData
             Out.println("       __Nulls.or(" + Mask + ");");
           }
 
-        if (C.isCollection() == true)
-          Out.println("       _" + C.getName() + "=null;");
-        else
-          switch (C.getType())
-            {
-              case CHAR:
-                Out.println("       _" + C.getName() + "=Character.UNASSIGNED;");
-                break;
-              case BOOLEAN:
-                Out.println("       _" + C.getName() + "=false;");
-                break;
-              case DOUBLE:
-              case LONG:
-                Out.println("       _" + C.getName() + "=0L;");
-                break;
-              case FLOAT:
-              case BITFIELD:
-              case INTEGER:
-              case SHORT:
-                Out.println("       _" + C.getName() + "=0;");
-                break;
-              case NUMERIC:
-                Out.println("       _" + C.getName() + "=BigDecimal.ZERO;");
-                break;              
-              case UUID:
-              case DATETIME:
-              case DATE:
-              case STRING:
-              case JSON:
-              case BINARY:
-                Out.println("       _" + C.getName() + "=null;");
-                break;
-              default:
-                throw new Error("ERROR! Cannot match ColumnType " + C.getType() + " when generating a null setter");
-            }
+        // if (C.isCollection() == true)
+        Out.println("       _" + C.getName() + "=null;");
+        // else
+        // Out.println(" _" + C.getName() + "=" + C.getType().getDefaultNullValue() + ";");
         if (C.needsTZ() == true)
           {
             Out.println("       set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "TZNull();");
@@ -1074,7 +1063,7 @@ public class TildaData implements CodeGenTildaData
                   case NUMERIC:
                   case LONG:
                   case STRING:
-                  case UUID:  
+                  case UUID:
                     if (C._DefaultUpdateValue == null)
                       Out.println("          if (__Changes.intersects(" + Mask + ") == true) " + Helper.getRuntimeUpdateStr(C) + ";");
                     else
@@ -1143,7 +1132,7 @@ public class TildaData implements CodeGenTildaData
                       Out.println("PS.set" + JavaJDBCType.get(C.getType())._JDBCType + "(++i, _" + C.getName() + ", java.sql.Types." + JavaJDBCType.get(C.getType())._JDBCSQLType + ");");
                     else
                       Out.println("C.setArray(PS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + "._Type, AllocatedArrays, _" + C.getName() + ");");
-                    break;                    
+                    break;
                   case BINARY:
                   case BITFIELD:
                   case BOOLEAN:
@@ -1192,18 +1181,235 @@ public class TildaData implements CodeGenTildaData
       }
 
 
+    private void genValidateDeserialization(PrintWriter Out, Object O)
+      {
+        Out.println("   protected void validateDeserialization() throws Exception");
+        Out.println("     {");
+        for (Column C : O._Columns)
+          {
+            if (C == null || C.isJSONColumn() == false)
+              continue;
+
+            String Mask = Helper.getRuntimeMask(C);
+            Out.println();
+
+            if (C._Nullable == false)
+              {
+                if (C.isCollection() == false && C.getType() == ColumnType.STRING)
+                  Out.println("       if (TextUtil.isNullOrEmpty(_" + C.getName() + ") == true)");
+                else if (C.isCollection() == false && C.getType() == ColumnType.DATETIME)
+                  Out.println("       if (TextUtil.isNullOrEmpty(Str_" + C.getName() + ") == true)");
+                else if (C.isCollection() == true)
+                  Out.println("       if (_" + C.getName() + (C._JsonSchema == null ? "" : "Obj") + " == null || _" + C.getName() + (C._JsonSchema == null ? "" : "Obj") + ".isEmpty() == true)");
+                else
+                  Out.println("       if (_" + C.getName() + (C._JsonSchema == null ? "" : "Obj") + " == null)"); // || _" + C.getName() + " == " +
+                                                                                                                  // C.getType().getDefaultNullValue() + ")");
+
+                if (C._DefaultCreateValue == null)
+                  Out.println("        throw new Exception(\"Incoming value for '" + C.getFullName() + "' was null or empty. It's not nullable in the model.\\n\"+toString());");
+                else
+                  Out.println("        _" + C.getName() + "=" + TildaData.PrintColumnValue(C, C._DefaultCreateValue._Value) + ";");
+                validateHousekeeping(Out, C, Mask);
+              }
+
+            if (C.getType() == ColumnType.DATETIME)
+              {
+                if (C._Nullable == true)
+                  {
+                    Out.println("       if (TextUtil.isNullOrEmpty(Str_" + C.getName() + ") == false)");
+                  }
+                Out.println("        {");
+                String ExtraPad = C._Nullable == true ? "   " : "";
+                Out.println(ExtraPad + "       _" + C.getName() + " = DateTimeUtil.parsefromJSON(Str_" + C.getName() + ");");
+                Out.println(ExtraPad + "       if (   _" + C.getName() + " == null)");
+                Out.println(ExtraPad + "        throw new Exception(\"Incoming value for '" + C.getFullName() + "' was not in the expected format. Dates should follow the ISO format.\\n\"+toString());");
+                Out.println(ExtraPad + "       __Changes.or(" + Mask + ");");
+                Out.println(ExtraPad + "       __Nulls.andNot(" + Mask + ");");
+                if (C.needsTZ() == true)
+                  {
+                    if (C.isCollection() == true)
+                      {
+                        Out.println(ExtraPad + "       for (int pos = 0; pos < _" + C.getName() + ".size(); ++pos)");
+                        Out.println(ExtraPad + "         {");
+                      }
+                    Out.println(ExtraPad + "       tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(_" + C.getName() + (C.isCollection() == true==true?".get(pos)":"") + ".getZone().getId());");
+                    Out.println(ExtraPad + "       if (ZI == null)");
+                    Out.println(ExtraPad + "        throw new Exception(\"Cannot set field '" + C.getFullName() + "' because the timezone value '\"+_" + C.getName() + (C.isCollection() == true==true?".get(pos)":"") + ".getZone().getId()+\"' is unknown. Make sure it is mapped properly in the ZoneInfo table.\");");
+                    if (C.isCollection() == true)
+                      Out.println("          addTo" + TextUtil.capitalizeFirstCharacter(C.getName()) + "TZ(pos, ZI.getId());");
+                    else
+                      Out.println("          set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "TZ(ZI.getId());");
+                    if (C.isCollection() == true)
+                      {
+                        Out.println(ExtraPad + "         }");
+                      }
+                  }
+                Out.println("        }");
+              }
+            else if (C._Nullable == true)
+              {
+                if (C.isCollection() == false && C.getType() == ColumnType.STRING)
+                  Out.println("       if (TextUtil.isNullOrEmpty(_" + C.getName() + ") == false)");
+                else if (C.isCollection() == false && C.getType() == ColumnType.DATETIME)
+                  Out.println("       if (TextUtil.isNullOrEmpty(Str_" + C.getName() + ") == false)");
+                else if (C.isCollection() == true)
+                  Out.println("       if (_" + C.getName() + (C._JsonSchema == null ? "" : "Obj") + " != null && _" + C.getName() + (C._JsonSchema == null ? "" : "Obj") + ".isEmpty() == false)");
+                else
+                  Out.println("       if (_" + C.getName() + (C._JsonSchema == null ? "" : "Obj") + " != null)");
+                Out.println("        {");
+                validateHousekeeping(Out, C, Mask);
+                Out.println("        }");
+              }
+            if (O._FST == FrameworkSourcedType.MAPPER && C.getName().equals("group") == true)
+              {
+                Out.println("       if (TextUtil.findElement(" + Helper.getFullAppDataClassName(O) + "._" + C.getName() + "_Values, _" + C.getName() + ", 0, true, 0) == -1)");
+                Out.println("        throw new Exception(\"Invalid value " + C.getName() + "='\"+_" + C.getName() + "+\"'. As per the model, valid values are: \"+TextUtil.print(" + Helper.getFullAppDataClassName(O) + "._"
+                + C.getName() + "_Values, 0)+\".\\n\"+toString());");
+              }
+          }
+        Out.println("     }");
+      }
+
+    protected void validateHousekeeping(PrintWriter Out, Column C, String Mask)
+      {
+        Out.println("          __Changes.or(" + Mask + ");");
+        Out.println("          __Nulls.andNot(" + Mask + ");");
+        if (C._JsonSchema != null)
+          {
+            Out.println("          Gson gson = new GsonBuilder().setPrettyPrinting().create();");
+            Out.println("          _" + C.getName() + " = gson.toJson(_" + C.getName() + "Obj, LIST_TYPE_" + C._JsonSchema._TypeName + ");");
+          }
+        if (C._Mapper != null)
+          {
+            if (C._Mapper._Name == ColumnMapperMode.DB)
+              {
+                Column SecondaryC = C._ParentObject.getColumn(C.getName() + "MappedName");
+                String SecondaryMask = Helper.getRuntimeMask(SecondaryC);
+                Out.println("          __Changes.or(" + SecondaryMask + ");");
+                Out.println("          __Nulls.andNot(" + SecondaryMask + ");");
+              }
+            if (C._Mapper._Group == ColumnMapperMode.DB)
+              {
+                Column SecondaryC = C._ParentObject.getColumn(C.getName() + "MappedGroup");
+                String SecondaryMask = Helper.getRuntimeMask(SecondaryC);
+                Out.println("          __Changes.or(" + SecondaryMask + ");");
+                Out.println("          __Nulls.andNot(" + SecondaryMask + ");");
+              }
+            if (C.isCollection() == true)
+              {
+                if (C._Mapper._Name != ColumnMapperMode.NONE)
+                  Out.println("          _" + C.getName() + "MappedName = new " + (C.isList() == true ? "ArrayList" : "TreeSet") + "<" + JavaJDBCType.getFieldTypeBaseClass(C) + ">();");
+                if (C._Mapper._Group != ColumnMapperMode.NONE)
+                  Out.println("          _" + C.getName() + "MappedGroup = new " + (C.isList() == true ? "ArrayList" : "TreeSet") + "<" + JavaJDBCType.getFieldTypeBaseClass(C) + ">();");
+              }
+
+            String ClassName = Helper.getFullAppFactoryClassName(C._Mapper._DestObjectObj);
+            StringBuilder Str = new StringBuilder();
+            for (int c = 0; c < C._Mapper._SrcColumnObjs.size() - 1; ++c)
+              {
+                Column col = C._Mapper._SrcColumnObjs.get(c);
+                if (c != 0)
+                  Str.append(", ");
+                Str.append("get" + TextUtil.capitalizeFirstCharacter(col.getName()) + "()");
+              }
+            if (C.isCollection() == true)
+              {
+                Out.println("          for (" + JavaJDBCType.getFieldTypeBase(C) + " i : _" + C.getName() + ")");
+                Out.println("           {");
+              }
+            if (C._Mapper._Name != ColumnMapperMode.NONE)
+              Out.println("             " + (C.isCollection() == true ? "addTo" : "set") + TextUtil.capitalizeFirstCharacter(C.getName()) + "MappedName(" + ClassName + ".getMappedName(" + Str + ", " + (C.isCollection() == true ? "i" : "_" + C.getName()) + "));");
+            if (C._Mapper._Group != ColumnMapperMode.NONE)
+              Out.println("             " + (C.isCollection() == true ? "addTo" : "set") + TextUtil.capitalizeFirstCharacter(C.getName()) + "MappedGroup(" + ClassName + ".getMappedGroup(" + Str + ", " + (C.isCollection() == true ? "i" : "_" + C.getName()) + "));");
+            if (C.isCollection() == true)
+              {
+                Out.println("           }");
+              }
+          }
+      }
+
+    private void genColumnTestBoolean(PrintWriter Out, List<Column> cols)
+      {
+        boolean first = true;
+        for (Column C : cols)
+          if (C != null)
+            {
+              if (first == true)
+                first = false;
+              else
+                Out.print(" && ");
+              if (C.isCollection() == false && C.getType() == ColumnType.STRING)
+                Out.print("TextUtil.isNullOrEmpty(_" + C.getName() + ") == false");
+              else if (C.isCollection() == false && C.getType() == ColumnType.DATETIME)
+                Out.print("TextUtil.isNullOrEmpty(Str_" + C.getName() + ") == false");
+              else if (C.isCollection() == true)
+                Out.print("_" + C.getName() + " != null && _" + C.getName() + ".isEmpty() == false");
+              else
+                Out.print("_" + C.getName() + " != null");
+            }
+      }
+
+    private void genLookupByCheck(PrintWriter Out, Object O)
+      {
+        Out.println("   /**");
+        Out.println("   * Returns the first satisfied natural identify (i.e., unique indices), or if defined, the PK. by 'satisfied',");
+        Out.println("   * we mean an identity whose columns have all been provided (i.e., not null). We prioritize natural identities");
+        Out.println("   * over the PK since PKs are typically not stable across systems. For example, one might model a user with a PK");
+        Out.println("   * but also an identify over an email address for example. That email address for a given logical user should be");
+        Out.println("   * constant across multiple environments (e.g., a dev, staging or prod), where as a PK might be generated based");
+        Out.println("   * on dynamic factors that are very likely to be different across systems.");
+        Out.println("   */");
+        Out.println("   protected int getFirstValidLookupBy() throws Exception");
+        Out.println("     {");
+
+        // If there is a primary key, it comes first (id=0), but we output the check for the PK if it exists, last.
+        int LookupId = O._PrimaryKey == null ? -1 : 0;
+        if (O._Indices != null)
+          for (Index I : O._Indices)
+            if (I != null && I._Unique == true)
+              {
+                Out.println();
+                Out.println("       // Testing if cols for unique index " + I._Name + " were set - Id: " + (++LookupId));
+                Out.print("       if (");
+                genColumnTestBoolean(Out, I._ColumnObjs);
+                Out.println(")");
+                Out.println("        return " + LookupId + ";");
+              }
+        if (O._PrimaryKey != null)
+          {
+            Out.println();
+            Out.println("       // Testing if primary key has been set - Id: 0"); // The primary key would always be the lkookip id 0
+            Out.print("       if (");
+            genColumnTestBoolean(Out, O._PrimaryKey._ColumnObjs);
+            Out.println(")");
+            Out.println("        return " + 0 + ";");
+          }
+        Out.println();
+        Out.println("       return SystemValues.EVIL_VALUE;");
+        Out.println("     }");
+      }
+
 
     @Override
     public void genMethodWrite(PrintWriter Out, GeneratorSession G, Object O)
     throws Exception
       {
-        genTimestampSignature(Out, O);
-        genWriteQuery(Out, G, O);
-        genWritePreparedStatementPopulation(Out, O);
-        genPostWriteObjectStateUpdate(Out, O);
         Out.println("   public final boolean write(Connection C) throws Exception");
         Out.println("     {");
         Out.println("       long T0 = System.nanoTime();");
+        Out.println();
+        Out.println("       if (__Init == null && __LookupId==0) // Loaded via some other mechamism, e.g., Json or CSV loader");
+        Out.println("        {");
+        Out.println("          validateDeserialization();");
+        Out.println("          initForCreate();");
+        if (O._PrimaryKey != null && O._PrimaryKey._Autogen == true)
+          {
+            Out.println("          // Auto PK");
+            Column PK = O._PrimaryKey._ColumnObjs.get(0);
+            Out.println("          set" + TextUtil.capitalizeFirstCharacter(PK.getName()) + "(tilda.db.KeysManager.getKey(" + TextUtil.escapeDoubleQuoteWithSlash(O.getShortName().toUpperCase()) + "));");
+          }
+        Out.println("        }");
+        Out.println();
         Out.println("       if (hasChanged() == false)");
         Out.println("        {");
         Out.println("          LOG.debug(QueryDetails._LOGGING_HEADER + \"The " + O.getFullName() + " has not changed: no writing will occur.\");");
@@ -1222,12 +1428,7 @@ public class TildaData implements CodeGenTildaData
         Out.println();
         Out.println("       java.sql.PreparedStatement PS = null;");
         Out.println("       int count = 0;");
-        // for (Column C : O._Columns)
-        // if (C != null && C.isCollection() == true)
-        // {
         Out.println("       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();");
-        // break;
-        // }
         Out.println("       try");
         Out.println("        {");
         Out.println("          PS = C.prepareStatement(Q);");
@@ -1255,6 +1456,75 @@ public class TildaData implements CodeGenTildaData
         Out.println();
         Out.println("   protected abstract boolean beforeWrite(Connection C) throws Exception;");
         Out.println();
+        genValidateDeserialization(Out, O);
+        genTimestampSignature(Out, O);
+        genWriteQuery(Out, G, O);
+        genWritePreparedStatementPopulation(Out, O);
+        genPostWriteObjectStateUpdate(Out, O);
+      }
+
+
+    @Override
+    public void genMethodUpsert(PrintWriter Out, GeneratorSession G, Object O)
+    throws Exception
+      {
+        Out.println("   public final boolean upsert(Connection C, boolean updateFirst) throws Exception");
+        Out.println("     {");
+        Out.println("       boolean OK =    __Init == InitMode.CREATE && __NewlyCreated == true && __LookupId == SystemValues.EVIL_VALUE // Create() through factory");
+        Out.println("                    || __Init == null && __LookupId==0 // Loaded via some deserialization mechamism, e.g., Json or CSV loader");
+        Out.println("               ;");
+        Out.println("       if (OK == false)");
+        Out.println("        throw new Exception(\"Object has not been instanciated via deserialization or the factory create() method.\");");
+        Out.println();
+        Out.println("       if (__Init == null && __LookupId==0);  // object deserialized");
+        Out.println("        validateDeserialization();");
+        Out.println();
+        Out.println("       int lookupId = getFirstValidLookupBy();");
+        Out.println("       if (lookupId == SystemValues.EVIL_VALUE)");
+        Out.println("        throw new Exception(\"Object has not been intialized with sufficient data for any natural key to be available for a lookup.\");");
+        Out.println();
+        Out.println("       if (updateFirst == true)");
+        Out.println("        {");
+        Out.println("          initForLookup(lookupId);");
+        Out.println("          if (write(C) == false)");
+        Out.println("           {");
+        Out.println("             initForCreate();");
+        if (O._PrimaryKey != null && O._PrimaryKey._Autogen == true)
+          {
+            Out.println("             // Auto PK");
+            Column PK = O._PrimaryKey._ColumnObjs.get(0);
+            Out.println("             set" + TextUtil.capitalizeFirstCharacter(PK.getName()) + "(tilda.db.KeysManager.getKey(" + TextUtil.escapeDoubleQuoteWithSlash(O.getShortName().toUpperCase()) + "));");
+          }
+        Out.println("             return write(C);");
+        Out.println("           }");
+        Out.println("        }");
+        Out.println("       else");
+        Out.println("        {");
+        Out.println("          initForCreate();");
+        if (O._PrimaryKey != null && O._PrimaryKey._Autogen == true)
+          {
+            Out.println("          // Auto PK");
+            Column PK = O._PrimaryKey._ColumnObjs.get(0);
+            Out.println("          set" + TextUtil.capitalizeFirstCharacter(PK.getName()) + "(tilda.db.KeysManager.getKey(" + TextUtil.escapeDoubleQuoteWithSlash(O.getShortName().toUpperCase()) + "));");
+          }
+        Out.println("          if (write(C) == false)");
+        Out.println("           {");
+        Out.println("             initForLookup(lookupId);");
+        if (O._PrimaryKey != null && O._PrimaryKey._Autogen == true)
+          {
+            Out.println("              // Undo auto PK");
+            Column PK = O._PrimaryKey._ColumnObjs.get(0);
+            Out.println("              __Changes.andNot(" + Helper.getRuntimeMask(PK) + ");");
+          }
+        Out.println("             return write(C);");
+        Out.println("           }");
+        Out.println("        }");
+        Out.println();
+        Out.println("       return true;");
+        Out.println("     }");
+        Out.println();
+        genLookupByCheck(Out, O);
+        Out.println();
       }
 
 
@@ -1270,7 +1540,7 @@ public class TildaData implements CodeGenTildaData
               String Mask = Helper.getRuntimeMask(C);
               String Pad = O._PadderColumnNames.getPad(C.getName());
               if (C._Nullable == true)
-                Out.print("       if (__Changes.intersects(" + Mask + ") == true) Dst.set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "Null"+ Pad + "(); else ");
+                Out.print("       if (__Changes.intersects(" + Mask + ") == true) Dst.set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "Null" + Pad + "(); else ");
               Out.println("       Dst.set" + TextUtil.capitalizeFirstCharacter(C.getName()) + Pad + "(_" + C.getName() + Pad + ");");
             }
         Out.println("     }");
@@ -1377,11 +1647,14 @@ public class TildaData implements CodeGenTildaData
                 {
                   case JSON:
                     Out.println("_" + C.getName() + Pad + " =                              RS.get" + JavaJDBCType.get(C.getType())._JDBCType + "(++i) ; ");
-                    Out.println(Header + " if (_" + C.getName() + " != null)");
-                    Out.println(Header + "  {");
-                    Out.println(Header + "    " + C._JsonSchema._TypeName + "[] tmp = gson.fromJson(_" + C.getName() + ", " + C._JsonSchema._TypeName + "[].class);");
-                    Out.println(Header + "    _" + C.getName() + "Obj = CollectionUtil.toList(tmp);");
-                    Out.println(Header + "  }");
+                    if (C._JsonSchema != null)
+                      {
+                        Out.println(Header + " if (_" + C.getName() + " != null)");
+                        Out.println(Header + "  {");
+                        Out.println(Header + "    " + C._JsonSchema._TypeName + "[] tmp = gson.fromJson(_" + C.getName() + ", " + C._JsonSchema._TypeName + "[].class);");
+                        Out.println(Header + "    _" + C.getName() + "Obj = CollectionUtil.toList(tmp);");
+                        Out.println(Header + "  }");
+                      }
                     break;
                   case UUID:
                     if (C.isCollection() == true)
@@ -1393,13 +1666,13 @@ public class TildaData implements CodeGenTildaData
                   case FLOAT:
                   case INTEGER:
                   case SHORT:
-                  case NUMERIC:  
+                  case NUMERIC:
                   case LONG:
                   case BINARY:
                   case BITFIELD:
                   case BOOLEAN:
                   case CHAR:
-                  case STRING:                   
+                  case STRING:
                     if (C.isCollection() == true)
                       Out.print("_" + C.getName() + " = (" + (C.isSet() == true ? "Set<" : "List<") + JavaJDBCType.get(C.getType())._JavaClassType + ">) C.getArray(RS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + "._Type, " + C.isSet() + ");");
                     else if (C.getType() == ColumnType.CHAR)
@@ -1650,7 +1923,7 @@ public class TildaData implements CodeGenTildaData
                 Out.println("        { ");
                 for (OutputMapping OM2 : O._OutputMaps)
                   if (OM2 != null && OM2._OutputTypes.contains(OutputFormatType.JSON) == true)
-                    Out.println("          case \"" + OM2._Name + "\": " + Helper.getFullAppJsonClassName(O) + ".toJSON" + OM2._Name + "(Out, (" + Helper.getFullAppDataClassName(O) + ") this, FullObject); break;");
+                    Out.println("          case \"" + OM2._Name + "\": " + Helper.getFullAppFactoryClassName(O) + ".toJSON" + OM2._Name + "(Out, (" + Helper.getFullAppDataClassName(O) + ") this, FullObject); break;");
                 Out.println("          default: throw new Exception(\"Unknown JSON exporter '\"+ExportName+\"' for " + Helper.getFullAppJsonClassName(O) + "\");");
                 Out.println("        } ");
                 Out.println("    }");
@@ -1664,7 +1937,7 @@ public class TildaData implements CodeGenTildaData
                 Out.println("        { ");
                 for (OutputMapping OM2 : O._OutputMaps)
                   if (OM2 != null && OM2._OutputTypes.contains(OutputFormatType.CSV) == true)
-                    Out.println("          case \"" + OM2._Name + "\": " + Helper.getFullAppJsonClassName(O) + ".toCSV" + OM2._Name + "(Out, (" + Helper.getFullAppDataClassName(O) + ") this); break;");
+                    Out.println("          case \"" + OM2._Name + "\": " + Helper.getFullAppFactoryClassName(O) + ".toCSV" + OM2._Name + "(Out, (" + Helper.getFullAppDataClassName(O) + ") this); break;");
                 Out.println("          default: throw new Exception(\"Unknown CSV exporter '\"+ExportName+\"' for " + Helper.getFullAppJsonClassName(O) + "\");");
                 Out.println("        } ");
                 Out.println("    }");
