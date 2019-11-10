@@ -262,6 +262,8 @@ public class View extends Base
                 TZCol._SameAs = VC._SameAs + "TZ";
                 TZCol._Name = VC._Name == null ? null : VC._Name + "TZ";
                 TZCol._As = VC._As;
+                TZCol._AggregateStr = VC._AggregateStr;
+                TZCol._OrderBy = VC._OrderBy;
 
                 // want to make sure that the TZ col follows directives from source col.
                 TZCol._FCT = FrameworkColumnType.TZ;
