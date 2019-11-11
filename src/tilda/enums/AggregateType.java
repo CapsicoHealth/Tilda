@@ -71,6 +71,7 @@ public enum AggregateType
             case MAX:
               if (T != ColumnType.DATETIME)
                 return T;
+              break;
             case FIRST:
             case LAST:
               return T;

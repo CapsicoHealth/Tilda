@@ -513,9 +513,10 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 int count = 0;
                 for (int i = 0; i < V._ViewColumns.size(); ++i)
                   {
-                    if (V._ViewColumns.get(i)._Aggregate != null)
+                    ViewColumn VC = V._ViewColumns.get(i);
+                    if (VC._Aggregate != null)
                       break;
-                    if (V._ViewColumns.get(i)._JoinOnly == false)
+                    if (VC._JoinOnly == false)
                       {
                         if (count > 0)
                           Str.append(", ");
