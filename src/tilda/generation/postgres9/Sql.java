@@ -639,7 +639,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                           First = false;
                         else
                           Str.append(", ");
-                        Str.append("\"" + VC._OrderByObjs.get(i).getName() + "\" " + VC._OrderByOrders.get(i));
+                        Str.append(getFullColumnVar(VC._OrderByObjs.get(i)) + " " + VC._OrderByOrders.get(i));
                       }
                   }
                 Str.append(")");
