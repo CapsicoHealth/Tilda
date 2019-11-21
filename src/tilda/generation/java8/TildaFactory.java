@@ -230,8 +230,8 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("       protected tilda.db.processors.ObjectProcessor<" + Helper.getFullAppDataClassName(O) + "> _OP;");
         Out.println("       protected ArrayListResults<" + Helper.getFullAppDataClassName(O) + "> _L = null;");
         Out.println("       public void    start  () { if (_OP != null) _OP.start(); }");
-        Out.println("       public void    end    (boolean hasMore, int maxIndex) { if (_OP == null) _L.wrapup(HasMore, Max); else _OP.end(hasMore, maxIndex); }");
-        Out.println("       public boolean process(int Index, java.sql.ResultSet RS) throws Exception");
+        Out.println("       public void    end    (boolean hasMore, int maxCount) { if (_OP == null) _L.wrapup(hasMore, maxCount); else _OP.end(hasMore, maxCount); }");
+        Out.println("       public boolean process(int count, java.sql.ResultSet RS) throws Exception");
         Out.println("        {");
         Out.println("          " + Helper.getFullAppDataClassName(O) + " Obj = new " + Helper.getFullAppDataClassName(O) + "();");
         Out.println("          boolean OK = ((" + Helper.getFullBaseClassName(O) + ")Obj).init(_C, RS);");
@@ -240,7 +240,7 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("             if (_OP == null)");
         Out.println("              _L.add(Obj);");
         Out.println("             else");
-        Out.println("              _OP.process(Index, Obj);");
+        Out.println("              _OP.process(count, Obj);");
         Out.println("           }");
         Out.println("          return OK;");
         Out.println("        }");
