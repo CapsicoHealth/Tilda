@@ -39,4 +39,12 @@ public class Test_XYZ_Realized_Data extends tilda.tutorial.data._Tilda.TILDA__TE
        return true;
      }
 
+  @Override
+  public boolean touch(Connection C)
+  throws Exception
+    {
+      // TODO Auto-generated method stub
+      return false;
+    }
+
  }

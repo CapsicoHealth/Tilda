@@ -19,10 +19,33 @@ package tilda.db.processors;
 import java.sql.ResultSet;
 
 public interface RecordProcessor
- {
-   public void    start  ();
-   public boolean process(int Index, ResultSet RS) throws Exception;
-   default void   end    (boolean hasMore, int MaxIndex)
-    {
-    }
- }
+  {
+    /**
+     * Called before the first record is processed
+     */
+    default public void start()
+      {
+      }
+
+    /**
+     * Called for each record
+     * 
+     * @param count the count of the record being processed starting at 0 for the first record
+     * @param RS the result set to be processed
+     * @return whether this was successful or not. If false is returned, the process will be aborted.
+     * @throws Exception
+     */
+    public boolean process(int count, ResultSet RS)
+    throws Exception;
+
+
+    /**
+     * Called after the last record has been processed successfully
+     * 
+     * @param hasMore whether there are more records to be processed
+     * @param maxCount the max count originally supplied to the query handler
+     */
+    default void end(boolean hasMore, int maxCount)
+      {
+      }    
+  }

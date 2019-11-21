@@ -41,6 +41,8 @@ public class Query
     @SerializedName("db"    ) public String   _DB    ;
     @SerializedName("clause") public String   _Clause;
     /*@formatter:on*/
+    
+    transient public Base _ParentObject;
 
     public static class Attribute
       {
@@ -116,6 +118,7 @@ public class Query
     public boolean Validate(ParserSession PS, Base ParentObject, String OwnerObjName)
       {
         int Errs = PS.getErrorCount();
+        _ParentObject = ParentObject; 
 
         // Does it have a name?
         if (TextUtil.isNullOrEmpty(_Clause) == true)
