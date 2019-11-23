@@ -1088,33 +1088,41 @@ public class TildaFactory implements CodeGenTildaFactory
     protected static void genMethodToJSON(PrintWriter Out, GeneratorSession G, OutputMapping J)
     throws Exception
       {
-        Out.println("   public static void toJSON" + J._Name + "(java.io.Writer Out, List<" + Helper.getFullAppDataClassName(J._ParentObject) + "> L, String Lead, boolean FullList) throws java.io.IOException");
+        Out.println("   public static void toJSON" + J._Name + "(java.io.Writer out, List<" + Helper.getFullAppDataClassName(J._ParentObject) + "> L, String lead, boolean fullList) throws java.io.IOException");
         Out.println("    {");
-        Out.println("      if (L == null || L.size() == 0) return;");
-        Out.println("      if (FullList == true)");
-        Out.println("       Out.write(\"[\\n\");");
+        Out.println("      long T0 = System.nanoTime();");
+        Out.println("      if (fullList == true)");
+        Out.println("        {");
+        Out.println("          if (L == null)");
+        Out.println("           {");
+        Out.println("             out.write(\"null\\n\");");
+        Out.println("             return;");
+        Out.println("           }");
+        Out.println("          out.write(\"[\\n\");");
+        Out.println("        }");
         Out.println("      boolean First = true;");
         Out.println("      for (" + Helper.getFullAppDataClassName(J._ParentObject) + " O : L)");
         Out.println("       if (O!=null)");
         Out.println("        {");
-        Out.println("          Out.write(Lead);");
-        Out.println("          if (First == false) Out.write(\",\"); else { Out.write(\" \"); First = false; }");
-        Out.println("          toJSON" + J._Name + "(Out, O, true);");
-        Out.println("          Out.write(\"\\n\");");
+        Out.println("          out.write(lead);");
+        Out.println("          if (First == false) out.write(\",\"); else { out.write(\" \"); First = false; }");
+        Out.println("          toJSON" + J._Name + "(out, O, true);");
+        Out.println("          out.write(\"\\n\");");
         Out.println("        }");
-        Out.println("      if (FullList == true)");
+        Out.println("      if (fullList == true)");
         Out.println("       { ");
-        Out.println("          Out.write(Lead);");
-        Out.println("          Out.write(\"]\\n\");");
+        Out.println("          out.write(lead);");
+        Out.println("          out.write(\"]\\n\");");
         Out.println("       } ");
+        Out.println("      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);");
         Out.println("    }");
         Out.println();
-        Out.println("   public static void toJSON" + J._Name + "(java.io.Writer Out, " + Helper.getFullAppDataClassName(J._ParentObject) + " ObjApp, boolean FullObject) throws java.io.IOException");
+        Out.println("   public static void toJSON" + J._Name + "(java.io.Writer out, " + Helper.getFullAppDataClassName(J._ParentObject) + " obj, boolean fullObject) throws java.io.IOException");
         Out.println("    {");
         Out.println("      long T0 = System.nanoTime();");
-        Out.println("      " + Helper.getFullBaseClassName(J._ParentObject) + " Obj = (" + Helper.getFullBaseClassName(J._ParentObject) + ") ObjApp;");
-        Out.println("      if (FullObject == true)");
-        Out.println("       Out.write(\"{\");");
+        Out.println("      " + Helper.getFullBaseClassName(J._ParentObject) + " Obj = (" + Helper.getFullBaseClassName(J._ParentObject) + ") obj;");
+        Out.println("      if (fullObject == true)");
+        Out.println("       out.write(\"{\");");
         Out.println();
         boolean First = true;
         for (Column C : J._ColumnObjs)
@@ -1124,59 +1132,61 @@ public class TildaFactory implements CodeGenTildaFactory
               // if (C.getType() == ColumnType.DATETIME && C.isOCCGenerated() == false)
               // First = JSONExport(Out, First, C._ParentObject.getColumn(C.getName()+"TZ"));
             }
-        Out.println("      if (FullObject == true)");
-        Out.println("       Out.write(\" }\");");
+        Out.println("      if (fullObject == true)");
+        Out.println("       out.write(\" }\");");
         Out.println("      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);");
         Out.println("    }");
 
         if (J._ParentObject.isOCC() == true && (J._ParentObject._TildaType == TildaType.OBJECT || J._ParentObject._TildaType == TildaType.VIEW) && J._Sync == true)
           {
             Out.println();
-            Out.println("   public static boolean toJSON" + J._Name + "(java.io.Writer Out, " + Helper.getFullAppDataClassName(J._ParentObject) + " Data, String ElementName, String Lead, ZonedDateTime LastSync)");
+            Out.println("   public static void toJSON" + J._Name + "(java.io.Writer out, List<" + Helper.getFullAppDataClassName(J._ParentObject) + "> L, String lead, boolean fullList, ZonedDateTime lastSync)");
             Out.println("   throws java.io.IOException");
             Out.println("    {");
-            Out.println("      SyncStatus s = SyncStatus.get(LastSync, Data);");
-            Out.println("      if (s == SyncStatus.OLD)");
-            Out.println("       return false;");
-            Out.println("      Out.write(Lead);");
-            Out.println("      if (ElementName != null)");
-            Out.println("       {");
-            Out.println("         Out.write(\"\\\"\");");
-            Out.println("         Out.write(ElementName);");
-            Out.println("         Out.write(\"\\\": \");");
-            Out.println("       }");
-            Out.println("      Out.write(\" { \\\"__sync\\\": \\\"\");");
-            Out.println("      Out.write(s._Status);");
-            Out.println("      Out.write(\"\\\", \");");
-            Out.println("      toJSON" + J._Name + "(Out, Data, false);");
-            Out.println("      Out.write(\" }\\n\");");
-            Out.println("      return true;");
-            Out.println("    }");
-            Out.println();
-            Out.println("   public static void toJSON" + J._Name + "(java.io.Writer Out, List<" + Helper.getFullAppDataClassName(J._ParentObject) + "> L, String ElementName, String Lead, ZonedDateTime LastSync)");
-            Out.println("   throws java.io.IOException");
-            Out.println("    {");
-            Out.println("      Out.write(Lead);");
-            Out.println("      if (ElementName != null)");
-            Out.println("       {");
-            Out.println("         Out.write(\"\\\"\");");
-            Out.println("         Out.write(ElementName);");
-            Out.println("         Out.write(\"\\\": \");");
-            Out.println("       }");
-            Out.println("      Out.write(\" [\\n\");");
+            Out.println("      long T0 = System.nanoTime();");
+            Out.println("      if (fullList == true)");
+            Out.println("        {");
+            Out.println("          if (L == null)");
+            Out.println("           {");
+            Out.println("             out.write(\"null\\n\");");
+            Out.println("             return;");
+            Out.println("           }");
+            Out.println("          out.write(\"[\\n\");");
+            Out.println("        }");
             Out.println("      boolean First = true;");
-            Out.println("      Lead = PaddingUtil.getPad(Lead.length());");
-            Out.println("      String LeadFirst = Lead+\"      \";");
-            Out.println("      String LeadNext  = Lead+\"    , \";");
-            Out.println("      for (" + Helper.getFullAppDataClassName(J._ParentObject) + " Data : L)");
+            Out.println("      for (" + Helper.getFullAppDataClassName(J._ParentObject) + " obj : L)");
             Out.println("       {");
-            Out.println("         if (toJSON" + J._Name + "(Out, Data, null, First == true ? LeadFirst : LeadNext, LastSync) == false)");
+            Out.println("         if (toJSON" + J._Name + "(out, obj, lead+(First==true?\"   \":\"  ,\"), true, lastSync) == false)");
             Out.println("          continue;");
+            Out.println("         out.write(\"\\n\");");
             Out.println("         if (First == true)");
             Out.println("          First = false;");
             Out.println("       }");
-            Out.println("      Out.write(Lead);");
-            Out.println("      Out.write(\"  ]\\n\");");
+            Out.println("      if (fullList == true)");
+            Out.println("       {");
+            Out.println("         out.write(lead);");
+            Out.println("         out.write(\"]\\n\");");
+            Out.println("       }");
+            Out.println("      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);");
+            Out.println("    }");
+            Out.println();
+            Out.println("   public static boolean toJSON" + J._Name + "(java.io.Writer out, " + Helper.getFullAppDataClassName(J._ParentObject) + " obj, String lead, boolean fullObject, ZonedDateTime lastSync)");
+            Out.println("   throws java.io.IOException");
+            Out.println("    {");
+            Out.println("      long T0 = System.nanoTime();");
+            Out.println("      SyncStatus s = SyncStatus.get(lastSync, obj);");
+            Out.println("      if (s == SyncStatus.OLD || s == SyncStatus.GHOST)");
+            Out.println("       return false;");
+            Out.println("      if (fullObject == true)");
+            Out.println("       out.write(\"{\");");
+            Out.println("      out.write(\" \\\"__sync\\\": \\\"\");");
+            Out.println("      out.write(s._Status);");
+            Out.println("      out.write(\"\\\", \");");
+            Out.println("      toJSON" + J._Name + "(out, obj, false);");
+            Out.println("      if (fullObject == true)");
+            Out.println("       out.write(\" }\\n\");");
+            Out.println("      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);");
+            Out.println("      return true;");
             Out.println("    }");
             Out.println();
           }
@@ -1201,22 +1211,22 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("      return " + TextUtil.escapeDoubleQuoteWithSlash(header.toString()) + ";");
         Out.println("    }");
         Out.println();
-        Out.println("   public static void toCSV" + J._Name + "(java.io.Writer Out, List<" + Helper.getFullAppDataClassName(J._ParentObject) + "> L, boolean includeHeader) throws java.io.IOException");
+        Out.println("   public static void toCSV" + J._Name + "(java.io.Writer out, List<" + Helper.getFullAppDataClassName(J._ParentObject) + "> L, boolean includeHeader) throws java.io.IOException");
         Out.println("    {");
         Out.println("      long T0 = System.nanoTime();");
         Out.println("      if (includeHeader == true)");
-        Out.println("        Out.write(getCSVHeader" + J._Name + "() + \"\\n\");");
+        Out.println("        out.write(getCSVHeader" + J._Name + "() + \"\\n\");");
         Out.println("      for (" + Helper.getFullAppDataClassName(J._ParentObject) + " O : L)");
         Out.println("       if (O!=null)");
         Out.println("        {");
-        Out.println("          toCSV" + J._Name + "(Out, O);");
-        Out.println("          Out.write(\"\\n\");");
+        Out.println("          toCSV" + J._Name + "(out, O);");
+        Out.println("          out.write(\"\\n\");");
         Out.println("        }");
         Out.println("      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);");
         Out.println("    }");
 
         Out.println();
-        Out.println("   public static void toCSV" + J._Name + "(java.io.Writer Out, " + Helper.getFullAppDataClassName(J._ParentObject) + " Data) throws java.io.IOException");
+        Out.println("   public static void toCSV" + J._Name + "(java.io.Writer out, " + Helper.getFullAppDataClassName(J._ParentObject) + " obj) throws java.io.IOException");
         Out.println("    {");
         Out.println("      long T0 = System.nanoTime();");
         Out.println("      StringBuilder Str = new StringBuilder();");
@@ -1227,9 +1237,53 @@ public class TildaFactory implements CodeGenTildaFactory
             {
               First = Helper.CSVExport(Out, First, C);
             }
-        Out.println("      Out.write(Str.toString());");
+        Out.println("      out.write(Str.toString());");
         Out.println("      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);");
         Out.println("    }");
+        
+        if (J._ParentObject.isOCC() == true && (J._ParentObject._TildaType == TildaType.OBJECT || J._ParentObject._TildaType == TildaType.VIEW) && J._Sync == true)
+          {
+            Out.println();
+            Out.println("   public static void toCSV" + J._Name + "(java.io.Writer out, List<" + Helper.getFullAppDataClassName(J._ParentObject) + "> L, boolean includeHeader, ZonedDateTime lastSync)");
+            Out.println("   throws java.io.IOException");
+            Out.println("    {");
+            Out.println("      long T0 = System.nanoTime();");
+            Out.println("      if (includeHeader == true)");
+            Out.println("       {");
+            Out.println("         out.write(\"__sync,\");");
+            Out.println("         out.write(getCSVHeader" + J._Name + "() + \"\\n\");");
+            Out.println("       }");
+            Out.println("      for (" + Helper.getFullAppDataClassName(J._ParentObject) + " obj : L)");
+            Out.println("       {");
+            Out.println("         if (toCSV" + J._Name + "(out, obj, lastSync) == true)");
+            Out.println("          out.write(\"\\n\");");
+            Out.println("       }");
+            Out.println("      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);");
+            Out.println("    }");
+            Out.println();
+            Out.println("   public static boolean toCSV" + J._Name + "(java.io.Writer out, " + Helper.getFullAppDataClassName(J._ParentObject) + " obj, ZonedDateTime lastSync)");
+            Out.println("   throws java.io.IOException");
+            Out.println("    {");
+            Out.println("      long T0 = System.nanoTime();");
+            Out.println("      SyncStatus s = SyncStatus.get(lastSync, obj);");
+            Out.println("      if (s == SyncStatus.OLD || s == SyncStatus.GHOST)");
+            Out.println("       return false;");
+            Out.println("      StringBuilder Str = new StringBuilder();");
+            Out.println();
+            Out.println("      out.write(s._Status);");
+            Out.println("      out.write(\",\");");
+            First = true;
+            for (Column C : J._ColumnObjs)
+              if (C != null)
+                {
+                  First = Helper.CSVExport(Out, First, C);
+                }
+            Out.println("      out.write(Str.toString());");
+            Out.println("      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);");
+            Out.println("      return true;");
+            Out.println("    }");
+            Out.println();
+          }
       }
 
 
