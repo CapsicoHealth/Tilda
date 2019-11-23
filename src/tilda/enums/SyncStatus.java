@@ -25,7 +25,9 @@ public enum SyncStatus
     NEW('N')
   , UPDATED('U')
   , DELETED('D')
-  , OLD('O');
+  , OLD('O')
+  , GHOST('G')
+  ;
 
   private SyncStatus(char Status)
     {
@@ -36,7 +38,8 @@ public enum SyncStatus
   
   public static SyncStatus get(ZonedDateTime Marker, OCCObject Obj)
     {
-      return Obj.getDeleted    () != null ? ( Obj.getDeleted().isAfter(Marker) == true && Obj.getCreated().isBefore(Marker) == true ? DELETED : OLD)
+      return Obj.getCreated    ().isAfter(Marker) == true && Obj.getDeleted() != null && Obj.getDeleted().isAfter(Marker) == true ? GHOST
+           : Obj.getDeleted    () != null && Obj.getDeleted().isAfter(Marker) == true ? DELETED
            : Obj.getCreated    ().isAfter(Marker) == true ? NEW
            : Obj.getLastUpdated().isAfter(Marker) == true ? UPDATED
                                                           : OLD;
