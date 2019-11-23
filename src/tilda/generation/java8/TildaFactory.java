@@ -1244,27 +1244,22 @@ public class TildaFactory implements CodeGenTildaFactory
             Column nameCol = J._ColumnObjs.get(0);
             Column valCol = J._ColumnObjs.get(1);
 
-            String nameType = TextUtil.normalCapitalization(nameCol.getType().name());
-            String valType = TextUtil.normalCapitalization(valCol.getType().name());
-
-            if (nameType.equalsIgnoreCase("Char"))
-              nameType = "Character";
-            if (valType.equalsIgnoreCase("Char"))
-              valType = "Character";
+            String nameType = JavaJDBCType.getFieldTypeBaseClass(nameCol);
+            String valType = JavaJDBCType.getFieldTypeBaseClass(valCol);
 
             Out.println("   public static Map<" + nameType + ", " + valType + "> toNVP" + J._Name + "(List<" + Helper.getFullAppDataClassName(J._ParentObject) + "> L) throws Exception");
             Out.println("    {");
             Out.println("      Map<" + nameType + ", " + valType + "> M = new HashMap<" + nameType + ", " + valType + ">();");
             Out.println("      for (" + Helper.getFullAppDataClassName(J._ParentObject) + " D : L)");
             Out.println("        {");
-            Out.println("          " + valType + " val = M.get(D.get" + TextUtil.capitalizeFirstCharacter(nameCol.getName()) + "());");
-            Out.println("          if(val != null)");
-            Out.println("            throw new Exception(\"The key \" + D.get" + TextUtil.capitalizeFirstCharacter(nameCol.getName()) + "() + \" with value \" + String.valueOf(val) + \" already exists in the Map. Key values must be unique.\");");
-            if (nameCol.getType().name().equalsIgnoreCase("STRING"))
+            if (nameCol.getType() == ColumnType.STRING)
               Out.println("          if(TextUtil.isNullOrEmpty(D.get" + TextUtil.capitalizeFirstCharacter(nameCol.getName()) + "()) == false)");
-            else
+            else if (nameCol._Nullable == true)
               Out.println("          if(D.is" + TextUtil.capitalizeFirstCharacter(nameCol.getName()) + "Null() == false)");
-            Out.println("            M.put(D.get" + TextUtil.capitalizeFirstCharacter(nameCol.getName()) + "(), D.get" + TextUtil.capitalizeFirstCharacter(valCol.getName()) + "());");
+            else if (nameCol.getType().isPrimitive() == false)
+              Out.println("          if(D.get" + TextUtil.capitalizeFirstCharacter(nameCol.getName()) + "() != null)");
+            Out.println("            if (M.put(D.get" + TextUtil.capitalizeFirstCharacter(nameCol.getName()) + "(), D.get" + TextUtil.capitalizeFirstCharacter(valCol.getName()) + "()) != null)");
+            Out.println("             throw new Exception(\"The key \" + D.get" + TextUtil.capitalizeFirstCharacter(nameCol.getName()) + "() + \" with value \" + D.get" + TextUtil.capitalizeFirstCharacter(valCol.getName()) + "() + \" already exists in the Map. Key values must be unique.\");");
             Out.println("        }");
             Out.println("      return M;");
             Out.println("    }");
