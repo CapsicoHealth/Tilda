@@ -1098,6 +1098,11 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("             out.write(\"null\\n\");");
         Out.println("             return;");
         Out.println("           }");
+        Out.println("          if (L.isEmpty() == true)");
+        Out.println("           {");
+        Out.println("             out.write(\"[]\\n\");");
+        Out.println("             return;");
+        Out.println("           }");
         Out.println("          out.write(\"[\\n\");");
         Out.println("        }");
         Out.println("      boolean First = true;");
@@ -1105,8 +1110,7 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("       if (O!=null)");
         Out.println("        {");
         Out.println("          out.write(lead);");
-        Out.println("          if (First == false) out.write(\",\"); else { out.write(\" \"); First = false; }");
-        Out.println("          toJSON" + J._Name + "(out, O, true);");
+        Out.println("          toJSON" + J._Name + "(out, O, First == true ? \"   \" : \"  ,\", true);");
         Out.println("          out.write(\"\\n\");");
         Out.println("        }");
         Out.println("      if (fullList == true)");
@@ -1119,10 +1123,18 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println();
         Out.println("   public static void toJSON" + J._Name + "(java.io.Writer out, " + Helper.getFullAppDataClassName(J._ParentObject) + " obj, boolean fullObject) throws java.io.IOException");
         Out.println("    {");
+        Out.println("      toJSON" + J._Name + "(out, obj, \"\", fullObject);");
+        Out.println("    }");
+        Out.println();
+        Out.println("   public static void toJSON" + J._Name + "(java.io.Writer out, " + Helper.getFullAppDataClassName(J._ParentObject) + " obj, String lead, boolean fullObject) throws java.io.IOException");
+        Out.println("    {");
         Out.println("      long T0 = System.nanoTime();");
         Out.println("      " + Helper.getFullBaseClassName(J._ParentObject) + " Obj = (" + Helper.getFullBaseClassName(J._ParentObject) + ") obj;");
         Out.println("      if (fullObject == true)");
-        Out.println("       out.write(\"{\");");
+        Out.println("       {");
+        Out.println("          out.write(lead);");
+        Out.println("          out.write(\"{\");");
+        Out.println("       }");
         Out.println();
         boolean First = true;
         for (Column C : J._ColumnObjs)
@@ -1151,6 +1163,11 @@ public class TildaFactory implements CodeGenTildaFactory
             Out.println("             out.write(\"null\\n\");");
             Out.println("             return;");
             Out.println("           }");
+            Out.println("          if (L.isEmpty() == true)");
+            Out.println("           {");
+            Out.println("             out.write(\"[]\\n\");");
+            Out.println("             return;");
+            Out.println("           }");
             Out.println("          out.write(\"[\\n\");");
             Out.println("        }");
             Out.println("      boolean First = true;");
@@ -1170,6 +1187,12 @@ public class TildaFactory implements CodeGenTildaFactory
             Out.println("      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);");
             Out.println("    }");
             Out.println();
+            Out.println("   public static boolean toJSON" + J._Name + "(java.io.Writer out, " + Helper.getFullAppDataClassName(J._ParentObject) + " obj, boolean fullObject, ZonedDateTime lastSync)");
+            Out.println("   throws java.io.IOException");
+            Out.println("    {");
+            Out.println("      return toJSON" + J._Name + "(out, obj, \"\", fullObject, lastSync);");
+            Out.println("    }");
+            Out.println();
             Out.println("   public static boolean toJSON" + J._Name + "(java.io.Writer out, " + Helper.getFullAppDataClassName(J._ParentObject) + " obj, String lead, boolean fullObject, ZonedDateTime lastSync)");
             Out.println("   throws java.io.IOException");
             Out.println("    {");
@@ -1182,7 +1205,7 @@ public class TildaFactory implements CodeGenTildaFactory
             Out.println("      out.write(\" \\\"__sync\\\": \\\"\");");
             Out.println("      out.write(s._Status);");
             Out.println("      out.write(\"\\\", \");");
-            Out.println("      toJSON" + J._Name + "(out, obj, false);");
+            Out.println("      toJSON" + J._Name + "(out, obj, \"\", false);");
             Out.println("      if (fullObject == true)");
             Out.println("       out.write(\" }\\n\");");
             Out.println("      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);");

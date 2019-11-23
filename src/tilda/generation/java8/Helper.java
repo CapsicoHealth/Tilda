@@ -682,7 +682,7 @@ public class Helper
         else if (C.isCollection() == false)
           Out.println("        JSONUtil.print(out, \"" + C.getName() + "\", " + First + ", Obj.get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "());");
         else
-          Out.println("        JSONUtil.print(out, \"" + C.getName() + "\", " + First + ", Obj._" + C.getName() + ");");
+          Out.println("        JSONUtil.print(out, \"" + C.getName() + "\", " + First + ", Obj.get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "AsArray());");
         Out.println();
         return false;
       }
