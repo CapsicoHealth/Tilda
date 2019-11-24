@@ -1111,7 +1111,6 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("        {");
         Out.println("          out.write(lead);");
         Out.println("          toJSON" + J._Name + "(out, O, First == true ? \"   \" : \"  ,\", true);");
-        Out.println("          out.write(\"\\n\");");
         Out.println("        }");
         Out.println("      if (fullList == true)");
         Out.println("       { ");
@@ -1145,7 +1144,7 @@ public class TildaFactory implements CodeGenTildaFactory
               // First = JSONExport(Out, First, C._ParentObject.getColumn(C.getName()+"TZ"));
             }
         Out.println("      if (fullObject == true)");
-        Out.println("       out.write(\" }\");");
+        Out.println("       out.write(\" }\\n\");");
         Out.println("      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);");
         Out.println("    }");
 
@@ -1175,7 +1174,6 @@ public class TildaFactory implements CodeGenTildaFactory
             Out.println("       {");
             Out.println("         if (toJSON" + J._Name + "(out, obj, lead+(First==true?\"   \":\"  ,\"), true, lastSync) == false)");
             Out.println("          continue;");
-            Out.println("         out.write(\"\\n\");");
             Out.println("         if (First == true)");
             Out.println("          First = false;");
             Out.println("       }");
@@ -1201,7 +1199,10 @@ public class TildaFactory implements CodeGenTildaFactory
             Out.println("      if (s == SyncStatus.OLD || s == SyncStatus.GHOST)");
             Out.println("       return false;");
             Out.println("      if (fullObject == true)");
-            Out.println("       out.write(\"{\");");
+            Out.println("       {");
+            Out.println("          out.write(lead);");
+            Out.println("          out.write(\"{\");");
+            Out.println("       }");
             Out.println("      out.write(\" \\\"__sync\\\": \\\"\");");
             Out.println("      out.write(s._Status);");
             Out.println("      out.write(\"\\\", \");");
