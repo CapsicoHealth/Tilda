@@ -430,7 +430,7 @@ public class ParseUtil
      * @param DefaultValue
      * @return
      */
-    public static long ParseLongPercentage(String Val, long DefaultValue)
+    public static long parseLongPercentage(String Val, long DefaultValue)
       {
         try
           {
