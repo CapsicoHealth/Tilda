@@ -1111,6 +1111,8 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("        {");
         Out.println("          out.write(lead);");
         Out.println("          toJSON" + J._Name + "(out, O, First == true ? \"   \" : \"  ,\", true);");
+        Out.println("          if (First == true)");
+        Out.println("           First = false;");
         Out.println("        }");
         Out.println("      if (fullList == true)");
         Out.println("       { ");
