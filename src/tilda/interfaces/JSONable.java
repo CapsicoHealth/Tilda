@@ -17,10 +17,12 @@
 package tilda.interfaces;
 
 import java.io.Writer;
+import java.time.ZonedDateTime;
 
 
 
 public interface JSONable
   {
-    public void toJSON(Writer Out, String JsonExportName, boolean FullObject) throws Exception;
+    public void toJSON(Writer out, String jsonExportName, String lead, boolean fullObject) throws Exception;
+    public void toJSON(Writer out, String jsonExportName, String lead, boolean fullObject, ZonedDateTime lastsync) throws Exception;
   }

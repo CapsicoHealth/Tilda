@@ -114,7 +114,7 @@ public class FolderCompare
                 FileUtil.iterate(f, FSP1, new String[] {".*", "bin" });
                 BufferedWriter Out = new BufferedWriter(new FileWriter(D1.getAbsolutePath()+"\\"+f.getName()+".filecounts.csv"));
                 Out.write("Path, FileCount, FileSize, Oldest, Newest, TotalCount, TotalSize\r\n");
-                Print(Out, FSP1._Root, 0);
+                print(Out, FSP1._Root, 0);
                 Out.close();
               }
           }
@@ -126,7 +126,7 @@ public class FolderCompare
 
       }
 
-    private static void Print(Writer Out, FolderStats FS, int Level) throws IOException
+    private static void print(Writer Out, FolderStats FS, int Level) throws IOException
       {
         for (int i = 0; i < Level; ++i)
          Out.write("  ");
@@ -148,6 +148,6 @@ public class FolderCompare
         Out.write("\r\n");
         
         for (FolderStats fs : FS._Descendents)
-          Print(Out, fs, Level+1);
+          print(Out, fs, Level+1);
       }
   }

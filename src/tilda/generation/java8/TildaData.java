@@ -1232,9 +1232,9 @@ public class TildaData implements CodeGenTildaData
                         Out.println(ExtraPad + "       for (int pos = 0; pos < _" + C.getName() + ".size(); ++pos)");
                         Out.println(ExtraPad + "         {");
                       }
-                    Out.println(ExtraPad + "       tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(_" + C.getName() + (C.isCollection() == true==true?".get(pos)":"") + ".getZone().getId());");
+                    Out.println(ExtraPad + "       tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(_" + C.getName() + (C.isCollection() == true == true ? ".get(pos)" : "") + ".getZone().getId());");
                     Out.println(ExtraPad + "       if (ZI == null)");
-                    Out.println(ExtraPad + "        throw new Exception(\"Cannot set field '" + C.getFullName() + "' because the timezone value '\"+_" + C.getName() + (C.isCollection() == true==true?".get(pos)":"") + ".getZone().getId()+\"' is unknown. Make sure it is mapped properly in the ZoneInfo table.\");");
+                    Out.println(ExtraPad + "        throw new Exception(\"Cannot set field '" + C.getFullName() + "' because the timezone value '\"+_" + C.getName() + (C.isCollection() == true == true ? ".get(pos)" : "") + ".getZone().getId()+\"' is unknown. Make sure it is mapped properly in the ZoneInfo table.\");");
                     if (C.isCollection() == true)
                       Out.println("          addTo" + TextUtil.capitalizeFirstCharacter(C.getName()) + "TZ(pos, ZI.getId());");
                     else
@@ -1910,41 +1910,98 @@ public class TildaData implements CodeGenTildaData
     @Override
     public void genMethodOutput(PrintWriter Out, GeneratorSession G, Object O)
       {
-        boolean JSONDone = false;
-        boolean CSVDone = false;
+        boolean JSON = false;
+        boolean JSONSync = false;
+        boolean CSV = false;
+        boolean CSVSync = false;
         for (OutputMapping OM : O._OutputMaps)
           {
-            if (OM._OutputTypes.contains(OutputFormatType.JSON) == true && JSONDone == false)
+            if (OM._OutputTypes.contains(OutputFormatType.JSON) == true)
               {
-                JSONDone = true;
-                Out.println("   public void toJSON(java.io.Writer Out, String ExportName, boolean FullObject) throws Exception");
+                JSON = true;
+                if (OM._Sync == true)
+                  JSONSync = true;
+              }
+            else if (OM._OutputTypes.contains(OutputFormatType.CSV) == true)
+              {
+                CSV = true;
+                if (OM._Sync == true)
+                  CSVSync = true;
+              }
+          }
+
+        if (JSON == true)
+          {
+            Out.println("   public void toJSON(java.io.Writer out, String exportName, boolean fullObject) throws Exception");
+            Out.println("    {");
+            Out.println("      toJSON(out, exportName, \"\", fullObject);");
+            Out.println("    }");
+            Out.println("   public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject) throws Exception");
+            Out.println("    {");
+            Out.println("      switch (exportName)");
+            Out.println("        { ");
+            for (OutputMapping OM : O._OutputMaps)
+              if (OM != null && OM._OutputTypes.contains(OutputFormatType.JSON) == true)
+                Out.println("          case \"" + OM._Name + "\": " + Helper.getFullAppFactoryClassName(O) + ".toJSON" + OM._Name + "(out, (" + Helper.getFullAppDataClassName(O) + ") this, lead, fullObject); break;");
+            Out.println("          default: throw new Exception(\"Unknown JSON exporter '\"+exportName+\"' for " + Helper.getFullAppJsonClassName(O) + "\");");
+            Out.println("        } ");
+            Out.println("    }");
+            if (JSONSync == true)
+              {
+                Out.println("   public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject, java.time.ZonedDateTime lastsync) throws Exception");
                 Out.println("    {");
-                Out.println("      switch (ExportName)");
+                Out.println("      switch (exportName)");
                 Out.println("        { ");
-                for (OutputMapping OM2 : O._OutputMaps)
-                  if (OM2 != null && OM2._OutputTypes.contains(OutputFormatType.JSON) == true)
-                    Out.println("          case \"" + OM2._Name + "\": " + Helper.getFullAppFactoryClassName(O) + ".toJSON" + OM2._Name + "(Out, (" + Helper.getFullAppDataClassName(O) + ") this, FullObject); break;");
-                Out.println("          default: throw new Exception(\"Unknown JSON exporter '\"+ExportName+\"' for " + Helper.getFullAppJsonClassName(O) + "\");");
+                for (OutputMapping OM : O._OutputMaps)
+                  if (OM != null && OM._OutputTypes.contains(OutputFormatType.JSON) == true && OM._Sync == true)
+                    Out.println("          case \"" + OM._Name + "\": " + Helper.getFullAppFactoryClassName(O) + ".toJSON" + OM._Name + "(out, (" + Helper.getFullAppDataClassName(O) + ") this, lead, fullObject, lastsync); break;");
+                Out.println("          default: throw new Exception(\"Unknown JSON sync exporter '\"+exportName+\"' for " + Helper.getFullAppJsonClassName(O) + "\");");
                 Out.println("        } ");
                 Out.println("    }");
               }
-            else if (OM._OutputTypes.contains(OutputFormatType.CSV) == true && CSVDone == false)
+            else
               {
-                CSVDone = true;
-                Out.println("   public void toCSV(java.io.Writer Out, String ExportName) throws Exception");
+                Out.println("   public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject, java.time.ZonedDateTime lastsync) throws Exception");
                 Out.println("    {");
-                Out.println("      switch (ExportName)");
+                Out.println("      throw new Exception(\"Unknown JSON sync exporter '\"+exportName+\"' for " + Helper.getFullAppJsonClassName(O) + "\");");
+                Out.println("    }");
+                
+              }
+          }
+
+        if (CSV == true)
+          {
+            Out.println("   public void toCSV(java.io.Writer out, String exportName) throws Exception");
+            Out.println("    {");
+            Out.println("      switch (exportName)");
+            Out.println("        { ");
+            for (OutputMapping OM : O._OutputMaps)
+              if (OM != null && OM._OutputTypes.contains(OutputFormatType.CSV) == true)
+                Out.println("          case \"" + OM._Name + "\": " + Helper.getFullAppFactoryClassName(O) + ".toCSV" + OM._Name + "(out, (" + Helper.getFullAppDataClassName(O) + ") this); break;");
+            Out.println("          default: throw new Exception(\"Unknown CSV exporter '\"+exportName+\"' for " + Helper.getFullAppJsonClassName(O) + "\");");
+            Out.println("        } ");
+            Out.println("    }");
+            if (CSVSync == true)
+              {
+                Out.println("   public void toCSV(java.io.Writer out, String exportName, java.time.ZonedDateTime lastsync) throws Exception");
+                Out.println("    {");
+                Out.println("      switch (exportName)");
                 Out.println("        { ");
-                for (OutputMapping OM2 : O._OutputMaps)
-                  if (OM2 != null && OM2._OutputTypes.contains(OutputFormatType.CSV) == true)
-                    Out.println("          case \"" + OM2._Name + "\": " + Helper.getFullAppFactoryClassName(O) + ".toCSV" + OM2._Name + "(Out, (" + Helper.getFullAppDataClassName(O) + ") this); break;");
-                Out.println("          default: throw new Exception(\"Unknown CSV exporter '\"+ExportName+\"' for " + Helper.getFullAppJsonClassName(O) + "\");");
+                for (OutputMapping OM : O._OutputMaps)
+                  if (OM != null && OM._OutputTypes.contains(OutputFormatType.CSV) == true)
+                    Out.println("          case \"" + OM._Name + "\": " + Helper.getFullAppFactoryClassName(O) + ".toCSV" + OM._Name + "(out, (" + Helper.getFullAppDataClassName(O) + ") this, lastsync); break;");
+                Out.println("          default: throw new Exception(\"Unknown CSV sync exporter '\"+exportName+\"' for " + Helper.getFullAppJsonClassName(O) + "\");");
                 Out.println("        } ");
                 Out.println("    }");
               }
-            for (OutputFormatType OTF : OM._OutputTypes)
-              if (OTF != OutputFormatType.JSON && OTF != OutputFormatType.CSV && OTF != OutputFormatType.NVP)
-                throw new Error("Object '" + O.getFullName() + "' is defining an output mapping '" + O._Name + "' with an unsupported output format type " + OTF.name() + ".");
+            else
+              {
+                Out.println("   public void toCSV(java.io.Writer out, String exportName, java.time.ZonedDateTime lastsync) throws Exception");
+                Out.println("    {");
+                Out.println("      throw new Exception(\"Unknown CSV sync exporter '\"+exportName+\"' for " + Helper.getFullAppJsonClassName(O) + "\");");
+                Out.println("    }");
+                
+              }
           }
       }
 
