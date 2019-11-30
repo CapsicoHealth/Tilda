@@ -100,9 +100,8 @@ public class DocGen
         if (schema._Documentation != null && schema._Documentation._Description != null)
           for (String str : schema._Documentation._Description)
             writer.println(str);
-
+        writer.println("<BR><BR>");
         writeSearchHTML(writer, true); // Add Search Box
-
         if (f.exists())
           {
             FileUtil.copyFileContentsIntoAnotherFile(base64FileName, writer);
@@ -233,6 +232,7 @@ public class DocGen
         writer.println("</TD></TR>");
         writer.println("<TR><TD colspan=\"2\"><table id=\"__SEARCH_BOX_RESULTS__\" class=\"search_results Selectable\" border=\"0px\" cellspacing=\"0px\"></table>");
         writer.println("</TD></TR></TABLE></DIV>");
+        writer.println("<BR>");
         // writer.println("<SCRIPT>registerStickyHeader(\"__SEARCH_BOX__\");</SCRIPT>");
         // hideIfEsc(event, '__SEARCH_BOX_RESULTS__');
       }
@@ -257,7 +257,10 @@ public class DocGen
         + "</HEAD>\n"
         + "<BODY onkeyup=\"MasterIndex.keyup(event);\">\n");
         writer.println("<H1>"+TextUtil.print(MC._Title, "Master Database Documentation")+"</H1>");
-        writer.println(String.join("\n", MC._Descriptions)+"<BR>");
+        if (MC._Descriptions != null)
+          for (String str : MC._Descriptions)
+            writer.println(str);
+        writer.println("<BR><BR>");
         writeSearchHTML(writer, false); // Add Search Box
         writer.println("<BR>");
         writer.println("<DIV id='MI'><DIV id='MI_SCHEMAS'></DIV><DIV id='MI_OBJECTS'></DIV><DIV id='MI_COLUMNS'></DIV><DIV id='MI_DOCS'></DIV></DIV>");
