@@ -56,7 +56,32 @@ CREATE OR REPLACE FUNCTION TILDA.ILike(v text, val text[])
   'select v ilike ANY(val);';
 
 
+  
+-----------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------
+-- TILDA contains() functions
+-----------------------------------------------------------------------------------------------------------------
+CREATE OR REPLACE FUNCTION TILDA.contains(v int4range[], val integer)
+  RETURNS boolean
+  IMMUTABLE LANGUAGE SQL AS
+  'select exists (select * from unnest(v) x_ where x_ @> val);';
+
+CREATE OR REPLACE FUNCTION TILDA.contains(v int8range[], val bigint)
+  RETURNS boolean
+  IMMUTABLE LANGUAGE SQL AS
+  'select exists (select * from unnest(v) x_ where x_ @> val);';
  
+CREATE OR REPLACE FUNCTION TILDA.contains(v tstzrange[], val timestamptz)
+  RETURNS boolean
+  IMMUTABLE LANGUAGE SQL AS
+  'select exists (select * from unnest(v) x_ where x_ @> val);';
+
+CREATE OR REPLACE FUNCTION TILDA.contains(v daterange [], val date)
+  RETURNS boolean
+  IMMUTABLE LANGUAGE SQL AS
+  'select exists (select * from unnest(v) x_ where x_ @> val);';
+
+  
 
 -----------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------
