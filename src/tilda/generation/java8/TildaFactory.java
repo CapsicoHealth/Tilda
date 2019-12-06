@@ -554,7 +554,7 @@ public class TildaFactory implements CodeGenTildaFactory
         if (q != null && q._Attributes.isEmpty() == false)
           Helper.MakeParamStaticClass(Out, q._Attributes, MethodName);
         Out.println();
-        
+
         Out.print("   static public ListResults<" + Helper.getFullAppDataClassName(I._Parent) + "> " + MethodName + "(Connection C");
         genMethodLookupWhereIndexSignature(Out, G, I, q);
         Out.println("     {");
@@ -623,48 +623,48 @@ public class TildaFactory implements CodeGenTildaFactory
           throw new Error("ERROR: called genMethodLookupWhereQuery with a Unique SubWhereclause");
 
         String MethodName = "lookupWhere" + SWC._Name;
-        
+
         if (SWC._Attributes.isEmpty() == false)
           Helper.MakeParamStaticClass(Out, SWC._Attributes, MethodName);
         Out.println();
         Out.print("   static public ListResults<" + Helper.getFullAppDataClassName(SWC._ParentObject) + "> " + MethodName + "(Connection C");
         genMethodLookupWhereQuerySignature(Out, G, SWC);
-/*
-        Set<String> VarNameSet = new HashSet<String>();
-        for (Query.Attribute A : SWC._Attributes)
-          {
-            String v = A._VarName.replace('.', '_');
-            if (VarNameSet.add(v) == false)
-              continue;
-            Out.print(", " + JavaJDBCType.getFieldTypeParam(A._Col, A._Multi) + " " + v);
-          }
-        Out.println(", int start, int size) throws Exception");
-*/
+        /*
+         * Set<String> VarNameSet = new HashSet<String>();
+         * for (Query.Attribute A : SWC._Attributes)
+         * {
+         * String v = A._VarName.replace('.', '_');
+         * if (VarNameSet.add(v) == false)
+         * continue;
+         * Out.print(", " + JavaJDBCType.getFieldTypeParam(A._Col, A._Multi) + " " + v);
+         * }
+         * Out.println(", int start, int size) throws Exception");
+         */
         Out.println("     {");
         genMethodLookupWhereQueryPreamble(Out, SWC, MethodName);
-/*        
-        Out.println("       " + Helper.getFullBaseClassName(SWC._ParentObject) + " Obj = new " + Helper.getFullAppDataClassName(SWC._ParentObject) + "();");
-        Out.println("       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);");
-        Out.println();
-        if (SWC._Attributes.isEmpty() == false)
-          {
-            Out.print("       " + MethodName + "Params P = new " + MethodName + "Params(");
-            boolean First = true;
-            VarNameSet.clear();
-            for (Query.Attribute A : SWC._Attributes)
-              {
-                String v = A._VarName.replace('.', '_');
-                if (VarNameSet.add(v) == false)
-                  continue;
-                if (First == true)
-                  First = false;
-                else
-                  Out.print(", ");
-                Out.print(v);
-              }
-            Out.println(");");
-          }
-*/
+        /*
+         * Out.println("       " + Helper.getFullBaseClassName(SWC._ParentObject) + " Obj = new " + Helper.getFullAppDataClassName(SWC._ParentObject) + "();");
+         * Out.println("       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);");
+         * Out.println();
+         * if (SWC._Attributes.isEmpty() == false)
+         * {
+         * Out.print("       " + MethodName + "Params P = new " + MethodName + "Params(");
+         * boolean First = true;
+         * VarNameSet.clear();
+         * for (Query.Attribute A : SWC._Attributes)
+         * {
+         * String v = A._VarName.replace('.', '_');
+         * if (VarNameSet.add(v) == false)
+         * continue;
+         * if (First == true)
+         * First = false;
+         * else
+         * Out.print(", ");
+         * Out.print(v);
+         * }
+         * Out.println(");");
+         * }
+         */
         Out.println();
         Out.println("       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);");
         Out.println("       readMany(C, " + LookupId + ", RPI, Obj, " + (SWC._Attributes.isEmpty() == false ? "P" : "null") + ", start, size);");
@@ -972,6 +972,13 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("                   QueryDetails.setLastQuery(" + O.getBaseClassName() + "_Factory.SCHEMA_TABLENAME_LABEL, \"\");");
         Out.println("                   return index;");
         Out.println("                 }");
+        if (O.hasAutos() == true)
+          {
+            Out.println();
+            for (Column C : O._Columns)
+              if (C != null && C._Mode == ColumnMode.AUTO && C._MapperDef == null && C._FCT.isManaged() == false)
+                Out.println("               lastObj.set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "();");
+          }
         Out.println();
         Out.println("               if (((" + O._BaseClassName + ") d).beforeWrite(C) == false)");
         Out.println("                 {");
@@ -1266,7 +1273,7 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("      out.write(Str.toString());");
         Out.println("      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);");
         Out.println("    }");
-        
+
         if (J._ParentObject.isOCC() == true && (J._ParentObject._TildaType == TildaType.OBJECT || J._ParentObject._TildaType == TildaType.VIEW) && J._Sync == true)
           {
             Out.println();

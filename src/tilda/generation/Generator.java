@@ -353,6 +353,12 @@ public class Generator
                 DG.docMethodTouch(Out, G, C);
                 CG.genMethodTouch(Out, G, C);
               }
+            else
+              {
+                Out.println();
+                DG.docMethodTouch(Out, G, null);
+                CG.genMethodTouch(Out, G, null);
+              }
 
             Out.println();
             DG.docMethodWrite(Out, G, O);
