@@ -16,6 +16,7 @@
 
 package tilda.performance;
 
+import java.io.Writer;
 import java.util.concurrent.atomic.AtomicLong;
 
 import tilda.enums.StatementType;
@@ -104,36 +105,38 @@ public class TableInfo implements Info
         return _InsertNano.get()+_SelectNano.get()+_UpdateNano.get()+_DeleteNano.get();
       }
 
-    public static void printHelper(StringBuilder Str, String StatementType, long Count, long Records, long Nano, long TotalCount, long TotalRecords, long TotalNano)
+    public static void printHelper(Writer out, String statementType, long count, long records, long nano, long totalCount, long totalRecords, long totalNano)
+    throws Exception
      {
-       if (Count == 0)
+       if (count == 0)
         return;
-       Str.append("<TR style=\"font-size: 80%;\">")
-          .append("<TD>&nbsp;</TD><TD align=\"right\">").append(StatementType).append("&nbsp;&nbsp;&nbsp;</TD>")
-          .append("<TD>").append(DurationUtil.printDurationMilliSeconds(Nano)).append(" (").append(NumberFormatUtil.printPercentWith2Dec(TotalNano, Nano)).append("%)").append("</TD>")
-          .append("<TD>").append(Count  ).append(" (").append(NumberFormatUtil.printPercentWith2Dec(TotalCount  , Count  )).append("%)").append("</TD>")
-          .append("<TD>").append(DurationUtil.printPerformancePerSecond(Nano, Count)).append("q/s\r\n").append("</TD>")
-          .append("<TD>").append(Records).append(" (").append(NumberFormatUtil.printPercentWith2Dec(TotalRecords, Records)).append("%)").append("</TD>")
+       out.append("<TR style=\"font-size: 80%;\">")
+          .append("<TD>&nbsp;</TD><TD align=\"right\">").append(statementType).append("&nbsp;&nbsp;&nbsp;</TD>")
+          .append("<TD>").append(DurationUtil.printDurationMilliSeconds(nano)).append(" (").append(NumberFormatUtil.printPercentWith2Dec(totalNano, nano)).append("%)").append("</TD>")
+          .append("<TD>").append(NumberFormatUtil.printWith000Sep(count)  ).append(" (").append(NumberFormatUtil.printPercentWith2Dec(totalCount  , count  )).append("%)").append("</TD>")
+          .append("<TD>").append(DurationUtil.printPerformancePerSecond(nano, count)).append("q/s\r\n").append("</TD>")
+          .append("<TD>").append(NumberFormatUtil.printWith000Sep(records)).append(" (").append(NumberFormatUtil.printPercentWith2Dec(totalRecords, records)).append("%)").append("</TD>")
           .append("</TR>\r\n");
      }
     
     @Override
-    public void print(StringBuilder Str, long SuperCount, long SuperRecords, long SuperNano)
+    public void print(Writer out, long superCount, long superRecords, long superNano)
+    throws Exception
       {
-        long TotalCount  = getCountTotal   ();
-        long TotalRecords= getRecordsTotal ();
-        long TotalNano   = getNanoTotal    ();
-        Str.append("<TR style=\"background-color: #EFEFFF;\" valign=\"top\">")
+        long totalCount  = getCountTotal   ();
+        long totalRecords= getRecordsTotal ();
+        long totalNano   = getNanoTotal    ();
+        out.append("<TR style=\"background-color: #EFEFFF;\" valign=\"top\">")
            .append("<TD COLSPAN=\"2\">").append(_Name).append("&nbsp;&nbsp;&nbsp;</TD>")
-           .append("<TD>").append(DurationUtil.printDurationMilliSeconds(TotalNano)).append("&nbsp;(").append(NumberFormatUtil.printPercentWith2Dec(SuperNano, TotalNano)).append("%)").append("</TD>")
-           .append("<TD>").append(TotalCount  ).append("&nbsp;(").append(NumberFormatUtil.printPercentWith2Dec(SuperCount  , TotalCount  )).append("%)").append("</TD>")
-           .append("<TD>").append(DurationUtil.printPerformancePerSecond(TotalNano, TotalCount)).append("q/s\r\n").append("</TD>")
-           .append("<TD>").append(TotalRecords).append("&nbsp;(").append(NumberFormatUtil.printPercentWith2Dec(SuperRecords, TotalRecords)).append("%)").append("</TD>")
+           .append("<TD>").append(DurationUtil.printDurationMilliSeconds(totalNano)).append("&nbsp;(").append(NumberFormatUtil.printPercentWith2Dec(superNano, totalNano)).append("%)").append("</TD>")
+           .append("<TD>").append(NumberFormatUtil.printWith000Sep(totalCount)).append("&nbsp;(").append(NumberFormatUtil.printPercentWith2Dec(superCount  , totalCount  )).append("%)").append("</TD>")
+           .append("<TD>").append(DurationUtil.printPerformancePerSecond(totalNano, totalCount)).append("q/s\r\n").append("</TD>")
+           .append("<TD>").append(NumberFormatUtil.printWith000Sep(totalRecords)).append("&nbsp;(").append(NumberFormatUtil.printPercentWith2Dec(superRecords, totalRecords)).append("%)").append("</TD>")
            .append("</TR>\r\n");
-        printHelper(Str, "INSERT", _InsertCount.get(), _InsertCount  .get(), _InsertNano.get(), TotalCount, TotalRecords, TotalNano);
-        printHelper(Str, "SELECT", _SelectCount.get(), _SelectRecords.get(), _SelectNano.get(), TotalCount, TotalRecords, TotalNano);
-        printHelper(Str, "UPDATE", _UpdateCount.get(), _UpdateRecords.get(), _UpdateNano.get(), TotalCount, TotalRecords, TotalNano);
-        printHelper(Str, "DELETE", _DeleteCount.get(), _DeleteRecords.get(), _DeleteNano.get(), TotalCount, TotalRecords, TotalNano);
-        Str.append("<TR style=\"font-size: 60%;\"><TD colspan=\"6\">&nbsp;</TD></TR>\r\n");
+        printHelper(out, "INSERT", _InsertCount.get(), _InsertCount  .get(), _InsertNano.get(), totalCount, totalRecords, totalNano);
+        printHelper(out, "SELECT", _SelectCount.get(), _SelectRecords.get(), _SelectNano.get(), totalCount, totalRecords, totalNano);
+        printHelper(out, "UPDATE", _UpdateCount.get(), _UpdateRecords.get(), _UpdateNano.get(), totalCount, totalRecords, totalNano);
+        printHelper(out, "DELETE", _DeleteCount.get(), _DeleteRecords.get(), _DeleteNano.get(), totalCount, totalRecords, totalNano);
+        out.append("<TR style=\"font-size: 60%;\"><TD colspan=\"6\">&nbsp;</TD></TR>\r\n");
       }
   }

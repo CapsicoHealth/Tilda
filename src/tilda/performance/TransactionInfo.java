@@ -16,6 +16,7 @@
 
 package tilda.performance;
 
+import java.io.Writer;
 import java.util.concurrent.atomic.AtomicLong;
 
 import tilda.enums.TransactionType;
@@ -69,18 +70,19 @@ public class TransactionInfo implements Info
       }
 
     @Override
-    public void print(StringBuilder Str, long SuperCount, long SuperRecords, long SuperNano)
+    public void print(Writer out, long superCount, long superRecords, long superNano)
+    throws Exception
       {
-        long TotalCount = getCountTotal();
-        long TotalNano = getNanoTotal();
-        Str.append("<TR style=\"background-color: #EFEFFF;\" valign=\"top\">")
+        long totalCount = getCountTotal();
+        long totalNano = getNanoTotal();
+        out.append("<TR style=\"background-color: #EFEFFF;\" valign=\"top\">")
             .append("<TD COLSPAN=\"2\">").append(_Name).append("&nbsp;&nbsp;&nbsp;</TD>")
-            .append("<TD>").append(DurationUtil.printDurationMilliSeconds(TotalNano)).append("&nbsp;(").append(NumberFormatUtil.printPercentWith2Dec(SuperNano, TotalNano)).append("%)").append("</TD>")
-            .append("<TD>").append(TotalCount).append("&nbsp;(").append(NumberFormatUtil.printPercentWith2Dec(SuperCount, TotalCount)).append("%)").append("</TD>")
-            .append("<TD>").append(DurationUtil.printPerformancePerSecond(TotalNano, TotalCount)).append("q/s\r\n").append("</TD>")
+            .append("<TD>").append(DurationUtil.printDurationMilliSeconds(totalNano)).append("&nbsp;(").append(NumberFormatUtil.printPercentWith2Dec(superNano, totalNano)).append("%)").append("</TD>")
+            .append("<TD>").append(NumberFormatUtil.printWith000Sep(totalCount)).append("&nbsp;(").append(NumberFormatUtil.printPercentWith2Dec(superCount, totalCount)).append("%)").append("</TD>")
+            .append("<TD>").append(DurationUtil.printPerformancePerSecond(totalNano, totalCount)).append("q/s\r\n").append("</TD>")
             .append("<TD>&nbsp;</TD>")
             .append("</TR>\r\n");
-        Str.append("<TR style=\"font-size: 50%;\"><TD colspan=\"6\">&nbsp;</TD></TR>\r\n");
+        out.append("<TR style=\"font-size: 50%;\"><TD colspan=\"6\">&nbsp;</TD></TR>\r\n");
       }
 
   }

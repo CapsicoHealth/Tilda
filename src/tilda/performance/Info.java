@@ -16,11 +16,13 @@
 
 package tilda.performance;
 
+import java.io.Writer;
+
 public interface Info
   {
     public String getName();
     public long getNanoTotal();
     public long getCountTotal();
     public long getRecordsTotal();
-    public void print(StringBuilder Str, long SuperCount, long SuperRecords, long SuperNano);
+    public void print(Writer out, long superCount, long superRecords, long superNano) throws Exception;
   }

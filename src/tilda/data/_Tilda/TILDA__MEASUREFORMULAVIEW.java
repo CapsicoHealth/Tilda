@@ -1581,6 +1581,7 @@ This is the null setter for:<BR>
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();
+
      return afterRead(C);
    }
 

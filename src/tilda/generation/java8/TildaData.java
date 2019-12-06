@@ -430,11 +430,21 @@ public class TildaData implements CodeGenTildaData
     public void genMethodSet(PrintWriter Out, GeneratorSession G, Column C)
     throws Exception
       {
+        if (C._Mode == ColumnMode.AUTO && C._MapperDef == null && C._FCT.isManaged() == false)
+          {
+            Out.println("   /**");
+            Out.println("    * Internal setter for auto field "+C.getName());
+            Out.println("    */");
+            Out.println("   protected abstract void set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "() throws Exception;");
+            Out.println();
+          }
+
         String Mask = Helper.getRuntimeMask(C);
         String Visibility = Helper.getVisibility(C, true);
         if (C._JsonSchema != null && C.isCollection() == true)
           {
             Out.println("   protected static final java.lang.reflect.Type LIST_TYPE_" + C._JsonSchema._TypeName + " = new com.google.gson.reflect.TypeToken<ArrayList<" + C._JsonSchema._TypeName + ">>(){}.getType();");
+            Out.println();
           }
 
         if (C.isCollection() == true)
@@ -930,11 +940,18 @@ public class TildaData implements CodeGenTildaData
     public void genMethodTouch(PrintWriter Out, GeneratorSession G, Column C)
     throws Exception
       {
-        Out.println("   public final boolean touch(Connection C) throws Exception");
-        Out.println("     {");
-        Out.println("       set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "Now();");
-        Out.println("       return write(C);");
-        Out.println("     }");
+        if (C != null)
+          {
+            Out.println("   public final boolean touch(Connection C) throws Exception");
+            Out.println("     {");
+            Out.println("       set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "Now();");
+            Out.println("       return write(C);");
+            Out.println("     }");
+          }
+        else
+          {
+            Out.println("   public abstract boolean touch(Connection C) throws Exception;");
+          }
       }
 
     public void genTimestampSignature(PrintWriter Out, Object O)
@@ -1416,6 +1433,13 @@ public class TildaData implements CodeGenTildaData
         Out.println("          QueryDetails.setLastQuery(" + O.getBaseClassName() + "_Factory.SCHEMA_TABLENAME_LABEL, \"\");");
         Out.println("          return true;");
         Out.println("        }");
+        if (O.hasAutos() == true)
+          {
+            Out.println();
+            for (Column C : O._Columns)
+              if (C != null && C._Mode == ColumnMode.AUTO && C._MapperDef == null && C._FCT.isManaged() == false)
+                Out.println("       set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "();");
+          }
         Out.println();
         Out.println("       if (beforeWrite(C) == false)");
         Out.println("        {");
@@ -1773,6 +1797,19 @@ public class TildaData implements CodeGenTildaData
         Out.println("     __LookupId = 0;");
         Out.println("     __Init     = InitMode.READ;");
         Out.println("     __Changes.clear();");
+
+// LDH-NOTE: Auto fields are written to the database, i.e., they are associated to a column and so will be read already.
+//          It is therefore useless to call the auto setters here.
+        
+//        if (O.hasAutos() == true)
+//          {
+//            Out.println();
+//            for (Column C : O._Columns)
+//              if (C != null && C._Mode == ColumnMode.AUTO && C._MapperDef == null && C._FCT.isManaged() == false)
+//                Out.println("    set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "();");
+//          }
+
+        Out.println();
         Out.println("     return afterRead(C);");
         Out.println("   }");
         for (Column C : O._Columns)
@@ -1965,7 +2002,7 @@ public class TildaData implements CodeGenTildaData
                 Out.println("    {");
                 Out.println("      throw new Exception(\"Unknown JSON sync exporter '\"+exportName+\"' for " + Helper.getFullAppJsonClassName(O) + "\");");
                 Out.println("    }");
-                
+
               }
           }
 
@@ -2000,7 +2037,7 @@ public class TildaData implements CodeGenTildaData
                 Out.println("    {");
                 Out.println("      throw new Exception(\"Unknown CSV sync exporter '\"+exportName+\"' for " + Helper.getFullAppJsonClassName(O) + "\");");
                 Out.println("    }");
-                
+
               }
           }
       }

@@ -426,6 +426,11 @@ This is the hasChanged for:<BR>
      }
 
 /**
+ Sets the 'lastUpdated' column to now and causes a Write to occur to update the object in the data store.
+*/
+   public abstract boolean touch(Connection C) throws Exception;
+
+/**
  Writes the object to the data store if any changes has occurred since the object was initially
  read from the data store or last written. 
  If the object was deserialized (i.e., not created via the factory lookup() or create() methods, 
@@ -800,6 +805,7 @@ This is the hasChanged for:<BR>
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();
+
      return afterRead(C);
    }
 

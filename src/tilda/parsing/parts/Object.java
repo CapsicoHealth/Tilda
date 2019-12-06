@@ -623,4 +623,12 @@ public class Object extends Base
         return null;
       }
 
+    public boolean hasAutos()
+      {
+        for (Column C : _Columns)
+          if (C != null && C._Mode == ColumnMode.AUTO)
+           return true;
+        return false;
+      }
+
   }
