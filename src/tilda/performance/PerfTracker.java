@@ -16,10 +16,12 @@
 
 package tilda.performance;
 
+import java.io.Writer;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.io.output.StringBuilderWriter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -28,15 +30,17 @@ import tilda.enums.StatementType;
 import tilda.enums.TransactionType;
 import tilda.utils.AnsiUtil;
 import tilda.utils.DurationUtil;
+import tilda.utils.NumberFormatUtil;
 
 public abstract class PerfTracker
   {
-    protected static final Logger LOG = LogManager.getLogger(PerfTracker.class.getName());
-    
-    protected static Map<String, Info> _M = new HashMap<String, Info>();
+    protected static final Logger      LOG = LogManager.getLogger(PerfTracker.class.getName());
+
+    protected static Map<String, Info> _M  = new HashMap<String, Info>();
 
     /**
      * Adds new perf information for the named table.
+     * 
      * @param TableName
      * @param Query
      * @param Type
@@ -58,13 +62,14 @@ public abstract class PerfTracker
             }
         I.add(Type, DurationNano, Count);
         if (Count == 0)
-         LOG.warn(QueryDetails._LOGGING_HEADER+"   "+AnsiUtil.UNDERLINE+"No record "+Type._PP+" "+AnsiUtil.UNDERLINE_OFF+" in "+DurationUtil.printDurationMilliSeconds(DurationNano));
+          LOG.warn(QueryDetails._LOGGING_HEADER + "   " + AnsiUtil.UNDERLINE + "No record " + Type._PP + " " + AnsiUtil.UNDERLINE_OFF + " in " + DurationUtil.printDurationMilliSeconds(DurationNano));
         else
-         LOG.debug(QueryDetails._LOGGING_HEADER+"   "+Type._PP+" "+Count+" records in "+DurationUtil.printDurationMilliSeconds(DurationNano));
+          LOG.debug(QueryDetails._LOGGING_HEADER + "   " + Type._PP + " " + Count + " records in " + DurationUtil.printDurationMilliSeconds(DurationNano));
       }
 
     /**
      * Adds new perf information for transactional things such as COMMIT, ROLLBACK, CLOSE, SAVEPOINT...
+     * 
      * @param TT
      * @param DurationNano
      */
@@ -82,17 +87,21 @@ public abstract class PerfTracker
                 }
             }
         I.add(DurationNano);
-//        LOG.debug("   query time: "+DurationUtil.printDurationMilliSeconds(DurationNano));
+        // LOG.debug(" query time: "+DurationUtil.printDurationMilliSeconds(DurationNano));
       }
 
-    public static void print(StringBuilder Str)
+    public static Info[] getPerfLogSnapshot()
       {
-        Info[] C = null;
         synchronized (_M)
           {
-            C = _M.values().toArray(new Info[] {});
+            return _M.values().toArray(new Info[] {});
           }
-        Arrays.sort(C, new TableInfoByTime());
+      }
+
+    public static void print(Writer out)
+    throws Exception
+      {
+        Info[] C = getPerfLogSnapshot();
         long TotalCount = 0;
         long TotalRecords = 0;
         long TotalNano = 0;
@@ -105,19 +114,31 @@ public abstract class PerfTracker
             if (T.getName().length() > MaxTableNameLength)
               MaxTableNameLength = T.getName().length();
           }
-        Str.append("<BR>\r\n\r\n")
-            .append("=========================================================================================================================<BR>\r\n")
-            .append("==  Summary database performance numbers<BR>\r\n")
-            .append("==  # of queries=").append(TotalCount).append("; # affected records=").append(TotalRecords).append("; time=").append(DurationUtil.printDuration(TotalNano))
-            .append("; perf=").append(DurationUtil.printPerformancePerSecond(TotalNano, TotalCount)).append("q/s ")
-            .append("; perf=").append(DurationUtil.printDurationMilliSeconds(TotalCount == 0 ? 0 : TotalNano / TotalCount)).append("/q; ").append("<BR>\r\n")
-            .append("=========================================================================================================================<BR>\r\n")
-            .append("<TABLE style=\"font-size: 70%;\" cellpadding=\"3px\" cellspacing=\"0px\" border=\"0px\">\r\n")
-            .append("<TR style=\"background-color: #000; color: #FFF; font-weight: bold;\">\r\n")
-            .append("<TD>Table</TD><TD>Operation</TD><TD>Time</TD><TD>Count</TD><TD>Perf</TD><TD>Records</TD>\r\n")
-            .append("</TR>\r\n");
+        
+        out.append("<BR>\r\n\r\n")
+        .append("=========================================================================================================================<BR>\r\n")
+        .append("==  Summary database performance numbers<BR>\r\n")
+        .append("==  # of queries=").append(NumberFormatUtil.printWith000Sep(TotalCount))
+          .append("; # affected records=").append(NumberFormatUtil.printWith000Sep(TotalRecords))
+          .append("; time=").append(DurationUtil.printDuration(TotalNano))
+        .append("; perf=").append(DurationUtil.printPerformancePerSecond(TotalNano, TotalCount)).append("q/s ")
+        .append("; perf=").append(DurationUtil.printDurationMilliSeconds(TotalCount == 0 ? 0 : TotalNano / TotalCount)).append("/q; ").append("<BR>\r\n")
+        .append("=========================================================================================================================<BR>\r\n")
+        .append("<TABLE style=\"font-size: 70%;\" cellpadding=\"3px\" cellspacing=\"0px\" border=\"0px\">\r\n")
+        .append("<TR style=\"background-color: #000; color: #FFF; font-weight: bold;\">\r\n")
+        .append("<TD>Table</TD><TD>Operation</TD><TD>Time</TD><TD>Count</TD><TD>Perf</TD><TD>Records</TD>\r\n")
+        .append("</TR>\r\n");
+
+        Arrays.sort(C, new TableInfoByTime());
         for (Info T : C)
-          T.print(Str, TotalCount, TotalRecords, TotalNano);
-        Str.append("</TABLE>\r\n");
+          T.print(out, TotalCount, TotalRecords, TotalNano);
+        out.append("</TABLE>\r\n");
+      }
+    
+    public static void print(StringBuilder Str)
+    throws Exception
+      {
+        StringBuilderWriter SBW = new StringBuilderWriter(Str);
+        print(SBW);
       }
   }
