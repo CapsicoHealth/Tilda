@@ -377,6 +377,7 @@ This is the column definition for:<BR>
                    return index;
                  }
 
+
                if (((TILDA__FORMULARESULT) d).beforeWrite(C) == false)
                  {
                    LOG.debug(QueryDetails._LOGGING_HEADER + "The 'tilda.data.FormulaResult_Data' object at positon #" + index + " failed in its beforeWrite() method.");

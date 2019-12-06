@@ -438,6 +438,7 @@ This is the column definition for:<BR>
                    return index;
                  }
 
+
                if (((TILDA__JOBPARTMESSAGE) d).beforeWrite(C) == false)
                  {
                    LOG.debug(QueryDetails._LOGGING_HEADER + "The 'tilda.data.JobPartMessage_Data' object at positon #" + index + " failed in its beforeWrite() method.");
