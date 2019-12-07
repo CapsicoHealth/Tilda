@@ -77,7 +77,7 @@ public class Index
         if (TextUtil.isNullOrEmpty(_Name) == true)
           return PS.AddError("Object '" + _Parent.getFullName() + "' is defining an index without a name.");
 
-        if (_Name.length() > PS._CGSql.getMaxColumnNameSize())
+        if (getName().length() > PS._CGSql.getMaxColumnNameSize())
           PS.AddError("Object '" + _Parent.getFullName() + "' is defining index '" + _Name + "' with a name that's too long: max allowed by your database is "+PS._CGSql.getMaxColumnNameSize()+" vs "+_Name.length()+" for this identifier.");
         if (_Name.equals(TextUtil.sanitizeName(_Name)) == false)
          PS.AddError("Object '" + _Parent.getFullName() + "' is defining index '" + _Name + "' with a name containing invalid characters (must all be alphanumeric or underscore).");
