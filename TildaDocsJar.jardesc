@@ -11,6 +11,6 @@
         </sealing>
     </manifest>
     <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
-        <folder path="/Tilda/docs"/>
+        <folder path="/Tilda/docs/javadocs"/>
     </selectedElements>
 </jardesc>
