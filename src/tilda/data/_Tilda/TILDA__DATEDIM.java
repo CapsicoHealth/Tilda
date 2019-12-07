@@ -44,7 +44,7 @@ The Table TILDA.DateDim:<UL>
 This Table contains the following columns:<BLOCKQUOTE>
  <TABLE id="DateDim_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
    <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
-  <TR valign="top" bgcolor="#DFECF8">
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>1&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateDim-dt_DIV' class='columns'>dt</B>&nbsp;&nbsp;</TD>
 <TD>LocalDate&nbsp;/&nbsp;date&nbsp;&nbsp;</TD>
@@ -54,7 +54,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The Date date</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
+  <TR valign="top" style="background-color:#FFFFFF;">
     <TD>2&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateDim-epoch_DIV' class='columns'>epoch</B>&nbsp;&nbsp;</TD>
 <TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
@@ -64,7 +64,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The epoch date</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>3&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateDim-dayName_DIV' class='columns'>dayName</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(255)&nbsp;&nbsp;</TD>
@@ -74,7 +74,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Day name (i.e., Monday, Tuesday...) of the date</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
+  <TR valign="top" style="background-color:#FFFFFF;">
     <TD>4&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateDim-dayOfWeek_DIV' class='columns'>dayOfWeek</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
@@ -84,7 +84,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>ISO 8601 day of the week (Monday=1 to Sunday=7) of the date</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>5&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateDim-dayOfMonth_DIV' class='columns'>dayOfMonth</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
@@ -94,7 +94,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>ISO 8601 day of the month (starting with 1) of the date</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
+  <TR valign="top" style="background-color:#FFFFFF;">
     <TD>6&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateDim-dayOfQuarter_DIV' class='columns'>dayOfQuarter</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
@@ -104,7 +104,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>ISO 8601 day of the quarter (starting with 1) of the date</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>7&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateDim-dayOfYear_DIV' class='columns'>dayOfYear</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
@@ -114,7 +114,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>ISO 8601 day of the year (starting with 1) of the date</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
+  <TR valign="top" style="background-color:#FFFFFF;">
     <TD>8&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateDim-weekOfMonth_DIV' class='columns'>weekOfMonth</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
@@ -124,7 +124,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>ISO 8601 week of the month (starting with 1) of the date</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>9&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateDim-weekOfYear_DIV' class='columns'>weekOfYear</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
@@ -134,7 +134,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>ISO 8601 week of the year (starting with 1) of the date</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
+  <TR valign="top" style="background-color:#FFFFFF;">
     <TD>10&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateDim-monthOfYear_DIV' class='columns'>monthOfYear</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
@@ -144,7 +144,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>ISO 8601 month of the year (starting with 1) of the date</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>11&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateDim-monthName_DIV' class='columns'>monthName</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(255)&nbsp;&nbsp;</TD>
@@ -154,7 +154,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Month name (i.e., January, February...) of the date.</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
+  <TR valign="top" style="background-color:#FFFFFF;">
     <TD>12&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateDim-monthNameShort_DIV' class='columns'>monthNameShort</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(255)&nbsp;&nbsp;</TD>
@@ -164,7 +164,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Monday short name (i.e., Jan, Feb...) of the date.</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>13&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateDim-quarterOfYear_DIV' class='columns'>quarterOfYear</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
@@ -174,7 +174,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>ISO 8601 quarter of the year (starting with 1) of the date.</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
+  <TR valign="top" style="background-color:#FFFFFF;">
     <TD>14&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateDim-quarterName_DIV' class='columns'>quarterName</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(255)&nbsp;&nbsp;</TD>
@@ -184,7 +184,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Quarter name (i.e., Q1, Q2...) of the date.</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>15&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateDim-year_DIV' class='columns'>year</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
@@ -194,7 +194,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>ISO 8601 year (1.e., 2018) of the date.</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
+  <TR valign="top" style="background-color:#FFFFFF;">
     <TD>16&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateDim-mmyyyy_DIV' class='columns'>mmyyyy</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(6)&nbsp;&nbsp;</TD>
@@ -204,7 +204,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The mmyyyy printable version of a date.</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>17&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateDim-mmddyyyy_DIV' class='columns'>mmddyyyy</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(8)&nbsp;&nbsp;</TD>
@@ -214,7 +214,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The mmddyyyy printable version of a date.</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
+  <TR valign="top" style="background-color:#FFFFFF;">
     <TD>18&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateDim-yyyymmdd_DIV' class='columns'>yyyymmdd</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(8)&nbsp;&nbsp;</TD>
@@ -224,7 +224,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The yyyymmdd sortable printable version of a date.</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>19&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateDim-isWeekend_DIV' class='columns'>isWeekend</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
@@ -234,7 +234,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>1 if this is a weekend day, 0 otherwise.</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
+  <TR valign="top" style="background-color:#FFFFFF;">
     <TD>20&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateDim-isBusinessDay_DIV' class='columns'>isBusinessDay</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
@@ -244,7 +244,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>1 if this is a business day, 0 otherwise.</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>21&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateDim-isHoliday_DIV' class='columns'>isHoliday</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
@@ -254,7 +254,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>1 if this is a holiday, 0 otherwise.</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
+  <TR valign="top" style="background-color:#FFFFFF;">
     <TD>22&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateDim-holidayName_DIV' class='columns'>holidayName</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(255)&nbsp;&nbsp;</TD>
@@ -264,7 +264,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The name of the holiday if applicable.</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>23&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateDim-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
@@ -274,7 +274,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was created. (TILDA.DateDim)</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
+  <TR valign="top" style="background-color:#FFFFFF;">
     <TD>24&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateDim-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
@@ -284,7 +284,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was last updated. (TILDA.DateDim)</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>25&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateDim-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
@@ -4179,6 +4179,7 @@ This is the hasChanged for:<BR>
           QueryDetails.setLastQuery(TILDA__DATEDIM_Factory.SCHEMA_TABLENAME_LABEL, "");
           return true;
         }
+
 
        if (beforeWrite(C) == false)
         {

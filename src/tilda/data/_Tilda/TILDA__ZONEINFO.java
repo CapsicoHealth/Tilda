@@ -47,7 +47,7 @@ The Table TILDA.ZoneInfo:<UL>
 This Table contains the following columns:<BLOCKQUOTE>
  <TABLE id="ZoneInfo_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
    <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
-  <TR valign="top" bgcolor="#DFECF8">
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>1&nbsp;&nbsp;</TD>
 <TD align="right"><B id='ZoneInfo-id_DIV' class='columns'>id</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
@@ -57,7 +57,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The id for this enumeration.</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
+  <TR valign="top" style="background-color:#FFFFFF;">
     <TD>2&nbsp;&nbsp;</TD>
 <TD align="right"><B id='ZoneInfo-value_DIV' class='columns'>value</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(50)&nbsp;&nbsp;</TD>
@@ -67,7 +67,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The value for this enumeration.</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>3&nbsp;&nbsp;</TD>
 <TD align="right"><B id='ZoneInfo-label_DIV' class='columns'>label</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(254)&nbsp;&nbsp;</TD>
@@ -77,7 +77,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">ABSOLUTE&nbsp;&nbsp;</TD>
 <TD>The label for this enumeration.</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
+  <TR valign="top" style="background-color:#FFFFFF;">
     <TD>4&nbsp;&nbsp;</TD>
 <TD align="right"><B id='ZoneInfo-deactivatedTZ_DIV' class='columns'>deactivatedTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
@@ -89,7 +89,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TABLE>
 </TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>5&nbsp;&nbsp;</TD>
 <TD align="right"><B id='ZoneInfo-deactivated_DIV' class='columns'>deactivated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
@@ -99,7 +99,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The label for this enumeration.</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
+  <TR valign="top" style="background-color:#FFFFFF;">
     <TD>6&nbsp;&nbsp;</TD>
 <TD align="right"><B id='ZoneInfo-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
@@ -109,7 +109,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was created. (TILDA.ZoneInfo)</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>7&nbsp;&nbsp;</TD>
 <TD align="right"><B id='ZoneInfo-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
@@ -119,7 +119,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was last updated. (TILDA.ZoneInfo)</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
+  <TR valign="top" style="background-color:#FFFFFF;">
     <TD>8&nbsp;&nbsp;</TD>
 <TD align="right"><B id='ZoneInfo-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
@@ -1534,6 +1534,7 @@ This is the hasChanged for:<BR>
           QueryDetails.setLastQuery(TILDA__ZONEINFO_Factory.SCHEMA_TABLENAME_LABEL, "");
           return true;
         }
+
 
        if (beforeWrite(C) == false)
         {

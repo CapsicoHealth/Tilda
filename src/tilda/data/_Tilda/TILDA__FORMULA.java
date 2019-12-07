@@ -45,7 +45,7 @@ The Table TILDA.Formula:<UL>
 This Table contains the following columns:<BLOCKQUOTE>
  <TABLE id="Formula_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
    <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
-  <TR valign="top" bgcolor="#DFECF8">
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>1&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Formula-refnum_DIV' class='columns'>refnum</B>&nbsp;&nbsp;</TD>
 <TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
@@ -55,7 +55,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The primary key for this record</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
+  <TR valign="top" style="background-color:#FFFFFF;">
     <TD>2&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Formula-location_DIV' class='columns'>location</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(64)&nbsp;&nbsp;</TD>
@@ -65,7 +65,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The name of the primary table/view this formula is defined in.</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>3&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Formula-location2_DIV' class='columns'>location2</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(64)&nbsp;&nbsp;</TD>
@@ -75,7 +75,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The name of the secondary table/view (a derived view, a realized table), if appropriate.</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
+  <TR valign="top" style="background-color:#FFFFFF;">
     <TD>4&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Formula-name_DIV' class='columns'>name</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(64)&nbsp;&nbsp;</TD>
@@ -85,7 +85,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The name of the formula/column.</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>5&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Formula-type_DIV' class='columns'>type</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(3)&nbsp;&nbsp;</TD>
@@ -112,7 +112,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 </BLOCKQUOTE>
 </TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
+  <TR valign="top" style="background-color:#FFFFFF;">
     <TD>6&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Formula-title_DIV' class='columns'>title</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(128)&nbsp;&nbsp;</TD>
@@ -122,7 +122,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The title of the formula/column.</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>7&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Formula-description_DIV' class='columns'>description</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;text&nbsp;&nbsp;</TD>
@@ -132,7 +132,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The description of the formula/column.</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
+  <TR valign="top" style="background-color:#FFFFFF;">
     <TD>8&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Formula-formula_DIV' class='columns'>formula</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;text&nbsp;&nbsp;</TD>
@@ -142,7 +142,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The formula.</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>9&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Formula-htmlDoc_DIV' class='columns'>htmlDoc</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;text&nbsp;&nbsp;</TD>
@@ -152,7 +152,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Pre-rendered html fragment with the full documentation for this formula.</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
+  <TR valign="top" style="background-color:#FFFFFF;">
     <TD>10&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Formula-referencedColumns_DIV' class='columns'>referencedColumns</B>&nbsp;&nbsp;</TD>
 <TD>List<String> List<>&nbsp;/&nbsp;text[]&nbsp;&nbsp;</TD>
@@ -162,7 +162,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The list of columns this formula depends on.</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>11&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Formula-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
@@ -172,7 +172,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was created. (TILDA.Formula)</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
+  <TR valign="top" style="background-color:#FFFFFF;">
     <TD>12&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Formula-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
@@ -182,7 +182,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was last updated. (TILDA.Formula)</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>13&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Formula-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
@@ -2606,6 +2606,7 @@ This is the hasChanged for:<BR>
           QueryDetails.setLastQuery(TILDA__FORMULA_Factory.SCHEMA_TABLENAME_LABEL, "");
           return true;
         }
+
 
        if (beforeWrite(C) == false)
         {

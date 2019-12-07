@@ -41,7 +41,7 @@ This view depends on the following filter(s), sub-view(s), and/or root table(s):
 This View contains the following columns:<BLOCKQUOTE>
  <TABLE id="FormulaResultView_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
    <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
-  <TR valign="top" bgcolor="#DFECF8">
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>1&nbsp;&nbsp;</TD>
 <TD align="right"><B id='FormulaResultView-formulaRefnum_DIV' class='columns'>formulaRefnum</B>&nbsp;&nbsp;</TD>
 <TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
@@ -51,7 +51,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The parent formula.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#FormulaResult-formulaRefnum_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>FormulaResult<B>&nbsp;&#8226;&nbsp;</B>formulaRefnum</A><BR>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Formula-refnum_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Formula<B>&nbsp;&#8226;&nbsp;</B>refnum</A></DIV></TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
+  <TR valign="top" style="background-color:#FFFFFF;">
     <TD>2&nbsp;&nbsp;</TD>
 <TD align="right"><B id='FormulaResultView-value_DIV' class='columns'>value</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(100)&nbsp;&nbsp;</TD>
@@ -61,7 +61,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The result value.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#FormulaResult-value_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>FormulaResult<B>&nbsp;&#8226;&nbsp;</B>value</A></DIV></TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>3&nbsp;&nbsp;</TD>
 <TD align="right"><B id='FormulaResultView-description_DIV' class='columns'>description</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;text&nbsp;&nbsp;</TD>
@@ -71,7 +71,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The description of the result value.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#FormulaResult-description_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>FormulaResult<B>&nbsp;&#8226;&nbsp;</B>description</A></DIV></TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
+  <TR valign="top" style="background-color:#FFFFFF;">
     <TD>4&nbsp;&nbsp;</TD>
 <TD align="right"><B id='FormulaResultView-location_DIV' class='columns'>location</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(64)&nbsp;&nbsp;</TD>
@@ -81,7 +81,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The name of the primary table/view this formula is defined in.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Formula-location_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Formula<B>&nbsp;&#8226;&nbsp;</B>location</A></DIV></TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>5&nbsp;&nbsp;</TD>
 <TD align="right"><B id='FormulaResultView-name_DIV' class='columns'>name</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(64)&nbsp;&nbsp;</TD>

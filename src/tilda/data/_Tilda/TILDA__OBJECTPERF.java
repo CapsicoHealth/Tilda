@@ -45,7 +45,7 @@ The Table TILDA.ObjectPerf:<UL>
 This Table contains the following columns:<BLOCKQUOTE>
  <TABLE id="ObjectPerf_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
    <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
-  <TR valign="top" bgcolor="#DFECF8">
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>1&nbsp;&nbsp;</TD>
 <TD align="right"><B id='ObjectPerf-schemaName_DIV' class='columns'>schemaName</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(64)&nbsp;&nbsp;</TD>
@@ -55,7 +55,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The name of the schema tracked</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
+  <TR valign="top" style="background-color:#FFFFFF;">
     <TD>2&nbsp;&nbsp;</TD>
 <TD align="right"><B id='ObjectPerf-objectName_DIV' class='columns'>objectName</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(64)&nbsp;&nbsp;</TD>
@@ -65,7 +65,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The name of the table/object tracked</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>3&nbsp;&nbsp;</TD>
 <TD align="right"><B id='ObjectPerf-startPeriodTZ_DIV' class='columns'>startPeriodTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
@@ -77,7 +77,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TABLE>
 </TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
+  <TR valign="top" style="background-color:#FFFFFF;">
     <TD>4&nbsp;&nbsp;</TD>
 <TD align="right"><B id='ObjectPerf-startPeriod_DIV' class='columns'>startPeriod</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
@@ -87,7 +87,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was created.</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>5&nbsp;&nbsp;</TD>
 <TD align="right"><B id='ObjectPerf-endPeriodTZ_DIV' class='columns'>endPeriodTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
@@ -99,7 +99,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TABLE>
 </TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
+  <TR valign="top" style="background-color:#FFFFFF;">
     <TD>6&nbsp;&nbsp;</TD>
 <TD align="right"><B id='ObjectPerf-endPeriod_DIV' class='columns'>endPeriod</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
@@ -109,7 +109,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was created.</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>7&nbsp;&nbsp;</TD>
 <TD align="right"><B id='ObjectPerf-selectNano_DIV' class='columns'>selectNano</B>&nbsp;&nbsp;</TD>
 <TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
@@ -125,7 +125,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 </BLOCKQUOTE>
 </TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
+  <TR valign="top" style="background-color:#FFFFFF;">
     <TD>8&nbsp;&nbsp;</TD>
 <TD align="right"><B id='ObjectPerf-selectCount_DIV' class='columns'>selectCount</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
@@ -141,7 +141,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 </BLOCKQUOTE>
 </TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>9&nbsp;&nbsp;</TD>
 <TD align="right"><B id='ObjectPerf-selectRecords_DIV' class='columns'>selectRecords</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
@@ -157,7 +157,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 </BLOCKQUOTE>
 </TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
+  <TR valign="top" style="background-color:#FFFFFF;">
     <TD>10&nbsp;&nbsp;</TD>
 <TD align="right"><B id='ObjectPerf-insertNano_DIV' class='columns'>insertNano</B>&nbsp;&nbsp;</TD>
 <TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
@@ -173,7 +173,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 </BLOCKQUOTE>
 </TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>11&nbsp;&nbsp;</TD>
 <TD align="right"><B id='ObjectPerf-insertCount_DIV' class='columns'>insertCount</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
@@ -189,7 +189,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 </BLOCKQUOTE>
 </TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
+  <TR valign="top" style="background-color:#FFFFFF;">
     <TD>12&nbsp;&nbsp;</TD>
 <TD align="right"><B id='ObjectPerf-insertRecords_DIV' class='columns'>insertRecords</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
@@ -205,7 +205,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 </BLOCKQUOTE>
 </TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>13&nbsp;&nbsp;</TD>
 <TD align="right"><B id='ObjectPerf-updateNano_DIV' class='columns'>updateNano</B>&nbsp;&nbsp;</TD>
 <TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
@@ -221,7 +221,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 </BLOCKQUOTE>
 </TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
+  <TR valign="top" style="background-color:#FFFFFF;">
     <TD>14&nbsp;&nbsp;</TD>
 <TD align="right"><B id='ObjectPerf-updateCount_DIV' class='columns'>updateCount</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
@@ -237,7 +237,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 </BLOCKQUOTE>
 </TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>15&nbsp;&nbsp;</TD>
 <TD align="right"><B id='ObjectPerf-updateRecords_DIV' class='columns'>updateRecords</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
@@ -253,7 +253,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 </BLOCKQUOTE>
 </TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
+  <TR valign="top" style="background-color:#FFFFFF;">
     <TD>16&nbsp;&nbsp;</TD>
 <TD align="right"><B id='ObjectPerf-deleteNano_DIV' class='columns'>deleteNano</B>&nbsp;&nbsp;</TD>
 <TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
@@ -269,7 +269,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 </BLOCKQUOTE>
 </TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>17&nbsp;&nbsp;</TD>
 <TD align="right"><B id='ObjectPerf-deleteCount_DIV' class='columns'>deleteCount</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
@@ -285,7 +285,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 </BLOCKQUOTE>
 </TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
+  <TR valign="top" style="background-color:#FFFFFF;">
     <TD>18&nbsp;&nbsp;</TD>
 <TD align="right"><B id='ObjectPerf-deleteRecords_DIV' class='columns'>deleteRecords</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
@@ -301,7 +301,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 </BLOCKQUOTE>
 </TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>19&nbsp;&nbsp;</TD>
 <TD align="right"><B id='ObjectPerf-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
@@ -311,7 +311,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was created. (TILDA.ObjectPerf)</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
+  <TR valign="top" style="background-color:#FFFFFF;">
     <TD>20&nbsp;&nbsp;</TD>
 <TD align="right"><B id='ObjectPerf-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
@@ -321,7 +321,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was last updated. (TILDA.ObjectPerf)</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>21&nbsp;&nbsp;</TD>
 <TD align="right"><B id='ObjectPerf-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
@@ -3675,6 +3675,7 @@ This is the hasChanged for:<BR>
           QueryDetails.setLastQuery(TILDA__OBJECTPERF_Factory.SCHEMA_TABLENAME_LABEL, "");
           return true;
         }
+
 
        if (beforeWrite(C) == false)
         {
