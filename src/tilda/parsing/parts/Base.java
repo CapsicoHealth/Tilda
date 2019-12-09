@@ -30,6 +30,7 @@ import tilda.enums.ObjectLifecycle;
 import tilda.enums.TildaType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ValidationHelper;
+import tilda.utils.CollectionUtil;
 import tilda.utils.PaddingTracker;
 import tilda.utils.TextUtil;
 
@@ -192,7 +193,7 @@ public abstract class Base
               _OutputMaps.add(J);
             _JsonDEPRECATED.clear();
           }
-        
+
         _Validated = Errs == PS.getErrorCount();
         return _Validated;
       }
@@ -219,20 +220,26 @@ public abstract class Base
      * @param vals
      * @return
      */
-    protected List<String> expandColumnNames(String[] vals)
+    protected List<String> expandColumnNames(String[] vals, ParserSession PS, String constructType, String constructName)
       {
         String[] colNames = getColumnNames();
-        List<String> L = new ArrayList<String>();
+        Set<String> S = new HashSet<String>(); // gotta be a set in case multiple column templates resolve to the swame column name(s).
         for (String val : vals)
           {
             String[] valsA = new String[] { val
             };
+            boolean found = false;
             for (String colName : colNames)
               {
                 if (TextUtil.findStarElement(valsA, colName, false, 0) != -1)
-                  L.add(colName);
+                  {
+                    S.add(colName);
+                    found = true;
+                  }
               }
+            if (found == false)
+              PS.AddError("Object/View " + this.getFullName() + " is defining a column template '" + val + "' for " + constructType + " '" + constructName + "' which doesn't map to any columns.");
           }
-        return L;
+        return new ArrayList<String>(S);
       }
   }
