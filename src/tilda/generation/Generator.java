@@ -417,6 +417,10 @@ public class Generator
 
         if (O._LC != ObjectLifecycle.READONLY)
           {
+            Out.println();
+            DG.docMethodInit(Out, G, O);
+            CG.genMethodInit(Out, G, O);
+
             List<Column> CreateColumns = O.getCreateColumns();
             List<Column> DefaultCreateColumns = O.getDefaultCreateColumns();
             Out.println();

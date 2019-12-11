@@ -45,6 +45,7 @@ import tilda.parsing.parts.Query;
 import tilda.parsing.parts.SubWhereClause;
 import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
+import tilda.utils.pairs.StringStringPair;
 
 public class TildaFactory implements CodeGenTildaFactory
   {
@@ -355,69 +356,62 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("       return (" + Helper.getFullAppDataClassName(O) + ") Obj;");
         Out.println("     }");
         Out.println();
-
-
-        Out.println("   static public " + Helper.getFullAppDataClassName(O) + " create(Map<String, String> Values, List<StringStringPair> Errors)");
-        Out.println("   throws Exception");
-        Out.println("     {");
-        Out.println("       int IncomingErrors = Errors.size();");
-        Out.println();
-        for (Column C : O._Columns)
-          if (C != null)
-            {
-              if (C.getType() == ColumnType.BINARY)
-                {
-                  Out.println("       if (Values.get(" + TextUtil.escapeDoubleQuoteWithSlash(C.getName()) + ") != null)");
-                  Out.println("        Errors.add(new StringStringPair(" + TextUtil.escapeDoubleQuoteWithSlash(C.getName()) + ", \"Parameter is of a binary type and cannot be passed as a string value.\"));");
-                  continue;
-                }
-              if (C._FCT.isManaged() == true || C._Mode != ColumnMode.NORMAL)
-                continue;
-              String Pad = C._ParentObject.getColumnPad(C.getName());
-              Out.print("       " + (C.isCollection() == true && C._JsonSchema == null ? JavaJDBCType.getFieldType(C) : JavaJDBCType.getFieldTypeBaseClass(C) + "      ")
-              + "  _" + C.getName() + Pad
-              + " = " + (C.isList() == true && C._JsonSchema == null ? "CollectionUtil.toList("
-              : C.isSet() == true && C._JsonSchema == null ? "CollectionUtil.toSet ("
-              : "                      ")
-              + "ParseUtil.parse" + JavaJDBCType.getFieldTypeBaseClass(C)
-              + "(" + TextUtil.escapeDoubleQuoteWithSlash(C.getName()) + Pad
-              + ", " + (C._Nullable == true ? "false" : "true ")
-              + ", Values.get(" + TextUtil.escapeDoubleQuoteWithSlash(C.getName()) + Pad + ")");
-              if (C.isCollection() == true && C._JsonSchema == null)
-                Out.print(", " + TextUtil.escapeDoubleQuoteWithSlash(SystemValues.DEFAULT_SEPARATOR1_BACKQUOTES));
-              Out.println(", Errors"
-              + (C.isCollection() == true && C._JsonSchema == null ? ")" : " ")
-              + ");");
-            }
-        Out.println();
-        Out.println("       if (IncomingErrors != Errors.size())");
-        Out.println("        return null;");
-        Out.println();
-        Out.print("      " + Helper.getFullAppDataClassName(O) + " Obj = " + Helper.getFullAppFactoryClassName(O) + ".create(");
-        First = true;
-        for (Column C : CreateColumns)
-          if (C != null && (C._PrimaryKey == false || O._PrimaryKey._Autogen == false))
-            {
-              if (First == true)
-                First = false;
-              else
-                Out.print(", ");
-              Out.print("_" + C.getName());
-            }
-        Out.println(");");
-        Out.println();
-        for (Column C : O._Columns)
-          if (C != null && C.getType() != ColumnType.BINARY && C._FCT.isManaged() == false && C._Mode == ColumnMode.NORMAL && CreateColumns.contains(C) == false)
-            {
-              String Pad = O._PadderColumnNames.getPad(C.getName());
-              Out.println("      if (_" + C.getName() + Pad + "!= null) Obj.set" + TextUtil.capitalizeFirstCharacter(C.getName()) + Pad + "(_" + C.getName() + Pad + ");");
-            }
-        Out.println();
-        Out.println("      return Obj;");
-        Out.println("     }");
-
       }
 
+    @Override
+    public void genMethodInit(PrintWriter Out, GeneratorSession G, Object O)
+      {
+        Out.println("   static public " + Helper.getFullAppDataClassName(O) + " init(Map<String, String[]> Values, List<StringStringPair> Errors)");
+        Out.println("   throws Exception");
+        Out.println("     {");
+        Out.println("       " + Helper.getFullBaseClassName(O) + " Obj = new " + Helper.getFullAppDataClassName(O) + "();");
+
+        Out.println("       String[] vals = null;");
+        Out.println();
+        for (Column C : O._Columns)
+          {
+            if (C == null || C._FCT.isManaged() == true || C._Mode != ColumnMode.NORMAL)
+              continue;
+            Out.println("       vals = Values.get(" + TextUtil.escapeDoubleQuoteWithSlash(C.getName()) + ");");
+            if (C.getType() == ColumnType.BINARY)
+              {
+                Out.println("       if (vals != null)");
+                Out.println("        throw new Exception(\"Column '" + C.getName() + "' is of a binary type and cannot be initislized with a generic String value.\"));");
+                continue;
+              }
+
+            if (O.isAutoGenPrimaryKey(C)==true)
+              {
+                Out.println("       // Even though this is a primary key, and is by definition not-null, we nevertheless check it as optional in case");
+                Out.println("       // this object is being initialized generically for a create.");
+              }
+            if (C.isCollection() == false)
+              {
+                Out.println("       if (vals!=null && vals.length > 1)");
+                Out.println("        Errors.add(new StringStringPair("+ TextUtil.escapeDoubleQuoteWithSlash(C.getName()) +", \"Parameter is not a list or a set and yet received \"+vals.length+\" values\"));");
+      }
+
+            Out.print("       " + (C.isCollection() == true && C._JsonSchema == null ? JavaJDBCType.getFieldType(C) : JavaJDBCType.getFieldTypeBaseClass(C))
+            + " _" + C.getName()
+            + " = " + (C.isList() == true && C._JsonSchema == null ? "CollectionUtil.toList("
+            : C.isSet() == true && C._JsonSchema == null ? "CollectionUtil.toSet ("
+            : "")
+            + "ParseUtil.parse" + JavaJDBCType.getFieldTypeBaseClass(C)
+            + "(" + TextUtil.escapeDoubleQuoteWithSlash(C.getName())
+            + ", " + (C._Nullable == true || O.isAutoGenPrimaryKey(C)==true ? "false" : "true")
+            + ", ");
+            if (C.isCollection() == false || C._JsonSchema != null)
+              Out.print("vals!=null && vals.length > 0 ? vals[0] : null");
+            else
+              Out.print("vals");
+            Out.println(", Errors" + (C.isCollection() == true && C._JsonSchema == null ? ")" : "") + ");");
+            Out.println("       if (_" + C.getName() + " != null) Obj.set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "(_" + C.getName() + ");");
+            Out.println();
+          }
+        Out.println();
+        Out.println("       return (" + Helper.getFullAppDataClassName(O) + ") Obj;");
+        Out.println("     }");
+      }
 
 
     @Override
