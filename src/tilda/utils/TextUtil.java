@@ -1044,7 +1044,7 @@ public class TextUtil
         return s.toString();
       }
 
-    public static final String print(Iterator<?> I, String Separator)
+    public static final String print(Iterator<?> I, String separator)
       {
         if (I == null)
           return null;
@@ -1056,7 +1056,7 @@ public class TextUtil
             if (First == true)
               First = false;
             else
-              Str.append(Separator);
+              Str.append(separator);
             if (O == null)
               Str.append("null");
             else
@@ -1437,26 +1437,14 @@ public class TextUtil
      * @param SeparatorRegEx
      * @return
      */
-    public static final String[] split(String Str, String SeparatorRegEx)
+    public static final String[] split(String str, String separatorRegEx)
       {
-        return isNullOrEmpty(Str) == true ? null : Str.split(SeparatorRegEx);
+        return isNullOrEmpty(str) == true ? null : str.split(separatorRegEx);
       }
 
-    public static final String print(List<?> L, String Separator)
+    public static final String print(List<?> L, String separator)
       {
-        if (L == null || L.isEmpty() == true)
-          return null;
-        StringBuilder Str = new StringBuilder();
-        for (Object o : L)
-          {
-            if (Str.length() != 0)
-              Str.append(Separator);
-            if (o.getClass() != null)
-              Str.append(o.getClass().getName());
-            else
-              Str.append(o.toString());
-          }
-        return Str.toString();
+        return L == null ? null : print(L.iterator(), separator);
       }
 
 

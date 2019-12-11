@@ -17,8 +17,10 @@
 package tilda.loader.csv;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -33,6 +35,7 @@ import tilda.loader.csv.stores.CSVImporter.Results;
 import tilda.loader.parser.DataObject;
 import tilda.utils.DurationUtil;
 import tilda.utils.NumberFormatUtil;
+import tilda.utils.TextUtil;
 
 public class ImportProcessor
   {
@@ -81,15 +84,28 @@ public class ImportProcessor
 
         long totalCount = 0;
         long totalNano = 0;
+        Set<String> Names = new HashSet<String>();
+        List<String> errFiles = new ArrayList<String>();
         for (Results R : Results)
           {
+            Names.add(R._SchemaName + "." + R._TableName);
             totalCount += R._RecordsCount;
             totalNano += R._TimeNano;
-            LOG.debug("Processed file " + R._FileName + " into table " + R._TableName + " with " + NumberFormatUtil.printWith000Sep(R._RecordsCount) + " records in CPU-Time of " + DurationUtil.printDuration(R._TimeNano) +
-            " (" + DurationUtil.printPerformancePerMinute(R._TimeNano, R._RecordsCount) + " Records/min)");
+            if (R._RecordsCount == 0)
+              {
+                errFiles.add("       - "+R._FileName);
+              }
+            else
+              {
+                LOG.debug("Processed file " + R._FileName + " into table " + R._TableName
+                + " with " + NumberFormatUtil.printWith000Sep(R._RecordsCount) + " records in CPU-Time of " + DurationUtil.printDuration(R._TimeNano) +
+                " (" + DurationUtil.printPerformancePerMinute(R._TimeNano, R._RecordsCount) + " Records/min)");
+              }
           }
-        LOG.debug("--------------------------------------------------------------------------------------------------------------");
-        LOG.debug("In total, processed " + NumberFormatUtil.printWith000Sep(totalCount) + " records in CPU-Time of " + DurationUtil.printDuration(totalNano) + " (" + DurationUtil.printPerformancePerMinute(totalNano, totalCount) + " Records/min)");
+        LOG.debug("\n--------------------------------------------------------------------------------------------------------------\n"
+        + "   In total, Processed " + Results.size() + " file(s) populating " + Names.size() + " table(s)"+(errFiles.isEmpty() == true ? ".":" with "+errFiles.size()+" error(s):")+"\n"
+        + (errFiles.isEmpty() == true ? "" : TextUtil.print(errFiles.iterator(), "\n")+"\n")
+        + "   In total, processed " + NumberFormatUtil.printWith000Sep(totalCount) + " records in CPU-Time of " + DurationUtil.printDuration(totalNano) + " (" + DurationUtil.printPerformancePerMinute(totalNano, totalCount) + " Records/min)\n");
         return totalCount;
       }
 

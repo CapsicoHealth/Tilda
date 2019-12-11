@@ -56,10 +56,10 @@ import tilda.loader.ui.DataImportTableModel;
 import tilda.utils.DurationUtil;
 import tilda.utils.TextUtil;
 
-public class load
+public class Load
   {
-    protected static final Logger LOG               = LogManager.getLogger(load.class.getName());
-    load                          app               = null;
+    protected static final Logger LOG               = LogManager.getLogger(Load.class.getName());
+    Load                          app               = null;
 
     private static int            threadsCount      = 1;
     private static Object[][]     data              = null;
@@ -183,7 +183,7 @@ public class load
                   {
                     try
                       {
-                        load window = new load();
+                        Load window = new Load();
                         window.frmDataImport.setVisible(true);
                       }
                     catch (Exception e)
@@ -372,7 +372,7 @@ public class load
       }
 
     // Constructor
-    public load()
+    public Load()
       {
         initialize();
         this.app = this;
