@@ -347,6 +347,45 @@ This is the column definition for:<BR>
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
+The generic init method is typically run when there is a general data structure of data available, for example, a CSV
+data file read in memory, or run from a servlet using a Map<String, String[]> object obtained from an ServletRequest
+object. The generic init method defaults to this general data structure as a genegic representation.
+*/
+   static public tilda.data.ZoneInfo_Data init(Map<String, String[]> Values, List<StringStringPair> Errors)
+   throws Exception
+     {
+       tilda.data._Tilda.TILDA__ZONEINFO Obj = new tilda.data.ZoneInfo_Data();
+       String[] vals = null;
+
+       vals = Values.get("id");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("id", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _id = ParseUtil.parseString("id", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_id != null) Obj.setId(_id);
+
+       vals = Values.get("value");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("value", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _value = ParseUtil.parseString("value", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_value != null) Obj.setValue(_value);
+
+       vals = Values.get("label");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("label", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _label = ParseUtil.parseString("label", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_label != null) Obj.setLabel(_label);
+
+       vals = Values.get("deactivated");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("deactivated", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       ZonedDateTime _deactivated = ParseUtil.parseZonedDateTime("deactivated", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_deactivated != null) Obj.setDeactivated(_deactivated);
+
+
+       return (tilda.data.ZoneInfo_Data) Obj;
+     }
+
+/**
  Creates a new object in memory, which you can subsequently {@link #write()} to the data store.
  current object to the destination. 
  @param id            (max size 5) The id for this enumeration.
@@ -371,25 +410,6 @@ This is the column definition for:<BR>
        return (tilda.data.ZoneInfo_Data) Obj;
      }
 
-   static public tilda.data.ZoneInfo_Data create(Map<String, String> Values, List<StringStringPair> Errors)
-   throws Exception
-     {
-       int IncomingErrors = Errors.size();
-
-       String        _id            =                       ParseUtil.parseString("id"           , true , Values.get("id"           ), Errors );
-       String        _value         =                       ParseUtil.parseString("value"        , true , Values.get("value"        ), Errors );
-       String        _label         =                       ParseUtil.parseString("label"        , true , Values.get("label"        ), Errors );
-       ZonedDateTime        _deactivated   =                       ParseUtil.parseZonedDateTime("deactivated"  , false, Values.get("deactivated"  ), Errors );
-
-       if (IncomingErrors != Errors.size())
-        return null;
-
-      tilda.data.ZoneInfo_Data Obj = tilda.data.ZoneInfo_Factory.create(_id, _value, _label);
-
-      if (_deactivated  != null) Obj.setDeactivated  (_deactivated  );
-
-      return Obj;
-     }
    public static int writeBatch(Connection C, List<tilda.data.ZoneInfo_Data> L, int batchSize, int commitSize) throws Exception
      {
        long T0 = System.nanoTime();

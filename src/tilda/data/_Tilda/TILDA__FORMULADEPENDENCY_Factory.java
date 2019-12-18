@@ -277,6 +277,33 @@ This is the column definition for:<BR>
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
+The generic init method is typically run when there is a general data structure of data available, for example, a CSV
+data file read in memory, or run from a servlet using a Map<String, String[]> object obtained from an ServletRequest
+object. The generic init method defaults to this general data structure as a genegic representation.
+*/
+   static public tilda.data.FormulaDependency_Data init(Map<String, String[]> Values, List<StringStringPair> Errors)
+   throws Exception
+     {
+       tilda.data._Tilda.TILDA__FORMULADEPENDENCY Obj = new tilda.data.FormulaDependency_Data();
+       String[] vals = null;
+
+       vals = Values.get("formulaRefnum");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("formulaRefnum", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Long _formulaRefnum = ParseUtil.parseLong("formulaRefnum", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_formulaRefnum != null) Obj.setFormulaRefnum(_formulaRefnum);
+
+       vals = Values.get("dependencyRefnum");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("dependencyRefnum", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Long _dependencyRefnum = ParseUtil.parseLong("dependencyRefnum", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_dependencyRefnum != null) Obj.setDependencyRefnum(_dependencyRefnum);
+
+
+       return (tilda.data.FormulaDependency_Data) Obj;
+     }
+
+/**
  Creates a new object in memory, which you can subsequently {@link #write()} to the data store.
  current object to the destination. 
  @param formulaRefnum    The parent formula.
@@ -299,22 +326,6 @@ This is the column definition for:<BR>
        return (tilda.data.FormulaDependency_Data) Obj;
      }
 
-   static public tilda.data.FormulaDependency_Data create(Map<String, String> Values, List<StringStringPair> Errors)
-   throws Exception
-     {
-       int IncomingErrors = Errors.size();
-
-       Long        _formulaRefnum    =                       ParseUtil.parseLong("formulaRefnum"   , true , Values.get("formulaRefnum"   ), Errors );
-       Long        _dependencyRefnum =                       ParseUtil.parseLong("dependencyRefnum", true , Values.get("dependencyRefnum"), Errors );
-
-       if (IncomingErrors != Errors.size())
-        return null;
-
-      tilda.data.FormulaDependency_Data Obj = tilda.data.FormulaDependency_Factory.create(_formulaRefnum, _dependencyRefnum);
-
-
-      return Obj;
-     }
    public static int writeBatch(Connection C, List<tilda.data.FormulaDependency_Data> L, int batchSize, int commitSize) throws Exception
      {
        long T0 = System.nanoTime();

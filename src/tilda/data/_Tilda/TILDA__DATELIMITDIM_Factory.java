@@ -226,6 +226,39 @@ This is the column definition for:<BR>
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
+The generic init method is typically run when there is a general data structure of data available, for example, a CSV
+data file read in memory, or run from a servlet using a Map<String, String[]> object obtained from an ServletRequest
+object. The generic init method defaults to this general data structure as a genegic representation.
+*/
+   static public tilda.data.DateLimitDim_Data init(Map<String, String[]> Values, List<StringStringPair> Errors)
+   throws Exception
+     {
+       tilda.data._Tilda.TILDA__DATELIMITDIM Obj = new tilda.data.DateLimitDim_Data();
+       String[] vals = null;
+
+       vals = Values.get("invalidDate");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("invalidDate", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       LocalDate _invalidDate = ParseUtil.parseLocalDate("invalidDate", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_invalidDate != null) Obj.setInvalidDate(_invalidDate);
+
+       vals = Values.get("minDate");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("minDate", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       LocalDate _minDate = ParseUtil.parseLocalDate("minDate", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_minDate != null) Obj.setMinDate(_minDate);
+
+       vals = Values.get("maxDate");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("maxDate", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       LocalDate _maxDate = ParseUtil.parseLocalDate("maxDate", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_maxDate != null) Obj.setMaxDate(_maxDate);
+
+
+       return (tilda.data.DateLimitDim_Data) Obj;
+     }
+
+/**
  Creates a new object in memory, which you can subsequently {@link #write()} to the data store.
  current object to the destination. 
  @param invalidDate The invalid date
@@ -246,23 +279,6 @@ This is the column definition for:<BR>
        return (tilda.data.DateLimitDim_Data) Obj;
      }
 
-   static public tilda.data.DateLimitDim_Data create(Map<String, String> Values, List<StringStringPair> Errors)
-   throws Exception
-     {
-       int IncomingErrors = Errors.size();
-
-       LocalDate        _invalidDate =                       ParseUtil.parseLocalDate("invalidDate", true , Values.get("invalidDate"), Errors );
-       LocalDate        _minDate     =                       ParseUtil.parseLocalDate("minDate"    , true , Values.get("minDate"    ), Errors );
-       LocalDate        _maxDate     =                       ParseUtil.parseLocalDate("maxDate"    , true , Values.get("maxDate"    ), Errors );
-
-       if (IncomingErrors != Errors.size())
-        return null;
-
-      tilda.data.DateLimitDim_Data Obj = tilda.data.DateLimitDim_Factory.create(_invalidDate, _minDate, _maxDate);
-
-
-      return Obj;
-     }
    public static int writeBatch(Connection C, List<tilda.data.DateLimitDim_Data> L, int batchSize, int commitSize) throws Exception
      {
        long T0 = System.nanoTime();

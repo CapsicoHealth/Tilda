@@ -298,6 +298,39 @@ This is the column definition for:<BR>
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
+The generic init method is typically run when there is a general data structure of data available, for example, a CSV
+data file read in memory, or run from a servlet using a Map<String, String[]> object obtained from an ServletRequest
+object. The generic init method defaults to this general data structure as a genegic representation.
+*/
+   static public tilda.data.FormulaResult_Data init(Map<String, String[]> Values, List<StringStringPair> Errors)
+   throws Exception
+     {
+       tilda.data._Tilda.TILDA__FORMULARESULT Obj = new tilda.data.FormulaResult_Data();
+       String[] vals = null;
+
+       vals = Values.get("formulaRefnum");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("formulaRefnum", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Long _formulaRefnum = ParseUtil.parseLong("formulaRefnum", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_formulaRefnum != null) Obj.setFormulaRefnum(_formulaRefnum);
+
+       vals = Values.get("value");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("value", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _value = ParseUtil.parseString("value", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_value != null) Obj.setValue(_value);
+
+       vals = Values.get("description");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("description", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _description = ParseUtil.parseString("description", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_description != null) Obj.setDescription(_description);
+
+
+       return (tilda.data.FormulaResult_Data) Obj;
+     }
+
+/**
  Creates a new object in memory, which you can subsequently {@link #write()} to the data store.
  current object to the destination. 
  @param formulaRefnum The parent formula.
@@ -322,23 +355,6 @@ This is the column definition for:<BR>
        return (tilda.data.FormulaResult_Data) Obj;
      }
 
-   static public tilda.data.FormulaResult_Data create(Map<String, String> Values, List<StringStringPair> Errors)
-   throws Exception
-     {
-       int IncomingErrors = Errors.size();
-
-       Long        _formulaRefnum =                       ParseUtil.parseLong("formulaRefnum", true , Values.get("formulaRefnum"), Errors );
-       String        _value         =                       ParseUtil.parseString("value"        , true , Values.get("value"        ), Errors );
-       String        _description   =                       ParseUtil.parseString("description"  , true , Values.get("description"  ), Errors );
-
-       if (IncomingErrors != Errors.size())
-        return null;
-
-      tilda.data.FormulaResult_Data Obj = tilda.data.FormulaResult_Factory.create(_formulaRefnum, _value, _description);
-
-
-      return Obj;
-     }
    public static int writeBatch(Connection C, List<tilda.data.FormulaResult_Data> L, int batchSize, int commitSize) throws Exception
      {
        long T0 = System.nanoTime();

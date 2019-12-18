@@ -324,6 +324,45 @@ This is the column definition for:<BR>
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
+The generic init method is typically run when there is a general data structure of data available, for example, a CSV
+data file read in memory, or run from a servlet using a Map<String, String[]> object obtained from an ServletRequest
+object. The generic init method defaults to this general data structure as a genegic representation.
+*/
+   static public tilda.data.Key_Data init(Map<String, String[]> Values, List<StringStringPair> Errors)
+   throws Exception
+     {
+       tilda.data._Tilda.TILDA__KEY Obj = new tilda.data.Key_Data();
+       String[] vals = null;
+
+       vals = Values.get("refnum");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("refnum", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Long _refnum = ParseUtil.parseLong("refnum", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_refnum != null) Obj.setRefnum(_refnum);
+
+       vals = Values.get("name");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("name", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _name = ParseUtil.parseString("name", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_name != null) Obj.setName(_name);
+
+       vals = Values.get("max");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("max", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Long _max = ParseUtil.parseLong("max", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_max != null) Obj.setMax(_max);
+
+       vals = Values.get("count");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("count", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Integer _count = ParseUtil.parseInteger("count", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_count != null) Obj.setCount(_count);
+
+
+       return (tilda.data.Key_Data) Obj;
+     }
+
+/**
  Creates a new object in memory, which you can subsequently {@link #write()} to the data store.
  current object to the destination. 
  @param refnum         The primary key for this record
@@ -350,24 +389,6 @@ This is the column definition for:<BR>
        return (tilda.data.Key_Data) Obj;
      }
 
-   static public tilda.data.Key_Data create(Map<String, String> Values, List<StringStringPair> Errors)
-   throws Exception
-     {
-       int IncomingErrors = Errors.size();
-
-       Long        _refnum         =                       ParseUtil.parseLong("refnum"        , true , Values.get("refnum"        ), Errors );
-       String        _name           =                       ParseUtil.parseString("name"          , true , Values.get("name"          ), Errors );
-       Long        _max            =                       ParseUtil.parseLong("max"           , true , Values.get("max"           ), Errors );
-       Integer        _count          =                       ParseUtil.parseInteger("count"         , true , Values.get("count"         ), Errors );
-
-       if (IncomingErrors != Errors.size())
-        return null;
-
-      tilda.data.Key_Data Obj = tilda.data.Key_Factory.create(_refnum, _name, _max, _count);
-
-
-      return Obj;
-     }
    public static int writeBatch(Connection C, List<tilda.data.Key_Data> L, int batchSize, int commitSize) throws Exception
      {
        long T0 = System.nanoTime();

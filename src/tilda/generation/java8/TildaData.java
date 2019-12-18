@@ -1129,14 +1129,14 @@ public class TildaData implements CodeGenTildaData
                   case DATE:
                     Out.print(" else ");
                     if (C.isCollection() == false)
-                      Out.println("if (DateTimeUtil.isNowPlaceholder(_" + C.getName() + ") == false)  PS.setDate(++i, new java.sql.Date(_" + C.getName() + ".getYear()-1900, _" + C.getName() + ".getMonthValue()-1, _" + C.getName() + ".getDayOfMonth()));");
+                      Out.println("if (DateTimeUtil.isNowPlaceholder(_" + C.getName() + ") == false)  PS.setDate(++i, java.sql.Date.valueOf(_" + C.getName() + "));");
                     else
                       Out.println("C.setArray(PS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + "._Type, AllocatedArrays, _" + C.getName() + ");");
                     break;
                   case DATETIME:
                     Out.print(" else ");
                     if (C.isCollection() == false)
-                      Out.println("if (DateTimeUtil.isNowPlaceholder(_" + C.getName() + ") == false) PS.setTimestamp(++i, new java.sql.Timestamp(_" + C.getName() + ".toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);");
+                      Out.println("if (DateTimeUtil.isNowPlaceholder(_" + C.getName() + ") == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_" + C.getName() + ".toInstant()), DateTimeUtil._UTC_CALENDAR);");
                     else
                       Out.println("C.setArray(PS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + "._Type, AllocatedArrays, DateTimeUtil.toSQLTimeStamps(_" + C.getName() + "));");
                     break;

@@ -299,6 +299,39 @@ This is the column definition for:<BR>
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
+The generic init method is typically run when there is a general data structure of data available, for example, a CSV
+data file read in memory, or run from a servlet using a Map<String, String[]> object obtained from an ServletRequest
+object. The generic init method defaults to this general data structure as a genegic representation.
+*/
+   static public tilda.data.Maintenance_Data init(Map<String, String[]> Values, List<StringStringPair> Errors)
+   throws Exception
+     {
+       tilda.data._Tilda.TILDA__MAINTENANCE Obj = new tilda.data.Maintenance_Data();
+       String[] vals = null;
+
+       vals = Values.get("type");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("type", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _type = ParseUtil.parseString("type", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_type != null) Obj.setType(_type);
+
+       vals = Values.get("name");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("name", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _name = ParseUtil.parseString("name", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_name != null) Obj.setName(_name);
+
+       vals = Values.get("value");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("value", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _value = ParseUtil.parseString("value", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_value != null) Obj.setValue(_value);
+
+
+       return (tilda.data.Maintenance_Data) Obj;
+     }
+
+/**
  Creates a new object in memory, which you can subsequently {@link #write()} to the data store.
  current object to the destination. 
  @param type        (max size 64) The type of maintenance resource to track
@@ -321,24 +354,6 @@ This is the column definition for:<BR>
        return (tilda.data.Maintenance_Data) Obj;
      }
 
-   static public tilda.data.Maintenance_Data create(Map<String, String> Values, List<StringStringPair> Errors)
-   throws Exception
-     {
-       int IncomingErrors = Errors.size();
-
-       String        _type        =                       ParseUtil.parseString("type"       , true , Values.get("type"       ), Errors );
-       String        _name        =                       ParseUtil.parseString("name"       , true , Values.get("name"       ), Errors );
-       String        _value       =                       ParseUtil.parseString("value"      , false, Values.get("value"      ), Errors );
-
-       if (IncomingErrors != Errors.size())
-        return null;
-
-      tilda.data.Maintenance_Data Obj = tilda.data.Maintenance_Factory.create(_type, _name);
-
-      if (_value      != null) Obj.setValue      (_value      );
-
-      return Obj;
-     }
    public static int writeBatch(Connection C, List<tilda.data.Maintenance_Data> L, int batchSize, int commitSize) throws Exception
      {
        long T0 = System.nanoTime();

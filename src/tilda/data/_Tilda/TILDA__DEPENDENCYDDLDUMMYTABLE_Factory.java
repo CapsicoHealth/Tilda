@@ -360,6 +360,57 @@ This is the column definition for:<BR>
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
+The generic init method is typically run when there is a general data structure of data available, for example, a CSV
+data file read in memory, or run from a servlet using a Map<String, String[]> object obtained from an ServletRequest
+object. The generic init method defaults to this general data structure as a genegic representation.
+*/
+   static public tilda.data.DependencyDDLDummyTable_Data init(Map<String, String[]> Values, List<StringStringPair> Errors)
+   throws Exception
+     {
+       tilda.data._Tilda.TILDA__DEPENDENCYDDLDUMMYTABLE Obj = new tilda.data.DependencyDDLDummyTable_Data();
+       String[] vals = null;
+
+       vals = Values.get("srcSchemaName");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("srcSchemaName", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _srcSchemaName = ParseUtil.parseString("srcSchemaName", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_srcSchemaName != null) Obj.setSrcSchemaName(_srcSchemaName);
+
+       vals = Values.get("srcTVName");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("srcTVName", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _srcTVName = ParseUtil.parseString("srcTVName", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_srcTVName != null) Obj.setSrcTVName(_srcTVName);
+
+       vals = Values.get("seq");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("seq", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Integer _seq = ParseUtil.parseInteger("seq", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_seq != null) Obj.setSeq(_seq);
+
+       vals = Values.get("depSchemaName");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("depSchemaName", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _depSchemaName = ParseUtil.parseString("depSchemaName", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_depSchemaName != null) Obj.setDepSchemaName(_depSchemaName);
+
+       vals = Values.get("depViewName");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("depViewName", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _depViewName = ParseUtil.parseString("depViewName", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_depViewName != null) Obj.setDepViewName(_depViewName);
+
+       vals = Values.get("restoreScript");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("restoreScript", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _restoreScript = ParseUtil.parseString("restoreScript", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_restoreScript != null) Obj.setRestoreScript(_restoreScript);
+
+
+       return (tilda.data.DependencyDDLDummyTable_Data) Obj;
+     }
+
+/**
  Creates a new object in memory, which you can subsequently {@link #write()} to the data store.
  current object to the destination. 
  @param srcSchemaName (max size 100) The result value.
@@ -390,26 +441,6 @@ This is the column definition for:<BR>
        return (tilda.data.DependencyDDLDummyTable_Data) Obj;
      }
 
-   static public tilda.data.DependencyDDLDummyTable_Data create(Map<String, String> Values, List<StringStringPair> Errors)
-   throws Exception
-     {
-       int IncomingErrors = Errors.size();
-
-       String        _srcSchemaName =                       ParseUtil.parseString("srcSchemaName", true , Values.get("srcSchemaName"), Errors );
-       String        _srcTVName     =                       ParseUtil.parseString("srcTVName"    , true , Values.get("srcTVName"    ), Errors );
-       Integer        _seq           =                       ParseUtil.parseInteger("seq"          , true , Values.get("seq"          ), Errors );
-       String        _depSchemaName =                       ParseUtil.parseString("depSchemaName", true , Values.get("depSchemaName"), Errors );
-       String        _depViewName   =                       ParseUtil.parseString("depViewName"  , true , Values.get("depViewName"  ), Errors );
-       String        _restoreScript =                       ParseUtil.parseString("restoreScript", true , Values.get("restoreScript"), Errors );
-
-       if (IncomingErrors != Errors.size())
-        return null;
-
-      tilda.data.DependencyDDLDummyTable_Data Obj = tilda.data.DependencyDDLDummyTable_Factory.create(_srcSchemaName, _srcTVName, _seq, _depSchemaName, _depViewName, _restoreScript);
-
-
-      return Obj;
-     }
    public static int writeBatch(Connection C, List<tilda.data.DependencyDDLDummyTable_Data> L, int batchSize, int commitSize) throws Exception
      {
        long T0 = System.nanoTime();

@@ -299,6 +299,41 @@ This is the column definition for:<BR>
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
+The generic init method is typically run when there is a general data structure of data available, for example, a CSV
+data file read in memory, or run from a servlet using a Map<String, String[]> object obtained from an ServletRequest
+object. The generic init method defaults to this general data structure as a genegic representation.
+*/
+   static public tilda.data.Measure_Data init(Map<String, String[]> Values, List<StringStringPair> Errors)
+   throws Exception
+     {
+       tilda.data._Tilda.TILDA__MEASURE Obj = new tilda.data.Measure_Data();
+       String[] vals = null;
+
+       vals = Values.get("refnum");
+       // Even though this is a primary key, and is by definition not-null, we nevertheless check it as optional in case
+       // this object is being initialized generically for a create.
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("refnum", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Long _refnum = ParseUtil.parseLong("refnum", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_refnum != null) Obj.setRefnum(_refnum);
+
+       vals = Values.get("schema");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("schema", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _schema = ParseUtil.parseString("schema", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_schema != null) Obj.setSchema(_schema);
+
+       vals = Values.get("name");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("name", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _name = ParseUtil.parseString("name", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_name != null) Obj.setName(_name);
+
+
+       return (tilda.data.Measure_Data) Obj;
+     }
+
+/**
  Creates a new object in memory, which you can subsequently {@link #write()} to the data store.
  current object to the destination. 
  @param schema      (max size 64) The Schema wher ethe measure is defined.
@@ -324,24 +359,6 @@ This is the column definition for:<BR>
        return (tilda.data.Measure_Data) Obj;
      }
 
-   static public tilda.data.Measure_Data create(Map<String, String> Values, List<StringStringPair> Errors)
-   throws Exception
-     {
-       int IncomingErrors = Errors.size();
-
-       Long        _refnum      =                       ParseUtil.parseLong("refnum"     , true , Values.get("refnum"     ), Errors );
-       String        _schema      =                       ParseUtil.parseString("schema"     , true , Values.get("schema"     ), Errors );
-       String        _name        =                       ParseUtil.parseString("name"       , true , Values.get("name"       ), Errors );
-
-       if (IncomingErrors != Errors.size())
-        return null;
-
-      tilda.data.Measure_Data Obj = tilda.data.Measure_Factory.create(_schema, _name);
-
-      if (_refnum     != null) Obj.setRefnum     (_refnum     );
-
-      return Obj;
-     }
    public static int writeBatch(Connection C, List<tilda.data.Measure_Data> L, int batchSize, int commitSize) throws Exception
      {
        long T0 = System.nanoTime();

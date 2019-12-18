@@ -536,6 +536,83 @@ This is the column definition for:<BR>
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
+The generic init method is typically run when there is a general data structure of data available, for example, a CSV
+data file read in memory, or run from a servlet using a Map<String, String[]> object obtained from an ServletRequest
+object. The generic init method defaults to this general data structure as a genegic representation.
+*/
+   static public tilda.data.JobPart_Data init(Map<String, String[]> Values, List<StringStringPair> Errors)
+   throws Exception
+     {
+       tilda.data._Tilda.TILDA__JOBPART Obj = new tilda.data.JobPart_Data();
+       String[] vals = null;
+
+       vals = Values.get("refnum");
+       // Even though this is a primary key, and is by definition not-null, we nevertheless check it as optional in case
+       // this object is being initialized generically for a create.
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("refnum", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Long _refnum = ParseUtil.parseLong("refnum", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_refnum != null) Obj.setRefnum(_refnum);
+
+       vals = Values.get("jobRefnum");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("jobRefnum", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Long _jobRefnum = ParseUtil.parseLong("jobRefnum", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_jobRefnum != null) Obj.setJobRefnum(_jobRefnum);
+
+       vals = Values.get("name");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("name", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _name = ParseUtil.parseString("name", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_name != null) Obj.setName(_name);
+
+       vals = Values.get("type");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("type", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _type = ParseUtil.parseString("type", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_type != null) Obj.setType(_type);
+
+       vals = Values.get("dataStart");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("dataStart", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       ZonedDateTime _dataStart = ParseUtil.parseZonedDateTime("dataStart", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_dataStart != null) Obj.setDataStart(_dataStart);
+
+       vals = Values.get("dataEnd");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("dataEnd", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       ZonedDateTime _dataEnd = ParseUtil.parseZonedDateTime("dataEnd", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_dataEnd != null) Obj.setDataEnd(_dataEnd);
+
+       vals = Values.get("start");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("start", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       ZonedDateTime _start = ParseUtil.parseZonedDateTime("start", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_start != null) Obj.setStart(_start);
+
+       vals = Values.get("end");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("end", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       ZonedDateTime _end = ParseUtil.parseZonedDateTime("end", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_end != null) Obj.setEnd(_end);
+
+       vals = Values.get("recordsCount");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("recordsCount", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Integer _recordsCount = ParseUtil.parseInteger("recordsCount", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_recordsCount != null) Obj.setRecordsCount(_recordsCount);
+
+       vals = Values.get("status");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("status", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Boolean _status = ParseUtil.parseBoolean("status", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_status != null) Obj.setStatus(_status);
+
+
+       return (tilda.data.JobPart_Data) Obj;
+     }
+
+/**
  Creates a new object in memory, which you can subsequently {@link #write()} to the data store.
  current object to the destination. 
  @param jobRefnum    Parent Job Refnum
@@ -563,37 +640,6 @@ This is the column definition for:<BR>
        return (tilda.data.JobPart_Data) Obj;
      }
 
-   static public tilda.data.JobPart_Data create(Map<String, String> Values, List<StringStringPair> Errors)
-   throws Exception
-     {
-       int IncomingErrors = Errors.size();
-
-       Long        _refnum       =                       ParseUtil.parseLong("refnum"      , true , Values.get("refnum"      ), Errors );
-       Long        _jobRefnum    =                       ParseUtil.parseLong("jobRefnum"   , true , Values.get("jobRefnum"   ), Errors );
-       String        _name         =                       ParseUtil.parseString("name"        , true , Values.get("name"        ), Errors );
-       String        _type         =                       ParseUtil.parseString("type"        , false, Values.get("type"        ), Errors );
-       ZonedDateTime        _dataStart    =                       ParseUtil.parseZonedDateTime("dataStart"   , false, Values.get("dataStart"   ), Errors );
-       ZonedDateTime        _dataEnd      =                       ParseUtil.parseZonedDateTime("dataEnd"     , false, Values.get("dataEnd"     ), Errors );
-       ZonedDateTime        _start        =                       ParseUtil.parseZonedDateTime("start"       , true , Values.get("start"       ), Errors );
-       ZonedDateTime        _end          =                       ParseUtil.parseZonedDateTime("end"         , false, Values.get("end"         ), Errors );
-       Integer        _recordsCount =                       ParseUtil.parseInteger("recordsCount", false, Values.get("recordsCount"), Errors );
-       Boolean        _status       =                       ParseUtil.parseBoolean("status"      , false, Values.get("status"      ), Errors );
-
-       if (IncomingErrors != Errors.size())
-        return null;
-
-      tilda.data.JobPart_Data Obj = tilda.data.JobPart_Factory.create(_jobRefnum, _name, _start);
-
-      if (_refnum      != null) Obj.setRefnum      (_refnum      );
-      if (_type        != null) Obj.setType        (_type        );
-      if (_dataStart   != null) Obj.setDataStart   (_dataStart   );
-      if (_dataEnd     != null) Obj.setDataEnd     (_dataEnd     );
-      if (_end         != null) Obj.setEnd         (_end         );
-      if (_recordsCount!= null) Obj.setRecordsCount(_recordsCount);
-      if (_status      != null) Obj.setStatus      (_status      );
-
-      return Obj;
-     }
    public static int writeBatch(Connection C, List<tilda.data.JobPart_Data> L, int batchSize, int commitSize) throws Exception
      {
        long T0 = System.nanoTime();

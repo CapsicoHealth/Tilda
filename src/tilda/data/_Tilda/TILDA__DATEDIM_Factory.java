@@ -665,6 +665,153 @@ This is the column definition for:<BR>
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
+The generic init method is typically run when there is a general data structure of data available, for example, a CSV
+data file read in memory, or run from a servlet using a Map<String, String[]> object obtained from an ServletRequest
+object. The generic init method defaults to this general data structure as a genegic representation.
+*/
+   static public tilda.data.DateDim_Data init(Map<String, String[]> Values, List<StringStringPair> Errors)
+   throws Exception
+     {
+       tilda.data._Tilda.TILDA__DATEDIM Obj = new tilda.data.DateDim_Data();
+       String[] vals = null;
+
+       vals = Values.get("dt");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("dt", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       LocalDate _dt = ParseUtil.parseLocalDate("dt", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_dt != null) Obj.setDt(_dt);
+
+       vals = Values.get("epoch");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("epoch", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Long _epoch = ParseUtil.parseLong("epoch", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_epoch != null) Obj.setEpoch(_epoch);
+
+       vals = Values.get("dayName");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("dayName", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _dayName = ParseUtil.parseString("dayName", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_dayName != null) Obj.setDayName(_dayName);
+
+       vals = Values.get("dayOfWeek");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("dayOfWeek", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Integer _dayOfWeek = ParseUtil.parseInteger("dayOfWeek", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_dayOfWeek != null) Obj.setDayOfWeek(_dayOfWeek);
+
+       vals = Values.get("dayOfMonth");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("dayOfMonth", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Integer _dayOfMonth = ParseUtil.parseInteger("dayOfMonth", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_dayOfMonth != null) Obj.setDayOfMonth(_dayOfMonth);
+
+       vals = Values.get("dayOfQuarter");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("dayOfQuarter", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Integer _dayOfQuarter = ParseUtil.parseInteger("dayOfQuarter", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_dayOfQuarter != null) Obj.setDayOfQuarter(_dayOfQuarter);
+
+       vals = Values.get("dayOfYear");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("dayOfYear", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Integer _dayOfYear = ParseUtil.parseInteger("dayOfYear", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_dayOfYear != null) Obj.setDayOfYear(_dayOfYear);
+
+       vals = Values.get("weekOfMonth");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("weekOfMonth", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Integer _weekOfMonth = ParseUtil.parseInteger("weekOfMonth", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_weekOfMonth != null) Obj.setWeekOfMonth(_weekOfMonth);
+
+       vals = Values.get("weekOfYear");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("weekOfYear", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Integer _weekOfYear = ParseUtil.parseInteger("weekOfYear", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_weekOfYear != null) Obj.setWeekOfYear(_weekOfYear);
+
+       vals = Values.get("monthOfYear");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("monthOfYear", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Integer _monthOfYear = ParseUtil.parseInteger("monthOfYear", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_monthOfYear != null) Obj.setMonthOfYear(_monthOfYear);
+
+       vals = Values.get("monthName");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("monthName", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _monthName = ParseUtil.parseString("monthName", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_monthName != null) Obj.setMonthName(_monthName);
+
+       vals = Values.get("monthNameShort");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("monthNameShort", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _monthNameShort = ParseUtil.parseString("monthNameShort", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_monthNameShort != null) Obj.setMonthNameShort(_monthNameShort);
+
+       vals = Values.get("quarterOfYear");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("quarterOfYear", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Integer _quarterOfYear = ParseUtil.parseInteger("quarterOfYear", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_quarterOfYear != null) Obj.setQuarterOfYear(_quarterOfYear);
+
+       vals = Values.get("quarterName");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("quarterName", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _quarterName = ParseUtil.parseString("quarterName", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_quarterName != null) Obj.setQuarterName(_quarterName);
+
+       vals = Values.get("year");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("year", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Integer _year = ParseUtil.parseInteger("year", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_year != null) Obj.setYear(_year);
+
+       vals = Values.get("mmyyyy");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("mmyyyy", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _mmyyyy = ParseUtil.parseString("mmyyyy", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_mmyyyy != null) Obj.setMmyyyy(_mmyyyy);
+
+       vals = Values.get("mmddyyyy");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("mmddyyyy", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _mmddyyyy = ParseUtil.parseString("mmddyyyy", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_mmddyyyy != null) Obj.setMmddyyyy(_mmddyyyy);
+
+       vals = Values.get("yyyymmdd");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("yyyymmdd", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _yyyymmdd = ParseUtil.parseString("yyyymmdd", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_yyyymmdd != null) Obj.setYyyymmdd(_yyyymmdd);
+
+       vals = Values.get("isWeekend");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("isWeekend", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Integer _isWeekend = ParseUtil.parseInteger("isWeekend", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_isWeekend != null) Obj.setIsWeekend(_isWeekend);
+
+       vals = Values.get("isBusinessDay");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("isBusinessDay", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Integer _isBusinessDay = ParseUtil.parseInteger("isBusinessDay", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_isBusinessDay != null) Obj.setIsBusinessDay(_isBusinessDay);
+
+       vals = Values.get("isHoliday");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("isHoliday", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Integer _isHoliday = ParseUtil.parseInteger("isHoliday", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_isHoliday != null) Obj.setIsHoliday(_isHoliday);
+
+       vals = Values.get("holidayName");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("holidayName", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _holidayName = ParseUtil.parseString("holidayName", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_holidayName != null) Obj.setHolidayName(_holidayName);
+
+
+       return (tilda.data.DateDim_Data) Obj;
+     }
+
+/**
  Creates a new object in memory, which you can subsequently {@link #write()} to the data store.
  current object to the destination. 
  @param dt             The Date date
@@ -687,62 +834,6 @@ This is the column definition for:<BR>
        return (tilda.data.DateDim_Data) Obj;
      }
 
-   static public tilda.data.DateDim_Data create(Map<String, String> Values, List<StringStringPair> Errors)
-   throws Exception
-     {
-       int IncomingErrors = Errors.size();
-
-       LocalDate        _dt             =                       ParseUtil.parseLocalDate("dt"            , true , Values.get("dt"            ), Errors );
-       Long        _epoch          =                       ParseUtil.parseLong("epoch"         , true , Values.get("epoch"         ), Errors );
-       String        _dayName        =                       ParseUtil.parseString("dayName"       , false, Values.get("dayName"       ), Errors );
-       Integer        _dayOfWeek      =                       ParseUtil.parseInteger("dayOfWeek"     , false, Values.get("dayOfWeek"     ), Errors );
-       Integer        _dayOfMonth     =                       ParseUtil.parseInteger("dayOfMonth"    , false, Values.get("dayOfMonth"    ), Errors );
-       Integer        _dayOfQuarter   =                       ParseUtil.parseInteger("dayOfQuarter"  , false, Values.get("dayOfQuarter"  ), Errors );
-       Integer        _dayOfYear      =                       ParseUtil.parseInteger("dayOfYear"     , false, Values.get("dayOfYear"     ), Errors );
-       Integer        _weekOfMonth    =                       ParseUtil.parseInteger("weekOfMonth"   , false, Values.get("weekOfMonth"   ), Errors );
-       Integer        _weekOfYear     =                       ParseUtil.parseInteger("weekOfYear"    , false, Values.get("weekOfYear"    ), Errors );
-       Integer        _monthOfYear    =                       ParseUtil.parseInteger("monthOfYear"   , false, Values.get("monthOfYear"   ), Errors );
-       String        _monthName      =                       ParseUtil.parseString("monthName"     , false, Values.get("monthName"     ), Errors );
-       String        _monthNameShort =                       ParseUtil.parseString("monthNameShort", false, Values.get("monthNameShort"), Errors );
-       Integer        _quarterOfYear  =                       ParseUtil.parseInteger("quarterOfYear" , false, Values.get("quarterOfYear" ), Errors );
-       String        _quarterName    =                       ParseUtil.parseString("quarterName"   , false, Values.get("quarterName"   ), Errors );
-       Integer        _year           =                       ParseUtil.parseInteger("year"          , false, Values.get("year"          ), Errors );
-       String        _mmyyyy         =                       ParseUtil.parseString("mmyyyy"        , false, Values.get("mmyyyy"        ), Errors );
-       String        _mmddyyyy       =                       ParseUtil.parseString("mmddyyyy"      , false, Values.get("mmddyyyy"      ), Errors );
-       String        _yyyymmdd       =                       ParseUtil.parseString("yyyymmdd"      , false, Values.get("yyyymmdd"      ), Errors );
-       Integer        _isWeekend      =                       ParseUtil.parseInteger("isWeekend"     , false, Values.get("isWeekend"     ), Errors );
-       Integer        _isBusinessDay  =                       ParseUtil.parseInteger("isBusinessDay" , false, Values.get("isBusinessDay" ), Errors );
-       Integer        _isHoliday      =                       ParseUtil.parseInteger("isHoliday"     , false, Values.get("isHoliday"     ), Errors );
-       String        _holidayName    =                       ParseUtil.parseString("holidayName"   , false, Values.get("holidayName"   ), Errors );
-
-       if (IncomingErrors != Errors.size())
-        return null;
-
-      tilda.data.DateDim_Data Obj = tilda.data.DateDim_Factory.create(_dt, _epoch);
-
-      if (_dayName       != null) Obj.setDayName       (_dayName       );
-      if (_dayOfWeek     != null) Obj.setDayOfWeek     (_dayOfWeek     );
-      if (_dayOfMonth    != null) Obj.setDayOfMonth    (_dayOfMonth    );
-      if (_dayOfQuarter  != null) Obj.setDayOfQuarter  (_dayOfQuarter  );
-      if (_dayOfYear     != null) Obj.setDayOfYear     (_dayOfYear     );
-      if (_weekOfMonth   != null) Obj.setWeekOfMonth   (_weekOfMonth   );
-      if (_weekOfYear    != null) Obj.setWeekOfYear    (_weekOfYear    );
-      if (_monthOfYear   != null) Obj.setMonthOfYear   (_monthOfYear   );
-      if (_monthName     != null) Obj.setMonthName     (_monthName     );
-      if (_monthNameShort!= null) Obj.setMonthNameShort(_monthNameShort);
-      if (_quarterOfYear != null) Obj.setQuarterOfYear (_quarterOfYear );
-      if (_quarterName   != null) Obj.setQuarterName   (_quarterName   );
-      if (_year          != null) Obj.setYear          (_year          );
-      if (_mmyyyy        != null) Obj.setMmyyyy        (_mmyyyy        );
-      if (_mmddyyyy      != null) Obj.setMmddyyyy      (_mmddyyyy      );
-      if (_yyyymmdd      != null) Obj.setYyyymmdd      (_yyyymmdd      );
-      if (_isWeekend     != null) Obj.setIsWeekend     (_isWeekend     );
-      if (_isBusinessDay != null) Obj.setIsBusinessDay (_isBusinessDay );
-      if (_isHoliday     != null) Obj.setIsHoliday     (_isHoliday     );
-      if (_holidayName   != null) Obj.setHolidayName   (_holidayName   );
-
-      return Obj;
-     }
    public static int writeBatch(Connection C, List<tilda.data.DateDim_Data> L, int batchSize, int commitSize) throws Exception
      {
        long T0 = System.nanoTime();

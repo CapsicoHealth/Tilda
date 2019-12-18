@@ -1138,14 +1138,10 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("          out.write(\"{\");");
         Out.println("       }");
         Out.println();
-        boolean First = true;
+        Out.println("      int i = -1;");
         for (Column C : J._ColumnObjs)
           if (C != null)
-            {
-              First = Helper.JSONExport(Out, First, C);
-              // if (C.getType() == ColumnType.DATETIME && C.isOCCGenerated() == false)
-              // First = JSONExport(Out, First, C._ParentObject.getColumn(C.getName()+"TZ"));
-            }
+           Helper.JSONExport(Out, C);
         Out.println("      if (fullObject == true)");
         Out.println("       out.write(\" }\\n\");");
         Out.println("      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);");

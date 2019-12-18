@@ -3392,7 +3392,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.DATASTART._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.DATASTART._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_dataStart) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_dataStart.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+          if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.DATASTART._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_dataStart) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_dataStart.toInstant()), DateTimeUtil._UTC_CALENDAR);
         } 
        if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.DATAENDTZ._Mask) == true) 
         { 
@@ -3400,7 +3400,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.DATAEND._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.DATAEND._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_dataEnd) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_dataEnd.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+          if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.DATAEND._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_dataEnd) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_dataEnd.toInstant()), DateTimeUtil._UTC_CALENDAR);
         } 
        if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.STARTTZ._Mask) == true) 
         { 
@@ -3408,7 +3408,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.START._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.START._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_start) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_start.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+          if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.START._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_start) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_start.toInstant()), DateTimeUtil._UTC_CALENDAR);
         } 
        if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.ENDTZ._Mask) == true) 
         { 
@@ -3416,7 +3416,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.END._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.END._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_end) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_end.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+          if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.END._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_end) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_end.toInstant()), DateTimeUtil._UTC_CALENDAR);
         } 
        if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.RECORDSCOUNT._Mask) == true) 
         { 
@@ -3428,15 +3428,15 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.CREATED._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.CREATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_created) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_created.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+          if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.CREATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_created) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_created.toInstant()), DateTimeUtil._UTC_CALENDAR);
         } 
        if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.LASTUPDATED._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.LASTUPDATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_lastUpdated) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_lastUpdated.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+          if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.LASTUPDATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_lastUpdated) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_lastUpdated.toInstant()), DateTimeUtil._UTC_CALENDAR);
         } 
        if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.DELETED._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.DELETED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_deleted) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_deleted.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+          if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.DELETED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_deleted) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_deleted.toInstant()), DateTimeUtil._UTC_CALENDAR);
         } 
        return i;
      }

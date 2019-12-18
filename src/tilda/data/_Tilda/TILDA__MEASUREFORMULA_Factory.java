@@ -277,6 +277,33 @@ This is the column definition for:<BR>
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
+The generic init method is typically run when there is a general data structure of data available, for example, a CSV
+data file read in memory, or run from a servlet using a Map<String, String[]> object obtained from an ServletRequest
+object. The generic init method defaults to this general data structure as a genegic representation.
+*/
+   static public tilda.data.MeasureFormula_Data init(Map<String, String[]> Values, List<StringStringPair> Errors)
+   throws Exception
+     {
+       tilda.data._Tilda.TILDA__MEASUREFORMULA Obj = new tilda.data.MeasureFormula_Data();
+       String[] vals = null;
+
+       vals = Values.get("measureRefnum");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("measureRefnum", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Long _measureRefnum = ParseUtil.parseLong("measureRefnum", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_measureRefnum != null) Obj.setMeasureRefnum(_measureRefnum);
+
+       vals = Values.get("formulaRefnum");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("formulaRefnum", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Long _formulaRefnum = ParseUtil.parseLong("formulaRefnum", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_formulaRefnum != null) Obj.setFormulaRefnum(_formulaRefnum);
+
+
+       return (tilda.data.MeasureFormula_Data) Obj;
+     }
+
+/**
  Creates a new object in memory, which you can subsequently {@link #write()} to the data store.
  current object to the destination. 
  @param measureRefnum The measure.
@@ -299,22 +326,6 @@ This is the column definition for:<BR>
        return (tilda.data.MeasureFormula_Data) Obj;
      }
 
-   static public tilda.data.MeasureFormula_Data create(Map<String, String> Values, List<StringStringPair> Errors)
-   throws Exception
-     {
-       int IncomingErrors = Errors.size();
-
-       Long        _measureRefnum =                       ParseUtil.parseLong("measureRefnum", true , Values.get("measureRefnum"), Errors );
-       Long        _formulaRefnum =                       ParseUtil.parseLong("formulaRefnum", true , Values.get("formulaRefnum"), Errors );
-
-       if (IncomingErrors != Errors.size())
-        return null;
-
-      tilda.data.MeasureFormula_Data Obj = tilda.data.MeasureFormula_Factory.create(_measureRefnum, _formulaRefnum);
-
-
-      return Obj;
-     }
    public static int writeBatch(Connection C, List<tilda.data.MeasureFormula_Data> L, int batchSize, int commitSize) throws Exception
      {
        long T0 = System.nanoTime();

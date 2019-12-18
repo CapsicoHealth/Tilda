@@ -660,7 +660,7 @@ public class Helper
         Out.println("     }");
       }
 
-    public static boolean JSONExport(PrintWriter Out, boolean First, Column C)
+    public static void JSONExport(PrintWriter Out, Column C)
       {
         if (C._Nullable == true)
           {
@@ -678,13 +678,12 @@ public class Helper
               }
           }
         if (C.getType() == ColumnType.JSON)
-          Out.println("        JSONUtil.printSubJson(out, \"" + C.getName() + "\", " + First + ", Obj._" + C.getName() + ");");
+          Out.println("        JSONUtil.printSubJson(out, \"" + C.getName() + "\", ++i==0, Obj._" + C.getName() + ");");
         else if (C.isCollection() == false)
-          Out.println("        JSONUtil.print(out, \"" + C.getName() + "\", " + First + ", Obj.get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "());");
+          Out.println("        JSONUtil.print(out, \"" + C.getName() + "\", ++i==0, Obj.get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "());");
         else
-          Out.println("        JSONUtil.print(out, \"" + C.getName() + "\", " + First + ", Obj.get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "AsArray());");
+          Out.println("        JSONUtil.print(out, \"" + C.getName() + "\", ++i==0, Obj.get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "AsArray());");
         Out.println();
-        return false;
       }
 
     public static boolean CSVExport(PrintWriter Out, boolean First, Column C)
