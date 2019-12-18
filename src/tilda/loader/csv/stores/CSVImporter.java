@@ -259,7 +259,7 @@ public abstract class CSVImporter
             if (TextUtil.isNullOrEmpty(CH._Operator) == false)
               {
                 Class<?> clazz = Class.forName(CH._Operator);
-                GenericLoader GL = (GenericLoader) clazz.newInstance();
+                GenericLoader GL = (GenericLoader) clazz.getDeclaredConstructor().newInstance();
                 GL.init(C);
                 GLMap.put(CH._Operator, GL);
               }

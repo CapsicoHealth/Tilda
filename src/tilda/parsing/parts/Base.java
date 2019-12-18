@@ -30,7 +30,6 @@ import tilda.enums.ObjectLifecycle;
 import tilda.enums.TildaType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ValidationHelper;
-import tilda.utils.CollectionUtil;
 import tilda.utils.PaddingTracker;
 import tilda.utils.TextUtil;
 

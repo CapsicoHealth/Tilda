@@ -155,6 +155,6 @@ public class WhereClauseCompositionClassGenerator
         if (X == null)
           return null;
 
-        return (tilda.grammar.CompiledWhereClause) X.newInstance();
+        return (tilda.grammar.CompiledWhereClause) X.getDeclaredConstructor().newInstance();
       }
   }
