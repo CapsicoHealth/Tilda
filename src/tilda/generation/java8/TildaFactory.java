@@ -43,9 +43,7 @@ import tilda.parsing.parts.OutputMapping;
 import tilda.parsing.parts.PrimaryKey;
 import tilda.parsing.parts.Query;
 import tilda.parsing.parts.SubWhereClause;
-import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
-import tilda.utils.pairs.StringStringPair;
 
 public class TildaFactory implements CodeGenTildaFactory
   {

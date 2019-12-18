@@ -74,16 +74,16 @@ public class GeneratorSession
     protected boolean InitCodeGenerators(String ClassKey)
       {
         try{
-          _DocsGenerator         = (CodeGenDocs        ) Class.forName("tilda.generation."+ClassKey+".Docs"   ).newInstance();
+          _DocsGenerator         = (CodeGenDocs        ) Class.forName("tilda.generation."+ClassKey+".Docs"   ).getDeclaredConstructor().newInstance();
 
-          _TildaSupportGenerator = (CodeGenTildaSupport) Class.forName("tilda.generation."+ClassKey+".TildaSupport").newInstance();
-          _TildaDataGenerator    = (CodeGenTildaData   ) Class.forName("tilda.generation."+ClassKey+".TildaData"   ).newInstance();
-          _TildaFactoryGenerator = (CodeGenTildaFactory) Class.forName("tilda.generation."+ClassKey+".TildaFactory").newInstance();
-          _TildaJsonGenerator    = (CodeGenTildaJson   ) Class.forName("tilda.generation."+ClassKey+".TildaJson"   ).newInstance();
+          _TildaSupportGenerator = (CodeGenTildaSupport) Class.forName("tilda.generation."+ClassKey+".TildaSupport").getDeclaredConstructor().newInstance();
+          _TildaDataGenerator    = (CodeGenTildaData   ) Class.forName("tilda.generation."+ClassKey+".TildaData"   ).getDeclaredConstructor().newInstance();
+          _TildaFactoryGenerator = (CodeGenTildaFactory) Class.forName("tilda.generation."+ClassKey+".TildaFactory").getDeclaredConstructor().newInstance();
+          _TildaJsonGenerator    = (CodeGenTildaJson   ) Class.forName("tilda.generation."+ClassKey+".TildaJson"   ).getDeclaredConstructor().newInstance();
 
-          _AppDataGenerator      = (CodeGenAppData     ) Class.forName("tilda.generation."+ClassKey+".AppData"     ).newInstance();
-          _AppFactoryGenerator   = (CodeGenAppFactory  ) Class.forName("tilda.generation."+ClassKey+".AppFactory"  ).newInstance();
-          _AppJsonGenerator      = (CodeGenAppJson     ) Class.forName("tilda.generation."+ClassKey+".AppJson"     ).newInstance();
+          _AppDataGenerator      = (CodeGenAppData     ) Class.forName("tilda.generation."+ClassKey+".AppData"     ).getDeclaredConstructor().newInstance();
+          _AppFactoryGenerator   = (CodeGenAppFactory  ) Class.forName("tilda.generation."+ClassKey+".AppFactory"  ).getDeclaredConstructor().newInstance();
+          _AppJsonGenerator      = (CodeGenAppJson     ) Class.forName("tilda.generation."+ClassKey+".AppJson"     ).getDeclaredConstructor().newInstance();
         }
         catch (Throwable T)
           {
@@ -95,8 +95,8 @@ public class GeneratorSession
     protected boolean InitDBGenerators(String ClassKey)
       {
         try{
-          _SqlClassGenerator = (CodeGenSql    ) Class.forName("tilda.generation."+ClassKey+".Sql" ).newInstance();
-          _SqlDocsGenerator  = (CodeGenSqlDocs) Class.forName("tilda.generation."+ClassKey+".Docs").newInstance();
+          _SqlClassGenerator = (CodeGenSql    ) Class.forName("tilda.generation."+ClassKey+".Sql" ).getDeclaredConstructor().newInstance();
+          _SqlDocsGenerator  = (CodeGenSqlDocs) Class.forName("tilda.generation."+ClassKey+".Docs").getDeclaredConstructor().newInstance();
         }
         catch (Throwable T)
           {

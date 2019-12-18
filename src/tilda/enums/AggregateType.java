@@ -16,7 +16,6 @@
 
 package tilda.enums;
 
-import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ViewColumn;
 
 public enum AggregateType
