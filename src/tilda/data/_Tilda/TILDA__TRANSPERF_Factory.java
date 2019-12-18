@@ -941,6 +941,177 @@ This is the column definition for:<BR>
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
+The generic init method is typically run when there is a general data structure of data available, for example, a CSV
+data file read in memory, or run from a servlet using a Map<String, String[]> object obtained from an ServletRequest
+object. The generic init method defaults to this general data structure as a genegic representation.
+*/
+   static public tilda.data.TransPerf_Data init(Map<String, String[]> Values, List<StringStringPair> Errors)
+   throws Exception
+     {
+       tilda.data._Tilda.TILDA__TRANSPERF Obj = new tilda.data.TransPerf_Data();
+       String[] vals = null;
+
+       vals = Values.get("startPeriod");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("startPeriod", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       ZonedDateTime _startPeriod = ParseUtil.parseZonedDateTime("startPeriod", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_startPeriod != null) Obj.setStartPeriod(_startPeriod);
+
+       vals = Values.get("endPeriod");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("endPeriod", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       ZonedDateTime _endPeriod = ParseUtil.parseZonedDateTime("endPeriod", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_endPeriod != null) Obj.setEndPeriod(_endPeriod);
+
+       vals = Values.get("commitNano");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("commitNano", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Long _commitNano = ParseUtil.parseLong("commitNano", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_commitNano != null) Obj.setCommitNano(_commitNano);
+
+       vals = Values.get("commitCount");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("commitCount", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Integer _commitCount = ParseUtil.parseInteger("commitCount", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_commitCount != null) Obj.setCommitCount(_commitCount);
+
+       vals = Values.get("rollbackNano");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("rollbackNano", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Long _rollbackNano = ParseUtil.parseLong("rollbackNano", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_rollbackNano != null) Obj.setRollbackNano(_rollbackNano);
+
+       vals = Values.get("rollbackCount");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("rollbackCount", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Integer _rollbackCount = ParseUtil.parseInteger("rollbackCount", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_rollbackCount != null) Obj.setRollbackCount(_rollbackCount);
+
+       vals = Values.get("savepointSetNano");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("savepointSetNano", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Long _savepointSetNano = ParseUtil.parseLong("savepointSetNano", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_savepointSetNano != null) Obj.setSavepointSetNano(_savepointSetNano);
+
+       vals = Values.get("savepointSetCount");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("savepointSetCount", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Integer _savepointSetCount = ParseUtil.parseInteger("savepointSetCount", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_savepointSetCount != null) Obj.setSavepointSetCount(_savepointSetCount);
+
+       vals = Values.get("savepointCommitNano");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("savepointCommitNano", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Long _savepointCommitNano = ParseUtil.parseLong("savepointCommitNano", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_savepointCommitNano != null) Obj.setSavepointCommitNano(_savepointCommitNano);
+
+       vals = Values.get("savepointCommitCount");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("savepointCommitCount", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Integer _savepointCommitCount = ParseUtil.parseInteger("savepointCommitCount", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_savepointCommitCount != null) Obj.setSavepointCommitCount(_savepointCommitCount);
+
+       vals = Values.get("savepointRollbackNano");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("savepointRollbackNano", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Long _savepointRollbackNano = ParseUtil.parseLong("savepointRollbackNano", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_savepointRollbackNano != null) Obj.setSavepointRollbackNano(_savepointRollbackNano);
+
+       vals = Values.get("savepointRollbackCount");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("savepointRollbackCount", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Integer _savepointRollbackCount = ParseUtil.parseInteger("savepointRollbackCount", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_savepointRollbackCount != null) Obj.setSavepointRollbackCount(_savepointRollbackCount);
+
+       vals = Values.get("statementCloseNano");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("statementCloseNano", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Long _statementCloseNano = ParseUtil.parseLong("statementCloseNano", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_statementCloseNano != null) Obj.setStatementCloseNano(_statementCloseNano);
+
+       vals = Values.get("statementCloseCount");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("statementCloseCount", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Integer _statementCloseCount = ParseUtil.parseInteger("statementCloseCount", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_statementCloseCount != null) Obj.setStatementCloseCount(_statementCloseCount);
+
+       vals = Values.get("connectionCloseNano");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("connectionCloseNano", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Long _connectionCloseNano = ParseUtil.parseLong("connectionCloseNano", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_connectionCloseNano != null) Obj.setConnectionCloseNano(_connectionCloseNano);
+
+       vals = Values.get("connectionCloseCount");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("connectionCloseCount", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Integer _connectionCloseCount = ParseUtil.parseInteger("connectionCloseCount", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_connectionCloseCount != null) Obj.setConnectionCloseCount(_connectionCloseCount);
+
+       vals = Values.get("connectionGetNano");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("connectionGetNano", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Long _connectionGetNano = ParseUtil.parseLong("connectionGetNano", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_connectionGetNano != null) Obj.setConnectionGetNano(_connectionGetNano);
+
+       vals = Values.get("connectionGetCount");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("connectionGetCount", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Integer _connectionGetCount = ParseUtil.parseInteger("connectionGetCount", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_connectionGetCount != null) Obj.setConnectionGetCount(_connectionGetCount);
+
+       vals = Values.get("tildaSetterNano");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("tildaSetterNano", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Long _tildaSetterNano = ParseUtil.parseLong("tildaSetterNano", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_tildaSetterNano != null) Obj.setTildaSetterNano(_tildaSetterNano);
+
+       vals = Values.get("tildaSetterCount");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("tildaSetterCount", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Integer _tildaSetterCount = ParseUtil.parseInteger("tildaSetterCount", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_tildaSetterCount != null) Obj.setTildaSetterCount(_tildaSetterCount);
+
+       vals = Values.get("tildaToStringNano");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("tildaToStringNano", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Long _tildaToStringNano = ParseUtil.parseLong("tildaToStringNano", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_tildaToStringNano != null) Obj.setTildaToStringNano(_tildaToStringNano);
+
+       vals = Values.get("tildaToStringCount");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("tildaToStringCount", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Integer _tildaToStringCount = ParseUtil.parseInteger("tildaToStringCount", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_tildaToStringCount != null) Obj.setTildaToStringCount(_tildaToStringCount);
+
+       vals = Values.get("tildaToJsonNano");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("tildaToJsonNano", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Long _tildaToJsonNano = ParseUtil.parseLong("tildaToJsonNano", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_tildaToJsonNano != null) Obj.setTildaToJsonNano(_tildaToJsonNano);
+
+       vals = Values.get("tildaToJsonCount");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("tildaToJsonCount", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Integer _tildaToJsonCount = ParseUtil.parseInteger("tildaToJsonCount", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_tildaToJsonCount != null) Obj.setTildaToJsonCount(_tildaToJsonCount);
+
+       vals = Values.get("tildaToCsvNano");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("tildaToCsvNano", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Long _tildaToCsvNano = ParseUtil.parseLong("tildaToCsvNano", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_tildaToCsvNano != null) Obj.setTildaToCsvNano(_tildaToCsvNano);
+
+       vals = Values.get("tildaToCsvCount");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("tildaToCsvCount", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Integer _tildaToCsvCount = ParseUtil.parseInteger("tildaToCsvCount", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_tildaToCsvCount != null) Obj.setTildaToCsvCount(_tildaToCsvCount);
+
+
+       return (tilda.data.TransPerf_Data) Obj;
+     }
+
+/**
  Creates a new object in memory, which you can subsequently {@link #write()} to the data store.
  current object to the destination. 
  @param startPeriod            The timestamp for when the record was created.
@@ -987,70 +1158,6 @@ This is the column definition for:<BR>
        return (tilda.data.TransPerf_Data) Obj;
      }
 
-   static public tilda.data.TransPerf_Data create(Map<String, String> Values, List<StringStringPair> Errors)
-   throws Exception
-     {
-       int IncomingErrors = Errors.size();
-
-       ZonedDateTime        _startPeriod            =                       ParseUtil.parseZonedDateTime("startPeriod"           , true , Values.get("startPeriod"           ), Errors );
-       ZonedDateTime        _endPeriod              =                       ParseUtil.parseZonedDateTime("endPeriod"             , true , Values.get("endPeriod"             ), Errors );
-       Long        _commitNano             =                       ParseUtil.parseLong("commitNano"            , true , Values.get("commitNano"            ), Errors );
-       Integer        _commitCount            =                       ParseUtil.parseInteger("commitCount"           , true , Values.get("commitCount"           ), Errors );
-       Long        _rollbackNano           =                       ParseUtil.parseLong("rollbackNano"          , true , Values.get("rollbackNano"          ), Errors );
-       Integer        _rollbackCount          =                       ParseUtil.parseInteger("rollbackCount"         , true , Values.get("rollbackCount"         ), Errors );
-       Long        _savepointSetNano       =                       ParseUtil.parseLong("savepointSetNano"      , true , Values.get("savepointSetNano"      ), Errors );
-       Integer        _savepointSetCount      =                       ParseUtil.parseInteger("savepointSetCount"     , true , Values.get("savepointSetCount"     ), Errors );
-       Long        _savepointCommitNano    =                       ParseUtil.parseLong("savepointCommitNano"   , true , Values.get("savepointCommitNano"   ), Errors );
-       Integer        _savepointCommitCount   =                       ParseUtil.parseInteger("savepointCommitCount"  , true , Values.get("savepointCommitCount"  ), Errors );
-       Long        _savepointRollbackNano  =                       ParseUtil.parseLong("savepointRollbackNano" , true , Values.get("savepointRollbackNano" ), Errors );
-       Integer        _savepointRollbackCount =                       ParseUtil.parseInteger("savepointRollbackCount", true , Values.get("savepointRollbackCount"), Errors );
-       Long        _statementCloseNano     =                       ParseUtil.parseLong("statementCloseNano"    , true , Values.get("statementCloseNano"    ), Errors );
-       Integer        _statementCloseCount    =                       ParseUtil.parseInteger("statementCloseCount"   , true , Values.get("statementCloseCount"   ), Errors );
-       Long        _connectionCloseNano    =                       ParseUtil.parseLong("connectionCloseNano"   , true , Values.get("connectionCloseNano"   ), Errors );
-       Integer        _connectionCloseCount   =                       ParseUtil.parseInteger("connectionCloseCount"  , true , Values.get("connectionCloseCount"  ), Errors );
-       Long        _connectionGetNano      =                       ParseUtil.parseLong("connectionGetNano"     , true , Values.get("connectionGetNano"     ), Errors );
-       Integer        _connectionGetCount     =                       ParseUtil.parseInteger("connectionGetCount"    , true , Values.get("connectionGetCount"    ), Errors );
-       Long        _tildaSetterNano        =                       ParseUtil.parseLong("tildaSetterNano"       , true , Values.get("tildaSetterNano"       ), Errors );
-       Integer        _tildaSetterCount       =                       ParseUtil.parseInteger("tildaSetterCount"      , true , Values.get("tildaSetterCount"      ), Errors );
-       Long        _tildaToStringNano      =                       ParseUtil.parseLong("tildaToStringNano"     , true , Values.get("tildaToStringNano"     ), Errors );
-       Integer        _tildaToStringCount     =                       ParseUtil.parseInteger("tildaToStringCount"    , true , Values.get("tildaToStringCount"    ), Errors );
-       Long        _tildaToJsonNano        =                       ParseUtil.parseLong("tildaToJsonNano"       , true , Values.get("tildaToJsonNano"       ), Errors );
-       Integer        _tildaToJsonCount       =                       ParseUtil.parseInteger("tildaToJsonCount"      , true , Values.get("tildaToJsonCount"      ), Errors );
-       Long        _tildaToCsvNano         =                       ParseUtil.parseLong("tildaToCsvNano"        , true , Values.get("tildaToCsvNano"        ), Errors );
-       Integer        _tildaToCsvCount        =                       ParseUtil.parseInteger("tildaToCsvCount"       , true , Values.get("tildaToCsvCount"       ), Errors );
-
-       if (IncomingErrors != Errors.size())
-        return null;
-
-      tilda.data.TransPerf_Data Obj = tilda.data.TransPerf_Factory.create(_startPeriod, _endPeriod);
-
-      if (_commitNano            != null) Obj.setCommitNano            (_commitNano            );
-      if (_commitCount           != null) Obj.setCommitCount           (_commitCount           );
-      if (_rollbackNano          != null) Obj.setRollbackNano          (_rollbackNano          );
-      if (_rollbackCount         != null) Obj.setRollbackCount         (_rollbackCount         );
-      if (_savepointSetNano      != null) Obj.setSavepointSetNano      (_savepointSetNano      );
-      if (_savepointSetCount     != null) Obj.setSavepointSetCount     (_savepointSetCount     );
-      if (_savepointCommitNano   != null) Obj.setSavepointCommitNano   (_savepointCommitNano   );
-      if (_savepointCommitCount  != null) Obj.setSavepointCommitCount  (_savepointCommitCount  );
-      if (_savepointRollbackNano != null) Obj.setSavepointRollbackNano (_savepointRollbackNano );
-      if (_savepointRollbackCount!= null) Obj.setSavepointRollbackCount(_savepointRollbackCount);
-      if (_statementCloseNano    != null) Obj.setStatementCloseNano    (_statementCloseNano    );
-      if (_statementCloseCount   != null) Obj.setStatementCloseCount   (_statementCloseCount   );
-      if (_connectionCloseNano   != null) Obj.setConnectionCloseNano   (_connectionCloseNano   );
-      if (_connectionCloseCount  != null) Obj.setConnectionCloseCount  (_connectionCloseCount  );
-      if (_connectionGetNano     != null) Obj.setConnectionGetNano     (_connectionGetNano     );
-      if (_connectionGetCount    != null) Obj.setConnectionGetCount    (_connectionGetCount    );
-      if (_tildaSetterNano       != null) Obj.setTildaSetterNano       (_tildaSetterNano       );
-      if (_tildaSetterCount      != null) Obj.setTildaSetterCount      (_tildaSetterCount      );
-      if (_tildaToStringNano     != null) Obj.setTildaToStringNano     (_tildaToStringNano     );
-      if (_tildaToStringCount    != null) Obj.setTildaToStringCount    (_tildaToStringCount    );
-      if (_tildaToJsonNano       != null) Obj.setTildaToJsonNano       (_tildaToJsonNano       );
-      if (_tildaToJsonCount      != null) Obj.setTildaToJsonCount      (_tildaToJsonCount      );
-      if (_tildaToCsvNano        != null) Obj.setTildaToCsvNano        (_tildaToCsvNano        );
-      if (_tildaToCsvCount       != null) Obj.setTildaToCsvCount       (_tildaToCsvCount       );
-
-      return Obj;
-     }
    public static int writeBatch(Connection C, List<tilda.data.TransPerf_Data> L, int batchSize, int commitSize) throws Exception
      {
        long T0 = System.nanoTime();

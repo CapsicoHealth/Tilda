@@ -352,6 +352,53 @@ This is the column definition for:<BR>
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
+The generic init method is typically run when there is a general data structure of data available, for example, a CSV
+data file read in memory, or run from a servlet using a Map<String, String[]> object obtained from an ServletRequest
+object. The generic init method defaults to this general data structure as a genegic representation.
+*/
+   static public tilda.data.JobPartMessage_Data init(Map<String, String[]> Values, List<StringStringPair> Errors)
+   throws Exception
+     {
+       tilda.data._Tilda.TILDA__JOBPARTMESSAGE Obj = new tilda.data.JobPartMessage_Data();
+       String[] vals = null;
+
+       vals = Values.get("refnum");
+       // Even though this is a primary key, and is by definition not-null, we nevertheless check it as optional in case
+       // this object is being initialized generically for a create.
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("refnum", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Long _refnum = ParseUtil.parseLong("refnum", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_refnum != null) Obj.setRefnum(_refnum);
+
+       vals = Values.get("jobRefnum");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("jobRefnum", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Long _jobRefnum = ParseUtil.parseLong("jobRefnum", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_jobRefnum != null) Obj.setJobRefnum(_jobRefnum);
+
+       vals = Values.get("jobPartRefnum");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("jobPartRefnum", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Long _jobPartRefnum = ParseUtil.parseLong("jobPartRefnum", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_jobPartRefnum != null) Obj.setJobPartRefnum(_jobPartRefnum);
+
+       vals = Values.get("notify");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("notify", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Boolean _notify = ParseUtil.parseBoolean("notify", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_notify != null) Obj.setNotify(_notify);
+
+       vals = Values.get("msg");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("msg", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _msg = ParseUtil.parseString("msg", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_msg != null) Obj.setMsg(_msg);
+
+
+       return (tilda.data.JobPartMessage_Data) Obj;
+     }
+
+/**
  Creates a new object in memory, which you can subsequently {@link #write()} to the data store.
  current object to the destination. 
  @param jobRefnum     Parent Job Refnum
@@ -379,27 +426,6 @@ This is the column definition for:<BR>
        return (tilda.data.JobPartMessage_Data) Obj;
      }
 
-   static public tilda.data.JobPartMessage_Data create(Map<String, String> Values, List<StringStringPair> Errors)
-   throws Exception
-     {
-       int IncomingErrors = Errors.size();
-
-       Long        _refnum        =                       ParseUtil.parseLong("refnum"       , true , Values.get("refnum"       ), Errors );
-       Long        _jobRefnum     =                       ParseUtil.parseLong("jobRefnum"    , true , Values.get("jobRefnum"    ), Errors );
-       Long        _jobPartRefnum =                       ParseUtil.parseLong("jobPartRefnum", false, Values.get("jobPartRefnum"), Errors );
-       Boolean        _notify        =                       ParseUtil.parseBoolean("notify"       , true , Values.get("notify"       ), Errors );
-       String        _msg           =                       ParseUtil.parseString("msg"          , true , Values.get("msg"          ), Errors );
-
-       if (IncomingErrors != Errors.size())
-        return null;
-
-      tilda.data.JobPartMessage_Data Obj = tilda.data.JobPartMessage_Factory.create(_jobRefnum, _notify, _msg);
-
-      if (_refnum       != null) Obj.setRefnum       (_refnum       );
-      if (_jobPartRefnum!= null) Obj.setJobPartRefnum(_jobPartRefnum);
-
-      return Obj;
-     }
    public static int writeBatch(Connection C, List<tilda.data.JobPartMessage_Data> L, int batchSize, int commitSize) throws Exception
      {
        long T0 = System.nanoTime();

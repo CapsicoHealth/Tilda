@@ -431,6 +431,69 @@ This is the column definition for:<BR>
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
+The generic init method is typically run when there is a general data structure of data available, for example, a CSV
+data file read in memory, or run from a servlet using a Map<String, String[]> object obtained from an ServletRequest
+object. The generic init method defaults to this general data structure as a genegic representation.
+*/
+   static public tilda.data.RefillPerf_Data init(Map<String, String[]> Values, List<StringStringPair> Errors)
+   throws Exception
+     {
+       tilda.data._Tilda.TILDA__REFILLPERF Obj = new tilda.data.RefillPerf_Data();
+       String[] vals = null;
+
+       vals = Values.get("schemaName");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("schemaName", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _schemaName = ParseUtil.parseString("schemaName", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_schemaName != null) Obj.setSchemaName(_schemaName);
+
+       vals = Values.get("objectName");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("objectName", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _objectName = ParseUtil.parseString("objectName", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_objectName != null) Obj.setObjectName(_objectName);
+
+       vals = Values.get("startPeriod");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("startPeriod", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       ZonedDateTime _startPeriod = ParseUtil.parseZonedDateTime("startPeriod", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_startPeriod != null) Obj.setStartPeriod(_startPeriod);
+
+       vals = Values.get("timeCreateMs");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("timeCreateMs", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Long _timeCreateMs = ParseUtil.parseLong("timeCreateMs", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_timeCreateMs != null) Obj.setTimeCreateMs(_timeCreateMs);
+
+       vals = Values.get("timeIndexMs");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("timeIndexMs", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Long _timeIndexMs = ParseUtil.parseLong("timeIndexMs", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_timeIndexMs != null) Obj.setTimeIndexMs(_timeIndexMs);
+
+       vals = Values.get("timeAnalyzeMs");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("timeAnalyzeMs", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Long _timeAnalyzeMs = ParseUtil.parseLong("timeAnalyzeMs", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_timeAnalyzeMs != null) Obj.setTimeAnalyzeMs(_timeAnalyzeMs);
+
+       vals = Values.get("timeTotalMs");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("timeTotalMs", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Long _timeTotalMs = ParseUtil.parseLong("timeTotalMs", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_timeTotalMs != null) Obj.setTimeTotalMs(_timeTotalMs);
+
+       vals = Values.get("columnsMs");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("columnsMs", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Long _columnsMs = ParseUtil.parseLong("columnsMs", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_columnsMs != null) Obj.setColumnsMs(_columnsMs);
+
+
+       return (tilda.data.RefillPerf_Data) Obj;
+     }
+
+/**
  Creates a new object in memory, which you can subsequently {@link #write()} to the data store.
  current object to the destination. 
  @param schemaName    (max size 64) The name of the schema tracked
@@ -465,28 +528,6 @@ This is the column definition for:<BR>
        return (tilda.data.RefillPerf_Data) Obj;
      }
 
-   static public tilda.data.RefillPerf_Data create(Map<String, String> Values, List<StringStringPair> Errors)
-   throws Exception
-     {
-       int IncomingErrors = Errors.size();
-
-       String        _schemaName    =                       ParseUtil.parseString("schemaName"   , true , Values.get("schemaName"   ), Errors );
-       String        _objectName    =                       ParseUtil.parseString("objectName"   , true , Values.get("objectName"   ), Errors );
-       ZonedDateTime        _startPeriod   =                       ParseUtil.parseZonedDateTime("startPeriod"  , true , Values.get("startPeriod"  ), Errors );
-       Long        _timeCreateMs  =                       ParseUtil.parseLong("timeCreateMs" , true , Values.get("timeCreateMs" ), Errors );
-       Long        _timeIndexMs   =                       ParseUtil.parseLong("timeIndexMs"  , true , Values.get("timeIndexMs"  ), Errors );
-       Long        _timeAnalyzeMs =                       ParseUtil.parseLong("timeAnalyzeMs", true , Values.get("timeAnalyzeMs"), Errors );
-       Long        _timeTotalMs   =                       ParseUtil.parseLong("timeTotalMs"  , true , Values.get("timeTotalMs"  ), Errors );
-       Long        _columnsMs     =                       ParseUtil.parseLong("columnsMs"    , true , Values.get("columnsMs"    ), Errors );
-
-       if (IncomingErrors != Errors.size())
-        return null;
-
-      tilda.data.RefillPerf_Data Obj = tilda.data.RefillPerf_Factory.create(_schemaName, _objectName, _startPeriod, _timeCreateMs, _timeIndexMs, _timeAnalyzeMs, _timeTotalMs, _columnsMs);
-
-
-      return Obj;
-     }
    public static int writeBatch(Connection C, List<tilda.data.RefillPerf_Data> L, int batchSize, int commitSize) throws Exception
      {
        long T0 = System.nanoTime();

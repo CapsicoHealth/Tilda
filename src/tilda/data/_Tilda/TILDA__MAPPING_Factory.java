@@ -300,6 +300,39 @@ This is the column definition for:<BR>
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
+The generic init method is typically run when there is a general data structure of data available, for example, a CSV
+data file read in memory, or run from a servlet using a Map<String, String[]> object obtained from an ServletRequest
+object. The generic init method defaults to this general data structure as a genegic representation.
+*/
+   static public tilda.data.Mapping_Data init(Map<String, String[]> Values, List<StringStringPair> Errors)
+   throws Exception
+     {
+       tilda.data._Tilda.TILDA__MAPPING Obj = new tilda.data.Mapping_Data();
+       String[] vals = null;
+
+       vals = Values.get("type");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("type", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _type = ParseUtil.parseString("type", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_type != null) Obj.setType(_type);
+
+       vals = Values.get("src");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("src", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _src = ParseUtil.parseString("src", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_src != null) Obj.setSrc(_src);
+
+       vals = Values.get("dst");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("dst", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _dst = ParseUtil.parseString("dst", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_dst != null) Obj.setDst(_dst);
+
+
+       return (tilda.data.Mapping_Data) Obj;
+     }
+
+/**
  Creates a new object in memory, which you can subsequently {@link #write()} to the data store.
  current object to the destination. 
  @param type        (max size 10) The type this mapping is for
@@ -324,23 +357,6 @@ This is the column definition for:<BR>
        return (tilda.data.Mapping_Data) Obj;
      }
 
-   static public tilda.data.Mapping_Data create(Map<String, String> Values, List<StringStringPair> Errors)
-   throws Exception
-     {
-       int IncomingErrors = Errors.size();
-
-       String        _type        =                       ParseUtil.parseString("type"       , true , Values.get("type"       ), Errors );
-       String        _src         =                       ParseUtil.parseString("src"        , true , Values.get("src"        ), Errors );
-       String        _dst         =                       ParseUtil.parseString("dst"        , true , Values.get("dst"        ), Errors );
-
-       if (IncomingErrors != Errors.size())
-        return null;
-
-      tilda.data.Mapping_Data Obj = tilda.data.Mapping_Factory.create(_type, _src, _dst);
-
-
-      return Obj;
-     }
    public static int writeBatch(Connection C, List<tilda.data.Mapping_Data> L, int batchSize, int commitSize) throws Exception
      {
        long T0 = System.nanoTime();

@@ -606,15 +606,15 @@ This is the hasChanged for:<BR>
        int i = 0;
        if (__Changes.intersects(TILDA__DATELIMITDIM_Factory.COLS.INVALIDDATE._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__DATELIMITDIM_Factory.COLS.INVALIDDATE._Mask) == true) PS.setNull(++i, java.sql.Types.DATE); else if (DateTimeUtil.isNowPlaceholder(_invalidDate) == false)  PS.setDate(++i, new java.sql.Date(_invalidDate.getYear()-1900, _invalidDate.getMonthValue()-1, _invalidDate.getDayOfMonth()));
+          if (__Nulls.intersects(TILDA__DATELIMITDIM_Factory.COLS.INVALIDDATE._Mask) == true) PS.setNull(++i, java.sql.Types.DATE); else if (DateTimeUtil.isNowPlaceholder(_invalidDate) == false)  PS.setDate(++i, java.sql.Date.valueOf(_invalidDate));
         } 
        if (__Changes.intersects(TILDA__DATELIMITDIM_Factory.COLS.MINDATE._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__DATELIMITDIM_Factory.COLS.MINDATE._Mask) == true) PS.setNull(++i, java.sql.Types.DATE); else if (DateTimeUtil.isNowPlaceholder(_minDate) == false)  PS.setDate(++i, new java.sql.Date(_minDate.getYear()-1900, _minDate.getMonthValue()-1, _minDate.getDayOfMonth()));
+          if (__Nulls.intersects(TILDA__DATELIMITDIM_Factory.COLS.MINDATE._Mask) == true) PS.setNull(++i, java.sql.Types.DATE); else if (DateTimeUtil.isNowPlaceholder(_minDate) == false)  PS.setDate(++i, java.sql.Date.valueOf(_minDate));
         } 
        if (__Changes.intersects(TILDA__DATELIMITDIM_Factory.COLS.MAXDATE._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__DATELIMITDIM_Factory.COLS.MAXDATE._Mask) == true) PS.setNull(++i, java.sql.Types.DATE); else if (DateTimeUtil.isNowPlaceholder(_maxDate) == false)  PS.setDate(++i, new java.sql.Date(_maxDate.getYear()-1900, _maxDate.getMonthValue()-1, _maxDate.getDayOfMonth()));
+          if (__Nulls.intersects(TILDA__DATELIMITDIM_Factory.COLS.MAXDATE._Mask) == true) PS.setNull(++i, java.sql.Types.DATE); else if (DateTimeUtil.isNowPlaceholder(_maxDate) == false)  PS.setDate(++i, java.sql.Date.valueOf(_maxDate));
         } 
        return i;
      }

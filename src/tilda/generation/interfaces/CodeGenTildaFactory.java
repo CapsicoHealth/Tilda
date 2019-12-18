@@ -139,5 +139,7 @@ public interface CodeGenTildaFactory extends CodeGenBase
      * @param g
      */
     public void genMethodToOutput(PrintWriter Out, GeneratorSession G, OutputMapping OM)
-    throws Exception;    
+    throws Exception;
+
+    public void genMethodInit(PrintWriter Out, GeneratorSession G, Object O);    
   }

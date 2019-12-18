@@ -431,6 +431,73 @@ This is the column definition for:<BR>
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
+The generic init method is typically run when there is a general data structure of data available, for example, a CSV
+data file read in memory, or run from a servlet using a Map<String, String[]> object obtained from an ServletRequest
+object. The generic init method defaults to this general data structure as a genegic representation.
+*/
+   static public tilda.data.Connection_Data init(Map<String, String[]> Values, List<StringStringPair> Errors)
+   throws Exception
+     {
+       tilda.data._Tilda.TILDA__CONNECTION Obj = new tilda.data.Connection_Data();
+       String[] vals = null;
+
+       vals = Values.get("active");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("active", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Boolean _active = ParseUtil.parseBoolean("active", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_active != null) Obj.setActive(_active);
+
+       vals = Values.get("id");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("id", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _id = ParseUtil.parseString("id", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_id != null) Obj.setId(_id);
+
+       vals = Values.get("driver");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("driver", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _driver = ParseUtil.parseString("driver", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_driver != null) Obj.setDriver(_driver);
+
+       vals = Values.get("db");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("db", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _db = ParseUtil.parseString("db", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_db != null) Obj.setDb(_db);
+
+       vals = Values.get("user");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("user", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _user = ParseUtil.parseString("user", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_user != null) Obj.setUser(_user);
+
+       vals = Values.get("pswd");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("pswd", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _pswd = ParseUtil.parseString("pswd", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_pswd != null) Obj.setPswd(_pswd);
+
+       vals = Values.get("initial");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("initial", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Integer _initial = ParseUtil.parseInteger("initial", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_initial != null) Obj.setInitial(_initial);
+
+       vals = Values.get("max");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("max", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Integer _max = ParseUtil.parseInteger("max", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_max != null) Obj.setMax(_max);
+
+       vals = Values.get("schemas");
+       List<String> _schemas = CollectionUtil.toList(ParseUtil.parseString("schemas", true, vals, Errors));
+       if (_schemas != null) Obj.setSchemas(_schemas);
+
+
+       return (tilda.data.Connection_Data) Obj;
+     }
+
+/**
  Creates a new object in memory, which you can subsequently {@link #write()} to the data store.
  current object to the destination. 
  @param id          (max size 15) Connection ID
@@ -465,30 +532,6 @@ This is the column definition for:<BR>
        return (tilda.data.Connection_Data) Obj;
      }
 
-   static public tilda.data.Connection_Data create(Map<String, String> Values, List<StringStringPair> Errors)
-   throws Exception
-     {
-       int IncomingErrors = Errors.size();
-
-       Boolean        _active      =                       ParseUtil.parseBoolean("active"     , false, Values.get("active"     ), Errors );
-       String        _id          =                       ParseUtil.parseString("id"         , true , Values.get("id"         ), Errors );
-       String        _driver      =                       ParseUtil.parseString("driver"     , true , Values.get("driver"     ), Errors );
-       String        _db          =                       ParseUtil.parseString("db"         , true , Values.get("db"         ), Errors );
-       String        _user        =                       ParseUtil.parseString("user"       , true , Values.get("user"       ), Errors );
-       String        _pswd        =                       ParseUtil.parseString("pswd"       , true , Values.get("pswd"       ), Errors );
-       Integer        _initial     =                       ParseUtil.parseInteger("initial"    , true , Values.get("initial"    ), Errors );
-       Integer        _max         =                       ParseUtil.parseInteger("max"        , true , Values.get("max"        ), Errors );
-       List<String>  _schemas     = CollectionUtil.toList(ParseUtil.parseString("schemas"    , true , Values.get("schemas"    ), "``", Errors));
-
-       if (IncomingErrors != Errors.size())
-        return null;
-
-      tilda.data.Connection_Data Obj = tilda.data.Connection_Factory.create(_id, _driver, _db, _user, _pswd, _initial, _max, _schemas);
-
-      if (_active     != null) Obj.setActive     (_active     );
-
-      return Obj;
-     }
    public static int writeBatch(Connection C, List<tilda.data.Connection_Data> L, int batchSize, int commitSize) throws Exception
      {
        long T0 = System.nanoTime();

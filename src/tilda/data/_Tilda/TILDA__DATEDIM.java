@@ -4510,7 +4510,7 @@ This is the hasChanged for:<BR>
        int i = 0;
        if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.DT._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DT._Mask) == true) PS.setNull(++i, java.sql.Types.DATE); else if (DateTimeUtil.isNowPlaceholder(_dt) == false)  PS.setDate(++i, new java.sql.Date(_dt.getYear()-1900, _dt.getMonthValue()-1, _dt.getDayOfMonth()));
+          if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DT._Mask) == true) PS.setNull(++i, java.sql.Types.DATE); else if (DateTimeUtil.isNowPlaceholder(_dt) == false)  PS.setDate(++i, java.sql.Date.valueOf(_dt));
         } 
        if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.EPOCH._Mask) == true) 
         { 
@@ -4598,15 +4598,15 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.CREATED._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.CREATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_created) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_created.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+          if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.CREATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_created) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_created.toInstant()), DateTimeUtil._UTC_CALENDAR);
         } 
        if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.LASTUPDATED._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.LASTUPDATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_lastUpdated) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_lastUpdated.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+          if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.LASTUPDATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_lastUpdated) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_lastUpdated.toInstant()), DateTimeUtil._UTC_CALENDAR);
         } 
        if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.DELETED._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DELETED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_deleted) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_deleted.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+          if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DELETED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_deleted) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_deleted.toInstant()), DateTimeUtil._UTC_CALENDAR);
         } 
        return i;
      }

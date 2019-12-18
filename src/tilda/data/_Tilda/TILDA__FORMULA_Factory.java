@@ -465,6 +465,81 @@ This is the column definition for:<BR>
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
+The generic init method is typically run when there is a general data structure of data available, for example, a CSV
+data file read in memory, or run from a servlet using a Map<String, String[]> object obtained from an ServletRequest
+object. The generic init method defaults to this general data structure as a genegic representation.
+*/
+   static public tilda.data.Formula_Data init(Map<String, String[]> Values, List<StringStringPair> Errors)
+   throws Exception
+     {
+       tilda.data._Tilda.TILDA__FORMULA Obj = new tilda.data.Formula_Data();
+       String[] vals = null;
+
+       vals = Values.get("refnum");
+       // Even though this is a primary key, and is by definition not-null, we nevertheless check it as optional in case
+       // this object is being initialized generically for a create.
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("refnum", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Long _refnum = ParseUtil.parseLong("refnum", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_refnum != null) Obj.setRefnum(_refnum);
+
+       vals = Values.get("location");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("location", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _location = ParseUtil.parseString("location", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_location != null) Obj.setLocation(_location);
+
+       vals = Values.get("location2");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("location2", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _location2 = ParseUtil.parseString("location2", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_location2 != null) Obj.setLocation2(_location2);
+
+       vals = Values.get("name");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("name", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _name = ParseUtil.parseString("name", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_name != null) Obj.setName(_name);
+
+       vals = Values.get("type");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("type", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _type = ParseUtil.parseString("type", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_type != null) Obj.setType(_type);
+
+       vals = Values.get("title");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("title", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _title = ParseUtil.parseString("title", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_title != null) Obj.setTitle(_title);
+
+       vals = Values.get("description");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("description", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _description = ParseUtil.parseString("description", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_description != null) Obj.setDescription(_description);
+
+       vals = Values.get("formula");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("formula", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _formula = ParseUtil.parseString("formula", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_formula != null) Obj.setFormula(_formula);
+
+       vals = Values.get("htmlDoc");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("htmlDoc", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _htmlDoc = ParseUtil.parseString("htmlDoc", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_htmlDoc != null) Obj.setHtmlDoc(_htmlDoc);
+
+       vals = Values.get("referencedColumns");
+       List<String> _referencedColumns = CollectionUtil.toList(ParseUtil.parseString("referencedColumns", false, vals, Errors));
+       if (_referencedColumns != null) Obj.setReferencedColumns(_referencedColumns);
+
+
+       return (tilda.data.Formula_Data) Obj;
+     }
+
+/**
  Creates a new object in memory, which you can subsequently {@link #write()} to the data store.
  current object to the destination. 
  @param location          (max size 64) The name of the primary table/view this formula is defined in.
@@ -498,34 +573,6 @@ This is the column definition for:<BR>
        return (tilda.data.Formula_Data) Obj;
      }
 
-   static public tilda.data.Formula_Data create(Map<String, String> Values, List<StringStringPair> Errors)
-   throws Exception
-     {
-       int IncomingErrors = Errors.size();
-
-       Long        _refnum            =                       ParseUtil.parseLong("refnum"           , true , Values.get("refnum"           ), Errors );
-       String        _location          =                       ParseUtil.parseString("location"         , true , Values.get("location"         ), Errors );
-       String        _location2         =                       ParseUtil.parseString("location2"        , true , Values.get("location2"        ), Errors );
-       String        _name              =                       ParseUtil.parseString("name"             , true , Values.get("name"             ), Errors );
-       String        _type              =                       ParseUtil.parseString("type"             , true , Values.get("type"             ), Errors );
-       String        _title             =                       ParseUtil.parseString("title"            , true , Values.get("title"            ), Errors );
-       String        _description       =                       ParseUtil.parseString("description"      , true , Values.get("description"      ), Errors );
-       String        _formula           =                       ParseUtil.parseString("formula"          , false, Values.get("formula"          ), Errors );
-       String        _htmlDoc           =                       ParseUtil.parseString("htmlDoc"          , false, Values.get("htmlDoc"          ), Errors );
-       List<String>  _referencedColumns = CollectionUtil.toList(ParseUtil.parseString("referencedColumns", false, Values.get("referencedColumns"), "``", Errors));
-
-       if (IncomingErrors != Errors.size())
-        return null;
-
-      tilda.data.Formula_Data Obj = tilda.data.Formula_Factory.create(_location, _location2, _name, _type, _title, _description);
-
-      if (_refnum           != null) Obj.setRefnum           (_refnum           );
-      if (_formula          != null) Obj.setFormula          (_formula          );
-      if (_htmlDoc          != null) Obj.setHtmlDoc          (_htmlDoc          );
-      if (_referencedColumns!= null) Obj.setReferencedColumns(_referencedColumns);
-
-      return Obj;
-     }
    public static int writeBatch(Connection C, List<tilda.data.Formula_Data> L, int batchSize, int commitSize) throws Exception
      {
        long T0 = System.nanoTime();
