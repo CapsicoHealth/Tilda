@@ -54,8 +54,14 @@ public class MasterFactory
             _Obj = Obj;
 
             String FactoryClassName = Helper.getFullBaseClassName(Obj) + "_Factory";
-            _FactoryClass = Class.forName(FactoryClassName);
-
+            try
+              {
+                _FactoryClass = Class.forName(FactoryClassName);
+              }
+            catch (Exception E)
+              {
+                throw new Exception("The class '"+FactoryClassName+"' cannot be loaded. Did you just Gen and forgot to Refresh your workspace?", E);
+              }
             _ObjectName = Obj.getShortName();
 
             String ColsClassName = Helper.getFullBaseClassName(Obj) + "_Factory$COLS";
@@ -72,8 +78,8 @@ public class MasterFactory
                     }
                   catch (Throwable T)
                     {
-                      String w = "No generated code for '"+C.getFullName()+"'.";
-                      LOG.warn(w+"\n", T);
+                      String w = "No generated code for '" + C.getFullName() + "'.";
+                      LOG.warn(w + "\n", T);
                       Warnings.add(w);
                     }
                 }
