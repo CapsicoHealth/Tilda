@@ -691,7 +691,7 @@ public class Helper
         if (First == false)
           Out.println("      Str.append(\",\");");
         if (C.getType() == ColumnType.DOUBLE || C.getType() == ColumnType.FLOAT || C.getType() == ColumnType.LONG || C.getType() == ColumnType.INTEGER
-        || C.getType() == ColumnType.CHAR || C.getType() == ColumnType.BINARY || C.getType() == ColumnType.BOOLEAN)
+        || C.getType() == ColumnType.SHORT || C.getType() == ColumnType.CHAR || C.getType() == ColumnType.BINARY || C.getType() == ColumnType.BOOLEAN)
           Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, \"\" + " + "obj.get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "());");
         else if (C.isCollection() == true)
           Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, " + "TextUtil.print(obj.get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "(), \",\"));");
