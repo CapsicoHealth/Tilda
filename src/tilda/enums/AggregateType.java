@@ -138,6 +138,7 @@ public enum AggregateType
         switch (this)
           {
             case ARRAY:
+            case ARRAYCAT:
             case FIRST:
             case LAST:
               return true;
