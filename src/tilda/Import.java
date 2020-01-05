@@ -36,6 +36,7 @@ import tilda.db.ConnectionPool;
 import tilda.performance.PerfTracker;
 import tilda.utils.DurationUtil;
 import tilda.utils.FileUtil;
+import tilda.utils.LogUtil;
 import tilda.utils.TextUtil;
 
 public class Import
@@ -107,13 +108,7 @@ public class Import
         catch (Throwable T)
           {
             LOG.error("An exception occurred importing file " + currentFile + "\n", T);
-            try
-              {
-                C.rollback();
-              }
-            catch (SQLException X)
-              {
-              }
+            System.exit(-1);
           }
         finally
           {

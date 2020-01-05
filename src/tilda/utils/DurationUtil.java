@@ -99,16 +99,18 @@ public class DurationUtil
 
     /**
      * Given a length of elapsed time represented in ms, convert to a
-     * user friendly translation into [days] [hours] minutes (hours and
-     * days only printed if necessary)
+     * user friendly translation into [days] [hours] [minutes] seconds 
+     * (minutes, hours and days only printed if necessary)
      */
     public static String printDurationConciseFromMs(long MilliSeconds)
       {
-        long d = (long) Math.floor(MilliSeconds / (24 * 60 * 60 * 1000.0));
+        int d = (int) Math.floor(MilliSeconds / (24 * 60 * 60 * 1000.0));
         MilliSeconds -= d * 24 * 60 * 60 * 1000;
-        long h = (long) Math.floor(MilliSeconds / (60 * 60 * 1000.0));
+        int h = (int) Math.floor(MilliSeconds / (60 * 60 * 1000.0));
         MilliSeconds -= h * 60 * 60 * 1000;
-        long mn = (long) Math.floor(MilliSeconds / (60 * 1000.0));
+        int mn = (int) Math.floor(MilliSeconds / (60 * 1000.0));
+        MilliSeconds -= mn * 60 * 1000;
+        int s = (int) Math.round(MilliSeconds/1000.0);
 
         StringBuilder Str = new StringBuilder();
         if (d != 0)
@@ -117,6 +119,8 @@ public class DurationUtil
           Str.append(Str.length() != 0 ? " " : "").append(h).append("h");
         if (mn != 0 || Str.length() == 0)
           Str.append(Str.length() != 0 ? " " : "").append(mn).append("mn");
+        
+        Str.append(Str.length() != 0 ? " " : "").append(s).append("s");
 
         return Str.toString();
       }

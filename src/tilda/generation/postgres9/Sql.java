@@ -639,7 +639,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                           First = false;
                         else
                           Str.append(", ");
-                        Str.append(getFullColumnVar(VC._OrderByObjs.get(i)) + " " + VC._OrderByOrders.get(i));
+                        Str.append(TI.getFullName() + ".\"" + VC._OrderByObjs.get(i).getName() + "\" " + VC._OrderByOrders.get(i));
                       }
                   }
                 Str.append(")");
@@ -1571,6 +1571,18 @@ public class Sql extends PostgreSQL implements CodeGenSql
 
     public static boolean PrintColumnList(PrintWriter Out, List<Column> Columns)
       {
+        return PrintColumnList(Out, Columns, null);
+      }
+    
+    /**
+     * Prints a comma-separated list of columns, for example for an index or an FK.
+     * @param Out the output stream
+     * @param Columns the list of columns to print (must not be null)
+     * @param LALs For indices, the list of columns marked as LAL-enabled (Left-Anchor-Like for efficient search such as like 'abc%').
+     * @return
+     */
+    public static boolean PrintColumnList(PrintWriter Out, List<Column> Columns, String[] LALs)
+      {
         boolean First = true;
         for (Column C : Columns)
           {
@@ -1581,9 +1593,12 @@ public class Sql extends PostgreSQL implements CodeGenSql
             else
               Out.print(", ");
             Out.print("\"" + C.getName() + "\"");
+            if (LALs != null && TextUtil.findElement(LALs, C.getName(), false, 0) != -1)
+             Out.print(" text_pattern_ops");
           }
         return First != true;
       }
+    
 
     @Override
     public void genClassEnd(PrintWriter Out, GeneratorSession G)

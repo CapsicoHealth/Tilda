@@ -25,29 +25,31 @@ import org.apache.logging.log4j.core.config.LoggerConfig;
 
 /**
  * <A href="http://en.wikipedia.org/wiki/ANSI_escape_code">http://en.wikipedia.org/wiki/ANSI_escape_code</A>
+ * 
  * @author ldh
  *
  */
 public class LogUtil
   {
-    protected static final Logger LOG = LogManager.getLogger(LogUtil.class.getName());
-    
-    protected static Level _originalLogLevel = null;
+    protected static final Logger LOG               = LogManager.getLogger(LogUtil.class.getName());
+
+    protected static Level        _originalLogLevel = null;
 
     public static void setLogLevel(Level NewLevel)
-     {
-       LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
-       Configuration config = ctx.getConfiguration();
-       LoggerConfig loggerConfig = config.getLoggerConfig(LogManager.ROOT_LOGGER_NAME);
-       Level OldLevel = loggerConfig.getLevel();
-       if (OldLevel != NewLevel)
-         {
-           loggerConfig.setLevel(NewLevel);
-           ctx.updateLoggers();  // This causes all Loggers to refetch information from their LoggerConfig.
-         }
-       if (_originalLogLevel == null)
-         _originalLogLevel = OldLevel;
-     }
+      {
+        LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
+        Configuration config = ctx.getConfiguration();
+        LoggerConfig loggerConfig = config.getLoggerConfig(LogManager.ROOT_LOGGER_NAME);
+        Level OldLevel = loggerConfig.getLevel();
+        if (OldLevel != NewLevel)
+          {
+            loggerConfig.setLevel(NewLevel);
+            ctx.updateLoggers(); // This causes all Loggers to refetch information from their LoggerConfig.
+          }
+        if (_originalLogLevel == null)
+          _originalLogLevel = OldLevel;
+      }
+
     public static void resetLogLevel()
       {
         if (_originalLogLevel != null)

@@ -40,6 +40,7 @@ import tilda.parsing.parts.Schema;
 import tilda.utils.AsciiArt;
 import tilda.utils.CollectionUtil;
 import tilda.utils.FileUtil;
+import tilda.utils.LogUtil;
 import tilda.utils.TextUtil;
 
 /**
@@ -47,23 +48,38 @@ import tilda.utils.TextUtil;
  * available in the classpath.
  * <P>
  * The utility can take 1 or more parameters:
- * <UL><LI> A mandatory path to the folder where to put the documentation files from active Tilda schemas in the classpath.</LI>
- *     <LI> An optional path to a tilda.master.xxx.json file, or a list of schema names, to extract a subset of the documentation for specified schemas.</LI>
+ * <UL>
+ * <LI>A mandatory path to the folder where to put the documentation files from active Tilda schemas in the classpath.</LI>
+ * <LI>An optional path to a tilda.master.xxx.json file, or a list of schema names, to extract a subset of the documentation for specified schemas.</LI>
  * </UL>
  * For example:
- * <UL><LI> Export docs and SQL for ALL the Tilda schemas found in the classpath
- *       <PRE>   tilda.Docs C:\projects\docs\</PRE>
- *     </LI>
- *     <LI>Export docs and SQL for the Tilda schemas listed in the master configuration file and their dependencies, grouped as defined, and found in the classpath. 
- *       <PRE>  tilda.Docs C:\projects\docs\ tilda.master.blah.json</PRE>
- *     </LI> 
- *    <LI>Export docs and SQL for the Tilda schemas Schema1 and Schema2 (and their dependencies), found in the classpath. 
- *      <PRE>   tilda.Docs C:\projects\docs\ Schema1 Schema2</PRE>
- *    </LI>
+ * <UL>
+ * <LI>Export docs and SQL for ALL the Tilda schemas found in the classpath
+ * 
+ * <PRE>
+ *    tilda.Docs C:\projects\docs\
+ * </PRE>
+ * 
+ * </LI>
+ * <LI>Export docs and SQL for the Tilda schemas listed in the master configuration file and their dependencies, grouped as defined, and found in the classpath.
+ * 
+ * <PRE>
+ *   tilda.Docs C:\projects\docs\ tilda.master.blah.json
+ * </PRE>
+ * 
+ * </LI>
+ * <LI>Export docs and SQL for the Tilda schemas Schema1 and Schema2 (and their dependencies), found in the classpath.
+ * 
+ * <PRE>
+ *    tilda.Docs C:\projects\docs\ Schema1 Schema2
+ * </PRE>
+ * 
+ * </LI>
  * </UL>
  * The master configuration file is a JSON-based file as defined by {@link MasterConfig}. The utility will export an
  * HTML file TILDA___Docs.[schema_name].html and TILDA___[db_type].[schema_name].sql, and a master index file index.html.
  * For example:
+ * 
  * <PRE>
  *    index.html
  *    TILDA___Docs.SCHEMA1.html
@@ -82,6 +98,7 @@ public class Docs
     /**
      * GSon-based definition for the Master Index definitionfor the command line {@link Docs} utility.
      * <P>
+     * 
      * <PRE>
      * { "title": "Sample Database Master Index"
      *  ,"description":[
@@ -240,14 +257,14 @@ public class Docs
               }
             DocGen.GenMasterIndex(Args[0] + File.separator, SelectedSchemas, MC);
           }
-        catch (Exception E)
+        catch (Throwable T)
           {
             LOG.error("\n"
             + "          ======================================================================================\n"
             + AsciiArt.Error("               ")
             + "\n"
             + "               Cannot extract documentation from active Tilda definitions in the classpath.\n"
-            + "          ======================================================================================\n", E);
+            + "          ======================================================================================\n", T);
             System.exit(-1);
           }
 
