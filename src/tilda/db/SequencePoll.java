@@ -43,6 +43,8 @@ public class SequencePoll extends DBPoll
 
     String  _SequenceName;
     Handler _H;
+    
+    public String getSequenceName() { return _SequenceName; }
 
     @Override
     public void init()
