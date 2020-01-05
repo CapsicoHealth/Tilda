@@ -25,6 +25,8 @@ create schema IF NOT EXISTS TILDA;
 
 SET search_path TO TILDA;
 
+CREATE EXTENSION if not exists pg_trgm;
+
 -----------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------
 -- TILDA like() and ilike() functions
@@ -102,6 +104,11 @@ CREATE OR REPLACE FUNCTION TILDA.In(v bigint[], vals bigint[])
   IMMUTABLE LANGUAGE SQL AS
   'select v && vals;';
 
+CREATE OR REPLACE FUNCTION TILDA.In(v boolean[], vals boolean[])
+  RETURNS boolean
+  IMMUTABLE LANGUAGE SQL AS
+  'select v && vals;';
+
 CREATE OR REPLACE FUNCTION TILDA.In(v text, vals text[])
   RETURNS boolean
   IMMUTABLE LANGUAGE SQL AS
@@ -117,6 +124,10 @@ CREATE OR REPLACE FUNCTION TILDA.In(v bigint, vals bigint[])
   IMMUTABLE LANGUAGE SQL AS
   'select v = ANY(vals);';
 
+CREATE OR REPLACE FUNCTION TILDA.In(v boolean, vals boolean[])
+  RETURNS boolean
+  IMMUTABLE LANGUAGE SQL AS
+  'select v = ANY(vals);';
 
   
   
@@ -429,6 +440,17 @@ $$;
 
 
 
+
+-----------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------
+-- TILDA boolean to smallint case
+-----------------------------------------------------------------------------------------------------------------
+DROP CAST IF EXISTS (boolean AS smallint);
+CREATE OR REPLACE FUNCTION TILDA.boolToSmallint(boolean)
+  RETURNS smallint
+  IMMUTABLE LANGUAGE SQL AS
+'SELECT (case when $1 then 1 else 0 end)::SMALLINT;';
+CREATE CAST (boolean AS smallint) WITH FUNCTION TILDA.boolToSmallint(boolean) as Implicit;
 
 
 -----------------------------------------------------------------------------------------------------------------
