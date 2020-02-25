@@ -67,7 +67,7 @@ public class Gen
           {
             try
               {
-                GeneratorSession G = new GeneratorSession("java", 8, -1, "postgres", 9, -1);
+                GeneratorSession G = new GeneratorSession("java", 8, -1, "postgres", 9, 6);
 
                 ParserSession PS = Parser.parse(path, G.getSql());
                 if (PS == null)

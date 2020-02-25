@@ -21,7 +21,6 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.db.ConnectionPool;
 import tilda.utils.AsciiArt;
-import tilda.utils.LogUtil;
 
 public class Migrate
   {
