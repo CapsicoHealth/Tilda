@@ -109,7 +109,7 @@ public class AppData implements CodeGenAppData
         Out.println("       return true;");
         Out.println("     }");
 
-        if (O._OCC == false)
+        if (O._OCC == false && O._LC != ObjectLifecycle.READONLY)
           {
             Out.println();
             Out.println("   @Override");

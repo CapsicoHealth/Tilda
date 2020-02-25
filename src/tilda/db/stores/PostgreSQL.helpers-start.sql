@@ -411,6 +411,15 @@ END $$;
 
 
 
+CREATE OR REPLACE FUNCTION TILDA.arrayTrunc(arr anyarray, maxCount integer)
+ RETURNS anyarray
+ LANGUAGE sql
+ IMMUTABLE COST 1
+AS $function$SELECT array_agg(a) FROM (SELECT unnest(arr) a limit maxCount) X;
+$function$
+;
+
+
 
 -----------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------
@@ -958,3 +967,4 @@ where refnum in (select refnum from T)
 update tilda.key set max=(select max(refnum)+1 from PATIENTS.Order) where "name"='PATIENTS.ORDER'
 DROP SEQUENCE IF EXISTS temp_seq;
 */
+

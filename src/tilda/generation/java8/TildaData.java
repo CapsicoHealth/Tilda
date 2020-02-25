@@ -224,7 +224,7 @@ public class TildaData implements CodeGenTildaData
               }
             Out.println(";");
             if (C.isSavedField() == true)
-              Out.println("   protected " + JavaJDBCType.getFieldType(C) + " __Saved_" + C.getName() + ";");
+              Out.println("   protected " + JavaJDBCType.getFieldTypeBaseClass(C) + " __Saved_" + C.getName() + ";");
           }
 
       }

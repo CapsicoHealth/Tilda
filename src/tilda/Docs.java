@@ -40,7 +40,6 @@ import tilda.parsing.parts.Schema;
 import tilda.utils.AsciiArt;
 import tilda.utils.CollectionUtil;
 import tilda.utils.FileUtil;
-import tilda.utils.LogUtil;
 import tilda.utils.TextUtil;
 
 /**

@@ -510,7 +510,7 @@ public class Generator
         CG.genClassEnd(Out, G);
         Out.close();
       }
-
+/*
     protected static void genTildaJson(GeneratorSession G, File GenFolder, Object O)
     throws Exception
       {
@@ -542,7 +542,7 @@ public class Generator
         CG.genClassEnd(Out, G);
         Out.close();
       }
-
+*/
 
     protected static File genAppData(GeneratorSession G, File GenFolder, Object O)
     throws Exception
@@ -597,7 +597,7 @@ public class Generator
           }
         return f;
       }
-
+/*
     protected static File genAppJson(GeneratorSession G, File GenFolder, Object O)
     throws Exception
       {
@@ -622,5 +622,5 @@ public class Generator
           }
         return f;
       }
-
+*/
   }
