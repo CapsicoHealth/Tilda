@@ -812,7 +812,7 @@ public class TextUtil
 
     /**
      * Takes a string and rewrites it by replacing all special characters with an '_'. Special characters include
-     * ' ', '*', '\'', '/', '"', ':', ';', ',', '.', '%', '+', '&', '=', '?', '-'
+     * ' ', '*', '\'', '/', '"', ':', ';', ',', '.', '%', '+', '&', '=', '?', '-', '(', ')', '[', ']', '{', '}'
      */
     public static String sanitizeName(String Name)
       {
@@ -836,6 +836,12 @@ public class TextUtil
                 case '=':
                 case '?':
                 case '-':
+                case '(':
+                case ')':
+                case '[':
+                case ']':
+                case '{':
+                case '}':
                   C[i] = '_';
               }
           }
