@@ -222,7 +222,8 @@ public abstract class Base
     protected List<String> expandColumnNames(String[] vals, ParserSession PS, String constructType, String constructName)
       {
         String[] colNames = getColumnNames();
-        Set<String> S = new HashSet<String>(); // gotta be a set in case multiple column templates resolve to the swame column name(s).
+        Set<String> S = new HashSet<String>(); // gotta be a set in case multiple column templates resolve to the same column name(s).
+        List<String> L = new ArrayList<String>();
         for (String val : vals)
           {
             String[] valsA = new String[] { val
@@ -232,13 +233,14 @@ public abstract class Base
               {
                 if (TextUtil.findStarElement(valsA, colName, false, 0) != -1)
                   {
-                    S.add(colName);
+                    if (S.add(colName) == true)
+                      L.add(colName);
                     found = true;
                   }
               }
             if (found == false)
               PS.AddError("Object/View " + this.getFullName() + " is defining a column template '" + val + "' for " + constructType + " '" + constructName + "' which doesn't map to any columns.");
           }
-        return new ArrayList<String>(S);
+        return L;
       }
   }
