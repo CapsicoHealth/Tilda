@@ -59,7 +59,7 @@ public class DDLDependencyPreManagement extends MigrationAction
         try
           {
             // when running for the first time on a given database, i.e., the tilda.getdependenciesddls function doesn't exist yet,
-            // so we can't reallt assess whether there are dependencies or not. So we delay to the "process" step. This happens only
+            // so we can't really assess whether there are dependencies or not. So we delay to the "process" step. This happens only
             // for the first time the migrate utility is ran when the DDL Management infrastructure hasn't been created yet.
             C.setSavepoint();
             if (_DdlDepMan.fetchDependencies(C) == false)
@@ -69,7 +69,7 @@ public class DDLDependencyPreManagement extends MigrationAction
           }
         catch (Exception E)
           {
-            LOG.warn("An error occurred while looking at dependencies. This is because this is the first time this is being run ever for this database. The utility should continue properly.");
+            LOG.warn("An error occurred while looking at dependencies. This may be because this is the first time this is being run ever for this database. The utility should continue properly.\n", E);
             C.releaseSavepoint(false);
           }
         return true;

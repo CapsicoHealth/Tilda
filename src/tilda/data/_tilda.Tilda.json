@@ -346,12 +346,12 @@
     ,{ "name": "DependencyDDLDummyTable"
       ,"description": "A dummy Table created to generate JavaCode to handle results from the Tilda.getDependenciesDDLs() function output."
       ,"columns":[
-           { "name":"srcSchemaName", "type":"STRING" , "nullable":false, "size":  100, "description":"The result value."  }
-          ,{ "name":"srcTVName"    , "type":"STRING" , "nullable":false, "size":  100, "description":"The result value."  }
-          ,{ "name":"seq"          , "type":"INTEGER", "nullable":false              , "description": "The blah"          }
-          ,{ "name":"depSchemaName", "type":"STRING" , "nullable":false, "size":  100, "description":"The result value."  }
-          ,{ "name":"depViewName"  , "type":"STRING" , "nullable":false, "size":  100, "description":"The result value."  }
-          ,{ "name":"restoreScript", "type":"STRING" , "nullable":false, "size":30000, "description":"The result value."  }
+           { "name":"srcSchemaName", "type":"STRING" , "nullable":false, "size":   100, "description":"The result value."  }
+          ,{ "name":"srcTVName"    , "type":"STRING" , "nullable":false, "size":   100, "description":"The result value."  }
+          ,{ "name":"seq"          , "type":"INTEGER", "nullable":false               , "description": "The blah"          }
+          ,{ "name":"depSchemaName", "type":"STRING" , "nullable":false, "size":   100, "description":"The result value."  }
+          ,{ "name":"depViewName"  , "type":"STRING" , "nullable":false, "size":   100, "description":"The result value."  }
+          ,{ "name":"restoreScript", "type":"STRING" , "nullable":false, "size":500000, "description":"The result value."  }
        ]
       ,"indices":[
            { "name": "DepedencySequence", "columns": ["srcSchemaName" , "srcTVName", "seq"], "db": true }

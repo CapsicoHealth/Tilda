@@ -140,7 +140,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.restoreScript of type String</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.restoreScript of type text</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>30000</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>500000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The result value.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
@@ -418,7 +418,7 @@ object. The generic init method defaults to this general data structure as a gen
  @param seq           The blah
  @param depSchemaName (max size 100) The result value.
  @param depViewName   (max size 100) The result value.
- @param restoreScript (max size 30000) The result value.
+ @param restoreScript (max size 500000) The result value.
 */
    static public tilda.data.DependencyDDLDummyTable_Data create(String srcSchemaName, String srcTVName, int seq, String depSchemaName, String depViewName, String restoreScript) throws Exception
      {

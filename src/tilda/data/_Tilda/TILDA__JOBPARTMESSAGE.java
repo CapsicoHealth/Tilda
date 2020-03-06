@@ -189,7 +189,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    Long _refnum=null;
-   protected long __Saved_refnum;
+   protected Long __Saved_refnum;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -647,7 +647,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.JobPartMessage.msg to null: it's not nullable.");
        else if (v.length() > 8192)
-        throw new Exception("Cannot set tilda.data.TILDA.JobPartMessage.msg: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 8192.");
+        throw new Exception("Cannot set tilda.data.TILDA.JobPartMessage.msg: the size "+v.length()+" is larger than the max allowed of 8192: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_msg) == false)
         {
           __Changes.or(TILDA__JOBPARTMESSAGE_Factory.COLS.MSG._Mask);

@@ -244,7 +244,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.DependencyDDLDummyTable.srcSchemaName to null: it's not nullable.");
        else if (v.length() > 100)
-        throw new Exception("Cannot set tilda.data.TILDA.DependencyDDLDummyTable.srcSchemaName: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 100.");
+        throw new Exception("Cannot set tilda.data.TILDA.DependencyDDLDummyTable.srcSchemaName: the size "+v.length()+" is larger than the max allowed of 100: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_srcSchemaName) == false)
         {
           __Changes.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SRCSCHEMANAME._Mask);
@@ -348,7 +348,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.DependencyDDLDummyTable.srcTVName to null: it's not nullable.");
        else if (v.length() > 100)
-        throw new Exception("Cannot set tilda.data.TILDA.DependencyDDLDummyTable.srcTVName: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 100.");
+        throw new Exception("Cannot set tilda.data.TILDA.DependencyDDLDummyTable.srcTVName: the size "+v.length()+" is larger than the max allowed of 100: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_srcTVName) == false)
         {
           __Changes.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.SRCTVNAME._Mask);
@@ -404,7 +404,7 @@ This is the definition for:<BR>
 */
    @SerializedName("seq")
    Integer _seq=null;
-   protected int __Saved_seq;
+   protected Integer __Saved_seq;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -548,7 +548,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.DependencyDDLDummyTable.depSchemaName to null: it's not nullable.");
        else if (v.length() > 100)
-        throw new Exception("Cannot set tilda.data.TILDA.DependencyDDLDummyTable.depSchemaName: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 100.");
+        throw new Exception("Cannot set tilda.data.TILDA.DependencyDDLDummyTable.depSchemaName: the size "+v.length()+" is larger than the max allowed of 100: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_depSchemaName) == false)
         {
           __Changes.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DEPSCHEMANAME._Mask);
@@ -652,7 +652,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.DependencyDDLDummyTable.depViewName to null: it's not nullable.");
        else if (v.length() > 100)
-        throw new Exception("Cannot set tilda.data.TILDA.DependencyDDLDummyTable.depViewName: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 100.");
+        throw new Exception("Cannot set tilda.data.TILDA.DependencyDDLDummyTable.depViewName: the size "+v.length()+" is larger than the max allowed of 100: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_depViewName) == false)
         {
           __Changes.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.DEPVIEWNAME._Mask);
@@ -699,7 +699,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.restoreScript of type String</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.restoreScript of type text</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>30000</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>500000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The result value.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
@@ -720,7 +720,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.restoreScript of type String</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.restoreScript of type text</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>30000</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>500000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The result value.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
@@ -741,7 +741,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.restoreScript of type String</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.restoreScript of type text</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>30000</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>500000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The result value.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
@@ -754,8 +754,8 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.DependencyDDLDummyTable.restoreScript to null: it's not nullable.");
-       else if (v.length() > 30000)
-        throw new Exception("Cannot set tilda.data.TILDA.DependencyDDLDummyTable.restoreScript: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 30000.");
+       else if (v.length() > 500000)
+        throw new Exception("Cannot set tilda.data.TILDA.DependencyDDLDummyTable.restoreScript: the size "+v.length()+" is larger than the max allowed of 500000: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_restoreScript) == false)
         {
           __Changes.or(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.COLS.RESTORESCRIPT._Mask);
@@ -775,7 +775,7 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DependencyDDLDummyTable.restoreScript of type String</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DependencyDDLDummyTable.restoreScript of type text</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>30000</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>500000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The result value.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>

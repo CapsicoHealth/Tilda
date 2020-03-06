@@ -658,22 +658,6 @@ public class Sql extends PostgreSQL implements CodeGenSql
         return hasAggregates;
       }
 
-    public static String getViewSubRealizeSchemaName()
-      {
-        return "TILDATMP";
-      }
-
-    public static String getViewSubRealizeViewName(View V)
-      {
-        return V._ParentSchema._Name + "_" + V._Name + "_R";
-      }
-
-    public static String getViewSubRealizeName(View V)
-      {
-        return getViewSubRealizeSchemaName() + "." + getViewSubRealizeViewName(V);
-      }
-
-
     @Override
     public void genDDL(PrintWriter OutFinal, View V)
     throws Exception
@@ -715,10 +699,10 @@ public class Sql extends PostgreSQL implements CodeGenSql
               for (View arv : AncestorRealizedViews)
                 {
                   String regex = "(?i)\\b(" + arv.getShortName().replace(".", "\\.)?") + "\\b";
-                  Str = Str.replaceAll(regex, getViewSubRealizeName(arv));
+                  Str = Str.replaceAll(regex, arv.getViewSubRealizeFullName());
                 }
 
-            OutFinal.println("create or replace view " + getViewSubRealizeName(V) + " as ");
+            OutFinal.println("create or replace view " + V.getViewSubRealizeFullName() + " as ");
             OutFinal.println(Str + ";\n");
           }
         if (V._Realize != null)
@@ -747,7 +731,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
             BaseLineInsert.append("SELECT ").append(genRealizedColumnList(V, "\n          "));
 
             if (SubRealizedViews != null || AncestorRealizedViews != null) // View depends on realized views.
-              BaseLineInsert.append("\n     FROM " + getViewSubRealizeName(V));
+              BaseLineInsert.append("\n     FROM " + V.getViewSubRealizeFullName());
             else
               BaseLineInsert.append("\n     FROM ").append(V._ParentSchema._Name).append(".").append(V._Name);
 

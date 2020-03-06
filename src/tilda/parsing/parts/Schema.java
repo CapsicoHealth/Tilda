@@ -165,6 +165,15 @@ public class Schema
         return null;
       }
 
+    public static View getView(List<Schema> Schemas, String SchemaName, String ViewName)
+      {
+        for (Schema S : Schemas)
+          if (S != null && S._Name.equalsIgnoreCase(SchemaName) == true)
+            return S.getView(ViewName);
+        LOG.debug("Cannot find view '"+ViewName+"' because the schema '"+SchemaName+"' cannot be found.");
+        return null;
+      }
+
     public View getSourceView(Object O)
       {
         if (_Name.equals(O._ParentSchema._Name) == true)

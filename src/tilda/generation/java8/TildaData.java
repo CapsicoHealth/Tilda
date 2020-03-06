@@ -653,7 +653,7 @@ public class TildaData implements CodeGenTildaData
                   if (C.getType() == ColumnType.STRING && C.isCollection() == false)
                     {
                       Out.println("       else if (v.length() > " + C._Size + ")");
-                      Out.println("        throw new Exception(\"Cannot set " + C.getFullName() + ": the value \"+TextUtil.escapeDoubleQuoteWithSlash(v)+\" is larger than the max size allowed " + C._Size + ".\");");
+                      Out.println("        throw new Exception(\"Cannot set " + C.getFullName() + ": the size \"+v.length()+\" is larger than the max allowed of " + C._Size + ": \"+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));");
                     }
                   if (C.isSet() == true)
                     Out.println("       else if (_" + C.getName() + ".contains(v) == false)");
