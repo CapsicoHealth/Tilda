@@ -269,6 +269,17 @@ public class Migrator
             // DdlDepMan.restoreDependencies(C);
             // C.commit();
             // }
+            try
+              {
+                lastAction.errorHandling(C);
+                C.commit();
+              }
+            catch (Throwable T)
+              {
+                LOG.catching(T);
+                C.rollback();
+              }
+            
             throw new Exception("Migration failed, and temporarily dropped dependencies were restored");
           }
       }

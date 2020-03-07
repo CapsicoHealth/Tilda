@@ -58,4 +58,9 @@ public abstract class MigrationAction
       {
         return _isDependencyAction;
       }
+
+    protected void errorHandling(Connection C)
+    throws Exception
+      {
+      }
   }

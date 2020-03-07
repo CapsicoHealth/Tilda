@@ -1358,7 +1358,12 @@ public class TildaData implements CodeGenTildaData
               if (C.isCollection() == false && C.getType() == ColumnType.STRING)
                 Out.print("TextUtil.isNullOrEmpty(_" + C.getName() + ") == false");
               else if (C.isCollection() == false && C.getType() == ColumnType.DATETIME)
-                Out.print("TextUtil.isNullOrEmpty(Str_" + C.getName() + ") == false");
+                {
+                  if (C.isJSONColumn() == true)
+                   Out.print("TextUtil.isNullOrEmpty(Str_" + C.getName() + ") == false");
+                  else
+                    Out.print("_" + C.getName() + " != null");
+                }
               else if (C.isCollection() == true)
                 Out.print("_" + C.getName() + " != null && _" + C.getName() + ".isEmpty() == false");
               else

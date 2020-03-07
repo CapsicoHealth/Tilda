@@ -519,29 +519,28 @@ COMMENT ON COLUMN TILDA.FormulaResult."deleted" IS E'The timestamp for when the 
 
 
 
-create table if not exists TILDA.DependencyDDLDummyTable -- A dummy Table created to generate JavaCode to handle results from the Tilda.getDependenciesDDLs() function output.
+create table if not exists TILDA.FailedDependencyDDLScripts -- A dummy Table created to generate JavaCode to handle results from the Tilda.getDependenciesDDLs() function output.
  (  "srcSchemaName"  varchar(100)  not null   -- The result value.
   , "srcTVName"      varchar(100)  not null   -- The result value.
   , "seq"            integer       not null   -- The blah
   , "depSchemaName"  varchar(100)  not null   -- The result value.
   , "depViewName"    varchar(100)  not null   -- The result value.
   , "restoreScript"  text          not null   -- The result value.
-  , "created"        timestamptz   not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.DependencyDDLDummyTable)
-  , "lastUpdated"    timestamptz   not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.DependencyDDLDummyTable)
-  , "deleted"        timestamptz              -- The timestamp for when the record was deleted. (TILDA.DependencyDDLDummyTable)
+  , "created"        timestamptz   not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.FailedDependencyDDLScripts)
+  , "lastUpdated"    timestamptz   not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.FailedDependencyDDLScripts)
+  , "deleted"        timestamptz              -- The timestamp for when the record was deleted. (TILDA.FailedDependencyDDLScripts)
  );
-COMMENT ON TABLE TILDA.DependencyDDLDummyTable IS E'A dummy Table created to generate JavaCode to handle results from the Tilda.getDependenciesDDLs() function output.';
-COMMENT ON COLUMN TILDA.DependencyDDLDummyTable."srcSchemaName" IS E'The result value.';
-COMMENT ON COLUMN TILDA.DependencyDDLDummyTable."srcTVName" IS E'The result value.';
-COMMENT ON COLUMN TILDA.DependencyDDLDummyTable."seq" IS E'The blah';
-COMMENT ON COLUMN TILDA.DependencyDDLDummyTable."depSchemaName" IS E'The result value.';
-COMMENT ON COLUMN TILDA.DependencyDDLDummyTable."depViewName" IS E'The result value.';
-COMMENT ON COLUMN TILDA.DependencyDDLDummyTable."restoreScript" IS E'The result value.';
-COMMENT ON COLUMN TILDA.DependencyDDLDummyTable."created" IS E'The timestamp for when the record was created. (TILDA.DependencyDDLDummyTable)';
-COMMENT ON COLUMN TILDA.DependencyDDLDummyTable."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.DependencyDDLDummyTable)';
-COMMENT ON COLUMN TILDA.DependencyDDLDummyTable."deleted" IS E'The timestamp for when the record was deleted. (TILDA.DependencyDDLDummyTable)';
-CREATE UNIQUE INDEX IF NOT EXISTS DependencyDDLDummyTable_DepedencySequence ON TILDA.DependencyDDLDummyTable ("srcSchemaName", "srcTVName", "seq");
-CREATE UNIQUE INDEX IF NOT EXISTS DependencyDDLDummyTable_DepedencySTV ON TILDA.DependencyDDLDummyTable ("srcSchemaName", "srcTVName", "depSchemaName", "depViewName");
+COMMENT ON TABLE TILDA.FailedDependencyDDLScripts IS E'A dummy Table created to generate JavaCode to handle results from the Tilda.getDependenciesDDLs() function output.';
+COMMENT ON COLUMN TILDA.FailedDependencyDDLScripts."srcSchemaName" IS E'The result value.';
+COMMENT ON COLUMN TILDA.FailedDependencyDDLScripts."srcTVName" IS E'The result value.';
+COMMENT ON COLUMN TILDA.FailedDependencyDDLScripts."seq" IS E'The blah';
+COMMENT ON COLUMN TILDA.FailedDependencyDDLScripts."depSchemaName" IS E'The result value.';
+COMMENT ON COLUMN TILDA.FailedDependencyDDLScripts."depViewName" IS E'The result value.';
+COMMENT ON COLUMN TILDA.FailedDependencyDDLScripts."restoreScript" IS E'The result value.';
+COMMENT ON COLUMN TILDA.FailedDependencyDDLScripts."created" IS E'The timestamp for when the record was created. (TILDA.FailedDependencyDDLScripts)';
+COMMENT ON COLUMN TILDA.FailedDependencyDDLScripts."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.FailedDependencyDDLScripts)';
+COMMENT ON COLUMN TILDA.FailedDependencyDDLScripts."deleted" IS E'The timestamp for when the record was deleted. (TILDA.FailedDependencyDDLScripts)';
+CREATE UNIQUE INDEX IF NOT EXISTS FailedDependencyDDLScripts_DepedencySequence ON TILDA.FailedDependencyDDLScripts ("srcSchemaName", "srcTVName", "created", "seq");
 
 
 

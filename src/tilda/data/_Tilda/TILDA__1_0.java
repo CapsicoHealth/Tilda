@@ -52,7 +52,7 @@ public final class TILDA__1_0
       tilda.data._Tilda.TILDA__MEASUREFORMULA_Factory.initObject(C);
       tilda.data._Tilda.TILDA__FORMULADEPENDENCY_Factory.initObject(C);
       tilda.data._Tilda.TILDA__FORMULARESULT_Factory.initObject(C);
-      tilda.data._Tilda.TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.initObject(C);
+      tilda.data._Tilda.TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.initObject(C);
       tilda.data._Tilda.TILDA__DATEDIM_Factory.initObject(C);
       tilda.data._Tilda.TILDA__DATELIMITDIM_Factory.initObject(C);
       tilda.data._Tilda.TILDA__FORMULARESULTVIEW_Factory.initObject(C);
