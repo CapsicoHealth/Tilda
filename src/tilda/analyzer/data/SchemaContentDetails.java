@@ -14,15 +14,28 @@
  * limitations under the License.
  */
 
-package tilda.db.config;
+package tilda.analyzer.data;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import tilda.analyzer.helper.DateHelper;
 import com.google.gson.annotations.SerializedName;
 
-public class EmailConfig
+public class SchemaContentDetails
   {
+    
     /*@formatter:off*/
-    @SerializedName("smtp"        ) public String _SMTP      = null;
-    @SerializedName("userId"      ) public String _UserId    = null;
-    @SerializedName("pswd"        ) public String _Pswd      = null;
+    @SerializedName("name"    ) public final String           _Name;
+    @SerializedName("created" ) public final String           _Created ;
+    @SerializedName("tables" )  public List<String> _TableList = new ArrayList<String>();    
     /*@formatter:on*/
+    
+    public SchemaContentDetails(String Name,  List<String> TablesList)
+    {
+      _Name = Name;
+      _Created = DateHelper.getTimeNow();
+      _TableList = TablesList;
+    }
+    
   }

@@ -14,15 +14,17 @@
  * limitations under the License.
  */
 
-package tilda.db.config;
+package tilda.analyzer.parser;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
-public class EmailConfig
+public class RegexData
   {
-    /*@formatter:off*/
-    @SerializedName("smtp"        ) public String _SMTP      = null;
-    @SerializedName("userId"      ) public String _UserId    = null;
-    @SerializedName("pswd"        ) public String _Pswd      = null;
-    /*@formatter:on*/
+    @SerializedName("schema" )        public List<String>       _SchemaList = new ArrayList<String>();
+    @SerializedName("table" )         public List<String>       _TableList  = new ArrayList<String>();
+    
+    
   }

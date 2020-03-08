@@ -14,15 +14,35 @@
  * limitations under the License.
  */
 
-package tilda.db.config;
+package tilda.analyzer.bean;
 
-import com.google.gson.annotations.SerializedName;
+import java.util.ArrayList;
+import java.util.List;
 
-public class EmailConfig
+public class StateEvents
   {
-    /*@formatter:off*/
-    @SerializedName("smtp"        ) public String _SMTP      = null;
-    @SerializedName("userId"      ) public String _UserId    = null;
-    @SerializedName("pswd"        ) public String _Pswd      = null;
-    /*@formatter:on*/
+      public final String _Type;
+      
+      public StateEvents(String Type)
+      {
+        _Type = Type;
+      }
+      
+      private static List<String> values = new ArrayList<String>();
+      
+      public boolean hasNext(){
+        return values.size() >0;
+      }
+      public String values()
+      {
+        return values.get(0);
+      }
+      public boolean add(String S)
+      {
+        return values.add(S);
+      }
+      public boolean remove(String S)
+      {
+        return values.remove(S);
+      }
   }

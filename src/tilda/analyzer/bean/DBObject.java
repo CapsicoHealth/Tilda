@@ -14,15 +14,19 @@
  * limitations under the License.
  */
 
-package tilda.db.config;
+package tilda.analyzer.bean;
 
-import com.google.gson.annotations.SerializedName;
+import tilda.db.Connection;
 
-public class EmailConfig
+public interface DBObject
   {
-    /*@formatter:off*/
-    @SerializedName("smtp"        ) public String _SMTP      = null;
-    @SerializedName("userId"      ) public String _UserId    = null;
-    @SerializedName("pswd"        ) public String _Pswd      = null;
-    /*@formatter:on*/
+    public void setCompleted();
+    public boolean getCompleted();
+    public String getName();
+    public String getFullyQualifiedName();
+    public boolean performTask(Connection C);
+    public String getFileName(int part);
+    public boolean getStarted();
+    public void setStarted();
+    public String getJsonFileName();
   }

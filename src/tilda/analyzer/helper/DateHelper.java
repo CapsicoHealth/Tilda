@@ -14,15 +14,22 @@
  * limitations under the License.
  */
 
-package tilda.db.config;
+package tilda.analyzer.helper;
 
-import com.google.gson.annotations.SerializedName;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
-public class EmailConfig
+public class DateHelper
   {
-    /*@formatter:off*/
-    @SerializedName("smtp"        ) public String _SMTP      = null;
-    @SerializedName("userId"      ) public String _UserId    = null;
-    @SerializedName("pswd"        ) public String _Pswd      = null;
-    /*@formatter:on*/
+    private static transient final String Formatter = "yyyy-MM-dd HH:mm:ss";
+    private static transient final String TimezoneId = "US/Eastern";
+    
+    
+    public static String getTimeNow()
+    {
+      ZonedDateTime ZDT1 = ZonedDateTime.now(ZoneId.of(TimezoneId));
+      return ZDT1.format(DateTimeFormatter.ofPattern(Formatter));
+    }
+    
   }
