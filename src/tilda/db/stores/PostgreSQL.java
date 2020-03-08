@@ -52,6 +52,7 @@ import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Object;
+import tilda.parsing.parts.Query;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
 import tilda.parsing.parts.helpers.ValueHelper;
@@ -1250,7 +1251,13 @@ public class PostgreSQL implements DBType
                 Out.print("\"" + IX._OrderByObjs.get(i).getName() + "\" " + (Gin ? "" : IX._OrderByOrders.get(i)));
               }
           }
-        Out.println(");");
+        Out.print(")");
+        if (IX._SubQuery != null)
+          {
+            Query Q = IX._SubQuery.getQuery(DBType.Postgres);
+            Out.print(" where "+Q._Clause);
+          }
+        Out.println(";");
         return OutStr.toString();
       }
 

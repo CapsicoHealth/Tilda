@@ -74,49 +74,12 @@ public class ViewRealize
         if (_Exclude_DEPRECATED != null || _Excludes_DEPRECATED != null)
           PS.AddError("The realize section for view '" + ParentView.getFullName() + "' uses the deprecated feature 'exclude' or 'excludes'. Use view columns with \"block\":[...] instead.");
 
-        Set<String> Names = new HashSet<String>();
-        boolean indexOnDeleted = false;
-        for (Index I : _Indices)
-          if (I != null)
-            {
-              if (I.Validate(PS, ParentRealized) == false)
-               continue;
-              if (Names.add(I._Name) == false)
-                PS.AddError("Index '" + I._Name + "' is duplicated in the realize section for view '" + ParentView.getFullName() + "'.");
-              if (_Upsert != null && (   I._ColumnObjs.size() > 0 && I._ColumnObjs.get(0)._Name.equals(_Upsert._DeleteTS) == true
-                                      || I._ColumnObjs.size() == 0 && I._OrderByObjs.get(0)._Name.equals(_Upsert._DeleteTS) == true
-                                     )
-                 )
-                indexOnDeleted = true;
-            }
-        if (_Upsert != null && indexOnDeleted == false)
-          {
-            Index I = new Index();
-            I._Name="TILDA_RUOD_IDX";
-            I._OrderBy= new String[] { _Upsert._DeleteTS };
-            I.Validate(PS, ParentRealized);
-            _Indices.add(I);
-          }
-        
         if (_PrimaryKey != null && _PrimaryKey._Autogen == true)
           PS.AddError("The realize section for view '" + ParentView.getFullName() + "' defines an autogen primary key: these are not allowed for realized tables.");
           
-        Names.clear();
         if (_Mappings_DEPRECATED != null)
           PS.AddError("The realize section for view '" + ParentView.getFullName() + "' defines a mapping which has been DEPRECATED. Use formulas instead in the main view.");
-/*         
-        for (ViewRealizeMapping VRM : _Mappings)
-          if (VRM != null)
-            {
-              VRM.Validate(PS, ParentView);
-              if (Names.add(VRM._Name) == false)
-                PS.AddError("Mapping '" + VRM._Name + "' is duplicated in the realize section for view '" + ParentView.getFullName() + "'.");
-              if (ParentView.getColumn(VRM._Name) == null && ParentView.getFormula(VRM._Name) == null && ParentView.getPivottedColumn(VRM._Name) == null)
-                PS.AddError("Mapping for column '" + VRM._Name + "' is defined without a matching column/formula/pivot in the main view '" + ParentView.getFullName() + "'.");
-              if (TextUtil.findStarElement(_Exclude_DEPRECATED, VRM._Name, true, 0) != -1)
-                PS.AddError("Mapping for column '" + VRM._Name + "' is defined while also being excluded.");
-            }
-*/
+
         Object O = new Object();
         O._FST = FrameworkSourcedType.REALIZED;
         O._SourceView=ParentView;
@@ -172,13 +135,40 @@ public class ViewRealize
         
         // We can't just copy the OCC status of the view because we don't know which columns are actually used.
         O._OCC = O.getColumn("created") != null && O.getColumn("lastUpdated") != null && O.getColumn("deleted") != null;
-        
         O._ModeStr = ParentView._DBOnly==true?ObjectMode.DB_ONLY.toString():ObjectMode.NORMAL.toString();
+
         ParentView._ParentSchema._Objects.add(O);
+
         O.Validate(PS, ParentView._ParentSchema);
+        
+        Set<String> Names = new HashSet<String>();
+        boolean indexOnDeleted = false;
+        for (Index I : _Indices)
+          if (I != null)
+            {
+              if (I.Validate(PS, ParentRealized) == false)
+               continue;
+              if (Names.add(I._Name) == false)
+                PS.AddError("Index '" + I._Name + "' is duplicated in the realize section for view '" + ParentView.getFullName() + "'.");
+              if (_Upsert != null && (   I._ColumnObjs.size() > 0 && I._ColumnObjs.get(0)._Name.equals(_Upsert._DeleteTS) == true
+                                      || I._ColumnObjs.size() == 0 && I._OrderByObjs.get(0)._Name.equals(_Upsert._DeleteTS) == true
+                                     )
+                 )
+                indexOnDeleted = true;
+            }
+        if (_Upsert != null && indexOnDeleted == false)
+          {
+            Index I = new Index();
+            I._Name="TILDA_RUOD_IDX";
+            I._OrderBy= new String[] { _Upsert._DeleteTS };
+            I._SubWhere = _Upsert._DeleteTS +" is not null";
+            I.Validate(PS, ParentRealized);
+            _Indices.add(I);
+          }
         
         if (_Upsert != null)
           _Upsert.Validate(PS, ParentView, ParentRealized, O.getFirstIdentityColumns());
+
 
 //        if (O._Name.equals("Testing2Realized") == true)
 //          LOG.debug("yyyyy");

@@ -370,7 +370,7 @@ public class View extends Base
         // LOG.debug("Object " + O._Name + ": " + TextUtil.print(O.getColumnNames()));
 
         if (_Realize != null)
-          _Realize.Validate(PS, this, new ViewRealizedWrapper(O));
+          _Realize.Validate(PS, this, new ViewRealizedWrapper(O, this));
 
         _Validated = Errs == PS.getErrorCount();
         return _Validated;

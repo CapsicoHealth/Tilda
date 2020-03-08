@@ -773,6 +773,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 OutFinal.append("  ;\n");
                 if (Up._UpsertTSColumnObj != null)
                   OutFinal.append("  DELETE FROM " + RName + " WHERE \"" + Up._DeleteTSColumnObj.getName() + "\" is not null;\n");
+                OutFinal.append("  ANALYZE " + RName + ";\n");
                 OutFinal.append("  END IF;\n");
               }
             // for (Index I : V._Realize._Indices)
@@ -1094,7 +1095,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Formulas
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        String RealizedTable = V._Realize == null ? null : V._ParentSchema._Name + "." + V._Name.substring(0, V._Name.length() - (V._Pivots.isEmpty() == false ? "PivotView" : "View").length()) + "Realized";
+        String RealizedTable = V.getRealizedTableName(true);
         int count = -1;
         int MeasureCount = 0;
         for (Formula F : V._Formulas)
