@@ -42,7 +42,7 @@ public class AppData implements CodeGenAppData
 
     @Override
     public void genFileStart(PrintWriter Out, Object O)
-      throws Exception
+    throws Exception
       {
         Out.println("package " + O._ParentSchema._Package + ";");
         Out.println();
@@ -54,7 +54,7 @@ public class AppData implements CodeGenAppData
 
     @Override
     public void genClassStart(PrintWriter Out, GeneratorSession G, Object O)
-      throws Exception
+    throws Exception
       {
         Out.println("public class " + O._AppDataClassName + " extends " + Helper.getFullBaseClassName(O));
         Out.println(" {");
@@ -65,18 +65,32 @@ public class AppData implements CodeGenAppData
 
     @Override
     public void genClassCustomizations(PrintWriter Out, GeneratorSession G, Object O)
-      throws Exception
+    throws Exception
       {
         for (Column C : O._Columns)
-          if (C != null && C._Mode == ColumnMode.CALCULATED && C._MapperDef == null)
-            {
-              Out.println();
-              Out.println("   @Override");
-              Out.println("   public " + JavaJDBCType.getFieldType(C) + " get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "()");
-              Out.println("    {");
-              Out.println("      // return something");
-              Out.println("    }");
-            }
+          {
+            if (C != null && C._Mode == ColumnMode.CALCULATED && C._MapperDef == null)
+              {
+                Out.println();
+                Out.println("   @Override");
+                Out.println("   public " + JavaJDBCType.getFieldType(C) + " get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "()");
+                Out.println("    {");
+                Out.println("      // return some value");
+                Out.println("      ...");
+                Out.println("    }");
+              }
+            if (C != null && C._Mode == ColumnMode.AUTO && C._MapperDef == null && C._FCT.isManaged() == false)
+              {
+                Out.println();
+                Out.println("   @Override");
+                Out.println("   protected void set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "()");
+                Out.println("   throws Exception");
+                Out.println("    {");
+                Out.println("      // Do something to set the value of the auto field.");
+                Out.println("      ...");
+                Out.println("    }");
+              }
+          }
         if (O._LC != ObjectLifecycle.READONLY)
           {
             Out.println();
@@ -94,11 +108,26 @@ public class AppData implements CodeGenAppData
         Out.println("       // Do things after an object has just been read form the data store, for example, take care of AUTO fields.");
         Out.println("       return true;");
         Out.println("     }");
+
+        if (O._OCC == false && O._LC != ObjectLifecycle.READONLY)
+          {
+            Out.println();
+            Out.println("   @Override");
+            Out.println("   public boolean touch(Connection C) throws Exception");
+            Out.println("     {");
+            Out.println("       // Do things here to update your custom life-cycle tracker fields, like timestamp, if any.");
+            Out.println("       ... something like setLastUpdatedNow();");
+            Out.println();
+            Out.println("       // the write the object to complete the touch operation.");
+            Out.println("       return write(C);");
+            Out.println("     }");
+
+          }
       }
 
     @Override
     public void genClassEnd(PrintWriter Out, GeneratorSession G)
-      throws Exception
+    throws Exception
       {
         Out.println(" }");
       }

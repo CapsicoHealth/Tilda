@@ -440,4 +440,16 @@ public class Docs implements CodeGenDocs
         // TODO Auto-generated method stub
       }
 
+    @Override
+    public void docMethodInit(PrintWriter Out, GeneratorSession G, Object O)
+      {
+        Out.println(Helper.getMultiLineDocCommentStart());
+        Out.println("The generic init method is typically run when there is a general data structure of data available, for example, a CSV");
+        Out.println("data file read in memory, or run from a servlet using a Map<String, String[]> object obtained from an ServletRequest");
+        Out.println("object. The generic init method defaults to this general data structure as a genegic representation.");
+        Out.println(Helper.getMultiLineCommentEnd());
+        
+        
+      }
+
   }

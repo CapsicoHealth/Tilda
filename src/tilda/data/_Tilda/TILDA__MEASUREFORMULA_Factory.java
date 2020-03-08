@@ -167,10 +167,10 @@ This is the column definition for:<BR>
      }
    private static class RecordProcessorInternal implements tilda.db.processors.RecordProcessor
      {
-       public RecordProcessorInternal(Connection C, int Start)
+       public RecordProcessorInternal(Connection C, int start)
          {
            _C = C;
-           _L = new ArrayListResults<tilda.data.MeasureFormula_Data>(Start);
+           _L = new ArrayListResults<tilda.data.MeasureFormula_Data>(start);
          }
        public RecordProcessorInternal(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.MeasureFormula_Data> OP)
          {
@@ -180,9 +180,9 @@ This is the column definition for:<BR>
        protected Connection _C = null;
        protected tilda.db.processors.ObjectProcessor<tilda.data.MeasureFormula_Data> _OP;
        protected ArrayListResults<tilda.data.MeasureFormula_Data> _L = null;
-       public void    start  () { }
-       public void    end    (boolean HasMore, int Max) { if (_OP == null) _L.wrapup(HasMore, Max); }
-       public boolean process(int Index, java.sql.ResultSet RS) throws Exception
+       public void    start  () { if (_OP != null) _OP.start(); }
+       public void    end    (boolean hasMore, int maxCount) { if (_OP == null) _L.wrapup(hasMore, maxCount); else _OP.end(hasMore, maxCount); }
+       public boolean process(int count, java.sql.ResultSet RS) throws Exception
         {
           tilda.data.MeasureFormula_Data Obj = new tilda.data.MeasureFormula_Data();
           boolean OK = ((tilda.data._Tilda.TILDA__MEASUREFORMULA)Obj).init(_C, RS);
@@ -191,24 +191,24 @@ This is the column definition for:<BR>
              if (_OP == null)
               _L.add(Obj);
              else
-              _OP.process(Index, Obj);
+              _OP.process(count, Obj);
            }
           return OK;
         }
      }
 
-   protected static final void processMany(Connection C, String FullSelectQuery, int Start, int Size, tilda.db.processors.RecordProcessor RP) throws Exception
+   protected static final void processMany(Connection C, String fullSelectQuery, int start, int size, tilda.db.processors.RecordProcessor RP) throws Exception
      {
-       readMany(C, -77, RP, null, FullSelectQuery, Start, Size);
+       readMany(C, -77, RP, null, fullSelectQuery, start, size);
      }
-   protected static final ListResults<tilda.data.MeasureFormula_Data> readMany(Connection C, String FullSelectQuery, int Start, int Size) throws Exception
+   protected static final ListResults<tilda.data.MeasureFormula_Data> readMany(Connection C, String fullSelectQuery, int start, int size) throws Exception
      {
-       RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
-       readMany(C, -77, RPI, null, FullSelectQuery, Start, Size);
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
+       readMany(C, -77, RPI, null, fullSelectQuery, start, size);
        return RPI._L;
      }
 
-   private static final void readMany(Connection C, int LookupId, tilda.db.processors.RecordProcessor RP, tilda.data._Tilda.TILDA__MEASUREFORMULA Obj, Object ExtraParams, int Start, int Size) throws Exception
+   private static final void readMany(Connection C, int LookupId, tilda.db.processors.RecordProcessor RP, tilda.data._Tilda.TILDA__MEASUREFORMULA Obj, Object ExtraParams, int start, int size) throws Exception
      {
        long T0 = System.nanoTime();
        StringBuilder S = new StringBuilder(1024);
@@ -237,7 +237,7 @@ This is the column definition for:<BR>
            }
         }
 
-       String Q = S.toString() + C.getSelectLimitClause(Start, Size+1);
+       String Q = S.toString() + C.getSelectLimitClause(start, size+1);
        S.setLength(0);
        S = null;
        QueryDetails.setLastQuery(SCHEMA_TABLENAME_LABEL, Q);
@@ -257,7 +257,7 @@ This is the column definition for:<BR>
            }
 
 
-          count = JDBCHelper.process(PS.executeQuery(), RP, Start, true, Size, true);
+          count = JDBCHelper.process(PS.executeQuery(), RP, start, true, size, true);
         }
        catch (java.sql.SQLException E)
         {
@@ -275,6 +275,33 @@ This is the column definition for:<BR>
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+The generic init method is typically run when there is a general data structure of data available, for example, a CSV
+data file read in memory, or run from a servlet using a Map<String, String[]> object obtained from an ServletRequest
+object. The generic init method defaults to this general data structure as a genegic representation.
+*/
+   static public tilda.data.MeasureFormula_Data init(Map<String, String[]> Values, List<StringStringPair> Errors)
+   throws Exception
+     {
+       tilda.data._Tilda.TILDA__MEASUREFORMULA Obj = new tilda.data.MeasureFormula_Data();
+       String[] vals = null;
+
+       vals = Values.get("measureRefnum");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("measureRefnum", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Long _measureRefnum = ParseUtil.parseLong("measureRefnum", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_measureRefnum != null) Obj.setMeasureRefnum(_measureRefnum);
+
+       vals = Values.get("formulaRefnum");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("formulaRefnum", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Long _formulaRefnum = ParseUtil.parseLong("formulaRefnum", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_formulaRefnum != null) Obj.setFormulaRefnum(_formulaRefnum);
+
+
+       return (tilda.data.MeasureFormula_Data) Obj;
+     }
 
 /**
  Creates a new object in memory, which you can subsequently {@link #write()} to the data store.
@@ -299,22 +326,6 @@ This is the column definition for:<BR>
        return (tilda.data.MeasureFormula_Data) Obj;
      }
 
-   static public tilda.data.MeasureFormula_Data create(Map<String, String> Values, List<StringStringPair> Errors)
-   throws Exception
-     {
-       int IncomingErrors = Errors.size();
-
-       Long        _measureRefnum =                       ParseUtil.parseLong("measureRefnum", true , Values.get("measureRefnum"), Errors );
-       Long        _formulaRefnum =                       ParseUtil.parseLong("formulaRefnum", true , Values.get("formulaRefnum"), Errors );
-
-       if (IncomingErrors != Errors.size())
-        return null;
-
-      tilda.data.MeasureFormula_Data Obj = tilda.data.MeasureFormula_Factory.create(_measureRefnum, _formulaRefnum);
-
-
-      return Obj;
-     }
    public static int writeBatch(Connection C, List<tilda.data.MeasureFormula_Data> L, int batchSize, int commitSize) throws Exception
      {
        long T0 = System.nanoTime();
@@ -352,6 +363,7 @@ This is the column definition for:<BR>
                    QueryDetails.setLastQuery(TILDA__MEASUREFORMULA_Factory.SCHEMA_TABLENAME_LABEL, "");
                    return index;
                  }
+
 
                if (((TILDA__MEASUREFORMULA) d).beforeWrite(C) == false)
                  {
@@ -452,16 +464,16 @@ This is the column definition for:<BR>
 
    public static SelectQuery newSelectQuery(Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, true); }
    public static SelectQuery newWhereQuery (Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, false); }
-   public static ListResults<tilda.data.MeasureFormula_Data> runSelect(Connection C, SelectQuery Q, int Start, int Size) throws Exception
+   public static ListResults<tilda.data.MeasureFormula_Data> runSelect(Connection C, SelectQuery Q, int start, int size) throws Exception
      {
-       RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
-       readMany(C, -7, RPI, null, Q, Start, Size);
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
+       readMany(C, -7, RPI, null, Q, start, size);
        return RPI._L;
      }
-   public static void runSelect(Connection C, SelectQuery Q, tilda.db.processors.ObjectProcessor<tilda.data.MeasureFormula_Data> OP, int Start, int Size) throws Exception
+   public static void runSelect(Connection C, SelectQuery Q, tilda.db.processors.ObjectProcessor<tilda.data.MeasureFormula_Data> OP, int start, int size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       readMany(C, -7, RPI, null, Q, Start, Size);
+       readMany(C, -7, RPI, null, Q, start, size);
      }
    public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
    public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }

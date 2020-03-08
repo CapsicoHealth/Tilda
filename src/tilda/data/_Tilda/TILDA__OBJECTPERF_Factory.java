@@ -543,10 +543,10 @@ This is the column definition for:<BR>
      }
    private static class RecordProcessorInternal implements tilda.db.processors.RecordProcessor
      {
-       public RecordProcessorInternal(Connection C, int Start)
+       public RecordProcessorInternal(Connection C, int start)
          {
            _C = C;
-           _L = new ArrayListResults<tilda.data.ObjectPerf_Data>(Start);
+           _L = new ArrayListResults<tilda.data.ObjectPerf_Data>(start);
          }
        public RecordProcessorInternal(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.ObjectPerf_Data> OP)
          {
@@ -556,9 +556,9 @@ This is the column definition for:<BR>
        protected Connection _C = null;
        protected tilda.db.processors.ObjectProcessor<tilda.data.ObjectPerf_Data> _OP;
        protected ArrayListResults<tilda.data.ObjectPerf_Data> _L = null;
-       public void    start  () { }
-       public void    end    (boolean HasMore, int Max) { if (_OP == null) _L.wrapup(HasMore, Max); }
-       public boolean process(int Index, java.sql.ResultSet RS) throws Exception
+       public void    start  () { if (_OP != null) _OP.start(); }
+       public void    end    (boolean hasMore, int maxCount) { if (_OP == null) _L.wrapup(hasMore, maxCount); else _OP.end(hasMore, maxCount); }
+       public boolean process(int count, java.sql.ResultSet RS) throws Exception
         {
           tilda.data.ObjectPerf_Data Obj = new tilda.data.ObjectPerf_Data();
           boolean OK = ((tilda.data._Tilda.TILDA__OBJECTPERF)Obj).init(_C, RS);
@@ -567,24 +567,24 @@ This is the column definition for:<BR>
              if (_OP == null)
               _L.add(Obj);
              else
-              _OP.process(Index, Obj);
+              _OP.process(count, Obj);
            }
           return OK;
         }
      }
 
-   protected static final void processMany(Connection C, String FullSelectQuery, int Start, int Size, tilda.db.processors.RecordProcessor RP) throws Exception
+   protected static final void processMany(Connection C, String fullSelectQuery, int start, int size, tilda.db.processors.RecordProcessor RP) throws Exception
      {
-       readMany(C, -77, RP, null, FullSelectQuery, Start, Size);
+       readMany(C, -77, RP, null, fullSelectQuery, start, size);
      }
-   protected static final ListResults<tilda.data.ObjectPerf_Data> readMany(Connection C, String FullSelectQuery, int Start, int Size) throws Exception
+   protected static final ListResults<tilda.data.ObjectPerf_Data> readMany(Connection C, String fullSelectQuery, int start, int size) throws Exception
      {
-       RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
-       readMany(C, -77, RPI, null, FullSelectQuery, Start, Size);
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
+       readMany(C, -77, RPI, null, fullSelectQuery, start, size);
        return RPI._L;
      }
 
-   private static final void readMany(Connection C, int LookupId, tilda.db.processors.RecordProcessor RP, tilda.data._Tilda.TILDA__OBJECTPERF Obj, Object ExtraParams, int Start, int Size) throws Exception
+   private static final void readMany(Connection C, int LookupId, tilda.db.processors.RecordProcessor RP, tilda.data._Tilda.TILDA__OBJECTPERF Obj, Object ExtraParams, int start, int size) throws Exception
      {
        long T0 = System.nanoTime();
        StringBuilder S = new StringBuilder(1024);
@@ -637,7 +637,7 @@ This is the column definition for:<BR>
            }
         }
 
-       String Q = S.toString() + C.getSelectLimitClause(Start, Size+1);
+       String Q = S.toString() + C.getSelectLimitClause(start, size+1);
        S.setLength(0);
        S = null;
        QueryDetails.setLastQuery(SCHEMA_TABLENAME_LABEL, Q);
@@ -667,7 +667,7 @@ This is the column definition for:<BR>
            }
 
 
-          count = JDBCHelper.process(PS.executeQuery(), RP, Start, true, Size, true);
+          count = JDBCHelper.process(PS.executeQuery(), RP, start, true, size, true);
         }
        catch (java.sql.SQLException E)
         {
@@ -685,6 +685,117 @@ This is the column definition for:<BR>
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+The generic init method is typically run when there is a general data structure of data available, for example, a CSV
+data file read in memory, or run from a servlet using a Map<String, String[]> object obtained from an ServletRequest
+object. The generic init method defaults to this general data structure as a genegic representation.
+*/
+   static public tilda.data.ObjectPerf_Data init(Map<String, String[]> Values, List<StringStringPair> Errors)
+   throws Exception
+     {
+       tilda.data._Tilda.TILDA__OBJECTPERF Obj = new tilda.data.ObjectPerf_Data();
+       String[] vals = null;
+
+       vals = Values.get("schemaName");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("schemaName", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _schemaName = ParseUtil.parseString("schemaName", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_schemaName != null) Obj.setSchemaName(_schemaName);
+
+       vals = Values.get("objectName");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("objectName", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _objectName = ParseUtil.parseString("objectName", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_objectName != null) Obj.setObjectName(_objectName);
+
+       vals = Values.get("startPeriod");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("startPeriod", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       ZonedDateTime _startPeriod = ParseUtil.parseZonedDateTime("startPeriod", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_startPeriod != null) Obj.setStartPeriod(_startPeriod);
+
+       vals = Values.get("endPeriod");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("endPeriod", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       ZonedDateTime _endPeriod = ParseUtil.parseZonedDateTime("endPeriod", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_endPeriod != null) Obj.setEndPeriod(_endPeriod);
+
+       vals = Values.get("selectNano");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("selectNano", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Long _selectNano = ParseUtil.parseLong("selectNano", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_selectNano != null) Obj.setSelectNano(_selectNano);
+
+       vals = Values.get("selectCount");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("selectCount", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Integer _selectCount = ParseUtil.parseInteger("selectCount", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_selectCount != null) Obj.setSelectCount(_selectCount);
+
+       vals = Values.get("selectRecords");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("selectRecords", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Integer _selectRecords = ParseUtil.parseInteger("selectRecords", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_selectRecords != null) Obj.setSelectRecords(_selectRecords);
+
+       vals = Values.get("insertNano");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("insertNano", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Long _insertNano = ParseUtil.parseLong("insertNano", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_insertNano != null) Obj.setInsertNano(_insertNano);
+
+       vals = Values.get("insertCount");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("insertCount", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Integer _insertCount = ParseUtil.parseInteger("insertCount", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_insertCount != null) Obj.setInsertCount(_insertCount);
+
+       vals = Values.get("insertRecords");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("insertRecords", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Integer _insertRecords = ParseUtil.parseInteger("insertRecords", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_insertRecords != null) Obj.setInsertRecords(_insertRecords);
+
+       vals = Values.get("updateNano");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("updateNano", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Long _updateNano = ParseUtil.parseLong("updateNano", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_updateNano != null) Obj.setUpdateNano(_updateNano);
+
+       vals = Values.get("updateCount");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("updateCount", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Integer _updateCount = ParseUtil.parseInteger("updateCount", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_updateCount != null) Obj.setUpdateCount(_updateCount);
+
+       vals = Values.get("updateRecords");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("updateRecords", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Integer _updateRecords = ParseUtil.parseInteger("updateRecords", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_updateRecords != null) Obj.setUpdateRecords(_updateRecords);
+
+       vals = Values.get("deleteNano");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("deleteNano", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Long _deleteNano = ParseUtil.parseLong("deleteNano", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_deleteNano != null) Obj.setDeleteNano(_deleteNano);
+
+       vals = Values.get("deleteCount");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("deleteCount", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Integer _deleteCount = ParseUtil.parseInteger("deleteCount", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_deleteCount != null) Obj.setDeleteCount(_deleteCount);
+
+       vals = Values.get("deleteRecords");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("deleteRecords", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Integer _deleteRecords = ParseUtil.parseInteger("deleteRecords", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_deleteRecords != null) Obj.setDeleteRecords(_deleteRecords);
+
+
+       return (tilda.data.ObjectPerf_Data) Obj;
+     }
 
 /**
  Creates a new object in memory, which you can subsequently {@link #write()} to the data store.
@@ -725,48 +836,6 @@ This is the column definition for:<BR>
        return (tilda.data.ObjectPerf_Data) Obj;
      }
 
-   static public tilda.data.ObjectPerf_Data create(Map<String, String> Values, List<StringStringPair> Errors)
-   throws Exception
-     {
-       int IncomingErrors = Errors.size();
-
-       String        _schemaName    =                       ParseUtil.parseString("schemaName"   , true , Values.get("schemaName"   ), Errors );
-       String        _objectName    =                       ParseUtil.parseString("objectName"   , true , Values.get("objectName"   ), Errors );
-       ZonedDateTime        _startPeriod   =                       ParseUtil.parseZonedDateTime("startPeriod"  , true , Values.get("startPeriod"  ), Errors );
-       ZonedDateTime        _endPeriod     =                       ParseUtil.parseZonedDateTime("endPeriod"    , true , Values.get("endPeriod"    ), Errors );
-       Long        _selectNano    =                       ParseUtil.parseLong("selectNano"   , true , Values.get("selectNano"   ), Errors );
-       Integer        _selectCount   =                       ParseUtil.parseInteger("selectCount"  , true , Values.get("selectCount"  ), Errors );
-       Integer        _selectRecords =                       ParseUtil.parseInteger("selectRecords", true , Values.get("selectRecords"), Errors );
-       Long        _insertNano    =                       ParseUtil.parseLong("insertNano"   , true , Values.get("insertNano"   ), Errors );
-       Integer        _insertCount   =                       ParseUtil.parseInteger("insertCount"  , true , Values.get("insertCount"  ), Errors );
-       Integer        _insertRecords =                       ParseUtil.parseInteger("insertRecords", true , Values.get("insertRecords"), Errors );
-       Long        _updateNano    =                       ParseUtil.parseLong("updateNano"   , true , Values.get("updateNano"   ), Errors );
-       Integer        _updateCount   =                       ParseUtil.parseInteger("updateCount"  , true , Values.get("updateCount"  ), Errors );
-       Integer        _updateRecords =                       ParseUtil.parseInteger("updateRecords", true , Values.get("updateRecords"), Errors );
-       Long        _deleteNano    =                       ParseUtil.parseLong("deleteNano"   , true , Values.get("deleteNano"   ), Errors );
-       Integer        _deleteCount   =                       ParseUtil.parseInteger("deleteCount"  , true , Values.get("deleteCount"  ), Errors );
-       Integer        _deleteRecords =                       ParseUtil.parseInteger("deleteRecords", true , Values.get("deleteRecords"), Errors );
-
-       if (IncomingErrors != Errors.size())
-        return null;
-
-      tilda.data.ObjectPerf_Data Obj = tilda.data.ObjectPerf_Factory.create(_schemaName, _objectName, _startPeriod, _endPeriod);
-
-      if (_selectNano   != null) Obj.setSelectNano   (_selectNano   );
-      if (_selectCount  != null) Obj.setSelectCount  (_selectCount  );
-      if (_selectRecords!= null) Obj.setSelectRecords(_selectRecords);
-      if (_insertNano   != null) Obj.setInsertNano   (_insertNano   );
-      if (_insertCount  != null) Obj.setInsertCount  (_insertCount  );
-      if (_insertRecords!= null) Obj.setInsertRecords(_insertRecords);
-      if (_updateNano   != null) Obj.setUpdateNano   (_updateNano   );
-      if (_updateCount  != null) Obj.setUpdateCount  (_updateCount  );
-      if (_updateRecords!= null) Obj.setUpdateRecords(_updateRecords);
-      if (_deleteNano   != null) Obj.setDeleteNano   (_deleteNano   );
-      if (_deleteCount  != null) Obj.setDeleteCount  (_deleteCount  );
-      if (_deleteRecords!= null) Obj.setDeleteRecords(_deleteRecords);
-
-      return Obj;
-     }
    public static int writeBatch(Connection C, List<tilda.data.ObjectPerf_Data> L, int batchSize, int commitSize) throws Exception
      {
        long T0 = System.nanoTime();
@@ -804,6 +873,7 @@ This is the column definition for:<BR>
                    QueryDetails.setLastQuery(TILDA__OBJECTPERF_Factory.SCHEMA_TABLENAME_LABEL, "");
                    return index;
                  }
+
 
                if (((TILDA__OBJECTPERF) d).beforeWrite(C) == false)
                  {
@@ -901,7 +971,8 @@ This is the column definition for:<BR>
        return (tilda.data.ObjectPerf_Data) Obj;
      }
 
-   static public ListResults<tilda.data.ObjectPerf_Data> lookupWhereSchemaByObjectStart(Connection C, String schemaName, int Start, int Size) throws Exception
+
+   static public ListResults<tilda.data.ObjectPerf_Data> lookupWhereSchemaByObjectStart(Connection C, String schemaName, int start, int size) throws Exception
      {
        tilda.data._Tilda.TILDA__OBJECTPERF Obj = new tilda.data.ObjectPerf_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -909,12 +980,12 @@ This is the column definition for:<BR>
        Obj.setSchemaName   (schemaName   );
 
 
-       RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
-       readMany(C, 1, RPI, Obj, null, Start, Size);
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
+       readMany(C, 1, RPI, Obj, null, start, size);
        return RPI._L;
      }
 
-   static public void lookupWhereSchemaByObjectStart(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.ObjectPerf_Data> OP, String schemaName, int Start, int Size) throws Exception
+   static public void lookupWhereSchemaByObjectStart(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.ObjectPerf_Data> OP, String schemaName, int start, int size) throws Exception
      {
        tilda.data._Tilda.TILDA__OBJECTPERF Obj = new tilda.data.ObjectPerf_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -923,11 +994,12 @@ This is the column definition for:<BR>
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       readMany(C, 1, RPI, Obj, null, Start, Size);
+       readMany(C, 1, RPI, Obj, null, start, size);
      }
 
 
-   static public ListResults<tilda.data.ObjectPerf_Data> lookupWhereSchemaObjectByStart(Connection C, String schemaName, String objectName, int Start, int Size) throws Exception
+
+   static public ListResults<tilda.data.ObjectPerf_Data> lookupWhereSchemaObjectByStart(Connection C, String schemaName, String objectName, int start, int size) throws Exception
      {
        tilda.data._Tilda.TILDA__OBJECTPERF Obj = new tilda.data.ObjectPerf_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -936,12 +1008,12 @@ This is the column definition for:<BR>
        Obj.setObjectName   (objectName   );
 
 
-       RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
-       readMany(C, 2, RPI, Obj, null, Start, Size);
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
+       readMany(C, 2, RPI, Obj, null, start, size);
        return RPI._L;
      }
 
-   static public void lookupWhereSchemaObjectByStart(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.ObjectPerf_Data> OP, String schemaName, String objectName, int Start, int Size) throws Exception
+   static public void lookupWhereSchemaObjectByStart(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.ObjectPerf_Data> OP, String schemaName, String objectName, int start, int size) throws Exception
      {
        tilda.data._Tilda.TILDA__OBJECTPERF Obj = new tilda.data.ObjectPerf_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -951,7 +1023,7 @@ This is the column definition for:<BR>
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       readMany(C, 2, RPI, Obj, null, Start, Size);
+       readMany(C, 2, RPI, Obj, null, start, size);
      }
 
 
@@ -959,16 +1031,16 @@ This is the column definition for:<BR>
 
    public static SelectQuery newSelectQuery(Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, true); }
    public static SelectQuery newWhereQuery (Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, false); }
-   public static ListResults<tilda.data.ObjectPerf_Data> runSelect(Connection C, SelectQuery Q, int Start, int Size) throws Exception
+   public static ListResults<tilda.data.ObjectPerf_Data> runSelect(Connection C, SelectQuery Q, int start, int size) throws Exception
      {
-       RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
-       readMany(C, -7, RPI, null, Q, Start, Size);
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
+       readMany(C, -7, RPI, null, Q, start, size);
        return RPI._L;
      }
-   public static void runSelect(Connection C, SelectQuery Q, tilda.db.processors.ObjectProcessor<tilda.data.ObjectPerf_Data> OP, int Start, int Size) throws Exception
+   public static void runSelect(Connection C, SelectQuery Q, tilda.db.processors.ObjectProcessor<tilda.data.ObjectPerf_Data> OP, int start, int size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       readMany(C, -7, RPI, null, Q, Start, Size);
+       readMany(C, -7, RPI, null, Q, start, size);
      }
    public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
    public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }

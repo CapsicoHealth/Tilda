@@ -83,7 +83,7 @@ public class Load
 
         if (!isValidArguments(arguments))
           {
-            PrintUsageHint();
+            printUsageHint();
             System.exit(-1);
           }
 
@@ -113,8 +113,8 @@ public class Load
                 LOG.debug("Validating file " + ConfigFileName);
                 List<String> selectedObjectsList = new ArrayList<>(Arrays.asList(arguments.get(i + 3).split(",")));
                 List<String> connectionIdsList = new ArrayList<>(Arrays.asList(arguments.get(i + 5).split(",")));
-                List<DataObject> filteredObjects = FilterObjects(selectedObjectsList, Conf._CmsData);
-                List<String> errors = ValidateDataObjects(connectionIdsList, filteredObjects);
+                List<DataObject> filteredObjects = filterObjects(selectedObjectsList, Conf._CmsData);
+                List<String> errors = validateDataObjects(connectionIdsList, filteredObjects);
                 if (errors.size() > 0)
                   {
                     for (String error : errors)
@@ -128,7 +128,7 @@ public class Load
                     truncatedTables.add(DO.getTableFullName());
               }
             LOG.debug("Validation Successful.");
-            CheckTruncates(truncatedTables);
+            checkTruncates(truncatedTables);
 
             // Processing
             for (int i = 0; i < arguments.size(); i += 6)
@@ -139,8 +139,8 @@ public class Load
                 LOG.debug("Processing file " + ConfigFileName);
                 List<String> selectedObjectsList = new ArrayList<>(Arrays.asList(arguments.get(i + 3).split(",")));
                 List<String> connectionIdsList = new ArrayList<>(Arrays.asList(arguments.get(i + 5).split(",")));
-                ValidateDataObjects(connectionIdsList, Conf._CmsData);
-                StartImportProcessor(selectedObjectsList, connectionIdsList, Conf, Conf._CmsData);
+                validateDataObjects(connectionIdsList, Conf._CmsData);
+                startImportProcessor(selectedObjectsList, connectionIdsList, Conf, Conf._CmsData);
               }
             LOG.debug("Import Tables completed.");
           }
@@ -195,7 +195,7 @@ public class Load
           }
       }
 
-    private static void CheckTruncates(Set<String> truncatedTables)
+    private static void checkTruncates(Set<String> truncatedTables)
     throws Exception
       {
         if (truncatedTables.isEmpty() == false)
@@ -211,7 +211,7 @@ public class Load
           }
       }
 
-    private static List<String> ValidateDataObjects(List<String> connectionIdsList, List<DataObject> selectedDO)
+    private static List<String> validateDataObjects(List<String> connectionIdsList, List<DataObject> selectedDO)
       {
         List<String> errorMessages = new ArrayList<>();
         Connection C = null;
@@ -247,15 +247,15 @@ public class Load
         return errorMessages;
       }
 
-    private static void StartImportProcessor(List<String> selectedObjectNames, List<String> connectionIdsList, Config conf, List<DataObject> _CmsData)
+    private static void startImportProcessor(List<String> selectedObjectNames, List<String> connectionIdsList, Config conf, List<DataObject> _CmsData)
     throws Exception
       {
-        List<DataObject> filteredObjects = FilterObjects(selectedObjectNames, _CmsData);
+        List<DataObject> filteredObjects = filterObjects(selectedObjectNames, _CmsData);
         if (connectionIdsList.size() > 0 && filteredObjects.size() > 0)
-          RunImportProcessor(connectionIdsList, conf, filteredObjects);
+          runImportProcessor(connectionIdsList, conf, filteredObjects);
       }
 
-    private static List<DataObject> FilterObjects(List<String> selectedObjects, List<DataObject> AllDataObjects)
+    private static List<DataObject> filterObjects(List<String> selectedObjects, List<DataObject> AllDataObjects)
       {
         List<DataObject> filteredList = new ArrayList<>();
 
@@ -273,7 +273,7 @@ public class Load
         return filteredList;
       }
 
-    private static void RunImportProcessor(List<String> connectionIdsList, Config Conf, List<DataObject> dataObjects)
+    private static void runImportProcessor(List<String> connectionIdsList, Config Conf, List<DataObject> dataObjects)
     throws Exception
       {
         if ("ALL".equals(connectionIdsList.get(0)))
@@ -353,7 +353,7 @@ public class Load
         return true;
       }
 
-    private static void PrintUsageHint()
+    private static void printUsageHint()
       {
         LOG.error("");
         LOG.error("Load utility *must* be called with following parameters :");
@@ -441,9 +441,9 @@ public class Load
                                   }
 
                                 // Validate configurations
-                                List<DataObject> selectedDO = FilterObjects(ImportTables, Conf._CmsData);
+                                List<DataObject> selectedDO = filterObjects(ImportTables, Conf._CmsData);
                                 LOG.debug("Validating Selected Table Indices..");
-                                List<String> errors = ValidateDataObjects(ConnectionIds, selectedDO);
+                                List<String> errors = validateDataObjects(ConnectionIds, selectedDO);
                                 if (errors.size() > 0)
                                   {
                                     String error = TextUtil.joinTrim(errors.toArray(new String[errors.size()]), ", \n");
@@ -456,10 +456,10 @@ public class Load
                                 for (DataObject DO : selectedDO)
                                   if (DO.isTruncateFirst() == true)
                                     truncatedTables.add(DO.getTableFullName());
-                                CheckTruncates(truncatedTables);
+                                checkTruncates(truncatedTables);
 
                                 // Processing
-                                StartImportProcessor(ImportTables, ConnectionIds, Conf, Conf._CmsData);
+                                startImportProcessor(ImportTables, ConnectionIds, Conf, Conf._CmsData);
                                 frmDataImport.dispose(); // Doesn't trigger listeners
                                 LOG.debug("Import Tables completed.");
                               }

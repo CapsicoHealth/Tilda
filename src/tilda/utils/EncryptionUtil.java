@@ -58,16 +58,16 @@ public class EncryptionUtil
      */
     public static byte[] hash256(String plaintext)
       {
-        return HashByteArrray(plaintext, "SHA-256");
+        return hashByteArrray(plaintext, "SHA-256");
       }
 
     protected static String hashStr(String plaintext, String algo)
       {
-        byte[] hash = HashByteArrray(plaintext, algo);
+        byte[] hash = hashByteArrray(plaintext, algo);
         return hash == null ? null : new String(Base64.getEncoder().encodeToString(hash));
       }
 
-    protected static byte[] HashByteArrray(String plainText, String shaAlgo)
+    protected static byte[] hashByteArrray(String plainText, String shaAlgo)
       {
         if (TextUtil.isNullOrEmpty(plainText) == true)
           return null;
@@ -79,7 +79,7 @@ public class EncryptionUtil
           }
         catch (Exception e)
           {
-            LOG.error("Exception in HashByteArrray()", e);
+            LOG.error("Exception in hashByteArrray()", e);
             return null;
           }
       }

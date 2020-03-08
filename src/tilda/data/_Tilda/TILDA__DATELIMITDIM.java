@@ -45,7 +45,7 @@ The Table TILDA.DateLimitDim:<UL>
 This Table contains the following columns:<BLOCKQUOTE>
  <TABLE id="DateLimitDim_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
    <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
-  <TR valign="top" bgcolor="#DFECF8">
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>1&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateLimitDim-invalidDate_DIV' class='columns'>invalidDate</B>&nbsp;&nbsp;</TD>
 <TD>LocalDate&nbsp;/&nbsp;date&nbsp;&nbsp;</TD>
@@ -57,7 +57,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TABLE>
 </TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
+  <TR valign="top" style="background-color:#FFFFFF;">
     <TD>2&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateLimitDim-minDate_DIV' class='columns'>minDate</B>&nbsp;&nbsp;</TD>
 <TD>LocalDate&nbsp;/&nbsp;date&nbsp;&nbsp;</TD>
@@ -69,7 +69,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TABLE>
 </TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>3&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateLimitDim-maxDate_DIV' class='columns'>maxDate</B>&nbsp;&nbsp;</TD>
 <TD>LocalDate&nbsp;/&nbsp;date&nbsp;&nbsp;</TD>
@@ -426,6 +426,11 @@ This is the hasChanged for:<BR>
      }
 
 /**
+ Sets the 'lastUpdated' column to now and causes a Write to occur to update the object in the data store.
+*/
+   public abstract boolean touch(Connection C) throws Exception;
+
+/**
  Writes the object to the data store if any changes has occurred since the object was initially
  read from the data store or last written. 
  If the object was deserialized (i.e., not created via the factory lookup() or create() methods, 
@@ -601,15 +606,15 @@ This is the hasChanged for:<BR>
        int i = 0;
        if (__Changes.intersects(TILDA__DATELIMITDIM_Factory.COLS.INVALIDDATE._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__DATELIMITDIM_Factory.COLS.INVALIDDATE._Mask) == true) PS.setNull(++i, java.sql.Types.DATE); else if (DateTimeUtil.isNowPlaceholder(_invalidDate) == false)  PS.setDate(++i, new java.sql.Date(_invalidDate.getYear()-1900, _invalidDate.getMonthValue()-1, _invalidDate.getDayOfMonth()));
+          if (__Nulls.intersects(TILDA__DATELIMITDIM_Factory.COLS.INVALIDDATE._Mask) == true) PS.setNull(++i, java.sql.Types.DATE); else if (DateTimeUtil.isNowPlaceholder(_invalidDate) == false)  PS.setDate(++i, java.sql.Date.valueOf(_invalidDate));
         } 
        if (__Changes.intersects(TILDA__DATELIMITDIM_Factory.COLS.MINDATE._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__DATELIMITDIM_Factory.COLS.MINDATE._Mask) == true) PS.setNull(++i, java.sql.Types.DATE); else if (DateTimeUtil.isNowPlaceholder(_minDate) == false)  PS.setDate(++i, new java.sql.Date(_minDate.getYear()-1900, _minDate.getMonthValue()-1, _minDate.getDayOfMonth()));
+          if (__Nulls.intersects(TILDA__DATELIMITDIM_Factory.COLS.MINDATE._Mask) == true) PS.setNull(++i, java.sql.Types.DATE); else if (DateTimeUtil.isNowPlaceholder(_minDate) == false)  PS.setDate(++i, java.sql.Date.valueOf(_minDate));
         } 
        if (__Changes.intersects(TILDA__DATELIMITDIM_Factory.COLS.MAXDATE._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__DATELIMITDIM_Factory.COLS.MAXDATE._Mask) == true) PS.setNull(++i, java.sql.Types.DATE); else if (DateTimeUtil.isNowPlaceholder(_maxDate) == false)  PS.setDate(++i, new java.sql.Date(_maxDate.getYear()-1900, _maxDate.getMonthValue()-1, _maxDate.getDayOfMonth()));
+          if (__Nulls.intersects(TILDA__DATELIMITDIM_Factory.COLS.MAXDATE._Mask) == true) PS.setNull(++i, java.sql.Types.DATE); else if (DateTimeUtil.isNowPlaceholder(_maxDate) == false)  PS.setDate(++i, java.sql.Date.valueOf(_maxDate));
         } 
        return i;
      }
@@ -800,6 +805,7 @@ This is the hasChanged for:<BR>
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();
+
      return afterRead(C);
    }
 

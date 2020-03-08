@@ -48,38 +48,45 @@ public class MasterFactory
 
     static class ObjectMetaData
       {
-        protected ObjectMetaData(String PackageName, Object Obj, List<String> WarningList)
-          throws Exception
-          {
-            _Obj = Obj;
+        protected ObjectMetaData(String PackageName, Object Obj, List<String> Warnings)
+        throws Exception
+        {
+          _Obj = Obj;
 
-            String FactoryClassName = Helper.getFullBaseClassName(Obj) + "_Factory";
-            _FactoryClass = Class.forName(FactoryClassName);
+          String FactoryClassName = Helper.getFullBaseClassName(Obj) + "_Factory";
+          try
+            {
+              _FactoryClass = Class.forName(FactoryClassName);
+            }
+          catch (Exception E)
+            {
+              throw new Exception("The class '"+FactoryClassName+"' cannot be loaded. Did you just Gen and forgot to Refresh your workspace?", E);
+            }
+          _ObjectName = Obj.getShortName();
 
-            _ObjectName = Obj.getShortName();
+          String ColsClassName = Helper.getFullBaseClassName(Obj) + "_Factory$COLS";
+          Class<?> _ColsClass = Class.forName(ColsClassName);
 
-            String ColsClassName = Helper.getFullBaseClassName(Obj) + "_Factory$COLS";
-            Class<?> _ColsClass = Class.forName(ColsClassName);
+          for (Column C : Obj._Columns)
+            if (C != null && C._FCT.isManaged() == false && C._Mode != ColumnMode.CALCULATED)
+              {
+                try
+                  {
+                    Field F = _ColsClass.getDeclaredField(C.getName().toUpperCase());
+                    ColumnDefinition CD = (ColumnDefinition) F.get(null);
+                    _Cols.add(CD);
+                  }
+                catch (Throwable T)
+                  {
+                    String w = "No generated code for '" + C.getFullName() + "'.";
+                    LOG.warn(w + "\n", T);
+                    Warnings.add(w);
+                  }
+              }
 
-            for (Column C : Obj._Columns)
-              if (C != null && C._FCT.isManaged() == false && C._Mode != ColumnMode.CALCULATED)
-                {
-                  try
-                    {
-                      Field F = _ColsClass.getDeclaredField(C.getName().toUpperCase());
-                      ColumnDefinition CD = (ColumnDefinition) F.get(null);
-                      _Cols.add(CD);
-                    }
-                  catch (Exception E)
-                    {
-                      LOG.warn("Field "+C.getFullName()+" cannot seem to be resolved from the current binaries. Possibly, someone forgot to Gen?\n", E);
-                      WarningList.add("Field "+C.getFullName()+" cannot seem to be resolved from the current binaries. Possibly, someone forgot to Gen?");
-                    }
-                }
-
-            _RunSelectMethodList = _FactoryClass.getMethod("runSelect", Connection.class, SelectQuery.class, Integer.TYPE, Integer.TYPE);
-            _RunSelectMethodOP = _FactoryClass.getMethod("runSelect", Connection.class, SelectQuery.class, ObjectProcessor.class, Integer.TYPE, Integer.TYPE);
-          }
+          _RunSelectMethodList = _FactoryClass.getMethod("runSelect", Connection.class, SelectQuery.class, Integer.TYPE, Integer.TYPE);
+          _RunSelectMethodOP = _FactoryClass.getMethod("runSelect", Connection.class, SelectQuery.class, ObjectProcessor.class, Integer.TYPE, Integer.TYPE);
+         }
 
         protected final Object              _Obj;
         public final String                 _ObjectName;

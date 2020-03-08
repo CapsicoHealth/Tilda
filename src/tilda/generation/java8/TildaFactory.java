@@ -43,7 +43,6 @@ import tilda.parsing.parts.OutputMapping;
 import tilda.parsing.parts.PrimaryKey;
 import tilda.parsing.parts.Query;
 import tilda.parsing.parts.SubWhereClause;
-import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
 
 public class TildaFactory implements CodeGenTildaFactory
@@ -66,11 +65,11 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("import java.math.*;");
         Out.println("import java.util.*;");
         Out.println("import java.time.*;");
-        Out.println();        
+        Out.println();
         Out.println("import org.apache.logging.log4j.*;");
-        Out.println();        
+        Out.println();
         Out.println("import com.google.gson.annotations.*;");
-        Out.println();        
+        Out.println();
         Out.println("import tilda.db.*;");
         Out.println("import tilda.enums.*;");
         Out.println("import tilda.performance.*;");
@@ -216,10 +215,10 @@ public class TildaFactory implements CodeGenTildaFactory
           }
         Out.println("   private static class RecordProcessorInternal implements tilda.db.processors.RecordProcessor");
         Out.println("     {");
-        Out.println("       public RecordProcessorInternal(Connection C, int Start)");
+        Out.println("       public RecordProcessorInternal(Connection C, int start)");
         Out.println("         {");
         Out.println("           _C = C;");
-        Out.println("           _L = new ArrayListResults<" + Helper.getFullAppDataClassName(O) + ">(Start);");
+        Out.println("           _L = new ArrayListResults<" + Helper.getFullAppDataClassName(O) + ">(start);");
         Out.println("         }");
         Out.println("       public RecordProcessorInternal(Connection C, tilda.db.processors.ObjectProcessor<" + Helper.getFullAppDataClassName(O) + "> OP)");
         Out.println("         {");
@@ -229,9 +228,9 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("       protected Connection _C = null;");
         Out.println("       protected tilda.db.processors.ObjectProcessor<" + Helper.getFullAppDataClassName(O) + "> _OP;");
         Out.println("       protected ArrayListResults<" + Helper.getFullAppDataClassName(O) + "> _L = null;");
-        Out.println("       public void    start  () { }");
-        Out.println("       public void    end    (boolean HasMore, int Max) { if (_OP == null) _L.wrapup(HasMore, Max); }");
-        Out.println("       public boolean process(int Index, java.sql.ResultSet RS) throws Exception");
+        Out.println("       public void    start  () { if (_OP != null) _OP.start(); }");
+        Out.println("       public void    end    (boolean hasMore, int maxCount) { if (_OP == null) _L.wrapup(hasMore, maxCount); else _OP.end(hasMore, maxCount); }");
+        Out.println("       public boolean process(int count, java.sql.ResultSet RS) throws Exception");
         Out.println("        {");
         Out.println("          " + Helper.getFullAppDataClassName(O) + " Obj = new " + Helper.getFullAppDataClassName(O) + "();");
         Out.println("          boolean OK = ((" + Helper.getFullBaseClassName(O) + ")Obj).init(_C, RS);");
@@ -240,26 +239,26 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("             if (_OP == null)");
         Out.println("              _L.add(Obj);");
         Out.println("             else");
-        Out.println("              _OP.process(Index, Obj);");
+        Out.println("              _OP.process(count, Obj);");
         Out.println("           }");
         Out.println("          return OK;");
         Out.println("        }");
         Out.println("     }");
         Out.println();
-        Out.println("   protected static final void processMany(Connection C, String FullSelectQuery, int Start, int Size, tilda.db.processors.RecordProcessor RP) throws Exception");
+        Out.println("   protected static final void processMany(Connection C, String fullSelectQuery, int start, int size, tilda.db.processors.RecordProcessor RP) throws Exception");
         Out.println("     {");
-        Out.println("       readMany(C, -77, RP, null, FullSelectQuery, Start, Size);");
+        Out.println("       readMany(C, -77, RP, null, fullSelectQuery, start, size);");
         Out.println("     }");
 
-        Out.println("   protected static final ListResults<" + Helper.getFullAppDataClassName(O) + "> readMany(Connection C, String FullSelectQuery, int Start, int Size) throws Exception");
+        Out.println("   protected static final ListResults<" + Helper.getFullAppDataClassName(O) + "> readMany(Connection C, String fullSelectQuery, int start, int size) throws Exception");
         Out.println("     {");
-        Out.println("       RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);");
-        Out.println("       readMany(C, -77, RPI, null, FullSelectQuery, Start, Size);");
+        Out.println("       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);");
+        Out.println("       readMany(C, -77, RPI, null, fullSelectQuery, start, size);");
         Out.println("       return RPI._L;");
         Out.println("     }");
         Out.println();
         Out.println("   private static final void readMany(Connection C, int LookupId, tilda.db.processors.RecordProcessor RP, "
-        + Helper.getFullBaseClassName(O) + " Obj, Object ExtraParams, int Start, int Size) throws Exception");
+        + Helper.getFullBaseClassName(O) + " Obj, Object ExtraParams, int start, int size) throws Exception");
         Out.println("     {");
         Out.println("       long T0 = System.nanoTime();");
         Out.println("       StringBuilder S = new StringBuilder(1024);");
@@ -274,7 +273,7 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("        }");
         Out.println();
         if (G.getSql().supportsSelectLimit() == true || G.getSql().supportsSelectOffset() == true)
-          Out.println("       String Q = S.toString() + C.getSelectLimitClause(Start, Size+1);");
+          Out.println("       String Q = S.toString() + C.getSelectLimitClause(start, size+1);");
         else
           Out.println("       String Q = S.toString();");
         Out.println("       S.setLength(0);");
@@ -299,7 +298,7 @@ public class TildaFactory implements CodeGenTildaFactory
           Out.println("          int i = 0;");
         Out.println(SBW.getBuilder().toString());
         Out.println();
-        Out.println("          count = JDBCHelper.process(PS.executeQuery(), RP, Start, " + G.getSql().supportsSelectOffset() + ", Size, " + G.getSql().supportsSelectOffset() + ");");
+        Out.println("          count = JDBCHelper.process(PS.executeQuery(), RP, start, " + G.getSql().supportsSelectOffset() + ", size, " + G.getSql().supportsSelectOffset() + ");");
         Out.println("        }");
         Helper.CatchFinallyBlock(Out, O, "selected", "StatementType.SELECT", false, true);
         Out.println();
@@ -355,69 +354,62 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("       return (" + Helper.getFullAppDataClassName(O) + ") Obj;");
         Out.println("     }");
         Out.println();
-
-
-        Out.println("   static public " + Helper.getFullAppDataClassName(O) + " create(Map<String, String> Values, List<StringStringPair> Errors)");
-        Out.println("   throws Exception");
-        Out.println("     {");
-        Out.println("       int IncomingErrors = Errors.size();");
-        Out.println();
-        for (Column C : O._Columns)
-          if (C != null)
-            {
-              if (C.getType() == ColumnType.BINARY)
-                {
-                  Out.println("       if (Values.get(" + TextUtil.escapeDoubleQuoteWithSlash(C.getName()) + ") != null)");
-                  Out.println("        Errors.add(new StringStringPair(" + TextUtil.escapeDoubleQuoteWithSlash(C.getName()) + ", \"Parameter is of a binary type and cannot be passed as a string value.\"));");
-                  continue;
-                }
-              if (C._FCT.isManaged() == true || C._Mode != ColumnMode.NORMAL)
-                continue;
-              String Pad = C._ParentObject.getColumnPad(C.getName());
-              Out.print("       " + (C.isCollection() == true && C._JsonSchema == null ? JavaJDBCType.getFieldType(C) : JavaJDBCType.getFieldTypeBaseClass(C) + "      ")
-              + "  _" + C.getName() + Pad
-              + " = " + (C.isList() == true && C._JsonSchema == null ? "CollectionUtil.toList("
-              : C.isSet() == true && C._JsonSchema == null ? "CollectionUtil.toSet ("
-              : "                      ")
-              + "ParseUtil.parse" + JavaJDBCType.getFieldTypeBaseClass(C)
-              + "(" + TextUtil.escapeDoubleQuoteWithSlash(C.getName()) + Pad
-              + ", " + (C._Nullable == true ? "false" : "true ")
-              + ", Values.get(" + TextUtil.escapeDoubleQuoteWithSlash(C.getName()) + Pad + ")");
-              if (C.isCollection() == true && C._JsonSchema == null)
-                Out.print(", " + TextUtil.escapeDoubleQuoteWithSlash(SystemValues.DEFAULT_SEPARATOR1_BACKQUOTES));
-              Out.println(", Errors"
-              + (C.isCollection() == true && C._JsonSchema == null ? ")" : " ")
-              + ");");
-            }
-        Out.println();
-        Out.println("       if (IncomingErrors != Errors.size())");
-        Out.println("        return null;");
-        Out.println();
-        Out.print("      " + Helper.getFullAppDataClassName(O) + " Obj = " + Helper.getFullAppFactoryClassName(O) + ".create(");
-        First = true;
-        for (Column C : CreateColumns)
-          if (C != null && (C._PrimaryKey == false || O._PrimaryKey._Autogen == false))
-            {
-              if (First == true)
-                First = false;
-              else
-                Out.print(", ");
-              Out.print("_" + C.getName());
-            }
-        Out.println(");");
-        Out.println();
-        for (Column C : O._Columns)
-          if (C != null && C.getType() != ColumnType.BINARY && C._FCT.isManaged() == false && C._Mode == ColumnMode.NORMAL && CreateColumns.contains(C) == false)
-            {
-              String Pad = O._PadderColumnNames.getPad(C.getName());
-              Out.println("      if (_" + C.getName() + Pad + "!= null) Obj.set" + TextUtil.capitalizeFirstCharacter(C.getName()) + Pad + "(_" + C.getName() + Pad + ");");
-            }
-        Out.println();
-        Out.println("      return Obj;");
-        Out.println("     }");
-
       }
 
+    @Override
+    public void genMethodInit(PrintWriter Out, GeneratorSession G, Object O)
+      {
+        Out.println("   static public " + Helper.getFullAppDataClassName(O) + " init(Map<String, String[]> Values, List<StringStringPair> Errors)");
+        Out.println("   throws Exception");
+        Out.println("     {");
+        Out.println("       " + Helper.getFullBaseClassName(O) + " Obj = new " + Helper.getFullAppDataClassName(O) + "();");
+
+        Out.println("       String[] vals = null;");
+        Out.println();
+        for (Column C : O._Columns)
+          {
+            if (C == null || C._FCT.isManaged() == true || C._Mode != ColumnMode.NORMAL)
+              continue;
+            Out.println("       vals = Values.get(" + TextUtil.escapeDoubleQuoteWithSlash(C.getName()) + ");");
+            if (C.getType() == ColumnType.BINARY)
+              {
+                Out.println("       if (vals != null)");
+                Out.println("        throw new Exception(\"Column '" + C.getName() + "' is of a binary type and cannot be initislized with a generic String value.\"));");
+                continue;
+              }
+
+            if (O.isAutoGenPrimaryKey(C)==true)
+              {
+                Out.println("       // Even though this is a primary key, and is by definition not-null, we nevertheless check it as optional in case");
+                Out.println("       // this object is being initialized generically for a create.");
+              }
+            if (C.isCollection() == false)
+              {
+                Out.println("       if (vals!=null && vals.length > 1)");
+                Out.println("        Errors.add(new StringStringPair("+ TextUtil.escapeDoubleQuoteWithSlash(C.getName()) +", \"Parameter is not a list or a set and yet received \"+vals.length+\" values\"));");
+      }
+
+            Out.print("       " + (C.isCollection() == true && C._JsonSchema == null ? JavaJDBCType.getFieldType(C) : JavaJDBCType.getFieldTypeBaseClass(C))
+            + " _" + C.getName()
+            + " = " + (C.isList() == true && C._JsonSchema == null ? "CollectionUtil.toList("
+            : C.isSet() == true && C._JsonSchema == null ? "CollectionUtil.toSet ("
+            : "")
+            + "ParseUtil.parse" + JavaJDBCType.getFieldTypeBaseClass(C)
+            + "(" + TextUtil.escapeDoubleQuoteWithSlash(C.getName())
+            + ", " + (C._Nullable == true || O.isAutoGenPrimaryKey(C)==true ? "false" : "true")
+            + ", ");
+            if (C.isCollection() == false || C._JsonSchema != null)
+              Out.print("vals!=null && vals.length > 0 ? vals[0] : null");
+            else
+              Out.print("vals");
+            Out.println(", Errors" + (C.isCollection() == true && C._JsonSchema == null ? ")" : "") + ");");
+            Out.println("       if (_" + C.getName() + " != null) Obj.set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "(_" + C.getName() + ");");
+            Out.println();
+          }
+        Out.println();
+        Out.println("       return (" + Helper.getFullAppDataClassName(O) + ") Obj;");
+        Out.println("     }");
+      }
 
 
     @Override
@@ -505,7 +497,7 @@ public class TildaFactory implements CodeGenTildaFactory
                 Out.print(", " + JavaJDBCType.getFieldTypeParam(A._Col, A._Multi) + " " + A._VarName);
               }
           }
-        Out.println(", int Start, int Size) throws Exception");
+        Out.println(", int start, int size) throws Exception");
 
       }
 
@@ -550,13 +542,18 @@ public class TildaFactory implements CodeGenTildaFactory
         Query q = I._SubQuery == null ? null : I._SubQuery.getQuery(G.getSql());
 
         String MethodName = "lookupWhere" + I._Name;
+
+        if (q != null && q._Attributes.isEmpty() == false)
+          Helper.MakeParamStaticClass(Out, q._Attributes, MethodName);
+        Out.println();
+
         Out.print("   static public ListResults<" + Helper.getFullAppDataClassName(I._Parent) + "> " + MethodName + "(Connection C");
         genMethodLookupWhereIndexSignature(Out, G, I, q);
         Out.println("     {");
         genMethodLookupWhereIndexPreamble(Out, I, q, MethodName);
         Out.println();
-        Out.println("       RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);");
-        Out.println("       readMany(C, " + LookupId + ", RPI, Obj, " + (q != null && q._Attributes.isEmpty() == false ? "P" : "null") + ", Start, Size);");
+        Out.println("       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);");
+        Out.println("       readMany(C, " + LookupId + ", RPI, Obj, " + (q != null && q._Attributes.isEmpty() == false ? "P" : "null") + ", start, size);");
         Out.println("       return RPI._L;");
         Out.println("     }");
         Out.println();
@@ -566,44 +563,36 @@ public class TildaFactory implements CodeGenTildaFactory
         genMethodLookupWhereIndexPreamble(Out, I, q, MethodName);
         Out.println();
         Out.println("       RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);");
-        Out.println("       readMany(C, " + LookupId + ", RPI, Obj, " + (q != null && q._Attributes.isEmpty() == false ? "P" : "null") + ", Start, Size);");
+        Out.println("       readMany(C, " + LookupId + ", RPI, Obj, " + (q != null && q._Attributes.isEmpty() == false ? "P" : "null") + ", start, size);");
         Out.println("     }");
         Out.println();
-
-        if (q != null && q._Attributes.isEmpty() == false)
-          Helper.MakeParamStaticClass(Out, q._Attributes, MethodName);
       }
 
 
 
-    @Override
-    public void genMethodLookupWhereQuery(PrintWriter Out, GeneratorSession G, SubWhereClause SWC, int LookupId)
+    private static void genMethodLookupWhereQuerySignature(PrintWriter Out, GeneratorSession G, SubWhereClause Q)
       {
-        if (SWC._Unique == true)
-          throw new Error("ERROR: called genMethodLookupWhereQuery with a Unique SubWhereclause");
-
-        String MethodName = "lookupWhere" + SWC._Name;
-        Out.print("   static public ListResults<" + Helper.getFullAppDataClassName(SWC._ParentObject) + "> " + MethodName
-        + "(Connection C");
         Set<String> VarNameSet = new HashSet<String>();
-        for (Query.Attribute A : SWC._Attributes)
+        for (Query.Attribute A : Q._Attributes)
           {
-            String v = A._VarName.replace('.', '_');
-            if (VarNameSet.add(v) == false)
+            if (VarNameSet.add(A._VarName) == false)
               continue;
-            Out.print(", " + JavaJDBCType.getFieldTypeParam(A._Col, A._Multi) + " " + v);
+            Out.print(", " + JavaJDBCType.getFieldTypeParam(A._Col, A._Multi) + " " + A._VarName);
           }
-        Out.println(", int Start, int Size) throws Exception");
-        Out.println("     {");
-        Out.println("       " + Helper.getFullBaseClassName(SWC._ParentObject) + " Obj = new " + Helper.getFullAppDataClassName(SWC._ParentObject) + "();");
+        Out.println(", int start, int size) throws Exception");
+      }
+
+    private static void genMethodLookupWhereQueryPreamble(PrintWriter Out, SubWhereClause Q, String MethodName)
+      {
+        Out.println("       " + Helper.getFullBaseClassName(Q._ParentObject) + " Obj = new " + Helper.getFullAppDataClassName(Q._ParentObject) + "();");
         Out.println("       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);");
         Out.println();
-        if (SWC._Attributes.isEmpty() == false)
+        if (Q._Attributes.isEmpty() == false)
           {
             Out.print("       " + MethodName + "Params P = new " + MethodName + "Params(");
             boolean First = true;
-            VarNameSet.clear();
-            for (Query.Attribute A : SWC._Attributes)
+            Set<String> VarNameSet = new HashSet<String>();
+            for (Query.Attribute A : Q._Attributes)
               {
                 String v = A._VarName.replace('.', '_');
                 if (VarNameSet.add(v) == false)
@@ -616,14 +605,74 @@ public class TildaFactory implements CodeGenTildaFactory
               }
             Out.println(");");
           }
+      }
+
+
+    @Override
+    public void genMethodLookupWhereQuery(PrintWriter Out, GeneratorSession G, SubWhereClause SWC, int LookupId)
+      {
+        if (SWC._Unique == true)
+          throw new Error("ERROR: called genMethodLookupWhereQuery with a Unique SubWhereclause");
+
+        String MethodName = "lookupWhere" + SWC._Name;
+
+        if (SWC._Attributes.isEmpty() == false)
+          Helper.MakeParamStaticClass(Out, SWC._Attributes, MethodName);
         Out.println();
-        Out.println("       RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);");
-        Out.println("       readMany(C, " + LookupId + ", RPI, Obj, " + (SWC._Attributes.isEmpty() == false ? "P" : "null") + ", Start, Size);");
+        Out.print("   static public ListResults<" + Helper.getFullAppDataClassName(SWC._ParentObject) + "> " + MethodName + "(Connection C");
+        genMethodLookupWhereQuerySignature(Out, G, SWC);
+        /*
+         * Set<String> VarNameSet = new HashSet<String>();
+         * for (Query.Attribute A : SWC._Attributes)
+         * {
+         * String v = A._VarName.replace('.', '_');
+         * if (VarNameSet.add(v) == false)
+         * continue;
+         * Out.print(", " + JavaJDBCType.getFieldTypeParam(A._Col, A._Multi) + " " + v);
+         * }
+         * Out.println(", int start, int size) throws Exception");
+         */
+        Out.println("     {");
+        genMethodLookupWhereQueryPreamble(Out, SWC, MethodName);
+        /*
+         * Out.println("       " + Helper.getFullBaseClassName(SWC._ParentObject) + " Obj = new " + Helper.getFullAppDataClassName(SWC._ParentObject) + "();");
+         * Out.println("       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);");
+         * Out.println();
+         * if (SWC._Attributes.isEmpty() == false)
+         * {
+         * Out.print("       " + MethodName + "Params P = new " + MethodName + "Params(");
+         * boolean First = true;
+         * VarNameSet.clear();
+         * for (Query.Attribute A : SWC._Attributes)
+         * {
+         * String v = A._VarName.replace('.', '_');
+         * if (VarNameSet.add(v) == false)
+         * continue;
+         * if (First == true)
+         * First = false;
+         * else
+         * Out.print(", ");
+         * Out.print(v);
+         * }
+         * Out.println(");");
+         * }
+         */
+        Out.println();
+        Out.println("       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);");
+        Out.println("       readMany(C, " + LookupId + ", RPI, Obj, " + (SWC._Attributes.isEmpty() == false ? "P" : "null") + ", start, size);");
         Out.println("       return RPI._L;");
         Out.println("     }");
         Out.println();
-        if (SWC._Attributes.isEmpty() == false)
-          Helper.MakeParamStaticClass(Out, SWC._Attributes, MethodName);
+        Out.println();
+        Out.print("   static public void " + MethodName + "(Connection C, tilda.db.processors.ObjectProcessor<" + Helper.getFullAppDataClassName(SWC._ParentObject) + "> OP");
+        genMethodLookupWhereQuerySignature(Out, G, SWC);
+        Out.println("     {");
+        genMethodLookupWhereQueryPreamble(Out, SWC, MethodName);
+        Out.println();
+        Out.println("       RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);");
+        Out.println("       readMany(C, " + LookupId + ", RPI, Obj, " + (SWC != null && SWC._Attributes.isEmpty() == false ? "P" : "null") + ", start, size);");
+        Out.println("     }");
+        Out.println();
       }
 
 
@@ -676,16 +725,16 @@ public class TildaFactory implements CodeGenTildaFactory
       {
         Out.println("   public static SelectQuery newSelectQuery(Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, true); }");
         Out.println("   public static SelectQuery newWhereQuery (Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, false); }");
-        Out.println("   public static ListResults<" + Helper.getFullAppDataClassName(O) + "> runSelect(Connection C, SelectQuery Q, int Start, int Size) throws Exception");
+        Out.println("   public static ListResults<" + Helper.getFullAppDataClassName(O) + "> runSelect(Connection C, SelectQuery Q, int start, int size) throws Exception");
         Out.println("     {");
-        Out.println("       RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);");
-        Out.println("       readMany(C, -7, RPI, null, Q, Start, Size);");
+        Out.println("       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);");
+        Out.println("       readMany(C, -7, RPI, null, Q, start, size);");
         Out.println("       return RPI._L;");
         Out.println("     }");
-        Out.println("   public static void runSelect(Connection C, SelectQuery Q, tilda.db.processors.ObjectProcessor<" + Helper.getFullAppDataClassName(O) + "> OP, int Start, int Size) throws Exception");
+        Out.println("   public static void runSelect(Connection C, SelectQuery Q, tilda.db.processors.ObjectProcessor<" + Helper.getFullAppDataClassName(O) + "> OP, int start, int size) throws Exception");
         Out.println("     {");
         Out.println("       RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);");
-        Out.println("       readMany(C, -7, RPI, null, Q, Start, Size);");
+        Out.println("       readMany(C, -7, RPI, null, Q, start, size);");
         Out.println("     }");
         if (O._LC == ObjectLifecycle.NORMAL)
           {
@@ -755,7 +804,7 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println(", obj);");
         Out.println("        }");
         Out.println("       if (Str.length() == 0)");
-        Out.println("        LOG.warn(\"Could not validate some mapping group values for "+O.getFullName()+" against the model.\\nInvalid group value(s): \"+Str.toString()+\"\\nCurrently modeled values are: \"+TextUtil.print(" + Helper.getFullAppDataClassName(O) + "._group_Values, 0)+\".\");");
+        Out.println("        LOG.warn(\"Could not validate some mapping group values for " + O.getFullName() + " against the model.\\nInvalid group value(s): \"+Str.toString()+\"\\nCurrently modeled values are: \"+TextUtil.print(" + Helper.getFullAppDataClassName(O) + "._group_Values, 0)+\".\");");
         Out.println("     }");
 
         Out.println("   private static " + Helper.getFullAppDataClassName(O) + " getMapping(" + FuncParams + ")");
@@ -915,6 +964,13 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("                   QueryDetails.setLastQuery(" + O.getBaseClassName() + "_Factory.SCHEMA_TABLENAME_LABEL, \"\");");
         Out.println("                   return index;");
         Out.println("                 }");
+        if (O.hasAutos() == true)
+          {
+            Out.println();
+            for (Column C : O._Columns)
+              if (C != null && C._Mode == ColumnMode.AUTO && C._MapperDef == null && C._FCT.isManaged() == false)
+                Out.println("               lastObj.set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "();");
+          }
         Out.println();
         Out.println("               if (((" + O._BaseClassName + ") d).beforeWrite(C) == false)");
         Out.println("                 {");
@@ -1005,7 +1061,7 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("       }");
       }
 
-    
+
     @Override
     public void genMethodToOutput(PrintWriter Out, GeneratorSession G, OutputMapping OM)
     throws Exception
@@ -1031,95 +1087,127 @@ public class TildaFactory implements CodeGenTildaFactory
     protected static void genMethodToJSON(PrintWriter Out, GeneratorSession G, OutputMapping J)
     throws Exception
       {
-        Out.println("   public static void toJSON" + J._Name + "(java.io.Writer Out, List<" + Helper.getFullAppDataClassName(J._ParentObject) + "> L, String Lead, boolean FullList) throws java.io.IOException");
+        Out.println("   public static void toJSON" + J._Name + "(java.io.Writer out, List<" + Helper.getFullAppDataClassName(J._ParentObject) + "> L, String lead, boolean fullList) throws java.io.IOException");
         Out.println("    {");
-        Out.println("      if (L == null || L.size() == 0) return;");
-        Out.println("      if (FullList == true)");
-        Out.println("       Out.write(\"[\\n\");");
+        Out.println("      long T0 = System.nanoTime();");
+        Out.println("      if (fullList == true)");
+        Out.println("        {");
+        Out.println("          if (L == null)");
+        Out.println("           {");
+        Out.println("             out.write(\"null\\n\");");
+        Out.println("             return;");
+        Out.println("           }");
+        Out.println("          if (L.isEmpty() == true)");
+        Out.println("           {");
+        Out.println("             out.write(\"[]\\n\");");
+        Out.println("             return;");
+        Out.println("           }");
+        Out.println("          out.write(\"[\\n\");");
+        Out.println("        }");
         Out.println("      boolean First = true;");
         Out.println("      for (" + Helper.getFullAppDataClassName(J._ParentObject) + " O : L)");
         Out.println("       if (O!=null)");
         Out.println("        {");
-        Out.println("          Out.write(Lead);");
-        Out.println("          if (First == false) Out.write(\",\"); else { Out.write(\" \"); First = false; }");
-        Out.println("          toJSON" + J._Name + "(Out, O, true);");
-        Out.println("          Out.write(\"\\n\");");
+        Out.println("          out.write(lead);");
+        Out.println("          toJSON" + J._Name + "(out, O, First == true ? \"   \" : \"  ,\", true);");
+        Out.println("          if (First == true)");
+        Out.println("           First = false;");
         Out.println("        }");
-        Out.println("      if (FullList == true)");
+        Out.println("      if (fullList == true)");
         Out.println("       { ");
-        Out.println("          Out.write(Lead);");
-        Out.println("          Out.write(\"]\\n\");");
+        Out.println("          out.write(lead);");
+        Out.println("          out.write(\"]\\n\");");
         Out.println("       } ");
+        Out.println("      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);");
         Out.println("    }");
         Out.println();
-        Out.println("   public static void toJSON" + J._Name + "(java.io.Writer Out, " + Helper.getFullAppDataClassName(J._ParentObject) + " ObjApp, boolean FullObject) throws java.io.IOException");
+        Out.println("   public static void toJSON" + J._Name + "(java.io.Writer out, " + Helper.getFullAppDataClassName(J._ParentObject) + " obj, boolean fullObject) throws java.io.IOException");
+        Out.println("    {");
+        Out.println("      toJSON" + J._Name + "(out, obj, \"\", fullObject);");
+        Out.println("    }");
+        Out.println();
+        Out.println("   public static void toJSON" + J._Name + "(java.io.Writer out, " + Helper.getFullAppDataClassName(J._ParentObject) + " obj, String lead, boolean fullObject) throws java.io.IOException");
         Out.println("    {");
         Out.println("      long T0 = System.nanoTime();");
-        Out.println("      " + Helper.getFullBaseClassName(J._ParentObject) + " Obj = (" + Helper.getFullBaseClassName(J._ParentObject) + ") ObjApp;");
-        Out.println("      if (FullObject == true)");
-        Out.println("       Out.write(\"{\");");
+        Out.println("      " + Helper.getFullBaseClassName(J._ParentObject) + " Obj = (" + Helper.getFullBaseClassName(J._ParentObject) + ") obj;");
+        Out.println("      if (fullObject == true)");
+        Out.println("       {");
+        Out.println("          out.write(lead);");
+        Out.println("          out.write(\"{\");");
+        Out.println("       }");
         Out.println();
-        boolean First = true;
+        Out.println("      int i = -1;");
         for (Column C : J._ColumnObjs)
           if (C != null)
-            {
-              First = Helper.JSONExport(Out, First, C);
-              // if (C.getType() == ColumnType.DATETIME && C.isOCCGenerated() == false)
-              // First = JSONExport(Out, First, C._ParentObject.getColumn(C.getName()+"TZ"));
-            }
-        Out.println("      if (FullObject == true)");
-        Out.println("       Out.write(\" }\");");
+           Helper.JSONExport(Out, C);
+        Out.println("      if (fullObject == true)");
+        Out.println("       out.write(\" }\\n\");");
         Out.println("      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);");
         Out.println("    }");
 
         if (J._ParentObject.isOCC() == true && (J._ParentObject._TildaType == TildaType.OBJECT || J._ParentObject._TildaType == TildaType.VIEW) && J._Sync == true)
           {
             Out.println();
-            Out.println("   public static boolean toJSON" + J._Name + "(java.io.Writer Out, " + Helper.getFullAppDataClassName(J._ParentObject) + " Data, String ElementName, String Lead, ZonedDateTime LastSync)");
+            Out.println("   public static void toJSON" + J._Name + "(java.io.Writer out, List<" + Helper.getFullAppDataClassName(J._ParentObject) + "> L, String lead, boolean fullList, ZonedDateTime lastSync)");
             Out.println("   throws java.io.IOException");
             Out.println("    {");
-            Out.println("      SyncStatus s = SyncStatus.get(LastSync, Data);");
-            Out.println("      if (s == SyncStatus.OLD)");
-            Out.println("       return false;");
-            Out.println("      Out.write(Lead);");
-            Out.println("      if (ElementName != null)");
-            Out.println("       {");
-            Out.println("         Out.write(\"\\\"\");");
-            Out.println("         Out.write(ElementName);");
-            Out.println("         Out.write(\"\\\": \");");
-            Out.println("       }");
-            Out.println("      Out.write(\" { \\\"__sync\\\": \\\"\");");
-            Out.println("      Out.write(s._Status);");
-            Out.println("      Out.write(\"\\\", \");");
-            Out.println("      toJSON" + J._Name + "(Out, Data, false);");
-            Out.println("      Out.write(\" }\\n\");");
-            Out.println("      return true;");
-            Out.println("    }");
-            Out.println();
-            Out.println("   public static void toJSON" + J._Name + "(java.io.Writer Out, List<" + Helper.getFullAppDataClassName(J._ParentObject) + "> L, String ElementName, String Lead, ZonedDateTime LastSync)");
-            Out.println("   throws java.io.IOException");
-            Out.println("    {");
-            Out.println("      Out.write(Lead);");
-            Out.println("      if (ElementName != null)");
-            Out.println("       {");
-            Out.println("         Out.write(\"\\\"\");");
-            Out.println("         Out.write(ElementName);");
-            Out.println("         Out.write(\"\\\": \");");
-            Out.println("       }");
-            Out.println("      Out.write(\" [\\n\");");
+            Out.println("      long T0 = System.nanoTime();");
+            Out.println("      if (fullList == true)");
+            Out.println("        {");
+            Out.println("          if (L == null)");
+            Out.println("           {");
+            Out.println("             out.write(\"null\\n\");");
+            Out.println("             return;");
+            Out.println("           }");
+            Out.println("          if (L.isEmpty() == true)");
+            Out.println("           {");
+            Out.println("             out.write(\"[]\\n\");");
+            Out.println("             return;");
+            Out.println("           }");
+            Out.println("          out.write(\"[\\n\");");
+            Out.println("        }");
             Out.println("      boolean First = true;");
-            Out.println("      Lead = PaddingUtil.getPad(Lead.length());");
-            Out.println("      String LeadFirst = Lead+\"      \";");
-            Out.println("      String LeadNext  = Lead+\"    , \";");
-            Out.println("      for (" + Helper.getFullAppDataClassName(J._ParentObject) + " Data : L)");
+            Out.println("      for (" + Helper.getFullAppDataClassName(J._ParentObject) + " obj : L)");
             Out.println("       {");
-            Out.println("         if (toJSON" + J._Name + "(Out, Data, null, First == true ? LeadFirst : LeadNext, LastSync) == false)");
+            Out.println("         if (toJSON" + J._Name + "(out, obj, lead+(First==true?\"   \":\"  ,\"), true, lastSync) == false)");
             Out.println("          continue;");
             Out.println("         if (First == true)");
             Out.println("          First = false;");
             Out.println("       }");
-            Out.println("      Out.write(Lead);");
-            Out.println("      Out.write(\"  ]\\n\");");
+            Out.println("      if (fullList == true)");
+            Out.println("       {");
+            Out.println("         out.write(lead);");
+            Out.println("         out.write(\"]\\n\");");
+            Out.println("       }");
+            Out.println("      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);");
+            Out.println("    }");
+            Out.println();
+            Out.println("   public static boolean toJSON" + J._Name + "(java.io.Writer out, " + Helper.getFullAppDataClassName(J._ParentObject) + " obj, boolean fullObject, ZonedDateTime lastSync)");
+            Out.println("   throws java.io.IOException");
+            Out.println("    {");
+            Out.println("      return toJSON" + J._Name + "(out, obj, \"\", fullObject, lastSync);");
+            Out.println("    }");
+            Out.println();
+            Out.println("   public static boolean toJSON" + J._Name + "(java.io.Writer out, " + Helper.getFullAppDataClassName(J._ParentObject) + " obj, String lead, boolean fullObject, ZonedDateTime lastSync)");
+            Out.println("   throws java.io.IOException");
+            Out.println("    {");
+            Out.println("      long T0 = System.nanoTime();");
+            Out.println("      SyncStatus s = SyncStatus.get(lastSync, obj);");
+            Out.println("      if (s == SyncStatus.OLD || s == SyncStatus.GHOST)");
+            Out.println("       return false;");
+            Out.println("      if (fullObject == true)");
+            Out.println("       {");
+            Out.println("          out.write(lead);");
+            Out.println("          out.write(\"{\");");
+            Out.println("       }");
+            Out.println("      out.write(\" \\\"__sync\\\": \\\"\");");
+            Out.println("      out.write(s._Status);");
+            Out.println("      out.write(\"\\\", \");");
+            Out.println("      toJSON" + J._Name + "(out, obj, \"\", false);");
+            Out.println("      if (fullObject == true)");
+            Out.println("       out.write(\" }\\n\");");
+            Out.println("      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);");
+            Out.println("      return true;");
             Out.println("    }");
             Out.println();
           }
@@ -1144,22 +1232,22 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("      return " + TextUtil.escapeDoubleQuoteWithSlash(header.toString()) + ";");
         Out.println("    }");
         Out.println();
-        Out.println("   public static void toCSV" + J._Name + "(java.io.Writer Out, List<" + Helper.getFullAppDataClassName(J._ParentObject) + "> L, boolean includeHeader) throws java.io.IOException");
+        Out.println("   public static void toCSV" + J._Name + "(java.io.Writer out, List<" + Helper.getFullAppDataClassName(J._ParentObject) + "> L, boolean includeHeader) throws java.io.IOException");
         Out.println("    {");
         Out.println("      long T0 = System.nanoTime();");
         Out.println("      if (includeHeader == true)");
-        Out.println("        Out.write(getCSVHeader" + J._Name + "() + \"\\n\");");
+        Out.println("        out.write(getCSVHeader" + J._Name + "() + \"\\n\");");
         Out.println("      for (" + Helper.getFullAppDataClassName(J._ParentObject) + " O : L)");
         Out.println("       if (O!=null)");
         Out.println("        {");
-        Out.println("          toCSV" + J._Name + "(Out, O);");
-        Out.println("          Out.write(\"\\n\");");
+        Out.println("          toCSV" + J._Name + "(out, O);");
+        Out.println("          out.write(\"\\n\");");
         Out.println("        }");
         Out.println("      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);");
         Out.println("    }");
 
         Out.println();
-        Out.println("   public static void toCSV" + J._Name + "(java.io.Writer Out, " + Helper.getFullAppDataClassName(J._ParentObject) + " Data) throws java.io.IOException");
+        Out.println("   public static void toCSV" + J._Name + "(java.io.Writer out, " + Helper.getFullAppDataClassName(J._ParentObject) + " obj) throws java.io.IOException");
         Out.println("    {");
         Out.println("      long T0 = System.nanoTime();");
         Out.println("      StringBuilder Str = new StringBuilder();");
@@ -1170,9 +1258,53 @@ public class TildaFactory implements CodeGenTildaFactory
             {
               First = Helper.CSVExport(Out, First, C);
             }
-        Out.println("      Out.write(Str.toString());");
+        Out.println("      out.write(Str.toString());");
         Out.println("      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);");
         Out.println("    }");
+
+        if (J._ParentObject.isOCC() == true && (J._ParentObject._TildaType == TildaType.OBJECT || J._ParentObject._TildaType == TildaType.VIEW) && J._Sync == true)
+          {
+            Out.println();
+            Out.println("   public static void toCSV" + J._Name + "(java.io.Writer out, List<" + Helper.getFullAppDataClassName(J._ParentObject) + "> L, boolean includeHeader, ZonedDateTime lastSync)");
+            Out.println("   throws java.io.IOException");
+            Out.println("    {");
+            Out.println("      long T0 = System.nanoTime();");
+            Out.println("      if (includeHeader == true)");
+            Out.println("       {");
+            Out.println("         out.write(\"__sync,\");");
+            Out.println("         out.write(getCSVHeader" + J._Name + "() + \"\\n\");");
+            Out.println("       }");
+            Out.println("      for (" + Helper.getFullAppDataClassName(J._ParentObject) + " obj : L)");
+            Out.println("       {");
+            Out.println("         if (toCSV" + J._Name + "(out, obj, lastSync) == true)");
+            Out.println("          out.write(\"\\n\");");
+            Out.println("       }");
+            Out.println("      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);");
+            Out.println("    }");
+            Out.println();
+            Out.println("   public static boolean toCSV" + J._Name + "(java.io.Writer out, " + Helper.getFullAppDataClassName(J._ParentObject) + " obj, ZonedDateTime lastSync)");
+            Out.println("   throws java.io.IOException");
+            Out.println("    {");
+            Out.println("      long T0 = System.nanoTime();");
+            Out.println("      SyncStatus s = SyncStatus.get(lastSync, obj);");
+            Out.println("      if (s == SyncStatus.OLD || s == SyncStatus.GHOST)");
+            Out.println("       return false;");
+            Out.println("      StringBuilder Str = new StringBuilder();");
+            Out.println();
+            Out.println("      out.write(s._Status);");
+            Out.println("      out.write(\",\");");
+            First = true;
+            for (Column C : J._ColumnObjs)
+              if (C != null)
+                {
+                  First = Helper.CSVExport(Out, First, C);
+                }
+            Out.println("      out.write(Str.toString());");
+            Out.println("      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);");
+            Out.println("      return true;");
+            Out.println("    }");
+            Out.println();
+          }
       }
 
 
@@ -1187,27 +1319,22 @@ public class TildaFactory implements CodeGenTildaFactory
             Column nameCol = J._ColumnObjs.get(0);
             Column valCol = J._ColumnObjs.get(1);
 
-            String nameType = TextUtil.normalCapitalization(nameCol.getType().name());
-            String valType = TextUtil.normalCapitalization(valCol.getType().name());
-
-            if (nameType.equalsIgnoreCase("Char"))
-              nameType = "Character";
-            if (valType.equalsIgnoreCase("Char"))
-              valType = "Character";
+            String nameType = JavaJDBCType.getFieldTypeBaseClass(nameCol);
+            String valType = JavaJDBCType.getFieldTypeBaseClass(valCol);
 
             Out.println("   public static Map<" + nameType + ", " + valType + "> toNVP" + J._Name + "(List<" + Helper.getFullAppDataClassName(J._ParentObject) + "> L) throws Exception");
             Out.println("    {");
             Out.println("      Map<" + nameType + ", " + valType + "> M = new HashMap<" + nameType + ", " + valType + ">();");
             Out.println("      for (" + Helper.getFullAppDataClassName(J._ParentObject) + " D : L)");
             Out.println("        {");
-            Out.println("          " + valType + " val = M.get(D.get" + TextUtil.capitalizeFirstCharacter(nameCol.getName()) + "());");
-            Out.println("          if(val != null)");
-            Out.println("            throw new Exception(\"The key \" + D.get" + TextUtil.capitalizeFirstCharacter(nameCol.getName()) + "() + \" with value \" + String.valueOf(val) + \" already exists in the Map. Key values must be unique.\");");
-            if (nameCol.getType().name().equalsIgnoreCase("STRING"))
+            if (nameCol.getType() == ColumnType.STRING)
               Out.println("          if(TextUtil.isNullOrEmpty(D.get" + TextUtil.capitalizeFirstCharacter(nameCol.getName()) + "()) == false)");
-            else
+            else if (nameCol._Nullable == true)
               Out.println("          if(D.is" + TextUtil.capitalizeFirstCharacter(nameCol.getName()) + "Null() == false)");
-            Out.println("            M.put(D.get" + TextUtil.capitalizeFirstCharacter(nameCol.getName()) + "(), D.get" + TextUtil.capitalizeFirstCharacter(valCol.getName()) + "());");
+            else if (nameCol.getType().isPrimitive() == false)
+              Out.println("          if(D.get" + TextUtil.capitalizeFirstCharacter(nameCol.getName()) + "() != null)");
+            Out.println("            if (M.put(D.get" + TextUtil.capitalizeFirstCharacter(nameCol.getName()) + "(), D.get" + TextUtil.capitalizeFirstCharacter(valCol.getName()) + "()) != null)");
+            Out.println("             throw new Exception(\"The key \" + D.get" + TextUtil.capitalizeFirstCharacter(nameCol.getName()) + "() + \" with value \" + D.get" + TextUtil.capitalizeFirstCharacter(valCol.getName()) + "() + \" already exists in the Map. Key values must be unique.\");");
             Out.println("        }");
             Out.println("      return M;");
             Out.println("    }");
@@ -1231,5 +1358,5 @@ public class TildaFactory implements CodeGenTildaFactory
             Out.println("    }");
           }
       }
-    
+
   }

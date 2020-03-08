@@ -56,8 +56,8 @@ public abstract class CSVImporter
   {
 
     protected static final Logger LOG                = LogManager.getLogger(CSVImporter.class.getName());
-    protected static final int    COMMIT_SIZE = 20_000;
-    protected static final int    BATCH_SIZE = 2_000;
+    protected static final int    COMMIT_SIZE = 25_000;
+    protected static final int    BATCH_SIZE = 2_500;
 
     protected Connection          C;
     protected String              rootFolder;
@@ -259,7 +259,7 @@ public abstract class CSVImporter
             if (TextUtil.isNullOrEmpty(CH._Operator) == false)
               {
                 Class<?> clazz = Class.forName(CH._Operator);
-                GenericLoader GL = (GenericLoader) clazz.newInstance();
+                GenericLoader GL = (GenericLoader) clazz.getDeclaredConstructor().newInstance();
                 GL.init(C);
                 GLMap.put(CH._Operator, GL);
               }

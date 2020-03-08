@@ -81,7 +81,7 @@ public class OutputMapping
 
         if (_Columns != null && _Columns.length > 0)
           {
-            _Columns = CollectionUtil.toStringArray(_ParentObject.expandColumnNames(_Columns));
+            _Columns = CollectionUtil.toStringArray(_ParentObject.expandColumnNames(_Columns, PS, "outputMap", _Name));
           }
 
         if (TextUtil.isNullOrEmpty(_Columns) == true)

@@ -1244,7 +1244,7 @@ public class PostgreSQL implements DBType
           Out.print("-- app-level index only -- ");
         Out.print("CREATE" + (IX._Unique == true ? " UNIQUE" : "") + " INDEX IF NOT EXISTS " + IX.getName() + " ON " + IX._Parent.getShortName() + (Gin ? " USING gin " : "") + " (");
         if (IX._ColumnObjs.isEmpty() == false)
-          Sql.PrintColumnList(Out, IX._ColumnObjs);
+          Sql.PrintColumnList(Out, IX._ColumnObjs, IX._LALColumns);
         if (IX._OrderByObjs.isEmpty() == false)
           {
             boolean First = IX._ColumnObjs.isEmpty();

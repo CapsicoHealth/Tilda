@@ -246,10 +246,10 @@ This is the column definition for:<BR>
      }
    private static class RecordProcessorInternal implements tilda.db.processors.RecordProcessor
      {
-       public RecordProcessorInternal(Connection C, int Start)
+       public RecordProcessorInternal(Connection C, int start)
          {
            _C = C;
-           _L = new ArrayListResults<tilda.data.DependencyDDLDummyTable_Data>(Start);
+           _L = new ArrayListResults<tilda.data.DependencyDDLDummyTable_Data>(start);
          }
        public RecordProcessorInternal(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.DependencyDDLDummyTable_Data> OP)
          {
@@ -259,9 +259,9 @@ This is the column definition for:<BR>
        protected Connection _C = null;
        protected tilda.db.processors.ObjectProcessor<tilda.data.DependencyDDLDummyTable_Data> _OP;
        protected ArrayListResults<tilda.data.DependencyDDLDummyTable_Data> _L = null;
-       public void    start  () { }
-       public void    end    (boolean HasMore, int Max) { if (_OP == null) _L.wrapup(HasMore, Max); }
-       public boolean process(int Index, java.sql.ResultSet RS) throws Exception
+       public void    start  () { if (_OP != null) _OP.start(); }
+       public void    end    (boolean hasMore, int maxCount) { if (_OP == null) _L.wrapup(hasMore, maxCount); else _OP.end(hasMore, maxCount); }
+       public boolean process(int count, java.sql.ResultSet RS) throws Exception
         {
           tilda.data.DependencyDDLDummyTable_Data Obj = new tilda.data.DependencyDDLDummyTable_Data();
           boolean OK = ((tilda.data._Tilda.TILDA__DEPENDENCYDDLDUMMYTABLE)Obj).init(_C, RS);
@@ -270,24 +270,24 @@ This is the column definition for:<BR>
              if (_OP == null)
               _L.add(Obj);
              else
-              _OP.process(Index, Obj);
+              _OP.process(count, Obj);
            }
           return OK;
         }
      }
 
-   protected static final void processMany(Connection C, String FullSelectQuery, int Start, int Size, tilda.db.processors.RecordProcessor RP) throws Exception
+   protected static final void processMany(Connection C, String fullSelectQuery, int start, int size, tilda.db.processors.RecordProcessor RP) throws Exception
      {
-       readMany(C, -77, RP, null, FullSelectQuery, Start, Size);
+       readMany(C, -77, RP, null, fullSelectQuery, start, size);
      }
-   protected static final ListResults<tilda.data.DependencyDDLDummyTable_Data> readMany(Connection C, String FullSelectQuery, int Start, int Size) throws Exception
+   protected static final ListResults<tilda.data.DependencyDDLDummyTable_Data> readMany(Connection C, String fullSelectQuery, int start, int size) throws Exception
      {
-       RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
-       readMany(C, -77, RPI, null, FullSelectQuery, Start, Size);
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
+       readMany(C, -77, RPI, null, fullSelectQuery, start, size);
        return RPI._L;
      }
 
-   private static final void readMany(Connection C, int LookupId, tilda.db.processors.RecordProcessor RP, tilda.data._Tilda.TILDA__DEPENDENCYDDLDUMMYTABLE Obj, Object ExtraParams, int Start, int Size) throws Exception
+   private static final void readMany(Connection C, int LookupId, tilda.db.processors.RecordProcessor RP, tilda.data._Tilda.TILDA__DEPENDENCYDDLDUMMYTABLE Obj, Object ExtraParams, int start, int size) throws Exception
      {
        long T0 = System.nanoTime();
        StringBuilder S = new StringBuilder(1024);
@@ -320,7 +320,7 @@ This is the column definition for:<BR>
            }
         }
 
-       String Q = S.toString() + C.getSelectLimitClause(Start, Size+1);
+       String Q = S.toString() + C.getSelectLimitClause(start, size+1);
        S.setLength(0);
        S = null;
        QueryDetails.setLastQuery(SCHEMA_TABLENAME_LABEL, Q);
@@ -340,7 +340,7 @@ This is the column definition for:<BR>
            }
 
 
-          count = JDBCHelper.process(PS.executeQuery(), RP, Start, true, Size, true);
+          count = JDBCHelper.process(PS.executeQuery(), RP, start, true, size, true);
         }
        catch (java.sql.SQLException E)
         {
@@ -358,6 +358,57 @@ This is the column definition for:<BR>
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+The generic init method is typically run when there is a general data structure of data available, for example, a CSV
+data file read in memory, or run from a servlet using a Map<String, String[]> object obtained from an ServletRequest
+object. The generic init method defaults to this general data structure as a genegic representation.
+*/
+   static public tilda.data.DependencyDDLDummyTable_Data init(Map<String, String[]> Values, List<StringStringPair> Errors)
+   throws Exception
+     {
+       tilda.data._Tilda.TILDA__DEPENDENCYDDLDUMMYTABLE Obj = new tilda.data.DependencyDDLDummyTable_Data();
+       String[] vals = null;
+
+       vals = Values.get("srcSchemaName");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("srcSchemaName", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _srcSchemaName = ParseUtil.parseString("srcSchemaName", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_srcSchemaName != null) Obj.setSrcSchemaName(_srcSchemaName);
+
+       vals = Values.get("srcTVName");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("srcTVName", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _srcTVName = ParseUtil.parseString("srcTVName", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_srcTVName != null) Obj.setSrcTVName(_srcTVName);
+
+       vals = Values.get("seq");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("seq", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Integer _seq = ParseUtil.parseInteger("seq", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_seq != null) Obj.setSeq(_seq);
+
+       vals = Values.get("depSchemaName");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("depSchemaName", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _depSchemaName = ParseUtil.parseString("depSchemaName", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_depSchemaName != null) Obj.setDepSchemaName(_depSchemaName);
+
+       vals = Values.get("depViewName");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("depViewName", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _depViewName = ParseUtil.parseString("depViewName", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_depViewName != null) Obj.setDepViewName(_depViewName);
+
+       vals = Values.get("restoreScript");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("restoreScript", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _restoreScript = ParseUtil.parseString("restoreScript", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_restoreScript != null) Obj.setRestoreScript(_restoreScript);
+
+
+       return (tilda.data.DependencyDDLDummyTable_Data) Obj;
+     }
 
 /**
  Creates a new object in memory, which you can subsequently {@link #write()} to the data store.
@@ -390,26 +441,6 @@ This is the column definition for:<BR>
        return (tilda.data.DependencyDDLDummyTable_Data) Obj;
      }
 
-   static public tilda.data.DependencyDDLDummyTable_Data create(Map<String, String> Values, List<StringStringPair> Errors)
-   throws Exception
-     {
-       int IncomingErrors = Errors.size();
-
-       String        _srcSchemaName =                       ParseUtil.parseString("srcSchemaName", true , Values.get("srcSchemaName"), Errors );
-       String        _srcTVName     =                       ParseUtil.parseString("srcTVName"    , true , Values.get("srcTVName"    ), Errors );
-       Integer        _seq           =                       ParseUtil.parseInteger("seq"          , true , Values.get("seq"          ), Errors );
-       String        _depSchemaName =                       ParseUtil.parseString("depSchemaName", true , Values.get("depSchemaName"), Errors );
-       String        _depViewName   =                       ParseUtil.parseString("depViewName"  , true , Values.get("depViewName"  ), Errors );
-       String        _restoreScript =                       ParseUtil.parseString("restoreScript", true , Values.get("restoreScript"), Errors );
-
-       if (IncomingErrors != Errors.size())
-        return null;
-
-      tilda.data.DependencyDDLDummyTable_Data Obj = tilda.data.DependencyDDLDummyTable_Factory.create(_srcSchemaName, _srcTVName, _seq, _depSchemaName, _depViewName, _restoreScript);
-
-
-      return Obj;
-     }
    public static int writeBatch(Connection C, List<tilda.data.DependencyDDLDummyTable_Data> L, int batchSize, int commitSize) throws Exception
      {
        long T0 = System.nanoTime();
@@ -447,6 +478,7 @@ This is the column definition for:<BR>
                    QueryDetails.setLastQuery(TILDA__DEPENDENCYDDLDUMMYTABLE_Factory.SCHEMA_TABLENAME_LABEL, "");
                    return index;
                  }
+
 
                if (((TILDA__DEPENDENCYDDLDUMMYTABLE) d).beforeWrite(C) == false)
                  {
@@ -559,16 +591,16 @@ This is the column definition for:<BR>
 
    public static SelectQuery newSelectQuery(Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, true); }
    public static SelectQuery newWhereQuery (Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, false); }
-   public static ListResults<tilda.data.DependencyDDLDummyTable_Data> runSelect(Connection C, SelectQuery Q, int Start, int Size) throws Exception
+   public static ListResults<tilda.data.DependencyDDLDummyTable_Data> runSelect(Connection C, SelectQuery Q, int start, int size) throws Exception
      {
-       RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
-       readMany(C, -7, RPI, null, Q, Start, Size);
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
+       readMany(C, -7, RPI, null, Q, start, size);
        return RPI._L;
      }
-   public static void runSelect(Connection C, SelectQuery Q, tilda.db.processors.ObjectProcessor<tilda.data.DependencyDDLDummyTable_Data> OP, int Start, int Size) throws Exception
+   public static void runSelect(Connection C, SelectQuery Q, tilda.db.processors.ObjectProcessor<tilda.data.DependencyDDLDummyTable_Data> OP, int start, int size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       readMany(C, -7, RPI, null, Q, Start, Size);
+       readMany(C, -7, RPI, null, Q, start, size);
      }
    public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
    public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }

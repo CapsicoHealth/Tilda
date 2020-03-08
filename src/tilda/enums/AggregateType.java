@@ -16,7 +16,6 @@
 
 package tilda.enums;
 
-import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ViewColumn;
 
 public enum AggregateType
@@ -71,6 +70,7 @@ public enum AggregateType
             case MAX:
               if (T != ColumnType.DATETIME)
                 return T;
+              break;
             case FIRST:
             case LAST:
               return T;
@@ -138,6 +138,7 @@ public enum AggregateType
         switch (this)
           {
             case ARRAY:
+            case ARRAYCAT:
             case FIRST:
             case LAST:
               return true;

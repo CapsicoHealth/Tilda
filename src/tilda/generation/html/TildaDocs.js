@@ -304,7 +304,7 @@ var getFilteredResults = function(queryString)
   if (doColumns == true)
     {
       getFilteredData(regex, tables, matchingResults);
-      getFilteredData(regex, doRealized == true ? realizedcolumns : columns, matchingResults);
+      getFilteredData(regex, doRealized == false ? realizedcolumns : columns, matchingResults);
     }
   if (doFormulas == true)
     {

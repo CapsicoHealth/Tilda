@@ -60,14 +60,15 @@ public class Migrate
             _MIGRATION_START_ = true;
             ConnectionPool.autoInit();
           }
-        catch (Throwable E)
+        catch (Throwable T)
           {
             LOG.error("\n"
             + "          ======================================================================================\n"
             + AsciiArt.Error("               ")
             + "\n"
             + "                                Cannot Automatically Migrate The Database.\n"
-            + "          ======================================================================================\n", E);
+            + "          ======================================================================================\n", T);
+//            LogUtil.catchingCauses(LOG, T);
             System.exit(-1);
           }
 

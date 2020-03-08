@@ -28,6 +28,7 @@ import tilda.enums.OrderType;
 import tilda.enums.TildaType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ValidationHelper;
+import tilda.utils.CollectionUtil;
 import tilda.utils.TextUtil;
 
 public class Index
@@ -45,6 +46,7 @@ public class Index
     public transient List<Column>    _OrderByObjs   = new ArrayList<Column>();
     public transient List<OrderType> _OrderByOrders = new ArrayList<OrderType>();
     public transient boolean         _Unique;
+    public transient String[]        _LALColumns;
 
     public transient Base            _Parent;
 
@@ -60,7 +62,7 @@ public class Index
         _Db = I._Db;
         _SubWhere = I._SubWhere;
         if (I._SubQuery != null)
-         _SubQuery = new SubWhereClause(I._SubQuery);
+          _SubQuery = new SubWhereClause(I._SubQuery);
       }
 
     public String getName()
@@ -77,17 +79,29 @@ public class Index
         if (TextUtil.isNullOrEmpty(_Name) == true)
           return PS.AddError("Object '" + _Parent.getFullName() + "' is defining an index without a name.");
 
-        if (_Name.length() > PS._CGSql.getMaxColumnNameSize())
-          PS.AddError("Object '" + _Parent.getFullName() + "' is defining index '" + _Name + "' with a name that's too long: max allowed by your database is "+PS._CGSql.getMaxColumnNameSize()+" vs "+_Name.length()+" for this identifier.");
+        if (getName().length() > PS._CGSql.getMaxColumnNameSize())
+          PS.AddError("Object '" + _Parent.getFullName() + "' is defining index '" + _Name + "' with a final name '" + getName() + "' that's too long: max allowed by your database is " + PS._CGSql.getMaxColumnNameSize() + " vs " + getName().length() + " for this identifier.");
         if (_Name.equals(TextUtil.sanitizeName(_Name)) == false)
-         PS.AddError("Object '" + _Parent.getFullName() + "' is defining index '" + _Name + "' with a name containing invalid characters (must all be alphanumeric or underscore).");
+          PS.AddError("Object '" + _Parent.getFullName() + "' is defining index '" + _Name + "' with a name containing invalid characters (must all be alphanumeric or underscore).");
         if (TextUtil.isJavaIdentifier(_Name) == false)
-         PS.AddError("Object '" + _Parent.getFullName() + "' is defining index '" + _Name + "' with a name that is imcompatible with standard identifier convensions (for example, Java, JavaScript since Foreign Keys have programmatic equivalents in those languages).");
+          PS.AddError("Object '" + _Parent.getFullName() + "' is defining index '" + _Name + "' with a name that is imcompatible with standard identifier convensions (for example, Java, JavaScript since Foreign Keys have programmatic equivalents in those languages).");
 
         if ((_Columns == null || _Columns.length == 0) && (_OrderBy == null || _OrderBy.length == 0))
-         PS.AddError("Object '" + _Parent.getFullName() + "' is defining index '" + _Name + "' without columns and/or order by.");
+          PS.AddError("Object '" + _Parent.getFullName() + "' is defining index '" + _Name + "' without columns and/or order by.");
 
         _Unique = _OrderBy == null || _OrderBy.length == 0;
+
+        List<String> LALs = new ArrayList<String>();
+        if (_Columns != null)
+          for (int i = 0; i < _Columns.length; ++i)
+            {
+              if (_Columns[i] != null && _Columns[i].toLowerCase().endsWith(" lal") == true)
+                {
+                  _Columns[i] = _Columns[i].substring(0, _Columns[i].length() - " lal".length());
+                  LALs.add(_Columns[i]);
+                }
+            }
+        _LALColumns = CollectionUtil.toStringArray(LALs);
 
         _ColumnObjs = ValidationHelper.ProcessColumn(PS, _Parent, "index '" + _Name + "'", _Columns, new ValidationHelper.Processor()
           {
@@ -96,9 +110,9 @@ public class Index
               {
                 if (C._Mode == ColumnMode.CALCULATED)
                   PS.AddError("Object '" + _Parent.getFullName() + "' is defining an index with column '" + C.getName() + "' which is calculated.");
-// We think it's OK to have indices on null columns. Postgres will be smart about it for example, and SQLServer seems to handle it properly too.                
-//                else if (_Unique == true && C._Nullable == true && _Columns.length > 1)
-//                  PS.AddError("Object '" + _Parent.getFullName() + "' is using nullable column '" + C.getName() + "' in a multi-column unique index.");
+                // We think it's OK to have indices on null columns. Postgres will be smart about it for example, and SQLServer seems to handle it properly too.
+                // else if (_Unique == true && C._Nullable == true && _Columns.length > 1)
+                // PS.AddError("Object '" + _Parent.getFullName() + "' is using nullable column '" + C.getName() + "' in a multi-column unique index.");
                 else
                   {
                     if (_Unique == true)
@@ -182,7 +196,7 @@ public class Index
             Column C = ParentObject.getColumn(Col);
             if (C == null)
               {
-                PS.AddError(What + " with orderby '" + Col + "' which cannot be found."+(ParentObject._TildaType!=TildaType.VIEW?"":" If you do need that column for the orderBy but do not want it in the final view, add it with \"joinOnly\"=true."));
+                PS.AddError(What + " with orderby '" + Col + "' which cannot be found." + (ParentObject._TildaType != TildaType.VIEW ? "" : " If you do need that column for the orderBy but do not want it in the final view, add it with \"joinOnly\"=true."));
                 continue;
               }
             if (C._Mode == ColumnMode.CALCULATED)

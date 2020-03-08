@@ -25,6 +25,8 @@ create schema IF NOT EXISTS TILDA;
 
 SET search_path TO TILDA;
 
+CREATE EXTENSION if not exists pg_trgm;
+
 -----------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------
 -- TILDA like() and ilike() functions
@@ -56,7 +58,32 @@ CREATE OR REPLACE FUNCTION TILDA.ILike(v text, val text[])
   'select v ilike ANY(val);';
 
 
+  
+-----------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------
+-- TILDA contains() functions
+-----------------------------------------------------------------------------------------------------------------
+CREATE OR REPLACE FUNCTION TILDA.contains(v int4range[], val integer)
+  RETURNS boolean
+  IMMUTABLE LANGUAGE SQL AS
+  'select exists (select * from unnest(v) x_ where x_ @> val);';
+
+CREATE OR REPLACE FUNCTION TILDA.contains(v int8range[], val bigint)
+  RETURNS boolean
+  IMMUTABLE LANGUAGE SQL AS
+  'select exists (select * from unnest(v) x_ where x_ @> val);';
  
+CREATE OR REPLACE FUNCTION TILDA.contains(v tstzrange[], val timestamptz)
+  RETURNS boolean
+  IMMUTABLE LANGUAGE SQL AS
+  'select exists (select * from unnest(v) x_ where x_ @> val);';
+
+CREATE OR REPLACE FUNCTION TILDA.contains(v daterange [], val date)
+  RETURNS boolean
+  IMMUTABLE LANGUAGE SQL AS
+  'select exists (select * from unnest(v) x_ where x_ @> val);';
+
+  
 
 -----------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------
@@ -77,6 +104,11 @@ CREATE OR REPLACE FUNCTION TILDA.In(v bigint[], vals bigint[])
   IMMUTABLE LANGUAGE SQL AS
   'select v && vals;';
 
+CREATE OR REPLACE FUNCTION TILDA.In(v boolean[], vals boolean[])
+  RETURNS boolean
+  IMMUTABLE LANGUAGE SQL AS
+  'select v && vals;';
+
 CREATE OR REPLACE FUNCTION TILDA.In(v text, vals text[])
   RETURNS boolean
   IMMUTABLE LANGUAGE SQL AS
@@ -92,6 +124,10 @@ CREATE OR REPLACE FUNCTION TILDA.In(v bigint, vals bigint[])
   IMMUTABLE LANGUAGE SQL AS
   'select v = ANY(vals);';
 
+CREATE OR REPLACE FUNCTION TILDA.In(v boolean, vals boolean[])
+  RETURNS boolean
+  IMMUTABLE LANGUAGE SQL AS
+  'select v = ANY(vals);';
 
   
   
@@ -375,6 +411,15 @@ END $$;
 
 
 
+CREATE OR REPLACE FUNCTION TILDA.arrayTrunc(arr anyarray, maxCount integer)
+ RETURNS anyarray
+ LANGUAGE sql
+ IMMUTABLE COST 1
+AS $function$SELECT array_agg(a) FROM (SELECT unnest(arr) a limit maxCount) X;
+$function$
+;
+
+
 
 -----------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------
@@ -404,6 +449,17 @@ $$;
 
 
 
+
+-----------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------
+-- TILDA boolean to smallint case
+-----------------------------------------------------------------------------------------------------------------
+DROP CAST IF EXISTS (boolean AS smallint);
+CREATE OR REPLACE FUNCTION TILDA.boolToSmallint(boolean)
+  RETURNS smallint
+  IMMUTABLE LANGUAGE SQL AS
+'SELECT (case when $1 then 1 else 0 end)::SMALLINT;';
+CREATE CAST (boolean AS smallint) WITH FUNCTION TILDA.boolToSmallint(boolean) as Implicit;
 
 
 -----------------------------------------------------------------------------------------------------------------
@@ -911,3 +967,4 @@ where refnum in (select refnum from T)
 update tilda.key set max=(select max(refnum)+1 from PATIENTS.Order) where "name"='PATIENTS.ORDER'
 DROP SEQUENCE IF EXISTS temp_seq;
 */
+
