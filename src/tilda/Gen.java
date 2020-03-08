@@ -31,7 +31,6 @@ import tilda.parsing.Parser;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.Schema;
 import tilda.utils.AsciiArt;
-import tilda.utils.LogUtil;
 import tilda.utils.SystemValues;
 
 /**
