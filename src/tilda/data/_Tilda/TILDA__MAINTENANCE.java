@@ -213,7 +213,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.Maintenance.type to null: it's not nullable.");
        else if (v.length() > 64)
-        throw new Exception("Cannot set tilda.data.TILDA.Maintenance.type: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
+        throw new Exception("Cannot set tilda.data.TILDA.Maintenance.type: the size "+v.length()+" is larger than the max allowed of 64: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_type) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
@@ -308,7 +308,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.Maintenance.name to null: it's not nullable.");
        else if (v.length() > 512)
-        throw new Exception("Cannot set tilda.data.TILDA.Maintenance.name: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 512.");
+        throw new Exception("Cannot set tilda.data.TILDA.Maintenance.name: the size "+v.length()+" is larger than the max allowed of 512: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_name) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
@@ -425,7 +425,7 @@ This is the setter for:<BR>
           setValueNull();
         }
        else if (v.length() > 500000)
-        throw new Exception("Cannot set tilda.data.TILDA.Maintenance.value: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 500000.");
+        throw new Exception("Cannot set tilda.data.TILDA.Maintenance.value: the size "+v.length()+" is larger than the max allowed of 500000: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_value) == false)
         {
           __Changes.or(TILDA__MAINTENANCE_Factory.COLS.VALUE._Mask);

@@ -27,7 +27,6 @@ public class ViewDrop extends MigrationAction
         super(V._ParentSchema._Name, V._Name, false);
         _V = V;
       }
-
     protected View _V;
 
     @Override

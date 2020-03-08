@@ -10,14 +10,14 @@ import org.apache.logging.log4j.Logger;
 import tilda.db.Connection;
 
 /**
-This is the application class <B>Data_DependencyDDLDummyTable</B> mapped to the table <B>TILDA.DependencyDDLDummyTable</B>.
-@see tilda.data._Tilda.TILDA__DEPENDENCYDDLDUMMYTABLE
+This is the application class <B>Data_FailedDependencyDDLScripts</B> mapped to the table <B>TILDA.FailedDependencyDDLScripts</B>.
+@see tilda.data._Tilda.TILDA__FAILEDDEPENDENCYDDLSCRIPTS
 */
-public class DependencyDDLDummyTable_Data extends tilda.data._Tilda.TILDA__DEPENDENCYDDLDUMMYTABLE
+public class FailedDependencyDDLScripts_Data extends tilda.data._Tilda.TILDA__FAILEDDEPENDENCYDDLSCRIPTS
  {
-   protected static final Logger LOG = LogManager.getLogger(DependencyDDLDummyTable_Data.class.getName());
+   protected static final Logger LOG = LogManager.getLogger(FailedDependencyDDLScripts_Data.class.getName());
 
-   public DependencyDDLDummyTable_Data() { }
+   public FailedDependencyDDLScripts_Data() { }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

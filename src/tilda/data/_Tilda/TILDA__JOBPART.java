@@ -277,7 +277,7 @@ This is the definition for:<BR>
 </TABLE>
 */
    Long _refnum=null;
-   protected long __Saved_refnum;
+   protected Long __Saved_refnum;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -497,7 +497,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.JobPart.name to null: it's not nullable.");
        else if (v.length() > 250)
-        throw new Exception("Cannot set tilda.data.TILDA.JobPart.name: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 250.");
+        throw new Exception("Cannot set tilda.data.TILDA.JobPart.name: the size "+v.length()+" is larger than the max allowed of 250: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_name) == false)
         {
           __Changes.or(TILDA__JOBPART_Factory.COLS.NAME._Mask);
@@ -623,7 +623,7 @@ This is the setter for:<BR>
           setTypeNull();
         }
        else if (v.length() > 250)
-        throw new Exception("Cannot set tilda.data.TILDA.JobPart.type: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 250.");
+        throw new Exception("Cannot set tilda.data.TILDA.JobPart.type: the size "+v.length()+" is larger than the max allowed of 250: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_type) == false)
         {
           __Changes.or(TILDA__JOBPART_Factory.COLS.TYPE._Mask);
@@ -777,7 +777,7 @@ This is the setter for:<BR>
           setDataStartTZNull();
         }
        else if (v.length() > 5)
-        throw new Exception("Cannot set tilda.data.TILDA.JobPart.dataStartTZ: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
+        throw new Exception("Cannot set tilda.data.TILDA.JobPart.dataStartTZ: the size "+v.length()+" is larger than the max allowed of 5: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_dataStartTZ) == false)
         {
           __Changes.or(TILDA__JOBPART_Factory.COLS.DATASTARTTZ._Mask);
@@ -1152,7 +1152,7 @@ This is the setter for:<BR>
           setDataEndTZNull();
         }
        else if (v.length() > 5)
-        throw new Exception("Cannot set tilda.data.TILDA.JobPart.dataEndTZ: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
+        throw new Exception("Cannot set tilda.data.TILDA.JobPart.dataEndTZ: the size "+v.length()+" is larger than the max allowed of 5: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_dataEndTZ) == false)
         {
           __Changes.or(TILDA__JOBPART_Factory.COLS.DATAENDTZ._Mask);
@@ -1504,7 +1504,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.JobPart.startTZ to null: it's not nullable.");
        else if (v.length() > 5)
-        throw new Exception("Cannot set tilda.data.TILDA.JobPart.startTZ: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
+        throw new Exception("Cannot set tilda.data.TILDA.JobPart.startTZ: the size "+v.length()+" is larger than the max allowed of 5: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_startTZ) == false)
         {
           __Changes.or(TILDA__JOBPART_Factory.COLS.STARTTZ._Mask);
@@ -1799,7 +1799,7 @@ This is the setter for:<BR>
           setEndTZNull();
         }
        else if (v.length() > 5)
-        throw new Exception("Cannot set tilda.data.TILDA.JobPart.endTZ: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
+        throw new Exception("Cannot set tilda.data.TILDA.JobPart.endTZ: the size "+v.length()+" is larger than the max allowed of 5: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_endTZ) == false)
         {
           __Changes.or(TILDA__JOBPART_Factory.COLS.ENDTZ._Mask);

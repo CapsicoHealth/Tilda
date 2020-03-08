@@ -196,7 +196,7 @@ This is the definition for:<BR>
 */
    @SerializedName("refnum")
    Long _refnum=null;
-   protected long __Saved_refnum;
+   protected Long __Saved_refnum;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -332,7 +332,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.Key.name to null: it's not nullable.");
        else if (v.length() > 128)
-        throw new Exception("Cannot set tilda.data.TILDA.Key.name: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 128.");
+        throw new Exception("Cannot set tilda.data.TILDA.Key.name: the size "+v.length()+" is larger than the max allowed of 128: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_name) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)

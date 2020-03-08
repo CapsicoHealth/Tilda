@@ -43,11 +43,9 @@ import tilda.enums.FrameworkSourcedType;
 import tilda.enums.ObjectMode;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.migration.actions.ColumnAdd;
-
+import tilda.migration.actions.ColumnAlterMulti;
 import tilda.migration.actions.ColumnAlterNull;
 import tilda.migration.actions.ColumnAlterNumericSize;
-
-import tilda.migration.actions.ColumnAlterMulti;
 import tilda.migration.actions.ColumnComment;
 import tilda.migration.actions.ColumnDefault;
 import tilda.migration.actions.DDLDependencyPostManagement;
@@ -231,7 +229,7 @@ public class Migrator
       {
         LOG.info("===> Migrating DB ( Url: " + C.getURL() + " )");
         LOG.info("Applying migration actions.");
-//        DDLDependencyManager DdlDepMan = null;
+        // DDLDependencyManager DdlDepMan = null;
         MigrationAction lastAction = null;
         try
           {
@@ -240,21 +238,21 @@ public class Migrator
                 if (S._Actions.isEmpty() == true)
                   continue;
                 if (S._S != null && TextUtil.findElement(DependencySchemas, S._S._Name, true, 0) != -1)
-                 continue;
+                  continue;
                 String lastEntityName = null;
                 for (MigrationAction A : S._Actions)
                   {
                     lastAction = A;
-                    String currentEntityName = A._SchemaName+"."+A._TableViewName;
+                    String currentEntityName = A._SchemaName + "." + A._TableViewName;
                     LOG.debug("Applying migration: " + A.getDescription());
                     if (A.process(C) == false)
                       throw new Exception("There was an error with the action '" + A.getDescription() + "'.");
                     if (Migrate.isTesting() == false && lastEntityName != null && currentEntityName.equals(lastEntityName) == false)
                       C.commit();
-//                    if (A.getClass() == DDLDependencyPreManagement.class)
-//                      DdlDepMan = ((DDLDependencyPreManagement) A)._DdlDepMan;
-//                    else if (A.getClass() == DDLDependencyPostManagement.class)
-//                      DdlDepMan = null;
+                    // if (A.getClass() == DDLDependencyPreManagement.class)
+                    // DdlDepMan = ((DDLDependencyPreManagement) A)._DdlDepMan;
+                    // else if (A.getClass() == DDLDependencyPostManagement.class)
+                    // DdlDepMan = null;
                     lastEntityName = currentEntityName;
                   }
                 C.commit();
@@ -264,13 +262,24 @@ public class Migrator
           {
             LOG.error("An exception occurred during migration: " + lastAction.getDescription());
             LOG.catching(E);
-//            if (DdlDepMan != null)
-//              {
+            // if (DdlDepMan != null)
+            // {
+            C.rollback();
+            // LOG.debug("There were dropped dependencies that need to be restored now.");
+            // DdlDepMan.restoreDependencies(C);
+            // C.commit();
+            // }
+            try
+              {
+                lastAction.errorHandling(C);
+                C.commit();
+              }
+            catch (Throwable T)
+              {
+                LOG.catching(T);
                 C.rollback();
-//                LOG.debug("There were dropped dependencies that need to be restored now.");
-//                DdlDepMan.restoreDependencies(C);
-//                C.commit();
-//              }
+              }
+            
             throw new Exception("Migration failed, and temporarily dropped dependencies were restored");
           }
       }
@@ -368,12 +377,11 @@ public class Migrator
                         // model changes, but to threshold changes.
                         boolean condition2 = Col.isCollection() == false && Col.getType() == ColumnType.STRING
                         // the database type is CHAR, but the Tilda type is not CHAR (i.e., the goal post for what is CHAR Vs VARCHAR changed)
-                        && (  CMeta._TypeSql.equals("CHAR") == true && C.getDBStringType(CMeta._Size) != DBStringType.CHARACTER
+                        && (CMeta._TypeSql.equals("CHAR") == true && C.getDBStringType(CMeta._Size) != DBStringType.CHARACTER
                         // the database type is VARCHAR but the Tilda type is CHAR (i.e., the goal post for what is CHAR Vs VARCHAR changed)
-                           || CMeta._TypeSql.equals("VARCHAR") == true && C.getDBStringType(CMeta._Size) == DBStringType.CHARACTER
+                        || CMeta._TypeSql.equals("VARCHAR") == true && C.getDBStringType(CMeta._Size) == DBStringType.CHARACTER
                         // the database type is TEXT but the Tilda type is not TEXT
-                           || CMeta._TypeSql.equals("VARCHAR") == true && CMeta._TypeName.equals("text") == true && C.getDBStringType(CMeta._Size) != DBStringType.TEXT
-                           );
+                        || CMeta._TypeSql.equals("VARCHAR") == true && CMeta._TypeName.equals("text") == true && C.getDBStringType(CMeta._Size) != DBStringType.TEXT);
 
                         if (condition1 || condition2)
                           {
@@ -388,12 +396,11 @@ public class Migrator
                         else if (!condition2 && Col.isCollection() == false && Col.getType() == ColumnType.STRING)
                           {
                             // The size-based types don't match
-                            if (   C.getDBStringType(CMeta._Size).equals(C.getDBStringType(Col._Size)) == false
+                            if (C.getDBStringType(CMeta._Size).equals(C.getDBStringType(Col._Size)) == false
                             // they match, but within a type, they are different sizes, except for TEXT
-                                ||    C.getDBStringType(CMeta._Size).equals(C.getDBStringType(Col._Size)) == true 
-                                   && CMeta._Size != Col._Size 
-                                   && CMeta._TypeSql.equals("VARCHAR") == false && CMeta._TypeName.equals("text") == false
-                               )
+                            || C.getDBStringType(CMeta._Size).equals(C.getDBStringType(Col._Size)) == true
+                            && CMeta._Size != Col._Size
+                            && CMeta._TypeSql.equals("VARCHAR") == false && CMeta._TypeName.equals("text") == false)
                               {
                                 CAM.addColumnAlterStringSize(CMeta, Col);
                                 NeedsDdlDependencyManagement = true;
@@ -408,7 +415,7 @@ public class Migrator
 
                 if (NeedsDdlDependencyManagement == true)
                   {
-                    DDLDependencyManager DdlDepMan = new DDLDependencyManager(Obj._ParentSchema._Name, Obj._Name);
+                    DDLDependencyManager DdlDepMan = new DDLDependencyManager(Obj._ParentSchema._Name, Obj._Name, TildaList);
                     MigrationAction A = new DDLDependencyPreManagement(DdlDepMan);
                     if (A.isNeeded(C, DBMeta) == true)
                       {
@@ -491,10 +498,10 @@ public class Migrator
                             if (ix._Unique
                             && (ix._Name.equals(ix._Name.toLowerCase()) == false
                             || ix._Name.equalsIgnoreCase(IX.getName()) == false))
-                              {
-                                Errors.add("Index " + ix._Name + " is unique and contains the same signature as " + IX.getName() + " in the " + IX._Parent._Name + " schema definition");
-                              }
-                            else if (DroppedSignatures.add(ix.getSignature()) == false) // catches duplicate signatures by different names in db. First will be renamed below
+                            // The actual rename will happen in the next loop, so we just mark the index signature as dropped.
+                              DroppedSignatures.add(ix.getSignature());
+                            // catches duplicate signatures by different names in db. First will be renamed below
+                            else if (DroppedSignatures.add(ix.getSignature()) == false)
                               Actions.add(new TableIndexDrop(Obj, ix));
                           }
                       }
@@ -547,9 +554,17 @@ public class Migrator
           {
             if (V == null)
               continue;
+            
             ViewMeta VMeta = DBMeta.getViewMeta(V._ParentSchema._Name, V._Name);
             if (VMeta == null)
-              Actions.add(new ViewCreate(V));
+              {
+                // The view doesn't exist, but maybe parallel dependencies do, most of the time
+                // when a migration failed for whatever reason. Even though we just tested whether
+                // the view exists, we still want to drop it. The drop implementation does do an
+                // "if exists" so it's safe.
+                Actions.add(new ViewDrop(V));
+                Actions.add(new ViewCreate(V));
+              }
             else
               {
                 StringBuilderWriter Out = new StringBuilderWriter();
@@ -558,15 +573,38 @@ public class Migrator
                 Out.close();
                 if (VMeta._Descr == null || VMeta._Descr.replace("\r\n", " ").replace("\n", " ").trim().equals(ViewDef.replace("\r\n", " ").replace("\n", " ").trim()) == false)
                   {
-                    DDLDependencyManager DdlDepMan = new DDLDependencyManager(V._ParentSchema._Name, V._Name);
+                    // If this view depends on another realized view, either directly or indirectly, then a parallel *_R view 
+                    // was created. When migrating, we have to take care of those 2 views.
+
+                    // Main view
+                    DDLDependencyManager DdlDepMan = null;
+                    DdlDepMan = new DDLDependencyManager(V._ParentSchema._Name, V._Name, TildaList);
                     MigrationAction A = new DDLDependencyPreManagement(DdlDepMan);
-                    boolean NeedsDdlDependencyManagement = A.isNeeded(C, DBMeta);
-                    if (NeedsDdlDependencyManagement == true)
+                    if (A.isNeeded(C, DBMeta) == true)
                       Actions.add(A);
+                    else
+                      DdlDepMan = null;
+
+/*
+                    // Test if there is an _R view
+                    DDLDependencyManager DdlDepMan_R = null;
+                    if (V.hasAncestorRealizedViews() == true)
+                      {
+                        DdlDepMan_R = new DDLDependencyManager(V.getViewSubRealizeSchemaName(), V.getViewSubRealizeViewName());
+                        A = new DDLDependencyPreManagement(DdlDepMan_R);
+                        if (A.isNeeded(C, DBMeta) == true)
+                          Actions.add(A);
+                        else // _R view was not there (maybe a previous failure, or some other weird thing)
+                          DdlDepMan_R = null;
+                      }
+*/
                     Actions.add(new ViewDrop(V));
                     Actions.add(new ViewCreate(V));
-                    if (NeedsDdlDependencyManagement == true)
+                    
+                    if (DdlDepMan != null)
                       Actions.add(new DDLDependencyPostManagement(DdlDepMan));
+//                    if (DdlDepMan_R != null)
+//                      Actions.add(new DDLDependencyPostManagement(DdlDepMan_R));
                   }
               }
           }
@@ -586,10 +624,11 @@ public class Migrator
 
         if (Errors.isEmpty() == false)
           {
-            LOG.error("Errors were found when putting together a migration script:");
+            StringBuilder Str = new StringBuilder();
+            Str.append("\n\nDatabase couldn't be migrated because of errors found:\n");
             for (int i = 0; i < Errors.size(); ++i)
-              LOG.error("   " + (i + 1) + ": " + Errors.get(i) + ".");
-            throw new Exception("Database couldn't be migrated.");
+              Str.append("     " + (i + 1) + ": " + Errors.get(i) + ".\n");
+            throw new Exception(Str.toString());
           }
         return Actions;
       }

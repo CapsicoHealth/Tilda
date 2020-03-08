@@ -40,6 +40,13 @@ public class DDLDependencyPostManagement extends MigrationAction
 
     public String getDescription()
       {
-        return "Restoring all views that were dependent on " + _DdlDepMan.getSchemaName() + "." + _DdlDepMan.getTableViewName()+".";
+        return "Restoring all views that were dependent on " + _DdlDepMan.getSchemaName() + "." + _DdlDepMan.getTableViewName() + ".";
+      }
+
+    @Override
+    public void errorHandling(Connection C)
+    throws Exception
+      {
+        _DdlDepMan.errorHandling(C);
       }
   }

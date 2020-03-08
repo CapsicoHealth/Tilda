@@ -16,15 +16,17 @@
 
 package tilda.migration;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import tilda.data.DependencyDDLDummyTable_Data;
-import tilda.data.DependencyDDLDummyTable_Factory;
+import tilda.data.FailedDependencyDDLScripts_Data;
+import tilda.data.FailedDependencyDDLScripts_Factory;
 import tilda.db.Connection;
+import tilda.parsing.parts.Schema;
 import tilda.utils.ReverseIterator;
 import tilda.utils.TextUtil;
 
@@ -32,15 +34,19 @@ public class DDLDependencyManager
   {
     protected static final Logger LOG = LogManager.getLogger(DDLDependencyManager.class.getName());
 
-    public DDLDependencyManager(String SchemaName, String TableViewName)
+    public DDLDependencyManager(String SchemaName, String TableViewName, List<Schema> TildaList)
       {
         _SchemaName = SchemaName;
         _TableViewName = TableViewName;
+        _TildaList = TildaList;
       }
 
-    protected String                                        _SchemaName;
-    protected String                                        _TableViewName;
-    protected List<tilda.data.DependencyDDLDummyTable_Data> _Scripts;
+    protected String                                _SchemaName;
+    protected String                                _TableViewName;
+    protected List<Schema>                          _TildaList;
+    protected List<FailedDependencyDDLScripts_Data> _Scripts;
+    protected List<FailedDependencyDDLScripts_Data> _FailedUnmanagedViewScripts = new ArrayList<FailedDependencyDDLScripts_Data>();
+
 
     public String getSchemaName()
       {
@@ -55,9 +61,9 @@ public class DDLDependencyManager
     public boolean fetchDependencies(Connection C)
     throws Exception
       {
-        _Scripts = DependencyDDLDummyTable_Factory.lookupDDLDependencies(C, _SchemaName, _TableViewName);
+        _Scripts = FailedDependencyDDLScripts_Factory.lookupDDLDependencies(C, _SchemaName, _TableViewName);
         boolean Error = false;
-        for (DependencyDDLDummyTable_Data S : _Scripts)
+        for (FailedDependencyDDLScripts_Data S : _Scripts)
           {
             if (TextUtil.isNullOrEmpty(S.getRestoreScript()) == true)
               {
@@ -65,11 +71,23 @@ public class DDLDependencyManager
                 Error = true;
               }
           }
+
+
+        // if (Error == false)
+        // for (FailedDependencyDDLScripts_Data S : _Scripts)
+        // {
+        // FailedDependencyDDLScripts_Data S2 = FailedDependencyDDLScripts_Factory.create(S.getSrcSchemaName(), S.getSrcTVName(), S.getSeq(), S.getDepSchemaName(), S.getDepViewName(),
+        // S.getRestoreScript());
+        // if (S2.write(C) == false)
+        // Error = true;
+        // }
+
         if (Error == true)
           {
             _Scripts = null;
             return false;
           }
+
         return true;
       }
 
@@ -87,8 +105,8 @@ public class DDLDependencyManager
             return;
           }
         StringBuilder Str = new StringBuilder();
-        for (DependencyDDLDummyTable_Data S : _Scripts)
-          Str.append("\nDROP VIEW " + S.getDepSchemaName() + "." + S.getDepViewName() + ";");
+        for (FailedDependencyDDLScripts_Data S : _Scripts)
+          Str.append("\nDROP VIEW IF EXISTS " + S.getDepSchemaName() + "." + S.getDepViewName() + " CASCADE;");
         if (C.executeDDL(_SchemaName, _TableViewName, Str.toString()) == false)
           throw new Exception("Database error dropping views dependent on " + _SchemaName + "." + _TableViewName + ".");
       }
@@ -101,27 +119,101 @@ public class DDLDependencyManager
             LOG.debug("Table/View " + _SchemaName + "." + _TableViewName + " has no dependencies to restore.");
             return;
           }
-        Iterator<DependencyDDLDummyTable_Data> I = new ReverseIterator<DependencyDDLDummyTable_Data>(_Scripts);
+        int Error = 0;
+        Iterator<FailedDependencyDDLScripts_Data> I = new ReverseIterator<FailedDependencyDDLScripts_Data>(_Scripts);
         while (I.hasNext() == true)
           {
-            DependencyDDLDummyTable_Data S = I.next();
-            if (C.executeDDL(S.getDepSchemaName(), S.getDepViewName(), S.getRestoreScript()) == false)
-              throw new Exception("Database error restoring view " + S.getDepSchemaName() + "." + S.getDepViewName() + " that was dependent on " + _SchemaName + "." + _TableViewName + ".");
+            FailedDependencyDDLScripts_Data S = I.next();
+            boolean OK = false;
+            try
+              {
+                OK = C.executeDDL(S.getDepSchemaName(), S.getDepViewName(), S.getRestoreScript());
+              }
+            catch (Exception E)
+              {
+                LOG.error("A database error occurred:\n", E);
+                OK = false;
+              }
+            if (OK == false)
+              {
+                StringBuilder Str = new StringBuilder();
+                Str.append("\n\n###############################################################################################################################\n");
+                Str.append("##\n");
+                Str.append("##  Database error restoring view " + S.getDepSchemaName() + "." + S.getDepViewName() + " that was\n");
+                Str.append("##  dependent on " + _SchemaName + "." + _TableViewName + ".\n");
+                Str.append("##\n");
+                Str.append("##  Could not restore " + S.getDepSchemaName() + "." + S.getDepViewName() + " due likely to a removed column that had dependencies\n");
+                Str.append("##  (i.e., a schema-breaking change, see exception above). You have to rerun Migrate. The dependent views\n");
+                Str.append("##  are as follows:\n");
+                I = new ReverseIterator<FailedDependencyDDLScripts_Data>(_Scripts);
+                while (I.hasNext() == true)
+                  {
+                    S = I.next();
+                    if (Schema.getView(_TildaList, S.getDepSchemaName(), S.getDepViewName()) == null)
+                      {
+                        _FailedUnmanagedViewScripts.add(S);
+                        Str.append("##      X ").append(S.getDepSchemaName()).append(".").append(S.getDepViewName()).append("   [NOT TILDA-MANAGED]\n");
+                      }
+                    else
+                      Str.append("##      - ").append(S.getDepSchemaName()).append(".").append(S.getDepViewName()).append("\n");
+                  }
+                Str.append("##\n");
+                if (_FailedUnmanagedViewScripts.isEmpty() == false)
+                  {
+                    Str.append("##  NOTE: There were " + _FailedUnmanagedViewScripts.size() + " dependent view(s) found that are not managed through Tilda\n");
+                    Str.append("##       (marked as such above if any). They must be re-created separately. Their captured DDL will\n");
+                    Str.append("##       be saved and retrievable as follows:\n");
+                    Str.append("            select * from Tilda.FailedDependencyDDLScripts\n");
+                    Str.append("             where ");
+                    FailedDependencyDDLScripts_Factory.COLS.SRCSCHEMANAME.getShortColumnVarForSelect(C, Str);
+                    Str.append(" = ").append(TextUtil.escapeSingleQuoteForSQL(_SchemaName))
+                    .append("\n               and ");
+                    FailedDependencyDDLScripts_Factory.COLS.SRCTVNAME.getShortColumnVarForSelect(C, Str);
+                    Str.append(" = ").append(TextUtil.escapeSingleQuoteForSQL(_TableViewName))
+                    .append("\n             order by \"created\" desc, seq\n");
+                  }
+                else
+                  {
+                    Str.append("##  NOTE: All those views are managed by Tilda and will be re-created automatically in the next Migrate.\n");
+                  }
+                Str.append("##\n");
+                Str.append("##  NOTE: If the Migrate still fails, you may have to manually drop-cascade ").append(_SchemaName).append(".").append(_TableViewName).append(".\n");
+                Str.append("##\n");
+                Str.append("###############################################################################################################################\n");
+                ++Error;
+                throw new Exception(Str.toString());
+              }
+          }
+        if (Error != 0)
+          LOG.debug("There were " + Error + " out of " + _Scripts.size() + " views which couldn't be re-created.");
+      }
+
+    public void errorHandling(Connection C)
+    throws Exception
+      {
+        if (_FailedUnmanagedViewScripts.isEmpty() == true)
+          return;
+        
+        for (FailedDependencyDDLScripts_Data S : _FailedUnmanagedViewScripts)
+          {
+            FailedDependencyDDLScripts_Data S2 = FailedDependencyDDLScripts_Factory.create(S.getSrcSchemaName(), S.getSrcTVName(), S.getSeq(), S.getDepSchemaName(), S.getDepViewName(), S.getRestoreScript());
+            if (S2.write(C) == false)
+              throw new Exception("Cannot save a restore script for " + S.getDepSchemaName() + "." + S.getDepViewName() + ".");
           }
       }
 
     public String getDependencyNames()
       {
         if (_Scripts == null)
-         return "";
+          return "";
         StringBuilder Str = new StringBuilder();
-        Iterator<DependencyDDLDummyTable_Data> I = new ReverseIterator<DependencyDDLDummyTable_Data>(_Scripts);
+        Iterator<FailedDependencyDDLScripts_Data> I = new ReverseIterator<FailedDependencyDDLScripts_Data>(_Scripts);
         while (I.hasNext() == true)
           {
-            DependencyDDLDummyTable_Data S = I.next();
+            FailedDependencyDDLScripts_Data S = I.next();
             if (Str.length() != 0)
-             Str.append(", ");
-            Str.append(S.getDepSchemaName()+"."+S.getDepViewName());
+              Str.append(", ");
+            Str.append(S.getDepSchemaName() + "." + S.getDepViewName());
           }
         return Str.toString();
       }

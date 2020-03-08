@@ -213,7 +213,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.Mapping.type to null: it's not nullable.");
        else if (v.length() > 10)
-        throw new Exception("Cannot set tilda.data.TILDA.Mapping.type: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 10.");
+        throw new Exception("Cannot set tilda.data.TILDA.Mapping.type: the size "+v.length()+" is larger than the max allowed of 10: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_type) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
@@ -329,7 +329,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.Mapping.src to null: it's not nullable.");
        else if (v.length() > 1024)
-        throw new Exception("Cannot set tilda.data.TILDA.Mapping.src: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 1024.");
+        throw new Exception("Cannot set tilda.data.TILDA.Mapping.src: the size "+v.length()+" is larger than the max allowed of 1024: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_src) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
@@ -445,7 +445,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.Mapping.dst to null: it's not nullable.");
        else if (v.length() > 1024)
-        throw new Exception("Cannot set tilda.data.TILDA.Mapping.dst: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 1024.");
+        throw new Exception("Cannot set tilda.data.TILDA.Mapping.dst: the size "+v.length()+" is larger than the max allowed of 1024: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_dst) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)

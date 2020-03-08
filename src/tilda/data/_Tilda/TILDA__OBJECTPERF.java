@@ -440,7 +440,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.ObjectPerf.schemaName to null: it's not nullable.");
        else if (v.length() > 64)
-        throw new Exception("Cannot set tilda.data.TILDA.ObjectPerf.schemaName: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
+        throw new Exception("Cannot set tilda.data.TILDA.ObjectPerf.schemaName: the size "+v.length()+" is larger than the max allowed of 64: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_schemaName) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
@@ -535,7 +535,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.ObjectPerf.objectName to null: it's not nullable.");
        else if (v.length() > 64)
-        throw new Exception("Cannot set tilda.data.TILDA.ObjectPerf.objectName: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
+        throw new Exception("Cannot set tilda.data.TILDA.ObjectPerf.objectName: the size "+v.length()+" is larger than the max allowed of 64: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_objectName) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
@@ -628,7 +628,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.ObjectPerf.startPeriodTZ to null: it's not nullable.");
        else if (v.length() > 5)
-        throw new Exception("Cannot set tilda.data.TILDA.ObjectPerf.startPeriodTZ: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
+        throw new Exception("Cannot set tilda.data.TILDA.ObjectPerf.startPeriodTZ: the size "+v.length()+" is larger than the max allowed of 5: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_startPeriodTZ) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
@@ -829,7 +829,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.ObjectPerf.endPeriodTZ to null: it's not nullable.");
        else if (v.length() > 5)
-        throw new Exception("Cannot set tilda.data.TILDA.ObjectPerf.endPeriodTZ: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
+        throw new Exception("Cannot set tilda.data.TILDA.ObjectPerf.endPeriodTZ: the size "+v.length()+" is larger than the max allowed of 5: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_endPeriodTZ) == false)
         {
           __Changes.or(TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask);

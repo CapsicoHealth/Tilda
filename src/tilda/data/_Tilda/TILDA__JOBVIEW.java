@@ -519,7 +519,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.JobView.jobName to null: it's not nullable.");
        else if (v.length() > 250)
-        throw new Exception("Cannot set tilda.data.TILDA.JobView.jobName: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 250.");
+        throw new Exception("Cannot set tilda.data.TILDA.JobView.jobName: the size "+v.length()+" is larger than the max allowed of 250: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_jobName) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
@@ -626,7 +626,7 @@ This is the setter for:<BR>
           setJobTypeNull();
         }
        else if (v.length() > 250)
-        throw new Exception("Cannot set tilda.data.TILDA.JobView.jobType: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 250.");
+        throw new Exception("Cannot set tilda.data.TILDA.JobView.jobType: the size "+v.length()+" is larger than the max allowed of 250: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_jobType) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
@@ -762,7 +762,7 @@ This is the setter for:<BR>
           setJobUserIdNull();
         }
        else if (v.length() > 250)
-        throw new Exception("Cannot set tilda.data.TILDA.JobView.jobUserId: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 250.");
+        throw new Exception("Cannot set tilda.data.TILDA.JobView.jobUserId: the size "+v.length()+" is larger than the max allowed of 250: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_jobUserId) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
@@ -897,7 +897,7 @@ This is the setter for:<BR>
           setJobDataStartTZNull();
         }
        else if (v.length() > 5)
-        throw new Exception("Cannot set tilda.data.TILDA.JobView.jobDataStartTZ: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
+        throw new Exception("Cannot set tilda.data.TILDA.JobView.jobDataStartTZ: the size "+v.length()+" is larger than the max allowed of 5: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_jobDataStartTZ) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
@@ -1169,7 +1169,7 @@ This is the setter for:<BR>
           setJobDataEndTZNull();
         }
        else if (v.length() > 5)
-        throw new Exception("Cannot set tilda.data.TILDA.JobView.jobDataEndTZ: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
+        throw new Exception("Cannot set tilda.data.TILDA.JobView.jobDataEndTZ: the size "+v.length()+" is larger than the max allowed of 5: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_jobDataEndTZ) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
@@ -1418,7 +1418,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.JobView.jobStartTZ to null: it's not nullable.");
        else if (v.length() > 5)
-        throw new Exception("Cannot set tilda.data.TILDA.JobView.jobStartTZ: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
+        throw new Exception("Cannot set tilda.data.TILDA.JobView.jobStartTZ: the size "+v.length()+" is larger than the max allowed of 5: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_jobStartTZ) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
@@ -1610,7 +1610,7 @@ This is the setter for:<BR>
           setJobEndTZNull();
         }
        else if (v.length() > 5)
-        throw new Exception("Cannot set tilda.data.TILDA.JobView.jobEndTZ: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
+        throw new Exception("Cannot set tilda.data.TILDA.JobView.jobEndTZ: the size "+v.length()+" is larger than the max allowed of 5: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_jobEndTZ) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
@@ -2008,7 +2008,7 @@ This is the setter for:<BR>
           setJobMsgNull();
         }
        else if (v.length() > 8192)
-        throw new Exception("Cannot set tilda.data.TILDA.JobView.jobMsg: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 8192.");
+        throw new Exception("Cannot set tilda.data.TILDA.JobView.jobMsg: the size "+v.length()+" is larger than the max allowed of 8192: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_jobMsg) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
@@ -2121,7 +2121,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.JobView.jobPartName to null: it's not nullable.");
        else if (v.length() > 250)
-        throw new Exception("Cannot set tilda.data.TILDA.JobView.jobPartName: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 250.");
+        throw new Exception("Cannot set tilda.data.TILDA.JobView.jobPartName: the size "+v.length()+" is larger than the max allowed of 250: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_jobPartName) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
@@ -2228,7 +2228,7 @@ This is the setter for:<BR>
           setJobPartTypeNull();
         }
        else if (v.length() > 250)
-        throw new Exception("Cannot set tilda.data.TILDA.JobView.jobPartType: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 250.");
+        throw new Exception("Cannot set tilda.data.TILDA.JobView.jobPartType: the size "+v.length()+" is larger than the max allowed of 250: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_jobPartType) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
@@ -2363,7 +2363,7 @@ This is the setter for:<BR>
           setJobPartDataStartTZNull();
         }
        else if (v.length() > 5)
-        throw new Exception("Cannot set tilda.data.TILDA.JobView.jobPartDataStartTZ: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
+        throw new Exception("Cannot set tilda.data.TILDA.JobView.jobPartDataStartTZ: the size "+v.length()+" is larger than the max allowed of 5: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_jobPartDataStartTZ) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
@@ -2635,7 +2635,7 @@ This is the setter for:<BR>
           setJobPartDataEndTZNull();
         }
        else if (v.length() > 5)
-        throw new Exception("Cannot set tilda.data.TILDA.JobView.jobPartDataEndTZ: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
+        throw new Exception("Cannot set tilda.data.TILDA.JobView.jobPartDataEndTZ: the size "+v.length()+" is larger than the max allowed of 5: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_jobPartDataEndTZ) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
@@ -2884,7 +2884,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.JobView.jobPartStartTZ to null: it's not nullable.");
        else if (v.length() > 5)
-        throw new Exception("Cannot set tilda.data.TILDA.JobView.jobPartStartTZ: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
+        throw new Exception("Cannot set tilda.data.TILDA.JobView.jobPartStartTZ: the size "+v.length()+" is larger than the max allowed of 5: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_jobPartStartTZ) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
@@ -3076,7 +3076,7 @@ This is the setter for:<BR>
           setJobPartEndTZNull();
         }
        else if (v.length() > 5)
-        throw new Exception("Cannot set tilda.data.TILDA.JobView.jobPartEndTZ: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
+        throw new Exception("Cannot set tilda.data.TILDA.JobView.jobPartEndTZ: the size "+v.length()+" is larger than the max allowed of 5: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_jobPartEndTZ) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
@@ -3653,7 +3653,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.JobView.jobPartMessage to null: it's not nullable.");
        else if (v.length() > 8192)
-        throw new Exception("Cannot set tilda.data.TILDA.JobView.jobPartMessage: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 8192.");
+        throw new Exception("Cannot set tilda.data.TILDA.JobView.jobPartMessage: the size "+v.length()+" is larger than the max allowed of 8192: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_jobPartMessage) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)

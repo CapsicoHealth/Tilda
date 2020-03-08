@@ -25,7 +25,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.commons.io.output.StringBuilderWriter;
 import org.apache.logging.log4j.LogManager;
@@ -240,11 +239,9 @@ public class PostgreSQL implements DBType
     public boolean dropView(Connection Con, View V)
     throws Exception
       {
-        Set<View> SubRealizedViews = V.getSubRealizedViewRootNames();
-        Set<View> AncestorRealizedViews = V.getAncestorRealizedViews();
         boolean OK = true;
-        if (SubRealizedViews != null || AncestorRealizedViews != null) // View depends on realized views.
-          OK = Con.executeDDL(Sql.getViewSubRealizeSchemaName(), Sql.getViewSubRealizeViewName(V), "DROP VIEW IF EXISTS " + Sql.getViewSubRealizeName(V) + " CASCADE");
+        if (V.hasAncestorRealizedViews() == true)
+          OK = Con.executeDDL(V.getViewSubRealizeSchemaName(), V.getViewSubRealizeViewName(), "DROP VIEW IF EXISTS " + V.getViewSubRealizeFullName() + " CASCADE");
 
         return OK == false ? OK : Con.executeDDL(V._ParentSchema._Name, V.getBaseName(), "DROP VIEW IF EXISTS " + V.getShortName() + " CASCADE");
       }

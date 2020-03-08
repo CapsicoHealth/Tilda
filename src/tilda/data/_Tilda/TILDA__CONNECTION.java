@@ -416,7 +416,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.Connection.id to null: it's not nullable.");
        else if (v.length() > 15)
-        throw new Exception("Cannot set tilda.data.TILDA.Connection.id: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 15.");
+        throw new Exception("Cannot set tilda.data.TILDA.Connection.id: the size "+v.length()+" is larger than the max allowed of 15: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_id) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
@@ -510,7 +510,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.Connection.driver to null: it's not nullable.");
        else if (v.length() > 100)
-        throw new Exception("Cannot set tilda.data.TILDA.Connection.driver: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 100.");
+        throw new Exception("Cannot set tilda.data.TILDA.Connection.driver: the size "+v.length()+" is larger than the max allowed of 100: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_driver) == false)
         {
           __Changes.or(TILDA__CONNECTION_Factory.COLS.DRIVER._Mask);
@@ -613,7 +613,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.Connection.db to null: it's not nullable.");
        else if (v.length() > 200)
-        throw new Exception("Cannot set tilda.data.TILDA.Connection.db: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 200.");
+        throw new Exception("Cannot set tilda.data.TILDA.Connection.db: the size "+v.length()+" is larger than the max allowed of 200: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_db) == false)
         {
           __Changes.or(TILDA__CONNECTION_Factory.COLS.DB._Mask);
@@ -716,7 +716,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.Connection.user to null: it's not nullable.");
        else if (v.length() > 30)
-        throw new Exception("Cannot set tilda.data.TILDA.Connection.user: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 30.");
+        throw new Exception("Cannot set tilda.data.TILDA.Connection.user: the size "+v.length()+" is larger than the max allowed of 30: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_user) == false)
         {
           __Changes.or(TILDA__CONNECTION_Factory.COLS.USER._Mask);
@@ -819,7 +819,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.Connection.pswd to null: it's not nullable.");
        else if (v.length() > 40)
-        throw new Exception("Cannot set tilda.data.TILDA.Connection.pswd: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 40.");
+        throw new Exception("Cannot set tilda.data.TILDA.Connection.pswd: the size "+v.length()+" is larger than the max allowed of 40: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_pswd) == false)
         {
           __Changes.or(TILDA__CONNECTION_Factory.COLS.PSWD._Mask);

@@ -1253,6 +1253,11 @@ public class View extends Base
       }
 
 
+    /**
+     * Checks whether this view has a dependency on realized views, and as such, a parallel _R view
+     * should be, or has been, created.
+     * @return
+     */
     public boolean hasAncestorRealizedViews()
       {
         Set<View> S1 = getAncestorRealizedViews();
@@ -1260,5 +1265,32 @@ public class View extends Base
         return S1 != null && S1.isEmpty() == false || S2 != null && S2.isEmpty() == false;
       }
 
+    /**
+     * The schema name for _R parallel views, currently TILTATMP.
+     * @return
+     */
+    public String getViewSubRealizeSchemaName()
+      {
+        return "TILDATMP";
+      }
+
+    /**
+     * The name of the _R view, as this view's "[schemaname]_[name]_R"
+     * @return
+     */
+    public String getViewSubRealizeViewName()
+      {
+        return _ParentSchema._Name + "_" + _Name + "_R";
+      }
+
+    /**
+     * The full schema.name of the _R parallel view as per getViewSubRealizeSchemaName() and getViewSubRealizeViewName().
+     * Only makes sense if hasAncestorRealizedViews() returns true, otherwise, this _R view wouldn't need to exist.
+     * @return
+     */
+    public String getViewSubRealizeFullName()
+      {
+        return getViewSubRealizeSchemaName() + "." + getViewSubRealizeViewName();
+      }
 
   }

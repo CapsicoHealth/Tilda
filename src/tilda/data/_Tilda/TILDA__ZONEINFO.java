@@ -238,7 +238,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.ZoneInfo.id to null: it's not nullable.");
        else if (v.length() > 5)
-        throw new Exception("Cannot set tilda.data.TILDA.ZoneInfo.id: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
+        throw new Exception("Cannot set tilda.data.TILDA.ZoneInfo.id: the size "+v.length()+" is larger than the max allowed of 5: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_id) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
@@ -333,7 +333,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.ZoneInfo.value to null: it's not nullable.");
        else if (v.length() > 50)
-        throw new Exception("Cannot set tilda.data.TILDA.ZoneInfo.value: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 50.");
+        throw new Exception("Cannot set tilda.data.TILDA.ZoneInfo.value: the size "+v.length()+" is larger than the max allowed of 50: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_value) == false)
         {
           __Changes.or(TILDA__ZONEINFO_Factory.COLS.VALUE._Mask);
@@ -436,7 +436,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.ZoneInfo.label to null: it's not nullable.");
        else if (v.length() > 254)
-        throw new Exception("Cannot set tilda.data.TILDA.ZoneInfo.label: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 254.");
+        throw new Exception("Cannot set tilda.data.TILDA.ZoneInfo.label: the size "+v.length()+" is larger than the max allowed of 254: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_label) == false)
         {
           v = HTMLFilter.cleanAbsolute(v);
@@ -562,7 +562,7 @@ This is the setter for:<BR>
           setDeactivatedTZNull();
         }
        else if (v.length() > 5)
-        throw new Exception("Cannot set tilda.data.TILDA.ZoneInfo.deactivatedTZ: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
+        throw new Exception("Cannot set tilda.data.TILDA.ZoneInfo.deactivatedTZ: the size "+v.length()+" is larger than the max allowed of 5: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_deactivatedTZ) == false)
         {
           __Changes.or(TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask);

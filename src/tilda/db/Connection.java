@@ -405,7 +405,8 @@ public final class Connection
         long T0 = System.nanoTime();
         if (commit == true)
           {
-            _C.releaseSavepoint(_SavePoints.pop());
+            Savepoint SP = _SavePoints.pop();
+            _C.releaseSavepoint(SP);
             PerfTracker.add(TransactionType.SAVEPOINT_COMMIT, System.nanoTime() - T0);
           }
         else

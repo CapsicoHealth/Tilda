@@ -168,7 +168,7 @@ This is the definition for:<BR>
 */
    @SerializedName("formulaRefnum")
    Long _formulaRefnum=null;
-   protected long __Saved_formulaRefnum;
+   protected Long __Saved_formulaRefnum;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -304,7 +304,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.FormulaResult.value to null: it's not nullable.");
        else if (v.length() > 100)
-        throw new Exception("Cannot set tilda.data.TILDA.FormulaResult.value: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 100.");
+        throw new Exception("Cannot set tilda.data.TILDA.FormulaResult.value: the size "+v.length()+" is larger than the max allowed of 100: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_value) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
@@ -398,7 +398,7 @@ This is the setter for:<BR>
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.FormulaResult.description to null: it's not nullable.");
        else if (v.length() > 32000)
-        throw new Exception("Cannot set tilda.data.TILDA.FormulaResult.description: the value "+TextUtil.escapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 32000.");
+        throw new Exception("Cannot set tilda.data.TILDA.FormulaResult.description: the size "+v.length()+" is larger than the max allowed of 32000: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_description) == false)
         {
           __Changes.or(TILDA__FORMULARESULT_Factory.COLS.DESCRIPTION._Mask);
