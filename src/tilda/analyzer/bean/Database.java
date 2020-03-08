@@ -29,7 +29,6 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import tilda.analyzer.DBAnalyzer;
 import tilda.analyzer.parser.AnalyzerData;
 import tilda.analyzer.parser.Rule;
 
@@ -37,7 +36,7 @@ import tilda.db.Connection;
 
 public class Database
   {
-    protected static final Logger LOG = LogManager.getLogger(DBAnalyzer.class.getName());
+    protected static final Logger LOG = LogManager.getLogger(Database.class.getName());
 
     public Database(Connection C, AnalyzerData Data)
       throws SQLException

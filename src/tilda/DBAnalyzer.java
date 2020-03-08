@@ -14,11 +14,13 @@
  * limitations under the License.
  */
 
-package tilda.analyzer;
+package tilda;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.analyzer.DBProcessor;
+import tilda.analyzer.HTMLRenderer;
 import tilda.analyzer.bean.DBStatus;
 import tilda.analyzer.bean.Database;
 import tilda.analyzer.helper.FileHelper;
