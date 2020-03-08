@@ -660,7 +660,7 @@ public class Helper
         Out.println("     }");
       }
 
-    public static boolean JSONExport(PrintWriter Out, boolean First, Column C)
+    public static void JSONExport(PrintWriter Out, Column C)
       {
         if (C._Nullable == true)
           {
@@ -678,13 +678,12 @@ public class Helper
               }
           }
         if (C.getType() == ColumnType.JSON)
-          Out.println("        JSONUtil.printSubJson(Out, \"" + C.getName() + "\", " + First + ", Obj._" + C.getName() + ");");
+          Out.println("        JSONUtil.printSubJson(out, \"" + C.getName() + "\", ++i==0, Obj._" + C.getName() + ");");
         else if (C.isCollection() == false)
-          Out.println("        JSONUtil.print(Out, \"" + C.getName() + "\", " + First + ", Obj.get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "());");
+          Out.println("        JSONUtil.print(out, \"" + C.getName() + "\", ++i==0, Obj.get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "());");
         else
-          Out.println("        JSONUtil.print(Out, \"" + C.getName() + "\", " + First + ", Obj._" + C.getName() + ".toArray(new " + JavaJDBCType.getFieldTypeBaseClass(C) + "[Obj._" + C.getName() + ".size()]));");
+          Out.println("        JSONUtil.print(out, \"" + C.getName() + "\", ++i==0, Obj.get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "AsArray());");
         Out.println();
-        return false;
       }
 
     public static boolean CSVExport(PrintWriter Out, boolean First, Column C)
@@ -692,16 +691,16 @@ public class Helper
         if (First == false)
           Out.println("      Str.append(\",\");");
         if (C.getType() == ColumnType.DOUBLE || C.getType() == ColumnType.FLOAT || C.getType() == ColumnType.LONG || C.getType() == ColumnType.INTEGER
-        || C.getType() == ColumnType.CHAR || C.getType() == ColumnType.BINARY || C.getType() == ColumnType.BOOLEAN)
-          Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, \"\" + " + "Data.get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "());");
+        || C.getType() == ColumnType.SHORT || C.getType() == ColumnType.CHAR || C.getType() == ColumnType.BINARY || C.getType() == ColumnType.BOOLEAN)
+          Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, \"\" + " + "obj.get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "());");
         else if (C.isCollection() == true)
-          Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, " + "TextUtil.print(Data.get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "(), \",\"));");
+          Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, " + "TextUtil.print(obj.get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "(), \",\"));");
         else if (C.getType() == ColumnType.DATETIME)
-          Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, " + "DateTimeUtil.printDateTimeForSQL(Data.get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "()));");
+          Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, " + "DateTimeUtil.printDateTimeForSQL(obj.get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "()));");
         else if (C.getType() == ColumnType.DATE)
-          Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, " + "DateTimeUtil.printDate(Data.get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "()));");
+          Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, " + "DateTimeUtil.printDate(obj.get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "()));");
         else
-          Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, " + "Data.get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "());");
+          Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, " + "obj.get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "());");
         return false;
       }
 

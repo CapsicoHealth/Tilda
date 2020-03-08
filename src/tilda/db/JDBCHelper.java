@@ -71,7 +71,7 @@ public class JDBCHelper
       {
         RP.start();
         int count = 0;
-        if (Offsetted == false && Start > 0 && RS.relative(Start) == false)
+        if (Offsetted == false && Start > 0 && RS.absolute(Start) == false)
           return -1;
         while (Size <= -1 || count < Size)
           {
@@ -101,7 +101,7 @@ public class JDBCHelper
           {
             long T0 = System.nanoTime();
             QueryDetails.setLastQuery(TableName, Query);
-            S = C.createStatement();
+            S = C.createStatement(ResultSet.FETCH_FORWARD, ResultSet.CONCUR_READ_ONLY);
             ResultSet RS = S.executeQuery(Query);
             int count = JDBCHelper.process(RS, RP, Start, Offsetted, Size, Limited, CountAll);
             PerfTracker.add(TableName, StatementType.SELECT, System.nanoTime() - T0, count);

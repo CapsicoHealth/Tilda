@@ -46,70 +46,72 @@ public class DateTimeUtilTest
             String TS = "2017-07-31 14:25:11.873-1000";
             LOG.debug(DateTimeUtil.parse(TS, "yyyy-MM-dd HH:mm:ss.SSSZ"));
 
-//            TS = "2017-10-25 11:04:12.597";            
-//            DateTimeUtil.parse(TS, "yyyy-MM-dd HH:mm:ss.SSS");
+            // TS = "2017-10-25 11:04:12.597";
+            // DateTimeUtil.parse(TS, "yyyy-MM-dd HH:mm:ss.SSS");
 
-                        
-//            Test0();
-            
-//            Test1();
-//            Test2();
-//            Test3();
-//            Test4();
-//            Test5();
+
+            // Test0();
+
+            // Test1();
+            // Test2();
+            // Test3();
+            // Test4();
+            // Test5();
+
+            test6();
           }
         catch (Exception e)
           {
             LOG.catching(e);
           }
       }
-    
+
     private static void Test0()
       {
         String value = "4/4/1940 00:00";
         String DateTimePattern = "M/d/yyyy HH:mm";
-//        String value = "1940-04-04 00:00:00";
-//        String DateTimePattern = "yyyy-MM-dd HH:mm:ss";
-        
+        // String value = "1940-04-04 00:00:00";
+        // String DateTimePattern = "yyyy-MM-dd HH:mm:ss";
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DateTimePattern);
         LocalDateTime dateTime = LocalDateTime.parse(value, formatter);
-        
+
       }
 
-/*
-    private static void Test1()
-    throws Exception
-      {
-        Calendar Cal = Calendar.getInstance();
-        String CalStr = DateTimeUtil.PrintSQLTimestamp(Cal);
-        System.out.println("Right now as SQL    : " + CalStr);
-        long T0 = System.nanoTime();
-        for (int i = 0; i < 1000000; ++i)
-          {
-            DateTimeUtil.PrintSQLTimestamp(Cal);
-          }
-        System.out.println("CalendarUtil.PrintSQLTimestamp: " + DurationUtil.printDuration(System.nanoTime() - T0));
-
-        Cal = DateTimeUtil.parseDefault(CalStr);
-        System.out.println("Roundtrip conversion: " + DateTimeUtil.PrintSQLTimestamp(Cal));
-
-        String CalStr2 = DateTimeUtil.toHTTPDate(Cal);
-        System.out.println("Right now as HTTP   : " + CalStr2);
-
-        DateFormat F = new SimpleDateFormat("MMM d yyyy, HH:mm:ss:SSSZ");
-        System.out.println("Right with formatter: " + F.format(Cal.getTime()));
-        T0 = System.nanoTime();
-        for (int i = 0; i < 1000000; ++i)
-          {
-            F.format(Cal.getTime());
-          }
-        System.out.println("SimpleDateFormat: " + DurationUtil.printDuration(System.nanoTime() - T0));
-
-        Cal.setTimeZone(TimeZone.getTimeZone("IST"));
-        CalStr = DateTimeUtil.PrintSQLTimestamp(Cal);
-        System.out.println("Right now IST as SQL    : " + CalStr);
-      }
-*/
+    /*
+     * private static void Test1()
+     * throws Exception
+     * {
+     * Calendar Cal = Calendar.getInstance();
+     * String CalStr = DateTimeUtil.PrintSQLTimestamp(Cal);
+     * System.out.println("Right now as SQL    : " + CalStr);
+     * long T0 = System.nanoTime();
+     * for (int i = 0; i < 1000000; ++i)
+     * {
+     * DateTimeUtil.PrintSQLTimestamp(Cal);
+     * }
+     * System.out.println("CalendarUtil.PrintSQLTimestamp: " + DurationUtil.printDuration(System.nanoTime() - T0));
+     * 
+     * Cal = DateTimeUtil.parseDefault(CalStr);
+     * System.out.println("Roundtrip conversion: " + DateTimeUtil.PrintSQLTimestamp(Cal));
+     * 
+     * String CalStr2 = DateTimeUtil.toHTTPDate(Cal);
+     * System.out.println("Right now as HTTP   : " + CalStr2);
+     * 
+     * DateFormat F = new SimpleDateFormat("MMM d yyyy, HH:mm:ss:SSSZ");
+     * System.out.println("Right with formatter: " + F.format(Cal.getTime()));
+     * T0 = System.nanoTime();
+     * for (int i = 0; i < 1000000; ++i)
+     * {
+     * F.format(Cal.getTime());
+     * }
+     * System.out.println("SimpleDateFormat: " + DurationUtil.printDuration(System.nanoTime() - T0));
+     * 
+     * Cal.setTimeZone(TimeZone.getTimeZone("IST"));
+     * CalStr = DateTimeUtil.PrintSQLTimestamp(Cal);
+     * System.out.println("Right now IST as SQL    : " + CalStr);
+     * }
+     */
 
     private static void Test2()
     throws Exception
@@ -267,7 +269,7 @@ public class DateTimeUtilTest
           {
             String s = ODT1.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
             if (s == null)
-             s = "Error";
+              s = "Error";
           }
         long T1 = System.nanoTime() - T0;
         LOG.info("DateTimeFormatter did " + DurationUtil.printPerformancePerSecond(T1, count) + " iterations/s.");
@@ -350,5 +352,37 @@ public class DateTimeUtilTest
         LOG.debug(DateTimeUtil.printDateTime(ZDT2));
         LOG.debug("Days between: " + DateTimeUtil.computeDays(ZDT1, ZDT2));
 
+      }
+
+    public static void test6()
+      {
+        ZonedDateTime ZDT = DateTimeUtil.nowLocal();
+        java.sql.Timestamp[] sqlT = new java.sql.Timestamp[50_000_000];
+
+        for (int c = 0; c < 5; ++c)
+          {
+            long T0 = System.nanoTime();
+            for (int i = 0; i < sqlT.length; ++i)
+              sqlT[i] = java.sql.Timestamp.from(ZDT.toInstant());
+            LOG.info("Timestamp.from did " + DurationUtil.printPerformancePerSecond(System.nanoTime() - T0, sqlT.length) + " iterations/s.");
+
+            T0 = System.nanoTime();
+            for (int i = 0; i < sqlT.length; ++i)
+              sqlT[i] = new java.sql.Timestamp(ZDT.toInstant().toEpochMilli());
+            LOG.info("Timestamp constructor did " + DurationUtil.printPerformancePerSecond(System.nanoTime() - T0, sqlT.length) + " iterations/s.\n");
+          }
+
+        for (int c = 0; c < 5; ++c)
+          {
+            long T0 = System.nanoTime();
+            for (int i = 0; i < sqlT.length; ++i)
+              sqlT[i] = new java.sql.Timestamp(ZDT.toInstant().toEpochMilli());
+            LOG.info("Timestamp constructor did " + DurationUtil.printPerformancePerSecond(System.nanoTime() - T0, sqlT.length) + " iterations/s.");
+
+            T0 = System.nanoTime();
+            for (int i = 0; i < sqlT.length; ++i)
+              sqlT[i] = java.sql.Timestamp.from(ZDT.toInstant());
+            LOG.info("Timestamp.from did " + DurationUtil.printPerformancePerSecond(System.nanoTime() - T0, sqlT.length) + " iterations/s\n.");
+          }
       }
   }

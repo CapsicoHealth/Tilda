@@ -1,6 +1,8 @@
 package tilda.loader.csv;
 
+import java.io.File;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -37,11 +39,15 @@ public class ImporterThread implements Callable<List<Results>>
             C = ConnectionPool.get(this.connectionId);
             CSVImporter importer = CSVImporterFactory.newInstance(C, this.rootFolder, this.dataObject);            
             result = importer.process();
+            if (result == null)
+              throw new Exception("An error occurred processing one or more files from '"+this.rootFolder+"' for '"+this.dataObject._SchemaName+"."+this.dataObject._TableName+'.');
           }
         catch(Throwable T) 
           {
-            LOG.error("Exception in one of ImporterThread execution.", T);
-            result = null;
+            LOG.error("Exception in one of ImporterThread execution.\n", T);
+            result = new ArrayList<Results>();
+            for (String file : this.dataObject._FileList)
+             result.add(new Results(this.rootFolder+File.separatorChar+file, this.dataObject._SchemaName, this.dataObject._TableName, 0, 0));
           }
         finally
           {

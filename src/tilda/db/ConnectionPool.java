@@ -82,7 +82,7 @@ public class ConnectionPool
     protected static Map<String, String>          _EmailConfigDetails  = null;
     protected static boolean                      _InitDebug           = false;
     protected static boolean                      _SkipValidation      = false;
-    protected static String[]                     _DependencySchemas   = { };
+    protected static String[]                     _DependencySchemas   = {};
 
     public static void autoInit()
       {
@@ -168,7 +168,7 @@ public class ConnectionPool
                         DatabaseMeta DBMeta = loadDatabaseMetaData(C, TildaList);
                         Migrator.MigrateDatabase(C, Migrate.isMigrationActive() == false, TildaList, DBMeta, first, connectionUrls, _DependencySchemas);
                       }
-                    if (/*first == true &&*/ Migrate.isMigrationActive() == false)
+                    if (/* first == true && */ Migrate.isMigrationActive() == false)
                       {
                         LOG.info("Initializing Schemas for " + C._Url);
                         for (Schema S : TildaList)
@@ -191,18 +191,7 @@ public class ConnectionPool
           }
         catch (Throwable T)
           {
-            LOG.error("Cannot initialize Tilda\n", T);
-            if (T.getCause() != null)
-              {
-                T = T.getCause();
-                LOG.catching(T);
-                if (T.getCause() != null)
-                  {
-                    T = T.getCause();
-                    LOG.catching(T.getCause());
-                  }
-              }
-            throw new Error(T);
+            throw new Error("Cannot initialize Tilda", T);
           }
         finally
           {
@@ -216,7 +205,7 @@ public class ConnectionPool
             catch (SQLException E)
               {
                 LOG.error("Cannot initialize Tilda\n", E);
-                throw new Error(E);
+                throw new Error("Cannot initialize Tilda", E);
               }
           }
         if (_InitDebug == false && Migrate.isMigrationActive() == false)
@@ -446,7 +435,7 @@ public class ConnectionPool
                       throw new Exception("Schema " + S._Name + " depends on " + DepdencySchemaName + " which hasn't been loaded.");
                     }
                 }
-            else //if (S._Name.equals("TILDATMP") == false)
+            else // if (S._Name.equals("TILDATMP") == false)
               {
                 PS.addDependencySchema(TildaList.get(0)); // Should be TILDATMP
                 PS.addDependencySchema(TildaList.get(1)); // Should be TILDA
@@ -455,8 +444,11 @@ public class ConnectionPool
               }
 
             if (S.Validate(PS) == false)
-              throw new Exception("Schema " + S._Name + " from resource " + S._ResourceName + " failed validation.");
-            
+              {
+                PS.printErrors();
+                throw new Exception("Schema " + S._Name + " from resource " + S._ResourceName + " failed validation.");
+              }
+
             for (Object Obj : S._Objects)
               if (Obj != null)
                 MasterFactory.register(S._Package, Obj, Warnings);
@@ -465,9 +457,9 @@ public class ConnectionPool
           {
             StringBuilder Str = new StringBuilder();
             Str.append("\n\n#############################################################################################################################\n");
-            Str.append("There were "+Warnings.size()+" runtime warnings:\n");
+            Str.append("There were " + Warnings.size() + " runtime warnings:\n");
             for (String w : Warnings)
-              Str.append("    - "+w+"\n");
+              Str.append("    - " + w + "\n");
             Str.append("These errors are typically due to the model having been updated but\n");
             Str.append("the Gen utility was not run, or the workspace was not refreshed and built.\n");
             Str.append("#############################################################################################################################\n\n");

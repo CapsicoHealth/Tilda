@@ -122,7 +122,7 @@ input[type=text]:focus {
    padding-left: 10px;
 }
 .Rowed TR:nth-child(odd) TD {
-   background-color: #f0fdf0;
+   background-color: rgba(173, 244, 173, 0.2);
 }
 .Rowed TR:nth-child(even) TD {
    background-color:#FFFFFF;

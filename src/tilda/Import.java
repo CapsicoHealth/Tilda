@@ -36,6 +36,7 @@ import tilda.db.ConnectionPool;
 import tilda.performance.PerfTracker;
 import tilda.utils.DurationUtil;
 import tilda.utils.FileUtil;
+import tilda.utils.LogUtil;
 import tilda.utils.TextUtil;
 
 public class Import
@@ -46,7 +47,7 @@ public class Import
       {
         Connection C = null;
         ArrayList<String> arguments = new ArrayList<>(Arrays.asList(args));
-        ValidateParams(arguments);
+        validateParams(arguments);
 
         LOG.info("\n*************************************************************************************************************************************");
         ConnectionPool.autoInit();
@@ -81,7 +82,7 @@ public class Import
                     while (iterator.hasNext())
                       {
                         C = ConnectionPool.get(iterator.next());
-                        RecordsCount += Do(I, C);
+                        RecordsCount += process(I, C);
                         C.commit();
                         C.close();
                         C = null;
@@ -107,13 +108,7 @@ public class Import
         catch (Throwable T)
           {
             LOG.error("An exception occurred importing file " + currentFile + "\n", T);
-            try
-              {
-                C.rollback();
-              }
-            catch (SQLException X)
-              {
-              }
+            System.exit(-1);
           }
         finally
           {
@@ -131,11 +126,11 @@ public class Import
         LOG.info("Import completed.");
       }
 
-    private static void ValidateParams(ArrayList<String> arguments)
+    private static void validateParams(ArrayList<String> arguments)
       {
         if (arguments.size() % 4 != 0)
           {
-            PrintUsageHint();
+            printUsageHint();
             System.exit(-1);
           }
 
@@ -144,14 +139,14 @@ public class Import
             if (!"-f".equals(arguments.get(i)) || TextUtil.isNullOrEmpty(arguments.get(i + 1))
             || !"-c".equals(arguments.get(i + 2)) || TextUtil.isNullOrEmpty(arguments.get(i + 3)))
               {
-                PrintUsageHint();
+                printUsageHint();
                 System.exit(-1);
               }
             i += 4;
           }
       }
 
-    private static void PrintUsageHint()
+    private static void printUsageHint()
       {
         LOG.error("");
         LOG.error("Import utility must be called with parameter(s) in following format:");
@@ -163,7 +158,7 @@ public class Import
         LOG.error("");
       }
 
-    protected static int Do(Importer I, Connection C)
+    protected static int process(Importer I, Connection C)
     throws Exception
       {
         LOG.info("");

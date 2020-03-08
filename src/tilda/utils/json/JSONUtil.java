@@ -477,28 +477,6 @@ public class JSONUtil
         Out.write("]");
       }
 
-    public static void print(Writer Out, String Name, boolean FirstElement, Collection<String> a)
-    throws IOException
-      {
-        print(Out, Name, FirstElement);
-        if (a == null)
-          {
-            Out.write("null");
-            return;
-          }
-        Out.write("[");
-        boolean First = true;
-        for (String i : a)
-          {
-            if (First == true)
-              First = false;
-            else
-              Out.write(",");
-            printString(Out, i);
-          }
-        Out.write("]");
-      }
-
     public static void print(Writer Out, String Name, boolean FirstElement, ZonedDateTime[] a)
     throws IOException
       {
@@ -521,6 +499,28 @@ public class JSONUtil
         Out.write("]");
       }
 
+    public static void print(Writer Out, String Name, boolean FirstElement, Collection<String> a)
+    throws IOException
+      {
+        print(Out, Name, FirstElement);
+        if (a == null)
+          {
+            Out.write("null");
+            return;
+          }
+        Out.write("[");
+        boolean First = true;
+        for (String i : a)
+          {
+            if (First == true)
+              First = false;
+            else
+              Out.write(",");
+            printString(Out, i);
+          }
+        Out.write("]");
+      }
+    
     /**
      * Starts the standard JSON header for payload, i.e., {code:xxx,data:}
      * 
@@ -569,7 +569,7 @@ public class JSONUtil
         else
           {
             startOK(Out, '{');
-            Obj.toJSON(Out, JsonExportName, false);
+            Obj.toJSON(Out, JsonExportName, "", false);
             end(Out, '}');
           }
       }
@@ -630,11 +630,48 @@ public class JSONUtil
               }
             else
               Out.write(Header + "  ,");
-            Obj.toJSON(Out, JsonExportName, true);
+            Obj.toJSON(Out, JsonExportName, "", true);
             Out.write("\n");
           }
         Out.write(Header + "  ]\n");
       }
+    
+    public static void print(Writer Out, String elementName, String JsonExportName, boolean firstElement, List<? extends JSONable> L, String Header, ZonedDateTime lastSync)
+    throws Exception
+      {
+        Out.write(Header);
+        print(Out, elementName, firstElement);
+
+        if (L == null)
+          {
+            Out.write(" null ");
+            return;
+          }
+        if (L.isEmpty() == true)
+          {
+            Out.write(" [ ] ");
+            return;
+          }
+        Out.write(" [\n");
+        boolean First = true;
+        for (JSONable Obj : L)
+          {
+            if (Obj == null)
+              continue;
+            Out.write(Header);
+            if (First == true)
+              {
+                Out.write(Header + "   ");
+                First = false;
+              }
+            else
+              Out.write(Header + "  ,");
+            Obj.toJSON(Out, JsonExportName, "", true, lastSync);
+            Out.write("\n");
+          }
+        Out.write(Header + "  ]\n");
+      }
+    
 
     public static void print(Writer Out, String elementName, String JsonExportName, boolean firstElement, JSONable Obj, String Header)
     throws Exception
@@ -644,7 +681,7 @@ public class JSONUtil
         if (Obj == null)
           Out.write(" null ");
         else
-          Obj.toJSON(Out, JsonExportName, true);
+          Obj.toJSON(Out, JsonExportName, "", true);
       }
 
     public static void print(Writer Out, String elementName, boolean firstElement, String[][] Values, String Header)

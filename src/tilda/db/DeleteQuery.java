@@ -39,7 +39,7 @@ public class DeleteQuery extends QueryHelper
       }
 
     public int execute()
-      throws Exception
+    throws Exception
       {
         return _C.executeUpdate(_SchemaName, _TableName, _QueryStr.toString());
       }

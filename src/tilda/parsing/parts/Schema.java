@@ -267,6 +267,7 @@ public class Schema
         return _Validated;
       }
 
+    public static final String    _BASE_TILDATMP_SCHEMA_RESOURCE = "tilda/data/tmp/_tilda.TildaTmp.json";
     public static final String    _BASE_TILDA_SCHEMA_RESOURCE = "tilda/data/_tilda.Tilda.json";
     
     public void setDefaultDependencies(ParserSession PS) throws Exception

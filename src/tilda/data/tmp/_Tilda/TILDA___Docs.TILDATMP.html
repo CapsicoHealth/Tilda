@@ -127,7 +127,7 @@ input[type=text]:focus {
    padding-left: 10px;
 }
 .Rowed TR:nth-child(odd) TD {
-   background-color: #f0fdf0;
+   background-color: rgba(173, 244, 173, 0.2);
 }
 .Rowed TR:nth-child(even) TD {
    background-color:#FFFFFF;
@@ -556,7 +556,7 @@ var getFilteredResults = function(queryString)
   if (doColumns == true)
     {
       getFilteredData(regex, tables, matchingResults);
-      getFilteredData(regex, doRealized == true ? realizedcolumns : columns, matchingResults);
+      getFilteredData(regex, doRealized == false ? realizedcolumns : columns, matchingResults);
     }
   if (doFormulas == true)
     {
@@ -973,6 +973,7 @@ var MasterIndex = {
 </HEAD>
 <BODY>
 <H1>Schema TILDATMP</H1>
+<BR><BR>
 <BR>
 <DIV id="__SEARCH_BOX_BASE__"><TABLE id="__SEARCH_BOX__" border="0px" cellspacing="0px" cellpadding="0px"><TR valign="top"><TD width="1px" style="font-size: 125%; font-weight:bold;">SEARCH</TD><TD>
 <input type="text" onfocus="showSearchResults(true);eventListener(event)" onkeyup="eventListener(event)", id="search_input" placeholder="Search Tables/Views, Fields, Formulae" autocomplete="off">
@@ -982,6 +983,7 @@ var MasterIndex = {
 </TD></TR>
 <TR><TD colspan="2"><table id="__SEARCH_BOX_RESULTS__" class="search_results Selectable" border="0px" cellspacing="0px"></table>
 </TD></TR></TABLE></DIV>
+<BR>
 <BR><BR><BR><BR><BR><HR><H1>Parallel Refill Schedule</H1><BLOCKQUOTE>
 This schema doesn't contain any realized views.
 

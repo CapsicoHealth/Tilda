@@ -4,6 +4,7 @@ tilda.data._Tilda
 tilda.data.importers.zones
 tilda.data.tmp._Tilda
 tilda.db
+tilda.db.config
 tilda.db.metadata
 tilda.db.processors
 tilda.db.stores
@@ -36,4 +37,6 @@ tilda.utils
 tilda.utils.comparators
 tilda.utils.compiler
 tilda.utils.concurrent
+tilda.utils.json
+tilda.utils.json.elements
 tilda.utils.pairs

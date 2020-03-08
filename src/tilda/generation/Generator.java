@@ -353,6 +353,12 @@ public class Generator
                 DG.docMethodTouch(Out, G, C);
                 CG.genMethodTouch(Out, G, C);
               }
+            else
+              {
+                Out.println();
+                DG.docMethodTouch(Out, G, null);
+                CG.genMethodTouch(Out, G, null);
+              }
 
             Out.println();
             DG.docMethodWrite(Out, G, O);
@@ -411,6 +417,10 @@ public class Generator
 
         if (O._LC != ObjectLifecycle.READONLY)
           {
+            Out.println();
+            DG.docMethodInit(Out, G, O);
+            CG.genMethodInit(Out, G, O);
+
             List<Column> CreateColumns = O.getCreateColumns();
             List<Column> DefaultCreateColumns = O.getDefaultCreateColumns();
             Out.println();
@@ -500,7 +510,7 @@ public class Generator
         CG.genClassEnd(Out, G);
         Out.close();
       }
-
+/*
     protected static void genTildaJson(GeneratorSession G, File GenFolder, Object O)
     throws Exception
       {
@@ -532,7 +542,7 @@ public class Generator
         CG.genClassEnd(Out, G);
         Out.close();
       }
-
+*/
 
     protected static File genAppData(GeneratorSession G, File GenFolder, Object O)
     throws Exception
@@ -587,7 +597,7 @@ public class Generator
           }
         return f;
       }
-
+/*
     protected static File genAppJson(GeneratorSession G, File GenFolder, Object O)
     throws Exception
       {
@@ -612,5 +622,5 @@ public class Generator
           }
         return f;
       }
-
+*/
   }

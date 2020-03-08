@@ -31,6 +31,7 @@ import tilda.parsing.Parser;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.Schema;
 import tilda.utils.AsciiArt;
+import tilda.utils.LogUtil;
 import tilda.utils.SystemValues;
 
 /**
@@ -66,7 +67,7 @@ public class Gen
           {
             try
               {
-                GeneratorSession G = new GeneratorSession("java", 8, -1, "postgres", 9, -1);
+                GeneratorSession G = new GeneratorSession("java", 8, -1, "postgres", 9, 6);
 
                 ParserSession PS = Parser.parse(path, G.getSql());
                 if (PS == null)

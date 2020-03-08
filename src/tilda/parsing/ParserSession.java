@@ -153,11 +153,14 @@ public class ParserSession
 
     public boolean printErrors()
       {
-        LOG.error("==============================================================================================");
-        LOG.error("There were " + getErrorCount() + " errors when trying to validate the schema set");
+        StringBuilder Str = new StringBuilder();
+        Str.append("\n==============================================================================================\n");
+        Str.append("    There were " + getErrorCount() + " errors when trying to validate the schema set\n");
         int i = 0;
         for (String Err : _Errors)
-          LOG.error("    " + (++i) + " - " + Err);
+          Str.append("      " + (++i) + " - " + Err+"\n");
+        Str.append("==============================================================================================\n");
+        LOG.error(Str.toString());
         return false;
       }
 

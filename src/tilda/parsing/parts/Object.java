@@ -287,7 +287,6 @@ public class Object extends Base
               _HasUniqueIndex = true;
           }
 
-        Names.clear();
         _HasUniqueQuery = false;
         for (SubWhereClause SWC : _Queries)
           {
@@ -295,7 +294,7 @@ public class Object extends Base
               continue;
             if (SWC.Validate(PS, this, "Object '" + getFullName() + "'", true) == true)
               if (Names.add(SWC._Name.toUpperCase()) == false)
-                PS.AddError("Object '" + getFullName() + "' is defining a duplicate query '" + SWC._Name + "'.");
+                PS.AddError("Object '" + getFullName() + "' is defining a query '" + SWC._Name + "' that has a name clashing with another query or index.");
             if (SWC._Unique == true)
               _HasUniqueQuery = true;
           }
@@ -622,6 +621,14 @@ public class Object extends Base
             if (I._Unique == true)
               return I._ColumnObjs;
         return null;
+      }
+
+    public boolean hasAutos()
+      {
+        for (Column C : _Columns)
+          if (C != null && C._Mode == ColumnMode.AUTO)
+           return true;
+        return false;
       }
 
   }

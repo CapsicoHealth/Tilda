@@ -104,5 +104,7 @@ public interface CodeGenDocs
     public void docMethodJSONSchema(PrintWriter Out, GeneratorSession G, Column col);
 
     public void docMethodUpsert(PrintWriter Out, GeneratorSession G, Object O);
+
+    public void docMethodInit(PrintWriter Out, GeneratorSession G, Object O);
     
   }
