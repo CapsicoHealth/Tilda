@@ -498,10 +498,10 @@ public class Migrator
                             if (ix._Unique
                             && (ix._Name.equals(ix._Name.toLowerCase()) == false
                             || ix._Name.equalsIgnoreCase(IX.getName()) == false))
-                              {
-                                Errors.add("Index " + ix._Name + " is unique and contains the same signature as " + IX.getName() + " in the " + IX._Parent._Name + " schema definition");
-                              }
-                            else if (DroppedSignatures.add(ix.getSignature()) == false) // catches duplicate signatures by different names in db. First will be renamed below
+                            // The actual rename will happen in the next loop, so we just mark the index signature as dropped.
+                              DroppedSignatures.add(ix.getSignature());
+                            // catches duplicate signatures by different names in db. First will be renamed below
+                            else if (DroppedSignatures.add(ix.getSignature()) == false)
                               Actions.add(new TableIndexDrop(Obj, ix));
                           }
                       }
@@ -624,10 +624,11 @@ public class Migrator
 
         if (Errors.isEmpty() == false)
           {
-            LOG.error("Errors were found when putting together a migration script:");
+            StringBuilder Str = new StringBuilder();
+            Str.append("\n\nDatabase couldn't be migrated because of errors found:\n");
             for (int i = 0; i < Errors.size(); ++i)
-              LOG.error("   " + (i + 1) + ": " + Errors.get(i) + ".");
-            throw new Exception("Database couldn't be migrated.");
+              Str.append("     " + (i + 1) + ": " + Errors.get(i) + ".\n");
+            throw new Exception(Str.toString());
           }
         return Actions;
       }
