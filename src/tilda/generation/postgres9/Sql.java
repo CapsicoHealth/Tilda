@@ -714,7 +714,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
 
             if (Up != null)
               {
-                String ColType = getColumnType(Up._UpsertTSColumnObj._SameAsObj);
+                String ColType = getColumnType(Up._LastUpdatedTSColumnObj._SameAsObj);
                 OutFinal.append("DROP FUNCTION IF EXISTS " + V._ParentSchema._Name + ".Refill_" + TName + "(fromInclusive " + ColType + ", toExclusive " + ColType + ");\n")
                 .append("CREATE OR REPLACE FUNCTION " + V._ParentSchema._Name + ".Refill_" + TName + "(fromInclusive " + ColType + ", toExclusive " + ColType + ")\n");
               }
@@ -741,13 +741,16 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 OutFinal.append("  THEN\n");
               }
             OutFinal.append("  TRUNCATE ").append(RName).append(";\n");
-            OutFinal.append(BaseLineInsert.toString()).append(";\n");
+            OutFinal.append(BaseLineInsert.toString());
+            if (Up != null && Up._DeleteTSColumnObj != null)
+              OutFinal.append("\n     WHERE \"" + Up._DeleteTSColumnObj.getName() + "\" is null");
+            OutFinal.append(";\n");
             OutFinal.append("  ANALYZE " + RName + ";\n");
             if (Up != null)
               {
                 OutFinal.append("  ELSE\n");
                 OutFinal.append(BaseLineInsert.toString());
-                OutFinal.append("\n    WHERE (fromInclusive is null or \"").append(Up._UpsertTSColumnObj.getName()).append("\" >= fromInclusive) and (toExclusive is null or \"").append(Up._UpsertTSColumnObj.getName()).append("\" < toExclusive)");
+                OutFinal.append("\n    WHERE (fromInclusive is null or \"").append(Up._LastUpdatedTSColumnObj.getName()).append("\" >= fromInclusive) and (toExclusive is null or \"").append(Up._LastUpdatedTSColumnObj.getName()).append("\" < toExclusive)");
                 OutFinal.append("\n  ON CONFLICT (");
                 boolean First = true;
                 for (ViewColumn VC : Up._IdentityViewColumns)
@@ -771,7 +774,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                     OutFinal.append("\"").append(ColNames).append("\"").append(" = EXCLUDED.").append("\"").append(ColNames).append("\"").append("\n");
                   }
                 OutFinal.append("  ;\n");
-                if (Up._UpsertTSColumnObj != null)
+                if (Up._DeleteTSColumnObj != null)
                   OutFinal.append("  DELETE FROM " + RName + " WHERE \"" + Up._DeleteTSColumnObj.getName() + "\" is not null;\n");
                 OutFinal.append("  ANALYZE " + RName + ";\n");
                 OutFinal.append("  END IF;\n");
@@ -790,7 +793,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
             .append("\n");
             if (Up != null)
               {
-                String ColType = getColumnType(Up._UpsertTSColumnObj._SameAsObj);
+                String ColType = getColumnType(Up._LastUpdatedTSColumnObj._SameAsObj);
                 OutFinal.append("DROP FUNCTION IF EXISTS " + V._ParentSchema._Name + ".Refill_" + TName + "(fromInclusive " + ColType + ");\n")
                 .append("CREATE OR REPLACE FUNCTION " + V._ParentSchema._Name + ".Refill_" + TName + "(fromInclusive " + ColType + ")\n");
                 OutFinal.append(" RETURNS boolean AS $$\n")

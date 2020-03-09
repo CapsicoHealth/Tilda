@@ -150,18 +150,19 @@ public class ViewRealize
                continue;
               if (Names.add(I._Name) == false)
                 PS.AddError("Index '" + I._Name + "' is duplicated in the realize section for view '" + ParentView.getFullName() + "'.");
-              if (_Upsert != null && (   I._ColumnObjs.size() > 0 && I._ColumnObjs.get(0)._Name.equals(_Upsert._DeleteTS) == true
-                                      || I._ColumnObjs.size() == 0 && I._OrderByObjs.get(0)._Name.equals(_Upsert._DeleteTS) == true
+              if (_Upsert != null && _Upsert._DeleteTSColumnObj != null
+                                  && (   I._ColumnObjs.size() > 0 && I._ColumnObjs.get(0)._Name.equals(_Upsert._DeleteTSColumnObj._Name) == true
+                                      || I._ColumnObjs.size() == 0 && I._OrderByObjs.get(0)._Name.equals(_Upsert._DeleteTSColumnObj._Name) == true
                                      )
                  )
                 indexOnDeleted = true;
             }
-        if (_Upsert != null && indexOnDeleted == false)
+        if (_Upsert != null && _Upsert._DeleteTSColumnObj != null && indexOnDeleted == false)
           {
             Index I = new Index();
             I._Name="TILDA_RUOD_IDX";
-            I._OrderBy= new String[] { _Upsert._DeleteTS };
-            I._SubWhere = _Upsert._DeleteTS +" is not null";
+            I._OrderBy= new String[] { _Upsert._DeleteTSColumnObj._Name };
+            I._SubWhere = _Upsert._DeleteTSColumnObj._Name +" is not null";
             I.Validate(PS, ParentRealized);
             _Indices.add(I);
           }
