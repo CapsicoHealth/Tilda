@@ -1778,6 +1778,14 @@ public class TextUtil
         return Str.toString();
       }
 
+    /**
+     * Takes a string with a regex-based separator (e.g., \s+) and turns it into an array
+     * of '%token%'. So 'a, b, c' with '(\s*,\s*)|\s+' will return ['%a%','%b%','%c%]
+     * @param Val
+     * @param splitRegex
+     * @param lowerCase
+     * @return
+     */
     public static String[] partsSqlLike(String Val, String splitRegex, boolean lowerCase)
       {
         if (Val == null)
