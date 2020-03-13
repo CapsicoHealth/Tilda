@@ -1985,7 +1985,7 @@ public class TildaData implements CodeGenTildaData
             for (OutputMapping OM : O._OutputMaps)
               if (OM != null && OM._OutputTypes.contains(OutputFormatType.JSON) == true)
                 Out.println("          case \"" + OM._Name + "\": " + Helper.getFullAppFactoryClassName(O) + ".toJSON" + OM._Name + "(out, (" + Helper.getFullAppDataClassName(O) + ") this, lead, fullObject); break;");
-            Out.println("          default: throw new Exception(\"Unknown JSON exporter '\"+exportName+\"' for " + Helper.getFullAppJsonClassName(O) + "\");");
+            Out.println("          default: throw new Exception(\"Unknown JSON exporter '\"+exportName+\"' for " + Helper.getFullAppFactoryClassName(O) + "\");");
             Out.println("        } ");
             Out.println("    }");
             if (JSONSync == true)
@@ -1997,7 +1997,7 @@ public class TildaData implements CodeGenTildaData
                 for (OutputMapping OM : O._OutputMaps)
                   if (OM != null && OM._OutputTypes.contains(OutputFormatType.JSON) == true && OM._Sync == true)
                     Out.println("          case \"" + OM._Name + "\": " + Helper.getFullAppFactoryClassName(O) + ".toJSON" + OM._Name + "(out, (" + Helper.getFullAppDataClassName(O) + ") this, lead, fullObject, lastsync); break;");
-                Out.println("          default: throw new Exception(\"Unknown JSON sync exporter '\"+exportName+\"' for " + Helper.getFullAppJsonClassName(O) + "\");");
+                Out.println("          default: throw new Exception(\"Unknown JSON sync exporter '\"+exportName+\"' for " + Helper.getFullAppFactoryClassName(O) + "\");");
                 Out.println("        } ");
                 Out.println("    }");
               }
@@ -2005,7 +2005,7 @@ public class TildaData implements CodeGenTildaData
               {
                 Out.println("   public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject, java.time.ZonedDateTime lastsync) throws Exception");
                 Out.println("    {");
-                Out.println("      throw new Exception(\"Unknown JSON sync exporter '\"+exportName+\"' for " + Helper.getFullAppJsonClassName(O) + "\");");
+                Out.println("      throw new Exception(\"Unknown JSON sync exporter '\"+exportName+\"' for " + Helper.getFullAppFactoryClassName(O) + "\");");
                 Out.println("    }");
 
               }
@@ -2020,7 +2020,7 @@ public class TildaData implements CodeGenTildaData
             for (OutputMapping OM : O._OutputMaps)
               if (OM != null && OM._OutputTypes.contains(OutputFormatType.CSV) == true)
                 Out.println("          case \"" + OM._Name + "\": " + Helper.getFullAppFactoryClassName(O) + ".toCSV" + OM._Name + "(out, (" + Helper.getFullAppDataClassName(O) + ") this); break;");
-            Out.println("          default: throw new Exception(\"Unknown CSV exporter '\"+exportName+\"' for " + Helper.getFullAppJsonClassName(O) + "\");");
+            Out.println("          default: throw new Exception(\"Unknown CSV exporter '\"+exportName+\"' for " + Helper.getFullAppFactoryClassName(O) + "\");");
             Out.println("        } ");
             Out.println("    }");
             if (CSVSync == true)
@@ -2032,7 +2032,7 @@ public class TildaData implements CodeGenTildaData
                 for (OutputMapping OM : O._OutputMaps)
                   if (OM != null && OM._OutputTypes.contains(OutputFormatType.CSV) == true)
                     Out.println("          case \"" + OM._Name + "\": " + Helper.getFullAppFactoryClassName(O) + ".toCSV" + OM._Name + "(out, (" + Helper.getFullAppDataClassName(O) + ") this, lastsync); break;");
-                Out.println("          default: throw new Exception(\"Unknown CSV sync exporter '\"+exportName+\"' for " + Helper.getFullAppJsonClassName(O) + "\");");
+                Out.println("          default: throw new Exception(\"Unknown CSV sync exporter '\"+exportName+\"' for " + Helper.getFullAppFactoryClassName(O) + "\");");
                 Out.println("        } ");
                 Out.println("    }");
               }
@@ -2040,7 +2040,7 @@ public class TildaData implements CodeGenTildaData
               {
                 Out.println("   public void toCSV(java.io.Writer out, String exportName, java.time.ZonedDateTime lastsync) throws Exception");
                 Out.println("    {");
-                Out.println("      throw new Exception(\"Unknown CSV sync exporter '\"+exportName+\"' for " + Helper.getFullAppJsonClassName(O) + "\");");
+                Out.println("      throw new Exception(\"Unknown CSV sync exporter '\"+exportName+\"' for " + Helper.getFullAppFactoryClassName(O) + "\");");
                 Out.println("    }");
 
               }

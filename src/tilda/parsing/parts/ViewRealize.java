@@ -67,6 +67,9 @@ public class ViewRealize
         _ParentView = ParentView;
         _ParentRealized = ParentRealized;
         
+        if (_ParentRealized.Validate(PS, ParentView._ParentSchema) == false)
+          return false;
+        
         if (TextUtil.isNullOrEmpty(_SubRealized_DEPRECATED) == false)
           PS.AddError("The realize section for view '" + ParentView.getFullName() + "' uses the deprecated feature 'subrealize'. Use dependent Realized tables directly.");
         

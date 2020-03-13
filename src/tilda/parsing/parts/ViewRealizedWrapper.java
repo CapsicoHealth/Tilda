@@ -21,6 +21,7 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.enums.ObjectLifecycle;
 import tilda.enums.TildaType;
+import tilda.parsing.ParserSession;
 
 public class ViewRealizedWrapper extends Base
   {
@@ -31,11 +32,20 @@ public class ViewRealizedWrapper extends Base
         super(TildaType.REALIZED_VIEW);
         _O = O;
         _Name = V.getRealizedTableName(false);
+        _Description = "Realized table for view "+V.getShortName()+": "+ _O._Description;
         _OriginalName = _Name;
         _ParentSchema = O.getSchema();
       }
 
     public Object _O;
+
+    public transient boolean         _Validated         = false;
+    
+    protected boolean Validate(ParserSession PS, Schema ParentSchema)
+      {
+        return super.Validate(PS, ParentSchema);
+      }
+
 
     @Override
     public Column getColumn(String name)

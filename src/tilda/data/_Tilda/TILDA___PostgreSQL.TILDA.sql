@@ -49,7 +49,7 @@ COMMENT ON COLUMN TILDA.Key."created" IS E'The timestamp for when the record was
 COMMENT ON COLUMN TILDA.Key."lastUpdated" IS E'The timestamp for when the record was last updated.';
 COMMENT ON COLUMN TILDA.Key."deleted" IS E'The timestamp for when the record was deleted.';
 CREATE UNIQUE INDEX IF NOT EXISTS Key_Name ON TILDA.Key ("name");
--- app-level index only -- CREATE INDEX IF NOT EXISTS Key_AllByName ON TILDA.Key ("name" ASC);
+-- app-level index only -- CREATE INDEX IF NOT EXISTS Key_AllByName ON TILDA.Key ("name" ASC) where TILDA.Key."deleted" is null;
 
 
 

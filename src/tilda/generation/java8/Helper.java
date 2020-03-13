@@ -84,11 +84,6 @@ public class Helper
         return ParentObject.getSchema()._Package + "." + ParentObject.getAppFactoryClassName();
       }
 
-    public static String getFullAppJsonClassName(Object ParentObject)
-      {
-        return ParentObject.getSchema()._Package + "." + ParentObject.getAppJsonClassName();
-      }
-
     public static String getFullBaseClassName(Base ParentObject)
       {
         return ParentObject.getSchema()._Package + "." + TILDA_GEN_PACKAGE + "." + ParentObject.getBaseClassName();
