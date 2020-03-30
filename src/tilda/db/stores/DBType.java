@@ -51,6 +51,7 @@ public interface DBType
     public String  getName();
     public boolean isErrNoData(SQLException t);
     public String  getCurrentTimestampStr();
+    public String  getCurrentDateStr();
     public boolean isLockOrConnectionError(SQLException t);
     public boolean isCanceledError(SQLException t);
     public boolean needsSavepoint();

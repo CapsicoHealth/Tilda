@@ -20,6 +20,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.Clock;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
@@ -58,12 +59,18 @@ public class DateTimeUtilTest
             // Test4();
             // Test5();
 
-            test6();
+            //test6();
+            test7();
           }
         catch (Exception e)
           {
             LOG.catching(e);
           }
+      }
+
+    private static void test7()
+      {
+        LocalDate DT = DateTimeUtil.parseDate("3/22/20 23:45".split("\\s+")[0], "M/d/yy");
       }
 
     private static void Test0()

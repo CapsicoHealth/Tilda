@@ -87,6 +87,12 @@ public class PostgreSQL implements DBType
         return "statement_timestamp()";
       }
 
+    @Override
+    public String getCurrentDateStr()
+      {
+        return "current_date";
+      }
+    
     protected static final String[] _LOCK_CONN_ERROR_SUBSTR = { "deadlocked on lock", "lock request time out", "lock inconsistency found", "connection reset", "connection is closed"
     };
 
@@ -1369,4 +1375,5 @@ public class PostgreSQL implements DBType
       {
         return null;
       }
+
   }

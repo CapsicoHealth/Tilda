@@ -227,6 +227,11 @@ public class DateTimeUtil
         return ZDT == null ? null : ZDT.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
       }
 
+    public static String printDateForSQL(LocalDate DT)
+      {
+        return DT == null ? null : DT.format(DateTimeFormatter.ISO_DATE);
+      }
+    
     public static List<String> printDateTimeForSQL(List<ZonedDateTime> ZDTs)
       {
         if (ZDTs == null)
@@ -312,9 +317,6 @@ public class DateTimeUtil
       }
 
 
-    private static Pattern _ISO_NOZONE_DATETIME = Pattern.compile("(\\d{4}).(\\d{2}).(\\d{2}).(\\d{2}).(\\d{2}).(\\d{2})");
-
-
     public static LocalDate parseDateFromJSON(String DateStr)
       {
         if (TextUtil.isNullOrEmpty(DateStr) == true)
@@ -331,6 +333,8 @@ public class DateTimeUtil
       }
 
 
+    private static Pattern _ISO_NOZONE_DATETIME = Pattern.compile("(\\d{4}).(\\d{2}).(\\d{2}).(\\d{2}).(\\d{2}).(\\d{2})");
+    
     /**
      * Takes a zone-less timestamp and returns a ZonedDateTime based on the system zone.
      * It will auto-complete with 0's if hours, minutes and/or seconds are missing and use

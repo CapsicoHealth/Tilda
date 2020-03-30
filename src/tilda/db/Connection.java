@@ -284,6 +284,12 @@ public final class Connection
         return _DB.getCurrentTimestampStr();
       }
 
+    public String getCurrentDateStr()
+    throws SQLException
+      {
+        return _DB.getCurrentDateStr();
+      }
+    
 
     public boolean isErrNoData(Throwable T)
     throws SQLException
