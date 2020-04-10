@@ -27,15 +27,20 @@ import org.apache.logging.log4j.Logger;
 import tilda.db.JDBCHelper;
 import tilda.interfaces.JSONable;
 import tilda.utils.json.elements.ElementBoolean;
+import tilda.utils.json.elements.ElementBooleanArray;
 import tilda.utils.json.elements.ElementDef;
 import tilda.utils.json.elements.ElementDouble;
+import tilda.utils.json.elements.ElementDoubleArray;
 import tilda.utils.json.elements.ElementList;
 import tilda.utils.json.elements.ElementLong;
+import tilda.utils.json.elements.ElementLongArray;
 import tilda.utils.json.elements.ElementObj;
 import tilda.utils.json.elements.ElementRaw;
 import tilda.utils.json.elements.ElementString;
-import tilda.utils.json.elements.ElementValues;
+import tilda.utils.json.elements.ElementStringArray;
+import tilda.utils.json.elements.ElementStringArrayDouble;
 import tilda.utils.json.elements.ElementZonedDateTime;
+import tilda.utils.json.elements.ElementZonedDateTimeArray;
 
 public class JSONPrinter
   {
@@ -65,15 +70,31 @@ public class JSONPrinter
 //        return this;
 //      }
     
-    public JSONPrinter addElement(String Name, String[][] Vals)
+    public JSONPrinter addElement(String Name, String Val)
       {
-        _Elements.add(new ElementValues(Name, Vals));
+        _Elements.add(new ElementString(Name, Val));
         return this;
       }
-
+    public JSONPrinter addElement(String Name, String[] Vals)
+      {
+        _Elements.add(new ElementStringArray(Name, Vals));
+        return this;
+      }
+    public JSONPrinter addElement(String Name, String[][] Vals)
+      {
+        _Elements.add(new ElementStringArrayDouble(Name, Vals));
+        return this;
+      }
+    
+    
     public JSONPrinter addElement(String Name, boolean Val)
       {
         _Elements.add(new ElementBoolean(Name, Val));
+        return this;
+      }
+    public JSONPrinter addElement(String Name, boolean[] Val)
+      {
+        _Elements.add(new ElementBooleanArray(Name, Val));
         return this;
       }
 
@@ -82,22 +103,31 @@ public class JSONPrinter
         _Elements.add(new ElementLong(Name, Val));
         return this;
       }
+    public JSONPrinter addElement(String Name, long[] Val)
+      {
+        _Elements.add(new ElementLongArray(Name, Val));
+        return this;
+      }
 
     public JSONPrinter addElement(String Name, double Val)
       {
         _Elements.add(new ElementDouble(Name, Val));
         return this;
       }
-
-    public JSONPrinter addElement(String Name, String Val)
+    public JSONPrinter addElement(String Name, double[] Val)
       {
-        _Elements.add(new ElementString(Name, Val));
+        _Elements.add(new ElementDoubleArray(Name, Val));
         return this;
       }
 
     public JSONPrinter addElement(String Name, ZonedDateTime Val)
       {
         _Elements.add(new ElementZonedDateTime(Name, Val));
+        return this;
+      }
+    public JSONPrinter addElement(String Name, ZonedDateTime[] Val)
+      {
+        _Elements.add(new ElementZonedDateTimeArray(Name, Val));
         return this;
       }
     

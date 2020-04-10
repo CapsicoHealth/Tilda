@@ -362,7 +362,10 @@ public class JSONUtil
               First = false;
             else
               Out.write(",");
-            printChar(Out, i);
+            if (i == null)
+             Out.write("null");
+            else
+             printChar(Out, i);
           }
         Out.write("]");
       }
@@ -406,7 +409,10 @@ public class JSONUtil
               First = false;
             else
               Out.write(",");
-            printFloat(Out, i);
+            if (i == null)
+              Out.write("null");
+             else
+              printFloat(Out, i);
           }
         Out.write("]");
       }
@@ -450,7 +456,10 @@ public class JSONUtil
               First = false;
             else
               Out.write(",");
-            printDouble(Out, i);
+            if (i == null)
+              Out.write("null");
+             else
+              printDouble(Out, i);
           }
         Out.write("]");
       }
@@ -631,7 +640,6 @@ public class JSONUtil
             else
               Out.write(Header + "  ,");
             Obj.toJSON(Out, JsonExportName, "", true);
-            Out.write("\n");
           }
         Out.write(Header + "  ]\n");
       }
@@ -667,7 +675,6 @@ public class JSONUtil
             else
               Out.write(Header + "  ,");
             Obj.toJSON(Out, JsonExportName, "", true, lastSync);
-            Out.write("\n");
           }
         Out.write(Header + "  ]\n");
       }
