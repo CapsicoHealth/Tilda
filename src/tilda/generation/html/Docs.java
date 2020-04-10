@@ -194,6 +194,8 @@ public class Docs
             Set<String> Names = new HashSet<String>();
             for (ForeignKey FK : O._ForeignKeys)
               {
+                if (FK == null)
+                  continue;
                 if (Names.add(FK._DestObjectObj.getShortName()) == false)
                   continue;
                 Out.print((x == 0 ? "" : ", ") + makeObjectLink(FK._DestObjectObj));
