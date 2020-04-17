@@ -1057,6 +1057,31 @@ public class ParseUtil
         return L.toArray(new LocalDate[L.size()]);
       }
 
+    public static LocalDate[] parseLocalDate(String Name, boolean Mandatory, String[] Values, List<StringStringPair> Errors)
+      {
+        if (Values == null || Values.length == 0)
+          {
+            if (Mandatory == true)
+              {
+                LOG.error("Missing parameter '" + Name + "'.");
+                Errors.add(new StringStringPair(Name, "Mandatory Parameter"));
+              }
+            return null;
+          }
+        LocalDate[] result = new LocalDate[Values.length];
+        for (int i = 0; i < Values.length; ++i)
+          {
+            String v = Values[i];
+            LocalDate r = ParseUtil.parseLocalDate(v);
+            if (r == null)
+              {
+                LOG.error("Invalid value '" + v + "' for parameter '" + Name + "'.");
+                Errors.add(new StringStringPair(Name, "Invalid parameter value '"+v+"': expecting a local date formatted string."));
+              }
+            result[i] = r; 
+          }
+        return result;
+      }
     
 
     /**

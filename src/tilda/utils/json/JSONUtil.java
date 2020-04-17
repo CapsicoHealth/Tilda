@@ -508,6 +508,28 @@ public class JSONUtil
         Out.write("]");
       }
 
+    public static void print(Writer Out, String Name, boolean FirstElement, LocalDate[] a)
+    throws IOException
+      {
+        print(Out, Name, FirstElement);
+        if (a == null)
+          {
+            Out.write("null");
+            return;
+          }
+        Out.write("[");
+        boolean First = true;
+        for (LocalDate i : a)
+          {
+            if (First == true)
+              First = false;
+            else
+              Out.write(",");
+            printLocalDate(Out, i);
+          }
+        Out.write("]");
+      }
+
     public static void print(Writer Out, String Name, boolean FirstElement, Collection<String> a)
     throws IOException
       {

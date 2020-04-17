@@ -28,7 +28,10 @@ import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -474,6 +477,20 @@ public class DateTimeUtil
         return D == null ? null : LocalDate.of(D.getYear() + 1900, D.getMonth() + 1, D.getDate());
       }
 
+    public static List<LocalDate> toLocalDates(List<java.sql.Date> D)
+      {
+        List<LocalDate> L = new ArrayList<LocalDate>();
+        for (java.sql.Date d : D)
+          L.add(toLocalDate(d));
+        return L;
+      }
+    public static Set<LocalDate> toLocalDates(Set<java.sql.Date> D)
+      {
+        Set<LocalDate> S = new HashSet<LocalDate>();
+        for (java.sql.Date d : D)
+          S.add(toLocalDate(d));
+        return S;
+      }
 
 
     /**
@@ -695,5 +712,4 @@ public class DateTimeUtil
         LOG.debug("newL: " + TextUtil.print(newL.iterator()));
         return newL;
       }
-
   }

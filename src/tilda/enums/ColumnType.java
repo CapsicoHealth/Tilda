@@ -17,6 +17,7 @@
 package tilda.enums;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -280,6 +281,13 @@ public enum ColumnType
                   throw new Exception(Errors.get(0)._V);
                 return isSet == true ? CollectionUtil.toSet(val) : CollectionUtil.toList(val);
               }
+            case DATE:
+              {
+                LocalDate[] val = ParseUtil.parseLocalDate("SQLDateArray", true, parts, Errors);
+                if (Errors.isEmpty() == false)
+                  throw new Exception(Errors.get(0)._V);
+                return isSet == true ? CollectionUtil.toSet(val) : CollectionUtil.toList(val);
+              }
             case DOUBLE:
               {
                 double[] val = ParseUtil.parseDouble("SQLDoubleArray", true, parts, Errors);
@@ -350,37 +358,37 @@ public enum ColumnType
         return Type == null ? false : Type.isNumber();
       }
 
-/*
-    public String getDefaultNullValue()
-      {
-        switch (this)
-          {
-            case BOOLEAN:
-              return "Boolean.FALSE";
-            case CHAR:
-              return "Character.UNASSIGNED";
-            case DOUBLE:
-              return "Double.valueOf(SystemValues.EVIL_VALUE)";
-            case FLOAT:
-              return "Float.valueOf(SystemValues.EVIL_VALUE)";
-            case INTEGER:
-              return "Integer.valueOf(SystemValues.EVIL_VALUE)";
-            case SHORT:
-              return "Short.valueOf(SystemValues.EVIL_VALUE)";
-            case LONG:
-              return "Long.valueOf(SystemValues.EVIL_VALUE)";
-            case NUMERIC:
-            case DATE:
-            case DATETIME:
-            case UUID:
-            case STRING:
-            case JSON:
-            case BINARY:
-            case BITFIELD:
-              return "null";
-           default:
-              throw new Error("Incomplete switch on ColumnType "+this.name());
-          }
-      }
-*/
+    /*
+     * public String getDefaultNullValue()
+     * {
+     * switch (this)
+     * {
+     * case BOOLEAN:
+     * return "Boolean.FALSE";
+     * case CHAR:
+     * return "Character.UNASSIGNED";
+     * case DOUBLE:
+     * return "Double.valueOf(SystemValues.EVIL_VALUE)";
+     * case FLOAT:
+     * return "Float.valueOf(SystemValues.EVIL_VALUE)";
+     * case INTEGER:
+     * return "Integer.valueOf(SystemValues.EVIL_VALUE)";
+     * case SHORT:
+     * return "Short.valueOf(SystemValues.EVIL_VALUE)";
+     * case LONG:
+     * return "Long.valueOf(SystemValues.EVIL_VALUE)";
+     * case NUMERIC:
+     * case DATE:
+     * case DATETIME:
+     * case UUID:
+     * case STRING:
+     * case JSON:
+     * case BINARY:
+     * case BITFIELD:
+     * return "null";
+     * default:
+     * throw new Error("Incomplete switch on ColumnType "+this.name());
+     * }
+     * }
+     */
   }
