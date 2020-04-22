@@ -76,7 +76,7 @@ public class Interface
         if (TextUtil.isNullOrEmpty(_Name) == true)
           return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring an interface without a name.");
         if (TextUtil.isNullOrEmpty(_Description) == true)
-          return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring an interface without a description name.");
+          return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring an interface without a description.");
 
         _OriginalName = _Name;
         _Name = _Name.toUpperCase();
