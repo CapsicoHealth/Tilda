@@ -470,6 +470,23 @@ public class DateTimeUtil
         return ZDT.withZoneSameInstant(_UTC);
       }
 
+    public static ZonedDateTime toZonedDateTime(LocalDate dt, String zoneStr)
+      {
+        if (dt == null)
+          return null;
+
+        ZonedDateTime ZDT = ZonedDateTime.of(dt.atStartOfDay(), ZoneId.systemDefault());
+        try
+          {
+            return ZDT.withZoneSameInstant(zoneStr == null ? _UTC : ZoneId.of(zoneStr));
+          }
+        catch (Exception E)
+          {
+            LOG.warn("Invalid zone id '" + zoneStr + "'. Used zone offset instead");
+          }
+        return ZDT.withZoneSameInstant(_UTC);
+      }
+    
 
     public static LocalDate toLocalDate(java.sql.Date D)
       {
