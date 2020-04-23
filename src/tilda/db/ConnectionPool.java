@@ -27,6 +27,7 @@ import java.net.URL;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -592,5 +593,26 @@ public class ConnectionPool
       {
         // TODO Auto-generated method stub
         return null;
+      }
+
+    /**
+     * returns a list of connection IDs based on a command-line type of parameter containing a
+     * comma-separated list of connextion IDs, of one (and only one) of the following values:
+     *   - ALL: returns all the connections active in the system
+     *   - ALL_TENANTS: returns the connections for all tenants in the system
+     * @param cmdLineParam
+     * @return
+     */
+    public static Iterator<String> getConnectionListFromParam(String cmdLineParam)
+      {
+        List<String> connectionIds = new ArrayList<>(Arrays.asList(cmdLineParam.split("\\s*,\\s*")));
+
+        if ("ALL".equals(connectionIds.get(0)))
+         return getAllDataSourceIds().keySet().iterator();
+        
+        if ("ALL_TENANTS".equals(connectionIds.get(0)))
+         return getAllTenantDataSourceIds().keySet().iterator();
+        
+        return connectionIds.iterator();
       }
   }

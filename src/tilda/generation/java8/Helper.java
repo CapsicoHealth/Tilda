@@ -512,9 +512,9 @@ public class Helper
                           if (C.getType().isPrimitive() == false)
                             Out.print("if (P._" + V + "==null) PS.setNull(++i, java.sql.Types." + JavaJDBCType.get(C.getType())._JDBCSQLType + "); else ");
                           if (C.getType() == ColumnType.DATETIME)
-                            Out.println("PS.setTimestamp(++i, new java.sql.Timestamp(P._" + C.getName() + ".toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);");
+                            Out.println("PS.setTimestamp(++i, new java.sql.Timestamp(P._" + V  + ".toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);");
                           else if (C.getType() == ColumnType.DATE)
-                            Out.println("PS.setDate(++i, new java.sql.Date(P._" + C.getName() + ".getYear()-1900, P._" + C.getName() + ".getMonthValue()-1, P._" + C.getName() + ".getDayOfMonth()));");
+                            Out.println("PS.setDate(++i, new java.sql.Date(P._" + V  + ".getYear()-1900, P._" + V  + ".getMonthValue()-1, P._" + V + ".getDayOfMonth()));");
                           else
                             Out.println("PS.set" + JavaJDBCType.get(C.getType())._JDBCType + "(++i, " + (C.getType() == ColumnType.CHAR ? "\"\"+" : "") + "P._" + V + Pad + ");");
                         }
@@ -561,7 +561,7 @@ public class Helper
                       if (C.getType() == ColumnType.DATETIME)
                         Out.println("PS.setTimestamp(++i, new java.sql.Timestamp(P._" + V + ".toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);");
                       else if (C.getType() == ColumnType.DATE)
-                        Out.println("PS.setDate(++i, new java.sql.Date(P._" + C.getName() + ".getYear()-1900, P._" + C.getName() + ".getMonthValue()-1, P._" + C.getName() + ".getDayOfMonth()));");
+                        Out.println("PS.setDate(++i, new java.sql.Date(P._" + V + ".getYear()-1900, P._" + V + ".getMonthValue()-1, P._" + V + ".getDayOfMonth()));");
                       else if (A._Multi == false)
                         Out.println("PS.set" + JavaJDBCType.get(C.getType())._JDBCType + "(++i, " + (C.getType() == ColumnType.CHAR ? "\"\"+" : "") + "P._" + V + Pad + ");");
                       else
