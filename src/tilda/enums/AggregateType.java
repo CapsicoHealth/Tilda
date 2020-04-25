@@ -168,4 +168,9 @@ public enum AggregateType
         return isOrderable() == true;
       }
 
+    public boolean isCollection()
+      {
+        return this == ARRAY || this == ARRAYCAT;
+      }
+
   }

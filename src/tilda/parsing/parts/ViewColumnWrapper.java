@@ -39,7 +39,7 @@ public class ViewColumnWrapper extends Column
           _Enum = new ColumnEnum(SameAsCol._Enum._DestObject, SameAsCol._Enum._Multi);
         if (VCol._Aggregate != null)
           {
-            if (VCol._Aggregate == AggregateType.ARRAY)
+            if (VCol._Aggregate.isCollection() == true && SameAsCol.isCollection() == false)
               {
                 _Aggregate = VCol._Aggregate;
                 _TypeStr = SameAsCol._TypeStr + "[]";

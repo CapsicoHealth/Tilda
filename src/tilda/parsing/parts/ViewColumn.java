@@ -127,6 +127,7 @@ public class ViewColumn
 
     /**
      * If the ViewColumn defines an expression and type, returns that. Otherwise, it returns the aggregate or original type.
+     * 
      * @return
      */
     public ColumnType getType()
@@ -136,6 +137,7 @@ public class ViewColumn
 
     /**
      * if it's not an aggregate, returns the original type of the sameAs obj, otherwise, returns the aggregate type.
+     * 
      * @return
      */
     public ColumnType getAggregateType()
@@ -367,5 +369,15 @@ public class ViewColumn
         return (_SameAsObj == null || _SameAsObj.needsTZ() == true)
         && (_Aggregate == null || _Aggregate.isZonedDateTimeCompatible() == true)
         && (TextUtil.isNullOrEmpty(_Expression) == true || _Type._Type == ColumnType.DATETIME);
+      }
+
+    public boolean isCollection()
+      {
+        if (_SameAsObj != null)
+         {
+           if (_SameAsObj.isCollection() == true || _Aggregate != null && _Aggregate.isCollection() == true)
+             return true;
+         }
+        return false;
       }
   }

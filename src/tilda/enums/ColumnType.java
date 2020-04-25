@@ -391,4 +391,38 @@ public enum ColumnType
      * }
      * }
      */
+
+    public String getBigQueryType()
+      {
+        switch (this)
+          {
+            case STRING:
+            case CHAR:
+            case UUID:
+              return "STRING";
+            case BOOLEAN:
+              return "BOOL";
+            case DOUBLE:
+            case FLOAT:
+              return "FLOAT64";
+            case SHORT:
+            case INTEGER:
+            case LONG:
+              return "INT64";
+            case NUMERIC:
+              return "NUMERIC";
+            case DATE:
+              return "DATE";
+            case DATETIME:
+              return "DATETIME";
+            case JSON:
+              return "STRING";
+            case BINARY:
+            case BITFIELD:
+              return "BYTES";
+            default:
+              throw new Error("Incomplete switch in getBigQueryType() on ColumnType " + this.name());
+          }
+      }
+
   }
