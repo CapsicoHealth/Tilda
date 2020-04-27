@@ -585,7 +585,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
     private boolean PrintViewColumn(StringBuilder Str, ViewColumn VC, TableRankTracker TI, boolean NoAs)
     throws Exception
       {
-        if (TextUtil.isNullOrEmpty(VC._Coalesce) == false)
+        if (TextUtil.isNullOrEmpty(VC._Coalesce) == false && (VC._Aggregate == null || VC._Aggregate==AggregateType.COUNT))
           Str.append("coalesce(");
 
         boolean hasAggregates = false;
@@ -618,6 +618,9 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 hasAggregates = true;
                 if (VC._Distinct == Boolean.TRUE)
                   Str.append("distinct ");
+
+                if (TextUtil.isNullOrEmpty(VC._Coalesce) == false && VC._Aggregate!=AggregateType.COUNT)
+                  Str.append("coalesce(");
               }
             if (trimNeeded)
               Str.append("trim(");
@@ -629,6 +632,9 @@ public class Sql extends PostgreSQL implements CodeGenSql
               Str.append(")");
             if (VC._Aggregate != null)
               {
+                if (TextUtil.isNullOrEmpty(VC._Coalesce) == false && VC._Aggregate!=AggregateType.COUNT)
+                  Str.append(", " + ValueHelper.printValue(VC._SameAsObj.getName(), VC.getAggregateType(), VC._Coalesce) + ")");
+
                 if (VC._OrderByObjs != null && VC._OrderByObjs.isEmpty() == false)
                   {
                     Str.append(" order by ");
@@ -649,7 +655,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                   }
               }
           }
-        if (TextUtil.isNullOrEmpty(VC._Coalesce) == false)
+        if (TextUtil.isNullOrEmpty(VC._Coalesce) == false && (VC._Aggregate == null || VC._Aggregate==AggregateType.COUNT))
           Str.append(", " + ValueHelper.printValue(VC._SameAsObj.getName(), VC.getAggregateType(), VC._Coalesce) + ")");
         if (NoAs == false)
           Str.append(" as \"" + VC.getName() + "\" " + (VC._SameAsObj == null ? "" : "-- " + VC._SameAsObj._Description));
