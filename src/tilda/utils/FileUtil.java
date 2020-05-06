@@ -24,22 +24,38 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.Reader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.StringJoiner;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import tilda.utils.comparators.FileNameComparator;
 
 public class FileUtil
   {
+    protected static final Logger LOG = LogManager.getLogger(FileUtil.class.getName());
+
     public static InputStream getResourceAsStream(String ResourceName)
       {
         return FileUtil.class.getClassLoader().getResourceAsStream(ResourceName);
       }
 
+    public static URL getResourceUrl(String ResourceName)
+      {
+        return FileUtil.class.getClassLoader().getResource(ResourceName);
+      }
+    
     public static interface FileProcessor
       {
         public void startFolder(File D)
@@ -135,12 +151,18 @@ public class FileUtil
         return false;
       }
 
-    public static BufferedReader getReaderFromUrl(String Url)
+    /**
+     * Returns a Reader from a GET URL. It is the responsibility of the claler to close the Reader when done.
+     * 
+     * @param url
+     * @return
+     */
+    public static BufferedReader getReaderFromUrl(String url)
       {
         try
           {
-            URL url = new URL(Url);
-            URLConnection uc = url.openConnection();
+            URL u = new URL(url);
+            URLConnection uc = u.openConnection();
             Reader In = new InputStreamReader(uc.getInputStream());
             return new BufferedReader(In);
           }
@@ -166,6 +188,78 @@ public class FileUtil
         R.close();
         return Str.toString();
       }
+
+    /**
+     * Returns a Reader from a POST URL with parameters. It is the responsibility of the claler to close the Reader when done.
+     * 
+     * @param url
+     * @param args
+     * @return
+     */
+    public static BufferedReader getReaderFromPostUrl(String url, Map<String, String> params)
+      {
+        try
+          {
+            HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
+            con.setRequestMethod("POST");
+            con.setDoOutput(true);
+            con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+
+            StringJoiner sj = new StringJoiner("&");
+            if (params != null)
+              for (Map.Entry<String, String> entry : params.entrySet())
+                sj.add(URLEncoder.encode(entry.getKey(), "UTF-8") + "=" + URLEncoder.encode(entry.getValue(), "UTF-8"));
+            byte[] out = sj.toString().getBytes(StandardCharsets.UTF_8);
+//            int length = out.length;
+//            con.setFixedLengthStreamingMode(length);
+            OutputStream os = con.getOutputStream();
+            os.write(out);
+            os.flush();
+            os.close();
+
+            int responseCode = con.getResponseCode();
+            BufferedReader R = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            if (responseCode == HttpURLConnection.HTTP_OK)
+              return R;
+            else
+              {
+                StringBuilder Str = new StringBuilder();
+                String L = R.readLine();
+                while (L != null)
+                  {
+                    Str.append(L).append("\n");
+                    L = R.readLine();
+                  }
+                R.close();
+                System.out.print(Str.toString());
+              }
+          }
+        catch (IOException E)
+          {
+            LOG.error("Cannot access " + url + ".\n", E);
+          }
+        return null;
+      }
+
+    public static String getContentsFromPostUrl(String url, Map<String, String> params)
+    throws IOException
+      {
+        BufferedReader R = getReaderFromPostUrl(url, params);
+        if (R == null)
+          return null;
+        StringBuilder Str = new StringBuilder();
+        String L = R.readLine();
+        while (L != null)
+          {
+            Str.append(L);
+            L = R.readLine();
+            if (L != null)
+              Str.append("\n"); // not append newline for the last line.
+          }
+        R.close();
+        return Str.toString();
+      }
+
 
     public static BufferedReader getReaderFromFileOrResource(String Name)
     throws IOException

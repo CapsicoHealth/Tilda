@@ -112,7 +112,7 @@ public class MailUtil
           {
             if (LastAddress != null)
               LOG.debug("Email address '" + LastAddress + "' seems to be invalid.");
-            LOG.error("Cannot send email", E);
+            LOG.error("Cannot send email to "+SmtpInfo+"\n", E);
             Throwable t = E.getCause();
             if (t != null)
               LOG.catching(t);

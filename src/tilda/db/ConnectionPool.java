@@ -255,13 +255,8 @@ public class ConnectionPool
             if (In == null)
               throw new Exception("Cannot find the Tilda configuration file '/tilda.config.json' in the classpath.");
 
-            Enumeration<URL> resEnum = ConnectionPool.class.getClassLoader().getResources(Secondary == false ? "/tilda.config.json" : "tilda.config.json");
-            while (resEnum.hasMoreElements())
-              {
-                URL url = (URL) resEnum.nextElement();
-                LOG.info("   Found tilda.config.json file in " + url.toString());
-                break;
-              }
+            URL url = FileUtil.getResourceUrl(Secondary == false ? "/tilda.config.json" : "tilda.config.json");
+            LOG.info("   Found tilda.config.json file in " + url.toString());
 
             R = new BufferedReader(new InputStreamReader(In));
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
