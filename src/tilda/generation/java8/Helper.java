@@ -31,6 +31,7 @@ import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ColumnValue;
 import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Object;
+import tilda.parsing.parts.OrderBy;
 import tilda.parsing.parts.Query;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.SubWhereClause;
@@ -275,23 +276,23 @@ public class Helper
           }
       }
 
-    public static String PrintOrderByClause(GeneratorSession G, List<Column> OrderByObjs, List<OrderType> OrderByOrders)
+    public static String PrintOrderByClause(GeneratorSession G, List<OrderBy> OrderByObjs)
       {
         StringBuilder Str = new StringBuilder();
         boolean First = true;
-        for (int i = 0; i < OrderByObjs.size(); ++i)
+        for (OrderBy OB : OrderByObjs)
           {
-            Column C = OrderByObjs.get(i);
-            OrderType O = OrderByOrders.get(i);
-            if (C != null)
+            if (OB != null)
               {
                 if (First == true)
                   First = false;
                 else
                   Str.append("S.append(\", ");
                 Str.append("\"); ");
-                Str.append(Helper.getFullColVarAtRuntime(C));
-                Str.append("; S.append(\" ").append(O.toString()).append("\");");
+                Str.append(Helper.getFullColVarAtRuntime(OB._Col));
+                Str.append("; S.append(\" ").append(OB._Order.toString()).append("\");");
+                if (OB._Nulls != null)
+                  Str.append(" S.append(\" NULLS ").append(OB._Nulls.toString()).append("\");");
               }
           }
         return Str.toString();
@@ -392,7 +393,7 @@ public class Helper
                   // else
                   // Out.println(Lead + " S.append(\" where \").append(PartialWhereclause);");
                   if (I._OrderByObjs.isEmpty() == false)
-                    Out.println(Lead + "      S.append(\"" + " order by " + PrintOrderByClause(G, I._OrderByObjs, I._OrderByOrders));
+                    Out.println(Lead + "      S.append(\"" + " order by " + PrintOrderByClause(G, I._OrderByObjs));
                   Out.println(Lead + "      break;");
                 }
             }
@@ -422,7 +423,7 @@ public class Helper
                   if (TextUtil.isNullOrEmpty(WhereClause) == false)
                     Out.println(Lead + "      S.append(\" where (" + WhereClause + ")\");");
                   if (SWC._OrderByObjs.isEmpty() == false)
-                    Out.println(Lead + "      S.append(\" order by " + PrintOrderByClause(G, SWC._OrderByObjs, SWC._OrderByOrders));
+                    Out.println(Lead + "      S.append(\" order by " + PrintOrderByClause(G, SWC._OrderByObjs));
                   Out.println(Lead + "      break;");
                 }
             }

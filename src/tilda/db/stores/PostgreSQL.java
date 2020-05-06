@@ -52,6 +52,7 @@ import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Object;
+import tilda.parsing.parts.OrderBy;
 import tilda.parsing.parts.Query;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
@@ -1235,8 +1236,8 @@ public class PostgreSQL implements DBType
         for (Column C : IX._ColumnObjs)
           if (C.getType() != ColumnType.JSON && (C.getType() != ColumnType.STRING || C.isCollection() == false))
             Gin = false;
-        for (Column C : IX._OrderByObjs)
-          if (C.getType() != ColumnType.JSON && (C.getType() != ColumnType.STRING || C.isCollection() == false))
+        for (OrderBy OB : IX._OrderByObjs)
+          if (OB._Col.getType() != ColumnType.JSON && (OB._Col.getType() != ColumnType.STRING || OB._Col.isCollection() == false))
             Gin = false;
         if (Gin == true && IX._Unique == true)
           throw new Exception(IX._Parent.getFullName() + " is defining index '" + IX.getName() + "' which is GIN-Elligible and also defined as UNIQUE: GIN indices cannot be unique.");
@@ -1248,13 +1249,18 @@ public class PostgreSQL implements DBType
         if (IX._OrderByObjs.isEmpty() == false)
           {
             boolean First = IX._ColumnObjs.isEmpty();
-            for (int i = 0; i < IX._OrderByObjs.size(); ++i)
+            for (OrderBy OB : IX._OrderByObjs)
               {
+                if (OB == null)
+                  continue;
+                
                 if (First == true)
                   First = false;
                 else
                   Out.print(", ");
-                Out.print("\"" + IX._OrderByObjs.get(i).getName() + "\" " + (Gin ? "" : IX._OrderByOrders.get(i)));
+                Out.print("\"" + OB._Col.getName() + "\" " + (Gin ? "" : OB._Order));
+                if (OB._Nulls != null)
+                  Out.print(" NULLS "+OB._Nulls);
               }
           }
         Out.print(")");

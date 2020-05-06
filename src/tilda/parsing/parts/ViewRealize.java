@@ -155,7 +155,7 @@ public class ViewRealize
                 PS.AddError("Index '" + I._Name + "' is duplicated in the realize section for view '" + ParentView.getFullName() + "'.");
               if (_Upsert != null && _Upsert._DeleteTSColumnObj != null
                                   && (   I._ColumnObjs.size() > 0 && I._ColumnObjs.get(0)._Name.equals(_Upsert._DeleteTSColumnObj._Name) == true
-                                      || I._ColumnObjs.size() == 0 && I._OrderByObjs.get(0)._Name.equals(_Upsert._DeleteTSColumnObj._Name) == true
+                                      || I._ColumnObjs.size() == 0 && I._OrderByObjs.get(0)._Col._Name.equals(_Upsert._DeleteTSColumnObj._Name) == true
                                      )
                  )
                 indexOnDeleted = true;

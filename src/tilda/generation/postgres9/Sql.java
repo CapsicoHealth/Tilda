@@ -47,6 +47,7 @@ import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Formula;
 import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Object;
+import tilda.parsing.parts.OrderBy;
 import tilda.parsing.parts.Query;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.Value;
@@ -556,10 +557,11 @@ public class Sql extends PostgreSQL implements CodeGenSql
                     Str.append("\"").append(VC._Name).append("\"");
                   }
               }
-            for (int i = 0; i < V._DistinctOn._OrderByObjs.size(); ++i)
+            for (OrderBy OB : V._DistinctOn._OrderByObjs)
               {
-                Column C = V._DistinctOn._OrderByObjs.get(i);
-                Str.append(", ").append(getFullColumnVar(C)).append(" ").append(V._DistinctOn._OrderByOrders.get(i).name());
+                Str.append(", ").append(getFullColumnVar(OB._Col)).append(" ").append(OB._Order.name());
+                if (OB._Nulls != null)
+                  Str.append(" NULLS ").append(OB._Nulls.name());  
               }
             Str.append("\n");
           }
@@ -639,13 +641,16 @@ public class Sql extends PostgreSQL implements CodeGenSql
                   {
                     Str.append(" order by ");
                     boolean First = true;
-                    for (int i = 0; i < VC._OrderByObjs.size(); ++i)
+                    for (OrderBy OB : VC._OrderByObjs)
                       {
                         if (First == true)
                           First = false;
                         else
                           Str.append(", ");
-                        Str.append(TI.getFullName() + ".\"" + VC._OrderByObjs.get(i).getName() + "\" " + VC._OrderByOrders.get(i));
+                        Str.append(TI.getFullName() + ".\"" + OB._Col.getName() + "\" " + OB._Order);
+                        if (OB._Nulls != null)
+                          Str.append(" NULLS "+OB._Nulls);
+                        
                       }
                   }
                 Str.append(")");

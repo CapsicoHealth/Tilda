@@ -24,8 +24,6 @@ import java.util.Set;
 import com.google.gson.annotations.SerializedName;
 
 import tilda.enums.ColumnMode;
-import tilda.enums.OrderType;
-import tilda.enums.TildaType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ValidationHelper;
 import tilda.utils.CollectionUtil;
@@ -43,8 +41,7 @@ public class Index
     /*@formatter:on*/
 
     public transient List<Column>    _ColumnObjs    = new ArrayList<Column>();
-    public transient List<Column>    _OrderByObjs   = new ArrayList<Column>();
-    public transient List<OrderType> _OrderByOrders = new ArrayList<OrderType>();
+    public transient List<OrderBy>   _OrderByObjs   = new ArrayList<OrderBy>();
     public transient boolean         _Unique;
     public transient String[]        _LALColumns;
 
@@ -131,9 +128,7 @@ public class Index
               for (Column C : _ColumnObjs)
                 Names.add(C.getName().toUpperCase());
 
-            _OrderByObjs.clear();
-            _OrderByOrders.clear();
-            processOrderBy(PS, "Object '" + _Parent.getFullName() + "' defines index '" + _Name + "'", Names, _Parent, _OrderBy, _OrderByObjs, _OrderByOrders);
+            _OrderByObjs = OrderBy.processOrderBys(PS, "Object '" + _Parent.getFullName() + "' defines index '" + _Name + "'", _Parent, _OrderBy, false);
 
             if (TextUtil.isNullOrEmpty(_SubWhere) == false && _SubQuery != null)
               PS.AddError("Object '" + _Parent.getFullName() + "' is defining unique index '" + _Name + "' with both a subWhere AND a subQuery: only one is allowed.");
@@ -169,46 +164,6 @@ public class Index
         return Errs == PS.getErrorCount();
       }
 
-    public static void processOrderBy(ParserSession PS, String What, Set<String> Names, Base ParentObject, String[] OrderBy, List<Column> OrderByObjs, List<OrderType> OrderByOrders)
-      {
-        for (String ob : OrderBy)
-          {
-            if (TextUtil.isNullOrEmpty(ob) == true)
-              continue;
-            String[] parts = ob.split("\\s");
-            if (parts.length > 2)
-              {
-                PS.AddError(What + " with an orderBy '" + ob + "' that is formatted incorrectly.");
-                continue;
-              }
-            String Col = parts[0];
-            OrderType Order = OrderType.parse(parts.length == 2 ? parts[1] : "ASC");
-            if (Order == null)
-              {
-                PS.AddError(What + " with an orderBy '" + ob + "' that is formatted incorrectly: asc or desc expected.");
-                continue;
-              }
-            if (Names.add(Col.toUpperCase()) == false)
-              {
-                PS.AddError(What + " with duplicated orderby '" + Col + "'.");
-                continue;
-              }
-            Column C = ParentObject.getColumn(Col);
-            if (C == null)
-              {
-                PS.AddError(What + " with orderby '" + Col + "' which cannot be found." + (ParentObject._TildaType != TildaType.VIEW ? "" : " If you do need that column for the orderBy but do not want it in the final view, add it with \"joinOnly\"=true."));
-                continue;
-              }
-            if (C._Mode == ColumnMode.CALCULATED)
-              {
-                PS.AddError(What + " with orderby '" + Col + "' which is calculated and therefore, not available at the database level.");
-                continue;
-              }
-            OrderByObjs.add(C);
-            OrderByOrders.add(Order);
-          }
-      }
-
     public String getSignature()
       {
         StringBuilder Str = new StringBuilder();
@@ -222,16 +177,18 @@ public class Index
             Str.append(C._Name).append("|asc");
           }
         // Defined Order Bys
-        for (int i = 0; i < _OrderByObjs.size(); ++i)
+        for (OrderBy OB : _OrderByObjs)
           {
-            Column C = _OrderByObjs.get(i);
-            OrderType O = _OrderByOrders.get(i);
+            if (OB == null)
+              continue;
             if (Str.length() != 0)
               {
                 Str.append("|");
               }
-            Str.append(C._Name).append("|").append(O.name().toLowerCase());
+            Str.append(OB._Col._Name).append("|").append(OB._Order.name().toLowerCase());
+            if (OB._Nulls != null)
+             Str.append("|").append(OB._Nulls.name().toLowerCase());
           }
-        return (_Unique ? "u" : "") + "i|" + Str.toString();
+        return (_Unique ? "ui|" : "i|") + Str.toString();
       }
   }

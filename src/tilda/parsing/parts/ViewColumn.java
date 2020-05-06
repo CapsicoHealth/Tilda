@@ -31,7 +31,6 @@ import tilda.enums.ColumnType;
 import tilda.enums.FrameworkColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.enums.JoinType;
-import tilda.enums.OrderType;
 import tilda.enums.TildaType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ReferenceHelper;
@@ -91,8 +90,7 @@ public class ViewColumn
                                                                                         // _SameAsObj._ParentObject is the source object.
     public transient JoinType            _Join;
     public transient AggregateType       _Aggregate;
-    public transient List<Column>        _OrderByObjs      = new ArrayList<Column>();
-    public transient List<OrderType>     _OrderByOrders    = new ArrayList<OrderType>();
+    public transient List<OrderBy>       _OrderByObjs      = new ArrayList<OrderBy>();
     public transient TypeDef             _Type;
 
     public transient boolean             _FailedValidation = false;
@@ -230,7 +228,7 @@ public class ViewColumn
             else if (_Distinct == true)
               PS.AddError("View Column '" + getFullName() + "' defined an orderBy value in a Distinct aggregate, which is not supported.");
             Set<String> Names = new HashSet<String>();
-            Index.processOrderBy(PS, "View Column '" + getFullName() + "' array aggregate", Names, ParentView, _OrderBy, _OrderByObjs, _OrderByOrders);
+            _OrderByObjs = OrderBy.processOrderBys(PS, "View Column '" + getFullName() + "' array aggregate", ParentView, _OrderBy, true);
           }
 
         if (_Exclude.length > 0 || _Block.length > 0)

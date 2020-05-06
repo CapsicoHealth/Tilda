@@ -35,7 +35,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class SubWhereClause
   {
-    protected static final Logger          LOG            = LogManager.getLogger(SubWhereClause.class.getName());
+    protected static final Logger          LOG          = LogManager.getLogger(SubWhereClause.class.getName());
 
     /*@formatter:off*/
     @SerializedName("name"       ) public String   _Name       ;
@@ -45,10 +45,9 @@ public class SubWhereClause
     @SerializedName("orderBy"    ) public String[] _OrderBy= { };
     /*@formatter:on*/
 
-    public transient List<Query.Attribute> _Attributes    = new ArrayList<Query.Attribute>();
-    public transient List<Object>          _FromObj       = new ArrayList<Object>();
-    public transient List<Column>          _OrderByObjs   = new ArrayList<Column>();
-    public transient List<OrderType>       _OrderByOrders = new ArrayList<OrderType>();
+    public transient List<Query.Attribute> _Attributes  = new ArrayList<Query.Attribute>();
+    public transient List<Object>          _FromObj     = new ArrayList<Object>();
+    public transient List<OrderBy>         _OrderByObjs = new ArrayList<OrderBy>();
     public transient boolean               _Unique;
 
 
@@ -165,7 +164,7 @@ public class SubWhereClause
               }
           }
 
-        Index.processOrderBy(PS, "Object '" + _ParentObject.getFullName() + "' defines Query '" + _Name + "'", new HashSet<String>(), _ParentObject, _OrderBy, _OrderByObjs, _OrderByOrders);
+        _OrderByObjs = OrderBy.processOrderBys(PS, "Object '" + _ParentObject.getFullName() + "' defines Query '" + _Name + "'", _ParentObject, _OrderBy, true);
 
         _Unique = _OrderBy == null || _OrderBy.length == 0;
 

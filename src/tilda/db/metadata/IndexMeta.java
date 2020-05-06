@@ -31,7 +31,7 @@ public class IndexMeta
     protected IndexMeta(ResultSet RS, TableMeta parentTable)
     throws Exception
       {
-//        LOG.debug(JDBCHelper.PrintResultSet(RS));
+//        LOG.debug(JDBCHelper.printResultSet(RS));
         _Name   = RS.getString("INDEX_NAME" );//.toLowerCase();
         _Unique = RS.getBoolean("NON_UNIQUE") == false;
         _ParentTable = parentTable;

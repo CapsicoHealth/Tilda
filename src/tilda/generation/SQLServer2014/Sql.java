@@ -40,6 +40,7 @@ import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Object;
+import tilda.parsing.parts.OrderBy;
 import tilda.parsing.parts.Query;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
@@ -459,13 +460,15 @@ public class Sql extends MSSQL implements CodeGenSql
         if (I._OrderByObjs.isEmpty() == false)
           {
             boolean First = I._ColumnObjs.isEmpty();
-            for (int i = 0; i < I._OrderByObjs.size(); ++i)
+            for (OrderBy OB : I._OrderByObjs)
               {
                 if (First == true)
                   First = false;
                 else
                   Out.print(", ");
-                Out.print("\"" + I._OrderByObjs.get(i).getName() + "\" " + I._OrderByOrders.get(i));
+                Out.print("\"" + OB._Col.getName() + "\" " + OB._Order);
+                if (OB._Nulls != null)
+                  Out.print(" NULLS "+OB._Nulls);
               }
           }
         Out.println(");");
