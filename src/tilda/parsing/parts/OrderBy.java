@@ -66,8 +66,32 @@ public class OrderBy
         _Col = Parent.getColumn(Col);
         if (_Col == null)
           {
-            PS.AddError(what + " with orderby '" + Col + "' which cannot be found." + (Parent._TildaType != TildaType.VIEW ? "" : " If you do need that column for the orderBy but do not want it in the final view, add it with \"joinOnly\"=true."));
-            return false;
+             if (Parent._TildaType == TildaType.VIEW) // Let's do a deeper search for the other columns from the tables/views brought in
+              {
+                // LDH-NOTE: This should be abstracted better as a utility method. Looking up
+                //          a column by name across the entire view space is important moving forward
+                //          with a few new tilda features.
+                Set<String> objs = new HashSet<String>();
+                for (ViewColumn vc : ((View)_Parent)._ViewColumns)
+                  {
+                    if (vc._SameAsObj != null && vc._SameAsObj._ParentObject != null && objs.add(vc._SameAsObj._ParentObject._Name) == true)
+                      {
+                        for (Column c : vc._SameAsObj._ParentObject._Columns)
+                          if (c._Name.equals(Col) == true)
+                            {
+                              _Col = c;
+                              break;
+                            }
+                      }
+                    if (_Col != null)
+                     break;
+                  }
+              }
+             if (_Col == null)
+               {
+                 PS.AddError(what + " with orderby '" + Col + "' which cannot be found." + (Parent._TildaType != TildaType.VIEW ? "" : " If you do need that column for the orderBy but do not want it in the final view, add it with \"joinOnly\"=true."));
+                 return false;
+               }
           }
         if (_Col._Mode == ColumnMode.CALCULATED)
           {
