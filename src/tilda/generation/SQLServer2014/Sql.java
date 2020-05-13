@@ -40,7 +40,6 @@ import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Object;
-import tilda.parsing.parts.OrderBy;
 import tilda.parsing.parts.Query;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
@@ -449,29 +448,13 @@ public class Sql extends MSSQL implements CodeGenSql
         return Found;
       }
 
+    
     @Override
     public void genIndex(PrintWriter Out, Index I)
       {
-        if (I._Db == false)
-          Out.print("-- app-level index only -- ");
-        Out.print("CREATE" + (I._Unique == true ? " UNIQUE" : "") + " INDEX IF NOT EXISTS " + I._Parent.getBaseName() + "_" + I._Name + " ON [" + I._Parent._ParentSchema._Name + "].[" + I._Parent._Name + "] (");
-        if (I._ColumnObjs.isEmpty() == false)
-          PrintColumnList(Out, I._ColumnObjs);
-        if (I._OrderByObjs.isEmpty() == false)
-          {
-            boolean First = I._ColumnObjs.isEmpty();
-            for (OrderBy OB : I._OrderByObjs)
-              {
-                if (First == true)
-                  First = false;
-                else
-                  Out.print(", ");
-                Out.print("\"" + OB._Col.getName() + "\" " + OB._Order);
-                if (OB._Nulls != null)
-                  Out.print(" NULLS "+OB._Nulls);
-              }
-          }
-        Out.println(");");
+        throw new UnsupportedOperationException();
+//        String DDLStr = alterTableAddIndexDDL(I);
+//        Out.print(DDLStr);
       }
 
     @Override

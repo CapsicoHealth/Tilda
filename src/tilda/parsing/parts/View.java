@@ -94,8 +94,10 @@ public class View extends Base
     public Column getColumn(String name)
       {
         for (ViewColumn C : _ViewColumns)
-          if (C != null && C._Name != null && C._Name.equals(name) == true)
-            return C._SameAsObj;
+         {
+           if (C != null && C._Name != null && C._Name.equals(name) == true)
+             return C._SameAsObj;
+         }
         return null;
       }
 
@@ -158,7 +160,7 @@ public class View extends Base
 
     public String getRealizedTableName(boolean includeSchemaName)
       {
-        return _Realize == null ? null : (includeSchemaName == true ? _ParentSchema._Name + "." : "") + (TextUtil.isNullOrEmpty(_Realize._Name) == false ? _Realize._Name : _Name.substring(0, _Name.length() - (_Pivots.isEmpty() == false ? "PivotView" : "View").length()) + "Realized");
+        return _Realize == null ? null : (includeSchemaName == true ? _RealizedObj._ParentSchema._Name + "." : "") + (TextUtil.isNullOrEmpty(_Realize._Name) == false ? _Realize._Name : _Name.substring(0, _Name.length() - (_Pivots.isEmpty() == false ? "PivotView" : "View").length()) + "Realized");
       }
 
     public String getRootViewName()
@@ -861,7 +863,7 @@ public class View extends Base
               continue;
             if (V.isPivotColumn(col) == true)
               break;
-            if (col._Name.startsWith(startingWith) == false)
+            if (col._Name != null && col._Name.startsWith(startingWith) == false)
               continue;
             ViewColumn NewVC = new ViewColumn();
             // LOG.debug(col._Name);
@@ -1280,7 +1282,7 @@ public class View extends Base
      */
     public String getViewSubRealizeViewName()
       {
-        return _ParentSchema._Name + "_" + _Name + "_R";
+        return (_RealizedObj!= null ? _RealizedObj._ParentSchema : _ParentSchema)._Name + "_" + (_Name) + "_R";
       }
 
     /**

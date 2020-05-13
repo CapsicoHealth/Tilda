@@ -31,7 +31,6 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -409,6 +408,13 @@ public class DateTimeUtil
         return ZDT == null ? "NA" : ZDT.format(SuperCompactFormater);
       }
 
+    private static final DateTimeFormatter Time24HFormater = DateTimeFormatter.ofPattern("HH:mm:ss");
+    
+    public static String printTime24(ZonedDateTime ZDT)
+      {
+        return ZDT == null ? "NA" : ZDT.format(Time24HFormater);
+      }
+    
 
     private static final DateTimeFormatter DayTimeFormater = DateTimeFormatter.ofPattern("HH:mm");
     private static final DateTimeFormatter WeekFormater    = DateTimeFormatter.ofPattern("EEEE d, HH:mm");

@@ -55,7 +55,7 @@ public class FileUtil
       {
         return FileUtil.class.getClassLoader().getResource(ResourceName);
       }
-    
+
     public static interface FileProcessor
       {
         public void startFolder(File D)
@@ -152,30 +152,93 @@ public class FileUtil
       }
 
     /**
-     * Returns a Reader from a GET URL. It is the responsibility of the claler to close the Reader when done.
+     * Returns a Reader from a GET URL. It is the responsibility of the caller to close the Reader when done.
      * 
      * @param url
      * @return
      */
     public static BufferedReader getReaderFromUrl(String url)
+    throws Exception
+      {
+        return getReaderFromUrl(url, false);
+      }
+    
+    /**
+     * Returns a Reader from a GET URL. It is the responsibility of the caller to close the Reader when done.
+     * If retry is true, in the case of a failure, the HTTP call will be tried another 2 times with a delay of 1000 and 2500 respectively.
+     * 
+     * @param url
+     * @param retry
+     * @return
+     * @throws Exception 
+     */
+    public static BufferedReader getReaderFromUrl(String url, boolean retry)
+      {
+        BufferedReader R = getReaderFromUrl_base(url, 0);
+        if (retry == true && R == null)
+          {
+            LOG.warn("Trying a second time");
+            R = getReaderFromUrl_base(url, 1000);
+            if (R == null)
+              {
+                LOG.warn("Trying a third time");
+                R = getReaderFromUrl_base(url, 2500);
+              }
+          }
+        return R;
+      }
+    
+    /**
+     * Private method to get a reader from a GET URL and wait some millis before. Useful for retry strategies.
+     * @param url
+     * @param waitMillis
+     * @return
+     */
+    private static BufferedReader getReaderFromUrl_base(String url, int waitMillis)
       {
         try
           {
+            Thread.sleep(waitMillis);
             URL u = new URL(url);
+            long TS = System.nanoTime();
             URLConnection uc = u.openConnection();
             Reader In = new InputStreamReader(uc.getInputStream());
+            LOG.debug("URL call took " + DurationUtil.printDuration(System.nanoTime() - TS));
             return new BufferedReader(In);
           }
-        catch (IOException E)
+        catch (Exception E)
           {
+            LOG.error("An error occurred fetching " + url + "\n", E);
           }
         return null;
       }
-
-    public static String getContentsFromUrl(String Url)
+    
+    /**
+     * Gets contents from a GET URL provided,<BR>
+     * 
+     * @param url
+     * @return
+     * @throws IOException
+     */
+    public static String getContentsFromUrl(String url)
     throws IOException
       {
-        BufferedReader R = getReaderFromUrl(Url);
+        return getContentsFromUrl(url, false);
+      }
+
+    /**
+     * Gets contents from a GET URL provided,<BR>
+     * If retry is true, in the case of a failure, the HTTP call will be tried another 2 times with a delay of 1000 and 2500 respectively.
+     * 
+     * @param url
+     * @param retry
+     * @return
+     * @throws IOException
+     */
+    public static String getContentsFromUrl(String url, boolean retry)
+    throws IOException
+      {
+        BufferedReader R = getReaderFromUrl(url, retry);
         if (R == null)
           return null;
         StringBuilder Str = new StringBuilder();
@@ -188,6 +251,7 @@ public class FileUtil
         R.close();
         return Str.toString();
       }
+
 
     /**
      * Returns a Reader from a POST URL with parameters. It is the responsibility of the claler to close the Reader when done.
@@ -210,8 +274,8 @@ public class FileUtil
               for (Map.Entry<String, String> entry : params.entrySet())
                 sj.add(URLEncoder.encode(entry.getKey(), "UTF-8") + "=" + URLEncoder.encode(entry.getValue(), "UTF-8"));
             byte[] out = sj.toString().getBytes(StandardCharsets.UTF_8);
-//            int length = out.length;
-//            con.setFixedLengthStreamingMode(length);
+            // int length = out.length;
+            // con.setFixedLengthStreamingMode(length);
             OutputStream os = con.getOutputStream();
             os.write(out);
             os.flush();

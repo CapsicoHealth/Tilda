@@ -39,16 +39,20 @@ public class ViewRealize
     static final Logger             LOG          = LogManager.getLogger(ViewRealize.class.getName());
 
     /*@formatter:off*/
-    @SerializedName("name"       ) public String            _Name;
-    @SerializedName("primary"    ) public PrimaryKey        _PrimaryKey = null;
-    @SerializedName("foreign"    ) public List<ForeignKey>  _ForeignKeys= new ArrayList<ForeignKey>();
-    @SerializedName("indices"    ) public List<Index>       _Indices    = new ArrayList<Index>();
-    @SerializedName("subRealized") public String[]          _SubRealized_DEPRECATED= new String[] { };
+    
+    @SerializedName("name"        ) public String            _Name;
+    @SerializedName("targetSchema") public String            _TargetSchema;
+    @SerializedName("primary"     ) public PrimaryKey        _PrimaryKey = null;
+    @SerializedName("foreign"     ) public List<ForeignKey>  _ForeignKeys= new ArrayList<ForeignKey>();
+    @SerializedName("indices"     ) public List<Index>       _Indices    = new ArrayList<Index>();
+    @SerializedName("upsert"      ) public ViewRealizeUpsert _Upsert = null;
+
+    @SerializedName("subRealized" ) public String[]          _SubRealized_DEPRECATED= new String[] { };
     // It was "exclude" for view columns, so why was it ever "excludes" here? Not consistent.
-    @SerializedName("excludes"   ) public String[]          _Excludes_DEPRECATED   = null;
-    @SerializedName("exclude"    ) public String[]          _Exclude_DEPRECATED    = null;
-    @SerializedName("mappings"   ) public List<ViewRealizeMapping> _Mappings_DEPRECATED = null;
-    @SerializedName("upsert"     ) public ViewRealizeUpsert _Upsert = null;
+    @SerializedName("excludes"    ) public String[]          _Excludes_DEPRECATED   = null;
+    @SerializedName("exclude"     ) public String[]          _Exclude_DEPRECATED    = null;
+    @SerializedName("mappings"    ) public List<ViewRealizeMapping> _Mappings_DEPRECATED = null;
+
     /*@formatter:on*/
 
 
@@ -82,6 +86,20 @@ public class ViewRealize
           
         if (_Mappings_DEPRECATED != null)
           PS.AddError("The realize section for view '" + ParentView.getFullName() + "' defines a mapping which has been DEPRECATED. Use formulas instead in the main view.");
+
+        Schema targetSchema = null;
+        if (TextUtil.isNullOrEmpty(_TargetSchema) == false)
+          {
+            int i = _TargetSchema.lastIndexOf(".");
+            if (i == -1)
+             PS.AddError("The realize section for view '" + ParentView.getFullName() + "' defines a target schema '"+_TargetSchema+"' which doesn't use a fully qualified schema name (package+schema).");
+            else
+              {              
+                targetSchema = PS.getSchema(_TargetSchema.substring(0, i), _TargetSchema.substring(i+1));
+                if (targetSchema == null)
+                 PS.AddError("The realize section for view '" + ParentView.getFullName() + "' defines a target schema '"+_TargetSchema+"' which cannot be found.");
+              }
+          }
 
         Object O = new Object();
         O._FST = FrameworkSourcedType.REALIZED;
@@ -138,19 +156,22 @@ public class ViewRealize
         
         // We can't just copy the OCC status of the view because we don't know which columns are actually used.
         O._OCC = O.getColumn("created") != null && O.getColumn("lastUpdated") != null && O.getColumn("deleted") != null;
-        O._ModeStr = ParentView._DBOnly==true?ObjectMode.DB_ONLY.toString():ObjectMode.NORMAL.toString();
+        O._ModeStr = ParentView._DBOnly==true||targetSchema!=null?ObjectMode.DB_ONLY.toString():ObjectMode.NORMAL.toString();
 
         ParentView._ParentSchema._Objects.add(O);
+        ParentView._RealizedObj = O;
 
-        O.Validate(PS, ParentView._ParentSchema);
+        // default target schema is the current schema, i.e., the parent view's schema.);
+        O.Validate(PS, targetSchema != null ? targetSchema : ParentView._ParentSchema);
+
         
         Set<String> Names = new HashSet<String>();
         boolean indexOnDeleted = false;
         for (Index I : _Indices)
           if (I != null)
             {
-              if (I.Validate(PS, ParentRealized) == false)
-               continue;
+//              if (I.Validate(PS, ParentRealized) == false)
+//               continue;
               if (Names.add(I._Name) == false)
                 PS.AddError("Index '" + I._Name + "' is duplicated in the realize section for view '" + ParentView.getFullName() + "'.");
               if (_Upsert != null && _Upsert._DeleteTSColumnObj != null

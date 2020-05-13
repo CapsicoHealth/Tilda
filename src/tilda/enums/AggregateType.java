@@ -61,7 +61,7 @@ public enum AggregateType
             case AVG:
             case DEV:
             case VAR:
-              if (T == ColumnType.FLOAT || T == ColumnType.DOUBLE || T == ColumnType.INTEGER || T == ColumnType.LONG)
+              if (T == ColumnType.FLOAT || T == ColumnType.DOUBLE || T == ColumnType.INTEGER || T == ColumnType.LONG || T == ColumnType.SHORT)
                 return ColumnType.DOUBLE;
               break;
             case COUNT:
@@ -77,7 +77,7 @@ public enum AggregateType
             case SUM:
               if (T == ColumnType.FLOAT || T == ColumnType.DOUBLE)
                 return ColumnType.DOUBLE;
-              if (T == ColumnType.INTEGER || T == ColumnType.LONG)
+              if (T == ColumnType.INTEGER || T == ColumnType.LONG || T == ColumnType.SHORT)
                 return ColumnType.LONG;
               break;
             default:

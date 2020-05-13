@@ -689,21 +689,19 @@ public class Sql extends PostgreSQL implements CodeGenSql
         Set<View> AncestorRealizedViews = V.getAncestorRealizedViews();
         if (SubRealizedViews != null || AncestorRealizedViews != null) // View depends on realized views.
           {
-            StringBuilder r = new StringBuilder();
             if (SubRealizedViews != null)
               {
-                r.append("(?i)\\b(");
-                boolean First = true;
+                StringBuilder r = new StringBuilder();
                 for (View srv : SubRealizedViews)
                   {
-                    if (First == false)
-                      r.append("|");
-                    else
-                      First = false;
+                    r.setLength(0);
+                    r.append("(?i)\\b(");
+                    r.append(srv._ParentSchema._Name.toUpperCase());
+                    r.append("\\.");
                     r.append(srv.getRootViewName().toUpperCase());
+                    r.append(")(PIVOT)?VIEW\\b");
+                    Str = Str.replaceAll(r.toString(), srv._RealizedObj != null ? srv._RealizedObj._ParentSchema._Name+"."+srv._RealizedObj._Name : "$1Realized");
                   }
-                r.append(")(PIVOT)?VIEW\\b");
-                Str = Str.replaceAll(r.toString(), "$1Realized");
               }
 
             if (AncestorRealizedViews != null)

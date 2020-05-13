@@ -138,11 +138,13 @@ public class Docs
         if (view != null && view._Realize != null)
           {
             Object OR = O._ParentSchema.getObject(view.getRealizedTableName(false));
-            Out.println("<LI>Configured to be Realized to <B>" + makeObjectLink(OR) + "</B> through DB function <B>" + coolPrint(view._ParentSchema.getShortName() + ".Refill_" + view.getRealizedTableName(false)) + "()</B>.</LI>");
+            if (OR != null)
+             Out.println("<LI>Configured to be Realized to <B>" + makeObjectLink(OR) + "</B> through DB function <B>" + coolPrint(view._ParentSchema.getShortName() + ".Refill_" + view.getRealizedTableName(false)) + "()</B>.</LI>");
           }
         else if (O._FST == FrameworkSourcedType.REALIZED)
           {
             Object OR = O._ParentSchema.getObject(O._SourceView._Name);
+            if (OR != null)
             Out.println("<LI>Is Realized from <B>" + makeObjectLink(OR) + "</B> through DB function <B>" + coolPrint(O._ParentSchema.getShortName() + ".Refill_" + O._Name) + "()</B>.</LI>");
           }
         else if (O._FST == FrameworkSourcedType.CLONED)

@@ -146,6 +146,11 @@ public class ViewColumn
       }
 
 
+    /**
+     * Handles deprecated "sameas" and replaces with "sameAs" if appropriate.
+     * @param PS
+     * @return
+     */
     public boolean FixSameAs(ParserSession PS)
       {
         if (TextUtil.isNullOrEmpty(_Sameas_DEPRECATED) == false)
@@ -169,8 +174,7 @@ public class ViewColumn
         // Mandatories
         if (TextUtil.isNullOrEmpty(_SameAs) == true)
           return PS.AddError("View column '" + getFullName() + "' didn't define a 'sameAs'. It is mandatory.");
-
-        if (TextUtil.isNullOrEmpty(_SameAs) == false)
+        else
           {
             _SameAsObj = ValidateSameAs(PS, getFullName(), _SameAs, _ParentView);
             if (_SameAsObj == null)
