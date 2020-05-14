@@ -56,6 +56,7 @@ public abstract class Base
     public transient boolean         _Validated         = false;
     public transient final TildaType _TildaType;
     public transient Object          _RealizedObj;
+    public transient View            _RealizedView;
 
     public abstract Column getColumn(String name);
 

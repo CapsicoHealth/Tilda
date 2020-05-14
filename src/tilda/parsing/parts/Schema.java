@@ -57,6 +57,7 @@ public class Schema
     transient public String       _ProjectRoot;
     transient public List<Schema> _DependencySchemas          = new ArrayList<Schema>();
     transient public Boolean      _Validated                  = null;
+    transient public boolean      _ForeignRealizations        = false;
 
     @Override
     public String toString()
@@ -220,6 +221,12 @@ public class Schema
     public boolean Validate(ParserSession PS) throws Exception
       {
         LOG.info("Validating Tilda Schema '" + getFullName() + "'.");
+        if (_Validated != null)
+          {
+            LOG.info("     --> The Schema '" + getFullName() + "' has already been validated.");
+            return _Validated;
+          }
+        
         int Errs = PS.getErrorCount();
         int i = -1;
 

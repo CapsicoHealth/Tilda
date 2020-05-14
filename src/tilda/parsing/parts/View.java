@@ -160,6 +160,8 @@ public class View extends Base
 
     public String getRealizedTableName(boolean includeSchemaName)
       {
+        if (_Realize != null && includeSchemaName == true && _RealizedObj == null)
+          LOG.debug("XXX");
         return _Realize == null ? null : (includeSchemaName == true ? _RealizedObj._ParentSchema._Name + "." : "") + (TextUtil.isNullOrEmpty(_Realize._Name) == false ? _Realize._Name : _Name.substring(0, _Name.length() - (_Pivots.isEmpty() == false ? "PivotView" : "View").length()) + "Realized");
       }
 

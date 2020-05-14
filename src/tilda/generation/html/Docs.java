@@ -37,6 +37,7 @@ import tilda.generation.interfaces.CodeGenSql;
 import tilda.generation.java8.Helper;
 import tilda.generation.java8.JavaJDBCType;
 import tilda.parsing.ParserSession;
+import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ColumnValue;
 import tilda.parsing.parts.ForeignKey;
@@ -76,9 +77,9 @@ public class Docs
         return "<A href=\"TILDA___Docs." + S.getShortName() + ".html\">" + coolPrint(S.getShortName()) + "</A>";
       }
 
-    public static String makeObjectLink(Object O)
+    public static String makeObjectLink(Base O)
       {
-        return "<A href=\"TILDA___Docs." + O.getSchema().getShortName() + ".html#" + O._Name + "_CNT\">" + coolPrint(O.getShortName()) + "</A>";
+        return "<A href=\"TILDA___Docs." + (O._RealizedView==null ? O : O._RealizedView).getSchema().getShortName() + ".html#" + O._Name + "_CNT\">" + coolPrint(O.getShortName()) + "</A>";
       }
 
     public static String makeColumnHref(Column C)
@@ -137,15 +138,23 @@ public class Docs
 
         if (view != null && view._Realize != null)
           {
-            Object OR = O._ParentSchema.getObject(view.getRealizedTableName(false));
-            if (OR != null)
-             Out.println("<LI>Configured to be Realized to <B>" + makeObjectLink(OR) + "</B> through DB function <B>" + coolPrint(view._ParentSchema.getShortName() + ".Refill_" + view.getRealizedTableName(false)) + "()</B>.</LI>");
+            Object RO = view._RealizedObj;
+            if (RO != null)
+             {
+               Out.print("<LI>Configured to be Realized to <B>" + makeObjectLink(RO) + "</B> through DB function <B>" + coolPrint(view._ParentSchema.getShortName() + ".Refill_" + view.getRealizedTableName(false)) + "()</B>.");
+               if (RO._ParentSchema._Name.equals(view._ParentSchema._Name) == false)
+                 Out.print("<BR><B>The target table exists in a different schema: "+RO._ParentSchema._Name+".</B></LI>");
+               Out.println("</LI>");
+             }
           }
         else if (O._FST == FrameworkSourcedType.REALIZED)
           {
-            Object OR = O._ParentSchema.getObject(O._SourceView._Name);
-            if (OR != null)
-            Out.println("<LI>Is Realized from <B>" + makeObjectLink(OR) + "</B> through DB function <B>" + coolPrint(O._ParentSchema.getShortName() + ".Refill_" + O._Name) + "()</B>.</LI>");
+            View V = O._RealizedView;
+            if (V != null)
+             Out.print("<LI>Is Realized from <B>" + makeObjectLink(V) + "</B> through DB function <B>" + coolPrint(O._ParentSchema.getShortName() + ".Refill_" + O._Name) + "()</B>.");
+            if (O._ParentSchema._Name.equals(V._ParentSchema._Name) == false)
+              Out.print("<BR><B>This target table exists in a different schema: "+O._ParentSchema._Name+".</B></LI>");
+            Out.println("</LI>");
           }
         else if (O._FST == FrameworkSourcedType.CLONED)
           {

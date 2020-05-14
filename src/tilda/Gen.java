@@ -16,7 +16,9 @@
 
 package tilda;
 
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -31,6 +33,7 @@ import tilda.parsing.Parser;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.Schema;
 import tilda.utils.AsciiArt;
+import tilda.utils.DurationUtil;
 import tilda.utils.SystemValues;
 
 /**
@@ -61,14 +64,14 @@ public class Gen
             LOG.error("The utility must be called with a path to a Tilda json file");
             System.exit(-1);
           }
-        
+        long TS = System.nanoTime();
+        Map<String, Schema> SchemaCache = new HashMap<String, Schema>();
         for (String path : Args)
           {
             try
               {
                 GeneratorSession G = new GeneratorSession("java", 8, -1, "postgres", 9, 6);
-
-                ParserSession PS = Parser.parse(path, G.getSql());
+                ParserSession PS = Parser.parse(path, G.getSql(), SchemaCache);
                 if (PS == null)
                   throw new Exception("An error occurred trying to process Tilda file '" + path + "'.");
                 if (PS.getErrorCount() > 0)
@@ -124,6 +127,8 @@ public class Gen
         + AsciiArt.Woohoo("                       ")
         + "\n"
         + "              All Tilda code, migration scripts and documentation was generated succesfully.    \n"
+        +"                                                "+DurationUtil.printDuration(System.nanoTime()-TS)+"\n"
+        +"                                                "+SchemaCache.size()+" Schemas Processed\n"
         + "          ======================================================================================");
       }
   }
