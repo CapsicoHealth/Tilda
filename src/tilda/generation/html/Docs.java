@@ -119,7 +119,7 @@ public class Docs
       {
       }
 
-    public static void DataClassDocs(PrintWriter Out, GeneratorSession G, Object O)
+    public static void DataClassDocs(PrintWriter Out, GeneratorSession G, Object O, boolean exportPublish)
     throws Exception
       {
         View view = O._ParentSchema.getView(O._Name);

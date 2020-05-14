@@ -973,7 +973,7 @@ public class GraphvizUtil
             return;
           }
         
-        DG.WriteTablesAndViews(PS, writer);
+        DG.WriteTablesAndViews(PS, writer, false);
 
         writer.println("<BR><BR><BR><BR><HR><HR>End.<BR><BR><BR>");
         writer.println("<SCRIPT>");

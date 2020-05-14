@@ -58,6 +58,20 @@ public abstract class Parser
         Schema S = fromFile(FilePath);
         if (S == null)
           return null;
+        Schema CS = SchemaCache.get(S._ResourceNameShort);
+        if (CS == null)
+         SchemaCache.put(S._ResourceNameShort, S);
+        else
+          {
+            // When we load files from the file system, we have a full path to work from.
+            // If a schema is loaded for the first time via a dependency, it's loaded from
+            // the classpath as a resource. As such, its origin is not clear. If that schema
+            // shows up later in the processing pipeline, then we have to "fix" the previous
+            // instance's origin path.
+            if (CS._ProjectRoot.isEmpty() == true)
+              CS.setOrigin(FilePath);
+            S = CS;
+          }
 
         ParserSession PS = new ParserSession(S, CGSql);
         if (loadDependencies(PS, S, SchemaCache) == false)

@@ -36,7 +36,7 @@ import tilda.utils.TextUtil;
 
 public class Schema
   {
-    protected static final Logger LOG                         = LogManager.getLogger(Schema.class.getName());
+    protected static final Logger LOG                  = LogManager.getLogger(Schema.class.getName());
 
     /*@formatter:off*/
     @SerializedName("package"      ) public String            _Package;
@@ -55,9 +55,9 @@ public class Schema
     transient public String       _ResourceName;
     transient public String       _ResourceNameShort;
     transient public String       _ProjectRoot;
-    transient public List<Schema> _DependencySchemas          = new ArrayList<Schema>();
-    transient public Boolean      _Validated                  = null;
-    transient public boolean      _ForeignRealizations        = false;
+    transient public List<Schema> _DependencySchemas   = new ArrayList<Schema>();
+    transient public Boolean      _Validated           = null;
+    transient public boolean      _ForeignRealizations = false;
 
     @Override
     public String toString()
@@ -67,28 +67,28 @@ public class Schema
 
     protected static final Pattern P = Pattern.compile("/?_tilda\\.(\\w+)\\.json");
 
-    public void setOrigin(String ResourceName)
+    public void setOrigin(String resName)
     throws Exception
       {
-        _ResourceName = ResourceName;
-        ResourceName = "/" + ResourceName;
+        _ResourceName = resName;
+        resName = "/" + resName;
 
         String Pack = "/" + _Package.replaceAll("\\.", "/") + "/";
-        ResourceName = ResourceName.replaceAll(File.separatorChar == '\\' ? "\\\\" : "\\" + File.separatorChar, "/");
-        int i = ResourceName.indexOf(Pack);
+        resName = resName.replaceAll(File.separatorChar == '\\' ? "\\\\" : "\\" + File.separatorChar, "/");
+        int i = resName.indexOf(Pack);
         if (i == -1)
-          throw new Exception("The Schema being loaded from resource '" + ResourceName + "' does not match its package declaration '" + _Package + "'.");
+          throw new Exception("The Schema being loaded from resource '" + resName + "' does not match its package declaration '" + _Package + "'.");
 
-        _ProjectRoot = ResourceName.substring(i == 0 ? 0 : 1, i);
-        _ResourceNameShort = ResourceName.substring(i + 1);
-        String res = ResourceName.substring(i + Pack.length() - 1);
+        _ProjectRoot = resName.substring(i == 0 ? 0 : 1, i);
+        _ResourceNameShort = resName.substring(i + 1);
+        String res = resName.substring(i + Pack.length() - 1);
         Matcher M = P.matcher(res);
         while (M.matches() == true)
           {
             _Name = M.group(1).toUpperCase();
             return;
           }
-        throw new Exception("Cannot parse out the Tilda schema name out of the resource/file name '" + ResourceName + "'.");
+        throw new Exception("Cannot parse out the Tilda schema name out of the resource/file name '" + resName + "'.");
       }
 
     /**
@@ -171,7 +171,7 @@ public class Schema
         for (Schema S : Schemas)
           if (S != null && S._Name.equalsIgnoreCase(SchemaName) == true)
             return S.getView(ViewName);
-        LOG.debug("Cannot find view '"+ViewName+"' because the schema '"+SchemaName+"' cannot be found.");
+        LOG.debug("Cannot find view '" + ViewName + "' because the schema '" + SchemaName + "' cannot be found.");
         return null;
       }
 
@@ -218,7 +218,8 @@ public class Schema
       }
 
 
-    public boolean Validate(ParserSession PS) throws Exception
+    public boolean Validate(ParserSession PS)
+    throws Exception
       {
         LOG.info("Validating Tilda Schema '" + getFullName() + "'.");
         if (_Validated != null)
@@ -226,7 +227,7 @@ public class Schema
             LOG.info("     --> The Schema '" + getFullName() + "' has already been validated.");
             return _Validated;
           }
-        
+
         int Errs = PS.getErrorCount();
         int i = -1;
 
@@ -283,10 +284,11 @@ public class Schema
         return _Validated;
       }
 
-    public static final String    _BASE_TILDATMP_SCHEMA_RESOURCE = "tilda/data/tmp/_tilda.TildaTmp.json";
-    public static final String    _BASE_TILDA_SCHEMA_RESOURCE = "tilda/data/_tilda.Tilda.json";
-    
-    public void setDefaultDependencies(ParserSession PS) throws Exception
+    public static final String _BASE_TILDATMP_SCHEMA_RESOURCE = "tilda/data/tmp/_tilda.TildaTmp.json";
+    public static final String _BASE_TILDA_SCHEMA_RESOURCE    = "tilda/data/_tilda.Tilda.json";
+
+    public void setDefaultDependencies(ParserSession PS)
+    throws Exception
       {
         if (_Name.equals("TILDA") == false && _Name.equals("TILDATMP") == false && TextUtil.isNullOrEmpty(_Dependencies) == true)
           {
@@ -296,7 +298,7 @@ public class Schema
             if (TildaSchema != null)
               _DependencySchemas.add(TildaSchema);
             else
-              throw new Exception("Cannot find Tilda schema '"+_BASE_TILDA_SCHEMA_RESOURCE+"' in the dependencies!!!");
+              throw new Exception("Cannot find Tilda schema '" + _BASE_TILDA_SCHEMA_RESOURCE + "' in the dependencies!!!");
           }
       }
 
@@ -566,9 +568,14 @@ public class Schema
           for (String s : S._Dependencies)
             {
               int j = Schema.findByResourceName(L, s);
+              if (j == -1)
+               {
+                 Str.append(" --> ").append(s);
+                 return false;
+               }
               Schema D = L.get(j);
               if (getSubCircularPath(Root, D, L, Str) == false)
-                return false;
+               return false;
             }
         return true;
       }

@@ -291,7 +291,7 @@ public class Generator
         Out.println();
         DG.MustNotBeModified(Out, G);
         Out.println();
-        DG.DataClassDocs(Out, G, O);
+        DG.DataClassDocs(Out, G, O, false);
         CG.genClassStart(Out, G, O);
         for (Column C : O._Columns)
           if (C != null)

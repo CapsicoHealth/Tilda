@@ -64,51 +64,40 @@ public class DocGen
 
 
     public void writeSchema(ParserSession PS)
-      {
-// We don't need to deal with GraphViz anymore        
-//        File file = new File(getSchemaChromeAppGenHTML(schema, ".html"));
-//        if (!file.exists())
-//          {
-//            new GraphvizUtil(this.schema, G).writeSchema(this, PS);
-//          }
-//        else
-//          {
-            try
-              {
-                writeHTML(PS);
-              }
-            catch (Exception e)
-              {
-                e.printStackTrace();
-              }
-
-//          }
-      }
-
-    private void writeHTML(ParserSession PS)
     throws Exception
       {
-        String base64FileName = getSchemaChromeAppGenHTML(schema, ".html");
-        PrintWriter writer = new PrintWriter(getBaseResFileName(schema, ".html"));
-        File f = new File(base64FileName);
+        writeSchema(PS, false);
+        if (PS._Main._Documentation != null && PS._Main._Documentation._ExportPublish == true)
+          writeSchema(PS, true);
+      }
+
+    private void writeSchema(ParserSession PS, boolean exportPublish)
+    throws Exception
+      {
+        String base64FileName = getSchemaChromeAppGenHTML(schema, exportPublish==true?".export.html":".html");
+        String baseResFileName = getBaseResFileName(schema, exportPublish==true?".export.html":".html");
+        PrintWriter writer = new PrintWriter(baseResFileName);
         writer.println("<HTML>");
         writer.println("<HEAD>");
         writeHeader(writer, PS);
         writer.println("</HEAD>");
         writer.println("<BODY>");
-        writer.println("<H1>Schema " + schema._Name + "</H1>");
+        writer.println("<H1>Schema " + schema._Name + (exportPublish==true?" (Publish Export Version)":"") +"</H1>");
         if (schema._Documentation != null && schema._Documentation._Description != null)
           for (String str : schema._Documentation._Description)
             writer.println(str);
         writer.println("<BR><BR>");
         writeSearchHTML(writer, true); // Add Search Box
+
+        File f = new File(base64FileName);
         if (f.exists())
           {
             FileUtil.copyFileContentsIntoAnotherFile(base64FileName, writer);
           }
 
-        WriteTablesAndViews(PS, writer);
-        WriteRealizeSchedule(PS, writer);
+        WriteTablesAndViews(PS, writer, exportPublish);
+        if (exportPublish == false)
+         WriteRealizeSchedule(PS, writer);
 
         writer.println("<BR><BR><BR><BR><BR><HR>- End -<BR><BR><BR>");
         writeFooter(writer, PS);
@@ -116,7 +105,7 @@ public class DocGen
         writer.println("</HTML>");
         writer.close();
       }
-
+    
 
     private void WriteRealizeSchedule(ParserSession PS, PrintWriter writer)
     throws Exception
@@ -156,40 +145,20 @@ public class DocGen
         Docs.writeFooter(writer, PS._Main);
       }
 
-    public void WriteTablesAndViews(ParserSession PS, PrintWriter writer)
+    public void WriteTablesAndViews(ParserSession PS, PrintWriter writer, boolean exportPublish)
       {
-        WriteObjectDocsList(writer, FrameworkSourcedType.ENUMERATION, "Enumerations");
-        WriteObjectDocsList(writer, FrameworkSourcedType.MAPPER, "Mappers");
-        WriteObjectDocsList(writer, FrameworkSourcedType.NONE, "Tables");
-        WriteObjectDocsList(writer, FrameworkSourcedType.CLONED, "Cloned Tables");
-        WriteObjectDocsList(writer, FrameworkSourcedType.VIEW, "Views");
-        WriteObjectDocsList(writer, FrameworkSourcedType.REALIZED, "Realized Views");
-        /*
-         * boolean First = true;
-         * for (View V : schema._Views)
-         * {
-         * if (V._Realize == null)
-         * continue;
-         * if (First == true)
-         * {
-         * writer.println("<BR><BR><BR><BR><BR><HR><H1>Views</H1>");
-         * First = false;
-         * }
-         * // try
-         * // {
-         * // writer.println("<BR><BR><BR><BR><BR><BR>");
-         * // Docs.RealizedDataMartTableDocs(writer, PS, V);
-         * // }
-         * // catch (Exception e)
-         * // {
-         * // // TODO Auto-generated catch block
-         * // LOG.warn("FYI: this can be ignored for now:\n", e);
-         * // }
-         * }
-         */
+        if (exportPublish == false)
+          {
+            WriteObjectDocsList(writer, FrameworkSourcedType.ENUMERATION, "Enumerations", exportPublish);
+            WriteObjectDocsList(writer, FrameworkSourcedType.MAPPER, "Mappers", exportPublish);
+            WriteObjectDocsList(writer, FrameworkSourcedType.NONE, "Tables", exportPublish);
+            WriteObjectDocsList(writer, FrameworkSourcedType.CLONED, "Cloned Tables", exportPublish);
+            WriteObjectDocsList(writer, FrameworkSourcedType.VIEW, "Views", exportPublish);
+          }
+        WriteObjectDocsList(writer, FrameworkSourcedType.REALIZED, "Realized Tables", exportPublish);
       }
 
-    private void WriteObjectDocsList(PrintWriter writer, FrameworkSourcedType Filter, String TitleLabel)
+    private void WriteObjectDocsList(PrintWriter writer, FrameworkSourcedType Filter, String TitleLabel, boolean exportPublish)
       {
         boolean First = true;
         for (Object b : schema._Objects)
@@ -205,7 +174,7 @@ public class DocGen
               writer.println("<BR><BR><BR><BR><BR><BR>");
             try
               {
-                Docs.DataClassDocs(writer, G, b);
+                Docs.DataClassDocs(writer, G, b, exportPublish);
               }
             catch (Exception e)
               {
@@ -256,7 +225,7 @@ public class DocGen
         + "</SCRIPT>\n"
         + "</HEAD>\n"
         + "<BODY onkeyup=\"MasterIndex.keyup(event);\">\n");
-        writer.println("<H1>"+TextUtil.print(MC._Title, "Master Database Documentation")+"</H1>");
+        writer.println("<H1>" + TextUtil.print(MC._Title, "Master Database Documentation") + "</H1>");
         if (MC._Descriptions != null)
           for (String str : MC._Descriptions)
             writer.println(str);

@@ -42,6 +42,7 @@ import tilda.utils.SystemValues;
  * <P>
  * It takes one or more parameters that represent the paths to the Tilda JSON files to be processed.
  * This utility automatically handles dependencies for any listed schemas. For example:
+ * 
  * <PRE>
  *   tilda.Gen C:/projects/Xyz/src/com/myCo/package/schema1/_tilda.Schema1.json
  * </PRE>
@@ -77,7 +78,7 @@ public class Gen
                 if (PS.getErrorCount() > 0)
                   {
                     PS.printErrors();
-                    throw new java.lang.RuntimeException("There were "+PS.getErrorCount()+" errors detected during gen.");
+                    throw new java.lang.RuntimeException("There were " + PS.getErrorCount() + " errors detected during gen.");
                   }
 
                 LOG.info("Loaded Tilda schema '" + PS._Main.getFullName() + "'.");
@@ -105,10 +106,38 @@ public class Gen
                 + "          ======================================================================================\n"
                 + AsciiArt.Error("               ")
                 + "\n"
-                + "                Couldn't load the Tilda definition file " + path + ".\n"
+                + "                       Couldn't load the Tilda definition file " + path + ".\n"
                 + "          ======================================================================================\n", T);
                 System.exit(-1);
               }
+          }
+        // Now that we can realize views into tables in another schema, we have to output
+        // documentation of a given realized table twice. The first time is in the schema 
+        // of its originating view. The second is in its destination. Because the target
+        // schemas are modified in the pass above, we do this second pass to make sure the
+        // docs are completed and output (i.e., the first pass of the target schema did not
+        // have the realized tables ready for output yet.
+        try
+          {
+            for (Schema S : SchemaCache.values())
+              {
+                if (S._ForeignRealizations == false)
+                  continue;
+                GeneratorSession G = new GeneratorSession("java", 8, -1, "postgres", 9, 6);
+                ParserSession PS = new ParserSession(S, null);
+                DocGen DG = new DocGen(PS._Main, G);
+                DG.writeSchema(PS);
+              }
+          }
+        catch (Throwable T)
+          {
+            LOG.info("\n"
+            + "          ======================================================================================\n"
+            + AsciiArt.Error("               ")
+            + "\n"
+            + "                      An error occurred resolving the foreign-realized schemas.\n"
+            + "          ======================================================================================\n", T);
+            System.exit(-1);
           }
 
         if (NOTES.size() > 0)
@@ -127,8 +156,8 @@ public class Gen
         + AsciiArt.Woohoo("                       ")
         + "\n"
         + "              All Tilda code, migration scripts and documentation was generated succesfully.    \n"
-        +"                                                "+DurationUtil.printDuration(System.nanoTime()-TS)+"\n"
-        +"                                                "+SchemaCache.size()+" Schemas Processed\n"
+        + "                                                " + DurationUtil.printDuration(System.nanoTime() - TS) + "\n"
+        + "                                                " + SchemaCache.size() + " Schemas Processed\n"
         + "          ======================================================================================");
       }
   }
