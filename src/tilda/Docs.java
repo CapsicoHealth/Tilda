@@ -247,6 +247,14 @@ public class Docs
                 PrintWriter Out = FileUtil.getBufferedPrintWriter(Args[0] + File.separator + "TILDA___Docs." + S._Name.toUpperCase() + ".html", false);
                 FileUtil.copyFileContentsIntoAnotherFile(Name, Out);
                 Out.close();
+                if (S._Documentation != null && S._Documentation._ExportPublish == true)
+                  {
+                    Name = FileUtil.getBasePathFromFileOrResource(S._ResourceName) + "_Tilda/TILDA___Docs." + S._Name.toUpperCase() + ".export.html";
+                    LOG.debug("Extracting Tilda documentation " + Name);
+                    Out = FileUtil.getBufferedPrintWriter(Args[0] + File.separator + "TILDA___Docs." + S._Name.toUpperCase() + ".export.html", false);
+                    FileUtil.copyFileContentsIntoAnotherFile(Name, Out);
+                    Out.close();
+                  }
 
                 Name = FileUtil.getBasePathFromFileOrResource(S._ResourceName) + "_Tilda/TILDA___PostgreSQL." + S._Name.toUpperCase() + ".sql";
                 LOG.debug("Extracting Tilda SQL file " + Name);
