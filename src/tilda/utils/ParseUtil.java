@@ -207,6 +207,18 @@ public class ParseUtil
         return Default;
       }   
     
+    public static short parseShortFlexible(String Val, short Default)
+      {
+        short v = parseShort(Val, Default);
+        if (v != Default)
+         return v;
+        float f = parseFloat(Val, SystemValues.EVIL_VALUE);
+        v = (short) Math.round(f);
+        if (v != Default && v == f)
+         return v;
+        return Default;
+      }
+    
     
     /**
      * @param Name

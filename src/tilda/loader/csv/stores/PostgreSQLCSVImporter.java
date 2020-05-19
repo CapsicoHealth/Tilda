@@ -278,7 +278,14 @@ public class PostgreSQLCSVImporter extends CSVImporter
                             value = value.trim();
                             if (CI != null)
                               {
-                                if (CI._TildaType == ColumnType.INTEGER)
+                                if (CI._TildaType == ColumnType.SHORT)
+                                  {
+                                    short V = ParseUtil.parseShortFlexible(value, SystemValues.EVIL_VALUE);
+                                    if (V == SystemValues.EVIL_VALUE)
+                                     throw new Exception("Couldn't parse '"+value+"' as a short for column '"+CI._Name+"'.");
+                                    Pst.setShort(i + x, V);
+                                  }                                  
+                                else if (CI._TildaType == ColumnType.INTEGER)
                                   {
                                     int V = ParseUtil.parseIntegerFlexible(value, SystemValues.EVIL_VALUE);
                                     if (V == SystemValues.EVIL_VALUE)
