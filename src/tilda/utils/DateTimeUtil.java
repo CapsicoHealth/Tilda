@@ -578,7 +578,7 @@ public class DateTimeUtil
       }
 
     /**
-     * Comput ethe number of days using th emidnight rule, i.e., from 23:59 Monday night to 00:01 Tuesday morning, that
+     * Compute the number of days using the midnight rule, i.e., from 23:59 Monday night to 00:01 Tuesday morning, that
      * counts as one day.
      * 
      * @param Start

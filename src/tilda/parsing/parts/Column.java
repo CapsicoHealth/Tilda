@@ -178,7 +178,7 @@ public class Column extends TypeDef
      */
     public String getShortName()
       {
-        return (_ParentObject==null?null:_ParentObject.getShortName()) + "." + _Name;
+        return (_ParentObject == null ? null : _ParentObject.getShortName()) + "." + _Name;
       }
 
     /**
@@ -321,7 +321,7 @@ public class Column extends TypeDef
 
       }
 
-    private void copyFromSameAs(ParserSession PS)
+    protected void copyFromSameAs(ParserSession PS)
       {
         if (_SameAsObj == null)
           return;

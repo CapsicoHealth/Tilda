@@ -373,11 +373,11 @@ public class ViewColumn
         && (TextUtil.isNullOrEmpty(_Expression) == true || _Type._Type == ColumnType.DATETIME);
       }
 
-    public boolean isCollection()
+    public boolean isList()
       {
         if (_SameAsObj != null)
          {
-           if (_SameAsObj.isCollection() == true || _Aggregate != null && _Aggregate.isCollection() == true)
+           if (_SameAsObj.isList() == true || _Aggregate != null && _Aggregate.isList() == true)
              return true;
          }
         return false;

@@ -367,7 +367,7 @@ public class View extends Base
           PS.AddError("The View '" + _Name + "' is defining a 'pivotColumns' element which is deprecated. Please use the new 'pivots' constructs instead.");
         if (TextUtil.isNullOrEmpty(_CountStarDeprecated) == false)
           PS.AddError("View '" + getFullName() + "' is defining a 'countStar' element which is deprecated. Please use a standard column definition with an aggregate of 'COUNT'.");
-
+        
         // gotta construct a shadow Object for code-gen.
         // LOG.debug("View " + _Name + ": " + TextUtil.print(getColumnNames()));
         Object O = MakeObjectProxy(PS);

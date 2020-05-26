@@ -135,7 +135,7 @@ public class ViewRealize
         O._PrimaryKey = _PrimaryKey;
         O._ForeignKeys = _ForeignKeys;
         O._Indices = _Indices;
-
+        
         boolean OCC = false;
         // LOG.debug(ParentRealized._O.getFullName()+": "+TextUtil.print(ParentRealized._O.getColumnNames()));
         for (Column C : ParentRealized._O._Columns)
@@ -144,7 +144,7 @@ public class ViewRealize
               {
                 if (C._FCT.isOCC() == true)
                   OCC = true;
-                // LDH-NTE: This is problematic because we are making an assumption here when generating the model that "8" is the threshold
+                // LDH-NOTE: This is problematic because we are making an assumption here when generating the model that "8" is the threshold
                 // to go from CHAR to VARCHAR, but we made this a dynamic configuration at code-gen time and so each DB impl can
                 // change that. We need a more robust mechanism here to make this work. The problem is that fundamentally, we want to
                 // make realized tables friendly to data scientists and dealing with trailing blanks (from CHAR values) is not good.
