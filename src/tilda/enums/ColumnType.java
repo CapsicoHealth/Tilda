@@ -425,4 +425,40 @@ public enum ColumnType
           }
       }
 
+    public int getSQLType()
+      {
+        switch (this)
+          {
+            case STRING:
+            case CHAR:
+            case UUID:
+            case JSON:
+              return java.sql.Types.VARCHAR;
+            case BOOLEAN:
+              return java.sql.Types.BOOLEAN;
+            case DOUBLE:
+              return java.sql.Types.DOUBLE;
+            case FLOAT:
+              return java.sql.Types.FLOAT;
+            case SHORT:
+              return java.sql.Types.SMALLINT;
+            case INTEGER:
+              return java.sql.Types.INTEGER;
+            case LONG:
+              return java.sql.Types.BIGINT;
+            case NUMERIC:
+              return java.sql.Types.NUMERIC;
+            case DATE:
+              return java.sql.Types.DATE;
+            case DATETIME:
+              return java.sql.Types.TIMESTAMP;
+            case BINARY:
+              return java.sql.Types.VARBINARY;
+            case BITFIELD:
+              return java.sql.Types.BINARY;
+            default:
+              throw new Error("Incomplete switch in getSQLType() on ColumnType " + this.name());
+          }
+      }
+
   }

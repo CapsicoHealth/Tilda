@@ -345,19 +345,7 @@ public class PostgreSQLCSVImporter extends CSVImporter
                           }
                         else
                           {
-                            int DataType = java.sql.Types.VARCHAR;
-                            if (CI._TildaType == ColumnType.INTEGER)
-                              DataType = java.sql.Types.INTEGER;
-                            else if (CI._TildaType == ColumnType.FLOAT)
-                              DataType = java.sql.Types.FLOAT;
-                            else if (CI._TildaType == ColumnType.DOUBLE)
-                              DataType = java.sql.Types.DOUBLE;
-                            else if (CI._TildaType == ColumnType.DATETIME)
-                              DataType = java.sql.Types.TIMESTAMP;
-                            else if (CI._TildaType == ColumnType.DATE)
-                              DataType = java.sql.Types.DATE;
-                            else if (CI._TildaType == ColumnType.BOOLEAN)
-                              DataType = java.sql.Types.BOOLEAN;
+                            int DataType = CI._TildaType.getSQLType();
                             Pst.setNull(i + x, DataType);
                           }
                       }
