@@ -621,42 +621,8 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println();
         Out.print("   static public ListResults<" + Helper.getFullAppDataClassName(SWC._ParentObject) + "> " + MethodName + "(Connection C");
         genMethodLookupWhereQuerySignature(Out, G, SWC);
-        /*
-         * Set<String> VarNameSet = new HashSet<String>();
-         * for (Query.Attribute A : SWC._Attributes)
-         * {
-         * String v = A._VarName.replace('.', '_');
-         * if (VarNameSet.add(v) == false)
-         * continue;
-         * Out.print(", " + JavaJDBCType.getFieldTypeParam(A._Col, A._Multi) + " " + v);
-         * }
-         * Out.println(", int start, int size) throws Exception");
-         */
         Out.println("     {");
         genMethodLookupWhereQueryPreamble(Out, SWC, MethodName);
-        /*
-         * Out.println("       " + Helper.getFullBaseClassName(SWC._ParentObject) + " Obj = new " + Helper.getFullAppDataClassName(SWC._ParentObject) + "();");
-         * Out.println("       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);");
-         * Out.println();
-         * if (SWC._Attributes.isEmpty() == false)
-         * {
-         * Out.print("       " + MethodName + "Params P = new " + MethodName + "Params(");
-         * boolean First = true;
-         * VarNameSet.clear();
-         * for (Query.Attribute A : SWC._Attributes)
-         * {
-         * String v = A._VarName.replace('.', '_');
-         * if (VarNameSet.add(v) == false)
-         * continue;
-         * if (First == true)
-         * First = false;
-         * else
-         * Out.print(", ");
-         * Out.print(v);
-         * }
-         * Out.println(");");
-         * }
-         */
         Out.println();
         Out.println("       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);");
         Out.println("       readMany(C, " + LookupId + ", RPI, Obj, " + (SWC._Attributes.isEmpty() == false ? "P" : "null") + ", start, size);");

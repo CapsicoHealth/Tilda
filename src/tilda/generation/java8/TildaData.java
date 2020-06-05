@@ -1354,7 +1354,7 @@ public class TildaData implements CodeGenTildaData
               }
             String ClassNameFactory = Helper.getFullAppFactoryClassName(C._Enum._DestObjectObj);
             String ClassNameData    = Helper.getFullAppDataClassName(C._Enum._DestObjectObj);
-            if (C.isCollection() == true)
+            if (C.isList() == true)
               {
                 Out.println("          _" + C.getName() + "EnumValue = new " + (C.isList() == true ? "ArrayList" : "TreeSet") + "<" + JavaJDBCType.getFieldTypeBaseClass(C) + ">();");
                 Out.println("          for (int i = 0; i < _" + C.getName() + ".size(); ++i)");
@@ -1363,7 +1363,18 @@ public class TildaData implements CodeGenTildaData
                 Out.println("             "+ClassNameData+" d = "+ClassNameFactory+".getEnumerationById(v);");
                 Out.println("             if (d == null)");
                 Out.println("              throw new Exception(\"Cannot set " + C.getFullName() + ": the value \'\"+v+\"\' is not a valid Enumerated value as per \'" + ClassNameFactory + "\'.\");");
-                Out.println("             addToCategoriesEnumValue(i, d.getValue());");
+                Out.println("             addTo"+TextUtil.capitalizeFirstCharacter(C.getName())+"EnumValue(i, d.getValue());");
+                Out.println("           }");
+              }
+            else if (C.isSet() == true)
+              {
+                Out.println("          _" + C.getName() + "EnumValue = new " + (C.isList() == true ? "ArrayList" : "TreeSet") + "<" + JavaJDBCType.getFieldTypeBaseClass(C) + ">();");
+                Out.println("          for (String v : _" + C.getName() + ")");
+                Out.println("           {");
+                Out.println("             "+ClassNameData+" d = "+ClassNameFactory+".getEnumerationById(v);");
+                Out.println("             if (d == null)");
+                Out.println("              throw new Exception(\"Cannot set " + C.getFullName() + ": the value \'\"+v+\"\' is not a valid Enumerated value as per \'" + ClassNameFactory + "\'.\");");
+                Out.println("             addTo"+TextUtil.capitalizeFirstCharacter(C.getName())+"EnumValue(d.getValue());");
                 Out.println("           }");
               }
             else
