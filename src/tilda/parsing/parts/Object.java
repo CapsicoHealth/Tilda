@@ -575,6 +575,18 @@ public class Object extends Base
       }
 
     /**
+     * Checks if there any CSV output maps
+     * @return
+     */
+    public boolean isCSVable()
+      {
+        for (OutputMapping OM : _OutputMaps)
+          if (OM != null && OM._OutputTypes.contains(OutputFormatType.CSV) == true)
+            return true;
+        return false;
+      }
+    
+    /**
      * Checks if there any JSON or CSV output maps. If more methods of serializations are added in the future,
      * this method will add extra checks.
      * @return

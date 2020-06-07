@@ -104,6 +104,8 @@ public class TildaData implements CodeGenTildaData
           Out.print(", tilda.interfaces.OCCObject");
         if (O.isJsonable() == true)
           Out.print(", tilda.interfaces.JSONable");
+        if (O.isCSVable() == true)
+          Out.print(", tilda.interfaces.CSVable");
         Out.println();
         Out.println(" {");
         Out.println("   protected transient static final Logger LOG = LogManager.getLogger(" + O._BaseClassName + ".class.getName());");
@@ -2016,7 +2018,7 @@ public class TildaData implements CodeGenTildaData
                 if (OM._Sync == true)
                   JSONSync = true;
               }
-            else if (OM._OutputTypes.contains(OutputFormatType.CSV) == true)
+            if (OM._OutputTypes.contains(OutputFormatType.CSV) == true)
               {
                 CSV = true;
                 if (OM._Sync == true)
