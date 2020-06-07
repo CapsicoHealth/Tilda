@@ -25,6 +25,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.util.StringBuilderWriter;
 
+import tilda.db.Connection;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.enums.FrameworkSourcedType;
@@ -292,6 +293,8 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("       try");
         Out.println("        {");
         Out.println("          PS = C.prepareStatement(Q);");
+        Out.println("          if (size < 0 || size > 5000)"); // Gotta switch to cursor mode if getting a lot of data.
+        Out.println("           PS.setFetchSize(5000);");
         StringBuilderWriter SBW = new StringBuilderWriter();
         Helper.SwitchLookupIdPreparedStatement(new PrintWriter(SBW), G, O, "          ", false, true);
         if (SBW.getBuilder().indexOf("++i") != -1)

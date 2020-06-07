@@ -63,7 +63,7 @@ import tilda.utils.pairs.StringStringPair;
 
 public final class Connection
   {
-    static final Logger LOG = LogManager.getLogger(Connection.class.getName());
+    static final Logger LOG                 = LogManager.getLogger(Connection.class.getName());
 
     public Connection(java.sql.Connection C)
       throws Exception,
@@ -242,7 +242,8 @@ public final class Connection
     public final Statement createStatement()
     throws SQLException
       {
-        return _C.createStatement();
+        Statement S = _C.createStatement();
+        return S;
       }
 
 
@@ -275,7 +276,8 @@ public final class Connection
     public PreparedStatement prepareStatement(String Q)
     throws SQLException
       {
-        return _C.prepareStatement(Q);
+        PreparedStatement PS = _C.prepareStatement(Q);
+        return PS;
       }
 
     public String getCurrentTimestampStr()
@@ -400,7 +402,7 @@ public final class Connection
         long T0 = System.nanoTime();
         Savepoint SP = _C.setSavepoint();
         _SavePoints.add(SP);
-//        LOG.debug("SAVEPOINT ADD: "+SP.getSavepointId()+ " (total: "+_SavePoints.size()+")");
+        // LOG.debug("SAVEPOINT ADD: "+SP.getSavepointId()+ " (total: "+_SavePoints.size()+")");
         PerfTracker.add(TransactionType.SAVEPOINT_SET, System.nanoTime() - T0);
       }
 
@@ -412,7 +414,7 @@ public final class Connection
 
         long T0 = System.nanoTime();
         Savepoint SP = _SavePoints.pop();
-//        LOG.debug("SAVEPOINT POP: "+SP.getSavepointId() + " (total: "+(_SavePoints.size()+1)+")");
+        // LOG.debug("SAVEPOINT POP: "+SP.getSavepointId() + " (total: "+(_SavePoints.size()+1)+")");
         if (commit == true)
           {
             _C.releaseSavepoint(SP);
@@ -736,6 +738,12 @@ public final class Connection
         _DB.cancel(this);
       }
 
+    /**
+     * 
+     * @param CL
+     * @return
+     * @throws Exception
+     */
     public static int closeAll(List<Connection> CL)
     throws Exception
       {
@@ -755,10 +763,30 @@ public final class Connection
         return errors;
       }
 
-    public static void commitAll(List<Connection> CL) throws SQLException
+    /**
+     * Commits all the connections in the list. This is doing a straightforward commit and not a fancier 2-phase
+     * coordinated commit of all connections.
+     * @param CL
+     * @throws SQLException If one commit fails, the exception is thrown, and remaining connections are left untouched.
+     */
+    public static void commitAll(List<Connection> CL)
+    throws SQLException
       {
         for (int i = 0; i < CL.size(); ++i)
           CL.get(i).commit();
+      }
+
+    /**
+     * Rollbacks all the connections in the list. This is doing a straightforward rollback and not a fancier 2-phase
+     * coordinated rollback of all connections.
+     * @param CL
+     * @throws SQLException If one rollback fails, the exception is thrown, and remaining connections are left untouched.
+     */
+    public static void rollbackAll(List<Connection> CL)
+    throws SQLException
+      {
+        for (int i = 0; i < CL.size(); ++i)
+          CL.get(i).rollback();
       }
 
   }

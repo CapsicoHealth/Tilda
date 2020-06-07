@@ -28,7 +28,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -498,7 +497,7 @@ public class ConnectionPool
                     C = DriverManager.getConnection(BDS.getUrl(), userId, userPswd);
                     C.setAutoCommit(false);
                     C.setTransactionIsolation(java.sql.Connection.TRANSACTION_READ_COMMITTED);
-                    C.setClientInfo("defaultRowFetchSize", "1000");
+                    C.setClientInfo("defaultRowFetchSize", "5000");
                   }
                 PerfTracker.add(TransactionType.CONNECTION_GET, System.nanoTime() - T0);
                 break;
