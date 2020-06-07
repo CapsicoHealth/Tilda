@@ -414,7 +414,7 @@ public enum ColumnType
             case DATE:
               return "DATE";
             case DATETIME:
-              return "DATETIME";
+              return "TIMESTAMP";
             case JSON:
               return "STRING";
             case BINARY:

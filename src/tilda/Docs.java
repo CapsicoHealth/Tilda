@@ -251,16 +251,44 @@ public class Docs
                   {
                     Name = FileUtil.getBasePathFromFileOrResource(S._ResourceName) + "_Tilda/TILDA___Docs." + S._Name.toUpperCase() + ".export.html";
                     LOG.debug("Extracting Tilda documentation " + Name);
-                    Out = FileUtil.getBufferedPrintWriter(Args[0] + File.separator + "TILDA___Docs." + S._Name.toUpperCase() + ".export.html", false);
+                    Out = FileUtil.getBufferedPrintWriter(Args[0] + File.separator + "TILDA___Docs." + S._Name.toUpperCase() + ".public.html", false);
                     FileUtil.copyFileContentsIntoAnotherFile(Name, Out);
                     Out.close();
                   }
 
                 Name = FileUtil.getBasePathFromFileOrResource(S._ResourceName) + "_Tilda/TILDA___PostgreSQL." + S._Name.toUpperCase() + ".sql";
                 LOG.debug("Extracting Tilda SQL file " + Name);
-                Out = FileUtil.getBufferedPrintWriter(Args[0] + File.separator + "TILDA___PostgreSQL." + S._Name.toUpperCase() + ".sql", false);
+                Out = FileUtil.getBufferedPrintWriter(Args[0] + File.separator + "/sql/TILDA___PostgreSQL." + S._Name.toUpperCase() + ".sql", false);
                 FileUtil.copyFileContentsIntoAnotherFile(Name, Out);
                 Out.close();
+
+                LOG.debug("Extracting bigquery JSON file " + Name);
+                for (tilda.parsing.parts.Object o : S._Objects)
+                  {
+                    Name = FileUtil.getBasePathFromFileOrResource(S._ResourceName) + "_Tilda/bigquery/bq." + o.getBaseName() + ".json";
+                    Out = FileUtil.getBufferedPrintWriter(Args[0] + File.separator + "/bigquery/" + S._Name.toUpperCase() + "/bq." + o.getBaseName() + ".json", false);
+                    try
+                      {
+                        FileUtil.copyFileContentsIntoAnotherFile(Name, Out);
+                      }
+                    catch (Exception E)
+                      {
+                      }
+                    Out.close();
+                  }
+                for (tilda.parsing.parts.View v : S._Views)
+                  {
+                    Name = FileUtil.getBasePathFromFileOrResource(S._ResourceName) + "_Tilda/bigquery/bq." + v.getBaseName() + ".json";
+                    Out = FileUtil.getBufferedPrintWriter(Args[0] + File.separator + "/bigquery/" + S._Name.toUpperCase() + "/bq." + v.getBaseName() + ".json", false);
+                    try
+                      {
+                        FileUtil.copyFileContentsIntoAnotherFile(Name, Out);
+                      }
+                    catch (Exception E)
+                      {
+                      }
+                    Out.close();
+                  }
               }
             DocGen.GenMasterIndex(Args[0] + File.separator, SelectedSchemas, MC);
           }
@@ -280,6 +308,7 @@ public class Docs
         + AsciiArt.Woohoo("                       ")
         + "\n"
         + "              All Tilda code, migration scripts and documentation was generated succesfully.    \n"
+        + "              " + Args[0] + "\n"
         + "          ======================================================================================");
       }
 
