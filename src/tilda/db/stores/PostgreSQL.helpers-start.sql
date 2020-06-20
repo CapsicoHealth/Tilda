@@ -33,28 +33,28 @@ CREATE EXTENSION if not exists pg_trgm;
 -----------------------------------------------------------------------------------------------------------------
 CREATE OR REPLACE FUNCTION TILDA.Like(v text[], val text)
   RETURNS boolean
-  IMMUTABLE LANGUAGE SQL AS
+  IMMUTABLE COST 1 LANGUAGE SQL AS
   'select exists (select * from unnest(v) x_ where x_ like val);';
 CREATE OR REPLACE FUNCTION TILDA.Like(v text[], val text[])
   RETURNS boolean
-  IMMUTABLE LANGUAGE SQL AS
+  IMMUTABLE COST 1 LANGUAGE SQL AS
   'select exists (select * from unnest(v) x_ where x_ like ANY(val));';
 CREATE OR REPLACE FUNCTION TILDA.Like(v text, val text[])
   RETURNS boolean
-  IMMUTABLE LANGUAGE SQL AS
+  IMMUTABLE COST 1 LANGUAGE SQL AS
   'select v like ANY(val);';
 
 CREATE OR REPLACE FUNCTION TILDA.ILike(v text[], val text)
   RETURNS boolean
-  IMMUTABLE LANGUAGE SQL AS
+  IMMUTABLE COST 1 LANGUAGE SQL AS
   'select exists (select * from unnest(v) x_ where x_ ilike val);';
 CREATE OR REPLACE FUNCTION TILDA.ILike(v text[], val text[])
   RETURNS boolean
-  IMMUTABLE LANGUAGE SQL AS
+  IMMUTABLE COST 1 LANGUAGE SQL AS
   'select exists (select * from unnest(v) x_ where x_ ilike ANY(val));';
 CREATE OR REPLACE FUNCTION TILDA.ILike(v text, val text[])
   RETURNS boolean
-  IMMUTABLE LANGUAGE SQL AS
+  IMMUTABLE COST 1 LANGUAGE SQL AS
   'select v ilike ANY(val);';
 
 
@@ -65,22 +65,22 @@ CREATE OR REPLACE FUNCTION TILDA.ILike(v text, val text[])
 -----------------------------------------------------------------------------------------------------------------
 CREATE OR REPLACE FUNCTION TILDA.contains(v int4range[], val integer)
   RETURNS boolean
-  IMMUTABLE LANGUAGE SQL AS
+  IMMUTABLE COST 1 LANGUAGE SQL AS
   'select exists (select * from unnest(v) x_ where x_ @> val);';
 
 CREATE OR REPLACE FUNCTION TILDA.contains(v int8range[], val bigint)
   RETURNS boolean
-  IMMUTABLE LANGUAGE SQL AS
+  IMMUTABLE COST 1 LANGUAGE SQL AS
   'select exists (select * from unnest(v) x_ where x_ @> val);';
  
 CREATE OR REPLACE FUNCTION TILDA.contains(v tstzrange[], val timestamptz)
   RETURNS boolean
-  IMMUTABLE LANGUAGE SQL AS
+  IMMUTABLE COST 1 LANGUAGE SQL AS
   'select exists (select * from unnest(v) x_ where x_ @> val);';
 
 CREATE OR REPLACE FUNCTION TILDA.contains(v daterange [], val date)
   RETURNS boolean
-  IMMUTABLE LANGUAGE SQL AS
+  IMMUTABLE COST 1 LANGUAGE SQL AS
   'select exists (select * from unnest(v) x_ where x_ @> val);';
 
   
@@ -91,42 +91,42 @@ CREATE OR REPLACE FUNCTION TILDA.contains(v daterange [], val date)
 -----------------------------------------------------------------------------------------------------------------
 CREATE OR REPLACE FUNCTION TILDA.In(v text[], vals text[])
   RETURNS boolean
-  IMMUTABLE LANGUAGE SQL AS
+  IMMUTABLE COST 1 LANGUAGE SQL AS
   'select v && vals;';
 
 CREATE OR REPLACE FUNCTION TILDA.In(v integer[], vals integer[])
   RETURNS boolean
-  IMMUTABLE LANGUAGE SQL AS
+  IMMUTABLE COST 1 LANGUAGE SQL AS
   'select v && vals;';
 
 CREATE OR REPLACE FUNCTION TILDA.In(v bigint[], vals bigint[])
   RETURNS boolean
-  IMMUTABLE LANGUAGE SQL AS
+  IMMUTABLE COST 1 LANGUAGE SQL AS
   'select v && vals;';
 
 CREATE OR REPLACE FUNCTION TILDA.In(v boolean[], vals boolean[])
   RETURNS boolean
-  IMMUTABLE LANGUAGE SQL AS
+  IMMUTABLE COST 1 LANGUAGE SQL AS
   'select v && vals;';
 
 CREATE OR REPLACE FUNCTION TILDA.In(v text, vals text[])
   RETURNS boolean
-  IMMUTABLE LANGUAGE SQL AS
+  IMMUTABLE COST 1 LANGUAGE SQL AS
   'select v = ANY(vals);';
 
 CREATE OR REPLACE FUNCTION TILDA.In(v integer, vals integer[])
   RETURNS boolean
-  IMMUTABLE LANGUAGE SQL AS
+  IMMUTABLE COST 1 LANGUAGE SQL AS
   'select v = ANY(vals);';
 
 CREATE OR REPLACE FUNCTION TILDA.In(v bigint, vals bigint[])
   RETURNS boolean
-  IMMUTABLE LANGUAGE SQL AS
+  IMMUTABLE COST 1 LANGUAGE SQL AS
   'select v = ANY(vals);';
 
 CREATE OR REPLACE FUNCTION TILDA.In(v boolean, vals boolean[])
   RETURNS boolean
-  IMMUTABLE LANGUAGE SQL AS
+  IMMUTABLE COST 1 LANGUAGE SQL AS
   'select v = ANY(vals);';
 
   
@@ -147,21 +147,21 @@ BEGIN
 EXCEPTION WHEN OTHERS THEN
   RETURN val;
 END;
-$$ LANGUAGE plpgsql IMMUTABLE;
+$$ LANGUAGE plpgsql COST 1 IMMUTABLE;
 
 CREATE OR REPLACE FUNCTION TILDA.toInt(str1 varchar, str2 varchar, val integer)
 RETURNS integer AS $$
 BEGIN
   RETURN coalesce(Tilda.toInt(str1, null), Tilda.toInt(str2, val));
 END;
-$$ LANGUAGE plpgsql IMMUTABLE;
+$$ LANGUAGE plpgsql COST 1 IMMUTABLE;
 
 CREATE OR REPLACE FUNCTION TILDA.toInt(str1 varchar, str2 varchar, str3 varchar, val integer)
 RETURNS integer AS $$
 BEGIN
   RETURN coalesce(Tilda.toInt(str1, null), Tilda.toInt(str2, null), Tilda.toInt(str3, val));
 END;
-$$ LANGUAGE plpgsql IMMUTABLE;
+$$ LANGUAGE plpgsql COST 1 IMMUTABLE;
 
 
 ---------------------
@@ -173,21 +173,21 @@ BEGIN
 EXCEPTION WHEN OTHERS THEN
   RETURN val;
 END;
-$$ LANGUAGE plpgsql IMMUTABLE;
+$$ LANGUAGE plpgsql COST 1 IMMUTABLE;
 
 CREATE OR REPLACE FUNCTION TILDA.toDouble(str1 varchar, str2 varchar, val double precision)
 RETURNS double precision AS $$
 BEGIN
   RETURN coalesce(Tilda.toDouble(str1, null), Tilda.toDouble(str2, val));
 END;
-$$ LANGUAGE plpgsql IMMUTABLE;
+$$ LANGUAGE plpgsql COST 1 IMMUTABLE;
 
 CREATE OR REPLACE FUNCTION TILDA.toDouble(str1 varchar, str2 varchar, str3 varchar, val double precision)
 RETURNS double precision AS $$
 BEGIN
   RETURN coalesce(Tilda.toDouble(str1, null), Tilda.toDouble(str2, null), Tilda.toDouble(str3, val));
 END;
-$$ LANGUAGE plpgsql IMMUTABLE;
+$$ LANGUAGE plpgsql COST 1 IMMUTABLE;
 
 
 ---------------------
@@ -199,21 +199,21 @@ BEGIN
 EXCEPTION WHEN OTHERS THEN
   RETURN val;
 END;
-$$ LANGUAGE plpgsql IMMUTABLE;
+$$ LANGUAGE plpgsql COST 1 IMMUTABLE;
 
 CREATE OR REPLACE FUNCTION TILDA.toFloat(str1 varchar, str2 varchar, val real)
 RETURNS real AS $$
 BEGIN
   RETURN coalesce(Tilda.toFloat(str1, null), Tilda.toFloat(str2, val));
 END;
-$$ LANGUAGE plpgsql IMMUTABLE;
+$$ LANGUAGE plpgsql COST 1 IMMUTABLE;
 
 CREATE OR REPLACE FUNCTION TILDA.toFloat(str1 varchar, str2 varchar, str3 varchar, val real)
 RETURNS real AS $$
 BEGIN
   RETURN coalesce(Tilda.toFloat(str1, null), Tilda.toFloat(str2, null), Tilda.toFloat(str3, val));
 END;
-$$ LANGUAGE plpgsql IMMUTABLE;
+$$ LANGUAGE plpgsql COST 1 IMMUTABLE;
 
 
 ---------------------
@@ -225,21 +225,21 @@ BEGIN
 EXCEPTION WHEN OTHERS THEN
   RETURN val;
 END;
-$$ LANGUAGE plpgsql IMMUTABLE;
+$$ LANGUAGE plpgsql COST 1 IMMUTABLE;
 
 CREATE OR REPLACE FUNCTION TILDA.toDate(str1 varchar, str2 varchar, val Date)
 RETURNS Date AS $$
 BEGIN
   RETURN coalesce(Tilda.toDate(str1, null), Tilda.toDate(str2, val));
 END;
-$$ LANGUAGE plpgsql IMMUTABLE;
+$$ LANGUAGE plpgsql COST 1 IMMUTABLE;
 
 CREATE OR REPLACE FUNCTION TILDA.toDate(str1 varchar, str2 varchar, str3 varchar, val Date)
 RETURNS Date AS $$
 BEGIN
   RETURN coalesce(Tilda.toDate(str1, null), Tilda.toDate(str2, null), Tilda.toDate(str3, val));
 END;
-$$ LANGUAGE plpgsql IMMUTABLE;
+$$ LANGUAGE plpgsql COST 1 IMMUTABLE;
 
 
 ---------------------
@@ -251,21 +251,21 @@ BEGIN
 EXCEPTION WHEN OTHERS THEN
   RETURN val;
 END;
-$$ LANGUAGE plpgsql IMMUTABLE;
+$$ LANGUAGE plpgsql COST 1 IMMUTABLE;
 
 CREATE OR REPLACE FUNCTION Tilda.toBool(str1 varchar, str2 varchar, val boolean)
 RETURNS boolean AS $$
 BEGIN
   RETURN coalesce(Tilda.toBool(str1, null), Tilda.toBool(str2, val));
 END;
-$$ LANGUAGE plpgsql IMMUTABLE;
+$$ LANGUAGE plpgsql COST 1 IMMUTABLE;
 
 CREATE OR REPLACE FUNCTION Tilda.toBool(str1 varchar, str2 varchar, str3 varchar, val boolean)
 RETURNS boolean AS $$
 BEGIN
   RETURN coalesce(Tilda.toBool(str1, null), Tilda.toBool(str2, null), Tilda.toBool(str3, val));
 END;
-$$ LANGUAGE plpgsql IMMUTABLE;
+$$ LANGUAGE plpgsql COST 1 IMMUTABLE;
 
 
 ---------------------
@@ -277,21 +277,21 @@ BEGIN
 EXCEPTION WHEN OTHERS THEN
   RETURN val;
 END;
-$$ LANGUAGE plpgsql IMMUTABLE;
+$$ LANGUAGE plpgsql COST 1 IMMUTABLE;
 
 CREATE OR REPLACE FUNCTION Tilda.toBoolInt(str1 varchar, str2 varchar, val boolean)
 RETURNS integer AS $$
 BEGIN
   RETURN coalesce(Tilda.toBoolInt(str1, null), Tilda.toBoolInt(str2, val));
 END;
-$$ LANGUAGE plpgsql IMMUTABLE;
+$$ LANGUAGE plpgsql COST 1 IMMUTABLE;
 
 CREATE OR REPLACE FUNCTION Tilda.toBoolInt(str1 varchar, str2 varchar, str3 varchar, val boolean)
 RETURNS integer AS $$
 BEGIN
   RETURN coalesce(Tilda.toBoolInt(str1, null), Tilda.toBoolInt(str2, null), Tilda.toBoolInt(str3, val));
 END;
-$$ LANGUAGE plpgsql IMMUTABLE;
+$$ LANGUAGE plpgsql COST 1 IMMUTABLE;
 
 
 
@@ -306,7 +306,7 @@ $$ LANGUAGE plpgsql IMMUTABLE;
 -- age
 CREATE OR REPLACE FUNCTION TILDA.age(timestamptz, timestamptz)
   RETURNS float
-  IMMUTABLE LANGUAGE SQL AS
+  IMMUTABLE COST 1 LANGUAGE SQL AS
 'SELECT date_part(''year'', age($2, $1)) + date_part(''month'', age($2, $1))/12.0 + date_part(''day'', age($2, $1))/365.0;';
 COMMENT ON FUNCTION TILDA.Age(timestamptz, timestamptz) IS 'Computes the age in years between 2 dates ''start'' and ''end'' with decimal places, so 1.25 years is 1y and 3 months. It is not 100% accurate as we use a simple 1y=365 days calculation. Use Tilda.DaysBetween if you want accurate days-based calculations.';
 
@@ -315,7 +315,7 @@ COMMENT ON FUNCTION TILDA.Age(timestamptz, timestamptz) IS 'Computes the age in 
 -- ageBetween
 CREATE OR REPLACE FUNCTION TILDA.ageBetween(timestamptz, timestamptz, float, float)
   RETURNS boolean
-  IMMUTABLE LANGUAGE SQL AS
+  IMMUTABLE COST 1 LANGUAGE SQL AS
 'SELECT TILDA.Age($1, $2) >= $3 AND TILDA.Age($1, $2) < $4';
 
 
@@ -323,13 +323,13 @@ CREATE OR REPLACE FUNCTION TILDA.ageBetween(timestamptz, timestamptz, float, flo
 -- daysBetween
 CREATE OR REPLACE FUNCTION TILDA.daysBetween(ts1 timestamptz, ts2 timestamptz, midnight boolean)
   RETURNS integer
-  IMMUTABLE LANGUAGE SQL AS
+  IMMUTABLE COST 1 LANGUAGE SQL AS
 'SELECT case when $3 or $2 < $1 then $2::DATE - $1::DATE else $2::DATE - $1::DATE + 1 end;';
 COMMENT ON FUNCTION TILDA.DaysBetween(timestamptz, timestamptz, boolean) IS 'Computes the number of days between 2 dates ''start'' and ''end''. The third parameter indicates whether the midnight rule should be applied or not. If true, the number of days between 2016-12-01 and 2016-12-02 for example will be 1 (i.e., one mignight passed). If false, the returned count will be 2. Note that this function doesn.''t care about timezones and only compares the date portions of the parameters passed in.';
 
 CREATE OR REPLACE FUNCTION TILDA.daysBetween(ts1 timestamptz, ts2 timestamptz)
   RETURNS integer
-  IMMUTABLE LANGUAGE SQL AS
+  IMMUTABLE COST 1 LANGUAGE SQL AS
 'SELECT case when $2 < $1 then $2::DATE - $1::DATE else $2::DATE - $1::DATE + 1 end;';
 COMMENT ON FUNCTION TILDA.DaysBetween(timestamptz, timestamptz) IS 'Computes the number of days between 2 dates ''start'' and ''end''. This function is the same as TILDA.DaysBetween(timestamptz, timestamptz, boolean) but with the third parapeter defaulted to false, i.e., the number of days between 2016-12-01 and 2016-12-02 is 2.';
 
@@ -338,19 +338,19 @@ COMMENT ON FUNCTION TILDA.DaysBetween(timestamptz, timestamptz) IS 'Computes the
 -- monthsBetween, quartersBetween, yearsBetween
 CREATE OR REPLACE FUNCTION TILDA.monthsBetween(timestamptz, timestamptz)
   RETURNS float
-  IMMUTABLE LANGUAGE SQL AS
+  IMMUTABLE COST 1 LANGUAGE SQL AS
 'SELECT date_part(''year'', age($2, $1))*12+date_part(''month'', age($2, $1))+date_part(''days'', age($2, $1))/30.0;';
 COMMENT ON FUNCTION TILDA.MonthsBetween(timestamptz, timestamptz) IS 'Computes the aproximate number of months between 2 dates ''start'' and ''end''. It''s approximate because fractional days are computed as a 30th part of a month no matter which month it is.';
 
 CREATE OR REPLACE FUNCTION TILDA.quartersBetween(timestamptz, timestamptz)
   RETURNS float
-  IMMUTABLE LANGUAGE SQL AS
+  IMMUTABLE COST 1 LANGUAGE SQL AS
 'SELECT date_part(''year'', age($2, $1))*4+date_part(''month'', age($2, $1))/3.0+date_part(''days'', age($2, $1))/91.0;';
 COMMENT ON FUNCTION TILDA.QuartersBetween(timestamptz, timestamptz) IS 'Computes the aproximate number of quarters between 2 dates ''start'' and ''end''. It''s approximate because fractional days are computed as a 91st part of a quarter no matter which quarter it is.';
 
 CREATE OR REPLACE FUNCTION TILDA.yearsBetween(timestamptz, timestamptz)
   RETURNS float
-  IMMUTABLE LANGUAGE SQL AS
+  IMMUTABLE COST 1 LANGUAGE SQL AS
 'SELECT date_part(''year'', age($2, $1))+date_part(''month'', age($2, $1))/12.0+date_part(''days'', age($2, $1))/365.0;';
 COMMENT ON FUNCTION TILDA.YearsBetween(timestamptz, timestamptz) IS 'Computes the aproximate number of years between 2 dates ''start'' and ''end''. It''s approximate because fractional days are computed as a 365th part of a year no matter which year it is.';
 
@@ -365,7 +365,7 @@ COMMENT ON FUNCTION TILDA.YearsBetween(timestamptz, timestamptz) IS 'Computes th
 ---------------------
 -- First
 CREATE OR REPLACE FUNCTION TILDA.first_agg (anyelement, anyelement)
-RETURNS anyelement LANGUAGE SQL IMMUTABLE STRICT AS $$
+RETURNS anyelement LANGUAGE SQL COST 1 IMMUTABLE STRICT AS $$
         SELECT $1;
 $$;
 
@@ -382,7 +382,7 @@ END $$;
 ---------------------
 -- Last
 CREATE OR REPLACE FUNCTION TILDA.last_agg ( anyelement, anyelement )
-RETURNS anyelement LANGUAGE SQL IMMUTABLE STRICT AS $$
+RETURNS anyelement LANGUAGE SQL COST 1 IMMUTABLE STRICT AS $$
         SELECT $2;
 $$;
 DO $$ BEGIN
@@ -411,14 +411,44 @@ END $$;
 
 
 
+-----------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------
+-- ARRAY Helpers
+-----------------------------------------------------------------------------------------------------------------
+
 CREATE OR REPLACE FUNCTION TILDA.arrayTrunc(arr anyarray, maxCount integer)
  RETURNS anyarray
  LANGUAGE sql
  IMMUTABLE COST 1
-AS $function$SELECT array_agg(a) FROM (SELECT unnest(arr) a limit maxCount) X;
-$function$
+AS $$
+SELECT array_agg(a) FROM (SELECT unnest(arr) a limit maxCount) X;
+$$
 ;
 
+CREATE OR REPLACE FUNCTION TILDA.arrayUnique(arr anyarray)
+ RETURNS anyarray
+ LANGUAGE sql
+ IMMUTABLE COST 2
+AS $$
+select array_agg(a order by a) from (select distinct unnest(arr) as a) x;
+$$
+;
+CREATE OR REPLACE FUNCTION TILDA.arrayMergeUnique(arr1 anyarray, arr2 anyarray)
+ RETURNS anyarray
+ LANGUAGE sql
+ IMMUTABLE COST 2
+AS $$
+select array_agg(a order by a) from (select distinct unnest(arr1||arr2) as a) x;
+$$
+;
+CREATE OR REPLACE FUNCTION TILDA.arrayMergeUnique(arr1 anyarray, arr2 anyarray, arr3 anyarray)
+ RETURNS anyarray
+ LANGUAGE sql
+ IMMUTABLE COST 2
+AS $$
+select array_agg(a order by a) from (select distinct unnest(arr1||arr2||arr3) as a) x;
+$$
+;
 
 
 -----------------------------------------------------------------------------------------------------------------
@@ -428,21 +458,21 @@ $function$
 DROP CAST IF EXISTS (text AS text[]);
 CREATE OR REPLACE FUNCTION TILDA.strToArray(text)
   RETURNS text[]
-  IMMUTABLE LANGUAGE SQL AS
+  IMMUTABLE COST 2 LANGUAGE SQL AS
 'SELECT regexp_split_to_array($1, ''``'');';
 CREATE CAST (text AS text[]) WITH FUNCTION TILDA.strToArray(text) as Implicit;
 
 DROP CAST IF EXISTS (varchar AS text[]);
 CREATE OR REPLACE FUNCTION TILDA.strToArray(varchar)
   RETURNS text[]
-  IMMUTABLE LANGUAGE SQL AS
+  IMMUTABLE COST 2 LANGUAGE SQL AS
 'SELECT regexp_split_to_array($1, ''``'');';
 CREATE CAST (varchar AS text[]) WITH FUNCTION TILDA.strToArray(varchar) as Implicit;
 
 -- allows a native representation, i.e., '{xxx,"abc 123",aaa}' to be parsed back into an array.
 CREATE OR REPLACE FUNCTION TILDA.StrNativeArrayToArray(v text)
   RETURNS text[]
-  IMMUTABLE LANGUAGE SQL AS $$
+  IMMUTABLE COST 2 LANGUAGE SQL AS $$
   select regexp_split_to_array(regexp_replace(v, '^{\"?|\"?}$', '', 'g'), '\"?,\"?')
 $$;
 
@@ -457,7 +487,7 @@ $$;
 DROP CAST IF EXISTS (boolean AS smallint);
 CREATE OR REPLACE FUNCTION TILDA.boolToSmallint(boolean)
   RETURNS smallint
-  IMMUTABLE LANGUAGE SQL AS
+  IMMUTABLE COST 1 LANGUAGE SQL AS
 'SELECT (case when $1 then 1 else 0 end)::SMALLINT;';
 CREATE CAST (boolean AS smallint) WITH FUNCTION TILDA.boolToSmallint(boolean) as Implicit;
 
@@ -472,7 +502,7 @@ CREATE CAST (boolean AS smallint) WITH FUNCTION TILDA.boolToSmallint(boolean) as
 -- as strings
 CREATE OR REPLACE FUNCTION TILDA.existsTable(schemaName varchar, tableName varchar)
 RETURNS boolean
-STABLE LANGUAGE SQL AS
+STABLE COST 1000 LANGUAGE SQL AS
   'SELECT true FROM information_schema.tables WHERE lower(tables.table_schema)=lower($1) and lower(tables.table_name)=lower($2);'
 ;
 
@@ -481,7 +511,7 @@ STABLE LANGUAGE SQL AS
 -- as strings
 CREATE OR REPLACE FUNCTION TILDA.existsColumn(schemaName varchar, tableName varchar, colName varchar)
 RETURNS boolean
-STABLE LANGUAGE SQL AS $$
+STABLE COST 1000 LANGUAGE SQL AS $$
   SELECT true FROM information_schema.tables T
               JOIN information_schema.columns C on C.table_schema=T.table_schema and C.table_name=T.table_name
    WHERE lower(T.table_schema)=lower($1) and lower(T.table_name)=lower($2) and lower(c.column_name)=lower($3)
@@ -602,7 +632,7 @@ for v_curr in
 end loop;
 end;
 $$
-LANGUAGE plpgsql;
+LANGUAGE plpgsql COST 5000 ;
 
 
 
@@ -655,7 +685,7 @@ BEGIN
   RETURN QUERY select 1, 'Column '||schemaName||'.'||tableName||'.'||_columnNames[1]||' has been successfully renamed to '||newColumnName||'.';
   END IF;
 END
-$$ LANGUAGE plpgsql;
+$$ LANGUAGE plpgsql  COST 1000 ;
 
 
 
@@ -704,7 +734,7 @@ BEGIN
     RETURN QUERY select 1, 'Column '||_srcColumnName||' has been copied to '||_destColumnName||' and then dropped.';
   END IF;
 END
-$$ LANGUAGE plpgsql;
+$$ LANGUAGE plpgsql COST 1000 ;
 
 
 
@@ -775,8 +805,8 @@ BEGIN
 
   RETURN v_res1;
 END; $BODY$
-  LANGUAGE plpgsql STABLE
-  COST 100;
+  LANGUAGE plpgsql STABLE 
+  COST 1000;
 
 
   
@@ -847,7 +877,7 @@ begin
   RETURN QUERY EXECUTE v_query;
 end;
 $$
-LANGUAGE plpgsql;
+LANGUAGE plpgsql COST 1000 ;
 
 
 
@@ -891,7 +921,7 @@ select "schemaName"
      , pg_size_pretty(sum("totalSizeIndices") over(order by "totalSize" desc)) as "runningTotalSizeIndicesPretty"
   from T
 group by 1, 2, 3, 4, 5, 6, 7, 8, 9
-$$ LANGUAGE SQL;
+$$ LANGUAGE SQL COST 1000 ;
 
 
 
@@ -934,7 +964,7 @@ select "schemaName", "tableName"
      , pg_size_pretty(sum("totalSizeIndices") over(order by "totalSize" desc)) as "runningTotalSizeIndicesPretty"
   from T
 group by 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
-$$ LANGUAGE SQL;
+$$ LANGUAGE SQL COST 1000 ;
 
 
 

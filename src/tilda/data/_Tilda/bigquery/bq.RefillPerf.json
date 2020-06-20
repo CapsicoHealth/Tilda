@@ -1,0 +1,14 @@
+[
+    { "name":"schemaName","type":"STRING","mode":"REQUIRED","description":"The name of the schema tracked" }
+   ,{ "name":"objectName","type":"STRING","mode":"REQUIRED","description":"The name of the table/object tracked" }
+   ,{ "name":"startPeriodTZ","type":"STRING","mode":"REQUIRED","description":"Generated helper column to hold the time zone ID for 'startPeriod'." }
+   ,{ "name":"startPeriod","type":"TIMESTAMP","mode":"REQUIRED","description":"The timestamp for when the refill started." }
+   ,{ "name":"timeCreateMs","type":"INT64","mode":"REQUIRED","description":"The time, in milliseconds, the create took." }
+   ,{ "name":"timeIndexMs","type":"INT64","mode":"REQUIRED","description":"The time, in milliseconds, the indexing took." }
+   ,{ "name":"timeAnalyzeMs","type":"INT64","mode":"REQUIRED","description":"The time, in milliseconds, the analyze took." }
+   ,{ "name":"timeTotalMs","type":"INT64","mode":"REQUIRED","description":"The time, in milliseconds, the whole refill took." }
+   ,{ "name":"columnsMs","type":"INT64","mode":"REQUIRED","description":"The list of columns that were refilled." }
+   ,{ "name":"created","type":"TIMESTAMP","mode":"REQUIRED","description":"The timestamp for when the record was created. (TILDA.RefillPerf)" }
+   ,{ "name":"lastUpdated","type":"TIMESTAMP","mode":"REQUIRED","description":"The timestamp for when the record was last updated. (TILDA.RefillPerf)" }
+   ,{ "name":"deleted","type":"TIMESTAMP","mode":"NULLABLE","description":"The timestamp for when the record was deleted. (TILDA.RefillPerf)" }
+]

@@ -136,6 +136,16 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
     <TD>10&nbsp;&nbsp;</TD>
+<TD align="right"><B id='DateDim-month_DIV' class='columns'>month</B>&nbsp;&nbsp;</TD>
+<TD>LocalDate&nbsp;/&nbsp;date&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Month-truncated date.</TD>
+</TR>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>11&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateDim-monthOfYear_DIV' class='columns'>monthOfYear</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -144,8 +154,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>ISO 8601 month of the year (starting with 1) of the date</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>11&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>12&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateDim-monthName_DIV' class='columns'>monthName</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(255)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -154,8 +164,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Month name (i.e., January, February...) of the date.</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>12&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>13&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateDim-monthNameShort_DIV' class='columns'>monthNameShort</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(255)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -164,8 +174,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Monday short name (i.e., Jan, Feb...) of the date.</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>13&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>14&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateDim-quarterOfYear_DIV' class='columns'>quarterOfYear</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -174,8 +184,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>ISO 8601 quarter of the year (starting with 1) of the date.</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>14&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>15&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateDim-quarterName_DIV' class='columns'>quarterName</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(255)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -184,8 +194,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Quarter name (i.e., Q1, Q2...) of the date.</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>15&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>16&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateDim-year_DIV' class='columns'>year</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -194,8 +204,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>ISO 8601 year (1.e., 2018) of the date.</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>16&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>17&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateDim-mmyyyy_DIV' class='columns'>mmyyyy</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(6)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -204,8 +214,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The mmyyyy printable version of a date.</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>17&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>18&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateDim-mmddyyyy_DIV' class='columns'>mmddyyyy</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(8)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -214,8 +224,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The mmddyyyy printable version of a date.</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>18&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>19&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateDim-yyyymmdd_DIV' class='columns'>yyyymmdd</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(8)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -224,8 +234,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The yyyymmdd sortable printable version of a date.</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>19&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>20&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateDim-isWeekend_DIV' class='columns'>isWeekend</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -234,8 +244,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>1 if this is a weekend day, 0 otherwise.</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>20&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>21&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateDim-isBusinessDay_DIV' class='columns'>isBusinessDay</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -244,8 +254,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>1 if this is a business day, 0 otherwise.</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>21&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>22&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateDim-isHoliday_DIV' class='columns'>isHoliday</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -254,8 +264,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>1 if this is a holiday, 0 otherwise.</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>22&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>23&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateDim-holidayName_DIV' class='columns'>holidayName</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(255)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -264,8 +274,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The name of the holiday if applicable.</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>23&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>24&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateDim-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -274,8 +284,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was created. (TILDA.DateDim)</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>24&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>25&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateDim-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -284,8 +294,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was last updated. (TILDA.DateDim)</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>25&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>26&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateDim-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -1527,6 +1537,153 @@ This is the hasChanged for:<BR>
 */
    public boolean hasChangedWeekOfYear()
      { return __Changes.intersects(TILDA__DATEDIM_Factory.COLS.WEEKOFYEAR._Mask); }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.DateDim.month -> TILDA.DateDim."month"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.month of type LocalDate</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.month of type date</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Month-truncated date.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   @SerializedName("month")
+   LocalDate _month=null;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.DateDim.month -> TILDA.DateDim."month"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.month of type LocalDate</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.month of type date</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Month-truncated date.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final LocalDate getMonth()
+      { return _month; }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.DateDim.month -> TILDA.DateDim."month"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the isNull for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.month of type LocalDate</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.month of type date</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Month-truncated date.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final boolean isMonthNull()
+     { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTH._Mask); }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.DateDim.month -> TILDA.DateDim."month"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.month of type LocalDate</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.month of type date</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Month-truncated date.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public void setMonth(LocalDate v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (v == null)
+        {
+          setMonthNull();
+        }
+       else if (v.equals(_month) == false)
+        {
+          __Changes.or(TILDA__DATEDIM_Factory.COLS.MONTH._Mask);
+          __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.MONTH._Mask);
+       _month = v;
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.DateDim.month -> TILDA.DateDim."month"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the null setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.month of type LocalDate</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.month of type date</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Month-truncated date.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public void setMonthNull()
+     {
+       long T0 = System.nanoTime();
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTH._Mask) == true) // already NULL
+        return;
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.MONTH._Mask);
+       __Nulls.or(TILDA__DATEDIM_Factory.COLS.MONTH._Mask);
+       _month=null;
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.DateDim.month -> TILDA.DateDim."month"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the hasChanged for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.month of type LocalDate</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.month of type date</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Month-truncated date.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public boolean hasChangedMonth()
+     { return __Changes.intersects(TILDA__DATEDIM_Factory.COLS.MONTH._Mask); }
 
 
 
@@ -4126,6 +4283,7 @@ This is the hasChanged for:<BR>
        if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFYEAR._Mask) == true) Dst.setDayOfYearNull     (); else        Dst.setDayOfYear     (_dayOfYear     );
        if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.WEEKOFMONTH._Mask) == true) Dst.setWeekOfMonthNull   (); else        Dst.setWeekOfMonth   (_weekOfMonth   );
        if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.WEEKOFYEAR._Mask) == true) Dst.setWeekOfYearNull    (); else        Dst.setWeekOfYear    (_weekOfYear    );
+       if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.MONTH._Mask) == true) Dst.setMonthNull         (); else        Dst.setMonth         (_month         );
        if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.MONTHOFYEAR._Mask) == true) Dst.setMonthOfYearNull   (); else        Dst.setMonthOfYear   (_monthOfYear   );
        if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.MONTHNAME._Mask) == true) Dst.setMonthNameNull     (); else        Dst.setMonthName     (_monthName     );
        if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.MONTHNAMESHORT._Mask) == true) Dst.setMonthNameShortNull(); else        Dst.setMonthNameShort(_monthNameShort);
@@ -4285,6 +4443,12 @@ This is the hasChanged for:<BR>
           __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.WEEKOFYEAR._Mask);
         }
 
+       if (_month != null)
+        {
+          __Changes.or(TILDA__DATEDIM_Factory.COLS.MONTH._Mask);
+          __Nulls.andNot(TILDA__DATEDIM_Factory.COLS.MONTH._Mask);
+        }
+
        if (_monthOfYear != null)
         {
           __Changes.or(TILDA__DATEDIM_Factory.COLS.MONTHOFYEAR._Mask);
@@ -4391,6 +4555,9 @@ This is the hasChanged for:<BR>
           if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFYEAR._Mask) == true) { TILDA__DATEDIM_Factory.COLS.DAYOFYEAR.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
           if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.WEEKOFMONTH._Mask) == true) { TILDA__DATEDIM_Factory.COLS.WEEKOFMONTH.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
           if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.WEEKOFYEAR._Mask) == true) { TILDA__DATEDIM_Factory.COLS.WEEKOFYEAR.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.MONTH._Mask) == true) { TILDA__DATEDIM_Factory.COLS.MONTH.getFullColumnVarForInsert(C, S);
+             V.append(__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTH._Mask) == false && DateTimeUtil.isNowPlaceholder(_month) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+           }
           if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.MONTHOFYEAR._Mask) == true) { TILDA__DATEDIM_Factory.COLS.MONTHOFYEAR.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
           if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.MONTHNAME._Mask) == true) { TILDA__DATEDIM_Factory.COLS.MONTHNAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
           if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.MONTHNAMESHORT._Mask) == true) { TILDA__DATEDIM_Factory.COLS.MONTHNAMESHORT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
@@ -4442,6 +4609,13 @@ This is the hasChanged for:<BR>
           if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFYEAR._Mask) == true) TILDA__DATEDIM_Factory.COLS.DAYOFYEAR.getFullColumnVarForUpdate(C, S);
           if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.WEEKOFMONTH._Mask) == true) TILDA__DATEDIM_Factory.COLS.WEEKOFMONTH.getFullColumnVarForUpdate(C, S);
           if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.WEEKOFYEAR._Mask) == true) TILDA__DATEDIM_Factory.COLS.WEEKOFYEAR.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.MONTH._Mask) == true)
+           {
+             if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTH._Mask) == false && DateTimeUtil.isNowPlaceholder(_month) == true)
+              { TILDA__DATEDIM_Factory.COLS.MONTH.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
+             else
+              TILDA__DATEDIM_Factory.COLS.MONTH.getFullColumnVarForUpdate(C, S);
+           }
           if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.MONTHOFYEAR._Mask) == true) TILDA__DATEDIM_Factory.COLS.MONTHOFYEAR.getFullColumnVarForUpdate(C, S);
           if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.MONTHNAME._Mask) == true) TILDA__DATEDIM_Factory.COLS.MONTHNAME.getFullColumnVarForUpdate(C, S);
           if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.MONTHNAMESHORT._Mask) == true) TILDA__DATEDIM_Factory.COLS.MONTHNAMESHORT.getFullColumnVarForUpdate(C, S);
@@ -4543,6 +4717,10 @@ This is the hasChanged for:<BR>
        if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.WEEKOFYEAR._Mask) == true) 
         { 
           if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.WEEKOFYEAR._Mask) == true) PS.setNull(++i, java.sql.Types.INTEGER   ); else PS.setInt       (++i, _weekOfYear);
+        } 
+       if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.MONTH._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTH._Mask) == true) PS.setNull(++i, java.sql.Types.DATE); else if (DateTimeUtil.isNowPlaceholder(_month) == false)  PS.setDate(++i, java.sql.Date.valueOf(_month));
         } 
        if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.MONTHOFYEAR._Mask) == true) 
         { 
@@ -4739,6 +4917,7 @@ This is the hasChanged for:<BR>
           S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "dayOfYear");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "weekOfMonth");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "weekOfYear");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "month");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "monthOfYear");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "monthName");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "monthNameShort");
@@ -4822,6 +5001,7 @@ This is the hasChanged for:<BR>
                                _dayOfYear      =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__DATEDIM_Factory.COLS.DAYOFYEAR._Mask     );
                                _weekOfMonth    =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__DATEDIM_Factory.COLS.WEEKOFMONTH._Mask   );
                                _weekOfYear     =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__DATEDIM_Factory.COLS.WEEKOFYEAR._Mask    );
+                               _month          = DateTimeUtil.toLocalDate(RS.getDate(++i)); if (RS.wasNull() == true) __Nulls.or(TILDA__DATEDIM_Factory.COLS.MONTH._Mask         );
                                _monthOfYear    =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__DATEDIM_Factory.COLS.MONTHOFYEAR._Mask   );
                                _monthName      = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__DATEDIM_Factory.COLS.MONTHNAME._Mask     );
                                _monthNameShort = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__DATEDIM_Factory.COLS.MONTHNAMESHORT._Mask);
@@ -4860,6 +5040,7 @@ This is the hasChanged for:<BR>
                + "; dayOfYear"        + (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFYEAR._Mask) == true ? ": NULL" : ": " +                                   getDayOfYear     () )
                + "; weekOfMonth"      + (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.WEEKOFMONTH._Mask) == true ? ": NULL" : ": " +                                   getWeekOfMonth   () )
                + "; weekOfYear"       + (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.WEEKOFYEAR._Mask) == true ? ": NULL" : ": " +                                   getWeekOfYear    () )
+               + "; month"            + (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTH._Mask) == true ? ": NULL" : ": " +                                   getMonth         () )
                + "; monthOfYear"      + (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTHOFYEAR._Mask) == true ? ": NULL" : ": " +                                   getMonthOfYear   () )
                + "; monthName"        + (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTHNAME._Mask) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getMonthName     ()))
                + "; monthNameShort"   + (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTHNAMESHORT._Mask) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getMonthNameShort()))

@@ -134,7 +134,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
     @Override
     public boolean stringNeedsTrim(Column C)
       {
-        return C.getType() == ColumnType.STRING && C._Mode != ColumnMode.CALCULATED && C.isCollection() == false && getDBStringType(C._Size) == DBStringType.CHARACTER;
+        return C.getType() == ColumnType.STRING && C._Mode != ColumnMode.CALCULATED && C.isCollection() == false && (C._Size!=null && getDBStringType(C._Size) == DBStringType.CHARACTER);
       }
 
     @Override

@@ -1,0 +1,10 @@
+[
+    { "name":"refnum","type":"INT64","mode":"REQUIRED","description":"The primary key for this record" }
+   ,{ "name":"jobRefnum","type":"INT64","mode":"REQUIRED","description":"Parent Job Refnum" }
+   ,{ "name":"jobPartRefnum","type":"INT64","mode":"NULLABLE","description":"Parent Job Part Refnum" }
+   ,{ "name":"notify","type":"BOOL","mode":"REQUIRED","description":"Notification flag" }
+   ,{ "name":"msg","type":"STRING","mode":"REQUIRED","description":"Message details" }
+   ,{ "name":"created","type":"TIMESTAMP","mode":"REQUIRED","description":"The timestamp for when the record was created. (TILDA.JobPartMessage)" }
+   ,{ "name":"lastUpdated","type":"TIMESTAMP","mode":"REQUIRED","description":"The timestamp for when the record was last updated. (TILDA.JobPartMessage)" }
+   ,{ "name":"deleted","type":"TIMESTAMP","mode":"NULLABLE","description":"The timestamp for when the record was deleted. (TILDA.JobPartMessage)" }
+]

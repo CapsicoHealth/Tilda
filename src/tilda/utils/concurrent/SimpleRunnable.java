@@ -27,12 +27,28 @@ public abstract class SimpleRunnable implements Runnable
 
     public SimpleRunnable(String Name)
       {
-        _Name = Name;
+        _name = Name;
       }
 
-    String   _Name;
-    Executor _Executor;
+    String   _name;
+    Executor _executor;
     long     _taskTimeNano = 0;
+    long     _totalCount   = 0;
+
+    public String getName()
+      {
+        return _name;
+      }
+
+    public void setCount(long totalCount)
+      {
+        _totalCount = totalCount;
+      }
+
+    public long getCount()
+      {
+        return _totalCount;
+      }
 
     @Override
     public void run()
@@ -43,13 +59,14 @@ public abstract class SimpleRunnable implements Runnable
             doRun();
             _taskTimeNano = System.nanoTime() - T0;
             LOG.debug("\n\n*******************************************************************************************\n"
-            + "** Task " + _Name + " ran in " + DurationUtil.printDuration(_taskTimeNano) + ".\n"
+            + "** Task " + _name + " ran in " + DurationUtil.printDuration(_taskTimeNano) + ".\n"
+            + (_totalCount==0?"":"** Processed "+_totalCount+" records (" + DurationUtil.printPerformancePerMinute(_taskTimeNano, _totalCount) + " records/min).\n")
             + "*******************************************************************************************\n\n");
           }
         catch (Exception E)
           {
             LOG.error("An error occurred in the thread\n", E);
-            _Executor.addException(E);
+            _executor.addException(E);
             _taskTimeNano = System.nanoTime() - T0;
           }
       }

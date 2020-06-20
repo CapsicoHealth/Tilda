@@ -33,8 +33,10 @@ insert into TILDA.ZoneInfo ("id", "label", "value", "deactivatedTZ", "deactivate
 -- Generate the date dimension
 --
 ---------------------------------------------------------------------------------------------------
- INSERT INTO Tilda.DateDim ("dt", "epoch", "dayName", "dayOfWeek", "dayOfMonth", "dayOfQuarter", "dayOfYear", "weekOfMonth", "weekOfYear"
-                           ,"monthOfYear", "monthName", "monthNameShort", "quarterOfYear", "quarterName", "year", "mmyyyy", "mmddyyyy", "yyyymmdd"
+truncate Tilda.DateLimitDim;
+delete from Tilda.Datedim;
+INSERT INTO Tilda.DateDim ("dt", "epoch", "dayName", "dayOfWeek", "dayOfMonth", "dayOfQuarter", "dayOfYear", "weekOfMonth", "weekOfYear"
+                           ,"month", "monthOfYear", "monthName", "monthNameShort", "quarterOfYear", "quarterName", "year", "mmyyyy", "mmddyyyy", "yyyymmdd"
                            ,"isWeekend", "isBusinessDay", "isHoliday", "holidayName", "created", "lastUpdated", "deleted"
                            )
 SELECT actualdate as "dt"
@@ -46,12 +48,13 @@ SELECT actualdate as "dt"
       ,EXTRACT(doy FROM actualdate) AS "dayOfYear"
       ,TO_CHAR(actualdate,'W')::INT AS "weekOfMonth"
       ,EXTRACT(week FROM actualdate) AS "weekOfYear"
+      ,date_trunc('month', actualdate)::DATE AS "month"
       ,EXTRACT(MONTH FROM actualdate) AS "monthOfYear"
       ,TO_CHAR(actualdate,'MONTH') AS "monthName"
       ,TO_CHAR(actualdate,'MON') AS "monthNameShort"
       ,EXTRACT(quarter FROM actualdate) AS "quarterOfYear"
       ,'Q'|| EXTRACT(quarter FROM actualdate) AS "quarterName"
-      ,EXTRACT(isoyear FROM actualdate) AS "year"
+      ,EXTRACT(year FROM actualdate) AS "year"
       ,TO_CHAR(actualdate,'mmyyyy') AS "mmyyyy"
       ,TO_CHAR(actualdate,'mmddyyyy') AS "mmddyyyy"
       ,TO_CHAR(actualdate,'yyyymmdd') AS "yyyymmdd"
@@ -74,14 +77,13 @@ FROM (select generate_series('1889-01-01'::date, '2089-12-31'::date, '1 day'::in
       select '1789-07-14'::DATE -- Start of French Revolution...
      ) X
 ON CONFLICT ("dt") DO NOTHING;
-
+analyze tilda.datedim;
 
 ---------------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------------
 -- Helper function for date lookup
 --
 ---------------------------------------------------------------------------------------------------
-truncate table Tilda.DateLimitDim;
 insert into Tilda.DateLimitDim ("invalidDate", "minDate", "maxDate")
 SELECT '1789-07-14' AS "invalidDate"
       ,min(dateDim.dt) FILTER (WHERE dateDim.dt <> '1789-07-14') AS "minDate"
@@ -106,6 +108,14 @@ CREATE OR REPLACE FUNCTION Tilda.isInvalidDate("dt" TIMESTAMP WITH TIME ZONE)
   LANGUAGE sql IMMUTABLE;
 
 
+  
+  
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+-- Helper Formula dependency view
+--
+---------------------------------------------------------------------------------------------------
+
 CREATE OR REPLACE VIEW Tilda.FormulaDependencyFullView as
 with recursive R("formulaRefnum", "formulaLocation", "formulaName", "formulaDependencies", "columnDependencies") as (
 select FormulaDependencyView."formulaRefnum", "location" as "formulaLocation", "name" as "formulaName", ARRAY["dependentFormulaLocation"||'.'||"dependentFormulaName"] as "formulaDependencies", "referencedColumns" as "columnDependencies"
@@ -118,7 +128,12 @@ select FormulaDependencyView."formulaRefnum", "location" as "formulaLocation", "
 select distinct * 
   from R
 ;
- 
 
+
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+-- cleanup of old tables.
+--
+---------------------------------------------------------------------------------------------------
 drop table if exists tilda.job_detail;
 drop table if exists tilda.jobs;

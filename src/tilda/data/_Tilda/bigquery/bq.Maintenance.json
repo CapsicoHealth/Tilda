@@ -1,0 +1,8 @@
+[
+    { "name":"type","type":"STRING","mode":"REQUIRED","description":"The type of maintenance resource to track" }
+   ,{ "name":"name","type":"STRING","mode":"REQUIRED","description":"The name of the maintenance resource to track." }
+   ,{ "name":"value","type":"STRING","mode":"NULLABLE","description":"The value of the maintenance resource to track." }
+   ,{ "name":"created","type":"TIMESTAMP","mode":"REQUIRED","description":"The timestamp for when the record was created. (TILDA.Maintenance)" }
+   ,{ "name":"lastUpdated","type":"TIMESTAMP","mode":"REQUIRED","description":"The timestamp for when the record was last updated. (TILDA.Maintenance)" }
+   ,{ "name":"deleted","type":"TIMESTAMP","mode":"NULLABLE","description":"The timestamp for when the record was deleted. (TILDA.Maintenance)" }
+]

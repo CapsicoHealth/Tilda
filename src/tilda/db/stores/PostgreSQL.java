@@ -384,9 +384,10 @@ public class PostgreSQL implements DBType
       {
         if (T == ColumnType.STRING && M != ColumnMode.CALCULATED)
           {
+            DBStringType ST = S==null ? null : getDBStringType(S);
             return Collection == true ? "text[]"
-            : getDBStringType(S) == DBStringType.CHARACTER ? PostgresType.CHAR._SQLType + "(" + S + ")"
-            : getDBStringType(S) == DBStringType.VARCHAR ? PostgresType.STRING._SQLType + "(" + S + ")"
+            : ST == DBStringType.CHARACTER ? PostgresType.CHAR._SQLType + "(" + S + ")"
+            : ST == DBStringType.VARCHAR ? PostgresType.STRING._SQLType + "(" + S + ")"
             : "text";
           }
 
