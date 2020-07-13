@@ -553,7 +553,7 @@ for v_curr in
 (
   select obj_schema, obj_name, obj_type
     from ( with recursive recursive_deps(obj_schema, obj_name, obj_type, depth) as 
-            ( select p_view_schema, p_view_name, null::varchar, 0
+            ( select p_view_schema COLLATE "default", p_view_name COLLATE "default", null::varchar, 0
               union
               select dep_schema::varchar, dep_name::varchar, dep_type::varchar, recursive_deps.depth + 1
                 from ( select ref_nsp.nspname ref_schema, ref_cl.relname ref_name, rwr_cl.relkind dep_type, rwr_nsp.nspname dep_schema, rwr_cl.relname dep_name

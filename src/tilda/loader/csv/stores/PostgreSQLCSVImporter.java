@@ -368,8 +368,8 @@ public class PostgreSQLCSVImporter extends CSVImporter
                   {
                     Pst.executeBatch();
                     batchCount = 0;
-                    long t = System.nanoTime() - t0;
-                    LOG.debug("Processed " + NumberFormatUtil.printWith000Sep(NumOfRecs) + " records so far in " + DurationUtil.printDuration(t) + " (" + DurationUtil.printPerformancePerMinute(t, NumOfRecs) + " Records/min)");
+//                    long t = System.nanoTime() - t0;
+//                    LOG.debug("Processed " + NumberFormatUtil.printWith000Sep(NumOfRecs) + " records so far in " + DurationUtil.printDuration(t) + " (" + DurationUtil.printPerformancePerMinute(t, NumOfRecs) + " Records/min)");
                   }
                 Pst.clearParameters();
   

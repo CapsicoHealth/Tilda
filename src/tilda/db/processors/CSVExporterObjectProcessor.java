@@ -19,6 +19,7 @@ package tilda.db.processors;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.lang.reflect.Method;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -30,22 +31,24 @@ public class CSVExporterObjectProcessor<T extends CSVable> implements ObjectProc
   {
     protected static final Logger LOG = LogManager.getLogger(CSVExporterObjectProcessor.class.getName());
 
-    public CSVExporterObjectProcessor(PrintWriter out, long logFreq, String name)
+    public CSVExporterObjectProcessor(PrintWriter out, long logFreq, String name, Class<?> factoryClass)
       {
         _out = out;
         _totalCount = 0;
         _logFreq = logFreq;
         _name = name;
+        _factoryClass = factoryClass;
       }
 
-    public CSVExporterObjectProcessor(String outFile, long logFreq)
-    throws FileNotFoundException
+    public CSVExporterObjectProcessor(String outFile, long logFreq, Class<?> factoryClass)
+      throws FileNotFoundException
       {
         _out = new PrintWriter(new File(outFile));
         _cleanWriter = true;
         _totalCount = 0;
         _logFreq = logFreq;
         _name = outFile;
+        _factoryClass = factoryClass;
       }
 
     protected PrintWriter _out;
@@ -55,11 +58,21 @@ public class CSVExporterObjectProcessor<T extends CSVable> implements ObjectProc
     protected long        _endTs;
     protected long        _logFreq;
     protected String      _name;
+    protected Class<?>    _factoryClass;
+
 
     @Override
     public void start()
       {
         _startTs = System.nanoTime();
+        try
+          {
+            Method M = _factoryClass.getMethod("getCSVHeader");
+            _out.println((String) M.invoke(null));
+          }
+        catch (Throwable E)
+          {
+          }
       }
 
     @Override
@@ -85,10 +98,9 @@ public class CSVExporterObjectProcessor<T extends CSVable> implements ObjectProc
         _endTs = System.nanoTime();
         long durationNano = _endTs - _startTs;
         LOG.info("\n==========================================================================================================================================\n"
-                  +"==  "+_name+"\n"
-                  +"==  " + _totalCount + " records to CSV in " + DurationUtil.printDuration(durationNano) + " (" + DurationUtil.printPerformancePerMinute(durationNano, _totalCount) + " records/min)\n"
-                  +"==========================================================================================================================================\n"
-                  );
+        + "==  " + _name + "\n"
+        + "==  " + _totalCount + " records to CSV in " + DurationUtil.printDuration(durationNano) + " (" + DurationUtil.printPerformancePerMinute(durationNano, _totalCount) + " records/min)\n"
+        + "==========================================================================================================================================\n");
       }
 
     public long getTotalCount()

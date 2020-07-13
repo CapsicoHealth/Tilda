@@ -109,6 +109,7 @@ public enum ColumnType
             } // UUID
         };
 
+        // Whether the first element of each row can be converted to any of the elements following
         _CompatibleDBTypes = new ColumnType[][] {
             { STRING, JSON, CHAR, INTEGER, LONG, FLOAT, DOUBLE, BOOLEAN, DATE, DATETIME, BITFIELD, SHORT, NUMERIC, UUID
             } // STRING
@@ -116,7 +117,7 @@ public enum ColumnType
             } // JSON
             , { CHAR, STRING, BOOLEAN
             } // CHAR
-            , { SHORT, BOOLEAN, STRING
+            , { SHORT, BOOLEAN, STRING, INTEGER, LONG, DOUBLE, FLOAT, NUMERIC, BITFIELD
             } // SHORT TODO:CHECK
             , { INTEGER, BOOLEAN, STRING, LONG, DOUBLE, FLOAT, SHORT, NUMERIC, BITFIELD
             } // INTEGER

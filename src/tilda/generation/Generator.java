@@ -49,6 +49,7 @@ import tilda.parsing.parts.OutputMapping;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.SubWhereClause;
 import tilda.parsing.parts.View;
+import tilda.parsing.parts.ViewColumn;
 import tilda.utils.json.JSONUtil;
 
 public class Generator
@@ -144,8 +145,8 @@ public class Generator
     throws Exception
       {
         LOG.debug("  Generating the BigQuery JSON Schema files.");
-        
-        GenFolder = new File(GenFolder.getAbsolutePath()+ File.separator + "bigquery");
+
+        GenFolder = new File(GenFolder.getAbsolutePath() + File.separator + "bigquery");
         if (GenFolder.exists() == true)
           FileUtils.deleteDirectory(GenFolder);
         if (GenFolder.mkdir() == false)
@@ -168,7 +169,7 @@ public class Generator
                       }
                     else
                       Out.print("   ,{");
-                    JSONUtil.print(Out, "name", true , col.getName());
+                    JSONUtil.print(Out, "name", true, col.getName());
                     JSONUtil.print(Out, "type", false, col.getType().getBigQueryType());
                     JSONUtil.print(Out, "mode", false, col.isCollection() == true ? "REPEATED" : col._Nullable == false ? "REQUIRED" : "NULLABLE");
                     JSONUtil.print(Out, "description", false, col._Description);
@@ -177,33 +178,32 @@ public class Generator
               Out.println("]");
               Out.close();
             }
-        /*
-         * for (View V : S._Views)
-         * if (V != null)
-         * {
-         * File f = new File(GenFolder.getAbsolutePath() + File.separator + "bigquery" + File.separator + V._Name+".json");
-         * PrintWriter Out = new PrintWriter(f);
-         * Out.println("[");
-         * boolean First = true;
-         * for (ViewColumn col : V._ViewColumns)
-         * if (col!=null)
-         * {
-         * if (First == true)
-         * {
-         * First = false;
-         * Out.print("    {");
-         * }
-         * else
-         * Out.print("   ,{");
-         * JSONUtil.print(Out, "name", true, col.getName());
-         * JSONUtil.print(Out, "type", true, col.getType().getBigQueryType());
-         * JSONUtil.print(Out, "mode", true, col.isCollection() == true ? "REPEATED" : "NULLABLE");
-         * Out.println(" }");
-         * }
-         * Out.println("]");
-         * Out.close();
-         * }
-         */
+
+        for (View V : S._Views)
+          if (V != null)
+            {
+              File f = new File(GenFolder.getAbsolutePath() + File.separator + "bq." + V._Name + ".json");
+              PrintWriter Out = new PrintWriter(f);
+              Out.println("[");
+              boolean First = true;
+              for (ViewColumn col : V._ViewColumns)
+                if (col != null)
+                  {
+                    if (First == true)
+                      {
+                        First = false;
+                        Out.print("    {");
+                      }
+                    else
+                      Out.print("   ,{");
+                    JSONUtil.print(Out, "name", true, col.getName());
+                    JSONUtil.print(Out, "type", true, col.getType().getBigQueryType());
+                    JSONUtil.print(Out, "mode", true, col.isCollection() == true ? "REPEATED" : "NULLABLE");
+                    Out.println(" }");
+                  }
+              Out.println("]");
+              Out.close();
+            }
       }
 
     public static void getTableDDL(CodeGenSql CG, PrintWriter Out, Object O, boolean mainDDL, boolean keysDDL)

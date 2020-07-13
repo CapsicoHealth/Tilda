@@ -519,8 +519,9 @@ public class View extends Base
                 ViewColumn VC = new ViewColumn();
                 VC._SameAs = "_TS.p";
                 VC._Name = _TimeSeries._Name;
+                VC._TypeStr = ColumnType.DATE.name();
                 VC._FCT = FrameworkColumnType.TS;
-                VC._ParentView = this;
+                VC.Validate(PS, this);
                 _ViewColumns.add(firstAgg, VC);
               }
           }

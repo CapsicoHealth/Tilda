@@ -41,9 +41,9 @@ public class ExportToCSV
         if (lastDot == -1)
           throw new Exception("Incorrect Tilda object name '" + fullName + "'.");
 
-        CSVExporterObjectProcessor<CSVable> OP = new CSVExporterObjectProcessor<CSVable>(path + "\\" + fullName.substring(lastDot + 1) + ".csv", logFrequency);
-        Class<?> Factory = Class.forName(fullName + "_Factory");
-        Method M = Factory.getMethod("lookupWhereAll", Connection.class, ObjectProcessor.class, int.class, int.class);
+        Class<?> factoryClass = Class.forName(fullName + "_Factory");
+        CSVExporterObjectProcessor<CSVable> OP = new CSVExporterObjectProcessor<CSVable>(path + "\\" + fullName.substring(lastDot + 1) + ".csv", logFrequency, factoryClass);
+        Method M = factoryClass.getMethod("lookupWhereAll", Connection.class, ObjectProcessor.class, int.class, int.class);
         M.invoke(null, C, OP, 0, -1);
         return OP.getTotalCount();
       }

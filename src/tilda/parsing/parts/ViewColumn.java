@@ -174,7 +174,7 @@ public class ViewColumn
         // Mandatories
         if (TextUtil.isNullOrEmpty(_SameAs) == true)
           return PS.AddError("View column '" + getFullName() + "' didn't define a 'sameAs'. It is mandatory.");
-        else
+        else if (_FCT != FrameworkColumnType.TS)
           {
             _SameAsObj = ValidateSameAs(PS, getFullName(), _SameAs, _ParentView);
             if (_SameAsObj == null)
@@ -248,7 +248,7 @@ public class ViewColumn
         // Checking that type information is only present when expression is specified and vice-versa.
         if (TextUtil.isNullOrEmpty(_Expression) == false && _Type == null)
           PS.AddError("View Column '" + getFullName() + "' defined an 'expression' but neglected to specify type information and optionally, size.");
-        if (TextUtil.isNullOrEmpty(_Expression) == true && _Type != null)
+        if (TextUtil.isNullOrEmpty(_Expression) == true && _Type != null && _FCT != FrameworkColumnType.TS)
           PS.AddError("View Column '" + getFullName() + "' defined extra type/size information without an 'expression': type and size are for expressions only.");
 
         return Errs == PS.getErrorCount();
@@ -375,11 +375,16 @@ public class ViewColumn
 
     public boolean isList()
       {
-        if (_SameAsObj != null)
-         {
-           if (_SameAsObj.isList() == true || _Aggregate != null && _Aggregate.isList() == true)
-             return true;
-         }
-        return false;
+        return _SameAsObj != null && _SameAsObj.isList() == true || _Aggregate != null && _Aggregate.isList() == true;
       }
+    public boolean isSet()
+      {
+        return _SameAsObj != null && _SameAsObj.isSet() == true && _Aggregate == null;
+      }
+
+    public boolean isCollection()
+      {
+        return _SameAsObj != null && _SameAsObj.isCollection() == true || _Aggregate != null && _Aggregate.isList() == true;
+      }
+    
   }
