@@ -647,6 +647,8 @@ This is the column definition for:<BR>
        try
         {
           PS = C.prepareStatement(Q);
+          if (size < 0 || size > 5000)
+           PS.setFetchSize(5000);
           int i = 0;
           switch (LookupId)
            {

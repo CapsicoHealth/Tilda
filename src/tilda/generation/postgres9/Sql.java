@@ -47,6 +47,7 @@ import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Formula;
 import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Object;
+import tilda.parsing.parts.OrderBy;
 import tilda.parsing.parts.Query;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.Value;
@@ -133,7 +134,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
     @Override
     public boolean stringNeedsTrim(Column C)
       {
-        return C.getType() == ColumnType.STRING && C._Mode != ColumnMode.CALCULATED && C.isCollection() == false && getDBStringType(C._Size) == DBStringType.CHARACTER;
+        return C.getType() == ColumnType.STRING && C._Mode != ColumnMode.CALCULATED && C.isCollection() == false && (C._Size!=null && getDBStringType(C._Size) == DBStringType.CHARACTER);
       }
 
     @Override
@@ -556,10 +557,11 @@ public class Sql extends PostgreSQL implements CodeGenSql
                     Str.append("\"").append(VC._Name).append("\"");
                   }
               }
-            for (int i = 0; i < V._DistinctOn._OrderByObjs.size(); ++i)
+            for (OrderBy OB : V._DistinctOn._OrderByObjs)
               {
-                Column C = V._DistinctOn._OrderByObjs.get(i);
-                Str.append(", ").append(getFullColumnVar(C)).append(" ").append(V._DistinctOn._OrderByOrders.get(i).name());
+                Str.append(", ").append(getFullColumnVar(OB._Col)).append(" ").append(OB._Order.name());
+                if (OB._Nulls != null)
+                  Str.append(" NULLS ").append(OB._Nulls.name());  
               }
             Str.append("\n");
           }
@@ -585,7 +587,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
     private boolean PrintViewColumn(StringBuilder Str, ViewColumn VC, TableRankTracker TI, boolean NoAs)
     throws Exception
       {
-        if (TextUtil.isNullOrEmpty(VC._Coalesce) == false)
+        if (TextUtil.isNullOrEmpty(VC._Coalesce) == false && (VC._Aggregate == null || VC._Aggregate==AggregateType.COUNT))
           Str.append("coalesce(");
 
         boolean hasAggregates = false;
@@ -618,6 +620,9 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 hasAggregates = true;
                 if (VC._Distinct == Boolean.TRUE)
                   Str.append("distinct ");
+
+                if (TextUtil.isNullOrEmpty(VC._Coalesce) == false && VC._Aggregate!=AggregateType.COUNT)
+                  Str.append("coalesce(");
               }
             if (trimNeeded)
               Str.append("trim(");
@@ -629,17 +634,23 @@ public class Sql extends PostgreSQL implements CodeGenSql
               Str.append(")");
             if (VC._Aggregate != null)
               {
+                if (TextUtil.isNullOrEmpty(VC._Coalesce) == false && VC._Aggregate!=AggregateType.COUNT)
+                  Str.append(", " + ValueHelper.printValue(VC._SameAsObj.getName(), VC.getAggregateType(), VC._Coalesce) + ")");
+
                 if (VC._OrderByObjs != null && VC._OrderByObjs.isEmpty() == false)
                   {
                     Str.append(" order by ");
                     boolean First = true;
-                    for (int i = 0; i < VC._OrderByObjs.size(); ++i)
+                    for (OrderBy OB : VC._OrderByObjs)
                       {
                         if (First == true)
                           First = false;
                         else
                           Str.append(", ");
-                        Str.append(TI.getFullName() + ".\"" + VC._OrderByObjs.get(i).getName() + "\" " + VC._OrderByOrders.get(i));
+                        Str.append(TI.getFullName() + ".\"" + OB._Col.getName() + "\" " + OB._Order);
+                        if (OB._Nulls != null)
+                          Str.append(" NULLS "+OB._Nulls);
+                        
                       }
                   }
                 Str.append(")");
@@ -649,7 +660,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                   }
               }
           }
-        if (TextUtil.isNullOrEmpty(VC._Coalesce) == false)
+        if (TextUtil.isNullOrEmpty(VC._Coalesce) == false && (VC._Aggregate == null || VC._Aggregate==AggregateType.COUNT))
           Str.append(", " + ValueHelper.printValue(VC._SameAsObj.getName(), VC.getAggregateType(), VC._Coalesce) + ")");
         if (NoAs == false)
           Str.append(" as \"" + VC.getName() + "\" " + (VC._SameAsObj == null ? "" : "-- " + VC._SameAsObj._Description));
@@ -678,21 +689,19 @@ public class Sql extends PostgreSQL implements CodeGenSql
         Set<View> AncestorRealizedViews = V.getAncestorRealizedViews();
         if (SubRealizedViews != null || AncestorRealizedViews != null) // View depends on realized views.
           {
-            StringBuilder r = new StringBuilder();
             if (SubRealizedViews != null)
               {
-                r.append("(?i)\\b(");
-                boolean First = true;
+                StringBuilder r = new StringBuilder();
                 for (View srv : SubRealizedViews)
                   {
-                    if (First == false)
-                      r.append("|");
-                    else
-                      First = false;
+                    r.setLength(0);
+                    r.append("(?i)\\b(");
+                    r.append(srv._ParentSchema._Name.toUpperCase());
+                    r.append("\\.");
                     r.append(srv.getRootViewName().toUpperCase());
+                    r.append(")(PIVOT)?VIEW\\b");
+                    Str = Str.replaceAll(r.toString(), srv._RealizedObj != null ? srv._RealizedObj._ParentSchema._Name+"."+srv._RealizedObj._Name : "$1Realized");
                   }
-                r.append(")(PIVOT)?VIEW\\b");
-                Str = Str.replaceAll(r.toString(), "$1Realized");
               }
 
             if (AncestorRealizedViews != null)
@@ -714,7 +723,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
 
             if (Up != null)
               {
-                String ColType = getColumnType(Up._UpsertTSColumnObj._SameAsObj);
+                String ColType = getColumnType(Up._LastUpdatedTSColumnObj._SameAsObj);
                 OutFinal.append("DROP FUNCTION IF EXISTS " + V._ParentSchema._Name + ".Refill_" + TName + "(fromInclusive " + ColType + ", toExclusive " + ColType + ");\n")
                 .append("CREATE OR REPLACE FUNCTION " + V._ParentSchema._Name + ".Refill_" + TName + "(fromInclusive " + ColType + ", toExclusive " + ColType + ")\n");
               }
@@ -741,13 +750,16 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 OutFinal.append("  THEN\n");
               }
             OutFinal.append("  TRUNCATE ").append(RName).append(";\n");
-            OutFinal.append(BaseLineInsert.toString()).append(";\n");
+            OutFinal.append(BaseLineInsert.toString());
+            if (Up != null && Up._DeleteTSColumnObj != null)
+              OutFinal.append("\n     WHERE \"" + Up._DeleteTSColumnObj.getName() + "\" is null");
+            OutFinal.append(";\n");
             OutFinal.append("  ANALYZE " + RName + ";\n");
             if (Up != null)
               {
                 OutFinal.append("  ELSE\n");
                 OutFinal.append(BaseLineInsert.toString());
-                OutFinal.append("\n    WHERE (fromInclusive is null or \"").append(Up._UpsertTSColumnObj.getName()).append("\" >= fromInclusive) and (toExclusive is null or \"").append(Up._UpsertTSColumnObj.getName()).append("\" < toExclusive)");
+                OutFinal.append("\n    WHERE (fromInclusive is null or \"").append(Up._LastUpdatedTSColumnObj.getName()).append("\" >= fromInclusive) and (toExclusive is null or \"").append(Up._LastUpdatedTSColumnObj.getName()).append("\" < toExclusive)");
                 OutFinal.append("\n  ON CONFLICT (");
                 boolean First = true;
                 for (ViewColumn VC : Up._IdentityViewColumns)
@@ -771,8 +783,9 @@ public class Sql extends PostgreSQL implements CodeGenSql
                     OutFinal.append("\"").append(ColNames).append("\"").append(" = EXCLUDED.").append("\"").append(ColNames).append("\"").append("\n");
                   }
                 OutFinal.append("  ;\n");
-                if (Up._UpsertTSColumnObj != null)
+                if (Up._DeleteTSColumnObj != null)
                   OutFinal.append("  DELETE FROM " + RName + " WHERE \"" + Up._DeleteTSColumnObj.getName() + "\" is not null;\n");
+                OutFinal.append("  ANALYZE " + RName + ";\n");
                 OutFinal.append("  END IF;\n");
               }
             // for (Index I : V._Realize._Indices)
@@ -789,7 +802,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
             .append("\n");
             if (Up != null)
               {
-                String ColType = getColumnType(Up._UpsertTSColumnObj._SameAsObj);
+                String ColType = getColumnType(Up._LastUpdatedTSColumnObj._SameAsObj);
                 OutFinal.append("DROP FUNCTION IF EXISTS " + V._ParentSchema._Name + ".Refill_" + TName + "(fromInclusive " + ColType + ");\n")
                 .append("CREATE OR REPLACE FUNCTION " + V._ParentSchema._Name + ".Refill_" + TName + "(fromInclusive " + ColType + ")\n");
                 OutFinal.append(" RETURNS boolean AS $$\n")
@@ -1094,7 +1107,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Formulas
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        String RealizedTable = V._Realize == null ? null : V._ParentSchema._Name + "." + V._Name.substring(0, V._Name.length() - (V._Pivots.isEmpty() == false ? "PivotView" : "View").length()) + "Realized";
+        String RealizedTable = V.getRealizedTableName(true);
         int count = -1;
         int MeasureCount = 0;
         for (Formula F : V._Formulas)

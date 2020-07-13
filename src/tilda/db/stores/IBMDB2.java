@@ -461,4 +461,11 @@ public class IBMDB2 implements DBType
       {
         throw new UnsupportedOperationException();
       }
+
+
+    @Override
+    public String getCurrentDateStr()
+      {
+        throw new UnsupportedOperationException();
+      }
   }

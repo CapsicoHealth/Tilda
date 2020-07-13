@@ -30,11 +30,11 @@ import tilda.utils.TextUtil;
 
 public class ViewRealizeUpsert
   {
-    static final Logger LOG              = LogManager.getLogger(ViewRealizeUpsert.class.getName());
+    static final Logger LOG            = LogManager.getLogger(ViewRealizeUpsert.class.getName());
 
     /*@formatter:off*/
-    @SerializedName("upsertTS") public String    _UpsertTS  = null;
-    @SerializedName("deleteTS") public String    _DeleteTS  = null;
+    @SerializedName("lastUpdatedTS") public String _LastUpdatedTS  = null;
+    @SerializedName("deletedTS")     public String _DeletedTS       = null;
     /*@formatter:on*/
 
 
@@ -44,7 +44,7 @@ public class ViewRealizeUpsert
 
     public transient View             _ParentView;
     public transient Base             _ParentRealized;
-    public transient ViewColumn       _UpsertTSColumnObj;
+    public transient ViewColumn       _LastUpdatedTSColumnObj;
     public transient ViewColumn       _DeleteTSColumnObj;
     public transient List<ViewColumn> _IdentityViewColumns;
     public transient boolean          _FailedValidation = false;
@@ -57,26 +57,25 @@ public class ViewRealizeUpsert
         _ParentRealized = ParentRealized;
 
         // Gotta define an upsert timestamp
-        if (TextUtil.isNullOrEmpty(_UpsertTS) == true)
+        if (TextUtil.isNullOrEmpty(_LastUpdatedTS) == true)
           PS.AddError("View '" + _ParentView.getFullName() + "' is defining an upserted realization with no 'upsertTS' value.");
 
-        // Gotta define a delete timestamp
-        if (TextUtil.isNullOrEmpty(_DeleteTS) == true)
-          PS.AddError("View '" + _ParentView.getFullName() + "' is defining an upserted realization with no 'deleteTS' value.");
-
         // Upsert timestamp must be a valid column and a date or timestamp
-        _UpsertTSColumnObj = _ParentView.getViewColumn(_UpsertTS);
-        if (_UpsertTSColumnObj == null)
-          PS.AddError("View '" + _ParentView.getFullName() + "' is defining an upserted realization with an upsert timestamp column '" + _UpsertTS + "' which cannot be found.");
-        else if (_UpsertTSColumnObj._SameAsObj.getType() != ColumnType.DATE && _UpsertTSColumnObj._SameAsObj.getType() != ColumnType.DATETIME)
-          PS.AddError("View '" + _ParentView.getFullName() + "' is defining an upserted realization with an upsert timestamp column '" + _UpsertTS + "' which is not a date or timestamp.");
+        _LastUpdatedTSColumnObj = _ParentView.getViewColumn(_LastUpdatedTS);
+        if (_LastUpdatedTSColumnObj == null)
+          PS.AddError("View '" + _ParentView.getFullName() + "' is defining an upserted realization with an upsert timestamp column '" + _LastUpdatedTS + "' which cannot be found.");
+        else if (_LastUpdatedTSColumnObj._SameAsObj.getType() != ColumnType.DATE && _LastUpdatedTSColumnObj._SameAsObj.getType() != ColumnType.DATETIME)
+          PS.AddError("View '" + _ParentView.getFullName() + "' is defining an upserted realization with an upsert timestamp column '" + _LastUpdatedTS + "' which is not a date or timestamp.");
 
         // Delete timestamp must be a valid column and a date or timestamp
-        _DeleteTSColumnObj = _ParentView.getViewColumn(_DeleteTS);
-        if (_DeleteTSColumnObj == null)
-          PS.AddError("View '" + _ParentView.getFullName() + "' is defining an upserted realization with a delete timestamp column '" + _DeleteTS + "' which cannot be found.");
-        else if (_DeleteTSColumnObj._SameAsObj.getType() != ColumnType.DATE && _DeleteTSColumnObj._SameAsObj.getType() != ColumnType.DATETIME)
-          PS.AddError("View '" + _ParentView.getFullName() + "' is defining an upserted realization with an upsert timestamp column '" + _DeleteTS + "' which is not a date or timestamp.");
+        if (TextUtil.isNullOrEmpty(_DeletedTS) == false)
+          {
+            _DeleteTSColumnObj = _ParentView.getViewColumn(_DeletedTS);
+            if (_DeleteTSColumnObj == null)
+              PS.AddError("View '" + _ParentView.getFullName() + "' is defining an upserted realization with a delete timestamp column '" + _DeletedTS + "' which cannot be found.");
+            else if (_DeleteTSColumnObj._SameAsObj.getType() != ColumnType.DATE && _DeleteTSColumnObj._SameAsObj.getType() != ColumnType.DATETIME)
+              PS.AddError("View '" + _ParentView.getFullName() + "' is defining an upserted realization with an upsert timestamp column '" + _DeletedTS + "' which is not a date or timestamp.");
+          }
 
         // The realized table must have an identity
         if (FirstIdentity == null || FirstIdentity.isEmpty() == true)
@@ -85,13 +84,13 @@ public class ViewRealizeUpsert
           {
             _IdentityViewColumns = new ArrayList<ViewColumn>();
             for (Column C : FirstIdentity)
-             {
-               ViewColumn VC = ParentView.getViewColumn(C._Name);
-               if (VC == null)
-                 PS.AddError("View '" + _ParentView.getFullName() + "' is defining an upserted realization with a realized table whose identity column '"+C._Name+"' cannot be found in the parent view.");
-               else
-                 _IdentityViewColumns.add(VC);
-             }
+              {
+                ViewColumn VC = ParentView.getViewColumn(C._Name);
+                if (VC == null)
+                  PS.AddError("View '" + _ParentView.getFullName() + "' is defining an upserted realization with a realized table whose identity column '" + C._Name + "' cannot be found in the parent view.");
+                else
+                  _IdentityViewColumns.add(VC);
+              }
           }
 
         return Errs == PS.getErrorCount();

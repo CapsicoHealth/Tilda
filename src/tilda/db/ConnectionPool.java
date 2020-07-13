@@ -27,7 +27,7 @@ import java.net.URL;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Enumeration;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -254,13 +254,8 @@ public class ConnectionPool
             if (In == null)
               throw new Exception("Cannot find the Tilda configuration file '/tilda.config.json' in the classpath.");
 
-            Enumeration<URL> resEnum = ConnectionPool.class.getClassLoader().getResources(Secondary == false ? "/tilda.config.json" : "tilda.config.json");
-            while (resEnum.hasMoreElements())
-              {
-                URL url = (URL) resEnum.nextElement();
-                LOG.info("   Found tilda.config.json file in " + url.toString());
-                break;
-              }
+            URL url = FileUtil.getResourceUrl(Secondary == false ? "/tilda.config.json" : "tilda.config.json");
+            LOG.info("   Found tilda.config.json file in " + url.toString());
 
             R = new BufferedReader(new InputStreamReader(In));
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -502,7 +497,7 @@ public class ConnectionPool
                     C = DriverManager.getConnection(BDS.getUrl(), userId, userPswd);
                     C.setAutoCommit(false);
                     C.setTransactionIsolation(java.sql.Connection.TRANSACTION_READ_COMMITTED);
-                    C.setClientInfo("defaultRowFetchSize", "1000");
+                    C.setClientInfo("defaultRowFetchSize", "5000");
                   }
                 PerfTracker.add(TransactionType.CONNECTION_GET, System.nanoTime() - T0);
                 break;
@@ -592,5 +587,26 @@ public class ConnectionPool
       {
         // TODO Auto-generated method stub
         return null;
+      }
+
+    /**
+     * returns a list of connection IDs based on a command-line type of parameter containing a
+     * comma-separated list of connextion IDs, of one (and only one) of the following values:
+     *   - ALL: returns all the connections active in the system
+     *   - ALL_TENANTS: returns the connections for all tenants in the system
+     * @param cmdLineParam
+     * @return
+     */
+    public static Iterator<String> getConnectionListFromParam(String cmdLineParam)
+      {
+        List<String> connectionIds = new ArrayList<>(Arrays.asList(cmdLineParam.split("\\s*,\\s*")));
+
+        if ("ALL".equals(connectionIds.get(0)))
+         return getAllDataSourceIds().keySet().iterator();
+        
+        if ("ALL_TENANTS".equals(connectionIds.get(0)))
+         return getAllTenantDataSourceIds().keySet().iterator();
+        
+        return connectionIds.iterator();
       }
   }

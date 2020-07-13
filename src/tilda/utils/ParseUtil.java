@@ -207,6 +207,18 @@ public class ParseUtil
         return Default;
       }   
     
+    public static short parseShortFlexible(String Val, short Default)
+      {
+        short v = parseShort(Val, Default);
+        if (v != Default)
+         return v;
+        float f = parseFloat(Val, SystemValues.EVIL_VALUE);
+        v = (short) Math.round(f);
+        if (v != Default && v == f)
+         return v;
+        return Default;
+      }
+    
     
     /**
      * @param Name
@@ -1057,6 +1069,31 @@ public class ParseUtil
         return L.toArray(new LocalDate[L.size()]);
       }
 
+    public static LocalDate[] parseLocalDate(String Name, boolean Mandatory, String[] Values, List<StringStringPair> Errors)
+      {
+        if (Values == null || Values.length == 0)
+          {
+            if (Mandatory == true)
+              {
+                LOG.error("Missing parameter '" + Name + "'.");
+                Errors.add(new StringStringPair(Name, "Mandatory Parameter"));
+              }
+            return null;
+          }
+        LocalDate[] result = new LocalDate[Values.length];
+        for (int i = 0; i < Values.length; ++i)
+          {
+            String v = Values[i];
+            LocalDate r = ParseUtil.parseLocalDate(v);
+            if (r == null)
+              {
+                LOG.error("Invalid value '" + v + "' for parameter '" + Name + "'.");
+                Errors.add(new StringStringPair(Name, "Invalid parameter value '"+v+"': expecting a local date formatted string."));
+              }
+            result[i] = r; 
+          }
+        return result;
+      }
     
 
     /**

@@ -28,7 +28,9 @@ import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -227,6 +229,11 @@ public class DateTimeUtil
         return ZDT == null ? null : ZDT.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
       }
 
+    public static String printDateForSQL(LocalDate DT)
+      {
+        return DT == null ? null : DT.format(DateTimeFormatter.ISO_DATE);
+      }
+    
     public static List<String> printDateTimeForSQL(List<ZonedDateTime> ZDTs)
       {
         if (ZDTs == null)
@@ -312,9 +319,6 @@ public class DateTimeUtil
       }
 
 
-    private static Pattern _ISO_NOZONE_DATETIME = Pattern.compile("(\\d{4}).(\\d{2}).(\\d{2}).(\\d{2}).(\\d{2}).(\\d{2})");
-
-
     public static LocalDate parseDateFromJSON(String DateStr)
       {
         if (TextUtil.isNullOrEmpty(DateStr) == true)
@@ -331,6 +335,8 @@ public class DateTimeUtil
       }
 
 
+    private static Pattern _ISO_NOZONE_DATETIME = Pattern.compile("(\\d{4}).(\\d{2}).(\\d{2}).(\\d{2}).(\\d{2}).(\\d{2})");
+    
     /**
      * Takes a zone-less timestamp and returns a ZonedDateTime based on the system zone.
      * It will auto-complete with 0's if hours, minutes and/or seconds are missing and use
@@ -402,6 +408,13 @@ public class DateTimeUtil
         return ZDT == null ? "NA" : ZDT.format(SuperCompactFormater);
       }
 
+    private static final DateTimeFormatter Time24HFormater = DateTimeFormatter.ofPattern("HH:mm:ss");
+    
+    public static String printTime24(ZonedDateTime ZDT)
+      {
+        return ZDT == null ? "NA" : ZDT.format(Time24HFormater);
+      }
+    
 
     private static final DateTimeFormatter DayTimeFormater = DateTimeFormatter.ofPattern("HH:mm");
     private static final DateTimeFormatter WeekFormater    = DateTimeFormatter.ofPattern("EEEE d, HH:mm");
@@ -463,6 +476,23 @@ public class DateTimeUtil
         return ZDT.withZoneSameInstant(_UTC);
       }
 
+    public static ZonedDateTime toZonedDateTime(LocalDate dt, String zoneStr)
+      {
+        if (dt == null)
+          return null;
+
+        ZonedDateTime ZDT = ZonedDateTime.of(dt.atStartOfDay(), ZoneId.systemDefault());
+        try
+          {
+            return ZDT.withZoneSameInstant(zoneStr == null ? _UTC : ZoneId.of(zoneStr));
+          }
+        catch (Exception E)
+          {
+            LOG.warn("Invalid zone id '" + zoneStr + "'. Used zone offset instead");
+          }
+        return ZDT.withZoneSameInstant(_UTC);
+      }
+    
 
     public static LocalDate toLocalDate(java.sql.Date D)
       {
@@ -470,6 +500,20 @@ public class DateTimeUtil
         return D == null ? null : LocalDate.of(D.getYear() + 1900, D.getMonth() + 1, D.getDate());
       }
 
+    public static List<LocalDate> toLocalDates(List<java.sql.Date> D)
+      {
+        List<LocalDate> L = new ArrayList<LocalDate>();
+        for (java.sql.Date d : D)
+          L.add(toLocalDate(d));
+        return L;
+      }
+    public static Set<LocalDate> toLocalDates(Set<java.sql.Date> D)
+      {
+        Set<LocalDate> S = new HashSet<LocalDate>();
+        for (java.sql.Date d : D)
+          S.add(toLocalDate(d));
+        return S;
+      }
 
 
     /**
@@ -534,7 +578,7 @@ public class DateTimeUtil
       }
 
     /**
-     * Comput ethe number of days using th emidnight rule, i.e., from 23:59 Monday night to 00:01 Tuesday morning, that
+     * Compute the number of days using the midnight rule, i.e., from 23:59 Monday night to 00:01 Tuesday morning, that
      * counts as one day.
      * 
      * @param Start
@@ -691,5 +735,4 @@ public class DateTimeUtil
         LOG.debug("newL: " + TextUtil.print(newL.iterator()));
         return newL;
       }
-
   }

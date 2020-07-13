@@ -92,7 +92,7 @@ public class ParserSession
            return S;
         LOG.debug("Schema " + resourceName + " cannot be found out of the current schema list [" + getSchemaList() + "].");
         return null;
-      }
+      }    
 
 
     public Schema getSchemaForDependency(String PackageName, String SchemaName)

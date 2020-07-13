@@ -21,7 +21,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -64,19 +63,7 @@ public class Import
                   {
                     currentFile = arguments.get(i + 1);
                     Importer I = getFileImporter(null, currentFile);
-                    String[] connectionIdsArr = arguments.get(i + 3).split(",");
-                    List<String> connectionIds = new ArrayList<>(Arrays.asList(connectionIdsArr));
-                    Iterator<String> iterator = connectionIds.iterator();
-
-                    if ("ALL".equals(connectionIds.get(0)))
-                      {
-                        iterator = ConnectionPool.getAllDataSourceIds().keySet().iterator();
-                      }
-                    else if ("ALL_TENANTS".equals(connectionIds.get(0)))
-                      {
-                        iterator = ConnectionPool.getAllTenantDataSourceIds().keySet().iterator();
-                      }
-
+                    Iterator<String> iterator = ConnectionPool.getConnectionListFromParam(arguments.get(i + 3));
                     // Loop connectionIds and run Import
                     while (iterator.hasNext())
                       {

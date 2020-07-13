@@ -134,14 +134,12 @@ public class Docs implements CodeGenDocs
 
 
     @Override
-    public void DataClassDocs(PrintWriter Out, GeneratorSession G, Object O)
+    public void DataClassDocs(PrintWriter Out, GeneratorSession G, Object O, boolean exportPublish)
       throws Exception
       {
         Out.println(Helper.getMultiLineDocCommentStart());
-        tilda.generation.html.Docs.DataClassDocs(Out, G, O);
-        Out.println(SystemValues.NEWLINE
-                   + Helper.getMultiLineCommentEnd()
-                   );
+        tilda.generation.html.Docs.DataClassDocs(Out, G, O, exportPublish);
+        Out.println(SystemValues.NEWLINE+ Helper.getMultiLineCommentEnd());
       }
 
 

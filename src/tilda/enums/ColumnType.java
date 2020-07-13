@@ -17,6 +17,7 @@
 package tilda.enums;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -108,6 +109,7 @@ public enum ColumnType
             } // UUID
         };
 
+        // Whether the first element of each row can be converted to any of the elements following
         _CompatibleDBTypes = new ColumnType[][] {
             { STRING, JSON, CHAR, INTEGER, LONG, FLOAT, DOUBLE, BOOLEAN, DATE, DATETIME, BITFIELD, SHORT, NUMERIC, UUID
             } // STRING
@@ -115,7 +117,7 @@ public enum ColumnType
             } // JSON
             , { CHAR, STRING, BOOLEAN
             } // CHAR
-            , { SHORT, BOOLEAN, STRING
+            , { SHORT, BOOLEAN, STRING, INTEGER, LONG, DOUBLE, FLOAT, NUMERIC, BITFIELD
             } // SHORT TODO:CHECK
             , { INTEGER, BOOLEAN, STRING, LONG, DOUBLE, FLOAT, SHORT, NUMERIC, BITFIELD
             } // INTEGER
@@ -280,6 +282,13 @@ public enum ColumnType
                   throw new Exception(Errors.get(0)._V);
                 return isSet == true ? CollectionUtil.toSet(val) : CollectionUtil.toList(val);
               }
+            case DATE:
+              {
+                LocalDate[] val = ParseUtil.parseLocalDate("SQLDateArray", true, parts, Errors);
+                if (Errors.isEmpty() == false)
+                  throw new Exception(Errors.get(0)._V);
+                return isSet == true ? CollectionUtil.toSet(val) : CollectionUtil.toList(val);
+              }
             case DOUBLE:
               {
                 double[] val = ParseUtil.parseDouble("SQLDoubleArray", true, parts, Errors);
@@ -350,37 +359,107 @@ public enum ColumnType
         return Type == null ? false : Type.isNumber();
       }
 
-/*
-    public String getDefaultNullValue()
+    /*
+     * public String getDefaultNullValue()
+     * {
+     * switch (this)
+     * {
+     * case BOOLEAN:
+     * return "Boolean.FALSE";
+     * case CHAR:
+     * return "Character.UNASSIGNED";
+     * case DOUBLE:
+     * return "Double.valueOf(SystemValues.EVIL_VALUE)";
+     * case FLOAT:
+     * return "Float.valueOf(SystemValues.EVIL_VALUE)";
+     * case INTEGER:
+     * return "Integer.valueOf(SystemValues.EVIL_VALUE)";
+     * case SHORT:
+     * return "Short.valueOf(SystemValues.EVIL_VALUE)";
+     * case LONG:
+     * return "Long.valueOf(SystemValues.EVIL_VALUE)";
+     * case NUMERIC:
+     * case DATE:
+     * case DATETIME:
+     * case UUID:
+     * case STRING:
+     * case JSON:
+     * case BINARY:
+     * case BITFIELD:
+     * return "null";
+     * default:
+     * throw new Error("Incomplete switch on ColumnType "+this.name());
+     * }
+     * }
+     */
+
+    public String getBigQueryType()
       {
         switch (this)
           {
-            case BOOLEAN:
-              return "Boolean.FALSE";
-            case CHAR:
-              return "Character.UNASSIGNED";
-            case DOUBLE:
-              return "Double.valueOf(SystemValues.EVIL_VALUE)";
-            case FLOAT:
-              return "Float.valueOf(SystemValues.EVIL_VALUE)";
-            case INTEGER:
-              return "Integer.valueOf(SystemValues.EVIL_VALUE)";
-            case SHORT:
-              return "Short.valueOf(SystemValues.EVIL_VALUE)";
-            case LONG:
-              return "Long.valueOf(SystemValues.EVIL_VALUE)";
-            case NUMERIC:
-            case DATE:
-            case DATETIME:
-            case UUID:
             case STRING:
+            case CHAR:
+            case UUID:
+              return "STRING";
+            case BOOLEAN:
+              return "BOOL";
+            case DOUBLE:
+            case FLOAT:
+              return "FLOAT64";
+            case SHORT:
+            case INTEGER:
+            case LONG:
+              return "INT64";
+            case NUMERIC:
+              return "NUMERIC";
+            case DATE:
+              return "DATE";
+            case DATETIME:
+              return "TIMESTAMP";
             case JSON:
+              return "STRING";
             case BINARY:
             case BITFIELD:
-              return "null";
-           default:
-              throw new Error("Incomplete switch on ColumnType "+this.name());
+              return "BYTES";
+            default:
+              throw new Error("Incomplete switch in getBigQueryType() on ColumnType " + this.name());
           }
       }
-*/
+
+    public int getSQLType()
+      {
+        switch (this)
+          {
+            case STRING:
+            case CHAR:
+            case UUID:
+            case JSON:
+              return java.sql.Types.VARCHAR;
+            case BOOLEAN:
+              return java.sql.Types.BOOLEAN;
+            case DOUBLE:
+              return java.sql.Types.DOUBLE;
+            case FLOAT:
+              return java.sql.Types.FLOAT;
+            case SHORT:
+              return java.sql.Types.SMALLINT;
+            case INTEGER:
+              return java.sql.Types.INTEGER;
+            case LONG:
+              return java.sql.Types.BIGINT;
+            case NUMERIC:
+              return java.sql.Types.NUMERIC;
+            case DATE:
+              return java.sql.Types.DATE;
+            case DATETIME:
+              return java.sql.Types.TIMESTAMP;
+            case BINARY:
+              return java.sql.Types.VARBINARY;
+            case BITFIELD:
+              return java.sql.Types.BINARY;
+            default:
+              throw new Error("Incomplete switch in getSQLType() on ColumnType " + this.name());
+          }
+      }
+
   }

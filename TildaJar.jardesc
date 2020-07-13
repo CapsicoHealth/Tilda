@@ -12,5 +12,6 @@
     </manifest>
     <selectedElements exportClassFiles="true" exportJavaFiles="true" exportOutputFolder="false">
         <javaElement handleIdentifier="=Tilda/src"/>
+        <javaElement handleIdentifier="=Tilda/src-antlr4"/>
     </selectedElements>
 </jardesc>

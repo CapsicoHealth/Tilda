@@ -16,6 +16,7 @@
 
 package tilda.db;
 
+import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -34,6 +35,7 @@ import tilda.types.Nullable;
 import tilda.types.Type_BooleanPrimitive;
 import tilda.types.Type_CharCollection;
 import tilda.types.Type_CharPrimitive;
+import tilda.types.Type_DatePrimitive;
 import tilda.types.Type_DatetimePrimitive;
 import tilda.types.Type_DoublePrimitive;
 import tilda.types.Type_FloatPrimitive;
@@ -487,12 +489,17 @@ public abstract class QueryHelper
         public final String _Str;
       }
 
+    protected static boolean opOK(StatementType st, S s)
+      {
+        return st == StatementType.SELECT && (s == S.WHERE || s == S.FROM)
+        || st == StatementType.DELETE && (s == S.WHERE || s == S.FROM)
+        || st == StatementType.UPDATE && (s == S.WHERE || s == S.SET);
+      }
+
     protected final void opVal(Op O, String V)
     throws Exception
       {
-        if (_ST == StatementType.SELECT && (_Section == S.WHERE || _Section == S.FROM)
-        || _ST == StatementType.DELETE && (_Section == S.WHERE || _Section == S.FROM)
-        || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
+        if (opOK(_ST, _Section) == true)
           {
             if (V == null)
               {
@@ -523,7 +530,7 @@ public abstract class QueryHelper
     protected final void opVal(Op O, boolean V)
     throws Exception
       {
-        if (_ST == StatementType.SELECT && (_Section == S.WHERE || _Section == S.FROM) || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
+        if (opOK(_ST, _Section) == true)
           {
             _QueryStr.append(O._Str).append(V);
             if (_Section != S.SET)
@@ -536,7 +543,7 @@ public abstract class QueryHelper
     protected final void opVal(Op O, double V)
     throws Exception
       {
-        if (_ST == StatementType.SELECT && (_Section == S.WHERE || _Section == S.FROM) || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
+        if (opOK(_ST, _Section) == true)
           {
             _QueryStr.append(O._Str).append(V);
             if (_Section != S.SET)
@@ -549,7 +556,7 @@ public abstract class QueryHelper
     protected final void opVal(Op O, float V)
     throws Exception
       {
-        if (_ST == StatementType.SELECT && (_Section == S.WHERE || _Section == S.FROM) || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
+        if (opOK(_ST, _Section) == true)
           {
             _QueryStr.append(O._Str).append(V);
             if (_Section != S.SET)
@@ -562,7 +569,7 @@ public abstract class QueryHelper
     protected final void opVal(Op O, int V)
     throws Exception
       {
-        if (_ST == StatementType.SELECT && (_Section == S.WHERE || _Section == S.FROM) || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
+        if (opOK(_ST, _Section) == true)
           {
             _QueryStr.append(O._Str).append(V);
             if (_Section != S.SET)
@@ -575,7 +582,7 @@ public abstract class QueryHelper
     protected final void opVal(Op O, long V)
     throws Exception
       {
-        if (_ST == StatementType.SELECT && (_Section == S.WHERE || _Section == S.FROM) || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET) || _ST == StatementType.DELETE && _Section == S.WHERE)
+        if (opOK(_ST, _Section) == true)
           {
             _QueryStr.append(O._Str).append(V);
             if (_Section != S.SET)
@@ -588,7 +595,7 @@ public abstract class QueryHelper
     protected final void opVal(Op O, char V)
     throws Exception
       {
-        if (_ST == StatementType.SELECT && (_Section == S.WHERE || _Section == S.FROM) || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
+        if (opOK(_ST, _Section) == true)
           {
             _QueryStr.append(O._Str).append('\'').append(V).append('\'');
             if (_Section != S.SET)
@@ -601,7 +608,7 @@ public abstract class QueryHelper
     protected final void opVal(Op O, ZonedDateTime V)
     throws Exception
       {
-        if (_ST == StatementType.SELECT && (_Section == S.WHERE || _Section == S.FROM) || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
+        if (opOK(_ST, _Section) == true)
           {
             if (DateTimeUtil.isNowPlaceholder(V) == true)
               _QueryStr.append(O._Str).append(_C.getCurrentTimestampStr());
@@ -622,6 +629,39 @@ public abstract class QueryHelper
             else
               {
                 _QueryStr.append(O._Str).append("'").append(DateTimeUtil.printDateTimeForSQL(V)).append("'");
+              }
+            if (_Section != S.SET)
+              _Section = S.WHERE;
+          }
+        else
+          throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
+      }
+
+
+    protected final void opVal(Op O, LocalDate V)
+    throws Exception
+      {
+        if (opOK(_ST, _Section) == true)
+          {
+            if (DateTimeUtil.isNowPlaceholder(V) == true)
+              _QueryStr.append(O._Str).append(_C.getCurrentDateStr());
+            else if (V == null)
+              {
+                if (_Section == S.WHERE || _Section == S.FROM)
+                  {
+                    if (O == Op.EQUALS)
+                      _QueryStr.append(" IS NULL ");
+                    else if (O == Op.NOT_EQUALS)
+                      _QueryStr.append(" IS NOT NULL ");
+                    else
+                      throw new Exception("Invalid query syntax: cannot use the operator " + O + " with a NULL value: " + _QueryStr.toString());
+                  }
+                else
+                  _QueryStr.append(" = NULL ");
+              }
+            else
+              {
+                _QueryStr.append(O._Str).append("'").append(DateTimeUtil.printDateForSQL(V)).append("'");
               }
             if (_Section != S.SET)
               _Section = S.WHERE;
@@ -1305,6 +1345,12 @@ public abstract class QueryHelper
         return compareBase(Col1, Col2, Op.EQUALS);
       }
 
+    public QueryHelper equals(Type_DatePrimitive Col1, Type_DatePrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.EQUALS);
+      }
+
     public QueryHelper equals(Type_CharPrimitive Col1, Type_CharPrimitive Col2)
     throws Exception
       {
@@ -1410,6 +1456,13 @@ public abstract class QueryHelper
         return this;
       }
 
+    public QueryHelper equals(Type_DatePrimitive Col, LocalDate DT)
+    throws Exception
+      {
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        opVal(Op.EQUALS, DT);
+        return this;
+      }
 
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Col < value

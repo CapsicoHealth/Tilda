@@ -55,7 +55,7 @@ public interface CodeGenDocs
 
     public void DataFileDocs (PrintWriter Out, GeneratorSession G) throws Exception;
     
-    public void DataClassDocs(PrintWriter Out, GeneratorSession G, Object O) throws Exception;
+    public void DataClassDocs(PrintWriter Out, GeneratorSession G, Object O, boolean exportPublish) throws Exception;
     
     public void docField(PrintWriter Out, GeneratorSession G, Column C, String DocsHeader) throws Exception;
 

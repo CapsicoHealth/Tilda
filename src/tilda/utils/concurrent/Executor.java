@@ -34,12 +34,14 @@ public class Executor
 
     public Executor(int MaxThreadCount)
       {
+        _MaxThreadCount = MaxThreadCount;
         _Executor = Executors.newFixedThreadPool(MaxThreadCount);
       }
 
     protected List<Exception>      _Exceptions = new ArrayList<Exception>();
     protected List<SimpleRunnable> _Runnables  = new ArrayList<SimpleRunnable>();
     protected ExecutorService      _Executor;
+    protected final int            _MaxThreadCount;
 
     public void addException(Exception E)
       {
@@ -52,12 +54,12 @@ public class Executor
     public void addRunnable(SimpleRunnable R)
     throws Exception
       {
-        if (R._Executor != null)
-          throw new Exception("Runnable " + R._Name + " is already fregistered to an Orchestrator.");
+        if (R._executor != null)
+          throw new Exception("Runnable " + R._name + " is already fregistered to an Orchestrator.");
         synchronized (_Runnables)
           {
             _Runnables.add(R);
-            R._Executor = this;
+            R._executor = this;
           }
       }
 
@@ -80,12 +82,17 @@ public class Executor
               }
           }
         long seqTimeNano = 0;
+        long totalCount = 0;
         for (SimpleRunnable R : _Runnables)
-          seqTimeNano+=R._taskTimeNano;
+          {
+            seqTimeNano+=R._taskTimeNano;
+            totalCount+=R._totalCount;
+          }
         long duration = System.nanoTime() - T0;
         LOG.debug("\n\n*******************************************************************************************\n"
-        + "** Executed " + _Runnables.size() + " tasks in " + DurationUtil.printDuration(duration) + ".\n"
-        + "** Sequential time would have been around " + DurationUtil.printDuration(seqTimeNano) + " or "+NumberFormatUtil.printPercentWith1Dec(duration, seqTimeNano)+"% slower.\n"
+        + "** Executed " + _Runnables.size() + " tasks in " + DurationUtil.printDuration(duration) + " over "+_MaxThreadCount+" threads.\n"
+        + (totalCount==0?"":"** Processed "+totalCount+" records (" + DurationUtil.printPerformancePerMinute(duration, totalCount) + " records/min).\n")
+        + "** Sequential time would have been around " + DurationUtil.printDuration(seqTimeNano) + " or "+NumberFormatUtil.printPercentWith1Dec(seqTimeNano, duration)+"% slower.\n"
         + "*******************************************************************************************\n\n");
         return _Exceptions;
       }

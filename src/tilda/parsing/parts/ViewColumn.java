@@ -31,7 +31,6 @@ import tilda.enums.ColumnType;
 import tilda.enums.FrameworkColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.enums.JoinType;
-import tilda.enums.OrderType;
 import tilda.enums.TildaType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ReferenceHelper;
@@ -91,8 +90,7 @@ public class ViewColumn
                                                                                         // _SameAsObj._ParentObject is the source object.
     public transient JoinType            _Join;
     public transient AggregateType       _Aggregate;
-    public transient List<Column>        _OrderByObjs      = new ArrayList<Column>();
-    public transient List<OrderType>     _OrderByOrders    = new ArrayList<OrderType>();
+    public transient List<OrderBy>       _OrderByObjs      = new ArrayList<OrderBy>();
     public transient TypeDef             _Type;
 
     public transient boolean             _FailedValidation = false;
@@ -127,6 +125,7 @@ public class ViewColumn
 
     /**
      * If the ViewColumn defines an expression and type, returns that. Otherwise, it returns the aggregate or original type.
+     * 
      * @return
      */
     public ColumnType getType()
@@ -136,6 +135,7 @@ public class ViewColumn
 
     /**
      * if it's not an aggregate, returns the original type of the sameAs obj, otherwise, returns the aggregate type.
+     * 
      * @return
      */
     public ColumnType getAggregateType()
@@ -146,6 +146,11 @@ public class ViewColumn
       }
 
 
+    /**
+     * Handles deprecated "sameas" and replaces with "sameAs" if appropriate.
+     * @param PS
+     * @return
+     */
     public boolean FixSameAs(ParserSession PS)
       {
         if (TextUtil.isNullOrEmpty(_Sameas_DEPRECATED) == false)
@@ -169,8 +174,7 @@ public class ViewColumn
         // Mandatories
         if (TextUtil.isNullOrEmpty(_SameAs) == true)
           return PS.AddError("View column '" + getFullName() + "' didn't define a 'sameAs'. It is mandatory.");
-
-        if (TextUtil.isNullOrEmpty(_SameAs) == false)
+        else if (_FCT != FrameworkColumnType.TS)
           {
             _SameAsObj = ValidateSameAs(PS, getFullName(), _SameAs, _ParentView);
             if (_SameAsObj == null)
@@ -228,7 +232,7 @@ public class ViewColumn
             else if (_Distinct == true)
               PS.AddError("View Column '" + getFullName() + "' defined an orderBy value in a Distinct aggregate, which is not supported.");
             Set<String> Names = new HashSet<String>();
-            Index.processOrderBy(PS, "View Column '" + getFullName() + "' array aggregate", Names, ParentView, _OrderBy, _OrderByObjs, _OrderByOrders);
+            _OrderByObjs = OrderBy.processOrderBys(PS, "View Column '" + getFullName() + "' array aggregate", ParentView, _OrderBy, true);
           }
 
         if (_Exclude.length > 0 || _Block.length > 0)
@@ -244,7 +248,7 @@ public class ViewColumn
         // Checking that type information is only present when expression is specified and vice-versa.
         if (TextUtil.isNullOrEmpty(_Expression) == false && _Type == null)
           PS.AddError("View Column '" + getFullName() + "' defined an 'expression' but neglected to specify type information and optionally, size.");
-        if (TextUtil.isNullOrEmpty(_Expression) == true && _Type != null)
+        if (TextUtil.isNullOrEmpty(_Expression) == true && _Type != null && _FCT != FrameworkColumnType.TS)
           PS.AddError("View Column '" + getFullName() + "' defined extra type/size information without an 'expression': type and size are for expressions only.");
 
         return Errs == PS.getErrorCount();
@@ -368,4 +372,19 @@ public class ViewColumn
         && (_Aggregate == null || _Aggregate.isZonedDateTimeCompatible() == true)
         && (TextUtil.isNullOrEmpty(_Expression) == true || _Type._Type == ColumnType.DATETIME);
       }
+
+    public boolean isList()
+      {
+        return _SameAsObj != null && _SameAsObj.isList() == true || _Aggregate != null && _Aggregate.isList() == true;
+      }
+    public boolean isSet()
+      {
+        return _SameAsObj != null && _SameAsObj.isSet() == true && _Aggregate == null;
+      }
+
+    public boolean isCollection()
+      {
+        return _SameAsObj != null && _SameAsObj.isCollection() == true || _Aggregate != null && _Aggregate.isList() == true;
+      }
+    
   }

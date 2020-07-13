@@ -39,6 +39,6 @@ public class ColumnComment extends MigrationAction
     @Override
     public String getDescription()
       {
-        return "Set column "+_Col.getFullName()+"'s comment";
+        return "Set comment on column "+_Col.getFullName();
       }
   }

@@ -94,8 +94,10 @@ public class View extends Base
     public Column getColumn(String name)
       {
         for (ViewColumn C : _ViewColumns)
-          if (C != null && C._Name != null && C._Name.equals(name) == true)
-            return C._SameAsObj;
+         {
+           if (C != null && C._Name != null && C._Name.equals(name) == true)
+             return C._SameAsObj;
+         }
         return null;
       }
 
@@ -158,7 +160,9 @@ public class View extends Base
 
     public String getRealizedTableName(boolean includeSchemaName)
       {
-        return _Realize == null ? null : (includeSchemaName == true ? _ParentSchema._Name + "." : "") + (TextUtil.isNullOrEmpty(_Realize._Name) == false ? _Realize._Name : _Name.substring(0, _Name.length() - (_Pivots.isEmpty() == false ? "PivotView" : "View").length()) + "Realized");
+        if (_Realize != null && includeSchemaName == true && _RealizedObj == null)
+          LOG.debug("XXX");
+        return _Realize == null ? null : (includeSchemaName == true ? _RealizedObj._ParentSchema._Name + "." : "") + (TextUtil.isNullOrEmpty(_Realize._Name) == false ? _Realize._Name : _Name.substring(0, _Name.length() - (_Pivots.isEmpty() == false ? "PivotView" : "View").length()) + "Realized");
       }
 
     public String getRootViewName()
@@ -363,14 +367,14 @@ public class View extends Base
           PS.AddError("The View '" + _Name + "' is defining a 'pivotColumns' element which is deprecated. Please use the new 'pivots' constructs instead.");
         if (TextUtil.isNullOrEmpty(_CountStarDeprecated) == false)
           PS.AddError("View '" + getFullName() + "' is defining a 'countStar' element which is deprecated. Please use a standard column definition with an aggregate of 'COUNT'.");
-
+        
         // gotta construct a shadow Object for code-gen.
         // LOG.debug("View " + _Name + ": " + TextUtil.print(getColumnNames()));
         Object O = MakeObjectProxy(PS);
         // LOG.debug("Object " + O._Name + ": " + TextUtil.print(O.getColumnNames()));
 
         if (_Realize != null)
-          _Realize.Validate(PS, this, new ViewRealizedWrapper(O));
+          _Realize.Validate(PS, this, new ViewRealizedWrapper(O, this));
 
         _Validated = Errs == PS.getErrorCount();
         return _Validated;
@@ -515,8 +519,9 @@ public class View extends Base
                 ViewColumn VC = new ViewColumn();
                 VC._SameAs = "_TS.p";
                 VC._Name = _TimeSeries._Name;
+                VC._TypeStr = ColumnType.DATE.name();
                 VC._FCT = FrameworkColumnType.TS;
-                VC._ParentView = this;
+                VC.Validate(PS, this);
                 _ViewColumns.add(firstAgg, VC);
               }
           }
@@ -861,7 +866,7 @@ public class View extends Base
               continue;
             if (V.isPivotColumn(col) == true)
               break;
-            if (col._Name.startsWith(startingWith) == false)
+            if (col._Name != null && col._Name.startsWith(startingWith) == false)
               continue;
             ViewColumn NewVC = new ViewColumn();
             // LOG.debug(col._Name);
@@ -1280,7 +1285,7 @@ public class View extends Base
      */
     public String getViewSubRealizeViewName()
       {
-        return _ParentSchema._Name + "_" + _Name + "_R";
+        return (_RealizedObj!= null ? _RealizedObj._ParentSchema : _ParentSchema)._Name + "_" + (_Name) + "_R";
       }
 
     /**

@@ -17,9 +17,7 @@
 package tilda.parsing.parts;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -27,21 +25,19 @@ import org.apache.logging.log4j.Logger;
 import com.google.gson.annotations.SerializedName;
 
 import tilda.enums.FrameworkColumnType;
-import tilda.enums.OrderType;
 import tilda.parsing.ParserSession;
 
 public class ViewDistinctOn
   {
-    static final Logger              LOG            = LogManager.getLogger(ViewDistinctOn.class.getName());
+    static final Logger               LOG          = LogManager.getLogger(ViewDistinctOn.class.getName());
 
     /*@formatter:off*/
     @SerializedName("columns" ) public String[]       _Columns;
     @SerializedName("orderBy" ) public String[]       _OrderBy;
     /*@formatter:on*/
 
-    public transient List<ViewColumn> _ColumnObjs    = new ArrayList<ViewColumn>();
-    public transient List<Column>     _OrderByObjs   = new ArrayList<Column>();
-    public transient List<OrderType>  _OrderByOrders = new ArrayList<OrderType>();
+    public transient List<ViewColumn> _ColumnObjs  = new ArrayList<ViewColumn>();
+    public transient List<OrderBy>    _OrderByObjs = new ArrayList<OrderBy>();
 
 
     public ViewDistinctOn()
@@ -64,15 +60,14 @@ public class ViewDistinctOn
         for (int i = 0; i < _ColumnObjs.size(); ++i)
           {
             if (ParentView._ViewColumns.get(i)._FCT == FrameworkColumnType.TZ == true)
-             ++offset; 
-            if (_ColumnObjs.get(i)._Name.equalsIgnoreCase(ParentView._ViewColumns.get(i+offset)._Name) == false)
-              return PS.AddError("View '" + _ParentView.getFullName() + "' is defining distinctOn with columns not matching the initial columns of the view: expecting '"+ParentView._ViewColumns.get(i+offset)._Name+"' in position "+i+" but got '"+_ColumnObjs.get(i)._Name+"' instead.");
+              ++offset;
+            if (_ColumnObjs.get(i)._Name.equalsIgnoreCase(ParentView._ViewColumns.get(i + offset)._Name) == false)
+              return PS.AddError("View '" + _ParentView.getFullName() + "' is defining distinctOn with columns not matching the initial columns of the view: expecting '" + ParentView._ViewColumns.get(i + offset)._Name + "' in position " + i + " but got '" + _ColumnObjs.get(i)._Name + "' instead.");
           }
 
         if (_OrderBy != null && _OrderBy.length > 0)
           {
-            Set<String> Names = new HashSet<String>();
-            Index.processOrderBy(PS, "Object '" + _ParentView.getFullName() + "' defines distinctOn", Names, _ParentView, _OrderBy, _OrderByObjs, _OrderByOrders);
+            _OrderByObjs = OrderBy.processOrderBys(PS, "Object '" + _ParentView.getFullName() + "' defines distinctOn", _ParentView, _OrderBy, true);
           }
         return Errs == PS.getErrorCount();
       }
@@ -84,7 +79,7 @@ public class ViewDistinctOn
           {
             ViewColumn VC = ParentView.getViewColumn(s);
             if (VC == null)
-             PS.AddError("View '" + ParentView.getFullName() + "' is defining distinctOn with column '"+s+"' which cannot be found.");
+              PS.AddError("View '" + ParentView.getFullName() + "' is defining distinctOn with column '" + s + "' which cannot be found.");
             else
               L.add(VC);
           }

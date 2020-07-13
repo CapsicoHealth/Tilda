@@ -63,7 +63,7 @@ import tilda.utils.pairs.StringStringPair;
 
 public final class Connection
   {
-    static final Logger LOG = LogManager.getLogger(Connection.class.getName());
+    static final Logger LOG                 = LogManager.getLogger(Connection.class.getName());
 
     public Connection(java.sql.Connection C)
       throws Exception,
@@ -242,7 +242,8 @@ public final class Connection
     public final Statement createStatement()
     throws SQLException
       {
-        return _C.createStatement();
+        Statement S = _C.createStatement();
+        return S;
       }
 
 
@@ -275,7 +276,8 @@ public final class Connection
     public PreparedStatement prepareStatement(String Q)
     throws SQLException
       {
-        return _C.prepareStatement(Q);
+        PreparedStatement PS = _C.prepareStatement(Q);
+        return PS;
       }
 
     public String getCurrentTimestampStr()
@@ -284,23 +286,29 @@ public final class Connection
         return _DB.getCurrentTimestampStr();
       }
 
+    public String getCurrentDateStr()
+    throws SQLException
+      {
+        return _DB.getCurrentDateStr();
+      }
+
 
     public boolean isErrNoData(Throwable T)
     throws SQLException
       {
-        return isSQLExcception(T) == false ? false: _DB.isErrNoData((SQLException) T);
+        return isSQLExcception(T) == false ? false : _DB.isErrNoData((SQLException) T);
       }
 
     public boolean isLockOrConnectionError(Throwable T)
     throws SQLException
       {
-        return isSQLExcception(T) == false ? false: _DB.isLockOrConnectionError((SQLException) T);
+        return isSQLExcception(T) == false ? false : _DB.isLockOrConnectionError((SQLException) T);
       }
 
     public boolean isCanceledError(Throwable T)
     throws SQLException
       {
-        return isSQLExcception(T) == false ? false: _DB.isCanceledError((SQLException) T);
+        return isSQLExcception(T) == false ? false : _DB.isCanceledError((SQLException) T);
       }
 
     private boolean isSQLExcception(Throwable T)
@@ -320,7 +328,7 @@ public final class Connection
 
         return true;
       }
-    
+
     public int executeSelect(String SchemaName, String TableName, String Query, RecordProcessor RP)
     throws Exception
       {
@@ -392,7 +400,9 @@ public final class Connection
         if (_DB.needsSavepoint() == false)
           return;
         long T0 = System.nanoTime();
-        _SavePoints.add(_C.setSavepoint());
+        Savepoint SP = _C.setSavepoint();
+        _SavePoints.add(SP);
+        // LOG.debug("SAVEPOINT ADD: "+SP.getSavepointId()+ " (total: "+_SavePoints.size()+")");
         PerfTracker.add(TransactionType.SAVEPOINT_SET, System.nanoTime() - T0);
       }
 
@@ -403,15 +413,16 @@ public final class Connection
           return;
 
         long T0 = System.nanoTime();
+        Savepoint SP = _SavePoints.pop();
+        // LOG.debug("SAVEPOINT POP: "+SP.getSavepointId() + " (total: "+(_SavePoints.size()+1)+")");
         if (commit == true)
           {
-            Savepoint SP = _SavePoints.pop();
             _C.releaseSavepoint(SP);
             PerfTracker.add(TransactionType.SAVEPOINT_COMMIT, System.nanoTime() - T0);
           }
         else
           {
-            _C.rollback(_SavePoints.pop());
+            _C.rollback(SP);
             PerfTracker.add(TransactionType.SAVEPOINT_ROLLBACK, System.nanoTime() - T0);
           }
       }
@@ -513,7 +524,7 @@ public final class Connection
       {
         return _DB.alterTableAlterColumnNumericSize(this, ColMeta, Col);
       }
-    
+
     public boolean alterTableAlterColumnStringSize(ColumnMeta ColMeta, Column Col)
     throws Exception
       {
@@ -525,7 +536,7 @@ public final class Connection
       {
         return _DB.alterTableAlterColumnType(this, ColMeta, Col, defaultZI);
       }
-    
+
     public boolean alterTableAlterColumnMulti(List<ColMetaColPair> BatchTypeCols, List<ColMetaColPair> BatchSizeCols, ZoneInfo_Data defaultZI)
     throws Exception
       {
@@ -725,6 +736,57 @@ public final class Connection
     throws Exception
       {
         _DB.cancel(this);
+      }
+
+    /**
+     * 
+     * @param CL
+     * @return
+     * @throws Exception
+     */
+    public static int closeAll(List<Connection> CL)
+    throws Exception
+      {
+        int errors = 0;
+        for (int i = 0; i < CL.size(); ++i)
+          try
+            {
+              CL.get(i).close();
+              CL.remove(i);
+              --i;
+            }
+          catch (SQLException E)
+            {
+              ++errors;
+              LOG.error("Couldn't close the connection " + CL.get(i).getBackendId() + "\n", E);
+            }
+        return errors;
+      }
+
+    /**
+     * Commits all the connections in the list. This is doing a straightforward commit and not a fancier 2-phase
+     * coordinated commit of all connections.
+     * @param CL
+     * @throws SQLException If one commit fails, the exception is thrown, and remaining connections are left untouched.
+     */
+    public static void commitAll(List<Connection> CL)
+    throws SQLException
+      {
+        for (int i = 0; i < CL.size(); ++i)
+          CL.get(i).commit();
+      }
+
+    /**
+     * Rollbacks all the connections in the list. This is doing a straightforward rollback and not a fancier 2-phase
+     * coordinated rollback of all connections.
+     * @param CL
+     * @throws SQLException If one rollback fails, the exception is thrown, and remaining connections are left untouched.
+     */
+    public static void rollbackAll(List<Connection> CL)
+    throws SQLException
+      {
+        for (int i = 0; i < CL.size(); ++i)
+          CL.get(i).rollback();
       }
 
   }

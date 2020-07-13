@@ -1,0 +1,10 @@
+[
+    { "name":"id","type":"STRING","mode":"REQUIRED","description":"The id for this enumeration." }
+   ,{ "name":"value","type":"STRING","mode":"REQUIRED","description":"The value for this enumeration." }
+   ,{ "name":"label","type":"STRING","mode":"REQUIRED","description":"The label for this enumeration." }
+   ,{ "name":"deactivatedTZ","type":"STRING","mode":"NULLABLE","description":"Generated helper column to hold the time zone ID for 'deactivated'." }
+   ,{ "name":"deactivated","type":"TIMESTAMP","mode":"NULLABLE","description":"The label for this enumeration." }
+   ,{ "name":"created","type":"TIMESTAMP","mode":"REQUIRED","description":"The timestamp for when the record was created. (TILDA.ZoneInfo)" }
+   ,{ "name":"lastUpdated","type":"TIMESTAMP","mode":"REQUIRED","description":"The timestamp for when the record was last updated. (TILDA.ZoneInfo)" }
+   ,{ "name":"deleted","type":"TIMESTAMP","mode":"NULLABLE","description":"The timestamp for when the record was deleted. (TILDA.ZoneInfo)" }
+]

@@ -18,6 +18,7 @@ package tilda.utils;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.time.ZonedDateTime;
 import java.util.Calendar;
 
 public class DurationUtil
@@ -211,5 +212,10 @@ public class DurationUtil
     public static long getDurationNano(Calendar Start, Calendar End)
       {
         return (End.getTimeInMillis() - Start.getTimeInMillis()) * NANOSECS_PER_MILLISECOND;
+      }
+
+    public static long getDurationMillis(ZonedDateTime Start, ZonedDateTime End)
+      {
+        return (End.toEpochSecond() - Start.toEpochSecond())*1000;
       }
   }

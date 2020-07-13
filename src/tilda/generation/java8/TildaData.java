@@ -104,6 +104,8 @@ public class TildaData implements CodeGenTildaData
           Out.print(", tilda.interfaces.OCCObject");
         if (O.isJsonable() == true)
           Out.print(", tilda.interfaces.JSONable");
+        if (O.isCSVable() == true)
+          Out.print(", tilda.interfaces.CSVable");
         Out.println();
         Out.println(" {");
         Out.println("   protected transient static final Logger LOG = LogManager.getLogger(" + O._BaseClassName + ".class.getName());");
@@ -611,7 +613,7 @@ public class TildaData implements CodeGenTildaData
                 Out.println("           throw new Exception(\"Cannot set " + C.getFullName() + ": the value \'\"+v+\"\' is not a valid Enumerated value as per \'" + FactoryClassName + "\'.\");");
                 Out.println("          v = e.getId();");
                 if (C._Enum._Name != ColumnMapperMode.NONE)
-                  Out.println("          " + (C.isCollection() == true ? "addTo" : "set") + TextUtil.capitalizeFirstCharacter(C.getName()) + "EnumValue(e.getValue());");
+                  Out.println("          " + (C.isCollection() == true ? "addTo" : "set") + TextUtil.capitalizeFirstCharacter(C.getName()) + "EnumValue("+(C.isList()?"pos, ":"")+"e.getValue());");
                 Out.println("        }");
               }
             switch (C.getType())
@@ -1343,6 +1345,60 @@ public class TildaData implements CodeGenTildaData
                 Out.println("           }");
               }
           }
+        if (C._Enum != null && C._Enum._Name != ColumnMapperMode.NONE)
+          {
+            if (C._Enum._Name == ColumnMapperMode.DB)
+              {
+                Column SecondaryC = C._ParentObject.getColumn(C.getName() + "EnumValue");
+                String SecondaryMask = Helper.getRuntimeMask(SecondaryC);
+                Out.println("          __Changes.or(" + SecondaryMask + ");");
+                Out.println("          __Nulls.andNot(" + SecondaryMask + ");");
+              }
+            String ClassNameFactory = Helper.getFullAppFactoryClassName(C._Enum._DestObjectObj);
+            String ClassNameData    = Helper.getFullAppDataClassName(C._Enum._DestObjectObj);
+            if (C.isList() == true)
+              {
+                Out.println("          _" + C.getName() + "EnumValue = new " + (C.isList() == true ? "ArrayList" : "TreeSet") + "<" + JavaJDBCType.getFieldTypeBaseClass(C) + ">();");
+                Out.println("          for (int i = 0; i < _" + C.getName() + ".size(); ++i)");
+                Out.println("           {");
+                Out.println("             String v = _" + C.getName() + ".get(i);");
+                Out.println("             "+ClassNameData+" d = "+ClassNameFactory+".getEnumerationById(v);");
+                Out.println("             if (d == null)");
+                Out.println("              throw new Exception(\"Cannot set " + C.getFullName() + ": the value \'\"+v+\"\' is not a valid Enumerated value as per \'" + ClassNameFactory + "\'.\");");
+                Out.println("             addTo"+TextUtil.capitalizeFirstCharacter(C.getName())+"EnumValue(i, d.getValue());");
+                Out.println("           }");
+              }
+            else if (C.isSet() == true)
+              {
+                Out.println("          _" + C.getName() + "EnumValue = new " + (C.isList() == true ? "ArrayList" : "TreeSet") + "<" + JavaJDBCType.getFieldTypeBaseClass(C) + ">();");
+                Out.println("          for (String v : _" + C.getName() + ")");
+                Out.println("           {");
+                Out.println("             "+ClassNameData+" d = "+ClassNameFactory+".getEnumerationById(v);");
+                Out.println("             if (d == null)");
+                Out.println("              throw new Exception(\"Cannot set " + C.getFullName() + ": the value \'\"+v+\"\' is not a valid Enumerated value as per \'" + ClassNameFactory + "\'.\");");
+                Out.println("             addTo"+TextUtil.capitalizeFirstCharacter(C.getName())+"EnumValue(d.getValue());");
+                Out.println("           }");
+              }
+            else
+              {
+                Out.println("          "+ClassNameData+" d = "+ClassNameFactory+".getEnumerationById(_"+C.getName()+");");
+                Out.println("          if (d == null)");
+                Out.println("           throw new Exception(\"Cannot set " + C.getFullName() + ": the value \'\"+_"+C.getName()+"+\"\' is not a valid Enumerated value as per \'" + ClassNameFactory + "\'.\");");
+                Out.println("          set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "EnumValue(d.getValue());");
+              }
+          }
+/*
+ *           for (int i = 0; i < _categories.size(); ++i)
+           {
+             String v = _categories.get(i);
+             com.capsico.forms.data.FormCategory_Data d = com.capsico.forms.data.FormCategory_Factory.getEnumerationById(v);
+             if (d == null)
+              throw new Exception("ccccc");
+             addToCategoriesEnumValue(i, v);
+           }
+        
+ */
+        
       }
 
     private void genColumnTestBoolean(PrintWriter Out, List<Column> cols)
@@ -1713,9 +1769,7 @@ public class TildaData implements CodeGenTildaData
                     break;
                   case DATE:
                     if (C.isCollection() == true)
-                      Out.print("_" + C.getName() + " = (" + (C.isSet() == true ? "Set<" : "List<") + JavaJDBCType.get(C.getType())._JavaClassType + ">) C.getArray(RS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + "._Type, " + C.isSet() + ");");
-                    // Out.print("_" + C.getName() + Pad + " = " + SerializeArray(G) + "((" + JavaJDBCType.get(C.getType())._JavaClassType + "[])RS.getArray(++i).getArray());");
-                    // throw new Error("Cannot do Date arrays yet!");
+                      Out.print("_" + C.getName() + Pad + " = DateTimeUtil.toLocalDates((" + (C.isSet() == true ? "Set<" : "List<") + "java.sql.Date>) C.getArray(RS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + "._Type, " + C.isSet() + "));");
                     else
                       Out.print("_" + C.getName() + Pad + " = DateTimeUtil.toLocalDate(RS.getDate(++i));");
                     break;
@@ -1964,7 +2018,7 @@ public class TildaData implements CodeGenTildaData
                 if (OM._Sync == true)
                   JSONSync = true;
               }
-            else if (OM._OutputTypes.contains(OutputFormatType.CSV) == true)
+            if (OM._OutputTypes.contains(OutputFormatType.CSV) == true)
               {
                 CSV = true;
                 if (OM._Sync == true)
@@ -1985,7 +2039,7 @@ public class TildaData implements CodeGenTildaData
             for (OutputMapping OM : O._OutputMaps)
               if (OM != null && OM._OutputTypes.contains(OutputFormatType.JSON) == true)
                 Out.println("          case \"" + OM._Name + "\": " + Helper.getFullAppFactoryClassName(O) + ".toJSON" + OM._Name + "(out, (" + Helper.getFullAppDataClassName(O) + ") this, lead, fullObject); break;");
-            Out.println("          default: throw new Exception(\"Unknown JSON exporter '\"+exportName+\"' for " + Helper.getFullAppJsonClassName(O) + "\");");
+            Out.println("          default: throw new Exception(\"Unknown JSON exporter '\"+exportName+\"' for " + Helper.getFullAppFactoryClassName(O) + "\");");
             Out.println("        } ");
             Out.println("    }");
             if (JSONSync == true)
@@ -1997,7 +2051,7 @@ public class TildaData implements CodeGenTildaData
                 for (OutputMapping OM : O._OutputMaps)
                   if (OM != null && OM._OutputTypes.contains(OutputFormatType.JSON) == true && OM._Sync == true)
                     Out.println("          case \"" + OM._Name + "\": " + Helper.getFullAppFactoryClassName(O) + ".toJSON" + OM._Name + "(out, (" + Helper.getFullAppDataClassName(O) + ") this, lead, fullObject, lastsync); break;");
-                Out.println("          default: throw new Exception(\"Unknown JSON sync exporter '\"+exportName+\"' for " + Helper.getFullAppJsonClassName(O) + "\");");
+                Out.println("          default: throw new Exception(\"Unknown JSON sync exporter '\"+exportName+\"' for " + Helper.getFullAppFactoryClassName(O) + "\");");
                 Out.println("        } ");
                 Out.println("    }");
               }
@@ -2005,7 +2059,7 @@ public class TildaData implements CodeGenTildaData
               {
                 Out.println("   public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject, java.time.ZonedDateTime lastsync) throws Exception");
                 Out.println("    {");
-                Out.println("      throw new Exception(\"Unknown JSON sync exporter '\"+exportName+\"' for " + Helper.getFullAppJsonClassName(O) + "\");");
+                Out.println("      throw new Exception(\"Unknown JSON sync exporter '\"+exportName+\"' for " + Helper.getFullAppFactoryClassName(O) + "\");");
                 Out.println("    }");
 
               }
@@ -2020,7 +2074,7 @@ public class TildaData implements CodeGenTildaData
             for (OutputMapping OM : O._OutputMaps)
               if (OM != null && OM._OutputTypes.contains(OutputFormatType.CSV) == true)
                 Out.println("          case \"" + OM._Name + "\": " + Helper.getFullAppFactoryClassName(O) + ".toCSV" + OM._Name + "(out, (" + Helper.getFullAppDataClassName(O) + ") this); break;");
-            Out.println("          default: throw new Exception(\"Unknown CSV exporter '\"+exportName+\"' for " + Helper.getFullAppJsonClassName(O) + "\");");
+            Out.println("          default: throw new Exception(\"Unknown CSV exporter '\"+exportName+\"' for " + Helper.getFullAppFactoryClassName(O) + "\");");
             Out.println("        } ");
             Out.println("    }");
             if (CSVSync == true)
@@ -2032,7 +2086,7 @@ public class TildaData implements CodeGenTildaData
                 for (OutputMapping OM : O._OutputMaps)
                   if (OM != null && OM._OutputTypes.contains(OutputFormatType.CSV) == true)
                     Out.println("          case \"" + OM._Name + "\": " + Helper.getFullAppFactoryClassName(O) + ".toCSV" + OM._Name + "(out, (" + Helper.getFullAppDataClassName(O) + ") this, lastsync); break;");
-                Out.println("          default: throw new Exception(\"Unknown CSV sync exporter '\"+exportName+\"' for " + Helper.getFullAppJsonClassName(O) + "\");");
+                Out.println("          default: throw new Exception(\"Unknown CSV sync exporter '\"+exportName+\"' for " + Helper.getFullAppFactoryClassName(O) + "\");");
                 Out.println("        } ");
                 Out.println("    }");
               }
@@ -2040,7 +2094,7 @@ public class TildaData implements CodeGenTildaData
               {
                 Out.println("   public void toCSV(java.io.Writer out, String exportName, java.time.ZonedDateTime lastsync) throws Exception");
                 Out.println("    {");
-                Out.println("      throw new Exception(\"Unknown CSV sync exporter '\"+exportName+\"' for " + Helper.getFullAppJsonClassName(O) + "\");");
+                Out.println("      throw new Exception(\"Unknown CSV sync exporter '\"+exportName+\"' for " + Helper.getFullAppFactoryClassName(O) + "\");");
                 Out.println("    }");
 
               }

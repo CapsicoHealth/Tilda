@@ -51,16 +51,30 @@ public abstract class Parser
        return PS;
      }
 
-    public static ParserSession parse(String FilePath, CodeGenSql CGSql) throws Exception
+    public static ParserSession parse(String FilePath, CodeGenSql CGSql, Map<String, Schema> SchemaCache) throws Exception
       {
         LOG.info("\n\n\n-----------------------------------------------------------------------------------------------------------------------------------------------");
         LOG.info("Loading Tilda schema '" + FilePath + "'.");
         Schema S = fromFile(FilePath);
         if (S == null)
           return null;
+        Schema CS = SchemaCache.get(S._ResourceNameShort);
+        if (CS == null)
+         SchemaCache.put(S._ResourceNameShort, S);
+        else
+          {
+            // When we load files from the file system, we have a full path to work from.
+            // If a schema is loaded for the first time via a dependency, it's loaded from
+            // the classpath as a resource. As such, its origin is not clear. If that schema
+            // shows up later in the processing pipeline, then we have to "fix" the previous
+            // instance's origin path.
+            if (CS._ProjectRoot.isEmpty() == true)
+              CS.setOrigin(FilePath);
+            S = CS;
+          }
 
         ParserSession PS = new ParserSession(S, CGSql);
-        if (loadDependencies(PS, S) == false)
+        if (loadDependencies(PS, S, SchemaCache) == false)
           return null;
         
         return PS;
@@ -130,18 +144,25 @@ public abstract class Parser
           }
       }
 
-    public static boolean loadDependencies(ParserSession PS, Schema BaseSchema) throws Exception
+    public static boolean loadDependencies(ParserSession PS, Schema BaseSchema, Map<String, Schema> SchemaCache) throws Exception
       {
         Schema BaseTilda = null;
         if (BaseSchema._ResourceName.endsWith(Schema._BASE_TILDA_SCHEMA_RESOURCE) == false)
           {
             LOG.info("Loading base Tilda schema from '" + Schema._BASE_TILDA_SCHEMA_RESOURCE + "'.");
-            BaseTilda = fromResource(Schema._BASE_TILDA_SCHEMA_RESOURCE);
-            if (BaseTilda == null)
-              return false;
+            BaseTilda = SchemaCache.get(Schema._BASE_TILDA_SCHEMA_RESOURCE);
+            if (BaseTilda != null)
+              LOG.info("Tilda schema from '" + Schema._BASE_TILDA_SCHEMA_RESOURCE + "' has already been loaded previously and has been fetched from the cache.");
+            else
+              {
+                BaseTilda = fromResource(Schema._BASE_TILDA_SCHEMA_RESOURCE);
+                if (BaseTilda == null)
+                 return false;
+                SchemaCache.put(Schema._BASE_TILDA_SCHEMA_RESOURCE, BaseTilda);
+              }
             PS.addDependencySchema(BaseTilda);
-            if (loadDependencies(BaseSchema, PS._Dependencies) == false)
-              return false;
+            if (loadDependencies(BaseSchema, PS._Dependencies, SchemaCache) == false)
+             return false;
           }
         else
           BaseTilda = BaseSchema;
@@ -171,15 +192,24 @@ public abstract class Parser
         return true;
       }
 
-    private static boolean loadDependencies(Schema S, Map<String, Schema> Dependencies)
+    private static boolean loadDependencies(Schema S, Map<String, Schema> Dependencies, Map<String, Schema> SchemaCache)
       {
         if (S._Dependencies != null)
           for (String d : S._Dependencies)
             {
-              LOG.info("Loading dependency schema from '" + d + "'.");
-              Schema D = fromResource(d);
+              Schema D = SchemaCache.get(d);
               if (D == null)
-                return false;
+                {
+                  LOG.info("Loading dependency schema from '" + d + "'.");
+                  D = fromResource(d);
+                  if (D == null)
+                    return false;
+                  SchemaCache.put(d, D);
+                }
+              else
+                {
+                  LOG.info("Tilda schema from '" + d + "' has already been loaded previously and has been fetched from the cache.");
+                }
               Schema Pre = Dependencies.get(D.getFullName());
               if (Pre != null)
                 {
@@ -190,7 +220,7 @@ public abstract class Parser
                 {
                   S._DependencySchemas.add(D);
                   Dependencies.put(D.getFullName(), D);
-                  if (loadDependencies(D, Dependencies) == false)
+                  if (loadDependencies(D, Dependencies, SchemaCache) == false)
                     return false;
                 }
             }

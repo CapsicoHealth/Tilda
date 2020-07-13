@@ -47,16 +47,17 @@ public class MailUtil
             HtmlEmail email = new HtmlEmail();
 
             String[] parts = SmtpInfo.split(":");
+            LOG.debug("SmtpInfo: "+SmtpInfo+" -> "+TextUtil.print(parts));
             email.setHostName(parts[0]);
             if (parts.length > 1)
               {
                 if (parts.length > 2)
                   {
-                    email.setSslSmtpPort(parts[1]);
                     if (parts[2].equalsIgnoreCase("ssl") == true)
                      email.setSSLOnConnect(true);
                     else if (parts[2].equalsIgnoreCase("starttls") == true)
                      email.setStartTLSEnabled(true);
+                    email.setSslSmtpPort(parts[1]);
                   }
                 else
                   {
@@ -67,7 +68,7 @@ public class MailUtil
             email.setAuthentication(From, Password);
             email.setSubject(Subject);
 
-            LOG.debug("Sending an email '" + email.getSubject() + "'.");
+            LOG.debug("Sending an email '" + email.getSubject() + "' to " + SmtpInfo);
             if (To != null)
               for (String s : To)
                 {
@@ -112,7 +113,7 @@ public class MailUtil
           {
             if (LastAddress != null)
               LOG.debug("Email address '" + LastAddress + "' seems to be invalid.");
-            LOG.error("Cannot send email", E);
+            LOG.error("Cannot send email to "+SmtpInfo+"\n", E);
             Throwable t = E.getCause();
             if (t != null)
               LOG.catching(t);

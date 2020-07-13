@@ -4,21 +4,22 @@ import java.io.Writer;
 
 import tilda.utils.json.JSONUtil;
 
-public class ElementValues implements ElementDef
+public class ElementDoubleArray implements ElementDef
   {
-    public ElementValues(String Name, String[][] Val)
+    public ElementDoubleArray(String Name, double[] Val)
       {
         _Name = Name;
         _Val = Val;
       }
 
-    protected final String     _Name;
-    protected final String[][] _Val;
+    protected final String _Name;
+    protected final double[] _Val;
 
     @Override
     public void print(Writer Out, boolean FirstElement, String Header)
     throws Exception
       {
-        JSONUtil.print(Out, _Name, FirstElement, _Val, Header);
+        Out.write(Header);
+        JSONUtil.print(Out, _Name, FirstElement, _Val);
       }
   }

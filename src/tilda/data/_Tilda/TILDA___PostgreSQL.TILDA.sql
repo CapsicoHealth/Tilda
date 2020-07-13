@@ -49,7 +49,7 @@ COMMENT ON COLUMN TILDA.Key."created" IS E'The timestamp for when the record was
 COMMENT ON COLUMN TILDA.Key."lastUpdated" IS E'The timestamp for when the record was last updated.';
 COMMENT ON COLUMN TILDA.Key."deleted" IS E'The timestamp for when the record was deleted.';
 CREATE UNIQUE INDEX IF NOT EXISTS Key_Name ON TILDA.Key ("name");
--- app-level index only -- CREATE INDEX IF NOT EXISTS Key_AllByName ON TILDA.Key ("name" ASC);
+-- app-level index only -- CREATE INDEX IF NOT EXISTS Key_AllByName ON TILDA.Key ("name" ASC) where TILDA.Key."deleted" is null;
 
 
 
@@ -554,6 +554,7 @@ create table if not exists TILDA.DateDim -- The Date dimension, capturing pre-ca
   , "dayOfYear"       integer                  -- ISO 8601 day of the year (starting with 1) of the date
   , "weekOfMonth"     integer                  -- ISO 8601 week of the month (starting with 1) of the date
   , "weekOfYear"      integer                  -- ISO 8601 week of the year (starting with 1) of the date
+  , "month"           date                     -- Month-truncated date.
   , "monthOfYear"     integer                  -- ISO 8601 month of the year (starting with 1) of the date
   , "monthName"       varchar(255)             -- Month name (i.e., January, February...) of the date.
   , "monthNameShort"  varchar(255)             -- Monday short name (i.e., Jan, Feb...) of the date.
@@ -582,6 +583,7 @@ COMMENT ON COLUMN TILDA.DateDim."dayOfQuarter" IS E'ISO 8601 day of the quarter 
 COMMENT ON COLUMN TILDA.DateDim."dayOfYear" IS E'ISO 8601 day of the year (starting with 1) of the date';
 COMMENT ON COLUMN TILDA.DateDim."weekOfMonth" IS E'ISO 8601 week of the month (starting with 1) of the date';
 COMMENT ON COLUMN TILDA.DateDim."weekOfYear" IS E'ISO 8601 week of the year (starting with 1) of the date';
+COMMENT ON COLUMN TILDA.DateDim."month" IS E'Month-truncated date.';
 COMMENT ON COLUMN TILDA.DateDim."monthOfYear" IS E'ISO 8601 month of the year (starting with 1) of the date';
 COMMENT ON COLUMN TILDA.DateDim."monthName" IS E'Month name (i.e., January, February...) of the date.';
 COMMENT ON COLUMN TILDA.DateDim."monthNameShort" IS E'Monday short name (i.e., Jan, Feb...) of the date.';

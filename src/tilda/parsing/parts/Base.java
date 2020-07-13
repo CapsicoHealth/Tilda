@@ -53,9 +53,10 @@ public abstract class Base
     public transient String          _BaseClassName;
     public transient String          _AppDataClassName;
     public transient String          _AppFactoryClassName;
-    public transient String          _AppJsonClassName;
     public transient boolean         _Validated         = false;
     public transient final TildaType _TildaType;
+    public transient Object          _RealizedObj;
+    public transient View            _RealizedView;
 
     public abstract Column getColumn(String name);
 
@@ -134,11 +135,6 @@ public abstract class Base
         return _AppFactoryClassName;
       }
 
-    public String getAppJsonClassName()
-      {
-        return _AppJsonClassName;
-      }
-
     public String getBaseClassName()
       {
         return _BaseClassName;
@@ -173,14 +169,13 @@ public abstract class Base
           PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring " + _TildaType.name() + " '" + getBaseName() + "' with a name '" + _Name + "' which is not valid. " + ValidationHelper._ValidIdentifierMessage);
 
         if (TextUtil.isNullOrEmpty(_Description) == true)
-          PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring " + _TildaType.name() + " '" + getBaseName() + "' without a description name.");
+          PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring " + _TildaType.name() + " '" + getBaseName() + "' without a description.");
 
         // _Name = _Name.toUpperCase();
 
         _BaseClassName = "TILDA__" + _Name.toUpperCase();
         _AppDataClassName = _OriginalName + "_Data";
         _AppFactoryClassName = _OriginalName + "_Factory";
-        _AppJsonClassName = _OriginalName + "_Json";
 
         // LDH-NOTE: We do not validate the mappings at this time, because the whole parent object
         // has not finished being validated. As such, columns and other generetated

@@ -596,4 +596,10 @@ public class MSSQL implements DBType
       {
         throw new UnsupportedOperationException();
       }
+
+    @Override
+    public String getCurrentDateStr()
+      {
+        throw new UnsupportedOperationException();
+      }
   }

@@ -278,7 +278,14 @@ public class PostgreSQLCSVImporter extends CSVImporter
                             value = value.trim();
                             if (CI != null)
                               {
-                                if (CI._TildaType == ColumnType.INTEGER)
+                                if (CI._TildaType == ColumnType.SHORT)
+                                  {
+                                    short V = ParseUtil.parseShortFlexible(value, SystemValues.EVIL_VALUE);
+                                    if (V == SystemValues.EVIL_VALUE)
+                                     throw new Exception("Couldn't parse '"+value+"' as a short for column '"+CI._Name+"'.");
+                                    Pst.setShort(i + x, V);
+                                  }                                  
+                                else if (CI._TildaType == ColumnType.INTEGER)
                                   {
                                     int V = ParseUtil.parseIntegerFlexible(value, SystemValues.EVIL_VALUE);
                                     if (V == SystemValues.EVIL_VALUE)
@@ -338,19 +345,7 @@ public class PostgreSQLCSVImporter extends CSVImporter
                           }
                         else
                           {
-                            int DataType = java.sql.Types.VARCHAR;
-                            if (CI._TildaType == ColumnType.INTEGER)
-                              DataType = java.sql.Types.INTEGER;
-                            else if (CI._TildaType == ColumnType.FLOAT)
-                              DataType = java.sql.Types.FLOAT;
-                            else if (CI._TildaType == ColumnType.DOUBLE)
-                              DataType = java.sql.Types.DOUBLE;
-                            else if (CI._TildaType == ColumnType.DATETIME)
-                              DataType = java.sql.Types.TIMESTAMP;
-                            else if (CI._TildaType == ColumnType.DATE)
-                              DataType = java.sql.Types.DATE;
-                            else if (CI._TildaType == ColumnType.BOOLEAN)
-                              DataType = java.sql.Types.BOOLEAN;
+                            int DataType = CI._TildaType.getSQLType();
                             Pst.setNull(i + x, DataType);
                           }
                       }
@@ -373,6 +368,8 @@ public class PostgreSQLCSVImporter extends CSVImporter
                   {
                     Pst.executeBatch();
                     batchCount = 0;
+//                    long t = System.nanoTime() - t0;
+//                    LOG.debug("Processed " + NumberFormatUtil.printWith000Sep(NumOfRecs) + " records so far in " + DurationUtil.printDuration(t) + " (" + DurationUtil.printPerformancePerMinute(t, NumOfRecs) + " Records/min)");
                   }
                 Pst.clearParameters();
   
