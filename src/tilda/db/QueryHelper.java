@@ -2899,11 +2899,27 @@ public abstract class QueryHelper
         return this;
       }
 
+    public QueryHelper exists(SelectQuery subQ)
+      {
+        _QueryStr.append(" exists (").append(subQ.toString()).append(")");
+        return this;
+      }
 
+    public QueryHelper notExists(SelectQuery subQ)
+      {
+        _QueryStr.append(" not ");
+        return exists(subQ);
+      }
 
     public String toString()
       {
         return _QueryStr.toString();
+      }
+
+    public QueryHelper addSuperQueryContext(String schemaName, String tableName)
+      {
+        _Froms.add(schemaName + "." + tableName);
+        return this;
       }
 
   }
