@@ -37,6 +37,7 @@ import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.enums.DBStringType;
 import tilda.generation.interfaces.CodeGenSql;
+import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
@@ -465,6 +466,14 @@ public class IBMDB2 implements DBType
 
     @Override
     public String getCurrentDateStr()
+      {
+        throw new UnsupportedOperationException();
+      }
+
+
+    @Override
+    public boolean moveTableView(Connection Con, Base base, String oldSchemaName)
+    throws Exception
       {
         throw new UnsupportedOperationException();
       }

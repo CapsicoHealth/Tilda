@@ -48,6 +48,7 @@ import tilda.generation.Generator;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.generation.postgres9.PostgresType;
 import tilda.generation.postgres9.Sql;
+import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
@@ -93,7 +94,7 @@ public class PostgreSQL implements DBType
       {
         return "current_date";
       }
-    
+
     protected static final String[] _LOCK_CONN_ERROR_SUBSTR = { "deadlocked on lock", "lock request time out", "lock inconsistency found", "connection reset", "connection is closed"
     };
 
@@ -384,7 +385,7 @@ public class PostgreSQL implements DBType
       {
         if (T == ColumnType.STRING && M != ColumnMode.CALCULATED)
           {
-            DBStringType ST = S==null ? null : getDBStringType(S);
+            DBStringType ST = S == null ? null : getDBStringType(S);
             return Collection == true ? "text[]"
             : ST == DBStringType.CHARACTER ? PostgresType.CHAR._SQLType + "(" + S + ")"
             : ST == DBStringType.VARCHAR ? PostgresType.STRING._SQLType + "(" + S + ")"
@@ -676,9 +677,9 @@ public class PostgreSQL implements DBType
         else
           {
             String Schema = BatchTypeCols != null && BatchTypeCols.isEmpty() == false ? BatchTypeCols.get(0)._Col._ParentObject._ParentSchema._Name
-                                                                                      : BatchSizeCols.get(0)._Col._ParentObject._ParentSchema._Name;
+            : BatchSizeCols.get(0)._Col._ParentObject._ParentSchema._Name;
             String Table = BatchTypeCols != null && BatchTypeCols.isEmpty() == false ? BatchTypeCols.get(0)._Col._ParentObject.getBaseName()
-                                                                                     : BatchSizeCols.get(0)._Col._ParentObject.getBaseName();
+            : BatchSizeCols.get(0)._Col._ParentObject.getBaseName();
             return Con.executeDDL(Schema, Table, Q);
           }
       }
@@ -1254,21 +1255,21 @@ public class PostgreSQL implements DBType
               {
                 if (OB == null)
                   continue;
-                
+
                 if (First == true)
                   First = false;
                 else
                   Out.print(", ");
                 Out.print("\"" + OB._Col.getName() + "\" " + (Gin ? "" : OB._Order));
                 if (OB._Nulls != null)
-                  Out.print(" NULLS "+OB._Nulls);
+                  Out.print(" NULLS " + OB._Nulls);
               }
           }
         Out.print(")");
         if (IX._SubQuery != null)
           {
             Query Q = IX._SubQuery.getQuery(DBType.Postgres);
-            Out.print(" where "+Q._Clause);
+            Out.print(" where " + Q._Clause);
           }
         Out.println(";");
         return OutStr.toString();
@@ -1375,12 +1376,19 @@ public class PostgreSQL implements DBType
         return 63;
       }
 
-
     @Override
     public String getBackendConnectionId(Connection connection)
     throws Exception
       {
         return null;
+      }
+
+    @Override
+    public boolean moveTableView(Connection Con, Base base, String oldSchemaName)
+    throws Exception
+      {
+        String Q = "ALTER TABLE " + oldSchemaName+"."+base._Name + " SET SCHEMA " + base._ParentSchema._Name + "";
+        return Con.executeDDL(base._ParentSchema._Name, base.getBaseName(), Q);
       }
 
   }

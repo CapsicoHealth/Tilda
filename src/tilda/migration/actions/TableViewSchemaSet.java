@@ -16,38 +16,30 @@
 
 package tilda.migration.actions;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import tilda.db.Connection;
-import tilda.db.metadata.FKMeta;
 import tilda.migration.MigrationAction;
 
-public class TableFKDrop extends MigrationAction
+public class TableViewSchemaSet extends MigrationAction
   {
-    protected static final Logger LOG = LogManager.getLogger(TableFKDrop.class.getName());
-
-    public TableFKDrop(tilda.parsing.parts.Object SrcObj, FKMeta FK)
+    public TableViewSchemaSet(tilda.parsing.parts.Base Base, String OldSchemaName)
       {
-        super(SrcObj._ParentSchema._Name, SrcObj._Name, false);
-        _SrcObj = SrcObj;
-        _FK = FK;
+        super(Base._ParentSchema._Name, Base._Name, false);
+        _Base = Base;
+        _OldSchemaName = OldSchemaName;
       }
 
-    protected tilda.parsing.parts.Object _SrcObj;
-    protected FKMeta _FK;
+    protected tilda.parsing.parts.Base _Base;
+    protected String _OldSchemaName;
 
     public boolean process(Connection C)
     throws Exception
       {
-        return C.alterTableDropFK(_SrcObj, _FK);
+        return C.moveTableView(_Base, _OldSchemaName);
       }
 
     @Override
     public String getDescription()
       {
-        return "Dropping FK "+_SrcObj.getFullName()+"."+_FK._Name+"("+_FK.getColumnList()+") to " + _FK._OtherSchema+"."+_FK._OtherTable;
+        return "Moving "+_Base._TildaType.name()+" '"+_Base._Name+"' from schema '"+_OldSchemaName+"' to '"+_Base._ParentSchema._Name+"'.";
       }
-
-
   }

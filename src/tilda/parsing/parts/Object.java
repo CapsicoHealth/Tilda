@@ -57,8 +57,6 @@ public class Object extends Base
     @SerializedName("indices"       ) public List<Index>          _Indices    = new ArrayList<Index         >();
     @SerializedName("http"          ) public HttpMapping[]        _Http       = { };
     @SerializedName("history"       ) public String     []        _History    = { };
-//    @SerializedName("migrations"    ) public Migration  []        _Migrations = { };
-    
     /*@formatter:on*/
 
     public transient boolean              _HasUniqueIndex;

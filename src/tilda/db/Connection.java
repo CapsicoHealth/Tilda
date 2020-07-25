@@ -44,6 +44,7 @@ import tilda.enums.ColumnType;
 import tilda.enums.DBStringType;
 import tilda.enums.TransactionType;
 import tilda.generation.interfaces.CodeGenSql;
+import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
@@ -63,7 +64,7 @@ import tilda.utils.pairs.StringStringPair;
 
 public final class Connection
   {
-    static final Logger LOG                 = LogManager.getLogger(Connection.class.getName());
+    static final Logger LOG = LogManager.getLogger(Connection.class.getName());
 
     public Connection(java.sql.Connection C)
       throws Exception,
@@ -766,6 +767,7 @@ public final class Connection
     /**
      * Commits all the connections in the list. This is doing a straightforward commit and not a fancier 2-phase
      * coordinated commit of all connections.
+     * 
      * @param CL
      * @throws SQLException If one commit fails, the exception is thrown, and remaining connections are left untouched.
      */
@@ -779,6 +781,7 @@ public final class Connection
     /**
      * Rollbacks all the connections in the list. This is doing a straightforward rollback and not a fancier 2-phase
      * coordinated rollback of all connections.
+     * 
      * @param CL
      * @throws SQLException If one rollback fails, the exception is thrown, and remaining connections are left untouched.
      */
@@ -787,6 +790,18 @@ public final class Connection
       {
         for (int i = 0; i < CL.size(); ++i)
           CL.get(i).rollback();
+      }
+
+    public boolean moveTable(Object _Obj, String _OldSchemaName)
+      {
+        // TODO Auto-generated method stub
+        return false;
+      }
+
+    public boolean moveTableView(Base base, String oldSchemaName)
+    throws Exception
+      {
+        return _DB.moveTableView(this, base, oldSchemaName);
       }
 
   }

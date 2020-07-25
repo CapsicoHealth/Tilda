@@ -44,7 +44,7 @@ public class TableFKAdd extends MigrationAction
     @Override
     public String getDescription()
       {
-        return "Adding FK "+_FK._Name+"("+_FK.getColumnList()+") to table " + _FK._ParentObject.getFullName();
+        return "Adding FK "+_FK._ParentObject.getFullName()+"."+_FK._Name+"("+_FK.getColumnList()+") to " + _FK._DestObjectObj.getFullName();
       }
 
 

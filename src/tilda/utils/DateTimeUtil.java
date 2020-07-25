@@ -179,21 +179,34 @@ public class DateTimeUtil
      * 
      * @return a LocalDate object if the string could be parsed, or null otherwise.
      */
-    public static LocalDate parseDate(String DateStr, String Pattern)
+    public static LocalDate parseDate(String dateStr, String Pattern)
       {
-        if (TextUtil.isNullOrEmpty(DateStr) == true)
+        if (TextUtil.isNullOrEmpty(dateStr) == true)
           return null;
         try
           {
-            return LocalDate.parse(DateStr, DateTimeFormatter.ofPattern(Pattern));
+            return LocalDate.parse(dateStr, DateTimeFormatter.ofPattern(Pattern));
           }
         catch (DateTimeParseException E)
           {
-            LOG.warn("Cannot parse " + DateStr + " with pattern " + Pattern + ": " + E.getMessage());
+            LOG.warn("Cannot parse " + dateStr + " with pattern " + Pattern + ": " + E.getMessage());
             return null;
           }
       }
 
+    /**
+     * Simple method to get a LocalDate object out of a string for the default pattern 'yyyy-MM-dd'.
+     * <P>
+     * This method returns a LocalDate based on a string value and a standard pattern. It avoids throwing an exception
+     * if the data cannot be parsed and will return NULL instead with a warning in the logs.
+     * 
+     * @return a LocalDate object if the string could be parsed, or null otherwise.
+     */
+    public static LocalDate parseDate(String dateStr)
+      {
+        return parseDate(dateStr, "yyyy-MM-dd");
+      }
+    
     public static java.sql.Timestamp parseToSqlTimestamp(String DateTimeStr, String Pattern)
       {
         return new java.sql.Timestamp(parse(DateTimeStr, Pattern).toInstant().toEpochMilli());

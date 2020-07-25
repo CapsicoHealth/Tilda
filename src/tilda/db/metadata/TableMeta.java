@@ -42,7 +42,7 @@ public class TableMeta
         _Descr = Descr;
       }
 
-    public final String            _SchemaName;
+    public String                  _SchemaName;
     public final String            _TableName;
     public final String            _Descr;
     public Map<String, ColumnMeta> _ColumnsMap        = new HashMap<String, ColumnMeta>();

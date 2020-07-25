@@ -16,36 +16,26 @@
 
 package tilda.parsing.parts;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.google.gson.annotations.SerializedName;
 
 import tilda.parsing.ParserSession;
 
-public class Migration
+public class MigrationRename
   {
     /*@formatter:off*/
-    @SerializedName("renames") public List<MigrationRename> _Renames = new ArrayList<MigrationRename>();
-    @SerializedName("drops"  ) public List<MigrationDrop>   _Drops   = new ArrayList<MigrationDrop  >();
-    @SerializedName("moves"  ) public List<MigrationMove>   _Moves   = new ArrayList<MigrationMove  >();
+    @SerializedName("object"  ) public String    _ObjectName;
+    @SerializedName("view"    ) public String    _ViewName  ;
+    @SerializedName("column"  ) public String    _Column;
+    @SerializedName("oldNames") public String[]  _OldNames;
     /*@formatter:on*/
 
-    public transient Schema              _Parent;
+    public transient Schema _Parent;
 
     public boolean Validate(ParserSession PS, Schema Parent)
       {
         int Errs = PS.getErrorCount();
         _Parent = Parent;
 
-        for (MigrationRename M : _Renames)
-          M.Validate(PS, Parent);
-
-        for (MigrationDrop M : _Drops)
-          M.Validate(PS, Parent);
-
-        for (MigrationMove M : _Moves)
-          M.Validate(PS, Parent);
 
         return Errs == PS.getErrorCount();
       }
