@@ -27,7 +27,7 @@
             { "name": "Name"     , "columns": ["name"] }
          ]
        ,"json":[
-            { "name": "", "columns": ["refnum", "userRefnum", "name"] }
+            { "name": "", "columns": ["refnum", "name"] }
          ]
       }
      ,{ "name": "Test2"
@@ -44,7 +44,7 @@
             { "name": "Name"     , "columns": ["name"] }
          ]
        ,"json":[
-            { "name": "", "columns": ["refnum", "userRefnum", "name"] }
+            { "name": "", "columns": ["refnum", "name"] }
          ]
       }
       
@@ -167,7 +167,7 @@
 //          }
         ]
        ,"json":[
-            { "name": "", "columns": ["refnum", "name", "userId"] }
+            { "name": "", "columns": ["refnum", "name"] }
          ]
       }
 

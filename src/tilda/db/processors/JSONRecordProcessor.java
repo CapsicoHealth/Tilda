@@ -21,7 +21,6 @@ import java.sql.ResultSet;
 import java.util.Iterator;
 
 import tilda.db.SelectQuery;
-import tilda.db.processors.RecordProcessor;
 import tilda.enums.ColumnType;
 import tilda.types.ColumnDefinition;
 import tilda.utils.json.JSONUtil;

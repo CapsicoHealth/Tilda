@@ -1092,10 +1092,15 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println();
         Out.println("   public static void toJSON" + J._Name + "(java.io.Writer out, " + Helper.getFullAppDataClassName(J._ParentObject) + " obj, boolean fullObject) throws java.io.IOException");
         Out.println("    {");
-        Out.println("      toJSON" + J._Name + "(out, obj, \"\", fullObject);");
+        Out.println("      toJSON" + J._Name + "(out, obj, \"\", fullObject, false);");
         Out.println("    }");
         Out.println();
         Out.println("   public static void toJSON" + J._Name + "(java.io.Writer out, " + Helper.getFullAppDataClassName(J._ParentObject) + " obj, String lead, boolean fullObject) throws java.io.IOException");
+        Out.println("    {");
+        Out.println("      toJSON" + J._Name + "(out, obj, \"\", fullObject, false);");
+        Out.println("    }");
+        Out.println();
+        Out.println("   public static void toJSON" + J._Name + "(java.io.Writer out, " + Helper.getFullAppDataClassName(J._ParentObject) + " obj, String lead, boolean fullObject, boolean noNullArrays) throws java.io.IOException");
         Out.println("    {");
         Out.println("      long T0 = System.nanoTime();");
         Out.println("      " + Helper.getFullBaseClassName(J._ParentObject) + " Obj = (" + Helper.getFullBaseClassName(J._ParentObject) + ") obj;");
