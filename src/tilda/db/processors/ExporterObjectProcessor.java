@@ -19,28 +19,25 @@ package tilda.db.processors;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.lang.reflect.Method;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import tilda.interfaces.CSVable;
 import tilda.utils.DurationUtil;
 
-public class CSVExporterObjectProcessor<T extends CSVable> implements ObjectProcessor<T>
+public abstract class ExporterObjectProcessor<T> implements ObjectProcessor<T>
   {
-    protected static final Logger LOG = LogManager.getLogger(CSVExporterObjectProcessor.class.getName());
+    protected static final Logger LOG = LogManager.getLogger(ExporterObjectProcessor.class.getName());
 
-    public CSVExporterObjectProcessor(PrintWriter out, long logFreq, String name, Class<?> factoryClass)
+    public ExporterObjectProcessor(PrintWriter out, long logFreq, String name)
       {
         _out = out;
         _totalCount = 0;
         _logFreq = logFreq;
         _name = name;
-        _factoryClass = factoryClass;
       }
 
-    public CSVExporterObjectProcessor(String outFile, long logFreq, Class<?> factoryClass)
+    public ExporterObjectProcessor(String outFile, long logFreq)
       throws FileNotFoundException
       {
         _out = new PrintWriter(new File(outFile));
@@ -48,7 +45,6 @@ public class CSVExporterObjectProcessor<T extends CSVable> implements ObjectProc
         _totalCount = 0;
         _logFreq = logFreq;
         _name = outFile;
-        _factoryClass = factoryClass;
       }
 
     protected PrintWriter _out;
@@ -58,29 +54,16 @@ public class CSVExporterObjectProcessor<T extends CSVable> implements ObjectProc
     protected long        _endTs;
     protected long        _logFreq;
     protected String      _name;
-    protected Class<?>    _factoryClass;
 
 
-    @Override
     public void start()
       {
         _startTs = System.nanoTime();
-        try
-          {
-            Method M = _factoryClass.getMethod("getCSVHeader");
-            _out.println((String) M.invoke(null));
-          }
-        catch (Throwable E)
-          {
-          }
       }
 
-    @Override
-    public boolean process(int count, T obj)
+    public boolean process(int count)
     throws Exception
       {
-        obj.toCSV(_out, "");
-        _out.println();
         ++_totalCount;
         if (count % _logFreq == 0)
           {
@@ -90,7 +73,6 @@ public class CSVExporterObjectProcessor<T extends CSVable> implements ObjectProc
         return true;
       }
 
-    @Override
     public void end(boolean hasMore, int maxCount)
       {
         if (_cleanWriter == true)

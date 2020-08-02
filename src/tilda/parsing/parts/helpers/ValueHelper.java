@@ -50,6 +50,10 @@ public class ValueHelper
               if (ParseUtil.parseFloat(Value, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
                 PS.AddError("Column '" + Col.getFullName() + "' defines Value '" + Name + "' with value '" + Value + "' which is incompatible with type '" + Col.getType() + "'.");
               break;
+            case SHORT:
+              if (ParseUtil.parseShort(Value, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
+                PS.AddError("Column '" + Col.getFullName() + "' defines Value '" + Name + "' with value '" + Value + "' which is incompatible with type '" + Col.getType() + "'.");
+              break;
             case INTEGER:
               if (ParseUtil.parseInteger(Value, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
                 PS.AddError("Column '" + Col.getFullName() + "' defines Value '" + Name + "' with value '" + Value + "' which is incompatible with type '" + Col.getType() + "'.");

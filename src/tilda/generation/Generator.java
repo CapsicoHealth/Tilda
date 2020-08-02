@@ -197,8 +197,8 @@ public class Generator
                     else
                       Out.print("   ,{");
                     JSONUtil.print(Out, "name", true, col.getName());
-                    JSONUtil.print(Out, "type", true, col.getType().getBigQueryType());
-                    JSONUtil.print(Out, "mode", true, col.isCollection() == true ? "REPEATED" : "NULLABLE");
+                    JSONUtil.print(Out, "type", false, col.getType().getBigQueryType());
+                    JSONUtil.print(Out, "mode", false, col.isCollection() == true ? "REPEATED" : "NULLABLE");
                     Out.println(" }");
                   }
               Out.println("]");
