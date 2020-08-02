@@ -260,7 +260,8 @@ public class DateTimeUtil
 
     public static String printDateTimeForJSON(ZonedDateTime ZDT)
       {
-        return ZDT == null ? null : ZDT.format(DateTimeFormatter.ISO_ZONED_DATE_TIME);
+        // LDH-NOTE: Not understanding why ISO_OFFSET_DATE_TIME doesn't deliver formatting like yyyy-MM-dd'T'HH:mm:ss.SSSXXX which it is supposed to be.
+        return ZDT == null ? null : ZDT.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSxxx")); //DateTimeFormatter.ISO_OFFSET_DATE_TIME); //ISO_ZONED_DATE_TIME);
       }
 
     public static String printDate(LocalDate D)
