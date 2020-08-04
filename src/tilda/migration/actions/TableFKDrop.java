@@ -27,16 +27,14 @@ public class TableFKDrop extends MigrationAction
   {
     protected static final Logger LOG = LogManager.getLogger(TableFKDrop.class.getName());
 
-    public TableFKDrop(tilda.parsing.parts.Object SrcObj, tilda.parsing.parts.Object TargetObj, FKMeta FK)
+    public TableFKDrop(tilda.parsing.parts.Object SrcObj, FKMeta FK)
       {
         super(SrcObj._ParentSchema._Name, SrcObj._Name, false);
         _SrcObj = SrcObj;
-        _TargetObj = TargetObj;
         _FK = FK;
       }
 
     protected tilda.parsing.parts.Object _SrcObj;
-    protected tilda.parsing.parts.Object _TargetObj;
     protected FKMeta _FK;
 
     public boolean process(Connection C)
@@ -48,7 +46,7 @@ public class TableFKDrop extends MigrationAction
     @Override
     public String getDescription()
       {
-        return "Dropping Table " + _SrcObj.getFullName()+"'s Foreign Key " + _FK._Name + "("+_FK.getColumnList()+") to " + (_TargetObj==null ? _FK._OtherSchema+"."+_FK._OtherTable : _TargetObj.getFullName());
+        return "Dropping FK "+_SrcObj.getFullName()+"."+_FK._Name+"("+_FK.getColumnList()+") to " + _FK._OtherSchema+"."+_FK._OtherTable;
       }
 
 

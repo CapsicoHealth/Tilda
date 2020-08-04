@@ -42,6 +42,7 @@ import tilda.generation.Generator;
 import tilda.generation.SQLServer2014.SQLServerType;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.generation.postgres9.PostgresType;
+import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
@@ -602,4 +603,12 @@ public class MSSQL implements DBType
       {
         throw new UnsupportedOperationException();
       }
+
+    @Override
+    public boolean moveTableView(Connection Con, Base base, String oldSchemaName)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
   }

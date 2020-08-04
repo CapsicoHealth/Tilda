@@ -24,5 +24,6 @@ import java.time.ZonedDateTime;
 public interface JSONable
   {
     public void toJSON(Writer out, String jsonExportName, String lead, boolean fullObject) throws Exception;
+    public void toJSON(Writer out, String jsonExportName, String lead, boolean fullObject, boolean noNullArrays) throws Exception;
     public void toJSON(Writer out, String jsonExportName, String lead, boolean fullObject, ZonedDateTime lastsync) throws Exception;
   }

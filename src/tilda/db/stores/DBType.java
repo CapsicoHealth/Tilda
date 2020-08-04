@@ -34,6 +34,7 @@ import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.enums.DBStringType;
 import tilda.generation.interfaces.CodeGenSql;
+import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
@@ -88,7 +89,7 @@ public interface DBType
     public boolean alterTableRenameIndex           (Connection Con, Object Obj, String OldName, String NewName) throws Exception;
     public String  getHelperFunctionsScript        (Connection Con, boolean start) throws Exception;    
     public String  getAclRolesScript               (Connection Con, List<Schema> TildaList) throws Exception;
-    public boolean isSuperUser                     (Connection C) throws Exception;
+    public boolean isSuperUser                     (Connection Con) throws Exception;
 
 
     public void   truncateTable(Connection C, String schemaName, String tableName, boolean cascade) throws Exception;
@@ -108,16 +109,17 @@ public interface DBType
     public void             getFullColumnVar(StringBuilder Str, String SchemaName, String TableName, String ColumnName);
     public void             getFullTableVar (StringBuilder Str, String SchemaName, String TableName);
     public void             getColumnType   (StringBuilder Str, ColumnType T, Integer S, ColumnMode M, boolean Collection, Integer Precision, Integer Scale);
-    public void             setArray(Connection C, PreparedStatement PS, int i, ColumnType Type, List<Array> allocatedArrays, Collection<?> val) throws Exception;
-    public Collection<?>    getArray(              ResultSet         RS, int i, ColumnType Type, boolean isSet) throws Exception;
-    public void             setJson (              PreparedStatement PS, int i, String jsonValue) throws Exception;
-    public String           getJson (              ResultSet         RS, int i) throws Exception;
+    public void             setArray(Connection Con, PreparedStatement PS, int i, ColumnType Type, List<Array> allocatedArrays, Collection<?> val) throws Exception;
+    public Collection<?>    getArray(                ResultSet         RS, int i, ColumnType Type, boolean isSet) throws Exception;
+    public void             setJson (                PreparedStatement PS, int i, String jsonValue) throws Exception;
+    public String           getJson (                ResultSet         RS, int i) throws Exception;
     public String           getJsonParametrizedQueryPlaceHolder();
-    public void             setOrderByWithNullsOrdering(Connection C, StringBuilder Str, ColumnDefinition Col, boolean Asc, boolean NullsLast);
-    public void             age(Connection C, StringBuilder Str, Type_DatetimePrimitive ColStart, Type_DatetimePrimitive ColEnd, IntervalEnum Type, int Count, String Operator);
-    public void             within(Connection C, StringBuilder Str, Type_DatetimePrimitive Col, Type_DatetimePrimitive ColStart, long DurationCount, IntervalEnum DurationType);
+    public void             setOrderByWithNullsOrdering(Connection Con, StringBuilder Str, ColumnDefinition Col, boolean Asc, boolean NullsLast);
+    public void             age(Connection Con, StringBuilder Str, Type_DatetimePrimitive ColStart, Type_DatetimePrimitive ColEnd, IntervalEnum Type, int Count, String Operator);
+    public void             within(Connection Con, StringBuilder Str, Type_DatetimePrimitive Col, Type_DatetimePrimitive ColStart, long DurationCount, IntervalEnum DurationType);
     // LDH-NOTE: UNLOGGED Tables behave strangely in some situations... Disabling this feature.
 //    public boolean setTableLogging(Connection connection, String schemaName, String tableName, boolean logged) throws Exception;
-    public String getBackendConnectionId(Connection connection) throws Exception;
-    void cancel(Connection C) throws SQLException;
+    public String getBackendConnectionId(Connection Con) throws Exception;
+    void cancel(Connection Con) throws SQLException;
+    public boolean moveTableView(Connection Con, Base base, String oldSchemaName) throws Exception;
   }

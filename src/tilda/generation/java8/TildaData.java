@@ -2030,15 +2030,19 @@ public class TildaData implements CodeGenTildaData
           {
             Out.println("   public void toJSON(java.io.Writer out, String exportName, boolean fullObject) throws Exception");
             Out.println("    {");
-            Out.println("      toJSON(out, exportName, \"\", fullObject);");
+            Out.println("      toJSON(out, exportName, \"\", fullObject, false);");
             Out.println("    }");
             Out.println("   public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject) throws Exception");
+            Out.println("    {");
+            Out.println("      toJSON(out, exportName, \"\", fullObject, false);");
+            Out.println("    }");
+            Out.println("   public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject, boolean noNullArrays) throws Exception");
             Out.println("    {");
             Out.println("      switch (exportName)");
             Out.println("        { ");
             for (OutputMapping OM : O._OutputMaps)
               if (OM != null && OM._OutputTypes.contains(OutputFormatType.JSON) == true)
-                Out.println("          case \"" + OM._Name + "\": " + Helper.getFullAppFactoryClassName(O) + ".toJSON" + OM._Name + "(out, (" + Helper.getFullAppDataClassName(O) + ") this, lead, fullObject); break;");
+                Out.println("          case \"" + OM._Name + "\": " + Helper.getFullAppFactoryClassName(O) + ".toJSON" + OM._Name + "(out, (" + Helper.getFullAppDataClassName(O) + ") this, lead, fullObject, noNullArrays); break;");
             Out.println("          default: throw new Exception(\"Unknown JSON exporter '\"+exportName+\"' for " + Helper.getFullAppFactoryClassName(O) + "\");");
             Out.println("        } ");
             Out.println("    }");

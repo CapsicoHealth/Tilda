@@ -39,6 +39,7 @@ import tilda.utils.DateTimeUtil;
 import tilda.utils.PaddingTracker;
 import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
+import tilda.utils.json.JSONUtil;
 
 public class Helper
   {
@@ -658,6 +659,7 @@ public class Helper
 
     public static void JSONExport(PrintWriter Out, Column C)
       {
+        boolean nullableCollection = false;
         if (C._Nullable == true)
           {
             if (C._Mode == ColumnMode.CALCULATED)
@@ -670,6 +672,7 @@ public class Helper
                 Out.print("      if (Obj.is" + TextUtil.capitalizeFirstCharacter(C.getName()) + "Null() == false");
                 if (C.isCollection() == true || C.getType().isPrimitive() == false)
                   Out.print(" && Obj.get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "() != null");
+                nullableCollection = C.isCollection();
                 Out.println(")");
               }
           }
@@ -679,6 +682,15 @@ public class Helper
           Out.println("        JSONUtil.print(out, \"" + C.getName() + "\", ++i==0, Obj.get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "());");
         else
           Out.println("        JSONUtil.print(out, \"" + C.getName() + "\", ++i==0, Obj.get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "AsArray());");
+        if (nullableCollection == true)
+          {
+            Out.println("      else if (noNullArrays == true)");
+            Out.println("        {");
+            Out.println("          JSONUtil.print(out, \"" + C.getName() + "\", ++i==0);");
+            Out.println("          out.write(\"[]\");");
+            Out.println("        }");
+          }
+          
         Out.println();
       }
 

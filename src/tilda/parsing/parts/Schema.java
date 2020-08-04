@@ -48,7 +48,7 @@ public class Schema
     @SerializedName("mappers"      ) public List<Mapper     > _Mappers       = new ArrayList<Mapper     >();
     @SerializedName("objects"      ) public List<Object     > _Objects       = new ArrayList<Object     >();
     @SerializedName("views"        ) public List<View       > _Views         = new ArrayList<View       >();
-    @SerializedName("importers"    ) public List<Importer   > _Importers     = new ArrayList<Importer   >();
+    @SerializedName("migrations"   ) public Migration         _Migration;
     /*@formatter:on*/
 
     transient public String       _Name;
@@ -275,6 +275,9 @@ public class Schema
                       }
                 }
             }
+        
+        if (_Migration != null)
+          _Migration.Validate(PS, this);
 
         /*
          * if (hasFormulas == true)

@@ -80,4 +80,9 @@ public class DatabaseMeta
       {
         return _SupportsArrays;
       }
+
+    public boolean addSchema(String SchemaName)
+      {
+        return _DBSchemas.put(SchemaName.toLowerCase(), new SchemaMeta(SchemaName)) == null;
+      }
   }

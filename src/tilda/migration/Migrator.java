@@ -60,6 +60,7 @@ import tilda.migration.actions.TableIndexDrop;
 import tilda.migration.actions.TableIndexRename;
 import tilda.migration.actions.TableKeyCreate;
 import tilda.migration.actions.TablePKReplace;
+import tilda.migration.actions.TableViewSchemaSet;
 import tilda.migration.actions.TildaAclAdd;
 import tilda.migration.actions.TildaExtraDDL;
 import tilda.migration.actions.TildaHelpersAddEnd;
@@ -70,6 +71,7 @@ import tilda.parsing.Parser;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
+import tilda.parsing.parts.MigrationMove;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.PrimaryKey;
 import tilda.parsing.parts.Schema;
@@ -279,7 +281,7 @@ public class Migrator
                 LOG.catching(T);
                 C.rollback();
               }
-            
+
             throw new Exception("Migration failed, and temporarily dropped dependencies were restored");
           }
       }
@@ -292,8 +294,50 @@ public class Migrator
         List<MigrationAction> Actions = new ArrayList<MigrationAction>();
         List<String> Errors = new ArrayList<String>();
 
+        // Create the schema if not exists
         if (DBMeta.getSchemaMeta(S._Name) == null)
-          Actions.add(new SchemaCreate(S));
+          {
+            Actions.add(new SchemaCreate(S));
+            // We must create the schema object in DBMeta so that if there are any future migrations of pre-existing
+            // tables/views from an older schema to a newer schema.
+            DBMeta.addSchema(S._Name);
+          }
+
+        if (S._Migration != null && S._Migration._Moves.isEmpty() == false) // Are there any migration steps to move tables over to this schema?
+          for (MigrationMove MM : S._Migration._Moves)
+            if (MM != null)
+              {
+                for (Object obj : MM._Objects) // let's look at tables to transfer
+                  {
+                    TableMeta TMSrc = DBMeta.getTableMeta(MM._Schema, obj._Name); // src table
+                    TableMeta TMDest = DBMeta.getTableMeta(S._Name, obj._Name); // dst table
+                    // src table must exist and dst table must not exist (i.e., if it doesn't, it's been migrated previously already).
+                    if (TMDest == null && TMSrc != null)
+                      {
+                        // Add the migration action
+                        Actions.add(new TableViewSchemaSet(obj, MM._Schema));
+                        // Transfer table to new schema to avoid double-creation later in this loop
+                        // i.e., the table didn't exist in this schema when the database was originally scanned (DBMeta).
+                        if (DBMeta.getSchemaMeta(obj._ParentSchema._Name).moveTableMetaFromOtherSchema(DBMeta, TMSrc) == false)
+                         throw new Exception("An error occurred: table '"+obj._Name+"' is being moved from schema '"+MM._Schema+"' to '"+obj._ParentSchema._Name+"' but seems to already exist there even though we just tested that a second ago and found nothing!");
+                      }
+                  }
+                for (View v : MM._Views)
+                  {
+                    ViewMeta VMSrc = DBMeta.getViewMeta(MM._Schema, v._Name);
+                    ViewMeta VMDest = DBMeta.getViewMeta(S._Name, v._Name);
+                    // src view must exist and dst view must not exist (i.e., if it doesn't, it's been migrated previously already).
+                    if (VMDest == null && VMSrc != null)
+                      {
+                        // Add the migration action
+                        Actions.add(new TableViewSchemaSet(v, MM._Schema));
+                        // Transfer view to new schema to avoid double-creation later in this loop
+                        // i.e., the table didn't exist in this schema when the database was originally scanned (DBMeta).
+                        if (DBMeta.getSchemaMeta(v._ParentSchema._Name).moveViewMetaFromOtherSchema(DBMeta, VMSrc) == false)
+                         throw new Exception("An error occurred: view '"+v._Name+"' is being moved from schema '"+MM._Schema+"' to '"+v._ParentSchema._Name+"' but seems to already exist there even though we just tested that a second ago and found nothing!");
+                      }
+                  }
+              }
 
         boolean Helpers = false;
         if (S._Name.equalsIgnoreCase("TILDA") == true)
@@ -433,7 +477,7 @@ public class Migrator
                         Object OtherObj = CheckForeignKeys(TildaList, Errors, Obj, fk);
                         if (OtherObj == null)
                           continue;
-                        Actions.add(new TableFKDrop(OtherObj, Obj, fk));
+                        Actions.add(new TableFKDrop(OtherObj, fk));
                         DroppedFKs.add(fk.getSignature());
                       }
                     Actions.add(new TablePKReplace(Obj, TMeta));
@@ -455,7 +499,7 @@ public class Migrator
                           }
                       }
                     if (Found == false && DroppedFKs.contains(fk.getSignature()) == false)
-                      Actions.add(new TableFKDrop(Obj, null, fk));
+                      Actions.add(new TableFKDrop(Obj, fk));
                   }
                 // Checking any FK defined in the Model which are not in the DB, so they can be added.
                 for (ForeignKey FK : Obj._ForeignKeys)
@@ -498,7 +542,7 @@ public class Migrator
                             if (ix._Unique
                             && (ix._Name.equals(ix._Name.toLowerCase()) == false
                             || ix._Name.equalsIgnoreCase(IX.getName()) == false))
-                            // The actual rename will happen in the next loop, so we just mark the index signature as dropped.
+                              // The actual rename will happen in the next loop, so we just mark the index signature as dropped.
                               DroppedSignatures.add(ix.getSignature());
                             // catches duplicate signatures by different names in db. First will be renamed below
                             else if (DroppedSignatures.add(ix.getSignature()) == false)
@@ -554,7 +598,7 @@ public class Migrator
           {
             if (V == null)
               continue;
-            
+
             ViewMeta VMeta = DBMeta.getViewMeta(V._ParentSchema._Name, V._Name);
             if (VMeta == null)
               {
@@ -573,7 +617,7 @@ public class Migrator
                 Out.close();
                 if (VMeta._Descr == null || VMeta._Descr.replace("\r\n", " ").replace("\n", " ").trim().equals(ViewDef.replace("\r\n", " ").replace("\n", " ").trim()) == false)
                   {
-                    // If this view depends on another realized view, either directly or indirectly, then a parallel *_R view 
+                    // If this view depends on another realized view, either directly or indirectly, then a parallel *_R view
                     // was created. When migrating, we have to take care of those 2 views.
 
                     // Main view
@@ -585,26 +629,26 @@ public class Migrator
                     else
                       DdlDepMan = null;
 
-/*
-                    // Test if there is an _R view
-                    DDLDependencyManager DdlDepMan_R = null;
-                    if (V.hasAncestorRealizedViews() == true)
-                      {
-                        DdlDepMan_R = new DDLDependencyManager(V.getViewSubRealizeSchemaName(), V.getViewSubRealizeViewName());
-                        A = new DDLDependencyPreManagement(DdlDepMan_R);
-                        if (A.isNeeded(C, DBMeta) == true)
-                          Actions.add(A);
-                        else // _R view was not there (maybe a previous failure, or some other weird thing)
-                          DdlDepMan_R = null;
-                      }
-*/
+                    /*
+                     * // Test if there is an _R view
+                     * DDLDependencyManager DdlDepMan_R = null;
+                     * if (V.hasAncestorRealizedViews() == true)
+                     * {
+                     * DdlDepMan_R = new DDLDependencyManager(V.getViewSubRealizeSchemaName(), V.getViewSubRealizeViewName());
+                     * A = new DDLDependencyPreManagement(DdlDepMan_R);
+                     * if (A.isNeeded(C, DBMeta) == true)
+                     * Actions.add(A);
+                     * else // _R view was not there (maybe a previous failure, or some other weird thing)
+                     * DdlDepMan_R = null;
+                     * }
+                     */
                     Actions.add(new ViewDrop(V));
                     Actions.add(new ViewCreate(V));
-                    
+
                     if (DdlDepMan != null)
                       Actions.add(new DDLDependencyPostManagement(DdlDepMan));
-//                    if (DdlDepMan_R != null)
-//                      Actions.add(new DDLDependencyPostManagement(DdlDepMan_R));
+                    // if (DdlDepMan_R != null)
+                    // Actions.add(new DDLDependencyPostManagement(DdlDepMan_R));
                   }
               }
           }

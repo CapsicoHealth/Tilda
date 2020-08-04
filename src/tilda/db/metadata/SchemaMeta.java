@@ -84,4 +84,18 @@ public class SchemaMeta
       {
         return _DBViews.get(ViewName.toLowerCase());
       }
+    
+    public boolean moveTableMetaFromOtherSchema(DatabaseMeta DBMeta, TableMeta src)
+     {
+       DBMeta.getSchemaMeta(src._SchemaName)._DBTables.remove(src._TableName.toLowerCase());
+       src._SchemaName = _SchemaName;
+       return _DBTables.put(src._TableName.toLowerCase(), src) == null;
+     }
+
+    public boolean moveViewMetaFromOtherSchema(DatabaseMeta DBMeta, ViewMeta src)
+      {
+        DBMeta.getSchemaMeta(src._SchemaName)._DBViews.remove(src._ViewName.toLowerCase());
+        src._SchemaName = _SchemaName;
+        return _DBViews.put(src._ViewName.toLowerCase(), src) == null;
+      }
   }
