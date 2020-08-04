@@ -1,0 +1,4 @@
+[
+    { "name":"refnum","type":"INT64","mode":"NULLABLE" }
+   ,{ "name":"name","type":"STRING","mode":"NULLABLE" }
+]

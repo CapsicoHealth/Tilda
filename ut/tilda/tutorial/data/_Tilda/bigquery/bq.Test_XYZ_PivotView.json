@@ -1,0 +1,16 @@
+[
+    { "name":"formRefnum" "type":"INT64" "mode":"NULLABLE" }
+   ,{ "name":"formType" "type":"STRING" "mode":"NULLABLE" }
+   ,{ "name":"formFillDateTZ" "type":"STRING" "mode":"NULLABLE" }
+   ,{ "name":"formFillDate" "type":"TIMESTAMP" "mode":"NULLABLE" }
+   ,{ "name":"formUserRefnum" "type":"INT64" "mode":"NULLABLE" }
+   ,{ "name":"formUserEmail" "type":"STRING" "mode":"NULLABLE" }
+   ,{ "name":"questionId" "type":"STRING" "mode":"NULLABLE" }
+   ,{ "name":"countCorrect" "type":"INT64" "mode":"NULLABLE" }
+   ,{ "name":"countIncorrect" "type":"INT64" "mode":"NULLABLE" }
+   ,{ "name":"timeMillisTotal" "type":"INT64" "mode":"NULLABLE" }
+   ,{ "name":"timeMillisAvg" "type":"FLOAT64" "mode":"NULLABLE" }
+   ,{ "name":"timeMillisMin" "type":"INT64" "mode":"NULLABLE" }
+   ,{ "name":"timeMillisMax" "type":"INT64" "mode":"NULLABLE" }
+   ,{ "name":"correct" "type":"BOOL" "mode":"NULLABLE" }
+]

@@ -377,7 +377,7 @@ public class TildaFactory implements CodeGenTildaFactory
             if (C.getType() == ColumnType.BINARY)
               {
                 Out.println("       if (vals != null)");
-                Out.println("        throw new Exception(\"Column '" + C.getName() + "' is of a binary type and cannot be initislized with a generic String value.\"));");
+                Out.println("        throw new Exception(\"Column '" + C.getName() + "' is of a binary type and cannot be initialized with a generic String value.\");");
                 continue;
               }
 

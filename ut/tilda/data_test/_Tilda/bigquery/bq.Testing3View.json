@@ -1,0 +1,8 @@
+[
+    { "name":"refnum","type":"INT64","mode":"NULLABLE" }
+   ,{ "name":"name","type":"STRING","mode":"NULLABLE" }
+   ,{ "name":"a8bTZ","type":"STRING","mode":"NULLABLE" }
+   ,{ "name":"a8b","type":"TIMESTAMP","mode":"NULLABLE" }
+   ,{ "name":"lastUpdated","type":"TIMESTAMP","mode":"NULLABLE" }
+   ,{ "name":"xxxLastUpdated","type":"TIMESTAMP","mode":"NULLABLE" }
+]

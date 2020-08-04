@@ -1,0 +1,9 @@
+[
+    { "name":"formRefnum" "type":"INT64" "mode":"NULLABLE" }
+   ,{ "name":"formFillDateTZ" "type":"STRING" "mode":"NULLABLE" }
+   ,{ "name":"formFillDate" "type":"TIMESTAMP" "mode":"NULLABLE" }
+   ,{ "name":"formUserRefnum" "type":"INT64" "mode":"NULLABLE" }
+   ,{ "name":"formUserEmail" "type":"STRING" "mode":"NULLABLE" }
+   ,{ "name":"field" "type":"STRING" "mode":"NULLABLE" }
+   ,{ "name":"value" "type":"STRING" "mode":"NULLABLE" }
+]
