@@ -2034,7 +2034,7 @@ public class TildaData implements CodeGenTildaData
             Out.println("    }");
             Out.println("   public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject) throws Exception");
             Out.println("    {");
-            Out.println("      toJSON(out, exportName, \"\", fullObject, false);");
+            Out.println("      toJSON(out, exportName, lead, fullObject, false);");
             Out.println("    }");
             Out.println("   public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject, boolean noNullArrays) throws Exception");
             Out.println("    {");
