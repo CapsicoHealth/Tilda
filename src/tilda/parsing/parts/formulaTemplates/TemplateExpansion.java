@@ -33,7 +33,8 @@ public class TemplateExpansion
     /*@formatter:off*/
     @SerializedName("name"       ) public String   _Name         ;
     @SerializedName("title"      ) public String   _Title        ;
-    @SerializedName("expr"       ) public String   _Expression   ;
+    @SerializedName("expr"       ) public String   _Expression_DEPRECATED   ;
+    @SerializedName("formula"    ) public String   _Formula      ;
     @SerializedName("description") public String   _Description  ;
     /*@formatter:on*/
 
@@ -49,10 +50,17 @@ public class TemplateExpansion
         
         if (TextUtil.isNullOrEmpty(_Name) == true)
          PS.AddError("Formula template "+GT._Name+" is defining an expansion without a name.");
+        
         if (TextUtil.isNullOrEmpty(_Title) == true)
           _Title = _Name;
-        if (TextUtil.isNullOrEmpty(_Expression) == true)
-          _Expression = _Name;
+
+        if (TextUtil.isNullOrEmpty(_Expression_DEPRECATED) == false && TextUtil.isNullOrEmpty(_Formula) == false)
+          PS.AddError("Formula template "+GT._Name+" is defining an expansion with both an 'expr' and 'formula' value: only one is allowed, and 'expr' has been deprecated in favor of 'formula'.");
+        else if (TextUtil.isNullOrEmpty(_Expression_DEPRECATED) == false && TextUtil.isNullOrEmpty(_Formula) == true)
+          _Formula = _Expression_DEPRECATED;
+        else if (TextUtil.isNullOrEmpty(_Expression_DEPRECATED) == true && TextUtil.isNullOrEmpty(_Formula) == true)
+          _Formula = _Name;
+
         if (TextUtil.isNullOrEmpty(_Description) == true)
           _Description = _Name;
       }
