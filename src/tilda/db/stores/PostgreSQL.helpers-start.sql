@@ -450,6 +450,14 @@ select array_agg(a order by a) from (select distinct unnest(arr1||arr2||arr3) as
 $$
 ;
 
+CREATE OR REPLACE FUNCTION TILDA.arrayPick(a anyarray)
+RETURNS anyelement
+LANGUAGE sql COST 2 AS $$
+select a[floor(random() * (array_upper(a, 1) - array_lower(a, 1) + 1)+1)];
+$$;
+
+
+
 
 -----------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------
