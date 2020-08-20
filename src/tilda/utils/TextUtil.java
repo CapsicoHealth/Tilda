@@ -70,12 +70,12 @@ public class TextUtil
      * @param str
      * @return a string where the string is surrounded by a single quote and any single quote included is duplicated so as to make the result suitable to be used in an SQL query.
      * 
-     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, String)} 
-     * @see {@link #escapeSingleQuoteForSQL(String)} 
-     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, String[], boolean)} 
-     * @see {@link #escapeSingleQuoteForSQL(String[], boolean)} 
-     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, char[], boolean)} 
-     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, Collection, boolean)} 
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, String)}
+     * @see {@link #escapeSingleQuoteForSQL(String)}
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, String[], boolean)}
+     * @see {@link #escapeSingleQuoteForSQL(String[], boolean)}
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, char[], boolean)}
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, Collection, boolean)}
      */
     public static final String escapeSingleQuoteForSQL(String str)
       {
@@ -93,12 +93,12 @@ public class TextUtil
      * @param x The StringBuilder to append the escaped string to
      * @param str The string to escape
      * 
-     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, String)} 
-     * @see {@link #escapeSingleQuoteForSQL(String)} 
-     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, String[], boolean)} 
-     * @see {@link #escapeSingleQuoteForSQL(String[], boolean)} 
-     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, char[], boolean)} 
-     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, Collection, boolean)} 
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, String)}
+     * @see {@link #escapeSingleQuoteForSQL(String)}
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, String[], boolean)}
+     * @see {@link #escapeSingleQuoteForSQL(String[], boolean)}
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, char[], boolean)}
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, Collection, boolean)}
      */
     public static final void escapeSingleQuoteForSQL(StringBuilder x, String str)
       {
@@ -117,14 +117,14 @@ public class TextUtil
      * @param x The StringBuilder to append the comma-separated escaped string sto
      * @param strs An array of Strings
      * @param first whether this is the first printing in a list (should not start with a comma), or part of a series of call
-     * where the first part of the list has already occurred.
+     *          where the first part of the list has already occurred.
      * 
-     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, String)} 
-     * @see {@link #escapeSingleQuoteForSQL(String)} 
-     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, String[], boolean)} 
-     * @see {@link #escapeSingleQuoteForSQL(String[], boolean)} 
-     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, char[], boolean)} 
-     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, Collection, boolean)} 
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, String)}
+     * @see {@link #escapeSingleQuoteForSQL(String)}
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, String[], boolean)}
+     * @see {@link #escapeSingleQuoteForSQL(String[], boolean)}
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, char[], boolean)}
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, Collection, boolean)}
      */
     public static final void escapeSingleQuoteForSQL(StringBuilder x, String[] strs, boolean first)
       {
@@ -144,21 +144,22 @@ public class TextUtil
     /**
      * Escapes an array of string for SQL, including surrounding single quotes, comma-separated.
      * <p>
-     * This method behaves similarly to {@link #escapeSingleQuoteForSQL(StringBuilder, String[], boolean)} but 
+     * This method behaves similarly to {@link #escapeSingleQuoteForSQL(StringBuilder, String[], boolean)} but
      * creates an internal SrringBuilder and returns the escaped values directly. This doesn't perform as well
      * as that other method, but is useful in simpler settings where you might not be working already with
      * a StringBuilder. Otherwise, the other method is preferred and more efficient.
+     * 
      * @param strs An array of strings to escape.
      * @param first whether this is the first part of a list (not starting with a comma), or a subsequent
-     *       part of a list, which should start with a comma.
+     *          part of a list, which should start with a comma.
      * @return The comma-separated list of escaped strings suitable for an SQL "in" for example.
      * 
-     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, String)} 
-     * @see {@link #escapeSingleQuoteForSQL(String)} 
-     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, String[], boolean)} 
-     * @see {@link #escapeSingleQuoteForSQL(String[], boolean)} 
-     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, char[], boolean)} 
-     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, Collection, boolean)} 
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, String)}
+     * @see {@link #escapeSingleQuoteForSQL(String)}
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, String[], boolean)}
+     * @see {@link #escapeSingleQuoteForSQL(String[], boolean)}
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, char[], boolean)}
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, Collection, boolean)}
      */
     public static final String escapeSingleQuoteForSQL(String[] strs, boolean first)
       {
@@ -175,16 +176,16 @@ public class TextUtil
      * appends it to the StringBuilder provided separating them by commas (suitable for an "in" for example).
      *
      * @param x The StringBuilder to append the comma-separated escaped string sto
-     * @param chars An array of char 
+     * @param chars An array of char
      * @param first whether this is the first printing in a list (should not start with a comma), or part of a series of call
-     * where the first part of the list has already occurred.
+     *          where the first part of the list has already occurred.
      * 
-     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, String)} 
-     * @see {@link #escapeSingleQuoteForSQL(String)} 
-     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, String[], boolean)} 
-     * @see {@link #escapeSingleQuoteForSQL(String[], boolean)} 
-     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, char[], boolean)} 
-     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, Collection, boolean)} 
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, String)}
+     * @see {@link #escapeSingleQuoteForSQL(String)}
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, String[], boolean)}
+     * @see {@link #escapeSingleQuoteForSQL(String[], boolean)}
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, char[], boolean)}
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, Collection, boolean)}
      */
     public static void escapeSingleQuoteForSQL(StringBuilder x, char[] chars, boolean first)
       {
@@ -205,21 +206,22 @@ public class TextUtil
     /**
      * Escapes a collection of objects' toString() for SQL, including surrounding single quotes, comma-separated.
      * <p>
-     * This method behaves similarly to {@link #escapeSingleQuoteForSQL(StringBuilder, String[], boolean)} but 
+     * This method behaves similarly to {@link #escapeSingleQuoteForSQL(StringBuilder, String[], boolean)} but
      * creates an internal SrringBuilder and returns the escaped values directly. This doesn't perform as well
      * as that other method, but is useful in simpler settings where you might not be working already with
      * a StringBuilder. Otherwise, the other method is preferred and more efficient.
+     * 
      * @param s An array of strings to escape.
      * @param first whether this is the first part of a list (not starting with a comma), or a subsequent
-     *       part of a list, which should start with a comma.
+     *          part of a list, which should start with a comma.
      * @return The comma-separated list of escaped strings suitable for an SQL "in" for example.
      * 
-     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, String)} 
-     * @see {@link #escapeSingleQuoteForSQL(String)} 
-     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, String[], boolean)} 
-     * @see {@link #escapeSingleQuoteForSQL(String[], boolean)} 
-     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, char[], boolean)} 
-     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, Collection, boolean)} 
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, String)}
+     * @see {@link #escapeSingleQuoteForSQL(String)}
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, String[], boolean)}
+     * @see {@link #escapeSingleQuoteForSQL(String[], boolean)}
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, char[], boolean)}
+     * @see {@link #escapeSingleQuoteForSQL(StringBuilder, Collection, boolean)}
      */
     public static final <T> void escapeSingleQuoteForSQL(StringBuilder x, Collection<T> strs, boolean first)
       {
@@ -264,8 +266,8 @@ public class TextUtil
           x.append(end);
       }
 
-    
-    
+
+
     public static final String escapeDoubleQuoteWithSlash(String str)
       {
         StringBuilder X = new StringBuilder();
@@ -410,6 +412,7 @@ public class TextUtil
 
     /**
      * Checks if a String is NULL or made up only of white spaces (as per {@link Character#isWhitespace(char)}.
+     * 
      * @param str
      * @return true if the string is null or empty
      */
@@ -424,6 +427,7 @@ public class TextUtil
 
     /**
      * Checks if an array of Strings is NULL, empty, or made up of Strings that are themselves null or empty (as per {@link #isNullOrEmpty(String)}.
+     * 
      * @param strings
      * @return true if the array is null or empty, or only contains strings that are themselves null or empty.
      */
@@ -438,6 +442,7 @@ public class TextUtil
 
     /**
      * Checks if an list of Strings is NULL, empty, or made up of Strings that are themselves null or empty (as per {@link #isNullOrEmpty(String)}.
+     * 
      * @param strings
      * @return true if the list is null or empty, or only contains strings that are themselves null or empty.
      */
@@ -456,6 +461,7 @@ public class TextUtil
      * doesn't use regexes.
      * <p>
      * See test case in TextUtilTest.Test_SearchReplace() for performance analysis.
+     * 
      * @param str
      * @param search
      * @param replace
@@ -484,6 +490,7 @@ public class TextUtil
 
     /**
      * A search-and-replace method similar to {@link #searchReplace(String, String, String)} but which outputs the results to a StringBuilder.
+     * 
      * @param x
      * @param str
      * @param search
@@ -511,6 +518,7 @@ public class TextUtil
 
     /**
      * A search-and-replace method similar to {@link #searchReplace(String, String, String)} but which outputs the results to a Writer.
+     * 
      * @param x
      * @param str
      * @param search
@@ -1781,6 +1789,7 @@ public class TextUtil
     /**
      * Takes a string with a regex-based separator (e.g., \s+) and turns it into an array
      * of '%token%'. So 'a, b, c' with '(\s*,\s*)|\s+' will return ['%a%','%b%','%c%]
+     * 
      * @param Val
      * @param splitRegex
      * @param lowerCase
@@ -1803,5 +1812,21 @@ public class TextUtil
         return Parts;
       }
 
+
+    public static String printJsonQuotedStringValue(String v)
+      {
+        if (v == null || v.equals("null") == true || v.equals("undefined") == true)
+         return "null";
+
+        StringBuilder Str = new StringBuilder();
+        Str.append("\"");
+        for (int i = 0; i < v.length(); ++i)
+          {
+            char c = v.charAt(i);
+            Str.append(c == '\n' ? "\\n" : c == '\r' ? "\\r" : c == '"' ? "\\\"" : c == '\\' ? "\\\\" : "" + c);
+          }
+        Str.append("\"");
+        return Str.toString();
+      }
 
   }
