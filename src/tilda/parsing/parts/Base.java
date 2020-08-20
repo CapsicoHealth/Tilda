@@ -40,6 +40,7 @@ public abstract class Base
 
     /*@formatter:off*/
     @SerializedName("name"       ) public String               _Name       = null;
+    @SerializedName("shortAlias" ) public String               _ShortAlias = null;
     @SerializedName("description") public String               _Description= null;
     @SerializedName("queries"    ) public List<SubWhereClause> _Queries    = new ArrayList<SubWhereClause>();
     @SerializedName("json"       ) public List<OutputMapping>  _JsonDEPRECATED = new ArrayList<OutputMapping >();
@@ -74,6 +75,7 @@ public abstract class Base
     public Base(Base b)
       {
         _Name = b._Name;
+        _ShortAlias = b._ShortAlias;
         _Description = b._Description;
 
         // SubWhereClauses are being modified as part of validation, and so we need a clean copy here.
