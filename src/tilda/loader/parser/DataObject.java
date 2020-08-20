@@ -38,6 +38,7 @@ public class DataObject
 
     /*@formatter:off*/
     @SerializedName("filepath"       )      public List<String>       _FileList = new ArrayList<String>();
+    @SerializedName("datasetName"    )      public String             _DatasetName;
     @SerializedName("schemaName"     )      public String             _SchemaName;
     @SerializedName("tableName"      )      public String             _TableName;
     @SerializedName("headerList"     )	    public List<String>       _HeaderList    = new ArrayList<String>();

@@ -113,7 +113,7 @@ public class Load
                 LOG.debug("Validating file " + ConfigFileName);
                 List<String> selectedObjectsList = new ArrayList<>(Arrays.asList(arguments.get(i + 3).split(",")));
                 List<String> connectionIdsList = new ArrayList<>(Arrays.asList(arguments.get(i + 5).split(",")));
-                List<DataObject> filteredObjects = filterObjects(selectedObjectsList, Conf._CmsData);
+                List<DataObject> filteredObjects = filterObjects(selectedObjectsList, Conf._CmsData, true);
                 List<String> errors = validateDataObjects(connectionIdsList, filteredObjects);
                 if (errors.size() > 0)
                   {
@@ -155,10 +155,7 @@ public class Load
                 DataObject DO = list.get(i);
                 if (DO == null)
                   continue;
-                String schemaName = DO._SchemaName;
-                String tableName = DO._TableName;
-                String schemaPlusTable = schemaName + "." + tableName;
-                data[i][0] = schemaPlusTable.toUpperCase();
+                data[i][0] = DO._SchemaName.toUpperCase()+"."+DO._TableName + (TextUtil.isNullOrEmpty(DO._DatasetName)==true?"":" ("+DO._DatasetName+")");
                 data[i][1] = Boolean.FALSE;
               }
 
@@ -250,24 +247,29 @@ public class Load
     private static void startImportProcessor(List<String> selectedObjectNames, List<String> connectionIdsList, Config conf, List<DataObject> _CmsData)
     throws Exception
       {
-        List<DataObject> filteredObjects = filterObjects(selectedObjectNames, _CmsData);
+        List<DataObject> filteredObjects = filterObjects(selectedObjectNames, _CmsData, false);
         if (connectionIdsList.size() > 0 && filteredObjects.size() > 0)
           runImportProcessor(connectionIdsList, conf, filteredObjects);
       }
 
-    private static List<DataObject> filterObjects(List<String> selectedObjects, List<DataObject> AllDataObjects)
+    private static List<DataObject> filterObjects(List<String> selectedObjects, List<DataObject> AllDataObjects, boolean silent)
       {
         List<DataObject> filteredList = new ArrayList<>();
 
+        LOG.debug("Looking at all datasets: "+TextUtil.print(selectedObjects, ", "));
         Iterator<DataObject> iterator = AllDataObjects.iterator();
         while (iterator.hasNext())
           {
             DataObject dataObject = iterator.next();
-            String tempObjectName = dataObject._SchemaName + "." + dataObject._TableName;
-            tempObjectName = tempObjectName.toUpperCase();
+            String tempObjectName = dataObject._SchemaName.toUpperCase()+"."+dataObject._TableName + (silent==true||TextUtil.isNullOrEmpty(dataObject._DatasetName)==true?"":" ("+dataObject._DatasetName+")");
             if (selectedObjects.contains(tempObjectName) == true)
               {
+                LOG.debug("Selecting dataset "+tempObjectName);
                 filteredList.add(dataObject);
+              }
+            else
+              {
+                LOG.debug("Ignoring dataset "+tempObjectName);
               }
           }
         return filteredList;
@@ -441,7 +443,7 @@ public class Load
                                   }
 
                                 // Validate configurations
-                                List<DataObject> selectedDO = filterObjects(ImportTables, Conf._CmsData);
+                                List<DataObject> selectedDO = filterObjects(ImportTables, Conf._CmsData, false);
                                 LOG.debug("Validating Selected Table Indices..");
                                 List<String> errors = validateDataObjects(ConnectionIds, selectedDO);
                                 if (errors.size() > 0)
@@ -500,9 +502,9 @@ public class Load
         // Table1 Setup
         tableDataModel = new DataImportTableModel(data);
         table1 = new JTable(tableDataModel);
-        table1.getTableHeader().setFont(new Font("Times New Roman", Font.BOLD, 14));
+        table1.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 16));
         table1.getTableHeader().setReorderingAllowed(false);
-        table1.setRowHeight(25);
+        table1.setRowHeight(23);
         table1.getColumnModel().getColumn(0).setPreferredWidth(550);
         table1.getColumnModel().getColumn(1).setPreferredWidth(80);
         table1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -518,9 +520,9 @@ public class Load
         // Table2 Setup
         connectionDataModel = new ConnectionsTableModel(connections);
         table2 = new JTable(connectionDataModel);
-        table2.getTableHeader().setFont(new Font("Times New Roman", Font.BOLD, 14));
+        table2.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 16));
         table2.getTableHeader().setReorderingAllowed(false);
-        table2.setRowHeight(25);
+        table2.setRowHeight(23);
         table2.getColumnModel().getColumn(0).setPreferredWidth(200);
         table2.getColumnModel().getColumn(1).setPreferredWidth(350);
         table2.getColumnModel().getColumn(2).setPreferredWidth(80);
