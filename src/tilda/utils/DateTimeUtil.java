@@ -206,7 +206,7 @@ public class DateTimeUtil
       {
         return parseDate(dateStr, "yyyy-MM-dd");
       }
-    
+
     public static java.sql.Timestamp parseToSqlTimestamp(String DateTimeStr, String Pattern)
       {
         return new java.sql.Timestamp(parse(DateTimeStr, Pattern).toInstant().toEpochMilli());
@@ -246,7 +246,7 @@ public class DateTimeUtil
       {
         return DT == null ? null : DT.format(DateTimeFormatter.ISO_DATE);
       }
-    
+
     public static List<String> printDateTimeForSQL(List<ZonedDateTime> ZDTs)
       {
         if (ZDTs == null)
@@ -257,11 +257,16 @@ public class DateTimeUtil
         return L;
       }
 
-
     public static String printDateTimeForJSON(ZonedDateTime ZDT)
       {
+        return printDateTimeForJSON(ZDT, false);
+      }
+
+    public static String printDateTimeForJSON(ZonedDateTime ZDT, boolean forceISOZDT)
+      {
         // LDH-NOTE: Not understanding why ISO_OFFSET_DATE_TIME doesn't deliver formatting like yyyy-MM-dd'T'HH:mm:ss.SSSXXX which it is supposed to be.
-        return ZDT == null ? null : ZDT.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSxxx")); //DateTimeFormatter.ISO_OFFSET_DATE_TIME); //ISO_ZONED_DATE_TIME);
+        return ZDT == null ? null : forceISOZDT == true ? ZDT.format(DateTimeFormatter.ISO_ZONED_DATE_TIME) : ZDT.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSxxx")); // DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+                                                                                                                                                                                     // //ISO_ZONED_DATE_TIME);
       }
 
     public static String printDate(LocalDate D)
@@ -350,7 +355,7 @@ public class DateTimeUtil
 
 
     private static Pattern _ISO_NOZONE_DATETIME = Pattern.compile("(\\d{4}).(\\d{2}).(\\d{2}).(\\d{2}).(\\d{2}).(\\d{2})");
-    
+
     /**
      * Takes a zone-less timestamp and returns a ZonedDateTime based on the system zone.
      * It will auto-complete with 0's if hours, minutes and/or seconds are missing and use
@@ -423,12 +428,12 @@ public class DateTimeUtil
       }
 
     private static final DateTimeFormatter Time24HFormater = DateTimeFormatter.ofPattern("HH:mm:ss");
-    
+
     public static String printTime24(ZonedDateTime ZDT)
       {
         return ZDT == null ? "NA" : ZDT.format(Time24HFormater);
       }
-    
+
 
     private static final DateTimeFormatter DayTimeFormater = DateTimeFormatter.ofPattern("HH:mm");
     private static final DateTimeFormatter WeekFormater    = DateTimeFormatter.ofPattern("EEEE d, HH:mm");
@@ -506,7 +511,7 @@ public class DateTimeUtil
           }
         return ZDT.withZoneSameInstant(_UTC);
       }
-    
+
 
     public static LocalDate toLocalDate(java.sql.Date D)
       {
@@ -521,6 +526,7 @@ public class DateTimeUtil
           L.add(toLocalDate(d));
         return L;
       }
+
     public static Set<LocalDate> toLocalDates(Set<java.sql.Date> D)
       {
         Set<LocalDate> S = new HashSet<LocalDate>();
@@ -710,7 +716,7 @@ public class DateTimeUtil
         BaseTimeMarker = Plus ? BaseTimeMarker.plus(P) : BaseTimeMarker.minus(P);
         BaseTimeMarker = BaseTimeMarker.withHour(hour).withMinute(minute);
 
-        return printDateTimeForJSON(BaseTimeMarker);
+        return printDateTimeForJSON(BaseTimeMarker, true);
       }
 
     public static boolean validateBoundary(TimeSeriesType Type, boolean Start, ZonedDateTime ZDT)
