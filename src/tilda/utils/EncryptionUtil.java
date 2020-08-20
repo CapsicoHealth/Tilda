@@ -21,6 +21,7 @@ import java.security.SecureRandom;
 import java.util.Base64;
 
 import javax.crypto.Cipher;
+import javax.crypto.Mac;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
@@ -142,6 +143,18 @@ public class EncryptionUtil
             LOG.error("Exception in aes()", e);
             return null;
           }
+      }
+    
+    
+    public static String hmacSHA1(String plaintext, String key)
+    throws Exception
+      {
+        byte[] keyBytes = key.getBytes();
+        SecretKeySpec signingKey = new SecretKeySpec(keyBytes, "HmacSHA1");
+        Mac mac = Mac.getInstance("HmacSHA1");
+        mac.init(signingKey);
+        byte[] rawHmac = Base64.getEncoder().encode(mac.doFinal(plaintext.getBytes("UTF-8")));
+        return new String(rawHmac, "UTF-8");
       }
 
   }
