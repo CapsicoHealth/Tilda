@@ -157,4 +157,14 @@ public class EncryptionUtil
         return new String(rawHmac, "UTF-8");
       }
 
+    public static String hmacSHA256(String plaintext, String key)
+    throws Exception
+      {
+        byte[] keyBytes = key.getBytes();
+        SecretKeySpec signingKey = new SecretKeySpec(keyBytes, "HmacSHA256");
+        Mac mac = Mac.getInstance("HmacSHA256");
+        mac.init(signingKey);
+        byte[] rawHmac = Base64.getEncoder().encode(mac.doFinal(plaintext.getBytes("UTF-8")));
+        return new String(rawHmac, "UTF-8");
+      }
   }
