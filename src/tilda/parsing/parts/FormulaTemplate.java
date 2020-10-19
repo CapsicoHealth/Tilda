@@ -34,8 +34,8 @@ public class FormulaTemplate
     protected static final Logger   LOG             = LogManager.getLogger(FormulaTemplate.class.getName());
 
     /*@formatter:off*/
-    @SerializedName("name"   ) public String             _Name   ;
-    @SerializedName("pattern") public String             _PatternStr;
+    @SerializedName("name"   ) public String            _Name   ;
+    @SerializedName("pattern") public String            _PatternStr;
     @SerializedName("impls"  ) public List<JSONObject>  _Impls = new ArrayList<JSONObject>();
     /*@formatter:on*/
     

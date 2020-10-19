@@ -58,6 +58,7 @@ public class MailUtil
                     else if (parts[2].equalsIgnoreCase("starttls") == true)
                      email.setStartTLSEnabled(true);
                     email.setSslSmtpPort(parts[1]);
+                    email.setSmtpPort(ParseUtil.parseInteger(parts[1], 25));
                   }
                 else
                   {

@@ -40,12 +40,12 @@ public class Index
     @SerializedName("subQuery") public SubWhereClause _SubQuery;
     /*@formatter:on*/
 
-    public transient List<Column>    _ColumnObjs    = new ArrayList<Column>();
-    public transient List<OrderBy>   _OrderByObjs   = new ArrayList<OrderBy>();
-    public transient boolean         _Unique;
-    public transient String[]        _LALColumns;
+    public transient List<Column>  _ColumnObjs  = new ArrayList<Column>();
+    public transient List<OrderBy> _OrderByObjs = new ArrayList<OrderBy>();
+    public transient boolean       _Unique;
+    public transient String[]      _LALColumns;
 
-    public transient Base            _Parent;
+    public transient Base          _Parent;
 
     public Index()
       {
@@ -64,7 +64,7 @@ public class Index
 
     public String getName()
       {
-        return _Parent._OriginalName + "_" + _Name;
+        return TextUtil.print(_Parent._ShortAlias, _Parent._OriginalName) + "_" + _Name;
       }
 
     public boolean Validate(ParserSession PS, Base Parent)
@@ -119,15 +119,8 @@ public class Index
               }
           });
 
-
-
         if (_Unique == false)
           {
-            Set<String> Names = new HashSet<String>();
-            if (_ColumnObjs != null)
-              for (Column C : _ColumnObjs)
-                Names.add(C.getName().toUpperCase());
-
             _OrderByObjs = OrderBy.processOrderBys(PS, "Object '" + _Parent.getFullName() + "' defines index '" + _Name + "'", _Parent, _OrderBy, false);
 
             if (TextUtil.isNullOrEmpty(_SubWhere) == false && _SubQuery != null)
@@ -187,8 +180,14 @@ public class Index
               }
             Str.append(OB._Col._Name).append("|").append(OB._Order.name().toLowerCase());
             if (OB._Nulls != null)
-             Str.append("|").append(OB._Nulls.name().toLowerCase());
+              Str.append("|").append(OB._Nulls.name().toLowerCase());
           }
         return (_Unique ? "ui|" : "i|") + Str.toString();
+      }
+
+    @Override
+    public String toString()
+      {
+        return getSignature();
       }
   }

@@ -91,7 +91,7 @@ public class JDBCHelper
     /**
      * Executes a query with a record processor, starting at Start (0 is beginning), and for Size records.
      */
-    public static int executeSelect(Connection C, String SchemaName, String TableName, String Query, RecordProcessor RP, int Start, boolean Offsetted, int Size, boolean Limited, boolean CountAll)
+    public static int executeSelect(Connection C, String SchemaName, String TableName, String Query, RecordProcessor RP, int Start, boolean Offsetted, int size, boolean Limited, boolean CountAll)
     throws Exception
       {
         TableName = SchemaName + "." + TableName;
@@ -102,8 +102,10 @@ public class JDBCHelper
             long T0 = System.nanoTime();
             QueryDetails.setLastQuery(TableName, Query);
             S = C.createStatement(ResultSet.FETCH_FORWARD, ResultSet.CONCUR_READ_ONLY);
+            if (size < 0 || size > 5000)
+             S.setFetchSize(5000);
             ResultSet RS = S.executeQuery(Query);
-            int count = JDBCHelper.process(RS, RP, Start, Offsetted, Size, Limited, CountAll);
+            int count = JDBCHelper.process(RS, RP, Start, Offsetted, size, Limited, CountAll);
             PerfTracker.add(TableName, StatementType.SELECT, System.nanoTime() - T0, count);
             return count;
           }

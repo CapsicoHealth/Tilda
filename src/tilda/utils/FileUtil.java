@@ -162,7 +162,7 @@ public class FileUtil
       {
         return getReaderFromUrl(url, false);
       }
-    
+
     /**
      * Returns a Reader from a GET URL. It is the responsibility of the caller to close the Reader when done.
      * If retry is true, in the case of a failure, the HTTP call will be tried another 2 times with a delay of 1000 and 2500 respectively.
@@ -170,39 +170,59 @@ public class FileUtil
      * @param url
      * @param retry
      * @return
-     * @throws Exception 
+     * @throws Exception
      */
     public static BufferedReader getReaderFromUrl(String url, boolean retry)
       {
-        BufferedReader R = getReaderFromUrl_base(url, 0);
+        return getReaderFromUrl(url, retry, null);
+      }
+
+    /**
+     * Returns a Reader from a GET URL and headers. It is the responsibility of the caller to close the Reader when done.
+     * If retry is true, in the case of a failure, the HTTP call will be tried another 2 times with a delay of 1000 and 2500 respectively.
+     * 
+     * @param url
+     * @param retry
+     * @return
+     * @throws Exception
+     */
+    public static BufferedReader getReaderFromUrl(String url, boolean retry, Map<String, String> headers)
+      {
+        BufferedReader R = getReaderFromUrl_base(url, 0, headers);
         if (retry == true && R == null)
           {
             LOG.warn("Trying a second time");
-            R = getReaderFromUrl_base(url, 1000);
+            R = getReaderFromUrl_base(url, 1000, headers);
             if (R == null)
               {
                 LOG.warn("Trying a third time");
-                R = getReaderFromUrl_base(url, 2500);
+                R = getReaderFromUrl_base(url, 2500, headers);
               }
           }
         return R;
       }
-    
+
     /**
      * Private method to get a reader from a GET URL and wait some millis before. Useful for retry strategies.
+     * 
      * @param url
      * @param waitMillis
      * @return
      */
-    private static BufferedReader getReaderFromUrl_base(String url, int waitMillis)
+    private static BufferedReader getReaderFromUrl_base(String url, int waitMillis, Map<String, String> headers)
       {
         try
           {
             Thread.sleep(waitMillis);
             URL u = new URL(url);
             long TS = System.nanoTime();
-            URLConnection uc = u.openConnection();
-            Reader In = new InputStreamReader(uc.getInputStream());
+            URLConnection con = u.openConnection();
+            if (headers != null)
+              for (Map.Entry<String, String> E : headers.entrySet())
+                {
+                  con.setRequestProperty(E.getKey(), E.getValue());
+                }
+            Reader In = new InputStreamReader(con.getInputStream());
             LOG.debug("URL call took " + DurationUtil.printDuration(System.nanoTime() - TS));
             return new BufferedReader(In);
           }
@@ -212,7 +232,7 @@ public class FileUtil
           }
         return null;
       }
-    
+
     /**
      * Gets contents from a GET URL provided,<BR>
      * 
@@ -238,7 +258,22 @@ public class FileUtil
     public static String getContentsFromUrl(String url, boolean retry)
     throws IOException
       {
-        BufferedReader R = getReaderFromUrl(url, retry);
+        return getContentsFromUrl(url, retry, null);
+      }
+    
+    /**
+     * Gets contents from a GET URL provided,<BR>
+     * If retry is true, in the case of a failure, the HTTP call will be tried another 2 times with a delay of 1000 and 2500 respectively.
+     * 
+     * @param url
+     * @param retry
+     * @return
+     * @throws IOException
+     */
+    public static String getContentsFromUrl(String url, boolean retry, Map<String, String> headers)
+    throws IOException
+      {
+        BufferedReader R = getReaderFromUrl(url, retry, headers);
         if (R == null)
           return null;
         StringBuilder Str = new StringBuilder();
@@ -254,7 +289,7 @@ public class FileUtil
 
 
     /**
-     * Returns a Reader from a POST URL with parameters. It is the responsibility of the claler to close the Reader when done.
+     * Returns a Reader from a POST URL with parameters. It is the responsibility of the caller to close the Reader when done.
      * 
      * @param url
      * @param args
@@ -262,11 +297,28 @@ public class FileUtil
      */
     public static BufferedReader getReaderFromPostUrl(String url, Map<String, String> params)
       {
+        return getReaderFromPostUrl(url, params, null);
+      }
+
+    /**
+     * Returns a Reader from a POST URL with parameters and headers. It is the responsibility of the caller to close the Reader when done.
+     * 
+     * @param url
+     * @param args
+     * @return
+     */
+    public static BufferedReader getReaderFromPostUrl(String url, Map<String, String> params, Map<String, String> headers)
+      {
         try
           {
             HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
             con.setRequestMethod("POST");
             con.setDoOutput(true);
+            if (headers != null)
+              for (Map.Entry<String, String> E : headers.entrySet())
+                {
+                  con.setRequestProperty(E.getKey(), E.getValue());
+                }
             con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
 
             StringJoiner sj = new StringJoiner("&");
@@ -308,7 +360,13 @@ public class FileUtil
     public static String getContentsFromPostUrl(String url, Map<String, String> params)
     throws IOException
       {
-        BufferedReader R = getReaderFromPostUrl(url, params);
+        return getContentsFromPostUrl(url, params, null);
+      }
+
+    public static String getContentsFromPostUrl(String url, Map<String, String> params, Map<String, String> headerss)
+    throws IOException
+      {
+        BufferedReader R = getReaderFromPostUrl(url, params, headerss);
         if (R == null)
           return null;
         StringBuilder Str = new StringBuilder();

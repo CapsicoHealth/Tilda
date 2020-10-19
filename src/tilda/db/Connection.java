@@ -402,8 +402,8 @@ public final class Connection
           return;
         long T0 = System.nanoTime();
         Savepoint SP = _C.setSavepoint();
-        _SavePoints.add(SP);
-        // LOG.debug("SAVEPOINT ADD: "+SP.getSavepointId()+ " (total: "+_SavePoints.size()+")");
+        _SavePoints.push(SP);
+//        LOG.debug("SAVEPOINT ADD: "+SP.getSavepointId()+ " (total: "+_SavePoints.size()+")");
         PerfTracker.add(TransactionType.SAVEPOINT_SET, System.nanoTime() - T0);
       }
 
@@ -415,7 +415,7 @@ public final class Connection
 
         long T0 = System.nanoTime();
         Savepoint SP = _SavePoints.pop();
-        // LOG.debug("SAVEPOINT POP: "+SP.getSavepointId() + " (total: "+(_SavePoints.size()+1)+")");
+//        LOG.debug("SAVEPOINT POP: "+SP.getSavepointId() + " (total: "+(_SavePoints.size()+1)+")");
         if (commit == true)
           {
             _C.releaseSavepoint(SP);

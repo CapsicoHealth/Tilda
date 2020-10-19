@@ -40,12 +40,13 @@ public class ViewRealize
 
     /*@formatter:off*/
     
-    @SerializedName("name"        ) public String            _Name;
-    @SerializedName("targetSchema") public String            _TargetSchema;
-    @SerializedName("primary"     ) public PrimaryKey        _PrimaryKey = null;
-    @SerializedName("foreign"     ) public List<ForeignKey>  _ForeignKeys= new ArrayList<ForeignKey>();
-    @SerializedName("indices"     ) public List<Index>       _Indices    = new ArrayList<Index>();
-    @SerializedName("upsert"      ) public ViewRealizeUpsert _Upsert = null;
+    @SerializedName("name"          ) public String              _Name;
+    @SerializedName("targetSchema"  ) public String              _TargetSchema;
+    @SerializedName("primary"       ) public PrimaryKey          _PrimaryKey = null;
+    @SerializedName("foreign"       ) public List<ForeignKey>    _ForeignKeys= new ArrayList<ForeignKey>();
+    @SerializedName("indices"       ) public List<Index>         _Indices    = new ArrayList<Index>();
+    @SerializedName("indexTemplates") public List<IndexTemplate> _IndexTemplates = new ArrayList<IndexTemplate>();
+    @SerializedName("upsert"        ) public ViewRealizeUpsert   _Upsert = null;
 
     @SerializedName("subRealized" ) public String[]          _SubRealized_DEPRECATED= new String[] { };
     // It was "exclude" for view columns, so why was it ever "excludes" here? Not consistent.
@@ -91,6 +92,7 @@ public class ViewRealize
         O._FST = FrameworkSourcedType.REALIZED;
         O._SourceView = ParentView;
         O._Name = ParentView.getRealizedTableName(false);
+        O._ShortAlias = ParentView._ShortAlias;
 
         Schema targetSchema = null;
         if (TextUtil.isNullOrEmpty(_TargetSchema) == false)
@@ -135,7 +137,27 @@ public class ViewRealize
         O._PrimaryKey = _PrimaryKey;
         O._ForeignKeys = _ForeignKeys;
         O._Indices = _Indices;
-        
+        if (_IndexTemplates != null)
+          for (IndexTemplate IT : _IndexTemplates)
+            if (IT.Validate(PS, ParentRealized._O) == true)
+              for (String col : IT._Columns)
+                {
+                  Index I = new Index();
+                  I._Name = IT._Name + "_" + col;
+                  I._Unique = false;
+                  I._OrderBy = IT._OrderBy;
+                  I._SubWhere = IT._SubWhere;
+                  if (I._SubWhere != null)
+                    I._SubWhere = I._SubWhere.replace("?", col);
+                  I._SubQuery = IT._SubQuery;
+                  if (I._SubQuery != null && I._SubQuery._Wheres != null)
+                    for (Query Q : I._SubQuery._Wheres)
+                      Q._Clause = Q._Clause.replace("?", col);
+                  I._Columns = new String[] { col
+                  };
+                  O._Indices.add(I);
+                }
+
         boolean OCC = false;
         // LOG.debug(ParentRealized._O.getFullName()+": "+TextUtil.print(ParentRealized._O.getColumnNames()));
         for (Column C : ParentRealized._O._Columns)

@@ -34,7 +34,7 @@ public class Config
   {
     protected static final Logger LOG = LogManager.getLogger(Config.class.getName());
     
-    @SerializedName("objects"     ) public List<DataObject     > _CmsData     = new ArrayList<DataObject     >();
+    @SerializedName("objects"     ) public List<DataObject> _CmsData     = new ArrayList<DataObject>();
     
     public transient String _RootFolder = null;
     
