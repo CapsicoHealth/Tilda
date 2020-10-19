@@ -63,9 +63,16 @@ public class DDLDependencyPreManagement extends MigrationAction
             // for the first time the migrate utility is ran when the DDL Management infrastructure hasn't been created yet.
             C.setSavepoint();
             if (_DdlDepMan.fetchDependencies(C) == false)
-              return false;
+              {
+                C.releaseSavepoint(false);
+                return false;
+              }
             if (_DdlDepMan.hasDependencies() == false)
-              return false;
+              {
+                C.releaseSavepoint(false);
+                return false;
+              }
+            C.releaseSavepoint(false);
           }
         catch (Exception E)
           {
