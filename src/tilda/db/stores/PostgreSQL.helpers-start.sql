@@ -485,6 +485,70 @@ CREATE OR REPLACE FUNCTION TILDA.StrNativeArrayToArray(v text)
 $$;
 
 
+-- Text to real[]
+DROP CAST IF EXISTS (text AS real[]);
+CREATE OR REPLACE FUNCTION TILDA.strToArrayReal(text)
+  RETURNS real[]
+  IMMUTABLE COST 2 LANGUAGE SQL AS
+'SELECT $1::VARCHAR[]::REAL[];';
+CREATE CAST (text AS real[]) WITH FUNCTION TILDA.strToArrayReal(text) as Implicit;
+
+-- Varchar to real[]
+DROP CAST IF EXISTS (varchar AS real[]);
+CREATE OR REPLACE FUNCTION TILDA.strToArrayReal(varchar)
+  RETURNS real[]
+  IMMUTABLE COST 2 LANGUAGE SQL AS
+'SELECT $1::VARCHAR[]::REAL[];';
+CREATE CAST (varchar AS real[]) WITH FUNCTION TILDA.strToArrayReal(varchar) as Implicit;
+
+-- Text to DOUBLE PRECISION[]
+DROP CAST IF EXISTS (text AS DOUBLE PRECISION[]);
+CREATE OR REPLACE FUNCTION TILDA.strToArrayDoublePrecision(text)
+  RETURNS DOUBLE PRECISION[]
+  IMMUTABLE COST 2 LANGUAGE SQL AS
+'SELECT $1::VARCHAR[]::DOUBLE PRECISION[];';
+CREATE CAST (text AS DOUBLE PRECISION[]) WITH FUNCTION TILDA.strToArrayDoublePrecision(text) as Implicit;
+
+-- Varchar to DOUBLE PRECISION[]
+DROP CAST IF EXISTS (varchar AS DOUBLE PRECISION[]);
+CREATE OR REPLACE FUNCTION TILDA.strToArrayDoublePrecision(varchar)
+  RETURNS DOUBLE PRECISION[]
+  IMMUTABLE COST 2 LANGUAGE SQL AS
+'SELECT $1::VARCHAR[]::DOUBLE PRECISION[];';
+CREATE CAST (varchar AS DOUBLE PRECISION[]) WITH FUNCTION TILDA.strToArrayDoublePrecision(varchar) as Implicit;
+
+-- Text to integer[]
+DROP CAST IF EXISTS (text AS integer[]);
+CREATE OR REPLACE FUNCTION TILDA.strToArrayInteger(text)
+  RETURNS integer[]
+  IMMUTABLE COST 2 LANGUAGE SQL AS
+'SELECT $1::VARCHAR[]::INTEGER[];';
+CREATE CAST (text AS integer[]) WITH FUNCTION TILDA.strToArrayInteger(text) as Implicit;
+
+-- Varchar to integer[]
+DROP CAST IF EXISTS (varchar AS integer[]);
+CREATE OR REPLACE FUNCTION TILDA.strToArrayInteger(varchar)
+  RETURNS integer[]
+  IMMUTABLE COST 2 LANGUAGE SQL AS
+'SELECT $1::VARCHAR[]::INTEGER[];';
+CREATE CAST (varchar AS integer[]) WITH FUNCTION TILDA.strToArrayInteger(varchar) as Implicit;
+
+-- Text to bigint[]
+DROP CAST IF EXISTS (text AS bigint[]);
+CREATE OR REPLACE FUNCTION TILDA.strToArrayBigint(text)
+  RETURNS bigint[]
+  IMMUTABLE COST 2 LANGUAGE SQL AS
+'SELECT $1::VARCHAR[]::bigint[];';
+CREATE CAST (text AS bigint[]) WITH FUNCTION TILDA.strToArrayBigint(text) as Implicit;
+
+-- Varchar to bigint[]
+DROP CAST IF EXISTS (varchar AS bigint[]);
+CREATE OR REPLACE FUNCTION TILDA.strToArrayBigint(varchar)
+  RETURNS bigint[]
+  IMMUTABLE COST 2 LANGUAGE SQL AS
+'SELECT $1::VARCHAR[]::bigint[];';
+CREATE CAST (varchar AS bigint[]) WITH FUNCTION TILDA.strToArrayBigint(varchar) as Implicit;
+
 
 
 
