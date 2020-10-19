@@ -1561,7 +1561,7 @@ public class TildaData implements CodeGenTildaData
         Out.println("       if (OK == false)");
         Out.println("        throw new Exception(\"Object has not been instanciated via deserialization or the factory create() method.\");");
         Out.println();
-        Out.println("       if (__Init == null && __LookupId==0);  // object deserialized");
+        Out.println("       if (__Init == null && __LookupId==0)  // object deserialized");
         Out.println("        validateDeserialization();");
         Out.println();
         Out.println("       int lookupId = getFirstValidLookupBy();");

@@ -31,8 +31,8 @@ public class ViewPivotValue extends Value
     @SerializedName("type"      ) public String  _TypeStr   ;
     @SerializedName("size"      ) public Integer _Size      ;
     @SerializedName("expression") public String  _Expression;
-    @SerializedName("scale"     ) public Integer  _Scale     ;
-    @SerializedName("precision" ) public Integer  _Precision ;
+    @SerializedName("scale"     ) public Integer _Scale     ;
+    @SerializedName("precision" ) public Integer _Precision ;
     /*@formatter:on*/
 
     public transient TypeDef _Type;    
