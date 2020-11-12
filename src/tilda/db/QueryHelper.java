@@ -47,6 +47,7 @@ import tilda.types.Type_StringPrimitive;
 import tilda.utils.CollectionUtil;
 import tilda.utils.DateTimeUtil;
 import tilda.utils.DurationUtil.IntervalEnum;
+import tilda.utils.PaddingUtil;
 import tilda.utils.TextUtil;
 
 /**
@@ -2894,11 +2895,18 @@ public abstract class QueryHelper
     throws Exception
       {
         _QueryStr.append("\n");
-        if (TextUtil.isNullOrEmpty(NextHeader) == false)
+        if (NextHeader != null)
           _QueryStr.append(NextHeader);
         return this;
       }
 
+    public QueryHelper padding(int spaces)
+    throws Exception
+      {
+        _QueryStr.append(PaddingUtil.getPad(spaces));
+        return this;
+      }
+    
     public QueryHelper exists(SelectQuery subQ)
       {
         _QueryStr.append(" exists (").append(subQ.toString()).append(")");
