@@ -910,7 +910,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
           {
             if (F == null)
               continue;
-            String FormulaType = getColumnType(F.getType(), 8192, null, false, F._Precision, F._Scale);
+            String FormulaType = getColumnType(F.getType(), 8192, null, F.isCollection(), F._Precision, F._Scale);
             b.append("     -- ").append(String.join("\n     -- ", F._Description)).append("\n");
             if (First == true)
               First = false;
@@ -1333,8 +1333,6 @@ public class Sql extends PostgreSQL implements CodeGenSql
       {
         String FormulaStr = TextUtil.joinTrim(F._FormulaStrs, " ");
 
-        if (F._Name.startsWith("x_") == true)
-         LOG.debug("xxxx");
         Matcher M = F.getParentView()._ViewColumnsRegEx.matcher(FormulaStr);
         StringBuffer Str = new StringBuffer();
         while (M.find() == true)
@@ -1382,7 +1380,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 for (Formula F2 : ParentView._Formulas)
                   if (s.equals(F2._Name) == true && s.equals(F._Name) == false)
                     {
-                      String FormulaType = getColumnType(F2.getType(), F2._Size, null, false, F2._Precision, F2._Scale);
+                      String FormulaType = getColumnType(F2.getType(), F2._Size, null, F2.isCollection(), F2._Precision, F2._Scale);
                       M.appendReplacement(Str, "(" + genFormulaCode(ParentView, F2) + ")::" + FormulaType);
                       break;
                     }
