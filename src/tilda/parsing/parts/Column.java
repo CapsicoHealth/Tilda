@@ -584,6 +584,22 @@ public class Column extends TypeDef
         return Str.toString();
       }
 
+    /**
+     * returns an array of column names
+     * 
+     * @param L
+     * @return
+     */
+    public static String[] getColumnNames(List<Column> L)
+      {
+        if (L == null)
+          return null;
+        String[] names = new String[L.size()];
+        for (int i = 0; i < L.size(); ++i)
+         names[i] = L.get(i)._Name;
+        return names;
+      }
+
     @Override
     public String toString()
       {

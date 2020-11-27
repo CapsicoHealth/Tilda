@@ -560,7 +560,7 @@ DROP CAST IF EXISTS (boolean AS smallint);
 CREATE OR REPLACE FUNCTION TILDA.boolToSmallint(boolean)
   RETURNS smallint
   IMMUTABLE COST 1 LANGUAGE SQL AS
-'SELECT (case when $1 then 1 else 0 end)::SMALLINT;';
+'SELECT (case when $1 = true then 1 when $1 = false then 0 else null end)::SMALLINT;';
 CREATE CAST (boolean AS smallint) WITH FUNCTION TILDA.boolToSmallint(boolean) as Implicit;
 
 

@@ -346,6 +346,31 @@ public class Object extends Base
         _Validated = Errs == PS.getErrorCount();
         
         _HasNaturalIdentity = _HasUniqueIndex == true || _PrimaryKey != null && _PrimaryKey._Autogen == false;
+        
+        boolean All = false;
+        for (Index I : _Indices)
+          if (I._Name.equals("All") == true)
+           {
+             All = true;
+             break;
+           }
+        if (All == false)
+          for (SubWhereClause SWC : _Queries)
+            if (SWC._Name.equals("All") == true)
+             {
+               All = true;
+               break;
+             }
+         if (All == false && _HasNaturalIdentity == true)
+           {
+             SubWhereClause SWC = new SubWhereClause();
+             SWC._Name = "All";
+             SWC._Description = "Generated All query";
+             SWC._OrderBy = Column.getColumnNames(getFirstIdentityColumns());
+             SWC._Wheres = new Query[] { new Query("1=1") };
+             SWC.Validate(PS, this, "Object '" + getFullName() + "'", true);
+             _Queries.add(SWC);
+           }
 
         return _Validated;
       }
