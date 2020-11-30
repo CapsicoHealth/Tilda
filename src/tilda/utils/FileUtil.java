@@ -260,7 +260,7 @@ public class FileUtil
       {
         return getContentsFromUrl(url, retry, null);
       }
-    
+
     /**
      * Gets contents from a GET URL provided,<BR>
      * If retry is true, in the case of a failure, the HTTP call will be tried another 2 times with a delay of 1000 and 2500 respectively.
@@ -437,4 +437,25 @@ public class FileUtil
         return System.getProperty("user.home");
       }
 
+    public static boolean removeDir(File dir, boolean recurse)
+      {
+        if (dir.exists() == false) // If it doesn't exist, consider it deleted!
+          return true;
+
+        File[] files = dir.listFiles();
+        // If there are subfiles or subdirs and recurse is false, return false
+        if (recurse == false && files != null && files.length > 0)
+          return false;
+
+        if (files != null)
+          for (File f : files)
+            {
+              if (f.isDirectory() == true)
+                removeDir(f, true);
+              else
+                f.delete();
+            }
+
+        return dir.delete();
+      }
   }
