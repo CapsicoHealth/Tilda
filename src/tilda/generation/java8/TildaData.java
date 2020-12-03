@@ -1670,12 +1670,8 @@ public class TildaData implements CodeGenTildaData
         Out.println("       QueryDetails.logQuery(\"" + O.getShortName() + "\", Q, toString());");
         Out.println("       java.sql.PreparedStatement PS=null;");
         Out.println("       java.sql.ResultSet RS=null;");
-        for (Column C : O._Columns)
-          if (C != null && C.isCollection() == true)
-            {
-              Out.println("       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();");
-              break;
-            }
+        if (O.hasCollectionColumn() == true || O.hasCollectionQuery() == true)
+         Out.println("       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();");
         Out.println("       int count = 0;");
         Out.println();
         Out.println("       try");

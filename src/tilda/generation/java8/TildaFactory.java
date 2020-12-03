@@ -25,7 +25,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.util.StringBuilderWriter;
 
-import tilda.db.Connection;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.enums.FrameworkSourcedType;
@@ -282,13 +281,10 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("       QueryDetails.setLastQuery(SCHEMA_TABLENAME_LABEL, Q);");
         Out.println("       QueryDetails.logQuery(\"" + O.getShortName() + "\", Q, null);");
         Out.println("       java.sql.PreparedStatement PS=null;");
-        // Out.println(" java.sql.ResultSet RS=null;");
-        for (Column C : O._Columns)
-          if (C != null && C.isCollection() == true)
-            {
-              Out.println("       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();");
-              break;
-            }
+
+        boolean Collection = O.hasCollectionColumn() == true || O.hasCollectionQuery() == true;
+        if (Collection == true)
+         Out.println("       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();");
         Out.println("       int count = 0;");
         Out.println("       try");
         Out.println("        {");
