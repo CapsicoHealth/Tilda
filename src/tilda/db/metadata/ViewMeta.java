@@ -45,6 +45,7 @@ public class ViewMeta
     public void load(Connection C)
     throws Exception
       {
+        long TS = System.nanoTime();
         // LOG.debug("View: " + _SchemaName + "." + _ViewName);
         DatabaseMetaData meta = C.getMetaData();
         ResultSet RS = meta.getColumns(null, _SchemaName.toLowerCase(), _ViewName.toLowerCase(), null);
@@ -52,6 +53,8 @@ public class ViewMeta
           {
             ColumnMeta CI = new ColumnMeta(C, RS, null, this);
             _DBColumns.put(CI._Name, CI);
+            ++MetaPerformance._ViewColumnCount;
           }
+        MetaPerformance._ViewColumnNano+=(System.nanoTime()-TS);
       }
   }

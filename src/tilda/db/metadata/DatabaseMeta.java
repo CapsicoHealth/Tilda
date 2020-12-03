@@ -34,6 +34,7 @@ public class DatabaseMeta
 
     public void load(Connection C, String SchemaPattern, String TablePattern) throws Exception
       {
+        long TS = System.nanoTime();
         DatabaseMetaData meta = C.getMetaData();
         ResultSet RS = meta.getSchemas(null, SchemaPattern==null?SchemaPattern:SchemaPattern.toLowerCase());
         while (RS.next() != false)
@@ -42,8 +43,11 @@ public class DatabaseMeta
             SchemaMeta S = _DBSchemas.get(SchemaName);
             if (S == null)
              S = new SchemaMeta(SchemaName);
-            S.load(C, TablePattern);
             _DBSchemas.put(SchemaName, S);
+            MetaPerformance._SchemaNano+=(System.nanoTime()-TS);
+            S.load(C, TablePattern);
+            TS = System.nanoTime();
+            ++MetaPerformance._SchemaCount;
           }
         RS.close();
         _SupportsArrays = C.supportsArrays();

@@ -48,6 +48,7 @@ import tilda.db.config.Bootstrappers;
 import tilda.db.config.Conn;
 import tilda.db.config.ConnDefs;
 import tilda.db.metadata.DatabaseMeta;
+import tilda.db.metadata.MetaPerformance;
 import tilda.enums.TransactionType;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.migration.Migrator;
@@ -57,6 +58,7 @@ import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.performance.PerfTracker;
 import tilda.utils.ClassStaticInit;
+import tilda.utils.DurationUtil;
 import tilda.utils.FileUtil;
 import tilda.utils.LogUtil;
 import tilda.utils.SystemValues;
@@ -383,14 +385,32 @@ public class ConnectionPool
       {
         DatabaseMeta DBMeta = new DatabaseMeta();
         LOG.info("Loading database metadata for found Schemas from " + C.getPoolName() + ".");
+        long TS = System.nanoTime();
         for (Schema S : TildaList)
           {
             LOG.debug("  " + S._Name);
             DBMeta.load(C, S._Name);
           }
+//        MetaPerformance.print();
+        LOG.debug("--> Metadata fetching took "+DurationUtil.printDurationMilliSeconds(System.nanoTime()-TS));
         return DBMeta;
       }
+/*
+Schemas:    19 in    26ms or  0.3%
+Tables :   280 in     3ms or  0.0%
+Columns: 5,638 in   922ms or 10.8%
+PK     :   280 in   630ms or  7.4%
+FK-Out :   351 in 3,049ms or 35.8%
+FK-In  :   353 in 2,735ms or 32.1%
+Indices:   768 in 1,141ms or 13.4%
+----------------------------------------------------------------------------
+Total: 8,509ms
 
+ */
+
+    
+    
+    
     private static List<Schema> loadTildaResources(Connection C)
     throws Exception
       {
