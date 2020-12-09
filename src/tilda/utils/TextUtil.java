@@ -1138,6 +1138,17 @@ public class TextUtil
       }
 
 
+    /**
+     * Writes the Str string in a way that makes it compatible with XML, i.e.:
+     * <UL>
+     * <LI>&lt; and &gt; are escaped as &amp;lt; and &amp;gt;
+     * <LI>&amp; is escaped to &amp;amp;
+     * <LI>" and ' are escaped to &amp;quot; and &amp;apos;
+     * </UL>
+     * 
+     * @param Out
+     * @param Str
+     */
     public static final void escapeXML(PrintWriter Out, String Str)
       {
         for (int i = 0; i < Str.length(); ++i)
@@ -1158,6 +1169,12 @@ public class TextUtil
           }
       }
 
+    /**
+     * Same as {@link #escapeXML(PrintWriter, String)} but with a PrintStream.
+     * 
+     * @param Out
+     * @param Str
+     */
     public static final void escapeXML(PrintStream Out, String Str)
       {
         if (Str == null)
@@ -1180,6 +1197,51 @@ public class TextUtil
           }
       }
 
+    // public static final String escapeXML1(String Str)
+    // {
+    // if (Str == null)
+    // return null;
+    // StringBuilderWriter SBW = new StringBuilderWriter();
+    // PrintWriter Out = new PrintWriter(SBW);
+    // escapeXML(Out, Str);
+    // Out.flush();
+    // Out.close();
+    // return SBW.getBuilder().toString();
+    // }
+
+    /**
+     * Same as {@link #escapeXML(PrintWriter, String)} but returning a direct String.<BR>
+     * <BR>
+     * Note: FYI that it seems bad form to copy/paste the same logic instead of reusing, but
+     * the escapeXML1 version is about 5 times slower.
+     * 
+     * @param Out
+     * @param Str
+     */
+    public static final String escapeXML(String Str)
+      {
+        if (Str == null)
+          return Str;
+        StringBuilder s = new StringBuilder();
+        for (int i = 0; i < Str.length(); ++i)
+          {
+            char c = Str.charAt(i);
+            if (c == '<')
+              s.append("&lt;");
+            else if (c == '&')
+              s.append("&amp;");
+            else if (c == '>')
+              s.append("&gt;");
+            else if (c == '"')
+              s.append("&quot;");
+            else if (c == '\'')
+              s.append("&apos;");
+            else
+              s.append(c);
+          }
+        return s.toString();
+      }
+
 
     public static final void printXMLTag(PrintWriter Out, String Lead, String Tag, String Content)
       {
@@ -1195,7 +1257,6 @@ public class TextUtil
             Out.println(">");
           }
       }
-
 
     protected static final Pattern RTF_CELL_PATTERN = Pattern.compile("\\\\cell\\W|\\}\\{\\\\");
 
@@ -1816,7 +1877,7 @@ public class TextUtil
     public static String printJsonQuotedStringValue(String v)
       {
         if (v == null || v.equals("null") == true || v.equals("undefined") == true)
-         return "null";
+          return "null";
 
         StringBuilder Str = new StringBuilder();
         Str.append("\"");

@@ -33,7 +33,8 @@ public class TextUtilTest
     public static void main(String[] args)
       {
 //        Test_SimplifyName();
-        Test_SearchReplace();
+//        Test_SearchReplace();
+        test_EscapeXML();
 //        Test2();
 //        Test3();
 //        Test4();
@@ -42,6 +43,29 @@ public class TextUtilTest
 //          Test_Perf_endsWith_vs_charAt();
 //          Test_isNullOrEmpty();
       }
+
+    private static void test_EscapeXML()
+     {
+       LOG.debug("Starting test_EscapeXML");
+       final int count = 1_000_000;
+       long TS = System.nanoTime();
+       String Str = "'StartSel=\"<SPAN class=\"\"highlight\"\">\", StopSel=\"<SPAN>COUGH</SPAN></SPAN>\", MinWords=5, MaxWords=12, MaxFragments=5, FragmentDelimiter=\" ||-|-|| \"'";
+       for (int i = 0; i < count; ++i)
+         {
+           TextUtil.escapeXML(Str);
+         }
+       TS = System.nanoTime() - TS;
+       LOG.debug("EscapeXml: "+DurationUtil.printDuration(TS) +" with "+DurationUtil.printPerformancePerSecond(TS, count)+" calls/s");
+       
+//       TS = System.nanoTime();
+//       for (int i = 0; i < count; ++i)
+//         {
+//           TextUtil.escapeXML3(Str);
+//         }
+//       TS = System.nanoTime() - TS;
+//       LOG.debug("EscapeXml3: "+DurationUtil.printDuration(TS) +" with "+DurationUtil.printPerformancePerSecond(TS, count)+" calls/s");
+       
+     }
 
     private static void Test_isNullOrEmpty()
       {
