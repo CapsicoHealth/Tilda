@@ -37,6 +37,7 @@ import tilda.db.metadata.ColumnMeta;
 import tilda.db.metadata.FKMeta;
 import tilda.db.metadata.IndexMeta;
 import tilda.db.metadata.PKMeta;
+import tilda.db.metadata.ViewMeta;
 import tilda.db.processors.ScalarRP;
 import tilda.db.processors.StringListRP;
 import tilda.db.processors.StringRP;
@@ -254,6 +255,14 @@ public class PostgreSQL implements DBType
 
         return OK == false ? OK : Con.executeDDL(V._ParentSchema._Name, V.getBaseName(), "DROP VIEW IF EXISTS " + V.getShortName() + " CASCADE");
       }
+    
+    @Override
+    public boolean dropView(Connection Con, ViewMeta V, boolean cascade)
+    throws Exception
+      {
+        return Con.executeDDL(V._SchemaName, V._ViewName, "DROP VIEW IF EXISTS " + V._SchemaName + "." + V._ViewName + (cascade==true?" CASCADE":""));
+      }
+    
 
     @Override
     public boolean createView(Connection Con, View V)

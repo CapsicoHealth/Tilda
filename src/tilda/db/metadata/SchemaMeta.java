@@ -100,4 +100,9 @@ public class SchemaMeta
         src._SchemaName = _SchemaName;
         return _DBViews.put(src._ViewName.toLowerCase(), src) == null;
       }
+
+    public Collection<ViewMeta> getViewMetas()
+      {
+        return _DBViews.values();
+      }
   }
