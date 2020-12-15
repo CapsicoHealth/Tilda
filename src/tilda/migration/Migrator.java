@@ -427,6 +427,9 @@ public class Migrator
                         // the database type is TEXT but the Tilda type is not TEXT
                         || CMeta._TypeSql.equals("VARCHAR") == true && CMeta._TypeName.equals("text") == true && C.getDBStringType(CMeta._Size) != DBStringType.TEXT);
 
+                        if (Col.getName().equals("tag") == true)
+                         LOG.debug("xxx");
+                          
                         if (condition1 || condition2)
                           {
                             // Are the to/from types compatible?
@@ -441,10 +444,12 @@ public class Migrator
                           {
                             // The size-based types don't match
                             if (C.getDBStringType(CMeta._Size).equals(C.getDBStringType(Col._Size)) == false
-                            // they match, but within a type, they are different sizes, except for TEXT
+                            // or they match and they are different sizes, except for TEXT
                             || C.getDBStringType(CMeta._Size).equals(C.getDBStringType(Col._Size)) == true
                             && CMeta._Size != Col._Size
-                            && CMeta._TypeSql.equals("VARCHAR") == false && CMeta._TypeName.equals("text") == false)
+                            // Unless it's a size change but remains within TEXT
+                            && (CMeta._TypeSql.equals("VARCHAR") == false || CMeta._TypeName.equals("text") == false)
+                            )
                               {
                                 CAM.addColumnAlterStringSize(CMeta, Col);
                                 NeedsDdlDependencyManagement = true;
