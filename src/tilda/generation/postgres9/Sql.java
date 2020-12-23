@@ -284,7 +284,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
     private String PrintBaseView(View V, boolean OmmitTZs)
     throws Exception
       {
-        List<TotalMess> FuckList = TotalMess.ScanView(V); // Sorry for the explitives here, but this code is really messed up in very impolite ways!!!
+        List<TotalMess> FuckList = TotalMess.ScanView(V); // Sorry for the expletives here, but this code is really messed up in very impolite ways!!!
 
         StringBuilder Str = new StringBuilder();
         Str.append("-- " + TextUtil.escapeSingleQuoteForSQL(V._Description) + "\n");
@@ -687,6 +687,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         OutFinal.println(Str + ";\n");
         Set<View> SubRealizedViews = V.getSubRealizedViewRootNames();
         Set<View> AncestorRealizedViews = V.getAncestorRealizedViews();
+        
         if (SubRealizedViews != null || AncestorRealizedViews != null) // View depends on realized views.
           {
             if (SubRealizedViews != null)
@@ -695,11 +696,12 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 for (View srv : SubRealizedViews)
                   {
                     r.setLength(0);
-                    r.append("(?i)\\b(");
+                    r.append("(?i)\\b((");
                     r.append(srv._ParentSchema._Name.toUpperCase());
-                    r.append("\\.");
+                    r.append("\\.)?");
                     r.append(srv.getRootViewName().toUpperCase());
-                    r.append(")(PIVOT)?VIEW\\b");
+//                    r.append(")(PIVOT)?VIEW\\b");
+                    r.append(srv._Pivots==null||srv._Pivots.isEmpty()==true ? ")VIEW\\b" : ")PIVOTVIEW\\b");
                     Str = Str.replaceAll(r.toString(), srv._RealizedObj != null ? srv._RealizedObj._ParentSchema._Name+"."+srv._RealizedObj._Name : "$1Realized");
                   }
               }
@@ -1346,7 +1348,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
             for (ViewColumn VC : ParentView._ViewColumns)
               if (s.equals(VC._Name) == true)
                 {
-                  ColumnType T = VC._SameAsObj == null && VC._SameAs.equals("_TS.p") == true ? ColumnType.DATE : VC._SameAsObj.getType();
+                  ColumnType T = VC._SameAsObj == null && VC._SameAs.equals("_TS.p") == true ? ColumnType.DATE : VC.getType();
                   boolean nullTest = FormulaStr.substring(M.end()).toLowerCase().matches("\\s*is\\s*(not)?\\s*null.*");
                   if (nullTest == false && (T == ColumnType.INTEGER || T == ColumnType.LONG || T == ColumnType.FLOAT || T == ColumnType.DOUBLE))
                     M.appendReplacement(Str, "coalesce(\"" + M.group(1) + "\", 0)");

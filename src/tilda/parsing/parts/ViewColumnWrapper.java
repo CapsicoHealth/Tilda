@@ -28,15 +28,15 @@ public class ViewColumnWrapper extends Column
 
     public ViewColumnWrapper(Column SameAsCol, ViewColumn VCol, int SequenceOrder)
       {
-        super(VCol._Name, VCol._SameAs, TextUtil.isNullOrEmpty(VCol._Description) == false ? VCol._Description : SameAsCol._Description);
+        super(VCol._Name, VCol._SameAs, TextUtil.isNullOrEmpty(VCol._Description) == false ? VCol._Description : SameAsCol!=null ? SameAsCol._Description : "Frmework generated column");
 
         _VCol = VCol;
         _SequenceOrder = SequenceOrder;
-        _Invariant = SameAsCol._Invariant;
-        _FCT = SameAsCol._FCT;
-        if (VCol._UseMapper == true && SameAsCol._Mapper != null)
+        _Invariant = SameAsCol!=null?SameAsCol._Invariant : false;
+        _FCT = SameAsCol != null ? SameAsCol._FCT : VCol._FCT;
+        if (SameAsCol != null && VCol._UseMapper == true && SameAsCol._Mapper != null)
           _Mapper = new ColumnMapper(SameAsCol._Mapper._SrcColumns, SameAsCol._Mapper._DestObject, SameAsCol._Mapper._Name, SameAsCol._Mapper._Group, SameAsCol._Mapper._Multi);
-        if (VCol._UseEnum == true && SameAsCol._Enum != null)
+        if (SameAsCol != null && VCol._UseEnum == true && SameAsCol._Enum != null)
           _Enum = new ColumnEnum(SameAsCol._Enum._DestObject, SameAsCol._Enum._Multi);
         // Aggregates are a bit more complex to process type-wise
         if (VCol._Aggregate != null)
@@ -55,7 +55,7 @@ public class ViewColumnWrapper extends Column
             else if (_TypeStr.equals(ColumnType.STRING.name()) == true)
               _Size = SameAsCol._Size;
           }
-        else if (TextUtil.isNullOrEmpty(VCol._Expression) == false)
+        else if (TextUtil.isNullOrEmpty(VCol._Expression) == false) // need to set expression type override
           {
             _TypeStr = VCol._Type._TypeStr;
             // _TypeStr = VCol._Type._Type.name()+(SameAsCol.isCollection()==true?"[]":"");
@@ -65,6 +65,13 @@ public class ViewColumnWrapper extends Column
             _SameAs = null;
             _SameAs__DEPRECATED = null;
             _SameAsObj = null;
+          }
+        else if (VCol != null && VCol._SameAsObj != null)
+          {
+            _TypeStr = VCol._SameAsObj._TypeStr;
+            _Size = VCol._SameAsObj._Size;
+            _Scale = VCol._SameAsObj._Scale;
+            _Precision = VCol._SameAsObj._Precision;
           }
       }
 
