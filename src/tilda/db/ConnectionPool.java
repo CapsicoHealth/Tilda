@@ -386,12 +386,13 @@ public class ConnectionPool
         DatabaseMeta DBMeta = new DatabaseMeta();
         LOG.info("Loading database metadata for found Schemas from " + C.getPoolName() + ".");
         long TS = System.nanoTime();
-        for (Schema S : TildaList)
-          {
-            LOG.debug("  " + S._Name);
-            DBMeta.load(C, S._Name);
-          }
-//        MetaPerformance.print();
+//        for (Schema S : TildaList)
+//          {
+//            LOG.debug("  " + S._Name);
+//            DBMeta.load(C, S._Name);
+//          }
+        DBMeta.load(C, null);
+        MetaPerformance.print();
         LOG.debug("--> Metadata fetching took "+DurationUtil.printDurationMilliSeconds(System.nanoTime()-TS));
         return DBMeta;
       }

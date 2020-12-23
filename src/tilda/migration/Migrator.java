@@ -427,9 +427,6 @@ public class Migrator
                         // the database type is TEXT but the Tilda type is not TEXT
                         || CMeta._TypeSql.equals("VARCHAR") == true && CMeta._TypeName.equals("text") == true && C.getDBStringType(CMeta._Size) != DBStringType.TEXT);
 
-                        if (Col.getName().equals("tag") == true)
-                         LOG.debug("xxx");
-                          
                         if (condition1 || condition2)
                           {
                             // Are the to/from types compatible?

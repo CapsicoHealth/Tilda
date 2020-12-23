@@ -908,7 +908,7 @@ public class Docs
                 Out.println("<A style=\"color:#00AA00; font-weight: bold;\" href=\"" + makeColumnHref(C) + "\">" + ColName + "</A><BR>");
                 ViewColumn VC = V.getViewColumn(ColName);
                 List<Column> L = VC == null ? null : VC.getSameAsLineage();
-                if (L != null)
+                if (L != null && L.isEmpty() == false)
                   {
                     Out.println("<DIV style=\"padding-left:10px; font-size:75%;\">&nbsp;&nbsp;&rarr;&nbsp;" + makeColumnLink(L.get(0)));
                     if (L.size() > 2)

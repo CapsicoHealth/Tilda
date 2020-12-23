@@ -39,7 +39,7 @@ public final class MetaPerformance
         + "\nFK-Out: " + _FKOutCount + " in " + DurationUtil.printDurationMilliSeconds(_FKOutNano)+" or "+NumberFormatUtil.printPercentWith1Dec(total, _FKOutNano)+"%"
         + "\nFK-In: " + _FKInCount + " in " + DurationUtil.printDurationMilliSeconds(_FKInNano)+" or "+NumberFormatUtil.printPercentWith1Dec(total, _FKInNano)+"%"
         + "\nIndices: " + _IndexCount + " in " + DurationUtil.printDurationMilliSeconds(_IndexNano)+" or "+NumberFormatUtil.printPercentWith1Dec(total, _IndexNano)+"%"
-//        + "\nViews: " + _ViewCount + " in " + DurationUtil.printDurationMilliSeconds(_ViewNano)+" or "+NumberFormatUtil.printPercentWith1Dec(total, _ViewNano)+"%"
+        + "\nViews: " + _ViewCount + " in " + DurationUtil.printDurationMilliSeconds(_ViewNano)+" or "+NumberFormatUtil.printPercentWith1Dec(total, _ViewNano)+"%"
 //        + "\nViewColumns: " + _ViewColumnCount + " in " + DurationUtil.printDurationMilliSeconds(_ViewColumnNano)+" or "+NumberFormatUtil.printPercentWith1Dec(total, _ViewColumnNano)+"%"
         + "\n----------------------------------------------------------------------------"
         + "\nTotal: "+DurationUtil.printDurationMilliSeconds(total)
