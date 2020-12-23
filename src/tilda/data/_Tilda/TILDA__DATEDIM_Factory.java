@@ -638,6 +638,10 @@ This is the column definition for:<BR>
                 String clause = ((SelectQuery)ExtraParams).getWhereClause();
                 if (TextUtil.isNullOrEmpty(clause) == false) S.append(clause);
                 break;
+             case 1:
+                S.append(" where (1=1)");
+                S.append(" order by "); C.getFullColumnVar(S, "TILDA", "DateDim", "dt"); S.append(" ASC");
+                break;
              case -77: 
              case -666: break;
              default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot create where clause.");
@@ -661,6 +665,9 @@ This is the column definition for:<BR>
              case -77:
              case -7:
                 break;
+             case 1: {
+               break;
+             }
              case -666: break;
              default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot prepare statement.");
            }
@@ -993,6 +1000,30 @@ object. The generic init method defaults to this general data structure as a gen
 
        return (tilda.data.DateDim_Data) Obj;
      }
+
+
+   static public ListResults<tilda.data.DateDim_Data> lookupWhereAll(Connection C, int start, int size) throws Exception
+     {
+       tilda.data._Tilda.TILDA__DATEDIM Obj = new tilda.data.DateDim_Data();
+       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
+
+
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
+       readMany(C, 1, RPI, Obj, null, start, size);
+       return RPI._L;
+     }
+
+
+   static public void lookupWhereAll(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.DateDim_Data> OP, int start, int size) throws Exception
+     {
+       tilda.data._Tilda.TILDA__DATEDIM Obj = new tilda.data.DateDim_Data();
+       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
+
+
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
+       readMany(C, 1, RPI, Obj, null, start, size);
+     }
+
 
    public static SelectQuery newSelectQuery(Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, true); }
    public static SelectQuery newWhereQuery (Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, false); }

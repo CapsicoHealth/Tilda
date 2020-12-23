@@ -631,6 +631,10 @@ This is the column definition for:<BR>
                 S.append(" where ("); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "schemaName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "objectName"); S.append("=?)");
                 S.append(" order by "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "startPeriod"); S.append(" DESC");
                 break;
+             case 3:
+                S.append(" where (1=1)");
+                S.append(" order by "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "schemaName"); S.append(" ASC");S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "objectName"); S.append(" ASC");S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "startPeriod"); S.append(" ASC");
+                break;
              case -77: 
              case -666: break;
              default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot create where clause.");
@@ -662,6 +666,9 @@ This is the column definition for:<BR>
              case 2: {
                PS.setString    (++i, Obj._schemaName   );
                PS.setString    (++i, Obj._objectName   );
+               break;
+             }
+             case 3: {
                break;
              }
              case -666: break;
@@ -1026,6 +1033,30 @@ object. The generic init method defaults to this general data structure as a gen
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
        readMany(C, 2, RPI, Obj, null, start, size);
+     }
+
+
+
+   static public ListResults<tilda.data.ObjectPerf_Data> lookupWhereAll(Connection C, int start, int size) throws Exception
+     {
+       tilda.data._Tilda.TILDA__OBJECTPERF Obj = new tilda.data.ObjectPerf_Data();
+       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
+
+
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
+       readMany(C, 3, RPI, Obj, null, start, size);
+       return RPI._L;
+     }
+
+
+   static public void lookupWhereAll(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.ObjectPerf_Data> OP, int start, int size) throws Exception
+     {
+       tilda.data._Tilda.TILDA__OBJECTPERF Obj = new tilda.data.ObjectPerf_Data();
+       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
+
+
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
+       readMany(C, 3, RPI, Obj, null, start, size);
      }
 
 

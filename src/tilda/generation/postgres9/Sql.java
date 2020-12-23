@@ -735,7 +735,19 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 .append("CREATE OR REPLACE FUNCTION " + V._ParentSchema._Name + ".Refill_" + TName + "()\n");
               }
             OutFinal.append(" RETURNS boolean AS $$\n")
-            .append("BEGIN\n");
+            .append("declare\n")
+            .append("  startDt        timestamptz;\n")
+            .append("  insertStartDt  timestamptz;\n")
+            .append("  insertEndDt    timestamptz;\n")
+            .append("  deleteStartDt  timestamptz;\n")
+            .append("  deleteEndDt    timestamptz;\n")
+            .append("  analyzeStartDt timestamptz;\n")
+            .append("  analyzeEndDt   timestamptz;\n")
+            .append("  insertRowCount bigint;\n")
+            .append("  deleteRowCount bigint;\n")
+            .append("BEGIN\n")
+            .append("  startDt:= clock_timestamp();\n")
+            ;
 
             StringWriter BaseLineInsert = new StringWriter();
             BaseLineInsert.append("  INSERT INTO " + RName + " (" + PrintInsertColumnNames(V) + ")\n     ");
@@ -751,15 +763,20 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 OutFinal.append("  IF fromInclusive is null AND toExclusive is null\n");
                 OutFinal.append("  THEN\n");
               }
-            OutFinal.append("  TRUNCATE ").append(RName).append(";\n");
+            OutFinal.append("  TRUNCATE ").append(RName).append(";\n")
+                    .append("  insertStartDt:= clock_timestamp();\n")
+                    ;
             OutFinal.append(BaseLineInsert.toString());
             if (Up != null && Up._DeleteTSColumnObj != null)
               OutFinal.append("\n     WHERE \"" + Up._DeleteTSColumnObj.getName() + "\" is null");
-            OutFinal.append(";\n");
-            OutFinal.append("  ANALYZE " + RName + ";\n");
+            OutFinal.append(";\n")
+                    .append("  insertEndDt:= clock_timestamp();")
+                    .append("  GET DIAGNOSTICS insertRowCount = ROW_COUNT;\n")
+                    ;
             if (Up != null)
               {
                 OutFinal.append("  ELSE\n");
+                OutFinal.append("  insertStartDt:= clock_timestamp();\n");
                 OutFinal.append(BaseLineInsert.toString());
                 OutFinal.append("\n    WHERE (fromInclusive is null or \"").append(Up._LastUpdatedTSColumnObj.getName()).append("\" >= fromInclusive) and (toExclusive is null or \"").append(Up._LastUpdatedTSColumnObj.getName()).append("\" < toExclusive)");
                 OutFinal.append("\n  ON CONFLICT (");
@@ -785,23 +802,31 @@ public class Sql extends PostgreSQL implements CodeGenSql
                     OutFinal.append("\"").append(ColNames).append("\"").append(" = EXCLUDED.").append("\"").append(ColNames).append("\"").append("\n");
                   }
                 OutFinal.append("  ;\n");
+                OutFinal.append("  insertEndDt:= clock_timestamp();");
+                OutFinal.append("  GET DIAGNOSTICS insertRowCount = ROW_COUNT;\n");
+
                 if (Up._DeleteTSColumnObj != null)
+                  OutFinal.append("  deleteStartDt:= clock_timestamp();\n");
                   OutFinal.append("  DELETE FROM " + RName + " WHERE \"" + Up._DeleteTSColumnObj.getName() + "\" is not null;\n");
-                OutFinal.append("  ANALYZE " + RName + ";\n");
+                  OutFinal.append("  GET DIAGNOSTICS deleteRowCount = ROW_COUNT;\n");
+                  OutFinal.append("  deleteEndDt:= clock_timestamp();\n");
                 OutFinal.append("  END IF;\n");
               }
-            // for (Index I : V._Realize._Indices)
-            // if (I != null)
-            // genIndex(OutFinal, I);
-
-            // OutFinal.append(" GRANT ALL ON ").append(RName).append(" TO tilda_app;\n");
-            // OutFinal.append(" GRANT SELECT ON ").append(RName).append(" TO tilda_read_only;\n");
-            // OutFinal.append(" GRANT SELECT ON ").append(RName).append(" TO tilda_reporting;\n");
-            // OutFinal.append(" ANALYZE " + RName + ";\n")
-            OutFinal.append("  return true;\n")
-            .append("END; $$\n")
-            .append("LANGUAGE PLPGSQL;\n")
-            .append("\n");
+            
+            OutFinal.append("  analyzeStartDt:= clock_timestamp();\n");
+            OutFinal.append("  ANALYZE " + RName + ";\n");
+            OutFinal.append("  analyzeEndDt:= clock_timestamp ( );\n");
+            OutFinal.append("\n");
+            OutFinal.append("  INSERT INTO TILDA.RefillPerf(\"schemaName\", \"objectName\", \"startTimeTZ\", \"startTime\", \"endTimeTZ\", \"endTime\", \"timeInsertMs\", \"timeDeleteMs\", \"timeAnalyzeMs\", \"insertCount\", \"deleteCount\")\n");
+            OutFinal.append("                        VALUES('"+V._ParentSchema._Name+"', '"+TName+"', 'UTC', startDt, 'UTC', clock_timestamp()\n");
+            OutFinal.append("                                         , COALESCE(EXTRACT(EPOCH FROM insertEndDt-insertStartDt), 0)\n");
+            OutFinal.append("                                         , COALESCE(EXTRACT(EPOCH FROM deleteEndDt-deleteStartDt), 0)\n");
+            OutFinal.append("                                         , COALESCE(EXTRACT(EPOCH FROM analyzeEndDt-analyzeStartDt), 0), COALESCE(insertRowCount, 0), COALESCE(deleteRowCount, 0));\n");
+            OutFinal.append("  return true;\n");
+            OutFinal.append("END; $$\n");
+            OutFinal.append("LANGUAGE PLPGSQL;\n");
+            OutFinal.append("\n")
+            ;
             if (Up != null)
               {
                 String ColType = getColumnType(Up._LastUpdatedTSColumnObj._SameAsObj);
@@ -1070,7 +1095,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
     @Override
     public String getDDLMetadataVersion()
       {
-        return "DDL META DATA VERSION 2019-01-09";
+        return "DDL META DATA VERSION 2020-12-24";
       }
 
     @Override

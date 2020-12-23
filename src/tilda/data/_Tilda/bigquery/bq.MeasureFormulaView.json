@@ -1,0 +1,13 @@
+[
+    { "name":"measureRefnum","type":"INT64","mode":"NULLABLE" }
+   ,{ "name":"measureSchema","type":"STRING","mode":"NULLABLE" }
+   ,{ "name":"measureName","type":"STRING","mode":"NULLABLE" }
+   ,{ "name":"formulaRefnum","type":"INT64","mode":"NULLABLE" }
+   ,{ "name":"formulaLocation","type":"STRING","mode":"NULLABLE" }
+   ,{ "name":"formulaLocation2","type":"STRING","mode":"NULLABLE" }
+   ,{ "name":"formulaName","type":"STRING","mode":"NULLABLE" }
+   ,{ "name":"title","type":"STRING","mode":"NULLABLE" }
+   ,{ "name":"description","type":"STRING","mode":"NULLABLE" }
+   ,{ "name":"type","type":"STRING","mode":"NULLABLE" }
+   ,{ "name":"formula","type":"STRING","mode":"NULLABLE" }
+]

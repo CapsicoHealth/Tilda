@@ -1361,7 +1361,7 @@ This is the hasChanged for:<BR>
        if (OK == false)
         throw new Exception("Object has not been instanciated via deserialization or the factory create() method.");
 
-       if (__Init == null && __LookupId==0);  // object deserialized
+       if (__Init == null && __LookupId==0)  // object deserialized
         validateDeserialization();
 
        int lookupId = getFirstValidLookupBy();

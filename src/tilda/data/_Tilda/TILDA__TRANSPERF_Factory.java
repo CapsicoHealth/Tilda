@@ -895,6 +895,10 @@ This is the column definition for:<BR>
                 String clause = ((SelectQuery)ExtraParams).getWhereClause();
                 if (TextUtil.isNullOrEmpty(clause) == false) S.append(clause);
                 break;
+             case 1:
+                S.append(" where (1=1)");
+                S.append(" order by "); C.getFullColumnVar(S, "TILDA", "TransPerf", "startPeriod"); S.append(" ASC");
+                break;
              case -77: 
              case -666: break;
              default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot create where clause.");
@@ -918,6 +922,9 @@ This is the column definition for:<BR>
              case -77:
              case -7:
                 break;
+             case 1: {
+               break;
+             }
              case -666: break;
              default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot prepare statement.");
            }
@@ -1292,6 +1299,30 @@ object. The generic init method defaults to this general data structure as a gen
 
        return (tilda.data.TransPerf_Data) Obj;
      }
+
+
+   static public ListResults<tilda.data.TransPerf_Data> lookupWhereAll(Connection C, int start, int size) throws Exception
+     {
+       tilda.data._Tilda.TILDA__TRANSPERF Obj = new tilda.data.TransPerf_Data();
+       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
+
+
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
+       readMany(C, 1, RPI, Obj, null, start, size);
+       return RPI._L;
+     }
+
+
+   static public void lookupWhereAll(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.TransPerf_Data> OP, int start, int size) throws Exception
+     {
+       tilda.data._Tilda.TILDA__TRANSPERF Obj = new tilda.data.TransPerf_Data();
+       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
+
+
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
+       readMany(C, 1, RPI, Obj, null, start, size);
+     }
+
 
 
 

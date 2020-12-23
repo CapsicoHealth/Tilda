@@ -1,0 +1,7 @@
+[
+    { "name":"formulaRefnum","type":"INT64","mode":"NULLABLE" }
+   ,{ "name":"value","type":"STRING","mode":"NULLABLE" }
+   ,{ "name":"description","type":"STRING","mode":"NULLABLE" }
+   ,{ "name":"location","type":"STRING","mode":"NULLABLE" }
+   ,{ "name":"name","type":"STRING","mode":"NULLABLE" }
+]

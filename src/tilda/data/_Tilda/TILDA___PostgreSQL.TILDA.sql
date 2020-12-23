@@ -352,34 +352,39 @@ insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated
 create table if not exists TILDA.RefillPerf -- Performance logs for the Tilda Refills
  (  "schemaName"     varchar(64)   not null   -- The name of the schema tracked
   , "objectName"     varchar(64)   not null   -- The name of the table/object tracked
-  , "startPeriodTZ"  character(5)  not null   -- Generated helper column to hold the time zone ID for 'startPeriod'.
-  , "startPeriod"    timestamptz   not null   -- The timestamp for when the refill started.
-  , "timeCreateMs"   bigint        not null   -- The time, in milliseconds, the create took.
-  , "timeIndexMs"    bigint        not null   -- The time, in milliseconds, the indexing took.
+  , "startTimeTZ"    character(5)  not null   -- Generated helper column to hold the time zone ID for 'startTime'.
+  , "startTime"      timestamptz   not null   -- The timestamp for when the refill started.
+  , "endTimeTZ"      character(5)  not null   -- Generated helper column to hold the time zone ID for 'endTime'.
+  , "endTime"        timestamptz   not null   -- The timestamp for when the refill ended.
+  , "timeInsertMs"   bigint        not null   -- The time, in milliseconds, the create took.
+  , "timeDeleteMs"   bigint        not null   -- The time, in milliseconds, the create took.
   , "timeAnalyzeMs"  bigint        not null   -- The time, in milliseconds, the analyze took.
-  , "timeTotalMs"    bigint        not null   -- The time, in milliseconds, the whole refill took.
-  , "columnsMs"      bigint        not null   -- The list of columns that were refilled.
+  , "insertCount"    bigint        not null   -- The count of inserted rows.
+  , "deleteCount"    bigint        not null   -- The count of rows deleted.
   , "created"        timestamptz   not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.RefillPerf)
   , "lastUpdated"    timestamptz   not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.RefillPerf)
   , "deleted"        timestamptz              -- The timestamp for when the record was deleted. (TILDA.RefillPerf)
-  , PRIMARY KEY("schemaName", "objectName", "startPeriod")
-  , CONSTRAINT fk_RefillPerf_startPeriod FOREIGN KEY ("startPeriodTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
+  , PRIMARY KEY("schemaName", "objectName", "startTime")
+  , CONSTRAINT fk_RefillPerf_startTime FOREIGN KEY ("startTimeTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
+  , CONSTRAINT fk_RefillPerf_endTime FOREIGN KEY ("endTimeTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
  );
 COMMENT ON TABLE TILDA.RefillPerf IS E'Performance logs for the Tilda Refills';
 COMMENT ON COLUMN TILDA.RefillPerf."schemaName" IS E'The name of the schema tracked';
 COMMENT ON COLUMN TILDA.RefillPerf."objectName" IS E'The name of the table/object tracked';
-COMMENT ON COLUMN TILDA.RefillPerf."startPeriodTZ" IS E'Generated helper column to hold the time zone ID for ''startPeriod''.';
-COMMENT ON COLUMN TILDA.RefillPerf."startPeriod" IS E'The timestamp for when the refill started.';
-COMMENT ON COLUMN TILDA.RefillPerf."timeCreateMs" IS E'The time, in milliseconds, the create took.';
-COMMENT ON COLUMN TILDA.RefillPerf."timeIndexMs" IS E'The time, in milliseconds, the indexing took.';
+COMMENT ON COLUMN TILDA.RefillPerf."startTimeTZ" IS E'Generated helper column to hold the time zone ID for ''startTime''.';
+COMMENT ON COLUMN TILDA.RefillPerf."startTime" IS E'The timestamp for when the refill started.';
+COMMENT ON COLUMN TILDA.RefillPerf."endTimeTZ" IS E'Generated helper column to hold the time zone ID for ''endTime''.';
+COMMENT ON COLUMN TILDA.RefillPerf."endTime" IS E'The timestamp for when the refill ended.';
+COMMENT ON COLUMN TILDA.RefillPerf."timeInsertMs" IS E'The time, in milliseconds, the create took.';
+COMMENT ON COLUMN TILDA.RefillPerf."timeDeleteMs" IS E'The time, in milliseconds, the create took.';
 COMMENT ON COLUMN TILDA.RefillPerf."timeAnalyzeMs" IS E'The time, in milliseconds, the analyze took.';
-COMMENT ON COLUMN TILDA.RefillPerf."timeTotalMs" IS E'The time, in milliseconds, the whole refill took.';
-COMMENT ON COLUMN TILDA.RefillPerf."columnsMs" IS E'The list of columns that were refilled.';
+COMMENT ON COLUMN TILDA.RefillPerf."insertCount" IS E'The count of inserted rows.';
+COMMENT ON COLUMN TILDA.RefillPerf."deleteCount" IS E'The count of rows deleted.';
 COMMENT ON COLUMN TILDA.RefillPerf."created" IS E'The timestamp for when the record was created. (TILDA.RefillPerf)';
 COMMENT ON COLUMN TILDA.RefillPerf."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.RefillPerf)';
 COMMENT ON COLUMN TILDA.RefillPerf."deleted" IS E'The timestamp for when the record was deleted. (TILDA.RefillPerf)';
-CREATE INDEX IF NOT EXISTS RefillPerf_SchemaByObjectStart ON TILDA.RefillPerf ("schemaName", "objectName" ASC, "startPeriod" DESC);
--- app-level index only -- CREATE INDEX IF NOT EXISTS RefillPerf_SchemaObjectByStart ON TILDA.RefillPerf ("schemaName", "objectName", "startPeriod" DESC);
+CREATE INDEX IF NOT EXISTS RefillPerf_SchemaByObjectStart ON TILDA.RefillPerf ("schemaName", "objectName" ASC, "startTime" DESC);
+-- app-level index only -- CREATE INDEX IF NOT EXISTS RefillPerf_SchemaObjectByStart ON TILDA.RefillPerf ("schemaName", "objectName", "startTime" DESC);
 
 
 

@@ -252,6 +252,10 @@ This is the column definition for:<BR>
                 String clause = ((SelectQuery)ExtraParams).getWhereClause();
                 if (TextUtil.isNullOrEmpty(clause) == false) S.append(clause);
                 break;
+             case 1:
+                S.append(" where (1=1)");
+                S.append(" order by "); C.getFullColumnVar(S, "TILDA", "FormulaResult", "formulaRefnum"); S.append(" ASC");S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaResult", "value"); S.append(" ASC");
+                break;
              case -77: 
              case -666: break;
              default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot create where clause.");
@@ -275,6 +279,9 @@ This is the column definition for:<BR>
              case -77:
              case -7:
                 break;
+             case 1: {
+               break;
+             }
              case -666: break;
              default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot prepare statement.");
            }
@@ -490,6 +497,30 @@ object. The generic init method defaults to this general data structure as a gen
 
        return (tilda.data.FormulaResult_Data) Obj;
      }
+
+
+   static public ListResults<tilda.data.FormulaResult_Data> lookupWhereAll(Connection C, int start, int size) throws Exception
+     {
+       tilda.data._Tilda.TILDA__FORMULARESULT Obj = new tilda.data.FormulaResult_Data();
+       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
+
+
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
+       readMany(C, 1, RPI, Obj, null, start, size);
+       return RPI._L;
+     }
+
+
+   static public void lookupWhereAll(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.FormulaResult_Data> OP, int start, int size) throws Exception
+     {
+       tilda.data._Tilda.TILDA__FORMULARESULT Obj = new tilda.data.FormulaResult_Data();
+       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
+
+
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
+       readMany(C, 1, RPI, Obj, null, start, size);
+     }
+
 
 
    public static SelectQuery newSelectQuery(Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, true); }
