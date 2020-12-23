@@ -43,6 +43,7 @@ public class SchemaMeta
     public void load(Connection C, String TablePattern)
     throws Exception
       {
+        long TS = System.nanoTime();
         DatabaseMetaData meta = C.getMetaData();
         ResultSet RS = meta.getTables(null, _SchemaName.toLowerCase(), TablePattern == null ? null : TablePattern.toLowerCase(), null);
         while (RS.next() != false)
@@ -53,19 +54,20 @@ public class SchemaMeta
             if ("table".equalsIgnoreCase(Type) == true)
               {
                 TableMeta T = new TableMeta(_SchemaName, Name, Descr);
-                T.load(C);
                 _DBTables.put(Name, T);
+                MetaPerformance._TableNano += (System.nanoTime() - TS);
+                ++MetaPerformance._TableCount;
+                T.load(C);
               }
             else if ("view".equalsIgnoreCase(Type) == true)
               {
                 ViewMeta V = new ViewMeta(_SchemaName, Name, Descr);
-                // for (int i = 0; i < RS.getMetaData().getColumnCount(); ++i)
-                // {
-                // LOG.debug(" column: "+RS.getMetaData().getColumnName(i+1)+"; value: "+RS.getString(RS.getMetaData().getColumnName(i+1))+";");
-                // }
-                V.load(C);
                 _DBViews.put(Name, V);
+                ++MetaPerformance._ViewCount;
+                MetaPerformance._ViewNano += (System.nanoTime() - TS);
+                V.load(C);
               }
+            TS = System.nanoTime();
           }
         RS.close();
       }
@@ -79,23 +81,28 @@ public class SchemaMeta
       {
         return _DBTables.values();
       }
-    
+
     public ViewMeta getViewMeta(String ViewName)
       {
         return _DBViews.get(ViewName.toLowerCase());
       }
-    
+
     public boolean moveTableMetaFromOtherSchema(DatabaseMeta DBMeta, TableMeta src)
-     {
-       DBMeta.getSchemaMeta(src._SchemaName)._DBTables.remove(src._TableName.toLowerCase());
-       src._SchemaName = _SchemaName;
-       return _DBTables.put(src._TableName.toLowerCase(), src) == null;
-     }
+      {
+        DBMeta.getSchemaMeta(src._SchemaName)._DBTables.remove(src._TableName.toLowerCase());
+        src._SchemaName = _SchemaName;
+        return _DBTables.put(src._TableName.toLowerCase(), src) == null;
+      }
 
     public boolean moveViewMetaFromOtherSchema(DatabaseMeta DBMeta, ViewMeta src)
       {
         DBMeta.getSchemaMeta(src._SchemaName)._DBViews.remove(src._ViewName.toLowerCase());
         src._SchemaName = _SchemaName;
         return _DBViews.put(src._ViewName.toLowerCase(), src) == null;
+      }
+
+    public Collection<ViewMeta> getViewMetas()
+      {
+        return _DBViews.values();
       }
   }

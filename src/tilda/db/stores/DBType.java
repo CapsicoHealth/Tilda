@@ -29,6 +29,7 @@ import tilda.db.metadata.ColumnMeta;
 import tilda.db.metadata.FKMeta;
 import tilda.db.metadata.IndexMeta;
 import tilda.db.metadata.PKMeta;
+import tilda.db.metadata.ViewMeta;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
@@ -70,6 +71,7 @@ public interface DBType
     public boolean alterTableComment               (Connection Con, Object Obj) throws Exception;
     public boolean createKeysEntry                 (Connection Con, Object Obj) throws Exception;
     public boolean dropView                        (Connection Con, View V) throws Exception;
+    public boolean dropView                        (Connection con, ViewMeta v, boolean cascade) throws Exception;
     public boolean createView                      (Connection Con, View V) throws Exception;
     public boolean alterTableAddColumn             (Connection Con, Column Col, String DefaultValue) throws Exception;
     public boolean alterTableAlterColumnDefault    (Connection Con, Column Col) throws Exception;

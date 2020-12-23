@@ -441,10 +441,12 @@ public class Migrator
                           {
                             // The size-based types don't match
                             if (C.getDBStringType(CMeta._Size).equals(C.getDBStringType(Col._Size)) == false
-                            // they match, but within a type, they are different sizes, except for TEXT
+                            // or they match and they are different sizes, except for TEXT
                             || C.getDBStringType(CMeta._Size).equals(C.getDBStringType(Col._Size)) == true
                             && CMeta._Size != Col._Size
-                            && CMeta._TypeSql.equals("VARCHAR") == false && CMeta._TypeName.equals("text") == false)
+                            // Unless it's a size change but remains within TEXT
+                            && (CMeta._TypeSql.equals("VARCHAR") == false || CMeta._TypeName.equals("text") == false)
+                            )
                               {
                                 CAM.addColumnAlterStringSize(CMeta, Col);
                                 NeedsDdlDependencyManagement = true;

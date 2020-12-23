@@ -53,10 +53,10 @@ public class TableMeta
     public PKMeta                  _PrimaryKey;
     public PaddingTracker          _PadderColumnNames = new PaddingTracker();
 
-
     public void load(Connection C)
     throws Exception
       {
+        long TS = System.nanoTime();
         DatabaseMetaData meta = C.getMetaData();
         ResultSet RS = meta.getColumns(null, _SchemaName.toLowerCase(), _TableName.toLowerCase(), null);
         while (RS.next() != false)
@@ -65,22 +65,37 @@ public class TableMeta
             _ColumnsMap.put(CI._Name.toLowerCase(), CI);
             _ColumnsList.add(CI);
             _PadderColumnNames.track(CI._Name);
+            ++MetaPerformance._TableColumnCount;
           }
+        MetaPerformance._TableColumnNano+=(System.nanoTime()-TS);
 
+        
+        TS = System.nanoTime();
         RS = meta.getIndexInfo(null, _SchemaName.toLowerCase(), _TableName.toLowerCase(), true, true);
         loadIndices(RS);
         RS = meta.getIndexInfo(null, _SchemaName.toLowerCase(), _TableName.toLowerCase(), false, true);
         loadIndices(RS);
-
+        MetaPerformance._IndexNano+=(System.nanoTime()-TS);
+        MetaPerformance._IndexCount += _Indices.size();
+        
+        TS = System.nanoTime();
         RS = meta.getImportedKeys(null, _SchemaName.toLowerCase(), _TableName.toLowerCase());
         loadForeignKeys(RS, _ForeignKeysOut, true, this);
+        MetaPerformance._FKOutNano+=(System.nanoTime()-TS);
+        MetaPerformance._FKOutCount += _ForeignKeysOut.size();
 
+        TS = System.nanoTime();
         RS = meta.getExportedKeys(null, _SchemaName.toLowerCase(), _TableName.toLowerCase());
         loadForeignKeys(RS, _ForeignKeysIn, false, this);
+        MetaPerformance._FKInNano+=(System.nanoTime()-TS);
+        MetaPerformance._FKInCount += _ForeignKeysIn.size();
 
+        TS = System.nanoTime();
         RS = meta.getPrimaryKeys(null, _SchemaName.toLowerCase(), _TableName.toLowerCase());
         if (RS.next() == true)
           _PrimaryKey = new PKMeta(RS);
+        MetaPerformance._PKNano+=(System.nanoTime()-TS);
+        MetaPerformance._PKCount++;
       }
 
     private void loadIndices(ResultSet RS)

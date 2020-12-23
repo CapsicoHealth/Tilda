@@ -140,9 +140,10 @@ public class ViewColumn
      */
     public ColumnType getAggregateType()
       {
-        return _Aggregate == null ? _SameAsObj.getType()
+        return _Aggregate == null && _SameAsObj != null ? _SameAsObj.getType()
         : _Aggregate == AggregateType.COUNT && _SameAsObj == null ? ColumnType.LONG
-        : _Aggregate.getType(_SameAsObj.getType());
+        : _SameAsObj != null ? _Aggregate.getType(_SameAsObj.getType())
+        : null;
       }
 
 
@@ -362,7 +363,8 @@ public class ViewColumn
 
     /**
      * A view column of type 'DATETIME' needs an extra timezone support field if the underlying column needs one, and the
-     * view column is not an aggregate, and does not have an expression unless it's of type datetime.
+     * view column is not an aggregate, and does not have an expression unless it's of type datetime, and is a 
+     * non-framework-generated column.
      * 
      * @return
      */
@@ -370,7 +372,9 @@ public class ViewColumn
       {
         return (_SameAsObj == null || _SameAsObj.needsTZ() == true)
         && (_Aggregate == null || _Aggregate.isZonedDateTimeCompatible() == true)
-        && (TextUtil.isNullOrEmpty(_Expression) == true || _Type._Type == ColumnType.DATETIME);
+        && (TextUtil.isNullOrEmpty(_Expression) == true || _Type._Type == ColumnType.DATETIME)
+        && _FCT == FrameworkColumnType.NONE
+        ;
       }
 
     public boolean isList()

@@ -154,13 +154,7 @@ public class Helper
           Out.println("          C.handleCatch(E, " + TextUtil.escapeDoubleQuoteWithSlash(OperationDebugStr) + ");");
         else
           Out.println("          return C.handleCatch(E, " + TextUtil.escapeDoubleQuoteWithSlash(OperationDebugStr) + ");");
-        boolean Collection = false;
-        for (Column C : O._Columns)
-          if (C != null && C.isCollection() == true)
-            {
-              Collection = true;
-              break;
-            }
+        boolean Collection = O.hasCollectionColumn() == true || O.hasCollectionQuery() == true;
         Out.println("        }");
         Out.println("       finally");
         Out.println("        {");

@@ -25,6 +25,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.annotation.MultipartConfig;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -604,6 +606,25 @@ public class JSONUtil
             end(Out, '}');
           }
       }
+    
+    /**
+     * When using client-side frameworks such as Dojo that may use an iFrame for ajax-contents, the protocol
+     * is typically yo return the json data packaged inside a textarea. This function does that. It is exactly
+     * equivalent to the "plain" response method except the jsonable object is output inside a textarea and the
+     * writer is expected to be set up as an HTML one.
+     * @param Out
+     * @param JsonExportName
+     * @param Obj
+     * @throws Exception
+     */
+    public static void responseDojoMultipartConfig(Writer Out, String JsonExportName, JSONable Obj)
+    throws Exception
+      {
+        Out.write("<textarea>\n");
+        response(Out, JsonExportName, Obj);
+        Out.write("</textarea>\n");        
+      }
+    
 
     public static void response(Writer Out, String JsonExportName, List<? extends JSONable> L)
     throws Exception

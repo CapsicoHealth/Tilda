@@ -36,6 +36,7 @@ import tilda.db.metadata.ColumnMeta;
 import tilda.db.metadata.FKMeta;
 import tilda.db.metadata.IndexMeta;
 import tilda.db.metadata.PKMeta;
+import tilda.db.metadata.ViewMeta;
 import tilda.db.processors.RecordProcessor;
 import tilda.db.stores.DBType;
 import tilda.enums.AggregateType;
@@ -473,6 +474,11 @@ public final class Connection
     throws Exception
       {
         return _DB.dropView(this, V);
+      }
+    public boolean dropView(ViewMeta V, boolean cascade)
+    throws Exception
+      {
+        return _DB.dropView(this, V, cascade);
       }
 
     public boolean createView(View V)

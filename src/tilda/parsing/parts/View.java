@@ -77,27 +77,27 @@ public class View extends Base
     public transient Pattern           _FormulasRegEx;
     public transient Map<String, Base> _Dependencies     = new HashMap<String, Base>();
     public transient List<Column>      _PivotColumns     = new ArrayList<Column>();
-    
+
     public View()
       {
         super(TildaType.VIEW);
       }
-    
+
     @Override
     public String toString()
       {
         return getFullName() + " (" + super.toString() + ")";
       }
-    
+
 
     @Override
     public Column getColumn(String name)
       {
         for (ViewColumn C : _ViewColumns)
-         {
-           if (C != null && C._Name != null && C._Name.equals(name) == true)
-             return C._SameAsObj;
-         }
+          {
+            if (C != null && C._Name != null && C._Name.equals(name) == true)
+              return C._SameAsObj;
+          }
         return null;
       }
 
@@ -122,7 +122,7 @@ public class View extends Base
             return C;
         return null;
       }
-    
+
     @Override
     public String[] getColumnNames()
       {
@@ -160,8 +160,6 @@ public class View extends Base
 
     public String getRealizedTableName(boolean includeSchemaName)
       {
-        if (_Realize != null && includeSchemaName == true && _RealizedObj == null)
-          LOG.debug("XXX");
         return _Realize == null ? null : (includeSchemaName == true ? _RealizedObj._ParentSchema._Name + "." : "") + (TextUtil.isNullOrEmpty(_Realize._Name) == false ? _Realize._Name : _Name.substring(0, _Name.length() - (_Pivots.isEmpty() == false ? "PivotView" : "View").length()) + "Realized");
       }
 
@@ -198,12 +196,13 @@ public class View extends Base
         String LastUpdatedColObjName = null;
         String LastUpdatedETLColObjName = null;
         String DeletedColObjName = null;
-        
+
         // First, let's construct the actual view and validate its fields
         boolean err = false;
         for (int i = 0; i < _ViewColumns.size(); ++i)
           {
             ViewColumn VC = _ViewColumns.get(i);
+
             // It's possible in JSON to have dangling commas, which GSON will read fine as a NULL object. So we need to protect against that.
             if (VC == null)
               {
@@ -214,6 +213,7 @@ public class View extends Base
 
             if (VC.FixSameAs(PS) == false)
               return false;
+
             // dependency (.*) expansion
             if (VC._SameAs != null && VC._SameAs.endsWith("*") == true)
               {
@@ -248,14 +248,19 @@ public class View extends Base
               DeletedColObjName = VC._SameAsObj._ParentObject.getFullName();
 
             // LOG.debug("VC: " + VC._Name + "; VC._SameAsObj: " + VC._SameAsObj + "; VC._SameAsObj._ParentObject: " + VC._SameAsObj._ParentObject + ";");
-            if (ObjectNames.add(VC._SameAsObj._ParentObject.getFullName()) == false)
+            // LOG.debug("VC: " + VC.toString() + "; VC._FCT:" + VC._FCT);
+            // LDH-NOTE: Should this not be generalized by simply checking VC._SameAsObj != null? Why only TS columns?
+            if (VC._FCT != FrameworkColumnType.TS) // TimeSeries fields are generated columns and do not have sameAs values.
               {
-                if (VC._Join != null)
-                  PS.AddError("Column '" + VC.getFullName() + "' is defining a join type: only the first column of a referenced table can define a join type.");
-              }
-            else if (ObjectNames.size() == 1 && VC._Join != null)
-              {
-                PS.AddError("Column '" + VC.getFullName() + "' is defining a join type: columns of the first referenced table are considered part of the 'from' clause of a view and cannot define a join type.");
+                if (ObjectNames.add(VC._SameAsObj._ParentObject.getFullName()) == false)
+                  {
+                    if (VC._Join != null)
+                      PS.AddError("Column '" + VC.getFullName() + "' is defining a join type: only the first column of a referenced table can define a join type.");
+                  }
+                else if (ObjectNames.size() == 1 && VC._Join != null)
+                  {
+                    PS.AddError("Column '" + VC.getFullName() + "' is defining a join type: columns of the first referenced table are considered part of the 'from' clause of a view and cannot define a join type.");
+                  }
               }
 
             // For DATETIME columns, we add an extra column to maintain the timezone.
@@ -281,7 +286,7 @@ public class View extends Base
                   PS.AddError("Generated column '" + TZCol.getFullName() + "' conflicts with another column already named the same in view '" + getFullName() + "'.");
                 _PadderColumnNames.track(TZCol.getName());
               }
-            if (VC._SameAsObj._Mapper != null && VC._UseMapper == true)
+            if (VC._SameAsObj != null && VC._SameAsObj._Mapper != null && VC._UseMapper == true)
               {
                 if (VC._SameAsObj._Mapper._Group == ColumnMapperMode.DB)
                   CreateMappedViewColumn(PS, ColumnNames, i++, VC, "Group");
@@ -367,7 +372,7 @@ public class View extends Base
           PS.AddError("The View '" + _Name + "' is defining a 'pivotColumns' element which is deprecated. Please use the new 'pivots' constructs instead.");
         if (TextUtil.isNullOrEmpty(_CountStarDeprecated) == false)
           PS.AddError("View '" + getFullName() + "' is defining a 'countStar' element which is deprecated. Please use a standard column definition with an aggregate of 'COUNT'.");
-        
+
         // gotta construct a shadow Object for code-gen.
         // LOG.debug("View " + _Name + ": " + TextUtil.print(getColumnNames()));
         Object O = MakeObjectProxy(PS);
@@ -521,6 +526,7 @@ public class View extends Base
                 VC._Name = _TimeSeries._Name;
                 VC._TypeStr = ColumnType.DATE.name();
                 VC._FCT = FrameworkColumnType.TS;
+                VC._Description = "Framework-generated Timeseries column";
                 VC.Validate(PS, this);
                 _ViewColumns.add(firstAgg, VC);
               }
@@ -567,14 +573,15 @@ public class View extends Base
         if (_TimeSeries != null)
           {
             ColumnType Type = ColumnType.DATE;
-            Column C = new Column(_TimeSeries._Name, Type.name(), 0, true, ColumnMode.NORMAL, true, null, "Timeseries period", null, null);
+            Column C = new Column(_TimeSeries._Name, Type.name(), null, true, ColumnMode.NORMAL, true, null, "Timeseries period", null, null);
             C._FCT = FrameworkColumnType.TS;
+            C.Validate(PS, O);
             O._Columns.add(C);
           }
 
         // LOG.debug(O._Name+": "+TextUtil.print(O.getColumnNames()));
         genPivotColumns(PS, O);
-        
+
         if (_ImportFormulas != null)
           for (String s : _ImportFormulas)
             {
@@ -632,7 +639,7 @@ public class View extends Base
                 else
                   {
                     F.Validate(PS, this);
-                    Column C = new Column(F._Name, F._TypeStr, F._Size, true, ColumnMode.NORMAL, true, null, "Formula column '<B>" + F._Title+"</B>'", F._Precision, F._Scale);
+                    Column C = new Column(F._Name, F._TypeStr, F._Size, true, ColumnMode.NORMAL, true, null, "Formula column '<B>" + F._Title + "</B>'", F._Precision, F._Scale);
                     if (F.getType() == ColumnType.DATETIME)
                       C._FCT = FrameworkColumnType.DT_FORMULA;
                     else if (F._FormulaTemplate == true)
@@ -874,6 +881,15 @@ public class View extends Base
             NewVC._As = VC._As;
             NewVC._Name = Prefix + col._Name;
             NewVC._FCT = col._FCT;
+            if (col._FCT == FrameworkColumnType.TS)
+              {
+                NewVC._FCT = FrameworkColumnType.NONE; // This is a view column referring to a TS column, so it becomes "regular"
+                NewVC._TypeStr = col._TypeStr;
+                NewVC._Size = col._Size;
+                NewVC._Scale = col._Scale;
+                NewVC._Precision = col._Precision;
+              }
+
             if (TextUtil.findStarElement(VC._Block, col._Name, false, 0) != -1)
               NewVC._FormulaOnly = true;
             _ViewColumns.add(i + j, NewVC);
@@ -990,7 +1006,7 @@ public class View extends Base
           {
             ViewColumn VC = getViewColumn(FormulaName);
             if (VC != null && VC._SameAsView != null)
-             return VC._SameAsView.getFormula(FormulaName, deep);
+              return VC._SameAsView.getFormula(FormulaName, deep);
           }
         return null;
       }
@@ -1261,6 +1277,7 @@ public class View extends Base
     /**
      * Checks whether this view has a dependency on realized views, and as such, a parallel _R view
      * should be, or has been, created.
+     * 
      * @return
      */
     public boolean hasAncestorRealizedViews()
@@ -1272,6 +1289,7 @@ public class View extends Base
 
     /**
      * The schema name for _R parallel views, currently TILTATMP.
+     * 
      * @return
      */
     public String getViewSubRealizeSchemaName()
@@ -1281,16 +1299,18 @@ public class View extends Base
 
     /**
      * The name of the _R view, as this view's "[schemaname]_[name]_R"
+     * 
      * @return
      */
     public String getViewSubRealizeViewName()
       {
-        return (_RealizedObj!= null ? _RealizedObj._ParentSchema : _ParentSchema)._Name + "_" + (_Name) + "_R";
+        return (_RealizedObj != null ? _RealizedObj._ParentSchema : _ParentSchema)._Name + "_" + (_Name) + "_R";
       }
 
     /**
      * The full schema.name of the _R parallel view as per getViewSubRealizeSchemaName() and getViewSubRealizeViewName().
      * Only makes sense if hasAncestorRealizedViews() returns true, otherwise, this _R view wouldn't need to exist.
+     * 
      * @return
      */
     public String getViewSubRealizeFullName()

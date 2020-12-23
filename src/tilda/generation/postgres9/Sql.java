@@ -284,7 +284,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
     private String PrintBaseView(View V, boolean OmmitTZs)
     throws Exception
       {
-        List<TotalMess> FuckList = TotalMess.ScanView(V); // Sorry for the explitives here, but this code is really messed up in very impolite ways!!!
+        List<TotalMess> FuckList = TotalMess.ScanView(V); // Sorry for the expletives here, but this code is really messed up in very impolite ways!!!
 
         StringBuilder Str = new StringBuilder();
         Str.append("-- " + TextUtil.escapeSingleQuoteForSQL(V._Description) + "\n");
@@ -687,6 +687,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         OutFinal.println(Str + ";\n");
         Set<View> SubRealizedViews = V.getSubRealizedViewRootNames();
         Set<View> AncestorRealizedViews = V.getAncestorRealizedViews();
+        
         if (SubRealizedViews != null || AncestorRealizedViews != null) // View depends on realized views.
           {
             if (SubRealizedViews != null)
@@ -695,11 +696,12 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 for (View srv : SubRealizedViews)
                   {
                     r.setLength(0);
-                    r.append("(?i)\\b(");
+                    r.append("(?i)\\b((");
                     r.append(srv._ParentSchema._Name.toUpperCase());
-                    r.append("\\.");
+                    r.append("\\.)?");
                     r.append(srv.getRootViewName().toUpperCase());
-                    r.append(")(PIVOT)?VIEW\\b");
+//                    r.append(")(PIVOT)?VIEW\\b");
+                    r.append(srv._Pivots==null||srv._Pivots.isEmpty()==true ? ")VIEW\\b" : ")PIVOTVIEW\\b");
                     Str = Str.replaceAll(r.toString(), srv._RealizedObj != null ? srv._RealizedObj._ParentSchema._Name+"."+srv._RealizedObj._Name : "$1Realized");
                   }
               }
@@ -910,7 +912,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
           {
             if (F == null)
               continue;
-            String FormulaType = getColumnType(F.getType(), 8192, null, false, F._Precision, F._Scale);
+            String FormulaType = getColumnType(F.getType(), 8192, null, F.isCollection(), F._Precision, F._Scale);
             b.append("     -- ").append(String.join("\n     -- ", F._Description)).append("\n");
             if (First == true)
               First = false;
@@ -1333,8 +1335,6 @@ public class Sql extends PostgreSQL implements CodeGenSql
       {
         String FormulaStr = TextUtil.joinTrim(F._FormulaStrs, " ");
 
-        if (F._Name.startsWith("x_") == true)
-         LOG.debug("xxxx");
         Matcher M = F.getParentView()._ViewColumnsRegEx.matcher(FormulaStr);
         StringBuffer Str = new StringBuffer();
         while (M.find() == true)
@@ -1348,7 +1348,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
             for (ViewColumn VC : ParentView._ViewColumns)
               if (s.equals(VC._Name) == true)
                 {
-                  ColumnType T = VC._SameAsObj == null && VC._SameAs.equals("_TS.p") == true ? ColumnType.DATE : VC._SameAsObj.getType();
+                  ColumnType T = VC._SameAsObj == null && VC._SameAs.equals("_TS.p") == true ? ColumnType.DATE : VC.getType();
                   boolean nullTest = FormulaStr.substring(M.end()).toLowerCase().matches("\\s*is\\s*(not)?\\s*null.*");
                   if (nullTest == false && (T == ColumnType.INTEGER || T == ColumnType.LONG || T == ColumnType.FLOAT || T == ColumnType.DOUBLE))
                     M.appendReplacement(Str, "coalesce(\"" + M.group(1) + "\", 0)");
@@ -1382,7 +1382,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 for (Formula F2 : ParentView._Formulas)
                   if (s.equals(F2._Name) == true && s.equals(F._Name) == false)
                     {
-                      String FormulaType = getColumnType(F2.getType(), F2._Size, null, false, F2._Precision, F2._Scale);
+                      String FormulaType = getColumnType(F2.getType(), F2._Size, null, F2.isCollection(), F2._Precision, F2._Scale);
                       M.appendReplacement(Str, "(" + genFormulaCode(ParentView, F2) + ")::" + FormulaType);
                       break;
                     }
