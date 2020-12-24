@@ -1,0 +1,10 @@
+[
+    { "name":"formulaRefnum","type":"INT64","mode":"NULLABLE" }
+   ,{ "name":"location","type":"STRING","mode":"NULLABLE" }
+   ,{ "name":"name","type":"STRING","mode":"NULLABLE" }
+   ,{ "name":"referencedColumns","type":"STRING","mode":"REPEATED" }
+   ,{ "name":"dependencyRefnum","type":"INT64","mode":"NULLABLE" }
+   ,{ "name":"dependentFormulaName","type":"STRING","mode":"NULLABLE" }
+   ,{ "name":"dependentFormulaLocation","type":"STRING","mode":"NULLABLE" }
+   ,{ "name":"dependentReferencedColumns","type":"STRING","mode":"REPEATED" }
+]

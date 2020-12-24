@@ -414,6 +414,10 @@ This is the column definition for:<BR>
              case 2:
                 S.append(" order by "); C.getFullColumnVar(S, "TILDA", "Formula", "referencedColumns"); S.append(" ASC");
                 break;
+             case 3:
+                S.append(" where (1=1)");
+                S.append(" order by "); C.getFullColumnVar(S, "TILDA", "Formula", "refnum"); S.append(" ASC");
+                break;
              case -77: 
              case -666: break;
              default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot create where clause.");
@@ -439,6 +443,9 @@ This is the column definition for:<BR>
              case -7:
                 break;
              case 2: {
+               break;
+             }
+             case 3: {
                break;
              }
              case -666: break;
@@ -741,6 +748,30 @@ object. The generic init method defaults to this general data structure as a gen
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
        readMany(C, 2, RPI, Obj, null, start, size);
+     }
+
+
+
+   static public ListResults<tilda.data.Formula_Data> lookupWhereAll(Connection C, int start, int size) throws Exception
+     {
+       tilda.data._Tilda.TILDA__FORMULA Obj = new tilda.data.Formula_Data();
+       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
+
+
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
+       readMany(C, 3, RPI, Obj, null, start, size);
+       return RPI._L;
+     }
+
+
+   static public void lookupWhereAll(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Formula_Data> OP, int start, int size) throws Exception
+     {
+       tilda.data._Tilda.TILDA__FORMULA Obj = new tilda.data.Formula_Data();
+       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
+
+
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
+       readMany(C, 3, RPI, Obj, null, start, size);
      }
 
 

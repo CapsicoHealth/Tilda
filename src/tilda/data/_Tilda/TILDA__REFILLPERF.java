@@ -36,8 +36,8 @@ The Table TILDA.RefillPerf:<UL>
 <LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>RefillPerf_Factory</B>, <B>RefillPerf_Data</B> in the package <B>tilda.data</B>.
 <LI>Is configured for normal <B>read/write</B> access.</LI>
 <LI>Is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
-<LI>Defines a foreign key to <A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A> </LI>
-<LI>Has the following identity:<UL><LI>Primary Key: schemaName, objectName, startPeriod</LI>
+<LI>Defines foreign key(s) to <A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A> </LI>
+<LI>Has the following identity:<UL><LI>Primary Key: schemaName, objectName, startTime</LI>
 </UL></LI>
 </UL>
 <B>Description</B>: Performance logs for the Tilda Refills<BR>
@@ -67,19 +67,19 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>3&nbsp;&nbsp;</TD>
-<TD align="right"><B id='RefillPerf-startPeriodTZ_DIV' class='columns'>startPeriodTZ</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='RefillPerf-startTimeTZ_DIV' class='columns'>startTimeTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Generated helper column to hold the time zone ID for 'startPeriod'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
+<TD>Generated helper column to hold the time zone ID for 'startTime'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
 </TABLE>
 </TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
     <TD>4&nbsp;&nbsp;</TD>
-<TD align="right"><B id='RefillPerf-startPeriod_DIV' class='columns'>startPeriod</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='RefillPerf-startTime_DIV' class='columns'>startTime</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -89,56 +89,78 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>5&nbsp;&nbsp;</TD>
-<TD align="right"><B id='RefillPerf-timeCreateMs_DIV' class='columns'>timeCreateMs</B>&nbsp;&nbsp;</TD>
-<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
+<TD align="right"><B id='RefillPerf-endTimeTZ_DIV' class='columns'>endTimeTZ</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The time, in milliseconds, the create took.</TD>
+<TD>Generated helper column to hold the time zone ID for 'endTime'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
+</TABLE>
+</TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
     <TD>6&nbsp;&nbsp;</TD>
-<TD align="right"><B id='RefillPerf-timeIndexMs_DIV' class='columns'>timeIndexMs</B>&nbsp;&nbsp;</TD>
-<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
+<TD align="right"><B id='RefillPerf-endTime_DIV' class='columns'>endTime</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The time, in milliseconds, the indexing took.</TD>
+<TD>The timestamp for when the refill ended.</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>7&nbsp;&nbsp;</TD>
-<TD align="right"><B id='RefillPerf-timeAnalyzeMs_DIV' class='columns'>timeAnalyzeMs</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='RefillPerf-timeInsertSec_DIV' class='columns'>timeInsertSec</B>&nbsp;&nbsp;</TD>
 <TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The time, in milliseconds, the analyze took.</TD>
+<TD>The time, in seconds, the inserts took.</TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
     <TD>8&nbsp;&nbsp;</TD>
-<TD align="right"><B id='RefillPerf-timeTotalMs_DIV' class='columns'>timeTotalMs</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='RefillPerf-timeDeleteSec_DIV' class='columns'>timeDeleteSec</B>&nbsp;&nbsp;</TD>
 <TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The time, in milliseconds, the whole refill took.</TD>
+<TD>The time, in seconds, the deletes took.</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>9&nbsp;&nbsp;</TD>
-<TD align="right"><B id='RefillPerf-columnsMs_DIV' class='columns'>columnsMs</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='RefillPerf-timeAnalyzeSec_DIV' class='columns'>timeAnalyzeSec</B>&nbsp;&nbsp;</TD>
 <TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The list of columns that were refilled.</TD>
+<TD>The time, in seconds, the analyze took.</TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
     <TD>10&nbsp;&nbsp;</TD>
+<TD align="right"><B id='RefillPerf-insertCount_DIV' class='columns'>insertCount</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The count of inserted rows.</TD>
+</TR>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>11&nbsp;&nbsp;</TD>
+<TD align="right"><B id='RefillPerf-deleteCount_DIV' class='columns'>deleteCount</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The count of rows deleted.</TD>
+</TR>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>12&nbsp;&nbsp;</TD>
 <TD align="right"><B id='RefillPerf-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -148,7 +170,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD>The timestamp for when the record was created. (TILDA.RefillPerf)</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>11&nbsp;&nbsp;</TD>
+    <TD>13&nbsp;&nbsp;</TD>
 <TD align="right"><B id='RefillPerf-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -158,7 +180,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD>The timestamp for when the record was last updated. (TILDA.RefillPerf)</TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>12&nbsp;&nbsp;</TD>
+    <TD>14&nbsp;&nbsp;</TD>
 <TD align="right"><B id='RefillPerf-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -401,101 +423,101 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.RefillPerf.startPeriodTZ -> TILDA.RefillPerf."startPeriodTZ"
+//   Field tilda.data.TILDA.RefillPerf.startTimeTZ -> TILDA.RefillPerf."startTimeTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.startPeriodTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.startPeriodTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.startTimeTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.startTimeTZ of type character(5)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'startPeriod'.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'startTime'.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _startPeriodTZ=null;
+   String _startTimeTZ=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.RefillPerf.startPeriodTZ -> TILDA.RefillPerf."startPeriodTZ"
+//   Field tilda.data.TILDA.RefillPerf.startTimeTZ -> TILDA.RefillPerf."startTimeTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.startPeriodTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.startPeriodTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.startTimeTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.startTimeTZ of type character(5)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'startPeriod'.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'startTime'.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final String getStartPeriodTZ()
-      { return _startPeriodTZ; }
+   public final String getStartTimeTZ()
+      { return _startTimeTZ; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.RefillPerf.startPeriodTZ -> TILDA.RefillPerf."startPeriodTZ"
+//   Field tilda.data.TILDA.RefillPerf.startTimeTZ -> TILDA.RefillPerf."startTimeTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.startPeriodTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.startPeriodTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.startTimeTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.startTimeTZ of type character(5)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'startPeriod'.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'startTime'.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setStartPeriodTZ(String v) throws Exception
+    void setStartTimeTZ(String v) throws Exception
      {
        long T0 = System.nanoTime();
        if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.RefillPerf.startPeriodTZ to null: it's not nullable.");
+        throw new Exception("Cannot set tilda.data.TILDA.RefillPerf.startTimeTZ to null: it's not nullable.");
        else if (v.length() > 5)
-        throw new Exception("Cannot set tilda.data.TILDA.RefillPerf.startPeriodTZ: the size "+v.length()+" is larger than the max allowed of 5: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
-       else if (v.equals(_startPeriodTZ) == false)
+        throw new Exception("Cannot set tilda.data.TILDA.RefillPerf.startTimeTZ: the size "+v.length()+" is larger than the max allowed of 5: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
+       else if (v.equals(_startTimeTZ) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.RefillPerf.startPeriodTZ' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes.or(TILDA__REFILLPERF_Factory.COLS.STARTPERIODTZ._Mask);
-          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.STARTPERIODTZ._Mask);
-       _startPeriodTZ = v;
+           throw new Exception("Cannot set field 'tilda.data.TILDA.RefillPerf.startTimeTZ' that is invariant, or part of a read-only or pre-existing WORM object.");
+          __Changes.or(TILDA__REFILLPERF_Factory.COLS.STARTTIMETZ._Mask);
+          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.STARTTIMETZ._Mask);
+       _startTimeTZ = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.RefillPerf.startPeriodTZ -> TILDA.RefillPerf."startPeriodTZ"
+//   Field tilda.data.TILDA.RefillPerf.startTimeTZ -> TILDA.RefillPerf."startTimeTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.startPeriodTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.startPeriodTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.startTimeTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.startTimeTZ of type character(5)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'startPeriod'.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'startTime'.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public boolean hasChangedStartPeriodTZ()
-     { return __Changes.intersects(TILDA__REFILLPERF_Factory.COLS.STARTPERIODTZ._Mask); }
+   public boolean hasChangedStartTimeTZ()
+     { return __Changes.intersects(TILDA__REFILLPERF_Factory.COLS.STARTTIMETZ._Mask); }
 
 
 
@@ -505,13 +527,13 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.RefillPerf.startPeriod -> TILDA.RefillPerf."startPeriod"
+//   Field tilda.data.TILDA.RefillPerf.startTime -> TILDA.RefillPerf."startTime"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.startPeriod of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.startPeriod of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.startTime of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.startTime of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the refill started.</TD></TR>
@@ -520,22 +542,22 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   @SerializedName("startPeriod")
-   String  Str_startPeriod;
-   public void initStartPeriod(String v) { Str_startPeriod = v; }
-   public String initStartPeriodVal() { return Str_startPeriod; }
-   transient ZonedDateTime _startPeriod = null;
-   transient ZonedDateTime __Saved_startPeriod;
+   @SerializedName("startTime")
+   String  Str_startTime;
+   public void initStartTime(String v) { Str_startTime = v; }
+   public String initStartTimeVal() { return Str_startTime; }
+   transient ZonedDateTime _startTime = null;
+   transient ZonedDateTime __Saved_startTime;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.RefillPerf.startPeriod -> TILDA.RefillPerf."startPeriod"
+//   Field tilda.data.TILDA.RefillPerf.startTime -> TILDA.RefillPerf."startTime"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.startPeriod of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.startPeriod of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.startTime of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.startTime of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the refill started.</TD></TR>
@@ -544,18 +566,18 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final ZonedDateTime getStartPeriod()
-      { return _startPeriod; }
+   public final ZonedDateTime getStartTime()
+      { return _startTime; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.RefillPerf.startPeriod -> TILDA.RefillPerf."startPeriod"
+//   Field tilda.data.TILDA.RefillPerf.startTime -> TILDA.RefillPerf."startTime"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.startPeriod of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.startPeriod of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.startTime of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.startTime of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the refill started.</TD></TR>
@@ -564,34 +586,34 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   protected void setStartPeriod(ZonedDateTime v) throws Exception
+   protected void setStartTime(ZonedDateTime v) throws Exception
      {
        long T0 = System.nanoTime();
        if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.RefillPerf.startPeriod to null: it's not nullable.");
-       else if (v.equals(_startPeriod) == false)
+        throw new Exception("Cannot set tilda.data.TILDA.RefillPerf.startTime to null: it's not nullable.");
+       else if (v.equals(_startTime) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.RefillPerf.startPeriod' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes.or(TILDA__REFILLPERF_Factory.COLS.STARTPERIOD._Mask);
-          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.STARTPERIOD._Mask);
-       _startPeriod = v;
+           throw new Exception("Cannot set field 'tilda.data.TILDA.RefillPerf.startTime' that is invariant, or part of a read-only or pre-existing WORM object.");
+          __Changes.or(TILDA__REFILLPERF_Factory.COLS.STARTTIME._Mask);
+          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.STARTTIME._Mask);
+       _startTime = v;
           tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(v.getZone().getId());
           if (ZI == null)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.RefillPerf.startPeriod' because the timezone value '"+v.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-          setStartPeriodTZ(ZI.getId());
+           throw new Exception("Cannot set field 'tilda.data.TILDA.RefillPerf.startTime' because the timezone value '"+v.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+          setStartTimeTZ(ZI.getId());
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
    /**
-    * Being invariant, the field startPeriod doesn't have a public setter. To support deserialization however, 
+    * Being invariant, the field startTime doesn't have a public setter. To support deserialization however, 
     * we may need to set that field after a create/deserialization and before any write. The init methods allows
     * to do so.
    */
-   public void initStartPeriod(ZonedDateTime v) throws Exception
+   public void initStartTime(ZonedDateTime v) throws Exception
      {
-       setStartPeriod(v);
+       setStartTime(v);
      }
 
 
@@ -602,92 +624,101 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.RefillPerf.timeCreateMs -> TILDA.RefillPerf."timeCreateMs"
+//   Field tilda.data.TILDA.RefillPerf.endTimeTZ -> TILDA.RefillPerf."endTimeTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeCreateMs of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeCreateMs of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.endTimeTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.endTimeTZ of type character(5)</TD></TR>
 
+  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in milliseconds, the create took.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'endTime'.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   @SerializedName("timeCreateMs")
-   Long _timeCreateMs=null;
+   String _endTimeTZ=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.RefillPerf.timeCreateMs -> TILDA.RefillPerf."timeCreateMs"
+//   Field tilda.data.TILDA.RefillPerf.endTimeTZ -> TILDA.RefillPerf."endTimeTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeCreateMs of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeCreateMs of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.endTimeTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.endTimeTZ of type character(5)</TD></TR>
 
+  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in milliseconds, the create took.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'endTime'.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final long getTimeCreateMs()
-      { return _timeCreateMs==null?0l:_timeCreateMs; }
+   public final String getEndTimeTZ()
+      { return _endTimeTZ; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.RefillPerf.timeCreateMs -> TILDA.RefillPerf."timeCreateMs"
+//   Field tilda.data.TILDA.RefillPerf.endTimeTZ -> TILDA.RefillPerf."endTimeTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeCreateMs of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeCreateMs of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.endTimeTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.endTimeTZ of type character(5)</TD></TR>
 
+  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in milliseconds, the create took.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'endTime'.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setTimeCreateMs(long v) throws Exception
+    void setEndTimeTZ(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || _timeCreateMs == null || v != _timeCreateMs)
+       if (v == null)
+        throw new Exception("Cannot set tilda.data.TILDA.RefillPerf.endTimeTZ to null: it's not nullable.");
+       else if (v.length() > 5)
+        throw new Exception("Cannot set tilda.data.TILDA.RefillPerf.endTimeTZ: the size "+v.length()+" is larger than the max allowed of 5: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
+       else if (v.equals(_endTimeTZ) == false)
         {
-          __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMECREATEMS._Mask);
-          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMECREATEMS._Mask);
-       _timeCreateMs = v;
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
+           throw new Exception("Cannot set field 'tilda.data.TILDA.RefillPerf.endTimeTZ' that is invariant, or part of a read-only or pre-existing WORM object.");
+          __Changes.or(TILDA__REFILLPERF_Factory.COLS.ENDTIMETZ._Mask);
+          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.ENDTIMETZ._Mask);
+       _endTimeTZ = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.RefillPerf.timeCreateMs -> TILDA.RefillPerf."timeCreateMs"
+//   Field tilda.data.TILDA.RefillPerf.endTimeTZ -> TILDA.RefillPerf."endTimeTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeCreateMs of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeCreateMs of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.endTimeTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.endTimeTZ of type character(5)</TD></TR>
 
+  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in milliseconds, the create took.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'endTime'.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public boolean hasChangedTimeCreateMs()
-     { return __Changes.intersects(TILDA__REFILLPERF_Factory.COLS.TIMECREATEMS._Mask); }
+   public boolean hasChangedEndTimeTZ()
+     { return __Changes.intersects(TILDA__REFILLPERF_Factory.COLS.ENDTIMETZ._Mask); }
 
 
 
@@ -697,92 +728,179 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.RefillPerf.timeIndexMs -> TILDA.RefillPerf."timeIndexMs"
+//   Field tilda.data.TILDA.RefillPerf.endTime -> TILDA.RefillPerf."endTime"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeIndexMs of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeIndexMs of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.endTime of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.endTime of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in milliseconds, the indexing took.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the refill ended.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   @SerializedName("timeIndexMs")
-   Long _timeIndexMs=null;
+   @SerializedName("endTime")
+   String  Str_endTime;
+   public void initEndTime(String v) { Str_endTime = v; }
+   public String initEndTimeVal() { return Str_endTime; }
+   transient ZonedDateTime _endTime = null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.RefillPerf.timeIndexMs -> TILDA.RefillPerf."timeIndexMs"
+//   Field tilda.data.TILDA.RefillPerf.endTime -> TILDA.RefillPerf."endTime"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeIndexMs of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeIndexMs of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.endTime of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.endTime of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in milliseconds, the indexing took.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the refill ended.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final long getTimeIndexMs()
-      { return _timeIndexMs==null?0l:_timeIndexMs; }
+   public final ZonedDateTime getEndTime()
+      { return _endTime; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.RefillPerf.timeIndexMs -> TILDA.RefillPerf."timeIndexMs"
+//   Field tilda.data.TILDA.RefillPerf.endTime -> TILDA.RefillPerf."endTime"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeIndexMs of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeIndexMs of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.endTime of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.endTime of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in milliseconds, the indexing took.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the refill ended.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setTimeIndexMs(long v) throws Exception
+   protected void setEndTime(ZonedDateTime v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || _timeIndexMs == null || v != _timeIndexMs)
+       if (v == null)
+        throw new Exception("Cannot set tilda.data.TILDA.RefillPerf.endTime to null: it's not nullable.");
+       else if (v.equals(_endTime) == false)
         {
-          __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMEINDEXMS._Mask);
-          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMEINDEXMS._Mask);
-       _timeIndexMs = v;
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
+           throw new Exception("Cannot set field 'tilda.data.TILDA.RefillPerf.endTime' that is invariant, or part of a read-only or pre-existing WORM object.");
+          __Changes.or(TILDA__REFILLPERF_Factory.COLS.ENDTIME._Mask);
+          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.ENDTIME._Mask);
+       _endTime = v;
+          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(v.getZone().getId());
+          if (ZI == null)
+           throw new Exception("Cannot set field 'tilda.data.TILDA.RefillPerf.endTime' because the timezone value '"+v.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+          setEndTimeTZ(ZI.getId());
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
+   /**
+    * Being invariant, the field endTime doesn't have a public setter. To support deserialization however, 
+    * we may need to set that field after a create/deserialization and before any write. The init methods allows
+    * to do so.
+   */
+   public void initEndTime(ZonedDateTime v) throws Exception
+     {
+       setEndTime(v);
+     }
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.RefillPerf.timeIndexMs -> TILDA.RefillPerf."timeIndexMs"
+//   Field tilda.data.TILDA.RefillPerf.endTime -> TILDA.RefillPerf."endTime"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the NOW setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.endTime of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.endTime of type timestamptz</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the refill ended.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   protected final void setEndTimeNow() throws Exception
+    {
+      setEndTime(DateTimeUtil.NOW_PLACEHOLDER_ZDT);
+    }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.RefillPerf.endTime -> TILDA.RefillPerf."endTime"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the UNDEFINED setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.endTime of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.endTime of type timestamptz</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the refill ended.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   protected final void setEndTimeUndefined() throws Exception
+    {
+      setEndTime(DateTimeUtil.UNDEFINED_PLACEHOLDER_ZDT);
+    }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.RefillPerf.endTime -> TILDA.RefillPerf."endTime"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.endTime of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.endTime of type timestamptz</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the refill ended.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   protected final void setEndTime(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
+    {
+      setEndTime(DateTimeUtil.newTZ(year, month, date, hourOfDay, minute, second, millis, z));
+    }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.RefillPerf.endTime -> TILDA.RefillPerf."endTime"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeIndexMs of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeIndexMs of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.endTime of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.endTime of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in milliseconds, the indexing took.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the refill ended.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public boolean hasChangedTimeIndexMs()
-     { return __Changes.intersects(TILDA__REFILLPERF_Factory.COLS.TIMEINDEXMS._Mask); }
+   public boolean hasChangedEndTime()
+     { return __Changes.intersects(TILDA__REFILLPERF_Factory.COLS.ENDTIME._Mask); }
 
 
 
@@ -792,92 +910,92 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.RefillPerf.timeAnalyzeMs -> TILDA.RefillPerf."timeAnalyzeMs"
+//   Field tilda.data.TILDA.RefillPerf.timeInsertSec -> TILDA.RefillPerf."timeInsertSec"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeAnalyzeMs of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeAnalyzeMs of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeInsertSec of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeInsertSec of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in milliseconds, the analyze took.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in seconds, the inserts took.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   @SerializedName("timeAnalyzeMs")
-   Long _timeAnalyzeMs=null;
+   @SerializedName("timeInsertSec")
+   Long _timeInsertSec=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.RefillPerf.timeAnalyzeMs -> TILDA.RefillPerf."timeAnalyzeMs"
+//   Field tilda.data.TILDA.RefillPerf.timeInsertSec -> TILDA.RefillPerf."timeInsertSec"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeAnalyzeMs of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeAnalyzeMs of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeInsertSec of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeInsertSec of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in milliseconds, the analyze took.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in seconds, the inserts took.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final long getTimeAnalyzeMs()
-      { return _timeAnalyzeMs==null?0l:_timeAnalyzeMs; }
+   public final long getTimeInsertSec()
+      { return _timeInsertSec==null?0l:_timeInsertSec; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.RefillPerf.timeAnalyzeMs -> TILDA.RefillPerf."timeAnalyzeMs"
+//   Field tilda.data.TILDA.RefillPerf.timeInsertSec -> TILDA.RefillPerf."timeInsertSec"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeAnalyzeMs of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeAnalyzeMs of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeInsertSec of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeInsertSec of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in milliseconds, the analyze took.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in seconds, the inserts took.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setTimeAnalyzeMs(long v) throws Exception
+   public void setTimeInsertSec(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || _timeAnalyzeMs == null || v != _timeAnalyzeMs)
+       if (__Init == InitMode.CREATE || _timeInsertSec == null || v != _timeInsertSec)
         {
-          __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMEANALYZEMS._Mask);
-          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMEANALYZEMS._Mask);
-       _timeAnalyzeMs = v;
+          __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMEINSERTSEC._Mask);
+          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMEINSERTSEC._Mask);
+       _timeInsertSec = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.RefillPerf.timeAnalyzeMs -> TILDA.RefillPerf."timeAnalyzeMs"
+//   Field tilda.data.TILDA.RefillPerf.timeInsertSec -> TILDA.RefillPerf."timeInsertSec"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeAnalyzeMs of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeAnalyzeMs of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeInsertSec of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeInsertSec of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in milliseconds, the analyze took.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in seconds, the inserts took.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public boolean hasChangedTimeAnalyzeMs()
-     { return __Changes.intersects(TILDA__REFILLPERF_Factory.COLS.TIMEANALYZEMS._Mask); }
+   public boolean hasChangedTimeInsertSec()
+     { return __Changes.intersects(TILDA__REFILLPERF_Factory.COLS.TIMEINSERTSEC._Mask); }
 
 
 
@@ -887,92 +1005,92 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.RefillPerf.timeTotalMs -> TILDA.RefillPerf."timeTotalMs"
+//   Field tilda.data.TILDA.RefillPerf.timeDeleteSec -> TILDA.RefillPerf."timeDeleteSec"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeTotalMs of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeTotalMs of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeDeleteSec of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeDeleteSec of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in milliseconds, the whole refill took.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in seconds, the deletes took.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   @SerializedName("timeTotalMs")
-   Long _timeTotalMs=null;
+   @SerializedName("timeDeleteSec")
+   Long _timeDeleteSec=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.RefillPerf.timeTotalMs -> TILDA.RefillPerf."timeTotalMs"
+//   Field tilda.data.TILDA.RefillPerf.timeDeleteSec -> TILDA.RefillPerf."timeDeleteSec"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeTotalMs of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeTotalMs of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeDeleteSec of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeDeleteSec of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in milliseconds, the whole refill took.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in seconds, the deletes took.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final long getTimeTotalMs()
-      { return _timeTotalMs==null?0l:_timeTotalMs; }
+   public final long getTimeDeleteSec()
+      { return _timeDeleteSec==null?0l:_timeDeleteSec; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.RefillPerf.timeTotalMs -> TILDA.RefillPerf."timeTotalMs"
+//   Field tilda.data.TILDA.RefillPerf.timeDeleteSec -> TILDA.RefillPerf."timeDeleteSec"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeTotalMs of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeTotalMs of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeDeleteSec of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeDeleteSec of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in milliseconds, the whole refill took.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in seconds, the deletes took.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setTimeTotalMs(long v) throws Exception
+   public void setTimeDeleteSec(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || _timeTotalMs == null || v != _timeTotalMs)
+       if (__Init == InitMode.CREATE || _timeDeleteSec == null || v != _timeDeleteSec)
         {
-          __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMETOTALMS._Mask);
-          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMETOTALMS._Mask);
-       _timeTotalMs = v;
+          __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMEDELETESEC._Mask);
+          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMEDELETESEC._Mask);
+       _timeDeleteSec = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.RefillPerf.timeTotalMs -> TILDA.RefillPerf."timeTotalMs"
+//   Field tilda.data.TILDA.RefillPerf.timeDeleteSec -> TILDA.RefillPerf."timeDeleteSec"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeTotalMs of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeTotalMs of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeDeleteSec of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeDeleteSec of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in milliseconds, the whole refill took.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in seconds, the deletes took.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public boolean hasChangedTimeTotalMs()
-     { return __Changes.intersects(TILDA__REFILLPERF_Factory.COLS.TIMETOTALMS._Mask); }
+   public boolean hasChangedTimeDeleteSec()
+     { return __Changes.intersects(TILDA__REFILLPERF_Factory.COLS.TIMEDELETESEC._Mask); }
 
 
 
@@ -982,92 +1100,282 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.RefillPerf.columnsMs -> TILDA.RefillPerf."columnsMs"
+//   Field tilda.data.TILDA.RefillPerf.timeAnalyzeSec -> TILDA.RefillPerf."timeAnalyzeSec"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.columnsMs of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.columnsMs of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeAnalyzeSec of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeAnalyzeSec of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The list of columns that were refilled.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in seconds, the analyze took.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   @SerializedName("columnsMs")
-   Long _columnsMs=null;
+   @SerializedName("timeAnalyzeSec")
+   Long _timeAnalyzeSec=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.RefillPerf.columnsMs -> TILDA.RefillPerf."columnsMs"
+//   Field tilda.data.TILDA.RefillPerf.timeAnalyzeSec -> TILDA.RefillPerf."timeAnalyzeSec"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.columnsMs of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.columnsMs of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeAnalyzeSec of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeAnalyzeSec of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The list of columns that were refilled.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in seconds, the analyze took.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final long getColumnsMs()
-      { return _columnsMs==null?0l:_columnsMs; }
+   public final long getTimeAnalyzeSec()
+      { return _timeAnalyzeSec==null?0l:_timeAnalyzeSec; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.RefillPerf.columnsMs -> TILDA.RefillPerf."columnsMs"
+//   Field tilda.data.TILDA.RefillPerf.timeAnalyzeSec -> TILDA.RefillPerf."timeAnalyzeSec"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.columnsMs of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.columnsMs of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeAnalyzeSec of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeAnalyzeSec of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The list of columns that were refilled.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in seconds, the analyze took.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setColumnsMs(long v) throws Exception
+   public void setTimeAnalyzeSec(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || _columnsMs == null || v != _columnsMs)
+       if (__Init == InitMode.CREATE || _timeAnalyzeSec == null || v != _timeAnalyzeSec)
         {
-          __Changes.or(TILDA__REFILLPERF_Factory.COLS.COLUMNSMS._Mask);
-          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.COLUMNSMS._Mask);
-       _columnsMs = v;
+          __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMEANALYZESEC._Mask);
+          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMEANALYZESEC._Mask);
+       _timeAnalyzeSec = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.RefillPerf.columnsMs -> TILDA.RefillPerf."columnsMs"
+//   Field tilda.data.TILDA.RefillPerf.timeAnalyzeSec -> TILDA.RefillPerf."timeAnalyzeSec"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.columnsMs of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.columnsMs of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeAnalyzeSec of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeAnalyzeSec of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The list of columns that were refilled.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in seconds, the analyze took.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public boolean hasChangedColumnsMs()
-     { return __Changes.intersects(TILDA__REFILLPERF_Factory.COLS.COLUMNSMS._Mask); }
+   public boolean hasChangedTimeAnalyzeSec()
+     { return __Changes.intersects(TILDA__REFILLPERF_Factory.COLS.TIMEANALYZESEC._Mask); }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.RefillPerf.insertCount -> TILDA.RefillPerf."insertCount"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.insertCount of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.insertCount of type bigint</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The count of inserted rows.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   @SerializedName("insertCount")
+   Long _insertCount=null;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.RefillPerf.insertCount -> TILDA.RefillPerf."insertCount"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.insertCount of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.insertCount of type bigint</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The count of inserted rows.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final long getInsertCount()
+      { return _insertCount==null?0l:_insertCount; }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.RefillPerf.insertCount -> TILDA.RefillPerf."insertCount"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.insertCount of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.insertCount of type bigint</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The count of inserted rows.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public void setInsertCount(long v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (__Init == InitMode.CREATE || _insertCount == null || v != _insertCount)
+        {
+          __Changes.or(TILDA__REFILLPERF_Factory.COLS.INSERTCOUNT._Mask);
+          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.INSERTCOUNT._Mask);
+       _insertCount = v;
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.RefillPerf.insertCount -> TILDA.RefillPerf."insertCount"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the hasChanged for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.insertCount of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.insertCount of type bigint</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The count of inserted rows.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public boolean hasChangedInsertCount()
+     { return __Changes.intersects(TILDA__REFILLPERF_Factory.COLS.INSERTCOUNT._Mask); }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.RefillPerf.deleteCount -> TILDA.RefillPerf."deleteCount"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.deleteCount of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.deleteCount of type bigint</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The count of rows deleted.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   @SerializedName("deleteCount")
+   Long _deleteCount=null;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.RefillPerf.deleteCount -> TILDA.RefillPerf."deleteCount"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.deleteCount of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.deleteCount of type bigint</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The count of rows deleted.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final long getDeleteCount()
+      { return _deleteCount==null?0l:_deleteCount; }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.RefillPerf.deleteCount -> TILDA.RefillPerf."deleteCount"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.deleteCount of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.deleteCount of type bigint</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The count of rows deleted.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public void setDeleteCount(long v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (__Init == InitMode.CREATE || _deleteCount == null || v != _deleteCount)
+        {
+          __Changes.or(TILDA__REFILLPERF_Factory.COLS.DELETECOUNT._Mask);
+          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.DELETECOUNT._Mask);
+       _deleteCount = v;
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.RefillPerf.deleteCount -> TILDA.RefillPerf."deleteCount"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the hasChanged for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.deleteCount of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.deleteCount of type bigint</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The count of rows deleted.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public boolean hasChangedDeleteCount()
+     { return __Changes.intersects(TILDA__REFILLPERF_Factory.COLS.DELETECOUNT._Mask); }
 
 
 
@@ -1716,13 +2024,13 @@ This is the hasChanged for:<BR>
 */
    public void copyTo(tilda.data._Tilda.TILDA__REFILLPERF Dst) throws Exception
      {
-       Dst.setTimeCreateMs (_timeCreateMs );
-       Dst.setTimeIndexMs  (_timeIndexMs  );
-       Dst.setTimeAnalyzeMs(_timeAnalyzeMs);
-       Dst.setTimeTotalMs  (_timeTotalMs  );
-       Dst.setColumnsMs    (_columnsMs    );
-       Dst.setLastUpdated  (_lastUpdated  );
-       if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull      (); else        Dst.setDeleted      (_deleted      );
+       Dst.setTimeInsertSec (_timeInsertSec );
+       Dst.setTimeDeleteSec (_timeDeleteSec );
+       Dst.setTimeAnalyzeSec(_timeAnalyzeSec);
+       Dst.setInsertCount   (_insertCount   );
+       Dst.setDeleteCount   (_deleteCount   );
+       Dst.setLastUpdated   (_lastUpdated   );
+       if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull       (); else        Dst.setDeleted       (_deleted       );
      }
 
 /**
@@ -1783,9 +2091,9 @@ This is the hasChanged for:<BR>
           switch (__LookupId)
            {
              case 0:
-               PS.setString    (++i, _schemaName   );
-               PS.setString    (++i, _objectName   );
-               PS.setTimestamp(++i, new java.sql.Timestamp(_startPeriod.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+               PS.setString    (++i, _schemaName    );
+               PS.setString    (++i, _objectName    );
+               PS.setTimestamp(++i, new java.sql.Timestamp(_startTime.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -1827,51 +2135,68 @@ This is the hasChanged for:<BR>
           __Changes.or(TILDA__REFILLPERF_Factory.COLS.OBJECTNAME._Mask);
           __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.OBJECTNAME._Mask);
 
-       if (TextUtil.isNullOrEmpty(Str_startPeriod) == true)
-        throw new Exception("Incoming value for 'tilda.data.TILDA.RefillPerf.startPeriod' was null or empty. It's not nullable in the model.\n"+toString());
-          __Changes.or(TILDA__REFILLPERF_Factory.COLS.STARTPERIOD._Mask);
-          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.STARTPERIOD._Mask);
+       if (TextUtil.isNullOrEmpty(Str_startTime) == true)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.RefillPerf.startTime' was null or empty. It's not nullable in the model.\n"+toString());
+          __Changes.or(TILDA__REFILLPERF_Factory.COLS.STARTTIME._Mask);
+          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.STARTTIME._Mask);
         {
-       _startPeriod = DateTimeUtil.parsefromJSON(Str_startPeriod);
-       if (   _startPeriod == null)
-        throw new Exception("Incoming value for 'tilda.data.TILDA.RefillPerf.startPeriod' was not in the expected format. Dates should follow the ISO format.\n"+toString());
-       __Changes.or(TILDA__REFILLPERF_Factory.COLS.STARTPERIOD._Mask);
-       __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.STARTPERIOD._Mask);
-       tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(_startPeriod.getZone().getId());
+       _startTime = DateTimeUtil.parsefromJSON(Str_startTime);
+       if (   _startTime == null)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.RefillPerf.startTime' was not in the expected format. Dates should follow the ISO format.\n"+toString());
+       __Changes.or(TILDA__REFILLPERF_Factory.COLS.STARTTIME._Mask);
+       __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.STARTTIME._Mask);
+       tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(_startTime.getZone().getId());
        if (ZI == null)
-        throw new Exception("Cannot set field 'tilda.data.TILDA.RefillPerf.startPeriod' because the timezone value '"+_startPeriod.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-          setStartPeriodTZ(ZI.getId());
+        throw new Exception("Cannot set field 'tilda.data.TILDA.RefillPerf.startTime' because the timezone value '"+_startTime.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+          setStartTimeTZ(ZI.getId());
         }
 
-       if (_timeCreateMs == null)
-        throw new Exception("Incoming value for 'tilda.data.TILDA.RefillPerf.timeCreateMs' was null or empty. It's not nullable in the model.\n"+toString());
-          __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMECREATEMS._Mask);
-          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMECREATEMS._Mask);
+       if (TextUtil.isNullOrEmpty(Str_endTime) == true)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.RefillPerf.endTime' was null or empty. It's not nullable in the model.\n"+toString());
+          __Changes.or(TILDA__REFILLPERF_Factory.COLS.ENDTIME._Mask);
+          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.ENDTIME._Mask);
+        {
+       _endTime = DateTimeUtil.parsefromJSON(Str_endTime);
+       if (   _endTime == null)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.RefillPerf.endTime' was not in the expected format. Dates should follow the ISO format.\n"+toString());
+       __Changes.or(TILDA__REFILLPERF_Factory.COLS.ENDTIME._Mask);
+       __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.ENDTIME._Mask);
+       tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(_endTime.getZone().getId());
+       if (ZI == null)
+        throw new Exception("Cannot set field 'tilda.data.TILDA.RefillPerf.endTime' because the timezone value '"+_endTime.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+          setEndTimeTZ(ZI.getId());
+        }
 
-       if (_timeIndexMs == null)
-        throw new Exception("Incoming value for 'tilda.data.TILDA.RefillPerf.timeIndexMs' was null or empty. It's not nullable in the model.\n"+toString());
-          __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMEINDEXMS._Mask);
-          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMEINDEXMS._Mask);
+       if (_timeInsertSec == null)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.RefillPerf.timeInsertSec' was null or empty. It's not nullable in the model.\n"+toString());
+          __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMEINSERTSEC._Mask);
+          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMEINSERTSEC._Mask);
 
-       if (_timeAnalyzeMs == null)
-        throw new Exception("Incoming value for 'tilda.data.TILDA.RefillPerf.timeAnalyzeMs' was null or empty. It's not nullable in the model.\n"+toString());
-          __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMEANALYZEMS._Mask);
-          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMEANALYZEMS._Mask);
+       if (_timeDeleteSec == null)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.RefillPerf.timeDeleteSec' was null or empty. It's not nullable in the model.\n"+toString());
+          __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMEDELETESEC._Mask);
+          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMEDELETESEC._Mask);
 
-       if (_timeTotalMs == null)
-        throw new Exception("Incoming value for 'tilda.data.TILDA.RefillPerf.timeTotalMs' was null or empty. It's not nullable in the model.\n"+toString());
-          __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMETOTALMS._Mask);
-          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMETOTALMS._Mask);
+       if (_timeAnalyzeSec == null)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.RefillPerf.timeAnalyzeSec' was null or empty. It's not nullable in the model.\n"+toString());
+          __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMEANALYZESEC._Mask);
+          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMEANALYZESEC._Mask);
 
-       if (_columnsMs == null)
-        throw new Exception("Incoming value for 'tilda.data.TILDA.RefillPerf.columnsMs' was null or empty. It's not nullable in the model.\n"+toString());
-          __Changes.or(TILDA__REFILLPERF_Factory.COLS.COLUMNSMS._Mask);
-          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.COLUMNSMS._Mask);
+       if (_insertCount == null)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.RefillPerf.insertCount' was null or empty. It's not nullable in the model.\n"+toString());
+          __Changes.or(TILDA__REFILLPERF_Factory.COLS.INSERTCOUNT._Mask);
+          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.INSERTCOUNT._Mask);
+
+       if (_deleteCount == null)
+        throw new Exception("Incoming value for 'tilda.data.TILDA.RefillPerf.deleteCount' was null or empty. It's not nullable in the model.\n"+toString());
+          __Changes.or(TILDA__REFILLPERF_Factory.COLS.DELETECOUNT._Mask);
+          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.DELETECOUNT._Mask);
      }
    protected String getTimeStampSignature() throws Exception
      {
        StringBuilder S = new StringBuilder(1024);
-       if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.STARTPERIOD._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_startPeriod) == true ? "C" : "X");
+       if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.STARTTIME._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_startTime) == true ? "C" : "X");
+       if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.ENDTIME._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_endTime) == true ? "C" : "X");
        if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.CREATED._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_created) == true ? "C" : "X");
        if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.LASTUPDATED._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? "C" : "X");
        if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.DELETED._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_deleted) == true ? "C" : "X");
@@ -1888,16 +2213,21 @@ This is the hasChanged for:<BR>
           int Pos = S.length();
           if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.SCHEMANAME._Mask) == true) { TILDA__REFILLPERF_Factory.COLS.SCHEMANAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
           if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.OBJECTNAME._Mask) == true) { TILDA__REFILLPERF_Factory.COLS.OBJECTNAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.STARTPERIODTZ._Mask) == true) { TILDA__REFILLPERF_Factory.COLS.STARTPERIODTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.STARTTIMETZ._Mask) == true) { TILDA__REFILLPERF_Factory.COLS.STARTTIMETZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
 
-          if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.STARTPERIOD._Mask) == true) { TILDA__REFILLPERF_Factory.COLS.STARTPERIOD.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__REFILLPERF_Factory.COLS.STARTPERIOD._Mask) == false && DateTimeUtil.isNowPlaceholder(_startPeriod) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+          if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.STARTTIME._Mask) == true) { TILDA__REFILLPERF_Factory.COLS.STARTTIME.getFullColumnVarForInsert(C, S);
+             V.append(__Nulls.intersects(TILDA__REFILLPERF_Factory.COLS.STARTTIME._Mask) == false && DateTimeUtil.isNowPlaceholder(_startTime) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
-          if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.TIMECREATEMS._Mask) == true) { TILDA__REFILLPERF_Factory.COLS.TIMECREATEMS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.TIMEINDEXMS._Mask) == true) { TILDA__REFILLPERF_Factory.COLS.TIMEINDEXMS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.TIMEANALYZEMS._Mask) == true) { TILDA__REFILLPERF_Factory.COLS.TIMEANALYZEMS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.TIMETOTALMS._Mask) == true) { TILDA__REFILLPERF_Factory.COLS.TIMETOTALMS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.COLUMNSMS._Mask) == true) { TILDA__REFILLPERF_Factory.COLS.COLUMNSMS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.ENDTIMETZ._Mask) == true) { TILDA__REFILLPERF_Factory.COLS.ENDTIMETZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+
+          if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.ENDTIME._Mask) == true) { TILDA__REFILLPERF_Factory.COLS.ENDTIME.getFullColumnVarForInsert(C, S);
+             V.append(__Nulls.intersects(TILDA__REFILLPERF_Factory.COLS.ENDTIME._Mask) == false && DateTimeUtil.isNowPlaceholder(_endTime) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+           }
+          if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.TIMEINSERTSEC._Mask) == true) { TILDA__REFILLPERF_Factory.COLS.TIMEINSERTSEC.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.TIMEDELETESEC._Mask) == true) { TILDA__REFILLPERF_Factory.COLS.TIMEDELETESEC.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.TIMEANALYZESEC._Mask) == true) { TILDA__REFILLPERF_Factory.COLS.TIMEANALYZESEC.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.INSERTCOUNT._Mask) == true) { TILDA__REFILLPERF_Factory.COLS.INSERTCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.DELETECOUNT._Mask) == true) { TILDA__REFILLPERF_Factory.COLS.DELETECOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
 
           if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.CREATED._Mask) == true) { TILDA__REFILLPERF_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
              V.append(__Nulls.intersects(TILDA__REFILLPERF_Factory.COLS.CREATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
@@ -1923,20 +2253,29 @@ This is the hasChanged for:<BR>
           int Pos = S.length();
           if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.SCHEMANAME._Mask) == true) TILDA__REFILLPERF_Factory.COLS.SCHEMANAME.getFullColumnVarForUpdate(C, S);
           if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.OBJECTNAME._Mask) == true) TILDA__REFILLPERF_Factory.COLS.OBJECTNAME.getFullColumnVarForUpdate(C, S);
-          if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.STARTPERIODTZ._Mask) == true) TILDA__REFILLPERF_Factory.COLS.STARTPERIODTZ.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.STARTTIMETZ._Mask) == true) TILDA__REFILLPERF_Factory.COLS.STARTTIMETZ.getFullColumnVarForUpdate(C, S);
 
-          if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.STARTPERIOD._Mask) == true)
+          if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.STARTTIME._Mask) == true)
            {
-             if (__Nulls.intersects(TILDA__REFILLPERF_Factory.COLS.STARTPERIOD._Mask) == false && DateTimeUtil.isNowPlaceholder(_startPeriod) == true)
-              { TILDA__REFILLPERF_Factory.COLS.STARTPERIOD.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
+             if (__Nulls.intersects(TILDA__REFILLPERF_Factory.COLS.STARTTIME._Mask) == false && DateTimeUtil.isNowPlaceholder(_startTime) == true)
+              { TILDA__REFILLPERF_Factory.COLS.STARTTIME.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
-              TILDA__REFILLPERF_Factory.COLS.STARTPERIOD.getFullColumnVarForUpdate(C, S);
+              TILDA__REFILLPERF_Factory.COLS.STARTTIME.getFullColumnVarForUpdate(C, S);
            }
-          if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.TIMECREATEMS._Mask) == true) TILDA__REFILLPERF_Factory.COLS.TIMECREATEMS.getFullColumnVarForUpdate(C, S);
-          if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.TIMEINDEXMS._Mask) == true) TILDA__REFILLPERF_Factory.COLS.TIMEINDEXMS.getFullColumnVarForUpdate(C, S);
-          if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.TIMEANALYZEMS._Mask) == true) TILDA__REFILLPERF_Factory.COLS.TIMEANALYZEMS.getFullColumnVarForUpdate(C, S);
-          if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.TIMETOTALMS._Mask) == true) TILDA__REFILLPERF_Factory.COLS.TIMETOTALMS.getFullColumnVarForUpdate(C, S);
-          if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.COLUMNSMS._Mask) == true) TILDA__REFILLPERF_Factory.COLS.COLUMNSMS.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.ENDTIMETZ._Mask) == true) TILDA__REFILLPERF_Factory.COLS.ENDTIMETZ.getFullColumnVarForUpdate(C, S);
+
+          if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.ENDTIME._Mask) == true)
+           {
+             if (__Nulls.intersects(TILDA__REFILLPERF_Factory.COLS.ENDTIME._Mask) == false && DateTimeUtil.isNowPlaceholder(_endTime) == true)
+              { TILDA__REFILLPERF_Factory.COLS.ENDTIME.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
+             else
+              TILDA__REFILLPERF_Factory.COLS.ENDTIME.getFullColumnVarForUpdate(C, S);
+           }
+          if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.TIMEINSERTSEC._Mask) == true) TILDA__REFILLPERF_Factory.COLS.TIMEINSERTSEC.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.TIMEDELETESEC._Mask) == true) TILDA__REFILLPERF_Factory.COLS.TIMEDELETESEC.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.TIMEANALYZESEC._Mask) == true) TILDA__REFILLPERF_Factory.COLS.TIMEANALYZESEC.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.INSERTCOUNT._Mask) == true) TILDA__REFILLPERF_Factory.COLS.INSERTCOUNT.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.DELETECOUNT._Mask) == true) TILDA__REFILLPERF_Factory.COLS.DELETECOUNT.getFullColumnVarForUpdate(C, S);
 
           if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.CREATED._Mask) == true)
            {
@@ -1970,7 +2309,7 @@ This is the hasChanged for:<BR>
           switch (__LookupId)
            {
              case 0:
-                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "RefillPerf", "schemaName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "objectName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "startPeriod"); S.append("=?)");
+                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "RefillPerf", "schemaName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "objectName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "startTime"); S.append("=?)");
                 break;
              case -77: 
              case -666: if (__Init == InitMode.CREATE) break;
@@ -1998,33 +2337,41 @@ This is the hasChanged for:<BR>
         { 
           if (__Nulls.intersects(TILDA__REFILLPERF_Factory.COLS.OBJECTNAME._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _objectName);
         } 
-       if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.STARTPERIODTZ._Mask) == true) 
+       if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.STARTTIMETZ._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__REFILLPERF_Factory.COLS.STARTPERIODTZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _startPeriodTZ);
+          if (__Nulls.intersects(TILDA__REFILLPERF_Factory.COLS.STARTTIMETZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _startTimeTZ);
         } 
-       if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.STARTPERIOD._Mask) == true) 
+       if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.STARTTIME._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__REFILLPERF_Factory.COLS.STARTPERIOD._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_startPeriod) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_startPeriod.toInstant()), DateTimeUtil._UTC_CALENDAR);
+          if (__Nulls.intersects(TILDA__REFILLPERF_Factory.COLS.STARTTIME._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_startTime) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_startTime.toInstant()), DateTimeUtil._UTC_CALENDAR);
         } 
-       if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.TIMECREATEMS._Mask) == true) 
+       if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.ENDTIMETZ._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__REFILLPERF_Factory.COLS.TIMECREATEMS._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT    ); else PS.setLong      (++i, _timeCreateMs);
+          if (__Nulls.intersects(TILDA__REFILLPERF_Factory.COLS.ENDTIMETZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _endTimeTZ);
         } 
-       if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.TIMEINDEXMS._Mask) == true) 
+       if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.ENDTIME._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__REFILLPERF_Factory.COLS.TIMEINDEXMS._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT    ); else PS.setLong      (++i, _timeIndexMs);
+          if (__Nulls.intersects(TILDA__REFILLPERF_Factory.COLS.ENDTIME._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_endTime) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_endTime.toInstant()), DateTimeUtil._UTC_CALENDAR);
         } 
-       if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.TIMEANALYZEMS._Mask) == true) 
+       if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.TIMEINSERTSEC._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__REFILLPERF_Factory.COLS.TIMEANALYZEMS._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT    ); else PS.setLong      (++i, _timeAnalyzeMs);
+          if (__Nulls.intersects(TILDA__REFILLPERF_Factory.COLS.TIMEINSERTSEC._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT    ); else PS.setLong      (++i, _timeInsertSec);
         } 
-       if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.TIMETOTALMS._Mask) == true) 
+       if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.TIMEDELETESEC._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__REFILLPERF_Factory.COLS.TIMETOTALMS._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT    ); else PS.setLong      (++i, _timeTotalMs);
+          if (__Nulls.intersects(TILDA__REFILLPERF_Factory.COLS.TIMEDELETESEC._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT    ); else PS.setLong      (++i, _timeDeleteSec);
         } 
-       if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.COLUMNSMS._Mask) == true) 
+       if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.TIMEANALYZESEC._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__REFILLPERF_Factory.COLS.COLUMNSMS._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT    ); else PS.setLong      (++i, _columnsMs);
+          if (__Nulls.intersects(TILDA__REFILLPERF_Factory.COLS.TIMEANALYZESEC._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT    ); else PS.setLong      (++i, _timeAnalyzeSec);
+        } 
+       if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.INSERTCOUNT._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__REFILLPERF_Factory.COLS.INSERTCOUNT._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT    ); else PS.setLong      (++i, _insertCount);
+        } 
+       if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.DELETECOUNT._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__REFILLPERF_Factory.COLS.DELETECOUNT._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT    ); else PS.setLong      (++i, _deleteCount);
         } 
        if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.CREATED._Mask) == true) 
         { 
@@ -2055,9 +2402,9 @@ This is the hasChanged for:<BR>
        switch (__LookupId)
         {
           case 0:
-             __Saved_schemaName    = _schemaName   ;
-             __Saved_objectName    = _objectName   ;
-             __Saved_startPeriod   = _startPeriod  ;
+             __Saved_schemaName     = _schemaName    ;
+             __Saved_objectName     = _objectName    ;
+             __Saved_startTime      = _startTime     ;
              break;
           case -666: if (__Init == InitMode.CREATE) break;
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -2086,7 +2433,7 @@ This is the hasChanged for:<BR>
        if (OK == false)
         throw new Exception("Object has not been instanciated via deserialization or the factory create() method.");
 
-       if (__Init == null && __LookupId==0);  // object deserialized
+       if (__Init == null && __LookupId==0)  // object deserialized
         validateDeserialization();
 
        int lookupId = getFirstValidLookupBy();
@@ -2127,7 +2474,7 @@ This is the hasChanged for:<BR>
      {
 
        // Testing if primary key has been set - Id: 0
-       if (TextUtil.isNullOrEmpty(_schemaName) == false && TextUtil.isNullOrEmpty(_objectName) == false && TextUtil.isNullOrEmpty(Str_startPeriod) == false)
+       if (TextUtil.isNullOrEmpty(_schemaName) == false && TextUtil.isNullOrEmpty(_objectName) == false && TextUtil.isNullOrEmpty(Str_startTime) == false)
         return 0;
 
        return SystemValues.EVIL_VALUE;
@@ -2164,13 +2511,15 @@ This is the hasChanged for:<BR>
           S.append("select ");
           S.append(" "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "schemaName");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "objectName");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "startPeriodTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "startPeriod");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "timeCreateMs");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "timeIndexMs");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "timeAnalyzeMs");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "timeTotalMs");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "columnsMs");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "startTimeTZ");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "startTime");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "endTimeTZ");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "endTime");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "timeInsertSec");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "timeDeleteSec");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "timeAnalyzeSec");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "insertCount");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "deleteCount");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "created");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "lastUpdated");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "deleted");
@@ -2178,7 +2527,7 @@ This is the hasChanged for:<BR>
        switch (__LookupId)
         {
           case 0:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "RefillPerf", "schemaName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "objectName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "startPeriod"); S.append("=?)");
+             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "RefillPerf", "schemaName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "objectName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "startTime"); S.append("=?)");
              break;
           case -77: 
           case -666: if (__Init == InitMode.CREATE) break;
@@ -2201,9 +2550,9 @@ This is the hasChanged for:<BR>
           switch (__LookupId)
            {
              case 0:
-               PS.setString    (++i, _schemaName   );
-               PS.setString    (++i, _objectName   );
-               PS.setTimestamp(++i, new java.sql.Timestamp(_startPeriod.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+               PS.setString    (++i, _schemaName    );
+               PS.setString    (++i, _objectName    );
+               PS.setTimestamp(++i, new java.sql.Timestamp(_startTime.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -2234,18 +2583,20 @@ This is the hasChanged for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-      __Saved_schemaName    = _schemaName    = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__REFILLPERF_Factory.COLS.SCHEMANAME._Mask   );
-      __Saved_objectName    = _objectName    = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__REFILLPERF_Factory.COLS.OBJECTNAME._Mask   );
-                              _startPeriodTZ = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__REFILLPERF_Factory.COLS.STARTPERIODTZ._Mask); else _startPeriodTZ = _startPeriodTZ.trim();
-      __Saved_startPeriod   = _startPeriod   = processZDT(_startPeriodTZ  , "tilda.data.TILDA.RefillPerf.startPeriod"  , RS, ++i, TILDA__REFILLPERF_Factory.COLS.STARTPERIOD  , TILDA__REFILLPERF_Factory.COLS.STARTPERIODTZ  ); if (RS.wasNull() == true) __Nulls.or(TILDA__REFILLPERF_Factory.COLS.STARTPERIOD._Mask  );
-                              _timeCreateMs  =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__REFILLPERF_Factory.COLS.TIMECREATEMS._Mask );
-                              _timeIndexMs   =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__REFILLPERF_Factory.COLS.TIMEINDEXMS._Mask  );
-                              _timeAnalyzeMs =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__REFILLPERF_Factory.COLS.TIMEANALYZEMS._Mask);
-                              _timeTotalMs   =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__REFILLPERF_Factory.COLS.TIMETOTALMS._Mask  );
-                              _columnsMs     =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__REFILLPERF_Factory.COLS.COLUMNSMS._Mask    );
-                              _created       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__REFILLPERF_Factory.COLS.CREATED._Mask      );
-                              _lastUpdated   = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__REFILLPERF_Factory.COLS.LASTUPDATED._Mask  );
-                              _deleted       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__REFILLPERF_Factory.COLS.DELETED._Mask      );
+      __Saved_schemaName     = _schemaName     = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__REFILLPERF_Factory.COLS.SCHEMANAME._Mask    );
+      __Saved_objectName     = _objectName     = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__REFILLPERF_Factory.COLS.OBJECTNAME._Mask    );
+                               _startTimeTZ    = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__REFILLPERF_Factory.COLS.STARTTIMETZ._Mask   ); else _startTimeTZ    = _startTimeTZ   .trim();
+      __Saved_startTime      = _startTime      = processZDT(_startTimeTZ     , "tilda.data.TILDA.RefillPerf.startTime"     , RS, ++i, TILDA__REFILLPERF_Factory.COLS.STARTTIME     , TILDA__REFILLPERF_Factory.COLS.STARTTIMETZ     ); if (RS.wasNull() == true) __Nulls.or(TILDA__REFILLPERF_Factory.COLS.STARTTIME._Mask     );
+                               _endTimeTZ      = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__REFILLPERF_Factory.COLS.ENDTIMETZ._Mask     ); else _endTimeTZ      = _endTimeTZ     .trim();
+                               _endTime        = processZDT(_endTimeTZ       , "tilda.data.TILDA.RefillPerf.endTime"       , RS, ++i, TILDA__REFILLPERF_Factory.COLS.ENDTIME       , TILDA__REFILLPERF_Factory.COLS.ENDTIMETZ       ); if (RS.wasNull() == true) __Nulls.or(TILDA__REFILLPERF_Factory.COLS.ENDTIME._Mask       );
+                               _timeInsertSec  =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__REFILLPERF_Factory.COLS.TIMEINSERTSEC._Mask );
+                               _timeDeleteSec  =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__REFILLPERF_Factory.COLS.TIMEDELETESEC._Mask );
+                               _timeAnalyzeSec =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__REFILLPERF_Factory.COLS.TIMEANALYZESEC._Mask);
+                               _insertCount    =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__REFILLPERF_Factory.COLS.INSERTCOUNT._Mask   );
+                               _deleteCount    =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__REFILLPERF_Factory.COLS.DELETECOUNT._Mask   );
+                               _created        = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__REFILLPERF_Factory.COLS.CREATED._Mask       );
+                               _lastUpdated    = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__REFILLPERF_Factory.COLS.LASTUPDATED._Mask   );
+                               _deleted        = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__REFILLPERF_Factory.COLS.DELETED._Mask       );
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();
@@ -2278,17 +2629,18 @@ This is the hasChanged for:<BR>
     {
       long T0 = System.nanoTime();
       String Str = 
-                   "schemaName: "                                                                                              + TextUtil.printVariableStr        (getSchemaName   ())
-               + "; objectName: "                                                                                              + TextUtil.printVariableStr        (getObjectName   ())
-               + "; startPeriod: "                                                                                             + DateTimeUtil.printDateTimeForJSON(getStartPeriod  ())
-               + "; timeCreateMs: "                                                                                            +                                   getTimeCreateMs () 
-               + "; timeIndexMs: "                                                                                             +                                   getTimeIndexMs  () 
-               + "; timeAnalyzeMs: "                                                                                           +                                   getTimeAnalyzeMs() 
-               + "; timeTotalMs: "                                                                                             +                                   getTimeTotalMs  () 
-               + "; columnsMs: "                                                                                               +                                   getColumnsMs    () 
-               + "; created: "                                                                                                 + DateTimeUtil.printDateTimeForJSON(getCreated      ())
-               + "; lastUpdated: "                                                                                             + DateTimeUtil.printDateTimeForJSON(getLastUpdated  ())
-               + "; deleted"         + (__Nulls.intersects(TILDA__REFILLPERF_Factory.COLS.DELETED._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDeleted      ()))
+                   "schemaName: "                                                                                                + TextUtil.printVariableStr        (getSchemaName    ())
+               + "; objectName: "                                                                                                + TextUtil.printVariableStr        (getObjectName    ())
+               + "; startTime: "                                                                                                 + DateTimeUtil.printDateTimeForJSON(getStartTime     ())
+               + "; endTime: "                                                                                                   + DateTimeUtil.printDateTimeForJSON(getEndTime       ())
+               + "; timeInsertSec: "                                                                                             +                                   getTimeInsertSec () 
+               + "; timeDeleteSec: "                                                                                             +                                   getTimeDeleteSec () 
+               + "; timeAnalyzeSec: "                                                                                            +                                   getTimeAnalyzeSec() 
+               + "; insertCount: "                                                                                               +                                   getInsertCount   () 
+               + "; deleteCount: "                                                                                               +                                   getDeleteCount   () 
+               + "; created: "                                                                                                   + DateTimeUtil.printDateTimeForJSON(getCreated       ())
+               + "; lastUpdated: "                                                                                               + DateTimeUtil.printDateTimeForJSON(getLastUpdated   ())
+               + "; deleted"          + (__Nulls.intersects(TILDA__REFILLPERF_Factory.COLS.DELETED._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDeleted       ()))
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;
