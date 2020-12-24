@@ -1,4 +1,9 @@
 tilda
+tilda.analyzer
+tilda.analyzer.bean
+tilda.analyzer.data
+tilda.analyzer.helper
+tilda.analyzer.parser
 tilda.data
 tilda.data._Tilda
 tilda.data.importers.zones
