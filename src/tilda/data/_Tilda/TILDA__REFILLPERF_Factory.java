@@ -54,7 +54,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        SCHEMANAME   = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "schemaName"   , 0/*0*/, "The name of the schema tracked");
+     public static Type_StringPrimitive        SCHEMANAME    = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "schemaName"    , 0/*0*/, "The name of the schema tracked");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.RefillPerf.objectName -> TILDA.RefillPerf."objectName"
@@ -73,7 +73,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        OBJECTNAME   = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "objectName"   , 1/*1*/, "The name of the table/object tracked");
+     public static Type_StringPrimitive        OBJECTNAME    = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "objectName"    , 1/*1*/, "The name of the table/object tracked");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.RefillPerf.startTimeTZ -> TILDA.RefillPerf."startTimeTZ"
@@ -92,7 +92,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        STARTTIMETZ  = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "startTimeTZ"  , 2/*2*/, "Generated helper column to hold the time zone ID for 'startTime'.");
+     public static Type_StringPrimitive        STARTTIMETZ   = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "startTimeTZ"   , 2/*2*/, "Generated helper column to hold the time zone ID for 'startTime'.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.RefillPerf.startTime -> TILDA.RefillPerf."startTime"
@@ -110,7 +110,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitive      STARTTIME    = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "startTime"    , 3/*3*/, "The timestamp for when the refill started.", STARTTIMETZ);
+     public static Type_DatetimePrimitive      STARTTIME     = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "startTime"     , 3/*3*/, "The timestamp for when the refill started.", STARTTIMETZ);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.RefillPerf.endTimeTZ -> TILDA.RefillPerf."endTimeTZ"
@@ -129,7 +129,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        ENDTIMETZ    = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "endTimeTZ"    , 4/*4*/, "Generated helper column to hold the time zone ID for 'endTime'.");
+     public static Type_StringPrimitive        ENDTIMETZ     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "endTimeTZ"     , 4/*4*/, "Generated helper column to hold the time zone ID for 'endTime'.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.RefillPerf.endTime -> TILDA.RefillPerf."endTime"
@@ -147,61 +147,61 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitive      ENDTIME      = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "endTime"      , 5/*5*/, "The timestamp for when the refill ended.", ENDTIMETZ);
+     public static Type_DatetimePrimitive      ENDTIME       = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "endTime"       , 5/*5*/, "The timestamp for when the refill ended.", ENDTIMETZ);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.RefillPerf.timeInsertMs -> TILDA.RefillPerf."timeInsertMs"
+//   Field tilda.data.TILDA.RefillPerf.timeInsertSec -> TILDA.RefillPerf."timeInsertSec"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeInsertMs of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeInsertMs of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeInsertSec of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeInsertSec of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in milliseconds, the create took.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in seconds, the inserts took.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          TIMEINSERTMS = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "timeInsertMs" , 6/*6*/, "The time, in milliseconds, the create took.");
+     public static Type_LongPrimitive          TIMEINSERTSEC = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "timeInsertSec" , 6/*6*/, "The time, in seconds, the inserts took.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.RefillPerf.timeDeleteMs -> TILDA.RefillPerf."timeDeleteMs"
+//   Field tilda.data.TILDA.RefillPerf.timeDeleteSec -> TILDA.RefillPerf."timeDeleteSec"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeDeleteMs of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeDeleteMs of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeDeleteSec of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeDeleteSec of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in milliseconds, the create took.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in seconds, the deletes took.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          TIMEDELETEMS = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "timeDeleteMs" , 7/*7*/, "The time, in milliseconds, the create took.");
+     public static Type_LongPrimitive          TIMEDELETESEC = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "timeDeleteSec" , 7/*7*/, "The time, in seconds, the deletes took.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.RefillPerf.timeAnalyzeMs -> TILDA.RefillPerf."timeAnalyzeMs"
+//   Field tilda.data.TILDA.RefillPerf.timeAnalyzeSec -> TILDA.RefillPerf."timeAnalyzeSec"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeAnalyzeMs of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeAnalyzeMs of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeAnalyzeSec of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeAnalyzeSec of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in milliseconds, the analyze took.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in seconds, the analyze took.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          TIMEANALYZEMS= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "timeAnalyzeMs", 8/*8*/, "The time, in milliseconds, the analyze took.");
+     public static Type_LongPrimitive          TIMEANALYZESEC= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "timeAnalyzeSec", 8/*8*/, "The time, in seconds, the analyze took.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.RefillPerf.insertCount -> TILDA.RefillPerf."insertCount"
@@ -219,7 +219,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          INSERTCOUNT  = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "insertCount"  , 9/*9*/, "The count of inserted rows.");
+     public static Type_LongPrimitive          INSERTCOUNT   = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "insertCount"   , 9/*9*/, "The count of inserted rows.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.RefillPerf.deleteCount -> TILDA.RefillPerf."deleteCount"
@@ -237,7 +237,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          DELETECOUNT  = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "deleteCount"  , 10/*10*/, "The count of rows deleted.");
+     public static Type_LongPrimitive          DELETECOUNT   = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "deleteCount"   , 10/*10*/, "The count of rows deleted.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.RefillPerf.created -> TILDA.RefillPerf."created"
@@ -262,7 +262,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      CREATED      = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"      , 11/*11*/, "The timestamp for when the record was created. (TILDA.RefillPerf)");
+     public static Type_DatetimePrimitive      CREATED       = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"       , 11/*11*/, "The timestamp for when the record was created. (TILDA.RefillPerf)");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.RefillPerf.lastUpdated -> TILDA.RefillPerf."lastUpdated"
@@ -287,7 +287,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      LASTUPDATED  = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"  , 12/*12*/, "The timestamp for when the record was last updated. (TILDA.RefillPerf)");
+     public static Type_DatetimePrimitive      LASTUPDATED   = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"   , 12/*12*/, "The timestamp for when the record was last updated. (TILDA.RefillPerf)");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.RefillPerf.deleted -> TILDA.RefillPerf."deleted"
@@ -305,11 +305,11 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  DELETED      = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"      , 13/*13*/, "The timestamp for when the record was deleted. (TILDA.RefillPerf)");
+     public static Type_DatetimePrimitiveNull  DELETED       = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"       , 13/*13*/, "The timestamp for when the record was deleted. (TILDA.RefillPerf)");
 ;
    }
 
-   public static final ColumnDefinition[] COLUMNS = { COLS.SCHEMANAME,COLS.OBJECTNAME,COLS.STARTTIMETZ,COLS.STARTTIME,COLS.ENDTIMETZ,COLS.ENDTIME,COLS.TIMEINSERTMS,COLS.TIMEDELETEMS,COLS.TIMEANALYZEMS,COLS.INSERTCOUNT,COLS.DELETECOUNT,COLS.CREATED,COLS.LASTUPDATED,COLS.DELETED };
+   public static final ColumnDefinition[] COLUMNS = { COLS.SCHEMANAME,COLS.OBJECTNAME,COLS.STARTTIMETZ,COLS.STARTTIME,COLS.ENDTIMETZ,COLS.ENDTIME,COLS.TIMEINSERTSEC,COLS.TIMEDELETESEC,COLS.TIMEANALYZESEC,COLS.INSERTCOUNT,COLS.DELETECOUNT,COLS.CREATED,COLS.LASTUPDATED,COLS.DELETED };
 
    public static final ColumnDefinition[] COLUMNS_PRIMARY = { COLS.SCHEMANAME,COLS.OBJECTNAME,COLS.STARTTIME };
 
@@ -391,9 +391,9 @@ This is the column definition for:<BR>
           S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "startTime");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "endTimeTZ");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "endTime");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "timeInsertMs");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "timeDeleteMs");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "timeAnalyzeMs");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "timeInsertSec");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "timeDeleteSec");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "timeAnalyzeSec");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "insertCount");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "deleteCount");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "created");
@@ -443,12 +443,12 @@ This is the column definition for:<BR>
              case -7:
                 break;
              case 1: {
-               PS.setString    (++i, Obj._schemaName   );
+               PS.setString    (++i, Obj._schemaName    );
                break;
              }
              case 2: {
-               PS.setString    (++i, Obj._schemaName   );
-               PS.setString    (++i, Obj._objectName   );
+               PS.setString    (++i, Obj._schemaName    );
+               PS.setString    (++i, Obj._objectName    );
                break;
              }
              case 3: {
@@ -513,23 +513,23 @@ object. The generic init method defaults to this general data structure as a gen
        ZonedDateTime _endTime = ParseUtil.parseZonedDateTime("endTime", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
        if (_endTime != null) Obj.setEndTime(_endTime);
 
-       vals = Values.get("timeInsertMs");
+       vals = Values.get("timeInsertSec");
        if (vals!=null && vals.length > 1)
-        Errors.add(new StringStringPair("timeInsertMs", "Parameter is not a list or a set and yet received "+vals.length+" values"));
-       Long _timeInsertMs = ParseUtil.parseLong("timeInsertMs", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_timeInsertMs != null) Obj.setTimeInsertMs(_timeInsertMs);
+        Errors.add(new StringStringPair("timeInsertSec", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Long _timeInsertSec = ParseUtil.parseLong("timeInsertSec", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_timeInsertSec != null) Obj.setTimeInsertSec(_timeInsertSec);
 
-       vals = Values.get("timeDeleteMs");
+       vals = Values.get("timeDeleteSec");
        if (vals!=null && vals.length > 1)
-        Errors.add(new StringStringPair("timeDeleteMs", "Parameter is not a list or a set and yet received "+vals.length+" values"));
-       Long _timeDeleteMs = ParseUtil.parseLong("timeDeleteMs", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_timeDeleteMs != null) Obj.setTimeDeleteMs(_timeDeleteMs);
+        Errors.add(new StringStringPair("timeDeleteSec", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Long _timeDeleteSec = ParseUtil.parseLong("timeDeleteSec", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_timeDeleteSec != null) Obj.setTimeDeleteSec(_timeDeleteSec);
 
-       vals = Values.get("timeAnalyzeMs");
+       vals = Values.get("timeAnalyzeSec");
        if (vals!=null && vals.length > 1)
-        Errors.add(new StringStringPair("timeAnalyzeMs", "Parameter is not a list or a set and yet received "+vals.length+" values"));
-       Long _timeAnalyzeMs = ParseUtil.parseLong("timeAnalyzeMs", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_timeAnalyzeMs != null) Obj.setTimeAnalyzeMs(_timeAnalyzeMs);
+        Errors.add(new StringStringPair("timeAnalyzeSec", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Long _timeAnalyzeSec = ParseUtil.parseLong("timeAnalyzeSec", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_timeAnalyzeSec != null) Obj.setTimeAnalyzeSec(_timeAnalyzeSec);
 
        vals = Values.get("insertCount");
        if (vals!=null && vals.length > 1)
@@ -550,32 +550,32 @@ object. The generic init method defaults to this general data structure as a gen
 /**
  Creates a new object in memory, which you can subsequently {@link #write()} to the data store.
  current object to the destination. 
- @param schemaName    (max size 64) The name of the schema tracked
- @param objectName    (max size 64) The name of the table/object tracked
- @param startTime     The timestamp for when the refill started.
- @param endTime       The timestamp for when the refill ended.
- @param timeInsertMs  The time, in milliseconds, the create took.
- @param timeDeleteMs  The time, in milliseconds, the create took.
- @param timeAnalyzeMs The time, in milliseconds, the analyze took.
- @param insertCount   The count of inserted rows.
- @param deleteCount   The count of rows deleted.
+ @param schemaName     (max size 64) The name of the schema tracked
+ @param objectName     (max size 64) The name of the table/object tracked
+ @param startTime      The timestamp for when the refill started.
+ @param endTime        The timestamp for when the refill ended.
+ @param timeInsertSec  The time, in seconds, the inserts took.
+ @param timeDeleteSec  The time, in seconds, the deletes took.
+ @param timeAnalyzeSec The time, in seconds, the analyze took.
+ @param insertCount    The count of inserted rows.
+ @param deleteCount    The count of rows deleted.
 */
-   static public tilda.data.RefillPerf_Data create(String schemaName, String objectName, ZonedDateTime startTime, ZonedDateTime endTime, long timeInsertMs, long timeDeleteMs, long timeAnalyzeMs, long insertCount, long deleteCount) throws Exception
+   static public tilda.data.RefillPerf_Data create(String schemaName, String objectName, ZonedDateTime startTime, ZonedDateTime endTime, long timeInsertSec, long timeDeleteSec, long timeAnalyzeSec, long insertCount, long deleteCount) throws Exception
      {
        tilda.data._Tilda.TILDA__REFILLPERF Obj = new tilda.data.RefillPerf_Data();
        Obj.initForCreate();
 
 
        // Explicit setters
-       Obj.setSchemaName   (schemaName   );
-       Obj.setObjectName   (objectName   );
-       Obj.setStartTime    (startTime    );
-       Obj.setEndTime      (endTime      );
-       Obj.setTimeInsertMs (timeInsertMs );
-       Obj.setTimeDeleteMs (timeDeleteMs );
-       Obj.setTimeAnalyzeMs(timeAnalyzeMs);
-       Obj.setInsertCount  (insertCount  );
-       Obj.setDeleteCount  (deleteCount  );
+       Obj.setSchemaName    (schemaName    );
+       Obj.setObjectName    (objectName    );
+       Obj.setStartTime     (startTime     );
+       Obj.setEndTime       (endTime       );
+       Obj.setTimeInsertSec (timeInsertSec );
+       Obj.setTimeDeleteSec (timeDeleteSec );
+       Obj.setTimeAnalyzeSec(timeAnalyzeSec);
+       Obj.setInsertCount   (insertCount   );
+       Obj.setDeleteCount   (deleteCount   );
 
        // Default Create-time setters
        Obj.setCreatedNow       ();
@@ -712,9 +712,9 @@ object. The generic init method defaults to this general data structure as a gen
        tilda.data._Tilda.TILDA__REFILLPERF Obj = new tilda.data.RefillPerf_Data();
        Obj.initForLookup(0);
 
-       Obj.setSchemaName   (schemaName   ); Obj.__Saved_schemaName    = Obj._schemaName   ;
-       Obj.setObjectName   (objectName   ); Obj.__Saved_objectName    = Obj._objectName   ;
-       Obj.setStartTime    (startTime    ); Obj.__Saved_startTime     = Obj._startTime    ;
+       Obj.setSchemaName    (schemaName    ); Obj.__Saved_schemaName     = Obj._schemaName    ;
+       Obj.setObjectName    (objectName    ); Obj.__Saved_objectName     = Obj._objectName    ;
+       Obj.setStartTime     (startTime     ); Obj.__Saved_startTime      = Obj._startTime     ;
 
        return (tilda.data.RefillPerf_Data) Obj;
      }
@@ -725,7 +725,7 @@ object. The generic init method defaults to this general data structure as a gen
        tilda.data._Tilda.TILDA__REFILLPERF Obj = new tilda.data.RefillPerf_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
 
-       Obj.setSchemaName   (schemaName   );
+       Obj.setSchemaName    (schemaName    );
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
@@ -738,7 +738,7 @@ object. The generic init method defaults to this general data structure as a gen
        tilda.data._Tilda.TILDA__REFILLPERF Obj = new tilda.data.RefillPerf_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
 
-       Obj.setSchemaName   (schemaName   );
+       Obj.setSchemaName    (schemaName    );
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
@@ -752,8 +752,8 @@ object. The generic init method defaults to this general data structure as a gen
        tilda.data._Tilda.TILDA__REFILLPERF Obj = new tilda.data.RefillPerf_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
 
-       Obj.setSchemaName   (schemaName   );
-       Obj.setObjectName   (objectName   );
+       Obj.setSchemaName    (schemaName    );
+       Obj.setObjectName    (objectName    );
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
@@ -766,8 +766,8 @@ object. The generic init method defaults to this general data structure as a gen
        tilda.data._Tilda.TILDA__REFILLPERF Obj = new tilda.data.RefillPerf_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
 
-       Obj.setSchemaName   (schemaName   );
-       Obj.setObjectName   (objectName   );
+       Obj.setSchemaName    (schemaName    );
+       Obj.setObjectName    (objectName    );
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);

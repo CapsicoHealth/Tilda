@@ -350,20 +350,20 @@ insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated
 
 
 create table if not exists TILDA.RefillPerf -- Performance logs for the Tilda Refills
- (  "schemaName"     varchar(64)   not null   -- The name of the schema tracked
-  , "objectName"     varchar(64)   not null   -- The name of the table/object tracked
-  , "startTimeTZ"    character(5)  not null   -- Generated helper column to hold the time zone ID for 'startTime'.
-  , "startTime"      timestamptz   not null   -- The timestamp for when the refill started.
-  , "endTimeTZ"      character(5)  not null   -- Generated helper column to hold the time zone ID for 'endTime'.
-  , "endTime"        timestamptz   not null   -- The timestamp for when the refill ended.
-  , "timeInsertMs"   bigint        not null   -- The time, in milliseconds, the create took.
-  , "timeDeleteMs"   bigint        not null   -- The time, in milliseconds, the create took.
-  , "timeAnalyzeMs"  bigint        not null   -- The time, in milliseconds, the analyze took.
-  , "insertCount"    bigint        not null   -- The count of inserted rows.
-  , "deleteCount"    bigint        not null   -- The count of rows deleted.
-  , "created"        timestamptz   not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.RefillPerf)
-  , "lastUpdated"    timestamptz   not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.RefillPerf)
-  , "deleted"        timestamptz              -- The timestamp for when the record was deleted. (TILDA.RefillPerf)
+ (  "schemaName"      varchar(64)   not null   -- The name of the schema tracked
+  , "objectName"      varchar(64)   not null   -- The name of the table/object tracked
+  , "startTimeTZ"     character(5)  not null   -- Generated helper column to hold the time zone ID for 'startTime'.
+  , "startTime"       timestamptz   not null   -- The timestamp for when the refill started.
+  , "endTimeTZ"       character(5)  not null   -- Generated helper column to hold the time zone ID for 'endTime'.
+  , "endTime"         timestamptz   not null   -- The timestamp for when the refill ended.
+  , "timeInsertSec"   bigint        not null   -- The time, in seconds, the inserts took.
+  , "timeDeleteSec"   bigint        not null   -- The time, in seconds, the deletes took.
+  , "timeAnalyzeSec"  bigint        not null   -- The time, in seconds, the analyze took.
+  , "insertCount"     bigint        not null   -- The count of inserted rows.
+  , "deleteCount"     bigint        not null   -- The count of rows deleted.
+  , "created"         timestamptz   not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.RefillPerf)
+  , "lastUpdated"     timestamptz   not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.RefillPerf)
+  , "deleted"         timestamptz              -- The timestamp for when the record was deleted. (TILDA.RefillPerf)
   , PRIMARY KEY("schemaName", "objectName", "startTime")
   , CONSTRAINT fk_RefillPerf_startTime FOREIGN KEY ("startTimeTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
   , CONSTRAINT fk_RefillPerf_endTime FOREIGN KEY ("endTimeTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
@@ -375,9 +375,9 @@ COMMENT ON COLUMN TILDA.RefillPerf."startTimeTZ" IS E'Generated helper column to
 COMMENT ON COLUMN TILDA.RefillPerf."startTime" IS E'The timestamp for when the refill started.';
 COMMENT ON COLUMN TILDA.RefillPerf."endTimeTZ" IS E'Generated helper column to hold the time zone ID for ''endTime''.';
 COMMENT ON COLUMN TILDA.RefillPerf."endTime" IS E'The timestamp for when the refill ended.';
-COMMENT ON COLUMN TILDA.RefillPerf."timeInsertMs" IS E'The time, in milliseconds, the create took.';
-COMMENT ON COLUMN TILDA.RefillPerf."timeDeleteMs" IS E'The time, in milliseconds, the create took.';
-COMMENT ON COLUMN TILDA.RefillPerf."timeAnalyzeMs" IS E'The time, in milliseconds, the analyze took.';
+COMMENT ON COLUMN TILDA.RefillPerf."timeInsertSec" IS E'The time, in seconds, the inserts took.';
+COMMENT ON COLUMN TILDA.RefillPerf."timeDeleteSec" IS E'The time, in seconds, the deletes took.';
+COMMENT ON COLUMN TILDA.RefillPerf."timeAnalyzeSec" IS E'The time, in seconds, the analyze took.';
 COMMENT ON COLUMN TILDA.RefillPerf."insertCount" IS E'The count of inserted rows.';
 COMMENT ON COLUMN TILDA.RefillPerf."deleteCount" IS E'The count of rows deleted.';
 COMMENT ON COLUMN TILDA.RefillPerf."created" IS E'The timestamp for when the record was created. (TILDA.RefillPerf)';
@@ -625,7 +625,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS DateLimitDim_InvalidDate ON TILDA.DateLimitDim
 
 
 
--- DDL META DATA VERSION 2019-01-09
+-- DDL META DATA VERSION 2020-12-25
 create or replace view TILDA.FormulaResultView as 
 -- 'A view of formulas and their values.'
 select TILDA.FormulaResult."formulaRefnum" as "formulaRefnum" -- The parent formula.
@@ -639,7 +639,7 @@ select TILDA.FormulaResult."formulaRefnum" as "formulaRefnum" -- The parent form
 ;
 
 
-COMMENT ON VIEW TILDA.FormulaResultView IS E'-- DDL META DATA VERSION 2019-01-09\ncreate or replace view TILDA.FormulaResultView as \n-- ''A view of formulas and their values.''\nselect TILDA.FormulaResult."formulaRefnum" as "formulaRefnum" -- The parent formula.\n     , TILDA.FormulaResult."value" as "value" -- The result value.\n     , TILDA.FormulaResult."description" as "description" -- The description of the result value.\n     , TILDA.Formula."location" as "location" -- The name of the primary table/view this formula is defined in.\n     , TILDA.Formula."name" as "name" -- The name of the formula/column.\n  from TILDA.FormulaResult\n     inner join TILDA.Formula on TILDA.FormulaResult."formulaRefnum" = TILDA.Formula."refnum"\n where (TILDA.Formula."deleted" is null and TILDA.FormulaResult."deleted" is null)\n;\n\n';
+COMMENT ON VIEW TILDA.FormulaResultView IS E'-- DDL META DATA VERSION 2020-12-25\ncreate or replace view TILDA.FormulaResultView as \n-- ''A view of formulas and their values.''\nselect TILDA.FormulaResult."formulaRefnum" as "formulaRefnum" -- The parent formula.\n     , TILDA.FormulaResult."value" as "value" -- The result value.\n     , TILDA.FormulaResult."description" as "description" -- The description of the result value.\n     , TILDA.Formula."location" as "location" -- The name of the primary table/view this formula is defined in.\n     , TILDA.Formula."name" as "name" -- The name of the formula/column.\n  from TILDA.FormulaResult\n     inner join TILDA.Formula on TILDA.FormulaResult."formulaRefnum" = TILDA.Formula."refnum"\n where (TILDA.Formula."deleted" is null and TILDA.FormulaResult."deleted" is null)\n;\n\n';
 
 COMMENT ON COLUMN TILDA.FormulaResultView."formulaRefnum" IS E'The parent formula.';
 COMMENT ON COLUMN TILDA.FormulaResultView."value" IS E'The result value.';
@@ -659,7 +659,7 @@ LANGUAGE PLPGSQL;
 
 
 
--- DDL META DATA VERSION 2019-01-09
+-- DDL META DATA VERSION 2020-12-25
 create or replace view TILDA.FormulaDependencyView as 
 -- 'A view of formulas and their direct dependencies.'
 select TILDA.FormulaDependency."formulaRefnum" as "formulaRefnum" -- The parent formula.
@@ -677,7 +677,7 @@ select TILDA.FormulaDependency."formulaRefnum" as "formulaRefnum" -- The parent 
 ;
 
 
-COMMENT ON VIEW TILDA.FormulaDependencyView IS E'-- DDL META DATA VERSION 2019-01-09\ncreate or replace view TILDA.FormulaDependencyView as \n-- ''A view of formulas and their direct dependencies.''\nselect TILDA.FormulaDependency."formulaRefnum" as "formulaRefnum" -- The parent formula.\n     , TILDA.Formula."location" as "location" -- The name of the primary table/view this formula is defined in.\n     , TILDA.Formula."name" as "name" -- The name of the formula/column.\n     , TILDA.Formula."referencedColumns" as "referencedColumns" -- The list of columns this formula depends on.\n     , TILDA.FormulaDependency."dependencyRefnum" as "dependencyRefnum" -- The dependent formula.\n     , TILDA_Formula_2."name" as "dependentFormulaName" -- The name of the formula/column.\n     , TILDA_Formula_2."location" as "dependentFormulaLocation" -- The name of the primary table/view this formula is defined in.\n     , TILDA_Formula_2."referencedColumns" as "dependentReferencedColumns" -- The list of columns this formula depends on.\n  from TILDA.FormulaDependency\n     inner join TILDA.Formula on TILDA.FormulaDependency."formulaRefnum" = TILDA.Formula."refnum"\n     inner join TILDA.Formula as TILDA_Formula_2 on TILDA.FormulaDependency."dependencyRefnum" = TILDA_Formula_2."refnum"\n where (TILDA.Formula."deleted" is null)\n;\n\n';
+COMMENT ON VIEW TILDA.FormulaDependencyView IS E'-- DDL META DATA VERSION 2020-12-25\ncreate or replace view TILDA.FormulaDependencyView as \n-- ''A view of formulas and their direct dependencies.''\nselect TILDA.FormulaDependency."formulaRefnum" as "formulaRefnum" -- The parent formula.\n     , TILDA.Formula."location" as "location" -- The name of the primary table/view this formula is defined in.\n     , TILDA.Formula."name" as "name" -- The name of the formula/column.\n     , TILDA.Formula."referencedColumns" as "referencedColumns" -- The list of columns this formula depends on.\n     , TILDA.FormulaDependency."dependencyRefnum" as "dependencyRefnum" -- The dependent formula.\n     , TILDA_Formula_2."name" as "dependentFormulaName" -- The name of the formula/column.\n     , TILDA_Formula_2."location" as "dependentFormulaLocation" -- The name of the primary table/view this formula is defined in.\n     , TILDA_Formula_2."referencedColumns" as "dependentReferencedColumns" -- The list of columns this formula depends on.\n  from TILDA.FormulaDependency\n     inner join TILDA.Formula on TILDA.FormulaDependency."formulaRefnum" = TILDA.Formula."refnum"\n     inner join TILDA.Formula as TILDA_Formula_2 on TILDA.FormulaDependency."dependencyRefnum" = TILDA_Formula_2."refnum"\n where (TILDA.Formula."deleted" is null)\n;\n\n';
 
 COMMENT ON COLUMN TILDA.FormulaDependencyView."formulaRefnum" IS E'The parent formula.';
 COMMENT ON COLUMN TILDA.FormulaDependencyView."location" IS E'The name of the primary table/view this formula is defined in.';
@@ -700,7 +700,7 @@ LANGUAGE PLPGSQL;
 
 
 
--- DDL META DATA VERSION 2019-01-09
+-- DDL META DATA VERSION 2020-12-25
 create or replace view TILDA.MeasureFormulaView as 
 -- 'A view of formulas and their dependencies.'
 select TILDA.MeasureFormula."measureRefnum" as "measureRefnum" -- The measure.
@@ -721,7 +721,7 @@ select TILDA.MeasureFormula."measureRefnum" as "measureRefnum" -- The measure.
 ;
 
 
-COMMENT ON VIEW TILDA.MeasureFormulaView IS E'-- DDL META DATA VERSION 2019-01-09\ncreate or replace view TILDA.MeasureFormulaView as \n-- ''A view of formulas and their dependencies.''\nselect TILDA.MeasureFormula."measureRefnum" as "measureRefnum" -- The measure.\n     , TILDA.Measure."schema" as "measureSchema" -- The Schema wher ethe measure is defined.\n     , TILDA.Measure."name" as "measureName" -- The name of the measure.\n     , TILDA.Formula."refnum" as "formulaRefnum" -- The primary key for this record\n     , TILDA.Formula."location" as "formulaLocation" -- The name of the primary table/view this formula is defined in.\n     , TILDA.Formula."location2" as "formulaLocation2" -- The name of the secondary table/view (a derived view, a realized table), if appropriate.\n     , TILDA.Formula."name" as "formulaName" -- The name of the formula/column.\n     , TILDA.Formula."title" as "title" -- The title of the formula/column.\n     , TILDA.Formula."description" as "description" -- The description of the formula/column.\n     , trim(TILDA.Formula."type") as "type" -- The type of the formula/column value/outcome.\n     , TILDA.Formula."formula" as "formula" -- The formula.\n  from TILDA.MeasureFormula\n     inner join TILDA.Measure on TILDA.MeasureFormula."measureRefnum" = TILDA.Measure."refnum"\n     inner join TILDA.Formula on TILDA.MeasureFormula."formulaRefnum" = TILDA.Formula."refnum"\n where (TILDA.Formula."deleted" is null and TILDA.Measure."deleted" is null)\n;\n\n';
+COMMENT ON VIEW TILDA.MeasureFormulaView IS E'-- DDL META DATA VERSION 2020-12-25\ncreate or replace view TILDA.MeasureFormulaView as \n-- ''A view of formulas and their dependencies.''\nselect TILDA.MeasureFormula."measureRefnum" as "measureRefnum" -- The measure.\n     , TILDA.Measure."schema" as "measureSchema" -- The Schema wher ethe measure is defined.\n     , TILDA.Measure."name" as "measureName" -- The name of the measure.\n     , TILDA.Formula."refnum" as "formulaRefnum" -- The primary key for this record\n     , TILDA.Formula."location" as "formulaLocation" -- The name of the primary table/view this formula is defined in.\n     , TILDA.Formula."location2" as "formulaLocation2" -- The name of the secondary table/view (a derived view, a realized table), if appropriate.\n     , TILDA.Formula."name" as "formulaName" -- The name of the formula/column.\n     , TILDA.Formula."title" as "title" -- The title of the formula/column.\n     , TILDA.Formula."description" as "description" -- The description of the formula/column.\n     , trim(TILDA.Formula."type") as "type" -- The type of the formula/column value/outcome.\n     , TILDA.Formula."formula" as "formula" -- The formula.\n  from TILDA.MeasureFormula\n     inner join TILDA.Measure on TILDA.MeasureFormula."measureRefnum" = TILDA.Measure."refnum"\n     inner join TILDA.Formula on TILDA.MeasureFormula."formulaRefnum" = TILDA.Formula."refnum"\n where (TILDA.Formula."deleted" is null and TILDA.Measure."deleted" is null)\n;\n\n';
 
 COMMENT ON COLUMN TILDA.MeasureFormulaView."measureRefnum" IS E'The measure.';
 COMMENT ON COLUMN TILDA.MeasureFormulaView."measureSchema" IS E'The Schema wher ethe measure is defined.';
@@ -747,7 +747,7 @@ LANGUAGE PLPGSQL;
 
 
 
--- DDL META DATA VERSION 2019-01-09
+-- DDL META DATA VERSION 2020-12-25
 create or replace view TILDA.JobView as 
 -- 'A view of the job data.'
 select TILDA.Job."refnum" as "jobRefnum" -- The primary key for this record
@@ -784,7 +784,7 @@ select TILDA.Job."refnum" as "jobRefnum" -- The primary key for this record
 ;
 
 
-COMMENT ON VIEW TILDA.JobView IS E'-- DDL META DATA VERSION 2019-01-09\ncreate or replace view TILDA.JobView as \n-- ''A view of the job data.''\nselect TILDA.Job."refnum" as "jobRefnum" -- The primary key for this record\n     , TILDA.Job."name" as "jobName" -- Name\n     , TILDA.Job."type" as "jobType" -- Job type\n     , TILDA.Job."userId" as "jobUserId" -- Job user Id\n     , trim(TILDA.Job."dataStartTZ") as "jobDataStartTZ" -- Generated helper column to hold the time zone ID for ''dataStart''.\n     , TILDA.Job."dataStart" as "jobDataStart" -- StartTime\n     , trim(TILDA.Job."dataEndTZ") as "jobDataEndTZ" -- Generated helper column to hold the time zone ID for ''dataEnd''.\n     , TILDA.Job."dataEnd" as "jobDataEnd" -- StartTime\n     , trim(TILDA.Job."startTZ") as "jobStartTZ" -- Generated helper column to hold the time zone ID for ''start''.\n     , TILDA.Job."start" as "jobStart" -- StartTime\n     , trim(TILDA.Job."endTZ") as "jobEndTZ" -- Generated helper column to hold the time zone ID for ''end''.\n     , TILDA.Job."end" as "jobEnd" -- EndTime\n     , TILDA.Job."status" as "jobStatus" -- Status\n     , TILDA.Job."msg" as "jobMsg" -- Message details\n     , TILDA.JobPart."name" as "jobPartName" -- Job part name\n     , TILDA.JobPart."type" as "jobPartType" -- Job part type\n     , trim(TILDA.JobPart."dataStartTZ") as "jobPartDataStartTZ" -- Generated helper column to hold the time zone ID for ''dataStart''.\n     , TILDA.JobPart."dataStart" as "jobPartDataStart" -- Job part data start\n     , trim(TILDA.JobPart."dataEndTZ") as "jobPartDataEndTZ" -- Generated helper column to hold the time zone ID for ''dataEnd''.\n     , TILDA.JobPart."dataEnd" as "jobPartDataEnd" -- Job part data end\n     , trim(TILDA.JobPart."startTZ") as "jobPartStartTZ" -- Generated helper column to hold the time zone ID for ''start''.\n     , TILDA.JobPart."start" as "jobPartStart" -- Job part execution start\n     , trim(TILDA.JobPart."endTZ") as "jobPartEndTZ" -- Generated helper column to hold the time zone ID for ''end''.\n     , TILDA.JobPart."end" as "jobPartEnd" -- Job part execution end\n     , TILDA.JobPart."recordsCount" as "jobPartRecordsCount" -- count of database or file or ... records.\n     , TILDA.JobPart."status" as "jobPartStatus" -- Status flag, i.e., success=true and failure-false\n     , TILDA.JobPartMessage."notify" as "jobPartNotify" -- Notification flag\n     , TILDA.JobPartMessage."msg" as "jobPartMessage" -- Message details\n  from TILDA.Job\n     left  join TILDA.JobPart on TILDA.JobPart."jobRefnum" = TILDA.Job."refnum"\n     left  join TILDA.JobPartMessage on TILDA.JobPartMessage."jobPartRefnum" = TILDA.JobPart."refnum"\n;\n\n';
+COMMENT ON VIEW TILDA.JobView IS E'-- DDL META DATA VERSION 2020-12-25\ncreate or replace view TILDA.JobView as \n-- ''A view of the job data.''\nselect TILDA.Job."refnum" as "jobRefnum" -- The primary key for this record\n     , TILDA.Job."name" as "jobName" -- Name\n     , TILDA.Job."type" as "jobType" -- Job type\n     , TILDA.Job."userId" as "jobUserId" -- Job user Id\n     , trim(TILDA.Job."dataStartTZ") as "jobDataStartTZ" -- Generated helper column to hold the time zone ID for ''dataStart''.\n     , TILDA.Job."dataStart" as "jobDataStart" -- StartTime\n     , trim(TILDA.Job."dataEndTZ") as "jobDataEndTZ" -- Generated helper column to hold the time zone ID for ''dataEnd''.\n     , TILDA.Job."dataEnd" as "jobDataEnd" -- StartTime\n     , trim(TILDA.Job."startTZ") as "jobStartTZ" -- Generated helper column to hold the time zone ID for ''start''.\n     , TILDA.Job."start" as "jobStart" -- StartTime\n     , trim(TILDA.Job."endTZ") as "jobEndTZ" -- Generated helper column to hold the time zone ID for ''end''.\n     , TILDA.Job."end" as "jobEnd" -- EndTime\n     , TILDA.Job."status" as "jobStatus" -- Status\n     , TILDA.Job."msg" as "jobMsg" -- Message details\n     , TILDA.JobPart."name" as "jobPartName" -- Job part name\n     , TILDA.JobPart."type" as "jobPartType" -- Job part type\n     , trim(TILDA.JobPart."dataStartTZ") as "jobPartDataStartTZ" -- Generated helper column to hold the time zone ID for ''dataStart''.\n     , TILDA.JobPart."dataStart" as "jobPartDataStart" -- Job part data start\n     , trim(TILDA.JobPart."dataEndTZ") as "jobPartDataEndTZ" -- Generated helper column to hold the time zone ID for ''dataEnd''.\n     , TILDA.JobPart."dataEnd" as "jobPartDataEnd" -- Job part data end\n     , trim(TILDA.JobPart."startTZ") as "jobPartStartTZ" -- Generated helper column to hold the time zone ID for ''start''.\n     , TILDA.JobPart."start" as "jobPartStart" -- Job part execution start\n     , trim(TILDA.JobPart."endTZ") as "jobPartEndTZ" -- Generated helper column to hold the time zone ID for ''end''.\n     , TILDA.JobPart."end" as "jobPartEnd" -- Job part execution end\n     , TILDA.JobPart."recordsCount" as "jobPartRecordsCount" -- count of database or file or ... records.\n     , TILDA.JobPart."status" as "jobPartStatus" -- Status flag, i.e., success=true and failure-false\n     , TILDA.JobPartMessage."notify" as "jobPartNotify" -- Notification flag\n     , TILDA.JobPartMessage."msg" as "jobPartMessage" -- Message details\n  from TILDA.Job\n     left  join TILDA.JobPart on TILDA.JobPart."jobRefnum" = TILDA.Job."refnum"\n     left  join TILDA.JobPartMessage on TILDA.JobPartMessage."jobPartRefnum" = TILDA.JobPart."refnum"\n;\n\n';
 
 COMMENT ON COLUMN TILDA.JobView."jobRefnum" IS E'The primary key for this record';
 COMMENT ON COLUMN TILDA.JobView."jobName" IS E'Name';

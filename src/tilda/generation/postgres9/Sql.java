@@ -817,7 +817,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
             OutFinal.append("  ANALYZE " + RName + ";\n");
             OutFinal.append("  analyzeEndDt:= clock_timestamp ( );\n");
             OutFinal.append("\n");
-            OutFinal.append("  INSERT INTO TILDA.RefillPerf(\"schemaName\", \"objectName\", \"startTimeTZ\", \"startTime\", \"endTimeTZ\", \"endTime\", \"timeInsertMs\", \"timeDeleteMs\", \"timeAnalyzeMs\", \"insertCount\", \"deleteCount\")\n");
+            OutFinal.append("  INSERT INTO TILDA.RefillPerf(\"schemaName\", \"objectName\", \"startTimeTZ\", \"startTime\", \"endTimeTZ\", \"endTime\", \"timeInsertSec\", \"timeDeleteSec\", \"timeAnalyzeSec\", \"insertCount\", \"deleteCount\")\n");
             OutFinal.append("                        VALUES('"+V._ParentSchema._Name+"', '"+TName+"', 'UTC', startDt, 'UTC', clock_timestamp()\n");
             OutFinal.append("                                         , COALESCE(EXTRACT(EPOCH FROM insertEndDt-insertStartDt), 0)\n");
             OutFinal.append("                                         , COALESCE(EXTRACT(EPOCH FROM deleteEndDt-deleteStartDt), 0)\n");
@@ -1095,7 +1095,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
     @Override
     public String getDDLMetadataVersion()
       {
-        return "DDL META DATA VERSION 2020-12-24";
+        return "DDL META DATA VERSION 2020-12-25";
       }
 
     @Override
