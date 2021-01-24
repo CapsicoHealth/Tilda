@@ -123,7 +123,7 @@ public abstract class CSVImporter
 
                 R.close();
 
-                NumOfRecs = (cmsDO._HeadersIncluded == true) ? (NumOfRecs - 1) : NumOfRecs;
+                NumOfRecs = (cmsDO._HeadersIncluded == true) ? NumOfRecs : NumOfRecs+1; // NumOfRecs is 0-based.
                 t0 = System.nanoTime() - t0;
                 LOG.debug("Processed a total of " + NumberFormatUtil.printWith000Sep(NumOfRecs) + " records in " + DurationUtil.printDuration(t0) + " (" + DurationUtil.printPerformancePerMinute(t0, NumOfRecs) + " Records/min)");
 

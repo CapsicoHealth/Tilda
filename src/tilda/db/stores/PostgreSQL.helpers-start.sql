@@ -456,7 +456,15 @@ LANGUAGE sql COST 2 AS $$
 select a[floor(random() * (array_upper(a, 1) - array_lower(a, 1) + 1)+1)];
 $$;
 
-
+CREATE OR REPLACE FUNCTION TILDA.expRandom(mean float)
+RETURNS float
+LANGUAGE sql COST 2 AS $$
+SELECT CASE WHEN r > 1 THEN r-floor(r)
+            WHEN r < 0 THEN r+CEIL(r) 
+            ELSE r 
+       END
+  FROM (SELECT -LN(RANDOM()) * mean AS r) T
+$$;
 
 
 -----------------------------------------------------------------------------------------------------------------
