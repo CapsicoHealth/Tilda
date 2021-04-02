@@ -111,7 +111,7 @@ public class JSONUtil
     public static void print(Writer Out, String Name, boolean FirstElement)
     throws IOException
       {
-        Out.write(FirstElement == false ? "," : " ");
+        Out.write(FirstElement == false ? ", " : " ");
         if (Name != null)
           {
             Out.write("\"");
@@ -207,7 +207,7 @@ public class JSONUtil
             if (First == true)
               First = false;
             else
-              Out.write(",");
+              Out.write(", ");
             Out.write(((Boolean) i).toString());
           }
         Out.write("]");
@@ -229,7 +229,7 @@ public class JSONUtil
             if (First == true)
               First = false;
             else
-              Out.write(",");
+              Out.write(", ");
             Out.write(i == null ? "null" : i.toString());
           }
         Out.write("]");
@@ -251,7 +251,7 @@ public class JSONUtil
             if (First == true)
               First = false;
             else
-              Out.write(",");
+              Out.write(", ");
             Out.write(((Integer) i).toString());
           }
         Out.write("]");
@@ -273,7 +273,7 @@ public class JSONUtil
             if (First == true)
               First = false;
             else
-              Out.write(",");
+              Out.write(", ");
             Out.write(i == null ? "null" : i.toString());
           }
         Out.write("]");
@@ -295,7 +295,7 @@ public class JSONUtil
             if (First == true)
               First = false;
             else
-              Out.write(",");
+              Out.write(", ");
             Out.write(((Long) i).toString());
           }
         Out.write("]");
@@ -317,7 +317,7 @@ public class JSONUtil
             if (First == true)
               First = false;
             else
-              Out.write(",");
+              Out.write(", ");
             Out.write(i == null ? "null" : i.toString());
           }
         Out.write("]");
@@ -339,7 +339,7 @@ public class JSONUtil
             if (First == true)
               First = false;
             else
-              Out.write(",");
+              Out.write(", ");
             printChar(Out, i);
           }
         Out.write("]");
@@ -361,7 +361,7 @@ public class JSONUtil
             if (First == true)
               First = false;
             else
-              Out.write(",");
+              Out.write(", ");
             if (i == null)
              Out.write("null");
             else
@@ -386,7 +386,7 @@ public class JSONUtil
             if (First == true)
               First = false;
             else
-              Out.write(",");
+              Out.write(", ");
             printFloat(Out, i);
           }
         Out.write("]");
@@ -408,7 +408,7 @@ public class JSONUtil
             if (First == true)
               First = false;
             else
-              Out.write(",");
+              Out.write(", ");
             if (i == null)
               Out.write("null");
              else
@@ -433,7 +433,7 @@ public class JSONUtil
             if (First == true)
               First = false;
             else
-              Out.write(",");
+              Out.write(", ");
             printDouble(Out, i);
           }
         Out.write("]");
@@ -455,7 +455,7 @@ public class JSONUtil
             if (First == true)
               First = false;
             else
-              Out.write(",");
+              Out.write(", ");
             if (i == null)
               Out.write("null");
              else
@@ -480,7 +480,7 @@ public class JSONUtil
             if (First == true)
               First = false;
             else
-              Out.write(",");
+              Out.write(", ");
             printString(Out, i);
           }
         Out.write("]");
@@ -502,7 +502,7 @@ public class JSONUtil
             if (First == true)
               First = false;
             else
-              Out.write(",");
+              Out.write(", ");
             printZonedDateTime(Out, i);
           }
         Out.write("]");
@@ -524,7 +524,7 @@ public class JSONUtil
             if (First == true)
               First = false;
             else
-              Out.write(",");
+              Out.write(", ");
             printLocalDate(Out, i);
           }
         Out.write("]");
@@ -546,11 +546,39 @@ public class JSONUtil
             if (First == true)
               First = false;
             else
-              Out.write(",");
+              Out.write(", ");
             printString(Out, i);
           }
         Out.write("]");
       }
+    
+    
+    public static void print(Writer Out, String Name, boolean FirstElement, Map<String, String> M)
+    throws IOException
+      {
+        print(Out, Name, FirstElement);
+        if (M == null)
+          {
+            Out.write("null");
+            return;
+          }
+        Out.write("[");
+        boolean First = true;
+        for (Map.Entry<String,String> e : M.entrySet())
+          {
+            if (First == true)
+              First = false;
+            else
+              Out.write(", ");
+            Out.write("[");
+            printString(Out, e.getKey());
+            Out.write(", ");
+            printString(Out, e.getValue());
+            Out.write("]");
+          }
+        Out.write("]");
+      }
+    
     
     /**
      * Starts the standard JSON header for payload, i.e., {code:xxx,data:}
@@ -607,7 +635,7 @@ public class JSONUtil
     
     /**
      * When using client-side frameworks such as Dojo that may use an iFrame for ajax-contents, the protocol
-     * is typically yo return the json data packaged inside a textarea. This function does that. It is exactly
+     * is typically to return the json data packaged inside a textarea. This function does that. It is exactly
      * equivalent to the "plain" response method except the jsonable object is output inside a textarea and the
      * writer is expected to be set up as an HTML one.
      * @param Out
@@ -681,6 +709,7 @@ public class JSONUtil
             else
               Out.write(Header + "  ,");
             Obj.toJSON(Out, JsonExportName, "", true);
+            Out.write("\n");
           }
         Out.write(Header + "  ]\n");
       }
