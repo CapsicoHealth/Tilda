@@ -72,7 +72,7 @@ public class Gen
             try
               {
                 GeneratorSession G = new GeneratorSession("java", 8, -1, "postgres", 9, 6);
-                ParserSession PS = Parser.parse(path, G.getSql(), SchemaCache);
+                ParserSession PS = Parser.parse(path, G.getSql(), SchemaCache, false);
                 if (PS == null)
                   throw new Exception("An error occurred trying to process Tilda file '" + path + "'.");
                 if (PS.getErrorCount() > 0)

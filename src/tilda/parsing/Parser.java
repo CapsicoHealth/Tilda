@@ -51,11 +51,11 @@ public abstract class Parser
        return PS;
      }
 
-    public static ParserSession parse(String FilePath, CodeGenSql CGSql, Map<String, Schema> SchemaCache) throws Exception
+    public static ParserSession parse(String FilePath, CodeGenSql CGSql, Map<String, Schema> SchemaCache, boolean allowResource) throws Exception
       {
         LOG.info("\n\n\n-----------------------------------------------------------------------------------------------------------------------------------------------");
         LOG.info("Loading Tilda schema '" + FilePath + "'.");
-        Schema S = fromFile(FilePath);
+        Schema S = fromFile(FilePath, allowResource);
         if (S == null)
           return null;
         Schema CS = SchemaCache.get(S._ResourceNameShort);
@@ -80,13 +80,13 @@ public abstract class Parser
         return PS;
       }
 
-    protected static Schema fromFile(String FilePath)
+    protected static Schema fromFile(String FilePath, boolean allowResource)
       {
         Reader R = null;
         try
           {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            R = new FileReader(FilePath);
+            R = allowResource == true ? FileUtil.getReaderFromFileOrResource(FilePath) : new FileReader(FilePath);
             Schema S = gson.fromJson(R, tilda.parsing.parts.Schema.class);
             S.setOrigin(FilePath);
             return S;
