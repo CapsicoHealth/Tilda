@@ -23,6 +23,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Savepoint;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.ArrayDeque;
 import java.util.Collection;
 import java.util.Deque;
@@ -808,6 +810,16 @@ public final class Connection
     throws Exception
       {
         return _DB.moveTableView(this, base, oldSchemaName);
+      }
+
+    public ZonedDateTime getCurrentTimestamp() throws Exception
+      {
+        return _DB.getCurrentTimestamp(this);
+      }
+
+    public LocalDate getCurrentDate() throws Exception
+      {
+        return _DB.getCurrentDate(this);
       }
 
   }
