@@ -31,15 +31,21 @@ public class RootImporter implements Importer
     /*@formatter:off*/
     @SerializedName("zones") public List<ZoneInfo_Data> _Zones = new ArrayList<ZoneInfo_Data>();
     /*@formatter:on*/
-    
+
     @Override
-    public int process(Connection C) throws Exception
+    public int process(Connection C)
+    throws Exception
       {
         int Count = 0;
-        
-        for (ZoneInfo_Data obj : _Zones) { ++Count; if (obj.upsert(C, true) == false) throw new Exception("Cannot upsert ZoneInfo"); }
+
+        for (ZoneInfo_Data obj : _Zones)
+          {
+            ++Count;
+            if (obj.upsert(C, true) == false)
+              throw new Exception("Cannot upsert ZoneInfo");
+          }
         ZoneInfo_Factory.initMappings(C);
-        
+
         return Count;
       }
   }

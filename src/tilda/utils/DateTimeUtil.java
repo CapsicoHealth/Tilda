@@ -16,6 +16,7 @@
 
 package tilda.utils;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.Period;
@@ -85,6 +86,15 @@ public class DateTimeUtil
         return newTZ(Year, Month, Day, Hour, Minutes, Seconds, Milliseconds * 1000000, _UTC);
       }
 
+    /**
+     * Returns a new ZonedDateTime object in the UTC timezone, based on the information provided using
+     * the ZonedDateTime class conventions.
+     */
+    public static ZonedDateTime newUTC(long epochMillis)
+      {
+        return ZonedDateTime.ofInstant(Instant.ofEpochMilli(epochMillis), _UTC);
+      }
+    
     /**
      * Returns a new ZonedDateTime object based on the information provided using
      * the ZonedDateTime class conventions.

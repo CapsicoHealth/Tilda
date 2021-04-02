@@ -22,6 +22,8 @@ import java.sql.Array;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -38,9 +40,11 @@ import tilda.db.metadata.FKMeta;
 import tilda.db.metadata.IndexMeta;
 import tilda.db.metadata.PKMeta;
 import tilda.db.metadata.ViewMeta;
+import tilda.db.processors.LocalDateRP;
 import tilda.db.processors.ScalarRP;
 import tilda.db.processors.StringListRP;
 import tilda.db.processors.StringRP;
+import tilda.db.processors.ZonedDateTimeRP;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
@@ -925,7 +929,7 @@ public class PostgreSQL implements DBType
         Role = Role.toLowerCase();
         Str.append("DO $body$\n");
         Str.append("BEGIN\n");
-        Str.append("   IF NOT EXISTS (SELECT FROM pg_catalog.pg_authid WHERE rolname = " + TextUtil.escapeSingleQuoteForSQL(Role) + ")\n");
+        Str.append("   IF NOT EXISTS (SELECT FROM pg_catalog.pg_roles WHERE rolname = " + TextUtil.escapeSingleQuoteForSQL(Role) + ")\n");
         Str.append("   THEN\n");
         Str.append("      CREATE ROLE " + Role + ";\n");
         Str.append("   END IF;\n");
@@ -1359,7 +1363,23 @@ public class PostgreSQL implements DBType
     public boolean isSuperUser(Connection C)
     throws Exception
       {
-        String Q = "select current_setting('is_superuser');";
+        // First, let's check if the user has a "superuser" role
+        // We make the assumption here that any role with "superuser" in the name has enough access rights to perform migration actions.
+        String Q = "WITH RECURSIVE cte AS (\n"
+                  +"  SELECT oid FROM pg_roles WHERE rolname = (SELECT current_role)\n"
+                  +"  UNION ALL\n"
+                  +"  SELECT m.roleid\n"
+                  +"    FROM cte\n"
+                  +"       JOIN pg_auth_members m ON m.member = cte.oid\n"
+                  +")\n"
+                  +"SELECT count(*) FROM cte WHERE oid::regrole::TEXT ILIKE '%superuser%'"
+                  ;
+        ScalarRP SRP = new ScalarRP();
+        C.executeSelect("SYSTEM", "CURRENT_SETTING", Q, SRP);
+        if (SRP.getResult() > 0)
+         return true;
+        
+        Q = "select current_setting('is_superuser');";
         StringRP RP = new StringRP();
         C.executeSelect("SYSTEM", "CURRENT_SETTING", Q, RP);
         return "on".equals(RP.getResult()) == true;
@@ -1398,6 +1418,22 @@ public class PostgreSQL implements DBType
       {
         String Q = "ALTER TABLE " + oldSchemaName+"."+base._Name + " SET SCHEMA " + base._ParentSchema._Name + "";
         return Con.executeDDL(base._ParentSchema._Name, base.getBaseName(), Q);
+      }
+
+    @Override
+    public ZonedDateTime getCurrentTimestamp(Connection Con) throws Exception
+      {
+        ZonedDateTimeRP RP = new ZonedDateTimeRP();
+        Con.executeSelect("TILDA", "CURRENT_TIMESTAMP", "select "+getCurrentTimestampStr(), RP);
+        return RP.getResult();
+      }
+
+    @Override
+    public LocalDate getCurrentDate(Connection Con) throws Exception
+      {
+        LocalDateRP RP = new LocalDateRP();
+        Con.executeSelect("TILDA", "CURRENT_DATE", "select "+getCurrentDateStr(), RP);
+        return RP.getResult();
       }
 
   }

@@ -20,6 +20,8 @@ import java.sql.Array;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -124,4 +126,6 @@ public interface DBType
     public String getBackendConnectionId(Connection Con) throws Exception;
     void cancel(Connection Con) throws SQLException;
     public boolean moveTableView(Connection Con, Base base, String oldSchemaName) throws Exception;
+    public ZonedDateTime getCurrentTimestamp(Connection Con) throws Exception;
+    public LocalDate getCurrentDate(Connection Con) throws Exception;
   }

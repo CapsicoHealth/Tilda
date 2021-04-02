@@ -18,23 +18,27 @@ package tilda.db.processors;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
+
+import tilda.utils.DateTimeUtil;
 
 
-public class TimeStampRP implements RecordProcessor
+public class LocalDateRP implements RecordProcessor
   {
     @Override
     public void start()
       {
       }
 
-    protected OffsetDateTime _ODT;
+    protected LocalDate _LD;
 
     @Override
     public boolean process(int Index, ResultSet RS)
       throws SQLException
       {
-        _ODT = (OffsetDateTime) RS.getObject(1);
+        _LD = DateTimeUtil.toLocalDate(RS.getDate(1));
         return true;
       }
 
@@ -43,8 +47,8 @@ public class TimeStampRP implements RecordProcessor
       {
       }
 
-    public OffsetDateTime getResult()
+    public LocalDate getResult()
       {
-        return _ODT;
+        return _LD;
       }
   }
