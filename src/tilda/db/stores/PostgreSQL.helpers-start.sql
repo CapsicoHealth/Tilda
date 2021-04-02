@@ -467,10 +467,14 @@ SELECT CASE WHEN r > 1 THEN r-floor(r)
 $$;
 
 
+
 -----------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------
 -- TILDA String-to-Array conversion for automated array support, mostly from ETL platforms
 -----------------------------------------------------------------------------------------------------------------
+-- Creating CAST operators requires owning the type and this doesn't work in managed instances such
+-- as AWS or GCP!!!! So trying to remove this feature.
+/*
 DROP CAST IF EXISTS (text AS text[]);
 CREATE OR REPLACE FUNCTION TILDA.strToArray(text)
   RETURNS text[]
@@ -556,7 +560,7 @@ CREATE OR REPLACE FUNCTION TILDA.strToArrayBigint(varchar)
   IMMUTABLE COST 2 LANGUAGE SQL AS
 'SELECT $1::VARCHAR[]::bigint[];';
 CREATE CAST (varchar AS bigint[]) WITH FUNCTION TILDA.strToArrayBigint(varchar) as Implicit;
-
+*/
 
 
 
@@ -564,13 +568,16 @@ CREATE CAST (varchar AS bigint[]) WITH FUNCTION TILDA.strToArrayBigint(varchar) 
 -----------------------------------------------------------------------------------------------------------------
 -- TILDA boolean to smallint case
 -----------------------------------------------------------------------------------------------------------------
-DROP CAST IF EXISTS (boolean AS smallint);
+-- Creating CAST operators requires owning the type and this doesn't work in managed instances such
+-- as AWS or GCP!!!! So trying to remove this feature.
 CREATE OR REPLACE FUNCTION TILDA.boolToSmallint(boolean)
   RETURNS smallint
   IMMUTABLE COST 1 LANGUAGE SQL AS
 'SELECT (case when $1 = true then 1 when $1 = false then 0 else null end)::SMALLINT;';
+/*
+DROP CAST IF EXISTS (boolean AS smallint);
 CREATE CAST (boolean AS smallint) WITH FUNCTION TILDA.boolToSmallint(boolean) as Implicit;
-
+*/
 
 -----------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------
