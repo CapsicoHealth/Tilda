@@ -991,6 +991,7 @@ public class Docs
                   {
                     M.appendReplacement(Str, "<A style=\"color:#0000AA; font-weight: bold;\" href=\"" + makeColumnHref(C) + "\">" + s + "</A>");
                     FormulaMatches.add(s);
+                    break;
                   }
               }
             M.appendTail(Str);
