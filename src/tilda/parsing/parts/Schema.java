@@ -217,6 +217,11 @@ public class Schema
         return O == null ? null : O.getColumn(ColumnName);
       }
 
+    public ViewColumn getViewColumn(String viewName, String columnName)
+      {
+        View V = getView(viewName);
+        return V == null ? null : V.getViewColumn(columnName);
+      }
 
     public boolean Validate(ParserSession PS)
     throws Exception

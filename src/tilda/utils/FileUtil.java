@@ -32,11 +32,16 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.StringJoiner;
 
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVRecord;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -458,4 +463,22 @@ public class FileUtil
 
         return dir.delete();
       }
+    
+    public static List<CSVRecord> getCSVRecords(String fileName)
+      {
+        List<CSVRecord> L = new ArrayList<CSVRecord>();
+        try
+          {
+            Reader R = FileUtil.getReaderFromFileOrResource(fileName);
+            CSVFormat csvFormat = CSVFormat.DEFAULT.withSkipHeaderRecord(false);
+            Iterator<CSVRecord> records = csvFormat.parse(R).iterator();
+            while (records.hasNext() == true)
+              L.add(records.next());
+          }
+        catch (Exception E)
+          {
+          }
+        return L;
+      }
+    
   }

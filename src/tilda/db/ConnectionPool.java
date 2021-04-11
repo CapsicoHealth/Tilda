@@ -54,8 +54,11 @@ import tilda.generation.interfaces.CodeGenSql;
 import tilda.migration.Migrator;
 import tilda.parsing.Loader;
 import tilda.parsing.ParserSession;
+import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
+import tilda.parsing.parts.View;
+import tilda.parsing.parts.ViewColumn;
 import tilda.performance.PerfTracker;
 import tilda.utils.ClassStaticInit;
 import tilda.utils.DurationUtil;
@@ -552,11 +555,41 @@ Total: 8,509ms
         return BDS.getUrl();
       }
 
-    public static String getSchemaPackage(String SchemaName)
+    public static String getSchemaPackage(String schemaName)
       {
-        Schema S = _Schemas.get(SchemaName.toUpperCase());
+        Schema S = _Schemas.get(schemaName.toUpperCase());
         return S == null ? null : S._Package;
       }
+    
+    public static Schema getSchema(String schemaName)
+      {
+        return _Schemas.get(schemaName.toUpperCase());
+      }
+    public static Object getTable(String schemaName, String tableName)
+      {
+        Schema S = _Schemas.get(schemaName.toUpperCase());
+        return S == null ? null : S.getObject(tableName);
+      }
+    public static Column getTableColumn(String schemaName, String tableName, String columnName)
+      {
+        Schema S = _Schemas.get(schemaName.toUpperCase());
+        if (S == null)
+         return null;
+        return S.getColumn(tableName, columnName);
+      }
+    public static View getView(String schemaName, String viewName)
+      {
+        Schema S = _Schemas.get(schemaName.toUpperCase());
+        return S == null ? null : S.getView(viewName);
+      }
+    public static ViewColumn getViewColumn(String schemaName, String tableName, String columnName)
+      {
+        Schema S = _Schemas.get(schemaName.toUpperCase());
+        if (S == null)
+         return null;
+        return S.getViewColumn(tableName, columnName);
+      }
+
 
     public static Map<String, String> getEmailConfig()
       {
