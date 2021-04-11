@@ -87,13 +87,14 @@
 .search_results TR TD {
    padding-right: 10px;
  }
+ 
+@keyframes blinkAnimation {   
+   from { background-color: #F77; visibility: visible }
+   to   { background-color: white; visibility: hidden; } 
+ } 
 .blink_div { 
-   animation: blink-animation 0.75s steps(5, start) infinite; 
-   color: red; 
- } 
-@keyframes blink-animation {   
-   to { visibility: hidden; } 
- } 
+   animation: blinkAnimation 0.3s infinite;
+}
 
 input[type=text]:focus {
    border-color:#DFECF8;
@@ -153,15 +154,18 @@ input[type=text]:focus {
    display: none;
  }
 .sticky {
-   position: fixed;
-   top: 0;
-   left: 0;
-   background: #F09819;
-   background: -webkit-linear-gradient(to top, #F09819, #FFC837);
-   background: linear-gradient(to top, #F09819, #FFC837);
-   color: #000;
-   width: 100%;
- }
+    position: fixed;
+    top: 0;
+    left: 33%;
+    background: #F09819;
+    background: -webkit-linear-gradient(to top, #F09819, #FFC837);
+    background: linear-gradient(to top, #F09819, #FFC837);
+    color: #000;
+    border-radius: 20px 0px 0px 20px;
+    padding-left: 20px;
+    width: 67%;
+    box-shadow: -3px 5px 0px #BBB;
+}
 .sticky H2 {
    margin: 0px;
    padding: 0px;

@@ -68,23 +68,23 @@ var onModalShowClicked = function(id)
 
 window.addEventListener('load', function()
 {
-  expand_buttons = document.getElementsByClassName("expand_div");
-  for (var i = 0; i < expand_buttons.length; i++)
-    {
-      expand_buttons[i].addEventListener("click", function(event)
-      {
-        if (event.target.parentElement.getElementsByTagName("div")[0].style.display == "none")
-          {
-            event.target.parentElement.getElementsByTagName("div")[0].style.display = "block"
-            event.target.innerHTML = "&#9660;"
-          }
-        else
-          {
-            event.target.parentElement.getElementsByTagName("div")[0].style.display = "none"
-            event.target.innerHTML = "&#9654;"
-          }
-      }, false);
-    }
+//  expand_buttons = document.getElementsByClassName("expand_div");
+//  for (var i = 0; i < expand_buttons.length; i++)
+//    {
+//      expand_buttons[i].addEventListener("click", function(event)
+//      {
+//        if (event.target.parentElement.getElementsByTagName("div")[0].style.display == "none")
+//          {
+//            event.target.parentElement.getElementsByTagName("div")[0].style.display = "block"
+//            event.target.innerHTML = "&#9660;"
+//          }
+//        else
+//          {
+//            event.target.parentElement.getElementsByTagName("div")[0].style.display = "none"
+//            event.target.innerHTML = "&#9654;"
+//          }
+//      }, false);
+//    }
 }, false);
 
 var tables = {};
@@ -104,17 +104,46 @@ window.addEventListener("load", function()
   realizedformulae = getData("realizedformulae");
 }, false);
 
+
+function blinkElement(e, className, millis)
+ {
+   if (typeof e == "string")
+    e = document.getElementById(e);
+   if (e != null && e.classList != null)
+    {
+      e.classList.add(className);
+      setTimeout(function() {   
+        e.classList.remove(className);
+      }, millis);
+    }
+}
+
 var openDiv = function(divId, yOffsetCorrection)
 {
-  freezeSearchResults(true);
+//  freezeSearchResults(true);
   var e = document.getElementById(divId);
-  window.location = "#" + divId;
-  setTimeout(function()
-  {
-    if (yOffsetCorrection != null)
-     window.scrollBy(0, yOffsetCorrection);
-    freezeSearchResults(false);
-  }, 50);
+  if (e != null)
+   {
+     var savedE = e;
+     while (e != null && e.nodeName != 'TR' && e.nodeName != 'TABLE' && e.nodeName != 'DIV')
+      e=e.parentNode;
+     if (e == null)
+      e = savedE;
+     e.scrollIntoView(/*{block: "center"}*/);
+       window.scrollBy(0, divId.endsWith("_CNT") == true ? 0 : -100);
+       setTimeout(function() { 
+         e.scrollIntoView(/*{block: "center"}*/);
+         window.scrollBy(0, divId.endsWith("_CNT") == true ? 0 : -100);
+         blinkElement(e, "blink_div", 1500);
+       }, 200);
+   }
+//  window.location = "#" + divId;
+//  setTimeout(function()
+//  {
+//    if (yOffsetCorrection != null)
+//     window.scrollBy(0, yOffsetCorrection);
+//    freezeSearchResults(false);
+//  }, 50);
 }
 
 function showSearchResults(show)
@@ -161,15 +190,18 @@ var eventListener = function()
     {
       value = filteredResults[key];
       // Add Table/View
-      tempElementBody += "<TR valign=\"top\"><td width=\"1px\">&nbsp;<A href=\"javascript:openDiv('" + key + "_CNT',20)\">" + key
-          + "</A></TD>";
+      tempElementBody += "<TR valign=\"top\"><td width=\"1px\">&nbsp;<A href=\"javascript:openDiv('" + key + "_CNT',20)\">" + key + "</A></TD>";
       // Add Columns/Formulae (if Any)
+      if (value.length == 0)
+       {
+         tempElementBody += "<TD>&nbsp;</TD><TD>&nbsp;</TD></TR>";
+       }
+      else
       for (var i = 0; i < value.length; i++)
         {
           if (i != 0)
-            tempElementBody += "<TR><TD></TD>";
-          tempElementBody += "<TD><A href=\"javascript:openDiv('" + key + "-" + value[i] + "_DIV', -50)\">" + value[i]
-              + "</A></TD><TD>&nbsp;</TD></TR>";
+            tempElementBody += "<TR><TD>&nbsp;</TD>";
+          tempElementBody += "<TD><A href=\"javascript:openDiv('" + key + "-" + value[i] + "_DIV', -50)\">" + value[i]+ "</A></TD><TD>&nbsp;</TD></TR>";
         }
     }
   searchResultsDiv.innerHTML = tempElementBody;
@@ -303,8 +335,9 @@ var getFilteredResults = function(queryString)
 
   if (doColumns == true)
     {
+      console.log("columns: ", columns);
       getFilteredData(regex, tables, matchingResults);
-      getFilteredData(regex, doRealized == false ? realizedcolumns : columns, matchingResults);
+      getFilteredData(regex, doRealized == true ? realizedcolumns : columns, matchingResults);
     }
   if (doFormulas == true)
     {
@@ -590,7 +623,8 @@ var MasterIndex = {
                 {
                   var cell = e.rows[i].cells[0];
                   MasterIndex.selectColumn({target: cell});
-                  cell.scrollIntoView();
+                  cell.scrollIntoView(/*{block: "center"}*/);
+//                  window.scrollBy(0, -100);
                   break;
                 }
            }
