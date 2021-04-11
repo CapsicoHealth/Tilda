@@ -1783,7 +1783,7 @@ public class TildaData implements CodeGenTildaData
                     throw new Error("ERROR! Cannot match ColumnType " + C.getType() + " when generating the Read method");
                 }
 
-              Out.print(" if (RS.wasNull() == true) __Nulls.or(" + Mask + Pad + ");");
+              Out.print(" if (RS.wasNull() == true) { __Nulls.or(" + Mask + Pad + "); _" + C.getName() + " = null; }");
               if (G.getSql().stringNeedsTrim(C) == true)
                 Out.print(" else _" + C.getName() + Pad + " = _" + C.getName() + Pad + ".trim();");
               Out.println();
