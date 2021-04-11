@@ -94,6 +94,7 @@ public class ValueHelper
             case BOOLEAN:
             case DOUBLE:
             case FLOAT:
+            case SHORT:
             case INTEGER:
             case LONG:
               return defaultValue;
