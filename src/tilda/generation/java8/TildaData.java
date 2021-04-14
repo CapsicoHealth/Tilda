@@ -1195,7 +1195,7 @@ public class TildaData implements CodeGenTildaData
         Helper.setSavedFields(Out, O);
         Out.println();
         Out.println("       __Changes.clear();");
-        Out.println("       __Nulls.clear();");
+//        Out.println("       __Nulls.clear();");
         Out.println("     }");
       }
 
@@ -1625,7 +1625,7 @@ public class TildaData implements CodeGenTildaData
               String Mask = Helper.getRuntimeMask(C);
               String Pad = O._PadderColumnNames.getPad(C.getName());
               if (C._Nullable == true)
-                Out.print("       if (__Changes.intersects(" + Mask + ") == true) Dst.set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "Null" + Pad + "(); else ");
+                Out.print("       if (__Nulls.intersects(" + Mask + ") == true) Dst.set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "Null" + Pad + "(); else ");
               Out.println("       Dst.set" + TextUtil.capitalizeFirstCharacter(C.getName()) + Pad + "(_" + C.getName() + Pad + ");");
             }
         Out.println("     }");
