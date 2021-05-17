@@ -22,6 +22,8 @@ import java.sql.Array;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -34,6 +36,7 @@ import tilda.db.metadata.ColumnMeta;
 import tilda.db.metadata.FKMeta;
 import tilda.db.metadata.IndexMeta;
 import tilda.db.metadata.PKMeta;
+import tilda.db.metadata.ViewMeta;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
@@ -605,10 +608,49 @@ public class MSSQL implements DBType
       }
 
     @Override
-    public boolean moveTableView(Connection Con, Base base, String oldSchemaName)
+    public boolean dropView(Connection con, ViewMeta v, boolean cascade)
     throws Exception
       {
         throw new UnsupportedOperationException();
       }
 
+
+    @Override
+    public boolean renameTableView(Connection con, Base base, String oldName)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+
+    @Override
+    public boolean renameTableColumn(Connection con, Column col, String oldName)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+
+    @Override
+    public ZonedDateTime getCurrentTimestamp(Connection con)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+
+    @Override
+    public LocalDate getCurrentDate(Connection con)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public boolean moveTableView(Connection con, Base base, String oldSchemaName)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+    
   }
