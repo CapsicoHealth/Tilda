@@ -177,7 +177,7 @@ public class ConnectionPool
                         LOG.info("Initializing Schemas for " + C._Url);
                         for (Schema S : TildaList)
                           {
-                            LOG.debug("  Initializing Schema " + S.getFullName());
+                            LOG.info("  Initializing Schema " + S.getFullName());
                             Method M = Class.forName(tilda.generation.java8.Helper.getSupportClassFullName(S)).getMethod("initSchema", Connection.class);
                             M.invoke(null, C);
                             if (_Schemas.get(S._Name.toUpperCase()) == null)
@@ -389,30 +389,17 @@ public class ConnectionPool
         DatabaseMeta DBMeta = new DatabaseMeta();
         LOG.info("Loading database metadata for found Schemas from " + C.getPoolName() + ".");
         long TS = System.nanoTime();
-//        for (Schema S : TildaList)
-//          {
-//            LOG.debug("  " + S._Name);
-//            DBMeta.load(C, S._Name);
-//          }
-        DBMeta.load(C, null);
+//      Loading ALL schemas from the DB can be really a lot, especially in development environment where some orgs may
+//      have multiple sandbox schemas and other dev artifacts. So let's focus on loading what's defined in TILDA files.
+//      DBMeta.load(C, null);
+        for (Schema S : TildaList)
+          {
+            DBMeta.load(C, S._Name);
+          }
         MetaPerformance.print();
         LOG.debug("--> Metadata fetching took "+DurationUtil.printDurationMilliSeconds(System.nanoTime()-TS));
         return DBMeta;
       }
-/*
-Schemas:    19 in    26ms or  0.3%
-Tables :   280 in     3ms or  0.0%
-Columns: 5,638 in   922ms or 10.8%
-PK     :   280 in   630ms or  7.4%
-FK-Out :   351 in 3,049ms or 35.8%
-FK-In  :   353 in 2,735ms or 32.1%
-Indices:   768 in 1,141ms or 13.4%
-----------------------------------------------------------------------------
-Total: 8,509ms
-
- */
-
-    
     
     
     private static List<Schema> loadTildaResources(Connection C)
