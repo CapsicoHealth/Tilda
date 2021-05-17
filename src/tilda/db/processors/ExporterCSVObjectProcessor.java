@@ -17,7 +17,7 @@
 package tilda.db.processors;
 
 import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.io.Writer;
 import java.lang.reflect.Method;
 
 import org.apache.logging.log4j.LogManager;
@@ -29,34 +29,39 @@ public class ExporterCSVObjectProcessor<T extends CSVable> extends ExporterObjec
   {
     protected static final Logger LOG = LogManager.getLogger(ExporterCSVObjectProcessor.class.getName());
 
-    public ExporterCSVObjectProcessor(PrintWriter out, long logFreq, String name, Class<?> factoryClass)
+    public ExporterCSVObjectProcessor(Writer out, String outName, long logFreq, Class<?> factoryClass, boolean header)
       {
-        super(out, logFreq, name);
+        super(out, outName, logFreq);
         _factoryClass = factoryClass;
+        _header = header;
       }
 
-    public ExporterCSVObjectProcessor(String outFile, long logFreq, Class<?> factoryClass)
+    public ExporterCSVObjectProcessor(String outFile, long logFreq, Class<?> factoryClass, boolean header)
       throws FileNotFoundException
       {
         super(outFile, logFreq);
         _factoryClass = factoryClass;
+        _header = header;
       }
 
     protected Class<?> _factoryClass;
+    protected boolean  _header;
 
     @Override
     public void start()
+    throws Exception
       {
         super.start();
-        try
-          {
-            Method M = _factoryClass.getMethod("getCSVHeader");
-            _out.println((String) M.invoke(null));
-          }
-        catch (Throwable E)
-          {
-            throw new Error("An error occurred.\n", E);
-          }
+        if (_header == true)
+          try
+            {
+              Method M = _factoryClass.getMethod("getCSVHeader");
+              _out.append((String) M.invoke(null)).append(System.lineSeparator());
+            }
+          catch (Throwable E)
+            {
+              throw new Error("An error occurred.\n", E);
+            }
       }
 
     @Override
@@ -64,7 +69,7 @@ public class ExporterCSVObjectProcessor<T extends CSVable> extends ExporterObjec
     throws Exception
       {
         obj.toCSV(_out, "");
-        _out.println();
+        _out.append(System.lineSeparator());
         return super.process(count);
       }
 

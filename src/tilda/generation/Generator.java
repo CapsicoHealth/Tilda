@@ -17,6 +17,7 @@
 package tilda.generation;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
@@ -157,25 +158,7 @@ public class Generator
             {
               File f = new File(GenFolder.getAbsolutePath() + File.separator + "bq." + O._Name + ".json");
               PrintWriter Out = new PrintWriter(f);
-              Out.println("[");
-              boolean First = true;
-              for (Column col : O._Columns)
-                if (col != null)
-                  {
-                    if (First == true)
-                      {
-                        First = false;
-                        Out.print("    {");
-                      }
-                    else
-                      Out.print("   ,{");
-                    JSONUtil.print(Out, "name", true, col.getName());
-                    JSONUtil.print(Out, "type", false, col.getType().getBigQueryType());
-                    JSONUtil.print(Out, "mode", false, col.isCollection() == true ? "REPEATED" : col._Nullable == false ? "REQUIRED" : "NULLABLE");
-                    JSONUtil.print(Out, "description", false, col._Description);
-                    Out.println(" }");
-                  }
-              Out.println("]");
+              genTildaBigQuerySchema(O, Out);
               Out.close();
             }
 
@@ -184,26 +167,37 @@ public class Generator
             {
               File f = new File(GenFolder.getAbsolutePath() + File.separator + "bq." + V._Name + ".json");
               PrintWriter Out = new PrintWriter(f);
-              Out.println("[");
-              boolean First = true;
-              for (ViewColumn col : V._ViewColumns)
-                if (col != null)
-                  {
-                    if (First == true)
-                      {
-                        First = false;
-                        Out.print("    {");
-                      }
-                    else
-                      Out.print("   ,{");
-                    JSONUtil.print(Out, "name", true, col.getName());
-                    JSONUtil.print(Out, "type", false, col.getType().getBigQueryType());
-                    JSONUtil.print(Out, "mode", false, col.isCollection() == true ? "REPEATED" : "NULLABLE");
-                    Out.println(" }");
-                  }
-              Out.println("]");
+              genTildaBigQuerySchema(V, Out);
               Out.close();
             }
+      }
+
+
+    public static void genTildaBigQuerySchema(Base O, PrintWriter Out)
+    throws IOException
+      {
+        Out.println("[");
+        boolean First = true;
+        for (String name : O.getColumnNames())
+          if (name != null)
+            {
+              Column col = O.getColumn(name);
+              if (col == null)
+               continue;
+              if (First == true)
+                {
+                  First = false;
+                  Out.print("    {");
+                }
+              else
+                Out.print("   ,{");
+              JSONUtil.print(Out, "name", true, col.getName());
+              JSONUtil.print(Out, "type", false, col.getType().getBigQueryType());
+              JSONUtil.print(Out, "mode", false, col.isCollection() == true ? "REPEATED" : col._Nullable == false ? "REQUIRED" : "NULLABLE");
+              JSONUtil.print(Out, "description", false, col._Description);
+              Out.println(" }");
+            }
+        Out.println("]");
       }
 
     public static void getTableDDL(CodeGenSql CG, PrintWriter Out, Object O, boolean mainDDL, boolean keysDDL)
