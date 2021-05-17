@@ -1,10 +1,10 @@
 [
-    { "name":"refnum","type":"INT64","mode":"REQUIRED","description":"The primary key for this record" }
-   ,{ "name":"userRefnum","type":"INT64","mode":"REQUIRED","description":"The user who created the form" }
-   ,{ "name":"type","type":"STRING","mode":"REQUIRED","description":"Form template type" }
-   ,{ "name":"fillDateTZ","type":"STRING","mode":"NULLABLE","description":"Generated helper column to hold the time zone ID for 'fillDate'." }
-   ,{ "name":"fillDate","type":"TIMESTAMP","mode":"NULLABLE","description":"The date the form was filled" }
-   ,{ "name":"created","type":"TIMESTAMP","mode":"REQUIRED","description":"The timestamp for when the record was created. (TILDATUTORIAL.Form)" }
-   ,{ "name":"lastUpdated","type":"TIMESTAMP","mode":"REQUIRED","description":"The timestamp for when the record was last updated. (TILDATUTORIAL.Form)" }
-   ,{ "name":"deleted","type":"TIMESTAMP","mode":"NULLABLE","description":"The timestamp for when the record was deleted. (TILDATUTORIAL.Form)" }
+    { "name":"refnum", "type":"INT64", "mode":"REQUIRED", "description":"The primary key for this record" }
+   ,{ "name":"userRefnum", "type":"INT64", "mode":"REQUIRED", "description":"The user who created the form" }
+   ,{ "name":"type", "type":"STRING", "mode":"REQUIRED", "description":"Form template type" }
+   ,{ "name":"fillDateTZ", "type":"STRING", "mode":"NULLABLE", "description":"Generated helper column to hold the time zone ID for 'fillDate'." }
+   ,{ "name":"fillDate", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"The date the form was filled" }
+   ,{ "name":"created", "type":"TIMESTAMP", "mode":"REQUIRED", "description":"The timestamp for when the record was created. (TILDATUTORIAL.Form)" }
+   ,{ "name":"lastUpdated", "type":"TIMESTAMP", "mode":"REQUIRED", "description":"The timestamp for when the record was last updated. (TILDATUTORIAL.Form)" }
+   ,{ "name":"deleted", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"The timestamp for when the record was deleted. (TILDATUTORIAL.Form)" }
 ]

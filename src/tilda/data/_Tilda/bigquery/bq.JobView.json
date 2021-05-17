@@ -1,30 +1,30 @@
 [
-    { "name":"jobRefnum","type":"INT64","mode":"NULLABLE" }
-   ,{ "name":"jobName","type":"STRING","mode":"NULLABLE" }
-   ,{ "name":"jobType","type":"STRING","mode":"NULLABLE" }
-   ,{ "name":"jobUserId","type":"STRING","mode":"NULLABLE" }
-   ,{ "name":"jobDataStartTZ","type":"STRING","mode":"NULLABLE" }
-   ,{ "name":"jobDataStart","type":"TIMESTAMP","mode":"NULLABLE" }
-   ,{ "name":"jobDataEndTZ","type":"STRING","mode":"NULLABLE" }
-   ,{ "name":"jobDataEnd","type":"TIMESTAMP","mode":"NULLABLE" }
-   ,{ "name":"jobStartTZ","type":"STRING","mode":"NULLABLE" }
-   ,{ "name":"jobStart","type":"TIMESTAMP","mode":"NULLABLE" }
-   ,{ "name":"jobEndTZ","type":"STRING","mode":"NULLABLE" }
-   ,{ "name":"jobEnd","type":"TIMESTAMP","mode":"NULLABLE" }
-   ,{ "name":"jobStatus","type":"BOOL","mode":"NULLABLE" }
-   ,{ "name":"jobMsg","type":"STRING","mode":"NULLABLE" }
-   ,{ "name":"jobPartName","type":"STRING","mode":"NULLABLE" }
-   ,{ "name":"jobPartType","type":"STRING","mode":"NULLABLE" }
-   ,{ "name":"jobPartDataStartTZ","type":"STRING","mode":"NULLABLE" }
-   ,{ "name":"jobPartDataStart","type":"TIMESTAMP","mode":"NULLABLE" }
-   ,{ "name":"jobPartDataEndTZ","type":"STRING","mode":"NULLABLE" }
-   ,{ "name":"jobPartDataEnd","type":"TIMESTAMP","mode":"NULLABLE" }
-   ,{ "name":"jobPartStartTZ","type":"STRING","mode":"NULLABLE" }
-   ,{ "name":"jobPartStart","type":"TIMESTAMP","mode":"NULLABLE" }
-   ,{ "name":"jobPartEndTZ","type":"STRING","mode":"NULLABLE" }
-   ,{ "name":"jobPartEnd","type":"TIMESTAMP","mode":"NULLABLE" }
-   ,{ "name":"jobPartRecordsCount","type":"INT64","mode":"NULLABLE" }
-   ,{ "name":"jobPartStatus","type":"BOOL","mode":"NULLABLE" }
-   ,{ "name":"jobPartNotify","type":"BOOL","mode":"NULLABLE" }
-   ,{ "name":"jobPartMessage","type":"STRING","mode":"NULLABLE" }
+    { "name":"refnum", "type":"INT64", "mode":"REQUIRED", "description":"The primary key for this record" }
+   ,{ "name":"name", "type":"STRING", "mode":"REQUIRED", "description":"Name" }
+   ,{ "name":"type", "type":"STRING", "mode":"NULLABLE", "description":"Job type" }
+   ,{ "name":"userId", "type":"STRING", "mode":"NULLABLE", "description":"Job user Id" }
+   ,{ "name":"dataStartTZ", "type":"STRING", "mode":"NULLABLE", "description":"Generated helper column to hold the time zone ID for 'dataStart'." }
+   ,{ "name":"dataStart", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"StartTime" }
+   ,{ "name":"dataEndTZ", "type":"STRING", "mode":"NULLABLE", "description":"Generated helper column to hold the time zone ID for 'dataEnd'." }
+   ,{ "name":"dataEnd", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"StartTime" }
+   ,{ "name":"startTZ", "type":"STRING", "mode":"REQUIRED", "description":"Generated helper column to hold the time zone ID for 'start'." }
+   ,{ "name":"start", "type":"TIMESTAMP", "mode":"REQUIRED", "description":"StartTime" }
+   ,{ "name":"endTZ", "type":"STRING", "mode":"NULLABLE", "description":"Generated helper column to hold the time zone ID for 'end'." }
+   ,{ "name":"end", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"EndTime" }
+   ,{ "name":"status", "type":"BOOL", "mode":"NULLABLE", "description":"Status" }
+   ,{ "name":"msg", "type":"STRING", "mode":"NULLABLE", "description":"Message details" }
+   ,{ "name":"name", "type":"STRING", "mode":"REQUIRED", "description":"Job part name" }
+   ,{ "name":"type", "type":"STRING", "mode":"NULLABLE", "description":"Job part type" }
+   ,{ "name":"dataStartTZ", "type":"STRING", "mode":"NULLABLE", "description":"Generated helper column to hold the time zone ID for 'dataStart'." }
+   ,{ "name":"dataStart", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"Job part data start" }
+   ,{ "name":"dataEndTZ", "type":"STRING", "mode":"NULLABLE", "description":"Generated helper column to hold the time zone ID for 'dataEnd'." }
+   ,{ "name":"dataEnd", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"Job part data end" }
+   ,{ "name":"startTZ", "type":"STRING", "mode":"REQUIRED", "description":"Generated helper column to hold the time zone ID for 'start'." }
+   ,{ "name":"start", "type":"TIMESTAMP", "mode":"REQUIRED", "description":"Job part execution start" }
+   ,{ "name":"endTZ", "type":"STRING", "mode":"NULLABLE", "description":"Generated helper column to hold the time zone ID for 'end'." }
+   ,{ "name":"end", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"Job part execution end" }
+   ,{ "name":"recordsCount", "type":"INT64", "mode":"NULLABLE", "description":"count of database or file or ... records." }
+   ,{ "name":"status", "type":"BOOL", "mode":"NULLABLE", "description":"Status flag, i.e., success=true and failure-false" }
+   ,{ "name":"notify", "type":"BOOL", "mode":"REQUIRED", "description":"Notification flag" }
+   ,{ "name":"msg", "type":"STRING", "mode":"REQUIRED", "description":"Message details" }
 ]

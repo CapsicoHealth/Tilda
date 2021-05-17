@@ -1357,15 +1357,15 @@ This is the null setter for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-                               _formRefnum     =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORM_SAT01_PIVOTVIEW_Factory.COLS.FORMREFNUM._Mask    );
-                               _formFillDateTZ = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORM_SAT01_PIVOTVIEW_Factory.COLS.FORMFILLDATETZ._Mask); else _formFillDateTZ = _formFillDateTZ.trim();
-                               _formFillDate   = processZDT(_formFillDateTZ  , "tilda.tutorial.data.TILDATUTORIAL.Form_SAT01_PivotView.formFillDate"  , RS, ++i, TILDA__FORM_SAT01_PIVOTVIEW_Factory.COLS.FORMFILLDATE  , TILDA__FORM_SAT01_PIVOTVIEW_Factory.COLS.FORMFILLDATETZ  ); if (RS.wasNull() == true) __Nulls.or(TILDA__FORM_SAT01_PIVOTVIEW_Factory.COLS.FORMFILLDATE._Mask  );
-                               _formUserRefnum =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORM_SAT01_PIVOTVIEW_Factory.COLS.FORMUSERREFNUM._Mask);
-                               _formUserEmail  = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORM_SAT01_PIVOTVIEW_Factory.COLS.FORMUSEREMAIL._Mask );
-                               _Q1             =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORM_SAT01_PIVOTVIEW_Factory.COLS.Q1._Mask            );
-                               _Q2             =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORM_SAT01_PIVOTVIEW_Factory.COLS.Q2._Mask            );
-                               _Q3             =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORM_SAT01_PIVOTVIEW_Factory.COLS.Q3._Mask            );
-                               _Q4             = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORM_SAT01_PIVOTVIEW_Factory.COLS.Q4._Mask            );
+                               _formRefnum     =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FORM_SAT01_PIVOTVIEW_Factory.COLS.FORMREFNUM._Mask    ); _formRefnum = null; }
+                               _formFillDateTZ = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FORM_SAT01_PIVOTVIEW_Factory.COLS.FORMFILLDATETZ._Mask); _formFillDateTZ = null; } else _formFillDateTZ = _formFillDateTZ.trim();
+                               _formFillDate   = processZDT(_formFillDateTZ  , "tilda.tutorial.data.TILDATUTORIAL.Form_SAT01_PivotView.formFillDate"  , RS, ++i, TILDA__FORM_SAT01_PIVOTVIEW_Factory.COLS.FORMFILLDATE  , TILDA__FORM_SAT01_PIVOTVIEW_Factory.COLS.FORMFILLDATETZ  ); if (RS.wasNull() == true) { __Nulls.or(TILDA__FORM_SAT01_PIVOTVIEW_Factory.COLS.FORMFILLDATE._Mask  ); _formFillDate = null; }
+                               _formUserRefnum =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FORM_SAT01_PIVOTVIEW_Factory.COLS.FORMUSERREFNUM._Mask); _formUserRefnum = null; }
+                               _formUserEmail  = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FORM_SAT01_PIVOTVIEW_Factory.COLS.FORMUSEREMAIL._Mask ); _formUserEmail = null; }
+                               _Q1             =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FORM_SAT01_PIVOTVIEW_Factory.COLS.Q1._Mask            ); _Q1 = null; }
+                               _Q2             =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FORM_SAT01_PIVOTVIEW_Factory.COLS.Q2._Mask            ); _Q2 = null; }
+                               _Q3             =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FORM_SAT01_PIVOTVIEW_Factory.COLS.Q3._Mask            ); _Q3 = null; }
+                               _Q4             = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FORM_SAT01_PIVOTVIEW_Factory.COLS.Q4._Mask            ); _Q4 = null; }
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();

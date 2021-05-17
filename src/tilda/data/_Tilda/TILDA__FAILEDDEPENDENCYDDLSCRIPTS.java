@@ -1438,7 +1438,7 @@ This is the hasChanged for:<BR>
        Dst.setDepViewName  (_depViewName  );
        Dst.setRestoreScript(_restoreScript);
        Dst.setLastUpdated  (_lastUpdated  );
-       if (__Changes.intersects(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull      (); else        Dst.setDeleted      (_deleted      );
+       if (__Nulls.intersects(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull      (); else        Dst.setDeleted      (_deleted      );
      }
 
 /**
@@ -1732,7 +1732,6 @@ This is the hasChanged for:<BR>
         }
 
        __Changes.clear();
-       __Nulls.clear();
      }
 /**
  Writes the object to the data store using an upsert approach and assumes the object is either
@@ -1900,15 +1899,15 @@ This is the hasChanged for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-      __Saved_srcSchemaName = _srcSchemaName = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.SRCSCHEMANAME._Mask);
-      __Saved_srcTVName     = _srcTVName     = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.SRCTVNAME._Mask    );
-      __Saved_seq           = _seq           =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.SEQ._Mask          );
-                              _depSchemaName = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.DEPSCHEMANAME._Mask);
-                              _depViewName   = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.DEPVIEWNAME._Mask  );
-                              _restoreScript = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.RESTORESCRIPT._Mask);
-      __Saved_created       = _created       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.CREATED._Mask      );
-                              _lastUpdated   = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.LASTUPDATED._Mask  );
-                              _deleted       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.DELETED._Mask      );
+      __Saved_srcSchemaName = _srcSchemaName = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.SRCSCHEMANAME._Mask); _srcSchemaName = null; }
+      __Saved_srcTVName     = _srcTVName     = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.SRCTVNAME._Mask    ); _srcTVName = null; }
+      __Saved_seq           = _seq           =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.SEQ._Mask          ); _seq = null; }
+                              _depSchemaName = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.DEPSCHEMANAME._Mask); _depSchemaName = null; }
+                              _depViewName   = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.DEPVIEWNAME._Mask  ); _depViewName = null; }
+                              _restoreScript = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.RESTORESCRIPT._Mask); _restoreScript = null; }
+      __Saved_created       = _created       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.CREATED._Mask      ); _created = null; }
+                              _lastUpdated   = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.LASTUPDATED._Mask  ); _lastUpdated = null; }
+                              _deleted       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.DELETED._Mask      ); _deleted = null; }
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();

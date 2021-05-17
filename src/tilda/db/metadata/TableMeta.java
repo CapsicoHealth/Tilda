@@ -43,7 +43,7 @@ public class TableMeta
       }
 
     public String                  _SchemaName;
-    public final String            _TableName;
+    public String                  _TableName;
     public final String            _Descr;
     public Map<String, ColumnMeta> _ColumnsMap        = new HashMap<String, ColumnMeta>();
     public List<ColumnMeta>        _ColumnsList       = new ArrayList<ColumnMeta>();

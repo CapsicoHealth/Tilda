@@ -113,8 +113,8 @@ This is the column definition for:<BR>
        protected Connection _C = null;
        protected tilda.db.processors.ObjectProcessor<tilda.data_test.TestView_Data> _OP;
        protected ArrayListResults<tilda.data_test.TestView_Data> _L = null;
-       public void    start  () { if (_OP != null) _OP.start(); }
-       public void    end    (boolean hasMore, int maxCount) { if (_OP == null) _L.wrapup(hasMore, maxCount); else _OP.end(hasMore, maxCount); }
+       public void    start  ()                              throws Exception { if (_OP != null) _OP.start(); }
+       public void    end    (boolean hasMore, int maxCount) throws Exception { if (_OP == null) _L.wrapup(hasMore, maxCount); else _OP.end(hasMore, maxCount); }
        public boolean process(int count, java.sql.ResultSet RS) throws Exception
         {
           tilda.data_test.TestView_Data Obj = new tilda.data_test.TestView_Data();
@@ -264,7 +264,7 @@ This is the column definition for:<BR>
 
    public static void toJSON(java.io.Writer out, tilda.data_test.TestView_Data obj, String lead, boolean fullObject) throws java.io.IOException
     {
-      toJSON(out, obj, "", fullObject, false);
+      toJSON(out, obj, lead, fullObject, false);
     }
 
    public static void toJSON(java.io.Writer out, tilda.data_test.TestView_Data obj, String lead, boolean fullObject, boolean noNullArrays) throws java.io.IOException

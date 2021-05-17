@@ -640,7 +640,6 @@ This is the hasChanged for:<BR>
         }
 
        __Changes.clear();
-       __Nulls.clear();
      }
 /**
  Writes the object to the data store using an upsert approach and assumes the object is either
@@ -799,9 +798,9 @@ This is the hasChanged for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-      __Saved_invalidDate = _invalidDate = DateTimeUtil.toLocalDate(RS.getDate(++i)); if (RS.wasNull() == true) __Nulls.or(TILDA__DATELIMITDIM_Factory.COLS.INVALIDDATE._Mask);
-                            _minDate     = DateTimeUtil.toLocalDate(RS.getDate(++i)); if (RS.wasNull() == true) __Nulls.or(TILDA__DATELIMITDIM_Factory.COLS.MINDATE._Mask    );
-                            _maxDate     = DateTimeUtil.toLocalDate(RS.getDate(++i)); if (RS.wasNull() == true) __Nulls.or(TILDA__DATELIMITDIM_Factory.COLS.MAXDATE._Mask    );
+      __Saved_invalidDate = _invalidDate = DateTimeUtil.toLocalDate(RS.getDate(++i)); if (RS.wasNull() == true) { __Nulls.or(TILDA__DATELIMITDIM_Factory.COLS.INVALIDDATE._Mask); _invalidDate = null; }
+                            _minDate     = DateTimeUtil.toLocalDate(RS.getDate(++i)); if (RS.wasNull() == true) { __Nulls.or(TILDA__DATELIMITDIM_Factory.COLS.MINDATE._Mask    ); _minDate = null; }
+                            _maxDate     = DateTimeUtil.toLocalDate(RS.getDate(++i)); if (RS.wasNull() == true) { __Nulls.or(TILDA__DATELIMITDIM_Factory.COLS.MAXDATE._Mask    ); _maxDate = null; }
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();

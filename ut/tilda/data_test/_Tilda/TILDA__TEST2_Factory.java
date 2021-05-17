@@ -200,8 +200,8 @@ This is the column definition for:<BR>
        protected Connection _C = null;
        protected tilda.db.processors.ObjectProcessor<tilda.data_test.Test2_Data> _OP;
        protected ArrayListResults<tilda.data_test.Test2_Data> _L = null;
-       public void    start  () { if (_OP != null) _OP.start(); }
-       public void    end    (boolean hasMore, int maxCount) { if (_OP == null) _L.wrapup(hasMore, maxCount); else _OP.end(hasMore, maxCount); }
+       public void    start  ()                              throws Exception { if (_OP != null) _OP.start(); }
+       public void    end    (boolean hasMore, int maxCount) throws Exception { if (_OP == null) _L.wrapup(hasMore, maxCount); else _OP.end(hasMore, maxCount); }
        public boolean process(int count, java.sql.ResultSet RS) throws Exception
         {
           tilda.data_test.Test2_Data Obj = new tilda.data_test.Test2_Data();
@@ -252,6 +252,10 @@ This is the column definition for:<BR>
                 String clause = ((SelectQuery)ExtraParams).getWhereClause();
                 if (TextUtil.isNullOrEmpty(clause) == false) S.append(clause);
                 break;
+             case 2:
+                S.append(" where (1=1)");
+                S.append(" order by "); C.getFullColumnVar(S, "TILDATEST", "Test2", "refnum"); S.append(" ASC");
+                break;
              case -77: 
              case -666: break;
              default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot create where clause.");
@@ -275,6 +279,9 @@ This is the column definition for:<BR>
              case -77:
              case -7:
                 break;
+             case 2: {
+               break;
+             }
              case -666: break;
              default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot prepare statement.");
            }
@@ -504,6 +511,30 @@ object. The generic init method defaults to this general data structure as a gen
      }
 
 
+   static public ListResults<tilda.data_test.Test2_Data> lookupWhereAll(Connection C, int start, int size) throws Exception
+     {
+       tilda.data_test._Tilda.TILDA__TEST2 Obj = new tilda.data_test.Test2_Data();
+       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
+
+
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
+       readMany(C, 2, RPI, Obj, null, start, size);
+       return RPI._L;
+     }
+
+
+   static public void lookupWhereAll(Connection C, tilda.db.processors.ObjectProcessor<tilda.data_test.Test2_Data> OP, int start, int size) throws Exception
+     {
+       tilda.data_test._Tilda.TILDA__TEST2 Obj = new tilda.data_test.Test2_Data();
+       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
+
+
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
+       readMany(C, 2, RPI, Obj, null, start, size);
+     }
+
+
+
    public static SelectQuery newSelectQuery(Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, true); }
    public static SelectQuery newWhereQuery (Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, false); }
    public static ListResults<tilda.data_test.Test2_Data> runSelect(Connection C, SelectQuery Q, int start, int size) throws Exception
@@ -562,7 +593,7 @@ object. The generic init method defaults to this general data structure as a gen
 
    public static void toJSON(java.io.Writer out, tilda.data_test.Test2_Data obj, String lead, boolean fullObject) throws java.io.IOException
     {
-      toJSON(out, obj, "", fullObject, false);
+      toJSON(out, obj, lead, fullObject, false);
     }
 
    public static void toJSON(java.io.Writer out, tilda.data_test.Test2_Data obj, String lead, boolean fullObject, boolean noNullArrays) throws java.io.IOException

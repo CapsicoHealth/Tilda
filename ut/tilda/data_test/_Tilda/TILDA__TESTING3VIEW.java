@@ -875,12 +875,12 @@ This is the setter for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-                               _refnum         =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING3VIEW_Factory.COLS.REFNUM._Mask        );
-                               _name           = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING3VIEW_Factory.COLS.NAME._Mask          );
-                               _a8bTZ          = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING3VIEW_Factory.COLS.A8BTZ._Mask         );
-                               _a8b            = processZDT(_a8bTZ           , "tilda.data_test.TILDATEST.Testing3View.a8b"           , RS, ++i, TILDA__TESTING3VIEW_Factory.COLS.A8B           , TILDA__TESTING3VIEW_Factory.COLS.A8BTZ           ); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING3VIEW_Factory.COLS.A8B._Mask           );
-                               _lastUpdated    = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING3VIEW_Factory.COLS.LASTUPDATED._Mask   );
-                               _xxxLastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING3VIEW_Factory.COLS.XXXLASTUPDATED._Mask);
+                               _refnum         =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING3VIEW_Factory.COLS.REFNUM._Mask        ); _refnum = null; }
+                               _name           = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING3VIEW_Factory.COLS.NAME._Mask          ); _name = null; }
+                               _a8bTZ          = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING3VIEW_Factory.COLS.A8BTZ._Mask         ); _a8bTZ = null; }
+                               _a8b            = processZDT(_a8bTZ           , "tilda.data_test.TILDATEST.Testing3View.a8b"           , RS, ++i, TILDA__TESTING3VIEW_Factory.COLS.A8B           , TILDA__TESTING3VIEW_Factory.COLS.A8BTZ           ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING3VIEW_Factory.COLS.A8B._Mask           ); _a8b = null; }
+                               _lastUpdated    = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING3VIEW_Factory.COLS.LASTUPDATED._Mask   ); _lastUpdated = null; }
+                               _xxxLastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING3VIEW_Factory.COLS.XXXLASTUPDATED._Mask); _xxxLastUpdated = null; }
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();

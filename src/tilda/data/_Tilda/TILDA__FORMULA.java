@@ -2561,11 +2561,11 @@ This is the hasChanged for:<BR>
        Dst.setType             (_type             );
        Dst.setTitle            (_title            );
        Dst.setDescription      (_description      );
-       if (__Changes.intersects(TILDA__FORMULA_Factory.COLS.FORMULA._Mask) == true) Dst.setFormulaNull          (); else        Dst.setFormula          (_formula          );
-       if (__Changes.intersects(TILDA__FORMULA_Factory.COLS.HTMLDOC._Mask) == true) Dst.setHtmlDocNull          (); else        Dst.setHtmlDoc          (_htmlDoc          );
-       if (__Changes.intersects(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask) == true) Dst.setReferencedColumnsNull(); else        Dst.setReferencedColumns(_referencedColumns);
+       if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.FORMULA._Mask) == true) Dst.setFormulaNull          (); else        Dst.setFormula          (_formula          );
+       if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.HTMLDOC._Mask) == true) Dst.setHtmlDocNull          (); else        Dst.setHtmlDoc          (_htmlDoc          );
+       if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask) == true) Dst.setReferencedColumnsNull(); else        Dst.setReferencedColumns(_referencedColumns);
        Dst.setLastUpdated      (_lastUpdated      );
-       if (__Changes.intersects(TILDA__FORMULA_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull          (); else        Dst.setDeleted          (_deleted          );
+       if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull          (); else        Dst.setDeleted          (_deleted          );
      }
 
 /**
@@ -2909,7 +2909,6 @@ This is the hasChanged for:<BR>
         }
 
        __Changes.clear();
-       __Nulls.clear();
      }
 /**
  Writes the object to the data store using an upsert approach and assumes the object is either
@@ -3098,19 +3097,19 @@ This is the hasChanged for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-      __Saved_refnum            = _refnum            =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.REFNUM._Mask           );
-      __Saved_location          = _location          = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.LOCATION._Mask         );
-                                  _location2         = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.LOCATION2._Mask        );
-      __Saved_name              = _name              = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.NAME._Mask             );
-                                  _type              = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.TYPE._Mask             ); else _type              = _type             .trim();
-                                  _title             = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.TITLE._Mask            );
-                                  _description       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.DESCRIPTION._Mask      );
-                                  _formula           = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.FORMULA._Mask          );
-                                  _htmlDoc           = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.HTMLDOC._Mask          );
-                                  _referencedColumns = (List<String>) C.getArray(RS, ++i, TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask);
-                                  _created           = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.CREATED._Mask          );
-                                  _lastUpdated       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.LASTUPDATED._Mask      );
-                                  _deleted           = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.DELETED._Mask          );
+      __Saved_refnum            = _refnum            =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FORMULA_Factory.COLS.REFNUM._Mask           ); _refnum = null; }
+      __Saved_location          = _location          = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FORMULA_Factory.COLS.LOCATION._Mask         ); _location = null; }
+                                  _location2         = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FORMULA_Factory.COLS.LOCATION2._Mask        ); _location2 = null; }
+      __Saved_name              = _name              = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FORMULA_Factory.COLS.NAME._Mask             ); _name = null; }
+                                  _type              = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FORMULA_Factory.COLS.TYPE._Mask             ); _type = null; } else _type              = _type             .trim();
+                                  _title             = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FORMULA_Factory.COLS.TITLE._Mask            ); _title = null; }
+                                  _description       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FORMULA_Factory.COLS.DESCRIPTION._Mask      ); _description = null; }
+                                  _formula           = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FORMULA_Factory.COLS.FORMULA._Mask          ); _formula = null; }
+                                  _htmlDoc           = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FORMULA_Factory.COLS.HTMLDOC._Mask          ); _htmlDoc = null; }
+                                  _referencedColumns = (List<String>) C.getArray(RS, ++i, TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Type, false); if (RS.wasNull() == true) { __Nulls.or(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask); _referencedColumns = null; }
+                                  _created           = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__FORMULA_Factory.COLS.CREATED._Mask          ); _created = null; }
+                                  _lastUpdated       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__FORMULA_Factory.COLS.LASTUPDATED._Mask      ); _lastUpdated = null; }
+                                  _deleted           = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__FORMULA_Factory.COLS.DELETED._Mask          ); _deleted = null; }
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();

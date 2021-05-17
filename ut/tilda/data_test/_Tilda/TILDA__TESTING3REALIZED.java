@@ -1250,12 +1250,12 @@ This is the hasChanged for:<BR>
 */
    public void copyTo(tilda.data_test._Tilda.TILDA__TESTING3REALIZED Dst) throws Exception
      {
-       if (__Changes.intersects(TILDA__TESTING3REALIZED_Factory.COLS.REFNUM._Mask) == true) Dst.setRefnumNull        (); else        Dst.setRefnum        (_refnum        );
-       if (__Changes.intersects(TILDA__TESTING3REALIZED_Factory.COLS.NAME._Mask) == true) Dst.setNameNull          (); else        Dst.setName          (_name          );
-       if (__Changes.intersects(TILDA__TESTING3REALIZED_Factory.COLS.A8BTZ._Mask) == true) Dst.setA8bTZNull         (); else        Dst.setA8bTZ         (_a8bTZ         );
-       if (__Changes.intersects(TILDA__TESTING3REALIZED_Factory.COLS.A8B._Mask) == true) Dst.setA8bNull           (); else        Dst.setA8b           (_a8b           );
-       if (__Changes.intersects(TILDA__TESTING3REALIZED_Factory.COLS.LASTUPDATED._Mask) == true) Dst.setLastUpdatedNull   (); else        Dst.setLastUpdated   (_lastUpdated   );
-       if (__Changes.intersects(TILDA__TESTING3REALIZED_Factory.COLS.XXXLASTUPDATED._Mask) == true) Dst.setXxxLastUpdatedNull(); else        Dst.setXxxLastUpdated(_xxxLastUpdated);
+       if (__Nulls.intersects(TILDA__TESTING3REALIZED_Factory.COLS.REFNUM._Mask) == true) Dst.setRefnumNull        (); else        Dst.setRefnum        (_refnum        );
+       if (__Nulls.intersects(TILDA__TESTING3REALIZED_Factory.COLS.NAME._Mask) == true) Dst.setNameNull          (); else        Dst.setName          (_name          );
+       if (__Nulls.intersects(TILDA__TESTING3REALIZED_Factory.COLS.A8BTZ._Mask) == true) Dst.setA8bTZNull         (); else        Dst.setA8bTZ         (_a8bTZ         );
+       if (__Nulls.intersects(TILDA__TESTING3REALIZED_Factory.COLS.A8B._Mask) == true) Dst.setA8bNull           (); else        Dst.setA8b           (_a8b           );
+       if (__Nulls.intersects(TILDA__TESTING3REALIZED_Factory.COLS.LASTUPDATED._Mask) == true) Dst.setLastUpdatedNull   (); else        Dst.setLastUpdated   (_lastUpdated   );
+       if (__Nulls.intersects(TILDA__TESTING3REALIZED_Factory.COLS.XXXLASTUPDATED._Mask) == true) Dst.setXxxLastUpdatedNull(); else        Dst.setXxxLastUpdated(_xxxLastUpdated);
      }
 
 /**
@@ -1510,7 +1510,6 @@ This is the hasChanged for:<BR>
         }
 
        __Changes.clear();
-       __Nulls.clear();
      }
 /**
  Writes the object to the data store using an upsert approach and assumes the object is either
@@ -1532,7 +1531,7 @@ This is the hasChanged for:<BR>
        if (OK == false)
         throw new Exception("Object has not been instanciated via deserialization or the factory create() method.");
 
-       if (__Init == null && __LookupId==0);  // object deserialized
+       if (__Init == null && __LookupId==0)  // object deserialized
         validateDeserialization();
 
        int lookupId = getFirstValidLookupBy();
@@ -1672,12 +1671,12 @@ This is the hasChanged for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-      __Saved_refnum         = _refnum         =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING3REALIZED_Factory.COLS.REFNUM._Mask        );
-                               _name           = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING3REALIZED_Factory.COLS.NAME._Mask          );
-                               _a8bTZ          = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING3REALIZED_Factory.COLS.A8BTZ._Mask         );
-                               _a8b            = processZDT(_a8bTZ           , "tilda.data_test.TILDATEST.Testing3Realized.a8b"           , RS, ++i, TILDA__TESTING3REALIZED_Factory.COLS.A8B           , TILDA__TESTING3REALIZED_Factory.COLS.A8BTZ           ); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING3REALIZED_Factory.COLS.A8B._Mask           );
-                               _lastUpdated    = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING3REALIZED_Factory.COLS.LASTUPDATED._Mask   );
-                               _xxxLastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING3REALIZED_Factory.COLS.XXXLASTUPDATED._Mask);
+      __Saved_refnum         = _refnum         =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING3REALIZED_Factory.COLS.REFNUM._Mask        ); _refnum = null; }
+                               _name           = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING3REALIZED_Factory.COLS.NAME._Mask          ); _name = null; }
+                               _a8bTZ          = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING3REALIZED_Factory.COLS.A8BTZ._Mask         ); _a8bTZ = null; }
+                               _a8b            = processZDT(_a8bTZ           , "tilda.data_test.TILDATEST.Testing3Realized.a8b"           , RS, ++i, TILDA__TESTING3REALIZED_Factory.COLS.A8B           , TILDA__TESTING3REALIZED_Factory.COLS.A8BTZ           ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING3REALIZED_Factory.COLS.A8B._Mask           ); _a8b = null; }
+                               _lastUpdated    = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING3REALIZED_Factory.COLS.LASTUPDATED._Mask   ); _lastUpdated = null; }
+                               _xxxLastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING3REALIZED_Factory.COLS.XXXLASTUPDATED._Mask); _xxxLastUpdated = null; }
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();

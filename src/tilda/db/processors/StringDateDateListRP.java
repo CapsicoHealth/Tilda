@@ -24,7 +24,6 @@ import java.util.List;
 
 import tilda.utils.DateTimeUtil;
 import tilda.utils.pairs.StringDateDatePair;
-import tilda.utils.pairs.StringLongPair;
 
 public class StringDateDateListRP implements RecordProcessor
   {

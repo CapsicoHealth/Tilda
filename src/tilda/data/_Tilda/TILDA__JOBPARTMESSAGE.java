@@ -1326,11 +1326,11 @@ This is the hasChanged for:<BR>
    public void copyTo(tilda.data._Tilda.TILDA__JOBPARTMESSAGE Dst) throws Exception
      {
        Dst.setJobRefnum    (_jobRefnum    );
-       if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask) == true) Dst.setJobPartRefnumNull(); else        Dst.setJobPartRefnum(_jobPartRefnum);
+       if (__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask) == true) Dst.setJobPartRefnumNull(); else        Dst.setJobPartRefnum(_jobPartRefnum);
        Dst.setNotify       (_notify       );
        Dst.setMsg          (_msg          );
        Dst.setLastUpdated  (_lastUpdated  );
-       if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull      (); else        Dst.setDeleted      (_deleted      );
+       if (__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull      (); else        Dst.setDeleted      (_deleted      );
      }
 
 /**
@@ -1605,7 +1605,6 @@ This is the hasChanged for:<BR>
         }
 
        __Changes.clear();
-       __Nulls.clear();
      }
 
 
@@ -1702,14 +1701,14 @@ This is the hasChanged for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-      __Saved_refnum        = _refnum        =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.REFNUM._Mask       );
-                              _jobRefnum     =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBREFNUM._Mask    );
-                              _jobPartRefnum =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask);
-                              _notify        =                              RS.getBoolean   (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.NOTIFY._Mask       );
-                              _msg           = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.MSG._Mask          );
-                              _created       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.CREATED._Mask      );
-                              _lastUpdated   = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.LASTUPDATED._Mask  );
-                              _deleted       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED._Mask      );
+      __Saved_refnum        = _refnum        =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.REFNUM._Mask       ); _refnum = null; }
+                              _jobRefnum     =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBREFNUM._Mask    ); _jobRefnum = null; }
+                              _jobPartRefnum =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask); _jobPartRefnum = null; }
+                              _notify        =                              RS.getBoolean   (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.NOTIFY._Mask       ); _notify = null; }
+                              _msg           = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.MSG._Mask          ); _msg = null; }
+                              _created       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.CREATED._Mask      ); _created = null; }
+                              _lastUpdated   = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.LASTUPDATED._Mask  ); _lastUpdated = null; }
+                              _deleted       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED._Mask      ); _deleted = null; }
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();

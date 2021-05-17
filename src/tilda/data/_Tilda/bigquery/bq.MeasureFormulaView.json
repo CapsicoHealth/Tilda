@@ -1,13 +1,13 @@
 [
-    { "name":"measureRefnum","type":"INT64","mode":"NULLABLE" }
-   ,{ "name":"measureSchema","type":"STRING","mode":"NULLABLE" }
-   ,{ "name":"measureName","type":"STRING","mode":"NULLABLE" }
-   ,{ "name":"formulaRefnum","type":"INT64","mode":"NULLABLE" }
-   ,{ "name":"formulaLocation","type":"STRING","mode":"NULLABLE" }
-   ,{ "name":"formulaLocation2","type":"STRING","mode":"NULLABLE" }
-   ,{ "name":"formulaName","type":"STRING","mode":"NULLABLE" }
-   ,{ "name":"title","type":"STRING","mode":"NULLABLE" }
-   ,{ "name":"description","type":"STRING","mode":"NULLABLE" }
-   ,{ "name":"type","type":"STRING","mode":"NULLABLE" }
-   ,{ "name":"formula","type":"STRING","mode":"NULLABLE" }
+    { "name":"measureRefnum", "type":"INT64", "mode":"REQUIRED", "description":"The measure." }
+   ,{ "name":"schema", "type":"STRING", "mode":"REQUIRED", "description":"The Schema wher ethe measure is defined." }
+   ,{ "name":"name", "type":"STRING", "mode":"REQUIRED", "description":"The name of the measure." }
+   ,{ "name":"refnum", "type":"INT64", "mode":"REQUIRED", "description":"The primary key for this record" }
+   ,{ "name":"location", "type":"STRING", "mode":"REQUIRED", "description":"The name of the primary table/view this formula is defined in." }
+   ,{ "name":"location2", "type":"STRING", "mode":"REQUIRED", "description":"The name of the secondary table/view (a derived view, a realized table), if appropriate." }
+   ,{ "name":"name", "type":"STRING", "mode":"REQUIRED", "description":"The name of the formula/column." }
+   ,{ "name":"title", "type":"STRING", "mode":"REQUIRED", "description":"The title of the formula/column." }
+   ,{ "name":"description", "type":"STRING", "mode":"REQUIRED", "description":"The description of the formula/column." }
+   ,{ "name":"type", "type":"STRING", "mode":"REQUIRED", "description":"The type of the formula/column value/outcome." }
+   ,{ "name":"formula", "type":"STRING", "mode":"NULLABLE", "description":"The formula." }
 ]

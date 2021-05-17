@@ -2030,7 +2030,7 @@ This is the hasChanged for:<BR>
        Dst.setInsertCount   (_insertCount   );
        Dst.setDeleteCount   (_deleteCount   );
        Dst.setLastUpdated   (_lastUpdated   );
-       if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull       (); else        Dst.setDeleted       (_deleted       );
+       if (__Nulls.intersects(TILDA__REFILLPERF_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull       (); else        Dst.setDeleted       (_deleted       );
      }
 
 /**
@@ -2411,7 +2411,6 @@ This is the hasChanged for:<BR>
         }
 
        __Changes.clear();
-       __Nulls.clear();
      }
 /**
  Writes the object to the data store using an upsert approach and assumes the object is either
@@ -2583,20 +2582,20 @@ This is the hasChanged for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-      __Saved_schemaName     = _schemaName     = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__REFILLPERF_Factory.COLS.SCHEMANAME._Mask    );
-      __Saved_objectName     = _objectName     = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__REFILLPERF_Factory.COLS.OBJECTNAME._Mask    );
-                               _startTimeTZ    = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__REFILLPERF_Factory.COLS.STARTTIMETZ._Mask   ); else _startTimeTZ    = _startTimeTZ   .trim();
-      __Saved_startTime      = _startTime      = processZDT(_startTimeTZ     , "tilda.data.TILDA.RefillPerf.startTime"     , RS, ++i, TILDA__REFILLPERF_Factory.COLS.STARTTIME     , TILDA__REFILLPERF_Factory.COLS.STARTTIMETZ     ); if (RS.wasNull() == true) __Nulls.or(TILDA__REFILLPERF_Factory.COLS.STARTTIME._Mask     );
-                               _endTimeTZ      = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__REFILLPERF_Factory.COLS.ENDTIMETZ._Mask     ); else _endTimeTZ      = _endTimeTZ     .trim();
-                               _endTime        = processZDT(_endTimeTZ       , "tilda.data.TILDA.RefillPerf.endTime"       , RS, ++i, TILDA__REFILLPERF_Factory.COLS.ENDTIME       , TILDA__REFILLPERF_Factory.COLS.ENDTIMETZ       ); if (RS.wasNull() == true) __Nulls.or(TILDA__REFILLPERF_Factory.COLS.ENDTIME._Mask       );
-                               _timeInsertSec  =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__REFILLPERF_Factory.COLS.TIMEINSERTSEC._Mask );
-                               _timeDeleteSec  =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__REFILLPERF_Factory.COLS.TIMEDELETESEC._Mask );
-                               _timeAnalyzeSec =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__REFILLPERF_Factory.COLS.TIMEANALYZESEC._Mask);
-                               _insertCount    =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__REFILLPERF_Factory.COLS.INSERTCOUNT._Mask   );
-                               _deleteCount    =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__REFILLPERF_Factory.COLS.DELETECOUNT._Mask   );
-                               _created        = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__REFILLPERF_Factory.COLS.CREATED._Mask       );
-                               _lastUpdated    = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__REFILLPERF_Factory.COLS.LASTUPDATED._Mask   );
-                               _deleted        = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__REFILLPERF_Factory.COLS.DELETED._Mask       );
+      __Saved_schemaName     = _schemaName     = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__REFILLPERF_Factory.COLS.SCHEMANAME._Mask    ); _schemaName = null; }
+      __Saved_objectName     = _objectName     = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__REFILLPERF_Factory.COLS.OBJECTNAME._Mask    ); _objectName = null; }
+                               _startTimeTZ    = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__REFILLPERF_Factory.COLS.STARTTIMETZ._Mask   ); _startTimeTZ = null; } else _startTimeTZ    = _startTimeTZ   .trim();
+      __Saved_startTime      = _startTime      = processZDT(_startTimeTZ     , "tilda.data.TILDA.RefillPerf.startTime"     , RS, ++i, TILDA__REFILLPERF_Factory.COLS.STARTTIME     , TILDA__REFILLPERF_Factory.COLS.STARTTIMETZ     ); if (RS.wasNull() == true) { __Nulls.or(TILDA__REFILLPERF_Factory.COLS.STARTTIME._Mask     ); _startTime = null; }
+                               _endTimeTZ      = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__REFILLPERF_Factory.COLS.ENDTIMETZ._Mask     ); _endTimeTZ = null; } else _endTimeTZ      = _endTimeTZ     .trim();
+                               _endTime        = processZDT(_endTimeTZ       , "tilda.data.TILDA.RefillPerf.endTime"       , RS, ++i, TILDA__REFILLPERF_Factory.COLS.ENDTIME       , TILDA__REFILLPERF_Factory.COLS.ENDTIMETZ       ); if (RS.wasNull() == true) { __Nulls.or(TILDA__REFILLPERF_Factory.COLS.ENDTIME._Mask       ); _endTime = null; }
+                               _timeInsertSec  =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__REFILLPERF_Factory.COLS.TIMEINSERTSEC._Mask ); _timeInsertSec = null; }
+                               _timeDeleteSec  =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__REFILLPERF_Factory.COLS.TIMEDELETESEC._Mask ); _timeDeleteSec = null; }
+                               _timeAnalyzeSec =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__REFILLPERF_Factory.COLS.TIMEANALYZESEC._Mask); _timeAnalyzeSec = null; }
+                               _insertCount    =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__REFILLPERF_Factory.COLS.INSERTCOUNT._Mask   ); _insertCount = null; }
+                               _deleteCount    =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__REFILLPERF_Factory.COLS.DELETECOUNT._Mask   ); _deleteCount = null; }
+                               _created        = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__REFILLPERF_Factory.COLS.CREATED._Mask       ); _created = null; }
+                               _lastUpdated    = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__REFILLPERF_Factory.COLS.LASTUPDATED._Mask   ); _lastUpdated = null; }
+                               _deleted        = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__REFILLPERF_Factory.COLS.DELETED._Mask       ); _deleted = null; }
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();

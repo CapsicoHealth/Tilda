@@ -1063,8 +1063,8 @@ This is the column definition for:<BR>
        protected Connection _C = null;
        protected tilda.db.processors.ObjectProcessor<tilda.data_test.Testing_Data> _OP;
        protected ArrayListResults<tilda.data_test.Testing_Data> _L = null;
-       public void    start  () { if (_OP != null) _OP.start(); }
-       public void    end    (boolean hasMore, int maxCount) { if (_OP == null) _L.wrapup(hasMore, maxCount); else _OP.end(hasMore, maxCount); }
+       public void    start  ()                              throws Exception { if (_OP != null) _OP.start(); }
+       public void    end    (boolean hasMore, int maxCount) throws Exception { if (_OP == null) _L.wrapup(hasMore, maxCount); else _OP.end(hasMore, maxCount); }
        public boolean process(int count, java.sql.ResultSet RS) throws Exception
         {
           tilda.data_test.Testing_Data Obj = new tilda.data_test.Testing_Data();
@@ -1838,7 +1838,7 @@ object. The generic init method defaults to this general data structure as a gen
 
    public static void toJSONCCC(java.io.Writer out, tilda.data_test.Testing_Data obj, String lead, boolean fullObject) throws java.io.IOException
     {
-      toJSONCCC(out, obj, "", fullObject, false);
+      toJSONCCC(out, obj, lead, fullObject, false);
     }
 
    public static void toJSONCCC(java.io.Writer out, tilda.data_test.Testing_Data obj, String lead, boolean fullObject, boolean noNullArrays) throws java.io.IOException
@@ -1930,7 +1930,7 @@ object. The generic init method defaults to this general data structure as a gen
 
    public static void toJSONAAA(java.io.Writer out, tilda.data_test.Testing_Data obj, String lead, boolean fullObject) throws java.io.IOException
     {
-      toJSONAAA(out, obj, "", fullObject, false);
+      toJSONAAA(out, obj, lead, fullObject, false);
     }
 
    public static void toJSONAAA(java.io.Writer out, tilda.data_test.Testing_Data obj, String lead, boolean fullObject, boolean noNullArrays) throws java.io.IOException

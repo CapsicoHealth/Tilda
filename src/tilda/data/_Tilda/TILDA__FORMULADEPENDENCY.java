@@ -959,7 +959,7 @@ This is the hasChanged for:<BR>
    public void copyTo(tilda.data._Tilda.TILDA__FORMULADEPENDENCY Dst) throws Exception
      {
        Dst.setLastUpdated     (_lastUpdated     );
-       if (__Changes.intersects(TILDA__FORMULADEPENDENCY_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull         (); else        Dst.setDeleted         (_deleted         );
+       if (__Nulls.intersects(TILDA__FORMULADEPENDENCY_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull         (); else        Dst.setDeleted         (_deleted         );
      }
 
 /**
@@ -1205,7 +1205,6 @@ This is the hasChanged for:<BR>
         }
 
        __Changes.clear();
-       __Nulls.clear();
      }
 /**
  Writes the object to the data store using an upsert approach and assumes the object is either
@@ -1367,11 +1366,11 @@ This is the hasChanged for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-      __Saved_formulaRefnum    = _formulaRefnum    =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULADEPENDENCY_Factory.COLS.FORMULAREFNUM._Mask   );
-      __Saved_dependencyRefnum = _dependencyRefnum =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULADEPENDENCY_Factory.COLS.DEPENDENCYREFNUM._Mask);
-                                 _created          = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULADEPENDENCY_Factory.COLS.CREATED._Mask         );
-                                 _lastUpdated      = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULADEPENDENCY_Factory.COLS.LASTUPDATED._Mask     );
-                                 _deleted          = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULADEPENDENCY_Factory.COLS.DELETED._Mask         );
+      __Saved_formulaRefnum    = _formulaRefnum    =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FORMULADEPENDENCY_Factory.COLS.FORMULAREFNUM._Mask   ); _formulaRefnum = null; }
+      __Saved_dependencyRefnum = _dependencyRefnum =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FORMULADEPENDENCY_Factory.COLS.DEPENDENCYREFNUM._Mask); _dependencyRefnum = null; }
+                                 _created          = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__FORMULADEPENDENCY_Factory.COLS.CREATED._Mask         ); _created = null; }
+                                 _lastUpdated      = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__FORMULADEPENDENCY_Factory.COLS.LASTUPDATED._Mask     ); _lastUpdated = null; }
+                                 _deleted          = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__FORMULADEPENDENCY_Factory.COLS.DELETED._Mask         ); _deleted = null; }
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();

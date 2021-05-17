@@ -2752,22 +2752,22 @@ This is the hasChanged for:<BR>
 */
    public void copyTo(tilda.tutorial.data._Tilda.TILDA__TEST_XYZ_REALIZED Dst) throws Exception
      {
-       if (__Changes.intersects(TILDA__TEST_XYZ_REALIZED_Factory.COLS.FORMTYPE._Mask) == true) Dst.setFormTypeNull       (); else        Dst.setFormType       (_formType       );
-       if (__Changes.intersects(TILDA__TEST_XYZ_REALIZED_Factory.COLS.FORMFILLDATETZ._Mask) == true) Dst.setFormFillDateTZNull (); else        Dst.setFormFillDateTZ (_formFillDateTZ );
-       if (__Changes.intersects(TILDA__TEST_XYZ_REALIZED_Factory.COLS.FORMFILLDATE._Mask) == true) Dst.setFormFillDateNull   (); else        Dst.setFormFillDate   (_formFillDate   );
-       if (__Changes.intersects(TILDA__TEST_XYZ_REALIZED_Factory.COLS.FORMUSERREFNUM._Mask) == true) Dst.setFormUserRefnumNull (); else        Dst.setFormUserRefnum (_formUserRefnum );
-       if (__Changes.intersects(TILDA__TEST_XYZ_REALIZED_Factory.COLS.FORMUSEREMAIL._Mask) == true) Dst.setFormUserEmailNull  (); else        Dst.setFormUserEmail  (_formUserEmail  );
-       if (__Changes.intersects(TILDA__TEST_XYZ_REALIZED_Factory.COLS.COUNTCORRECT._Mask) == true) Dst.setCountCorrectNull   (); else        Dst.setCountCorrect   (_countCorrect   );
-       if (__Changes.intersects(TILDA__TEST_XYZ_REALIZED_Factory.COLS.COUNTINCORRECT._Mask) == true) Dst.setCountIncorrectNull (); else        Dst.setCountIncorrect (_countIncorrect );
-       if (__Changes.intersects(TILDA__TEST_XYZ_REALIZED_Factory.COLS.TIMEMILLISTOTAL._Mask) == true) Dst.setTimeMillisTotalNull(); else        Dst.setTimeMillisTotal(_timeMillisTotal);
-       if (__Changes.intersects(TILDA__TEST_XYZ_REALIZED_Factory.COLS.TIMEMILLISAVG._Mask) == true) Dst.setTimeMillisAvgNull  (); else        Dst.setTimeMillisAvg  (_timeMillisAvg  );
-       if (__Changes.intersects(TILDA__TEST_XYZ_REALIZED_Factory.COLS.TIMEMILLISMIN._Mask) == true) Dst.setTimeMillisMinNull  (); else        Dst.setTimeMillisMin  (_timeMillisMin  );
-       if (__Changes.intersects(TILDA__TEST_XYZ_REALIZED_Factory.COLS.QX_CORRECT._Mask) == true) Dst.setQX_correctNull     (); else        Dst.setQX_correct     (_QX_correct     );
-       if (__Changes.intersects(TILDA__TEST_XYZ_REALIZED_Factory.COLS.QX_TIMEMILLIS._Mask) == true) Dst.setQX_timeMillisNull  (); else        Dst.setQX_timeMillis  (_QX_timeMillis  );
-       if (__Changes.intersects(TILDA__TEST_XYZ_REALIZED_Factory.COLS.QY_CORRECT._Mask) == true) Dst.setQY_correctNull     (); else        Dst.setQY_correct     (_QY_correct     );
-       if (__Changes.intersects(TILDA__TEST_XYZ_REALIZED_Factory.COLS.QY_TIMEMILLIS._Mask) == true) Dst.setQY_timeMillisNull  (); else        Dst.setQY_timeMillis  (_QY_timeMillis  );
-       if (__Changes.intersects(TILDA__TEST_XYZ_REALIZED_Factory.COLS.QZ_CORRECT._Mask) == true) Dst.setQZ_correctNull     (); else        Dst.setQZ_correct     (_QZ_correct     );
-       if (__Changes.intersects(TILDA__TEST_XYZ_REALIZED_Factory.COLS.QZ_TIMEMILLIS._Mask) == true) Dst.setQZ_timeMillisNull  (); else        Dst.setQZ_timeMillis  (_QZ_timeMillis  );
+       if (__Nulls.intersects(TILDA__TEST_XYZ_REALIZED_Factory.COLS.FORMTYPE._Mask) == true) Dst.setFormTypeNull       (); else        Dst.setFormType       (_formType       );
+       if (__Nulls.intersects(TILDA__TEST_XYZ_REALIZED_Factory.COLS.FORMFILLDATETZ._Mask) == true) Dst.setFormFillDateTZNull (); else        Dst.setFormFillDateTZ (_formFillDateTZ );
+       if (__Nulls.intersects(TILDA__TEST_XYZ_REALIZED_Factory.COLS.FORMFILLDATE._Mask) == true) Dst.setFormFillDateNull   (); else        Dst.setFormFillDate   (_formFillDate   );
+       if (__Nulls.intersects(TILDA__TEST_XYZ_REALIZED_Factory.COLS.FORMUSERREFNUM._Mask) == true) Dst.setFormUserRefnumNull (); else        Dst.setFormUserRefnum (_formUserRefnum );
+       if (__Nulls.intersects(TILDA__TEST_XYZ_REALIZED_Factory.COLS.FORMUSEREMAIL._Mask) == true) Dst.setFormUserEmailNull  (); else        Dst.setFormUserEmail  (_formUserEmail  );
+       if (__Nulls.intersects(TILDA__TEST_XYZ_REALIZED_Factory.COLS.COUNTCORRECT._Mask) == true) Dst.setCountCorrectNull   (); else        Dst.setCountCorrect   (_countCorrect   );
+       if (__Nulls.intersects(TILDA__TEST_XYZ_REALIZED_Factory.COLS.COUNTINCORRECT._Mask) == true) Dst.setCountIncorrectNull (); else        Dst.setCountIncorrect (_countIncorrect );
+       if (__Nulls.intersects(TILDA__TEST_XYZ_REALIZED_Factory.COLS.TIMEMILLISTOTAL._Mask) == true) Dst.setTimeMillisTotalNull(); else        Dst.setTimeMillisTotal(_timeMillisTotal);
+       if (__Nulls.intersects(TILDA__TEST_XYZ_REALIZED_Factory.COLS.TIMEMILLISAVG._Mask) == true) Dst.setTimeMillisAvgNull  (); else        Dst.setTimeMillisAvg  (_timeMillisAvg  );
+       if (__Nulls.intersects(TILDA__TEST_XYZ_REALIZED_Factory.COLS.TIMEMILLISMIN._Mask) == true) Dst.setTimeMillisMinNull  (); else        Dst.setTimeMillisMin  (_timeMillisMin  );
+       if (__Nulls.intersects(TILDA__TEST_XYZ_REALIZED_Factory.COLS.QX_CORRECT._Mask) == true) Dst.setQX_correctNull     (); else        Dst.setQX_correct     (_QX_correct     );
+       if (__Nulls.intersects(TILDA__TEST_XYZ_REALIZED_Factory.COLS.QX_TIMEMILLIS._Mask) == true) Dst.setQX_timeMillisNull  (); else        Dst.setQX_timeMillis  (_QX_timeMillis  );
+       if (__Nulls.intersects(TILDA__TEST_XYZ_REALIZED_Factory.COLS.QY_CORRECT._Mask) == true) Dst.setQY_correctNull     (); else        Dst.setQY_correct     (_QY_correct     );
+       if (__Nulls.intersects(TILDA__TEST_XYZ_REALIZED_Factory.COLS.QY_TIMEMILLIS._Mask) == true) Dst.setQY_timeMillisNull  (); else        Dst.setQY_timeMillis  (_QY_timeMillis  );
+       if (__Nulls.intersects(TILDA__TEST_XYZ_REALIZED_Factory.COLS.QZ_CORRECT._Mask) == true) Dst.setQZ_correctNull     (); else        Dst.setQZ_correct     (_QZ_correct     );
+       if (__Nulls.intersects(TILDA__TEST_XYZ_REALIZED_Factory.COLS.QZ_TIMEMILLIS._Mask) == true) Dst.setQZ_timeMillisNull  (); else        Dst.setQZ_timeMillis  (_QZ_timeMillis  );
      }
 
 /**
@@ -3143,7 +3143,6 @@ This is the hasChanged for:<BR>
         }
 
        __Changes.clear();
-       __Nulls.clear();
      }
 /**
  Writes the object to the data store using an upsert approach and assumes the object is either
@@ -3165,7 +3164,7 @@ This is the hasChanged for:<BR>
        if (OK == false)
         throw new Exception("Object has not been instanciated via deserialization or the factory create() method.");
 
-       if (__Init == null && __LookupId==0);  // object deserialized
+       if (__Init == null && __LookupId==0)  // object deserialized
         validateDeserialization();
 
        int lookupId = getFirstValidLookupBy();
@@ -3316,23 +3315,23 @@ This is the hasChanged for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-      __Saved_formRefnum      = _formRefnum      =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_REALIZED_Factory.COLS.FORMREFNUM._Mask     );
-                                _formType        = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_REALIZED_Factory.COLS.FORMTYPE._Mask       );
-                                _formFillDateTZ  = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_REALIZED_Factory.COLS.FORMFILLDATETZ._Mask );
-                                _formFillDate    = processZDT(_formFillDateTZ   , "tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Realized.formFillDate"   , RS, ++i, TILDA__TEST_XYZ_REALIZED_Factory.COLS.FORMFILLDATE   , TILDA__TEST_XYZ_REALIZED_Factory.COLS.FORMFILLDATETZ   ); if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_REALIZED_Factory.COLS.FORMFILLDATE._Mask   );
-                                _formUserRefnum  =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_REALIZED_Factory.COLS.FORMUSERREFNUM._Mask );
-                                _formUserEmail   = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_REALIZED_Factory.COLS.FORMUSEREMAIL._Mask  );
-                                _countCorrect    =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_REALIZED_Factory.COLS.COUNTCORRECT._Mask   );
-                                _countIncorrect  =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_REALIZED_Factory.COLS.COUNTINCORRECT._Mask );
-                                _timeMillisTotal =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_REALIZED_Factory.COLS.TIMEMILLISTOTAL._Mask);
-                                _timeMillisAvg   =                              RS.getDouble    (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_REALIZED_Factory.COLS.TIMEMILLISAVG._Mask  );
-                                _timeMillisMin   =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_REALIZED_Factory.COLS.TIMEMILLISMIN._Mask  );
-                                _QX_correct      =                              RS.getBoolean   (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_REALIZED_Factory.COLS.QX_CORRECT._Mask     );
-                                _QX_timeMillis   =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_REALIZED_Factory.COLS.QX_TIMEMILLIS._Mask  );
-                                _QY_correct      =                              RS.getBoolean   (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_REALIZED_Factory.COLS.QY_CORRECT._Mask     );
-                                _QY_timeMillis   =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_REALIZED_Factory.COLS.QY_TIMEMILLIS._Mask  );
-                                _QZ_correct      =                              RS.getBoolean   (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_REALIZED_Factory.COLS.QZ_CORRECT._Mask     );
-                                _QZ_timeMillis   =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_REALIZED_Factory.COLS.QZ_TIMEMILLIS._Mask  );
+      __Saved_formRefnum      = _formRefnum      =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_REALIZED_Factory.COLS.FORMREFNUM._Mask     ); _formRefnum = null; }
+                                _formType        = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_REALIZED_Factory.COLS.FORMTYPE._Mask       ); _formType = null; }
+                                _formFillDateTZ  = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_REALIZED_Factory.COLS.FORMFILLDATETZ._Mask ); _formFillDateTZ = null; }
+                                _formFillDate    = processZDT(_formFillDateTZ   , "tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Realized.formFillDate"   , RS, ++i, TILDA__TEST_XYZ_REALIZED_Factory.COLS.FORMFILLDATE   , TILDA__TEST_XYZ_REALIZED_Factory.COLS.FORMFILLDATETZ   ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_REALIZED_Factory.COLS.FORMFILLDATE._Mask   ); _formFillDate = null; }
+                                _formUserRefnum  =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_REALIZED_Factory.COLS.FORMUSERREFNUM._Mask ); _formUserRefnum = null; }
+                                _formUserEmail   = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_REALIZED_Factory.COLS.FORMUSEREMAIL._Mask  ); _formUserEmail = null; }
+                                _countCorrect    =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_REALIZED_Factory.COLS.COUNTCORRECT._Mask   ); _countCorrect = null; }
+                                _countIncorrect  =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_REALIZED_Factory.COLS.COUNTINCORRECT._Mask ); _countIncorrect = null; }
+                                _timeMillisTotal =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_REALIZED_Factory.COLS.TIMEMILLISTOTAL._Mask); _timeMillisTotal = null; }
+                                _timeMillisAvg   =                              RS.getDouble    (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_REALIZED_Factory.COLS.TIMEMILLISAVG._Mask  ); _timeMillisAvg = null; }
+                                _timeMillisMin   =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_REALIZED_Factory.COLS.TIMEMILLISMIN._Mask  ); _timeMillisMin = null; }
+                                _QX_correct      =                              RS.getBoolean   (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_REALIZED_Factory.COLS.QX_CORRECT._Mask     ); _QX_correct = null; }
+                                _QX_timeMillis   =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_REALIZED_Factory.COLS.QX_TIMEMILLIS._Mask  ); _QX_timeMillis = null; }
+                                _QY_correct      =                              RS.getBoolean   (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_REALIZED_Factory.COLS.QY_CORRECT._Mask     ); _QY_correct = null; }
+                                _QY_timeMillis   =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_REALIZED_Factory.COLS.QY_TIMEMILLIS._Mask  ); _QY_timeMillis = null; }
+                                _QZ_correct      =                              RS.getBoolean   (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_REALIZED_Factory.COLS.QZ_CORRECT._Mask     ); _QZ_correct = null; }
+                                _QZ_timeMillis   =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_REALIZED_Factory.COLS.QZ_TIMEMILLIS._Mask  ); _QZ_timeMillis = null; }
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();

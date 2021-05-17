@@ -331,8 +331,8 @@ This is the column definition for:<BR>
        protected Connection _C = null;
        protected tilda.db.processors.ObjectProcessor<tilda.tutorial.data.Test_Realized_Data> _OP;
        protected ArrayListResults<tilda.tutorial.data.Test_Realized_Data> _L = null;
-       public void    start  () { if (_OP != null) _OP.start(); }
-       public void    end    (boolean hasMore, int maxCount) { if (_OP == null) _L.wrapup(hasMore, maxCount); else _OP.end(hasMore, maxCount); }
+       public void    start  ()                              throws Exception { if (_OP != null) _OP.start(); }
+       public void    end    (boolean hasMore, int maxCount) throws Exception { if (_OP == null) _L.wrapup(hasMore, maxCount); else _OP.end(hasMore, maxCount); }
        public boolean process(int count, java.sql.ResultSet RS) throws Exception
         {
           tilda.tutorial.data.Test_Realized_Data Obj = new tilda.tutorial.data.Test_Realized_Data();
@@ -391,6 +391,10 @@ This is the column definition for:<BR>
                 String clause = ((SelectQuery)ExtraParams).getWhereClause();
                 if (TextUtil.isNullOrEmpty(clause) == false) S.append(clause);
                 break;
+             case 1:
+                S.append(" where (1=1)");
+                S.append(" order by "); C.getFullColumnVar(S, "TILDATUTORIAL", "Test_Realized", "type"); S.append(" ASC");
+                break;
              case -77: 
              case -666: break;
              default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot create where clause.");
@@ -414,6 +418,9 @@ This is the column definition for:<BR>
              case -77:
              case -7:
                 break;
+             case 1: {
+               break;
+             }
              case -666: break;
              default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot prepare statement.");
            }
@@ -673,6 +680,30 @@ object. The generic init method defaults to this general data structure as a gen
 
        return (tilda.tutorial.data.Test_Realized_Data) Obj;
      }
+
+
+   static public ListResults<tilda.tutorial.data.Test_Realized_Data> lookupWhereAll(Connection C, int start, int size) throws Exception
+     {
+       tilda.tutorial.data._Tilda.TILDA__TEST_REALIZED Obj = new tilda.tutorial.data.Test_Realized_Data();
+       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
+
+
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
+       readMany(C, 1, RPI, Obj, null, start, size);
+       return RPI._L;
+     }
+
+
+   static public void lookupWhereAll(Connection C, tilda.db.processors.ObjectProcessor<tilda.tutorial.data.Test_Realized_Data> OP, int start, int size) throws Exception
+     {
+       tilda.tutorial.data._Tilda.TILDA__TEST_REALIZED Obj = new tilda.tutorial.data.Test_Realized_Data();
+       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
+
+
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
+       readMany(C, 1, RPI, Obj, null, start, size);
+     }
+
 
    public static SelectQuery newSelectQuery(Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, true); }
    public static SelectQuery newWhereQuery (Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, false); }

@@ -1,16 +1,16 @@
 [
-    { "name":"formRefnum","type":"INT64","mode":"REQUIRED","description":"The primary key for this record (from TILDATUTORIAL.Test_XYZ_Analytics_View.formRefnum)" }
-   ,{ "name":"formType","type":"STRING","mode":"NULLABLE","description":"Form template type (from TILDATUTORIAL.Test_XYZ_Analytics_View.formType)" }
-   ,{ "name":"formFillDateTZ","type":"STRING","mode":"NULLABLE","description":"Generated helper column to hold the time zone ID for 'formFillDate'. (from TILDATUTORIAL.Test_XYZ_Analytics_View.formFillDateTZ)" }
-   ,{ "name":"formFillDate","type":"TIMESTAMP","mode":"NULLABLE","description":"The date the form was filled (from TILDATUTORIAL.Test_XYZ_Analytics_View.formFillDate)" }
-   ,{ "name":"formUserRefnum","type":"INT64","mode":"NULLABLE","description":"The primary key for this record (from TILDATUTORIAL.Test_XYZ_Analytics_View.formUserRefnum)" }
-   ,{ "name":"formUserEmail","type":"STRING","mode":"NULLABLE","description":"The user's email (from TILDATUTORIAL.Test_XYZ_Analytics_View.formUserEmail)" }
-   ,{ "name":"formCountCorrect","type":"INT64","mode":"NULLABLE","description":"Whether the answer is correct or not (from TILDATUTORIAL.Test_XYZ_Analytics_View.formCountCorrect)" }
-   ,{ "name":"formTimeMillisTotal","type":"INT64","mode":"NULLABLE","description":"Time in milliseconds for the time spent answering the question (from TILDATUTORIAL.Test_XYZ_Analytics_View.formTimeMillisTotal)" }
-   ,{ "name":"testCount","type":"INT64","mode":"NULLABLE","description":"The primary key for this record (from TILDATUTORIAL.Test_XYZ_Analytics_View.testCount)" }
-   ,{ "name":"testAnswerCountCorrect","type":"INT64","mode":"NULLABLE","description":"Whether the answer is correct or not (from TILDATUTORIAL.Test_XYZ_Analytics_View.testAnswerCountCorrect)" }
-   ,{ "name":"testTimeMillisAvg","type":"FLOAT64","mode":"NULLABLE","description":"Time in milliseconds for the time spent answering the question (from TILDATUTORIAL.Test_XYZ_Analytics_View.testTimeMillisAvg)" }
-   ,{ "name":"isPassed","type":"INT64","mode":"NULLABLE","description":"Formula column '<B>Test Passed</B>' (from TILDATUTORIAL.Test_XYZ_Analytics_View.isPassed)" }
-   ,{ "name":"tookLongerThanAverage","type":"INT64","mode":"NULLABLE","description":"Formula column '<B>Test Took Longer Than Average</B>' (from TILDATUTORIAL.Test_XYZ_Analytics_View.tookLongerThanAverage)" }
-   ,{ "name":"wasChallenging","type":"INT64","mode":"NULLABLE","description":"Formula column '<B>Test Was Challenging</B>' (from TILDATUTORIAL.Test_XYZ_Analytics_View.wasChallenging)" }
+    { "name":"formRefnum", "type":"INT64", "mode":"REQUIRED", "description":"The primary key for this record (from TILDATUTORIAL.Test_XYZ_Analytics_View.formRefnum)" }
+   ,{ "name":"formType", "type":"STRING", "mode":"NULLABLE", "description":"Form template type (from TILDATUTORIAL.Test_XYZ_Analytics_View.formType)" }
+   ,{ "name":"formFillDateTZ", "type":"STRING", "mode":"NULLABLE", "description":"Generated helper column to hold the time zone ID for 'formFillDate'. (from TILDATUTORIAL.Test_XYZ_Analytics_View.formFillDateTZ)" }
+   ,{ "name":"formFillDate", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"The date the form was filled (from TILDATUTORIAL.Test_XYZ_Analytics_View.formFillDate)" }
+   ,{ "name":"formUserRefnum", "type":"INT64", "mode":"NULLABLE", "description":"The primary key for this record (from TILDATUTORIAL.Test_XYZ_Analytics_View.formUserRefnum)" }
+   ,{ "name":"formUserEmail", "type":"STRING", "mode":"NULLABLE", "description":"The user's email (from TILDATUTORIAL.Test_XYZ_Analytics_View.formUserEmail)" }
+   ,{ "name":"formCountCorrect", "type":"INT64", "mode":"NULLABLE", "description":"Whether the answer is correct or not (from TILDATUTORIAL.Test_XYZ_Analytics_View.formCountCorrect)" }
+   ,{ "name":"formTimeMillisTotal", "type":"INT64", "mode":"NULLABLE", "description":"Time in milliseconds for the time spent answering the question (from TILDATUTORIAL.Test_XYZ_Analytics_View.formTimeMillisTotal)" }
+   ,{ "name":"testCount", "type":"INT64", "mode":"NULLABLE", "description":"The primary key for this record (from TILDATUTORIAL.Test_XYZ_Analytics_View.testCount)" }
+   ,{ "name":"testAnswerCountCorrect", "type":"INT64", "mode":"NULLABLE", "description":"Whether the answer is correct or not (from TILDATUTORIAL.Test_XYZ_Analytics_View.testAnswerCountCorrect)" }
+   ,{ "name":"testTimeMillisAvg", "type":"FLOAT64", "mode":"NULLABLE", "description":"Time in milliseconds for the time spent answering the question (from TILDATUTORIAL.Test_XYZ_Analytics_View.testTimeMillisAvg)" }
+   ,{ "name":"isPassed", "type":"INT64", "mode":"NULLABLE", "description":"Formula column '<B>Test Passed</B>' (from TILDATUTORIAL.Test_XYZ_Analytics_View.isPassed)" }
+   ,{ "name":"tookLongerThanAverage", "type":"INT64", "mode":"NULLABLE", "description":"Formula column '<B>Test Took Longer Than Average</B>' (from TILDATUTORIAL.Test_XYZ_Analytics_View.tookLongerThanAverage)" }
+   ,{ "name":"wasChallenging", "type":"INT64", "mode":"NULLABLE", "description":"Formula column '<B>Test Was Challenging</B>' (from TILDATUTORIAL.Test_XYZ_Analytics_View.wasChallenging)" }
 ]

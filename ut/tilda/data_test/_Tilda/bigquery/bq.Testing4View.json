@@ -1,45 +1,45 @@
 [
-    { "name":"refnum","type":"INT64","mode":"NULLABLE" }
-   ,{ "name":"name","type":"STRING","mode":"NULLABLE" }
-   ,{ "name":"lastUpdated","type":"TIMESTAMP","mode":"NULLABLE" }
-   ,{ "name":"xxxLastUpdated","type":"TIMESTAMP","mode":"NULLABLE" }
-   ,{ "name":"a1","type":"BYTES","mode":"NULLABLE" }
-   ,{ "name":"a3b","type":"BOOL","mode":"REPEATED" }
-   ,{ "name":"a4","type":"FLOAT64","mode":"NULLABLE" }
-   ,{ "name":"a4b","type":"FLOAT64","mode":"REPEATED" }
-   ,{ "name":"a5","type":"FLOAT64","mode":"NULLABLE" }
-   ,{ "name":"a5b","type":"FLOAT64","mode":"REPEATED" }
-   ,{ "name":"a7","type":"INT64","mode":"NULLABLE" }
-   ,{ "name":"a7b","type":"INT64","mode":"REPEATED" }
-   ,{ "name":"a8","type":"BYTES","mode":"NULLABLE" }
-   ,{ "name":"a8bTZ","type":"STRING","mode":"NULLABLE" }
-   ,{ "name":"a8b","type":"TIMESTAMP","mode":"NULLABLE" }
-   ,{ "name":"a10a","type":"INT64","mode":"NULLABLE" }
-   ,{ "name":"a10b","type":"STRING","mode":"NULLABLE" }
-   ,{ "name":"a10c","type":"INT64","mode":"NULLABLE" }
-   ,{ "name":"a11","type":"NUMERIC","mode":"NULLABLE" }
-   ,{ "name":"a11b","type":"NUMERIC","mode":"REPEATED" }
-   ,{ "name":"a11c","type":"NUMERIC","mode":"NULLABLE" }
-   ,{ "name":"a12","type":"INT64","mode":"NULLABLE" }
-   ,{ "name":"a12b","type":"INT64","mode":"REPEATED" }
-   ,{ "name":"a13","type":"STRING","mode":"NULLABLE" }
-   ,{ "name":"a13b","type":"STRING","mode":"REPEATED" }
-   ,{ "name":"description","type":"STRING","mode":"NULLABLE" }
-   ,{ "name":"desc2","type":"STRING","mode":"NULLABLE" }
-   ,{ "name":"desc3","type":"STRING","mode":"NULLABLE" }
-   ,{ "name":"desc4","type":"STRING","mode":"NULLABLE" }
-   ,{ "name":"desc5","type":"STRING","mode":"NULLABLE" }
-   ,{ "name":"desc6","type":"STRING","mode":"NULLABLE" }
-   ,{ "name":"a3","type":"BOOL","mode":"NULLABLE" }
-   ,{ "name":"bastille","type":"TIMESTAMP","mode":"NULLABLE" }
-   ,{ "name":"toto","type":"TIMESTAMP","mode":"NULLABLE" }
-   ,{ "name":"desc2_Cat1","type":"FLOAT64","mode":"NULLABLE" }
-   ,{ "name":"desc2_Cat2","type":"FLOAT64","mode":"NULLABLE" }
-   ,{ "name":"desc2_Cat3","type":"FLOAT64","mode":"NULLABLE" }
-   ,{ "name":"a7_Cat4","type":"FLOAT64","mode":"NULLABLE" }
-   ,{ "name":"a7_Cat5","type":"FLOAT64","mode":"NULLABLE" }
-   ,{ "name":"a5_null","type":"INT64","mode":"NULLABLE" }
-   ,{ "name":"a6_null","type":"INT64","mode":"NULLABLE" }
-   ,{ "name":"a7_null","type":"INT64","mode":"NULLABLE" }
-   ,{ "name":"a8_null","type":"INT64","mode":"NULLABLE" }
+    { "name":"refnum", "type":"INT64", "mode":"NULLABLE" }
+   ,{ "name":"name", "type":"STRING", "mode":"NULLABLE" }
+   ,{ "name":"lastUpdated", "type":"TIMESTAMP", "mode":"NULLABLE" }
+   ,{ "name":"xxxLastUpdated", "type":"TIMESTAMP", "mode":"NULLABLE" }
+   ,{ "name":"a1", "type":"BYTES", "mode":"NULLABLE" }
+   ,{ "name":"a3b", "type":"BOOL", "mode":"REPEATED" }
+   ,{ "name":"a4", "type":"FLOAT64", "mode":"NULLABLE" }
+   ,{ "name":"a4b", "type":"FLOAT64", "mode":"REPEATED" }
+   ,{ "name":"a5", "type":"FLOAT64", "mode":"NULLABLE" }
+   ,{ "name":"a5b", "type":"FLOAT64", "mode":"REPEATED" }
+   ,{ "name":"a7", "type":"INT64", "mode":"NULLABLE" }
+   ,{ "name":"a7b", "type":"INT64", "mode":"REPEATED" }
+   ,{ "name":"a8", "type":"BYTES", "mode":"NULLABLE" }
+   ,{ "name":"a8bTZ", "type":"STRING", "mode":"NULLABLE" }
+   ,{ "name":"a8b", "type":"TIMESTAMP", "mode":"NULLABLE" }
+   ,{ "name":"a10a", "type":"INT64", "mode":"NULLABLE" }
+   ,{ "name":"a10b", "type":"STRING", "mode":"NULLABLE" }
+   ,{ "name":"a10c", "type":"INT64", "mode":"NULLABLE" }
+   ,{ "name":"a11", "type":"NUMERIC", "mode":"NULLABLE" }
+   ,{ "name":"a11b", "type":"NUMERIC", "mode":"REPEATED" }
+   ,{ "name":"a11c", "type":"NUMERIC", "mode":"NULLABLE" }
+   ,{ "name":"a12", "type":"INT64", "mode":"NULLABLE" }
+   ,{ "name":"a12b", "type":"INT64", "mode":"REPEATED" }
+   ,{ "name":"a13", "type":"STRING", "mode":"NULLABLE" }
+   ,{ "name":"a13b", "type":"STRING", "mode":"REPEATED" }
+   ,{ "name":"description", "type":"STRING", "mode":"NULLABLE" }
+   ,{ "name":"desc2", "type":"STRING", "mode":"NULLABLE" }
+   ,{ "name":"desc3", "type":"STRING", "mode":"NULLABLE" }
+   ,{ "name":"desc4", "type":"STRING", "mode":"NULLABLE" }
+   ,{ "name":"desc5", "type":"STRING", "mode":"NULLABLE" }
+   ,{ "name":"desc6", "type":"STRING", "mode":"NULLABLE" }
+   ,{ "name":"a3", "type":"BOOL", "mode":"NULLABLE" }
+   ,{ "name":"bastille", "type":"TIMESTAMP", "mode":"NULLABLE" }
+   ,{ "name":"toto", "type":"TIMESTAMP", "mode":"NULLABLE" }
+   ,{ "name":"desc2_Cat1", "type":"FLOAT64", "mode":"NULLABLE" }
+   ,{ "name":"desc2_Cat2", "type":"FLOAT64", "mode":"NULLABLE" }
+   ,{ "name":"desc2_Cat3", "type":"FLOAT64", "mode":"NULLABLE" }
+   ,{ "name":"a7_Cat4", "type":"FLOAT64", "mode":"NULLABLE" }
+   ,{ "name":"a7_Cat5", "type":"FLOAT64", "mode":"NULLABLE" }
+   ,{ "name":"a5_null", "type":"INT64", "mode":"NULLABLE" }
+   ,{ "name":"a6_null", "type":"INT64", "mode":"NULLABLE" }
+   ,{ "name":"a7_null", "type":"INT64", "mode":"NULLABLE" }
+   ,{ "name":"a8_null", "type":"INT64", "mode":"NULLABLE" }
 ]

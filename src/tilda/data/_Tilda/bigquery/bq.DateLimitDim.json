@@ -1,5 +1,5 @@
 [
-    { "name":"invalidDate","type":"DATE","mode":"REQUIRED","description":"The invalid date" }
-   ,{ "name":"minDate","type":"DATE","mode":"REQUIRED","description":"The min date" }
-   ,{ "name":"maxDate","type":"DATE","mode":"REQUIRED","description":"The max date" }
+    { "name":"invalidDate", "type":"DATE", "mode":"REQUIRED", "description":"The invalid date" }
+   ,{ "name":"minDate", "type":"DATE", "mode":"REQUIRED", "description":"The min date" }
+   ,{ "name":"maxDate", "type":"DATE", "mode":"REQUIRED", "description":"The max date" }
 ]

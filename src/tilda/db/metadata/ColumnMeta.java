@@ -47,7 +47,7 @@ public class ColumnMeta
         _ParentView = V;
       }
 
-    public final String     _Name;
+    public String     _Name;
     public final String     _NameOriginal;
     public final int        _Nullable;
     public final int        _Size;

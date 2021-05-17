@@ -1,12 +1,12 @@
 [
-    { "name":"name","type":"STRING","mode":"NULLABLE" }
-   ,{ "name":"lastUpdated","type":"TIMESTAMP","mode":"NULLABLE" }
-   ,{ "name":"refnum","type":"INT64","mode":"NULLABLE" }
-   ,{ "name":"a2Min","type":"STRING","mode":"NULLABLE" }
-   ,{ "name":"a2Max","type":"STRING","mode":"NULLABLE" }
-   ,{ "name":"a9TZ","type":"STRING","mode":"REPEATED" }
-   ,{ "name":"a9","type":"TIMESTAMP","mode":"REPEATED" }
-   ,{ "name":"a9c","type":"DATE","mode":"REPEATED" }
-   ,{ "name":"a6First","type":"INT64","mode":"NULLABLE" }
-   ,{ "name":"a6Last","type":"INT64","mode":"NULLABLE" }
+    { "name":"name", "type":"STRING", "mode":"NULLABLE" }
+   ,{ "name":"lastUpdated", "type":"TIMESTAMP", "mode":"NULLABLE" }
+   ,{ "name":"refnum", "type":"INT64", "mode":"NULLABLE" }
+   ,{ "name":"a2Min", "type":"STRING", "mode":"NULLABLE" }
+   ,{ "name":"a2Max", "type":"STRING", "mode":"NULLABLE" }
+   ,{ "name":"a9TZ", "type":"STRING", "mode":"REPEATED" }
+   ,{ "name":"a9", "type":"TIMESTAMP", "mode":"REPEATED" }
+   ,{ "name":"a9c", "type":"DATE", "mode":"REPEATED" }
+   ,{ "name":"a6First", "type":"INT64", "mode":"NULLABLE" }
+   ,{ "name":"a6Last", "type":"INT64", "mode":"NULLABLE" }
 ]

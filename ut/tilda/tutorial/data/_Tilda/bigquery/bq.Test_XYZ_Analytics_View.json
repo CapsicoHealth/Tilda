@@ -1,13 +1,13 @@
 [
-    { "name":"formRefnum" "type":"INT64" "mode":"NULLABLE" }
-   ,{ "name":"formType" "type":"STRING" "mode":"NULLABLE" }
-   ,{ "name":"formFillDateTZ" "type":"STRING" "mode":"NULLABLE" }
-   ,{ "name":"formFillDate" "type":"TIMESTAMP" "mode":"NULLABLE" }
-   ,{ "name":"formUserRefnum" "type":"INT64" "mode":"NULLABLE" }
-   ,{ "name":"formUserEmail" "type":"STRING" "mode":"NULLABLE" }
-   ,{ "name":"formCountCorrect" "type":"INT64" "mode":"NULLABLE" }
-   ,{ "name":"formTimeMillisTotal" "type":"INT64" "mode":"NULLABLE" }
-   ,{ "name":"testCount" "type":"INT64" "mode":"NULLABLE" }
-   ,{ "name":"testAnswerCountCorrect" "type":"INT64" "mode":"NULLABLE" }
-   ,{ "name":"testTimeMillisAvg" "type":"FLOAT64" "mode":"NULLABLE" }
+    { "name":"formRefnum", "type":"INT64", "mode":"NULLABLE" }
+   ,{ "name":"formType", "type":"STRING", "mode":"NULLABLE" }
+   ,{ "name":"formFillDateTZ", "type":"STRING", "mode":"NULLABLE" }
+   ,{ "name":"formFillDate", "type":"TIMESTAMP", "mode":"NULLABLE" }
+   ,{ "name":"formUserRefnum", "type":"INT64", "mode":"NULLABLE" }
+   ,{ "name":"formUserEmail", "type":"STRING", "mode":"NULLABLE" }
+   ,{ "name":"formCountCorrect", "type":"INT64", "mode":"NULLABLE" }
+   ,{ "name":"formTimeMillisTotal", "type":"INT64", "mode":"NULLABLE" }
+   ,{ "name":"testCount", "type":"INT64", "mode":"NULLABLE" }
+   ,{ "name":"testAnswerCountCorrect", "type":"INT64", "mode":"NULLABLE" }
+   ,{ "name":"testTimeMillisAvg", "type":"FLOAT64", "mode":"NULLABLE" }
 ]

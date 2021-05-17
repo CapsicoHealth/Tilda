@@ -6391,48 +6391,48 @@ This is the null setter for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-                            _refnum      =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.REFNUM._Mask     );
-                            _name        = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.NAME._Mask       );
-                            _a1          =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A1._Mask         );
-                            _a3b = (List<Boolean>) C.getArray(RS, ++i, TILDA__TESTING4VIEW_Factory.COLS.A3B._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A3B._Mask        );
-                            _a4          =                              RS.getDouble    (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A4._Mask         );
-                            _a4b = (List<Double>) C.getArray(RS, ++i, TILDA__TESTING4VIEW_Factory.COLS.A4B._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A4B._Mask        );
-                            _a5          =                              RS.getFloat     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A5._Mask         );
-                            _a5b = (List<Float>) C.getArray(RS, ++i, TILDA__TESTING4VIEW_Factory.COLS.A5B._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A5B._Mask        );
-                            _a7          =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A7._Mask         );
-                            _a7b = (List<Integer>) C.getArray(RS, ++i, TILDA__TESTING4VIEW_Factory.COLS.A7B._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A7B._Mask        );
-                            _a8          =                              RS.getBytes     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A8._Mask         );
-                            _a8bTZ       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A8BTZ._Mask      );
-                            _a8b         = processZDT(_a8bTZ        , "tilda.data_test.TILDATEST.Testing4View.a8b"        , RS, ++i, TILDA__TESTING4VIEW_Factory.COLS.A8B        , TILDA__TESTING4VIEW_Factory.COLS.A8BTZ        ); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A8B._Mask        );
-                            _a10a        =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A10A._Mask       );
-                            _a10b        = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A10B._Mask       );
-                            _a10c        =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A10C._Mask       );
-                            _a11         =                              RS.getBigDecimal(++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A11._Mask        );
-                            _a11b = (List<BigDecimal>) C.getArray(RS, ++i, TILDA__TESTING4VIEW_Factory.COLS.A11B._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A11B._Mask       );
-                            _a11c        =                              RS.getBigDecimal(++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A11C._Mask       );
-                            _a12         =                              RS.getShort     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A12._Mask        );
-                            _a12b = (List<Short>) C.getArray(RS, ++i, TILDA__TESTING4VIEW_Factory.COLS.A12B._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A12B._Mask       );
-                            _a13         =                              (java.util.UUID) RS.getObject(++i);  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A13._Mask        );
-                            _a13b = (List<UUID>) C.getArray(RS, ++i, TILDA__TESTING4VIEW_Factory.COLS.A13B._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A13B._Mask       );
-                            _description = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.DESCRIPTION._Mask);
-                            _desc2       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.DESC2._Mask      );
-                            _desc3       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.DESC3._Mask      );
-                            _desc4       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.DESC4._Mask      );
-                            _desc5       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.DESC5._Mask      );
-                            _desc6       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.DESC6._Mask      );
-                            _bastille    = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.BASTILLE._Mask   );
-                            _toto        = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.TOTO._Mask       );
-                            _desc2_Cat1  =                              RS.getDouble    (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.DESC2_CAT1._Mask );
-                            _desc2_Cat2  =                              RS.getDouble    (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.DESC2_CAT2._Mask );
-                            _desc2_Cat3  =                              RS.getDouble    (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.DESC2_CAT3._Mask );
-                            _a7_Cat4     =                              RS.getDouble    (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A7_CAT4._Mask    );
-                            _a7_Cat5     =                              RS.getDouble    (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A7_CAT5._Mask    );
-                            _a5_null     =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A5_NULL._Mask    );
-                            _a6_null     =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A6_NULL._Mask    );
-                            _a7_null     =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A7_NULL._Mask    );
-                            _a8_null     =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A8_NULL._Mask    );
-                            _a3          =                              RS.getBoolean   (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A3._Mask         );
-                            _lastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.LASTUPDATED._Mask);
+                            _refnum      =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.REFNUM._Mask     ); _refnum = null; }
+                            _name        = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.NAME._Mask       ); _name = null; }
+                            _a1          =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A1._Mask         ); _a1 = null; }
+                            _a3b = (List<Boolean>) C.getArray(RS, ++i, TILDA__TESTING4VIEW_Factory.COLS.A3B._Type, false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A3B._Mask        ); _a3b = null; }
+                            _a4          =                              RS.getDouble    (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A4._Mask         ); _a4 = null; }
+                            _a4b = (List<Double>) C.getArray(RS, ++i, TILDA__TESTING4VIEW_Factory.COLS.A4B._Type, false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A4B._Mask        ); _a4b = null; }
+                            _a5          =                              RS.getFloat     (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A5._Mask         ); _a5 = null; }
+                            _a5b = (List<Float>) C.getArray(RS, ++i, TILDA__TESTING4VIEW_Factory.COLS.A5B._Type, false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A5B._Mask        ); _a5b = null; }
+                            _a7          =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A7._Mask         ); _a7 = null; }
+                            _a7b = (List<Integer>) C.getArray(RS, ++i, TILDA__TESTING4VIEW_Factory.COLS.A7B._Type, false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A7B._Mask        ); _a7b = null; }
+                            _a8          =                              RS.getBytes     (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A8._Mask         ); _a8 = null; }
+                            _a8bTZ       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A8BTZ._Mask      ); _a8bTZ = null; }
+                            _a8b         = processZDT(_a8bTZ        , "tilda.data_test.TILDATEST.Testing4View.a8b"        , RS, ++i, TILDA__TESTING4VIEW_Factory.COLS.A8B        , TILDA__TESTING4VIEW_Factory.COLS.A8BTZ        ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A8B._Mask        ); _a8b = null; }
+                            _a10a        =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A10A._Mask       ); _a10a = null; }
+                            _a10b        = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A10B._Mask       ); _a10b = null; }
+                            _a10c        =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A10C._Mask       ); _a10c = null; }
+                            _a11         =                              RS.getBigDecimal(++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A11._Mask        ); _a11 = null; }
+                            _a11b = (List<BigDecimal>) C.getArray(RS, ++i, TILDA__TESTING4VIEW_Factory.COLS.A11B._Type, false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A11B._Mask       ); _a11b = null; }
+                            _a11c        =                              RS.getBigDecimal(++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A11C._Mask       ); _a11c = null; }
+                            _a12         =                              RS.getShort     (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A12._Mask        ); _a12 = null; }
+                            _a12b = (List<Short>) C.getArray(RS, ++i, TILDA__TESTING4VIEW_Factory.COLS.A12B._Type, false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A12B._Mask       ); _a12b = null; }
+                            _a13         =                              (java.util.UUID) RS.getObject(++i);  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A13._Mask        ); _a13 = null; }
+                            _a13b = (List<UUID>) C.getArray(RS, ++i, TILDA__TESTING4VIEW_Factory.COLS.A13B._Type, false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A13B._Mask       ); _a13b = null; }
+                            _description = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.DESCRIPTION._Mask); _description = null; }
+                            _desc2       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.DESC2._Mask      ); _desc2 = null; }
+                            _desc3       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.DESC3._Mask      ); _desc3 = null; }
+                            _desc4       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.DESC4._Mask      ); _desc4 = null; }
+                            _desc5       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.DESC5._Mask      ); _desc5 = null; }
+                            _desc6       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.DESC6._Mask      ); _desc6 = null; }
+                            _bastille    = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.BASTILLE._Mask   ); _bastille = null; }
+                            _toto        = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.TOTO._Mask       ); _toto = null; }
+                            _desc2_Cat1  =                              RS.getDouble    (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.DESC2_CAT1._Mask ); _desc2_Cat1 = null; }
+                            _desc2_Cat2  =                              RS.getDouble    (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.DESC2_CAT2._Mask ); _desc2_Cat2 = null; }
+                            _desc2_Cat3  =                              RS.getDouble    (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.DESC2_CAT3._Mask ); _desc2_Cat3 = null; }
+                            _a7_Cat4     =                              RS.getDouble    (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A7_CAT4._Mask    ); _a7_Cat4 = null; }
+                            _a7_Cat5     =                              RS.getDouble    (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A7_CAT5._Mask    ); _a7_Cat5 = null; }
+                            _a5_null     =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A5_NULL._Mask    ); _a5_null = null; }
+                            _a6_null     =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A6_NULL._Mask    ); _a6_null = null; }
+                            _a7_null     =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A7_NULL._Mask    ); _a7_null = null; }
+                            _a8_null     =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A8_NULL._Mask    ); _a8_null = null; }
+                            _a3          =                              RS.getBoolean   (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.A3._Mask         ); _a3 = null; }
+                            _lastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING4VIEW_Factory.COLS.LASTUPDATED._Mask); _lastUpdated = null; }
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();

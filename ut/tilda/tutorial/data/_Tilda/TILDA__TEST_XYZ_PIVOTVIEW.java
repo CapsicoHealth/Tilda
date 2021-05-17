@@ -2173,23 +2173,23 @@ This is the null setter for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-                                _formRefnum      =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_PIVOTVIEW_Factory.COLS.FORMREFNUM._Mask     );
-                                _formType        = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_PIVOTVIEW_Factory.COLS.FORMTYPE._Mask       );
-                                _formFillDateTZ  = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_PIVOTVIEW_Factory.COLS.FORMFILLDATETZ._Mask );
-                                _formFillDate    = processZDT(_formFillDateTZ   , "tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_PivotView.formFillDate"   , RS, ++i, TILDA__TEST_XYZ_PIVOTVIEW_Factory.COLS.FORMFILLDATE   , TILDA__TEST_XYZ_PIVOTVIEW_Factory.COLS.FORMFILLDATETZ   ); if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_PIVOTVIEW_Factory.COLS.FORMFILLDATE._Mask   );
-                                _formUserRefnum  =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_PIVOTVIEW_Factory.COLS.FORMUSERREFNUM._Mask );
-                                _formUserEmail   = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_PIVOTVIEW_Factory.COLS.FORMUSEREMAIL._Mask  );
-                                _countCorrect    =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_PIVOTVIEW_Factory.COLS.COUNTCORRECT._Mask   );
-                                _countIncorrect  =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_PIVOTVIEW_Factory.COLS.COUNTINCORRECT._Mask );
-                                _timeMillisTotal =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_PIVOTVIEW_Factory.COLS.TIMEMILLISTOTAL._Mask);
-                                _timeMillisAvg   =                              RS.getDouble    (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_PIVOTVIEW_Factory.COLS.TIMEMILLISAVG._Mask  );
-                                _timeMillisMin   =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_PIVOTVIEW_Factory.COLS.TIMEMILLISMIN._Mask  );
-                                _QX_correct      =                              RS.getBoolean   (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_PIVOTVIEW_Factory.COLS.QX_CORRECT._Mask     );
-                                _QX_timeMillis   =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_PIVOTVIEW_Factory.COLS.QX_TIMEMILLIS._Mask  );
-                                _QY_correct      =                              RS.getBoolean   (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_PIVOTVIEW_Factory.COLS.QY_CORRECT._Mask     );
-                                _QY_timeMillis   =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_PIVOTVIEW_Factory.COLS.QY_TIMEMILLIS._Mask  );
-                                _QZ_correct      =                              RS.getBoolean   (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_PIVOTVIEW_Factory.COLS.QZ_CORRECT._Mask     );
-                                _QZ_timeMillis   =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_PIVOTVIEW_Factory.COLS.QZ_TIMEMILLIS._Mask  );
+                                _formRefnum      =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_PIVOTVIEW_Factory.COLS.FORMREFNUM._Mask     ); _formRefnum = null; }
+                                _formType        = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_PIVOTVIEW_Factory.COLS.FORMTYPE._Mask       ); _formType = null; }
+                                _formFillDateTZ  = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_PIVOTVIEW_Factory.COLS.FORMFILLDATETZ._Mask ); _formFillDateTZ = null; }
+                                _formFillDate    = processZDT(_formFillDateTZ   , "tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_PivotView.formFillDate"   , RS, ++i, TILDA__TEST_XYZ_PIVOTVIEW_Factory.COLS.FORMFILLDATE   , TILDA__TEST_XYZ_PIVOTVIEW_Factory.COLS.FORMFILLDATETZ   ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_PIVOTVIEW_Factory.COLS.FORMFILLDATE._Mask   ); _formFillDate = null; }
+                                _formUserRefnum  =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_PIVOTVIEW_Factory.COLS.FORMUSERREFNUM._Mask ); _formUserRefnum = null; }
+                                _formUserEmail   = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_PIVOTVIEW_Factory.COLS.FORMUSEREMAIL._Mask  ); _formUserEmail = null; }
+                                _countCorrect    =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_PIVOTVIEW_Factory.COLS.COUNTCORRECT._Mask   ); _countCorrect = null; }
+                                _countIncorrect  =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_PIVOTVIEW_Factory.COLS.COUNTINCORRECT._Mask ); _countIncorrect = null; }
+                                _timeMillisTotal =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_PIVOTVIEW_Factory.COLS.TIMEMILLISTOTAL._Mask); _timeMillisTotal = null; }
+                                _timeMillisAvg   =                              RS.getDouble    (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_PIVOTVIEW_Factory.COLS.TIMEMILLISAVG._Mask  ); _timeMillisAvg = null; }
+                                _timeMillisMin   =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_PIVOTVIEW_Factory.COLS.TIMEMILLISMIN._Mask  ); _timeMillisMin = null; }
+                                _QX_correct      =                              RS.getBoolean   (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_PIVOTVIEW_Factory.COLS.QX_CORRECT._Mask     ); _QX_correct = null; }
+                                _QX_timeMillis   =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_PIVOTVIEW_Factory.COLS.QX_TIMEMILLIS._Mask  ); _QX_timeMillis = null; }
+                                _QY_correct      =                              RS.getBoolean   (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_PIVOTVIEW_Factory.COLS.QY_CORRECT._Mask     ); _QY_correct = null; }
+                                _QY_timeMillis   =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_PIVOTVIEW_Factory.COLS.QY_TIMEMILLIS._Mask  ); _QY_timeMillis = null; }
+                                _QZ_correct      =                              RS.getBoolean   (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_PIVOTVIEW_Factory.COLS.QZ_CORRECT._Mask     ); _QZ_correct = null; }
+                                _QZ_timeMillis   =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_PIVOTVIEW_Factory.COLS.QZ_TIMEMILLIS._Mask  ); _QZ_timeMillis = null; }
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();
