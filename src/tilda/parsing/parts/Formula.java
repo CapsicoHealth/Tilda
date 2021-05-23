@@ -41,7 +41,8 @@ public class Formula extends TypeDef
     @SerializedName("title"      ) public String   _Title      ;
     @SerializedName("id"         ) public String   _Id         ;
     @SerializedName("description") public String[] _Description;
-    @SerializedName("values"     ) public Value[] _Values;
+    @SerializedName("values"     ) public Value[]  _Values;
+    @SerializedName("coalesceNumbers" ) public boolean  _CoalesceNumbers = Boolean.TRUE;
     /*@formatter:on*/
 
     public transient View         _ParentView;
