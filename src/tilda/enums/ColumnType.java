@@ -131,9 +131,9 @@ public enum ColumnType
             } // NUMERIC TODO:CHECK
             , { BOOLEAN, DOUBLE, FLOAT, LONG, INTEGER, CHAR, STRING
             } // BOOLEAN
-            , { DATE, STRING
+            , { DATE, DATETIME, STRING
             } // DATE
-            , { DATETIME, DATE, STRING
+            , { DATETIME, STRING
             } // DATETIME
             , { BINARY
             } // BINARY
