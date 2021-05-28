@@ -684,6 +684,7 @@ public class JSONUtil
         Out.write(Header);
         print(Out, elementName, firstElement);
 
+        
         if (L == null)
           {
             Out.write(" null ");
@@ -709,7 +710,7 @@ public class JSONUtil
             else
               Out.write(Header + "  ,");
             Obj.toJSON(Out, JsonExportName, "", true);
-            Out.write("\n");
+//            Out.write("\n");
           }
         Out.write(Header + "  ]\n");
       }
