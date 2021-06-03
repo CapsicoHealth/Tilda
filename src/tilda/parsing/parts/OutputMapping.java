@@ -43,6 +43,7 @@ public class OutputMapping
     /*@formatter:off*/
     @SerializedName("name"        ) public String   _Name;
     @SerializedName("columns"     ) public String[] _Columns;
+    @SerializedName("exclude"     ) public String[] _Exclude = new String[] { };
     @SerializedName("sync"        ) public boolean  _Sync = false;
     @SerializedName("outTypes"    ) public String[] _OutputTypeStrs;
     @SerializedName("nvpSrc"      ) public String 	_NVPSrcStr;
@@ -58,7 +59,6 @@ public class OutputMapping
         _NVPSrcStr = OM._NVPSrcStr;
         _NVPValueTypeStr = OM._NVPValueTypeStr;
       }
-
     
     public transient List<Column>           _ColumnObjs;
     public transient List<OutputFormatType> _OutputTypes;
@@ -81,7 +81,7 @@ public class OutputMapping
 
         if (_Columns != null && _Columns.length > 0)
           {
-            _Columns = CollectionUtil.toStringArray(_ParentObject.expandColumnNames(_Columns, PS, "outputMap", _Name));
+            _Columns = CollectionUtil.toStringArray(_ParentObject.expandColumnNames(_Columns, PS, "outputMap", _Name, _Exclude));
           }
 
         if (TextUtil.isNullOrEmpty(_Columns) == true)

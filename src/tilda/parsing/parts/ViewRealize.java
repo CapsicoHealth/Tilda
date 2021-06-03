@@ -162,7 +162,7 @@ public class ViewRealize
         // LOG.debug(ParentRealized._O.getFullName()+": "+TextUtil.print(ParentRealized._O.getColumnNames()));
         for (Column C : ParentRealized._O._Columns)
           {
-            if (TextUtil.findStarElement(_Exclude_DEPRECATED, C._Name, false, 0) == -1)
+            if (TextUtil.findStarElement(_Exclude_DEPRECATED, C._Name, true, 0) == -1)
               {
                 if (C._FCT.isOCC() == true)
                   OCC = true;

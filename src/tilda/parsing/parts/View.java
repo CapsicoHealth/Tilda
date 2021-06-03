@@ -842,12 +842,12 @@ public class View extends Base
             || col._FCT != FrameworkColumnType.NONE && col._FCT != FrameworkColumnType.TS && col._FCT.isOCC() == false)
               // if (col._FrameworkManaged == true)
               continue;
-            if (TextUtil.findStarElement(VC._Exclude, col._Name, false, 0) != -1)
+            if (TextUtil.findStarElement(VC._Exclude, col._Name, true, 0) != -1)
               continue;
             if (col._Name.startsWith(startingWith) == false)
               continue;
             ViewColumn NewVC = new ViewColumn();
-            if (TextUtil.findStarElement(VC._Block, col._Name, false, 0) != -1)
+            if (TextUtil.findStarElement(VC._Block, col._Name, true, 0) != -1)
               NewVC._FormulaOnly = true;
             NewVC._SameAs = col.getFullName();
             NewVC._As = VC._As;
@@ -867,7 +867,7 @@ public class View extends Base
             if (col._FCT == FrameworkColumnType.TZ
             || col._FCT != FrameworkColumnType.NONE && col._FCT != FrameworkColumnType.TS && col._FCT.isOCC() == false)
               continue;
-            if (TextUtil.findStarElement(VC._Exclude, col._Name, false, 0) != -1)
+            if (TextUtil.findStarElement(VC._Exclude, col._Name, true, 0) != -1)
               continue;
             if (col._JoinOnly == true || col._FormulaOnly == true)
               continue;
@@ -890,7 +890,7 @@ public class View extends Base
                 NewVC._Precision = col._Precision;
               }
 
-            if (TextUtil.findStarElement(VC._Block, col._Name, false, 0) != -1)
+            if (TextUtil.findStarElement(VC._Block, col._Name, true, 0) != -1)
               NewVC._FormulaOnly = true;
             _ViewColumns.add(i + j, NewVC);
             _PadderColumnNames.track(NewVC.getName());
@@ -906,7 +906,7 @@ public class View extends Base
                 for (ViewPivotAggregate A : P._Aggregates)
                   for (Value VPV : P._Values)
                     {
-                      if (TextUtil.findStarElement(VC._Exclude, TextUtil.print(VPV._Name, VPV._Value), false, 0) != -1)
+                      if (TextUtil.findStarElement(VC._Exclude, TextUtil.print(VPV._Name, VPV._Value), true, 0) != -1)
                         continue;
                       String SrcColName = A.makeName(VPV);
                       if (SrcColName.startsWith(startingWith) == false)
@@ -925,7 +925,7 @@ public class View extends Base
                 for (Value VPV : P._Values)
                   for (ViewPivotAggregate A : P._Aggregates)
                     {
-                      if (TextUtil.findStarElement(VC._Exclude, TextUtil.print(VPV._Name, VPV._Value), false, 0) != -1)
+                      if (TextUtil.findStarElement(VC._Exclude, TextUtil.print(VPV._Name, VPV._Value), true, 0) != -1)
                         continue;
                       String SrcColName = A.makeName(VPV);
                       if (SrcColName.startsWith(startingWith) == false)
@@ -942,7 +942,7 @@ public class View extends Base
           }
         for (Formula F : V._Formulas)
           {
-            if (TextUtil.findStarElement(VC._Exclude, F._Name, false, 0) != -1)
+            if (TextUtil.findStarElement(VC._Exclude, F._Name, true, 0) != -1)
               continue;
             if (F._Name.startsWith(startingWith) == false)
               continue;
@@ -951,7 +951,7 @@ public class View extends Base
             NewVC._Name = Prefix + F._Name;
             NewVC._As = VC._As;
             NewVC._FCT = VC._FCT;
-            if (TextUtil.findStarElement(VC._Block, F._Name, false, 0) != -1)
+            if (TextUtil.findStarElement(VC._Block, F._Name, true, 0) != -1)
               NewVC._FormulaOnly = true;
             _ViewColumns.add(i + j, NewVC);
             _PadderColumnNames.track(NewVC.getName());

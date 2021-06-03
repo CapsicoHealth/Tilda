@@ -217,6 +217,17 @@ public abstract class Base
      * @return
      */
     protected List<String> expandColumnNames(String[] vals, ParserSession PS, String constructType, String constructName)
+     {
+       return expandColumnNames(vals, PS, constructType, constructName, null);
+     }
+    
+    /**
+     * "colA", "abc*"
+     * 
+     * @param vals
+     * @return
+     */
+    protected List<String> expandColumnNames(String[] vals, ParserSession PS, String constructType, String constructName, String[] exclude)
       {
         String[] colNames = getColumnNames();
         Set<String> S = new HashSet<String>(); // gotta be a set in case multiple column templates resolve to the same column name(s).
@@ -228,12 +239,13 @@ public abstract class Base
             boolean found = false;
             for (String colName : colNames)
               {
-                if (TextUtil.findStarElement(valsA, colName, false, 0) != -1)
-                  {
-                    if (S.add(colName) == true)
-                      L.add(colName);
-                    found = true;
-                  }
+                if (TextUtil.findStarElement(valsA, colName, true, 0) == -1)
+                 continue;
+                if (exclude != null && exclude.length > 0 && TextUtil.findStarElement(exclude, colName, true, 0) != -1)
+                 continue;
+                if (S.add(colName) == true)
+                 L.add(colName);
+                found = true;
               }
             if (found == false)
               PS.AddError("Object/View " + this.getFullName() + " is defining a column template '" + val + "' for " + constructType + " '" + constructName + "' which doesn't map to any columns.");

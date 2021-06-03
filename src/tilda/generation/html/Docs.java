@@ -283,7 +283,7 @@ public class Docs
               continue;
             String bgColor = i % 2 == 0 ? "#FFFFFF" : "rgba(160, 199, 234, 0.2)";
             String FieldType = view != null && view.getFormula(C.getName()) != null ? "formulae" : "columns";
-            if (view != null && view._Realize != null && TextUtil.findStarElement(view._Realize._Exclude_DEPRECATED, C.getName(), false, 0) == -1)
+            if (view != null && view._Realize != null && TextUtil.findStarElement(view._Realize._Exclude_DEPRECATED, C.getName(), true, 0) == -1)
               FieldType = FieldType + " realized" + FieldType;
             Out.println("  <TR valign=\"top\" style=\"background-color:" + bgColor + ";\">");
             Out.println("    <TD>" + i + "&nbsp;&nbsp;</TD>");
@@ -310,7 +310,7 @@ public class Docs
             Out.println("<TD align=\"center\">" + (C._Nullable == true ? "&#x2611;" : "&#x2610") + "&nbsp;&nbsp;</TD>");
             if (view != null && view._Realize != null)
               {
-                Out.print("<TD align=\"center\">" + (TextUtil.findStarElement(view._Realize._Exclude_DEPRECATED, C.getName(), false, 0) == -1 ? "&#x2611;<!--R-->" : "&#x2610;") + "&nbsp;&nbsp;</TD>");
+                Out.print("<TD align=\"center\">" + (TextUtil.findStarElement(view._Realize._Exclude_DEPRECATED, C.getName(), true, 0) == -1 ? "&#x2611;<!--R-->" : "&#x2610;") + "&nbsp;&nbsp;</TD>");
               }
             if (O._Mode != ObjectMode.DB_ONLY)
               {
