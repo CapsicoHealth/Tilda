@@ -90,11 +90,11 @@ public class BQHelper
         File K = null;
         int i = 0;
         for (File F : P.listFiles())
-            if (F.isFile() == false && F.getName().startsWith(dataProjectName+".") == true && F.getName().endsWith(".key.bq.json") == true)
-              {
-                ++i;
-                K = F;
-              }
+          if (F.isFile() == false && F.getName().startsWith(dataProjectName + ".") == true && F.getName().endsWith(".key.bq.json") == true)
+            {
+              ++i;
+              K = F;
+            }
         if (i == 0)
           throw new IOException("Key file '" + dataProjectName + ".*.key.bq.json' not found.");
         else if (i > 1)
