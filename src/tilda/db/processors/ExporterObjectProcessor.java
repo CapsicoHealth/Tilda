@@ -25,6 +25,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.utils.DurationUtil;
+import tilda.utils.NumberFormatUtil;
 
 public abstract class ExporterObjectProcessor<T> implements ObjectProcessor<T>
   {
@@ -82,7 +83,7 @@ public abstract class ExporterObjectProcessor<T> implements ObjectProcessor<T>
         if (count % _logFreq == 0)
           {
             long durationNano = System.nanoTime() - _startTs;
-            LOG.info("Saved " + count + " records in " + DurationUtil.printDuration(durationNano) + " (" + DurationUtil.printPerformancePerMinute(durationNano, count) + " records/min)");
+            LOG.info("Saved " + NumberFormatUtil.printWith000Sep(count) + " records in " + DurationUtil.printDuration(durationNano) + " (" + DurationUtil.printPerformancePerMinute(durationNano, count) + " records/min)");
           }
         return true;
       }
@@ -96,7 +97,7 @@ public abstract class ExporterObjectProcessor<T> implements ObjectProcessor<T>
         long durationNano = _endTs - _startTs;
         LOG.info("\n==========================================================================================================================================\n"
         + "==  " + _outName + "\n"
-        + "==  " + _totalCount + " records in " + DurationUtil.printDuration(durationNano) + " (" + DurationUtil.printPerformancePerMinute(durationNano, _totalCount) + " records/min)\n"
+        + "==  " + NumberFormatUtil.printWith000Sep(_totalCount) + " records in " + DurationUtil.printDuration(durationNano) + " (" + DurationUtil.printPerformancePerMinute(durationNano, _totalCount) + " records/min)\n"
         + "==========================================================================================================================================\n");
       }
 

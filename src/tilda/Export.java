@@ -93,7 +93,7 @@ public class Export
         ExporterObjectProcessor<?> OP = null;
         TableDataWriteChannel Out = null;
 
-        if (path.startsWith("bq`") == true || path.startsWith("bq_TRUNCATE`") == true)
+        if (path.startsWith("bq`") == true)
           {
             if (path.endsWith("`") == false)
               throw new Exception("The <export_path> parameter '" + path + "' must be of the form 'bq`project.dataset`'.");
@@ -104,10 +104,10 @@ public class Export
             String schemaName = (String) factoryClass.getSuperclass().getDeclaredField("SCHEMA_LABEL").get(null);
             Schema schema = BQHelper.getTildaBQSchema(schemaName, tableName);
             Out = BQHelper.getTableWriterChannel(bq, parts[1], tableName, mode, schema, false);
-            BQWriter write = new BQWriter(Out);
+            BQWriter writer = new BQWriter(Out);
             OP = mode.equalsIgnoreCase("csv") == true
-            ? new ExporterCSVObjectProcessor(write, path, logFrequency, factoryClass, false)
-            : new ExporterJSONObjectProcessor(write, path, logFrequency, mode.equalsIgnoreCase("jsonl"));
+            ? new ExporterCSVObjectProcessor(writer, path, logFrequency, factoryClass, false)
+            : new ExporterJSONObjectProcessor(writer, path, logFrequency, mode.equalsIgnoreCase("jsonl"));
           }
         else
           {
@@ -156,7 +156,7 @@ public class Export
     public static void main(String[] args)
     throws Exception
       {
-        LOG.info("This utility exports one or more tables to CSV.");
+        LOG.info("This utility exports one or more tables to CSV/JSON/JSONL or directly to BigQuery.");
         LOG.info("  - It takes 4+ parameter: the number of threads, the export mode (CSV|JSON|JSONL), the path where the files should be saved, and one or more full class names of a Tilda object (without _Data or _Factory).");
         LOG.info("  - ExportToCSV <threads> <mode> <export_path> <tilda_class_name>+");
         LOG.info("  - ExportToCSV 2 CSV \"C:\\mypath\\data_export\\\" com.myCo.myProj.data.User com.myCo.myProj.data.Role");
