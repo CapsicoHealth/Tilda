@@ -63,9 +63,9 @@ public class TypeManager
           {
             String colName = column.getText();
             for (ColumnDefinition col : _Columns)
-              if (col.getName().equalsIgnoreCase(colName) == true)
+              if (col != null && col.getName().equalsIgnoreCase(colName) == true)
                 {
-                  if (handleType(col._Type, column) == false)
+                  if (handleType(col.getType(), column) == false)
                     return null;
                   return col;
                 }

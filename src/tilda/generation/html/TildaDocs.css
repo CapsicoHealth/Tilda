@@ -93,7 +93,7 @@
    to   { background-color: white; visibility: hidden; } 
  } 
 .blink_div { 
-   animation: blinkAnimation 0.3s infinite;
+   animation: blinkAnimation 0.25s infinite;
 }
 
 input[type=text]:focus {

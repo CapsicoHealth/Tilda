@@ -130,12 +130,12 @@ var openDiv = function(divId, yOffsetCorrection)
      if (e == null)
       e = savedE;
      e.scrollIntoView(/*{block: "center"}*/);
+     window.scrollBy(0, divId.endsWith("_CNT") == true ? 0 : -100);
+     setTimeout(function() { 
+       e.scrollIntoView(/*{block: "center"}*/);
        window.scrollBy(0, divId.endsWith("_CNT") == true ? 0 : -100);
-       setTimeout(function() { 
-         e.scrollIntoView(/*{block: "center"}*/);
-         window.scrollBy(0, divId.endsWith("_CNT") == true ? 0 : -100);
-         blinkElement(e, "blink_div", 1500);
-       }, 200);
+       blinkElement(e, "blink_div", 500);
+     }, 200);
    }
 //  window.location = "#" + divId;
 //  setTimeout(function()

@@ -520,7 +520,7 @@ public class Helper
                           else if (A._Multi == false)
                             Out.println("PS.set" + JavaJDBCType.get(C.getType())._JDBCType + "(++i, " + (C.getType() == ColumnType.CHAR ? "\"\"+" : "") + "P._" + V + Pad + ");");
                           else
-                            Out.println("C.setArray(PS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + "._Type, AllocatedArrays, P._" + V + ");");
+                            Out.println("C.setArray(PS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + ".getType(), AllocatedArrays, P._" + V + ");");
                         }
                     }
                   Out.println(Lead + "     break;");
@@ -569,7 +569,7 @@ public class Helper
                       else if (A._Multi == false)
                         Out.println("PS.set" + JavaJDBCType.get(C.getType())._JDBCType + "(++i, " + (C.getType() == ColumnType.CHAR ? "\"\"+" : "") + "P._" + V + Pad + ");");
                       else
-                        Out.println("C.setArray(PS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + "._Type, AllocatedArrays, P._" + V + ");");
+                        Out.println("C.setArray(PS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + ".getType(), AllocatedArrays, P._" + V + ");");
                     }
                   Out.println(Lead + "     break;");
                   Out.println(Lead + "   }");
@@ -600,7 +600,7 @@ public class Helper
             else if (C.isCollection() == false)
               Out.println("PS.set" + JavaJDBCType.get(C.getType())._JDBCType + "(++i, " + (C.getType() == ColumnType.CHAR ? "\"\"+" : "") + Pred + "_" + C.getName() + Pad + ");");
             else
-              Out.println("C.setArray(PS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + "._Type, AllocatedArrays, "+Pred + "_" + C.getName() + Pad + ");");
+              Out.println("C.setArray(PS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + ".getType(), AllocatedArrays, "+Pred + "_" + C.getName() + Pad + ");");
           }
       }
 

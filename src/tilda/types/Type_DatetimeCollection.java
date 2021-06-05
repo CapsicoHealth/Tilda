@@ -20,14 +20,14 @@ import tilda.enums.ColumnType;
 
 public class Type_DatetimeCollection extends ColumnDefinition
   {
-    public Type_DatetimeCollection(String SchemaName, String TableName, String ColumnName, int Count, String Description)
+    public Type_DatetimeCollection(String SchemaName, String TableName, String ColumnName, int Count, String Description, String[] expressionStrs, String[] expressionsDependencies)
       {
-        this(SchemaName, TableName, ColumnName, Count, Description, null);
+        this(SchemaName, TableName, ColumnName, Count, Description, expressionStrs, expressionsDependencies, null);
       }
 
-    public Type_DatetimeCollection(String SchemaName, String TableName, String ColumnName, int Count, String Description, Type_StringCollection TZCols)
+    public Type_DatetimeCollection(String SchemaName, String TableName, String ColumnName, int Count, String Description, String[] expressionStrs, String[] expressionsDependencies, Type_StringCollection TZCols)
       {
-        super(SchemaName, TableName, ColumnName, Count, ColumnType.DATETIME, false, Description);
+        super(SchemaName, TableName, ColumnName, Count, ColumnType.DATETIME, false, Description, expressionStrs, expressionsDependencies);
         _TZCols = TZCols;
       }
 

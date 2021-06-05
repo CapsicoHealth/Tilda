@@ -231,22 +231,22 @@ public class TildaSQLValidator extends TildaSQLBaseListener
         if (Columns.size() == 1)
           {
             ColumnDefinition Col = Columns.get(0);
-            if (Col._Type != ColumnType.STRING && Col._Collection != true)
+            if (Col.getType() != ColumnType.STRING && Col.isCollection() != true)
               {
                 err = true;
-                _Errors.addError("Function 'Len' must take a single Collection column or a list of Strings: parameter '" + Col.getName() + "' is a " + Col._Type.toString() + ".", ctx);
+                _Errors.addError("Function 'Len' must take a single Collection column or a list of Strings: parameter '" + Col.getName() + "' is a " + Col.getType().toString() + ".", ctx);
               }
           }
         else
           for (ColumnDefinition Col : Columns)
             {
-              if (Col._Type != ColumnType.STRING)
+              if (Col.getType() != ColumnType.STRING)
                 {
                   err = true;
-                  _Errors.addError("Function 'Len' must take a single Collection column or a list of Strings: parameter '" + Col.getName() + "' is a " + Col._Type.name() + ".", ctx);
+                  _Errors.addError("Function 'Len' must take a single Collection column or a list of Strings: parameter '" + Col.getName() + "' is a " + Col.getType().name() + ".", ctx);
                   break;
                 }
-              else if (Col._Collection == true)
+              else if (Col.isCollection() == true)
                 {
                   err = true;
                   _Errors.addError("Function 'Len' must take a single Collection column or a list of Strings: parameter '" + Col.getName() + "' is a Collection.", ctx);
@@ -519,10 +519,10 @@ public class TildaSQLValidator extends TildaSQLBaseListener
           }
         else if (ctx.isnull_op().K_NULL_OR_EMPTY() != null)
           {
-            if (CD._Type != ColumnType.STRING && CD._Collection != true)
+            if (CD.getType() != ColumnType.STRING && CD.isCollection() != true)
               {
                 Err = true;
-                _Errors.addError("Operator 'null or empty' must take a Collection column or a Strings: parameter '" + CD.getName() + "' is a " + CD._Type.toString() + ".", ctx);
+                _Errors.addError("Operator 'null or empty' must take a Collection column or a Strings: parameter '" + CD.getName() + "' is a " + CD.getType().toString() + ".", ctx);
               }
           }
 

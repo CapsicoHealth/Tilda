@@ -10,8 +10,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -37,8 +35,9 @@ import com.google.cloud.bigquery.TableDataWriteChannel;
 import com.google.cloud.bigquery.TableId;
 import com.google.cloud.bigquery.WriteChannelConfiguration;
 
-import tilda.db.ConnectionPool;
-import tilda.parsing.parts.Column;
+import tilda.db.TildaMasterRuntimeMetaData;
+import tilda.db.TildaObjectMetaData;
+import tilda.types.ColumnDefinition;
 
 public class BQHelper
   {
@@ -233,16 +232,16 @@ public class BQHelper
     public static Schema getTildaBQSchema(String SchemaName, String TableViewName)
     throws Exception
       {
-        tilda.parsing.parts.Object Obj = ConnectionPool.getTable(SchemaName, TableViewName);
+        TildaObjectMetaData Obj = TildaMasterRuntimeMetaData.getTableObject(SchemaName, TableViewName);
         if (Obj == null)
           throw new Exception("Cannot locate Object/View '" + SchemaName + "." + TableViewName + "'.");
 
         List<Field> fieldsList = new ArrayList<Field>();
-        for (Column col : Obj._Columns)
+        for (ColumnDefinition col : Obj.getColumnDefinitions())
           {
             Field F = Field.newBuilder(col.getName(), StandardSQLTypeName.valueOf(col.getType().getBigQueryType()))
-            .setMode(col.isCollection() == true ? Field.Mode.REPEATED : col._Nullable == false ? Field.Mode.REQUIRED : Field.Mode.NULLABLE)
-            .setDescription(col._Description)
+            .setMode(col.isCollection() == true ? Field.Mode.REPEATED : col.isNullable() == false ? Field.Mode.REQUIRED : Field.Mode.NULLABLE)
+            .setDescription(col.getDescription())
             .build();
             fieldsList.add(F);
           }

@@ -30,8 +30,6 @@ public enum FrameworkColumnType
   , OCC_LASTUPDATED // Generated OCC columns for lastUpdated.
   , OCC_DELETED // Generated OCC columns for deleted.
 
-  , DT_FORMULA // DATETIME formula which doesn't need TZ
-
   , TZ // added xxxTZ column to defined DATETIME columns
 
   , MAPPER_NAME // Mapped name
@@ -39,8 +37,10 @@ public enum FrameworkColumnType
   , MAPPER_GROUP // Mapped group
 
   , TS // Time series column
-  
-  , FORMULA_TEMPLATE // Formula column generated from a template
+
+  , FORMULA_DT // DATETIME formula which doesn't need TZ
+
+  , FORMULA // Formula column
 
     ;
 
@@ -48,6 +48,7 @@ public enum FrameworkColumnType
       {
         return this == OCC_CREATED || this == OCC_LASTUPDATED || this == OCC_DELETED;
       }
+
     public boolean isManaged()
       {
         return this != NONE;
@@ -60,10 +61,11 @@ public enum FrameworkColumnType
             return e;
         return null;
       }
+
     public static boolean isOCCColumnName(String Name)
       {
         return Name.equals("created") || Name.equals("lastUpdated") || Name.equals("deleted")
-           // || Name.equals("createdETL") || Name.equals("lastUpdatedETL") || Name.equals("deletedETL")
+        // || Name.equals("createdETL") || Name.equals("lastUpdatedETL") || Name.equals("deletedETL")
         ;
       }
   }

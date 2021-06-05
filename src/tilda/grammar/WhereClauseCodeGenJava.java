@@ -106,7 +106,7 @@ public class WhereClauseCodeGenJava implements WhereClauseCodeGen
           }
         else if (orEmpty == true)
           {
-            if (Col._Collection == true)
+            if (Col.isCollection() == true)
               {
                 _CodeGen.append(not == true ? " " : " (");
                 makeColumn(_CodeGen, Col);
@@ -229,7 +229,7 @@ public class WhereClauseCodeGenJava implements WhereClauseCodeGen
     @Override
     public void funcLen(List<ColumnDefinition> Columns)
       {
-        if (Columns.size() == 1 && Columns.get(0)._Collection == true)
+        if (Columns.size() == 1 && Columns.get(0).isCollection() == true)
           {
             makeColumn(_CodeGen, Columns.get(0));
             _CodeGen.append(".length");

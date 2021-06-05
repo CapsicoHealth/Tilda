@@ -639,17 +639,17 @@ public class View extends Base
                 else
                   {
                     F.Validate(PS, this);
-                    Column C = new Column(F._Name, F._TypeStr, F._Size, true, ColumnMode.NORMAL, true, null, "Formula column '<B>" + F._Title + "</B>'", F._Precision, F._Scale);
+                    Column C = new Column(F._Name, F._TypeStr, F._Size, true, ColumnMode.NORMAL, true, null, "<B>" + F._Title + "</B>: " + String.join(" ", F._Description), F._Precision, F._Scale);
                     if (F.getType() == ColumnType.DATETIME)
-                      C._FCT = FrameworkColumnType.DT_FORMULA;
+                      C._FCT = FrameworkColumnType.FORMULA_DT;
                     else if (F._FormulaTemplate == true)
-                      C._FCT = FrameworkColumnType.FORMULA_TEMPLATE;
+                      C._FCT = FrameworkColumnType.FORMULA;
                     O._Columns.add(C);
                     F._ProxyCol = C;
                   }
               }
-
-        PrepRegexes();
+        prepRegexes();
+        bindFormulaColumnDependencies(O);
 
         for (Formula F : _Formulas)
           if (F != null)
@@ -700,7 +700,31 @@ public class View extends Base
         return O;
       }
 
-    private void PrepRegexes()
+    private void bindFormulaColumnDependencies(Object obj)
+      {
+        for (Column C : obj._Columns)
+          {
+            if (C._FCT != FrameworkColumnType.FORMULA && C._FCT != FrameworkColumnType.FORMULA_DT)
+              continue;
+            Formula F = getFormula(C.getName());
+            if (F != null)
+              {
+                C._expressionStrs = F._FormulaStrs;
+                C._expressionDependencyColumnNames = Formula.getDependencyColumnNames(String.join(" ", F._FormulaStrs), obj, _ViewColumnsRegEx, _FormulasRegEx);
+                continue;
+              }
+            ViewColumn VC = getViewColumn(C.getName());
+            if (VC != null && TextUtil.isNullOrEmpty(VC._Expression) == false)
+              {
+                C._expressionStrs = new String[] { VC._Expression };
+                C._expressionDependencyColumnNames = Formula.getDependencyColumnNames(VC._Expression, obj, _ViewColumnsRegEx, _FormulasRegEx);
+                continue;
+              }
+          }
+
+      }
+
+    private void prepRegexes()
       {
         // Preparing regexes for anything that needs to do search and replace.
         Set<String> Names = new HashSet<String>();
@@ -734,7 +758,6 @@ public class View extends Base
           }
 
         _FormulasRegEx = Str.length() == 0 ? null : Pattern.compile("\\b(" + Str.toString() + ")\\b");
-
       }
 
     private void genPivotColumns(ParserSession PS, Object O)

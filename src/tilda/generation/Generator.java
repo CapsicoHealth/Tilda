@@ -50,7 +50,6 @@ import tilda.parsing.parts.OutputMapping;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.SubWhereClause;
 import tilda.parsing.parts.View;
-import tilda.parsing.parts.ViewColumn;
 import tilda.utils.json.JSONUtil;
 
 public class Generator

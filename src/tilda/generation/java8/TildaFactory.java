@@ -27,6 +27,7 @@ import org.apache.logging.log4j.core.util.StringBuilderWriter;
 
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
+import tilda.enums.FrameworkColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.enums.NVPSourceType;
 import tilda.enums.ObjectLifecycle;
@@ -114,7 +115,18 @@ public class TildaFactory implements CodeGenTildaFactory
               // String ColVarOthers = TextUtil.escapeDoubleQuoteWithSlash(G.getSql().getShortColumnVar(C), "", false);
               String ColumnTypeClassName = "Type_" + TextUtil.normalCapitalization(C.getType().name()) + (C.isCollection() ? "Collection" : "Primitive") + (C._Nullable == true ? "Null" : "");
               G.getGenDocs().docField(Out, G, C, "column definition");
-              Out.print("     public static " + ColumnTypeClassName + TypePad + " " + C.getName().toUpperCase() + ColumnPad + "= new " + ColumnTypeClassName + TypePad + "(SCHEMA_LABEL, TABLENAME_LABEL, \"" + C.getName() + "\"" + ColumnPad + ", " + (++Counter) + "/*" + C.getSequenceOrder() + "*/, " + TextUtil.escapeDoubleQuoteWithSlash(C._Description));
+              if (C._FCT == FrameworkColumnType.FORMULA || C._FCT == FrameworkColumnType.FORMULA_DT)
+               {
+                 Out.print("     public static " + ColumnTypeClassName + TypePad + " " + C.getName().toUpperCase() 
+                                                 + ColumnPad + "= new " + ColumnTypeClassName + TypePad + "(SCHEMA_LABEL, TABLENAME_LABEL, \"" + C.getName() + "\"" + ColumnPad 
+                                                 + ", " + (++Counter) + "/*" + C.getSequenceOrder() + "*/, " + TextUtil.escapeDoubleQuoteWithSlash(C._Description)
+                                                 +", new String[] {"+TextUtil.printJavaStringArray(C._expressionStrs)
+                                                 +"}, new String[] {"+TextUtil.printJavaStringArray(C._expressionDependencyColumnNames)+"}");
+               }
+              else
+               Out.print("     public static " + ColumnTypeClassName + TypePad + " " + C.getName().toUpperCase() 
+                                               + ColumnPad + "= new " + ColumnTypeClassName + TypePad + "(SCHEMA_LABEL, TABLENAME_LABEL, \"" + C.getName() + "\"" + ColumnPad 
+                                               + ", " + (++Counter) + "/*" + C.getSequenceOrder() + "*/, " + TextUtil.escapeDoubleQuoteWithSlash(C._Description)+", null, null");
               if (C.getType() == ColumnType.DATETIME && C.needsTZ() == true && O.getColumn(C.getName() + "TZ") != null)
                 {
                   Out.print(", " + C.getName().toUpperCase() + "TZ");

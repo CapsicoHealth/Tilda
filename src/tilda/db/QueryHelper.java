@@ -205,7 +205,7 @@ public abstract class QueryHelper
     public final QueryHelper selectCountStar()
     throws Exception
       {
-        _Columns.add(new ColumnDefinition(_SchemaName, _TableName, "count", 0, ColumnType.LONG, false, ""));
+        _Columns.add(new ColumnDefinition(_SchemaName, _TableName, "count", 0, ColumnType.LONG, false, "", null, null));
         return selectColumnBase("count(*)");
       }
 
@@ -295,7 +295,7 @@ public abstract class QueryHelper
         TextUtil.escapeSingleQuoteForSQL(Str, elseValue);
         Str.append(" end as \"").append(aliasName).append("\"");
 
-        clause._Col = new ColumnDefinition(_SchemaName, _TableName, aliasName, 0, ColumnType.STRING, false, "");
+        clause._Col = new ColumnDefinition(_SchemaName, _TableName, aliasName, 0, ColumnType.STRING, false, "", null, null);
         _Columns.add(clause._Col);
 
         return selectColumnBase(Str.toString());

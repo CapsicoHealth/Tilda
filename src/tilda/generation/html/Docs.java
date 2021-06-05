@@ -890,8 +890,7 @@ public class Docs
             Out.println("</TR>");
             Out.println("<TR valign=\"top\"><TD width=\"1px\" align=\"right\"><B>Title</B></TD><TD>" + F._Title + "</TD></TR>");
           }
-        Out.println("<TR valign=\"top\"><TD width=\"1px\" align=\"right\"><B>Description</B></TD><TD>" + CleanForHTML(F._Description) + "</TD></TR>"
-        + "<TR valign=\"top\"><TD width=\"1px\" align=\"right\"><B>Formula</B></TD><TD><PRE style=\"padding-top: 3px; font-size:110%;\">" + FormulaStr + "</PRE></TD><TR>");
+        Out.println("<TR valign=\"top\"><TD width=\"1px\" align=\"right\"><B>Formula</B></TD><TD><PRE style=\"padding-top: 3px; font-size:110%;\">" + FormulaStr + "</PRE></TD><TR>");
         if (F._Values != null && F._Values.length > 0)
           {
             Out.println("<TR valign=\"top\"><TD width=\"1px\" align=\"right\"><B>Values</B></TD><TD><TABLE border=\"0px\">");
@@ -938,7 +937,7 @@ public class Docs
           }
 
         // End Table
-        Out.println("</TABLE>");
+        Out.println("</TABLE>&nbsp;");
 
         if (!ColumnMatches.isEmpty() || !FormulaMatches.isEmpty())
           {

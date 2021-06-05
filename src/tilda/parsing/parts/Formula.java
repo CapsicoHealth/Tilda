@@ -21,6 +21,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,6 +29,7 @@ import org.apache.logging.log4j.Logger;
 import com.google.gson.annotations.SerializedName;
 
 import tilda.parsing.ParserSession;
+import tilda.utils.CollectionUtil;
 import tilda.utils.TextUtil;
 
 public class Formula extends TypeDef
@@ -153,5 +155,25 @@ public class Formula extends TypeDef
               L.add(f);
           }
         return L;
+      }
+
+    protected static String[] getDependencyColumnNames(String formulaStr, Object obj, Pattern viewColumnsRegEx, Pattern formulasRegEx)
+      {
+        List<String> L = new ArrayList<String>();
+        Set<String> Names = new HashSet<String>();
+        Matcher[] matchers = new Matcher[] { viewColumnsRegEx == null ? null : viewColumnsRegEx.matcher(formulaStr), formulasRegEx == null ? null : formulasRegEx.matcher(formulaStr)
+        };
+        for (Matcher M : matchers)
+          if (M != null)
+            while (M.find() == true)
+              {
+                String s = M.group(1);
+                if (Names.add(s) == false)
+                  continue;
+                Column c = obj.getColumn(s);
+                if (s != null)
+                  L.add(s);
+              }
+        return CollectionUtil.toStringArray(L);
       }
   }

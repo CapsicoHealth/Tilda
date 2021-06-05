@@ -77,6 +77,9 @@ public class Column extends TypeDef
     public transient ColumnValue         _DefaultUpdateValue;
 
     protected transient int              _SequenceOrder     = -1;
+    
+    public transient String[] _expressionStrs;
+    public transient String[] _expressionDependencyColumnNames;
 
     private transient ValidationStatus   _Validation        = ValidationStatus.NONE;
 

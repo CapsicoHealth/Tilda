@@ -1133,14 +1133,14 @@ public class TildaData implements CodeGenTildaData
                     if (C.isCollection() == false)
                       Out.println("if (DateTimeUtil.isNowPlaceholder(_" + C.getName() + ") == false)  PS.setDate(++i, java.sql.Date.valueOf(_" + C.getName() + "));");
                     else
-                      Out.println("C.setArray(PS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + "._Type, AllocatedArrays, _" + C.getName() + ");");
+                      Out.println("C.setArray(PS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + ".getType(), AllocatedArrays, _" + C.getName() + ");");
                     break;
                   case DATETIME:
                     Out.print(" else ");
                     if (C.isCollection() == false)
                       Out.println("if (DateTimeUtil.isNowPlaceholder(_" + C.getName() + ") == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_" + C.getName() + ".toInstant()), DateTimeUtil._UTC_CALENDAR);");
                     else
-                      Out.println("C.setArray(PS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + "._Type, AllocatedArrays, DateTimeUtil.toSQLTimeStamps(_" + C.getName() + "));");
+                      Out.println("C.setArray(PS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + ".getType(), AllocatedArrays, DateTimeUtil.toSQLTimeStamps(_" + C.getName() + "));");
                     break;
                   case JSON:
                     Out.println(" else PS.set" + JavaJDBCType.get(C.getType())._JDBCType + "(++i, " + (C.getType() == ColumnType.CHAR ? "\"\"+" : "") + "_" + C.getName() + ");");
@@ -1150,7 +1150,7 @@ public class TildaData implements CodeGenTildaData
                     if (C.isCollection() == false)
                       Out.println("PS.set" + JavaJDBCType.get(C.getType())._JDBCType + "(++i, _" + C.getName() + ", java.sql.Types." + JavaJDBCType.get(C.getType())._JDBCSQLType + ");");
                     else
-                      Out.println("C.setArray(PS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + "._Type, AllocatedArrays, _" + C.getName() + ");");
+                      Out.println("C.setArray(PS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + ".getType(), AllocatedArrays, _" + C.getName() + ");");
                     break;
                   case BINARY:
                   case BITFIELD:
@@ -1167,7 +1167,7 @@ public class TildaData implements CodeGenTildaData
                     if (C.isCollection() == false)
                       Out.println("PS.set" + JavaJDBCType.get(C.getType())._JDBCType + "(++i, " + (C.getType() == ColumnType.CHAR ? "\"\"+" : "") + "_" + C.getName() + ");");
                     else
-                      Out.println("C.setArray(PS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + "._Type, AllocatedArrays, _" + C.getName() + ");");
+                      Out.println("C.setArray(PS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + ".getType(), AllocatedArrays, _" + C.getName() + ");");
                     break;
                   default:
                     throw new Error("ERROR! Cannot match ColumnType " + C.getType() + " when generating a Write method");
@@ -1739,7 +1739,7 @@ public class TildaData implements CodeGenTildaData
                     break;
                   case UUID:
                     if (C.isCollection() == true)
-                      Out.print("_" + C.getName() + " = (" + (C.isSet() == true ? "Set<" : "List<") + JavaJDBCType.get(C.getType())._JavaClassType + ">) C.getArray(RS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + "._Type, " + C.isSet() + ");");
+                      Out.print("_" + C.getName() + " = (" + (C.isSet() == true ? "Set<" : "List<") + JavaJDBCType.get(C.getType())._JavaClassType + ">) C.getArray(RS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + ".getType(), " + C.isSet() + ");");
                     else
                       Out.print("_" + C.getName() + Pad + " =                              (java.util.UUID) RS.getObject(++i); ");
                     break;
@@ -1755,7 +1755,7 @@ public class TildaData implements CodeGenTildaData
                   case CHAR:
                   case STRING:
                     if (C.isCollection() == true)
-                      Out.print("_" + C.getName() + " = (" + (C.isSet() == true ? "Set<" : "List<") + JavaJDBCType.get(C.getType())._JavaClassType + ">) C.getArray(RS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + "._Type, " + C.isSet() + ");");
+                      Out.print("_" + C.getName() + " = (" + (C.isSet() == true ? "Set<" : "List<") + JavaJDBCType.get(C.getType())._JavaClassType + ">) C.getArray(RS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + ".getType(), " + C.isSet() + ");");
                     else if (C.getType() == ColumnType.CHAR)
                       Out.print("_" + C.getName() + Pad + " = ParseUtil.parseCharacter    (RS.get" + JavaJDBCType.get(C.getType())._JDBCType + "(++i)); ");
                     else if (C.getType() == ColumnType.STRING)
@@ -1765,7 +1765,7 @@ public class TildaData implements CodeGenTildaData
                     break;
                   case DATE:
                     if (C.isCollection() == true)
-                      Out.print("_" + C.getName() + Pad + " = DateTimeUtil.toLocalDates((" + (C.isSet() == true ? "Set<" : "List<") + "java.sql.Date>) C.getArray(RS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + "._Type, " + C.isSet() + "));");
+                      Out.print("_" + C.getName() + Pad + " = DateTimeUtil.toLocalDates((" + (C.isSet() == true ? "Set<" : "List<") + "java.sql.Date>) C.getArray(RS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + ".getType(), " + C.isSet() + "));");
                     else
                       Out.print("_" + C.getName() + Pad + " = DateTimeUtil.toLocalDate(RS.getDate(++i));");
                     break;
@@ -1897,7 +1897,7 @@ public class TildaData implements CodeGenTildaData
               Out.println("  private final List<ZonedDateTime> processZDTs(Connection C, List<String> TimezoneIds, String DTFieldName, java.sql.ResultSet RS, int ColumnPos, tilda.types.ColumnDefinition DTField, tilda.types.ColumnDefinition TZField)");
               Out.println("  throws Exception");
               Out.println("   {");
-              Out.println("     List<Timestamp> L = (List<Timestamp>) C.getArray(RS, ColumnPos, DTField._Type, false);");
+              Out.println("     List<Timestamp> L = (List<Timestamp>) C.getArray(RS, ColumnPos, DTField.getType(), false);");
               Out.println("     boolean DTNull = false;");
               Out.println("     if (RS.wasNull() == true)");
               Out.println("      {");

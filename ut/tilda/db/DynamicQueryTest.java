@@ -61,7 +61,7 @@ public class DynamicQueryTest
     private static void Test1(Connection C)
     throws Exception
       {
-        List<Key_Data> L = (List<Key_Data>) MasterFactory.lookupWhere(C, Key_Data.class, "NAME like 'PATIENTS.%' AND MAX <> 1", 0, -1);
+        List<Key_Data> L = (List<Key_Data>) TildaMasterRuntimeMetaData.lookupWhere(C, Key_Data.class, "NAME like 'PATIENTS.%' AND MAX <> 1", 0, -1);
         for (Key_Data D : L)
           LOG.debug(D.toString());
       }
@@ -83,7 +83,7 @@ public class DynamicQueryTest
     throws Exception
       {
         ObjProc OP = new ObjProc();
-        MasterFactory.lookupWhere(C, Key_Data.class, OP, "NAME like 'PATIENTS.%' AND MAX <> 1", 0, -1);
+        TildaMasterRuntimeMetaData.lookupWhere(C, Key_Data.class, OP, "NAME like 'PATIENTS.%' AND MAX <> 1", 0, -1);
       }
 
   }

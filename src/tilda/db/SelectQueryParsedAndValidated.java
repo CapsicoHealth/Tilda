@@ -22,7 +22,6 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import tilda.db.MasterFactory.ObjectMetaData;
 import tilda.db.processors.ObjectProcessor;
 import tilda.grammar.ErrorList;
 import tilda.grammar.TildaSQLValidator;
@@ -39,7 +38,7 @@ public class SelectQueryParsedAndValidated extends SelectQuery
   {
     protected static final Logger LOG = LogManager.getLogger(SelectQueryParsedAndValidated.class.getName());
 
-    public SelectQueryParsedAndValidated(ObjectMetaData OMD, String WhereClause)
+    public SelectQueryParsedAndValidated(TildaObjectMetaData OMD, String WhereClause)
       throws Exception
       {
         super(null, null, OMD._ObjectName, false);
@@ -67,7 +66,7 @@ public class SelectQueryParsedAndValidated extends SelectQuery
         this._QueryStr.append(WhereClause);
       }
     
-    protected final ObjectMetaData _OMD;
+    protected final TildaObjectMetaData _OMD;
 
     @SuppressWarnings("unchecked")
     public <T> List<T> execute(Connection C, int Start, int Size)

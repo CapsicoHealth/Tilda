@@ -20,9 +20,9 @@ import tilda.enums.ColumnType;
 
 public class Type_CharPrimitive extends ColumnDefinition
   {
-    public Type_CharPrimitive(String SchemaName, String TableName, String ColumnName, int Count, String Description)
+    public Type_CharPrimitive(String SchemaName, String TableName, String ColumnName, int Count, String Description, String[] expressionStrs, String[] expressionsDependencies)
       {
-        super(SchemaName, TableName, ColumnName, Count, ColumnType.CHAR, false, Description);
+        super(SchemaName, TableName, ColumnName, Count, ColumnType.CHAR, false, Description, expressionStrs, expressionsDependencies);
       }
     
   }
