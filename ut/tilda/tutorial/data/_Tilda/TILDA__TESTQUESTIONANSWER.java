@@ -1799,10 +1799,10 @@ This is the hasChanged for:<BR>
 
           switch (__LookupId)
            {
-             case 0:
+             case 0: // PK
                PS.setLong      (++i, _refnum       );
                break;
-             case 1:
+             case 1: // Unique Index 'FormAnswer'
                PS.setString    (++i, _type         );
                PS.setString    (++i, _questionId   );
                PS.setInt       (++i, _answerSeq    );
@@ -1967,11 +1967,11 @@ This is the hasChanged for:<BR>
 
           switch (__LookupId)
            {
-             case 0:
-                S.append(" where ("); C.getFullColumnVar(S, "TILDATUTORIAL", "TestQuestionAnswer", "refnum"); S.append("=?)");
+             case 0: // PK
+                S.append(" where ("); C.getFullColumnVar(S, "TILDATUTORIAL", "TestQuestionAnswer", "refnum"); S.append("=?");  S.append(")");
                 break;
-             case 1:
-                S.append(" where ("); C.getFullColumnVar(S, "TILDATUTORIAL", "TestQuestionAnswer", "type"); S.append("=? AND "); C.getFullColumnVar(S, "TILDATUTORIAL", "TestQuestionAnswer", "questionId"); S.append("=? AND "); C.getFullColumnVar(S, "TILDATUTORIAL", "TestQuestionAnswer", "answerSeq"); S.append("=?)");
+             case 1: // Unique Index 'FormAnswer'
+                S.append(" where ("); C.getFullColumnVar(S, "TILDATUTORIAL", "TestQuestionAnswer", "type"); S.append("=?");  S.append(" AND "); C.getFullColumnVar(S, "TILDATUTORIAL", "TestQuestionAnswer", "questionId"); S.append("=?");  S.append(" AND "); C.getFullColumnVar(S, "TILDATUTORIAL", "TestQuestionAnswer", "answerSeq"); S.append("=?");  S.append(")");
                 break;
              case -77: 
              case -666: if (__Init == InitMode.CREATE) break;
@@ -2190,11 +2190,11 @@ This is the hasChanged for:<BR>
           S.append(" from "); C.getFullTableVar(S, "TILDATUTORIAL", "TestQuestionAnswer");
        switch (__LookupId)
         {
-          case 0:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDATUTORIAL", "TestQuestionAnswer", "refnum"); S.append("=?)");
+          case 0: // PK
+             S.append(" where ("); C.getFullColumnVar(S, "TILDATUTORIAL", "TestQuestionAnswer", "refnum"); S.append("=?");  S.append(")");
              break;
-          case 1:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDATUTORIAL", "TestQuestionAnswer", "type"); S.append("=? AND "); C.getFullColumnVar(S, "TILDATUTORIAL", "TestQuestionAnswer", "questionId"); S.append("=? AND "); C.getFullColumnVar(S, "TILDATUTORIAL", "TestQuestionAnswer", "answerSeq"); S.append("=?)");
+          case 1: // Unique Index 'FormAnswer'
+             S.append(" where ("); C.getFullColumnVar(S, "TILDATUTORIAL", "TestQuestionAnswer", "type"); S.append("=?");  S.append(" AND "); C.getFullColumnVar(S, "TILDATUTORIAL", "TestQuestionAnswer", "questionId"); S.append("=?");  S.append(" AND "); C.getFullColumnVar(S, "TILDATUTORIAL", "TestQuestionAnswer", "answerSeq"); S.append("=?");  S.append(")");
              break;
           case -77: 
           case -666: if (__Init == InitMode.CREATE) break;
@@ -2216,10 +2216,10 @@ This is the hasChanged for:<BR>
           int i = 0;
           switch (__LookupId)
            {
-             case 0:
+             case 0: // PK
                PS.setLong      (++i, _refnum       );
                break;
-             case 1:
+             case 1: // Unique Index 'FormAnswer'
                PS.setString    (++i, _type         );
                PS.setString    (++i, _questionId   );
                PS.setInt       (++i, _answerSeq    );

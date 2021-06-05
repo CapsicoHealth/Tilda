@@ -239,9 +239,9 @@ create table if not exists TILDATUTORIAL.Test_XYZ_Analytics_Realized -- Realized
   , "testCount"               bigint                       -- The primary key for this record (from TILDATUTORIAL.Test_XYZ_Analytics_View.testCount)
   , "testAnswerCountCorrect"  bigint                       -- Whether the answer is correct or not (from TILDATUTORIAL.Test_XYZ_Analytics_View.testAnswerCountCorrect)
   , "testTimeMillisAvg"       double precision             -- Time in milliseconds for the time spent answering the question (from TILDATUTORIAL.Test_XYZ_Analytics_View.testTimeMillisAvg)
-  , "isPassed"                integer                      -- Formula column '<B>Test Passed</B>' (from TILDATUTORIAL.Test_XYZ_Analytics_View.isPassed)
-  , "tookLongerThanAverage"   integer                      -- Formula column '<B>Test Took Longer Than Average</B>' (from TILDATUTORIAL.Test_XYZ_Analytics_View.tookLongerThanAverage)
-  , "wasChallenging"          integer                      -- Formula column '<B>Test Was Challenging</B>' (from TILDATUTORIAL.Test_XYZ_Analytics_View.wasChallenging)
+  , "isPassed"                integer                      -- <B>Test Passed</B>: Whether the test was passed or not by answering at least 2 out of the 3 questions. (from TILDATUTORIAL.Test_XYZ_Analytics_View.isPassed)
+  , "tookLongerThanAverage"   integer                      -- <B>Test Took Longer Than Average</B>: Whether the test took longer that the average time spent across all tests. (from TILDATUTORIAL.Test_XYZ_Analytics_View.tookLongerThanAverage)
+  , "wasChallenging"          integer                      -- <B>Test Was Challenging</B>: Whether the test was challenging in that:<LI>   <LI>it was passed,</LI>   <LI>and overall, less than a third of answers across all tests were answered correctly.</LI> </UL> (from TILDATUTORIAL.Test_XYZ_Analytics_View.wasChallenging)
   , PRIMARY KEY("formRefnum")
   , CONSTRAINT fk_Test_XYZ_Analytics_Realized_Form FOREIGN KEY ("formRefnum") REFERENCES TILDATUTORIAL.Form ON DELETE restrict ON UPDATE cascade
   , CONSTRAINT fk_Test_XYZ_Analytics_Realized_User FOREIGN KEY ("formUserRefnum") REFERENCES TILDATUTORIAL.User ON DELETE restrict ON UPDATE cascade
@@ -258,9 +258,9 @@ COMMENT ON COLUMN TILDATUTORIAL.Test_XYZ_Analytics_Realized."formTimeMillisTotal
 COMMENT ON COLUMN TILDATUTORIAL.Test_XYZ_Analytics_Realized."testCount" IS E'The primary key for this record (from TILDATUTORIAL.Test_XYZ_Analytics_View.testCount)';
 COMMENT ON COLUMN TILDATUTORIAL.Test_XYZ_Analytics_Realized."testAnswerCountCorrect" IS E'Whether the answer is correct or not (from TILDATUTORIAL.Test_XYZ_Analytics_View.testAnswerCountCorrect)';
 COMMENT ON COLUMN TILDATUTORIAL.Test_XYZ_Analytics_Realized."testTimeMillisAvg" IS E'Time in milliseconds for the time spent answering the question (from TILDATUTORIAL.Test_XYZ_Analytics_View.testTimeMillisAvg)';
-COMMENT ON COLUMN TILDATUTORIAL.Test_XYZ_Analytics_Realized."isPassed" IS E'Formula column ''<B>Test Passed</B>'' (from TILDATUTORIAL.Test_XYZ_Analytics_View.isPassed)';
-COMMENT ON COLUMN TILDATUTORIAL.Test_XYZ_Analytics_Realized."tookLongerThanAverage" IS E'Formula column ''<B>Test Took Longer Than Average</B>'' (from TILDATUTORIAL.Test_XYZ_Analytics_View.tookLongerThanAverage)';
-COMMENT ON COLUMN TILDATUTORIAL.Test_XYZ_Analytics_Realized."wasChallenging" IS E'Formula column ''<B>Test Was Challenging</B>'' (from TILDATUTORIAL.Test_XYZ_Analytics_View.wasChallenging)';
+COMMENT ON COLUMN TILDATUTORIAL.Test_XYZ_Analytics_Realized."isPassed" IS E'<B>Test Passed</B>: Whether the test was passed or not by answering at least 2 out of the 3 questions. (from TILDATUTORIAL.Test_XYZ_Analytics_View.isPassed)';
+COMMENT ON COLUMN TILDATUTORIAL.Test_XYZ_Analytics_Realized."tookLongerThanAverage" IS E'<B>Test Took Longer Than Average</B>: Whether the test took longer that the average time spent across all tests. (from TILDATUTORIAL.Test_XYZ_Analytics_View.tookLongerThanAverage)';
+COMMENT ON COLUMN TILDATUTORIAL.Test_XYZ_Analytics_Realized."wasChallenging" IS E'<B>Test Was Challenging</B>: Whether the test was challenging in that:<LI>   <LI>it was passed,</LI>   <LI>and overall, less than a third of answers across all tests were answered correctly.</LI> </UL> (from TILDATUTORIAL.Test_XYZ_Analytics_View.wasChallenging)';
 CREATE INDEX IF NOT EXISTS Test_XYZ_Analytics_Realized_User ON TILDATUTORIAL.Test_XYZ_Analytics_Realized ("formUserRefnum", "formFillDate" DESC);
 CREATE INDEX IF NOT EXISTS Test_XYZ_Analytics_Realized_Type ON TILDATUTORIAL.Test_XYZ_Analytics_Realized ("formType", "formFillDate" DESC);
 

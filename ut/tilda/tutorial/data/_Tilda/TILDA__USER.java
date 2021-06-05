@@ -1139,13 +1139,13 @@ This is the hasChanged for:<BR>
 
           switch (__LookupId)
            {
-             case 0:
+             case 0: // PK
                PS.setLong      (++i, _refnum     );
                break;
-             case 1:
+             case 1: // Unique Index 'Id'
                PS.setString    (++i, _id         );
                break;
-             case 2:
+             case 2: // Unique Index 'Email'
                PS.setString    (++i, _email      );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
@@ -1266,14 +1266,14 @@ This is the hasChanged for:<BR>
 
           switch (__LookupId)
            {
-             case 0:
-                S.append(" where ("); C.getFullColumnVar(S, "TILDATUTORIAL", "User", "refnum"); S.append("=?)");
+             case 0: // PK
+                S.append(" where ("); C.getFullColumnVar(S, "TILDATUTORIAL", "User", "refnum"); S.append("=?");  S.append(")");
                 break;
-             case 1:
-                S.append(" where ("); C.getFullColumnVar(S, "TILDATUTORIAL", "User", "id"); S.append("=?)");
+             case 1: // Unique Index 'Id'
+                S.append(" where ("); C.getFullColumnVar(S, "TILDATUTORIAL", "User", "id"); S.append("=?");  S.append(")");
                 break;
-             case 2:
-                S.append(" where ("); C.getFullColumnVar(S, "TILDATUTORIAL", "User", "email"); S.append("=?)");
+             case 2: // Unique Index 'Email'
+                S.append(" where ("); C.getFullColumnVar(S, "TILDATUTORIAL", "User", "email"); S.append("=?");  S.append(")");
                 break;
              case -77: 
              case -666: if (__Init == InitMode.CREATE) break;
@@ -1467,14 +1467,14 @@ This is the hasChanged for:<BR>
           S.append(" from "); C.getFullTableVar(S, "TILDATUTORIAL", "User");
        switch (__LookupId)
         {
-          case 0:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDATUTORIAL", "User", "refnum"); S.append("=?)");
+          case 0: // PK
+             S.append(" where ("); C.getFullColumnVar(S, "TILDATUTORIAL", "User", "refnum"); S.append("=?");  S.append(")");
              break;
-          case 1:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDATUTORIAL", "User", "id"); S.append("=?)");
+          case 1: // Unique Index 'Id'
+             S.append(" where ("); C.getFullColumnVar(S, "TILDATUTORIAL", "User", "id"); S.append("=?");  S.append(")");
              break;
-          case 2:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDATUTORIAL", "User", "email"); S.append("=?)");
+          case 2: // Unique Index 'Email'
+             S.append(" where ("); C.getFullColumnVar(S, "TILDATUTORIAL", "User", "email"); S.append("=?");  S.append(")");
              break;
           case -77: 
           case -666: if (__Init == InitMode.CREATE) break;
@@ -1496,13 +1496,13 @@ This is the hasChanged for:<BR>
           int i = 0;
           switch (__LookupId)
            {
-             case 0:
+             case 0: // PK
                PS.setLong      (++i, _refnum     );
                break;
-             case 1:
+             case 1: // Unique Index 'Id'
                PS.setString    (++i, _id         );
                break;
-             case 2:
+             case 2: // Unique Index 'Email'
                PS.setString    (++i, _email      );
                break;
              case -666: if (__Init == InitMode.CREATE) break;

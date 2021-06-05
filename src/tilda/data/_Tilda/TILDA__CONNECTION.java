@@ -1903,7 +1903,7 @@ This is the hasChanged for:<BR>
 
           switch (__LookupId)
            {
-             case 0:
+             case 0: // PK
                PS.setString    (++i, _id         );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
@@ -2073,8 +2073,8 @@ This is the hasChanged for:<BR>
 
           switch (__LookupId)
            {
-             case 0:
-                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Connection", "id"); S.append("=?)");
+             case 0: // PK
+                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Connection", "id"); S.append("=?");  S.append(")");
                 break;
              case -77: 
              case -666: if (__Init == InitMode.CREATE) break;
@@ -2128,7 +2128,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR      ); else C.setArray(PS, ++i, TILDA__CONNECTION_Factory.COLS.SCHEMAS._Type, AllocatedArrays, _schemas);
+          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR      ); else C.setArray(PS, ++i, TILDA__CONNECTION_Factory.COLS.SCHEMAS.getType(), AllocatedArrays, _schemas);
         } 
        if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.CREATED._Mask) == true) 
         { 
@@ -2278,8 +2278,8 @@ This is the hasChanged for:<BR>
           S.append(" from "); C.getFullTableVar(S, "TILDA", "Connection");
        switch (__LookupId)
         {
-          case 0:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Connection", "id"); S.append("=?)");
+          case 0: // PK
+             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Connection", "id"); S.append("=?");  S.append(")");
              break;
           case -77: 
           case -666: if (__Init == InitMode.CREATE) break;
@@ -2302,7 +2302,7 @@ This is the hasChanged for:<BR>
           int i = 0;
           switch (__LookupId)
            {
-             case 0:
+             case 0: // PK
                PS.setString    (++i, _id         );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
@@ -2344,7 +2344,7 @@ This is the hasChanged for:<BR>
                             _pswd        = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__CONNECTION_Factory.COLS.PSWD._Mask       ); _pswd = null; }
                             _initial     =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__CONNECTION_Factory.COLS.INITIAL._Mask    ); _initial = null; }
                             _max         =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__CONNECTION_Factory.COLS.MAX._Mask        ); _max = null; }
-                            _schemas = (List<String>) C.getArray(RS, ++i, TILDA__CONNECTION_Factory.COLS.SCHEMAS._Type, false); if (RS.wasNull() == true) { __Nulls.or(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask    ); _schemas = null; }
+                            _schemas = (List<String>) C.getArray(RS, ++i, TILDA__CONNECTION_Factory.COLS.SCHEMAS.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask    ); _schemas = null; }
                             _created     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__CONNECTION_Factory.COLS.CREATED._Mask    ); _created = null; }
                             _lastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__CONNECTION_Factory.COLS.LASTUPDATED._Mask); _lastUpdated = null; }
                             _deleted     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__CONNECTION_Factory.COLS.DELETED._Mask    ); _deleted = null; }

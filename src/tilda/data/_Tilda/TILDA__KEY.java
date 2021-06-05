@@ -1327,10 +1327,10 @@ This is the hasChanged for:<BR>
 
           switch (__LookupId)
            {
-             case 0:
+             case 0: // PK
                PS.setLong      (++i, _refnum        );
                break;
-             case 1:
+             case 1: // Unique Index 'Name'
                PS.setString    (++i, _name          );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
@@ -1463,11 +1463,11 @@ This is the hasChanged for:<BR>
 
           switch (__LookupId)
            {
-             case 0:
-                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Key", "refnum"); S.append("=?)");
+             case 0: // PK
+                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Key", "refnum"); S.append("=?");  S.append(")");
                 break;
-             case 1:
-                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Key", "name"); S.append("=?)");
+             case 1: // Unique Index 'Name'
+                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Key", "name"); S.append("=?");  S.append(")");
                 break;
              case -77: 
              case -666: if (__Init == InitMode.CREATE) break;
@@ -1653,11 +1653,11 @@ This is the hasChanged for:<BR>
           S.append(" from "); C.getFullTableVar(S, "TILDA", "Key");
        switch (__LookupId)
         {
-          case 0:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Key", "refnum"); S.append("=?)");
+          case 0: // PK
+             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Key", "refnum"); S.append("=?");  S.append(")");
              break;
-          case 1:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Key", "name"); S.append("=?)");
+          case 1: // Unique Index 'Name'
+             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Key", "name"); S.append("=?");  S.append(")");
              break;
           case -77: 
           case -666: if (__Init == InitMode.CREATE) break;
@@ -1679,10 +1679,10 @@ This is the hasChanged for:<BR>
           int i = 0;
           switch (__LookupId)
            {
-             case 0:
+             case 0: // PK
                PS.setLong      (++i, _refnum        );
                break;
-             case 1:
+             case 1: // Unique Index 'Name'
                PS.setString    (++i, _name          );
                break;
              case -666: if (__Init == InitMode.CREATE) break;

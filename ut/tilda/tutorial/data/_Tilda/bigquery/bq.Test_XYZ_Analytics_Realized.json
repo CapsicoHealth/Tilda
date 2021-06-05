@@ -10,7 +10,7 @@
    ,{ "name":"testCount", "type":"INT64", "mode":"NULLABLE", "description":"The primary key for this record (from TILDATUTORIAL.Test_XYZ_Analytics_View.testCount)" }
    ,{ "name":"testAnswerCountCorrect", "type":"INT64", "mode":"NULLABLE", "description":"Whether the answer is correct or not (from TILDATUTORIAL.Test_XYZ_Analytics_View.testAnswerCountCorrect)" }
    ,{ "name":"testTimeMillisAvg", "type":"FLOAT64", "mode":"NULLABLE", "description":"Time in milliseconds for the time spent answering the question (from TILDATUTORIAL.Test_XYZ_Analytics_View.testTimeMillisAvg)" }
-   ,{ "name":"isPassed", "type":"INT64", "mode":"NULLABLE", "description":"Formula column '<B>Test Passed</B>' (from TILDATUTORIAL.Test_XYZ_Analytics_View.isPassed)" }
-   ,{ "name":"tookLongerThanAverage", "type":"INT64", "mode":"NULLABLE", "description":"Formula column '<B>Test Took Longer Than Average</B>' (from TILDATUTORIAL.Test_XYZ_Analytics_View.tookLongerThanAverage)" }
-   ,{ "name":"wasChallenging", "type":"INT64", "mode":"NULLABLE", "description":"Formula column '<B>Test Was Challenging</B>' (from TILDATUTORIAL.Test_XYZ_Analytics_View.wasChallenging)" }
+   ,{ "name":"isPassed", "type":"INT64", "mode":"NULLABLE", "description":"<B>Test Passed</B>: Whether the test was passed or not by answering at least 2 out of the 3 questions. (from TILDATUTORIAL.Test_XYZ_Analytics_View.isPassed)" }
+   ,{ "name":"tookLongerThanAverage", "type":"INT64", "mode":"NULLABLE", "description":"<B>Test Took Longer Than Average</B>: Whether the test took longer that the average time spent across all tests. (from TILDATUTORIAL.Test_XYZ_Analytics_View.tookLongerThanAverage)" }
+   ,{ "name":"wasChallenging", "type":"INT64", "mode":"NULLABLE", "description":"<B>Test Was Challenging</B>: Whether the test was challenging in that:<LI>   <LI>it was passed,</LI>   <LI>and overall, less than a third of answers across all tests were answered correctly.</LI> </UL> (from TILDATUTORIAL.Test_XYZ_Analytics_View.wasChallenging)" }
 ]

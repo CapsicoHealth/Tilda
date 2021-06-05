@@ -53,7 +53,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          REFNUM       = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"       , 0/*0*/, "The primary key for this record");
+     public static Type_LongPrimitive          REFNUM       = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"       , 0/*0*/, "The primary key for this record", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.TestQuestionAnswer.type -> TILDATUTORIAL.TestQuestionAnswer."type"
@@ -72,7 +72,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        TYPE         = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "type"         , 1/*1*/, "Form template type");
+     public static Type_StringPrimitive        TYPE         = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "type"         , 1/*1*/, "Form template type", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.TestQuestionAnswer.questionSeq -> TILDATUTORIAL.TestQuestionAnswer."questionSeq"
@@ -90,7 +90,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerPrimitive       QUESTIONSEQ  = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "questionSeq"  , 2/*2*/, "Sequence of the question for the test");
+     public static Type_IntegerPrimitive       QUESTIONSEQ  = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "questionSeq"  , 2/*2*/, "Sequence of the question for the test", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.TestQuestionAnswer.questionId -> TILDATUTORIAL.TestQuestionAnswer."questionId"
@@ -109,7 +109,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        QUESTIONID   = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "questionId"   , 3/*3*/, "Question id");
+     public static Type_StringPrimitive        QUESTIONID   = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "questionId"   , 3/*3*/, "Question id", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.TestQuestionAnswer.questionLabel -> TILDATUTORIAL.TestQuestionAnswer."questionLabel"
@@ -128,7 +128,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        QUESTIONLABEL= new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "questionLabel", 4/*4*/, "Question label");
+     public static Type_StringPrimitive        QUESTIONLABEL= new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "questionLabel", 4/*4*/, "Question label", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.TestQuestionAnswer.answerSeq -> TILDATUTORIAL.TestQuestionAnswer."answerSeq"
@@ -146,7 +146,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerPrimitive       ANSWERSEQ    = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "answerSeq"    , 5/*5*/, "Sequence of the answer for the question in the test");
+     public static Type_IntegerPrimitive       ANSWERSEQ    = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "answerSeq"    , 5/*5*/, "Sequence of the answer for the question in the test", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.TestQuestionAnswer.answerId -> TILDATUTORIAL.TestQuestionAnswer."answerId"
@@ -165,7 +165,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        ANSWERID     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "answerId"     , 6/*6*/, "Answer id");
+     public static Type_StringPrimitive        ANSWERID     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "answerId"     , 6/*6*/, "Answer id", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.TestQuestionAnswer.answerLabel -> TILDATUTORIAL.TestQuestionAnswer."answerLabel"
@@ -184,7 +184,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        ANSWERLABEL  = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "answerLabel"  , 7/*7*/, "Answer label");
+     public static Type_StringPrimitive        ANSWERLABEL  = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "answerLabel"  , 7/*7*/, "Answer label", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.TestQuestionAnswer.correct -> TILDATUTORIAL.TestQuestionAnswer."correct"
@@ -202,7 +202,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_BooleanPrimitive       CORRECT      = new Type_BooleanPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "correct"      , 8/*8*/, "Whether the answer is a correct one or not for that question (technically, there could be more than one)");
+     public static Type_BooleanPrimitive       CORRECT      = new Type_BooleanPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "correct"      , 8/*8*/, "Whether the answer is a correct one or not for that question (technically, there could be more than one)", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.TestQuestionAnswer.created -> TILDATUTORIAL.TestQuestionAnswer."created"
@@ -227,7 +227,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      CREATED      = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"      , 9/*9*/, "The timestamp for when the record was created. (TILDATUTORIAL.TestQuestionAnswer)");
+     public static Type_DatetimePrimitive      CREATED      = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"      , 9/*9*/, "The timestamp for when the record was created. (TILDATUTORIAL.TestQuestionAnswer)", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.TestQuestionAnswer.lastUpdated -> TILDATUTORIAL.TestQuestionAnswer."lastUpdated"
@@ -252,7 +252,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      LASTUPDATED  = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"  , 10/*10*/, "The timestamp for when the record was last updated. (TILDATUTORIAL.TestQuestionAnswer)");
+     public static Type_DatetimePrimitive      LASTUPDATED  = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"  , 10/*10*/, "The timestamp for when the record was last updated. (TILDATUTORIAL.TestQuestionAnswer)", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.TestQuestionAnswer.deleted -> TILDATUTORIAL.TestQuestionAnswer."deleted"
@@ -270,7 +270,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  DELETED      = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"      , 11/*11*/, "The timestamp for when the record was deleted. (TILDATUTORIAL.TestQuestionAnswer)");
+     public static Type_DatetimePrimitiveNull  DELETED      = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"      , 11/*11*/, "The timestamp for when the record was deleted. (TILDATUTORIAL.TestQuestionAnswer)", null, null);
 ;
    }
 
@@ -370,12 +370,12 @@ This is the column definition for:<BR>
                 String clause = ((SelectQuery)ExtraParams).getWhereClause();
                 if (TextUtil.isNullOrEmpty(clause) == false) S.append(clause);
                 break;
-             case 2:
-                S.append(" where ("); C.getFullColumnVar(S, "TILDATUTORIAL", "TestQuestionAnswer", "type"); S.append("=?)");
+             case 2: // Index 'Form'
+                S.append(" where ("); C.getFullColumnVar(S, "TILDATUTORIAL", "TestQuestionAnswer", "type"); S.append("=?");  S.append(")");
                 S.append(" order by "); C.getFullColumnVar(S, "TILDATUTORIAL", "TestQuestionAnswer", "questionId"); S.append(" ASC");S.append(", "); C.getFullColumnVar(S, "TILDATUTORIAL", "TestQuestionAnswer", "answerSeq"); S.append(" ASC");
                 break;
-             case 3:
-                S.append(" where (1=1)");
+             case 3: // Quwey 'All'
+                S.append(" where (");  S.append("1=1");  S.append(")");
                 S.append(" order by "); C.getFullColumnVar(S, "TILDATUTORIAL", "TestQuestionAnswer", "refnum"); S.append(" ASC");
                 break;
              case -77: 
@@ -402,11 +402,11 @@ This is the column definition for:<BR>
              case -77:
              case -7:
                 break;
-             case 2: {
+             case 2: {  // Index 'Form'
                PS.setString    (++i, Obj._type         );
                break;
              }
-             case 3: {
+             case 3: { // Query 'All'
                break;
              }
              case -666: break;

@@ -9747,7 +9747,7 @@ This is the hasChanged for:<BR>
 
           switch (__LookupId)
            {
-             case 0:
+             case 0: // PK
                PS.setLong      (++i, _refnum     );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
@@ -10309,8 +10309,8 @@ This is the hasChanged for:<BR>
 
           switch (__LookupId)
            {
-             case 0:
-                S.append(" where ("); C.getFullColumnVar(S, "TILDATEST", "Testing", "refnum"); S.append("=?)");
+             case 0: // PK
+                S.append(" where ("); C.getFullColumnVar(S, "TILDATEST", "Testing", "refnum"); S.append("=?");  S.append(")");
                 break;
              case -77: 
              case -666: if (__Init == InitMode.CREATE) break;
@@ -10336,7 +10336,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__TESTING_Factory.COLS.REFNUM2._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.REFNUM2._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.BIGINT    ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.REFNUM2._Type, AllocatedArrays, _refnum2);
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.REFNUM2._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.BIGINT    ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.REFNUM2.getType(), AllocatedArrays, _refnum2);
         } 
        if (__Changes.intersects(TILDA__TESTING_Factory.COLS.NAME._Mask) == true) 
         { 
@@ -10368,11 +10368,11 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__TESTING_Factory.COLS.TOPS._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.TOPS._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR      ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.TOPS._Type, AllocatedArrays, _tops);
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.TOPS._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR      ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.TOPS.getType(), AllocatedArrays, _tops);
         } 
        if (__Changes.intersects(TILDA__TESTING_Factory.COLS.TOPS2._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.TOPS2._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR      ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.TOPS2._Type, AllocatedArrays, _tops2);
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.TOPS2._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR      ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.TOPS2.getType(), AllocatedArrays, _tops2);
         } 
        if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A1._Mask) == true) 
         { 
@@ -10384,11 +10384,11 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A2B._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A2B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR      ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A2B._Type, AllocatedArrays, _a2b);
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A2B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR      ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A2B.getType(), AllocatedArrays, _a2b);
         } 
        if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A2C._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A2C._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR      ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A2C._Type, AllocatedArrays, _a2c);
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A2C._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR      ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A2C.getType(), AllocatedArrays, _a2c);
         } 
        if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A3._Mask) == true) 
         { 
@@ -10396,7 +10396,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A3B._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A3B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.BOOLEAN   ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A3B._Type, AllocatedArrays, _a3b);
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A3B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.BOOLEAN   ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A3B.getType(), AllocatedArrays, _a3b);
         } 
        if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A4._Mask) == true) 
         { 
@@ -10404,7 +10404,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A4B._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A4B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.DOUBLE    ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A4B._Type, AllocatedArrays, _a4b);
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A4B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.DOUBLE    ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A4B.getType(), AllocatedArrays, _a4b);
         } 
        if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A5._Mask) == true) 
         { 
@@ -10412,7 +10412,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A5B._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A5B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.FLOAT     ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A5B._Type, AllocatedArrays, _a5b);
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A5B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.FLOAT     ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A5B.getType(), AllocatedArrays, _a5b);
         } 
        if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A6._Mask) == true) 
         { 
@@ -10420,11 +10420,11 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A6B._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A6B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.BIGINT    ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A6B._Type, AllocatedArrays, _a6b);
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A6B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.BIGINT    ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A6B.getType(), AllocatedArrays, _a6b);
         } 
        if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A6C._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A6C._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.BIGINT    ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A6C._Type, AllocatedArrays, _a6c);
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A6C._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.BIGINT    ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A6C.getType(), AllocatedArrays, _a6c);
         } 
        if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A6DTZ._Mask) == true) 
         { 
@@ -10440,7 +10440,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A7B._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A7B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.INTEGER   ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A7B._Type, AllocatedArrays, _a7b);
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A7B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.INTEGER   ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A7B.getType(), AllocatedArrays, _a7b);
         } 
        if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A8._Mask) == true) 
         { 
@@ -10472,11 +10472,11 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9BTZ._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9BTZ._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR      ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A9BTZ._Type, AllocatedArrays, _a9bTZ);
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9BTZ._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR      ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A9BTZ.getType(), AllocatedArrays, _a9bTZ);
         } 
        if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9B._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A9B._Type, AllocatedArrays, DateTimeUtil.toSQLTimeStamps(_a9b));
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A9B.getType(), AllocatedArrays, DateTimeUtil.toSQLTimeStamps(_a9b));
         } 
        if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9C._Mask) == true) 
         { 
@@ -10484,7 +10484,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9D._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9D._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.DATE); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A9D._Type, AllocatedArrays, _a9d);
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9D._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.DATE); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A9D.getType(), AllocatedArrays, _a9d);
         } 
        if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A10A._Mask) == true) 
         { 
@@ -10504,7 +10504,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A11B._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A11B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.NUMERIC   ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A11B._Type, AllocatedArrays, _a11b);
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A11B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.NUMERIC   ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A11B.getType(), AllocatedArrays, _a11b);
         } 
        if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A11C._Mask) == true) 
         { 
@@ -10516,7 +10516,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A12B._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A12B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.SMALLINT  ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A12B._Type, AllocatedArrays, _a12b);
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A12B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.SMALLINT  ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A12B.getType(), AllocatedArrays, _a12b);
         } 
        if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A13._Mask) == true) 
         { 
@@ -10524,7 +10524,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A13B._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A13B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.OTHER     ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A13B._Type, AllocatedArrays, _a13b);
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A13B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.OTHER     ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A13B.getType(), AllocatedArrays, _a13b);
         } 
        if (__Changes.intersects(TILDA__TESTING_Factory.COLS.CREATED._Mask) == true) 
         { 
@@ -10647,8 +10647,8 @@ This is the hasChanged for:<BR>
           S.append(" from "); C.getFullTableVar(S, "TILDATEST", "Testing");
        switch (__LookupId)
         {
-          case 0:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDATEST", "Testing", "refnum"); S.append("=?)");
+          case 0: // PK
+             S.append(" where ("); C.getFullColumnVar(S, "TILDATEST", "Testing", "refnum"); S.append("=?");  S.append(")");
              break;
           case -77: 
           case -666: if (__Init == InitMode.CREATE) break;
@@ -10671,7 +10671,7 @@ This is the hasChanged for:<BR>
           int i = 0;
           switch (__LookupId)
            {
-             case 0:
+             case 0: // PK
                PS.setLong      (++i, _refnum     );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
@@ -10706,7 +10706,7 @@ This is the hasChanged for:<BR>
       int i = 0;
      __Init = InitMode.LOOKUP;
       __Saved_refnum      = _refnum      =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.REFNUM._Mask     ); _refnum = null; }
-                            _refnum2 = (List<Long>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.REFNUM2._Type, false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.REFNUM2._Mask    ); _refnum2 = null; }
+                            _refnum2 = (List<Long>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.REFNUM2.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.REFNUM2._Mask    ); _refnum2 = null; }
                             _name        = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.NAME._Mask       ); _name = null; }
                             _description = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask); _description = null; }
                             _desc2       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.DESC2._Mask      ); _desc2 = null; }
@@ -10714,25 +10714,25 @@ This is the hasChanged for:<BR>
                             _desc4       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.DESC4._Mask      ); _desc4 = null; }
                             _desc5       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.DESC5._Mask      ); _desc5 = null; }
                             _desc6       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.DESC6._Mask      ); _desc6 = null; }
-                            _tops = (List<String>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.TOPS._Type, false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.TOPS._Mask       ); _tops = null; }
-                            _tops2 = (Set<String>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.TOPS2._Type, true); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.TOPS2._Mask      ); _tops2 = null; }
+                            _tops = (List<String>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.TOPS.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.TOPS._Mask       ); _tops = null; }
+                            _tops2 = (Set<String>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.TOPS2.getType(), true); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.TOPS2._Mask      ); _tops2 = null; }
                             _a1          =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A1._Mask         ); _a1 = null; }
                             _a2          = ParseUtil.parseCharacter    (RS.getString    (++i));  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A2._Mask         ); _a2 = null; }
-                            _a2b = (List<Character>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A2B._Type, false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A2B._Mask        ); _a2b = null; }
-                            _a2c = (Set<Character>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A2C._Type, true); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A2C._Mask        ); _a2c = null; }
+                            _a2b = (List<Character>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A2B.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A2B._Mask        ); _a2b = null; }
+                            _a2c = (Set<Character>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A2C.getType(), true); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A2C._Mask        ); _a2c = null; }
                             _a3          =                              RS.getBoolean   (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A3._Mask         ); _a3 = null; }
-                            _a3b = (List<Boolean>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A3B._Type, false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A3B._Mask        ); _a3b = null; }
+                            _a3b = (List<Boolean>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A3B.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A3B._Mask        ); _a3b = null; }
                             _a4          =                              RS.getDouble    (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A4._Mask         ); _a4 = null; }
-                            _a4b = (List<Double>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A4B._Type, false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A4B._Mask        ); _a4b = null; }
+                            _a4b = (List<Double>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A4B.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A4B._Mask        ); _a4b = null; }
                             _a5          =                              RS.getFloat     (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A5._Mask         ); _a5 = null; }
-                            _a5b = (List<Float>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A5B._Type, false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A5B._Mask        ); _a5b = null; }
+                            _a5b = (List<Float>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A5B.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A5B._Mask        ); _a5b = null; }
                             _a6          =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A6._Mask         ); _a6 = null; }
-                            _a6b = (List<Long>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A6B._Type, false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A6B._Mask        ); _a6b = null; }
-                            _a6c = (Set<Long>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A6C._Type, true); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A6C._Mask        ); _a6c = null; }
+                            _a6b = (List<Long>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A6B.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A6B._Mask        ); _a6b = null; }
+                            _a6c = (Set<Long>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A6C.getType(), true); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A6C._Mask        ); _a6c = null; }
                             _a6dTZ       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A6DTZ._Mask      ); _a6dTZ = null; } else _a6dTZ       = _a6dTZ      .trim();
                             _a6d         = processZDT(_a6dTZ        , "tilda.data_test.TILDATEST.Testing.a6d"        , RS, ++i, TILDA__TESTING_Factory.COLS.A6D        , TILDA__TESTING_Factory.COLS.A6DTZ        ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A6D._Mask        ); _a6d = null; }
                             _a7          =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A7._Mask         ); _a7 = null; }
-                            _a7b = (List<Integer>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A7B._Type, false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A7B._Mask        ); _a7b = null; }
+                            _a7b = (List<Integer>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A7B.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A7B._Mask        ); _a7b = null; }
                             _a8          =                              RS.getBytes     (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A8._Mask         ); _a8 = null; }
                             _a8bTZ       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A8BTZ._Mask      ); _a8bTZ = null; } else _a8bTZ       = _a8bTZ      .trim();
                             _a8b         = processZDT(_a8bTZ        , "tilda.data_test.TILDATEST.Testing.a8b"        , RS, ++i, TILDA__TESTING_Factory.COLS.A8B        , TILDA__TESTING_Factory.COLS.A8BTZ        ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A8B._Mask        ); _a8b = null; }
@@ -10740,20 +10740,20 @@ This is the hasChanged for:<BR>
                             _a9          = processZDT(_a9TZ         , "tilda.data_test.TILDATEST.Testing.a9"         , RS, ++i, TILDA__TESTING_Factory.COLS.A9         , TILDA__TESTING_Factory.COLS.A9TZ         ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A9._Mask         ); _a9 = null; }
                             _a9a1TZ      = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A9A1TZ._Mask     ); _a9a1TZ = null; } else _a9a1TZ      = _a9a1TZ     .trim();
                             _a9a1        = processZDT(_a9a1TZ       , "tilda.data_test.TILDATEST.Testing.a9a1"       , RS, ++i, TILDA__TESTING_Factory.COLS.A9A1       , TILDA__TESTING_Factory.COLS.A9A1TZ       ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A9A1._Mask       ); _a9a1 = null; }
-                            _a9bTZ = (List<String>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A9BTZ._Type, false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A9BTZ._Mask      ); _a9bTZ = null; }
+                            _a9bTZ = (List<String>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A9BTZ.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A9BTZ._Mask      ); _a9bTZ = null; }
                             _a9b         = processZDTs(C, _a9bTZ        , "tilda.data_test.TILDATEST.Testing.a9b"        , RS, ++i, TILDA__TESTING_Factory.COLS.A9B        , TILDA__TESTING_Factory.COLS.A9BTZ        ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A9B._Mask        ); _a9b = null; }
                             _a9c         = DateTimeUtil.toLocalDate(RS.getDate(++i)); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A9C._Mask        ); _a9c = null; }
-                            _a9d         = DateTimeUtil.toLocalDates((List<java.sql.Date>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A9D._Type, false)); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A9D._Mask        ); _a9d = null; }
+                            _a9d         = DateTimeUtil.toLocalDates((List<java.sql.Date>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A9D.getType(), false)); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A9D._Mask        ); _a9d = null; }
                             _a10a        =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A10A._Mask       ); _a10a = null; }
                             _a10b        = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A10B._Mask       ); _a10b = null; }
                             _a10c        =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A10C._Mask       ); _a10c = null; }
                             _a11         =                              RS.getBigDecimal(++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A11._Mask        ); _a11 = null; }
-                            _a11b = (List<BigDecimal>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A11B._Type, false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A11B._Mask       ); _a11b = null; }
+                            _a11b = (List<BigDecimal>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A11B.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A11B._Mask       ); _a11b = null; }
                             _a11c        =                              RS.getBigDecimal(++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A11C._Mask       ); _a11c = null; }
                             _a12         =                              RS.getShort     (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A12._Mask        ); _a12 = null; }
-                            _a12b = (List<Short>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A12B._Type, false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A12B._Mask       ); _a12b = null; }
+                            _a12b = (List<Short>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A12B.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A12B._Mask       ); _a12b = null; }
                             _a13         =                              (java.util.UUID) RS.getObject(++i);  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A13._Mask        ); _a13 = null; }
-                            _a13b = (List<UUID>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A13B._Type, false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A13B._Mask       ); _a13b = null; }
+                            _a13b = (List<UUID>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A13B.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A13B._Mask       ); _a13b = null; }
                             _created     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.CREATED._Mask    ); _created = null; }
                             _lastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.LASTUPDATED._Mask); _lastUpdated = null; }
                             _deleted     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.DELETED._Mask    ); _deleted = null; }
@@ -10785,7 +10785,7 @@ This is the hasChanged for:<BR>
   private final List<ZonedDateTime> processZDTs(Connection C, List<String> TimezoneIds, String DTFieldName, java.sql.ResultSet RS, int ColumnPos, tilda.types.ColumnDefinition DTField, tilda.types.ColumnDefinition TZField)
   throws Exception
    {
-     List<Timestamp> L = (List<Timestamp>) C.getArray(RS, ColumnPos, DTField._Type, false);
+     List<Timestamp> L = (List<Timestamp>) C.getArray(RS, ColumnPos, DTField.getType(), false);
      boolean DTNull = false;
      if (RS.wasNull() == true)
       {

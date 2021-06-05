@@ -1196,7 +1196,7 @@ This is the hasChanged for:<BR>
 
           switch (__LookupId)
            {
-             case 0:
+             case 0: // Unique Index 'TypeSrcDst'
                PS.setString    (++i, _type       );
                PS.setString    (++i, _src        );
                PS.setString    (++i, _dst        );
@@ -1324,8 +1324,8 @@ This is the hasChanged for:<BR>
 
           switch (__LookupId)
            {
-             case 0:
-                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Mapping", "type"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "Mapping", "src"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "Mapping", "dst"); S.append("=?)");
+             case 0: // Unique Index 'TypeSrcDst'
+                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Mapping", "type"); S.append("=?");  S.append(" AND "); C.getFullColumnVar(S, "TILDA", "Mapping", "src"); S.append("=?");  S.append(" AND "); C.getFullColumnVar(S, "TILDA", "Mapping", "dst"); S.append("=?");  S.append(")");
                 break;
              case -77: 
              case -666: if (__Init == InitMode.CREATE) break;
@@ -1501,8 +1501,8 @@ This is the hasChanged for:<BR>
           S.append(" from "); C.getFullTableVar(S, "TILDA", "Mapping");
        switch (__LookupId)
         {
-          case 0:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Mapping", "type"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "Mapping", "src"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "Mapping", "dst"); S.append("=?)");
+          case 0: // Unique Index 'TypeSrcDst'
+             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Mapping", "type"); S.append("=?");  S.append(" AND "); C.getFullColumnVar(S, "TILDA", "Mapping", "src"); S.append("=?");  S.append(" AND "); C.getFullColumnVar(S, "TILDA", "Mapping", "dst"); S.append("=?");  S.append(")");
              break;
           case -77: 
           case -666: if (__Init == InitMode.CREATE) break;
@@ -1524,7 +1524,7 @@ This is the hasChanged for:<BR>
           int i = 0;
           switch (__LookupId)
            {
-             case 0:
+             case 0: // Unique Index 'TypeSrcDst'
                PS.setString    (++i, _type       );
                PS.setString    (++i, _src        );
                PS.setString    (++i, _dst        );

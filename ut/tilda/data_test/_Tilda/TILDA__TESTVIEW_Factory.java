@@ -53,7 +53,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          REFNUM= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum", 0/*0*/, "The primary key for this record");
+     public static Type_LongPrimitive          REFNUM= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum", 0/*0*/, "The primary key for this record", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.TestView.name -> TILDATEST.TestView."name"
@@ -72,7 +72,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        NAME  = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "name"  , 1/*1*/, "The name of the test");
+     public static Type_StringPrimitive        NAME  = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "name"  , 1/*1*/, "The name of the test", null, null);
 ;
    }
 
@@ -267,9 +267,10 @@ This is the column definition for:<BR>
       toJSON(out, obj, lead, fullObject, false);
     }
 
-   public static void toJSON(java.io.Writer out, tilda.data_test.TestView_Data obj, String lead, boolean fullObject, boolean noNullArrays) throws java.io.IOException
+   public static void toJSON(java.io.Writer outWriter, tilda.data_test.TestView_Data obj, String lead, boolean fullObject, boolean noNullArrays) throws java.io.IOException
     {
       long T0 = System.nanoTime();
+      org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter();
       tilda.data_test._Tilda.TILDA__TESTVIEW Obj = (tilda.data_test._Tilda.TILDA__TESTVIEW) obj;
       if (fullObject == true)
        {
@@ -284,6 +285,10 @@ This is the column definition for:<BR>
 
       if (fullObject == true)
        out.write(" }\n");
+
+      outWriter.append(out.getBuilder().toString());
+      out.close();
+
       PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
     }
 

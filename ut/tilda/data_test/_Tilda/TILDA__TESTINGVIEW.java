@@ -1533,9 +1533,9 @@ This is the null setter for:<BR>
                         _refnum  =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.REFNUM._Mask ); _refnum = null; }
                         _a2Min   = ParseUtil.parseCharacter    (RS.getString    (++i));  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A2MIN._Mask  ); _a2Min = null; }
                         _a2Max   = ParseUtil.parseCharacter    (RS.getString    (++i));  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A2MAX._Mask  ); _a2Max = null; }
-                        _a9TZ = (List<String>) C.getArray(RS, ++i, TILDA__TESTINGVIEW_Factory.COLS.A9TZ._Type, false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A9TZ._Mask   ); _a9TZ = null; }
+                        _a9TZ = (List<String>) C.getArray(RS, ++i, TILDA__TESTINGVIEW_Factory.COLS.A9TZ.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A9TZ._Mask   ); _a9TZ = null; }
                         _a9      = processZDTs(C, _a9TZ     , "tilda.data_test.TILDATEST.TestingView.a9"     , RS, ++i, TILDA__TESTINGVIEW_Factory.COLS.A9     , TILDA__TESTINGVIEW_Factory.COLS.A9TZ     ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A9._Mask     ); _a9 = null; }
-                        _a9c     = DateTimeUtil.toLocalDates((List<java.sql.Date>) C.getArray(RS, ++i, TILDA__TESTINGVIEW_Factory.COLS.A9C._Type, false)); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A9C._Mask    ); _a9c = null; }
+                        _a9c     = DateTimeUtil.toLocalDates((List<java.sql.Date>) C.getArray(RS, ++i, TILDA__TESTINGVIEW_Factory.COLS.A9C.getType(), false)); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A9C._Mask    ); _a9c = null; }
                         _a6First =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A6FIRST._Mask); _a6First = null; }
                         _a6Last  =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A6LAST._Mask ); _a6Last = null; }
      __LookupId = 0;
@@ -1566,7 +1566,7 @@ This is the null setter for:<BR>
   private final List<ZonedDateTime> processZDTs(Connection C, List<String> TimezoneIds, String DTFieldName, java.sql.ResultSet RS, int ColumnPos, tilda.types.ColumnDefinition DTField, tilda.types.ColumnDefinition TZField)
   throws Exception
    {
-     List<Timestamp> L = (List<Timestamp>) C.getArray(RS, ColumnPos, DTField._Type, false);
+     List<Timestamp> L = (List<Timestamp>) C.getArray(RS, ColumnPos, DTField.getType(), false);
      boolean DTNull = false;
      if (RS.wasNull() == true)
       {

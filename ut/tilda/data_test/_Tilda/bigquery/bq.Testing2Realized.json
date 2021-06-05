@@ -30,16 +30,16 @@
    ,{ "name":"desc4", "type":"STRING", "mode":"NULLABLE", "description":"The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.desc4)" }
    ,{ "name":"desc5", "type":"STRING", "mode":"NULLABLE", "description":"The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.desc5)" }
    ,{ "name":"desc6", "type":"STRING", "mode":"NULLABLE", "description":"The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.desc6)" }
-   ,{ "name":"a3", "type":"BOOL", "mode":"NULLABLE", "description":"Formula column '<B>Not A3</B>' (from TILDATEST.Testing2View.a3)" }
-   ,{ "name":"bastille", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"Formula column '<B>Bastille Day</B>' (from TILDATEST.Testing2View.bastille)" }
-   ,{ "name":"toto", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"Formula column '<B>Last Updated</B>' (from TILDATEST.Testing2View.toto)" }
-   ,{ "name":"desc2_Cat1", "type":"FLOAT64", "mode":"NULLABLE", "description":"Formula column '<B>desc2_Cat1 Title</B>' (from TILDATEST.Testing2View.desc2_Cat1)" }
-   ,{ "name":"desc2_Cat2", "type":"FLOAT64", "mode":"NULLABLE", "description":"Formula column '<B>desc2_Cat2 Title</B>' (from TILDATEST.Testing2View.desc2_Cat2)" }
-   ,{ "name":"desc2_Cat3", "type":"FLOAT64", "mode":"NULLABLE", "description":"Formula column '<B>desc2_Cat3 Title</B>' (from TILDATEST.Testing2View.desc2_Cat3)" }
-   ,{ "name":"a7_Cat4", "type":"FLOAT64", "mode":"NULLABLE", "description":"Formula column '<B>a7_Cat4 Title</B>' (from TILDATEST.Testing2View.a7_Cat4)" }
-   ,{ "name":"a7_Cat5", "type":"FLOAT64", "mode":"NULLABLE", "description":"Formula column '<B>a7_Cat5 Title</B>' (from TILDATEST.Testing2View.a7_Cat5)" }
-   ,{ "name":"a5_null", "type":"INT64", "mode":"NULLABLE", "description":"Formula column '<B>Null a5</B>' (from TILDATEST.Testing2View.a5_null)" }
-   ,{ "name":"a6_null", "type":"INT64", "mode":"NULLABLE", "description":"Formula column '<B>Null a6</B>' (from TILDATEST.Testing2View.a6_null)" }
-   ,{ "name":"a7_null", "type":"INT64", "mode":"NULLABLE", "description":"Formula column '<B>Null a7</B>' (from TILDATEST.Testing2View.a7_null)" }
-   ,{ "name":"a8_null", "type":"INT64", "mode":"NULLABLE", "description":"Formula column '<B>Null a8</B>' (from TILDATEST.Testing2View.a8_null)" }
+   ,{ "name":"a3", "type":"BOOL", "mode":"NULLABLE", "description":"<B>Not A3</B>: Blah... (from TILDATEST.Testing2View.a3)" }
+   ,{ "name":"bastille", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"<B>Bastille Day</B>: Blah... (from TILDATEST.Testing2View.bastille)" }
+   ,{ "name":"toto", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"<B>Last Updated</B>: Blah... (from TILDATEST.Testing2View.toto)" }
+   ,{ "name":"desc2_Cat1", "type":"FLOAT64", "mode":"NULLABLE", "description":"<B>desc2_Cat1 Title</B>: This formula checks whether the column 'desc2' contains the values 'a', 'b', 'c' for the View TILDATEST.Testing2View. (from TILDATEST.Testing2View.desc2_Cat1)" }
+   ,{ "name":"desc2_Cat2", "type":"FLOAT64", "mode":"NULLABLE", "description":"<B>desc2_Cat2 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View. (from TILDATEST.Testing2View.desc2_Cat2)" }
+   ,{ "name":"desc2_Cat3", "type":"FLOAT64", "mode":"NULLABLE", "description":"<B>desc2_Cat3 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View. (from TILDATEST.Testing2View.desc2_Cat3)" }
+   ,{ "name":"a7_Cat4", "type":"FLOAT64", "mode":"NULLABLE", "description":"<B>a7_Cat4 Title</B>: This formula checks whether the column 'a7' value falls in the range of 0.0 and 10.0. (from TILDATEST.Testing2View.a7_Cat4)" }
+   ,{ "name":"a7_Cat5", "type":"FLOAT64", "mode":"NULLABLE", "description":"<B>a7_Cat5 Title</B>: This formula checks whether the column 'a7' value falls in the range of 10.0 and 20.0. (from TILDATEST.Testing2View.a7_Cat5)" }
+   ,{ "name":"a5_null", "type":"INT64", "mode":"NULLABLE", "description":"<B>Null a5</B>: Whether a5 is null or not (from TILDATEST.Testing2View.a5_null)" }
+   ,{ "name":"a6_null", "type":"INT64", "mode":"NULLABLE", "description":"<B>Null a6</B>: Whether a6 is null or not (from TILDATEST.Testing2View.a6_null)" }
+   ,{ "name":"a7_null", "type":"INT64", "mode":"NULLABLE", "description":"<B>Null a7</B>: Whether a7 is null or not (from TILDATEST.Testing2View.a7_null)" }
+   ,{ "name":"a8_null", "type":"INT64", "mode":"NULLABLE", "description":"<B>Null a8</B>: Whether a8 is null or not (from TILDATEST.Testing2View.a8_null)" }
 ]

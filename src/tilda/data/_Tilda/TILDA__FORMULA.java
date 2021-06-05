@@ -2627,10 +2627,10 @@ This is the hasChanged for:<BR>
 
           switch (__LookupId)
            {
-             case 0:
+             case 0: // PK
                PS.setLong      (++i, _refnum           );
                break;
-             case 1:
+             case 1: // Unique Index 'Formula'
                PS.setString    (++i, _location         );
                PS.setString    (++i, _name             );
                break;
@@ -2805,11 +2805,11 @@ This is the hasChanged for:<BR>
 
           switch (__LookupId)
            {
-             case 0:
-                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Formula", "refnum"); S.append("=?)");
+             case 0: // PK
+                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Formula", "refnum"); S.append("=?");  S.append(")");
                 break;
-             case 1:
-                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Formula", "location"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "Formula", "name"); S.append("=?)");
+             case 1: // Unique Index 'Formula'
+                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Formula", "location"); S.append("=?");  S.append(" AND "); C.getFullColumnVar(S, "TILDA", "Formula", "name"); S.append("=?");  S.append(")");
                 break;
              case -77: 
              case -666: if (__Init == InitMode.CREATE) break;
@@ -2867,7 +2867,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR      ); else C.setArray(PS, ++i, TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Type, AllocatedArrays, _referencedColumns);
+          if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR      ); else C.setArray(PS, ++i, TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS.getType(), AllocatedArrays, _referencedColumns);
         } 
        if (__Changes.intersects(TILDA__FORMULA_Factory.COLS.CREATED._Mask) == true) 
         { 
@@ -3032,11 +3032,11 @@ This is the hasChanged for:<BR>
           S.append(" from "); C.getFullTableVar(S, "TILDA", "Formula");
        switch (__LookupId)
         {
-          case 0:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Formula", "refnum"); S.append("=?)");
+          case 0: // PK
+             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Formula", "refnum"); S.append("=?");  S.append(")");
              break;
-          case 1:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Formula", "location"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "Formula", "name"); S.append("=?)");
+          case 1: // Unique Index 'Formula'
+             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Formula", "location"); S.append("=?");  S.append(" AND "); C.getFullColumnVar(S, "TILDA", "Formula", "name"); S.append("=?");  S.append(")");
              break;
           case -77: 
           case -666: if (__Init == InitMode.CREATE) break;
@@ -3059,10 +3059,10 @@ This is the hasChanged for:<BR>
           int i = 0;
           switch (__LookupId)
            {
-             case 0:
+             case 0: // PK
                PS.setLong      (++i, _refnum           );
                break;
-             case 1:
+             case 1: // Unique Index 'Formula'
                PS.setString    (++i, _location         );
                PS.setString    (++i, _name             );
                break;
@@ -3106,7 +3106,7 @@ This is the hasChanged for:<BR>
                                   _description       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FORMULA_Factory.COLS.DESCRIPTION._Mask      ); _description = null; }
                                   _formula           = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FORMULA_Factory.COLS.FORMULA._Mask          ); _formula = null; }
                                   _htmlDoc           = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FORMULA_Factory.COLS.HTMLDOC._Mask          ); _htmlDoc = null; }
-                                  _referencedColumns = (List<String>) C.getArray(RS, ++i, TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Type, false); if (RS.wasNull() == true) { __Nulls.or(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask); _referencedColumns = null; }
+                                  _referencedColumns = (List<String>) C.getArray(RS, ++i, TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask); _referencedColumns = null; }
                                   _created           = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__FORMULA_Factory.COLS.CREATED._Mask          ); _created = null; }
                                   _lastUpdated       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__FORMULA_Factory.COLS.LASTUPDATED._Mask      ); _lastUpdated = null; }
                                   _deleted           = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__FORMULA_Factory.COLS.DELETED._Mask          ); _deleted = null; }

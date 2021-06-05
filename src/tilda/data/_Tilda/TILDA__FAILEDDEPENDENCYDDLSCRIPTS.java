@@ -1498,7 +1498,7 @@ This is the hasChanged for:<BR>
 
           switch (__LookupId)
            {
-             case 0:
+             case 0: // Unique Index 'DepedencySequence'
                PS.setString    (++i, _srcSchemaName);
                PS.setString    (++i, _srcTVName    );
                PS.setTimestamp(++i, new java.sql.Timestamp(_created.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
@@ -1648,8 +1648,8 @@ This is the hasChanged for:<BR>
 
           switch (__LookupId)
            {
-             case 0:
-                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "FailedDependencyDDLScripts", "srcSchemaName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "FailedDependencyDDLScripts", "srcTVName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "FailedDependencyDDLScripts", "created"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "FailedDependencyDDLScripts", "seq"); S.append("=?)");
+             case 0: // Unique Index 'DepedencySequence'
+                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "FailedDependencyDDLScripts", "srcSchemaName"); S.append("=?");  S.append(" AND "); C.getFullColumnVar(S, "TILDA", "FailedDependencyDDLScripts", "srcTVName"); S.append("=?");  S.append(" AND "); C.getFullColumnVar(S, "TILDA", "FailedDependencyDDLScripts", "created"); S.append("=?");  S.append(" AND "); C.getFullColumnVar(S, "TILDA", "FailedDependencyDDLScripts", "seq"); S.append("=?");  S.append(")");
                 break;
              case -77: 
              case -666: if (__Init == InitMode.CREATE) break;
@@ -1841,8 +1841,8 @@ This is the hasChanged for:<BR>
           S.append(" from "); C.getFullTableVar(S, "TILDA", "FailedDependencyDDLScripts");
        switch (__LookupId)
         {
-          case 0:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "FailedDependencyDDLScripts", "srcSchemaName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "FailedDependencyDDLScripts", "srcTVName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "FailedDependencyDDLScripts", "created"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "FailedDependencyDDLScripts", "seq"); S.append("=?)");
+          case 0: // Unique Index 'DepedencySequence'
+             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "FailedDependencyDDLScripts", "srcSchemaName"); S.append("=?");  S.append(" AND "); C.getFullColumnVar(S, "TILDA", "FailedDependencyDDLScripts", "srcTVName"); S.append("=?");  S.append(" AND "); C.getFullColumnVar(S, "TILDA", "FailedDependencyDDLScripts", "created"); S.append("=?");  S.append(" AND "); C.getFullColumnVar(S, "TILDA", "FailedDependencyDDLScripts", "seq"); S.append("=?");  S.append(")");
              break;
           case -77: 
           case -666: if (__Init == InitMode.CREATE) break;
@@ -1864,7 +1864,7 @@ This is the hasChanged for:<BR>
           int i = 0;
           switch (__LookupId)
            {
-             case 0:
+             case 0: // Unique Index 'DepedencySequence'
                PS.setString    (++i, _srcSchemaName);
                PS.setString    (++i, _srcTVName    );
                PS.setTimestamp(++i, new java.sql.Timestamp(_created.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);

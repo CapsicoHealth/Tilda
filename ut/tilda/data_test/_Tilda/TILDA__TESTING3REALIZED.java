@@ -1310,7 +1310,7 @@ This is the hasChanged for:<BR>
 
           switch (__LookupId)
            {
-             case 0:
+             case 0: // Unique Index 'Refnum'
                if (isRefnumNull() == true) PS.setNull(++i, java.sql.Types.BIGINT    );  else PS.setLong      (++i, _refnum        );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
@@ -1441,8 +1441,8 @@ This is the hasChanged for:<BR>
 
           switch (__LookupId)
            {
-             case 0:
-                S.append(" where ("); C.getFullColumnVar(S, "TILDATEST", "Testing3Realized", "refnum"); S.append("=?)");
+             case 0: // Unique Index 'Refnum'
+                S.append(" where ("); C.getFullColumnVar(S, "TILDATEST", "Testing3Realized", "refnum"); S.append("=?");  S.append(")");
                 break;
              case -77: 
              case -666: if (__Init == InitMode.CREATE) break;
@@ -1616,8 +1616,8 @@ This is the hasChanged for:<BR>
           S.append(" from "); C.getFullTableVar(S, "TILDATEST", "Testing3Realized");
        switch (__LookupId)
         {
-          case 0:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDATEST", "Testing3Realized", "refnum"); S.append("=?)");
+          case 0: // Unique Index 'Refnum'
+             S.append(" where ("); C.getFullColumnVar(S, "TILDATEST", "Testing3Realized", "refnum"); S.append("=?");  S.append(")");
              break;
           case -77: 
           case -666: if (__Init == InitMode.CREATE) break;
@@ -1639,7 +1639,7 @@ This is the hasChanged for:<BR>
           int i = 0;
           switch (__LookupId)
            {
-             case 0:
+             case 0: // Unique Index 'Refnum'
                if (isRefnumNull() == true) PS.setNull(++i, java.sql.Types.BIGINT    );  else PS.setLong      (++i, _refnum        );
                break;
              case -666: if (__Init == InitMode.CREATE) break;

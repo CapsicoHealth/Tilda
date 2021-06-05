@@ -98,7 +98,7 @@
    to   { background-color: white; visibility: hidden; } 
  } 
 .blink_div { 
-   animation: blinkAnimation 0.3s infinite;
+   animation: blinkAnimation 0.25s infinite;
 }
 
 input[type=text]:focus {
@@ -386,12 +386,12 @@ var openDiv = function(divId, yOffsetCorrection)
      if (e == null)
       e = savedE;
      e.scrollIntoView(/*{block: "center"}*/);
+     window.scrollBy(0, divId.endsWith("_CNT") == true ? 0 : -100);
+     setTimeout(function() { 
+       e.scrollIntoView(/*{block: "center"}*/);
        window.scrollBy(0, divId.endsWith("_CNT") == true ? 0 : -100);
-       setTimeout(function() { 
-         e.scrollIntoView(/*{block: "center"}*/);
-         window.scrollBy(0, divId.endsWith("_CNT") == true ? 0 : -100);
-         blinkElement(e, "blink_div", 1500);
-       }, 200);
+       blinkElement(e, "blink_div", 500);
+     }, 200);
    }
 //  window.location = "#" + divId;
 //  setTimeout(function()
@@ -2815,17 +2815,17 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>Not A3</B>'</TD></TR>
+<TD><B>Not A3</B>: Blah...</TD></TR>
   <TR valign="top" style="background-color:#FFFFFF"><TD colspan="2"></TD><TD colspan="7">
 <TABLE border="1px" style="border-collapse:collapse; border: 1px solid #AAA;" cellspacing="0px" cellpadding="2px" width="98%">
-<TR valign="top"><TD width="1px" align="right"><B>Description</B></TD><TD>Blah...</TD></TR><TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">NOT <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATEST.html#Testing2View-a3_DIV">a3</A></PRE></TD><TR>
+<TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">NOT <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATEST.html#Testing2View-a3_DIV">a3</A></PRE></TD><TR>
 <TR valign="top"><TD width="1px" align="right"><B>Ref&nbsp;Columns</B></TD><TD>
 <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATEST.html#Testing2View-a3_DIV">a3</A><BR>
 <DIV style="padding-left:10px; font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing-a3_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>a3</A>
 </DIV>
 <DIV style="padding-left:10px;">The blah</DIV>
 </TD></TR>
-</TABLE>
+</TABLE>&nbsp;
 <DIV id='Testing2View-a3_MODAL' class='modal'>
 <DIV class='modal-content'>
 <SPAN onclick="onModalCloseClicked('Testing2View-a3_MODAL')" class='close'>&times;</SPAN>
@@ -2848,11 +2848,11 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>Bastille Day</B>'</TD></TR>
+<TD><B>Bastille Day</B>: Blah...</TD></TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2)"><TD colspan="2"></TD><TD colspan="7">
 <TABLE border="1px" style="border-collapse:collapse; border: 1px solid #AAA;" cellspacing="0px" cellpadding="2px" width="98%">
-<TR valign="top"><TD width="1px" align="right"><B>Description</B></TD><TD>Blah...</TD></TR><TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">'1789-07-14'</PRE></TD><TR>
-</TABLE>
+<TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">'1789-07-14'</PRE></TD><TR>
+</TABLE>&nbsp;
 </TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
@@ -2863,11 +2863,11 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>Last Updated</B>'</TD></TR>
+<TD><B>Last Updated</B>: Blah...</TD></TR>
   <TR valign="top" style="background-color:#FFFFFF"><TD colspan="2"></TD><TD colspan="7">
 <TABLE border="1px" style="border-collapse:collapse; border: 1px solid #AAA;" cellspacing="0px" cellpadding="2px" width="98%">
-<TR valign="top"><TD width="1px" align="right"><B>Description</B></TD><TD>Blah...</TD></TR><TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">'2018-08-10'</PRE></TD><TR>
-</TABLE>
+<TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">'2018-08-10'</PRE></TD><TR>
+</TABLE>&nbsp;
 </TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -2878,17 +2878,17 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>desc2_Cat1 Title</B>'</TD></TR>
+<TD><B>desc2_Cat1 Title</B>: This formula checks whether the column 'desc2' contains the values 'a', 'b', 'c' for the View TILDATEST.Testing2View.</TD></TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2)"><TD colspan="2"></TD><TD colspan="7">
 <TABLE border="1px" style="border-collapse:collapse; border: 1px solid #AAA;" cellspacing="0px" cellpadding="2px" width="98%">
-<TR valign="top"><TD width="1px" align="right"><B>Description</B></TD><TD>This formula checks whether the column 'desc2' contains the values 'a', 'b', 'c' for the View TILDATEST.Testing2View.</TD></TR><TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">case when <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATEST.html#Testing2View-desc2_DIV">desc2</A>  in ('a', 'b', 'c') then 1 else 0 end</PRE></TD><TR>
+<TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">case when <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATEST.html#Testing2View-desc2_DIV">desc2</A>  in ('a', 'b', 'c') then 1 else 0 end</PRE></TD><TR>
 <TR valign="top"><TD width="1px" align="right"><B>Ref&nbsp;Columns</B></TD><TD>
 <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATEST.html#Testing2View-desc2_DIV">desc2</A><BR>
 <DIV style="padding-left:10px; font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing-desc2_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>desc2</A>
 </DIV>
 <DIV style="padding-left:10px;">The title for a person, i.e., Mr, Miss, Mrs...</DIV>
 </TD></TR>
-</TABLE>
+</TABLE>&nbsp;
 <DIV id='Testing2View-desc2_Cat1_MODAL' class='modal'>
 <DIV class='modal-content'>
 <SPAN onclick="onModalCloseClicked('Testing2View-desc2_Cat1_MODAL')" class='close'>&times;</SPAN>
@@ -2911,17 +2911,17 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>desc2_Cat2 Title</B>'</TD></TR>
+<TD><B>desc2_Cat2 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View.</TD></TR>
   <TR valign="top" style="background-color:#FFFFFF"><TD colspan="2"></TD><TD colspan="7">
 <TABLE border="1px" style="border-collapse:collapse; border: 1px solid #AAA;" cellspacing="0px" cellpadding="2px" width="98%">
-<TR valign="top"><TD width="1px" align="right"><B>Description</B></TD><TD>This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View.</TD></TR><TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">case when <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATEST.html#Testing2View-desc2_DIV">desc2</A>  in ('x', 'y', 'z') then 1 else 0 end</PRE></TD><TR>
+<TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">case when <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATEST.html#Testing2View-desc2_DIV">desc2</A>  in ('x', 'y', 'z') then 1 else 0 end</PRE></TD><TR>
 <TR valign="top"><TD width="1px" align="right"><B>Ref&nbsp;Columns</B></TD><TD>
 <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATEST.html#Testing2View-desc2_DIV">desc2</A><BR>
 <DIV style="padding-left:10px; font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing-desc2_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>desc2</A>
 </DIV>
 <DIV style="padding-left:10px;">The title for a person, i.e., Mr, Miss, Mrs...</DIV>
 </TD></TR>
-</TABLE>
+</TABLE>&nbsp;
 <DIV id='Testing2View-desc2_Cat2_MODAL' class='modal'>
 <DIV class='modal-content'>
 <SPAN onclick="onModalCloseClicked('Testing2View-desc2_Cat2_MODAL')" class='close'>&times;</SPAN>
@@ -2944,17 +2944,17 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>desc2_Cat3 Title</B>'</TD></TR>
+<TD><B>desc2_Cat3 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View.</TD></TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2)"><TD colspan="2"></TD><TD colspan="7">
 <TABLE border="1px" style="border-collapse:collapse; border: 1px solid #AAA;" cellspacing="0px" cellpadding="2px" width="98%">
-<TR valign="top"><TD width="1px" align="right"><B>Description</B></TD><TD>This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View.</TD></TR><TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">case when <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATEST.html#Testing2View-desc2_DIV">desc2</A>  in ('x', 'y', 'z') then 1 else 0 end</PRE></TD><TR>
+<TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">case when <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATEST.html#Testing2View-desc2_DIV">desc2</A>  in ('x', 'y', 'z') then 1 else 0 end</PRE></TD><TR>
 <TR valign="top"><TD width="1px" align="right"><B>Ref&nbsp;Columns</B></TD><TD>
 <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATEST.html#Testing2View-desc2_DIV">desc2</A><BR>
 <DIV style="padding-left:10px; font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing-desc2_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>desc2</A>
 </DIV>
 <DIV style="padding-left:10px;">The title for a person, i.e., Mr, Miss, Mrs...</DIV>
 </TD></TR>
-</TABLE>
+</TABLE>&nbsp;
 <DIV id='Testing2View-desc2_Cat3_MODAL' class='modal'>
 <DIV class='modal-content'>
 <SPAN onclick="onModalCloseClicked('Testing2View-desc2_Cat3_MODAL')" class='close'>&times;</SPAN>
@@ -2977,17 +2977,17 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>a7_Cat4 Title</B>'</TD></TR>
+<TD><B>a7_Cat4 Title</B>: This formula checks whether the column 'a7' value falls in the range of 0.0 and 10.0.</TD></TR>
   <TR valign="top" style="background-color:#FFFFFF"><TD colspan="2"></TD><TD colspan="7">
 <TABLE border="1px" style="border-collapse:collapse; border: 1px solid #AAA;" cellspacing="0px" cellpadding="2px" width="98%">
-<TR valign="top"><TD width="1px" align="right"><B>Description</B></TD><TD>This formula checks whether the column 'a7' value falls in the range of 0.0 and 10.0.</TD></TR><TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">case when <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATEST.html#Testing2View-a7_DIV">a7</A> >= 0.0 and <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATEST.html#Testing2View-a7_DIV">a7</A> < 10.0 then 1 else 0 end</PRE></TD><TR>
+<TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">case when <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATEST.html#Testing2View-a7_DIV">a7</A> >= 0.0 and <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATEST.html#Testing2View-a7_DIV">a7</A> < 10.0 then 1 else 0 end</PRE></TD><TR>
 <TR valign="top"><TD width="1px" align="right"><B>Ref&nbsp;Columns</B></TD><TD>
 <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATEST.html#Testing2View-a7_DIV">a7</A><BR>
 <DIV style="padding-left:10px; font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing-a7_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>a7</A>
 </DIV>
 <DIV style="padding-left:10px;">The blah</DIV>
 </TD></TR>
-</TABLE>
+</TABLE>&nbsp;
 <DIV id='Testing2View-a7_Cat4_MODAL' class='modal'>
 <DIV class='modal-content'>
 <SPAN onclick="onModalCloseClicked('Testing2View-a7_Cat4_MODAL')" class='close'>&times;</SPAN>
@@ -3010,17 +3010,17 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>a7_Cat5 Title</B>'</TD></TR>
+<TD><B>a7_Cat5 Title</B>: This formula checks whether the column 'a7' value falls in the range of 10.0 and 20.0.</TD></TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2)"><TD colspan="2"></TD><TD colspan="7">
 <TABLE border="1px" style="border-collapse:collapse; border: 1px solid #AAA;" cellspacing="0px" cellpadding="2px" width="98%">
-<TR valign="top"><TD width="1px" align="right"><B>Description</B></TD><TD>This formula checks whether the column 'a7' value falls in the range of 10.0 and 20.0.</TD></TR><TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">case when <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATEST.html#Testing2View-a7_DIV">a7</A> >= 10.0 and <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATEST.html#Testing2View-a7_DIV">a7</A> < 20.0 then 1 else 0 end</PRE></TD><TR>
+<TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">case when <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATEST.html#Testing2View-a7_DIV">a7</A> >= 10.0 and <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATEST.html#Testing2View-a7_DIV">a7</A> < 20.0 then 1 else 0 end</PRE></TD><TR>
 <TR valign="top"><TD width="1px" align="right"><B>Ref&nbsp;Columns</B></TD><TD>
 <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATEST.html#Testing2View-a7_DIV">a7</A><BR>
 <DIV style="padding-left:10px; font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing-a7_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>a7</A>
 </DIV>
 <DIV style="padding-left:10px;">The blah</DIV>
 </TD></TR>
-</TABLE>
+</TABLE>&nbsp;
 <DIV id='Testing2View-a7_Cat5_MODAL' class='modal'>
 <DIV class='modal-content'>
 <SPAN onclick="onModalCloseClicked('Testing2View-a7_Cat5_MODAL')" class='close'>&times;</SPAN>
@@ -3043,10 +3043,10 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>Null a5</B>'</TD></TR>
+<TD><B>Null a5</B>: Whether a5 is null or not</TD></TR>
   <TR valign="top" style="background-color:#FFFFFF"><TD colspan="2"></TD><TD colspan="7">
 <TABLE border="1px" style="border-collapse:collapse; border: 1px solid #AAA;" cellspacing="0px" cellpadding="2px" width="98%">
-<TR valign="top"><TD width="1px" align="right"><B>Description</B></TD><TD>Whether a5 is null or not</TD></TR><TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">case when <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATEST.html#Testing2View-a5_DIV">a5</A> is null then 1
+<TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">case when <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATEST.html#Testing2View-a5_DIV">a5</A> is null then 1
      when <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATEST.html#Testing2View-a5_DIV">a5</A> is not null then 0
 end</PRE></TD><TR>
 <TR valign="top"><TD width="1px" align="right"><B>Ref&nbsp;Columns</B></TD><TD>
@@ -3055,7 +3055,7 @@ end</PRE></TD><TR>
 </DIV>
 <DIV style="padding-left:10px;">The blah</DIV>
 </TD></TR>
-</TABLE>
+</TABLE>&nbsp;
 <DIV id='Testing2View-a5_null_MODAL' class='modal'>
 <DIV class='modal-content'>
 <SPAN onclick="onModalCloseClicked('Testing2View-a5_null_MODAL')" class='close'>&times;</SPAN>
@@ -3078,13 +3078,13 @@ end</PRE></TD><TR>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>Null a6</B>'</TD></TR>
+<TD><B>Null a6</B>: Whether a6 is null or not</TD></TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2)"><TD colspan="2"></TD><TD colspan="7">
 <TABLE border="1px" style="border-collapse:collapse; border: 1px solid #AAA;" cellspacing="0px" cellpadding="2px" width="98%">
-<TR valign="top"><TD width="1px" align="right"><B>Description</B></TD><TD>Whether a6 is null or not</TD></TR><TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">case when a6 is null then 1
+<TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">case when a6 is null then 1
      when a6 is not null then 0
 end</PRE></TD><TR>
-</TABLE>
+</TABLE>&nbsp;
 </TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
@@ -3095,10 +3095,10 @@ end</PRE></TD><TR>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>Null a7</B>'</TD></TR>
+<TD><B>Null a7</B>: Whether a7 is null or not</TD></TR>
   <TR valign="top" style="background-color:#FFFFFF"><TD colspan="2"></TD><TD colspan="7">
 <TABLE border="1px" style="border-collapse:collapse; border: 1px solid #AAA;" cellspacing="0px" cellpadding="2px" width="98%">
-<TR valign="top"><TD width="1px" align="right"><B>Description</B></TD><TD>Whether a7 is null or not</TD></TR><TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">case when <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATEST.html#Testing2View-a7_DIV">a7</A> is null then 1
+<TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">case when <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATEST.html#Testing2View-a7_DIV">a7</A> is null then 1
      when <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATEST.html#Testing2View-a7_DIV">a7</A> is not null then 0
 end</PRE></TD><TR>
 <TR valign="top"><TD width="1px" align="right"><B>Ref&nbsp;Columns</B></TD><TD>
@@ -3107,7 +3107,7 @@ end</PRE></TD><TR>
 </DIV>
 <DIV style="padding-left:10px;">The blah</DIV>
 </TD></TR>
-</TABLE>
+</TABLE>&nbsp;
 <DIV id='Testing2View-a7_null_MODAL' class='modal'>
 <DIV class='modal-content'>
 <SPAN onclick="onModalCloseClicked('Testing2View-a7_null_MODAL')" class='close'>&times;</SPAN>
@@ -3130,10 +3130,10 @@ end</PRE></TD><TR>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>Null a8</B>'</TD></TR>
+<TD><B>Null a8</B>: Whether a8 is null or not</TD></TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2)"><TD colspan="2"></TD><TD colspan="7">
 <TABLE border="1px" style="border-collapse:collapse; border: 1px solid #AAA;" cellspacing="0px" cellpadding="2px" width="98%">
-<TR valign="top"><TD width="1px" align="right"><B>Description</B></TD><TD>Whether a8 is null or not</TD></TR><TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">case when <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATEST.html#Testing2View-a8_DIV">a8</A> is null then 1
+<TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">case when <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATEST.html#Testing2View-a8_DIV">a8</A> is null then 1
      when <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATEST.html#Testing2View-a8_DIV">a8</A> is not null then 0
 end</PRE></TD><TR>
 <TR valign="top"><TD width="1px" align="right"><B>Ref&nbsp;Columns</B></TD><TD>
@@ -3142,7 +3142,7 @@ end</PRE></TD><TR>
 </DIV>
 <DIV style="padding-left:10px;">The blah</DIV>
 </TD></TR>
-</TABLE>
+</TABLE>&nbsp;
 <DIV id='Testing2View-a8_null_MODAL' class='modal'>
 <DIV class='modal-content'>
 <SPAN onclick="onModalCloseClicked('Testing2View-a8_null_MODAL')" class='close'>&times;</SPAN>
@@ -3570,7 +3570,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>Bastille Day</B>'<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-bastille_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>bastille</A></DIV></TD>
+<TD><B>Bastille Day</B>: Blah...<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-bastille_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>bastille</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>31&nbsp;&nbsp;</TD>
@@ -3580,7 +3580,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>Last Updated</B>'<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-toto_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>toto</A></DIV></TD>
+<TD><B>Last Updated</B>: Blah...<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-toto_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>toto</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
     <TD>32&nbsp;&nbsp;</TD>
@@ -3590,7 +3590,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>desc2_Cat1 Title</B>'<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-desc2_Cat1_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>desc2_Cat1</A></DIV></TD>
+<TD><B>desc2_Cat1 Title</B>: This formula checks whether the column 'desc2' contains the values 'a', 'b', 'c' for the View TILDATEST.Testing2View.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-desc2_Cat1_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>desc2_Cat1</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>33&nbsp;&nbsp;</TD>
@@ -3600,7 +3600,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>desc2_Cat2 Title</B>'<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-desc2_Cat2_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>desc2_Cat2</A></DIV></TD>
+<TD><B>desc2_Cat2 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-desc2_Cat2_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>desc2_Cat2</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
     <TD>34&nbsp;&nbsp;</TD>
@@ -3610,7 +3610,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>desc2_Cat3 Title</B>'<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-desc2_Cat3_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>desc2_Cat3</A></DIV></TD>
+<TD><B>desc2_Cat3 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-desc2_Cat3_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>desc2_Cat3</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>35&nbsp;&nbsp;</TD>
@@ -3620,7 +3620,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>a7_Cat4 Title</B>'<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a7_Cat4_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a7_Cat4</A></DIV></TD>
+<TD><B>a7_Cat4 Title</B>: This formula checks whether the column 'a7' value falls in the range of 0.0 and 10.0.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a7_Cat4_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a7_Cat4</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
     <TD>36&nbsp;&nbsp;</TD>
@@ -3630,7 +3630,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>a7_Cat5 Title</B>'<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a7_Cat5_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a7_Cat5</A></DIV></TD>
+<TD><B>a7_Cat5 Title</B>: This formula checks whether the column 'a7' value falls in the range of 10.0 and 20.0.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a7_Cat5_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a7_Cat5</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>37&nbsp;&nbsp;</TD>
@@ -3640,7 +3640,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>Null a5</B>'<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a5_null_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a5_null</A></DIV></TD>
+<TD><B>Null a5</B>: Whether a5 is null or not<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a5_null_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a5_null</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
     <TD>38&nbsp;&nbsp;</TD>
@@ -3650,7 +3650,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>Null a6</B>'<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a6_null_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a6_null</A></DIV></TD>
+<TD><B>Null a6</B>: Whether a6 is null or not<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a6_null_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a6_null</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>39&nbsp;&nbsp;</TD>
@@ -3660,7 +3660,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>Null a7</B>'<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a7_null_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a7_null</A></DIV></TD>
+<TD><B>Null a7</B>: Whether a7 is null or not<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a7_null_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a7_null</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
     <TD>40&nbsp;&nbsp;</TD>
@@ -3670,7 +3670,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>Null a8</B>'<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a8_null_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a8_null</A></DIV></TD>
+<TD><B>Null a8</B>: Whether a8 is null or not<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a8_null_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a8_null</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>41&nbsp;&nbsp;</TD>
@@ -3680,17 +3680,17 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>Always True</B>'</TD></TR>
+<TD><B>Always True</B>: Blah...</TD></TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2)"><TD colspan="2"></TD><TD colspan="7">
 <TABLE border="1px" style="border-collapse:collapse; border: 1px solid #AAA;" cellspacing="0px" cellpadding="2px" width="98%">
-<TR valign="top"><TD width="1px" align="right"><B>Description</B></TD><TD>Blah...</TD></TR><TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">NOT <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATEST.html#Testing4View-a3_DIV">a3</A> OR A3</PRE></TD><TR>
+<TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">NOT <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATEST.html#Testing4View-a3_DIV">a3</A> OR A3</PRE></TD><TR>
 <TR valign="top"><TD width="1px" align="right"><B>Ref&nbsp;Columns</B></TD><TD>
 <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATEST.html#Testing4View-a3_DIV">a3</A><BR>
 <DIV style="padding-left:10px; font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a3_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a3</A>
 </DIV>
-<DIV style="padding-left:10px;">Formula column '<B>Not A3</B>'</DIV>
+<DIV style="padding-left:10px;"><B>Not A3</B>: Blah...</DIV>
 </TD></TR>
-</TABLE>
+</TABLE>&nbsp;
 <DIV id='Testing4View-a3_MODAL' class='modal'>
 <DIV class='modal-content'>
 <SPAN onclick="onModalCloseClicked('Testing4View-a3_MODAL')" class='close'>&times;</SPAN>
@@ -3713,10 +3713,10 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>Always True</B>'</TD></TR>
+<TD><B>Always True</B>: Blah...</TD></TR>
   <TR valign="top" style="background-color:#FFFFFF"><TD colspan="2"></TD><TD colspan="7">
 <TABLE border="1px" style="border-collapse:collapse; border: 1px solid #AAA;" cellspacing="0px" cellpadding="2px" width="98%">
-<TR valign="top"><TD width="1px" align="right"><B>Description</B></TD><TD>Blah...</TD></TR><TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">GREATEST(<A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATEST.html#Testing4View-lastUpdated_DIV">lastUpdated</A>, xxxLastUpdated)</PRE></TD><TR>
+<TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">GREATEST(<A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATEST.html#Testing4View-lastUpdated_DIV">lastUpdated</A>, xxxLastUpdated)</PRE></TD><TR>
 <TR valign="top"><TD width="1px" align="right"><B>Ref&nbsp;Columns</B></TD><TD>
 <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATEST.html#Testing4View-lastUpdated_DIV">lastUpdated</A><BR>
 <DIV style="padding-left:10px; font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-lastUpdated_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>lastUpdated</A>
@@ -3724,7 +3724,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </DIV>
 <DIV style="padding-left:10px;">The timestamp for when the record was last updated. (TILDATEST.Testing)</DIV>
 </TD></TR>
-</TABLE>
+</TABLE>&nbsp;
 <DIV id='Testing4View-lastUpdated_MODAL' class='modal'>
 <DIV class='modal-content'>
 <SPAN onclick="onModalCloseClicked('Testing4View-lastUpdated_MODAL')" class='close'>&times;</SPAN>
@@ -4079,7 +4079,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>Not A3</B>' (from TILDATEST.Testing2View.a3)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a3_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a3</A></DIV></TD>
+<TD><B>Not A3</B>: Blah... (from TILDATEST.Testing2View.a3)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a3_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a3</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>33&nbsp;&nbsp;</TD>
@@ -4089,7 +4089,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>Bastille Day</B>' (from TILDATEST.Testing2View.bastille)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-bastille_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>bastille</A></DIV></TD>
+<TD><B>Bastille Day</B>: Blah... (from TILDATEST.Testing2View.bastille)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-bastille_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>bastille</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
     <TD>34&nbsp;&nbsp;</TD>
@@ -4099,7 +4099,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>Last Updated</B>' (from TILDATEST.Testing2View.toto)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-toto_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>toto</A></DIV></TD>
+<TD><B>Last Updated</B>: Blah... (from TILDATEST.Testing2View.toto)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-toto_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>toto</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>35&nbsp;&nbsp;</TD>
@@ -4109,7 +4109,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>desc2_Cat1 Title</B>' (from TILDATEST.Testing2View.desc2_Cat1)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-desc2_Cat1_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>desc2_Cat1</A></DIV></TD>
+<TD><B>desc2_Cat1 Title</B>: This formula checks whether the column 'desc2' contains the values 'a', 'b', 'c' for the View TILDATEST.Testing2View. (from TILDATEST.Testing2View.desc2_Cat1)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-desc2_Cat1_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>desc2_Cat1</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
     <TD>36&nbsp;&nbsp;</TD>
@@ -4119,7 +4119,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>desc2_Cat2 Title</B>' (from TILDATEST.Testing2View.desc2_Cat2)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-desc2_Cat2_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>desc2_Cat2</A></DIV></TD>
+<TD><B>desc2_Cat2 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View. (from TILDATEST.Testing2View.desc2_Cat2)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-desc2_Cat2_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>desc2_Cat2</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>37&nbsp;&nbsp;</TD>
@@ -4129,7 +4129,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>desc2_Cat3 Title</B>' (from TILDATEST.Testing2View.desc2_Cat3)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-desc2_Cat3_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>desc2_Cat3</A></DIV></TD>
+<TD><B>desc2_Cat3 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View. (from TILDATEST.Testing2View.desc2_Cat3)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-desc2_Cat3_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>desc2_Cat3</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
     <TD>38&nbsp;&nbsp;</TD>
@@ -4139,7 +4139,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>a7_Cat4 Title</B>' (from TILDATEST.Testing2View.a7_Cat4)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a7_Cat4_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a7_Cat4</A></DIV></TD>
+<TD><B>a7_Cat4 Title</B>: This formula checks whether the column 'a7' value falls in the range of 0.0 and 10.0. (from TILDATEST.Testing2View.a7_Cat4)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a7_Cat4_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a7_Cat4</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>39&nbsp;&nbsp;</TD>
@@ -4149,7 +4149,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>a7_Cat5 Title</B>' (from TILDATEST.Testing2View.a7_Cat5)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a7_Cat5_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a7_Cat5</A></DIV></TD>
+<TD><B>a7_Cat5 Title</B>: This formula checks whether the column 'a7' value falls in the range of 10.0 and 20.0. (from TILDATEST.Testing2View.a7_Cat5)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a7_Cat5_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a7_Cat5</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
     <TD>40&nbsp;&nbsp;</TD>
@@ -4159,7 +4159,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>Null a5</B>' (from TILDATEST.Testing2View.a5_null)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a5_null_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a5_null</A></DIV></TD>
+<TD><B>Null a5</B>: Whether a5 is null or not (from TILDATEST.Testing2View.a5_null)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a5_null_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a5_null</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>41&nbsp;&nbsp;</TD>
@@ -4169,7 +4169,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>Null a6</B>' (from TILDATEST.Testing2View.a6_null)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a6_null_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a6_null</A></DIV></TD>
+<TD><B>Null a6</B>: Whether a6 is null or not (from TILDATEST.Testing2View.a6_null)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a6_null_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a6_null</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
     <TD>42&nbsp;&nbsp;</TD>
@@ -4179,7 +4179,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>Null a7</B>' (from TILDATEST.Testing2View.a7_null)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a7_null_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a7_null</A></DIV></TD>
+<TD><B>Null a7</B>: Whether a7 is null or not (from TILDATEST.Testing2View.a7_null)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a7_null_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a7_null</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>43&nbsp;&nbsp;</TD>
@@ -4189,7 +4189,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>Null a8</B>' (from TILDATEST.Testing2View.a8_null)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a8_null_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a8_null</A></DIV></TD>
+<TD><B>Null a8</B>: Whether a8 is null or not (from TILDATEST.Testing2View.a8_null)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a8_null_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a8_null</A></DIV></TD>
 </TR>
 </TABLE></BLOCKQUOTE>
 </DIV>
@@ -4591,7 +4591,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>Bastille Day</B>' (from TILDATEST.Testing4View.bastille)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-bastille_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>bastille</A></DIV></TD>
+<TD><B>Bastille Day</B>: Blah... (from TILDATEST.Testing4View.bastille)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-bastille_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>bastille</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>31&nbsp;&nbsp;</TD>
@@ -4601,7 +4601,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>Last Updated</B>' (from TILDATEST.Testing4View.toto)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-toto_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>toto</A></DIV></TD>
+<TD><B>Last Updated</B>: Blah... (from TILDATEST.Testing4View.toto)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-toto_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>toto</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
     <TD>32&nbsp;&nbsp;</TD>
@@ -4611,7 +4611,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>desc2_Cat1 Title</B>' (from TILDATEST.Testing4View.desc2_Cat1)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-desc2_Cat1_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>desc2_Cat1</A></DIV></TD>
+<TD><B>desc2_Cat1 Title</B>: This formula checks whether the column 'desc2' contains the values 'a', 'b', 'c' for the View TILDATEST.Testing2View. (from TILDATEST.Testing4View.desc2_Cat1)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-desc2_Cat1_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>desc2_Cat1</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>33&nbsp;&nbsp;</TD>
@@ -4621,7 +4621,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>desc2_Cat2 Title</B>' (from TILDATEST.Testing4View.desc2_Cat2)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-desc2_Cat2_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>desc2_Cat2</A></DIV></TD>
+<TD><B>desc2_Cat2 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View. (from TILDATEST.Testing4View.desc2_Cat2)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-desc2_Cat2_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>desc2_Cat2</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
     <TD>34&nbsp;&nbsp;</TD>
@@ -4631,7 +4631,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>desc2_Cat3 Title</B>' (from TILDATEST.Testing4View.desc2_Cat3)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-desc2_Cat3_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>desc2_Cat3</A></DIV></TD>
+<TD><B>desc2_Cat3 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View. (from TILDATEST.Testing4View.desc2_Cat3)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-desc2_Cat3_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>desc2_Cat3</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>35&nbsp;&nbsp;</TD>
@@ -4641,7 +4641,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>a7_Cat4 Title</B>' (from TILDATEST.Testing4View.a7_Cat4)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a7_Cat4_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a7_Cat4</A></DIV></TD>
+<TD><B>a7_Cat4 Title</B>: This formula checks whether the column 'a7' value falls in the range of 0.0 and 10.0. (from TILDATEST.Testing4View.a7_Cat4)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a7_Cat4_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a7_Cat4</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
     <TD>36&nbsp;&nbsp;</TD>
@@ -4651,7 +4651,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>a7_Cat5 Title</B>' (from TILDATEST.Testing4View.a7_Cat5)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a7_Cat5_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a7_Cat5</A></DIV></TD>
+<TD><B>a7_Cat5 Title</B>: This formula checks whether the column 'a7' value falls in the range of 10.0 and 20.0. (from TILDATEST.Testing4View.a7_Cat5)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a7_Cat5_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a7_Cat5</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>37&nbsp;&nbsp;</TD>
@@ -4661,7 +4661,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>Null a5</B>' (from TILDATEST.Testing4View.a5_null)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a5_null_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a5_null</A></DIV></TD>
+<TD><B>Null a5</B>: Whether a5 is null or not (from TILDATEST.Testing4View.a5_null)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a5_null_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a5_null</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
     <TD>38&nbsp;&nbsp;</TD>
@@ -4671,7 +4671,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>Null a6</B>' (from TILDATEST.Testing4View.a6_null)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a6_null_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a6_null</A></DIV></TD>
+<TD><B>Null a6</B>: Whether a6 is null or not (from TILDATEST.Testing4View.a6_null)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a6_null_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a6_null</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>39&nbsp;&nbsp;</TD>
@@ -4681,7 +4681,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>Null a7</B>' (from TILDATEST.Testing4View.a7_null)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a7_null_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a7_null</A></DIV></TD>
+<TD><B>Null a7</B>: Whether a7 is null or not (from TILDATEST.Testing4View.a7_null)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a7_null_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a7_null</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
     <TD>40&nbsp;&nbsp;</TD>
@@ -4691,7 +4691,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>Null a8</B>' (from TILDATEST.Testing4View.a8_null)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a8_null_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a8_null</A></DIV></TD>
+<TD><B>Null a8</B>: Whether a8 is null or not (from TILDATEST.Testing4View.a8_null)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a8_null_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a8_null</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>41&nbsp;&nbsp;</TD>
@@ -4701,7 +4701,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>Always True</B>' (from TILDATEST.Testing4View.a3)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing4View-a3_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing4View<B>&nbsp;&#8226;&nbsp;</B>a3</A></DIV></TD>
+<TD><B>Always True</B>: Blah... (from TILDATEST.Testing4View.a3)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing4View-a3_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing4View<B>&nbsp;&#8226;&nbsp;</B>a3</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
     <TD>42&nbsp;&nbsp;</TD>
@@ -4711,7 +4711,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>Always True</B>' (from TILDATEST.Testing4View.lastUpdated)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing4View-lastUpdated_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing4View<B>&nbsp;&#8226;&nbsp;</B>lastUpdated</A></DIV></TD>
+<TD><B>Always True</B>: Blah... (from TILDATEST.Testing4View.lastUpdated)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing4View-lastUpdated_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing4View<B>&nbsp;&#8226;&nbsp;</B>lastUpdated</A></DIV></TD>
 </TR>
 </TABLE></BLOCKQUOTE>
 </DIV>
