@@ -154,7 +154,7 @@ public class Object extends Base
               if (C.Validate(PS, this) == false)
                 return false;
               Object obj = new Object(this);
-              obj._Name = _Name + "_" + C._Name;
+              obj._Name = (C._FullName==true ? "" : _Name + "_") + C._Name;
               obj._Description = C._Description;
               obj._FST = FrameworkSourcedType.CLONED;
               obj._SourceObject = this;
