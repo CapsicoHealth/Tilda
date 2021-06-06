@@ -82,14 +82,17 @@ public class Docs
         return "<A href=\"TILDA___Docs." + (O._RealizedView==null ? O : O._RealizedView).getSchema().getShortName() + ".html#" + O._Name + "_CNT\">" + coolPrint(O.getShortName()) + "</A>";
       }
 
-    public static String makeColumnHref(Column C)
+    public static String makeColumnHref(Column C, Schema parentSchema)
       {
-        return "TILDA___Docs." + C._ParentObject.getSchema().getShortName() + ".html#" + C._ParentObject._Name + "-" + C.getName() + "_DIV";
+        boolean inSchema = C._ParentObject.getSchema().getShortName().equalsIgnoreCase(parentSchema.getShortName());
+        return inSchema == true ? "javascript:openDiv('" + C._ParentObject._Name + "-" + C.getName() + "_DIV', -50)"
+                                : "TILDA___Docs." + C._ParentObject.getSchema().getShortName() + ".html#" + C._ParentObject._Name + "-" + C.getName() + "_DIV"
+                                ;
       }
 
-    public static String makeColumnLink(Column C)
+    public static String makeColumnLink(Column C, Schema parentSchema)
       {
-        return "<A href=\"" + makeColumnHref(C) + "\">" + coolPrint(C.getShortName()) + "</A>";
+        return "<A href=\"" + makeColumnHref(C, parentSchema) + "\">" + coolPrint(C.getShortName()) + "</A>";
       }
 
     protected static String makeFormulaLink(Formula F)
@@ -333,7 +336,7 @@ public class Docs
                           {
                             Out.print("<DIV style=\"margin:0px;margin-left:20px;font-size:75%;\">");
                             Out.print("&nbsp;&nbsp;&rarr;&nbsp;");
-                            Out.print(makeColumnLink(c));
+                            Out.print(makeColumnLink(c, O.getSchema()));
                             Out.print("</DIV>");
                           }
                       }
@@ -365,7 +368,7 @@ public class Docs
                         else
                           Out.print("<BR>");
                         Out.print("&rarr;&nbsp;");
-                        Out.print(makeColumnLink(c));
+                        Out.print(makeColumnLink(c, O.getSchema()));
                       }
                     Out.print("</DIV>");
                   }
@@ -904,16 +907,16 @@ public class Docs
             for (String ColName : ColumnMatches)
               {
                 Column C = V.getProxyColumn(ColName);
-                Out.println("<A style=\"color:#00AA00; font-weight: bold;\" href=\"" + makeColumnHref(C) + "\">" + ColName + "</A><BR>");
+                Out.println("<A style=\"color:#00AA00; font-weight: bold;\" href=\"" + makeColumnHref(C, V.getSchema()) + "\">" + ColName + "</A><BR>");
                 ViewColumn VC = V.getViewColumn(ColName);
                 List<Column> L = VC == null ? null : VC.getSameAsLineage();
                 if (L != null && L.isEmpty() == false)
                   {
-                    Out.println("<DIV style=\"padding-left:10px; font-size:75%;\">&nbsp;&nbsp;&rarr;&nbsp;" + makeColumnLink(L.get(0)));
+                    Out.println("<DIV style=\"padding-left:10px; font-size:75%;\">&nbsp;&nbsp;&rarr;&nbsp;" + makeColumnLink(L.get(0), V.getSchema()));
                     if (L.size() > 2)
                       Out.println("&nbsp;&nbsp;&rarr;&nbsp;&nbsp;&hellip;");
                     if (L.size() >= 2)
-                      Out.println("&nbsp;&nbsp;&rarr;&nbsp;" + makeColumnLink(L.get(L.size() - 1)));
+                      Out.println("&nbsp;&nbsp;&rarr;&nbsp;" + makeColumnLink(L.get(L.size() - 1), V.getSchema()));
                     Out.println("</DIV>");
                     Out.println("<DIV style=\"padding-left:10px;\">" + L.get(0)._Description + "</DIV>");
                   }
@@ -929,7 +932,7 @@ public class Docs
               {
                 Formula subF = V.getFormula(FormulaName, true);
                 Column C = V.getProxyColumn(FormulaName);
-                Out.println("<A style=\"color:#0000AA; font-weight: bold;\" href=\"" + makeColumnHref(C) + "\">" + FormulaName + "</A><BR>");
+                Out.println("<A style=\"color:#0000AA; font-weight: bold;\" href=\"" + makeColumnHref(C, V.getSchema()) + "\">" + FormulaName + "</A><BR>");
                 Out.println("<DIV style=\"padding-left:10px; font-size:75%;\">&nbsp;&nbsp;&rarr;&nbsp;" + makeFormulaLink(subF) + "</DIV>");
                 Out.println("<DIV style=\"padding-left:10px;\">" + CleanForHTML(subF._Description) + "</DIV>");
               }
@@ -973,7 +976,7 @@ public class Docs
             Column C = F._ParentView.getProxyColumn(s);
             if (C != null)
               {
-                M.appendReplacement(Str, "<A style=\"color:#00AA00; font-weight: bold;\" href=\"" + makeColumnHref(C) + "\">" + s + "</A>");
+                M.appendReplacement(Str, "<A style=\"color:#00AA00; font-weight: bold;\" href=\"" + makeColumnHref(C, F.getParentView().getSchema()) + "\">" + s + "</A>");
                 ColumnMatches.add(s);
               }
           }
@@ -988,7 +991,7 @@ public class Docs
                 Column C = F._ParentView.getProxyColumn(s);
                 if (C != null)
                   {
-                    M.appendReplacement(Str, "<A style=\"color:#0000AA; font-weight: bold;\" href=\"" + makeColumnHref(C) + "\">" + s + "</A>");
+                    M.appendReplacement(Str, "<A style=\"color:#0000AA; font-weight: bold;\" href=\"" + makeColumnHref(C, F.getParentView().getSchema()) + "\">" + s + "</A>");
                     FormulaMatches.add(s);
                   }
               }

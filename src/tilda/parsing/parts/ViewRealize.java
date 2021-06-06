@@ -175,7 +175,7 @@ public class ViewRealize
                 if (C._Type == ColumnType.STRING && C.isCollection() == false && C._Size != null && C._Size <= 8)
                   C._Size = 10;
                 // Make sure that the type is managed through the getType() method to account for aggregates.
-                Column newCol = new Column(C._Name, C.getType().name() + (C.isList() ? "[]" : C.isSet() ? "{}" : ""), C._Size, C._Description + " (from " + C.getShortName() + ")", C._Precision, C._Scale);
+                Column newCol = new Column(C._Name, C.getType().name() + (C.isList() ? "[]" : C.isSet() ? "{}" : ""), C._Size, C._Description/* + " (from " + C.getShortName() + ")"*/, C._Precision, C._Scale);
                 // If the final type is not a String or is a collection, we must clear the possible size since the aggregate changed the type.
                 if (newCol._TypeStr.startsWith("STRING") == false || C.isCollection() == true)
                   newCol._Size = null;
@@ -183,6 +183,8 @@ public class ViewRealize
                 newCol._Invariant = O.isPrimaryKey(C._Name) == true;
                 newCol._ProtectStr = C._ProtectStr;
                 newCol._FCT = C._FCT;
+                newCol._expressionStrs = C._expressionStrs;
+                newCol._expressionDependencyColumnNames = C._expressionDependencyColumnNames;
                 // LDH-NOTE: Not sure why we need to define SAME_AS here given that we specify all the information previously. This is causing issues with some aggregates...
                 // newCol._SameAs = C._SameAs;
                 // newCol._SameAsObj = C._SameAsObj;

@@ -642,7 +642,7 @@ public class View extends Base
                     Column C = new Column(F._Name, F._TypeStr, F._Size, true, ColumnMode.NORMAL, true, null, "<B>" + F._Title + "</B>: " + String.join(" ", F._Description), F._Precision, F._Scale);
                     if (F.getType() == ColumnType.DATETIME)
                       C._FCT = FrameworkColumnType.FORMULA_DT;
-                    else if (F._FormulaTemplate == true)
+                    else
                       C._FCT = FrameworkColumnType.FORMULA;
                     O._Columns.add(C);
                     F._ProxyCol = C;

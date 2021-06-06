@@ -299,7 +299,7 @@ public class DocGen
                                 JSONUtil.print(writer, "formula", false, true);
                                 JSONUtil.print(writer, "docs", false, F._Title + (F._Measure == false ? "" : "&nbsp;<SUP class=\"Measure\"></SUP>") + "<BR><BR>" + String.join(" ", F._Description) + "<PRE style=\"padding-top: 3px;\">" + Docs.printFormulaCodeHTML(F, ColumnMatches, FormulaMatches, true) + "</PRE>");
                               }
-                            JSONUtil.print(writer, "url", false, Docs.makeColumnHref(C));
+                            JSONUtil.print(writer, "url", false, Docs.makeColumnHref(C, O.getSchema()));
                             writer.println(" }");
                           }
                       writer.println("        ]}");

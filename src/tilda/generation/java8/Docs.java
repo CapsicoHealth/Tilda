@@ -213,6 +213,12 @@ public class Docs implements CodeGenDocs
             docFieldValues(Out, C);
             Out.println("</TD></TR>" + SystemValues.NEWLINE);
           }
+        if (C._expressionStrs != null && C._expressionStrs.length > 0)
+          {
+            Out.println("  <TR valign=\"top\"><TD align=\"right\"><B>Formula</B></TD><TD>" + SystemValues.NEWLINE);
+            Out.println("<PRE>"+String.join("\n", C._expressionStrs)+"</PRE>");
+            Out.println("</TD></TR>" + SystemValues.NEWLINE);
+          }
         Out.println(
             "</TABLE>" + SystemValues.NEWLINE
                 + Helper.getMultiLineCommentEnd()
