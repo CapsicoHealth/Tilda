@@ -116,9 +116,10 @@ public class ReferenceHelper
     public void LogErrorKnownColumns(Object O)
       {
         LOG.error("Cannot find Column '" + _S + "." + _O + "." + _C + "'.");
-        LOG.debug("Known Columns from Object "+O.getFullName()+": ");
+        LOG.debug("Known Columns from Object "+O._Name+" ("+O.getFullName()+"): ");
         for (Column c : O._Columns)
-          LOG.debug("   - " + c.getFullName());
+          if (c != null)
+           LOG.debug("   - " + c.getFullName());
       }
 
   }
