@@ -79,7 +79,7 @@ public enum ColumnType
         _CompatibleTypes = new ColumnType[][] {
             { STRING, JSON, CHAR, INTEGER, LONG, FLOAT, DOUBLE, BOOLEAN, DATE, DATETIME, BITFIELD, SHORT, UUID, NUMERIC
             } // STRING
-            , { JSON
+            , { JSON, STRING
             } // JSON
             , { CHAR, STRING
             } // CHAR

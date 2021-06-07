@@ -385,6 +385,7 @@ var openDiv = function(divId, yOffsetCorrection)
       e=e.parentNode;
      if (e == null)
       e = savedE;
+     window.location.hash = divId;
      e.scrollIntoView(/*{block: "center"}*/);
      window.scrollBy(0, divId.endsWith("_CNT") == true ? 0 : -100);
      setTimeout(function() { 

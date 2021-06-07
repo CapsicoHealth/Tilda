@@ -74,15 +74,15 @@ public class DocGen
     private void writeSchema(ParserSession PS, boolean exportPublish)
     throws Exception
       {
-        String base64FileName = getSchemaChromeAppGenHTML(schema, exportPublish==true?".export.html":".html");
-        String baseResFileName = getBaseResFileName(schema, exportPublish==true?".export.html":".html");
+        String base64FileName = getSchemaChromeAppGenHTML(schema, exportPublish == true ? ".export.html" : ".html");
+        String baseResFileName = getBaseResFileName(schema, exportPublish == true ? ".export.html" : ".html");
         PrintWriter writer = new PrintWriter(baseResFileName);
         writer.println("<HTML>");
         writer.println("<HEAD>");
         writeHeader(writer, PS);
         writer.println("</HEAD>");
         writer.println("<BODY>");
-        writer.println("<H1>Schema " + schema._Name + (exportPublish==true?" (Publish Export Version)":"") +"</H1>");
+        writer.println("<H1>Schema " + schema._Name + (exportPublish == true ? " (Publish Export Version)" : "") + "</H1>");
         if (schema._Documentation != null && schema._Documentation._Description != null)
           for (String str : schema._Documentation._Description)
             writer.println(str);
@@ -97,7 +97,7 @@ public class DocGen
 
         WriteTablesAndViews(PS, writer, exportPublish);
         if (exportPublish == false)
-         WriteRealizeSchedule(PS, writer);
+          WriteRealizeSchedule(PS, writer);
 
         writer.println("<BR><BR><BR><BR><BR><HR>- End -<BR><BR><BR>");
         writeFooter(writer, PS);
@@ -105,7 +105,7 @@ public class DocGen
         writer.println("</HTML>");
         writer.close();
       }
-    
+
 
     private void WriteRealizeSchedule(ParserSession PS, PrintWriter writer)
     throws Exception
