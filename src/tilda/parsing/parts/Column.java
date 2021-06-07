@@ -171,7 +171,7 @@ public class Column extends TypeDef
      */
     public String getFullName()
       {
-        return _ParentObject.getFullName() + "." + _Name;
+        return (_ParentObject == null ? null : _ParentObject.getFullName()) + "." + _Name;
       }
 
     /**
