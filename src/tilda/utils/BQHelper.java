@@ -89,13 +89,16 @@ public class BQHelper
         File K = null;
         int i = 0;
         for (File F : P.listFiles())
-          if (F.isFile() == false && F.getName().startsWith(dataProjectName + ".") == true && F.getName().endsWith(".key.bq.json") == true)
+          if (F.isFile() == true && F.getName().startsWith(dataProjectName + ".") == true && F.getName().endsWith(".key.bq.json") == true)
             {
               ++i;
               K = F;
             }
         if (i == 0)
-          throw new IOException("Key file '" + dataProjectName + ".*.key.bq.json' not found in '"+path+"'.");
+          {
+            LOG.error("GCP BigQuery key file '" + dataProjectName + ".*.key.bq.json' not found in '"+path+"'.");
+            throw new IOException("GCP BigQuery key file not found.");
+          }
         else if (i > 1)
           throw new IOException("There are more than 1 file matching the pattern '" + dataProjectName + ".*.bq.key.json' in '"+path+"' for account key files: only 1 was expected.");
 
