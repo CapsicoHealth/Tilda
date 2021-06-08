@@ -171,13 +171,15 @@ public class DDLDependencyManager
                     FailedDependencyDDLScripts_Factory.COLS.SRCTVNAME.getShortColumnVarForSelect(C, Str);
                     Str.append(" = ").append(TextUtil.escapeSingleQuoteForSQL(_TableViewName))
                     .append("\n             order by \"created\" desc, seq\n");
+                    Str.append("##\n");
+                    Str.append("##  NOTE: If you rerun Migrate and it still fails, you have to manually drop-cascade:\n");
                   }
                 else
                   {
-                    Str.append("##  NOTE: All those views are managed by Tilda and will be re-created automatically in the next Migrate.\n");
+                    Str.append("##  NOTE: All those views are managed by Tilda and will be re-created automatically in the next Migrate. You can \n");
+                    Str.append("         safely perform a manual drop-cascade:\n");
                   }
-                Str.append("##\n");
-                Str.append("##  NOTE: If the Migrate still fails, you may have to manually drop-cascade ").append(_SchemaName).append(".").append(_TableViewName).append(".\n");
+                Str.append("            - drop view ").append(_SchemaName).append(".").append(_TableViewName).append(" cascade.\n");
                 Str.append("##\n");
                 Str.append("###############################################################################################################################\n");
                 ++Error;

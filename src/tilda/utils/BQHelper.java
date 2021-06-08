@@ -95,9 +95,9 @@ public class BQHelper
               K = F;
             }
         if (i == 0)
-          throw new IOException("Key file '" + dataProjectName + ".*.key.bq.json' not found.");
+          throw new IOException("Key file '" + dataProjectName + ".*.key.bq.json' not found in '"+path+"'.");
         else if (i > 1)
-          throw new IOException("There are more than 1 file matching the pattern '" + dataProjectName + ".*.bq.key.json' for account key files: only 1 was expected.");
+          throw new IOException("There are more than 1 file matching the pattern '" + dataProjectName + ".*.bq.key.json' in '"+path+"' for account key files: only 1 was expected.");
 
         try (FileInputStream serviceAccountStream = new FileInputStream(K))
           {
