@@ -254,20 +254,6 @@ public class Object extends Base
           }
 
         Set<String> Names = new HashSet<String>();
-        /*
-         * for (int i = 0; i < _Migrations.length; ++i)
-         * {
-         * Migration M = _Migrations[i];
-         * if (M != null)
-         * if (M.Validate(PS, this, i) == true)
-         * {
-         * for (String col : M._ColumnNames)
-         * if (Names.add(col) == false)
-         * PS.AddError("Object '" + getFullName() + "' has declared migration #" + i + " with a column '" + col + "' which has already been specified in another migration!");
-         * }
-         * }
-         */
-
 
         _HasUniqueIndex = false;
         Set<String> Signatures = new HashSet<String>();

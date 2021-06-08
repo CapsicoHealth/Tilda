@@ -93,7 +93,7 @@ public class ViewRealize
         O._SourceView = ParentView;
         O._Name = ParentView.getRealizedTableName(false);
         O._ShortAlias = ParentView._ShortAlias;
-
+        
         Schema targetSchema = null;
         if (TextUtil.isNullOrEmpty(_TargetSchema) == false)
           {
@@ -159,7 +159,7 @@ public class ViewRealize
                 }
 
         boolean OCC = false;
-        // LOG.debug(ParentRealized._O.getFullName()+": "+TextUtil.print(ParentRealized._O.getColumnNames()));
+//        LOG.debug(ParentRealized._O.getFullName()+": "+TextUtil.print(ParentRealized._O.getColumnNames()));
         for (Column C : ParentRealized._O._Columns)
           {
             if (TextUtil.findStarElement(_Exclude_DEPRECATED, C._Name, true, 0) == -1)
@@ -190,7 +190,10 @@ public class ViewRealize
                 // newCol._SameAsObj = C._SameAsObj;
                 O._Columns.add(newCol);
               }
+//            else
+//              LOG.debug("Excluding "+C._Name);
           }
+//        LOG.debug(O.getFullName()+": "+TextUtil.print(O.getColumnNames()));
 
         // We can't just copy the OCC status of the view because we don't know which columns are actually used.
         O._OCC = O.getColumn("created") != null && O.getColumn("lastUpdated") != null && O.getColumn("deleted") != null;

@@ -198,6 +198,7 @@ public abstract class Parser
           for (String d : S._Dependencies)
             {
               Schema D = SchemaCache.get(d);
+              boolean cache = false;
               if (D == null)
                 {
                   LOG.info("Loading dependency schema from '" + d + "'.");
@@ -208,12 +209,14 @@ public abstract class Parser
                 }
               else
                 {
-                  LOG.info("Tilda schema from '" + d + "' has already been loaded previously and has been fetched from the cache.");
+                  LOG.info("   Tilda schema from '" + d + "' was found in the cache.");
+                  cache = true;
                 }
               Schema Pre = Dependencies.get(D.getFullName());
               if (Pre != null)
                 {
-                  LOG.info("   Tilda dependency schema '" + Pre.getFullName() + "' has been loaded already");
+                  if (cache == false)
+                   LOG.info("   Tilda dependency schema '" + Pre.getFullName() + "' has been validated already");
                   S._DependencySchemas.add(Pre);
                 }
               else

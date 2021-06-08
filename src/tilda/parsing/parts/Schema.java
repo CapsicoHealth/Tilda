@@ -226,12 +226,12 @@ public class Schema
     public boolean Validate(ParserSession PS)
     throws Exception
       {
-        LOG.info("Validating Tilda Schema '" + getFullName() + "'.");
         if (_Validated != null)
           {
-            LOG.info("     --> The Schema '" + getFullName() + "' has already been validated.");
+            LOG.info("Tilda Schema '" + getFullName() + "' has already been validated.");
             return _Validated;
           }
+        LOG.info("Validating Tilda Schema '" + getFullName() + "'.");
 
         int Errs = PS.getErrorCount();
         int i = -1;

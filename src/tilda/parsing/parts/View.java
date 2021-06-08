@@ -372,12 +372,15 @@ public class View extends Base
           PS.AddError("The View '" + _Name + "' is defining a 'pivotColumns' element which is deprecated. Please use the new 'pivots' constructs instead.");
         if (TextUtil.isNullOrEmpty(_CountStarDeprecated) == false)
           PS.AddError("View '" + getFullName() + "' is defining a 'countStar' element which is deprecated. Please use a standard column definition with an aggregate of 'COUNT'.");
-
+        
         // gotta construct a shadow Object for code-gen.
         // LOG.debug("View " + _Name + ": " + TextUtil.print(getColumnNames()));
         Object O = MakeObjectProxy(PS);
         // LOG.debug("Object " + O._Name + ": " + TextUtil.print(O.getColumnNames()));
 
+//        LOG.debug("VIEW - "+this.getFullName()+": "+TextUtil.print(this.getColumnNames()));
+//        LOG.debug("OBJECT - "+O.getFullName()+": "+TextUtil.print(O.getColumnNames()));
+        
         if (_Realize != null)
           _Realize.Validate(PS, this, new ViewRealizedWrapper(O, this));
 
@@ -388,6 +391,7 @@ public class View extends Base
     private boolean HandleStarExpansion(ParserSession PS, int i, ViewColumn VC)
       {
         _ViewColumns.remove(i);
+
         int lastDot = VC._SameAs.lastIndexOf('.');
         String startingWith = VC._SameAs.substring(lastDot + 1, VC._SameAs.length() - 1);
         VC._SameAs = VC._SameAs.substring(0, lastDot);
@@ -862,8 +866,7 @@ public class View extends Base
         for (Column col : O._Columns)
           {
             if (col._FCT == FrameworkColumnType.TZ
-            || col._FCT != FrameworkColumnType.NONE && col._FCT != FrameworkColumnType.TS && col._FCT.isOCC() == false)
-              // if (col._FrameworkManaged == true)
+            || col._FCT != FrameworkColumnType.NONE && col._FCT != FrameworkColumnType.FORMULA && col._FCT != FrameworkColumnType.FORMULA_DT && col._FCT != FrameworkColumnType.TS && col._FCT.isOCC() == false)
               continue;
             if (TextUtil.findStarElement(VC._Exclude, col._Name, true, 0) != -1)
               continue;
@@ -876,6 +879,7 @@ public class View extends Base
             NewVC._As = VC._As;
             NewVC._Name = Prefix + col.getName();
             NewVC._FCT = col._FCT;
+            copyAdvancedViewColumnFields(VC, NewVC);
             _ViewColumns.add(i + j, NewVC);
             ++j;
           }
@@ -885,10 +889,12 @@ public class View extends Base
     private void CopyDependentViewFields(int i, ViewColumn VC, String Prefix, View V, String startingWith)
       {
         int j = 0;
+//        LOG.debug("VIEWCOLUMN * - "+VC._SameAs+" -> "+ V.getFullName()+": "+TextUtil.print(V.getColumnNames()));
         for (ViewColumn col : V._ViewColumns)
           {
+//            LOG.debug("   - Looking at "+col.getFullName()+"; startingWith: "+startingWith+"; _FCT: "+col._FCT+";");
             if (col._FCT == FrameworkColumnType.TZ
-            || col._FCT != FrameworkColumnType.NONE && col._FCT != FrameworkColumnType.TS && col._FCT.isOCC() == false)
+            || col._FCT != FrameworkColumnType.NONE && col._FCT != FrameworkColumnType.FORMULA && col._FCT != FrameworkColumnType.FORMULA_DT && col._FCT != FrameworkColumnType.TS && col._FCT.isOCC() == false)
               continue;
             if (TextUtil.findStarElement(VC._Exclude, col._Name, true, 0) != -1)
               continue;
@@ -912,6 +918,7 @@ public class View extends Base
                 NewVC._Scale = col._Scale;
                 NewVC._Precision = col._Precision;
               }
+            copyAdvancedViewColumnFields(VC, NewVC);
 
             if (TextUtil.findStarElement(VC._Block, col._Name, true, 0) != -1)
               NewVC._FormulaOnly = true;
@@ -938,6 +945,7 @@ public class View extends Base
                       NewVC._SameAs = V.getFullName() + "." + SrcColName;
                       NewVC._As = VC._As;
                       NewVC._Name = Prefix + SrcColName;
+                      copyAdvancedViewColumnFields(VC, NewVC);
                       _ViewColumns.add(i + j, NewVC);
                       _PadderColumnNames.track(NewVC.getName());
                       ++j;
@@ -957,6 +965,7 @@ public class View extends Base
                       NewVC._SameAs = V.getFullName() + "." + SrcColName;
                       NewVC._As = VC._As;
                       NewVC._Name = Prefix + SrcColName;
+                      copyAdvancedViewColumnFields(VC, NewVC);
                       _ViewColumns.add(i + j, NewVC);
                       _PadderColumnNames.track(NewVC.getName());
                       ++j;
@@ -973,12 +982,39 @@ public class View extends Base
             NewVC._SameAs = V.getFullName() + "." + F._Name;
             NewVC._Name = Prefix + F._Name;
             NewVC._As = VC._As;
-            NewVC._FCT = VC._FCT;
+            // When copying a formula from a prior view, the column type should become NONE as it no longer has the properties of a formula.
+            NewVC._FCT = FrameworkColumnType.NONE;//VC._FCT;
+            copyAdvancedViewColumnFields(VC, NewVC);
             if (TextUtil.findStarElement(VC._Block, F._Name, true, 0) != -1)
               NewVC._FormulaOnly = true;
             _ViewColumns.add(i + j, NewVC);
             _PadderColumnNames.track(NewVC.getName());
             ++j;
+          }
+      }
+
+    /**
+     * Copies field values from VC to NewVC. Handles _AggregateStr, _FormulaOnly, _JoinOnly, _Coalesce, _Distinct
+     * _OrderBy, _Filter, _Expression, _TypeStr, _Size, _Scale, _Precision.
+     * @param VC
+     * @param NewVC
+     */
+    protected void copyAdvancedViewColumnFields(ViewColumn VC, ViewColumn NewVC)
+      {
+        NewVC._AggregateStr = VC._AggregateStr;
+        NewVC._FormulaOnly = VC._FormulaOnly;
+        NewVC._JoinOnly = VC._JoinOnly;
+        NewVC._Coalesce = VC._Coalesce;
+        NewVC._Distinct = VC._Distinct;
+        NewVC._OrderBy = VC._OrderBy;
+        NewVC._Filter = VC._Filter;
+        if (TextUtil.isNullOrEmpty(VC._Expression) == false)
+          {
+            NewVC._Expression = VC._Expression;
+            NewVC._TypeStr = VC._TypeStr;
+            NewVC._Size = VC._Size;
+            NewVC._Scale = VC._Scale;
+            NewVC._Precision = VC._Precision;
           }
       }
 
