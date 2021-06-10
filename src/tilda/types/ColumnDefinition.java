@@ -16,8 +16,11 @@
 
 package tilda.types;
 
+import java.io.Writer;
 import java.lang.reflect.Constructor;
+import java.time.ZonedDateTime;
 import java.util.BitSet;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,9 +28,13 @@ import org.apache.logging.log4j.Logger;
 import tilda.db.Connection;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
+import tilda.enums.TransactionType;
+import tilda.interfaces.JSONable;
+import tilda.performance.PerfTracker;
 import tilda.utils.TextUtil;
+import tilda.utils.json.JSONUtil;
 
-public class ColumnDefinition
+public class ColumnDefinition implements JSONable
   {
     protected static final Logger LOG = LogManager.getLogger(ColumnDefinition.class.getName());
 
@@ -154,7 +161,7 @@ public class ColumnDefinition
       {
         return _expressionDependencyColumnNames;
       }
-    
+
     public static ColumnDefinition create(String SchemaName, String TableName, String ColumnName, ColumnType Type, boolean Collection, boolean Nullable, String Description)
       {
         String ClassName = "tilda.types.Type_" + Type._SimpleName + (Collection == true ? "Collection" : "Primitive") + (Nullable == true ? "Null" : "");
@@ -227,5 +234,41 @@ public class ColumnDefinition
         return Names;
       }
 
+    @Override
+    public void toJSON(Writer out, String jsonExportName, String lead, boolean fullObject)
+    throws Exception
+      {
+        toJSON(out, jsonExportName, lead, fullObject, false);
+      }
 
+    @Override
+    public void toJSON(Writer out, String jsonExportName, String lead, boolean fullObject, ZonedDateTime lastsync)
+    throws Exception
+      {
+        toJSON(out, jsonExportName, lead, fullObject, false);
+      }
+
+    @Override
+    public void toJSON(Writer out, String jsonExportName, String lead, boolean fullObject, boolean noNullArrays)
+    throws Exception
+      {
+        if (fullObject == true)
+          {
+            out.write(lead);
+            out.write("{");
+          }
+
+        int i = -1;
+        JSONUtil.print(out, "schemaName", ++i == 0, getSchemaName());
+        JSONUtil.print(out, "tableName", ++i == 0, getTableName());
+        JSONUtil.print(out, "columnName", ++i == 0, getName());
+        JSONUtil.print(out, "nullable", ++i == 0, isNullable());
+        JSONUtil.print(out, "collection", ++i == 0, isCollection());
+        JSONUtil.print(out, "type", ++i == 0, getType().name());
+        JSONUtil.print(out, "description", ++i == 0, getDescription());
+        JSONUtil.print(out, "formula", ++i == 0, getExpression());
+
+        if (fullObject == true)
+          out.write(" }\n");
+      }
   }
