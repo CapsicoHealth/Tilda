@@ -19,6 +19,7 @@ import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.google.cloud.bigquery.BigQuery;
 import com.google.cloud.bigquery.BigQuery.DatasetListOption;
 import com.google.cloud.bigquery.BigQuery.TableListOption;
+import com.google.cloud.bigquery.BigQueryError;
 import com.google.cloud.bigquery.BigQueryException;
 import com.google.cloud.bigquery.BigQueryOptions;
 import com.google.cloud.bigquery.Dataset;
@@ -96,11 +97,11 @@ public class BQHelper
             }
         if (i == 0)
           {
-            LOG.error("GCP BigQuery key file '" + dataProjectName + ".*.key.bq.json' not found in '"+path+"'.");
+            LOG.error("GCP BigQuery key file '" + dataProjectName + ".*.key.bq.json' not found in '" + path + "'.");
             throw new IOException("GCP BigQuery key file not found.");
           }
         else if (i > 1)
-          throw new IOException("There are more than 1 file matching the pattern '" + dataProjectName + ".*.bq.key.json' in '"+path+"' for account key files: only 1 was expected.");
+          throw new IOException("There are more than 1 file matching the pattern '" + dataProjectName + ".*.bq.key.json' in '" + path + "' for account key files: only 1 was expected.");
 
         try (FileInputStream serviceAccountStream = new FileInputStream(K))
           {
@@ -183,15 +184,27 @@ public class BQHelper
     public static boolean completeJob(Job job)
     throws InterruptedException
       {
-        Job completedJob = job.waitFor();
-        if (completedJob == null)
+        List<BigQueryError> errs = null;
+        try
           {
-            LOG.error("BigQuery job was not executed since it no longer exists.\n" + job.getStatus().getError());
-            return false;
+            Job completedJob = job.waitFor();
+            if (completedJob == null)
+              {
+                LOG.error("BigQuery job was not executed since it no longer exists.\n" + job.getStatus().getError());
+                return false;
+              }
+            errs = job.getStatus().getExecutionErrors();
           }
-        else if (completedJob.getStatus().getError() != null)
+        catch (BigQueryException E)
           {
-            LOG.error("BigQuery job was unable to load data to the table due to an error: \n" + job.getStatus().getError());
+            errs = E.getErrors();
+          }
+        if (errs != null && errs.isEmpty() == false)
+          {
+            StringBuilder str = new StringBuilder();
+            for (BigQueryError err : errs)
+             str.append(" - " + err.getMessage() + "\n");
+            LOG.error("BigQuery job was unable to load data to the table due to an error: \n" + str.toString());
             return false;
           }
         LOG.info("BigQuery job completed successfully.\n" + job.getStatistics().toString());
