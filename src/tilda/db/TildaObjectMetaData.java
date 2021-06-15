@@ -34,7 +34,8 @@ public class TildaObjectMetaData
         Class<?> _ColsClass = Class.forName(ColsClassName);
 
         for (Column C : Obj._Columns)
-          if (C != null && C._FCT.isManaged() == false && C._Mode != ColumnMode.CALCULATED)
+          // LDH-NOTE: Not sure why managed columns were excluded... That means that formula columns or OCC columns for example couldn't be accessed dynamically.
+          if (C != null /*&& C._FCT.isManaged() == false*/ && C._Mode != ColumnMode.CALCULATED)
             {
               try
                 {

@@ -293,6 +293,7 @@ public class Column extends TypeDef
             _SameAs__DEPRECATED = null;
           }
 
+        _SameAs = _SameAs.trim();
         ReferenceHelper R = ReferenceHelper.parseColumnReference(_SameAs, _ParentObject);
 
         if (TextUtil.isNullOrEmpty(R._S) == true || TextUtil.isNullOrEmpty(R._O) == true || TextUtil.isNullOrEmpty(R._C) == true)

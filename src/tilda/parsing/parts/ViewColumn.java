@@ -161,6 +161,7 @@ public class ViewColumn
             _SameAs = _Sameas_DEPRECATED;
             _Sameas_DEPRECATED = null;
           }
+        _SameAs = _SameAs.trim();
         return true;
       }
 
