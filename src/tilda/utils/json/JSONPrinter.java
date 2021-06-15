@@ -63,6 +63,10 @@ public class JSONPrinter
         _Elements.add(new ElementList(Name, L, JsonExportName));
         return this;
       }
+    public JSONPrinter addElement(String Name, List<? extends JSONable> L)
+      {
+        return addElement(Name, L, "");
+      }
 
 //    public JSONPrinter addElement(String Name, List<? extends JSONable> L, String JsonExportName, ZonedDateTime SyncToken)
 //      {

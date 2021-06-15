@@ -597,6 +597,21 @@ public class JSONUtil
         Out.write("\n");
       }
 
+    public static void printArrayStart(Writer Out, String Name, boolean FirstElement, String Header)
+    throws IOException
+      {
+        Out.write(Header);
+        print(Out, Name, FirstElement);
+        startend(Out, '[');
+      }
+    public static void printElementStart(Writer Out, String Name, boolean FirstElement, String Header)
+    throws IOException
+      {
+        Out.write(Header);
+        print(Out, Name, FirstElement);
+        startend(Out, '{');
+      }
+    
     public static void startend(Writer Out, char startChar)
     throws IOException
       {
