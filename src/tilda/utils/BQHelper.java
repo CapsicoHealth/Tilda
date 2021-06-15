@@ -187,13 +187,15 @@ public class BQHelper
         List<BigQueryError> errs = null;
         try
           {
+            LOG.info("Waiting for the BQ job to complete...");
             Job completedJob = job.waitFor();
             if (completedJob == null)
               {
-                LOG.error("BigQuery job was not executed since it no longer exists.\n" + job.getStatus().getError());
+                LOG.error("BigQuery job was not executed, or no longer exists.\n" + job.getStatus().getError());
                 return false;
               }
-            errs = job.getStatus().getExecutionErrors();
+            job = completedJob;
+            errs = completedJob.getStatus().getExecutionErrors();
           }
         catch (BigQueryException E)
           {
@@ -207,7 +209,7 @@ public class BQHelper
             LOG.error("BigQuery job was unable to load data to the table due to an error: \n" + str.toString());
             return false;
           }
-        LOG.info("BigQuery job completed successfully.\n" + job.getStatistics().toString());
+        LOG.info("BigQuery job completed successfully.\n" + job.getStatistics().toString()+"\n");
         return true;
       }
 
@@ -238,8 +240,7 @@ public class BQHelper
         .build();
         JobId jobId = JobId.newBuilder().build();
         TableDataWriteChannel channel = bq.writer(jobId, writeChannelConfiguration);
-        channel.setChunkSize(4 * 1024 * 1024); // 1MB
-
+        channel.setChunkSize(4 * 1024 * 1024); // 4MB
         // == 139708 records in 3mn 4s 672ms (45,391.14 records/min)
 
         return channel;
@@ -252,6 +253,7 @@ public class BQHelper
         if (Obj == null)
           throw new Exception("Cannot locate Object/View '" + SchemaName + "." + TableViewName + "'.");
 
+//        StringBuilder str = new StringBuilder();
         List<Field> fieldsList = new ArrayList<Field>();
         for (ColumnDefinition col : Obj.getColumnDefinitions())
           {
@@ -260,7 +262,11 @@ public class BQHelper
             .setDescription(col.getDescription())
             .build();
             fieldsList.add(F);
+//            if (str.length()!=0)
+//             str.append(", ");
+//            str.append(col.getName());
           }
+//        LOG.debug("Schema for "+SchemaName+"."+TableViewName+": "+str.toString());
 
         return Schema.of(fieldsList);
       }
