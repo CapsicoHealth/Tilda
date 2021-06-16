@@ -182,7 +182,6 @@ public class BQHelper
      * @throws InterruptedException
      */
     public static boolean completeJob(Job job)
-    throws InterruptedException
       {
         List<BigQueryError> errs = null;
         try
@@ -199,18 +198,64 @@ public class BQHelper
           }
         catch (BigQueryException E)
           {
-            errs = E.getErrors();
+            errs = new ArrayList<BigQueryError>();
+            errs.add(E.getError());
+          }
+        catch (InterruptedException E)
+          {
+            LOG.error("Error waiting for the job\n", E);
+            return false;
           }
         if (errs != null && errs.isEmpty() == false)
           {
             StringBuilder str = new StringBuilder();
+            int errorCount = 0;
             for (BigQueryError err : errs)
-             str.append(" - " + err.getMessage() + "\n");
+              {
+                // LDH-NOTE: MAJOR HACK HERE!!!!!! We are getting back warning messages in the error list, and so we
+                // think the job failed when it actually succeeded (we checked on the BQ side). So for now
+                // we exclude explicit messages. Clearly a horrible thing to be doing!
+                if (err.getMessage().indexOf("The input data has NULL values in one or more columns") == -1)
+                  {
+                    ++errorCount;
+                  }
+                str.append(" - " + err.getMessage() + " - " + err.getReason() + "\n");
+              }
             LOG.error("BigQuery job was unable to load data to the table due to an error: \n" + str.toString());
-            return false;
+            if (errorCount > 0)
+              return false;
           }
-        LOG.info("BigQuery job completed successfully.\n" + job.getStatistics().toString()+"\n");
+        String stats = null;
+        try // Bad Google... job.getStatistics can throw on nullptr on their own internal API calls.
+          {
+            stats = job.getStatistics().toString();
+          }
+        catch (Exception E)
+          {
+            LOG.warn("job.getStatistics() threw:\n", E);
+            stats = E.getMessage();
+          }
+        LOG.info("BigQuery job completed successfully.\n" + stats + "\n");
         return true;
+      }
+
+
+    /**
+     * Returns a job if it's done, null otherwise.
+     * 
+     * @param bq
+     * @param jobId
+     * @return
+     * @throws Exception
+     * @throws InterruptedException
+     */
+    public static Job checkJobDone(BigQuery bq, String jobId)
+    throws Exception
+      {
+        Job job = bq.getJob(jobId);
+        if (job == null)
+          throw new Exception("Job cannot be found");
+        return job.isDone() == true ? job : null;
       }
 
     /**
@@ -253,7 +298,7 @@ public class BQHelper
         if (Obj == null)
           throw new Exception("Cannot locate Object/View '" + SchemaName + "." + TableViewName + "'.");
 
-//        StringBuilder str = new StringBuilder();
+        // StringBuilder str = new StringBuilder();
         List<Field> fieldsList = new ArrayList<Field>();
         for (ColumnDefinition col : Obj.getColumnDefinitions())
           {
@@ -262,11 +307,11 @@ public class BQHelper
             .setDescription(col.getDescription())
             .build();
             fieldsList.add(F);
-//            if (str.length()!=0)
-//             str.append(", ");
-//            str.append(col.getName());
+            // if (str.length()!=0)
+            // str.append(", ");
+            // str.append(col.getName());
           }
-//        LOG.debug("Schema for "+SchemaName+"."+TableViewName+": "+str.toString());
+        // LOG.debug("Schema for "+SchemaName+"."+TableViewName+": "+str.toString());
 
         return Schema.of(fieldsList);
       }
