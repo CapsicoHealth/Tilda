@@ -18,7 +18,9 @@ package tilda.utils.json;
 
 import java.io.Writer;
 import java.time.ZonedDateTime;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -26,11 +28,16 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.db.JDBCHelper;
 import tilda.interfaces.JSONable;
+import tilda.utils.TextUtil;
+import tilda.utils.json.elements.ElementArrayEnd;
+import tilda.utils.json.elements.ElementArrayStart;
 import tilda.utils.json.elements.ElementBoolean;
 import tilda.utils.json.elements.ElementBooleanArray;
 import tilda.utils.json.elements.ElementDef;
 import tilda.utils.json.elements.ElementDouble;
 import tilda.utils.json.elements.ElementDoubleArray;
+import tilda.utils.json.elements.ElementElementEnd;
+import tilda.utils.json.elements.ElementElementStart;
 import tilda.utils.json.elements.ElementList;
 import tilda.utils.json.elements.ElementLong;
 import tilda.utils.json.elements.ElementLongArray;
@@ -51,6 +58,7 @@ public class JSONPrinter
       }
 
     protected List<ElementDef> _Elements = new ArrayList<ElementDef>();
+    protected Deque<String> _NestingStack = new ArrayDeque<String>();
 
     public JSONPrinter addElement(String Name, JSONable Obj, String JsonExportName)
       {
@@ -63,39 +71,43 @@ public class JSONPrinter
         _Elements.add(new ElementList(Name, L, JsonExportName));
         return this;
       }
+
     public JSONPrinter addElement(String Name, List<? extends JSONable> L)
       {
         return addElement(Name, L, "");
       }
 
-//    public JSONPrinter addElement(String Name, List<? extends JSONable> L, String JsonExportName, ZonedDateTime SyncToken)
-//      {
-//        _Elements.add(new ElementList(Name, L, JsonExportName, SyncToken));
-//        return this;
-//      }
-    
+    // public JSONPrinter addElement(String Name, List<? extends JSONable> L, String JsonExportName, ZonedDateTime SyncToken)
+    // {
+    // _Elements.add(new ElementList(Name, L, JsonExportName, SyncToken));
+    // return this;
+    // }
+
     public JSONPrinter addElement(String Name, String Val)
       {
         _Elements.add(new ElementString(Name, Val));
         return this;
       }
+
     public JSONPrinter addElement(String Name, String[] Vals)
       {
         _Elements.add(new ElementStringArray(Name, Vals));
         return this;
       }
+
     public JSONPrinter addElement(String Name, String[][] Vals)
       {
         _Elements.add(new ElementStringArrayDouble(Name, Vals));
         return this;
       }
-    
-    
+
+
     public JSONPrinter addElement(String Name, boolean Val)
       {
         _Elements.add(new ElementBoolean(Name, Val));
         return this;
       }
+
     public JSONPrinter addElement(String Name, boolean[] Val)
       {
         _Elements.add(new ElementBooleanArray(Name, Val));
@@ -107,6 +119,7 @@ public class JSONPrinter
         _Elements.add(new ElementLong(Name, Val));
         return this;
       }
+
     public JSONPrinter addElement(String Name, long[] Val)
       {
         _Elements.add(new ElementLongArray(Name, Val));
@@ -118,6 +131,7 @@ public class JSONPrinter
         _Elements.add(new ElementDouble(Name, Val));
         return this;
       }
+
     public JSONPrinter addElement(String Name, double[] Val)
       {
         _Elements.add(new ElementDoubleArray(Name, Val));
@@ -129,22 +143,60 @@ public class JSONPrinter
         _Elements.add(new ElementZonedDateTime(Name, Val));
         return this;
       }
+
     public JSONPrinter addElement(String Name, ZonedDateTime[] Val)
       {
         _Elements.add(new ElementZonedDateTimeArray(Name, Val));
         return this;
       }
-    
+
     public JSONPrinter addElementRaw(String Name, String JsonRawValue)
       {
         _Elements.add(new ElementRaw(Name, JsonRawValue));
         return this;
       }
 
+    public JSONPrinter addElementStart(String Name)
+      {
+        _Elements.add(new ElementElementStart(Name));
+        _NestingStack.add("Element:"+Name);
+        return this;
+      }
+    public JSONPrinter addElementClose(String Name)
+    throws Exception
+      {
+        _Elements.add(new ElementElementEnd(Name));
+        String poppedName = _NestingStack.pop();
+        if (poppedName.equals("Element:"+Name) == false)
+          throw new Exception("JSON Nesting error: closed element '"+Name+"' but '"+poppedName+"' was the most recently started.");
+        return this;
+      }
+    public JSONPrinter addArrayStart(String Name)
+      {
+        _Elements.add(new ElementArrayStart(Name));
+        _NestingStack.add("Array:"+Name);
+        return this;
+      }
+    public JSONPrinter addArrayClose(String Name)
+    throws Exception
+      {
+        _Elements.add(new ElementArrayEnd(Name));
+        String poppedName = _NestingStack.pop();
+        if (poppedName.equals("Array:"+Name) == false)
+          throw new Exception("JSON Nesting error: closed array '"+Name+"' but '"+poppedName+"' was the most recently started.");
+        return this;
+      }
+
+    private void testNestingStack() throws Exception
+      {
+        if (_NestingStack.isEmpty() == false)
+          throw new Exception("A JSON object is being printed out with unclosed elements or arrays: "+TextUtil.print(_NestingStack.iterator()));
+      }
 
     public void print(Writer Out)
     throws Exception
       {
+        testNestingStack();
         JSONUtil.startOK(Out, '{');
         printRaw(Out);
         JSONUtil.end(Out, '}');
@@ -153,6 +205,7 @@ public class JSONPrinter
     public void printRawObj(Writer Out)
     throws Exception
       {
+        testNestingStack();
         Out.append("{\n");
         printRaw(Out);
         Out.append("\n}");
@@ -161,6 +214,7 @@ public class JSONPrinter
     protected void printRaw(Writer Out)
     throws Exception
       {
+        testNestingStack();
         boolean First = true;
         for (ElementDef e : _Elements)
           {
@@ -168,5 +222,5 @@ public class JSONPrinter
             First = false;
           }
       }
-    
+
   }

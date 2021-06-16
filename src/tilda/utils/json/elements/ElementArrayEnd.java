@@ -6,9 +6,11 @@ import tilda.utils.json.JSONUtil;
 
 public class ElementArrayEnd implements ElementDef
   {
-    public ElementArrayEnd()
+    public ElementArrayEnd(String Name)
       {
+        _Name = Name;
       }
+    protected final String _Name;
 
     @Override
     public void print(Writer Out, boolean FirstElement, String Header)
