@@ -19,7 +19,6 @@ public class ElementRaw implements ElementDef
     public void print(Writer Out, boolean FirstElement, String Header)
     throws Exception
       {
-        JSONUtil.print(Out, _Name, FirstElement);
-        Out.write(_Val);
+        JSONUtil.printRaw(Out, _Name, FirstElement, _Val);
       }
   }
