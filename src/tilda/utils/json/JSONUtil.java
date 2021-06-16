@@ -815,11 +815,37 @@ public class JSONUtil
      * @param rawJsonObject
      * @throws IOException
      */
-    public static void printRaw(Writer out, String name, boolean firstElement, String rawJsonObject)
+    public static void printRawObject(Writer out, String name, boolean firstElement, String rawJsonObject)
     throws IOException
       {
         JSONUtil.print(out, name, firstElement);
         out.write(rawJsonObject);
+      }
+
+    /**
+     * Prints a raw json object. It's assumed to be properly formed.
+     * @param out
+     * @param name
+     * @param firstElement
+     * @param rawJsonObject
+     * @throws IOException
+     */
+    public static void printRawArray(Writer out, String name, boolean firstElement, List<String> rawJsonObjects)
+    throws IOException
+      {
+        JSONUtil.print(out, name, firstElement);
+        out.write("[\n");
+        boolean first = true;
+        for (String s : rawJsonObjects)
+          {
+            if (first == true)
+              first = false;
+            else
+              out.write("   , ");
+            out.write(s);
+            out.write("\n");
+          }
+        out.write("]\n");
       }
     
   }
