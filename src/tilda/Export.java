@@ -122,7 +122,7 @@ public class Export
         if (Out != null)
           {
             Out.close();
-            if (BQHelper.completeJob(Out.getJob()) == false)
+            if (BQHelper.completeJob(Out.getJob()) == null)
               return 0;
           }
         return OP.getTotalCount();

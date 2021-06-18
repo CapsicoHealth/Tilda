@@ -25,15 +25,19 @@ import com.google.cloud.bigquery.BigQueryOptions;
 import com.google.cloud.bigquery.Dataset;
 import com.google.cloud.bigquery.DatasetInfo;
 import com.google.cloud.bigquery.Field;
+import com.google.cloud.bigquery.FieldValueList;
 import com.google.cloud.bigquery.FormatOptions;
 import com.google.cloud.bigquery.Job;
 import com.google.cloud.bigquery.JobId;
+import com.google.cloud.bigquery.JobInfo;
 import com.google.cloud.bigquery.JobInfo.WriteDisposition;
+import com.google.cloud.bigquery.QueryJobConfiguration;
 import com.google.cloud.bigquery.Schema;
 import com.google.cloud.bigquery.StandardSQLTypeName;
 import com.google.cloud.bigquery.Table;
 import com.google.cloud.bigquery.TableDataWriteChannel;
 import com.google.cloud.bigquery.TableId;
+import com.google.cloud.bigquery.TableResult;
 import com.google.cloud.bigquery.WriteChannelConfiguration;
 
 import tilda.db.TildaMasterRuntimeMetaData;
@@ -181,7 +185,7 @@ public class BQHelper
      * @return
      * @throws InterruptedException
      */
-    public static boolean completeJob(Job job)
+    public static Job completeJob(Job job)
       {
         List<BigQueryError> errs = null;
         try
@@ -191,7 +195,7 @@ public class BQHelper
             if (completedJob == null)
               {
                 LOG.error("BigQuery job was not executed, or no longer exists.\n" + job.getStatus().getError());
-                return false;
+                return null;
               }
             job = completedJob;
             errs = completedJob.getStatus().getExecutionErrors();
@@ -204,7 +208,7 @@ public class BQHelper
         catch (InterruptedException E)
           {
             LOG.error("Error waiting for the job\n", E);
-            return false;
+            return null;
           }
         if (errs != null && errs.isEmpty() == false)
           {
@@ -223,7 +227,7 @@ public class BQHelper
               }
             LOG.error("BigQuery job was unable to load data to the table due to an error: \n" + str.toString());
             if (errorCount > 0)
-              return false;
+              return null;
           }
         String stats = null;
         try // Bad Google... job.getStatistics can throw on nullptr on their own internal API calls.
@@ -236,7 +240,7 @@ public class BQHelper
             stats = E.getMessage();
           }
         LOG.info("BigQuery job completed successfully.\n" + stats + "\n");
-        return true;
+        return job;
       }
 
 
@@ -256,6 +260,78 @@ public class BQHelper
         if (job == null)
           throw new Exception("Job cannot be found");
         return job.isDone() == true ? job : null;
+      }
+
+    public static class JobResults
+      {
+        protected JobResults(Job j, TableResult r)
+          {
+            _j = j;
+            _r = r;
+          }
+
+        public final Job         _j;
+        public final TableResult _r;
+      }
+
+    public static JobResults runQuery(BigQuery bq, String q)
+      {
+        try
+          {
+            LOG.debug(q);
+            QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(q).setUseLegacySql(false).build();
+            JobId jobId = JobId.newBuilder().build();
+            JobInfo jobInfo = JobInfo.newBuilder(queryConfig).setJobId(jobId).build();
+            Job job = bq.create(jobInfo);
+            if (BQHelper.completeJob(job) != null)
+              {
+                TableResult results = job.getQueryResults();
+                if (results != null)
+                  return new JobResults(job, results);
+              }
+          }
+        catch (Exception E)
+          {
+            LOG.error("Cannot execute BigQuery query:\n", E);
+          }
+        return null;
+      }
+
+    public static class JobCostDetails
+      {
+        protected JobCostDetails(long bytes, double cost, double costModeling)
+          {
+            _bytes = bytes;
+            _cost = cost;
+            _costModeling = costModeling;
+          }
+
+        public final long   _bytes;
+        public final double _cost;
+        public final double _costModeling;
+      }
+
+    /**
+     * Returns the billed bytes and cost in cents for a given job, or null if the job could be
+     * located or an exception occurred internally (see logs).
+     * 
+     * @param bq
+     * @param jobId
+     * @return LongDoublePair
+     */
+    public static JobCostDetails getJobCostInBytesCents(BigQuery bq, String jobId)
+      {
+        String q = "SELECT total_bytes_billed, cost_cents, cost_cents_modeling from TILDA.BQJobDetails where job_id=" + TextUtil.escapeSingleQuoteForSQL(jobId) + ";";
+        JobResults jr = runQuery(bq, q);
+        if (jr != null)
+          for (FieldValueList row : jr._r.iterateAll())
+            {
+              long bytes = row.get("total_bytes_billed").getLongValue();
+              double cost = row.get("cost_cents").getDoubleValue();
+              double costModeling = row.get("cost_cents_modeling").getDoubleValue();
+              return new JobCostDetails(bytes, cost, costModeling);
+            }
+        return null;
       }
 
     /**
