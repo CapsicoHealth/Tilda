@@ -94,4 +94,11 @@ public class ViewRealizedWrapper extends Base
       {
         return _O._ParentSchema;
       }
+
+
+    @Override
+    public String[] getFirstIdentityColumnNames(boolean naturalIdentitiesFirst)
+      {
+        return _O.getFirstIdentityColumnNames(naturalIdentitiesFirst);
+      }
   }

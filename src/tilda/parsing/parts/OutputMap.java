@@ -32,11 +32,11 @@ import tilda.parsing.parts.helpers.ValidationHelper;
 import tilda.utils.CollectionUtil;
 import tilda.utils.TextUtil;
 
-public class OutputMapping
+public class OutputMap
   {
-    static final Logger LOG = LogManager.getLogger(OutputMapping.class.getName());
+    static final Logger LOG = LogManager.getLogger(OutputMap.class.getName());
 
-    public OutputMapping()
+    public OutputMap()
       {
       }
 
@@ -50,7 +50,7 @@ public class OutputMapping
     @SerializedName("nvpValueType") public String   _NVPValueTypeStr;
     /*@formatter:on*/
 
-    public OutputMapping(OutputMapping OM)
+    public OutputMap(OutputMap OM)
       {
         _Name = OM._Name;
         _Columns = OM._Columns;
@@ -166,12 +166,12 @@ public class OutputMapping
         return Errs == PS.getErrorCount();
       }
 
-    public static List<OutputMapping> newInstances(List<OutputMapping> OutputMaps)
+    public static List<OutputMap> newInstances(List<OutputMap> OutputMaps)
       {
-        List<OutputMapping> L = new ArrayList<OutputMapping>();
-        for (OutputMapping OM : OutputMaps)
+        List<OutputMap> L = new ArrayList<OutputMap>();
+        for (OutputMap OM : OutputMaps)
           if (OM != null)
-            L.add(new OutputMapping(OM));
+            L.add(new OutputMap(OM));
         return L;
       }
   }

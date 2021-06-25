@@ -373,6 +373,11 @@ public class View extends Base
         if (TextUtil.isNullOrEmpty(_CountStarDeprecated) == false)
           PS.AddError("View '" + getFullName() + "' is defining a 'countStar' element which is deprecated. Please use a standard column definition with an aggregate of 'COUNT'.");
         
+        if (_Name.equals("FormulaDependencyView") == true)
+         LOG.debug("XXX");
+        
+//        super.validateOutputMaps(PS); // We do not need to do this. The ObjectProxy is the driver of the code-gen and so the additional validation needed will occur there.
+        
         // gotta construct a shadow Object for code-gen.
         // LOG.debug("View " + _Name + ": " + TextUtil.print(getColumnNames()));
         Object O = MakeObjectProxy(PS);
@@ -663,40 +668,6 @@ public class View extends Base
                 PS.AddError("View '" + getFullName() + "' is defining formula '" + F._Name + "' with an infinite reference loop '" + Path + "'.");
             }
 
-        /*
-         * PrimaryKey PK = _ViewColumns.get(0)._SameAsObj._ParentObject._PrimaryKey;
-         * if (_Name.equals("VisitCountAndDurationPivotView") == true)
-         * LOG.debug("");
-         * if (PK != null)
-         * {
-         * if (PK._Autogen == true && getSameAsColumn(PK._ParentObject.getFullName(), "refnum") != null)
-         * {
-         * O._PrimaryKey = new PrimaryKey();
-         * O._PrimaryKey._Columns = new String[] { _ViewColumns.get(0)._Name
-         * };
-         * _PK = O._PrimaryKey;
-         * }
-         * else
-         * {
-         * int countFound = -1;
-         * String[] ColNames = new String[PK._ColumnObjs.size()];
-         * for (Column C : PK._ColumnObjs)
-         * {
-         * ViewColumn VC = getViewColumnFromSameAsColumn(C._ParentObject.getFullName(), C._Name);
-         * if (VC != null)
-         * ColNames[++countFound] = VC._Name;
-         * else
-         * break;
-         * }
-         * if (countFound == PK._ColumnObjs.size() - 1)
-         * {
-         * O._PrimaryKey = new PrimaryKey();
-         * O._PrimaryKey._Columns = ColNames;
-         * _PK = O._PrimaryKey;
-         * }
-         * }
-         * }
-         */
         O._ModeStr = _DBOnly == true ? ObjectMode.DB_ONLY.toString() : ObjectMode.NORMAL.toString();
         _ParentSchema._Objects.add(O);
         O.Validate(PS, _ParentSchema);
@@ -1375,6 +1346,59 @@ public class View extends Base
     public String getViewSubRealizeFullName()
       {
         return getViewSubRealizeSchemaName() + "." + getViewSubRealizeViewName();
+      }
+    
+    @Override
+    public String[] getFirstIdentityColumnNames(boolean naturalIdentitiesFirst)
+      {
+        return null;
+        
+/*        
+        Graph<DepWrapper> G = getDependencyGraph(false);
+        Set<DepWrapper> deps = G.getLeaves(false);
+        for (DepWrapper dw : deps)
+          {
+            List<Column> cols = dw._Obj.getFirstIdentityColumns();
+            boolean valid = false;
+            for (Column c : cols)
+              
+          }
+ */
+
+        /*
+         * PrimaryKey PK = _ViewColumns.get(0)._SameAsObj._ParentObject._PrimaryKey;
+         * if (_Name.equals("VisitCountAndDurationPivotView") == true)
+         * LOG.debug("");
+         * if (PK != null)
+         * {
+         * if (PK._Autogen == true && getSameAsColumn(PK._ParentObject.getFullName(), "refnum") != null)
+         * {
+         * O._PrimaryKey = new PrimaryKey();
+         * O._PrimaryKey._Columns = new String[] { _ViewColumns.get(0)._Name
+         * };
+         * _PK = O._PrimaryKey;
+         * }
+         * else
+         * {
+         * int countFound = -1;
+         * String[] ColNames = new String[PK._ColumnObjs.size()];
+         * for (Column C : PK._ColumnObjs)
+         * {
+         * ViewColumn VC = getViewColumnFromSameAsColumn(C._ParentObject.getFullName(), C._Name);
+         * if (VC != null)
+         * ColNames[++countFound] = VC._Name;
+         * else
+         * break;
+         * }
+         * if (countFound == PK._ColumnObjs.size() - 1)
+         * {
+         * O._PrimaryKey = new PrimaryKey();
+         * O._PrimaryKey._Columns = ColNames;
+         * _PK = O._PrimaryKey;
+         * }
+         * }
+         * }
+         */
       }
 
   }

@@ -132,7 +132,7 @@ public class ViewRealize
 
         O._Description = "Realized table for view " + ParentView.getShortName() + ": " + ParentRealized._O._Description;
         O.addQueries(ParentView._Queries);
-        O._OutputMaps = OutputMapping.newInstances(ParentView._OutputMaps);
+        O._OutputMaps = OutputMap.newInstances(ParentView._OutputMaps);
         O._LCStr = ObjectLifecycle.NORMAL.name();
         O._PrimaryKey = _PrimaryKey;
         O._ForeignKeys = _ForeignKeys;
@@ -232,7 +232,7 @@ public class ViewRealize
           }
 
         if (_Upsert != null)
-          _Upsert.Validate(PS, ParentView, ParentRealized, O.getFirstIdentityColumns());
+          _Upsert.Validate(PS, ParentView, ParentRealized, O.getFirstIdentityColumns(false));
 
         // if (O._Name.equals("Testing2Realized") == true)
         // LOG.debug("yyyyy");
