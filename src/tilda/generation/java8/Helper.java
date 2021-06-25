@@ -405,7 +405,7 @@ public class Helper
               ++LookupId;
               if (UniqueConstraints == true)
                 {
-                  Out.println(Lead + "   case " + LookupId + ": // Unique Quwey '"+SWC._Name+"'");
+                  Out.println(Lead + "   case " + LookupId + ": // Unique Query '"+SWC._Name+"'");
                   if (SWC._Attributes.isEmpty() == false)
                     Out.println(Lead + "      S.append(\" where (\"); " + PrintWhereClause(G, null, SWC) + " S.append(\")\");");
                   Out.println(Lead + "      break;");
@@ -417,7 +417,7 @@ public class Helper
               ++LookupId;
               if (UniqueConstraints == false)
                 {
-                  Out.println(Lead + "   case " + LookupId + ": // Quwey '"+SWC._Name+"'");
+                  Out.println(Lead + "   case " + LookupId + ": // Query '"+SWC._Name+"'");
                   if (SWC._FromObj.isEmpty() == false)
                     Out.println(Lead + "      S.append(" + TextUtil.escapeDoubleQuoteWithSlash(", " + PrintObjectList(SWC._FromObj)) + "); // Additional From's from the subwhereclause.");
                   String WhereClause = PrintWhereClause(G, null, SWC);

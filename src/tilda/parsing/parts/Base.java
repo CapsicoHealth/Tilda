@@ -29,6 +29,7 @@ import com.google.gson.annotations.SerializedName;
 import tilda.enums.ObjectLifecycle;
 import tilda.enums.TildaType;
 import tilda.parsing.ParserSession;
+import tilda.parsing.parts.helpers.DefaultsHelper;
 import tilda.parsing.parts.helpers.ValidationHelper;
 import tilda.utils.PaddingTracker;
 import tilda.utils.TextUtil;
@@ -43,8 +44,8 @@ public abstract class Base
     @SerializedName("shortAlias" ) public String               _ShortAlias = null;
     @SerializedName("description") public String               _Description= null;
     @SerializedName("queries"    ) public List<SubWhereClause> _Queries    = new ArrayList<SubWhereClause>();
-    @SerializedName("json"       ) public List<OutputMapping>  _JsonDEPRECATED = new ArrayList<OutputMapping >();
-    @SerializedName("outputMaps" ) public List<OutputMapping>  _OutputMaps = new ArrayList<OutputMapping>();
+    @SerializedName("json"       ) public List<OutputMap>      _JsonDEPRECATED = new ArrayList<OutputMap >();
+    @SerializedName("outputMaps" ) public List<OutputMap>      _OutputMaps = new ArrayList<OutputMap>();
     @SerializedName("tenantInit" ) public Boolean              _TenantInit = Boolean.FALSE;
     /*@formatter:on*/
 
@@ -58,6 +59,7 @@ public abstract class Base
     public transient final TildaType _TildaType;
     public transient Object          _RealizedObj;
     public transient View            _RealizedView;
+    public transient boolean         _HasUniqueQuery;
 
     public abstract Column getColumn(String name);
 
@@ -85,10 +87,10 @@ public abstract class Base
             _Queries.add(new SubWhereClause(SWC));
 
         // OutputMaps are being modified as part of validation, and so we need a clean copy here.
-        for (OutputMapping OM : b._JsonDEPRECATED)
-          _JsonDEPRECATED.add(new OutputMapping(OM));
-        for (OutputMapping OM : b._OutputMaps)
-          _OutputMaps.add(new OutputMapping(OM));
+        for (OutputMap OM : b._JsonDEPRECATED)
+          _JsonDEPRECATED.add(new OutputMap(OM));
+        for (OutputMap OM : b._OutputMaps)
+          _OutputMaps.add(new OutputMap(OM));
 
         _TenantInit = b._TenantInit;
         _TildaType = b._TildaType;
@@ -185,7 +187,7 @@ public abstract class Base
 
         if (_JsonDEPRECATED.isEmpty() == false)
           {
-            for (OutputMapping J : _JsonDEPRECATED)
+            for (OutputMap J : _JsonDEPRECATED)
               _OutputMaps.add(J);
             _JsonDEPRECATED.clear();
           }
@@ -194,20 +196,35 @@ public abstract class Base
         return _Validated;
       }
 
-    protected boolean ValidateOutputMappings(ParserSession PS)
+    protected void validateQueries(ParserSession PS, Set<String> Names)
       {
-        int Errs = PS.getErrorCount();
-        Set<String> Names = new HashSet<String>();
+        DefaultsHelper.defaultAllQuery(PS, this);
+        
+        _HasUniqueQuery = false;
+        for (SubWhereClause SWC : _Queries)
+          {
+            if (SWC == null)
+              continue;
+            if (SWC.Validate(PS, this, "Object '" + getFullName() + "'", true) == true)
+              if (Names.add(SWC._Name.toUpperCase()) == false)
+                PS.AddError("Object '" + getFullName() + "' is defining a query '" + SWC._Name + "' that has a name clashing with another query or index.");
+            if (SWC._Unique == true)
+              _HasUniqueQuery = true;
+          }
+      }
 
-        for (OutputMapping OM : _OutputMaps)
+    protected void validateOutputMaps(ParserSession PS)
+      {
+        DefaultsHelper.defaultOutputMap(PS, this);
+        
+        Set<String> Names = new HashSet<String>();
+        for (OutputMap OM : _OutputMaps)
           if (OM != null)
             {
               if (Names.add(OM._Name) == false)
                 PS.AddError(_TildaType.name() + " '" + getFullName() + "' is defining a duplicate Output mapping '" + OM._Name + "'.");
               OM.Validate(PS, this);
             }
-        _Validated = Errs == PS.getErrorCount();
-        return _Validated;
       }
 
     /**
@@ -217,10 +234,10 @@ public abstract class Base
      * @return
      */
     protected List<String> expandColumnNames(String[] vals, ParserSession PS, String constructType, String constructName)
-     {
-       return expandColumnNames(vals, PS, constructType, constructName, null);
-     }
-    
+      {
+        return expandColumnNames(vals, PS, constructType, constructName, null);
+      }
+
     /**
      * "colA", "abc*"
      * 
@@ -240,11 +257,11 @@ public abstract class Base
             for (String colName : colNames)
               {
                 if (TextUtil.findStarElement(valsA, colName, true, 0) == -1)
-                 continue;
+                  continue;
                 if (exclude != null && exclude.length > 0 && TextUtil.findStarElement(exclude, colName, true, 0) != -1)
-                 continue;
+                  continue;
                 if (S.add(colName) == true)
-                 L.add(colName);
+                  L.add(colName);
                 found = true;
               }
             if (found == false)
@@ -252,4 +269,34 @@ public abstract class Base
           }
         return L;
       }
+
+    public SubWhereClause getQuery(String name)
+      {
+        if (_Queries == null || _Queries.isEmpty() == false)
+          for (SubWhereClause swc : _Queries)
+            if (swc._Name.equalsIgnoreCase(name) == true)
+              return swc;
+        return null;
+      }
+
+    public OutputMap getOutputMap(String name)
+      {
+        if (_OutputMaps == null || _OutputMaps.isEmpty() == false)
+          for (OutputMap om : _OutputMaps)
+            if (om._Name.equalsIgnoreCase(name) == true)
+              return om;
+        return null;
+      }
+
+    /**
+     * Returns the list of columns that represent the first identity of the object. If a PK is defined,
+     * the columns defined for it will be returned. Otherwise, the columns for the first defined unique index
+     * will be returned. Null is returned otherwise, that that should never happen because all Objects are required
+     * to have at least one identity.<BR>
+     * <BR>
+     * This method should only be called <B>AFTER</B> {@link Object#Validate(ParserSession, Schema)} has been called first.
+     * 
+     * @return
+     */
+    public abstract String[] getFirstIdentityColumnNames(boolean naturalIdentitiesFirst);
   }

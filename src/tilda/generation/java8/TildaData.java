@@ -42,7 +42,7 @@ import tilda.parsing.parts.ColumnValue;
 import tilda.parsing.parts.Index;
 import tilda.parsing.parts.JsonField;
 import tilda.parsing.parts.Object;
-import tilda.parsing.parts.OutputMapping;
+import tilda.parsing.parts.OutputMap;
 import tilda.utils.AnsiUtil;
 import tilda.utils.PaddingUtil;
 import tilda.utils.TextUtil;
@@ -2006,7 +2006,7 @@ public class TildaData implements CodeGenTildaData
         boolean JSONSync = false;
         boolean CSV = false;
         boolean CSVSync = false;
-        for (OutputMapping OM : O._OutputMaps)
+        for (OutputMap OM : O._OutputMaps)
           {
             if (OM._OutputTypes.contains(OutputFormatType.JSON) == true)
               {
@@ -2036,7 +2036,7 @@ public class TildaData implements CodeGenTildaData
             Out.println("    {");
             Out.println("      switch (exportName)");
             Out.println("        { ");
-            for (OutputMapping OM : O._OutputMaps)
+            for (OutputMap OM : O._OutputMaps)
               if (OM != null && OM._OutputTypes.contains(OutputFormatType.JSON) == true)
                 Out.println("          case \"" + OM._Name + "\": " + Helper.getFullAppFactoryClassName(O) + ".toJSON" + OM._Name + "(out, (" + Helper.getFullAppDataClassName(O) + ") this, lead, fullObject, noNullArrays); break;");
             Out.println("          default: throw new Exception(\"Unknown JSON exporter '\"+exportName+\"' for " + Helper.getFullAppFactoryClassName(O) + "\");");
@@ -2048,7 +2048,7 @@ public class TildaData implements CodeGenTildaData
                 Out.println("    {");
                 Out.println("      switch (exportName)");
                 Out.println("        { ");
-                for (OutputMapping OM : O._OutputMaps)
+                for (OutputMap OM : O._OutputMaps)
                   if (OM != null && OM._OutputTypes.contains(OutputFormatType.JSON) == true && OM._Sync == true)
                     Out.println("          case \"" + OM._Name + "\": " + Helper.getFullAppFactoryClassName(O) + ".toJSON" + OM._Name + "(out, (" + Helper.getFullAppDataClassName(O) + ") this, lead, fullObject, lastsync); break;");
                 Out.println("          default: throw new Exception(\"Unknown JSON sync exporter '\"+exportName+\"' for " + Helper.getFullAppFactoryClassName(O) + "\");");
@@ -2071,7 +2071,7 @@ public class TildaData implements CodeGenTildaData
             Out.println("    {");
             Out.println("      switch (exportName)");
             Out.println("        { ");
-            for (OutputMapping OM : O._OutputMaps)
+            for (OutputMap OM : O._OutputMaps)
               if (OM != null && OM._OutputTypes.contains(OutputFormatType.CSV) == true)
                 Out.println("          case \"" + OM._Name + "\": " + Helper.getFullAppFactoryClassName(O) + ".toCSV" + OM._Name + "(out, (" + Helper.getFullAppDataClassName(O) + ") this); break;");
             Out.println("          default: throw new Exception(\"Unknown CSV exporter '\"+exportName+\"' for " + Helper.getFullAppFactoryClassName(O) + "\");");
@@ -2083,7 +2083,7 @@ public class TildaData implements CodeGenTildaData
                 Out.println("    {");
                 Out.println("      switch (exportName)");
                 Out.println("        { ");
-                for (OutputMapping OM : O._OutputMaps)
+                for (OutputMap OM : O._OutputMaps)
                   if (OM != null && OM._OutputTypes.contains(OutputFormatType.CSV) == true)
                     Out.println("          case \"" + OM._Name + "\": " + Helper.getFullAppFactoryClassName(O) + ".toCSV" + OM._Name + "(out, (" + Helper.getFullAppDataClassName(O) + ") this, lastsync); break;");
                 Out.println("          default: throw new Exception(\"Unknown CSV sync exporter '\"+exportName+\"' for " + Helper.getFullAppFactoryClassName(O) + "\");");

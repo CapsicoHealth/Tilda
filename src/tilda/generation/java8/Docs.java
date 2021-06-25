@@ -28,7 +28,7 @@ import tilda.parsing.parts.ColumnValue;
 import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Object;
-import tilda.parsing.parts.OutputMapping;
+import tilda.parsing.parts.OutputMap;
 import tilda.parsing.parts.PrimaryKey;
 import tilda.parsing.parts.SubWhereClause;
 import tilda.utils.SystemValues;
@@ -425,7 +425,7 @@ public class Docs implements CodeGenDocs
 
 
     @Override
-    public void docMethodOutput(PrintWriter Out, GeneratorSession G, OutputMapping J)
+    public void docMethodOutput(PrintWriter Out, GeneratorSession G, OutputMap J)
       {
         // TODO Auto-generated method stub
         

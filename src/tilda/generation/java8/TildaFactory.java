@@ -40,7 +40,7 @@ import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Object;
-import tilda.parsing.parts.OutputMapping;
+import tilda.parsing.parts.OutputMap;
 import tilda.parsing.parts.PrimaryKey;
 import tilda.parsing.parts.Query;
 import tilda.parsing.parts.SubWhereClause;
@@ -1040,7 +1040,7 @@ public class TildaFactory implements CodeGenTildaFactory
 
 
     @Override
-    public void genMethodToOutput(PrintWriter Out, GeneratorSession G, OutputMapping OM)
+    public void genMethodToOutput(PrintWriter Out, GeneratorSession G, OutputMap OM)
     throws Exception
       {
         for (OutputFormatType OFT : OM._OutputTypes)
@@ -1061,7 +1061,7 @@ public class TildaFactory implements CodeGenTildaFactory
       }
 
 
-    protected static void genMethodToJSON(PrintWriter Out, GeneratorSession G, OutputMapping J)
+    protected static void genMethodToJSON(PrintWriter Out, GeneratorSession G, OutputMap J)
     throws Exception
       {
         Out.println("   public static void toJSON" + J._Name + "(java.io.Writer out, List<" + Helper.getFullAppDataClassName(J._ParentObject) + "> L, String lead, boolean fullList) throws java.io.IOException");
@@ -1201,7 +1201,7 @@ public class TildaFactory implements CodeGenTildaFactory
       }
 
 
-    protected static void genMethodToCSV(PrintWriter Out, GeneratorSession G, OutputMapping J)
+    protected static void genMethodToCSV(PrintWriter Out, GeneratorSession G, OutputMap J)
     throws Exception
       {
         Out.println("   public static String getCSVHeader" + J._Name + "()");
@@ -1297,7 +1297,7 @@ public class TildaFactory implements CodeGenTildaFactory
 
 
 
-    protected static void genMethodToNVP(PrintWriter Out, GeneratorSession G, OutputMapping J)
+    protected static void genMethodToNVP(PrintWriter Out, GeneratorSession G, OutputMap J)
     throws Exception
       {
         if (J._NVPSrc.equals(NVPSourceType.ROWS))

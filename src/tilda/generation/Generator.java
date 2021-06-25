@@ -46,7 +46,7 @@ import tilda.parsing.parts.ColumnValue;
 import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Object;
-import tilda.parsing.parts.OutputMapping;
+import tilda.parsing.parts.OutputMap;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.SubWhereClause;
 import tilda.parsing.parts.View;
@@ -554,7 +554,7 @@ public class Generator
             CG.genEnumerationSupport(Out, G, O);
           }
 
-        for (OutputMapping OM : O._OutputMaps)
+        for (OutputMap OM : O._OutputMaps)
           if (OM != null)
             {
               Out.println();
