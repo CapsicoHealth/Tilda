@@ -203,7 +203,13 @@ public class BQHelper
         catch (BigQueryException E)
           {
             errs = new ArrayList<BigQueryError>();
-            errs.add(E.getError());
+            try {
+              errs = E.getErrors();
+            }
+            catch (Exception X)
+              {
+                errs.add(E.getError());
+              }
           }
         catch (InterruptedException E)
           {
