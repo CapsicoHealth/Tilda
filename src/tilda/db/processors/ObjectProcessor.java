@@ -22,19 +22,21 @@ public interface ObjectProcessor<T>
      * Called before the first record is processed
      */
     default public void start()
+    throws Exception
       {
       }
-    
+
     /**
      * Called for each record
-     *     
+     * 
      * @param count the count of the object processed, starting at 0 for the first object processed.
      * @param obj the object processed.
      * @return true if processing was successful and should continue, or false if processing was unsuccessful and should be aborted.
      * @throws Exception
      */
-    public boolean process(int count, T obj) throws Exception;
-    
+    public boolean process(int count, T obj)
+    throws Exception;
+
     /**
      * Called after the last record has been processed successfully
      * 
@@ -42,6 +44,7 @@ public interface ObjectProcessor<T>
      * @param maxCount the max count originally supplied to the query handler
      */
     default void end(boolean hasMore, int maxCount)
+    throws Exception
       {
-      }    
+      }
   }

@@ -34,13 +34,13 @@ public class TextUtilTest
       {
 //        Test_SimplifyName();
 //        Test_SearchReplace();
-        test_EscapeXML();
+//        test_EscapeXML();
 //        Test2();
 //        Test3();
 //        Test4();
 //        Test_Perf_toString_type_vs_cast();
 //          Test_FindLikeElement();
-//          Test_Perf_endsWith_vs_charAt();
+          Test_Perf_endsWith_vs_charAt();
 //          Test_isNullOrEmpty();
       }
 

@@ -1464,10 +1464,10 @@ This is the hasChanged for:<BR>
      {
        Dst.setUserRefnum (_userRefnum );
        Dst.setType       (_type       );
-       if (__Changes.intersects(TILDA__FORM_Factory.COLS.FILLDATETZ._Mask) == true) Dst.setFillDateTZNull (); else        Dst.setFillDateTZ (_fillDateTZ );
-       if (__Changes.intersects(TILDA__FORM_Factory.COLS.FILLDATE._Mask) == true) Dst.setFillDateNull   (); else        Dst.setFillDate   (_fillDate   );
+       if (__Nulls.intersects(TILDA__FORM_Factory.COLS.FILLDATETZ._Mask) == true) Dst.setFillDateTZNull (); else        Dst.setFillDateTZ (_fillDateTZ );
+       if (__Nulls.intersects(TILDA__FORM_Factory.COLS.FILLDATE._Mask) == true) Dst.setFillDateNull   (); else        Dst.setFillDate   (_fillDate   );
        Dst.setLastUpdated(_lastUpdated);
-       if (__Changes.intersects(TILDA__FORM_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull    (); else        Dst.setDeleted    (_deleted    );
+       if (__Nulls.intersects(TILDA__FORM_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull    (); else        Dst.setDeleted    (_deleted    );
      }
 
 /**
@@ -1529,7 +1529,7 @@ This is the hasChanged for:<BR>
 
           switch (__LookupId)
            {
-             case 0:
+             case 0: // PK
                PS.setLong      (++i, _refnum     );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
@@ -1678,8 +1678,8 @@ This is the hasChanged for:<BR>
 
           switch (__LookupId)
            {
-             case 0:
-                S.append(" where ("); C.getFullColumnVar(S, "TILDATUTORIAL", "Form", "refnum"); S.append("=?)");
+             case 0: // PK
+                S.append(" where ("); C.getFullColumnVar(S, "TILDATUTORIAL", "Form", "refnum"); S.append("=?");  S.append(")");
                 break;
              case -77: 
              case -666: if (__Init == InitMode.CREATE) break;
@@ -1755,7 +1755,6 @@ This is the hasChanged for:<BR>
         }
 
        __Changes.clear();
-       __Nulls.clear();
      }
 
 
@@ -1797,8 +1796,8 @@ This is the hasChanged for:<BR>
           S.append(" from "); C.getFullTableVar(S, "TILDATUTORIAL", "Form");
        switch (__LookupId)
         {
-          case 0:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDATUTORIAL", "Form", "refnum"); S.append("=?)");
+          case 0: // PK
+             S.append(" where ("); C.getFullColumnVar(S, "TILDATUTORIAL", "Form", "refnum"); S.append("=?");  S.append(")");
              break;
           case -77: 
           case -666: if (__Init == InitMode.CREATE) break;
@@ -1820,7 +1819,7 @@ This is the hasChanged for:<BR>
           int i = 0;
           switch (__LookupId)
            {
-             case 0:
+             case 0: // PK
                PS.setLong      (++i, _refnum     );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
@@ -1852,14 +1851,14 @@ This is the hasChanged for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-      __Saved_refnum      = _refnum      =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORM_Factory.COLS.REFNUM._Mask     );
-                            _userRefnum  =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORM_Factory.COLS.USERREFNUM._Mask );
-                            _type        = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORM_Factory.COLS.TYPE._Mask       );
-                            _fillDateTZ  = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORM_Factory.COLS.FILLDATETZ._Mask ); else _fillDateTZ  = _fillDateTZ .trim();
-                            _fillDate    = processZDT(_fillDateTZ   , "tilda.tutorial.data.TILDATUTORIAL.Form.fillDate"   , RS, ++i, TILDA__FORM_Factory.COLS.FILLDATE   , TILDA__FORM_Factory.COLS.FILLDATETZ   ); if (RS.wasNull() == true) __Nulls.or(TILDA__FORM_Factory.COLS.FILLDATE._Mask   );
-                            _created     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__FORM_Factory.COLS.CREATED._Mask    );
-                            _lastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__FORM_Factory.COLS.LASTUPDATED._Mask);
-                            _deleted     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__FORM_Factory.COLS.DELETED._Mask    );
+      __Saved_refnum      = _refnum      =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FORM_Factory.COLS.REFNUM._Mask     ); _refnum = null; }
+                            _userRefnum  =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FORM_Factory.COLS.USERREFNUM._Mask ); _userRefnum = null; }
+                            _type        = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FORM_Factory.COLS.TYPE._Mask       ); _type = null; }
+                            _fillDateTZ  = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FORM_Factory.COLS.FILLDATETZ._Mask ); _fillDateTZ = null; } else _fillDateTZ  = _fillDateTZ .trim();
+                            _fillDate    = processZDT(_fillDateTZ   , "tilda.tutorial.data.TILDATUTORIAL.Form.fillDate"   , RS, ++i, TILDA__FORM_Factory.COLS.FILLDATE   , TILDA__FORM_Factory.COLS.FILLDATETZ   ); if (RS.wasNull() == true) { __Nulls.or(TILDA__FORM_Factory.COLS.FILLDATE._Mask   ); _fillDate = null; }
+                            _created     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__FORM_Factory.COLS.CREATED._Mask    ); _created = null; }
+                            _lastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__FORM_Factory.COLS.LASTUPDATED._Mask); _lastUpdated = null; }
+                            _deleted     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__FORM_Factory.COLS.DELETED._Mask    ); _deleted = null; }
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();

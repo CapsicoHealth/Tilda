@@ -19,8 +19,6 @@ package tilda.db.processors;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import tilda.utils.SystemValues;
-
 
 public class BooleanRP implements RecordProcessor
   {

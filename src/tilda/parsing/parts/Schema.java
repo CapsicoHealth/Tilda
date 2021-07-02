@@ -217,16 +217,21 @@ public class Schema
         return O == null ? null : O.getColumn(ColumnName);
       }
 
+    public ViewColumn getViewColumn(String viewName, String columnName)
+      {
+        View V = getView(viewName);
+        return V == null ? null : V.getViewColumn(columnName);
+      }
 
     public boolean Validate(ParserSession PS)
     throws Exception
       {
-        LOG.info("Validating Tilda Schema '" + getFullName() + "'.");
         if (_Validated != null)
           {
-            LOG.info("     --> The Schema '" + getFullName() + "' has already been validated.");
+            LOG.info("Tilda Schema '" + getFullName() + "' has already been validated.");
             return _Validated;
           }
+        LOG.info("Validating Tilda Schema '" + getFullName() + "'.");
 
         int Errs = PS.getErrorCount();
         int i = -1;

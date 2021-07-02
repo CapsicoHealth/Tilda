@@ -49,6 +49,7 @@ import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.enums.DBStringType;
+import tilda.enums.TildaType;
 import tilda.generation.Generator;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.generation.postgres9.PostgresType;
@@ -1416,10 +1417,27 @@ public class PostgreSQL implements DBType
     public boolean moveTableView(Connection Con, Base base, String oldSchemaName)
     throws Exception
       {
-        String Q = "ALTER TABLE " + oldSchemaName+"."+base._Name + " SET SCHEMA " + base._ParentSchema._Name + "";
+        
+        String Q = "ALTER "+(base._TildaType==TildaType.VIEW ? "VIEW":"TABLE")+" " + oldSchemaName+"."+base._Name + " SET SCHEMA " + base._ParentSchema._Name + "";
         return Con.executeDDL(base._ParentSchema._Name, base.getBaseName(), Q);
       }
 
+    @Override
+    public boolean renameTableView(Connection Con, Base base, String oldName)
+    throws Exception
+      {
+        String Q = "ALTER "+(base._TildaType==TildaType.VIEW ? "VIEW":"TABLE")+" " + base._ParentSchema._Name+"."+oldName + " RENAME TO " + base._Name + "";
+        return Con.executeDDL(base._ParentSchema._Name, base.getBaseName(), Q);
+      }
+
+    @Override
+    public boolean renameTableColumn(Connection con, Column col, String oldName)
+    throws Exception
+      {
+        String Q = "ALTER TABLE " + col._ParentObject.getShortName() + " RENAME COLUMN \""+oldName+"\" TO \"" + col.getName() + "\"";
+        return con.executeDDL(col._ParentObject._ParentSchema._Name, col._ParentObject.getBaseName(), Q);
+      }
+    
     @Override
     public ZonedDateTime getCurrentTimestamp(Connection Con) throws Exception
       {

@@ -19,12 +19,12 @@ package tilda.types;
 
 public class Type_DatetimeCollectionNull extends Type_DatetimeCollection implements Nullable
   {
-    public Type_DatetimeCollectionNull(String SchemaName, String TableName, String ColumnName, int Count, String Description)
+    public Type_DatetimeCollectionNull(String SchemaName, String TableName, String ColumnName, int Count, String Description, String[] expressionStrs, String[] expressionsDependencies)
       {
-        this(SchemaName, TableName, ColumnName, Count, Description, null);
+        this(SchemaName, TableName, ColumnName, Count, Description, expressionStrs, expressionsDependencies, null);
       }
-    public Type_DatetimeCollectionNull(String SchemaName, String TableName, String ColumnName, int Count, String Description, Type_StringCollectionNull TZCols)
+    public Type_DatetimeCollectionNull(String SchemaName, String TableName, String ColumnName, int Count, String Description, String[] expressionStrs, String[] expressionsDependencies, Type_StringCollectionNull TZCols)
       {
-        super(SchemaName, TableName, ColumnName, Count, Description, TZCols);
+        super(SchemaName, TableName, ColumnName, Count, Description, expressionStrs, expressionsDependencies, TZCols);
       }
   }

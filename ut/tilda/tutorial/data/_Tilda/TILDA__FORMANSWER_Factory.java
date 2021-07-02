@@ -53,7 +53,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          REFNUM     = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"     , 0/*0*/, "The primary key for this record");
+     public static Type_LongPrimitive          REFNUM     = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"     , 0/*0*/, "The primary key for this record", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.FormAnswer.formRefnum -> TILDATUTORIAL.FormAnswer."formRefnum"
@@ -71,7 +71,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          FORMREFNUM = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "formRefnum" , 1/*1*/, "The form's refnum");
+     public static Type_LongPrimitive          FORMREFNUM = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "formRefnum" , 1/*1*/, "The form's refnum", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.FormAnswer.field -> TILDATUTORIAL.FormAnswer."field"
@@ -90,7 +90,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        FIELD      = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "field"      , 2/*2*/, "question/field id");
+     public static Type_StringPrimitive        FIELD      = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "field"      , 2/*2*/, "question/field id", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.FormAnswer.value -> TILDATUTORIAL.FormAnswer."value"
@@ -109,7 +109,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    VALUE      = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "value"      , 3/*3*/, "answer value");
+     public static Type_StringPrimitiveNull    VALUE      = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "value"      , 3/*3*/, "answer value", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.FormAnswer.created -> TILDATUTORIAL.FormAnswer."created"
@@ -134,7 +134,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      CREATED    = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"    , 4/*4*/, "The timestamp for when the record was created. (TILDATUTORIAL.FormAnswer)");
+     public static Type_DatetimePrimitive      CREATED    = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"    , 4/*4*/, "The timestamp for when the record was created. (TILDATUTORIAL.FormAnswer)", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.FormAnswer.lastUpdated -> TILDATUTORIAL.FormAnswer."lastUpdated"
@@ -159,7 +159,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      LASTUPDATED= new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated", 5/*5*/, "The timestamp for when the record was last updated. (TILDATUTORIAL.FormAnswer)");
+     public static Type_DatetimePrimitive      LASTUPDATED= new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated", 5/*5*/, "The timestamp for when the record was last updated. (TILDATUTORIAL.FormAnswer)", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.FormAnswer.deleted -> TILDATUTORIAL.FormAnswer."deleted"
@@ -177,7 +177,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  DELETED    = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"    , 6/*6*/, "The timestamp for when the record was deleted. (TILDATUTORIAL.FormAnswer)");
+     public static Type_DatetimePrimitiveNull  DELETED    = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"    , 6/*6*/, "The timestamp for when the record was deleted. (TILDATUTORIAL.FormAnswer)", null, null);
 ;
    }
 
@@ -219,8 +219,8 @@ This is the column definition for:<BR>
        protected Connection _C = null;
        protected tilda.db.processors.ObjectProcessor<tilda.tutorial.data.FormAnswer_Data> _OP;
        protected ArrayListResults<tilda.tutorial.data.FormAnswer_Data> _L = null;
-       public void    start  () { if (_OP != null) _OP.start(); }
-       public void    end    (boolean hasMore, int maxCount) { if (_OP == null) _L.wrapup(hasMore, maxCount); else _OP.end(hasMore, maxCount); }
+       public void    start  ()                              throws Exception { if (_OP != null) _OP.start(); }
+       public void    end    (boolean hasMore, int maxCount) throws Exception { if (_OP == null) _L.wrapup(hasMore, maxCount); else _OP.end(hasMore, maxCount); }
        public boolean process(int count, java.sql.ResultSet RS) throws Exception
         {
           tilda.tutorial.data.FormAnswer_Data Obj = new tilda.tutorial.data.FormAnswer_Data();
@@ -272,7 +272,7 @@ This is the column definition for:<BR>
                 String clause = ((SelectQuery)ExtraParams).getWhereClause();
                 if (TextUtil.isNullOrEmpty(clause) == false) S.append(clause);
                 break;
-             case 2:
+             case 2: // Index 'All'
                 S.append(" order by "); C.getFullColumnVar(S, "TILDATUTORIAL", "FormAnswer", "lastUpdated"); S.append(" ASC");
                 break;
              case -77: 
@@ -298,7 +298,7 @@ This is the column definition for:<BR>
              case -77:
              case -7:
                 break;
-             case 2: {
+             case 2: {  // Index 'All'
                break;
              }
              case -666: break;

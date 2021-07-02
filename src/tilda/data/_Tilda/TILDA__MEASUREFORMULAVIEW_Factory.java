@@ -53,7 +53,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          MEASUREREFNUM   = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "measureRefnum"   , 0/*0*/, "The measure.");
+     public static Type_LongPrimitive          MEASUREREFNUM   = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "measureRefnum"   , 0/*0*/, "The measure.", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.MeasureFormulaView.measureSchema -> TILDA.MeasureFormulaView."measureSchema"
@@ -72,7 +72,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        MEASURESCHEMA   = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "measureSchema"   , 1/*1*/, "The Schema wher ethe measure is defined.");
+     public static Type_StringPrimitive        MEASURESCHEMA   = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "measureSchema"   , 1/*1*/, "The Schema wher ethe measure is defined.", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.MeasureFormulaView.measureName -> TILDA.MeasureFormulaView."measureName"
@@ -91,7 +91,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        MEASURENAME     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "measureName"     , 2/*2*/, "The name of the measure.");
+     public static Type_StringPrimitive        MEASURENAME     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "measureName"     , 2/*2*/, "The name of the measure.", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.MeasureFormulaView.formulaRefnum -> TILDA.MeasureFormulaView."formulaRefnum"
@@ -109,7 +109,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          FORMULAREFNUM   = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "formulaRefnum"   , 3/*3*/, "The primary key for this record");
+     public static Type_LongPrimitive          FORMULAREFNUM   = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "formulaRefnum"   , 3/*3*/, "The primary key for this record", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.MeasureFormulaView.formulaLocation -> TILDA.MeasureFormulaView."formulaLocation"
@@ -128,7 +128,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        FORMULALOCATION = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "formulaLocation" , 4/*4*/, "The name of the primary table/view this formula is defined in.");
+     public static Type_StringPrimitive        FORMULALOCATION = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "formulaLocation" , 4/*4*/, "The name of the primary table/view this formula is defined in.", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.MeasureFormulaView.formulaLocation2 -> TILDA.MeasureFormulaView."formulaLocation2"
@@ -147,7 +147,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        FORMULALOCATION2= new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "formulaLocation2", 5/*5*/, "The name of the secondary table/view (a derived view, a realized table), if appropriate.");
+     public static Type_StringPrimitive        FORMULALOCATION2= new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "formulaLocation2", 5/*5*/, "The name of the secondary table/view (a derived view, a realized table), if appropriate.", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.MeasureFormulaView.formulaName -> TILDA.MeasureFormulaView."formulaName"
@@ -166,7 +166,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        FORMULANAME     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "formulaName"     , 6/*6*/, "The name of the formula/column.");
+     public static Type_StringPrimitive        FORMULANAME     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "formulaName"     , 6/*6*/, "The name of the formula/column.", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.MeasureFormulaView.title -> TILDA.MeasureFormulaView."title"
@@ -185,7 +185,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        TITLE           = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "title"           , 7/*7*/, "The title of the formula/column.");
+     public static Type_StringPrimitive        TITLE           = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "title"           , 7/*7*/, "The title of the formula/column.", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.MeasureFormulaView.description -> TILDA.MeasureFormulaView."description"
@@ -204,7 +204,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        DESCRIPTION     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "description"     , 8/*8*/, "The description of the formula/column.");
+     public static Type_StringPrimitive        DESCRIPTION     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "description"     , 8/*8*/, "The description of the formula/column.", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.MeasureFormulaView.type -> TILDA.MeasureFormulaView."type"
@@ -241,7 +241,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_StringPrimitive        TYPE            = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "type"            , 9/*9*/, "The type of the formula/column value/outcome.");
+     public static Type_StringPrimitive        TYPE            = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "type"            , 9/*9*/, "The type of the formula/column value/outcome.", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.MeasureFormulaView.formula -> TILDA.MeasureFormulaView."formula"
@@ -260,7 +260,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    FORMULA         = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "formula"         , 10/*10*/, "The formula.");
+     public static Type_StringPrimitiveNull    FORMULA         = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "formula"         , 10/*10*/, "The formula.", null, null);
 ;
    }
 
@@ -301,8 +301,8 @@ This is the column definition for:<BR>
        protected Connection _C = null;
        protected tilda.db.processors.ObjectProcessor<tilda.data.MeasureFormulaView_Data> _OP;
        protected ArrayListResults<tilda.data.MeasureFormulaView_Data> _L = null;
-       public void    start  () { if (_OP != null) _OP.start(); }
-       public void    end    (boolean hasMore, int maxCount) { if (_OP == null) _L.wrapup(hasMore, maxCount); else _OP.end(hasMore, maxCount); }
+       public void    start  ()                              throws Exception { if (_OP != null) _OP.start(); }
+       public void    end    (boolean hasMore, int maxCount) throws Exception { if (_OP == null) _L.wrapup(hasMore, maxCount); else _OP.end(hasMore, maxCount); }
        public boolean process(int count, java.sql.ResultSet RS) throws Exception
         {
           tilda.data.MeasureFormulaView_Data Obj = new tilda.data.MeasureFormulaView_Data();

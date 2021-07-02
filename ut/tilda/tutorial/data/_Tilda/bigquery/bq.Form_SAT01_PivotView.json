@@ -1,9 +1,9 @@
 [
-    { "name":"formRefnum" "type":"INT64" "mode":"NULLABLE" }
-   ,{ "name":"formFillDateTZ" "type":"STRING" "mode":"NULLABLE" }
-   ,{ "name":"formFillDate" "type":"TIMESTAMP" "mode":"NULLABLE" }
-   ,{ "name":"formUserRefnum" "type":"INT64" "mode":"NULLABLE" }
-   ,{ "name":"formUserEmail" "type":"STRING" "mode":"NULLABLE" }
-   ,{ "name":"field" "type":"STRING" "mode":"NULLABLE" }
-   ,{ "name":"value" "type":"STRING" "mode":"NULLABLE" }
+    { "name":"refnum", "type":"INT64", "mode":"REQUIRED", "description":"The primary key for this record" }
+   ,{ "name":"fillDateTZ", "type":"STRING", "mode":"NULLABLE", "description":"Generated helper column to hold the time zone ID for 'fillDate'." }
+   ,{ "name":"fillDate", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"The date the form was filled" }
+   ,{ "name":"refnum", "type":"INT64", "mode":"REQUIRED", "description":"The primary key for this record" }
+   ,{ "name":"email", "type":"STRING", "mode":"REQUIRED", "description":"The user's email" }
+   ,{ "name":"field", "type":"STRING", "mode":"REQUIRED", "description":"question/field id" }
+   ,{ "name":"value", "type":"STRING", "mode":"NULLABLE", "description":"answer value" }
 ]

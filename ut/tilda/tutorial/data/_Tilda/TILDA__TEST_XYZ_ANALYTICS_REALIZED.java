@@ -164,7 +164,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>Test Passed</B>' (from TILDATUTORIAL.Test_XYZ_Analytics_View.isPassed)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_Analytics_View-isPassed_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_XYZ_Analytics_View<B>&nbsp;&#8226;&nbsp;</B>isPassed</A></DIV></TD>
+<TD><B>Test Passed</B>: Whether the test was passed or not by answering at least 2 out of the 3 questions. (from TILDATUTORIAL.Test_XYZ_Analytics_View.isPassed)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_Analytics_View-isPassed_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_XYZ_Analytics_View<B>&nbsp;&#8226;&nbsp;</B>isPassed</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>13&nbsp;&nbsp;</TD>
@@ -174,7 +174,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>Test Took Longer Than Average</B>' (from TILDATUTORIAL.Test_XYZ_Analytics_View.tookLongerThanAverage)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_Analytics_View-tookLongerThanAverage_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_XYZ_Analytics_View<B>&nbsp;&#8226;&nbsp;</B>tookLongerThanAverage</A></DIV></TD>
+<TD><B>Test Took Longer Than Average</B>: Whether the test took longer that the average time spent across all tests. (from TILDATUTORIAL.Test_XYZ_Analytics_View.tookLongerThanAverage)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_Analytics_View-tookLongerThanAverage_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_XYZ_Analytics_View<B>&nbsp;&#8226;&nbsp;</B>tookLongerThanAverage</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
     <TD>14&nbsp;&nbsp;</TD>
@@ -184,7 +184,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>Test Was Challenging</B>' (from TILDATUTORIAL.Test_XYZ_Analytics_View.wasChallenging)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_Analytics_View-wasChallenging_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_XYZ_Analytics_View<B>&nbsp;&#8226;&nbsp;</B>wasChallenging</A></DIV></TD>
+<TD><B>Test Was Challenging</B>: Whether the test was challenging in that:<LI>   <LI>it was passed,</LI>   <LI>and overall, less than a third of answers across all tests were answered correctly.</LI> </UL> (from TILDATUTORIAL.Test_XYZ_Analytics_View.wasChallenging)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_Analytics_View-wasChallenging_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_XYZ_Analytics_View<B>&nbsp;&#8226;&nbsp;</B>wasChallenging</A></DIV></TD>
 </TR>
 </TABLE></BLOCKQUOTE>
 </DIV>
@@ -1870,7 +1870,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_Realized.isPassed of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Test Passed</B>' (from TILDATUTORIAL.Test_XYZ_Analytics_View.isPassed)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Passed</B>: Whether the test was passed or not by answering at least 2 out of the 3 questions. (from TILDATUTORIAL.Test_XYZ_Analytics_View.isPassed)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1890,7 +1890,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_Realized.isPassed of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Test Passed</B>' (from TILDATUTORIAL.Test_XYZ_Analytics_View.isPassed)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Passed</B>: Whether the test was passed or not by answering at least 2 out of the 3 questions. (from TILDATUTORIAL.Test_XYZ_Analytics_View.isPassed)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1910,7 +1910,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_Realized.isPassed of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Test Passed</B>' (from TILDATUTORIAL.Test_XYZ_Analytics_View.isPassed)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Passed</B>: Whether the test was passed or not by answering at least 2 out of the 3 questions. (from TILDATUTORIAL.Test_XYZ_Analytics_View.isPassed)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1930,7 +1930,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_Realized.isPassed of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Test Passed</B>' (from TILDATUTORIAL.Test_XYZ_Analytics_View.isPassed)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Passed</B>: Whether the test was passed or not by answering at least 2 out of the 3 questions. (from TILDATUTORIAL.Test_XYZ_Analytics_View.isPassed)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1959,7 +1959,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_Realized.isPassed of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Test Passed</B>' (from TILDATUTORIAL.Test_XYZ_Analytics_View.isPassed)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Passed</B>: Whether the test was passed or not by answering at least 2 out of the 3 questions. (from TILDATUTORIAL.Test_XYZ_Analytics_View.isPassed)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1987,7 +1987,7 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_Realized.isPassed of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Test Passed</B>' (from TILDATUTORIAL.Test_XYZ_Analytics_View.isPassed)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Passed</B>: Whether the test was passed or not by answering at least 2 out of the 3 questions. (from TILDATUTORIAL.Test_XYZ_Analytics_View.isPassed)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2013,7 +2013,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_Realized.tookLongerThanAverage of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Test Took Longer Than Average</B>' (from TILDATUTORIAL.Test_XYZ_Analytics_View.tookLongerThanAverage)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Took Longer Than Average</B>: Whether the test took longer that the average time spent across all tests. (from TILDATUTORIAL.Test_XYZ_Analytics_View.tookLongerThanAverage)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2033,7 +2033,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_Realized.tookLongerThanAverage of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Test Took Longer Than Average</B>' (from TILDATUTORIAL.Test_XYZ_Analytics_View.tookLongerThanAverage)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Took Longer Than Average</B>: Whether the test took longer that the average time spent across all tests. (from TILDATUTORIAL.Test_XYZ_Analytics_View.tookLongerThanAverage)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2053,7 +2053,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_Realized.tookLongerThanAverage of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Test Took Longer Than Average</B>' (from TILDATUTORIAL.Test_XYZ_Analytics_View.tookLongerThanAverage)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Took Longer Than Average</B>: Whether the test took longer that the average time spent across all tests. (from TILDATUTORIAL.Test_XYZ_Analytics_View.tookLongerThanAverage)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2073,7 +2073,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_Realized.tookLongerThanAverage of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Test Took Longer Than Average</B>' (from TILDATUTORIAL.Test_XYZ_Analytics_View.tookLongerThanAverage)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Took Longer Than Average</B>: Whether the test took longer that the average time spent across all tests. (from TILDATUTORIAL.Test_XYZ_Analytics_View.tookLongerThanAverage)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2102,7 +2102,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_Realized.tookLongerThanAverage of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Test Took Longer Than Average</B>' (from TILDATUTORIAL.Test_XYZ_Analytics_View.tookLongerThanAverage)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Took Longer Than Average</B>: Whether the test took longer that the average time spent across all tests. (from TILDATUTORIAL.Test_XYZ_Analytics_View.tookLongerThanAverage)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2130,7 +2130,7 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_Realized.tookLongerThanAverage of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Test Took Longer Than Average</B>' (from TILDATUTORIAL.Test_XYZ_Analytics_View.tookLongerThanAverage)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Took Longer Than Average</B>: Whether the test took longer that the average time spent across all tests. (from TILDATUTORIAL.Test_XYZ_Analytics_View.tookLongerThanAverage)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2156,7 +2156,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_Realized.wasChallenging of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Test Was Challenging</B>' (from TILDATUTORIAL.Test_XYZ_Analytics_View.wasChallenging)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Was Challenging</B>: Whether the test was challenging in that:<LI>   <LI>it was passed,</LI>   <LI>and overall, less than a third of answers across all tests were answered correctly.</LI> </UL> (from TILDATUTORIAL.Test_XYZ_Analytics_View.wasChallenging)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2176,7 +2176,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_Realized.wasChallenging of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Test Was Challenging</B>' (from TILDATUTORIAL.Test_XYZ_Analytics_View.wasChallenging)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Was Challenging</B>: Whether the test was challenging in that:<LI>   <LI>it was passed,</LI>   <LI>and overall, less than a third of answers across all tests were answered correctly.</LI> </UL> (from TILDATUTORIAL.Test_XYZ_Analytics_View.wasChallenging)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2196,7 +2196,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_Realized.wasChallenging of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Test Was Challenging</B>' (from TILDATUTORIAL.Test_XYZ_Analytics_View.wasChallenging)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Was Challenging</B>: Whether the test was challenging in that:<LI>   <LI>it was passed,</LI>   <LI>and overall, less than a third of answers across all tests were answered correctly.</LI> </UL> (from TILDATUTORIAL.Test_XYZ_Analytics_View.wasChallenging)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2216,7 +2216,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_Realized.wasChallenging of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Test Was Challenging</B>' (from TILDATUTORIAL.Test_XYZ_Analytics_View.wasChallenging)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Was Challenging</B>: Whether the test was challenging in that:<LI>   <LI>it was passed,</LI>   <LI>and overall, less than a third of answers across all tests were answered correctly.</LI> </UL> (from TILDATUTORIAL.Test_XYZ_Analytics_View.wasChallenging)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2245,7 +2245,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_Realized.wasChallenging of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Test Was Challenging</B>' (from TILDATUTORIAL.Test_XYZ_Analytics_View.wasChallenging)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Was Challenging</B>: Whether the test was challenging in that:<LI>   <LI>it was passed,</LI>   <LI>and overall, less than a third of answers across all tests were answered correctly.</LI> </UL> (from TILDATUTORIAL.Test_XYZ_Analytics_View.wasChallenging)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2273,7 +2273,7 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_Realized.wasChallenging of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column '<B>Test Was Challenging</B>' (from TILDATUTORIAL.Test_XYZ_Analytics_View.wasChallenging)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Was Challenging</B>: Whether the test was challenging in that:<LI>   <LI>it was passed,</LI>   <LI>and overall, less than a third of answers across all tests were answered correctly.</LI> </UL> (from TILDATUTORIAL.Test_XYZ_Analytics_View.wasChallenging)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2293,19 +2293,19 @@ This is the hasChanged for:<BR>
 */
    public void copyTo(tilda.tutorial.data._Tilda.TILDA__TEST_XYZ_ANALYTICS_REALIZED Dst) throws Exception
      {
-       if (__Changes.intersects(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.FORMTYPE._Mask) == true) Dst.setFormTypeNull              (); else        Dst.setFormType              (_formType              );
-       if (__Changes.intersects(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.FORMFILLDATETZ._Mask) == true) Dst.setFormFillDateTZNull        (); else        Dst.setFormFillDateTZ        (_formFillDateTZ        );
-       if (__Changes.intersects(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.FORMFILLDATE._Mask) == true) Dst.setFormFillDateNull          (); else        Dst.setFormFillDate          (_formFillDate          );
-       if (__Changes.intersects(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.FORMUSERREFNUM._Mask) == true) Dst.setFormUserRefnumNull        (); else        Dst.setFormUserRefnum        (_formUserRefnum        );
-       if (__Changes.intersects(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.FORMUSEREMAIL._Mask) == true) Dst.setFormUserEmailNull         (); else        Dst.setFormUserEmail         (_formUserEmail         );
-       if (__Changes.intersects(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.FORMCOUNTCORRECT._Mask) == true) Dst.setFormCountCorrectNull      (); else        Dst.setFormCountCorrect      (_formCountCorrect      );
-       if (__Changes.intersects(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.FORMTIMEMILLISTOTAL._Mask) == true) Dst.setFormTimeMillisTotalNull   (); else        Dst.setFormTimeMillisTotal   (_formTimeMillisTotal   );
-       if (__Changes.intersects(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.TESTCOUNT._Mask) == true) Dst.setTestCountNull             (); else        Dst.setTestCount             (_testCount             );
-       if (__Changes.intersects(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.TESTANSWERCOUNTCORRECT._Mask) == true) Dst.setTestAnswerCountCorrectNull(); else        Dst.setTestAnswerCountCorrect(_testAnswerCountCorrect);
-       if (__Changes.intersects(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.TESTTIMEMILLISAVG._Mask) == true) Dst.setTestTimeMillisAvgNull     (); else        Dst.setTestTimeMillisAvg     (_testTimeMillisAvg     );
-       if (__Changes.intersects(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.ISPASSED._Mask) == true) Dst.setIsPassedNull              (); else        Dst.setIsPassed              (_isPassed              );
-       if (__Changes.intersects(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.TOOKLONGERTHANAVERAGE._Mask) == true) Dst.setTookLongerThanAverageNull (); else        Dst.setTookLongerThanAverage (_tookLongerThanAverage );
-       if (__Changes.intersects(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.WASCHALLENGING._Mask) == true) Dst.setWasChallengingNull        (); else        Dst.setWasChallenging        (_wasChallenging        );
+       if (__Nulls.intersects(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.FORMTYPE._Mask) == true) Dst.setFormTypeNull              (); else        Dst.setFormType              (_formType              );
+       if (__Nulls.intersects(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.FORMFILLDATETZ._Mask) == true) Dst.setFormFillDateTZNull        (); else        Dst.setFormFillDateTZ        (_formFillDateTZ        );
+       if (__Nulls.intersects(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.FORMFILLDATE._Mask) == true) Dst.setFormFillDateNull          (); else        Dst.setFormFillDate          (_formFillDate          );
+       if (__Nulls.intersects(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.FORMUSERREFNUM._Mask) == true) Dst.setFormUserRefnumNull        (); else        Dst.setFormUserRefnum        (_formUserRefnum        );
+       if (__Nulls.intersects(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.FORMUSEREMAIL._Mask) == true) Dst.setFormUserEmailNull         (); else        Dst.setFormUserEmail         (_formUserEmail         );
+       if (__Nulls.intersects(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.FORMCOUNTCORRECT._Mask) == true) Dst.setFormCountCorrectNull      (); else        Dst.setFormCountCorrect      (_formCountCorrect      );
+       if (__Nulls.intersects(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.FORMTIMEMILLISTOTAL._Mask) == true) Dst.setFormTimeMillisTotalNull   (); else        Dst.setFormTimeMillisTotal   (_formTimeMillisTotal   );
+       if (__Nulls.intersects(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.TESTCOUNT._Mask) == true) Dst.setTestCountNull             (); else        Dst.setTestCount             (_testCount             );
+       if (__Nulls.intersects(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.TESTANSWERCOUNTCORRECT._Mask) == true) Dst.setTestAnswerCountCorrectNull(); else        Dst.setTestAnswerCountCorrect(_testAnswerCountCorrect);
+       if (__Nulls.intersects(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.TESTTIMEMILLISAVG._Mask) == true) Dst.setTestTimeMillisAvgNull     (); else        Dst.setTestTimeMillisAvg     (_testTimeMillisAvg     );
+       if (__Nulls.intersects(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.ISPASSED._Mask) == true) Dst.setIsPassedNull              (); else        Dst.setIsPassed              (_isPassed              );
+       if (__Nulls.intersects(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.TOOKLONGERTHANAVERAGE._Mask) == true) Dst.setTookLongerThanAverageNull (); else        Dst.setTookLongerThanAverage (_tookLongerThanAverage );
+       if (__Nulls.intersects(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.WASCHALLENGING._Mask) == true) Dst.setWasChallengingNull        (); else        Dst.setWasChallenging        (_wasChallenging        );
      }
 
 /**
@@ -2360,7 +2360,7 @@ This is the hasChanged for:<BR>
 
           switch (__LookupId)
            {
-             case 0:
+             case 0: // PK
                PS.setLong      (++i, _formRefnum            );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
@@ -2544,8 +2544,8 @@ This is the hasChanged for:<BR>
 
           switch (__LookupId)
            {
-             case 0:
-                S.append(" where ("); C.getFullColumnVar(S, "TILDATUTORIAL", "Test_XYZ_Analytics_Realized", "formRefnum"); S.append("=?)");
+             case 0: // PK
+                S.append(" where ("); C.getFullColumnVar(S, "TILDATUTORIAL", "Test_XYZ_Analytics_Realized", "formRefnum"); S.append("=?");  S.append(")");
                 break;
              case -77: 
              case -666: if (__Init == InitMode.CREATE) break;
@@ -2645,7 +2645,6 @@ This is the hasChanged for:<BR>
         }
 
        __Changes.clear();
-       __Nulls.clear();
      }
 /**
  Writes the object to the data store using an upsert approach and assumes the object is either
@@ -2667,7 +2666,7 @@ This is the hasChanged for:<BR>
        if (OK == false)
         throw new Exception("Object has not been instanciated via deserialization or the factory create() method.");
 
-       if (__Init == null && __LookupId==0);  // object deserialized
+       if (__Init == null && __LookupId==0)  // object deserialized
         validateDeserialization();
 
        int lookupId = getFirstValidLookupBy();
@@ -2760,8 +2759,8 @@ This is the hasChanged for:<BR>
           S.append(" from "); C.getFullTableVar(S, "TILDATUTORIAL", "Test_XYZ_Analytics_Realized");
        switch (__LookupId)
         {
-          case 0:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDATUTORIAL", "Test_XYZ_Analytics_Realized", "formRefnum"); S.append("=?)");
+          case 0: // PK
+             S.append(" where ("); C.getFullColumnVar(S, "TILDATUTORIAL", "Test_XYZ_Analytics_Realized", "formRefnum"); S.append("=?");  S.append(")");
              break;
           case -77: 
           case -666: if (__Init == InitMode.CREATE) break;
@@ -2783,7 +2782,7 @@ This is the hasChanged for:<BR>
           int i = 0;
           switch (__LookupId)
            {
-             case 0:
+             case 0: // PK
                PS.setLong      (++i, _formRefnum            );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
@@ -2815,20 +2814,20 @@ This is the hasChanged for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-      __Saved_formRefnum             = _formRefnum             =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.FORMREFNUM._Mask            );
-                                       _formType               = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.FORMTYPE._Mask              );
-                                       _formFillDateTZ         = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.FORMFILLDATETZ._Mask        );
-                                       _formFillDate           = processZDT(_formFillDateTZ          , "tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_Realized.formFillDate"          , RS, ++i, TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.FORMFILLDATE          , TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.FORMFILLDATETZ          ); if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.FORMFILLDATE._Mask          );
-                                       _formUserRefnum         =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.FORMUSERREFNUM._Mask        );
-                                       _formUserEmail          = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.FORMUSEREMAIL._Mask         );
-                                       _formCountCorrect       =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.FORMCOUNTCORRECT._Mask      );
-                                       _formTimeMillisTotal    =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.FORMTIMEMILLISTOTAL._Mask   );
-                                       _testCount              =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.TESTCOUNT._Mask             );
-                                       _testAnswerCountCorrect =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.TESTANSWERCOUNTCORRECT._Mask);
-                                       _testTimeMillisAvg      =                              RS.getDouble    (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.TESTTIMEMILLISAVG._Mask     );
-                                       _isPassed               =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.ISPASSED._Mask              );
-                                       _tookLongerThanAverage  =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.TOOKLONGERTHANAVERAGE._Mask );
-                                       _wasChallenging         =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.WASCHALLENGING._Mask        );
+      __Saved_formRefnum             = _formRefnum             =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.FORMREFNUM._Mask            ); _formRefnum = null; }
+                                       _formType               = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.FORMTYPE._Mask              ); _formType = null; }
+                                       _formFillDateTZ         = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.FORMFILLDATETZ._Mask        ); _formFillDateTZ = null; }
+                                       _formFillDate           = processZDT(_formFillDateTZ          , "tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_Realized.formFillDate"          , RS, ++i, TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.FORMFILLDATE          , TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.FORMFILLDATETZ          ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.FORMFILLDATE._Mask          ); _formFillDate = null; }
+                                       _formUserRefnum         =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.FORMUSERREFNUM._Mask        ); _formUserRefnum = null; }
+                                       _formUserEmail          = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.FORMUSEREMAIL._Mask         ); _formUserEmail = null; }
+                                       _formCountCorrect       =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.FORMCOUNTCORRECT._Mask      ); _formCountCorrect = null; }
+                                       _formTimeMillisTotal    =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.FORMTIMEMILLISTOTAL._Mask   ); _formTimeMillisTotal = null; }
+                                       _testCount              =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.TESTCOUNT._Mask             ); _testCount = null; }
+                                       _testAnswerCountCorrect =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.TESTANSWERCOUNTCORRECT._Mask); _testAnswerCountCorrect = null; }
+                                       _testTimeMillisAvg      =                              RS.getDouble    (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.TESTTIMEMILLISAVG._Mask     ); _testTimeMillisAvg = null; }
+                                       _isPassed               =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.ISPASSED._Mask              ); _isPassed = null; }
+                                       _tookLongerThanAverage  =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.TOOKLONGERTHANAVERAGE._Mask ); _tookLongerThanAverage = null; }
+                                       _wasChallenging         =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST_XYZ_ANALYTICS_REALIZED_Factory.COLS.WASCHALLENGING._Mask        ); _wasChallenging = null; }
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();

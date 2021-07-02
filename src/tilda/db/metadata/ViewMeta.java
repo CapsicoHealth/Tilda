@@ -38,7 +38,7 @@ public class ViewMeta
       }
 
     public String                     _SchemaName;
-    public final String               _ViewName;
+    public String                     _ViewName;
     public final String               _Descr;
     protected Map<String, ColumnMeta> _DBColumns = new HashMap<String, ColumnMeta>();
 

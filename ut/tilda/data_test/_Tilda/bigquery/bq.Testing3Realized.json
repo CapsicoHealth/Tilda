@@ -1,8 +1,8 @@
 [
-    { "name":"refnum","type":"INT64","mode":"NULLABLE","description":"The primary key for this record (from TILDATEST.Testing3View.refnum)" }
-   ,{ "name":"name","type":"STRING","mode":"NULLABLE","description":"Medical system unique enterprise id (from TILDATEST.Testing3View.name)" }
-   ,{ "name":"a8bTZ","type":"STRING","mode":"NULLABLE","description":"Generated helper column to hold the time zone ID for 'a8b'. (from TILDATEST.Testing3View.a8bTZ)" }
-   ,{ "name":"a8b","type":"TIMESTAMP","mode":"NULLABLE","description":"The blah (from TILDATEST.Testing3View.a8b)" }
-   ,{ "name":"lastUpdated","type":"TIMESTAMP","mode":"NULLABLE","description":"The timestamp for when the record was last updated. (TILDATEST.Testing) (from TILDATEST.Testing3View.lastUpdated)" }
-   ,{ "name":"xxxLastUpdated","type":"TIMESTAMP","mode":"NULLABLE","description":"The timestamp for when the record was last updated. (TILDATEST.Testing) (from TILDATEST.Testing3View.xxxLastUpdated)" }
+    { "name":"refnum", "type":"INT64", "mode":"NULLABLE", "description":"The primary key for this record (from TILDATEST.Testing3View.refnum)" }
+   ,{ "name":"name", "type":"STRING", "mode":"NULLABLE", "description":"Medical system unique enterprise id (from TILDATEST.Testing3View.name)" }
+   ,{ "name":"a8bTZ", "type":"STRING", "mode":"NULLABLE", "description":"Generated helper column to hold the time zone ID for 'a8b'. (from TILDATEST.Testing3View.a8bTZ)" }
+   ,{ "name":"a8b", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"The blah (from TILDATEST.Testing3View.a8b)" }
+   ,{ "name":"lastUpdated", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"The timestamp for when the record was last updated. (TILDATEST.Testing) (from TILDATEST.Testing3View.lastUpdated)" }
+   ,{ "name":"xxxLastUpdated", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"The timestamp for when the record was last updated. (TILDATEST.Testing) (from TILDATEST.Testing3View.xxxLastUpdated)" }
 ]

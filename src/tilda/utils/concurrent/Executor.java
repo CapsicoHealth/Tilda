@@ -74,13 +74,14 @@ public class Executor
           {
             try
               {
-                Thread.sleep(5000);
+                Thread.sleep(1000);
               }
             catch (InterruptedException e)
               {
                 LOG.error("Interrupted task\n", e);
               }
           }
+        long duration = System.nanoTime() - T0;
         long seqTimeNano = 0;
         long totalCount = 0;
         for (SimpleRunnable R : _Runnables)
@@ -88,11 +89,11 @@ public class Executor
             seqTimeNano+=R._taskTimeNano;
             totalCount+=R._totalCount;
           }
-        long duration = System.nanoTime() - T0;
+        boolean faster = duration < seqTimeNano;
         LOG.debug("\n\n*******************************************************************************************\n"
         + "** Executed " + _Runnables.size() + " tasks in " + DurationUtil.printDuration(duration) + " over "+_MaxThreadCount+" threads.\n"
         + (totalCount==0?"":"** Processed "+totalCount+" records (" + DurationUtil.printPerformancePerMinute(duration, totalCount) + " records/min).\n")
-        + "** Sequential time would have been around " + DurationUtil.printDuration(seqTimeNano) + " or "+NumberFormatUtil.printPercentWith1Dec(seqTimeNano, duration)+"% slower.\n"
+        + "** Sequential time would have been around " + DurationUtil.printDuration(seqTimeNano) + " ("+(faster?"faster":"slower")+" by "+NumberFormatUtil.printPercentWith1Dec(seqTimeNano, duration)+"%).\n"
         + "*******************************************************************************************\n\n");
         return _Exceptions;
       }

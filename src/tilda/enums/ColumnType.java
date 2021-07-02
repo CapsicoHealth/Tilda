@@ -79,7 +79,7 @@ public enum ColumnType
         _CompatibleTypes = new ColumnType[][] {
             { STRING, JSON, CHAR, INTEGER, LONG, FLOAT, DOUBLE, BOOLEAN, DATE, DATETIME, BITFIELD, SHORT, UUID, NUMERIC
             } // STRING
-            , { JSON
+            , { JSON, STRING
             } // JSON
             , { CHAR, STRING
             } // CHAR
@@ -131,9 +131,9 @@ public enum ColumnType
             } // NUMERIC TODO:CHECK
             , { BOOLEAN, DOUBLE, FLOAT, LONG, INTEGER, CHAR, STRING
             } // BOOLEAN
-            , { DATE, STRING
+            , { DATE, DATETIME, STRING
             } // DATE
-            , { DATETIME, DATE, STRING
+            , { DATETIME, STRING
             } // DATETIME
             , { BINARY
             } // BINARY

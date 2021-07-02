@@ -1,16 +1,16 @@
 [
-    { "name":"formRefnum" "type":"INT64" "mode":"NULLABLE" }
-   ,{ "name":"formType" "type":"STRING" "mode":"NULLABLE" }
-   ,{ "name":"formFillDateTZ" "type":"STRING" "mode":"NULLABLE" }
-   ,{ "name":"formFillDate" "type":"TIMESTAMP" "mode":"NULLABLE" }
-   ,{ "name":"formUserRefnum" "type":"INT64" "mode":"NULLABLE" }
-   ,{ "name":"formUserEmail" "type":"STRING" "mode":"NULLABLE" }
-   ,{ "name":"questionId" "type":"STRING" "mode":"NULLABLE" }
-   ,{ "name":"countCorrect" "type":"INT64" "mode":"NULLABLE" }
-   ,{ "name":"countIncorrect" "type":"INT64" "mode":"NULLABLE" }
-   ,{ "name":"timeMillisTotal" "type":"INT64" "mode":"NULLABLE" }
-   ,{ "name":"timeMillisAvg" "type":"FLOAT64" "mode":"NULLABLE" }
-   ,{ "name":"timeMillisMin" "type":"INT64" "mode":"NULLABLE" }
-   ,{ "name":"timeMillisMax" "type":"INT64" "mode":"NULLABLE" }
-   ,{ "name":"correct" "type":"BOOL" "mode":"NULLABLE" }
+    { "name":"refnum", "type":"INT64", "mode":"REQUIRED", "description":"The primary key for this record" }
+   ,{ "name":"type", "type":"STRING", "mode":"REQUIRED", "description":"Form template type" }
+   ,{ "name":"fillDateTZ", "type":"STRING", "mode":"NULLABLE", "description":"Generated helper column to hold the time zone ID for 'fillDate'." }
+   ,{ "name":"fillDate", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"The date the form was filled" }
+   ,{ "name":"refnum", "type":"INT64", "mode":"REQUIRED", "description":"The primary key for this record" }
+   ,{ "name":"email", "type":"STRING", "mode":"REQUIRED", "description":"The user's email" }
+   ,{ "name":"questionId", "type":"STRING", "mode":"REQUIRED", "description":"Question id" }
+   ,{ "name":"correct", "type":"BOOL", "mode":"REQUIRED", "description":"Whether the answer is correct or not" }
+   ,{ "name":"correct", "type":"BOOL", "mode":"REQUIRED", "description":"Whether the answer is correct or not" }
+   ,{ "name":"timeMillis", "type":"INT64", "mode":"REQUIRED", "description":"Time in milliseconds for the time spent answering the question" }
+   ,{ "name":"timeMillis", "type":"INT64", "mode":"REQUIRED", "description":"Time in milliseconds for the time spent answering the question" }
+   ,{ "name":"timeMillis", "type":"INT64", "mode":"REQUIRED", "description":"Time in milliseconds for the time spent answering the question" }
+   ,{ "name":"timeMillis", "type":"INT64", "mode":"REQUIRED", "description":"Time in milliseconds for the time spent answering the question" }
+   ,{ "name":"correct", "type":"BOOL", "mode":"REQUIRED", "description":"Whether the answer is correct or not" }
 ]

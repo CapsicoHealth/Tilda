@@ -26,6 +26,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.db.Connection;
+import tilda.db.JDBCHelper;
 
 public class SchemaMeta
   {
@@ -54,18 +55,28 @@ public class SchemaMeta
             if ("table".equalsIgnoreCase(Type) == true)
               {
                 TableMeta T = new TableMeta(_SchemaName, Name, Descr);
-                _DBTables.put(Name, T);
                 MetaPerformance._TableNano += (System.nanoTime() - TS);
                 ++MetaPerformance._TableCount;
-                T.load(C);
+                if (_DBTables.get(Name) != null)
+                  LOG.warn("        The table '" + Name + "' seems to have come more than once through the information schema query !!! " + JDBCHelper.printResultSet(RS));
+                else
+                  {
+                    _DBTables.put(Name, T);
+                    T.load(C);
+                  }
               }
             else if ("view".equalsIgnoreCase(Type) == true)
               {
                 ViewMeta V = new ViewMeta(_SchemaName, Name, Descr);
-                _DBViews.put(Name, V);
                 ++MetaPerformance._ViewCount;
                 MetaPerformance._ViewNano += (System.nanoTime() - TS);
-                V.load(C);
+                if (_DBViews.get(Name) != null)
+                  LOG.warn("        The view '" + Name + "' seems to have come more than once through the information schema query !!! " + JDBCHelper.printResultSet(RS));
+                else
+                  {
+                    _DBViews.put(Name, V);
+                    V.load(C);
+                  }
               }
             TS = System.nanoTime();
           }
@@ -94,10 +105,32 @@ public class SchemaMeta
         return _DBTables.put(src._TableName.toLowerCase(), src) == null;
       }
 
+    public boolean renameTable(DatabaseMeta DBMeta, TableMeta src, String newName)
+      {
+        DBMeta.getSchemaMeta(_SchemaName)._DBTables.remove(src._TableName.toLowerCase());
+        src._TableName = newName;
+        return _DBTables.put(src._TableName.toLowerCase(), src) == null;
+      }
+
+    public boolean renameTableColumn(DatabaseMeta DBMeta, TableMeta src, String colName, String newName)
+      {
+        ColumnMeta CM = src.getColumnMeta(colName);
+        CM._Name = newName;
+        src._ColumnsMap.remove(colName);
+        return src._ColumnsMap.put(CM._Name.toLowerCase(), CM) == null;
+      }
+
     public boolean moveViewMetaFromOtherSchema(DatabaseMeta DBMeta, ViewMeta src)
       {
         DBMeta.getSchemaMeta(src._SchemaName)._DBViews.remove(src._ViewName.toLowerCase());
         src._SchemaName = _SchemaName;
+        return _DBViews.put(src._ViewName.toLowerCase(), src) == null;
+      }
+
+    public boolean renameView(DatabaseMeta DBMeta, ViewMeta src, String newName)
+      {
+        DBMeta.getSchemaMeta(_SchemaName)._DBViews.remove(src._ViewName.toLowerCase());
+        src._ViewName = newName;
         return _DBViews.put(src._ViewName.toLowerCase(), src) == null;
       }
 

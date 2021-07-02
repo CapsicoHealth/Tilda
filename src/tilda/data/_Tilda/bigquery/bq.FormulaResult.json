@@ -1,8 +1,8 @@
 [
-    { "name":"formulaRefnum","type":"INT64","mode":"REQUIRED","description":"The parent formula." }
-   ,{ "name":"value","type":"STRING","mode":"REQUIRED","description":"The result value." }
-   ,{ "name":"description","type":"STRING","mode":"REQUIRED","description":"The description of the result value." }
-   ,{ "name":"created","type":"TIMESTAMP","mode":"REQUIRED","description":"The timestamp for when the record was created. (TILDA.FormulaResult)" }
-   ,{ "name":"lastUpdated","type":"TIMESTAMP","mode":"REQUIRED","description":"The timestamp for when the record was last updated. (TILDA.FormulaResult)" }
-   ,{ "name":"deleted","type":"TIMESTAMP","mode":"NULLABLE","description":"The timestamp for when the record was deleted. (TILDA.FormulaResult)" }
+    { "name":"formulaRefnum", "type":"INT64", "mode":"REQUIRED", "description":"The parent formula." }
+   ,{ "name":"value", "type":"STRING", "mode":"REQUIRED", "description":"The result value." }
+   ,{ "name":"description", "type":"STRING", "mode":"REQUIRED", "description":"The description of the result value." }
+   ,{ "name":"created", "type":"TIMESTAMP", "mode":"REQUIRED", "description":"The timestamp for when the record was created. (TILDA.FormulaResult)" }
+   ,{ "name":"lastUpdated", "type":"TIMESTAMP", "mode":"REQUIRED", "description":"The timestamp for when the record was last updated. (TILDA.FormulaResult)" }
+   ,{ "name":"deleted", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"The timestamp for when the record was deleted. (TILDA.FormulaResult)" }
 ]

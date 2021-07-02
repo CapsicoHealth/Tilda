@@ -53,7 +53,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          FORMREFNUM    = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "formRefnum"    , 0/*0*/, "The primary key for this record");
+     public static Type_LongPrimitive          FORMREFNUM    = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "formRefnum"    , 0/*0*/, "The primary key for this record", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.Form_SAT01_PivotView.formFillDateTZ -> TILDATUTORIAL.Form_SAT01_PivotView."formFillDateTZ"
@@ -72,7 +72,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    FORMFILLDATETZ= new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "formFillDateTZ", 1/*1*/, "Generated helper column to hold the time zone ID for 'formFillDate'.");
+     public static Type_StringPrimitiveNull    FORMFILLDATETZ= new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "formFillDateTZ", 1/*1*/, "Generated helper column to hold the time zone ID for 'formFillDate'.", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.Form_SAT01_PivotView.formFillDate -> TILDATUTORIAL.Form_SAT01_PivotView."formFillDate"
@@ -90,7 +90,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  FORMFILLDATE  = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "formFillDate"  , 2/*2*/, "The date the form was filled", FORMFILLDATETZ);
+     public static Type_DatetimePrimitiveNull  FORMFILLDATE  = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "formFillDate"  , 2/*2*/, "The date the form was filled", null, null, FORMFILLDATETZ);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.Form_SAT01_PivotView.formUserRefnum -> TILDATUTORIAL.Form_SAT01_PivotView."formUserRefnum"
@@ -108,7 +108,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          FORMUSERREFNUM= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "formUserRefnum", 3/*3*/, "The primary key for this record");
+     public static Type_LongPrimitive          FORMUSERREFNUM= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "formUserRefnum", 3/*3*/, "The primary key for this record", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.Form_SAT01_PivotView.formUserEmail -> TILDATUTORIAL.Form_SAT01_PivotView."formUserEmail"
@@ -127,7 +127,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        FORMUSEREMAIL = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "formUserEmail" , 4/*4*/, "The user's email");
+     public static Type_StringPrimitive        FORMUSEREMAIL = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "formUserEmail" , 4/*4*/, "The user's email", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.Form_SAT01_PivotView.Q1 -> TILDATUTORIAL.Form_SAT01_PivotView."Q1"
@@ -145,7 +145,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerPrimitiveNull   Q1            = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "Q1"            , 5/*5*/, "Q1 (pivot of MAX(TILDATUTORIAL.FormAnswer.value) on TILDATUTORIAL.FormAnswer.field='Q1')");
+     public static Type_IntegerPrimitiveNull   Q1            = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "Q1"            , 5/*5*/, "Q1 (pivot of MAX(TILDATUTORIAL.FormAnswer.value) on TILDATUTORIAL.FormAnswer.field='Q1')", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.Form_SAT01_PivotView.Q2 -> TILDATUTORIAL.Form_SAT01_PivotView."Q2"
@@ -163,7 +163,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerPrimitiveNull   Q2            = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "Q2"            , 6/*6*/, "Q2 (pivot of MAX(TILDATUTORIAL.FormAnswer.value) on TILDATUTORIAL.FormAnswer.field='Q2')");
+     public static Type_IntegerPrimitiveNull   Q2            = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "Q2"            , 6/*6*/, "Q2 (pivot of MAX(TILDATUTORIAL.FormAnswer.value) on TILDATUTORIAL.FormAnswer.field='Q2')", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.Form_SAT01_PivotView.Q3 -> TILDATUTORIAL.Form_SAT01_PivotView."Q3"
@@ -181,7 +181,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerPrimitiveNull   Q3            = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "Q3"            , 7/*7*/, "Q3 (pivot of MAX(TILDATUTORIAL.FormAnswer.value) on TILDATUTORIAL.FormAnswer.field='Q3')");
+     public static Type_IntegerPrimitiveNull   Q3            = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "Q3"            , 7/*7*/, "Q3 (pivot of MAX(TILDATUTORIAL.FormAnswer.value) on TILDATUTORIAL.FormAnswer.field='Q3')", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.Form_SAT01_PivotView.Q4 -> TILDATUTORIAL.Form_SAT01_PivotView."Q4"
@@ -200,7 +200,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    Q4            = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "Q4"            , 8/*8*/, "Q4 (pivot of MAX(TILDATUTORIAL.FormAnswer.value) on TILDATUTORIAL.FormAnswer.field='Q4')");
+     public static Type_StringPrimitiveNull    Q4            = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "Q4"            , 8/*8*/, "Q4 (pivot of MAX(TILDATUTORIAL.FormAnswer.value) on TILDATUTORIAL.FormAnswer.field='Q4')", null, null);
 ;
    }
 
@@ -241,8 +241,8 @@ This is the column definition for:<BR>
        protected Connection _C = null;
        protected tilda.db.processors.ObjectProcessor<tilda.tutorial.data.Form_SAT01_PivotView_Data> _OP;
        protected ArrayListResults<tilda.tutorial.data.Form_SAT01_PivotView_Data> _L = null;
-       public void    start  () { if (_OP != null) _OP.start(); }
-       public void    end    (boolean hasMore, int maxCount) { if (_OP == null) _L.wrapup(hasMore, maxCount); else _OP.end(hasMore, maxCount); }
+       public void    start  ()                              throws Exception { if (_OP != null) _OP.start(); }
+       public void    end    (boolean hasMore, int maxCount) throws Exception { if (_OP == null) _L.wrapup(hasMore, maxCount); else _OP.end(hasMore, maxCount); }
        public boolean process(int count, java.sql.ResultSet RS) throws Exception
         {
           tilda.tutorial.data.Form_SAT01_PivotView_Data Obj = new tilda.tutorial.data.Form_SAT01_PivotView_Data();

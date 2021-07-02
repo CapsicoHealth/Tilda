@@ -3015,19 +3015,19 @@ This is the hasChanged for:<BR>
      {
        Dst.setJobRefnum   (_jobRefnum   );
        Dst.setName        (_name        );
-       if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.TYPE._Mask) == true) Dst.setTypeNull        (); else        Dst.setType        (_type        );
-       if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.DATASTARTTZ._Mask) == true) Dst.setDataStartTZNull (); else        Dst.setDataStartTZ (_dataStartTZ );
-       if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.DATASTART._Mask) == true) Dst.setDataStartNull   (); else        Dst.setDataStart   (_dataStart   );
-       if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.DATAENDTZ._Mask) == true) Dst.setDataEndTZNull   (); else        Dst.setDataEndTZ   (_dataEndTZ   );
-       if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.DATAEND._Mask) == true) Dst.setDataEndNull     (); else        Dst.setDataEnd     (_dataEnd     );
+       if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.TYPE._Mask) == true) Dst.setTypeNull        (); else        Dst.setType        (_type        );
+       if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.DATASTARTTZ._Mask) == true) Dst.setDataStartTZNull (); else        Dst.setDataStartTZ (_dataStartTZ );
+       if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.DATASTART._Mask) == true) Dst.setDataStartNull   (); else        Dst.setDataStart   (_dataStart   );
+       if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.DATAENDTZ._Mask) == true) Dst.setDataEndTZNull   (); else        Dst.setDataEndTZ   (_dataEndTZ   );
+       if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.DATAEND._Mask) == true) Dst.setDataEndNull     (); else        Dst.setDataEnd     (_dataEnd     );
        Dst.setStartTZ     (_startTZ     );
        Dst.setStart       (_start       );
-       if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.ENDTZ._Mask) == true) Dst.setEndTZNull       (); else        Dst.setEndTZ       (_endTZ       );
-       if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.END._Mask) == true) Dst.setEndNull         (); else        Dst.setEnd         (_end         );
-       if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.RECORDSCOUNT._Mask) == true) Dst.setRecordsCountNull(); else        Dst.setRecordsCount(_recordsCount);
-       if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.STATUS._Mask) == true) Dst.setStatusNull      (); else        Dst.setStatus      (_status      );
+       if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.ENDTZ._Mask) == true) Dst.setEndTZNull       (); else        Dst.setEndTZ       (_endTZ       );
+       if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.END._Mask) == true) Dst.setEndNull         (); else        Dst.setEnd         (_end         );
+       if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.RECORDSCOUNT._Mask) == true) Dst.setRecordsCountNull(); else        Dst.setRecordsCount(_recordsCount);
+       if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.STATUS._Mask) == true) Dst.setStatusNull      (); else        Dst.setStatus      (_status      );
        Dst.setLastUpdated (_lastUpdated );
-       if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull     (); else        Dst.setDeleted     (_deleted     );
+       if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull     (); else        Dst.setDeleted     (_deleted     );
      }
 
 /**
@@ -3089,7 +3089,7 @@ This is the hasChanged for:<BR>
 
           switch (__LookupId)
            {
-             case 0:
+             case 0: // PK
                PS.setLong      (++i, _refnum      );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
@@ -3349,8 +3349,8 @@ This is the hasChanged for:<BR>
 
           switch (__LookupId)
            {
-             case 0:
-                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "JobPart", "refnum"); S.append("=?)");
+             case 0: // PK
+                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "JobPart", "refnum"); S.append("=?");  S.append(")");
                 break;
              case -77: 
              case -666: if (__Init == InitMode.CREATE) break;
@@ -3462,7 +3462,6 @@ This is the hasChanged for:<BR>
         }
 
        __Changes.clear();
-       __Nulls.clear();
      }
 
 
@@ -3513,8 +3512,8 @@ This is the hasChanged for:<BR>
           S.append(" from "); C.getFullTableVar(S, "TILDA", "JobPart");
        switch (__LookupId)
         {
-          case 0:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "JobPart", "refnum"); S.append("=?)");
+          case 0: // PK
+             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "JobPart", "refnum"); S.append("=?");  S.append(")");
              break;
           case -77: 
           case -666: if (__Init == InitMode.CREATE) break;
@@ -3536,7 +3535,7 @@ This is the hasChanged for:<BR>
           int i = 0;
           switch (__LookupId)
            {
-             case 0:
+             case 0: // PK
                PS.setLong      (++i, _refnum      );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
@@ -3568,23 +3567,23 @@ This is the hasChanged for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-      __Saved_refnum       = _refnum       =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPART_Factory.COLS.REFNUM._Mask      );
-                             _jobRefnum    =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPART_Factory.COLS.JOBREFNUM._Mask   );
-                             _name         = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPART_Factory.COLS.NAME._Mask        );
-                             _type         = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPART_Factory.COLS.TYPE._Mask        );
-                             _dataStartTZ  = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPART_Factory.COLS.DATASTARTTZ._Mask ); else _dataStartTZ  = _dataStartTZ .trim();
-                             _dataStart    = processZDT(_dataStartTZ   , "tilda.data.TILDA.JobPart.dataStart"   , RS, ++i, TILDA__JOBPART_Factory.COLS.DATASTART   , TILDA__JOBPART_Factory.COLS.DATASTARTTZ   ); if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPART_Factory.COLS.DATASTART._Mask   );
-                             _dataEndTZ    = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPART_Factory.COLS.DATAENDTZ._Mask   ); else _dataEndTZ    = _dataEndTZ   .trim();
-                             _dataEnd      = processZDT(_dataEndTZ     , "tilda.data.TILDA.JobPart.dataEnd"     , RS, ++i, TILDA__JOBPART_Factory.COLS.DATAEND     , TILDA__JOBPART_Factory.COLS.DATAENDTZ     ); if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPART_Factory.COLS.DATAEND._Mask     );
-                             _startTZ      = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPART_Factory.COLS.STARTTZ._Mask     ); else _startTZ      = _startTZ     .trim();
-                             _start        = processZDT(_startTZ       , "tilda.data.TILDA.JobPart.start"       , RS, ++i, TILDA__JOBPART_Factory.COLS.START       , TILDA__JOBPART_Factory.COLS.STARTTZ       ); if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPART_Factory.COLS.START._Mask       );
-                             _endTZ        = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPART_Factory.COLS.ENDTZ._Mask       ); else _endTZ        = _endTZ       .trim();
-                             _end          = processZDT(_endTZ         , "tilda.data.TILDA.JobPart.end"         , RS, ++i, TILDA__JOBPART_Factory.COLS.END         , TILDA__JOBPART_Factory.COLS.ENDTZ         ); if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPART_Factory.COLS.END._Mask         );
-                             _recordsCount =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPART_Factory.COLS.RECORDSCOUNT._Mask);
-                             _status       =                              RS.getBoolean   (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPART_Factory.COLS.STATUS._Mask      );
-                             _created      = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPART_Factory.COLS.CREATED._Mask     );
-                             _lastUpdated  = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPART_Factory.COLS.LASTUPDATED._Mask );
-                             _deleted      = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__JOBPART_Factory.COLS.DELETED._Mask     );
+      __Saved_refnum       = _refnum       =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPART_Factory.COLS.REFNUM._Mask      ); _refnum = null; }
+                             _jobRefnum    =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPART_Factory.COLS.JOBREFNUM._Mask   ); _jobRefnum = null; }
+                             _name         = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPART_Factory.COLS.NAME._Mask        ); _name = null; }
+                             _type         = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPART_Factory.COLS.TYPE._Mask        ); _type = null; }
+                             _dataStartTZ  = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPART_Factory.COLS.DATASTARTTZ._Mask ); _dataStartTZ = null; } else _dataStartTZ  = _dataStartTZ .trim();
+                             _dataStart    = processZDT(_dataStartTZ   , "tilda.data.TILDA.JobPart.dataStart"   , RS, ++i, TILDA__JOBPART_Factory.COLS.DATASTART   , TILDA__JOBPART_Factory.COLS.DATASTARTTZ   ); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPART_Factory.COLS.DATASTART._Mask   ); _dataStart = null; }
+                             _dataEndTZ    = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPART_Factory.COLS.DATAENDTZ._Mask   ); _dataEndTZ = null; } else _dataEndTZ    = _dataEndTZ   .trim();
+                             _dataEnd      = processZDT(_dataEndTZ     , "tilda.data.TILDA.JobPart.dataEnd"     , RS, ++i, TILDA__JOBPART_Factory.COLS.DATAEND     , TILDA__JOBPART_Factory.COLS.DATAENDTZ     ); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPART_Factory.COLS.DATAEND._Mask     ); _dataEnd = null; }
+                             _startTZ      = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPART_Factory.COLS.STARTTZ._Mask     ); _startTZ = null; } else _startTZ      = _startTZ     .trim();
+                             _start        = processZDT(_startTZ       , "tilda.data.TILDA.JobPart.start"       , RS, ++i, TILDA__JOBPART_Factory.COLS.START       , TILDA__JOBPART_Factory.COLS.STARTTZ       ); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPART_Factory.COLS.START._Mask       ); _start = null; }
+                             _endTZ        = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPART_Factory.COLS.ENDTZ._Mask       ); _endTZ = null; } else _endTZ        = _endTZ       .trim();
+                             _end          = processZDT(_endTZ         , "tilda.data.TILDA.JobPart.end"         , RS, ++i, TILDA__JOBPART_Factory.COLS.END         , TILDA__JOBPART_Factory.COLS.ENDTZ         ); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPART_Factory.COLS.END._Mask         ); _end = null; }
+                             _recordsCount =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPART_Factory.COLS.RECORDSCOUNT._Mask); _recordsCount = null; }
+                             _status       =                              RS.getBoolean   (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPART_Factory.COLS.STATUS._Mask      ); _status = null; }
+                             _created      = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPART_Factory.COLS.CREATED._Mask     ); _created = null; }
+                             _lastUpdated  = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPART_Factory.COLS.LASTUPDATED._Mask ); _lastUpdated = null; }
+                             _deleted      = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPART_Factory.COLS.DELETED._Mask     ); _deleted = null; }
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();

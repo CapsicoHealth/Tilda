@@ -34,6 +34,7 @@ import tilda.enums.ObjectMode;
 import tilda.enums.OutputFormatType;
 import tilda.enums.TildaType;
 import tilda.parsing.ParserSession;
+import tilda.parsing.parts.helpers.DefaultsHelper;
 import tilda.types.ColumnDefinition;
 
 public class Object extends Base
@@ -50,17 +51,16 @@ public class Object extends Base
     @SerializedName("lc"            ) public String               _LCStr      ;
     @SerializedName("cloneAs"       ) public Cloner[]             _CloneAs    ;
 
-    @SerializedName("columns"       ) public List<Column>         _Columns    = new ArrayList<Column        >();
+    @SerializedName("columns"       ) public List<Column>         _Columns    = new ArrayList<Column    >();
 
     @SerializedName("primary"       ) public PrimaryKey           _PrimaryKey = null;
     @SerializedName("foreign"       ) public List<ForeignKey>     _ForeignKeys= new ArrayList<ForeignKey>();
-    @SerializedName("indices"       ) public List<Index>          _Indices    = new ArrayList<Index         >();
+    @SerializedName("indices"       ) public List<Index>          _Indices    = new ArrayList<Index     >();
     @SerializedName("http"          ) public HttpMapping[]        _Http       = { };
     @SerializedName("history"       ) public String     []        _History    = { };
     /*@formatter:on*/
 
     public transient boolean              _HasUniqueIndex;
-    public transient boolean              _HasUniqueQuery;
     public transient boolean              _HasNaturalIdentity;
     public transient FrameworkSourcedType _FST          = FrameworkSourcedType.NONE;
     public transient View                 _SourceView   = null;                                        // For tables such as Realized tables generated out of views.
@@ -154,7 +154,7 @@ public class Object extends Base
               if (C.Validate(PS, this) == false)
                 return false;
               Object obj = new Object(this);
-              obj._Name = _Name + "_" + C._Name;
+              obj._Name = (C._FullName == true ? "" : _Name + "_") + C._Name;
               obj._Description = C._Description;
               obj._FST = FrameworkSourcedType.CLONED;
               obj._SourceObject = this;
@@ -254,20 +254,6 @@ public class Object extends Base
           }
 
         Set<String> Names = new HashSet<String>();
-        /*
-         * for (int i = 0; i < _Migrations.length; ++i)
-         * {
-         * Migration M = _Migrations[i];
-         * if (M != null)
-         * if (M.Validate(PS, this, i) == true)
-         * {
-         * for (String col : M._ColumnNames)
-         * if (Names.add(col) == false)
-         * PS.AddError("Object '" + getFullName() + "' has declared migration #" + i + " with a column '" + col + "' which has already been specified in another migration!");
-         * }
-         * }
-         */
-
 
         _HasUniqueIndex = false;
         Set<String> Signatures = new HashSet<String>();
@@ -284,22 +270,6 @@ public class Object extends Base
             if (I._Unique == true)
               _HasUniqueIndex = true;
           }
-
-        _HasUniqueQuery = false;
-        for (SubWhereClause SWC : _Queries)
-          {
-            if (SWC == null)
-              continue;
-            if (SWC.Validate(PS, this, "Object '" + getFullName() + "'", true) == true)
-              if (Names.add(SWC._Name.toUpperCase()) == false)
-                PS.AddError("Object '" + getFullName() + "' is defining a query '" + SWC._Name + "' that has a name clashing with another query or index.");
-            if (SWC._Unique == true)
-              _HasUniqueQuery = true;
-          }
-
-        // LDH-NOTE: We have to validate mappings here, because the whole parent object
-        // only finishes being validated at this time.
-        super.ValidateOutputMappings(PS);
 
         // if dbOnly has been set, we have to check for deprecation condition
         if (_DBOnly_DEPRECATED != null)
@@ -347,31 +317,10 @@ public class Object extends Base
 
         _HasNaturalIdentity = _HasUniqueIndex == true || _PrimaryKey != null && _PrimaryKey._Autogen == false;
 
-        boolean All = false;
-        for (Index I : _Indices)
-          if (I._Name.equals("All") == true)
-            {
-              All = true;
-              break;
-            }
-        if (All == false)
-          for (SubWhereClause SWC : _Queries)
-            if (SWC._Name.equals("All") == true)
-              {
-                All = true;
-                break;
-              }
-        if (All == false && _HasNaturalIdentity == true)
-          {
-            SubWhereClause SWC = new SubWhereClause();
-            SWC._Name = "All";
-            SWC._Description = "Generated All query";
-            SWC._OrderBy = Column.getColumnNames(getFirstIdentityColumns());
-            SWC._Wheres = new Query[] { new Query("1=1")
-            };
-            SWC.Validate(PS, this, "Object '" + getFullName() + "'", true);
-            _Queries.add(SWC);
-          }
+        // LDH-NOTE: We have to validate queries and mappings here, because the whole parent object
+        // only finishes being validated at this time.
+        super.validateQueries(PS, Names);
+        super.validateOutputMaps(PS);
 
         return _Validated;
       }
@@ -593,7 +542,7 @@ public class Object extends Base
      */
     public boolean isJsonable()
       {
-        for (OutputMapping OM : _OutputMaps)
+        for (OutputMap OM : _OutputMaps)
           if (OM != null && OM._OutputTypes.contains(OutputFormatType.JSON) == true)
             return true;
         return false;
@@ -606,7 +555,7 @@ public class Object extends Base
      */
     public boolean isCSVable()
       {
-        for (OutputMapping OM : _OutputMaps)
+        for (OutputMap OM : _OutputMaps)
           if (OM != null && OM._OutputTypes.contains(OutputFormatType.CSV) == true)
             return true;
         return false;
@@ -620,7 +569,7 @@ public class Object extends Base
      */
     public boolean isSerializable()
       {
-        for (OutputMapping OM : _OutputMaps)
+        for (OutputMap OM : _OutputMaps)
           if (OM != null && (OM._OutputTypes.contains(OutputFormatType.JSON) == true || OM._OutputTypes.contains(OutputFormatType.CSV) == true))
             return true;
         return false;
@@ -644,21 +593,44 @@ public class Object extends Base
     /**
      * Returns the list of columns that represent the first identity of the object. If a PK is defined,
      * the columns defined for it will be returned. Otherwise, the columns for the first defined unique index
-     * will be returned. Null is returned otherwise, that that should never happen because all Objects are required
+     * will be returned. Null is returned otherwise, but that should never happen because all Objects are required
      * to have at least one identity.<BR>
+     * If naturalIdentitiesFirst is true though, natural identities will be privileged first and the autogen PK will
+     * be returned only if there are no natural identities.<BR>
+     * A natural identity is defined as a unique index, of a non-autogen primary key.
      * <BR>
      * This method should only be called <B>AFTER</B> {@link Object#Validate(ParserSession, Schema)} has been called first.
      * 
      * @return
      */
-    public List<Column> getFirstIdentityColumns()
+    public List<Column> getFirstIdentityColumns(boolean naturalIdentitiesFirst)
       {
-        if (_PrimaryKey != null)
+        if (_PrimaryKey != null && (naturalIdentitiesFirst == false || _PrimaryKey._Autogen == false) )
           return _PrimaryKey._ColumnObjs;
+
         if (_Indices != null)
           for (Index I : _Indices)
             if (I._Unique == true)
               return I._ColumnObjs;
+
+        if (_PrimaryKey != null)
+          return _PrimaryKey._ColumnObjs;
+
+        return null;
+      }
+
+    @Override
+    public String[] getFirstIdentityColumnNames(boolean naturalIdentitiesFirst)
+      {
+        return Column.getColumnNames(getFirstIdentityColumns(naturalIdentitiesFirst));
+      }
+
+    public Index getIndex(String name)
+      {
+        if (_Indices == null || _Indices.isEmpty() == false)
+          for (Index idx : _Indices)
+            if (idx._Name.equalsIgnoreCase(name) == true)
+              return idx;
         return null;
       }
 

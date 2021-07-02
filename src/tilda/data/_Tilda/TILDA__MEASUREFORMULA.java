@@ -959,7 +959,7 @@ This is the hasChanged for:<BR>
    public void copyTo(tilda.data._Tilda.TILDA__MEASUREFORMULA Dst) throws Exception
      {
        Dst.setLastUpdated  (_lastUpdated  );
-       if (__Changes.intersects(TILDA__MEASUREFORMULA_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull      (); else        Dst.setDeleted      (_deleted      );
+       if (__Nulls.intersects(TILDA__MEASUREFORMULA_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull      (); else        Dst.setDeleted      (_deleted      );
      }
 
 /**
@@ -1019,7 +1019,7 @@ This is the hasChanged for:<BR>
 
           switch (__LookupId)
            {
-             case 0:
+             case 0: // PK
                PS.setLong      (++i, _measureRefnum);
                PS.setLong      (++i, _formulaRefnum);
                break;
@@ -1139,8 +1139,8 @@ This is the hasChanged for:<BR>
 
           switch (__LookupId)
            {
-             case 0:
-                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "MeasureFormula", "measureRefnum"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "MeasureFormula", "formulaRefnum"); S.append("=?)");
+             case 0: // PK
+                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "MeasureFormula", "measureRefnum"); S.append("=?");  S.append(" AND "); C.getFullColumnVar(S, "TILDA", "MeasureFormula", "formulaRefnum"); S.append("=?");  S.append(")");
                 break;
              case -77: 
              case -666: if (__Init == InitMode.CREATE) break;
@@ -1205,7 +1205,6 @@ This is the hasChanged for:<BR>
         }
 
        __Changes.clear();
-       __Nulls.clear();
      }
 /**
  Writes the object to the data store using an upsert approach and assumes the object is either
@@ -1311,8 +1310,8 @@ This is the hasChanged for:<BR>
           S.append(" from "); C.getFullTableVar(S, "TILDA", "MeasureFormula");
        switch (__LookupId)
         {
-          case 0:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "MeasureFormula", "measureRefnum"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "MeasureFormula", "formulaRefnum"); S.append("=?)");
+          case 0: // PK
+             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "MeasureFormula", "measureRefnum"); S.append("=?");  S.append(" AND "); C.getFullColumnVar(S, "TILDA", "MeasureFormula", "formulaRefnum"); S.append("=?");  S.append(")");
              break;
           case -77: 
           case -666: if (__Init == InitMode.CREATE) break;
@@ -1334,7 +1333,7 @@ This is the hasChanged for:<BR>
           int i = 0;
           switch (__LookupId)
            {
-             case 0:
+             case 0: // PK
                PS.setLong      (++i, _measureRefnum);
                PS.setLong      (++i, _formulaRefnum);
                break;
@@ -1367,11 +1366,11 @@ This is the hasChanged for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-      __Saved_measureRefnum = _measureRefnum =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULA_Factory.COLS.MEASUREREFNUM._Mask);
-      __Saved_formulaRefnum = _formulaRefnum =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULA_Factory.COLS.FORMULAREFNUM._Mask);
-                              _created       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULA_Factory.COLS.CREATED._Mask      );
-                              _lastUpdated   = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULA_Factory.COLS.LASTUPDATED._Mask  );
-                              _deleted       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__MEASUREFORMULA_Factory.COLS.DELETED._Mask      );
+      __Saved_measureRefnum = _measureRefnum =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__MEASUREFORMULA_Factory.COLS.MEASUREREFNUM._Mask); _measureRefnum = null; }
+      __Saved_formulaRefnum = _formulaRefnum =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__MEASUREFORMULA_Factory.COLS.FORMULAREFNUM._Mask); _formulaRefnum = null; }
+                              _created       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__MEASUREFORMULA_Factory.COLS.CREATED._Mask      ); _created = null; }
+                              _lastUpdated   = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__MEASUREFORMULA_Factory.COLS.LASTUPDATED._Mask  ); _lastUpdated = null; }
+                              _deleted       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__MEASUREFORMULA_Factory.COLS.DELETED._Mask      ); _deleted = null; }
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();

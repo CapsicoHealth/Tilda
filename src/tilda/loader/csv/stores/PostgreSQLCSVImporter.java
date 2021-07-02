@@ -32,8 +32,8 @@ import org.apache.commons.csv.CSVRecord;
 
 import tilda.data.ZoneInfo_Factory;
 import tilda.db.Connection;
-import tilda.db.MasterFactory;
 import tilda.db.QueryDetails;
+import tilda.db.TildaMasterRuntimeMetaData;
 import tilda.db.metadata.ColumnMeta;
 import tilda.db.metadata.TableMeta;
 import tilda.enums.ColumnType;
@@ -135,7 +135,7 @@ public class PostgreSQLCSVImporter extends CSVImporter
                     	      colVal = columnMap.get(c)._DefaultValue;
                             else if (DBColumns.get(c.toLowerCase())._Nullable != 1) 
                               {
-                    	        String defaultCreateValue = MasterFactory.getDefaultCreateValue(schemaName, tableName, c);
+                    	        String defaultCreateValue = TildaMasterRuntimeMetaData.getDefaultCreateValue(schemaName, tableName, c);
                     	   
                     	        if(TextUtil.isNullOrEmpty(defaultCreateValue) == false)
                     	          colVal = defaultCreateValue;

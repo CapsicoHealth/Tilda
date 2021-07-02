@@ -16,7 +16,9 @@
 
 package tilda.types;
 
+import java.io.Writer;
 import java.lang.reflect.Constructor;
+import java.time.ZonedDateTime;
 import java.util.BitSet;
 
 import org.apache.logging.log4j.LogManager;
@@ -25,13 +27,15 @@ import org.apache.logging.log4j.Logger;
 import tilda.db.Connection;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
+import tilda.interfaces.JSONable;
 import tilda.utils.TextUtil;
+import tilda.utils.json.JSONUtil;
 
-public class ColumnDefinition
+public class ColumnDefinition implements JSONable
   {
     protected static final Logger LOG = LogManager.getLogger(ColumnDefinition.class.getName());
 
-    public ColumnDefinition(String SchemaName, String TableName, String ColumnName, int Count, ColumnType Type, boolean Collection, String Description)
+    public ColumnDefinition(String SchemaName, String TableName, String ColumnName, int Count, ColumnType Type, boolean Collection, String Description, String[] expressionStrs, String[] expressionDependencyColumnNames)
       {
         _SchemaName = SchemaName;
         _TableName = TableName;
@@ -42,6 +46,8 @@ public class ColumnDefinition
         if (Count > _MAX_COL_COUNT)
           throw new Error("Trying to instanciate a column that requires a _Mask with more than " + _MAX_COL_COUNT + " bits.");
         _Description = Description;
+        _expressionStrs = expressionStrs;
+        _expressionDependencyColumnNames = expressionDependencyColumnNames;
       }
 
     public static final int _MAX_COL_COUNT = 512;
@@ -50,9 +56,10 @@ public class ColumnDefinition
     final String            _TableName;
     final String            _ColumnName;
     final String            _Description;
-
-    public final ColumnType _Type;
-    public final boolean    _Collection;
+    final String[]          _expressionStrs;
+    final String[]          _expressionDependencyColumnNames;
+    final ColumnType        _Type;
+    final boolean           _Collection;
     public final BitSet     _Mask          = new BitSet(64);
 
     public String getSchemaName()
@@ -122,20 +129,35 @@ public class ColumnDefinition
         return _ColumnName;
       }
 
+    public ColumnType getType()
+      {
+        return _Type;
+      }
+
     public boolean isNullable()
       {
         return this instanceof Nullable;
       }
 
-    // public static ColumnDefinition Create(String ColumnName, ColumnType Type, boolean Collection, boolean Nullable, String Description)
-    // {
-    // return Create(null, null, ColumnName, Type, Collection, Nullable, Description);
-    // }
+    public boolean isCollection()
+      {
+        return _Collection;
+      }
 
-    // public static ColumnDefinition Create(String TableName, String ColumnName, ColumnType Type, boolean Collection, boolean Nullable, String Description)
-    // {
-    // return Create(null, TableName, ColumnName, Type, Collection, Nullable, Description);
-    // }
+    public String getDescription()
+      {
+        return _Description;
+      }
+
+    public String[] getExpression()
+      {
+        return _expressionStrs;
+      }
+
+    public String[] getExpressionDependencies()
+      {
+        return _expressionDependencyColumnNames;
+      }
 
     public static ColumnDefinition create(String SchemaName, String TableName, String ColumnName, ColumnType Type, boolean Collection, boolean Nullable, String Description)
       {
@@ -143,8 +165,8 @@ public class ColumnDefinition
         try
           {
             Class<?> C = Class.forName(ClassName);
-            Constructor<?> cons = C.getConstructor(String.class, String.class, String.class, Integer.TYPE, String.class);
-            return (ColumnDefinition) cons.newInstance(SchemaName, TableName, ColumnName, 0, Description);
+            Constructor<?> cons = C.getConstructor(String.class, String.class, String.class, Integer.TYPE, String.class, String[].class, String[].class);
+            return (ColumnDefinition) cons.newInstance(SchemaName, TableName, ColumnName, 0, Description, null, null);
           }
         catch (Exception E)
           {
@@ -209,5 +231,41 @@ public class ColumnDefinition
         return Names;
       }
 
+    @Override
+    public void toJSON(Writer out, String jsonExportName, String lead, boolean fullObject)
+    throws Exception
+      {
+        toJSON(out, jsonExportName, lead, fullObject, false);
+      }
 
+    @Override
+    public void toJSON(Writer out, String jsonExportName, String lead, boolean fullObject, ZonedDateTime lastsync)
+    throws Exception
+      {
+        toJSON(out, jsonExportName, lead, fullObject, false);
+      }
+
+    @Override
+    public void toJSON(Writer out, String jsonExportName, String lead, boolean fullObject, boolean noNullArrays)
+    throws Exception
+      {
+        if (fullObject == true)
+          {
+            out.write(lead);
+            out.write("{");
+          }
+
+        int i = -1;
+        JSONUtil.print(out, "schemaName", ++i == 0, getSchemaName());
+        JSONUtil.print(out, "tableName", ++i == 0, getTableName());
+        JSONUtil.print(out, "columnName", ++i == 0, getName());
+        JSONUtil.print(out, "nullable", ++i == 0, isNullable());
+        JSONUtil.print(out, "collection", ++i == 0, isCollection());
+        JSONUtil.print(out, "type", ++i == 0, getType().name());
+        JSONUtil.print(out, "description", ++i == 0, getDescription());
+        JSONUtil.print(out, "formula", ++i == 0, getExpression());
+
+        if (fullObject == true)
+          out.write(" }\n");
+      }
   }

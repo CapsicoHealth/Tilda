@@ -151,7 +151,7 @@ public class WhereClauseCodeGenTildaQL implements WhereClauseCodeGen
     
     public void funcLen(List<ColumnDefinition> Columns)
       {
-        if (Columns.size() == 1 && Columns.get(0)._Collection == true)
+        if (Columns.size() == 1 && Columns.get(0).isCollection() == true)
           {
             _CodeGen.append(".len(");
             makeColumn(_CodeGen, Columns.get(0));

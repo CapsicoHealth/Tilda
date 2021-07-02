@@ -1,10 +1,10 @@
 [
-    { "name":"formulaRefnum","type":"INT64","mode":"NULLABLE" }
-   ,{ "name":"location","type":"STRING","mode":"NULLABLE" }
-   ,{ "name":"name","type":"STRING","mode":"NULLABLE" }
-   ,{ "name":"referencedColumns","type":"STRING","mode":"REPEATED" }
-   ,{ "name":"dependencyRefnum","type":"INT64","mode":"NULLABLE" }
-   ,{ "name":"dependentFormulaName","type":"STRING","mode":"NULLABLE" }
-   ,{ "name":"dependentFormulaLocation","type":"STRING","mode":"NULLABLE" }
-   ,{ "name":"dependentReferencedColumns","type":"STRING","mode":"REPEATED" }
+    { "name":"formulaRefnum", "type":"INT64", "mode":"REQUIRED", "description":"The parent formula." }
+   ,{ "name":"location", "type":"STRING", "mode":"REQUIRED", "description":"The name of the primary table/view this formula is defined in." }
+   ,{ "name":"name", "type":"STRING", "mode":"REQUIRED", "description":"The name of the formula/column." }
+   ,{ "name":"referencedColumns", "type":"STRING", "mode":"REPEATED", "description":"The list of columns this formula depends on." }
+   ,{ "name":"dependencyRefnum", "type":"INT64", "mode":"REQUIRED", "description":"The dependent formula." }
+   ,{ "name":"name", "type":"STRING", "mode":"REQUIRED", "description":"The name of the formula/column." }
+   ,{ "name":"location", "type":"STRING", "mode":"REQUIRED", "description":"The name of the primary table/view this formula is defined in." }
+   ,{ "name":"referencedColumns", "type":"STRING", "mode":"REPEATED", "description":"The list of columns this formula depends on." }
 ]

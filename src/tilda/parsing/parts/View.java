@@ -372,12 +372,20 @@ public class View extends Base
           PS.AddError("The View '" + _Name + "' is defining a 'pivotColumns' element which is deprecated. Please use the new 'pivots' constructs instead.");
         if (TextUtil.isNullOrEmpty(_CountStarDeprecated) == false)
           PS.AddError("View '" + getFullName() + "' is defining a 'countStar' element which is deprecated. Please use a standard column definition with an aggregate of 'COUNT'.");
-
+        
+        if (_Name.equals("FormulaDependencyView") == true)
+         LOG.debug("XXX");
+        
+//        super.validateOutputMaps(PS); // We do not need to do this. The ObjectProxy is the driver of the code-gen and so the additional validation needed will occur there.
+        
         // gotta construct a shadow Object for code-gen.
         // LOG.debug("View " + _Name + ": " + TextUtil.print(getColumnNames()));
         Object O = MakeObjectProxy(PS);
         // LOG.debug("Object " + O._Name + ": " + TextUtil.print(O.getColumnNames()));
 
+//        LOG.debug("VIEW - "+this.getFullName()+": "+TextUtil.print(this.getColumnNames()));
+//        LOG.debug("OBJECT - "+O.getFullName()+": "+TextUtil.print(O.getColumnNames()));
+        
         if (_Realize != null)
           _Realize.Validate(PS, this, new ViewRealizedWrapper(O, this));
 
@@ -388,6 +396,7 @@ public class View extends Base
     private boolean HandleStarExpansion(ParserSession PS, int i, ViewColumn VC)
       {
         _ViewColumns.remove(i);
+
         int lastDot = VC._SameAs.lastIndexOf('.');
         String startingWith = VC._SameAs.substring(lastDot + 1, VC._SameAs.length() - 1);
         VC._SameAs = VC._SameAs.substring(0, lastDot);
@@ -639,17 +648,17 @@ public class View extends Base
                 else
                   {
                     F.Validate(PS, this);
-                    Column C = new Column(F._Name, F._TypeStr, F._Size, true, ColumnMode.NORMAL, true, null, "Formula column '<B>" + F._Title + "</B>'", F._Precision, F._Scale);
+                    Column C = new Column(F._Name, F._TypeStr, F._Size, true, ColumnMode.NORMAL, true, null, "<B>" + F._Title + "</B>: " + String.join(" ", F._Description), F._Precision, F._Scale);
                     if (F.getType() == ColumnType.DATETIME)
-                      C._FCT = FrameworkColumnType.DT_FORMULA;
-                    else if (F._FormulaTemplate == true)
-                      C._FCT = FrameworkColumnType.FORMULA_TEMPLATE;
+                      C._FCT = FrameworkColumnType.FORMULA_DT;
+                    else
+                      C._FCT = FrameworkColumnType.FORMULA;
                     O._Columns.add(C);
                     F._ProxyCol = C;
                   }
               }
-
-        PrepRegexes();
+        prepRegexes();
+        bindFormulaColumnDependencies(O);
 
         for (Formula F : _Formulas)
           if (F != null)
@@ -659,40 +668,6 @@ public class View extends Base
                 PS.AddError("View '" + getFullName() + "' is defining formula '" + F._Name + "' with an infinite reference loop '" + Path + "'.");
             }
 
-        /*
-         * PrimaryKey PK = _ViewColumns.get(0)._SameAsObj._ParentObject._PrimaryKey;
-         * if (_Name.equals("VisitCountAndDurationPivotView") == true)
-         * LOG.debug("");
-         * if (PK != null)
-         * {
-         * if (PK._Autogen == true && getSameAsColumn(PK._ParentObject.getFullName(), "refnum") != null)
-         * {
-         * O._PrimaryKey = new PrimaryKey();
-         * O._PrimaryKey._Columns = new String[] { _ViewColumns.get(0)._Name
-         * };
-         * _PK = O._PrimaryKey;
-         * }
-         * else
-         * {
-         * int countFound = -1;
-         * String[] ColNames = new String[PK._ColumnObjs.size()];
-         * for (Column C : PK._ColumnObjs)
-         * {
-         * ViewColumn VC = getViewColumnFromSameAsColumn(C._ParentObject.getFullName(), C._Name);
-         * if (VC != null)
-         * ColNames[++countFound] = VC._Name;
-         * else
-         * break;
-         * }
-         * if (countFound == PK._ColumnObjs.size() - 1)
-         * {
-         * O._PrimaryKey = new PrimaryKey();
-         * O._PrimaryKey._Columns = ColNames;
-         * _PK = O._PrimaryKey;
-         * }
-         * }
-         * }
-         */
         O._ModeStr = _DBOnly == true ? ObjectMode.DB_ONLY.toString() : ObjectMode.NORMAL.toString();
         _ParentSchema._Objects.add(O);
         O.Validate(PS, _ParentSchema);
@@ -700,7 +675,31 @@ public class View extends Base
         return O;
       }
 
-    private void PrepRegexes()
+    private void bindFormulaColumnDependencies(Object obj)
+      {
+        for (Column C : obj._Columns)
+          {
+            if (C._FCT != FrameworkColumnType.FORMULA && C._FCT != FrameworkColumnType.FORMULA_DT)
+              continue;
+            Formula F = getFormula(C.getName());
+            if (F != null)
+              {
+                C._expressionStrs = F._FormulaStrs;
+                C._expressionDependencyColumnNames = Formula.getDependencyColumnNames(String.join(" ", F._FormulaStrs), obj, _ViewColumnsRegEx, _FormulasRegEx);
+                continue;
+              }
+            ViewColumn VC = getViewColumn(C.getName());
+            if (VC != null && TextUtil.isNullOrEmpty(VC._Expression) == false)
+              {
+                C._expressionStrs = new String[] { VC._Expression };
+                C._expressionDependencyColumnNames = Formula.getDependencyColumnNames(VC._Expression, obj, _ViewColumnsRegEx, _FormulasRegEx);
+                continue;
+              }
+          }
+
+      }
+
+    private void prepRegexes()
       {
         // Preparing regexes for anything that needs to do search and replace.
         Set<String> Names = new HashSet<String>();
@@ -734,7 +733,6 @@ public class View extends Base
           }
 
         _FormulasRegEx = Str.length() == 0 ? null : Pattern.compile("\\b(" + Str.toString() + ")\\b");
-
       }
 
     private void genPivotColumns(ParserSession PS, Object O)
@@ -839,20 +837,20 @@ public class View extends Base
         for (Column col : O._Columns)
           {
             if (col._FCT == FrameworkColumnType.TZ
-            || col._FCT != FrameworkColumnType.NONE && col._FCT != FrameworkColumnType.TS && col._FCT.isOCC() == false)
-              // if (col._FrameworkManaged == true)
+            || col._FCT != FrameworkColumnType.NONE && col._FCT != FrameworkColumnType.FORMULA && col._FCT != FrameworkColumnType.FORMULA_DT && col._FCT != FrameworkColumnType.TS && col._FCT.isOCC() == false)
               continue;
-            if (TextUtil.findStarElement(VC._Exclude, col._Name, false, 0) != -1)
+            if (TextUtil.findStarElement(VC._Exclude, col._Name, true, 0) != -1)
               continue;
             if (col._Name.startsWith(startingWith) == false)
               continue;
             ViewColumn NewVC = new ViewColumn();
-            if (TextUtil.findStarElement(VC._Block, col._Name, false, 0) != -1)
+            if (TextUtil.findStarElement(VC._Block, col._Name, true, 0) != -1)
               NewVC._FormulaOnly = true;
             NewVC._SameAs = col.getFullName();
             NewVC._As = VC._As;
             NewVC._Name = Prefix + col.getName();
             NewVC._FCT = col._FCT;
+            copyAdvancedViewColumnFields(VC, NewVC);
             _ViewColumns.add(i + j, NewVC);
             ++j;
           }
@@ -862,12 +860,14 @@ public class View extends Base
     private void CopyDependentViewFields(int i, ViewColumn VC, String Prefix, View V, String startingWith)
       {
         int j = 0;
+//        LOG.debug("VIEWCOLUMN * - "+VC._SameAs+" -> "+ V.getFullName()+": "+TextUtil.print(V.getColumnNames()));
         for (ViewColumn col : V._ViewColumns)
           {
+//            LOG.debug("   - Looking at "+col.getFullName()+"; startingWith: "+startingWith+"; _FCT: "+col._FCT+";");
             if (col._FCT == FrameworkColumnType.TZ
-            || col._FCT != FrameworkColumnType.NONE && col._FCT != FrameworkColumnType.TS && col._FCT.isOCC() == false)
+            || col._FCT != FrameworkColumnType.NONE && col._FCT != FrameworkColumnType.FORMULA && col._FCT != FrameworkColumnType.FORMULA_DT && col._FCT != FrameworkColumnType.TS && col._FCT.isOCC() == false)
               continue;
-            if (TextUtil.findStarElement(VC._Exclude, col._Name, false, 0) != -1)
+            if (TextUtil.findStarElement(VC._Exclude, col._Name, true, 0) != -1)
               continue;
             if (col._JoinOnly == true || col._FormulaOnly == true)
               continue;
@@ -889,8 +889,9 @@ public class View extends Base
                 NewVC._Scale = col._Scale;
                 NewVC._Precision = col._Precision;
               }
+            copyAdvancedViewColumnFields(VC, NewVC);
 
-            if (TextUtil.findStarElement(VC._Block, col._Name, false, 0) != -1)
+            if (TextUtil.findStarElement(VC._Block, col._Name, true, 0) != -1)
               NewVC._FormulaOnly = true;
             _ViewColumns.add(i + j, NewVC);
             _PadderColumnNames.track(NewVC.getName());
@@ -906,7 +907,7 @@ public class View extends Base
                 for (ViewPivotAggregate A : P._Aggregates)
                   for (Value VPV : P._Values)
                     {
-                      if (TextUtil.findStarElement(VC._Exclude, TextUtil.print(VPV._Name, VPV._Value), false, 0) != -1)
+                      if (TextUtil.findStarElement(VC._Exclude, TextUtil.print(VPV._Name, VPV._Value), true, 0) != -1)
                         continue;
                       String SrcColName = A.makeName(VPV);
                       if (SrcColName.startsWith(startingWith) == false)
@@ -915,6 +916,7 @@ public class View extends Base
                       NewVC._SameAs = V.getFullName() + "." + SrcColName;
                       NewVC._As = VC._As;
                       NewVC._Name = Prefix + SrcColName;
+                      copyAdvancedViewColumnFields(VC, NewVC);
                       _ViewColumns.add(i + j, NewVC);
                       _PadderColumnNames.track(NewVC.getName());
                       ++j;
@@ -925,7 +927,7 @@ public class View extends Base
                 for (Value VPV : P._Values)
                   for (ViewPivotAggregate A : P._Aggregates)
                     {
-                      if (TextUtil.findStarElement(VC._Exclude, TextUtil.print(VPV._Name, VPV._Value), false, 0) != -1)
+                      if (TextUtil.findStarElement(VC._Exclude, TextUtil.print(VPV._Name, VPV._Value), true, 0) != -1)
                         continue;
                       String SrcColName = A.makeName(VPV);
                       if (SrcColName.startsWith(startingWith) == false)
@@ -934,6 +936,7 @@ public class View extends Base
                       NewVC._SameAs = V.getFullName() + "." + SrcColName;
                       NewVC._As = VC._As;
                       NewVC._Name = Prefix + SrcColName;
+                      copyAdvancedViewColumnFields(VC, NewVC);
                       _ViewColumns.add(i + j, NewVC);
                       _PadderColumnNames.track(NewVC.getName());
                       ++j;
@@ -942,7 +945,7 @@ public class View extends Base
           }
         for (Formula F : V._Formulas)
           {
-            if (TextUtil.findStarElement(VC._Exclude, F._Name, false, 0) != -1)
+            if (TextUtil.findStarElement(VC._Exclude, F._Name, true, 0) != -1)
               continue;
             if (F._Name.startsWith(startingWith) == false)
               continue;
@@ -950,12 +953,39 @@ public class View extends Base
             NewVC._SameAs = V.getFullName() + "." + F._Name;
             NewVC._Name = Prefix + F._Name;
             NewVC._As = VC._As;
-            NewVC._FCT = VC._FCT;
-            if (TextUtil.findStarElement(VC._Block, F._Name, false, 0) != -1)
+            // When copying a formula from a prior view, the column type should become NONE as it no longer has the properties of a formula.
+            NewVC._FCT = FrameworkColumnType.NONE;//VC._FCT;
+            copyAdvancedViewColumnFields(VC, NewVC);
+            if (TextUtil.findStarElement(VC._Block, F._Name, true, 0) != -1)
               NewVC._FormulaOnly = true;
             _ViewColumns.add(i + j, NewVC);
             _PadderColumnNames.track(NewVC.getName());
             ++j;
+          }
+      }
+
+    /**
+     * Copies field values from VC to NewVC. Handles _AggregateStr, _FormulaOnly, _JoinOnly, _Coalesce, _Distinct
+     * _OrderBy, _Filter, _Expression, _TypeStr, _Size, _Scale, _Precision.
+     * @param VC
+     * @param NewVC
+     */
+    protected void copyAdvancedViewColumnFields(ViewColumn VC, ViewColumn NewVC)
+      {
+        NewVC._AggregateStr = VC._AggregateStr;
+        NewVC._FormulaOnly = VC._FormulaOnly;
+        NewVC._JoinOnly = VC._JoinOnly;
+        NewVC._Coalesce = VC._Coalesce;
+        NewVC._Distinct = VC._Distinct;
+        NewVC._OrderBy = VC._OrderBy;
+        NewVC._Filter = VC._Filter;
+        if (TextUtil.isNullOrEmpty(VC._Expression) == false)
+          {
+            NewVC._Expression = VC._Expression;
+            NewVC._TypeStr = VC._TypeStr;
+            NewVC._Size = VC._Size;
+            NewVC._Scale = VC._Scale;
+            NewVC._Precision = VC._Precision;
           }
       }
 
@@ -1316,6 +1346,59 @@ public class View extends Base
     public String getViewSubRealizeFullName()
       {
         return getViewSubRealizeSchemaName() + "." + getViewSubRealizeViewName();
+      }
+    
+    @Override
+    public String[] getFirstIdentityColumnNames(boolean naturalIdentitiesFirst)
+      {
+        return null;
+        
+/*        
+        Graph<DepWrapper> G = getDependencyGraph(false);
+        Set<DepWrapper> deps = G.getLeaves(false);
+        for (DepWrapper dw : deps)
+          {
+            List<Column> cols = dw._Obj.getFirstIdentityColumns();
+            boolean valid = false;
+            for (Column c : cols)
+              
+          }
+ */
+
+        /*
+         * PrimaryKey PK = _ViewColumns.get(0)._SameAsObj._ParentObject._PrimaryKey;
+         * if (_Name.equals("VisitCountAndDurationPivotView") == true)
+         * LOG.debug("");
+         * if (PK != null)
+         * {
+         * if (PK._Autogen == true && getSameAsColumn(PK._ParentObject.getFullName(), "refnum") != null)
+         * {
+         * O._PrimaryKey = new PrimaryKey();
+         * O._PrimaryKey._Columns = new String[] { _ViewColumns.get(0)._Name
+         * };
+         * _PK = O._PrimaryKey;
+         * }
+         * else
+         * {
+         * int countFound = -1;
+         * String[] ColNames = new String[PK._ColumnObjs.size()];
+         * for (Column C : PK._ColumnObjs)
+         * {
+         * ViewColumn VC = getViewColumnFromSameAsColumn(C._ParentObject.getFullName(), C._Name);
+         * if (VC != null)
+         * ColNames[++countFound] = VC._Name;
+         * else
+         * break;
+         * }
+         * if (countFound == PK._ColumnObjs.size() - 1)
+         * {
+         * O._PrimaryKey = new PrimaryKey();
+         * O._PrimaryKey._Columns = ColNames;
+         * _PK = O._PrimaryKey;
+         * }
+         * }
+         * }
+         */
       }
 
   }

@@ -24,7 +24,7 @@ import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Object;
-import tilda.parsing.parts.OutputMapping;
+import tilda.parsing.parts.OutputMap;
 import tilda.parsing.parts.PrimaryKey;
 import tilda.parsing.parts.SubWhereClause;
 
@@ -138,7 +138,7 @@ public interface CodeGenTildaFactory extends CodeGenBase
      * @param out
      * @param g
      */
-    public void genMethodToOutput(PrintWriter Out, GeneratorSession G, OutputMapping OM)
+    public void genMethodToOutput(PrintWriter Out, GeneratorSession G, OutputMap OM)
     throws Exception;
 
     public void genMethodInit(PrintWriter Out, GeneratorSession G, Object O);    

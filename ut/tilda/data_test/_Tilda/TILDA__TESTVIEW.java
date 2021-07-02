@@ -366,8 +366,8 @@ This is the setter for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-                       _refnum =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTVIEW_Factory.COLS.REFNUM._Mask);
-                       _name   = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTVIEW_Factory.COLS.NAME._Mask  );
+                       _refnum =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTVIEW_Factory.COLS.REFNUM._Mask); _refnum = null; }
+                       _name   = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTVIEW_Factory.COLS.NAME._Mask  ); _name = null; }
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();
@@ -394,7 +394,7 @@ This is the setter for:<BR>
     }
    public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject) throws Exception
     {
-      toJSON(out, exportName, "", fullObject, false);
+      toJSON(out, exportName, lead, fullObject, false);
     }
    public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject, boolean noNullArrays) throws Exception
     {

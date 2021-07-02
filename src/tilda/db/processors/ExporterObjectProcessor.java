@@ -19,24 +19,38 @@ package tilda.db.processors;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.io.Writer;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.utils.DurationUtil;
+import tilda.utils.NumberFormatUtil;
 
 public abstract class ExporterObjectProcessor<T> implements ObjectProcessor<T>
   {
     protected static final Logger LOG = LogManager.getLogger(ExporterObjectProcessor.class.getName());
 
-    public ExporterObjectProcessor(PrintWriter out, long logFreq, String name)
+    /**
+     * 
+     * @param out
+     * @param outName The name of the Writer
+     * @param logFreq
+     */
+    public ExporterObjectProcessor(Writer out, String outName, long logFreq)
       {
         _out = out;
         _totalCount = 0;
         _logFreq = logFreq;
-        _name = name;
+        _outName = outName;
       }
 
+    /**
+     * 
+     * @param outFile
+     * @param logFreq
+     * @throws FileNotFoundException
+     */
     public ExporterObjectProcessor(String outFile, long logFreq)
       throws FileNotFoundException
       {
@@ -44,19 +58,20 @@ public abstract class ExporterObjectProcessor<T> implements ObjectProcessor<T>
         _cleanWriter = true;
         _totalCount = 0;
         _logFreq = logFreq;
-        _name = outFile;
+        _outName = outFile;
       }
 
-    protected PrintWriter _out;
-    protected boolean     _cleanWriter = false;
-    protected long        _totalCount;
-    protected long        _startTs;
-    protected long        _endTs;
-    protected long        _logFreq;
-    protected String      _name;
+    protected Writer  _out;
+    protected String  _outName;
+    protected boolean _cleanWriter = false;
+    protected long    _totalCount;
+    protected long    _startTs;
+    protected long    _endTs;
+    protected long    _logFreq;
 
 
     public void start()
+    throws Exception
       {
         _startTs = System.nanoTime();
       }
@@ -68,20 +83,21 @@ public abstract class ExporterObjectProcessor<T> implements ObjectProcessor<T>
         if (count % _logFreq == 0)
           {
             long durationNano = System.nanoTime() - _startTs;
-            LOG.info("Saved " + count + " records to CSV in " + DurationUtil.printDuration(durationNano) + " (" + DurationUtil.printPerformancePerMinute(durationNano, count) + " records/min)");
+            LOG.info("Saved " + NumberFormatUtil.printWith000Sep(count) + " records in " + DurationUtil.printDuration(durationNano) + " (" + DurationUtil.printPerformancePerMinute(durationNano, count) + " records/min)");
           }
         return true;
       }
 
     public void end(boolean hasMore, int maxCount)
+    throws Exception
       {
         if (_cleanWriter == true)
           _out.close();
         _endTs = System.nanoTime();
         long durationNano = _endTs - _startTs;
         LOG.info("\n==========================================================================================================================================\n"
-        + "==  " + _name + "\n"
-        + "==  " + _totalCount + " records to CSV in " + DurationUtil.printDuration(durationNano) + " (" + DurationUtil.printPerformancePerMinute(durationNano, _totalCount) + " records/min)\n"
+        + "==  " + _outName + "\n"
+        + "==  " + NumberFormatUtil.printWith000Sep(_totalCount) + " records in " + DurationUtil.printDuration(durationNano) + " (" + DurationUtil.printPerformancePerMinute(durationNano, _totalCount) + " records/min)\n"
         + "==========================================================================================================================================\n");
       }
 

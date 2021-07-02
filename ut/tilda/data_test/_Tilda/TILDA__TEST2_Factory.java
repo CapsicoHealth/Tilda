@@ -53,7 +53,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          REFNUM     = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"     , 0/*0*/, "The primary key for this record");
+     public static Type_LongPrimitive          REFNUM     = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"     , 0/*0*/, "The primary key for this record", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Test2.name -> TILDATEST.Test2."name"
@@ -72,7 +72,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        NAME       = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "name"       , 1/*1*/, "The name of the test");
+     public static Type_StringPrimitive        NAME       = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "name"       , 1/*1*/, "The name of the test", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Test2.test_fk -> TILDATEST.Test2."test_fk"
@@ -90,7 +90,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          TEST_FK    = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "test_fk"    , 2/*2*/, "The name of the test");
+     public static Type_LongPrimitive          TEST_FK    = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "test_fk"    , 2/*2*/, "The name of the test", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Test2.created -> TILDATEST.Test2."created"
@@ -115,7 +115,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      CREATED    = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"    , 3/*3*/, "The timestamp for when the record was created. (TILDATEST.Test2)");
+     public static Type_DatetimePrimitive      CREATED    = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"    , 3/*3*/, "The timestamp for when the record was created. (TILDATEST.Test2)", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Test2.lastUpdated -> TILDATEST.Test2."lastUpdated"
@@ -140,7 +140,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      LASTUPDATED= new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated", 4/*4*/, "The timestamp for when the record was last updated. (TILDATEST.Test2)");
+     public static Type_DatetimePrimitive      LASTUPDATED= new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated", 4/*4*/, "The timestamp for when the record was last updated. (TILDATEST.Test2)", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Test2.deleted -> TILDATEST.Test2."deleted"
@@ -158,7 +158,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  DELETED    = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"    , 5/*5*/, "The timestamp for when the record was deleted. (TILDATEST.Test2)");
+     public static Type_DatetimePrimitiveNull  DELETED    = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"    , 5/*5*/, "The timestamp for when the record was deleted. (TILDATEST.Test2)", null, null);
 ;
    }
 
@@ -200,8 +200,8 @@ This is the column definition for:<BR>
        protected Connection _C = null;
        protected tilda.db.processors.ObjectProcessor<tilda.data_test.Test2_Data> _OP;
        protected ArrayListResults<tilda.data_test.Test2_Data> _L = null;
-       public void    start  () { if (_OP != null) _OP.start(); }
-       public void    end    (boolean hasMore, int maxCount) { if (_OP == null) _L.wrapup(hasMore, maxCount); else _OP.end(hasMore, maxCount); }
+       public void    start  ()                              throws Exception { if (_OP != null) _OP.start(); }
+       public void    end    (boolean hasMore, int maxCount) throws Exception { if (_OP == null) _L.wrapup(hasMore, maxCount); else _OP.end(hasMore, maxCount); }
        public boolean process(int count, java.sql.ResultSet RS) throws Exception
         {
           tilda.data_test.Test2_Data Obj = new tilda.data_test.Test2_Data();
@@ -252,6 +252,10 @@ This is the column definition for:<BR>
                 String clause = ((SelectQuery)ExtraParams).getWhereClause();
                 if (TextUtil.isNullOrEmpty(clause) == false) S.append(clause);
                 break;
+             case 2: // Quwey 'All'
+                S.append(" where (");  S.append("1=1");  S.append(")");
+                S.append(" order by "); C.getFullColumnVar(S, "TILDATEST", "Test2", "refnum"); S.append(" ASC");
+                break;
              case -77: 
              case -666: break;
              default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot create where clause.");
@@ -275,6 +279,9 @@ This is the column definition for:<BR>
              case -77:
              case -7:
                 break;
+             case 2: { // Query 'All'
+               break;
+             }
              case -666: break;
              default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot prepare statement.");
            }
@@ -504,6 +511,30 @@ object. The generic init method defaults to this general data structure as a gen
      }
 
 
+   static public ListResults<tilda.data_test.Test2_Data> lookupWhereAll(Connection C, int start, int size) throws Exception
+     {
+       tilda.data_test._Tilda.TILDA__TEST2 Obj = new tilda.data_test.Test2_Data();
+       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
+
+
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
+       readMany(C, 2, RPI, Obj, null, start, size);
+       return RPI._L;
+     }
+
+
+   static public void lookupWhereAll(Connection C, tilda.db.processors.ObjectProcessor<tilda.data_test.Test2_Data> OP, int start, int size) throws Exception
+     {
+       tilda.data_test._Tilda.TILDA__TEST2 Obj = new tilda.data_test.Test2_Data();
+       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
+
+
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
+       readMany(C, 2, RPI, Obj, null, start, size);
+     }
+
+
+
    public static SelectQuery newSelectQuery(Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, true); }
    public static SelectQuery newWhereQuery (Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, false); }
    public static ListResults<tilda.data_test.Test2_Data> runSelect(Connection C, SelectQuery Q, int start, int size) throws Exception
@@ -562,12 +593,13 @@ object. The generic init method defaults to this general data structure as a gen
 
    public static void toJSON(java.io.Writer out, tilda.data_test.Test2_Data obj, String lead, boolean fullObject) throws java.io.IOException
     {
-      toJSON(out, obj, "", fullObject, false);
+      toJSON(out, obj, lead, fullObject, false);
     }
 
-   public static void toJSON(java.io.Writer out, tilda.data_test.Test2_Data obj, String lead, boolean fullObject, boolean noNullArrays) throws java.io.IOException
+   public static void toJSON(java.io.Writer outWriter, tilda.data_test.Test2_Data obj, String lead, boolean fullObject, boolean noNullArrays) throws java.io.IOException
     {
       long T0 = System.nanoTime();
+      org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter();
       tilda.data_test._Tilda.TILDA__TEST2 Obj = (tilda.data_test._Tilda.TILDA__TEST2) obj;
       if (fullObject == true)
        {
@@ -582,6 +614,10 @@ object. The generic init method defaults to this general data structure as a gen
 
       if (fullObject == true)
        out.write(" }\n");
+
+      outWriter.append(out.getBuilder().toString());
+      out.close();
+
       PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
     }
 

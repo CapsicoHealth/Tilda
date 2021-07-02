@@ -43,12 +43,12 @@ public class Reverse
       {
         LOG.info("");
         LOG.info("Tilda reverse utility");
-        LOG.info("   This utility will reverse enginer a Schema from the database and generate a tilda.json file.");
-        LOG.info("   It takes one parameter, the name of the schema to reverse engineer.");
+        LOG.info("   This utility will reverse enginer a whole Schema or Table from the database and generate a tilda.json file.");
+        LOG.info("   It takes one mandatory parameter, the name of the schema to reverse engineer, and optionally, the name of a specific table to reverse engineer.");
         LOG.info("");
-        if (Args.length != 1)
+        if (Args.length < 1 || Args.length > 2)
           {
-            LOG.error("You must specify a single parameter, the name of the schema to reverse engineer.");
+            LOG.error("You must specify 1 or 2 parameters: the name of the schema to reverse engineer and optionally the name of a specific table.");
             return;
           }
         LOG.info("");
@@ -62,6 +62,8 @@ public class Reverse
 
             for (TableMeta T : S.getTableMetas())
               {
+                if (Args.length == 2 && TextUtil.isNullOrEmpty(Args[1]) == false && Args[1].equalsIgnoreCase(T._TableName) == false)
+                 continue;
                 ++tableNum;
                 if (tableNum == 0)
                   Str.append("  \"objects\":[");

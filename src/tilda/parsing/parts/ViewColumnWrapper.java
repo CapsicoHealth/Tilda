@@ -94,7 +94,7 @@ public class ViewColumnWrapper extends Column
       {
         return _VCol.getName();
       }
-
+    
     /**
      * Overrides the Column's method and defers to the ViewColumn implementation.
      */

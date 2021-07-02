@@ -1136,7 +1136,7 @@ This is the hasChanged for:<BR>
    public void copyTo(tilda.data._Tilda.TILDA__MAPPING Dst) throws Exception
      {
        Dst.setLastUpdated(_lastUpdated);
-       if (__Changes.intersects(TILDA__MAPPING_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull    (); else        Dst.setDeleted    (_deleted    );
+       if (__Nulls.intersects(TILDA__MAPPING_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull    (); else        Dst.setDeleted    (_deleted    );
      }
 
 /**
@@ -1196,7 +1196,7 @@ This is the hasChanged for:<BR>
 
           switch (__LookupId)
            {
-             case 0:
+             case 0: // Unique Index 'TypeSrcDst'
                PS.setString    (++i, _type       );
                PS.setString    (++i, _src        );
                PS.setString    (++i, _dst        );
@@ -1324,8 +1324,8 @@ This is the hasChanged for:<BR>
 
           switch (__LookupId)
            {
-             case 0:
-                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Mapping", "type"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "Mapping", "src"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "Mapping", "dst"); S.append("=?)");
+             case 0: // Unique Index 'TypeSrcDst'
+                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Mapping", "type"); S.append("=?");  S.append(" AND "); C.getFullColumnVar(S, "TILDA", "Mapping", "src"); S.append("=?");  S.append(" AND "); C.getFullColumnVar(S, "TILDA", "Mapping", "dst"); S.append("=?");  S.append(")");
                 break;
              case -77: 
              case -666: if (__Init == InitMode.CREATE) break;
@@ -1395,7 +1395,6 @@ This is the hasChanged for:<BR>
         }
 
        __Changes.clear();
-       __Nulls.clear();
      }
 /**
  Writes the object to the data store using an upsert approach and assumes the object is either
@@ -1502,8 +1501,8 @@ This is the hasChanged for:<BR>
           S.append(" from "); C.getFullTableVar(S, "TILDA", "Mapping");
        switch (__LookupId)
         {
-          case 0:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Mapping", "type"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "Mapping", "src"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "Mapping", "dst"); S.append("=?)");
+          case 0: // Unique Index 'TypeSrcDst'
+             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Mapping", "type"); S.append("=?");  S.append(" AND "); C.getFullColumnVar(S, "TILDA", "Mapping", "src"); S.append("=?");  S.append(" AND "); C.getFullColumnVar(S, "TILDA", "Mapping", "dst"); S.append("=?");  S.append(")");
              break;
           case -77: 
           case -666: if (__Init == InitMode.CREATE) break;
@@ -1525,7 +1524,7 @@ This is the hasChanged for:<BR>
           int i = 0;
           switch (__LookupId)
            {
-             case 0:
+             case 0: // Unique Index 'TypeSrcDst'
                PS.setString    (++i, _type       );
                PS.setString    (++i, _src        );
                PS.setString    (++i, _dst        );
@@ -1559,12 +1558,12 @@ This is the hasChanged for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-      __Saved_type        = _type        = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MAPPING_Factory.COLS.TYPE._Mask       );
-      __Saved_src         = _src         = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MAPPING_Factory.COLS.SRC._Mask        );
-      __Saved_dst         = _dst         = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MAPPING_Factory.COLS.DST._Mask        );
-                            _created     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__MAPPING_Factory.COLS.CREATED._Mask    );
-                            _lastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__MAPPING_Factory.COLS.LASTUPDATED._Mask);
-                            _deleted     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__MAPPING_Factory.COLS.DELETED._Mask    );
+      __Saved_type        = _type        = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__MAPPING_Factory.COLS.TYPE._Mask       ); _type = null; }
+      __Saved_src         = _src         = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__MAPPING_Factory.COLS.SRC._Mask        ); _src = null; }
+      __Saved_dst         = _dst         = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__MAPPING_Factory.COLS.DST._Mask        ); _dst = null; }
+                            _created     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__MAPPING_Factory.COLS.CREATED._Mask    ); _created = null; }
+                            _lastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__MAPPING_Factory.COLS.LASTUPDATED._Mask); _lastUpdated = null; }
+                            _deleted     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__MAPPING_Factory.COLS.DELETED._Mask    ); _deleted = null; }
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();

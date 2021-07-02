@@ -51,14 +51,14 @@ public class JSONRecordProcessor implements RecordProcessor
       while (I.hasNext() == true)
         {
           ColumnDefinition c = I.next();
-          if (c._Type == ColumnType.CHAR || c._Type == ColumnType.STRING)
+          if (c.getType() == ColumnType.CHAR || c.getType() == ColumnType.STRING)
            JSONUtil.print(_Out, c.getName(), i==1 , RS.getString(i).trim());
-          else if (c._Type == ColumnType.DOUBLE || c._Type == ColumnType.FLOAT)
+          else if (c.getType() == ColumnType.DOUBLE || c.getType() == ColumnType.FLOAT)
            JSONUtil.print(_Out, c.getName(), i==1 , RS.getDouble(i));
-          else if (c._Type == ColumnType.LONG || c._Type == ColumnType.INTEGER)
+          else if (c.getType() == ColumnType.LONG || c.getType() == ColumnType.INTEGER)
             JSONUtil.print(_Out, c.getName(), i==1 , RS.getLong(i));
           else
-           throw new Exception(c._Type+" column '"+c.getName()+"' was passed in through a query in position "+i+": JSONRecordProcessor only supports columns of type char/string/text, long/integer, or double/float.");
+           throw new Exception(c.getType()+" column '"+c.getName()+"' was passed in through a query in position "+i+": JSONRecordProcessor only supports columns of type char/string/text, long/integer, or double/float.");
           ++i;
         }
       _Out.append(" }\n");

@@ -20,9 +20,9 @@ import tilda.enums.ColumnType;
 
 public class Type_UuidCollection extends ColumnDefinition
   {
-    public Type_UuidCollection(String SchemaName, String TableName, String ColumnName, int Count, String Description)
+    public Type_UuidCollection(String SchemaName, String TableName, String ColumnName, int Count, String Description, String[] expressionStrs, String[] expressionsDependencies)
       {
-        super(SchemaName, TableName, ColumnName, Count, ColumnType.UUID, true, Description);
+        super(SchemaName, TableName, ColumnName, Count, ColumnType.UUID, true, Description, expressionStrs, expressionsDependencies);
       }
     
   }

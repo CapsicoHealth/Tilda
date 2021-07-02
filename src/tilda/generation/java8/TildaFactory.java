@@ -27,6 +27,7 @@ import org.apache.logging.log4j.core.util.StringBuilderWriter;
 
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
+import tilda.enums.FrameworkColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.enums.NVPSourceType;
 import tilda.enums.ObjectLifecycle;
@@ -39,7 +40,7 @@ import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Object;
-import tilda.parsing.parts.OutputMapping;
+import tilda.parsing.parts.OutputMap;
 import tilda.parsing.parts.PrimaryKey;
 import tilda.parsing.parts.Query;
 import tilda.parsing.parts.SubWhereClause;
@@ -114,7 +115,18 @@ public class TildaFactory implements CodeGenTildaFactory
               // String ColVarOthers = TextUtil.escapeDoubleQuoteWithSlash(G.getSql().getShortColumnVar(C), "", false);
               String ColumnTypeClassName = "Type_" + TextUtil.normalCapitalization(C.getType().name()) + (C.isCollection() ? "Collection" : "Primitive") + (C._Nullable == true ? "Null" : "");
               G.getGenDocs().docField(Out, G, C, "column definition");
-              Out.print("     public static " + ColumnTypeClassName + TypePad + " " + C.getName().toUpperCase() + ColumnPad + "= new " + ColumnTypeClassName + TypePad + "(SCHEMA_LABEL, TABLENAME_LABEL, \"" + C.getName() + "\"" + ColumnPad + ", " + (++Counter) + "/*" + C.getSequenceOrder() + "*/, " + TextUtil.escapeDoubleQuoteWithSlash(C._Description));
+              if (C._FCT == FrameworkColumnType.FORMULA || C._FCT == FrameworkColumnType.FORMULA_DT)
+               {
+                 Out.print("     public static " + ColumnTypeClassName + TypePad + " " + C.getName().toUpperCase() 
+                                                 + ColumnPad + "= new " + ColumnTypeClassName + TypePad + "(SCHEMA_LABEL, TABLENAME_LABEL, \"" + C.getName() + "\"" + ColumnPad 
+                                                 + ", " + (++Counter) + "/*" + C.getSequenceOrder() + "*/, " + TextUtil.escapeDoubleQuoteWithSlash(C._Description)
+                                                 +", new String[] {"+TextUtil.printJavaStringArray(C._expressionStrs)
+                                                 +"}, new String[] {"+TextUtil.printJavaStringArray(C._expressionDependencyColumnNames)+"}");
+               }
+              else
+               Out.print("     public static " + ColumnTypeClassName + TypePad + " " + C.getName().toUpperCase() 
+                                               + ColumnPad + "= new " + ColumnTypeClassName + TypePad + "(SCHEMA_LABEL, TABLENAME_LABEL, \"" + C.getName() + "\"" + ColumnPad 
+                                               + ", " + (++Counter) + "/*" + C.getSequenceOrder() + "*/, " + TextUtil.escapeDoubleQuoteWithSlash(C._Description)+", null, null");
               if (C.getType() == ColumnType.DATETIME && C.needsTZ() == true && O.getColumn(C.getName() + "TZ") != null)
                 {
                   Out.print(", " + C.getName().toUpperCase() + "TZ");
@@ -228,8 +240,8 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("       protected Connection _C = null;");
         Out.println("       protected tilda.db.processors.ObjectProcessor<" + Helper.getFullAppDataClassName(O) + "> _OP;");
         Out.println("       protected ArrayListResults<" + Helper.getFullAppDataClassName(O) + "> _L = null;");
-        Out.println("       public void    start  () { if (_OP != null) _OP.start(); }");
-        Out.println("       public void    end    (boolean hasMore, int maxCount) { if (_OP == null) _L.wrapup(hasMore, maxCount); else _OP.end(hasMore, maxCount); }");
+        Out.println("       public void    start  ()                              throws Exception { if (_OP != null) _OP.start(); }");
+        Out.println("       public void    end    (boolean hasMore, int maxCount) throws Exception { if (_OP == null) _L.wrapup(hasMore, maxCount); else _OP.end(hasMore, maxCount); }");
         Out.println("       public boolean process(int count, java.sql.ResultSet RS) throws Exception");
         Out.println("        {");
         Out.println("          " + Helper.getFullAppDataClassName(O) + " Obj = new " + Helper.getFullAppDataClassName(O) + "();");
@@ -386,7 +398,7 @@ public class TildaFactory implements CodeGenTildaFactory
               {
                 Out.println("       if (vals!=null && vals.length > 1)");
                 Out.println("        Errors.add(new StringStringPair("+ TextUtil.escapeDoubleQuoteWithSlash(C.getName()) +", \"Parameter is not a list or a set and yet received \"+vals.length+\" values\"));");
-      }
+              }
 
             Out.print("       " + (C.isCollection() == true && C._JsonSchema == null ? JavaJDBCType.getFieldType(C) : JavaJDBCType.getFieldTypeBaseClass(C))
             + " _" + C.getName()
@@ -1028,7 +1040,7 @@ public class TildaFactory implements CodeGenTildaFactory
 
 
     @Override
-    public void genMethodToOutput(PrintWriter Out, GeneratorSession G, OutputMapping OM)
+    public void genMethodToOutput(PrintWriter Out, GeneratorSession G, OutputMap OM)
     throws Exception
       {
         for (OutputFormatType OFT : OM._OutputTypes)
@@ -1049,7 +1061,7 @@ public class TildaFactory implements CodeGenTildaFactory
       }
 
 
-    protected static void genMethodToJSON(PrintWriter Out, GeneratorSession G, OutputMapping J)
+    protected static void genMethodToJSON(PrintWriter Out, GeneratorSession G, OutputMap J)
     throws Exception
       {
         Out.println("   public static void toJSON" + J._Name + "(java.io.Writer out, List<" + Helper.getFullAppDataClassName(J._ParentObject) + "> L, String lead, boolean fullList) throws java.io.IOException");
@@ -1096,9 +1108,10 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("      toJSON" + J._Name + "(out, obj, lead, fullObject, false);");
         Out.println("    }");
         Out.println();
-        Out.println("   public static void toJSON" + J._Name + "(java.io.Writer out, " + Helper.getFullAppDataClassName(J._ParentObject) + " obj, String lead, boolean fullObject, boolean noNullArrays) throws java.io.IOException");
+        Out.println("   public static void toJSON" + J._Name + "(java.io.Writer outWriter, " + Helper.getFullAppDataClassName(J._ParentObject) + " obj, String lead, boolean fullObject, boolean noNullArrays) throws java.io.IOException");
         Out.println("    {");
         Out.println("      long T0 = System.nanoTime();");
+        Out.println("      org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter();");
         Out.println("      " + Helper.getFullBaseClassName(J._ParentObject) + " Obj = (" + Helper.getFullBaseClassName(J._ParentObject) + ") obj;");
         Out.println("      if (fullObject == true)");
         Out.println("       {");
@@ -1112,6 +1125,10 @@ public class TildaFactory implements CodeGenTildaFactory
            Helper.JSONExport(Out, C);
         Out.println("      if (fullObject == true)");
         Out.println("       out.write(\" }\\n\");");
+        Out.println();
+        Out.println("      outWriter.append(out.getBuilder().toString());");
+        Out.println("      out.close();");
+        Out.println();
         Out.println("      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);");
         Out.println("    }");
 
@@ -1184,7 +1201,7 @@ public class TildaFactory implements CodeGenTildaFactory
       }
 
 
-    protected static void genMethodToCSV(PrintWriter Out, GeneratorSession G, OutputMapping J)
+    protected static void genMethodToCSV(PrintWriter Out, GeneratorSession G, OutputMap J)
     throws Exception
       {
         Out.println("   public static String getCSVHeader" + J._Name + "()");
@@ -1280,7 +1297,7 @@ public class TildaFactory implements CodeGenTildaFactory
 
 
 
-    protected static void genMethodToNVP(PrintWriter Out, GeneratorSession G, OutputMapping J)
+    protected static void genMethodToNVP(PrintWriter Out, GeneratorSession G, OutputMap J)
     throws Exception
       {
         if (J._NVPSrc.equals(NVPSourceType.ROWS))

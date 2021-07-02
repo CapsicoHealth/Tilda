@@ -1737,7 +1737,7 @@ This is the hasChanged for:<BR>
        Dst.setAnswerLabel  (_answerLabel  );
        Dst.setCorrect      (_correct      );
        Dst.setLastUpdated  (_lastUpdated  );
-       if (__Changes.intersects(TILDA__TESTQUESTIONANSWER_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull      (); else        Dst.setDeleted      (_deleted      );
+       if (__Nulls.intersects(TILDA__TESTQUESTIONANSWER_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull      (); else        Dst.setDeleted      (_deleted      );
      }
 
 /**
@@ -1799,10 +1799,10 @@ This is the hasChanged for:<BR>
 
           switch (__LookupId)
            {
-             case 0:
+             case 0: // PK
                PS.setLong      (++i, _refnum       );
                break;
-             case 1:
+             case 1: // Unique Index 'FormAnswer'
                PS.setString    (++i, _type         );
                PS.setString    (++i, _questionId   );
                PS.setInt       (++i, _answerSeq    );
@@ -1967,11 +1967,11 @@ This is the hasChanged for:<BR>
 
           switch (__LookupId)
            {
-             case 0:
-                S.append(" where ("); C.getFullColumnVar(S, "TILDATUTORIAL", "TestQuestionAnswer", "refnum"); S.append("=?)");
+             case 0: // PK
+                S.append(" where ("); C.getFullColumnVar(S, "TILDATUTORIAL", "TestQuestionAnswer", "refnum"); S.append("=?");  S.append(")");
                 break;
-             case 1:
-                S.append(" where ("); C.getFullColumnVar(S, "TILDATUTORIAL", "TestQuestionAnswer", "type"); S.append("=? AND "); C.getFullColumnVar(S, "TILDATUTORIAL", "TestQuestionAnswer", "questionId"); S.append("=? AND "); C.getFullColumnVar(S, "TILDATUTORIAL", "TestQuestionAnswer", "answerSeq"); S.append("=?)");
+             case 1: // Unique Index 'FormAnswer'
+                S.append(" where ("); C.getFullColumnVar(S, "TILDATUTORIAL", "TestQuestionAnswer", "type"); S.append("=?");  S.append(" AND "); C.getFullColumnVar(S, "TILDATUTORIAL", "TestQuestionAnswer", "questionId"); S.append("=?");  S.append(" AND "); C.getFullColumnVar(S, "TILDATUTORIAL", "TestQuestionAnswer", "answerSeq"); S.append("=?");  S.append(")");
                 break;
              case -77: 
              case -666: if (__Init == InitMode.CREATE) break;
@@ -2068,7 +2068,6 @@ This is the hasChanged for:<BR>
         }
 
        __Changes.clear();
-       __Nulls.clear();
      }
 /**
  Writes the object to the data store using an upsert approach and assumes the object is either
@@ -2090,7 +2089,7 @@ This is the hasChanged for:<BR>
        if (OK == false)
         throw new Exception("Object has not been instanciated via deserialization or the factory create() method.");
 
-       if (__Init == null && __LookupId==0);  // object deserialized
+       if (__Init == null && __LookupId==0)  // object deserialized
         validateDeserialization();
 
        int lookupId = getFirstValidLookupBy();
@@ -2191,11 +2190,11 @@ This is the hasChanged for:<BR>
           S.append(" from "); C.getFullTableVar(S, "TILDATUTORIAL", "TestQuestionAnswer");
        switch (__LookupId)
         {
-          case 0:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDATUTORIAL", "TestQuestionAnswer", "refnum"); S.append("=?)");
+          case 0: // PK
+             S.append(" where ("); C.getFullColumnVar(S, "TILDATUTORIAL", "TestQuestionAnswer", "refnum"); S.append("=?");  S.append(")");
              break;
-          case 1:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDATUTORIAL", "TestQuestionAnswer", "type"); S.append("=? AND "); C.getFullColumnVar(S, "TILDATUTORIAL", "TestQuestionAnswer", "questionId"); S.append("=? AND "); C.getFullColumnVar(S, "TILDATUTORIAL", "TestQuestionAnswer", "answerSeq"); S.append("=?)");
+          case 1: // Unique Index 'FormAnswer'
+             S.append(" where ("); C.getFullColumnVar(S, "TILDATUTORIAL", "TestQuestionAnswer", "type"); S.append("=?");  S.append(" AND "); C.getFullColumnVar(S, "TILDATUTORIAL", "TestQuestionAnswer", "questionId"); S.append("=?");  S.append(" AND "); C.getFullColumnVar(S, "TILDATUTORIAL", "TestQuestionAnswer", "answerSeq"); S.append("=?");  S.append(")");
              break;
           case -77: 
           case -666: if (__Init == InitMode.CREATE) break;
@@ -2217,10 +2216,10 @@ This is the hasChanged for:<BR>
           int i = 0;
           switch (__LookupId)
            {
-             case 0:
+             case 0: // PK
                PS.setLong      (++i, _refnum       );
                break;
-             case 1:
+             case 1: // Unique Index 'FormAnswer'
                PS.setString    (++i, _type         );
                PS.setString    (++i, _questionId   );
                PS.setInt       (++i, _answerSeq    );
@@ -2254,18 +2253,18 @@ This is the hasChanged for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-      __Saved_refnum        = _refnum        =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTQUESTIONANSWER_Factory.COLS.REFNUM._Mask       );
-      __Saved_type          = _type          = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTQUESTIONANSWER_Factory.COLS.TYPE._Mask         );
-                              _questionSeq   =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTQUESTIONANSWER_Factory.COLS.QUESTIONSEQ._Mask  );
-      __Saved_questionId    = _questionId    = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTQUESTIONANSWER_Factory.COLS.QUESTIONID._Mask   );
-                              _questionLabel = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTQUESTIONANSWER_Factory.COLS.QUESTIONLABEL._Mask);
-      __Saved_answerSeq     = _answerSeq     =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTQUESTIONANSWER_Factory.COLS.ANSWERSEQ._Mask    );
-                              _answerId      = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTQUESTIONANSWER_Factory.COLS.ANSWERID._Mask     );
-                              _answerLabel   = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTQUESTIONANSWER_Factory.COLS.ANSWERLABEL._Mask  );
-                              _correct       =                              RS.getBoolean   (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTQUESTIONANSWER_Factory.COLS.CORRECT._Mask      );
-                              _created       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTQUESTIONANSWER_Factory.COLS.CREATED._Mask      );
-                              _lastUpdated   = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTQUESTIONANSWER_Factory.COLS.LASTUPDATED._Mask  );
-                              _deleted       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTQUESTIONANSWER_Factory.COLS.DELETED._Mask      );
+      __Saved_refnum        = _refnum        =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTQUESTIONANSWER_Factory.COLS.REFNUM._Mask       ); _refnum = null; }
+      __Saved_type          = _type          = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTQUESTIONANSWER_Factory.COLS.TYPE._Mask         ); _type = null; }
+                              _questionSeq   =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTQUESTIONANSWER_Factory.COLS.QUESTIONSEQ._Mask  ); _questionSeq = null; }
+      __Saved_questionId    = _questionId    = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTQUESTIONANSWER_Factory.COLS.QUESTIONID._Mask   ); _questionId = null; }
+                              _questionLabel = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTQUESTIONANSWER_Factory.COLS.QUESTIONLABEL._Mask); _questionLabel = null; }
+      __Saved_answerSeq     = _answerSeq     =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTQUESTIONANSWER_Factory.COLS.ANSWERSEQ._Mask    ); _answerSeq = null; }
+                              _answerId      = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTQUESTIONANSWER_Factory.COLS.ANSWERID._Mask     ); _answerId = null; }
+                              _answerLabel   = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTQUESTIONANSWER_Factory.COLS.ANSWERLABEL._Mask  ); _answerLabel = null; }
+                              _correct       =                              RS.getBoolean   (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTQUESTIONANSWER_Factory.COLS.CORRECT._Mask      ); _correct = null; }
+                              _created       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTQUESTIONANSWER_Factory.COLS.CREATED._Mask      ); _created = null; }
+                              _lastUpdated   = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTQUESTIONANSWER_Factory.COLS.LASTUPDATED._Mask  ); _lastUpdated = null; }
+                              _deleted       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTQUESTIONANSWER_Factory.COLS.DELETED._Mask      ); _deleted = null; }
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();

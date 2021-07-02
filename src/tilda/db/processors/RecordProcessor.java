@@ -24,6 +24,7 @@ public interface RecordProcessor
      * Called before the first record is processed
      */
     default public void start()
+    throws Exception
       {
       }
 
@@ -46,6 +47,7 @@ public interface RecordProcessor
      * @param maxCount the max count originally supplied to the query handler
      */
     default void end(boolean hasMore, int maxCount)
+    throws Exception
       {
       }    
   }

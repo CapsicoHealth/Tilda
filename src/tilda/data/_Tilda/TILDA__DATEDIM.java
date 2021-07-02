@@ -4276,29 +4276,29 @@ This is the hasChanged for:<BR>
    public void copyTo(tilda.data._Tilda.TILDA__DATEDIM Dst) throws Exception
      {
        Dst.setEpoch         (_epoch         );
-       if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.DAYNAME._Mask) == true) Dst.setDayNameNull       (); else        Dst.setDayName       (_dayName       );
-       if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFWEEK._Mask) == true) Dst.setDayOfWeekNull     (); else        Dst.setDayOfWeek     (_dayOfWeek     );
-       if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFMONTH._Mask) == true) Dst.setDayOfMonthNull    (); else        Dst.setDayOfMonth    (_dayOfMonth    );
-       if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFQUARTER._Mask) == true) Dst.setDayOfQuarterNull  (); else        Dst.setDayOfQuarter  (_dayOfQuarter  );
-       if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFYEAR._Mask) == true) Dst.setDayOfYearNull     (); else        Dst.setDayOfYear     (_dayOfYear     );
-       if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.WEEKOFMONTH._Mask) == true) Dst.setWeekOfMonthNull   (); else        Dst.setWeekOfMonth   (_weekOfMonth   );
-       if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.WEEKOFYEAR._Mask) == true) Dst.setWeekOfYearNull    (); else        Dst.setWeekOfYear    (_weekOfYear    );
-       if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.MONTH._Mask) == true) Dst.setMonthNull         (); else        Dst.setMonth         (_month         );
-       if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.MONTHOFYEAR._Mask) == true) Dst.setMonthOfYearNull   (); else        Dst.setMonthOfYear   (_monthOfYear   );
-       if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.MONTHNAME._Mask) == true) Dst.setMonthNameNull     (); else        Dst.setMonthName     (_monthName     );
-       if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.MONTHNAMESHORT._Mask) == true) Dst.setMonthNameShortNull(); else        Dst.setMonthNameShort(_monthNameShort);
-       if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.QUARTEROFYEAR._Mask) == true) Dst.setQuarterOfYearNull (); else        Dst.setQuarterOfYear (_quarterOfYear );
-       if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.QUARTERNAME._Mask) == true) Dst.setQuarterNameNull   (); else        Dst.setQuarterName   (_quarterName   );
-       if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.YEAR._Mask) == true) Dst.setYearNull          (); else        Dst.setYear          (_year          );
-       if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.MMYYYY._Mask) == true) Dst.setMmyyyyNull        (); else        Dst.setMmyyyy        (_mmyyyy        );
-       if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.MMDDYYYY._Mask) == true) Dst.setMmddyyyyNull      (); else        Dst.setMmddyyyy      (_mmddyyyy      );
-       if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.YYYYMMDD._Mask) == true) Dst.setYyyymmddNull      (); else        Dst.setYyyymmdd      (_yyyymmdd      );
-       if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.ISWEEKEND._Mask) == true) Dst.setIsWeekendNull     (); else        Dst.setIsWeekend     (_isWeekend     );
-       if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.ISBUSINESSDAY._Mask) == true) Dst.setIsBusinessDayNull (); else        Dst.setIsBusinessDay (_isBusinessDay );
-       if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.ISHOLIDAY._Mask) == true) Dst.setIsHolidayNull     (); else        Dst.setIsHoliday     (_isHoliday     );
-       if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.HOLIDAYNAME._Mask) == true) Dst.setHolidayNameNull   (); else        Dst.setHolidayName   (_holidayName   );
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYNAME._Mask) == true) Dst.setDayNameNull       (); else        Dst.setDayName       (_dayName       );
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFWEEK._Mask) == true) Dst.setDayOfWeekNull     (); else        Dst.setDayOfWeek     (_dayOfWeek     );
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFMONTH._Mask) == true) Dst.setDayOfMonthNull    (); else        Dst.setDayOfMonth    (_dayOfMonth    );
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFQUARTER._Mask) == true) Dst.setDayOfQuarterNull  (); else        Dst.setDayOfQuarter  (_dayOfQuarter  );
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFYEAR._Mask) == true) Dst.setDayOfYearNull     (); else        Dst.setDayOfYear     (_dayOfYear     );
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.WEEKOFMONTH._Mask) == true) Dst.setWeekOfMonthNull   (); else        Dst.setWeekOfMonth   (_weekOfMonth   );
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.WEEKOFYEAR._Mask) == true) Dst.setWeekOfYearNull    (); else        Dst.setWeekOfYear    (_weekOfYear    );
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTH._Mask) == true) Dst.setMonthNull         (); else        Dst.setMonth         (_month         );
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTHOFYEAR._Mask) == true) Dst.setMonthOfYearNull   (); else        Dst.setMonthOfYear   (_monthOfYear   );
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTHNAME._Mask) == true) Dst.setMonthNameNull     (); else        Dst.setMonthName     (_monthName     );
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTHNAMESHORT._Mask) == true) Dst.setMonthNameShortNull(); else        Dst.setMonthNameShort(_monthNameShort);
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.QUARTEROFYEAR._Mask) == true) Dst.setQuarterOfYearNull (); else        Dst.setQuarterOfYear (_quarterOfYear );
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.QUARTERNAME._Mask) == true) Dst.setQuarterNameNull   (); else        Dst.setQuarterName   (_quarterName   );
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.YEAR._Mask) == true) Dst.setYearNull          (); else        Dst.setYear          (_year          );
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MMYYYY._Mask) == true) Dst.setMmyyyyNull        (); else        Dst.setMmyyyy        (_mmyyyy        );
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MMDDYYYY._Mask) == true) Dst.setMmddyyyyNull      (); else        Dst.setMmddyyyy      (_mmddyyyy      );
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.YYYYMMDD._Mask) == true) Dst.setYyyymmddNull      (); else        Dst.setYyyymmdd      (_yyyymmdd      );
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.ISWEEKEND._Mask) == true) Dst.setIsWeekendNull     (); else        Dst.setIsWeekend     (_isWeekend     );
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.ISBUSINESSDAY._Mask) == true) Dst.setIsBusinessDayNull (); else        Dst.setIsBusinessDay (_isBusinessDay );
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.ISHOLIDAY._Mask) == true) Dst.setIsHolidayNull     (); else        Dst.setIsHoliday     (_isHoliday     );
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.HOLIDAYNAME._Mask) == true) Dst.setHolidayNameNull   (); else        Dst.setHolidayName   (_holidayName   );
        Dst.setLastUpdated   (_lastUpdated   );
-       if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull       (); else        Dst.setDeleted       (_deleted       );
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull       (); else        Dst.setDeleted       (_deleted       );
      }
 
 /**
@@ -4358,7 +4358,7 @@ This is the hasChanged for:<BR>
 
           switch (__LookupId)
            {
-             case 0:
+             case 0: // PK
                PS.setDate(++i, new java.sql.Date(_dt.getYear()-1900, _dt.getMonthValue()-1, _dt.getDayOfMonth()));
                break;
              case -666: if (__Init == InitMode.CREATE) break;
@@ -4661,8 +4661,8 @@ This is the hasChanged for:<BR>
 
           switch (__LookupId)
            {
-             case 0:
-                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "DateDim", "dt"); S.append("=?)");
+             case 0: // PK
+                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "DateDim", "dt"); S.append("=?");  S.append(")");
                 break;
              case -77: 
              case -666: if (__Init == InitMode.CREATE) break;
@@ -4810,7 +4810,6 @@ This is the hasChanged for:<BR>
         }
 
        __Changes.clear();
-       __Nulls.clear();
      }
 /**
  Writes the object to the data store using an upsert approach and assumes the object is either
@@ -4937,8 +4936,8 @@ This is the hasChanged for:<BR>
           S.append(" from "); C.getFullTableVar(S, "TILDA", "DateDim");
        switch (__LookupId)
         {
-          case 0:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "DateDim", "dt"); S.append("=?)");
+          case 0: // PK
+             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "DateDim", "dt"); S.append("=?");  S.append(")");
              break;
           case -77: 
           case -666: if (__Init == InitMode.CREATE) break;
@@ -4960,7 +4959,7 @@ This is the hasChanged for:<BR>
           int i = 0;
           switch (__LookupId)
            {
-             case 0:
+             case 0: // PK
                PS.setDate(++i, new java.sql.Date(_dt.getYear()-1900, _dt.getMonthValue()-1, _dt.getDayOfMonth()));
                break;
              case -666: if (__Init == InitMode.CREATE) break;
@@ -4992,32 +4991,32 @@ This is the hasChanged for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-      __Saved_dt             = _dt             = DateTimeUtil.toLocalDate(RS.getDate(++i)); if (RS.wasNull() == true) __Nulls.or(TILDA__DATEDIM_Factory.COLS.DT._Mask            );
-                               _epoch          =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__DATEDIM_Factory.COLS.EPOCH._Mask         );
-                               _dayName        = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__DATEDIM_Factory.COLS.DAYNAME._Mask       );
-                               _dayOfWeek      =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__DATEDIM_Factory.COLS.DAYOFWEEK._Mask     );
-                               _dayOfMonth     =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__DATEDIM_Factory.COLS.DAYOFMONTH._Mask    );
-                               _dayOfQuarter   =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__DATEDIM_Factory.COLS.DAYOFQUARTER._Mask  );
-                               _dayOfYear      =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__DATEDIM_Factory.COLS.DAYOFYEAR._Mask     );
-                               _weekOfMonth    =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__DATEDIM_Factory.COLS.WEEKOFMONTH._Mask   );
-                               _weekOfYear     =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__DATEDIM_Factory.COLS.WEEKOFYEAR._Mask    );
-                               _month          = DateTimeUtil.toLocalDate(RS.getDate(++i)); if (RS.wasNull() == true) __Nulls.or(TILDA__DATEDIM_Factory.COLS.MONTH._Mask         );
-                               _monthOfYear    =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__DATEDIM_Factory.COLS.MONTHOFYEAR._Mask   );
-                               _monthName      = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__DATEDIM_Factory.COLS.MONTHNAME._Mask     );
-                               _monthNameShort = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__DATEDIM_Factory.COLS.MONTHNAMESHORT._Mask);
-                               _quarterOfYear  =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__DATEDIM_Factory.COLS.QUARTEROFYEAR._Mask );
-                               _quarterName    = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__DATEDIM_Factory.COLS.QUARTERNAME._Mask   );
-                               _year           =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__DATEDIM_Factory.COLS.YEAR._Mask          );
-                               _mmyyyy         = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__DATEDIM_Factory.COLS.MMYYYY._Mask        ); else _mmyyyy         = _mmyyyy        .trim();
-                               _mmddyyyy       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__DATEDIM_Factory.COLS.MMDDYYYY._Mask      ); else _mmddyyyy       = _mmddyyyy      .trim();
-                               _yyyymmdd       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__DATEDIM_Factory.COLS.YYYYMMDD._Mask      ); else _yyyymmdd       = _yyyymmdd      .trim();
-                               _isWeekend      =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__DATEDIM_Factory.COLS.ISWEEKEND._Mask     );
-                               _isBusinessDay  =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__DATEDIM_Factory.COLS.ISBUSINESSDAY._Mask );
-                               _isHoliday      =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__DATEDIM_Factory.COLS.ISHOLIDAY._Mask     );
-                               _holidayName    = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__DATEDIM_Factory.COLS.HOLIDAYNAME._Mask   );
-                               _created        = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__DATEDIM_Factory.COLS.CREATED._Mask       );
-                               _lastUpdated    = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__DATEDIM_Factory.COLS.LASTUPDATED._Mask   );
-                               _deleted        = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__DATEDIM_Factory.COLS.DELETED._Mask       );
+      __Saved_dt             = _dt             = DateTimeUtil.toLocalDate(RS.getDate(++i)); if (RS.wasNull() == true) { __Nulls.or(TILDA__DATEDIM_Factory.COLS.DT._Mask            ); _dt = null; }
+                               _epoch          =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__DATEDIM_Factory.COLS.EPOCH._Mask         ); _epoch = null; }
+                               _dayName        = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__DATEDIM_Factory.COLS.DAYNAME._Mask       ); _dayName = null; }
+                               _dayOfWeek      =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__DATEDIM_Factory.COLS.DAYOFWEEK._Mask     ); _dayOfWeek = null; }
+                               _dayOfMonth     =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__DATEDIM_Factory.COLS.DAYOFMONTH._Mask    ); _dayOfMonth = null; }
+                               _dayOfQuarter   =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__DATEDIM_Factory.COLS.DAYOFQUARTER._Mask  ); _dayOfQuarter = null; }
+                               _dayOfYear      =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__DATEDIM_Factory.COLS.DAYOFYEAR._Mask     ); _dayOfYear = null; }
+                               _weekOfMonth    =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__DATEDIM_Factory.COLS.WEEKOFMONTH._Mask   ); _weekOfMonth = null; }
+                               _weekOfYear     =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__DATEDIM_Factory.COLS.WEEKOFYEAR._Mask    ); _weekOfYear = null; }
+                               _month          = DateTimeUtil.toLocalDate(RS.getDate(++i)); if (RS.wasNull() == true) { __Nulls.or(TILDA__DATEDIM_Factory.COLS.MONTH._Mask         ); _month = null; }
+                               _monthOfYear    =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__DATEDIM_Factory.COLS.MONTHOFYEAR._Mask   ); _monthOfYear = null; }
+                               _monthName      = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__DATEDIM_Factory.COLS.MONTHNAME._Mask     ); _monthName = null; }
+                               _monthNameShort = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__DATEDIM_Factory.COLS.MONTHNAMESHORT._Mask); _monthNameShort = null; }
+                               _quarterOfYear  =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__DATEDIM_Factory.COLS.QUARTEROFYEAR._Mask ); _quarterOfYear = null; }
+                               _quarterName    = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__DATEDIM_Factory.COLS.QUARTERNAME._Mask   ); _quarterName = null; }
+                               _year           =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__DATEDIM_Factory.COLS.YEAR._Mask          ); _year = null; }
+                               _mmyyyy         = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__DATEDIM_Factory.COLS.MMYYYY._Mask        ); _mmyyyy = null; } else _mmyyyy         = _mmyyyy        .trim();
+                               _mmddyyyy       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__DATEDIM_Factory.COLS.MMDDYYYY._Mask      ); _mmddyyyy = null; } else _mmddyyyy       = _mmddyyyy      .trim();
+                               _yyyymmdd       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__DATEDIM_Factory.COLS.YYYYMMDD._Mask      ); _yyyymmdd = null; } else _yyyymmdd       = _yyyymmdd      .trim();
+                               _isWeekend      =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__DATEDIM_Factory.COLS.ISWEEKEND._Mask     ); _isWeekend = null; }
+                               _isBusinessDay  =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__DATEDIM_Factory.COLS.ISBUSINESSDAY._Mask ); _isBusinessDay = null; }
+                               _isHoliday      =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__DATEDIM_Factory.COLS.ISHOLIDAY._Mask     ); _isHoliday = null; }
+                               _holidayName    = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__DATEDIM_Factory.COLS.HOLIDAYNAME._Mask   ); _holidayName = null; }
+                               _created        = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__DATEDIM_Factory.COLS.CREATED._Mask       ); _created = null; }
+                               _lastUpdated    = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__DATEDIM_Factory.COLS.LASTUPDATED._Mask   ); _lastUpdated = null; }
+                               _deleted        = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__DATEDIM_Factory.COLS.DELETED._Mask       ); _deleted = null; }
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();

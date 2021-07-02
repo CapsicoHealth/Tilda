@@ -1092,7 +1092,7 @@ This is the hasChanged for:<BR>
    public void copyTo(tilda.data_test._Tilda.TILDA__TEST2 Dst) throws Exception
      {
        Dst.setLastUpdated(_lastUpdated);
-       if (__Changes.intersects(TILDA__TEST2_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull    (); else        Dst.setDeleted    (_deleted    );
+       if (__Nulls.intersects(TILDA__TEST2_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull    (); else        Dst.setDeleted    (_deleted    );
      }
 
 /**
@@ -1154,10 +1154,10 @@ This is the hasChanged for:<BR>
 
           switch (__LookupId)
            {
-             case 0:
+             case 0: // PK
                PS.setLong      (++i, _refnum     );
                break;
-             case 1:
+             case 1: // Unique Index 'Name'
                PS.setString    (++i, _name       );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
@@ -1278,11 +1278,11 @@ This is the hasChanged for:<BR>
 
           switch (__LookupId)
            {
-             case 0:
-                S.append(" where ("); C.getFullColumnVar(S, "TILDATEST", "Test2", "refnum"); S.append("=?)");
+             case 0: // PK
+                S.append(" where ("); C.getFullColumnVar(S, "TILDATEST", "Test2", "refnum"); S.append("=?");  S.append(")");
                 break;
-             case 1:
-                S.append(" where ("); C.getFullColumnVar(S, "TILDATEST", "Test2", "name"); S.append("=?)");
+             case 1: // Unique Index 'Name'
+                S.append(" where ("); C.getFullColumnVar(S, "TILDATEST", "Test2", "name"); S.append("=?");  S.append(")");
                 break;
              case -77: 
              case -666: if (__Init == InitMode.CREATE) break;
@@ -1353,7 +1353,6 @@ This is the hasChanged for:<BR>
         }
 
        __Changes.clear();
-       __Nulls.clear();
      }
 /**
  Writes the object to the data store using an upsert approach and assumes the object is either
@@ -1375,7 +1374,7 @@ This is the hasChanged for:<BR>
        if (OK == false)
         throw new Exception("Object has not been instanciated via deserialization or the factory create() method.");
 
-       if (__Init == null && __LookupId==0);  // object deserialized
+       if (__Init == null && __LookupId==0)  // object deserialized
         validateDeserialization();
 
        int lookupId = getFirstValidLookupBy();
@@ -1470,11 +1469,11 @@ This is the hasChanged for:<BR>
           S.append(" from "); C.getFullTableVar(S, "TILDATEST", "Test2");
        switch (__LookupId)
         {
-          case 0:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDATEST", "Test2", "refnum"); S.append("=?)");
+          case 0: // PK
+             S.append(" where ("); C.getFullColumnVar(S, "TILDATEST", "Test2", "refnum"); S.append("=?");  S.append(")");
              break;
-          case 1:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDATEST", "Test2", "name"); S.append("=?)");
+          case 1: // Unique Index 'Name'
+             S.append(" where ("); C.getFullColumnVar(S, "TILDATEST", "Test2", "name"); S.append("=?");  S.append(")");
              break;
           case -77: 
           case -666: if (__Init == InitMode.CREATE) break;
@@ -1496,10 +1495,10 @@ This is the hasChanged for:<BR>
           int i = 0;
           switch (__LookupId)
            {
-             case 0:
+             case 0: // PK
                PS.setLong      (++i, _refnum     );
                break;
-             case 1:
+             case 1: // Unique Index 'Name'
                PS.setString    (++i, _name       );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
@@ -1531,12 +1530,12 @@ This is the hasChanged for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-      __Saved_refnum      = _refnum      =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST2_Factory.COLS.REFNUM._Mask     );
-      __Saved_name        = _name        = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST2_Factory.COLS.NAME._Mask       );
-                            _test_fk     =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TEST2_Factory.COLS.TEST_FK._Mask    );
-                            _created     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__TEST2_Factory.COLS.CREATED._Mask    );
-                            _lastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__TEST2_Factory.COLS.LASTUPDATED._Mask);
-                            _deleted     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__TEST2_Factory.COLS.DELETED._Mask    );
+      __Saved_refnum      = _refnum      =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST2_Factory.COLS.REFNUM._Mask     ); _refnum = null; }
+      __Saved_name        = _name        = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST2_Factory.COLS.NAME._Mask       ); _name = null; }
+                            _test_fk     =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST2_Factory.COLS.TEST_FK._Mask    ); _test_fk = null; }
+                            _created     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST2_Factory.COLS.CREATED._Mask    ); _created = null; }
+                            _lastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST2_Factory.COLS.LASTUPDATED._Mask); _lastUpdated = null; }
+                            _deleted     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TEST2_Factory.COLS.DELETED._Mask    ); _deleted = null; }
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();
@@ -1567,7 +1566,7 @@ This is the hasChanged for:<BR>
     }
    public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject) throws Exception
     {
-      toJSON(out, exportName, "", fullObject, false);
+      toJSON(out, exportName, lead, fullObject, false);
     }
    public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject, boolean noNullArrays) throws Exception
     {

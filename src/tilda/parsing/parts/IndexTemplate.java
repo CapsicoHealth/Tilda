@@ -16,14 +16,9 @@
 
 package tilda.parsing.parts;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.google.gson.annotations.SerializedName;
 
-import tilda.enums.ColumnMode;
 import tilda.parsing.ParserSession;
-import tilda.parsing.parts.helpers.ValidationHelper;
 import tilda.utils.CollectionUtil;
 import tilda.utils.TextUtil;
 

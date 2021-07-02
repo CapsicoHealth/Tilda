@@ -54,7 +54,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        NAME   = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "name"   , 0/*0*/, "Medical system unique enterprise id");
+     public static Type_StringPrimitive        NAME   = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "name"   , 0/*0*/, "Medical system unique enterprise id", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.TestingView.refnum -> TILDATEST.TestingView."refnum"
@@ -72,7 +72,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          REFNUM = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum" , 1/*1*/, "The primary key for this record");
+     public static Type_LongPrimitive          REFNUM = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum" , 1/*1*/, "The primary key for this record", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.TestingView.a2Min -> TILDATEST.TestingView."a2Min"
@@ -90,7 +90,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_CharPrimitiveNull      A2MIN  = new Type_CharPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a2Min"  , 2/*2*/, "The blah");
+     public static Type_CharPrimitiveNull      A2MIN  = new Type_CharPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a2Min"  , 2/*2*/, "The blah", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.TestingView.a2Max -> TILDATEST.TestingView."a2Max"
@@ -108,7 +108,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_CharPrimitiveNull      A2MAX  = new Type_CharPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a2Max"  , 3/*3*/, "The blah");
+     public static Type_CharPrimitiveNull      A2MAX  = new Type_CharPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a2Max"  , 3/*3*/, "The blah", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.TestingView.a9TZ -> TILDATEST.TestingView."a9TZ"
@@ -127,7 +127,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringCollectionNull   A9TZ   = new Type_StringCollectionNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a9TZ"   , 4/*4*/, "Generated helper column to hold the time zone ID for 'a9'.");
+     public static Type_StringCollectionNull   A9TZ   = new Type_StringCollectionNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a9TZ"   , 4/*4*/, "Generated helper column to hold the time zone ID for 'a9'.", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.TestingView.a9 -> TILDATEST.TestingView."a9"
@@ -152,7 +152,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimeCollectionNull A9     = new Type_DatetimeCollectionNull(SCHEMA_LABEL, TABLENAME_LABEL, "a9"     , 5/*5*/, "The blah", A9TZ);
+     public static Type_DatetimeCollectionNull A9     = new Type_DatetimeCollectionNull(SCHEMA_LABEL, TABLENAME_LABEL, "a9"     , 5/*5*/, "The blah", null, null, A9TZ);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.TestingView.a9c -> TILDATEST.TestingView."a9c"
@@ -170,7 +170,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DateCollectionNull     A9C    = new Type_DateCollectionNull    (SCHEMA_LABEL, TABLENAME_LABEL, "a9c"    , 6/*6*/, "The blah");
+     public static Type_DateCollectionNull     A9C    = new Type_DateCollectionNull    (SCHEMA_LABEL, TABLENAME_LABEL, "a9c"    , 6/*6*/, "The blah", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.TestingView.a6First -> TILDATEST.TestingView."a6First"
@@ -188,7 +188,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitiveNull      A6FIRST= new Type_LongPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a6First", 7/*7*/, "The blah");
+     public static Type_LongPrimitiveNull      A6FIRST= new Type_LongPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a6First", 7/*7*/, "The blah", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.TestingView.a6Last -> TILDATEST.TestingView."a6Last"
@@ -206,7 +206,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitiveNull      A6LAST = new Type_LongPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a6Last" , 8/*8*/, "The blah");
+     public static Type_LongPrimitiveNull      A6LAST = new Type_LongPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a6Last" , 8/*8*/, "The blah", null, null);
 ;
    }
 
@@ -247,8 +247,8 @@ This is the column definition for:<BR>
        protected Connection _C = null;
        protected tilda.db.processors.ObjectProcessor<tilda.data_test.TestingView_Data> _OP;
        protected ArrayListResults<tilda.data_test.TestingView_Data> _L = null;
-       public void    start  () { if (_OP != null) _OP.start(); }
-       public void    end    (boolean hasMore, int maxCount) { if (_OP == null) _L.wrapup(hasMore, maxCount); else _OP.end(hasMore, maxCount); }
+       public void    start  ()                              throws Exception { if (_OP != null) _OP.start(); }
+       public void    end    (boolean hasMore, int maxCount) throws Exception { if (_OP == null) _L.wrapup(hasMore, maxCount); else _OP.end(hasMore, maxCount); }
        public boolean process(int count, java.sql.ResultSet RS) throws Exception
         {
           tilda.data_test.TestingView_Data Obj = new tilda.data_test.TestingView_Data();

@@ -28,7 +28,7 @@ import tilda.parsing.parts.ColumnValue;
 import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Object;
-import tilda.parsing.parts.OutputMapping;
+import tilda.parsing.parts.OutputMap;
 import tilda.parsing.parts.PrimaryKey;
 import tilda.parsing.parts.SubWhereClause;
 import tilda.utils.SystemValues;
@@ -211,6 +211,12 @@ public class Docs implements CodeGenDocs
           {
             Out.println("  <TR valign=\"top\"><TD align=\"right\"><B>Values</B></TD><TD>" + SystemValues.NEWLINE);
             docFieldValues(Out, C);
+            Out.println("</TD></TR>" + SystemValues.NEWLINE);
+          }
+        if (C._expressionStrs != null && C._expressionStrs.length > 0)
+          {
+            Out.println("  <TR valign=\"top\"><TD align=\"right\"><B>Formula</B></TD><TD>" + SystemValues.NEWLINE);
+            Out.println("<PRE>"+String.join("\n", C._expressionStrs)+"</PRE>");
             Out.println("</TD></TR>" + SystemValues.NEWLINE);
           }
         Out.println(
@@ -419,7 +425,7 @@ public class Docs implements CodeGenDocs
 
 
     @Override
-    public void docMethodOutput(PrintWriter Out, GeneratorSession G, OutputMapping J)
+    public void docMethodOutput(PrintWriter Out, GeneratorSession G, OutputMap J)
       {
         // TODO Auto-generated method stub
         

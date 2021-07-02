@@ -92,13 +92,14 @@
 .search_results TR TD {
    padding-right: 10px;
  }
+ 
+@keyframes blinkAnimation {   
+   from { background-color: #F77; visibility: visible }
+   to   { background-color: white; visibility: hidden; } 
+ } 
 .blink_div { 
-   animation: blink-animation 0.75s steps(5, start) infinite; 
-   color: red; 
- } 
-@keyframes blink-animation {   
-   to { visibility: hidden; } 
- } 
+   animation: blinkAnimation 0.25s infinite;
+}
 
 input[type=text]:focus {
    border-color:#DFECF8;
@@ -158,15 +159,18 @@ input[type=text]:focus {
    display: none;
  }
 .sticky {
-   position: fixed;
-   top: 0;
-   left: 0;
-   background: #F09819;
-   background: -webkit-linear-gradient(to top, #F09819, #FFC837);
-   background: linear-gradient(to top, #F09819, #FFC837);
-   color: #000;
-   width: 100%;
- }
+    position: fixed;
+    top: 0;
+    left: 33%;
+    background: #F09819;
+    background: -webkit-linear-gradient(to top, #F09819, #FFC837);
+    background: linear-gradient(to top, #F09819, #FFC837);
+    color: #000;
+    border-radius: 20px 0px 0px 20px;
+    padding-left: 20px;
+    width: 67%;
+    box-shadow: -3px 5px 0px #BBB;
+}
 .sticky H2 {
    margin: 0px;
    padding: 0px;
@@ -320,23 +324,23 @@ var onModalShowClicked = function(id)
 
 window.addEventListener('load', function()
 {
-  expand_buttons = document.getElementsByClassName("expand_div");
-  for (var i = 0; i < expand_buttons.length; i++)
-    {
-      expand_buttons[i].addEventListener("click", function(event)
-      {
-        if (event.target.parentElement.getElementsByTagName("div")[0].style.display == "none")
-          {
-            event.target.parentElement.getElementsByTagName("div")[0].style.display = "block"
-            event.target.innerHTML = "&#9660;"
-          }
-        else
-          {
-            event.target.parentElement.getElementsByTagName("div")[0].style.display = "none"
-            event.target.innerHTML = "&#9654;"
-          }
-      }, false);
-    }
+//  expand_buttons = document.getElementsByClassName("expand_div");
+//  for (var i = 0; i < expand_buttons.length; i++)
+//    {
+//      expand_buttons[i].addEventListener("click", function(event)
+//      {
+//        if (event.target.parentElement.getElementsByTagName("div")[0].style.display == "none")
+//          {
+//            event.target.parentElement.getElementsByTagName("div")[0].style.display = "block"
+//            event.target.innerHTML = "&#9660;"
+//          }
+//        else
+//          {
+//            event.target.parentElement.getElementsByTagName("div")[0].style.display = "none"
+//            event.target.innerHTML = "&#9654;"
+//          }
+//      }, false);
+//    }
 }, false);
 
 var tables = {};
@@ -356,17 +360,46 @@ window.addEventListener("load", function()
   realizedformulae = getData("realizedformulae");
 }, false);
 
+
+function blinkElement(e, className, millis)
+ {
+   if (typeof e == "string")
+    e = document.getElementById(e);
+   if (e != null && e.classList != null)
+    {
+      e.classList.add(className);
+      setTimeout(function() {   
+        e.classList.remove(className);
+      }, millis);
+    }
+}
+
 var openDiv = function(divId, yOffsetCorrection)
 {
-  freezeSearchResults(true);
+//  freezeSearchResults(true);
   var e = document.getElementById(divId);
-  window.location = "#" + divId;
-  setTimeout(function()
-  {
-    if (yOffsetCorrection != null)
-     window.scrollBy(0, yOffsetCorrection);
-    freezeSearchResults(false);
-  }, 50);
+  if (e != null)
+   {
+     var savedE = e;
+     while (e != null && e.nodeName != 'TR' && e.nodeName != 'TABLE' && e.nodeName != 'DIV')
+      e=e.parentNode;
+     if (e == null)
+      e = savedE;
+     e.scrollIntoView(/*{block: "center"}*/);
+     window.scrollBy(0, divId.endsWith("_CNT") == true ? 0 : -100);
+     setTimeout(function() { 
+       e.scrollIntoView(/*{block: "center"}*/);
+       window.scrollBy(0, divId.endsWith("_CNT") == true ? 0 : -100);
+       blinkElement(e, "blink_div", 500);
+     }, 200);
+   }
+//  window.location = "#" + divId;
+//  setTimeout(function()
+//  {
+//    if (yOffsetCorrection != null)
+//     window.scrollBy(0, yOffsetCorrection);
+//    freezeSearchResults(false);
+//  }, 50);
 }
 
 function showSearchResults(show)
@@ -413,15 +446,18 @@ var eventListener = function()
     {
       value = filteredResults[key];
       // Add Table/View
-      tempElementBody += "<TR valign=\"top\"><td width=\"1px\">&nbsp;<A href=\"javascript:openDiv('" + key + "_CNT',20)\">" + key
-          + "</A></TD>";
+      tempElementBody += "<TR valign=\"top\"><td width=\"1px\">&nbsp;<A href=\"javascript:openDiv('" + key + "_CNT',20)\">" + key + "</A></TD>";
       // Add Columns/Formulae (if Any)
+      if (value.length == 0)
+       {
+         tempElementBody += "<TD>&nbsp;</TD><TD>&nbsp;</TD></TR>";
+       }
+      else
       for (var i = 0; i < value.length; i++)
         {
           if (i != 0)
-            tempElementBody += "<TR><TD></TD>";
-          tempElementBody += "<TD><A href=\"javascript:openDiv('" + key + "-" + value[i] + "_DIV', -50)\">" + value[i]
-              + "</A></TD><TD>&nbsp;</TD></TR>";
+            tempElementBody += "<TR><TD>&nbsp;</TD>";
+          tempElementBody += "<TD><A href=\"javascript:openDiv('" + key + "-" + value[i] + "_DIV', -50)\">" + value[i]+ "</A></TD><TD>&nbsp;</TD></TR>";
         }
     }
   searchResultsDiv.innerHTML = tempElementBody;
@@ -555,8 +591,9 @@ var getFilteredResults = function(queryString)
 
   if (doColumns == true)
     {
+      console.log("columns: ", columns);
       getFilteredData(regex, tables, matchingResults);
-      getFilteredData(regex, doRealized == false ? realizedcolumns : columns, matchingResults);
+      getFilteredData(regex, doRealized == true ? realizedcolumns : columns, matchingResults);
     }
   if (doFormulas == true)
     {
@@ -842,7 +879,8 @@ var MasterIndex = {
                 {
                   var cell = e.rows[i].cells[0];
                   MasterIndex.selectColumn({target: cell});
-                  cell.scrollIntoView();
+                  cell.scrollIntoView(/*{block: "center"}*/);
+//                  window.scrollBy(0, -100);
                   break;
                 }
            }
@@ -2515,10 +2553,10 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>Test Passed</B>'</TD></TR>
+<TD><B>Test Passed</B>: Whether the test was passed or not by answering at least 2 out of the 3 questions.</TD></TR>
   <TR valign="top" style="background-color:#FFFFFF"><TD colspan="2"></TD><TD colspan="7">
 <TABLE border="1px" style="border-collapse:collapse; border: 1px solid #AAA;" cellspacing="0px" cellpadding="2px" width="98%">
-<TR valign="top"><TD width="1px" align="right"><B>Description</B></TD><TD>Whether the test was passed or not by answering at least 2 out of the 3 questions.</TD></TR><TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;"><A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_Analytics_View-formCountCorrect_DIV">formCountCorrect</A> >= 2</PRE></TD><TR>
+<TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;"><A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_Analytics_View-formCountCorrect_DIV">formCountCorrect</A> >= 2</PRE></TD><TR>
 <TR valign="top"><TD width="1px" align="right"><B>Ref&nbsp;Columns</B></TD><TD>
 <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_Analytics_View-formCountCorrect_DIV">formCountCorrect</A><BR>
 <DIV style="padding-left:10px; font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_PivotView-countCorrect_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_XYZ_PivotView<B>&nbsp;&#8226;&nbsp;</B>countCorrect</A>
@@ -2526,7 +2564,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </DIV>
 <DIV style="padding-left:10px;">Whether the answer is correct or not</DIV>
 </TD></TR>
-</TABLE>
+</TABLE>&nbsp;
 <DIV id='Test_XYZ_Analytics_View-isPassed_MODAL' class='modal'>
 <DIV class='modal-content'>
 <SPAN onclick="onModalCloseClicked('Test_XYZ_Analytics_View-isPassed_MODAL')" class='close'>&times;</SPAN>
@@ -2549,10 +2587,10 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>Test Took Longer Than Average</B>'</TD></TR>
+<TD><B>Test Took Longer Than Average</B>: Whether the test took longer that the average time spent across all tests.</TD></TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2)"><TD colspan="2"></TD><TD colspan="7">
 <TABLE border="1px" style="border-collapse:collapse; border: 1px solid #AAA;" cellspacing="0px" cellpadding="2px" width="98%">
-<TR valign="top"><TD width="1px" align="right"><B>Description</B></TD><TD>Whether the test took longer that the average time spent across all tests.</TD></TR><TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;"><A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_Analytics_View-formTimeMillisTotal_DIV">formTimeMillisTotal</A> > <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_Analytics_View-testTimeMillisAvg_DIV">testTimeMillisAvg</A></PRE></TD><TR>
+<TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;"><A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_Analytics_View-formTimeMillisTotal_DIV">formTimeMillisTotal</A> > <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_Analytics_View-testTimeMillisAvg_DIV">testTimeMillisAvg</A></PRE></TD><TR>
 <TR valign="top"><TD width="1px" align="right"><B>Ref&nbsp;Columns</B></TD><TD>
 <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_Analytics_View-formTimeMillisTotal_DIV">formTimeMillisTotal</A><BR>
 <DIV style="padding-left:10px; font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_PivotView-timeMillisTotal_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_XYZ_PivotView<B>&nbsp;&#8226;&nbsp;</B>timeMillisTotal</A>
@@ -2565,7 +2603,7 @@ This View contains the following columns:<BLOCKQUOTE>
 </DIV>
 <DIV style="padding-left:10px;">Time in milliseconds for the time spent answering the question</DIV>
 </TD></TR>
-</TABLE>
+</TABLE>&nbsp;
 <DIV id='Test_XYZ_Analytics_View-tookLongerThanAverage_MODAL' class='modal'>
 <DIV class='modal-content'>
 <SPAN onclick="onModalCloseClicked('Test_XYZ_Analytics_View-tookLongerThanAverage_MODAL')" class='close'>&times;</SPAN>
@@ -2588,13 +2626,10 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>Test Was Challenging</B>'</TD></TR>
+<TD><B>Test Was Challenging</B>: Whether the test was challenging in that:<LI>   <LI>it was passed,</LI>   <LI>and overall, less than a third of answers across all tests were answered correctly.</LI> </UL></TD></TR>
   <TR valign="top" style="background-color:#FFFFFF"><TD colspan="2"></TD><TD colspan="7">
 <TABLE border="1px" style="border-collapse:collapse; border: 1px solid #AAA;" cellspacing="0px" cellpadding="2px" width="98%">
-<TR valign="top"><TD width="1px" align="right"><B>Description</B></TD><TD>Whether the test was challenging in that:<LI>
-  <LI>it was passed,</LI>
-  <LI>and overall, less than a third of answers across all tests were answered correctly.</LI>
-</UL></TD></TR><TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">    <A style="color:#0000AA; font-weight: bold;" href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_Analytics_View-isPassed_DIV">isPassed</A>=1
+<TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">    <A style="color:#0000AA; font-weight: bold;" href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_Analytics_View-isPassed_DIV">isPassed</A>=1
 AND <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_Analytics_View-testAnswerCountCorrect_DIV">testAnswerCountCorrect</A> < <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_Analytics_View-testCount_DIV">testCount</A>*3/2</PRE></TD><TR>
 <TR valign="top"><TD width="1px" align="right"><B>Values</B></TD><TD><TABLE border="0px">
 <TR valign="top"><TD>0</TD><TD>The test was not challenging</TD><TR>
@@ -2617,7 +2652,7 @@ AND <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATUTORIA
 <DIV style="padding-left:10px; font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_Analytics_View-isPassed_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_XYZ_Analytics_View<B>&nbsp;&#8226;&nbsp;</B>isPassed</A></DIV>
 <DIV style="padding-left:10px;">Whether the test was passed or not by answering at least 2 out of the 3 questions.</DIV>
 </TD></TR>
-</TABLE>
+</TABLE>&nbsp;
 <DIV id='Test_XYZ_Analytics_View-wasChallenging_MODAL' class='modal'>
 <DIV class='modal-content'>
 <SPAN onclick="onModalCloseClicked('Test_XYZ_Analytics_View-wasChallenging_MODAL')" class='close'>&times;</SPAN>
@@ -3126,7 +3161,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>Test Passed</B>' (from TILDATUTORIAL.Test_XYZ_Analytics_View.isPassed)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_Analytics_View-isPassed_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_XYZ_Analytics_View<B>&nbsp;&#8226;&nbsp;</B>isPassed</A></DIV></TD>
+<TD><B>Test Passed</B>: Whether the test was passed or not by answering at least 2 out of the 3 questions. (from TILDATUTORIAL.Test_XYZ_Analytics_View.isPassed)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_Analytics_View-isPassed_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_XYZ_Analytics_View<B>&nbsp;&#8226;&nbsp;</B>isPassed</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>13&nbsp;&nbsp;</TD>
@@ -3136,7 +3171,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>Test Took Longer Than Average</B>' (from TILDATUTORIAL.Test_XYZ_Analytics_View.tookLongerThanAverage)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_Analytics_View-tookLongerThanAverage_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_XYZ_Analytics_View<B>&nbsp;&#8226;&nbsp;</B>tookLongerThanAverage</A></DIV></TD>
+<TD><B>Test Took Longer Than Average</B>: Whether the test took longer that the average time spent across all tests. (from TILDATUTORIAL.Test_XYZ_Analytics_View.tookLongerThanAverage)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_Analytics_View-tookLongerThanAverage_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_XYZ_Analytics_View<B>&nbsp;&#8226;&nbsp;</B>tookLongerThanAverage</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
     <TD>14&nbsp;&nbsp;</TD>
@@ -3146,7 +3181,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column '<B>Test Was Challenging</B>' (from TILDATUTORIAL.Test_XYZ_Analytics_View.wasChallenging)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_Analytics_View-wasChallenging_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_XYZ_Analytics_View<B>&nbsp;&#8226;&nbsp;</B>wasChallenging</A></DIV></TD>
+<TD><B>Test Was Challenging</B>: Whether the test was challenging in that:<LI>   <LI>it was passed,</LI>   <LI>and overall, less than a third of answers across all tests were answered correctly.</LI> </UL> (from TILDATUTORIAL.Test_XYZ_Analytics_View.wasChallenging)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_Analytics_View-wasChallenging_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_XYZ_Analytics_View<B>&nbsp;&#8226;&nbsp;</B>wasChallenging</A></DIV></TD>
 </TR>
 </TABLE></BLOCKQUOTE>
 </DIV>
@@ -3169,8 +3204,8 @@ select TILDATUTORIAL.Refill_Test_XYZ_Realized();<BR>
 <TR valign="top"><TD style="padding-left:30px;">select TILDATUTORIAL.Refill_Test_XYZ_Analytics_Realized();<BR>
 </TD><TD style="padding-left:10px;"><A href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_Analytics_View_CNT">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_XYZ_Analytics_View</A><BR>
 </TD><TD>
-TILDATUTORIAL.Refill_Test_XYZ_Realized();<BR>
 TILDATUTORIAL.Refill_Test_Realized();<BR>
+TILDATUTORIAL.Refill_Test_XYZ_Realized();<BR>
 </TD></TR>
 </TABLE>
 </BLOCKQUOTE>

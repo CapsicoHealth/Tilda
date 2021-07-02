@@ -29,6 +29,7 @@ public class Cloner
 
     /*@formatter:off*/
     @SerializedName("name"       ) public String  _Name       ;
+    @SerializedName("fullName"   ) public boolean _FullName   = false;
     @SerializedName("description") public String  _Description;
     /*@formatter:on*/
 

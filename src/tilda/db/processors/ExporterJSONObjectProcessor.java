@@ -17,7 +17,7 @@
 package tilda.db.processors;
 
 import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.io.Writer;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,9 +28,9 @@ public class ExporterJSONObjectProcessor<T extends JSONable> extends ExporterObj
   {
     protected static final Logger LOG = LogManager.getLogger(ExporterObjectProcessor.class.getName());
 
-    public ExporterJSONObjectProcessor(PrintWriter out, long logFreq, String name, boolean jsonLines)
+    public ExporterJSONObjectProcessor(Writer out, String outName, long logFreq, boolean jsonLines)
       {
-        super(out, logFreq, name);
+        super(out, outName, logFreq);
         _jsonLines = jsonLines;
       }
 
@@ -44,17 +44,18 @@ public class ExporterJSONObjectProcessor<T extends JSONable> extends ExporterObj
     protected boolean _jsonLines;
 
     @Override
-    public void start()
+    public void start() throws Exception
       {
         super.start();
         if (_jsonLines == false)
-          _out.println("[");
+          _out.append("[").append(System.lineSeparator());
       }
 
     @Override
     public boolean process(int count, T obj)
     throws Exception
       {
+//        LOG.debug("------------> "+count);
         if (_jsonLines == false)
           obj.toJSON(_out, "", count == 0 ? "   " : "  ,", true, true);
         else
@@ -64,9 +65,10 @@ public class ExporterJSONObjectProcessor<T extends JSONable> extends ExporterObj
 
     @Override
     public void end(boolean hasMore, int maxCount)
+    throws Exception
       {
         if (_jsonLines == false)
-          _out.println("]");
+          _out.append("]").append(System.lineSeparator());
         super.end(hasMore, maxCount);
       }
   }

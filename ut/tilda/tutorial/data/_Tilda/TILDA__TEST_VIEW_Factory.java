@@ -54,7 +54,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        TYPE                = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "type"                , 0/*0*/, "Form template type");
+     public static Type_StringPrimitive        TYPE                = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "type"                , 0/*0*/, "Form template type", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.Test_View.testCount -> TILDATUTORIAL.Test_View."testCount"
@@ -72,7 +72,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          TESTCOUNT           = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "testCount"           , 1/*1*/, "The primary key for this record");
+     public static Type_LongPrimitive          TESTCOUNT           = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "testCount"           , 1/*1*/, "The primary key for this record", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.Test_View.testFirstTZ -> TILDATUTORIAL.Test_View."testFirstTZ"
@@ -91,7 +91,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    TESTFIRSTTZ         = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "testFirstTZ"         , 2/*2*/, "Generated helper column to hold the time zone ID for 'testFirst'.");
+     public static Type_StringPrimitiveNull    TESTFIRSTTZ         = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "testFirstTZ"         , 2/*2*/, "Generated helper column to hold the time zone ID for 'testFirst'.", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.Test_View.testFirst -> TILDATUTORIAL.Test_View."testFirst"
@@ -109,7 +109,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  TESTFIRST           = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "testFirst"           , 3/*3*/, "The date the form was filled", TESTFIRSTTZ);
+     public static Type_DatetimePrimitiveNull  TESTFIRST           = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "testFirst"           , 3/*3*/, "The date the form was filled", null, null, TESTFIRSTTZ);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.Test_View.testLastTZ -> TILDATUTORIAL.Test_View."testLastTZ"
@@ -128,7 +128,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    TESTLASTTZ          = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "testLastTZ"          , 4/*4*/, "Generated helper column to hold the time zone ID for 'testLast'.");
+     public static Type_StringPrimitiveNull    TESTLASTTZ          = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "testLastTZ"          , 4/*4*/, "Generated helper column to hold the time zone ID for 'testLast'.", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.Test_View.testLast -> TILDATUTORIAL.Test_View."testLast"
@@ -146,7 +146,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  TESTLAST            = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "testLast"            , 5/*5*/, "The date the form was filled", TESTLASTTZ);
+     public static Type_DatetimePrimitiveNull  TESTLAST            = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "testLast"            , 5/*5*/, "The date the form was filled", null, null, TESTLASTTZ);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.Test_View.userCount -> TILDATUTORIAL.Test_View."userCount"
@@ -164,7 +164,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          USERCOUNT           = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "userCount"           , 6/*6*/, "The primary key for this record");
+     public static Type_LongPrimitive          USERCOUNT           = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "userCount"           , 6/*6*/, "The primary key for this record", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.Test_View.answerCount -> TILDATUTORIAL.Test_View."answerCount"
@@ -182,7 +182,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          ANSWERCOUNT         = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "answerCount"         , 7/*7*/, "Whether the answer is correct or not");
+     public static Type_LongPrimitive          ANSWERCOUNT         = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "answerCount"         , 7/*7*/, "Whether the answer is correct or not", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.Test_View.answerCountCorrect -> TILDATUTORIAL.Test_View."answerCountCorrect"
@@ -200,7 +200,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          ANSWERCOUNTCORRECT  = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "answerCountCorrect"  , 8/*8*/, "Whether the answer is correct or not");
+     public static Type_LongPrimitive          ANSWERCOUNTCORRECT  = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "answerCountCorrect"  , 8/*8*/, "Whether the answer is correct or not", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.Test_View.answerCountIncorrect -> TILDATUTORIAL.Test_View."answerCountIncorrect"
@@ -218,7 +218,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          ANSWERCOUNTINCORRECT= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "answerCountIncorrect", 9/*9*/, "Whether the answer is correct or not");
+     public static Type_LongPrimitive          ANSWERCOUNTINCORRECT= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "answerCountIncorrect", 9/*9*/, "Whether the answer is correct or not", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.Test_View.timeMillisTotal -> TILDATUTORIAL.Test_View."timeMillisTotal"
@@ -236,7 +236,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          TIMEMILLISTOTAL     = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "timeMillisTotal"     , 10/*10*/, "Time in milliseconds for the time spent answering the question");
+     public static Type_LongPrimitive          TIMEMILLISTOTAL     = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "timeMillisTotal"     , 10/*10*/, "Time in milliseconds for the time spent answering the question", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.Test_View.timeMillisAvg -> TILDATUTORIAL.Test_View."timeMillisAvg"
@@ -254,7 +254,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DoublePrimitive        TIMEMILLISAVG       = new Type_DoublePrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "timeMillisAvg"       , 11/*11*/, "Time in milliseconds for the time spent answering the question");
+     public static Type_DoublePrimitive        TIMEMILLISAVG       = new Type_DoublePrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "timeMillisAvg"       , 11/*11*/, "Time in milliseconds for the time spent answering the question", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.Test_View.timeMillisMin -> TILDATUTORIAL.Test_View."timeMillisMin"
@@ -272,7 +272,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerPrimitive       TIMEMILLISMIN       = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "timeMillisMin"       , 12/*12*/, "Time in milliseconds for the time spent answering the question");
+     public static Type_IntegerPrimitive       TIMEMILLISMIN       = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "timeMillisMin"       , 12/*12*/, "Time in milliseconds for the time spent answering the question", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.Test_View.timeMillisMax -> TILDATUTORIAL.Test_View."timeMillisMax"
@@ -290,7 +290,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerPrimitive       TIMEMILLISMAX       = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "timeMillisMax"       , 13/*13*/, "Time in milliseconds for the time spent answering the question");
+     public static Type_IntegerPrimitive       TIMEMILLISMAX       = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "timeMillisMax"       , 13/*13*/, "Time in milliseconds for the time spent answering the question", null, null);
 ;
    }
 
@@ -331,8 +331,8 @@ This is the column definition for:<BR>
        protected Connection _C = null;
        protected tilda.db.processors.ObjectProcessor<tilda.tutorial.data.Test_View_Data> _OP;
        protected ArrayListResults<tilda.tutorial.data.Test_View_Data> _L = null;
-       public void    start  () { if (_OP != null) _OP.start(); }
-       public void    end    (boolean hasMore, int maxCount) { if (_OP == null) _L.wrapup(hasMore, maxCount); else _OP.end(hasMore, maxCount); }
+       public void    start  ()                              throws Exception { if (_OP != null) _OP.start(); }
+       public void    end    (boolean hasMore, int maxCount) throws Exception { if (_OP == null) _L.wrapup(hasMore, maxCount); else _OP.end(hasMore, maxCount); }
        public boolean process(int count, java.sql.ResultSet RS) throws Exception
         {
           tilda.tutorial.data.Test_View_Data Obj = new tilda.tutorial.data.Test_View_Data();

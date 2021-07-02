@@ -32,24 +32,25 @@ import tilda.parsing.parts.helpers.ValidationHelper;
 import tilda.utils.CollectionUtil;
 import tilda.utils.TextUtil;
 
-public class OutputMapping
+public class OutputMap
   {
-    static final Logger LOG = LogManager.getLogger(OutputMapping.class.getName());
+    static final Logger LOG = LogManager.getLogger(OutputMap.class.getName());
 
-    public OutputMapping()
+    public OutputMap()
       {
       }
 
     /*@formatter:off*/
     @SerializedName("name"        ) public String   _Name;
     @SerializedName("columns"     ) public String[] _Columns;
+    @SerializedName("exclude"     ) public String[] _Exclude = new String[] { };
     @SerializedName("sync"        ) public boolean  _Sync = false;
     @SerializedName("outTypes"    ) public String[] _OutputTypeStrs;
     @SerializedName("nvpSrc"      ) public String 	_NVPSrcStr;
     @SerializedName("nvpValueType") public String   _NVPValueTypeStr;
     /*@formatter:on*/
 
-    public OutputMapping(OutputMapping OM)
+    public OutputMap(OutputMap OM)
       {
         _Name = OM._Name;
         _Columns = OM._Columns;
@@ -58,7 +59,6 @@ public class OutputMapping
         _NVPSrcStr = OM._NVPSrcStr;
         _NVPValueTypeStr = OM._NVPValueTypeStr;
       }
-
     
     public transient List<Column>           _ColumnObjs;
     public transient List<OutputFormatType> _OutputTypes;
@@ -81,7 +81,7 @@ public class OutputMapping
 
         if (_Columns != null && _Columns.length > 0)
           {
-            _Columns = CollectionUtil.toStringArray(_ParentObject.expandColumnNames(_Columns, PS, "outputMap", _Name));
+            _Columns = CollectionUtil.toStringArray(_ParentObject.expandColumnNames(_Columns, PS, "outputMap", _Name, _Exclude));
           }
 
         if (TextUtil.isNullOrEmpty(_Columns) == true)
@@ -166,12 +166,12 @@ public class OutputMapping
         return Errs == PS.getErrorCount();
       }
 
-    public static List<OutputMapping> newInstances(List<OutputMapping> OutputMaps)
+    public static List<OutputMap> newInstances(List<OutputMap> OutputMaps)
       {
-        List<OutputMapping> L = new ArrayList<OutputMapping>();
-        for (OutputMapping OM : OutputMaps)
+        List<OutputMap> L = new ArrayList<OutputMap>();
+        for (OutputMap OM : OutputMaps)
           if (OM != null)
-            L.add(new OutputMapping(OM));
+            L.add(new OutputMap(OM));
         return L;
       }
   }

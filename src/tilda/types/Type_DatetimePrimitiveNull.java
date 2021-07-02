@@ -19,20 +19,20 @@ package tilda.types;
 
 public class Type_DatetimePrimitiveNull extends Type_DatetimePrimitive implements Nullable
   {
-    public Type_DatetimePrimitiveNull(String SchemaName, String TableName, String ColumnName, int Count, String Description)
+    public Type_DatetimePrimitiveNull(String SchemaName, String TableName, String ColumnName, int Count, String Description, String[] expressionStrs, String[] expressionsDependencies)
       {
-        this(SchemaName, TableName, ColumnName, Count, Description, null);
-      }
-    public Type_DatetimePrimitiveNull(String SchemaName, String TableName, String ColumnName, int Count, String Description, Type_StringPrimitiveNull TZCol)
-      {
-        super(SchemaName, TableName, ColumnName, Count, Description, TZCol);
+        this(SchemaName, TableName, ColumnName, Count, Description, expressionStrs, expressionsDependencies, null);
       }
     
+    public Type_DatetimePrimitiveNull(String SchemaName, String TableName, String ColumnName, int Count, String Description, String[] expressionStrs, String[] expressionsDependencies, Type_StringPrimitiveNull TZCol)
+      {
+        super(SchemaName, TableName, ColumnName, Count, Description, expressionStrs, expressionsDependencies, TZCol);
+      }
+
     public Type_DatetimePrimitiveNull(Type_DatetimePrimitive notNullDateTime)
       {
-        super(notNullDateTime._SchemaName, notNullDateTime._TableName, notNullDateTime._ColumnName, notNullDateTime._Mask.nextSetBit(0), notNullDateTime._Description);
+        super(notNullDateTime._SchemaName, notNullDateTime._TableName, notNullDateTime._ColumnName, notNullDateTime._Mask.nextSetBit(0), notNullDateTime._Description, notNullDateTime._expressionStrs, notNullDateTime._expressionStrs);
       }
-    
     
     
   }

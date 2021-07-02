@@ -49,7 +49,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The parent formula.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#FormulaResult-formulaRefnum_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>FormulaResult<B>&nbsp;&#8226;&nbsp;</B>formulaRefnum</A><BR>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Formula-refnum_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Formula<B>&nbsp;&#8226;&nbsp;</B>refnum</A></DIV></TD>
+<TD>The parent formula.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('FormulaResult-formulaRefnum_DIV', -50)">TILDA<B>&nbsp;&#8226;&nbsp;</B>FormulaResult<B>&nbsp;&#8226;&nbsp;</B>formulaRefnum</A><BR>&rarr;&nbsp;<A href="javascript:openDiv('Formula-refnum_DIV', -50)">TILDA<B>&nbsp;&#8226;&nbsp;</B>Formula<B>&nbsp;&#8226;&nbsp;</B>refnum</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
     <TD>2&nbsp;&nbsp;</TD>
@@ -59,7 +59,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The result value.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#FormulaResult-value_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>FormulaResult<B>&nbsp;&#8226;&nbsp;</B>value</A></DIV></TD>
+<TD>The result value.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('FormulaResult-value_DIV', -50)">TILDA<B>&nbsp;&#8226;&nbsp;</B>FormulaResult<B>&nbsp;&#8226;&nbsp;</B>value</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>3&nbsp;&nbsp;</TD>
@@ -69,7 +69,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The description of the result value.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#FormulaResult-description_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>FormulaResult<B>&nbsp;&#8226;&nbsp;</B>description</A></DIV></TD>
+<TD>The description of the result value.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('FormulaResult-description_DIV', -50)">TILDA<B>&nbsp;&#8226;&nbsp;</B>FormulaResult<B>&nbsp;&#8226;&nbsp;</B>description</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
     <TD>4&nbsp;&nbsp;</TD>
@@ -79,7 +79,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The name of the primary table/view this formula is defined in.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Formula-location_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Formula<B>&nbsp;&#8226;&nbsp;</B>location</A></DIV></TD>
+<TD>The name of the primary table/view this formula is defined in.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Formula-location_DIV', -50)">TILDA<B>&nbsp;&#8226;&nbsp;</B>Formula<B>&nbsp;&#8226;&nbsp;</B>location</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>5&nbsp;&nbsp;</TD>
@@ -89,7 +89,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The name of the formula/column.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Formula-name_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Formula<B>&nbsp;&#8226;&nbsp;</B>name</A></DIV></TD>
+<TD>The name of the formula/column.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Formula-name_DIV', -50)">TILDA<B>&nbsp;&#8226;&nbsp;</B>Formula<B>&nbsp;&#8226;&nbsp;</B>name</A></DIV></TD>
 </TR>
 </TABLE></BLOCKQUOTE>
 </DIV>
@@ -659,11 +659,11 @@ This is the setter for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-                              _formulaRefnum =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULARESULTVIEW_Factory.COLS.FORMULAREFNUM._Mask);
-                              _value         = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULARESULTVIEW_Factory.COLS.VALUE._Mask        );
-                              _description   = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULARESULTVIEW_Factory.COLS.DESCRIPTION._Mask  );
-                              _location      = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULARESULTVIEW_Factory.COLS.LOCATION._Mask     );
-                              _name          = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULARESULTVIEW_Factory.COLS.NAME._Mask         );
+                              _formulaRefnum =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FORMULARESULTVIEW_Factory.COLS.FORMULAREFNUM._Mask); _formulaRefnum = null; }
+                              _value         = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FORMULARESULTVIEW_Factory.COLS.VALUE._Mask        ); _value = null; }
+                              _description   = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FORMULARESULTVIEW_Factory.COLS.DESCRIPTION._Mask  ); _description = null; }
+                              _location      = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FORMULARESULTVIEW_Factory.COLS.LOCATION._Mask     ); _location = null; }
+                              _name          = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FORMULARESULTVIEW_Factory.COLS.NAME._Mask         ); _name = null; }
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();

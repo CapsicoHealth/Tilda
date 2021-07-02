@@ -123,9 +123,11 @@ public interface DBType
     public void             within(Connection Con, StringBuilder Str, Type_DatetimePrimitive Col, Type_DatetimePrimitive ColStart, long DurationCount, IntervalEnum DurationType);
     // LDH-NOTE: UNLOGGED Tables behave strangely in some situations... Disabling this feature.
 //    public boolean setTableLogging(Connection connection, String schemaName, String tableName, boolean logged) throws Exception;
-    public String getBackendConnectionId(Connection Con) throws Exception;
-    void cancel(Connection Con) throws SQLException;
-    public boolean moveTableView(Connection Con, Base base, String oldSchemaName) throws Exception;
-    public ZonedDateTime getCurrentTimestamp(Connection Con) throws Exception;
-    public LocalDate getCurrentDate(Connection Con) throws Exception;
+    public String getBackendConnectionId(Connection con) throws Exception;
+    void cancel(Connection con) throws SQLException;
+    public boolean moveTableView(Connection con, Base base, String oldSchemaName) throws Exception;
+    public boolean renameTableView(Connection con, Base base, String oldName) throws Exception;
+    public boolean renameTableColumn(Connection con, Column col, String oldName) throws Exception;
+    public ZonedDateTime getCurrentTimestamp(Connection con) throws Exception;
+    public LocalDate getCurrentDate(Connection con) throws Exception;
   }

@@ -406,7 +406,7 @@ public final class Connection
         long T0 = System.nanoTime();
         Savepoint SP = _C.setSavepoint();
         _SavePoints.push(SP);
-//        LOG.debug("SAVEPOINT ADD: "+SP.getSavepointId()+ " (total: "+_SavePoints.size()+")");
+        // LOG.debug("SAVEPOINT ADD: "+SP.getSavepointId()+ " (total: "+_SavePoints.size()+")");
         PerfTracker.add(TransactionType.SAVEPOINT_SET, System.nanoTime() - T0);
       }
 
@@ -418,7 +418,7 @@ public final class Connection
 
         long T0 = System.nanoTime();
         Savepoint SP = _SavePoints.pop();
-//        LOG.debug("SAVEPOINT POP: "+SP.getSavepointId() + " (total: "+(_SavePoints.size()+1)+")");
+        // LOG.debug("SAVEPOINT POP: "+SP.getSavepointId() + " (total: "+(_SavePoints.size()+1)+")");
         if (commit == true)
           {
             _C.releaseSavepoint(SP);
@@ -477,6 +477,7 @@ public final class Connection
       {
         return _DB.dropView(this, V);
       }
+
     public boolean dropView(ViewMeta V, boolean cascade)
     throws Exception
       {
@@ -607,6 +608,12 @@ public final class Connection
         _DB.setArray(this, PS, i, Type, allocatedArrays, CollectionUtil.toList(val));
       }
 
+    public void setArray(PreparedStatement PS, int i, ColumnType Type, List<java.sql.Array> allocatedArrays, long[] val)
+    throws Exception
+      {
+        _DB.setArray(this, PS, i, Type, allocatedArrays, CollectionUtil.toList(val));
+      }
+    
     public void setArray(PreparedStatement PS, int i, ColumnType Type, List<java.sql.Array> allocatedArrays, Collection<?> val)
     throws Exception
       {
@@ -800,28 +807,41 @@ public final class Connection
           CL.get(i).rollback();
       }
 
-    public boolean moveTable(Object _Obj, String _OldSchemaName)
-      {
-        // TODO Auto-generated method stub
-        return false;
-      }
-
     public boolean moveTableView(Base base, String oldSchemaName)
     throws Exception
       {
         return _DB.moveTableView(this, base, oldSchemaName);
       }
 
-    public ZonedDateTime getCurrentTimestamp() throws Exception
+    public boolean renameTableView(Base base, String oldName)
+    throws Exception
+      {
+        return _DB.renameTableView(this, base, oldName);
+      }
+
+    public boolean renameTableColumn(Column col, String oldName)
+    throws Exception
+      {
+        return _DB.renameTableColumn(this, col, oldName);
+      }
+
+    public ZonedDateTime getCurrentTimestamp()
+    throws Exception
       {
         return _DB.getCurrentTimestamp(this);
       }
 
-    public LocalDate getCurrentDate() throws Exception
+    public LocalDate getCurrentDate()
+    throws Exception
       {
         return _DB.getCurrentDate(this);
       }
 
+    public void setReadOnly(boolean readOnly)
+    throws SQLException
+      {
+        _C.setReadOnly(readOnly);
+      }
   }
 
 

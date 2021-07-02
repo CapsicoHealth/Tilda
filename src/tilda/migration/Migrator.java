@@ -51,6 +51,7 @@ import tilda.migration.actions.ColumnDefault;
 import tilda.migration.actions.DDLDependencyPostManagement;
 import tilda.migration.actions.DDLDependencyPreManagement;
 import tilda.migration.actions.SchemaCreate;
+import tilda.migration.actions.TableColumnRename;
 import tilda.migration.actions.TableComment;
 import tilda.migration.actions.TableCreate;
 import tilda.migration.actions.TableFKAdd;
@@ -60,6 +61,7 @@ import tilda.migration.actions.TableIndexDrop;
 import tilda.migration.actions.TableIndexRename;
 import tilda.migration.actions.TableKeyCreate;
 import tilda.migration.actions.TablePKReplace;
+import tilda.migration.actions.TableViewRename;
 import tilda.migration.actions.TableViewSchemaSet;
 import tilda.migration.actions.TildaAclAdd;
 import tilda.migration.actions.TildaExtraDDL;
@@ -72,6 +74,7 @@ import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
 import tilda.parsing.parts.MigrationMove;
+import tilda.parsing.parts.MigrationRename;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.PrimaryKey;
 import tilda.parsing.parts.Schema;
@@ -303,41 +306,123 @@ public class Migrator
             DBMeta.addSchema(S._Name);
           }
 
-        if (S._Migration != null && S._Migration._Moves.isEmpty() == false) // Are there any migration steps to move tables over to this schema?
-          for (MigrationMove MM : S._Migration._Moves)
-            if (MM != null)
-              {
-                for (Object obj : MM._Objects) // let's look at tables to transfer
+        if (S._Migration != null) // Are there any migration steps to move tables over to this schema?
+          {
+            if (S._Migration._Moves.isEmpty() == false)
+              for (MigrationMove MM : S._Migration._Moves)
+                if (MM != null)
                   {
-                    TableMeta TMSrc = DBMeta.getTableMeta(MM._Schema, obj._Name); // src table
-                    TableMeta TMDest = DBMeta.getTableMeta(S._Name, obj._Name); // dst table
-                    // src table must exist and dst table must not exist (i.e., if it doesn't, it's been migrated previously already).
-                    if (TMDest == null && TMSrc != null)
+                    if (DBMeta.getSchemaMeta(MM._Schema) == null) // We might move some tables/views from an external schema which we should load.
+                      DBMeta.load(C, MM._Schema);
+
+                    for (Object obj : MM._Objects) // let's look at tables to transfer
                       {
-                        // Add the migration action
-                        Actions.add(new TableViewSchemaSet(obj, MM._Schema));
-                        // Transfer table to new schema to avoid double-creation later in this loop
-                        // i.e., the table didn't exist in this schema when the database was originally scanned (DBMeta).
-                        if (DBMeta.getSchemaMeta(obj._ParentSchema._Name).moveTableMetaFromOtherSchema(DBMeta, TMSrc) == false)
-                         throw new Exception("An error occurred: table '"+obj._Name+"' is being moved from schema '"+MM._Schema+"' to '"+obj._ParentSchema._Name+"' but seems to already exist there even though we just tested that a second ago and found nothing!");
+                        TableMeta TMSrc = DBMeta.getTableMeta(MM._Schema, obj._Name); // src table
+                        TableMeta TMDest = DBMeta.getTableMeta(S._Name, obj._Name); // dst table
+                        // src table must exist and dst table must not exist (i.e., if it doesn't, it's been migrated previously already).
+                        if (TMDest == null && TMSrc != null)
+                          {
+                            // Add the migration action
+                            Actions.add(new TableViewSchemaSet(obj, MM._Schema));
+                            // Transfer table to new schema to avoid double-creation later in this loop
+                            // i.e., the table didn't exist in this schema when the database was originally scanned (DBMeta).
+                            if (DBMeta.getSchemaMeta(obj._ParentSchema._Name).moveTableMetaFromOtherSchema(DBMeta, TMSrc) == false)
+                              throw new Exception("An error occurred: table '" + obj._Name + "' is being moved from schema '" + MM._Schema + "' to '" + obj._ParentSchema._Name + "' but seems to already exist there even though we just tested that a second ago and found nothing!");
+                          }
+                      }
+                    for (View v : MM._Views)
+                      {
+                        ViewMeta VMSrc = DBMeta.getViewMeta(MM._Schema, v._Name);
+                        ViewMeta VMDest = DBMeta.getViewMeta(S._Name, v._Name);
+                        // src view must exist and dst view must not exist (i.e., if it doesn't, it's been migrated previously already).
+                        if (VMDest == null && VMSrc != null)
+                          {
+                            // Add the migration action
+                            Actions.add(new TableViewSchemaSet(v, MM._Schema));
+                            // Transfer view to new schema to avoid double-creation later in this loop
+                            // i.e., the table didn't exist in this schema when the database was originally scanned (DBMeta).
+                            if (DBMeta.getSchemaMeta(v._ParentSchema._Name).moveViewMetaFromOtherSchema(DBMeta, VMSrc) == false)
+                              throw new Exception("An error occurred: view '" + v._Name + "' is being moved from schema '" + MM._Schema + "' to '" + v._ParentSchema._Name + "' but seems to already exist there even though we just tested that a second ago and found nothing!");
+                          }
                       }
                   }
-                for (View v : MM._Views)
+
+            if (S._Migration._Renames.isEmpty() == false)
+              for (MigrationRename MR : S._Migration._Renames)
+                if (MR != null)
                   {
-                    ViewMeta VMSrc = DBMeta.getViewMeta(MM._Schema, v._Name);
-                    ViewMeta VMDest = DBMeta.getViewMeta(S._Name, v._Name);
-                    // src view must exist and dst view must not exist (i.e., if it doesn't, it's been migrated previously already).
-                    if (VMDest == null && VMSrc != null)
+                    if (MR._Object != null) // Renaming object of column
                       {
-                        // Add the migration action
-                        Actions.add(new TableViewSchemaSet(v, MM._Schema));
-                        // Transfer view to new schema to avoid double-creation later in this loop
-                        // i.e., the table didn't exist in this schema when the database was originally scanned (DBMeta).
-                        if (DBMeta.getSchemaMeta(v._ParentSchema._Name).moveViewMetaFromOtherSchema(DBMeta, VMSrc) == false)
-                         throw new Exception("An error occurred: view '"+v._Name+"' is being moved from schema '"+MM._Schema+"' to '"+v._ParentSchema._Name+"' but seems to already exist there even though we just tested that a second ago and found nothing!");
+                        if (MR._Column != null) // renaming column
+                          {
+                            TableMeta TM = DBMeta.getTableMeta(MR._Schema._Name, MR._ObjectName);
+                            if (TM != null)
+                              {
+                                List<ColumnMeta> CMSrcs = new ArrayList<ColumnMeta>();
+                                for (String n : MR._OldNames)
+                                  {
+                                    ColumnMeta CMSrc = TM.getColumnMeta(n); // src column
+                                    if (CMSrc != null)
+                                      CMSrcs.add(CMSrc);
+                                  }
+                                ColumnMeta CMDest = TM.getColumnMeta(MR._Column.getName()); // dst column
+                                // dst column must not exist and only one src column must be existing in the DB (i.e., if it doesn't, it's been migrated previously already).
+                                if (CMDest == null && CMSrcs.size() == 1)
+                                  {
+                                    // Add the migration action
+                                    Actions.add(new TableColumnRename(MR._Column, CMSrcs.get(0)._Name));
+                                    // Rename table to avoid double-creation later in this loop
+                                    // i.e., the table didn't exist in this schema when the database was originally scanned (DBMeta).
+                                    if (DBMeta.getSchemaMeta(MR._Object._ParentSchema._Name).renameTableColumn(DBMeta, TM, CMSrcs.get(0)._Name, MR._Column.getName()) == false)
+                                      throw new Exception("An error occurred: Column '" + CMSrcs.get(0)._ParentTable._SchemaName + "." + CMSrcs.get(0)._ParentTable._TableName + "." + CMSrcs.get(0)._Name + "' is being renamed to '" + MR._ColumnName + "' but seems to already exist there even though we just tested that a second ago and found nothing!");
+                                  }
+                              }
+                          }
+                        else // Only renaming an object
+                          {
+                            List<TableMeta> TMSrcs = new ArrayList<TableMeta>();
+                            for (String n : MR._OldNames)
+                              {
+                                TableMeta TMSrc = DBMeta.getTableMeta(MR._Schema._Name, n); // src table
+                                if (TMSrc != null)
+                                  TMSrcs.add(TMSrc);
+                              }
+                            TableMeta TMDest = DBMeta.getTableMeta(MR._Schema._Name, MR._Object._Name); // dst table
+                            // src table must exist and dst table must not exist (i.e., if it doesn't, it's been migrated previously already).
+                            if (TMDest == null && TMSrcs.size() == 1)
+                              {
+                                // Add the migration action
+                                Actions.add(new TableViewRename(MR._Object, TMSrcs.get(0)._TableName));
+                                // Rename table to avoid double-creation later in this loop
+                                // i.e., the table didn't exist in this schema when the database was originally scanned (DBMeta).
+                                if (DBMeta.getSchemaMeta(MR._Object._ParentSchema._Name).renameTable(DBMeta, TMSrcs.get(0), MR._Object._Name) == false)
+                                  throw new Exception("An error occurred: table '" + TMSrcs.get(0)._SchemaName + "." + TMSrcs.get(0)._TableName + "' is being renamed to '" + MR._Object._Name + "' but seems to already exist there even though we just tested that a second ago and found nothing!");
+                              }
+                          }
+                      }
+                    else if (MR._View != null) // renaming view
+                      {
+                        List<ViewMeta> VMSrcs = new ArrayList<ViewMeta>();
+                        for (String n : MR._OldNames)
+                          {
+                            ViewMeta VMSrc = DBMeta.getViewMeta(MR._Schema._Name, n); // src view
+                            if (VMSrc != null)
+                              VMSrcs.add(VMSrc);
+                          }
+                        ViewMeta VMDest = DBMeta.getViewMeta(MR._Schema._Name, MR._View._Name); // dst view
+                        // src table must exist and dst table must not exist (i.e., if it doesn't, it's been migrated previously already).
+                        if (VMDest == null && VMSrcs.size() == 1)
+                          {
+                            // Add the migration action
+                            Actions.add(new TableViewRename(MR._View, VMSrcs.get(0)._ViewName));
+                            // Rename table to avoid double-creation later in this loop
+                            // i.e., the table didn't exist in this schema when the database was originally scanned (DBMeta).
+                            if (DBMeta.getSchemaMeta(MR._Object._ParentSchema._Name).renameView(DBMeta, VMSrcs.get(0), MR._Object._Name) == false)
+                              throw new Exception("An error occurred: view '" + VMSrcs.get(0)._SchemaName + "." + VMSrcs.get(0)._ViewName + "' is being renamed to '" + MR._Object._Name + "' but seems to already exist there even though we just tested that a second ago and found nothing!");
+                          }
                       }
                   }
-              }
+          }
 
         boolean Helpers = false;
         if (S._Name.equalsIgnoreCase("TILDA") == true)
@@ -445,8 +530,7 @@ public class Migrator
                             || C.getDBStringType(CMeta._Size).equals(C.getDBStringType(Col._Size)) == true
                             && CMeta._Size != Col._Size
                             // Unless it's a size change but remains within TEXT
-                            && (CMeta._TypeSql.equals("VARCHAR") == false || CMeta._TypeName.equals("text") == false)
-                            )
+                            && (CMeta._TypeSql.equals("VARCHAR") == false || CMeta._TypeName.equals("text") == false))
                               {
                                 CAM.addColumnAlterStringSize(CMeta, Col);
                                 NeedsDdlDependencyManagement = true;

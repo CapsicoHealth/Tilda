@@ -3636,7 +3636,7 @@ This is the hasChanged for:<BR>
        Dst.setDeleteCount  (_deleteCount  );
        Dst.setDeleteRecords(_deleteRecords);
        Dst.setLastUpdated  (_lastUpdated  );
-       if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull      (); else        Dst.setDeleted      (_deleted      );
+       if (__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull      (); else        Dst.setDeleted      (_deleted      );
      }
 
 /**
@@ -3696,7 +3696,7 @@ This is the hasChanged for:<BR>
 
           switch (__LookupId)
            {
-             case 0:
+             case 0: // PK
                PS.setString    (++i, _schemaName   );
                PS.setString    (++i, _objectName   );
                PS.setTimestamp(++i, new java.sql.Timestamp(_startPeriod.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
@@ -3963,8 +3963,8 @@ This is the hasChanged for:<BR>
 
           switch (__LookupId)
            {
-             case 0:
-                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "schemaName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "objectName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "startPeriod"); S.append("=?)");
+             case 0: // PK
+                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "schemaName"); S.append("=?");  S.append(" AND "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "objectName"); S.append("=?");  S.append(" AND "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "startPeriod"); S.append("=?");  S.append(")");
                 break;
              case -77: 
              case -666: if (__Init == InitMode.CREATE) break;
@@ -4094,7 +4094,6 @@ This is the hasChanged for:<BR>
         }
 
        __Changes.clear();
-       __Nulls.clear();
      }
 /**
  Writes the object to the data store using an upsert approach and assumes the object is either
@@ -4216,8 +4215,8 @@ This is the hasChanged for:<BR>
           S.append(" from "); C.getFullTableVar(S, "TILDA", "ObjectPerf");
        switch (__LookupId)
         {
-          case 0:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "schemaName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "objectName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "startPeriod"); S.append("=?)");
+          case 0: // PK
+             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "schemaName"); S.append("=?");  S.append(" AND "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "objectName"); S.append("=?");  S.append(" AND "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "startPeriod"); S.append("=?");  S.append(")");
              break;
           case -77: 
           case -666: if (__Init == InitMode.CREATE) break;
@@ -4239,7 +4238,7 @@ This is the hasChanged for:<BR>
           int i = 0;
           switch (__LookupId)
            {
-             case 0:
+             case 0: // PK
                PS.setString    (++i, _schemaName   );
                PS.setString    (++i, _objectName   );
                PS.setTimestamp(++i, new java.sql.Timestamp(_startPeriod.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
@@ -4273,27 +4272,27 @@ This is the hasChanged for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-      __Saved_schemaName    = _schemaName    = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask   );
-      __Saved_objectName    = _objectName    = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask   );
-                              _startPeriodTZ = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask); else _startPeriodTZ = _startPeriodTZ.trim();
-      __Saved_startPeriod   = _startPeriod   = processZDT(_startPeriodTZ  , "tilda.data.TILDA.ObjectPerf.startPeriod"  , RS, ++i, TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD  , TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ  ); if (RS.wasNull() == true) __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask  );
-                              _endPeriodTZ   = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask  ); else _endPeriodTZ   = _endPeriodTZ  .trim();
-                              _endPeriod     = processZDT(_endPeriodTZ    , "tilda.data.TILDA.ObjectPerf.endPeriod"    , RS, ++i, TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD    , TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ    ); if (RS.wasNull() == true) __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask    );
-                              _selectNano    =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask   );
-                              _selectCount   =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask  );
-                              _selectRecords =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask);
-                              _insertNano    =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask   );
-                              _insertCount   =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask  );
-                              _insertRecords =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask);
-                              _updateNano    =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask   );
-                              _updateCount   =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask  );
-                              _updateRecords =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask);
-                              _deleteNano    =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask   );
-                              _deleteCount   =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask  );
-                              _deleteRecords =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask);
-                              _created       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask      );
-                              _lastUpdated   = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask  );
-                              _deleted       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask      );
+      __Saved_schemaName    = _schemaName    = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask   ); _schemaName = null; }
+      __Saved_objectName    = _objectName    = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask   ); _objectName = null; }
+                              _startPeriodTZ = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask); _startPeriodTZ = null; } else _startPeriodTZ = _startPeriodTZ.trim();
+      __Saved_startPeriod   = _startPeriod   = processZDT(_startPeriodTZ  , "tilda.data.TILDA.ObjectPerf.startPeriod"  , RS, ++i, TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD  , TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ  ); if (RS.wasNull() == true) { __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask  ); _startPeriod = null; }
+                              _endPeriodTZ   = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask  ); _endPeriodTZ = null; } else _endPeriodTZ   = _endPeriodTZ  .trim();
+                              _endPeriod     = processZDT(_endPeriodTZ    , "tilda.data.TILDA.ObjectPerf.endPeriod"    , RS, ++i, TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD    , TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ    ); if (RS.wasNull() == true) { __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask    ); _endPeriod = null; }
+                              _selectNano    =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask   ); _selectNano = null; }
+                              _selectCount   =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask  ); _selectCount = null; }
+                              _selectRecords =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask); _selectRecords = null; }
+                              _insertNano    =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask   ); _insertNano = null; }
+                              _insertCount   =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask  ); _insertCount = null; }
+                              _insertRecords =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask); _insertRecords = null; }
+                              _updateNano    =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask   ); _updateNano = null; }
+                              _updateCount   =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask  ); _updateCount = null; }
+                              _updateRecords =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask); _updateRecords = null; }
+                              _deleteNano    =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask   ); _deleteNano = null; }
+                              _deleteCount   =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask  ); _deleteCount = null; }
+                              _deleteRecords =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask); _deleteRecords = null; }
+                              _created       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask      ); _created = null; }
+                              _lastUpdated   = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask  ); _lastUpdated = null; }
+                              _deleted       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask      ); _deleted = null; }
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();

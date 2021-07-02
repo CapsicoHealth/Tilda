@@ -363,9 +363,9 @@ public class JSONUtil
             else
               Out.write(", ");
             if (i == null)
-             Out.write("null");
+              Out.write("null");
             else
-             printChar(Out, i);
+              printChar(Out, i);
           }
         Out.write("]");
       }
@@ -411,7 +411,7 @@ public class JSONUtil
               Out.write(", ");
             if (i == null)
               Out.write("null");
-             else
+            else
               printFloat(Out, i);
           }
         Out.write("]");
@@ -458,7 +458,7 @@ public class JSONUtil
               Out.write(", ");
             if (i == null)
               Out.write("null");
-             else
+            else
               printDouble(Out, i);
           }
         Out.write("]");
@@ -551,8 +551,8 @@ public class JSONUtil
           }
         Out.write("]");
       }
-    
-    
+
+
     public static void print(Writer Out, String Name, boolean FirstElement, Map<String, String> M)
     throws IOException
       {
@@ -564,7 +564,7 @@ public class JSONUtil
           }
         Out.write("[");
         boolean First = true;
-        for (Map.Entry<String,String> e : M.entrySet())
+        for (Map.Entry<String, String> e : M.entrySet())
           {
             if (First == true)
               First = false;
@@ -578,8 +578,8 @@ public class JSONUtil
           }
         Out.write("]");
       }
-    
-    
+
+
     /**
      * Starts the standard JSON header for payload, i.e., {code:xxx,data:}
      * 
@@ -595,6 +595,22 @@ public class JSONUtil
         Out.write(",\"data\": ");
         Out.write(openObjectOrArray);
         Out.write("\n");
+      }
+
+    public static void printArrayStart(Writer Out, String Name, boolean FirstElement, String Header)
+    throws IOException
+      {
+        Out.write(Header);
+        print(Out, Name, FirstElement);
+        startend(Out, '[');
+      }
+
+    public static void printElementStart(Writer Out, String Name, boolean FirstElement, String Header)
+    throws IOException
+      {
+        Out.write(Header);
+        print(Out, Name, FirstElement);
+        startend(Out, '{');
       }
 
     public static void startend(Writer Out, char startChar)
@@ -632,12 +648,13 @@ public class JSONUtil
             end(Out, '}');
           }
       }
-    
+
     /**
      * When using client-side frameworks such as Dojo that may use an iFrame for ajax-contents, the protocol
      * is typically to return the json data packaged inside a textarea. This function does that. It is exactly
      * equivalent to the "plain" response method except the jsonable object is output inside a textarea and the
      * writer is expected to be set up as an HTML one.
+     * 
      * @param Out
      * @param JsonExportName
      * @param Obj
@@ -648,9 +665,9 @@ public class JSONUtil
       {
         Out.write("<textarea>\n");
         response(Out, JsonExportName, Obj);
-        Out.write("</textarea>\n");        
+        Out.write("</textarea>\n");
       }
-    
+
 
     public static void response(Writer Out, String JsonExportName, List<? extends JSONable> L)
     throws Exception
@@ -684,6 +701,7 @@ public class JSONUtil
         Out.write(Header);
         print(Out, elementName, firstElement);
 
+
         if (L == null)
           {
             Out.write(" null ");
@@ -709,11 +727,11 @@ public class JSONUtil
             else
               Out.write(Header + "  ,");
             Obj.toJSON(Out, JsonExportName, "", true);
-            Out.write("\n");
+            // Out.write("\n");
           }
         Out.write(Header + "  ]\n");
       }
-    
+
     public static void print(Writer Out, String elementName, String JsonExportName, boolean firstElement, List<? extends JSONable> L, String Header, ZonedDateTime lastSync)
     throws Exception
       {
@@ -748,7 +766,7 @@ public class JSONUtil
           }
         Out.write(Header + "  ]\n");
       }
-    
+
 
     public static void print(Writer Out, String elementName, String JsonExportName, boolean firstElement, JSONable Obj, String Header)
     throws Exception
@@ -789,4 +807,45 @@ public class JSONUtil
         Out.write(" ]\n");
       }
 
+    /**
+     * Prints a raw json object. It's assumed to be properly formed.
+     * @param out
+     * @param name
+     * @param firstElement
+     * @param rawJsonObject
+     * @throws IOException
+     */
+    public static void printRawObject(Writer out, String name, boolean firstElement, String rawJsonObject)
+    throws IOException
+      {
+        JSONUtil.print(out, name, firstElement);
+        out.write(rawJsonObject);
+      }
+
+    /**
+     * Prints a raw json object. It's assumed to be properly formed.
+     * @param out
+     * @param name
+     * @param firstElement
+     * @param rawJsonObject
+     * @throws IOException
+     */
+    public static void printRawArray(Writer out, String name, boolean firstElement, List<String> rawJsonObjects)
+    throws IOException
+      {
+        JSONUtil.print(out, name, firstElement);
+        out.write("[\n");
+        boolean first = true;
+        for (String s : rawJsonObjects)
+          {
+            if (first == true)
+              first = false;
+            else
+              out.write("   , ");
+            out.write(s);
+            out.write("\n");
+          }
+        out.write("]\n");
+      }
+    
   }

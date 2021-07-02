@@ -5574,7 +5574,7 @@ This is the hasChanged for:<BR>
        Dst.setTildaToCsvNano        (_tildaToCsvNano        );
        Dst.setTildaToCsvCount       (_tildaToCsvCount       );
        Dst.setLastUpdated           (_lastUpdated           );
-       if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull               (); else        Dst.setDeleted               (_deleted               );
+       if (__Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull               (); else        Dst.setDeleted               (_deleted               );
      }
 
 /**
@@ -5634,7 +5634,7 @@ This is the hasChanged for:<BR>
 
           switch (__LookupId)
            {
-             case 0:
+             case 0: // PK
                PS.setTimestamp(++i, new java.sql.Timestamp(_startPeriod.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                break;
              case -666: if (__Init == InitMode.CREATE) break;
@@ -5969,8 +5969,8 @@ This is the hasChanged for:<BR>
 
           switch (__LookupId)
            {
-             case 0:
-                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "TransPerf", "startPeriod"); S.append("=?)");
+             case 0: // PK
+                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "TransPerf", "startPeriod"); S.append("=?");  S.append(")");
                 break;
              case -77: 
              case -666: if (__Init == InitMode.CREATE) break;
@@ -6138,7 +6138,6 @@ This is the hasChanged for:<BR>
         }
 
        __Changes.clear();
-       __Nulls.clear();
      }
 /**
  Writes the object to the data store using an upsert approach and assumes the object is either
@@ -6270,8 +6269,8 @@ This is the hasChanged for:<BR>
           S.append(" from "); C.getFullTableVar(S, "TILDA", "TransPerf");
        switch (__LookupId)
         {
-          case 0:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "TransPerf", "startPeriod"); S.append("=?)");
+          case 0: // PK
+             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "TransPerf", "startPeriod"); S.append("=?");  S.append(")");
              break;
           case -77: 
           case -666: if (__Init == InitMode.CREATE) break;
@@ -6293,7 +6292,7 @@ This is the hasChanged for:<BR>
           int i = 0;
           switch (__LookupId)
            {
-             case 0:
+             case 0: // PK
                PS.setTimestamp(++i, new java.sql.Timestamp(_startPeriod.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                break;
              case -666: if (__Init == InitMode.CREATE) break;
@@ -6325,37 +6324,37 @@ This is the hasChanged for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-                                       _startPeriodTZ          = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.STARTPERIODTZ._Mask         ); else _startPeriodTZ          = _startPeriodTZ         .trim();
-      __Saved_startPeriod            = _startPeriod            = processZDT(_startPeriodTZ           , "tilda.data.TILDA.TransPerf.startPeriod"           , RS, ++i, TILDA__TRANSPERF_Factory.COLS.STARTPERIOD           , TILDA__TRANSPERF_Factory.COLS.STARTPERIODTZ           ); if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.STARTPERIOD._Mask           );
-                                       _endPeriodTZ            = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.ENDPERIODTZ._Mask           ); else _endPeriodTZ            = _endPeriodTZ           .trim();
-                                       _endPeriod              = processZDT(_endPeriodTZ             , "tilda.data.TILDA.TransPerf.endPeriod"             , RS, ++i, TILDA__TRANSPERF_Factory.COLS.ENDPERIOD             , TILDA__TRANSPERF_Factory.COLS.ENDPERIODTZ             ); if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.ENDPERIOD._Mask             );
-                                       _commitNano             =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.COMMITNANO._Mask            );
-                                       _commitCount            =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.COMMITCOUNT._Mask           );
-                                       _rollbackNano           =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.ROLLBACKNANO._Mask          );
-                                       _rollbackCount          =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.ROLLBACKCOUNT._Mask         );
-                                       _savepointSetNano       =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTSETNANO._Mask      );
-                                       _savepointSetCount      =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTSETCOUNT._Mask     );
-                                       _savepointCommitNano    =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTCOMMITNANO._Mask   );
-                                       _savepointCommitCount   =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTCOMMITCOUNT._Mask  );
-                                       _savepointRollbackNano  =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTROLLBACKNANO._Mask );
-                                       _savepointRollbackCount =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTROLLBACKCOUNT._Mask);
-                                       _statementCloseNano     =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.STATEMENTCLOSENANO._Mask    );
-                                       _statementCloseCount    =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.STATEMENTCLOSECOUNT._Mask   );
-                                       _connectionCloseNano    =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.CONNECTIONCLOSENANO._Mask   );
-                                       _connectionCloseCount   =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.CONNECTIONCLOSECOUNT._Mask  );
-                                       _connectionGetNano      =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.CONNECTIONGETNANO._Mask     );
-                                       _connectionGetCount     =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.CONNECTIONGETCOUNT._Mask    );
-                                       _tildaSetterNano        =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.TILDASETTERNANO._Mask       );
-                                       _tildaSetterCount       =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.TILDASETTERCOUNT._Mask      );
-                                       _tildaToStringNano      =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.TILDATOSTRINGNANO._Mask     );
-                                       _tildaToStringCount     =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.TILDATOSTRINGCOUNT._Mask    );
-                                       _tildaToJsonNano        =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.TILDATOJSONNANO._Mask       );
-                                       _tildaToJsonCount       =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.TILDATOJSONCOUNT._Mask      );
-                                       _tildaToCsvNano         =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.TILDATOCSVNANO._Mask        );
-                                       _tildaToCsvCount        =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.TILDATOCSVCOUNT._Mask       );
-                                       _created                = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.CREATED._Mask               );
-                                       _lastUpdated            = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.LASTUPDATED._Mask           );
-                                       _deleted                = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.DELETED._Mask               );
+                                       _startPeriodTZ          = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.STARTPERIODTZ._Mask         ); _startPeriodTZ = null; } else _startPeriodTZ          = _startPeriodTZ         .trim();
+      __Saved_startPeriod            = _startPeriod            = processZDT(_startPeriodTZ           , "tilda.data.TILDA.TransPerf.startPeriod"           , RS, ++i, TILDA__TRANSPERF_Factory.COLS.STARTPERIOD           , TILDA__TRANSPERF_Factory.COLS.STARTPERIODTZ           ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.STARTPERIOD._Mask           ); _startPeriod = null; }
+                                       _endPeriodTZ            = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.ENDPERIODTZ._Mask           ); _endPeriodTZ = null; } else _endPeriodTZ            = _endPeriodTZ           .trim();
+                                       _endPeriod              = processZDT(_endPeriodTZ             , "tilda.data.TILDA.TransPerf.endPeriod"             , RS, ++i, TILDA__TRANSPERF_Factory.COLS.ENDPERIOD             , TILDA__TRANSPERF_Factory.COLS.ENDPERIODTZ             ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.ENDPERIOD._Mask             ); _endPeriod = null; }
+                                       _commitNano             =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.COMMITNANO._Mask            ); _commitNano = null; }
+                                       _commitCount            =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.COMMITCOUNT._Mask           ); _commitCount = null; }
+                                       _rollbackNano           =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.ROLLBACKNANO._Mask          ); _rollbackNano = null; }
+                                       _rollbackCount          =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.ROLLBACKCOUNT._Mask         ); _rollbackCount = null; }
+                                       _savepointSetNano       =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTSETNANO._Mask      ); _savepointSetNano = null; }
+                                       _savepointSetCount      =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTSETCOUNT._Mask     ); _savepointSetCount = null; }
+                                       _savepointCommitNano    =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTCOMMITNANO._Mask   ); _savepointCommitNano = null; }
+                                       _savepointCommitCount   =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTCOMMITCOUNT._Mask  ); _savepointCommitCount = null; }
+                                       _savepointRollbackNano  =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTROLLBACKNANO._Mask ); _savepointRollbackNano = null; }
+                                       _savepointRollbackCount =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTROLLBACKCOUNT._Mask); _savepointRollbackCount = null; }
+                                       _statementCloseNano     =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.STATEMENTCLOSENANO._Mask    ); _statementCloseNano = null; }
+                                       _statementCloseCount    =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.STATEMENTCLOSECOUNT._Mask   ); _statementCloseCount = null; }
+                                       _connectionCloseNano    =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.CONNECTIONCLOSENANO._Mask   ); _connectionCloseNano = null; }
+                                       _connectionCloseCount   =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.CONNECTIONCLOSECOUNT._Mask  ); _connectionCloseCount = null; }
+                                       _connectionGetNano      =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.CONNECTIONGETNANO._Mask     ); _connectionGetNano = null; }
+                                       _connectionGetCount     =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.CONNECTIONGETCOUNT._Mask    ); _connectionGetCount = null; }
+                                       _tildaSetterNano        =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.TILDASETTERNANO._Mask       ); _tildaSetterNano = null; }
+                                       _tildaSetterCount       =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.TILDASETTERCOUNT._Mask      ); _tildaSetterCount = null; }
+                                       _tildaToStringNano      =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.TILDATOSTRINGNANO._Mask     ); _tildaToStringNano = null; }
+                                       _tildaToStringCount     =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.TILDATOSTRINGCOUNT._Mask    ); _tildaToStringCount = null; }
+                                       _tildaToJsonNano        =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.TILDATOJSONNANO._Mask       ); _tildaToJsonNano = null; }
+                                       _tildaToJsonCount       =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.TILDATOJSONCOUNT._Mask      ); _tildaToJsonCount = null; }
+                                       _tildaToCsvNano         =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.TILDATOCSVNANO._Mask        ); _tildaToCsvNano = null; }
+                                       _tildaToCsvCount        =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.TILDATOCSVCOUNT._Mask       ); _tildaToCsvCount = null; }
+                                       _created                = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.CREATED._Mask               ); _created = null; }
+                                       _lastUpdated            = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.LASTUPDATED._Mask           ); _lastUpdated = null; }
+                                       _deleted                = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.DELETED._Mask               ); _deleted = null; }
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();

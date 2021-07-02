@@ -1374,8 +1374,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
               if (s.equals(VC._Name) == true)
                 {
                   ColumnType T = VC._SameAsObj == null && VC._SameAs.equals("_TS.p") == true ? ColumnType.DATE : VC.getType();
-                  boolean nullTest = FormulaStr.substring(M.end()).toLowerCase().matches("\\s*is\\s*(not)?\\s*null.*");
-                  if (nullTest == false && (T == ColumnType.INTEGER || T == ColumnType.LONG || T == ColumnType.FLOAT || T == ColumnType.DOUBLE))
+                  boolean nullTest = FormulaStr.substring(M.end()).toLowerCase().matches("\\s*is\\s*(not)?\\s*null.*") || F._CoalesceNumbers == false;
+                  if (nullTest == false && (T == ColumnType.INTEGER || T == ColumnType.SHORT || T == ColumnType.LONG || T == ColumnType.FLOAT || T == ColumnType.DOUBLE))
                     M.appendReplacement(Str, "coalesce(\"" + M.group(1) + "\", 0)");
                   else
                     M.appendReplacement(Str, '"' + M.group(1) + '"');
@@ -1385,8 +1385,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
               if (s.equals(C.getName()) == true)
                 {
                   ColumnType T = C.getType();
-                  boolean nullTest = FormulaStr.substring(M.end()).toLowerCase().matches("\\s*is\\s*(not)?\\s*null.*");
-                  if (nullTest == false && (T == ColumnType.INTEGER || T == ColumnType.LONG || T == ColumnType.FLOAT || T == ColumnType.DOUBLE))
+                  boolean nullTest = FormulaStr.substring(M.end()).toLowerCase().matches("\\s*is\\s*(not)?\\s*null.*") || F._CoalesceNumbers == false;
+                  if (nullTest == false && (T == ColumnType.INTEGER || T == ColumnType.SHORT || T == ColumnType.LONG || T == ColumnType.FLOAT || T == ColumnType.DOUBLE))
                     M.appendReplacement(Str, "coalesce(\"" + M.group(1) + "\", 0)");
                   else
                     M.appendReplacement(Str, '"' + M.group(1) + '"');

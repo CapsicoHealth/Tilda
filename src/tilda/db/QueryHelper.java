@@ -42,6 +42,7 @@ import tilda.types.Type_FloatPrimitive;
 import tilda.types.Type_IntegerCollection;
 import tilda.types.Type_IntegerPrimitive;
 import tilda.types.Type_LongPrimitive;
+import tilda.types.Type_ShortPrimitive;
 import tilda.types.Type_StringCollection;
 import tilda.types.Type_StringPrimitive;
 import tilda.utils.CollectionUtil;
@@ -204,7 +205,7 @@ public abstract class QueryHelper
     public final QueryHelper selectCountStar()
     throws Exception
       {
-        _Columns.add(new ColumnDefinition(_SchemaName, _TableName, "count", 0, ColumnType.LONG, false, ""));
+        _Columns.add(new ColumnDefinition(_SchemaName, _TableName, "count", 0, ColumnType.LONG, false, "", null, null));
         return selectColumnBase("count(*)");
       }
 
@@ -294,7 +295,7 @@ public abstract class QueryHelper
         TextUtil.escapeSingleQuoteForSQL(Str, elseValue);
         Str.append(" end as \"").append(aliasName).append("\"");
 
-        clause._Col = new ColumnDefinition(_SchemaName, _TableName, aliasName, 0, ColumnType.STRING, false, "");
+        clause._Col = new ColumnDefinition(_SchemaName, _TableName, aliasName, 0, ColumnType.STRING, false, "", null, null);
         _Columns.add(clause._Col);
 
         return selectColumnBase(Str.toString());
@@ -567,6 +568,19 @@ public abstract class QueryHelper
           throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
       }
 
+    protected final void opVal(Op O, short V)
+    throws Exception
+      {
+        if (opOK(_ST, _Section) == true)
+          {
+            _QueryStr.append(O._Str).append(V);
+            if (_Section != S.SET)
+              _Section = S.WHERE;
+          }
+        else
+          throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
+      }
+
     protected final void opVal(Op O, int V)
     throws Exception
       {
@@ -784,6 +798,27 @@ public abstract class QueryHelper
         return equals(Col2);
       }
 
+    public QueryHelper set(Type_ShortPrimitive Col1, Type_ShortPrimitive Col2)
+    throws Exception
+      {
+        setColumn(Col1);
+        return equals(Col2);
+      }
+
+    public QueryHelper set(Type_IntegerPrimitive Col1, Type_ShortPrimitive Col2)
+    throws Exception
+      {
+        setColumn(Col1);
+        return equals(Col2);
+      }
+
+    public QueryHelper set(Type_LongPrimitive Col1, Type_ShortPrimitive Col2)
+    throws Exception
+      {
+        setColumn(Col1);
+        return equals(Col2);
+      }
+
     public QueryHelper set(Type_IntegerPrimitive Col1, Type_IntegerPrimitive Col2)
     throws Exception
       {
@@ -841,6 +876,13 @@ public abstract class QueryHelper
       }
 
     public QueryHelper set(Type_BooleanPrimitive Col1, boolean V)
+    throws Exception
+      {
+        setColumn(Col1);
+        return equals(V);
+      }
+
+    public QueryHelper set(Type_ShortPrimitive Col1, short V)
     throws Exception
       {
         setColumn(Col1);
@@ -1279,6 +1321,13 @@ public abstract class QueryHelper
         return this;
       }
 
+    public QueryHelper equals(short V)
+    throws Exception
+      {
+        opVal(Op.EQUALS, V);
+        return this;
+      }
+
     public QueryHelper equals(int V)
     throws Exception
       {
@@ -1364,6 +1413,24 @@ public abstract class QueryHelper
         return compareBase(Col1, Col2, Op.EQUALS);
       }
 
+    public QueryHelper equals(Type_ShortPrimitive Col1, Type_ShortPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.EQUALS);
+      }
+
+    public QueryHelper equals(Type_IntegerPrimitive Col1, Type_ShortPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.EQUALS);
+      }
+    
+    public QueryHelper equals(Type_LongPrimitive Col1, Type_ShortPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.EQUALS);
+      }
+    
     public QueryHelper equals(Type_IntegerPrimitive Col1, Type_IntegerPrimitive Col2)
     throws Exception
       {
@@ -1410,6 +1477,14 @@ public abstract class QueryHelper
       }
 
     public QueryHelper equals(Type_BooleanPrimitive Col, boolean V)
+    throws Exception
+      {
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        opVal(Op.EQUALS, V);
+        return this;
+      }
+
+    public QueryHelper equals(Type_ShortPrimitive Col, short V)
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
@@ -1492,6 +1567,14 @@ public abstract class QueryHelper
         return this;
       }
 
+    public QueryHelper lt(Type_ShortPrimitive Col, short V)
+    throws Exception
+      {
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        opVal(Op.LT, V);
+        return this;
+      }
+
     public QueryHelper lt(Type_IntegerPrimitive Col, int V)
     throws Exception
       {
@@ -1559,6 +1642,24 @@ public abstract class QueryHelper
         return compareBase(Col1, Col2, Op.LT);
       }
 
+    public QueryHelper lt(Type_ShortPrimitive Col1, Type_ShortPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.LT);
+      }
+
+    public QueryHelper lt(Type_ShortPrimitive Col1, Type_IntegerPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.LT);
+      }
+
+    public QueryHelper lt(Type_ShortPrimitive Col1, Type_LongPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.LT);
+      }
+
     public QueryHelper lt(Type_IntegerPrimitive Col1, Type_IntegerPrimitive Col2)
     throws Exception
       {
@@ -1604,6 +1705,14 @@ public abstract class QueryHelper
       }
 
     public QueryHelper lte(Type_BooleanPrimitive Col, boolean V)
+    throws Exception
+      {
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        opVal(Op.LTE, V);
+        return this;
+      }
+
+    public QueryHelper lte(Type_ShortPrimitive Col, short V)
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
@@ -1679,6 +1788,12 @@ public abstract class QueryHelper
         return compareBase(Col1, Col2, Op.LTE);
       }
 
+    public QueryHelper lte(Type_ShortPrimitive Col1, Type_ShortPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.LTE);
+      }
+
     public QueryHelper lte(Type_IntegerPrimitive Col1, Type_IntegerPrimitive Col2)
     throws Exception
       {
@@ -1724,6 +1839,14 @@ public abstract class QueryHelper
       }
 
     public QueryHelper gt(Type_BooleanPrimitive Col, boolean V)
+    throws Exception
+      {
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        opVal(Op.GT, V);
+        return this;
+      }
+
+    public QueryHelper gt(Type_ShortPrimitive Col, short V)
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
@@ -1799,6 +1922,12 @@ public abstract class QueryHelper
         return compareBase(Col1, Col2, Op.GT);
       }
 
+    public QueryHelper gt(Type_ShortPrimitive Col1, Type_ShortPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.GT);
+      }
+
     public QueryHelper gt(Type_IntegerPrimitive Col1, Type_IntegerPrimitive Col2)
     throws Exception
       {
@@ -1854,6 +1983,14 @@ public abstract class QueryHelper
       }
 
     public QueryHelper gte(Type_BooleanPrimitive Col, boolean V)
+    throws Exception
+      {
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        opVal(Op.GTE, V);
+        return this;
+      }
+
+    public QueryHelper gte(Type_ShortPrimitive Col, short V)
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
@@ -1929,6 +2066,12 @@ public abstract class QueryHelper
         return compareBase(Col1, Col2, Op.GTE);
       }
 
+    public QueryHelper gte(Type_ShortPrimitive Col1, Type_ShortPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.GTE);
+      }
+
     public QueryHelper gte(Type_IntegerPrimitive Col1, Type_IntegerPrimitive Col2)
     throws Exception
       {
@@ -1976,6 +2119,14 @@ public abstract class QueryHelper
       }
 
     public QueryHelper notEquals(Type_BooleanPrimitive Col, boolean V)
+    throws Exception
+      {
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        opVal(Op.NOT_EQUALS, V);
+        return this;
+      }
+
+    public QueryHelper notEquals(Type_ShortPrimitive Col, short V)
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
@@ -2046,6 +2197,12 @@ public abstract class QueryHelper
       }
 
     public QueryHelper notEquals(Type_BooleanPrimitive Col1, Type_BooleanPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.NOT_EQUALS);
+      }
+
+    public QueryHelper notEquals(Type_ShortPrimitive Col1, Type_ShortPrimitive Col2)
     throws Exception
       {
         return compareBase(Col1, Col2, Op.NOT_EQUALS);
@@ -2906,7 +3063,7 @@ public abstract class QueryHelper
         _QueryStr.append(PaddingUtil.getPad(spaces));
         return this;
       }
-    
+
     public QueryHelper exists(SelectQuery subQ)
       {
         _QueryStr.append(" exists (").append(subQ.toString()).append(")");

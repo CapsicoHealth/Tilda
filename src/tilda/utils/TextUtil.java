@@ -1028,6 +1028,40 @@ public class TextUtil
             s.append(str);
           }
       }
+    
+    /**
+     * Prints a list of strings in a comma-separated list of items to be used in Java code gen. For example, passing ["a\"", "b"]
+     * will generate "a\"", "b", i.e., double quotes in passed strings will be escaped.
+     * @param StrArray
+     * @param s
+     */
+    public static void printJavaStringArray(String[] StrArray, StringBuilder s)
+      {
+        if (StrArray == null)
+          return;
+        boolean First = true;
+        for (String str : StrArray)
+          {
+            if (First == true)
+              First = false;
+            else
+              s.append(", ");
+            s.append(TextUtil.escapeDoubleQuoteWithSlash(str));
+          }
+      }
+    /**
+     * Prints a list of strings in a comma-separated list of items to be used in Java code gen. For example, passing ["a\"", "b"]
+     * will generate "a\"", "b", i.e., double quotes in passed strings will be escaped.
+     * @param StrArray
+     * @param s
+     */
+    public static String printJavaStringArray(String[] StrArray)
+      {
+        StringBuilder str = new StringBuilder();
+        printJavaStringArray(StrArray, str);
+        return str.toString();
+      }
+    
 
     public static String print(String[][] A, int pos)
       {
