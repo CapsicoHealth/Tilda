@@ -1924,4 +1924,15 @@ public class TextUtil
         return Str.toString();
       }
 
+    /**
+     * Takes a string array and changes the array values to be sql likes, i.e., '%'+parts[i]+'%'
+     * @param parts
+     */
+    public static void partsSqlLike(String[] parts)
+      {
+        if (parts != null)
+         for (int i = 0; i < parts.length; ++i)
+           parts[i] = '%'+parts[i]+'%';
+      }
+
   }
