@@ -34,11 +34,12 @@ import tilda.db.processors.ExporterCSVObjectProcessor;
 import tilda.db.processors.ExporterJSONObjectProcessor;
 import tilda.db.processors.ExporterObjectProcessor;
 import tilda.db.processors.ObjectProcessor;
-import tilda.utils.BQHelper;
 import tilda.utils.DurationUtil;
 import tilda.utils.ParseUtil;
 import tilda.utils.concurrent.Executor;
 import tilda.utils.concurrent.SimpleRunnable;
+import tilda.utils.gcp.BQHelper;
+import tilda.utils.gcp.JobHelper;
 
 public class Export
   {
@@ -122,7 +123,7 @@ public class Export
         if (Out != null)
           {
             Out.close();
-            if (BQHelper.completeJob(Out.getJob()) == null)
+            if (JobHelper.completeJob(Out.getJob()) == null)
               return 0;
           }
         return OP.getTotalCount();

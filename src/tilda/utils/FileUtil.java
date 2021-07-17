@@ -374,17 +374,7 @@ public class FileUtil
         BufferedReader R = getReaderFromPostUrl(url, params, headerss);
         if (R == null)
           return null;
-        StringBuilder Str = new StringBuilder();
-        String L = R.readLine();
-        while (L != null)
-          {
-            Str.append(L);
-            L = R.readLine();
-            if (L != null)
-              Str.append("\n"); // not append newline for the last line.
-          }
-        R.close();
-        return Str.toString();
+        return getContentsFromReader(R);
       }
 
 
@@ -463,7 +453,7 @@ public class FileUtil
 
         return dir.delete();
       }
-    
+
     public static List<CSVRecord> getCSVRecords(String fileName)
       {
         List<CSVRecord> L = new ArrayList<CSVRecord>();
@@ -480,5 +470,20 @@ public class FileUtil
           }
         return L;
       }
-    
+
+    public static String getContentsFromReader(BufferedReader r)
+    throws IOException
+      {
+        StringBuilder Str = new StringBuilder();
+        String L = r.readLine();
+        while (L != null)
+          {
+            Str.append(L);
+            L = r.readLine();
+            if (L != null)
+              Str.append("\n"); // not append newline for the last line.
+          }
+        return Str.toString();
+      }
+
   }

@@ -2,10 +2,8 @@
  * Copyright (C) 2020 CapsicoHealth Inc.
  * ===========================================================================
  */
-package tilda.utils;
+package tilda.utils.gcp;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,11 +13,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.google.api.gax.paging.Page;
-import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.google.cloud.bigquery.BigQuery;
 import com.google.cloud.bigquery.BigQuery.DatasetListOption;
 import com.google.cloud.bigquery.BigQuery.TableListOption;
-import com.google.cloud.bigquery.BigQueryError;
 import com.google.cloud.bigquery.BigQueryException;
 import com.google.cloud.bigquery.BigQueryOptions;
 import com.google.cloud.bigquery.Dataset;
@@ -43,12 +39,13 @@ import com.google.cloud.bigquery.WriteChannelConfiguration;
 import tilda.db.TildaMasterRuntimeMetaData;
 import tilda.db.TildaObjectMetaData;
 import tilda.types.ColumnDefinition;
+import tilda.utils.CollectionUtil;
+import tilda.utils.DurationUtil;
+import tilda.utils.TextUtil;
 
 public class BQHelper
   {
     protected static final Logger LOG                   = LogManager.getLogger(BQHelper.class.getName());
-
-    protected static final String _DEFAULT_ENV_VAR_NAME = "GCP_SERVICE_ACCOUNT_CREDENTIALS_PATH";
 
     /**
      * Given the environment variable 'GCP_SERVICE_ACCOUNT_CREDENTIALS_PATH', looks up the value which points to a path, and then
@@ -65,7 +62,7 @@ public class BQHelper
     public static BigQuery getBigQuery(String dataProjectName)
     throws FileNotFoundException, IOException
       {
-        return getBigQuery(_DEFAULT_ENV_VAR_NAME, dataProjectName);
+        return BigQueryOptions.newBuilder().setCredentials(AuthHelper.getCredentials(dataProjectName, "bq")).setProjectId(dataProjectName).build().getService();
       }
 
     /**
@@ -84,34 +81,7 @@ public class BQHelper
     private static BigQuery getBigQuery(String envVariable, String dataProjectName)
     throws FileNotFoundException, IOException
       {
-        String path = System.getenv(envVariable);
-        if (TextUtil.isNullOrEmpty(path) == true)
-          throw new FileNotFoundException("Cannot find the environment variable '" + envVariable + "' for the GCP credentials key file.");
-
-        ServiceAccountCredentials credentials;
-        // We are looking for the bq key file, ad only one file
-        File P = new File(path);
-        File K = null;
-        int i = 0;
-        for (File F : P.listFiles())
-          if (F.isFile() == true && F.getName().startsWith(dataProjectName + ".") == true && F.getName().endsWith(".key.bq.json") == true)
-            {
-              ++i;
-              K = F;
-            }
-        if (i == 0)
-          {
-            LOG.error("GCP BigQuery key file '" + dataProjectName + ".*.key.bq.json' not found in '" + path + "'.");
-            throw new IOException("GCP BigQuery key file not found.");
-          }
-        else if (i > 1)
-          throw new IOException("There are more than 1 file matching the pattern '" + dataProjectName + ".*.bq.key.json' in '" + path + "' for account key files: only 1 was expected.");
-
-        try (FileInputStream serviceAccountStream = new FileInputStream(K))
-          {
-            credentials = ServiceAccountCredentials.fromStream(serviceAccountStream);
-          }
-        return BigQueryOptions.newBuilder().setCredentials(credentials).setProjectId(dataProjectName).build().getService();
+        return BigQueryOptions.newBuilder().setCredentials(AuthHelper.getCredentials(envVariable, dataProjectName, "bq")).setProjectId(dataProjectName).build().getService();
       }
 
     /**
@@ -180,77 +150,6 @@ public class BQHelper
       }
 
     /**
-     * 
-     * @param job
-     * @return
-     * @throws InterruptedException
-     */
-    public static Job completeJob(Job job)
-      {
-        List<BigQueryError> errs = null;
-        try
-          {
-            LOG.info("Waiting for the BQ job to complete...");
-            Job completedJob = job.waitFor();
-            if (completedJob == null)
-              {
-                LOG.error("BigQuery job was not executed, or no longer exists.\n" + job.getStatus().getError());
-                return null;
-              }
-            job = completedJob;
-            errs = completedJob.getStatus().getExecutionErrors();
-          }
-        catch (BigQueryException E)
-          {
-            errs = new ArrayList<BigQueryError>();
-            try {
-              errs = E.getErrors();
-            }
-            catch (Exception X)
-              {
-                errs.add(E.getError());
-              }
-          }
-        catch (InterruptedException E)
-          {
-            LOG.error("Error waiting for the job\n", E);
-            return null;
-          }
-        if (errs != null && errs.isEmpty() == false)
-          {
-            StringBuilder str = new StringBuilder();
-            int errorCount = 0;
-            for (BigQueryError err : errs)
-              {
-                // LDH-NOTE: MAJOR HACK HERE!!!!!! We are getting back warning messages in the error list, and so we
-                // think the job failed when it actually succeeded (we checked on the BQ side). So for now
-                // we exclude explicit messages. Clearly a horrible thing to be doing!
-                if (err.getMessage().indexOf("The input data has NULL values in one or more columns") == -1)
-                  {
-                    ++errorCount;
-                  }
-                str.append(" - " + err.getMessage() + " - " + err.getReason() + "\n");
-              }
-            LOG.error("BigQuery job was unable to load data to the table due to an error: \n" + str.toString());
-            if (errorCount > 0)
-              return null;
-          }
-        String stats = null;
-        try // Bad Google... job.getStatistics can throw on nullptr on their own internal API calls.
-          {
-            stats = job.getStatistics().toString();
-          }
-        catch (Exception E)
-          {
-            LOG.warn("job.getStatistics() threw:\n", E);
-            stats = E.getMessage();
-          }
-        LOG.info("BigQuery job completed successfully.\n" + stats + "\n");
-        return job;
-      }
-
-
-    /**
      * Returns a job if it's done, null otherwise.
      * 
      * @param bq
@@ -268,32 +167,24 @@ public class BQHelper
         return job.isDone() == true ? job : null;
       }
 
-    public static class JobResults
-      {
-        protected JobResults(Job j, TableResult r)
-          {
-            _j = j;
-            _r = r;
-          }
-
-        public final Job         _j;
-        public final TableResult _r;
-      }
-
     public static JobResults runQuery(BigQuery bq, String q)
       {
         try
           {
-            LOG.debug(q);
+            long ts = System.nanoTime();
+            LOG.debug("BIGQUERY: "+q);
             QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(q).setUseLegacySql(false).build();
             JobId jobId = JobId.newBuilder().build();
             JobInfo jobInfo = JobInfo.newBuilder(queryConfig).setJobId(jobId).build();
             Job job = bq.create(jobInfo);
-            if (BQHelper.completeJob(job) != null)
+            if (JobHelper.completeJob(job) != null)
               {
                 TableResult results = job.getQueryResults();
                 if (results != null)
-                  return new JobResults(job, results);
+                 {
+                   LOG.debug("    - retrieved "+results.getTotalRows()+" rows in "+DurationUtil.printDuration(System.nanoTime()-ts));
+                   return new JobResults(job, results);
+                 }
               }
           }
         catch (Exception E)
@@ -301,20 +192,6 @@ public class BQHelper
             LOG.error("Cannot execute BigQuery query:\n", E);
           }
         return null;
-      }
-
-    public static class JobCostDetails
-      {
-        protected JobCostDetails(long bytes, double cost, double costModeling)
-          {
-            _bytes = bytes;
-            _cost = cost;
-            _costModeling = costModeling;
-          }
-
-        public final long   _bytes;
-        public final double _cost;
-        public final double _costModeling;
       }
 
     /**
@@ -342,7 +219,7 @@ public class BQHelper
 
     /**
      * Sets up a Writer to a BQ Table in the appropriate format. Once obtained, you can write date to the writer, and when done,
-     * you can get the Job and check for completion with <code>boolean success = BQHelper.completeJob(writer.getJob());</code>
+     * you can get the Job and check for completion with <code>boolean success = JobHelper.completeJob(writer.getJob());</code>
      *
      * @param bq
      * @param datasetName

@@ -24,16 +24,22 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import tilda.db.JDBCHelper;
 import tilda.interfaces.JSONable;
 import tilda.utils.DateTimeUtil;
 import tilda.utils.HttpStatus;
+import tilda.utils.ParseUtil;
+import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
 
 public class JSONUtil
@@ -809,6 +815,7 @@ public class JSONUtil
 
     /**
      * Prints a raw json object. It's assumed to be properly formed.
+     * 
      * @param out
      * @param name
      * @param firstElement
@@ -824,6 +831,7 @@ public class JSONUtil
 
     /**
      * Prints a raw json object. It's assumed to be properly formed.
+     * 
      * @param out
      * @param name
      * @param firstElement
@@ -847,5 +855,54 @@ public class JSONUtil
           }
         out.write("]\n");
       }
-    
+
+
+    /**
+     * Follows the JsonPath syntax more or less... similar to how you'd access a value in JavaScript, i.e., obj.someItem.someOtherItem.someArray[0].someItem.<BR>
+     * <UL>
+     * <LI>If an element in the path chain doesn't exist in the JSON object or is null, null will be returned.</LI>
+     * <LI>Array must be subscripted with a positive integer. If not, will throw an exception.</LI>
+     * <LI>If an element is subscripted like an array, but is not an array in the source object, will throw an exception.</LI>
+     * </UL>
+     * 
+     * @param json
+     * @param path
+     * @return
+     * @throws Exception 
+     */
+    public static JsonElement getJsonElementFromPath(JsonElement e, String path) throws Exception
+      {
+        String[] parts = path.split("\\s*\\.\\s*");
+        for (String name : parts)
+          {
+            if (TextUtil.isNullOrEmpty(name) == true)
+              throw new Exception("Empty element name from " + parts + ".");
+            
+            int i1 = name.indexOf("[");
+            int i2 = name.lastIndexOf("]");
+            if (i1 != -1 && i2 == name.length()-1) // array subscripting found
+              {
+                int index =  ParseUtil.parseInteger(name.substring(i1+1, i2), SystemValues.EVIL_VALUE);
+                if (index < 0)
+                 throw new Exception("Invalid array subscripting expression in path at '"+name+"'.");
+                name = name.substring(0, i1);
+                e = ((JsonObject) e).get(name);
+                if (e == null || e.isJsonNull() == true)
+                  return null;
+                if (e.isJsonArray() == false)
+                  throw new Exception("Property '"+name+"' in path is indexed as an array but is not an array in the JSON object.");
+                e = e.getAsJsonArray().get(index);
+              }
+            else // a simple property
+              {
+                e = ((JsonObject) e).get(name);
+                if (e == null || e.isJsonNull() == true)
+                 return null;
+              }
+          }
+
+        return e;
+      }
+
+
   }
