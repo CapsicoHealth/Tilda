@@ -864,7 +864,8 @@ public class JSONUtil
      * <LI>Array must be subscripted with a positive integer. If not, will throw an exception.</LI>
      * <LI>If an element is subscripted like an array, but is not an array in the source object, will throw an exception.</LI>
      * </UL>
-     * 
+     * For the future, should add the ability to lookup in arrays by value and the ability to return a list of objects if the last property
+     * of the path is off an array.
      * @param json
      * @param path
      * @return
