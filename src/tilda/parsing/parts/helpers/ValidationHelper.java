@@ -83,4 +83,12 @@ public class ValidationHelper
             return false;
         return true;
       }
+
+    public static boolean isReservedIdentifier(String name)
+      {
+        if (name.equalsIgnoreCase("class") == true)
+          return true;
+        
+        return false;
+      }
   }
