@@ -7,9 +7,6 @@ package tilda.utils.gcp;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
-import java.time.ZonedDateTime;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
@@ -50,31 +47,47 @@ import tilda.utils.concurrent.SimpleRunnable;
 import tilda.utils.json.JSONUtil;
 
 /**
- * Useful documentation:<UL>
- * <LI>Create/Update<UL>
- *    <LI>https://cloud.google.com/healthcare/docs/samples/healthcare-update-resource#healthcare_update_resource-java</LI>
- *    <LI>https://cloud.google.com/healthcare/docs/how-tos/fhir-resources#healthcare-create-patient-java</LI>
- *    <LI>https://cloud.google.com/healthcare/docs/how-tos/fhir-resources#updating_a_fhir_resource</LI>
- *    <LI>https://hapifhir.io/hapi-fhir/docs/client/examples.html</LI>
- *    <LI>https://build.fhir.org/ig/HL7/us-bulk-data/</LI>
- * </UL></LI>
- * <LI>Config<UL>
- *    <LI>https://cloud.google.com/healthcare/docs/how-tos/fhir#healthcare-get-metadata-java</LI>
- *    <LI>https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/healthcare_fhir_store</LI>
- * </UL></LI>
- * <LI>Search<UL>
- *    <LI>https://cloud.google.com/healthcare/docs/how-tos/fhir-search</LI>
- *    <LI>https://cloud.google.com/healthcare/docs/samples/healthcare-search-resources-post</LI>
- *    <LI>https://cloud.google.com/healthcare/docs/reference/rest/v1/projects.locations.datasets.fhirStores.fhir/search</LI>
- *    <LI>https://hl7.org/implement/standards/fhir/R4/search.html</LI>
- *    <LI>https://hl7.org/fhir/search.html</LI>
- *    <LI>https://www.devdays.com/wp-content/uploads/2019/03/DD18-EU-Alexander-Zautke-Searching-in-FHIR-resources-2018-11-14.pdf</LI>
- * </UL></LI>
- * <LI>Entities<UL>
- *    <LI>https://www.hl7.org/fhir/patient.html</LI>
- *    <LI>https://www.hl7.org/fhir/references.html#Reference</LI>
- *    <LI>https://www.hl7.org/fhir/observation.html</LI>
- * </UL></LI>
+ * Useful documentation:
+ * <UL>
+ * <LI>Create/Update
+ * <UL>
+ * <LI>https://cloud.google.com/healthcare/docs/samples/healthcare-update-resource#healthcare_update_resource-java</LI>
+ * <LI>https://cloud.google.com/healthcare/docs/how-tos/fhir-resources#healthcare-create-patient-java</LI>
+ * <LI>https://cloud.google.com/healthcare/docs/how-tos/fhir-resources#updating_a_fhir_resource</LI>
+ * <LI>https://hapifhir.io/hapi-fhir/docs/client/examples.html</LI>
+ * <LI>https://build.fhir.org/ig/HL7/us-bulk-data/</LI>
+ * </UL>
+ * </LI>
+ * <LI>Config
+ * <UL>
+ * <LI>https://cloud.google.com/healthcare/docs/how-tos/fhir#healthcare-get-metadata-java</LI>
+ * <LI>https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/healthcare_fhir_store</LI>
+ * </UL>
+ * </LI>
+ * <LI>Search
+ * <UL>
+ * <LI>https://cloud.google.com/healthcare/docs/how-tos/fhir-search</LI>
+ * <LI>https://cloud.google.com/healthcare/docs/samples/healthcare-search-resources-post</LI>
+ * <LI>https://cloud.google.com/healthcare/docs/reference/rest/v1/projects.locations.datasets.fhirStores.fhir/search</LI>
+ * <LI>https://hl7.org/implement/standards/fhir/R4/search.html</LI>
+ * <LI>https://hl7.org/fhir/search.html</LI>
+ * <LI>https://www.devdays.com/wp-content/uploads/2019/03/DD18-EU-Alexander-Zautke-Searching-in-FHIR-resources-2018-11-14.pdf</LI>
+ * </UL>
+ * </LI>
+ * <LI>Entities
+ * <UL>
+ * <LI>https://www.hl7.org/fhir/patient.html</LI>
+ * <LI>https://www.hl7.org/fhir/references.html#Reference</LI>
+ * <LI>https://www.hl7.org/fhir/observation.html</LI>
+ * </UL>
+ * </LI>
+ * 
+ * <LI>Misc
+ * <UL>
+ * <LI>https://vneilley.medium.com/are-all-fhir-apis-the-same-48be75ac4ac5</LI>
+ * </UL>
+ * </LI>
+ * 
  * </UL>
  * 
  * @author Laurent Hasson
@@ -122,46 +135,6 @@ public class CHHelper
         .build();
       }
 
-    public static class FhirEntity
-      {
-        public FhirEntity(StringEntity entity, String uuid)
-          {
-            _entity = entity;
-            _uuid = uuid;
-          }
-
-        protected StringEntity  _entity;
-        protected JsonObject    _entityJson;
-        protected String        _uuid;
-        protected ZonedDateTime _lastUpdated;
-        protected String        _versionId;
-
-        public JsonObject getEntityAsJson()
-        throws UnsupportedEncodingException, IOException
-          {
-            if (_entityJson == null)
-              try (Reader reader = new InputStreamReader(_entity.getContent(), "UTF-8"))
-                {
-                  _entityJson = new Gson().fromJson(reader, JsonObject.class);
-                }
-            return _entityJson;
-          }
-
-        public void setUuid(String uuid)
-        throws UnsupportedEncodingException, IOException
-          {
-            JsonObject e = getEntityAsJson();
-            e.addProperty("id", uuid);
-            _entity = new StringEntity(e.toString());
-            _uuid = uuid;
-          }
-
-        public String getUuid()
-          {
-            return _uuid;
-          }
-      }
-
     public static JsonObject fhirStoreCapabilities(CloudHealthcare ch, String token, String fhirStoreName)
     throws Exception
       {
@@ -171,7 +144,7 @@ public class CHHelper
         return new Gson().fromJson(response.toString(), JsonObject.class);
       }
 
-    public static void fhirResourceCreate(CloudHealthcare ch, String token, String fhirStoreName, String resourceType, List<FhirEntity> reqEntities, boolean failOnQuota, String upsertByIdentifierSystem)
+    public static void fhirResourceCreate(CloudHealthcare ch, String token, String fhirStoreName, List<FhirEntity> reqEntities, boolean failOnQuota, boolean upsert)
     throws Exception
       {
         long ts = System.nanoTime();
@@ -180,12 +153,12 @@ public class CHHelper
         for (FhirEntity e : reqEntities)
           {
             boolean insert = true;
-            if (upsertByIdentifierSystem != null) // was asked to do an upsert
+            if (upsert == true && TextUtil.isNullOrEmpty(e.getPrimaryIdentifierSystem()) == false) // was asked to do an upsert
               {
-                JsonElement id = JSONUtil.getJsonElementFromPath(e.getEntityAsJson(), "id");
+                JsonElement id = JSONUtil.getJsonElementFromPath(e.getResource(), "id");
                 if (id == null)
                   {
-                    FhirEntity e_src = fhirResourceLookupByIdentifier(ch, token, fhirStoreName, resourceType, e, upsertByIdentifierSystem);
+                    FhirEntity e_src = fhirResourceLookupByIdentifier(ch, token, fhirStoreName, e);
                     if (e_src != null && TextUtil.isNullOrEmpty(e_src._uuid) == false)
                       {
                         e.setUuid(e_src._uuid);
@@ -196,13 +169,13 @@ public class CHHelper
 
             // Initialize the client, which will be used to interact with the service.
             HttpClient httpClient = HttpClients.createDefault();
-            String uri = String.format("%sv1/%s/fhir/%s", ch.getRootUrl(), fhirStoreName, resourceType);
+            String uri = String.format("%sv1/%s/fhir/%s", ch.getRootUrl(), fhirStoreName, e.getResourceType());
             if (insert == false)
               uri += "/" + e._uuid;
             RequestBuilder rb = insert == false ? RequestBuilder.put() : RequestBuilder.post();
             HttpUriRequest request = rb
             .setUri(new URIBuilder(uri).setParameter("access_token", token).build())
-            .setEntity(e._entity)
+            .setEntity(new StringEntity(e.getResource().toString()))
             .addHeader("Content-Type", "application/fhir+json")
             .addHeader("Accept-Charset", "utf-8")
             .addHeader("Accept", "application/fhir+json; charset=utf-8")
@@ -250,99 +223,94 @@ public class CHHelper
             if (++i % 50 == 0)
               {
                 long ts2 = System.nanoTime() - ts;
-                LOG.debug("Pushed " + i + " resources out so far in " + DurationUtil.printDuration(ts2) + " (" + DurationUtil.perMinute(ts2, i) + " puts/min).");
+                LOG.debug("Pushed " + i + " resources out so far in " + DurationUtil.printDuration(ts2) + " (" + NumberFormatUtil.printWith1DecAnd000Sep(DurationUtil.perMinute(ts2, i * (upsert == false ? 1 : 2))) + " " + (upsert == false ? "posts" : "gets+puts") + "/min).");
               }
             String id = result.get("id").getAsString();
             if (insert == true)
               e._uuid = id;
             else if (e._uuid.equals(id) == false)
-              throw new Exception("FHIRE resource " + resourceType + " came in with expected id='" + e._uuid + "' but '" + id + "' was returned instead by the store.");
+              throw new Exception("FHIRE resource " + e.getResourceType() + " came in with expected id='" + e._uuid + "' but '" + id + "' was returned instead by the store.");
             e._lastUpdated = DateTimeUtil.parsefromJSON(result.get("meta").getAsJsonObject().get("lastUpdated").getAsString());
             e._versionId = result.get("meta").getAsJsonObject().get("versionId").getAsString();
           }
         long ts2 = System.nanoTime() - ts;
-        LOG.debug("Pushed a total of " + i + " resources out in " + DurationUtil.printDuration(ts2) + " (" + DurationUtil.perMinute(ts2, i) + " puts/min).");
+        LOG.debug("Pushed a total of " + i + " resources out in " + DurationUtil.printDuration(ts2) + " (" + NumberFormatUtil.printWith1DecAnd000Sep(DurationUtil.perMinute(ts2, reqEntities.size() * (upsert == false ? 1 : 2))) + " " + (upsert == false ? "posts" : "gets+puts") + "/min).");
         if (result != null)
           LOG.debug("Last Result: " + result.toString());
       }
 
 
-    public static FhirEntity fhirResourceLookupByIdentifier(CloudHealthcare ch, String token, String fhirStoreName, String resourceType, FhirEntity e, String identifierSystem)
+    public static FhirEntity fhirResourceLookupByIdentifier(CloudHealthcare ch, String token, String fhirStoreName, FhirEntity e)
     throws Exception
       {
-        JsonArray a = JSONUtil.getJsonElementFromPath(e.getEntityAsJson(), "identifier").getAsJsonArray();
-        for (int i = 0; i < a.size(); ++i) // Need to find the right identifier as per the system passed in.
+        String system = e.getPrimaryIdentifierSystem();
+        String value = e.getPrimaryIdentifierValue();
+
+        if (TextUtil.isNullOrEmpty(value) == true)
+          return null;
+
+        JsonElement elem = fhirResourceLookupByIdentifier(ch, fhirStoreName, e.getResourceType(), system, value);
+        if (elem != null) // got at least one returned resource.
           {
-            JsonElement elem = a.get(i);
-            if (elem != null && elem.isJsonNull() == false)
+            JsonElement id = JSONUtil.getJsonElementFromPath(elem, "id");
+            if (id != null) // Does it have an id? It really should!
               {
-                String system = elem.getAsJsonObject().get("system").getAsString();
-                String value = elem.getAsJsonObject().get("value").getAsString();
-                if (identifierSystem.equals(system) == true && TextUtil.isNullOrEmpty(value) == false) // got it
-                  {
-                    SearchResourcesRequest request = new SearchResourcesRequest().setResourceType(resourceType);
-                    Search search = ch.projects().locations().datasets().fhirStores().fhir().search(fhirStoreName, request);
-                    search.set("identifier", system + "|" + value);
-                    // LOG.debug("URI: " + search.getRequestMethod()+ " - " + search.buildHttpRequestUrl().toString());
-                    try
-                      {
-                        HttpBody body = search.execute();
-                        JsonObject o = new Gson().fromJson(body.toString(), JsonObject.class); // Get the results in json form
-                        elem = JSONUtil.getJsonElementFromPath(o, "entry[0].resource"); // get the first resource
-                      }
-                    catch (Exception E)
-                      {
-                        LOG.debug("URI: " + search.getRequestMethod() + " - " + search.buildHttpRequestUrl().toString());
-                        LOG.error("An error occurred\n", E);
-                        return null;
-                      }
-                    if (elem != null) // got at least one returned resource.
-                      {
-                        JsonElement id = JSONUtil.getJsonElementFromPath(elem, "id");
-                        if (id != null) // Does it have an id? It really should!
-                          {
-                            StringEntity se = new StringEntity(elem.toString());
-                            return new FhirEntity(se, id.getAsString());
-                          }
-                      }
-                    break;
-                  }
+                return new FhirEntity(e.getResourceType(), e.getPrimaryIdentifierSystem(), elem.toString(), id.getAsString());
               }
           }
         return null;
+
+      }
+
+    public static JsonElement fhirResourceLookupByIdentifier(CloudHealthcare ch, String fhirStoreName, String resourceType, String identifierSystem, String identifierValue)
+    throws IOException
+      {
+        SearchResourcesRequest request = new SearchResourcesRequest().setResourceType(resourceType);
+        Search search = ch.projects().locations().datasets().fhirStores().fhir().search(fhirStoreName, request);
+        search.set("identifier", identifierSystem + "|" + identifierValue);
+        try
+          {
+            HttpBody body = search.execute();
+            JsonObject o = new Gson().fromJson(body.toString(), JsonObject.class); // Get the results in json form
+            return JSONUtil.getJsonElementFromPath(o, "entry[0].resource"); // get the first resource
+          }
+        catch (Exception E)
+          {
+            LOG.debug("URI: " + search.getRequestMethod() + " - " + search.buildHttpRequestUrl().toString());
+            LOG.error("An error occurred\n", E);
+            return null;
+          }
       }
 
     static protected class FhirEnitityCreator extends SimpleRunnable
       {
-        public FhirEnitityCreator(CloudHealthcare ch, String token, String fhirStoreName, String resourceType, List<FhirEntity> reqEntities, boolean failOnQuota, String upsertByIdentifierSystem)
+        public FhirEnitityCreator(CloudHealthcare ch, String token, String fhirStoreName, List<FhirEntity> reqEntities, boolean failOnQuota, boolean upsert)
           {
             super("FHIR Resource Create");
             _ch = ch;
             _token = token;
             _fhirStoreName = fhirStoreName;
-            _resourceType = resourceType;
             _reqEntities = reqEntities;
             _failOnQuota = failOnQuota;
-            _upsertByIdentifierSystem = upsertByIdentifierSystem;
+            _upsert = upsert;
           }
 
         CloudHealthcare  _ch;
         String           _token;
         String           _fhirStoreName;
-        String           _resourceType;
         List<FhirEntity> _reqEntities;
         boolean          _failOnQuota;
-        String           _upsertByIdentifierSystem;
+        boolean          _upsert;
 
         @Override
         public void doRun()
         throws Exception
           {
-            fhirResourceCreate(_ch, _token, _fhirStoreName, _resourceType, _reqEntities, _failOnQuota, _upsertByIdentifierSystem);
+            fhirResourceCreate(_ch, _token, _fhirStoreName, _reqEntities, _failOnQuota, _upsert);
           }
       }
 
-    public static void fhirResourceCreate(CloudHealthcare ch, String token, String fhirStoreName, String resourceType, List<FhirEntity> reqEntities, boolean failOnQuota, String upsertByIdentifierSystem, int threads)
+    public static void fhirResourceCreate(CloudHealthcare ch, String token, String fhirStoreName, List<FhirEntity> reqEntities, boolean failOnQuota, boolean upsert, int threads)
     throws Exception
       {
         int batchSize = reqEntities.size() / threads;
@@ -353,12 +321,12 @@ public class CHHelper
         while (start < reqEntities.size())
           {
             int end = start + batchSize <= reqEntities.size() ? start + batchSize : reqEntities.size();
-            exec.addRunnable(new FhirEnitityCreator(ch, token, fhirStoreName, resourceType, reqEntities.subList(start, end), failOnQuota, upsertByIdentifierSystem));
+            exec.addRunnable(new FhirEnitityCreator(ch, token, fhirStoreName, reqEntities.subList(start, end), failOnQuota, upsert));
             start += batchSize;
           }
         List<Exception> L = exec.run();
         long ts2 = System.nanoTime() - ts;
-        LOG.debug("Parallel FHIR resource loading output " + reqEntities.size() + " resources in " + DurationUtil.printDuration(ts2) + " (" + NumberFormatUtil.printWith1DecAnd000Sep(DurationUtil.perMinute(ts2, reqEntities.size()*(upsertByIdentifierSystem == null?1:2))) + " " + (upsertByIdentifierSystem == null ? "posts" : "gets+puts") + "/min).");
+        LOG.debug("Parallel FHIR resource loading output " + reqEntities.size() + " resources in " + DurationUtil.printDuration(ts2) + " (" + NumberFormatUtil.printWith1DecAnd000Sep(DurationUtil.perMinute(ts2, reqEntities.size() * (upsert == false ? 1 : 2))) + " " + (upsert == false ? "posts" : "gets+puts") + "/min).");
 
         if (L.isEmpty() == false)
           {

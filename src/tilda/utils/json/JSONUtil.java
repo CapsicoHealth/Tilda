@@ -31,6 +31,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -866,44 +867,52 @@ public class JSONUtil
      * </UL>
      * For the future, should add the ability to lookup in arrays by value and the ability to return a list of objects if the last property
      * of the path is off an array.
+     * 
      * @param json
      * @param path
      * @return
-     * @throws Exception 
+     * @throws Exception
      */
-    public static JsonElement getJsonElementFromPath(JsonElement e, String path) throws Exception
+    public static JsonElement getJsonElementFromPath(JsonElement e, String path)
+    throws Exception
       {
         String[] parts = path.split("\\s*\\.\\s*");
         for (String name : parts)
           {
             if (TextUtil.isNullOrEmpty(name) == true)
               throw new Exception("Empty element name from " + parts + ".");
-            
+
             int i1 = name.indexOf("[");
             int i2 = name.lastIndexOf("]");
-            if (i1 != -1 && i2 == name.length()-1) // array subscripting found
+            if (i1 != -1 && i2 == name.length() - 1) // array subscripting found
               {
-                int index =  ParseUtil.parseInteger(name.substring(i1+1, i2), SystemValues.EVIL_VALUE);
+                int index = ParseUtil.parseInteger(name.substring(i1 + 1, i2), SystemValues.EVIL_VALUE);
                 if (index < 0)
-                 throw new Exception("Invalid array subscripting expression in path at '"+name+"'.");
+                  throw new Exception("Invalid array subscripting expression in path at '" + name + "'.");
                 name = name.substring(0, i1);
                 e = ((JsonObject) e).get(name);
                 if (e == null || e.isJsonNull() == true)
                   return null;
                 if (e.isJsonArray() == false)
-                  throw new Exception("Property '"+name+"' in path is indexed as an array but is not an array in the JSON object.");
+                  throw new Exception("Property '" + name + "' in path is indexed as an array but is not an array in the JSON object.");
                 e = e.getAsJsonArray().get(index);
               }
             else // a simple property
               {
                 e = ((JsonObject) e).get(name);
                 if (e == null || e.isJsonNull() == true)
-                 return null;
+                  return null;
               }
           }
 
         return e;
       }
 
+
+    public static String prettyPrint(JsonObject e)
+      {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        return gson.toJson(e);
+      }
 
   }
