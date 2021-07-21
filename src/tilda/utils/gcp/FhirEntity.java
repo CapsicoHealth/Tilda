@@ -7,7 +7,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import tilda.utils.TextUtil;
 import tilda.utils.json.JSONUtil;
 
 public class FhirEntity

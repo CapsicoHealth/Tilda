@@ -29,6 +29,8 @@ import org.apache.logging.log4j.Logger;
 import tilda.db.JDBCHelper;
 import tilda.interfaces.JSONable;
 import tilda.utils.TextUtil;
+import tilda.utils.json.elements.ArrayElementEnd;
+import tilda.utils.json.elements.ArrayElementStart;
 import tilda.utils.json.elements.ElementArrayEnd;
 import tilda.utils.json.elements.ElementArrayStart;
 import tilda.utils.json.elements.ElementBoolean;
@@ -57,8 +59,8 @@ public class JSONPrinter
       {
       }
 
-    protected List<ElementDef> _Elements = new ArrayList<ElementDef>();
-    protected Deque<String> _NestingStack = new ArrayDeque<String>();
+    protected List<ElementDef> _Elements     = new ArrayList<ElementDef>();
+    protected Deque<String>    _NestingStack = new ArrayDeque<String>();
 
     public JSONPrinter addElement(String Name, JSONable Obj, String JsonExportName)
       {
@@ -156,41 +158,64 @@ public class JSONPrinter
         return this;
       }
 
+    public JSONPrinter addArrayElementStart()
+      {
+        String poppedName = _NestingStack.getFirst();
+        _Elements.add(new ArrayElementStart(poppedName));
+        _NestingStack.add("Array:" + poppedName);
+        return this;
+      }
+
+    public JSONPrinter addArrayElementClose()
+    throws Exception
+      {
+        String poppedName = _NestingStack.pop().substring("Array:".length());
+        _Elements.add(new ArrayElementEnd(poppedName));
+        String parent = _NestingStack.getFirst();
+        if (parent.equals(poppedName) == false)
+          throw new Exception("JSON Nesting error: closed array element '" + parent + "' but '" + poppedName + "' was the most recently started.");
+        return this;
+      }
+
     public JSONPrinter addElementStart(String Name)
       {
         _Elements.add(new ElementElementStart(Name));
-        _NestingStack.add("Element:"+Name);
+        _NestingStack.add("Element:" + Name);
         return this;
       }
+
     public JSONPrinter addElementClose(String Name)
     throws Exception
       {
         _Elements.add(new ElementElementEnd(Name));
         String poppedName = _NestingStack.pop();
-        if (poppedName.equals("Element:"+Name) == false)
-          throw new Exception("JSON Nesting error: closed element '"+Name+"' but '"+poppedName+"' was the most recently started.");
+        if (poppedName.equals("Element:" + Name) == false)
+          throw new Exception("JSON Nesting error: closed element '" + Name + "' but '" + poppedName + "' was the most recently started.");
         return this;
       }
+
     public JSONPrinter addArrayStart(String Name)
       {
         _Elements.add(new ElementArrayStart(Name));
-        _NestingStack.add("Array:"+Name);
+        _NestingStack.add("Array:" + Name);
         return this;
       }
+
     public JSONPrinter addArrayClose(String Name)
     throws Exception
       {
         _Elements.add(new ElementArrayEnd(Name));
         String poppedName = _NestingStack.pop();
-        if (poppedName.equals("Array:"+Name) == false)
-          throw new Exception("JSON Nesting error: closed array '"+Name+"' but '"+poppedName+"' was the most recently started.");
+        if (poppedName.equals("Array:" + Name) == false)
+          throw new Exception("JSON Nesting error: closed array '" + Name + "' but '" + poppedName + "' was the most recently started.");
         return this;
       }
 
-    private void testNestingStack() throws Exception
+    private void testNestingStack()
+    throws Exception
       {
         if (_NestingStack.isEmpty() == false)
-          throw new Exception("A JSON object is being printed out with unclosed elements or arrays: "+TextUtil.print(_NestingStack.iterator()));
+          throw new Exception("A JSON object is being printed out with unclosed elements or arrays: " + TextUtil.print(_NestingStack.iterator()));
       }
 
     public void print(Writer Out)

@@ -23,7 +23,6 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.services.healthcare.v1.CloudHealthcare;
 import com.google.api.services.healthcare.v1.CloudHealthcare.Projects.Locations.Datasets.FhirStores.Fhir.Capabilities;
@@ -33,7 +32,6 @@ import com.google.api.services.healthcare.v1.model.SearchResourcesRequest;
 import com.google.auth.http.HttpCredentialsAdapter;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -116,7 +114,7 @@ public class CHHelper
       }
 
 
-    private static final JsonFactory      JSON_FACTORY   = new GsonFactory();
+    private static final GsonFactory      JSON_FACTORY   = new GsonFactory();
     private static final NetHttpTransport HTTP_TRANSPORT = new NetHttpTransport();
 
     public static CloudHealthcare getCloudHealthcare(GoogleCredentials creds, String dataProjectName, String clientApplicationName)
@@ -125,8 +123,8 @@ public class CHHelper
         // Create a HttpRequestInitializer, which will provide a baseline configuration to all requests.
         HttpRequestInitializer requestInitializer = request -> {
           new HttpCredentialsAdapter(creds).initialize(request);
-          request.setConnectTimeout(60000); // 60 seconds connect timeout
-          request.setReadTimeout(60000); // 60 seconds read timeout
+          request.setConnectTimeout(80000); // 80 seconds connect timeout
+          request.setReadTimeout(80000); // 80 seconds read timeout
         };
 
         // Build the client for interacting with the service.
@@ -158,7 +156,7 @@ public class CHHelper
                 JsonElement id = JSONUtil.getJsonElementFromPath(e.getResource(), "id");
                 if (id == null)
                   {
-                    FhirEntity e_src = fhirResourceLookupByIdentifier(ch, token, fhirStoreName, e);
+                    FhirEntity e_src = fhirResourceSearchByIdentifier(ch, token, fhirStoreName, e);
                     if (e_src != null && TextUtil.isNullOrEmpty(e_src._uuid) == false)
                       {
                         e.setUuid(e_src._uuid);
@@ -240,7 +238,7 @@ public class CHHelper
       }
 
 
-    public static FhirEntity fhirResourceLookupByIdentifier(CloudHealthcare ch, String token, String fhirStoreName, FhirEntity e)
+    public static FhirEntity fhirResourceSearchByIdentifier(CloudHealthcare ch, String token, String fhirStoreName, FhirEntity e)
     throws Exception
       {
         String system = e.getPrimaryIdentifierSystem();
@@ -249,7 +247,7 @@ public class CHHelper
         if (TextUtil.isNullOrEmpty(value) == true)
           return null;
 
-        JsonElement elem = fhirResourceLookupByIdentifier(ch, fhirStoreName, e.getResourceType(), system, value);
+        JsonElement elem = fhirResourceSearchByIdentifier(ch, fhirStoreName, e.getResourceType(), system, value);
         if (elem != null) // got at least one returned resource.
           {
             JsonElement id = JSONUtil.getJsonElementFromPath(elem, "id");
@@ -262,7 +260,7 @@ public class CHHelper
 
       }
 
-    public static JsonElement fhirResourceLookupByIdentifier(CloudHealthcare ch, String fhirStoreName, String resourceType, String identifierSystem, String identifierValue)
+    public static JsonElement fhirResourceSearchByIdentifier(CloudHealthcare ch, String fhirStoreName, String resourceType, String identifierSystem, String identifierValue)
     throws IOException
       {
         SearchResourcesRequest request = new SearchResourcesRequest().setResourceType(resourceType);
@@ -281,6 +279,61 @@ public class CHHelper
             return null;
           }
       }
+
+
+    public static JsonObject fhirResourceGet(CloudHealthcare ch, String token, String fhirStoreName, String resourceType, String uuid, boolean everything)
+    throws Exception
+      {
+        long ts = System.nanoTime();
+        // Initialize the client, which will be used to interact with the service.
+        HttpClient httpClient = HttpClients.createDefault();
+        String uri = String.format("%sv1/%s/fhir/%s/%s", ch.getRootUrl(), fhirStoreName, resourceType, uuid);
+        if (everything == true)
+          uri += "/$everything";
+
+        HttpUriRequest request = RequestBuilder.get()
+        .setUri(new URIBuilder(uri).setParameter("access_token", token).build())
+        .addHeader("Content-Type", "application/fhir+json")
+        .addHeader("Accept-Charset", "utf-8")
+        .addHeader("Accept", "application/fhir+json; charset=utf-8")
+        .build();
+        LOG.debug("URI: " + request.getMethod() + " - " + uri);
+
+        // Execute the request and process the results.
+        JsonObject result = null;
+        HttpResponse response = httpClient.execute(request);
+        HttpEntity responseEntity = response.getEntity();
+
+        try (BufferedReader r = new BufferedReader(new InputStreamReader(responseEntity.getContent(), "UTF-8")))
+          {
+            String data = FileUtil.getContentsFromReader(r);
+            result = new Gson().fromJson(data, JsonObject.class);
+          }
+        catch (Exception E) // not a json?
+          {
+            LOG.debug("URI: " + request.getMethod() + " - " + uri);
+            throw new Exception("Exception creating FHIR resource: " + response.getStatusLine().toString());
+          }
+
+        int status = response.getStatusLine().getStatusCode();
+        if (response.getStatusLine().getStatusCode() == 429) // too many clients, must retry
+          {
+            LOG.debug("URI: " + request.getMethod() + " - " + uri);
+            throw new Exception("FHIR Resource Creator: HTTP ERROR 429: TOO MANY REQUESTS.");
+          }
+        else if (status != HttpStatus.SC_OK)
+          {
+            LOG.debug("URI: " + request.getMethod() + " - " + uri);
+            LOG.error("Error: " + result.toString());
+            throw new Exception("Exception creating FHIR resource: " + response.getStatusLine().toString());
+          }
+
+        long ts2 = System.nanoTime() - ts;
+        LOG.debug("Got one resource in " + DurationUtil.printDuration(ts2) + ".\n" + result.toString());
+        
+        return result;
+      }
+
 
     static protected class FhirEnitityCreator extends SimpleRunnable
       {
