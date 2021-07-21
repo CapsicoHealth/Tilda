@@ -6,6 +6,7 @@ package tilda.utils.gcp;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +48,7 @@ import tilda.utils.TextUtil;
 
 public class BQHelper
   {
-    protected static final Logger LOG                   = LogManager.getLogger(BQHelper.class.getName());
+    protected static final Logger LOG = LogManager.getLogger(BQHelper.class.getName());
 
     /**
      * Given the environment variable 'GCP_SERVICE_ACCOUNT_CREDENTIALS_PATH', looks up the value which points to a path, and then
@@ -174,7 +175,7 @@ public class BQHelper
         try
           {
             long ts = System.nanoTime();
-            LOG.debug("BIGQUERY: "+q);
+            LOG.debug("BIGQUERY: " + q);
             QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(q).setUseLegacySql(false).build();
             JobId jobId = JobId.newBuilder().build();
             JobInfo jobInfo = JobInfo.newBuilder(queryConfig).setJobId(jobId).build();
@@ -183,10 +184,10 @@ public class BQHelper
               {
                 TableResult results = job.getQueryResults();
                 if (results != null)
-                 {
-                   LOG.debug("    - retrieved "+results.getTotalRows()+" rows in "+DurationUtil.printDuration(System.nanoTime()-ts));
-                   return new JobResults(job, results);
-                 }
+                  {
+                    LOG.debug("    - retrieved " + results.getTotalRows() + " rows in " + DurationUtil.printDuration(System.nanoTime() - ts));
+                    return new JobResults(job, results);
+                  }
               }
           }
         catch (Exception E)
@@ -276,7 +277,7 @@ public class BQHelper
 
         return Schema.of(fieldsList);
       }
-    
+
     public static void copyComments(BigQuery bq, String srcDatasetName, String srcTableName, String destDatasetName, String destTableName)
       {
         try
@@ -316,6 +317,32 @@ public class BQHelper
             System.out.println("Empty column was not added. \n" + e.toString());
           }
       }
-    
+
+    public static interface BQCSVExporter
+      {
+        public String getNextCSVRecord(int i);
+      }
+
+    public static void exportCSV(BigQuery bq, String datasetName, String tableName, BQCSVExporter BQE)
+    throws Exception
+      {
+        Schema schema = BQHelper.getTildaBQSchema(datasetName, tableName);
+        TableDataWriteChannel out = BQHelper.getTableWriterChannel(bq, datasetName, tableName, "CSV", schema, true);
+        BQWriter writer = new BQWriter(out);
+        int i = -1;
+        while (true)
+          {
+            String csvRecord = BQE.getNextCSVRecord(++i);
+            if (TextUtil.isNullOrEmpty(csvRecord) == true)
+              break;
+            writer.append(csvRecord).append(System.lineSeparator());
+          }
+        LOG.debug("Wrote "+i+" records out to BQ.");
+        writer.close();
+        if (JobHelper.completeJob(out.getJob()) == null)
+          throw new Exception("Some error occurred");
+        LOG.debug("SUCCESS!");
+      }
+
 
   }

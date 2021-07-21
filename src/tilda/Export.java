@@ -15,11 +15,7 @@
  */
 package tilda;
 
-import java.io.IOException;
-import java.io.Writer;
 import java.lang.reflect.Method;
-import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -39,47 +35,12 @@ import tilda.utils.ParseUtil;
 import tilda.utils.concurrent.Executor;
 import tilda.utils.concurrent.SimpleRunnable;
 import tilda.utils.gcp.BQHelper;
+import tilda.utils.gcp.BQWriter;
 import tilda.utils.gcp.JobHelper;
 
 public class Export
   {
     protected static final Logger LOG = LogManager.getLogger(Export.class.getName());
-
-    protected static class BQWriter extends Writer
-      {
-        public BQWriter(TableDataWriteChannel Out)
-          {
-            _Out = Out;
-          }
-
-        protected TableDataWriteChannel _Out;
-        protected ByteBuffer            _BB = ByteBuffer.allocate(4096);
-
-        @Override
-        public void write(char[] cbuf, int off, int len)
-        throws IOException
-          {
-//            LOG.debug("off: "+off+"; len: "+len+"; "+new String(cbuf, off, len));
-            if (len == 0)
-              return;
-            // ByteBuffer BB = ByteBuffer.wrap(new String(cbuf, off, len).getBytes(StandardCharsets.UTF_8));
-            _Out.write(ByteBuffer.wrap(new String(cbuf, off, len).getBytes(StandardCharsets.UTF_8)));
-          }
-
-        @Override
-        public void flush()
-        throws IOException
-          {
-          }
-
-        @Override
-        public void close()
-        throws IOException
-          {
-            _Out.close();
-          }
-
-      }
 
     public static long export(Connection C, String mode, String fullName, String path, int logFrequency)
     throws Exception
