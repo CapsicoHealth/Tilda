@@ -7,6 +7,7 @@ package tilda.utils.gcp;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
@@ -142,11 +143,13 @@ public class CHHelper
         return new Gson().fromJson(response.toString(), JsonObject.class);
       }
 
-    public static void fhirResourceCreate(CloudHealthcare ch, String token, String fhirStoreName, List<FhirEntity> reqEntities, boolean failOnQuota, boolean upsert)
+    public static int fhirResourceCreate(CloudHealthcare ch, String token, String fhirStoreName, List<FhirEntity> reqEntities, boolean failOnQuota, boolean upsert)
     throws Exception
       {
         long ts = System.nanoTime();
         int i = 0;
+        int errs = 0;
+        int timeoutCalls = 0;
         JsonObject result = null;
         for (FhirEntity e : reqEntities)
           {
@@ -183,7 +186,31 @@ public class CHHelper
             // Execute the request and process the results.
             while (true)
               {
-                HttpResponse response = httpClient.execute(request);
+                HttpResponse response = null;
+                Exception execException = null;
+                int calls = 1;
+                for (; calls <= 5; ++calls)
+                  {
+                    try {
+                      response = httpClient.execute(request);
+                      break;
+                    }
+                    catch (Exception E) {
+                      execException = E;
+                    }
+                  }
+                if (response == null)
+                  {
+                    LOG.error("An error occurred making a request\n", execException);
+                    ++errs;
+                    continue;
+                  }
+                else if (calls > 1)
+                  {
+                    timeoutCalls+=calls-1;
+                    LOG.debug("Request took "+calls+" calls to get through (timeout issues).");
+                  }
+                
                 HttpEntity responseEntity = response.getEntity();
 
                 try (BufferedReader r = new BufferedReader(new InputStreamReader(responseEntity.getContent(), "UTF-8")))
@@ -194,7 +221,9 @@ public class CHHelper
                 catch (Exception E) // not a json?
                   {
                     LOG.debug("URI: " + request.getMethod() + " - " + uri);
-                    throw new Exception("Exception creating FHIR resource: " + response.getStatusLine().toString());
+                    LOG.error("Exception creating FHIR resource: " + response.getStatusLine().toString());
+                    ++errs;
+                    continue;
                   }
 
                 int status = response.getStatusLine().getStatusCode();
@@ -214,14 +243,16 @@ public class CHHelper
                   {
                     LOG.debug("URI: " + request.getMethod() + " - " + uri);
                     LOG.error("Error: " + result.toString());
-                    throw new Exception("Exception creating FHIR resource: " + response.getStatusLine().toString());
+                    LOG.error("Exception creating FHIR resource: " + response.getStatusLine().toString());
+                    ++errs;
+                    continue;
                   }
                 break;
               }
             if (++i % 50 == 0)
               {
                 long ts2 = System.nanoTime() - ts;
-                LOG.debug("Pushed " + i + " resources out so far in " + DurationUtil.printDuration(ts2) + " (" + NumberFormatUtil.printWith1DecAnd000Sep(DurationUtil.perMinute(ts2, i * (upsert == false ? 1 : 2))) + " " + (upsert == false ? "posts" : "gets+puts") + "/min).");
+                LOG.debug("Pushed " + i + " resources out so far (with "+errs+" errors and "+timeoutCalls+" timeouts) in " + DurationUtil.printDuration(ts2) + " (" + NumberFormatUtil.printWith1DecAnd000Sep(DurationUtil.perMinute(ts2, i * (upsert == false ? 1 : 2))) + " " + (upsert == false ? "posts" : "gets+puts") + "/min).");
               }
             String id = result.get("id").getAsString();
             if (insert == true)
@@ -232,9 +263,10 @@ public class CHHelper
             e._versionId = result.get("meta").getAsJsonObject().get("versionId").getAsString();
           }
         long ts2 = System.nanoTime() - ts;
-        LOG.debug("Pushed a total of " + i + " resources out in " + DurationUtil.printDuration(ts2) + " (" + NumberFormatUtil.printWith1DecAnd000Sep(DurationUtil.perMinute(ts2, reqEntities.size() * (upsert == false ? 1 : 2))) + " " + (upsert == false ? "posts" : "gets+puts") + "/min).");
+        LOG.debug("Pushed a total of " + i + " resources out (with '"+errs+"' errors and "+timeoutCalls+" timeouts) in " + DurationUtil.printDuration(ts2) + " (" + NumberFormatUtil.printWith1DecAnd000Sep(DurationUtil.perMinute(ts2, reqEntities.size() * (upsert == false ? 1 : 2))) + " " + (upsert == false ? "posts" : "gets+puts") + "/min).");
         if (result != null)
           LOG.debug("Last Result: " + result.toString());
+        return errs;
       }
 
 
@@ -268,7 +300,21 @@ public class CHHelper
         search.set("identifier", identifierSystem + "|" + identifierValue);
         try
           {
-            HttpBody body = search.execute();
+            HttpBody body = null;
+            Exception execException = null;
+            for (int calls = 0; calls < 5; ++calls)
+              {
+                try {
+                  body = search.execute();
+                  break;
+                }
+                catch (Exception E) {
+                  execException = E;
+                }
+              }
+            if (body == null)
+              throw execException;
+
             JsonObject o = new Gson().fromJson(body.toString(), JsonObject.class); // Get the results in json form
             return JSONUtil.getJsonElementFromPath(o, "entry[0].resource"); // get the first resource
           }
@@ -354,16 +400,19 @@ public class CHHelper
         List<FhirEntity> _reqEntities;
         boolean          _failOnQuota;
         boolean          _upsert;
+        int              _errs;
 
         @Override
         public void doRun()
         throws Exception
           {
-            fhirResourceCreate(_ch, _token, _fhirStoreName, _reqEntities, _failOnQuota, _upsert);
+            _errs = fhirResourceCreate(_ch, _token, _fhirStoreName, _reqEntities, _failOnQuota, _upsert);
+            if (_errs > 0)
+             throw new Exception("There were "+_errs+" errors.");
           }
       }
 
-    public static void fhirResourceCreate(CloudHealthcare ch, String token, String fhirStoreName, List<FhirEntity> reqEntities, boolean failOnQuota, boolean upsert, int threads)
+    public static int fhirResourceCreate(CloudHealthcare ch, String token, String fhirStoreName, List<FhirEntity> reqEntities, boolean failOnQuota, boolean upsert, int threads)
     throws Exception
       {
         int batchSize = reqEntities.size() / threads;
@@ -379,8 +428,13 @@ public class CHHelper
           }
         List<Exception> L = exec.run();
         long ts2 = System.nanoTime() - ts;
-        LOG.debug("Parallel FHIR resource loading output " + reqEntities.size() + " resources in " + DurationUtil.printDuration(ts2) + " (" + NumberFormatUtil.printWith1DecAnd000Sep(DurationUtil.perMinute(ts2, reqEntities.size() * (upsert == false ? 1 : 2))) + " " + (upsert == false ? "posts" : "gets+puts") + "/min).");
-
+        int errs = 0;
+        for (SimpleRunnable r : exec.getRunnables())
+          errs+=((FhirEnitityCreator)r)._errs;
+        
+        LOG.debug("Parallel FHIR resource loading output " + reqEntities.size() + " resources (with "+errs+" errors) in " + DurationUtil.printDuration(ts2) + " (" + NumberFormatUtil.printWith1DecAnd000Sep(DurationUtil.perMinute(ts2, reqEntities.size() * (upsert == false ? 1 : 2))) + " " + (upsert == false ? "posts" : "gets+puts") + "/min).");
+        if (errs > 0)
+          LOG.error("There were " + errs + " errorred resources.");
         if (L.isEmpty() == false)
           {
             LOG.error("There were " + L.size() + " errors.");
@@ -388,6 +442,8 @@ public class CHHelper
               LOG.error("      ", E);
           }
         else
-          LOG.info("PARALLEL FHIR RESOURCE LOADING COMPLETED SUCCESSFULLY");
+          LOG.info("PARALLEL FHIR RESOURCE LOADING COMPLETED");
+        
+        return errs;
       }
   }

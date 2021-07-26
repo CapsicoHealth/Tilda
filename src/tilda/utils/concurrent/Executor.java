@@ -62,6 +62,11 @@ public class Executor
             R._executor = this;
           }
       }
+    
+    public List<SimpleRunnable> getRunnables()
+    {
+      return _Runnables;
+    }
 
     public List<Exception> run()
       {
