@@ -83,4 +83,12 @@ public class TildaObjectMetaData
         return _Cols;
       }
 
+    public ColumnDefinition getColumnDefinition(String columnName)
+      {
+        for (ColumnDefinition cd : _Cols)
+          if (cd.getName().equals(columnName) == true)
+           return cd;
+        return null;
+      }
+
   }

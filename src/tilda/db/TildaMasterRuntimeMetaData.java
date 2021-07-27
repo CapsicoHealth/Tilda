@@ -26,6 +26,7 @@ import org.apache.logging.log4j.Logger;
 import tilda.db.processors.ObjectProcessor;
 import tilda.enums.ObjectMode;
 import tilda.parsing.parts.Object;
+import tilda.types.ColumnDefinition;
 
 /**
  * <B>LDH-NOTE</B>
@@ -46,6 +47,17 @@ public class TildaMasterRuntimeMetaData
       {
         if (_M.get(SchemaName.toUpperCase() + "." + TableName) != null)
           return _M.get(SchemaName.toUpperCase() + "." + TableName);
+        return null;
+      }
+
+    public static ColumnDefinition getColumnDefinition(String schemaName, String tableName, String columnName)
+      {
+        if (_M.get(schemaName.toUpperCase() + "." + tableName) != null)
+          {
+            TildaObjectMetaData TOMD = _M.get(schemaName.toUpperCase() + "." + tableName);
+            if (TOMD != null)
+             return TOMD.getColumnDefinition(columnName);
+          }
         return null;
       }
 
