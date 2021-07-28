@@ -278,6 +278,11 @@ public class BQHelper
         return Schema.of(fieldsList);
       }
 
+    public Schema getBQTableSchema(BigQuery bq, String datasetName, String tableName)
+      {
+        return bq.getTable(datasetName, tableName).getDefinition().getSchema();
+      }
+
     public static void copyComments(BigQuery bq, String srcDatasetName, String srcTableName, String destDatasetName, String destTableName)
       {
         try
@@ -337,7 +342,7 @@ public class BQHelper
               break;
             writer.append(csvRecord).append(System.lineSeparator());
           }
-        LOG.debug("Wrote "+i+" records out to BQ.");
+        LOG.debug("Wrote " + i + " records out to BQ.");
         writer.close();
         if (JobHelper.completeJob(out.getJob()) == null)
           throw new Exception("Some error occurred");
