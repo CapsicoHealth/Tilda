@@ -258,7 +258,7 @@ public class BQHelper
       {
         TildaObjectMetaData Obj = TildaMasterRuntimeMetaData.getTableObject(SchemaName, TableViewName);
         if (Obj == null)
-          throw new Exception("Cannot locate Object/View '" + SchemaName + "." + TableViewName + "'.");
+          throw new Exception("Cannot locate Tilda Object/View '" + SchemaName + "." + TableViewName + "', so cannot generate a BQ-compatible Schema.");
 
         // StringBuilder str = new StringBuilder();
         List<Field> fieldsList = new ArrayList<Field>();
@@ -276,6 +276,11 @@ public class BQHelper
         // LOG.debug("Schema for "+SchemaName+"."+TableViewName+": "+str.toString());
 
         return Schema.of(fieldsList);
+      }
+
+    public Schema getBQTableSchema(BigQuery bq, String datasetName, String tableName)
+      {
+        return bq.getTable(datasetName, tableName).getDefinition().getSchema();
       }
 
     public static void copyComments(BigQuery bq, String srcDatasetName, String srcTableName, String destDatasetName, String destTableName)
@@ -337,7 +342,7 @@ public class BQHelper
               break;
             writer.append(csvRecord).append(System.lineSeparator());
           }
-        LOG.debug("Wrote "+i+" records out to BQ.");
+        LOG.debug("Wrote " + i + " records out to BQ.");
         writer.close();
         if (JobHelper.completeJob(out.getJob()) == null)
           throw new Exception("Some error occurred");
