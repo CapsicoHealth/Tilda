@@ -159,28 +159,32 @@ public class JSONPrinter
       }
 
     public JSONPrinter addArrayElementStart()
+    throws Exception
       {
         String poppedName = _NestingStack.getFirst();
-        _Elements.add(new ArrayElementStart(poppedName));
-        _NestingStack.add("Array:" + poppedName);
+        if (poppedName.startsWith("Array:") == false)
+          throw new Exception("JSON Nesting error: starting an array element off a non array '" + poppedName + "'.");
+
+        _Elements.add(new ArrayElementStart("ArrayElement:"+poppedName));
+        _NestingStack.push("ArrayElement:"+poppedName);
         return this;
       }
 
     public JSONPrinter addArrayElementClose()
     throws Exception
       {
-        String poppedName = _NestingStack.pop().substring("Array:".length());
+        String poppedName = _NestingStack.pop();
+        if (poppedName.startsWith("ArrayElement:") == false)
+          throw new Exception("JSON Nesting error: closing array element on non array element '"+ poppedName + "'.");
+        poppedName = poppedName.substring("ArrayElement:".length());
         _Elements.add(new ArrayElementEnd(poppedName));
-        String parent = _NestingStack.getFirst();
-        if (parent.equals(poppedName) == false)
-          throw new Exception("JSON Nesting error: closed array element '" + parent + "' but '" + poppedName + "' was the most recently started.");
         return this;
       }
 
     public JSONPrinter addElementStart(String Name)
       {
         _Elements.add(new ElementElementStart(Name));
-        _NestingStack.add("Element:" + Name);
+        _NestingStack.push("Element:" + Name);
         return this;
       }
 
@@ -197,7 +201,7 @@ public class JSONPrinter
     public JSONPrinter addArrayStart(String Name)
       {
         _Elements.add(new ElementArrayStart(Name));
-        _NestingStack.add("Array:" + Name);
+        _NestingStack.push("Array:" + Name);
         return this;
       }
 
