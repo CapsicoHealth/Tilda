@@ -4,12 +4,13 @@ import java.io.Writer;
 
 import tilda.utils.json.JSONUtil;
 
-public class ElementElementEnd implements ElementDef
+public class ElementEnd implements ElementDef
   {
-    public ElementElementEnd(String Name)
+    public ElementEnd(String Name)
       {
         _Name = Name;
       }
+
     protected final String _Name;
 
     @Override
@@ -18,5 +19,11 @@ public class ElementElementEnd implements ElementDef
       {
         JSONUtil.startend(Out, '}');
         JSONUtil.newline(Out);
+      }
+
+    @Override
+    public NestingStatus getNestingStatus()
+      {
+        return NestingStatus.END;
       }
   }

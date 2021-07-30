@@ -18,4 +18,10 @@ public class ArrayElementStart implements ElementDef
         Out.write(Header);
         Out.write(FirstElement == false ? ", {" : "  {");
       }
+    
+    @Override
+    public NestingStatus getNestingStatus()
+      {
+        return NestingStatus.START;
+      }   
   }

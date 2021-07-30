@@ -4,9 +4,9 @@ import java.io.Writer;
 
 import tilda.utils.json.JSONUtil;
 
-public class ElementElementStart implements ElementDef
+public class ElementStart implements ElementDef
   {
-    public ElementElementStart(String Name)
+    public ElementStart(String Name)
       {
         _Name = Name;
       }
@@ -19,5 +19,11 @@ public class ElementElementStart implements ElementDef
       {
         JSONUtil.printElementStart(Out, _Name, FirstElement, Header);
         JSONUtil.newline(Out);
+      }
+
+    @Override
+    public NestingStatus getNestingStatus()
+      {
+        return NestingStatus.START;
       }
   }

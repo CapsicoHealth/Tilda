@@ -10,6 +10,7 @@ public class ArrayElementEnd implements ElementDef
       {
         _Name = Name;
       }
+
     protected final String _Name;
 
     @Override
@@ -18,5 +19,11 @@ public class ArrayElementEnd implements ElementDef
       {
         JSONUtil.startend(Out, '}');
         JSONUtil.newline(Out);
+      }
+
+    @Override
+    public NestingStatus getNestingStatus()
+      {
+        return NestingStatus.END;
       }
   }

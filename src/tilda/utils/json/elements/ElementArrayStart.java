@@ -20,4 +20,10 @@ public class ElementArrayStart implements ElementDef
         JSONUtil.printArrayStart(Out, _Name, FirstElement, Header);
         JSONUtil.newline(Out);
       }
+
+    @Override
+    public NestingStatus getNestingStatus()
+      {
+        return NestingStatus.START;
+      }
   }

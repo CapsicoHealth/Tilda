@@ -36,10 +36,11 @@ import tilda.utils.json.elements.ElementArrayStart;
 import tilda.utils.json.elements.ElementBoolean;
 import tilda.utils.json.elements.ElementBooleanArray;
 import tilda.utils.json.elements.ElementDef;
+import tilda.utils.json.elements.ElementDef.NestingStatus;
 import tilda.utils.json.elements.ElementDouble;
 import tilda.utils.json.elements.ElementDoubleArray;
-import tilda.utils.json.elements.ElementElementEnd;
-import tilda.utils.json.elements.ElementElementStart;
+import tilda.utils.json.elements.ElementEnd;
+import tilda.utils.json.elements.ElementStart;
 import tilda.utils.json.elements.ElementList;
 import tilda.utils.json.elements.ElementLong;
 import tilda.utils.json.elements.ElementLongArray;
@@ -165,8 +166,8 @@ public class JSONPrinter
         if (poppedName.startsWith("Array:") == false)
           throw new Exception("JSON Nesting error: starting an array element off a non array '" + poppedName + "'.");
 
-        _Elements.add(new ArrayElementStart("ArrayElement:"+poppedName));
-        _NestingStack.push("ArrayElement:"+poppedName);
+        _Elements.add(new ArrayElementStart("ArrayElement:" + poppedName));
+        _NestingStack.push("ArrayElement:" + poppedName);
         return this;
       }
 
@@ -175,7 +176,7 @@ public class JSONPrinter
       {
         String poppedName = _NestingStack.pop();
         if (poppedName.startsWith("ArrayElement:") == false)
-          throw new Exception("JSON Nesting error: closing array element on non array element '"+ poppedName + "'.");
+          throw new Exception("JSON Nesting error: closing array element on non array element '" + poppedName + "'.");
         poppedName = poppedName.substring("ArrayElement:".length());
         _Elements.add(new ArrayElementEnd(poppedName));
         return this;
@@ -183,7 +184,7 @@ public class JSONPrinter
 
     public JSONPrinter addElementStart(String Name)
       {
-        _Elements.add(new ElementElementStart(Name));
+        _Elements.add(new ElementStart(Name));
         _NestingStack.push("Element:" + Name);
         return this;
       }
@@ -191,7 +192,7 @@ public class JSONPrinter
     public JSONPrinter addElementClose(String Name)
     throws Exception
       {
-        _Elements.add(new ElementElementEnd(Name));
+        _Elements.add(new ElementEnd(Name));
         String poppedName = _NestingStack.pop();
         if (poppedName.equals("Element:" + Name) == false)
           throw new Exception("JSON Nesting error: closed element '" + Name + "' but '" + poppedName + "' was the most recently started.");
@@ -244,11 +245,21 @@ public class JSONPrinter
     throws Exception
       {
         testNestingStack();
-        boolean First = true;
+        Deque<Boolean> _FirstElementStatusStack = new ArrayDeque<Boolean>();
+        _FirstElementStatusStack.push(true);
         for (ElementDef e : _Elements)
           {
-            e.print(Out, First, "    ");
-            First = false;
+            boolean first = _FirstElementStatusStack.peek();
+            e.print(Out, first, "    ");
+            if (first == true)
+              {
+                _FirstElementStatusStack.pop();
+                _FirstElementStatusStack.push(false);
+              }
+            if (e.getNestingStatus() == NestingStatus.START)
+              _FirstElementStatusStack.push(true);
+            else if (e.getNestingStatus() == NestingStatus.END)
+              _FirstElementStatusStack.pop();
           }
       }
 
