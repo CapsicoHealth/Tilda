@@ -50,9 +50,6 @@ public class DefaultsHelper
              return;
           }
         
-        if (b._Name.equals("IcdDxMapping") == true)
-          LOG.debug("XXX");
-        
         SubWhereClause swc = new SubWhereClause();
         swc._Name = "All";
         swc._Description = "Default generated 'All' query";

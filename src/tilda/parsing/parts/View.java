@@ -373,9 +373,6 @@ public class View extends Base
         if (TextUtil.isNullOrEmpty(_CountStarDeprecated) == false)
           PS.AddError("View '" + getFullName() + "' is defining a 'countStar' element which is deprecated. Please use a standard column definition with an aggregate of 'COUNT'.");
         
-        if (_Name.equals("FormulaDependencyView") == true)
-         LOG.debug("XXX");
-        
 //        super.validateOutputMaps(PS); // We do not need to do this. The ObjectProxy is the driver of the code-gen and so the additional validation needed will occur there.
         
         // gotta construct a shadow Object for code-gen.
