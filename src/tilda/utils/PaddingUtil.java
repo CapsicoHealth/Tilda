@@ -47,4 +47,28 @@ public class PaddingUtil
               : Padding < _PADS.length ? _PADS[Padding]
               : _PADS[_PADS.length-1];
       }
+    
+    public static final String leftPad(String str, int minLen, char pad)
+      {
+        int len = str.length();
+        if (len >= minLen)
+         return str;
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < minLen-len; ++i)
+         sb.append(pad);
+        sb.append(str);
+        return sb.toString();
+      }
+    public static final String rightPad(String str, int minLen, char pad)
+      {
+        int len = str.length();
+        if (len >= minLen)
+         return str;
+        StringBuilder sb = new StringBuilder();
+        sb.append(str);
+        for (int i = 0; i < minLen-len; ++i)
+         sb.append(pad);
+        return sb.toString();
+      }
+    
   }

@@ -22,6 +22,7 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringReader;
 import java.io.Writer;
+import java.text.Normalizer;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -928,16 +929,27 @@ public class TextUtil
         return Character.UNASSIGNED;
       }
 
-    public static String replaceAccentedCharacters(String Str)
+    /*
+     * public static String replaceAccentedCharacters(String Str)
+     * {
+     * char[] Chars = Str.toCharArray();
+     * for (int i = 0; i < Chars.length; ++i)
+     * {
+     * char c = isAccentedCharacter(Chars[i]);
+     * if (c != Character.UNASSIGNED)
+     * Chars[i] = c;
+     * }
+     * return new String(Chars);
+     * }
+     */
+    static Pattern _UNICODE_MARKS = Pattern.compile("\\p{M}");
+
+    public static String replaceAccentedCharacters(String str)
       {
-        char[] Chars = Str.toCharArray();
-        for (int i = 0; i < Chars.length; ++i)
-          {
-            char c = isAccentedCharacter(Chars[i]);
-            if (c != Character.UNASSIGNED)
-              Chars[i] = c;
-          }
-        return new String(Chars);
+        if (str == null)
+          return null;
+        str = Normalizer.normalize(str, Normalizer.Form.NFD);
+        return _UNICODE_MARKS.matcher(str).replaceAll("");
       }
 
     public static char removeAccent(char c)
@@ -1028,10 +1040,11 @@ public class TextUtil
             s.append(str);
           }
       }
-    
+
     /**
      * Prints a list of strings in a comma-separated list of items to be used in Java code gen. For example, passing ["a\"", "b"]
      * will generate "a\"", "b", i.e., double quotes in passed strings will be escaped.
+     * 
      * @param StrArray
      * @param s
      */
@@ -1049,9 +1062,11 @@ public class TextUtil
             s.append(TextUtil.escapeDoubleQuoteWithSlash(str));
           }
       }
+
     /**
      * Prints a list of strings in a comma-separated list of items to be used in Java code gen. For example, passing ["a\"", "b"]
      * will generate "a\"", "b", i.e., double quotes in passed strings will be escaped.
+     * 
      * @param StrArray
      * @param s
      */
@@ -1061,7 +1076,7 @@ public class TextUtil
         printJavaStringArray(StrArray, str);
         return str.toString();
       }
-    
+
 
     public static String print(String[][] A, int pos)
       {
@@ -1926,13 +1941,14 @@ public class TextUtil
 
     /**
      * Takes a string array and changes the array values to be sql likes, i.e., '%'+parts[i]+'%'
+     * 
      * @param parts
      */
     public static void partsSqlLike(String[] parts)
       {
         if (parts != null)
-         for (int i = 0; i < parts.length; ++i)
-           parts[i] = '%'+parts[i]+'%';
+          for (int i = 0; i < parts.length; ++i)
+            parts[i] = '%' + parts[i] + '%';
       }
 
   }
