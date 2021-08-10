@@ -35,7 +35,9 @@ import com.google.cloud.bigquery.StandardSQLTypeName;
 import com.google.cloud.bigquery.StandardTableDefinition;
 import com.google.cloud.bigquery.Table;
 import com.google.cloud.bigquery.TableDataWriteChannel;
+import com.google.cloud.bigquery.TableDefinition;
 import com.google.cloud.bigquery.TableId;
+import com.google.cloud.bigquery.TableInfo;
 import com.google.cloud.bigquery.TableResult;
 import com.google.cloud.bigquery.WriteChannelConfiguration;
 
@@ -348,6 +350,44 @@ public class BQHelper
           throw new Exception("Some error occurred");
         LOG.debug("SUCCESS!");
       }
+    
+    public static void createTable(BigQuery bq, String datasetName, String tableName, Schema schema) {
+      try {
+        // Initialize client that will be used to send requests. This client only needs to be created
+        // once, and can be reused for multiple requests.
+        //BigQuery bigquery = BigQueryOptions.getDefaultInstance().getService();
+
+        TableId tableId = TableId.of(datasetName, tableName);
+        TableDefinition tableDefinition = StandardTableDefinition.of(schema);
+        TableInfo tableInfo = TableInfo.newBuilder(tableId, tableDefinition).build();
+
+        bq.create(tableInfo);
+        System.out.println("Table created successfully");
+      } catch (BigQueryException e) {
+        System.out.println("Table was not created. \n" + e.toString());
+      }
+    }
+    
+    // This method doesn't work
+    public static boolean tableExists(BigQuery bq, String datasetName, String tableName) {
+      try {
+        // Initialize client that will be used to send requests. This client only needs to be created
+        // once, and can be reused for multiple requests.
+        //BigQuery bigquery = BigQueryOptions.getDefaultInstance().getService();
+
+        Table table = bq.getTable(TableId.of(datasetName, tableName));
+        if (table.exists()) {
+          System.out.println("Table already exist");
+          return true;
+        } else {
+          System.out.println("Table not found");
+          return false;
+        }
+      } catch (BigQueryException e) {
+        System.out.println("Table not found. \n" + e.toString());
+        return false;
+      }
+    }
 
 
   }
