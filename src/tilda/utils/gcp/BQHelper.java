@@ -6,7 +6,6 @@ package tilda.utils.gcp;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +18,7 @@ import com.google.cloud.bigquery.BigQuery.DatasetListOption;
 import com.google.cloud.bigquery.BigQuery.TableListOption;
 import com.google.cloud.bigquery.BigQueryException;
 import com.google.cloud.bigquery.BigQueryOptions;
+import com.google.cloud.bigquery.CopyJobConfiguration;
 import com.google.cloud.bigquery.Dataset;
 import com.google.cloud.bigquery.DatasetInfo;
 import com.google.cloud.bigquery.Field;
@@ -83,7 +83,7 @@ public class BQHelper
      * @throws FileNotFoundException
      * @throws IOException
      */
-    private static BigQuery getBigQuery(String envVariable, String dataProjectName)
+    public static BigQuery getBigQuery(String envVariable, String dataProjectName)
     throws FileNotFoundException, IOException
       {
         return BigQueryOptions.newBuilder().setCredentials(AuthHelper.getCredentials(envVariable, dataProjectName, "bq")).setProjectId(dataProjectName).build().getService();
@@ -350,44 +350,122 @@ public class BQHelper
           throw new Exception("Some error occurred");
         LOG.debug("SUCCESS!");
       }
-    
-    public static void createTable(BigQuery bq, String datasetName, String tableName, Schema schema) {
-      try {
-        // Initialize client that will be used to send requests. This client only needs to be created
-        // once, and can be reused for multiple requests.
-        //BigQuery bigquery = BigQueryOptions.getDefaultInstance().getService();
 
-        TableId tableId = TableId.of(datasetName, tableName);
-        TableDefinition tableDefinition = StandardTableDefinition.of(schema);
-        TableInfo tableInfo = TableInfo.newBuilder(tableId, tableDefinition).build();
-
-        bq.create(tableInfo);
-        System.out.println("Table created successfully");
-      } catch (BigQueryException e) {
-        System.out.println("Table was not created. \n" + e.toString());
-      }
-    }
-    
-    // This method doesn't work
-    public static boolean tableExists(BigQuery bq, String datasetName, String tableName) {
-      try {
-        // Initialize client that will be used to send requests. This client only needs to be created
-        // once, and can be reused for multiple requests.
-        //BigQuery bigquery = BigQueryOptions.getDefaultInstance().getService();
-
-        Table table = bq.getTable(TableId.of(datasetName, tableName));
-        if (table.exists()) {
-          System.out.println("Table already exist");
-          return true;
-        } else {
-          System.out.println("Table not found");
-          return false;
-        }
-      } catch (BigQueryException e) {
-        System.out.println("Table not found. \n" + e.toString());
+    public static boolean createTable(BigQuery bq, String datasetName, String tableName, Schema schema)
+      {
+        try
+          {
+            TableId tableId = TableId.of(datasetName, tableName);
+            TableDefinition tableDefinition = StandardTableDefinition.of(schema);
+            TableInfo tableInfo = TableInfo.newBuilder(tableId, tableDefinition).build();
+            bq.create(tableInfo);
+            return true;
+          }
+        catch (BigQueryException e)
+          {
+            LOG.error(e);
+          }
+        LOG.debug("Table '" + datasetName + "." + tableName + "' not created");
         return false;
       }
-    }
+
+    /**
+     * Use this method carefully as it will truncate all contents of a table without an easy way to restore the data. Do note
+     * that BigQuery does create shadow versions of tables for up to 24 or 48h, so technically, data COULD be recovered if acted
+     * upon quickly. See https://cloud.google.com/bigquery/docs/samples/bigquery-undelete-table for documentation!
+     * 
+     * @param bq
+     * @param datasetName
+     * @param tableName
+     * @return
+     */
+    public static boolean truncateTable_BE_CAREFUL_WITH_THIS_ONE(BigQuery bq, String datasetName, String tableName)
+      {
+        try
+          {
+            JobResults results = runQuery(bq, "TRUNCATE TABLE " + datasetName + "." + tableName);
+            return results != null;
+          }
+        catch (BigQueryException e)
+          {
+            LOG.error(e);
+          }
+        LOG.debug("Table '" + datasetName + "." + tableName + "' not truncated");
+        return false;
+      }
+
+    /**
+     * Use this method carefully as it will delete/drop the table without an easy way to restore the data. Do note
+     * that BigQuery does create shadow versions of tables for up to 24 or 48h, so technically, data COULD be recovered if acted
+     * upon quickly. See https://cloud.google.com/bigquery/docs/samples/bigquery-undelete-table for documentation!
+     * 
+     * @param bq
+     * @param datasetName
+     * @param tableName
+     * @return
+     */
+    public static boolean deleteTable_BE_CAREFUL_WITH_THIS_ONE(BigQuery bq, String datasetName, String tableName)
+      {
+        try
+          {
+            return bq.delete(TableId.of(datasetName, tableName));
+          }
+        catch (BigQueryException e)
+          {
+            LOG.error(e);
+          }
+        LOG.debug("Table '" + datasetName + "." + tableName + "' not deleted");
+        return false;
+      }
+
+    /**
+     * Undeletes a table based on a snapshot time. As per the documentation https://cloud.google.com/bigquery/docs/samples/bigquery-undelete-table
+     * one cannot undelete a table that has been re-created since. BQ will also track the most recent snapshot as per the milliseconds provided.
+     * @param bq
+     * @param datasetName
+     * @param tableName
+     * @param epochMillis
+     * @return
+     */
+    public static boolean undeleteTable(BigQuery bq, String datasetName, String tableName, long epochMillis)
+      {
+        try
+          {
+            // Construct the restore-from tableID using a snapshot decorator.
+            String snapshotTableId = String.format("%s@%d", tableName, epochMillis);
+
+            // Construct and run a copy job.
+            CopyJobConfiguration configuration = CopyJobConfiguration.newBuilder(
+            // Choose a new table ID for the recovered table data.
+            TableId.of(datasetName, tableName),
+            TableId.of(datasetName, snapshotTableId))
+            .build();
+
+            Job job = bq.create(JobInfo.of(configuration));
+            return JobHelper.completeJob(job) != null;
+          }
+        catch (BigQueryException e)
+          {
+            LOG.error(e);
+          }
+        LOG.debug("Table '" + datasetName + "." + tableName + "' could not be undeleted");
+        return false;
+      }
+
+    public static boolean tableExists(BigQuery bq, String datasetName, String tableName)
+      {
+        try
+          {
+            Table table = bq.getTable(TableId.of(datasetName, tableName));
+            return table.exists();
+          }
+        catch (BigQueryException e)
+          {
+            LOG.error(e);
+          }
+        LOG.debug("Table '" + datasetName + "." + tableName + "' not found");
+        return false;
+      }
 
 
   }

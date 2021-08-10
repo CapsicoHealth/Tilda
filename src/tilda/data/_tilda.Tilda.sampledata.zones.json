@@ -19,6 +19,7 @@
 	   ,{ "id":"USMo" , "label":"US Mountain"        , "value":"US/Mountain"         }
 	   ,{ "id":"CaMo" , "label":"Canada Mountain"    , "value":"Canada/Mountain"     }
 	   ,{ "id":"USPa" , "label":"US Pacific"         , "value":"US/Pacific"          }
+       ,{ "id":"AmLA" , "label":"Los Angeles"        , "value":"America/Los_Angeles" }
 	   ,{ "id":"CaPa" , "label":"Canada Pacific"     , "value":"Canada/Pacific"      }
 	   ,{ "id":"USAl" , "label":"US Alaska"          , "value":"US/Alaska"           }
 	   ,{ "id":"USHa" , "label":"US Hawaii"          , "value":"US/Hawaii"           }
