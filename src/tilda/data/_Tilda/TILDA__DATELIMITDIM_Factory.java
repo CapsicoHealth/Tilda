@@ -180,7 +180,7 @@ This is the column definition for:<BR>
                 String clause = ((SelectQuery)ExtraParams).getWhereClause();
                 if (TextUtil.isNullOrEmpty(clause) == false) S.append(clause);
                 break;
-             case 1: // Quwey 'All'
+             case 1: // Query 'All'
                 S.append(" where (");  S.append("1=1");  S.append(")");
                 S.append(" order by "); C.getFullColumnVar(S, "TILDA", "DateLimitDim", "invalidDate"); S.append(" ASC");
                 break;
@@ -463,5 +463,108 @@ object. The generic init method defaults to this general data structure as a gen
    public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
    public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
 
+
+   public static String getCSVHeader()
+    {
+      return "\"invalidDate\",\"minDate\",\"maxDate\"";
+    }
+
+   public static void toCSV(java.io.Writer out, List<tilda.data.DateLimitDim_Data> L, boolean includeHeader) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      if (includeHeader == true)
+        out.write(getCSVHeader() + "\n");
+      for (tilda.data.DateLimitDim_Data O : L)
+       if (O!=null)
+        {
+          toCSV(out, O);
+          out.write("\n");
+        }
+      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);
+    }
+
+   public static void toCSV(java.io.Writer out, tilda.data.DateLimitDim_Data obj) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      StringBuilder Str = new StringBuilder();
+
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDate(obj.getInvalidDate()));
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDate(obj.getMinDate()));
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDate(obj.getMaxDate()));
+      out.write(Str.toString());
+      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);
+    }
+   public static void toJSON(java.io.Writer out, List<tilda.data.DateLimitDim_Data> L, String lead, boolean fullList) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      if (fullList == true)
+        {
+          if (L == null)
+           {
+             out.write("null\n");
+             return;
+           }
+          if (L.isEmpty() == true)
+           {
+             out.write("[]\n");
+             return;
+           }
+          out.write("[\n");
+        }
+      boolean First = true;
+      for (tilda.data.DateLimitDim_Data O : L)
+       if (O!=null)
+        {
+          out.write(lead);
+          toJSON(out, O, First == true ? "   " : "  ,", true);
+          if (First == true)
+           First = false;
+        }
+      if (fullList == true)
+       { 
+          out.write(lead);
+          out.write("]\n");
+       } 
+      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
+    }
+
+   public static void toJSON(java.io.Writer out, tilda.data.DateLimitDim_Data obj, boolean fullObject) throws java.io.IOException
+    {
+      toJSON(out, obj, "", fullObject, false);
+    }
+
+   public static void toJSON(java.io.Writer out, tilda.data.DateLimitDim_Data obj, String lead, boolean fullObject) throws java.io.IOException
+    {
+      toJSON(out, obj, lead, fullObject, false);
+    }
+
+   public static void toJSON(java.io.Writer outWriter, tilda.data.DateLimitDim_Data obj, String lead, boolean fullObject, boolean noNullArrays) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter();
+      tilda.data._Tilda.TILDA__DATELIMITDIM Obj = (tilda.data._Tilda.TILDA__DATELIMITDIM) obj;
+      if (fullObject == true)
+       {
+          out.write(lead);
+          out.write("{");
+       }
+
+      int i = -1;
+        JSONUtil.print(out, "invalidDate", ++i==0, Obj.getInvalidDate());
+
+        JSONUtil.print(out, "minDate", ++i==0, Obj.getMinDate());
+
+        JSONUtil.print(out, "maxDate", ++i==0, Obj.getMaxDate());
+
+      if (fullObject == true)
+       out.write(" }\n");
+
+      outWriter.append(out.getBuilder().toString());
+      out.close();
+
+      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
+    }
 
  }

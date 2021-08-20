@@ -638,7 +638,7 @@ This is the column definition for:<BR>
                 String clause = ((SelectQuery)ExtraParams).getWhereClause();
                 if (TextUtil.isNullOrEmpty(clause) == false) S.append(clause);
                 break;
-             case 1: // Quwey 'All'
+             case 1: // Query 'All'
                 S.append(" where (");  S.append("1=1");  S.append(")");
                 S.append(" order by "); C.getFullColumnVar(S, "TILDA", "DateDim", "dt"); S.append(" ASC");
                 break;
@@ -1041,5 +1041,222 @@ object. The generic init method defaults to this general data structure as a gen
    public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
    public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
 
+
+   public static String getCSVHeader()
+    {
+      return "\"dt\",\"epoch\",\"dayName\",\"dayOfWeek\",\"dayOfMonth\",\"dayOfQuarter\",\"dayOfYear\",\"weekOfMonth\",\"weekOfYear\",\"month\",\"monthOfYear\",\"monthName\",\"monthNameShort\",\"quarterOfYear\",\"quarterName\",\"year\",\"mmyyyy\",\"mmddyyyy\",\"yyyymmdd\",\"isWeekend\",\"isBusinessDay\",\"isHoliday\",\"holidayName\",\"created\",\"lastUpdated\",\"deleted\"";
+    }
+
+   public static void toCSV(java.io.Writer out, List<tilda.data.DateDim_Data> L, boolean includeHeader) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      if (includeHeader == true)
+        out.write(getCSVHeader() + "\n");
+      for (tilda.data.DateDim_Data O : L)
+       if (O!=null)
+        {
+          toCSV(out, O);
+          out.write("\n");
+        }
+      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);
+    }
+
+   public static void toCSV(java.io.Writer out, tilda.data.DateDim_Data obj) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      StringBuilder Str = new StringBuilder();
+
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDate(obj.getDt()));
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getEpoch());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getDayName());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getDayOfWeek());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getDayOfMonth());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getDayOfQuarter());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getDayOfYear());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getWeekOfMonth());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getWeekOfYear());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDate(obj.getMonth()));
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getMonthOfYear());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getMonthName());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getMonthNameShort());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getQuarterOfYear());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getQuarterName());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getYear());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getMmyyyy());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getMmddyyyy());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getYyyymmdd());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getIsWeekend());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getIsBusinessDay());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getIsHoliday());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getHolidayName());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getCreated()));
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getLastUpdated()));
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getDeleted()));
+      out.write(Str.toString());
+      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);
+    }
+   public static void toJSON(java.io.Writer out, List<tilda.data.DateDim_Data> L, String lead, boolean fullList) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      if (fullList == true)
+        {
+          if (L == null)
+           {
+             out.write("null\n");
+             return;
+           }
+          if (L.isEmpty() == true)
+           {
+             out.write("[]\n");
+             return;
+           }
+          out.write("[\n");
+        }
+      boolean First = true;
+      for (tilda.data.DateDim_Data O : L)
+       if (O!=null)
+        {
+          out.write(lead);
+          toJSON(out, O, First == true ? "   " : "  ,", true);
+          if (First == true)
+           First = false;
+        }
+      if (fullList == true)
+       { 
+          out.write(lead);
+          out.write("]\n");
+       } 
+      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
+    }
+
+   public static void toJSON(java.io.Writer out, tilda.data.DateDim_Data obj, boolean fullObject) throws java.io.IOException
+    {
+      toJSON(out, obj, "", fullObject, false);
+    }
+
+   public static void toJSON(java.io.Writer out, tilda.data.DateDim_Data obj, String lead, boolean fullObject) throws java.io.IOException
+    {
+      toJSON(out, obj, lead, fullObject, false);
+    }
+
+   public static void toJSON(java.io.Writer outWriter, tilda.data.DateDim_Data obj, String lead, boolean fullObject, boolean noNullArrays) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter();
+      tilda.data._Tilda.TILDA__DATEDIM Obj = (tilda.data._Tilda.TILDA__DATEDIM) obj;
+      if (fullObject == true)
+       {
+          out.write(lead);
+          out.write("{");
+       }
+
+      int i = -1;
+        JSONUtil.print(out, "dt", ++i==0, Obj.getDt());
+
+        JSONUtil.print(out, "epoch", ++i==0, Obj.getEpoch());
+
+      if (Obj.isDayNameNull() == false && Obj.getDayName() != null)
+        JSONUtil.print(out, "dayName", ++i==0, Obj.getDayName());
+
+      if (Obj.isDayOfWeekNull() == false)
+        JSONUtil.print(out, "dayOfWeek", ++i==0, Obj.getDayOfWeek());
+
+      if (Obj.isDayOfMonthNull() == false)
+        JSONUtil.print(out, "dayOfMonth", ++i==0, Obj.getDayOfMonth());
+
+      if (Obj.isDayOfQuarterNull() == false)
+        JSONUtil.print(out, "dayOfQuarter", ++i==0, Obj.getDayOfQuarter());
+
+      if (Obj.isDayOfYearNull() == false)
+        JSONUtil.print(out, "dayOfYear", ++i==0, Obj.getDayOfYear());
+
+      if (Obj.isWeekOfMonthNull() == false)
+        JSONUtil.print(out, "weekOfMonth", ++i==0, Obj.getWeekOfMonth());
+
+      if (Obj.isWeekOfYearNull() == false)
+        JSONUtil.print(out, "weekOfYear", ++i==0, Obj.getWeekOfYear());
+
+      if (Obj.isMonthNull() == false && Obj.getMonth() != null)
+        JSONUtil.print(out, "month", ++i==0, Obj.getMonth());
+
+      if (Obj.isMonthOfYearNull() == false)
+        JSONUtil.print(out, "monthOfYear", ++i==0, Obj.getMonthOfYear());
+
+      if (Obj.isMonthNameNull() == false && Obj.getMonthName() != null)
+        JSONUtil.print(out, "monthName", ++i==0, Obj.getMonthName());
+
+      if (Obj.isMonthNameShortNull() == false && Obj.getMonthNameShort() != null)
+        JSONUtil.print(out, "monthNameShort", ++i==0, Obj.getMonthNameShort());
+
+      if (Obj.isQuarterOfYearNull() == false)
+        JSONUtil.print(out, "quarterOfYear", ++i==0, Obj.getQuarterOfYear());
+
+      if (Obj.isQuarterNameNull() == false && Obj.getQuarterName() != null)
+        JSONUtil.print(out, "quarterName", ++i==0, Obj.getQuarterName());
+
+      if (Obj.isYearNull() == false)
+        JSONUtil.print(out, "year", ++i==0, Obj.getYear());
+
+      if (Obj.isMmyyyyNull() == false && Obj.getMmyyyy() != null)
+        JSONUtil.print(out, "mmyyyy", ++i==0, Obj.getMmyyyy());
+
+      if (Obj.isMmddyyyyNull() == false && Obj.getMmddyyyy() != null)
+        JSONUtil.print(out, "mmddyyyy", ++i==0, Obj.getMmddyyyy());
+
+      if (Obj.isYyyymmddNull() == false && Obj.getYyyymmdd() != null)
+        JSONUtil.print(out, "yyyymmdd", ++i==0, Obj.getYyyymmdd());
+
+      if (Obj.isIsWeekendNull() == false)
+        JSONUtil.print(out, "isWeekend", ++i==0, Obj.getIsWeekend());
+
+      if (Obj.isIsBusinessDayNull() == false)
+        JSONUtil.print(out, "isBusinessDay", ++i==0, Obj.getIsBusinessDay());
+
+      if (Obj.isIsHolidayNull() == false)
+        JSONUtil.print(out, "isHoliday", ++i==0, Obj.getIsHoliday());
+
+      if (Obj.isHolidayNameNull() == false && Obj.getHolidayName() != null)
+        JSONUtil.print(out, "holidayName", ++i==0, Obj.getHolidayName());
+
+        JSONUtil.print(out, "created", ++i==0, Obj.getCreated());
+
+        JSONUtil.print(out, "lastUpdated", ++i==0, Obj.getLastUpdated());
+
+      if (Obj.isDeletedNull() == false && Obj.getDeleted() != null)
+        JSONUtil.print(out, "deleted", ++i==0, Obj.getDeleted());
+
+      if (fullObject == true)
+       out.write(" }\n");
+
+      outWriter.append(out.getBuilder().toString());
+      out.close();
+
+      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
+    }
 
  }

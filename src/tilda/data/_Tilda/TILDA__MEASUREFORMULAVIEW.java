@@ -173,7 +173,7 @@ This View contains the following columns:<BLOCKQUOTE>
 
 */
 @SuppressWarnings({ "unused" })
-public abstract class TILDA__MEASUREFORMULAVIEW implements tilda.interfaces.ReaderObject
+public abstract class TILDA__MEASUREFORMULAVIEW implements tilda.interfaces.ReaderObject, tilda.interfaces.JSONable, tilda.interfaces.CSVable
  {
    protected transient static final Logger LOG = LogManager.getLogger(TILDA__MEASUREFORMULAVIEW.class.getName());
 
@@ -1519,6 +1519,8 @@ This is the null setter for:<BR>
           S.append(" from "); C.getFullTableVar(S, "TILDA", "MeasureFormulaView");
        switch (__LookupId)
         {
+          case 0: // Unique Query 'All'
+             break;
           case -77: 
           case -666: if (__Init == InitMode.CREATE) break;
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot create where clause.");
@@ -1538,6 +1540,8 @@ This is the null setter for:<BR>
           PS = C.prepareStatement(Q);
           switch (__LookupId)
            {
+             case 0: // Unique Query 'All'
+               break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
            }
@@ -1607,4 +1611,36 @@ This is the null setter for:<BR>
       return Str;
     }
 
+   public void toJSON(java.io.Writer out, String exportName, boolean fullObject) throws Exception
+    {
+      toJSON(out, exportName, "", fullObject, false);
+    }
+   public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject) throws Exception
+    {
+      toJSON(out, exportName, lead, fullObject, false);
+    }
+   public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject, boolean noNullArrays) throws Exception
+    {
+      switch (exportName)
+        { 
+          case "": tilda.data.MeasureFormulaView_Factory.toJSON(out, (tilda.data.MeasureFormulaView_Data) this, lead, fullObject, noNullArrays); break;
+          default: throw new Exception("Unknown JSON exporter '"+exportName+"' for tilda.data.MeasureFormulaView_Factory");
+        } 
+    }
+   public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject, java.time.ZonedDateTime lastsync) throws Exception
+    {
+      throw new Exception("Unknown JSON sync exporter '"+exportName+"' for tilda.data.MeasureFormulaView_Factory");
+    }
+   public void toCSV(java.io.Writer out, String exportName) throws Exception
+    {
+      switch (exportName)
+        { 
+          case "": tilda.data.MeasureFormulaView_Factory.toCSV(out, (tilda.data.MeasureFormulaView_Data) this); break;
+          default: throw new Exception("Unknown CSV exporter '"+exportName+"' for tilda.data.MeasureFormulaView_Factory");
+        } 
+    }
+   public void toCSV(java.io.Writer out, String exportName, java.time.ZonedDateTime lastsync) throws Exception
+    {
+      throw new Exception("Unknown CSV sync exporter '"+exportName+"' for tilda.data.MeasureFormulaView_Factory");
+    }
  }

@@ -359,6 +359,7 @@ create table if not exists TILDA.RefillPerf -- Performance logs for the Tilda Re
   , "timeInsertSec"   bigint        not null   -- The time, in seconds, the inserts took.
   , "timeDeleteSec"   bigint        not null   -- The time, in seconds, the deletes took.
   , "timeAnalyzeSec"  bigint        not null   -- The time, in seconds, the analyze took.
+  , "timeTotalSec"    bigint        not null DEFAULT 0   -- The time, in seconds, the analyze took.
   , "insertCount"     bigint        not null   -- The count of inserted rows.
   , "deleteCount"     bigint        not null   -- The count of rows deleted.
   , "created"         timestamptz   not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.RefillPerf)
@@ -378,6 +379,7 @@ COMMENT ON COLUMN TILDA.RefillPerf."endTime" IS E'The timestamp for when the ref
 COMMENT ON COLUMN TILDA.RefillPerf."timeInsertSec" IS E'The time, in seconds, the inserts took.';
 COMMENT ON COLUMN TILDA.RefillPerf."timeDeleteSec" IS E'The time, in seconds, the deletes took.';
 COMMENT ON COLUMN TILDA.RefillPerf."timeAnalyzeSec" IS E'The time, in seconds, the analyze took.';
+COMMENT ON COLUMN TILDA.RefillPerf."timeTotalSec" IS E'The time, in seconds, the analyze took.';
 COMMENT ON COLUMN TILDA.RefillPerf."insertCount" IS E'The count of inserted rows.';
 COMMENT ON COLUMN TILDA.RefillPerf."deleteCount" IS E'The count of rows deleted.';
 COMMENT ON COLUMN TILDA.RefillPerf."created" IS E'The timestamp for when the record was created. (TILDA.RefillPerf)';

@@ -297,6 +297,10 @@ This is the column definition for:<BR>
                 S.append(" where ("); C.getFullColumnVar(S, "TILDA", "JobPartMessage", "jobPartRefnum"); S.append("=?");  S.append(")");
                 S.append(" order by "); C.getFullColumnVar(S, "TILDA", "JobPartMessage", "created"); S.append(" DESC");
                 break;
+             case 3: // Query 'All'
+                S.append(" where (");  S.append("1=1");  S.append(")");
+                S.append(" order by "); C.getFullColumnVar(S, "TILDA", "JobPartMessage", "refnum"); S.append(" ASC");
+                break;
              case -77: 
              case -666: break;
              default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot create where clause.");
@@ -327,6 +331,9 @@ This is the column definition for:<BR>
              }
              case 2: {  // Index 'JobPart'
                if (Obj.isJobPartRefnumNull() == true) PS.setNull(++i, java.sql.Types.BIGINT    );  else PS.setLong      (++i, Obj._jobPartRefnum);
+               break;
+             }
+             case 3: { // Query 'All'
                break;
              }
              case -666: break;
@@ -616,6 +623,30 @@ object. The generic init method defaults to this general data structure as a gen
 
 
 
+   static public ListResults<tilda.data.JobPartMessage_Data> lookupWhereAll(Connection C, int start, int size) throws Exception
+     {
+       tilda.data._Tilda.TILDA__JOBPARTMESSAGE Obj = new tilda.data.JobPartMessage_Data();
+       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
+
+
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
+       readMany(C, 3, RPI, Obj, null, start, size);
+       return RPI._L;
+     }
+
+
+   static public void lookupWhereAll(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.JobPartMessage_Data> OP, int start, int size) throws Exception
+     {
+       tilda.data._Tilda.TILDA__JOBPARTMESSAGE Obj = new tilda.data.JobPartMessage_Data();
+       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
+
+
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
+       readMany(C, 3, RPI, Obj, null, start, size);
+     }
+
+
+
 
    public static SelectQuery newSelectQuery(Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, true); }
    public static SelectQuery newWhereQuery (Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, false); }
@@ -633,5 +664,130 @@ object. The generic init method defaults to this general data structure as a gen
    public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
    public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
 
+
+   public static String getCSVHeader()
+    {
+      return "\"refnum\",\"jobRefnum\",\"jobPartRefnum\",\"notify\",\"msg\",\"created\",\"lastUpdated\",\"deleted\"";
+    }
+
+   public static void toCSV(java.io.Writer out, List<tilda.data.JobPartMessage_Data> L, boolean includeHeader) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      if (includeHeader == true)
+        out.write(getCSVHeader() + "\n");
+      for (tilda.data.JobPartMessage_Data O : L)
+       if (O!=null)
+        {
+          toCSV(out, O);
+          out.write("\n");
+        }
+      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);
+    }
+
+   public static void toCSV(java.io.Writer out, tilda.data.JobPartMessage_Data obj) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      StringBuilder Str = new StringBuilder();
+
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getRefnum());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getJobRefnum());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getJobPartRefnum());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getNotify());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getMsg());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getCreated()));
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getLastUpdated()));
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getDeleted()));
+      out.write(Str.toString());
+      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);
+    }
+   public static void toJSON(java.io.Writer out, List<tilda.data.JobPartMessage_Data> L, String lead, boolean fullList) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      if (fullList == true)
+        {
+          if (L == null)
+           {
+             out.write("null\n");
+             return;
+           }
+          if (L.isEmpty() == true)
+           {
+             out.write("[]\n");
+             return;
+           }
+          out.write("[\n");
+        }
+      boolean First = true;
+      for (tilda.data.JobPartMessage_Data O : L)
+       if (O!=null)
+        {
+          out.write(lead);
+          toJSON(out, O, First == true ? "   " : "  ,", true);
+          if (First == true)
+           First = false;
+        }
+      if (fullList == true)
+       { 
+          out.write(lead);
+          out.write("]\n");
+       } 
+      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
+    }
+
+   public static void toJSON(java.io.Writer out, tilda.data.JobPartMessage_Data obj, boolean fullObject) throws java.io.IOException
+    {
+      toJSON(out, obj, "", fullObject, false);
+    }
+
+   public static void toJSON(java.io.Writer out, tilda.data.JobPartMessage_Data obj, String lead, boolean fullObject) throws java.io.IOException
+    {
+      toJSON(out, obj, lead, fullObject, false);
+    }
+
+   public static void toJSON(java.io.Writer outWriter, tilda.data.JobPartMessage_Data obj, String lead, boolean fullObject, boolean noNullArrays) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter();
+      tilda.data._Tilda.TILDA__JOBPARTMESSAGE Obj = (tilda.data._Tilda.TILDA__JOBPARTMESSAGE) obj;
+      if (fullObject == true)
+       {
+          out.write(lead);
+          out.write("{");
+       }
+
+      int i = -1;
+        JSONUtil.print(out, "refnum", ++i==0, Obj.getRefnum());
+
+        JSONUtil.print(out, "jobRefnum", ++i==0, Obj.getJobRefnum());
+
+      if (Obj.isJobPartRefnumNull() == false)
+        JSONUtil.print(out, "jobPartRefnum", ++i==0, Obj.getJobPartRefnum());
+
+        JSONUtil.print(out, "notify", ++i==0, Obj.getNotify());
+
+        JSONUtil.print(out, "msg", ++i==0, Obj.getMsg());
+
+        JSONUtil.print(out, "created", ++i==0, Obj.getCreated());
+
+        JSONUtil.print(out, "lastUpdated", ++i==0, Obj.getLastUpdated());
+
+      if (Obj.isDeletedNull() == false && Obj.getDeleted() != null)
+        JSONUtil.print(out, "deleted", ++i==0, Obj.getDeleted());
+
+      if (fullObject == true)
+       out.write(" }\n");
+
+      outWriter.append(out.getBuilder().toString());
+      out.close();
+
+      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
+    }
 
  }

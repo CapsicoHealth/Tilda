@@ -268,6 +268,16 @@ This is the column definition for:<BR>
 // THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+   static public tilda.data.FormulaResultView_Data lookupByAll() throws Exception
+     {
+       tilda.data._Tilda.TILDA__FORMULARESULTVIEW Obj = new tilda.data.FormulaResultView_Data();
+       Obj.initForLookup(0);
+
+
+       return (tilda.data.FormulaResultView_Data) Obj;
+     }
+
+
    public static SelectQuery newSelectQuery(Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, true); }
    public static SelectQuery newWhereQuery (Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, false); }
    public static ListResults<tilda.data.FormulaResultView_Data> runSelect(Connection C, SelectQuery Q, int start, int size) throws Exception
@@ -282,5 +292,116 @@ This is the column definition for:<BR>
        readMany(C, -7, RPI, null, Q, start, size);
      }
 
+
+   public static String getCSVHeader()
+    {
+      return "\"formulaRefnum\",\"value\",\"description\",\"location\",\"name\"";
+    }
+
+   public static void toCSV(java.io.Writer out, List<tilda.data.FormulaResultView_Data> L, boolean includeHeader) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      if (includeHeader == true)
+        out.write(getCSVHeader() + "\n");
+      for (tilda.data.FormulaResultView_Data O : L)
+       if (O!=null)
+        {
+          toCSV(out, O);
+          out.write("\n");
+        }
+      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);
+    }
+
+   public static void toCSV(java.io.Writer out, tilda.data.FormulaResultView_Data obj) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      StringBuilder Str = new StringBuilder();
+
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getFormulaRefnum());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getValue());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getDescription());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getLocation());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getName());
+      out.write(Str.toString());
+      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);
+    }
+   public static void toJSON(java.io.Writer out, List<tilda.data.FormulaResultView_Data> L, String lead, boolean fullList) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      if (fullList == true)
+        {
+          if (L == null)
+           {
+             out.write("null\n");
+             return;
+           }
+          if (L.isEmpty() == true)
+           {
+             out.write("[]\n");
+             return;
+           }
+          out.write("[\n");
+        }
+      boolean First = true;
+      for (tilda.data.FormulaResultView_Data O : L)
+       if (O!=null)
+        {
+          out.write(lead);
+          toJSON(out, O, First == true ? "   " : "  ,", true);
+          if (First == true)
+           First = false;
+        }
+      if (fullList == true)
+       { 
+          out.write(lead);
+          out.write("]\n");
+       } 
+      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
+    }
+
+   public static void toJSON(java.io.Writer out, tilda.data.FormulaResultView_Data obj, boolean fullObject) throws java.io.IOException
+    {
+      toJSON(out, obj, "", fullObject, false);
+    }
+
+   public static void toJSON(java.io.Writer out, tilda.data.FormulaResultView_Data obj, String lead, boolean fullObject) throws java.io.IOException
+    {
+      toJSON(out, obj, lead, fullObject, false);
+    }
+
+   public static void toJSON(java.io.Writer outWriter, tilda.data.FormulaResultView_Data obj, String lead, boolean fullObject, boolean noNullArrays) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter();
+      tilda.data._Tilda.TILDA__FORMULARESULTVIEW Obj = (tilda.data._Tilda.TILDA__FORMULARESULTVIEW) obj;
+      if (fullObject == true)
+       {
+          out.write(lead);
+          out.write("{");
+       }
+
+      int i = -1;
+        JSONUtil.print(out, "formulaRefnum", ++i==0, Obj.getFormulaRefnum());
+
+        JSONUtil.print(out, "value", ++i==0, Obj.getValue());
+
+        JSONUtil.print(out, "description", ++i==0, Obj.getDescription());
+
+        JSONUtil.print(out, "location", ++i==0, Obj.getLocation());
+
+        JSONUtil.print(out, "name", ++i==0, Obj.getName());
+
+      if (fullObject == true)
+       out.write(" }\n");
+
+      outWriter.append(out.getBuilder().toString());
+      out.close();
+
+      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
+    }
 
  }

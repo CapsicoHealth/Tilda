@@ -141,6 +141,22 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
     <TD>10&nbsp;&nbsp;</TD>
+<TD align="right"><B id='RefillPerf-timeTotalSec_DIV' class='columns'>timeTotalSec</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The time, in seconds, the analyze took.<BR>This column has defined a number of constant values:
+<BLOCKQUOTE>
+<TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #999;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#fff6fc"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>timeTotalSec_CreateDefault</B>&nbsp;&nbsp;</TD><TD>0&nbsp;&nbsp;</TD><TD>timeTotalSec_CreateDefault&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>timeTotalSec_CreateDefault</TD></TR>
+</TABLE>
+</BLOCKQUOTE>
+</TD>
+</TR>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>11&nbsp;&nbsp;</TD>
 <TD align="right"><B id='RefillPerf-insertCount_DIV' class='columns'>insertCount</B>&nbsp;&nbsp;</TD>
 <TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -149,8 +165,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The count of inserted rows.</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>11&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>12&nbsp;&nbsp;</TD>
 <TD align="right"><B id='RefillPerf-deleteCount_DIV' class='columns'>deleteCount</B>&nbsp;&nbsp;</TD>
 <TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -159,8 +175,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The count of rows deleted.</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>12&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>13&nbsp;&nbsp;</TD>
 <TD align="right"><B id='RefillPerf-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -169,8 +185,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was created. (TILDA.RefillPerf)</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>13&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>14&nbsp;&nbsp;</TD>
 <TD align="right"><B id='RefillPerf-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -179,8 +195,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was last updated. (TILDA.RefillPerf)</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>14&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>15&nbsp;&nbsp;</TD>
 <TD align="right"><B id='RefillPerf-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -194,7 +210,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
 */
 @SuppressWarnings({ "unused" })
-public abstract class TILDA__REFILLPERF implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
+public abstract class TILDA__REFILLPERF implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject, tilda.interfaces.JSONable, tilda.interfaces.CSVable
  {
    protected transient static final Logger LOG = LogManager.getLogger(TILDA__REFILLPERF.class.getName());
 
@@ -1195,6 +1211,168 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.RefillPerf.timeTotalSec -> TILDA.RefillPerf."timeTotalSec"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeTotalSec of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeTotalSec of type bigint</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in seconds, the analyze took.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
+
+<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>timeTotalSec_CreateDefault</B>&nbsp;&nbsp;</TD><TD>0&nbsp;&nbsp;</TD><TD>timeTotalSec_CreateDefault&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>timeTotalSec_CreateDefault</TD></TR>
+</TABLE>
+</TD></TR>
+
+</TABLE>
+*/
+   @SerializedName("timeTotalSec")
+   Long _timeTotalSec=null;
+/**
+These are the enumerated values for tilda.data.TILDA.RefillPerf.timeTotalSec, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
+
+<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>timeTotalSec_CreateDefault</B>&nbsp;&nbsp;</TD><TD>0&nbsp;&nbsp;</TD><TD>timeTotalSec_CreateDefault&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>timeTotalSec_CreateDefault</TD></TR>
+</TABLE>
+*/
+   public static final String[][] _timeTotalSec_Values = {
+                                               { "0", "timeTotalSec_CreateDefault", "timeTotalSec_CreateDefault", "" }
+                                  };
+   public static final long _timeTotalSecTimeTotalSec_CreateDefault = 0l;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.RefillPerf.timeTotalSec -> TILDA.RefillPerf."timeTotalSec"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeTotalSec of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeTotalSec of type bigint</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in seconds, the analyze took.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
+
+<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>timeTotalSec_CreateDefault</B>&nbsp;&nbsp;</TD><TD>0&nbsp;&nbsp;</TD><TD>timeTotalSec_CreateDefault&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>timeTotalSec_CreateDefault</TD></TR>
+</TABLE>
+</TD></TR>
+
+</TABLE>
+*/
+   public final long getTimeTotalSec()
+      { return _timeTotalSec==null?0l:_timeTotalSec; }
+
+/**
+This is the value is-a for tilda.data.TILDA.RefillPerf.timeTotalSec:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>timeTotalSec_CreateDefault</TD></TR>
+  <TR><TD align="right"><B>Value</B></TD><TD>0</TD></TR>
+  <TR><TD align="right"><B>Default</B></TD><TD>CREATE</TD></TR>
+  <TR><TD align="right"><B>Label</B></TD><TD>timeTotalSec_CreateDefault</TD></TR>
+  <TR><TD align="right"><B>Groupings</B></TD><TD></TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>timeTotalSec_CreateDefault</TD></TR>
+</TABLE>
+*/
+   public final boolean isTimeTotalSecTimeTotalSec_CreateDefault()
+      { return _timeTotalSec != null && _timeTotalSec.equals(_timeTotalSecTimeTotalSec_CreateDefault); }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.RefillPerf.timeTotalSec -> TILDA.RefillPerf."timeTotalSec"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeTotalSec of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeTotalSec of type bigint</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in seconds, the analyze took.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
+
+<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>timeTotalSec_CreateDefault</B>&nbsp;&nbsp;</TD><TD>0&nbsp;&nbsp;</TD><TD>timeTotalSec_CreateDefault&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>timeTotalSec_CreateDefault</TD></TR>
+</TABLE>
+</TD></TR>
+
+</TABLE>
+*/
+   public void setTimeTotalSec(long v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (__Init == InitMode.CREATE || _timeTotalSec == null || v != _timeTotalSec)
+        {
+          __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMETOTALSEC._Mask);
+          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMETOTALSEC._Mask);
+       _timeTotalSec = v;
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/**
+This is the value setter-as for tilda.data.TILDA.RefillPerf.timeTotalSec:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>timeTotalSec_CreateDefault</TD></TR>
+  <TR><TD align="right"><B>Value</B></TD><TD>0</TD></TR>
+  <TR><TD align="right"><B>Default</B></TD><TD>CREATE</TD></TR>
+  <TR><TD align="right"><B>Label</B></TD><TD>timeTotalSec_CreateDefault</TD></TR>
+  <TR><TD align="right"><B>Groupings</B></TD><TD></TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>timeTotalSec_CreateDefault</TD></TR>
+</TABLE>
+*/
+   public void setTimeTotalSecTimeTotalSec_CreateDefault() throws Exception
+      { setTimeTotalSec(_timeTotalSecTimeTotalSec_CreateDefault); }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.RefillPerf.timeTotalSec -> TILDA.RefillPerf."timeTotalSec"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the hasChanged for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeTotalSec of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeTotalSec of type bigint</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in seconds, the analyze took.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
+
+<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>timeTotalSec_CreateDefault</B>&nbsp;&nbsp;</TD><TD>0&nbsp;&nbsp;</TD><TD>timeTotalSec_CreateDefault&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>timeTotalSec_CreateDefault</TD></TR>
+</TABLE>
+</TD></TR>
+
+</TABLE>
+*/
+   public boolean hasChangedTimeTotalSec()
+     { return __Changes.intersects(TILDA__REFILLPERF_Factory.COLS.TIMETOTALSEC._Mask); }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.RefillPerf.insertCount -> TILDA.RefillPerf."insertCount"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
@@ -2027,6 +2205,7 @@ This is the hasChanged for:<BR>
        Dst.setTimeInsertSec (_timeInsertSec );
        Dst.setTimeDeleteSec (_timeDeleteSec );
        Dst.setTimeAnalyzeSec(_timeAnalyzeSec);
+       Dst.setTimeTotalSec  (_timeTotalSec  );
        Dst.setInsertCount   (_insertCount   );
        Dst.setDeleteCount   (_deleteCount   );
        Dst.setLastUpdated   (_lastUpdated   );
@@ -2182,6 +2361,11 @@ This is the hasChanged for:<BR>
           __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMEANALYZESEC._Mask);
           __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMEANALYZESEC._Mask);
 
+       if (_timeTotalSec == null)
+        _timeTotalSec=0l;
+          __Changes.or(TILDA__REFILLPERF_Factory.COLS.TIMETOTALSEC._Mask);
+          __Nulls.andNot(TILDA__REFILLPERF_Factory.COLS.TIMETOTALSEC._Mask);
+
        if (_insertCount == null)
         throw new Exception("Incoming value for 'tilda.data.TILDA.RefillPerf.insertCount' was null or empty. It's not nullable in the model.\n"+toString());
           __Changes.or(TILDA__REFILLPERF_Factory.COLS.INSERTCOUNT._Mask);
@@ -2226,6 +2410,7 @@ This is the hasChanged for:<BR>
           if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.TIMEINSERTSEC._Mask) == true) { TILDA__REFILLPERF_Factory.COLS.TIMEINSERTSEC.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
           if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.TIMEDELETESEC._Mask) == true) { TILDA__REFILLPERF_Factory.COLS.TIMEDELETESEC.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
           if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.TIMEANALYZESEC._Mask) == true) { TILDA__REFILLPERF_Factory.COLS.TIMEANALYZESEC.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.TIMETOTALSEC._Mask) == true) { TILDA__REFILLPERF_Factory.COLS.TIMETOTALSEC.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
           if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.INSERTCOUNT._Mask) == true) { TILDA__REFILLPERF_Factory.COLS.INSERTCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
           if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.DELETECOUNT._Mask) == true) { TILDA__REFILLPERF_Factory.COLS.DELETECOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
 
@@ -2274,6 +2459,7 @@ This is the hasChanged for:<BR>
           if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.TIMEINSERTSEC._Mask) == true) TILDA__REFILLPERF_Factory.COLS.TIMEINSERTSEC.getFullColumnVarForUpdate(C, S);
           if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.TIMEDELETESEC._Mask) == true) TILDA__REFILLPERF_Factory.COLS.TIMEDELETESEC.getFullColumnVarForUpdate(C, S);
           if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.TIMEANALYZESEC._Mask) == true) TILDA__REFILLPERF_Factory.COLS.TIMEANALYZESEC.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.TIMETOTALSEC._Mask) == true) TILDA__REFILLPERF_Factory.COLS.TIMETOTALSEC.getFullColumnVarForUpdate(C, S);
           if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.INSERTCOUNT._Mask) == true) TILDA__REFILLPERF_Factory.COLS.INSERTCOUNT.getFullColumnVarForUpdate(C, S);
           if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.DELETECOUNT._Mask) == true) TILDA__REFILLPERF_Factory.COLS.DELETECOUNT.getFullColumnVarForUpdate(C, S);
 
@@ -2364,6 +2550,10 @@ This is the hasChanged for:<BR>
        if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.TIMEANALYZESEC._Mask) == true) 
         { 
           if (__Nulls.intersects(TILDA__REFILLPERF_Factory.COLS.TIMEANALYZESEC._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT    ); else PS.setLong      (++i, _timeAnalyzeSec);
+        } 
+       if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.TIMETOTALSEC._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__REFILLPERF_Factory.COLS.TIMETOTALSEC._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT    ); else PS.setLong      (++i, _timeTotalSec);
         } 
        if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.INSERTCOUNT._Mask) == true) 
         { 
@@ -2517,6 +2707,7 @@ This is the hasChanged for:<BR>
           S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "timeInsertSec");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "timeDeleteSec");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "timeAnalyzeSec");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "timeTotalSec");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "insertCount");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "deleteCount");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "created");
@@ -2591,6 +2782,7 @@ This is the hasChanged for:<BR>
                                _timeInsertSec  =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__REFILLPERF_Factory.COLS.TIMEINSERTSEC._Mask ); _timeInsertSec = null; }
                                _timeDeleteSec  =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__REFILLPERF_Factory.COLS.TIMEDELETESEC._Mask ); _timeDeleteSec = null; }
                                _timeAnalyzeSec =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__REFILLPERF_Factory.COLS.TIMEANALYZESEC._Mask); _timeAnalyzeSec = null; }
+                               _timeTotalSec   =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__REFILLPERF_Factory.COLS.TIMETOTALSEC._Mask  ); _timeTotalSec = null; }
                                _insertCount    =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__REFILLPERF_Factory.COLS.INSERTCOUNT._Mask   ); _insertCount = null; }
                                _deleteCount    =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__REFILLPERF_Factory.COLS.DELETECOUNT._Mask   ); _deleteCount = null; }
                                _created        = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__REFILLPERF_Factory.COLS.CREATED._Mask       ); _created = null; }
@@ -2635,6 +2827,7 @@ This is the hasChanged for:<BR>
                + "; timeInsertSec: "                                                                                             +                                   getTimeInsertSec () 
                + "; timeDeleteSec: "                                                                                             +                                   getTimeDeleteSec () 
                + "; timeAnalyzeSec: "                                                                                            +                                   getTimeAnalyzeSec() 
+               + "; timeTotalSec: "                                                                                              +                                   getTimeTotalSec  () 
                + "; insertCount: "                                                                                               +                                   getInsertCount   () 
                + "; deleteCount: "                                                                                               +                                   getDeleteCount   () 
                + "; created: "                                                                                                   + DateTimeUtil.printDateTimeForJSON(getCreated       ())
@@ -2645,4 +2838,36 @@ This is the hasChanged for:<BR>
       return Str;
     }
 
+   public void toJSON(java.io.Writer out, String exportName, boolean fullObject) throws Exception
+    {
+      toJSON(out, exportName, "", fullObject, false);
+    }
+   public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject) throws Exception
+    {
+      toJSON(out, exportName, lead, fullObject, false);
+    }
+   public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject, boolean noNullArrays) throws Exception
+    {
+      switch (exportName)
+        { 
+          case "": tilda.data.RefillPerf_Factory.toJSON(out, (tilda.data.RefillPerf_Data) this, lead, fullObject, noNullArrays); break;
+          default: throw new Exception("Unknown JSON exporter '"+exportName+"' for tilda.data.RefillPerf_Factory");
+        } 
+    }
+   public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject, java.time.ZonedDateTime lastsync) throws Exception
+    {
+      throw new Exception("Unknown JSON sync exporter '"+exportName+"' for tilda.data.RefillPerf_Factory");
+    }
+   public void toCSV(java.io.Writer out, String exportName) throws Exception
+    {
+      switch (exportName)
+        { 
+          case "": tilda.data.RefillPerf_Factory.toCSV(out, (tilda.data.RefillPerf_Data) this); break;
+          default: throw new Exception("Unknown CSV exporter '"+exportName+"' for tilda.data.RefillPerf_Factory");
+        } 
+    }
+   public void toCSV(java.io.Writer out, String exportName, java.time.ZonedDateTime lastsync) throws Exception
+    {
+      throw new Exception("Unknown CSV sync exporter '"+exportName+"' for tilda.data.RefillPerf_Factory");
+    }
  }

@@ -204,6 +204,31 @@ This is the column definition for:<BR>
      public static Type_LongPrimitive          TIMEANALYZESEC= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "timeAnalyzeSec", 8/*8*/, "The time, in seconds, the analyze took.", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.RefillPerf.timeTotalSec -> TILDA.RefillPerf."timeTotalSec"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the column definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeTotalSec of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeTotalSec of type bigint</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in seconds, the analyze took.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
+
+<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>timeTotalSec_CreateDefault</B>&nbsp;&nbsp;</TD><TD>0&nbsp;&nbsp;</TD><TD>timeTotalSec_CreateDefault&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>timeTotalSec_CreateDefault</TD></TR>
+</TABLE>
+</TD></TR>
+
+</TABLE>
+*/
+     public static Type_LongPrimitive          TIMETOTALSEC  = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "timeTotalSec"  , 9/*9*/, "The time, in seconds, the analyze took.", null, null);
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.RefillPerf.insertCount -> TILDA.RefillPerf."insertCount"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
@@ -219,7 +244,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          INSERTCOUNT   = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "insertCount"   , 9/*9*/, "The count of inserted rows.", null, null);
+     public static Type_LongPrimitive          INSERTCOUNT   = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "insertCount"   , 10/*10*/, "The count of inserted rows.", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.RefillPerf.deleteCount -> TILDA.RefillPerf."deleteCount"
@@ -237,7 +262,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          DELETECOUNT   = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "deleteCount"   , 10/*10*/, "The count of rows deleted.", null, null);
+     public static Type_LongPrimitive          DELETECOUNT   = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "deleteCount"   , 11/*11*/, "The count of rows deleted.", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.RefillPerf.created -> TILDA.RefillPerf."created"
@@ -262,7 +287,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      CREATED       = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"       , 11/*11*/, "The timestamp for when the record was created. (TILDA.RefillPerf)", null, null);
+     public static Type_DatetimePrimitive      CREATED       = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"       , 12/*12*/, "The timestamp for when the record was created. (TILDA.RefillPerf)", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.RefillPerf.lastUpdated -> TILDA.RefillPerf."lastUpdated"
@@ -287,7 +312,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      LASTUPDATED   = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"   , 12/*12*/, "The timestamp for when the record was last updated. (TILDA.RefillPerf)", null, null);
+     public static Type_DatetimePrimitive      LASTUPDATED   = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"   , 13/*13*/, "The timestamp for when the record was last updated. (TILDA.RefillPerf)", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.RefillPerf.deleted -> TILDA.RefillPerf."deleted"
@@ -305,11 +330,11 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  DELETED       = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"       , 13/*13*/, "The timestamp for when the record was deleted. (TILDA.RefillPerf)", null, null);
+     public static Type_DatetimePrimitiveNull  DELETED       = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"       , 14/*14*/, "The timestamp for when the record was deleted. (TILDA.RefillPerf)", null, null);
 ;
    }
 
-   public static final ColumnDefinition[] COLUMNS = { COLS.SCHEMANAME,COLS.OBJECTNAME,COLS.STARTTIMETZ,COLS.STARTTIME,COLS.ENDTIMETZ,COLS.ENDTIME,COLS.TIMEINSERTSEC,COLS.TIMEDELETESEC,COLS.TIMEANALYZESEC,COLS.INSERTCOUNT,COLS.DELETECOUNT,COLS.CREATED,COLS.LASTUPDATED,COLS.DELETED };
+   public static final ColumnDefinition[] COLUMNS = { COLS.SCHEMANAME,COLS.OBJECTNAME,COLS.STARTTIMETZ,COLS.STARTTIME,COLS.ENDTIMETZ,COLS.ENDTIME,COLS.TIMEINSERTSEC,COLS.TIMEDELETESEC,COLS.TIMEANALYZESEC,COLS.TIMETOTALSEC,COLS.INSERTCOUNT,COLS.DELETECOUNT,COLS.CREATED,COLS.LASTUPDATED,COLS.DELETED };
 
    public static final ColumnDefinition[] COLUMNS_PRIMARY = { COLS.SCHEMANAME,COLS.OBJECTNAME,COLS.STARTTIME };
 
@@ -394,6 +419,7 @@ This is the column definition for:<BR>
           S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "timeInsertSec");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "timeDeleteSec");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "timeAnalyzeSec");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "timeTotalSec");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "insertCount");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "deleteCount");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "created");
@@ -414,7 +440,7 @@ This is the column definition for:<BR>
                 S.append(" where ("); C.getFullColumnVar(S, "TILDA", "RefillPerf", "schemaName"); S.append("=?");  S.append(" AND "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "objectName"); S.append("=?");  S.append(")");
                 S.append(" order by "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "startTime"); S.append(" DESC");
                 break;
-             case 3: // Quwey 'All'
+             case 3: // Query 'All'
                 S.append(" where (");  S.append("1=1");  S.append(")");
                 S.append(" order by "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "schemaName"); S.append(" ASC");S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "objectName"); S.append(" ASC");S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "startTime"); S.append(" ASC");
                 break;
@@ -531,6 +557,12 @@ object. The generic init method defaults to this general data structure as a gen
        Long _timeAnalyzeSec = ParseUtil.parseLong("timeAnalyzeSec", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
        if (_timeAnalyzeSec != null) Obj.setTimeAnalyzeSec(_timeAnalyzeSec);
 
+       vals = Values.get("timeTotalSec");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("timeTotalSec", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Long _timeTotalSec = ParseUtil.parseLong("timeTotalSec", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_timeTotalSec != null) Obj.setTimeTotalSec(_timeTotalSec);
+
        vals = Values.get("insertCount");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("insertCount", "Parameter is not a list or a set and yet received "+vals.length+" values"));
@@ -578,8 +610,9 @@ object. The generic init method defaults to this general data structure as a gen
        Obj.setDeleteCount   (deleteCount   );
 
        // Default Create-time setters
-       Obj.setCreatedNow       ();
-       Obj.setLastUpdatedNow   ();
+       Obj.setTimeTotalSecTimeTotalSec_CreateDefault();
+       Obj.setCreatedNow                            ();
+       Obj.setLastUpdatedNow                        ();
 
        return (tilda.data.RefillPerf_Data) Obj;
      }
@@ -817,5 +850,157 @@ object. The generic init method defaults to this general data structure as a gen
    public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
    public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
 
+
+   public static String getCSVHeader()
+    {
+      return "\"schemaName\",\"objectName\",\"startTimeTZ\",\"startTime\",\"endTimeTZ\",\"endTime\",\"timeInsertSec\",\"timeDeleteSec\",\"timeAnalyzeSec\",\"timeTotalSec\",\"insertCount\",\"deleteCount\",\"created\",\"lastUpdated\",\"deleted\"";
+    }
+
+   public static void toCSV(java.io.Writer out, List<tilda.data.RefillPerf_Data> L, boolean includeHeader) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      if (includeHeader == true)
+        out.write(getCSVHeader() + "\n");
+      for (tilda.data.RefillPerf_Data O : L)
+       if (O!=null)
+        {
+          toCSV(out, O);
+          out.write("\n");
+        }
+      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);
+    }
+
+   public static void toCSV(java.io.Writer out, tilda.data.RefillPerf_Data obj) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      StringBuilder Str = new StringBuilder();
+
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getSchemaName());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getObjectName());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getStartTimeTZ());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getStartTime()));
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getEndTimeTZ());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getEndTime()));
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getTimeInsertSec());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getTimeDeleteSec());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getTimeAnalyzeSec());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getTimeTotalSec());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getInsertCount());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getDeleteCount());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getCreated()));
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getLastUpdated()));
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getDeleted()));
+      out.write(Str.toString());
+      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);
+    }
+   public static void toJSON(java.io.Writer out, List<tilda.data.RefillPerf_Data> L, String lead, boolean fullList) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      if (fullList == true)
+        {
+          if (L == null)
+           {
+             out.write("null\n");
+             return;
+           }
+          if (L.isEmpty() == true)
+           {
+             out.write("[]\n");
+             return;
+           }
+          out.write("[\n");
+        }
+      boolean First = true;
+      for (tilda.data.RefillPerf_Data O : L)
+       if (O!=null)
+        {
+          out.write(lead);
+          toJSON(out, O, First == true ? "   " : "  ,", true);
+          if (First == true)
+           First = false;
+        }
+      if (fullList == true)
+       { 
+          out.write(lead);
+          out.write("]\n");
+       } 
+      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
+    }
+
+   public static void toJSON(java.io.Writer out, tilda.data.RefillPerf_Data obj, boolean fullObject) throws java.io.IOException
+    {
+      toJSON(out, obj, "", fullObject, false);
+    }
+
+   public static void toJSON(java.io.Writer out, tilda.data.RefillPerf_Data obj, String lead, boolean fullObject) throws java.io.IOException
+    {
+      toJSON(out, obj, lead, fullObject, false);
+    }
+
+   public static void toJSON(java.io.Writer outWriter, tilda.data.RefillPerf_Data obj, String lead, boolean fullObject, boolean noNullArrays) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter();
+      tilda.data._Tilda.TILDA__REFILLPERF Obj = (tilda.data._Tilda.TILDA__REFILLPERF) obj;
+      if (fullObject == true)
+       {
+          out.write(lead);
+          out.write("{");
+       }
+
+      int i = -1;
+        JSONUtil.print(out, "schemaName", ++i==0, Obj.getSchemaName());
+
+        JSONUtil.print(out, "objectName", ++i==0, Obj.getObjectName());
+
+        JSONUtil.print(out, "startTimeTZ", ++i==0, Obj.getStartTimeTZ());
+
+        JSONUtil.print(out, "startTime", ++i==0, Obj.getStartTime());
+
+        JSONUtil.print(out, "endTimeTZ", ++i==0, Obj.getEndTimeTZ());
+
+        JSONUtil.print(out, "endTime", ++i==0, Obj.getEndTime());
+
+        JSONUtil.print(out, "timeInsertSec", ++i==0, Obj.getTimeInsertSec());
+
+        JSONUtil.print(out, "timeDeleteSec", ++i==0, Obj.getTimeDeleteSec());
+
+        JSONUtil.print(out, "timeAnalyzeSec", ++i==0, Obj.getTimeAnalyzeSec());
+
+        JSONUtil.print(out, "timeTotalSec", ++i==0, Obj.getTimeTotalSec());
+
+        JSONUtil.print(out, "insertCount", ++i==0, Obj.getInsertCount());
+
+        JSONUtil.print(out, "deleteCount", ++i==0, Obj.getDeleteCount());
+
+        JSONUtil.print(out, "created", ++i==0, Obj.getCreated());
+
+        JSONUtil.print(out, "lastUpdated", ++i==0, Obj.getLastUpdated());
+
+      if (Obj.isDeletedNull() == false && Obj.getDeleted() != null)
+        JSONUtil.print(out, "deleted", ++i==0, Obj.getDeleted());
+
+      if (fullObject == true)
+       out.write(" }\n");
+
+      outWriter.append(out.getBuilder().toString());
+      out.close();
+
+      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
+    }
 
  }

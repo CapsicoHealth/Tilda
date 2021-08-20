@@ -8,6 +8,7 @@
    ,{ "name":"timeInsertSec", "type":"INT64", "mode":"REQUIRED", "description":"The time, in seconds, the inserts took." }
    ,{ "name":"timeDeleteSec", "type":"INT64", "mode":"REQUIRED", "description":"The time, in seconds, the deletes took." }
    ,{ "name":"timeAnalyzeSec", "type":"INT64", "mode":"REQUIRED", "description":"The time, in seconds, the analyze took." }
+   ,{ "name":"timeTotalSec", "type":"INT64", "mode":"REQUIRED", "description":"The time, in seconds, the analyze took." }
    ,{ "name":"insertCount", "type":"INT64", "mode":"REQUIRED", "description":"The count of inserted rows." }
    ,{ "name":"deleteCount", "type":"INT64", "mode":"REQUIRED", "description":"The count of rows deleted." }
    ,{ "name":"created", "type":"TIMESTAMP", "mode":"REQUIRED", "description":"The timestamp for when the record was created. (TILDA.RefillPerf)" }

@@ -112,7 +112,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
 */
 @SuppressWarnings({ "unused" })
-public abstract class TILDA__FORMULARESULT implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
+public abstract class TILDA__FORMULARESULT implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject, tilda.interfaces.JSONable, tilda.interfaces.CSVable
  {
    protected transient static final Logger LOG = LogManager.getLogger(TILDA__FORMULARESULT.class.getName());
 
@@ -1527,4 +1527,36 @@ This is the hasChanged for:<BR>
       return Str;
     }
 
+   public void toJSON(java.io.Writer out, String exportName, boolean fullObject) throws Exception
+    {
+      toJSON(out, exportName, "", fullObject, false);
+    }
+   public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject) throws Exception
+    {
+      toJSON(out, exportName, lead, fullObject, false);
+    }
+   public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject, boolean noNullArrays) throws Exception
+    {
+      switch (exportName)
+        { 
+          case "": tilda.data.FormulaResult_Factory.toJSON(out, (tilda.data.FormulaResult_Data) this, lead, fullObject, noNullArrays); break;
+          default: throw new Exception("Unknown JSON exporter '"+exportName+"' for tilda.data.FormulaResult_Factory");
+        } 
+    }
+   public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject, java.time.ZonedDateTime lastsync) throws Exception
+    {
+      throw new Exception("Unknown JSON sync exporter '"+exportName+"' for tilda.data.FormulaResult_Factory");
+    }
+   public void toCSV(java.io.Writer out, String exportName) throws Exception
+    {
+      switch (exportName)
+        { 
+          case "": tilda.data.FormulaResult_Factory.toCSV(out, (tilda.data.FormulaResult_Data) this); break;
+          default: throw new Exception("Unknown CSV exporter '"+exportName+"' for tilda.data.FormulaResult_Factory");
+        } 
+    }
+   public void toCSV(java.io.Writer out, String exportName, java.time.ZonedDateTime lastsync) throws Exception
+    {
+      throw new Exception("Unknown CSV sync exporter '"+exportName+"' for tilda.data.FormulaResult_Factory");
+    }
  }

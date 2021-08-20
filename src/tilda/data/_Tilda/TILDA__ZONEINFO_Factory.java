@@ -632,4 +632,130 @@ object. The generic init method defaults to this general data structure as a gen
        return Value == null ? null : __ENUMERATIONS_BY_VALUE.get(Value);
      }
 
+   public static String getCSVHeader()
+    {
+      return "\"id\",\"value\",\"label\",\"deactivatedTZ\",\"deactivated\",\"created\",\"lastUpdated\",\"deleted\"";
+    }
+
+   public static void toCSV(java.io.Writer out, List<tilda.data.ZoneInfo_Data> L, boolean includeHeader) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      if (includeHeader == true)
+        out.write(getCSVHeader() + "\n");
+      for (tilda.data.ZoneInfo_Data O : L)
+       if (O!=null)
+        {
+          toCSV(out, O);
+          out.write("\n");
+        }
+      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);
+    }
+
+   public static void toCSV(java.io.Writer out, tilda.data.ZoneInfo_Data obj) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      StringBuilder Str = new StringBuilder();
+
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getId());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getValue());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getLabel());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getDeactivatedTZ());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getDeactivated()));
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getCreated()));
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getLastUpdated()));
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getDeleted()));
+      out.write(Str.toString());
+      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);
+    }
+   public static void toJSON(java.io.Writer out, List<tilda.data.ZoneInfo_Data> L, String lead, boolean fullList) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      if (fullList == true)
+        {
+          if (L == null)
+           {
+             out.write("null\n");
+             return;
+           }
+          if (L.isEmpty() == true)
+           {
+             out.write("[]\n");
+             return;
+           }
+          out.write("[\n");
+        }
+      boolean First = true;
+      for (tilda.data.ZoneInfo_Data O : L)
+       if (O!=null)
+        {
+          out.write(lead);
+          toJSON(out, O, First == true ? "   " : "  ,", true);
+          if (First == true)
+           First = false;
+        }
+      if (fullList == true)
+       { 
+          out.write(lead);
+          out.write("]\n");
+       } 
+      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
+    }
+
+   public static void toJSON(java.io.Writer out, tilda.data.ZoneInfo_Data obj, boolean fullObject) throws java.io.IOException
+    {
+      toJSON(out, obj, "", fullObject, false);
+    }
+
+   public static void toJSON(java.io.Writer out, tilda.data.ZoneInfo_Data obj, String lead, boolean fullObject) throws java.io.IOException
+    {
+      toJSON(out, obj, lead, fullObject, false);
+    }
+
+   public static void toJSON(java.io.Writer outWriter, tilda.data.ZoneInfo_Data obj, String lead, boolean fullObject, boolean noNullArrays) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter();
+      tilda.data._Tilda.TILDA__ZONEINFO Obj = (tilda.data._Tilda.TILDA__ZONEINFO) obj;
+      if (fullObject == true)
+       {
+          out.write(lead);
+          out.write("{");
+       }
+
+      int i = -1;
+        JSONUtil.print(out, "id", ++i==0, Obj.getId());
+
+        JSONUtil.print(out, "value", ++i==0, Obj.getValue());
+
+        JSONUtil.print(out, "label", ++i==0, Obj.getLabel());
+
+      if (Obj.isDeactivatedTZNull() == false && Obj.getDeactivatedTZ() != null)
+        JSONUtil.print(out, "deactivatedTZ", ++i==0, Obj.getDeactivatedTZ());
+
+      if (Obj.isDeactivatedNull() == false && Obj.getDeactivated() != null)
+        JSONUtil.print(out, "deactivated", ++i==0, Obj.getDeactivated());
+
+        JSONUtil.print(out, "created", ++i==0, Obj.getCreated());
+
+        JSONUtil.print(out, "lastUpdated", ++i==0, Obj.getLastUpdated());
+
+      if (Obj.isDeletedNull() == false && Obj.getDeleted() != null)
+        JSONUtil.print(out, "deleted", ++i==0, Obj.getDeleted());
+
+      if (fullObject == true)
+       out.write(" }\n");
+
+      outWriter.append(out.getBuilder().toString());
+      out.close();
+
+      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
+    }
+
  }
