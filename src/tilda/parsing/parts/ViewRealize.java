@@ -46,7 +46,7 @@ public class ViewRealize
     @SerializedName("foreign"       ) public List<ForeignKey>    _ForeignKeys= new ArrayList<ForeignKey>();
     @SerializedName("indices"       ) public List<Index>         _Indices    = new ArrayList<Index>();
     @SerializedName("indexTemplates") public List<IndexTemplate> _IndexTemplates = new ArrayList<IndexTemplate>();
-    @SerializedName("upsert"        ) public ViewRealizeUpsert   _Upsert = null;
+    @SerializedName("incremental"   ) public ViewRealizeIncremental _Incremental = null;
 
     @SerializedName("subRealized" ) public String[]          _SubRealized_DEPRECATED= new String[] { };
     // It was "exclude" for view columns, so why was it ever "excludes" here? Not consistent.
@@ -129,6 +129,8 @@ public class ViewRealize
           PS.AddError("View '" + ParentView.getFullName() + "' is being realized to table '" + O._Name + "' with a name containing invalid characters (must all be alphanumeric or underscore).");
         if (ValidationHelper.isValidIdentifier(O._Name) == false)
           PS.AddError("View '" + ParentView.getFullName() + "' is being realized to table '" + O._Name + "' with a name which is not valid. " + ValidationHelper._ValidIdentifierMessage);
+        if (ValidationHelper.isReservedIdentifier(_Name) == true)
+          PS.AddError("View Column '" + ParentView.getFullName() + "' has a name '" + _Name + "' which is a reserved identifier.");
 
         O._Description = "Realized table for view " + ParentView.getShortName() + ": " + ParentRealized._O._Description;
         O.addQueries(ParentView._Queries);
@@ -207,7 +209,6 @@ public class ViewRealize
         O.Validate(PS, targetSchema != null ? targetSchema : ParentView._ParentSchema);
 
         Set<String> Names = new HashSet<String>();
-        boolean indexOnDeleted = false;
         for (Index I : _Indices)
           if (I != null)
             {
@@ -215,24 +216,10 @@ public class ViewRealize
               // continue;
               if (Names.add(I._Name) == false)
                 PS.AddError("Index '" + I._Name + "' is duplicated in the realize section for view '" + ParentView.getFullName() + "'.");
-              if (_Upsert != null && _Upsert._DeleteTSColumnObj != null
-              && (I._ColumnObjs.size() > 0 && I._ColumnObjs.get(0)._Name.equals(_Upsert._DeleteTSColumnObj._Name) == true
-              || I._ColumnObjs.size() == 0 && I._OrderByObjs.get(0)._Col._Name.equals(_Upsert._DeleteTSColumnObj._Name) == true))
-                indexOnDeleted = true;
             }
-        if (_Upsert != null && _Upsert._DeleteTSColumnObj != null && indexOnDeleted == false)
-          {
-            Index I = new Index();
-            I._Name = "TILDA_RUOD_IDX";
-            I._OrderBy = new String[] { _Upsert._DeleteTSColumnObj._Name
-            };
-            I._SubWhere = _Upsert._DeleteTSColumnObj._Name + " is not null";
-            I.Validate(PS, ParentRealized);
-            _Indices.add(I);
-          }
 
-        if (_Upsert != null)
-          _Upsert.Validate(PS, ParentView, ParentRealized, O.getFirstIdentityColumns(false));
+        if (_Incremental != null)
+          _Incremental.Validate(PS, ParentView, ParentRealized, O.getFirstIdentityColumns(false));
 
         // if (O._Name.equals("Testing2Realized") == true)
         // LOG.debug("yyyyy");

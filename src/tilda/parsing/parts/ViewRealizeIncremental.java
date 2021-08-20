@@ -24,31 +24,30 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
-import tilda.enums.ColumnType;
 import tilda.parsing.ParserSession;
 import tilda.utils.TextUtil;
 
-public class ViewRealizeUpsert
+public class ViewRealizeIncremental
   {
-    static final Logger LOG            = LogManager.getLogger(ViewRealizeUpsert.class.getName());
+    static final Logger LOG            = LogManager.getLogger(ViewRealizeIncremental.class.getName());
 
     /*@formatter:off*/
-    @SerializedName("lastUpdatedTS") public String _LastUpdatedTS  = null;
-    @SerializedName("deletedTS")     public String _DeletedTS       = null;
+    @SerializedName("deleteFirst") public Boolean _deleteFirst  = null;
+    @SerializedName("whereClause") public String  _whereClause  = null;
     /*@formatter:on*/
 
 
-    public ViewRealizeUpsert()
+    public ViewRealizeIncremental()
       {
       }
 
     public transient View             _ParentView;
     public transient Base             _ParentRealized;
-    public transient ViewColumn       _LastUpdatedTSColumnObj;
-    public transient ViewColumn       _DeleteTSColumnObj;
+//    public transient ViewColumn       _LastUpdatedTSColumnObj;
+//    public transient ViewColumn       _DeleteTSColumnObj;
     public transient List<ViewColumn> _IdentityViewColumns;
     public transient boolean          _FailedValidation = false;
-
+    public transient SubWhereClause   _SubQuery;
 
     public boolean Validate(ParserSession PS, View ParentView, Base ParentRealized, List<Column> FirstIdentity)
       {
@@ -57,29 +56,12 @@ public class ViewRealizeUpsert
         _ParentRealized = ParentRealized;
 
         // Gotta define an upsert timestamp
-        if (TextUtil.isNullOrEmpty(_LastUpdatedTS) == true)
-          PS.AddError("View '" + _ParentView.getFullName() + "' is defining an upserted realization with no 'upsertTS' value.");
-
-        // Upsert timestamp must be a valid column and a date or timestamp
-        _LastUpdatedTSColumnObj = _ParentView.getViewColumn(_LastUpdatedTS);
-        if (_LastUpdatedTSColumnObj == null)
-          PS.AddError("View '" + _ParentView.getFullName() + "' is defining an upserted realization with an upsert timestamp column '" + _LastUpdatedTS + "' which cannot be found.");
-        else if (_LastUpdatedTSColumnObj._SameAsObj.getType() != ColumnType.DATE && _LastUpdatedTSColumnObj._SameAsObj.getType() != ColumnType.DATETIME)
-          PS.AddError("View '" + _ParentView.getFullName() + "' is defining an upserted realization with an upsert timestamp column '" + _LastUpdatedTS + "' which is not a date or timestamp.");
-
-        // Delete timestamp must be a valid column and a date or timestamp
-        if (TextUtil.isNullOrEmpty(_DeletedTS) == false)
-          {
-            _DeleteTSColumnObj = _ParentView.getViewColumn(_DeletedTS);
-            if (_DeleteTSColumnObj == null)
-              PS.AddError("View '" + _ParentView.getFullName() + "' is defining an upserted realization with a delete timestamp column '" + _DeletedTS + "' which cannot be found.");
-            else if (_DeleteTSColumnObj._SameAsObj.getType() != ColumnType.DATE && _DeleteTSColumnObj._SameAsObj.getType() != ColumnType.DATETIME)
-              PS.AddError("View '" + _ParentView.getFullName() + "' is defining an upserted realization with an upsert timestamp column '" + _DeletedTS + "' which is not a date or timestamp.");
-          }
+        if (TextUtil.isNullOrEmpty(_whereClause) == true)
+          PS.AddError("View '" + _ParentView.getFullName() + "' is defining an incremental realization with no 'whereClause' value.");
 
         // The realized table must have an identity
         if (FirstIdentity == null || FirstIdentity.isEmpty() == true)
-          PS.AddError("View '" + _ParentView.getFullName() + "' is defining an upserted realization but the realized table did not define any identity.");
+          PS.AddError("View '" + _ParentView.getFullName() + "' is defining an incremental realization but the realized table did not define any identity.");
         else // The realized table must have an identity whose columns are all matched from the parent view
           {
             _IdentityViewColumns = new ArrayList<ViewColumn>();
@@ -92,7 +74,10 @@ public class ViewRealizeUpsert
                   _IdentityViewColumns.add(VC);
               }
           }
-
+        
+        _SubQuery = new SubWhereClause(_whereClause);
+        _SubQuery.Validate(PS, ParentView, "Realized View", false);
+        
         return Errs == PS.getErrorCount();
       }
 
