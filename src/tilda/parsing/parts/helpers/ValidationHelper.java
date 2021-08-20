@@ -81,12 +81,13 @@ public class ValidationHelper
         for (int i = 1; i < chars.length; ++i)
           if (Character.isJavaIdentifierPart(chars[i]) == false)
             return false;
+        
         return true;
       }
 
     public static boolean isReservedIdentifier(String name)
       {
-        if (name.equalsIgnoreCase("class") == true)
+        if (name != null && name.equalsIgnoreCase("class") == true)
           return true;
         
         return false;

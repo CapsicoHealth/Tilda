@@ -189,13 +189,15 @@ public class ViewColumn
           {
             _Name = _SameAsObj.getName();
           }
-
+        
         if (_Name.length() > PS._CGSql.getMaxColumnNameSize())
           PS.AddError("View Column '" + getFullName() + "' has a name that's too long: max allowed by your database is " + PS._CGSql.getMaxColumnNameSize() + " vs " + _Name.length() + " for this identifier.");
         if (_Name.equals(TextUtil.sanitizeName(_Name)) == false)
           PS.AddError("View Column '" + getFullName() + "' has a name containing invalid characters (must all be alphanumeric or underscore).");
         if (ValidationHelper.isValidIdentifier(_Name) == false)
           PS.AddError("View Column '" + getFullName() + "' has a name '" + _Name + "' which is not valid. " + ValidationHelper._ValidIdentifierMessage);
+        if (ValidationHelper.isReservedIdentifier(_Name) == true)
+          PS.AddError("View Column '" + getFullName() + "' has a name '" + _Name + "' which is a reserved identifier.");
 
 
         if (_JoinStr != null)

@@ -214,11 +214,15 @@ public class Column extends TypeDef
             PS.AddError("Column '" + getFullName() + "' didn't define a 'name'. It is mandatory.");
             return;
           }
+        
         if (N.length() > PS._CGSql.getMaxColumnNameSize())
           PS.AddError("Column '" + getFullName() + "' has a name that's too long: max allowed by your database is " + PS._CGSql.getMaxColumnNameSize() + " vs " + N.length() + " for this identifier.");
 
         if (ValidationHelper.isValidIdentifier(N) == false)
           PS.AddError("Column '" + getFullName() + "' has a name '" + N + "' which is not valid. " + ValidationHelper._ValidIdentifierMessage);
+
+        if (ValidationHelper.isReservedIdentifier(_Name) == true)
+          PS.AddError("Column '" + getFullName() + "' has a name '" + N + "' which is a reserved identifier.");
 
         if (ValidateSameAs(PS) == false)
           return;
