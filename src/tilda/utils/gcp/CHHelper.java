@@ -433,6 +433,8 @@ public class CHHelper
     throws Exception
       {
         int batchSize = reqEntities.size() / threads;
+        if (batchSize == 0)
+         batchSize = 1;
         LOG.info("PARALLEL FHIR RESOURCE LOADING: " + NumberFormatUtil.printWith000Sep(reqEntities.size()) + " resources in batches of " + batchSize + " over " + threads + " threads.");
         long ts = System.nanoTime();
         Executor exec = new Executor(threads);
