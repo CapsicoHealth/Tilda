@@ -378,6 +378,23 @@ public class FileUtil
       }
 
 
+    /**
+     * This methods provide a general "exists" helper that covers both file-system and resource-based paths.
+     * 
+     * @param Name
+     * @return true if the resource was found either on the file system or in the classpath, or false otherwise.
+     */
+    public static boolean existsFileOrResource(String Name)
+      {
+        if (new File(Name).exists() == true)
+          return true;
+
+        if (FileUtil.class.getClassLoader().getResource(Name) != null)
+          return true;
+
+        return false;
+      }
+
     public static BufferedReader getReaderFromFileOrResource(String Name)
     throws IOException
       {

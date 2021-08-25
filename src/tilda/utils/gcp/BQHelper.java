@@ -457,15 +457,13 @@ public class BQHelper
         try
           {
             Table table = bq.getTable(TableId.of(datasetName, tableName));
-            return table.exists();
+            if (table != null && table.exists() == true)
+             return true;
           }
         catch (BigQueryException e)
           {
-            LOG.error(e);
+            LOG.debug(e);
           }
-        catch (NullPointerException e) {
-          LOG.error(e);
-        }
         LOG.debug("Table '" + datasetName + "." + tableName + "' not found");
         return false;
       }
