@@ -463,6 +463,9 @@ public class BQHelper
           {
             LOG.error(e);
           }
+        catch (NullPointerException e) {
+          LOG.error(e);
+        }
         LOG.debug("Table '" + datasetName + "." + tableName + "' not found");
         return false;
       }
