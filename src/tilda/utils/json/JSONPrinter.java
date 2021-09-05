@@ -28,6 +28,7 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.db.JDBCHelper;
 import tilda.interfaces.JSONable;
+import tilda.utils.PaddingUtil;
 import tilda.utils.TextUtil;
 import tilda.utils.json.elements.ArrayElementEnd;
 import tilda.utils.json.elements.ArrayElementStart;
@@ -58,10 +59,23 @@ public class JSONPrinter
 
     public JSONPrinter()
       {
+        this(false);
+      }
+
+    protected static final String ROOT_ARRAY_MARKER = "Array:___ROOT____";
+
+    public JSONPrinter(boolean array)
+      {
+        _array = array;
+        if (array == true)
+          {
+            _NestingStack.push(ROOT_ARRAY_MARKER);
+          }
       }
 
     protected List<ElementDef> _Elements     = new ArrayList<ElementDef>();
     protected Deque<String>    _NestingStack = new ArrayDeque<String>();
+    protected final boolean    _array;
 
     public JSONPrinter addElement(String Name, JSONable Obj, String JsonExportName)
       {
@@ -219,14 +233,22 @@ public class JSONPrinter
     private void testNestingStack()
     throws Exception
       {
-        if (_NestingStack.isEmpty() == false)
-          throw new Exception("A JSON object is being printed out with unclosed elements or arrays: " + TextUtil.print(_NestingStack.iterator()));
+        // If the stack is empty we are good!
+        if (_NestingStack.isEmpty() == true)
+          return;
+
+        // If the stack only has one element and that element is the root marker and the json is actually an array, we are ok too
+        String poppedName = _NestingStack.peekFirst();
+        if (_NestingStack.size() == 1 && poppedName.equals(ROOT_ARRAY_MARKER) == true && _array == true)
+          return;
+
+        // Something is left dangling.
+        throw new Exception("A JSON object is being printed out with unclosed elements or arrays: " + TextUtil.print(_NestingStack.iterator()));
       }
 
     public void print(Writer Out)
     throws Exception
       {
-        testNestingStack();
         JSONUtil.startOK(Out, '{');
         printRaw(Out);
         JSONUtil.end(Out, '}');
@@ -235,31 +257,45 @@ public class JSONPrinter
     public void printRawObj(Writer Out)
     throws Exception
       {
-        testNestingStack();
         Out.append("{\n");
         printRaw(Out);
         Out.append("\n}");
       }
 
-    protected void printRaw(Writer Out)
+    public void printRawArray(Writer Out)
+    throws Exception
+      {
+        Out.append("[\n");
+        printRaw(Out);
+        Out.append("\n]");
+      }
+
+    public void printRaw(Writer Out)
     throws Exception
       {
         testNestingStack();
         Deque<Boolean> _FirstElementStatusStack = new ArrayDeque<Boolean>();
         _FirstElementStatusStack.push(true);
+        int level = 0;
         for (ElementDef e : _Elements)
           {
             boolean first = _FirstElementStatusStack.peek();
-            e.print(Out, first, "    ");
+            e.print(Out, first, PaddingUtil.getPad(level*2));
             if (first == true)
               {
                 _FirstElementStatusStack.pop();
                 _FirstElementStatusStack.push(false);
               }
             if (e.getNestingStatus() == NestingStatus.START)
-              _FirstElementStatusStack.push(true);
+              {
+                _FirstElementStatusStack.push(true);
+                ++level;
+              }
             else if (e.getNestingStatus() == NestingStatus.END)
-              _FirstElementStatusStack.pop();
+              {
+                _FirstElementStatusStack.pop();
+                --level;
+              }
           }
       }
 

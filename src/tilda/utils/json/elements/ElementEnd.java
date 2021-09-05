@@ -17,6 +17,7 @@ public class ElementEnd implements ElementDef
     public void print(Writer Out, boolean FirstElement, String Header)
     throws Exception
       {
+//        Out.write(Header);
         JSONUtil.startend(Out, '}');
         JSONUtil.newline(Out);
       }

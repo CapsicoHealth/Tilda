@@ -17,6 +17,7 @@ public class ArrayElementEnd implements ElementDef
     public void print(Writer Out, boolean FirstElement, String Header)
     throws Exception
       {
+        Out.write(" ");
         JSONUtil.startend(Out, '}');
         JSONUtil.newline(Out);
       }

@@ -20,7 +20,7 @@ public class ElementZonedDateTimeArray implements ElementDef
     public void print(Writer Out, boolean FirstElement, String Header)
     throws Exception
       {
-        Out.write(Header);
+//        Out.write(Header);
         JSONUtil.print(Out, _Name, FirstElement, _Val);
       }
   }

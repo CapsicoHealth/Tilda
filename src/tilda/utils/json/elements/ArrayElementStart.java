@@ -16,7 +16,7 @@ public class ArrayElementStart implements ElementDef
     throws Exception
       {
         Out.write(Header);
-        Out.write(FirstElement == false ? ", {" : "  {");
+        Out.write(FirstElement == false ? ",{" : " {");
       }
     
     @Override
