@@ -528,7 +528,8 @@ public class Column extends TypeDef
 
     public boolean isCopyToColumn()
       {
-        return _PrimaryKey == false && _Mode != ColumnMode.CALCULATED && _Invariant == false;
+        // LDH-NOTE: Why would invariants be excluded? They are write-once-read-many so they should be set to a new copy of an object.
+        return _PrimaryKey == false && _Mode != ColumnMode.CALCULATED; // && _Invariant == false; 
       }
 
     public boolean isSavedField()
