@@ -958,8 +958,22 @@ This is the hasChanged for:<BR>
 */
    public void copyTo(tilda.data._Tilda.TILDA__MEASUREFORMULA Dst) throws Exception
      {
-       Dst.setLastUpdated  (_lastUpdated  );
-       if (__Nulls.intersects(TILDA__MEASUREFORMULA_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull      (); else        Dst.setDeleted      (_deleted      );
+       if (_created       != null)
+        Dst.setCreated      (_created      );
+       if (_lastUpdated   != null)
+        Dst.setLastUpdated  (_lastUpdated  );
+       if (__Nulls.intersects(TILDA__MEASUREFORMULA_Factory.COLS.DELETED._Mask) == true || _deleted      ==null)
+        Dst.setDeletedNull      ();
+       else
+        Dst.setDeleted      (_deleted      );
+     }
+
+
+   public tilda.data.MeasureFormula_Data copy() throws Exception
+     {
+       tilda.data.MeasureFormula_Data dst = new tilda.data.MeasureFormula_Data();
+       copyTo(dst);
+       return dst;
      }
 
 /**

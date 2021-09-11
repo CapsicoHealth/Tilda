@@ -420,9 +420,20 @@ This is the hasChanged for:<BR>
 */
    public void copyTo(tilda.data._Tilda.TILDA__DATELIMITDIM Dst) throws Exception
      {
-       Dst.setInvalidDate(_invalidDate);
-       Dst.setMinDate    (_minDate    );
-       Dst.setMaxDate    (_maxDate    );
+       if (_invalidDate != null)
+        Dst.setInvalidDate(_invalidDate);
+       if (_minDate     != null)
+        Dst.setMinDate    (_minDate    );
+       if (_maxDate     != null)
+        Dst.setMaxDate    (_maxDate    );
+     }
+
+
+   public tilda.data.DateLimitDim_Data copy() throws Exception
+     {
+       tilda.data.DateLimitDim_Data dst = new tilda.data.DateLimitDim_Data();
+       copyTo(dst);
+       return dst;
      }
 
 /**

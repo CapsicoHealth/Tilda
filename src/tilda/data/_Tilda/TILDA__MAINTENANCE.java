@@ -1132,9 +1132,26 @@ This is the hasChanged for:<BR>
 */
    public void copyTo(tilda.data._Tilda.TILDA__MAINTENANCE Dst) throws Exception
      {
-       if (__Nulls.intersects(TILDA__MAINTENANCE_Factory.COLS.VALUE._Mask) == true) Dst.setValueNull      (); else        Dst.setValue      (_value      );
-       Dst.setLastUpdated(_lastUpdated);
-       if (__Nulls.intersects(TILDA__MAINTENANCE_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull    (); else        Dst.setDeleted    (_deleted    );
+       if (__Nulls.intersects(TILDA__MAINTENANCE_Factory.COLS.VALUE._Mask) == true || _value      ==null)
+        Dst.setValueNull      ();
+       else
+        Dst.setValue      (_value      );
+       if (_created     != null)
+        Dst.setCreated    (_created    );
+       if (_lastUpdated != null)
+        Dst.setLastUpdated(_lastUpdated);
+       if (__Nulls.intersects(TILDA__MAINTENANCE_Factory.COLS.DELETED._Mask) == true || _deleted    ==null)
+        Dst.setDeletedNull    ();
+       else
+        Dst.setDeleted    (_deleted    );
+     }
+
+
+   public tilda.data.Maintenance_Data copy() throws Exception
+     {
+       tilda.data.Maintenance_Data dst = new tilda.data.Maintenance_Data();
+       copyTo(dst);
+       return dst;
      }
 
 /**

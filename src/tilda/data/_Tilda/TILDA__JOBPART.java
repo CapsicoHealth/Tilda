@@ -3013,21 +3013,70 @@ This is the hasChanged for:<BR>
 */
    public void copyTo(tilda.data._Tilda.TILDA__JOBPART Dst) throws Exception
      {
-       Dst.setJobRefnum   (_jobRefnum   );
-       Dst.setName        (_name        );
-       if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.TYPE._Mask) == true) Dst.setTypeNull        (); else        Dst.setType        (_type        );
-       if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.DATASTARTTZ._Mask) == true) Dst.setDataStartTZNull (); else        Dst.setDataStartTZ (_dataStartTZ );
-       if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.DATASTART._Mask) == true) Dst.setDataStartNull   (); else        Dst.setDataStart   (_dataStart   );
-       if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.DATAENDTZ._Mask) == true) Dst.setDataEndTZNull   (); else        Dst.setDataEndTZ   (_dataEndTZ   );
-       if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.DATAEND._Mask) == true) Dst.setDataEndNull     (); else        Dst.setDataEnd     (_dataEnd     );
-       Dst.setStartTZ     (_startTZ     );
-       Dst.setStart       (_start       );
-       if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.ENDTZ._Mask) == true) Dst.setEndTZNull       (); else        Dst.setEndTZ       (_endTZ       );
-       if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.END._Mask) == true) Dst.setEndNull         (); else        Dst.setEnd         (_end         );
-       if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.RECORDSCOUNT._Mask) == true) Dst.setRecordsCountNull(); else        Dst.setRecordsCount(_recordsCount);
-       if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.STATUS._Mask) == true) Dst.setStatusNull      (); else        Dst.setStatus      (_status      );
-       Dst.setLastUpdated (_lastUpdated );
-       if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull     (); else        Dst.setDeleted     (_deleted     );
+       if (_jobRefnum    != null)
+        Dst.setJobRefnum   (_jobRefnum   );
+       if (_name         != null)
+        Dst.setName        (_name        );
+       if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.TYPE._Mask) == true || _type        ==null)
+        Dst.setTypeNull        ();
+       else
+        Dst.setType        (_type        );
+       if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.DATASTARTTZ._Mask) == true || _dataStartTZ ==null)
+        Dst.setDataStartTZNull ();
+       else
+        Dst.setDataStartTZ (_dataStartTZ );
+       if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.DATASTART._Mask) == true || _dataStart   ==null)
+        Dst.setDataStartNull   ();
+       else
+        Dst.setDataStart   (_dataStart   );
+       Dst.Str_dataStart = Str_dataStart;
+       if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.DATAENDTZ._Mask) == true || _dataEndTZ   ==null)
+        Dst.setDataEndTZNull   ();
+       else
+        Dst.setDataEndTZ   (_dataEndTZ   );
+       if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.DATAEND._Mask) == true || _dataEnd     ==null)
+        Dst.setDataEndNull     ();
+       else
+        Dst.setDataEnd     (_dataEnd     );
+       Dst.Str_dataEnd = Str_dataEnd;
+       if (_startTZ      != null)
+        Dst.setStartTZ     (_startTZ     );
+       if (_start        != null)
+        Dst.setStart       (_start       );
+       Dst.Str_start = Str_start;
+       if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.ENDTZ._Mask) == true || _endTZ       ==null)
+        Dst.setEndTZNull       ();
+       else
+        Dst.setEndTZ       (_endTZ       );
+       if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.END._Mask) == true || _end         ==null)
+        Dst.setEndNull         ();
+       else
+        Dst.setEnd         (_end         );
+       Dst.Str_end = Str_end;
+       if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.RECORDSCOUNT._Mask) == true || _recordsCount==null)
+        Dst.setRecordsCountNull();
+       else
+        Dst.setRecordsCount(_recordsCount);
+       if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.STATUS._Mask) == true || _status      ==null)
+        Dst.setStatusNull      ();
+       else
+        Dst.setStatus      (_status      );
+       if (_created      != null)
+        Dst.setCreated     (_created     );
+       if (_lastUpdated  != null)
+        Dst.setLastUpdated (_lastUpdated );
+       if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.DELETED._Mask) == true || _deleted     ==null)
+        Dst.setDeletedNull     ();
+       else
+        Dst.setDeleted     (_deleted     );
+     }
+
+
+   public tilda.data.JobPart_Data copy() throws Exception
+     {
+       tilda.data.JobPart_Data dst = new tilda.data.JobPart_Data();
+       copyTo(dst);
+       return dst;
      }
 
 /**

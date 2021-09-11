@@ -1073,10 +1073,26 @@ This is the hasChanged for:<BR>
 */
    public void copyTo(tilda.data._Tilda.TILDA__MEASURE Dst) throws Exception
      {
-       Dst.setSchema     (_schema     );
-       Dst.setName       (_name       );
-       Dst.setLastUpdated(_lastUpdated);
-       if (__Nulls.intersects(TILDA__MEASURE_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull    (); else        Dst.setDeleted    (_deleted    );
+       if (_schema      != null)
+        Dst.setSchema     (_schema     );
+       if (_name        != null)
+        Dst.setName       (_name       );
+       if (_created     != null)
+        Dst.setCreated    (_created    );
+       if (_lastUpdated != null)
+        Dst.setLastUpdated(_lastUpdated);
+       if (__Nulls.intersects(TILDA__MEASURE_Factory.COLS.DELETED._Mask) == true || _deleted    ==null)
+        Dst.setDeletedNull    ();
+       else
+        Dst.setDeleted    (_deleted    );
+     }
+
+
+   public tilda.data.Measure_Data copy() throws Exception
+     {
+       tilda.data.Measure_Data dst = new tilda.data.Measure_Data();
+       copyTo(dst);
+       return dst;
      }
 
 /**

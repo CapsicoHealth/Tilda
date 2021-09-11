@@ -4275,30 +4275,108 @@ This is the hasChanged for:<BR>
 */
    public void copyTo(tilda.data._Tilda.TILDA__DATEDIM Dst) throws Exception
      {
-       Dst.setEpoch         (_epoch         );
-       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYNAME._Mask) == true) Dst.setDayNameNull       (); else        Dst.setDayName       (_dayName       );
-       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFWEEK._Mask) == true) Dst.setDayOfWeekNull     (); else        Dst.setDayOfWeek     (_dayOfWeek     );
-       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFMONTH._Mask) == true) Dst.setDayOfMonthNull    (); else        Dst.setDayOfMonth    (_dayOfMonth    );
-       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFQUARTER._Mask) == true) Dst.setDayOfQuarterNull  (); else        Dst.setDayOfQuarter  (_dayOfQuarter  );
-       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFYEAR._Mask) == true) Dst.setDayOfYearNull     (); else        Dst.setDayOfYear     (_dayOfYear     );
-       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.WEEKOFMONTH._Mask) == true) Dst.setWeekOfMonthNull   (); else        Dst.setWeekOfMonth   (_weekOfMonth   );
-       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.WEEKOFYEAR._Mask) == true) Dst.setWeekOfYearNull    (); else        Dst.setWeekOfYear    (_weekOfYear    );
-       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTH._Mask) == true) Dst.setMonthNull         (); else        Dst.setMonth         (_month         );
-       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTHOFYEAR._Mask) == true) Dst.setMonthOfYearNull   (); else        Dst.setMonthOfYear   (_monthOfYear   );
-       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTHNAME._Mask) == true) Dst.setMonthNameNull     (); else        Dst.setMonthName     (_monthName     );
-       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTHNAMESHORT._Mask) == true) Dst.setMonthNameShortNull(); else        Dst.setMonthNameShort(_monthNameShort);
-       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.QUARTEROFYEAR._Mask) == true) Dst.setQuarterOfYearNull (); else        Dst.setQuarterOfYear (_quarterOfYear );
-       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.QUARTERNAME._Mask) == true) Dst.setQuarterNameNull   (); else        Dst.setQuarterName   (_quarterName   );
-       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.YEAR._Mask) == true) Dst.setYearNull          (); else        Dst.setYear          (_year          );
-       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MMYYYY._Mask) == true) Dst.setMmyyyyNull        (); else        Dst.setMmyyyy        (_mmyyyy        );
-       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MMDDYYYY._Mask) == true) Dst.setMmddyyyyNull      (); else        Dst.setMmddyyyy      (_mmddyyyy      );
-       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.YYYYMMDD._Mask) == true) Dst.setYyyymmddNull      (); else        Dst.setYyyymmdd      (_yyyymmdd      );
-       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.ISWEEKEND._Mask) == true) Dst.setIsWeekendNull     (); else        Dst.setIsWeekend     (_isWeekend     );
-       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.ISBUSINESSDAY._Mask) == true) Dst.setIsBusinessDayNull (); else        Dst.setIsBusinessDay (_isBusinessDay );
-       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.ISHOLIDAY._Mask) == true) Dst.setIsHolidayNull     (); else        Dst.setIsHoliday     (_isHoliday     );
-       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.HOLIDAYNAME._Mask) == true) Dst.setHolidayNameNull   (); else        Dst.setHolidayName   (_holidayName   );
-       Dst.setLastUpdated   (_lastUpdated   );
-       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull       (); else        Dst.setDeleted       (_deleted       );
+       if (_epoch          != null)
+        Dst.setEpoch         (_epoch         );
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYNAME._Mask) == true || _dayName       ==null)
+        Dst.setDayNameNull       ();
+       else
+        Dst.setDayName       (_dayName       );
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFWEEK._Mask) == true || _dayOfWeek     ==null)
+        Dst.setDayOfWeekNull     ();
+       else
+        Dst.setDayOfWeek     (_dayOfWeek     );
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFMONTH._Mask) == true || _dayOfMonth    ==null)
+        Dst.setDayOfMonthNull    ();
+       else
+        Dst.setDayOfMonth    (_dayOfMonth    );
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFQUARTER._Mask) == true || _dayOfQuarter  ==null)
+        Dst.setDayOfQuarterNull  ();
+       else
+        Dst.setDayOfQuarter  (_dayOfQuarter  );
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFYEAR._Mask) == true || _dayOfYear     ==null)
+        Dst.setDayOfYearNull     ();
+       else
+        Dst.setDayOfYear     (_dayOfYear     );
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.WEEKOFMONTH._Mask) == true || _weekOfMonth   ==null)
+        Dst.setWeekOfMonthNull   ();
+       else
+        Dst.setWeekOfMonth   (_weekOfMonth   );
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.WEEKOFYEAR._Mask) == true || _weekOfYear    ==null)
+        Dst.setWeekOfYearNull    ();
+       else
+        Dst.setWeekOfYear    (_weekOfYear    );
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTH._Mask) == true || _month         ==null)
+        Dst.setMonthNull         ();
+       else
+        Dst.setMonth         (_month         );
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTHOFYEAR._Mask) == true || _monthOfYear   ==null)
+        Dst.setMonthOfYearNull   ();
+       else
+        Dst.setMonthOfYear   (_monthOfYear   );
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTHNAME._Mask) == true || _monthName     ==null)
+        Dst.setMonthNameNull     ();
+       else
+        Dst.setMonthName     (_monthName     );
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTHNAMESHORT._Mask) == true || _monthNameShort==null)
+        Dst.setMonthNameShortNull();
+       else
+        Dst.setMonthNameShort(_monthNameShort);
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.QUARTEROFYEAR._Mask) == true || _quarterOfYear ==null)
+        Dst.setQuarterOfYearNull ();
+       else
+        Dst.setQuarterOfYear (_quarterOfYear );
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.QUARTERNAME._Mask) == true || _quarterName   ==null)
+        Dst.setQuarterNameNull   ();
+       else
+        Dst.setQuarterName   (_quarterName   );
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.YEAR._Mask) == true || _year          ==null)
+        Dst.setYearNull          ();
+       else
+        Dst.setYear          (_year          );
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MMYYYY._Mask) == true || _mmyyyy        ==null)
+        Dst.setMmyyyyNull        ();
+       else
+        Dst.setMmyyyy        (_mmyyyy        );
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MMDDYYYY._Mask) == true || _mmddyyyy      ==null)
+        Dst.setMmddyyyyNull      ();
+       else
+        Dst.setMmddyyyy      (_mmddyyyy      );
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.YYYYMMDD._Mask) == true || _yyyymmdd      ==null)
+        Dst.setYyyymmddNull      ();
+       else
+        Dst.setYyyymmdd      (_yyyymmdd      );
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.ISWEEKEND._Mask) == true || _isWeekend     ==null)
+        Dst.setIsWeekendNull     ();
+       else
+        Dst.setIsWeekend     (_isWeekend     );
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.ISBUSINESSDAY._Mask) == true || _isBusinessDay ==null)
+        Dst.setIsBusinessDayNull ();
+       else
+        Dst.setIsBusinessDay (_isBusinessDay );
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.ISHOLIDAY._Mask) == true || _isHoliday     ==null)
+        Dst.setIsHolidayNull     ();
+       else
+        Dst.setIsHoliday     (_isHoliday     );
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.HOLIDAYNAME._Mask) == true || _holidayName   ==null)
+        Dst.setHolidayNameNull   ();
+       else
+        Dst.setHolidayName   (_holidayName   );
+       if (_created        != null)
+        Dst.setCreated       (_created       );
+       if (_lastUpdated    != null)
+        Dst.setLastUpdated   (_lastUpdated   );
+       if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DELETED._Mask) == true || _deleted       ==null)
+        Dst.setDeletedNull       ();
+       else
+        Dst.setDeleted       (_deleted       );
+     }
+
+
+   public tilda.data.DateDim_Data copy() throws Exception
+     {
+       tilda.data.DateDim_Data dst = new tilda.data.DateDim_Data();
+       copyTo(dst);
+       return dst;
      }
 
 /**

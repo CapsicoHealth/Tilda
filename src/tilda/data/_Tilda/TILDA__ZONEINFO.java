@@ -1490,12 +1490,35 @@ This is the hasChanged for:<BR>
 */
    public void copyTo(tilda.data._Tilda.TILDA__ZONEINFO Dst) throws Exception
      {
-       Dst.setValue        (_value        );
-       Dst.setLabel        (_label        );
-       if (__Nulls.intersects(TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask) == true) Dst.setDeactivatedTZNull(); else        Dst.setDeactivatedTZ(_deactivatedTZ);
-       if (__Nulls.intersects(TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask) == true) Dst.setDeactivatedNull  (); else        Dst.setDeactivated  (_deactivated  );
-       Dst.setLastUpdated  (_lastUpdated  );
-       if (__Nulls.intersects(TILDA__ZONEINFO_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull      (); else        Dst.setDeleted      (_deleted      );
+       if (_value         != null)
+        Dst.setValue        (_value        );
+       if (_label         != null)
+        Dst.setLabel        (_label        );
+       if (__Nulls.intersects(TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask) == true || _deactivatedTZ==null)
+        Dst.setDeactivatedTZNull();
+       else
+        Dst.setDeactivatedTZ(_deactivatedTZ);
+       if (__Nulls.intersects(TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask) == true || _deactivated  ==null)
+        Dst.setDeactivatedNull  ();
+       else
+        Dst.setDeactivated  (_deactivated  );
+       Dst.Str_deactivated = Str_deactivated;
+       if (_created       != null)
+        Dst.setCreated      (_created      );
+       if (_lastUpdated   != null)
+        Dst.setLastUpdated  (_lastUpdated  );
+       if (__Nulls.intersects(TILDA__ZONEINFO_Factory.COLS.DELETED._Mask) == true || _deleted      ==null)
+        Dst.setDeletedNull      ();
+       else
+        Dst.setDeleted      (_deleted      );
+     }
+
+
+   public tilda.data.ZoneInfo_Data copy() throws Exception
+     {
+       tilda.data.ZoneInfo_Data dst = new tilda.data.ZoneInfo_Data();
+       copyTo(dst);
+       return dst;
      }
 
 /**

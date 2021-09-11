@@ -1325,12 +1325,32 @@ This is the hasChanged for:<BR>
 */
    public void copyTo(tilda.data._Tilda.TILDA__JOBPARTMESSAGE Dst) throws Exception
      {
-       Dst.setJobRefnum    (_jobRefnum    );
-       if (__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask) == true) Dst.setJobPartRefnumNull(); else        Dst.setJobPartRefnum(_jobPartRefnum);
-       Dst.setNotify       (_notify       );
-       Dst.setMsg          (_msg          );
-       Dst.setLastUpdated  (_lastUpdated  );
-       if (__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull      (); else        Dst.setDeleted      (_deleted      );
+       if (_jobRefnum     != null)
+        Dst.setJobRefnum    (_jobRefnum    );
+       if (__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask) == true || _jobPartRefnum==null)
+        Dst.setJobPartRefnumNull();
+       else
+        Dst.setJobPartRefnum(_jobPartRefnum);
+       if (_notify        != null)
+        Dst.setNotify       (_notify       );
+       if (_msg           != null)
+        Dst.setMsg          (_msg          );
+       if (_created       != null)
+        Dst.setCreated      (_created      );
+       if (_lastUpdated   != null)
+        Dst.setLastUpdated  (_lastUpdated  );
+       if (__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED._Mask) == true || _deleted      ==null)
+        Dst.setDeletedNull      ();
+       else
+        Dst.setDeleted      (_deleted      );
+     }
+
+
+   public tilda.data.JobPartMessage_Data copy() throws Exception
+     {
+       tilda.data.JobPartMessage_Data dst = new tilda.data.JobPartMessage_Data();
+       copyTo(dst);
+       return dst;
      }
 
 /**

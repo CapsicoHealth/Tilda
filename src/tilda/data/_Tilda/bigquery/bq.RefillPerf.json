@@ -1,6 +1,7 @@
 [
     { "name":"schemaName", "type":"STRING", "mode":"REQUIRED", "description":"The name of the schema tracked" }
    ,{ "name":"objectName", "type":"STRING", "mode":"REQUIRED", "description":"The name of the table/object tracked" }
+   ,{ "name":"startDateIncr", "type":"DATE", "mode":"NULLABLE", "description":"The date passed in for incremental refills." }
    ,{ "name":"startTimeTZ", "type":"STRING", "mode":"REQUIRED", "description":"Generated helper column to hold the time zone ID for 'startTime'." }
    ,{ "name":"startTime", "type":"TIMESTAMP", "mode":"REQUIRED", "description":"The timestamp for when the refill started." }
    ,{ "name":"endTimeTZ", "type":"STRING", "mode":"REQUIRED", "description":"Generated helper column to hold the time zone ID for 'endTime'." }

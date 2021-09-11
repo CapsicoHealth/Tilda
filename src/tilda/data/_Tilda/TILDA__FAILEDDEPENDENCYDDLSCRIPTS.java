@@ -1431,14 +1431,34 @@ This is the hasChanged for:<BR>
 */
    public void copyTo(tilda.data._Tilda.TILDA__FAILEDDEPENDENCYDDLSCRIPTS Dst) throws Exception
      {
-       Dst.setSrcSchemaName(_srcSchemaName);
-       Dst.setSrcTVName    (_srcTVName    );
-       Dst.setSeq          (_seq          );
-       Dst.setDepSchemaName(_depSchemaName);
-       Dst.setDepViewName  (_depViewName  );
-       Dst.setRestoreScript(_restoreScript);
-       Dst.setLastUpdated  (_lastUpdated  );
-       if (__Nulls.intersects(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull      (); else        Dst.setDeleted      (_deleted      );
+       if (_srcSchemaName != null)
+        Dst.setSrcSchemaName(_srcSchemaName);
+       if (_srcTVName     != null)
+        Dst.setSrcTVName    (_srcTVName    );
+       if (_seq           != null)
+        Dst.setSeq          (_seq          );
+       if (_depSchemaName != null)
+        Dst.setDepSchemaName(_depSchemaName);
+       if (_depViewName   != null)
+        Dst.setDepViewName  (_depViewName  );
+       if (_restoreScript != null)
+        Dst.setRestoreScript(_restoreScript);
+       if (_created       != null)
+        Dst.setCreated      (_created      );
+       if (_lastUpdated   != null)
+        Dst.setLastUpdated  (_lastUpdated  );
+       if (__Nulls.intersects(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.DELETED._Mask) == true || _deleted      ==null)
+        Dst.setDeletedNull      ();
+       else
+        Dst.setDeleted      (_deleted      );
+     }
+
+
+   public tilda.data.FailedDependencyDDLScripts_Data copy() throws Exception
+     {
+       tilda.data.FailedDependencyDDLScripts_Data dst = new tilda.data.FailedDependencyDDLScripts_Data();
+       copyTo(dst);
+       return dst;
      }
 
 /**

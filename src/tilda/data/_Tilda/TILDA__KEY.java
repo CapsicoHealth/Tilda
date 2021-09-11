@@ -1264,10 +1264,28 @@ This is the hasChanged for:<BR>
 */
    public void copyTo(tilda.data._Tilda.TILDA__KEY Dst) throws Exception
      {
-       Dst.setMax           (_max           );
-       Dst.setCount         (_count         );
-       Dst.setLastUpdated   (_lastUpdated   );
-       if (__Nulls.intersects(TILDA__KEY_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull       (); else        Dst.setDeleted       (_deleted       );
+       if (_name           != null)
+        Dst.setName          (_name          );
+       if (_max            != null)
+        Dst.setMax           (_max           );
+       if (_count          != null)
+        Dst.setCount         (_count         );
+       if (_created        != null)
+        Dst.setCreated       (_created       );
+       if (_lastUpdated    != null)
+        Dst.setLastUpdated   (_lastUpdated   );
+       if (__Nulls.intersects(TILDA__KEY_Factory.COLS.DELETED._Mask) == true || _deleted       ==null)
+        Dst.setDeletedNull       ();
+       else
+        Dst.setDeleted       (_deleted       );
+     }
+
+
+   public tilda.data.Key_Data copy() throws Exception
+     {
+       tilda.data.Key_Data dst = new tilda.data.Key_Data();
+       copyTo(dst);
+       return dst;
      }
 
 /**

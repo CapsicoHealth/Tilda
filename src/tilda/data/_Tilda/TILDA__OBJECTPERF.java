@@ -3621,22 +3621,53 @@ This is the hasChanged for:<BR>
 */
    public void copyTo(tilda.data._Tilda.TILDA__OBJECTPERF Dst) throws Exception
      {
-       Dst.setEndPeriodTZ  (_endPeriodTZ  );
-       Dst.setEndPeriod    (_endPeriod    );
-       Dst.setSelectNano   (_selectNano   );
-       Dst.setSelectCount  (_selectCount  );
-       Dst.setSelectRecords(_selectRecords);
-       Dst.setInsertNano   (_insertNano   );
-       Dst.setInsertCount  (_insertCount  );
-       Dst.setInsertRecords(_insertRecords);
-       Dst.setUpdateNano   (_updateNano   );
-       Dst.setUpdateCount  (_updateCount  );
-       Dst.setUpdateRecords(_updateRecords);
-       Dst.setDeleteNano   (_deleteNano   );
-       Dst.setDeleteCount  (_deleteCount  );
-       Dst.setDeleteRecords(_deleteRecords);
-       Dst.setLastUpdated  (_lastUpdated  );
-       if (__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull      (); else        Dst.setDeleted      (_deleted      );
+       if (_startPeriodTZ != null)
+        Dst.setStartPeriodTZ(_startPeriodTZ);
+       if (_endPeriodTZ   != null)
+        Dst.setEndPeriodTZ  (_endPeriodTZ  );
+       if (_endPeriod     != null)
+        Dst.setEndPeriod    (_endPeriod    );
+       Dst.Str_endPeriod = Str_endPeriod;
+       if (_selectNano    != null)
+        Dst.setSelectNano   (_selectNano   );
+       if (_selectCount   != null)
+        Dst.setSelectCount  (_selectCount  );
+       if (_selectRecords != null)
+        Dst.setSelectRecords(_selectRecords);
+       if (_insertNano    != null)
+        Dst.setInsertNano   (_insertNano   );
+       if (_insertCount   != null)
+        Dst.setInsertCount  (_insertCount  );
+       if (_insertRecords != null)
+        Dst.setInsertRecords(_insertRecords);
+       if (_updateNano    != null)
+        Dst.setUpdateNano   (_updateNano   );
+       if (_updateCount   != null)
+        Dst.setUpdateCount  (_updateCount  );
+       if (_updateRecords != null)
+        Dst.setUpdateRecords(_updateRecords);
+       if (_deleteNano    != null)
+        Dst.setDeleteNano   (_deleteNano   );
+       if (_deleteCount   != null)
+        Dst.setDeleteCount  (_deleteCount  );
+       if (_deleteRecords != null)
+        Dst.setDeleteRecords(_deleteRecords);
+       if (_created       != null)
+        Dst.setCreated      (_created      );
+       if (_lastUpdated   != null)
+        Dst.setLastUpdated  (_lastUpdated  );
+       if (__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask) == true || _deleted      ==null)
+        Dst.setDeletedNull      ();
+       else
+        Dst.setDeleted      (_deleted      );
+     }
+
+
+   public tilda.data.ObjectPerf_Data copy() throws Exception
+     {
+       tilda.data.ObjectPerf_Data dst = new tilda.data.ObjectPerf_Data();
+       copyTo(dst);
+       return dst;
      }
 
 /**

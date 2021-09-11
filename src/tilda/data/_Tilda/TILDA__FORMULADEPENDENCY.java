@@ -958,8 +958,22 @@ This is the hasChanged for:<BR>
 */
    public void copyTo(tilda.data._Tilda.TILDA__FORMULADEPENDENCY Dst) throws Exception
      {
-       Dst.setLastUpdated     (_lastUpdated     );
-       if (__Nulls.intersects(TILDA__FORMULADEPENDENCY_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull         (); else        Dst.setDeleted         (_deleted         );
+       if (_created          != null)
+        Dst.setCreated         (_created         );
+       if (_lastUpdated      != null)
+        Dst.setLastUpdated     (_lastUpdated     );
+       if (__Nulls.intersects(TILDA__FORMULADEPENDENCY_Factory.COLS.DELETED._Mask) == true || _deleted         ==null)
+        Dst.setDeletedNull         ();
+       else
+        Dst.setDeleted         (_deleted         );
+     }
+
+
+   public tilda.data.FormulaDependency_Data copy() throws Exception
+     {
+       tilda.data.FormulaDependency_Data dst = new tilda.data.FormulaDependency_Data();
+       copyTo(dst);
+       return dst;
      }
 
 /**

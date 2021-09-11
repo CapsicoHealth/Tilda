@@ -5547,34 +5547,77 @@ This is the hasChanged for:<BR>
 */
    public void copyTo(tilda.data._Tilda.TILDA__TRANSPERF Dst) throws Exception
      {
-       Dst.setEndPeriodTZ           (_endPeriodTZ           );
-       Dst.setEndPeriod             (_endPeriod             );
-       Dst.setCommitNano            (_commitNano            );
-       Dst.setCommitCount           (_commitCount           );
-       Dst.setRollbackNano          (_rollbackNano          );
-       Dst.setRollbackCount         (_rollbackCount         );
-       Dst.setSavepointSetNano      (_savepointSetNano      );
-       Dst.setSavepointSetCount     (_savepointSetCount     );
-       Dst.setSavepointCommitNano   (_savepointCommitNano   );
-       Dst.setSavepointCommitCount  (_savepointCommitCount  );
-       Dst.setSavepointRollbackNano (_savepointRollbackNano );
-       Dst.setSavepointRollbackCount(_savepointRollbackCount);
-       Dst.setStatementCloseNano    (_statementCloseNano    );
-       Dst.setStatementCloseCount   (_statementCloseCount   );
-       Dst.setConnectionCloseNano   (_connectionCloseNano   );
-       Dst.setConnectionCloseCount  (_connectionCloseCount  );
-       Dst.setConnectionGetNano     (_connectionGetNano     );
-       Dst.setConnectionGetCount    (_connectionGetCount    );
-       Dst.setTildaSetterNano       (_tildaSetterNano       );
-       Dst.setTildaSetterCount      (_tildaSetterCount      );
-       Dst.setTildaToStringNano     (_tildaToStringNano     );
-       Dst.setTildaToStringCount    (_tildaToStringCount    );
-       Dst.setTildaToJsonNano       (_tildaToJsonNano       );
-       Dst.setTildaToJsonCount      (_tildaToJsonCount      );
-       Dst.setTildaToCsvNano        (_tildaToCsvNano        );
-       Dst.setTildaToCsvCount       (_tildaToCsvCount       );
-       Dst.setLastUpdated           (_lastUpdated           );
-       if (__Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull               (); else        Dst.setDeleted               (_deleted               );
+       if (_startPeriodTZ          != null)
+        Dst.setStartPeriodTZ         (_startPeriodTZ         );
+       if (_endPeriodTZ            != null)
+        Dst.setEndPeriodTZ           (_endPeriodTZ           );
+       if (_endPeriod              != null)
+        Dst.setEndPeriod             (_endPeriod             );
+       Dst.Str_endPeriod = Str_endPeriod;
+       if (_commitNano             != null)
+        Dst.setCommitNano            (_commitNano            );
+       if (_commitCount            != null)
+        Dst.setCommitCount           (_commitCount           );
+       if (_rollbackNano           != null)
+        Dst.setRollbackNano          (_rollbackNano          );
+       if (_rollbackCount          != null)
+        Dst.setRollbackCount         (_rollbackCount         );
+       if (_savepointSetNano       != null)
+        Dst.setSavepointSetNano      (_savepointSetNano      );
+       if (_savepointSetCount      != null)
+        Dst.setSavepointSetCount     (_savepointSetCount     );
+       if (_savepointCommitNano    != null)
+        Dst.setSavepointCommitNano   (_savepointCommitNano   );
+       if (_savepointCommitCount   != null)
+        Dst.setSavepointCommitCount  (_savepointCommitCount  );
+       if (_savepointRollbackNano  != null)
+        Dst.setSavepointRollbackNano (_savepointRollbackNano );
+       if (_savepointRollbackCount != null)
+        Dst.setSavepointRollbackCount(_savepointRollbackCount);
+       if (_statementCloseNano     != null)
+        Dst.setStatementCloseNano    (_statementCloseNano    );
+       if (_statementCloseCount    != null)
+        Dst.setStatementCloseCount   (_statementCloseCount   );
+       if (_connectionCloseNano    != null)
+        Dst.setConnectionCloseNano   (_connectionCloseNano   );
+       if (_connectionCloseCount   != null)
+        Dst.setConnectionCloseCount  (_connectionCloseCount  );
+       if (_connectionGetNano      != null)
+        Dst.setConnectionGetNano     (_connectionGetNano     );
+       if (_connectionGetCount     != null)
+        Dst.setConnectionGetCount    (_connectionGetCount    );
+       if (_tildaSetterNano        != null)
+        Dst.setTildaSetterNano       (_tildaSetterNano       );
+       if (_tildaSetterCount       != null)
+        Dst.setTildaSetterCount      (_tildaSetterCount      );
+       if (_tildaToStringNano      != null)
+        Dst.setTildaToStringNano     (_tildaToStringNano     );
+       if (_tildaToStringCount     != null)
+        Dst.setTildaToStringCount    (_tildaToStringCount    );
+       if (_tildaToJsonNano        != null)
+        Dst.setTildaToJsonNano       (_tildaToJsonNano       );
+       if (_tildaToJsonCount       != null)
+        Dst.setTildaToJsonCount      (_tildaToJsonCount      );
+       if (_tildaToCsvNano         != null)
+        Dst.setTildaToCsvNano        (_tildaToCsvNano        );
+       if (_tildaToCsvCount        != null)
+        Dst.setTildaToCsvCount       (_tildaToCsvCount       );
+       if (_created                != null)
+        Dst.setCreated               (_created               );
+       if (_lastUpdated            != null)
+        Dst.setLastUpdated           (_lastUpdated           );
+       if (__Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.DELETED._Mask) == true || _deleted               ==null)
+        Dst.setDeletedNull               ();
+       else
+        Dst.setDeleted               (_deleted               );
+     }
+
+
+   public tilda.data.TransPerf_Data copy() throws Exception
+     {
+       tilda.data.TransPerf_Data dst = new tilda.data.TransPerf_Data();
+       copyTo(dst);
+       return dst;
      }
 
 /**

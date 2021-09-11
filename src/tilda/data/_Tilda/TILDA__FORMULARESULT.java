@@ -1076,9 +1076,24 @@ This is the hasChanged for:<BR>
 */
    public void copyTo(tilda.data._Tilda.TILDA__FORMULARESULT Dst) throws Exception
      {
-       Dst.setDescription  (_description  );
-       Dst.setLastUpdated  (_lastUpdated  );
-       if (__Nulls.intersects(TILDA__FORMULARESULT_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull      (); else        Dst.setDeleted      (_deleted      );
+       if (_description   != null)
+        Dst.setDescription  (_description  );
+       if (_created       != null)
+        Dst.setCreated      (_created      );
+       if (_lastUpdated   != null)
+        Dst.setLastUpdated  (_lastUpdated  );
+       if (__Nulls.intersects(TILDA__FORMULARESULT_Factory.COLS.DELETED._Mask) == true || _deleted      ==null)
+        Dst.setDeletedNull      ();
+       else
+        Dst.setDeleted      (_deleted      );
+     }
+
+
+   public tilda.data.FormulaResult_Data copy() throws Exception
+     {
+       tilda.data.FormulaResult_Data dst = new tilda.data.FormulaResult_Data();
+       copyTo(dst);
+       return dst;
      }
 
 /**
