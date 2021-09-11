@@ -8,7 +8,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Collections;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -95,7 +94,8 @@ public class AuthHelper
     public static String getAccessToken(GoogleCredentials creds)
     throws IOException
       {
-        return creds.refreshAccessToken().getTokenValue();
+        creds.refreshIfExpired();
+        return creds.getAccessToken().getTokenValue();
       }
 
   }
