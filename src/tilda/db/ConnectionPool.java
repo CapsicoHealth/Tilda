@@ -129,11 +129,12 @@ public class ConnectionPool
                       }
                     LOG.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                     LOG.info("\n");
-                    LOG.info("Press 'y' followed by enter to continue.");
-                    String answer = FileUtil.readlnFromStdIn(false);
-                    if (answer.toLowerCase().equals("y") == false)
-                      throw new Exception("User asked to exit.");
-                    LOG.info("OK! Starting the database analysis...");
+//                    LOG.info("Press 'y' followed by enter to continue.");
+//                    String answer = FileUtil.readlnFromStdIn(false);
+//                    if (answer.toLowerCase().equals("y") == false)
+//                      throw new Exception("User asked to exit.");
+//                    LOG.info("OK! Starting the database analysis...");
+                    LOG.info("\n");
                     LOG.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                     LOG.info("\n");
                   }

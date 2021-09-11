@@ -30,6 +30,28 @@ public class NumberFormatUtilTest
 
     private static void Test1()
       {
+        System.out.println(NumberFormatUtil.leadingZeros(-999999, 10));
+        System.out.println(NumberFormatUtil.leadingZeros(-99999, 10));
+        System.out.println(NumberFormatUtil.leadingZeros(-9999, 10));
+        System.out.println(NumberFormatUtil.leadingZeros(-999, 10));
+        System.out.println(NumberFormatUtil.leadingZeros(-99, 10));
+        System.out.println(NumberFormatUtil.leadingZeros( 88, 10));
+        System.out.println(NumberFormatUtil.leadingZeros( 888, 10));
+        System.out.println(NumberFormatUtil.leadingZeros( 8888, 10));
+        System.out.println(NumberFormatUtil.leadingZeros( 88888, 10));
+        System.out.println(NumberFormatUtil.leadingZeros( 888888, 10));
+        System.out.println(NumberFormatUtil.leadingZeros( 8888888, 10));
+
+        System.out.println(NumberFormatUtil.leadingZeros( 7777777, 5));
+        System.out.println(NumberFormatUtil.leadingZeros( 777777, 5));
+        System.out.println(NumberFormatUtil.leadingZeros( 77777, 5));
+        System.out.println(NumberFormatUtil.leadingZeros( 7777, 5));
+        System.out.println(NumberFormatUtil.leadingZeros( -7777, 5));
+        System.out.println(NumberFormatUtil.leadingZeros( -77777, 5));
+        System.out.println(NumberFormatUtil.leadingZeros( -777777, 5));
+        System.out.println(NumberFormatUtil.leadingZeros( -7777777, 5));
+
+/*
         System.out.println(NumberFormatUtil.leadingZero1(-10));
         System.out.println(NumberFormatUtil.leadingZero1(- 1));
         System.out.println(NumberFormatUtil.leadingZero1(  1));
@@ -50,6 +72,6 @@ public class NumberFormatUtilTest
         System.out.println(NumberFormatUtil.leadingZero3(   30));
         System.out.println(NumberFormatUtil.leadingZero3(  300));
         System.out.println(NumberFormatUtil.leadingZero3( 3000));
-        
+*/
       }
   }

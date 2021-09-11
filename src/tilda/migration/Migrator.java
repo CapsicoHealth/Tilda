@@ -16,6 +16,8 @@
 
 package tilda.migration;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -34,6 +36,7 @@ import tilda.db.metadata.DatabaseMeta;
 import tilda.db.metadata.FKMeta;
 import tilda.db.metadata.IndexMeta;
 import tilda.db.metadata.PKMeta;
+import tilda.db.metadata.SchemaMeta;
 import tilda.db.metadata.TableMeta;
 import tilda.db.metadata.ViewMeta;
 import tilda.enums.ColumnMode;
@@ -145,6 +148,7 @@ public class Migrator
       }
 
     public static void PrintDiscrepancies(Connection C, MigrationDataModel migrationData, String[] DependencySchemas)
+    throws Exception
       {
         LOG.info("");
         LOG.warn("There were " + migrationData.getActionCount() + " discrepencies found between the application's required data model and the database " + C.getPoolName() + ".");
@@ -172,31 +176,45 @@ public class Migrator
                   LOG.debug((included == true ? "       " : "       // ") + "(dependency) " + MA.getDescription());
               }
           }
+        List<MigrationDrops> drops = migrationData.getDropList();
+        if (drops != null && drops.isEmpty() == false)
+          {
+            LOG.info("");
+            File F = new File("tilda.migration.drops.sql");
+            PrintWriter out = new PrintWriter(new FileOutputStream(F, false));
+            for (MigrationDrops d : drops)
+              out.println("-- " + d.process());
+            out.close();
+            LOG.info("A total of " + drops.size() + " drop actions have been saved to the file " + F.getCanonicalPath() + ".");
+          }
         LOG.info("");
-        LOG.warn("A total of " + counterApplied + " migration steps will be applied.");
+        LOG.info("A total of " + counterApplied + " migration steps will be applied.");
       }
 
-    public static MigrationDataModel AnalyzeDatabase(Connection C, boolean CheckOnly, List<Schema> TildaList, DatabaseMeta DBMeta)
+    public static MigrationDataModel AnalyzeDatabase(Connection C, boolean checkOnly, List<Schema> tildaList, DatabaseMeta DBMeta)
     throws Exception
       {
-        List<MigrationScript> Scripts = new ArrayList<MigrationScript>();
-        int ActionCount = 0;
+        List<MigrationScript> scripts = new ArrayList<MigrationScript>();
+        int actionCount = 0;
 
         // if (CheckOnly == false && Migrate.isTesting() == false)
         // AddTildaHelpers(C, TildaList, DBMeta);
 
         LOG.info("===> Analyzing DB ( Url: " + C.getPoolName() + " )");
         LOG.info("Analyzing differences between the database and the application's expected data model...");
-        for (Schema S : TildaList)
+        List<MigrationDrops> dropList = new ArrayList<MigrationDrops>();
+        for (Schema S : tildaList)
           {
-            List<MigrationAction> L = Migrator.getMigrationActions(C, C.getSQlCodeGen(), S, TildaList, DBMeta);
+            List<MigrationAction> L = Migrator.getMigrationActions(C, C.getSQlCodeGen(), S, tildaList, DBMeta);
             for (MigrationAction MA : L)
               if (MA.isDependencyAction() == false)
-                ++ActionCount;
-            Scripts.add(new MigrationScript(S, L));
+                ++actionCount;
+            scripts.add(new MigrationScript(S, L));
+            dropList.addAll(Migrator.getDropScripts(C, C.getSQlCodeGen(), S, DBMeta));
           }
-        return new MigrationDataModel(ActionCount, Scripts);
+        return new MigrationDataModel(actionCount, scripts, dropList);
       }
+
 
     protected static void confirmMigration(Connection C)
     throws Exception
@@ -762,6 +780,38 @@ public class Migrator
           }
         return Actions;
       }
+
+
+    private static List<MigrationDrops> getDropScripts(Connection C, CodeGenSql SQlCodeGen, Schema s, DatabaseMeta DBMeta)
+      {
+        List<MigrationDrops> drops = new ArrayList<MigrationDrops>();
+        if (s._Dynamic == true)
+          return drops;
+        SchemaMeta sm = DBMeta.getSchemaMeta(s.getShortName());
+        if (sm != null)
+          {
+            for (TableMeta tm : sm.getTableMetas())
+              {
+                Object obj = s.getObject(tm._TableName);
+                if (obj == null)
+                  drops.add(new tilda.migration.drops.TableDrop(tm));
+                else
+                  {
+                    // for (IndexMeta im : tm.getIndexMetas())
+                    // if (obj.getIndex(im._Name) == null)
+                    // drops.add(new tilda.migration.drops.IndexDrop(im));
+                    for (ColumnMeta cm : tm.getColumnMetaList())
+                      if (obj.getColumn(cm._NameOriginal) == null)
+                        drops.add(new tilda.migration.drops.ColumnDrop(cm));
+                  }
+              }
+            for (ViewMeta vm : sm.getViewMetas())
+              if (s.getView(vm._ViewName) == null)
+                drops.add(new tilda.migration.drops.ViewDrop(vm));
+          }
+        return drops;
+      }
+
 
     private static void checkDefaultValue(List<MigrationAction> Actions, Column Col, ColumnMeta CMeta)
     throws Exception

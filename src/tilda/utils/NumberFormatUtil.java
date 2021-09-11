@@ -18,6 +18,7 @@ package tilda.utils;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.Arrays;
 
 public class NumberFormatUtil
   {
@@ -103,6 +104,19 @@ public class NumberFormatUtil
              : X >=     0 && X <     10 ?  "000"+X
              : X >=    10 && X <    100 ?   "00"+X
              : "0"+X;
+      }
+
+    public static final String leadingZeros(long x, int count)
+      {
+        String str = Long.toString(x>= 0 ? x : -x);
+        int fill = count-str.length();
+        if (fill >= 0)
+         {
+           char[] c = new char[fill];
+           Arrays.fill(c, '0');
+           return (x <= 0 ? "-":"")+new String(c)+str;
+         }
+        return (x <= 0 ? "-":"")+str;
       }
 
     public static final String leadingSpace(long X, int spaces)
