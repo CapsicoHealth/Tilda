@@ -20,11 +20,18 @@ insert into TILDA.ZoneInfo ("id", "label", "value", "deactivatedTZ", "deactivate
          ,('USMo' , 'US Mountain'        , 'US/Mountain'        , null, null, current_timestamp, current_timestamp)
          ,('CaMo' , 'Canada Mountain'    , 'Canada/Mountain'    , null, null, current_timestamp, current_timestamp)
          ,('USPa' , 'US Pacific'         , 'US/Pacific'         , null, null, current_timestamp, current_timestamp)
+         ,('AmLA' , 'Los Angeles'        , 'America/Los_Angeles', null, null, current_timestamp, current_timestamp)
          ,('CaPa' , 'Canada Pacific'     , 'Canada/Pacific'     , null, null, current_timestamp, current_timestamp)
          ,('USAl' , 'US Alaska'          , 'US/Alaska'          , null, null, current_timestamp, current_timestamp)
          ,('USHa' , 'US Hawaii'          , 'US/Hawaii'          , null, null, current_timestamp, current_timestamp)
          ,('USSa' , 'US Samoa'           , 'US/Samoa'           , null, null, current_timestamp, current_timestamp)
- on conflict do nothing;
+ on conflict("id") do update
+ set "label"=EXCLUDED."label"
+    ,"value"=EXCLUDED."value"
+    ,"deactivatedTZ"=EXCLUDED."deactivatedTZ"
+    ,"deactivated"=EXCLUDED."deactivated"
+    ,"lastUpdated"=EXCLUDED."lastUpdated"
+ ;
 
  
  

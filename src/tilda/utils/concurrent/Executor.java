@@ -62,6 +62,11 @@ public class Executor
             R._executor = this;
           }
       }
+    
+    public List<SimpleRunnable> getRunnables()
+    {
+      return _Runnables;
+    }
 
     public List<Exception> run()
       {
@@ -90,10 +95,11 @@ public class Executor
             totalCount+=R._totalCount;
           }
         boolean faster = duration < seqTimeNano;
+        String perf = faster == true ? NumberFormatUtil.printPercentWith1Dec(duration, seqTimeNano) : NumberFormatUtil.printPercentWith1Dec(seqTimeNano, duration);
         LOG.debug("\n\n*******************************************************************************************\n"
         + "** Executed " + _Runnables.size() + " tasks in " + DurationUtil.printDuration(duration) + " over "+_MaxThreadCount+" threads.\n"
         + (totalCount==0?"":"** Processed "+totalCount+" records (" + DurationUtil.printPerformancePerMinute(duration, totalCount) + " records/min).\n")
-        + "** Sequential time would have been around " + DurationUtil.printDuration(seqTimeNano) + " ("+(faster?"faster":"slower")+" by "+NumberFormatUtil.printPercentWith1Dec(seqTimeNano, duration)+"%).\n"
+        + "** Sequential time would have been around " + DurationUtil.printDuration(seqTimeNano) + " ("+(faster?"slower":"faster")+" by "+perf+"%).\n"
         + "*******************************************************************************************\n\n");
         return _Exceptions;
       }

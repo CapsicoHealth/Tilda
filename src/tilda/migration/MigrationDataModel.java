@@ -20,23 +20,30 @@ import java.util.List;
 
 public class MigrationDataModel
   {
-    int ActionCount;
-    List<MigrationScript> Scripts;
-    
-    public MigrationDataModel(int ActionCount, List<MigrationScript> Scripts) 
-      { 
-        this.ActionCount = ActionCount;
-        this.Scripts = Scripts;
+    public MigrationDataModel(int actionCount, List<MigrationScript> scripts, List<MigrationDrops> dropList)
+      {
+        _actionCount = actionCount;
+        _scripts = scripts;
+        _dropList = dropList;
       }
-    
+
+    int                   _actionCount;
+    List<MigrationScript> _scripts;
+    List<MigrationDrops>  _dropList;
+
     // Getters
     public int getActionCount()
       {
-        return this.ActionCount;
+        return _actionCount;
       }
-    
-    public List<MigrationScript> getMigrationScripts() 
+
+    public List<MigrationScript> getMigrationScripts()
       {
-        return this.Scripts;
+        return _scripts;
+      }
+
+    public List<MigrationDrops> getDropList()
+      {
+        return _dropList;
       }
   }

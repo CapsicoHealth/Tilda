@@ -631,7 +631,7 @@ This is the column definition for:<BR>
                 S.append(" where ("); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "schemaName"); S.append("=?");  S.append(" AND "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "objectName"); S.append("=?");  S.append(")");
                 S.append(" order by "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "startPeriod"); S.append(" DESC");
                 break;
-             case 3: // Quwey 'All'
+             case 3: // Query 'All'
                 S.append(" where (");  S.append("1=1");  S.append(")");
                 S.append(" order by "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "schemaName"); S.append(" ASC");S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "objectName"); S.append(" ASC");S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "startPeriod"); S.append(" ASC");
                 break;
@@ -1078,5 +1078,181 @@ object. The generic init method defaults to this general data structure as a gen
    public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
    public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
 
+
+   public static String getCSVHeader()
+    {
+      return "\"schemaName\",\"objectName\",\"startPeriodTZ\",\"startPeriod\",\"endPeriodTZ\",\"endPeriod\",\"selectNano\",\"selectCount\",\"selectRecords\",\"insertNano\",\"insertCount\",\"insertRecords\",\"updateNano\",\"updateCount\",\"updateRecords\",\"deleteNano\",\"deleteCount\",\"deleteRecords\",\"created\",\"lastUpdated\",\"deleted\"";
+    }
+
+   public static void toCSV(java.io.Writer out, List<tilda.data.ObjectPerf_Data> L, boolean includeHeader) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      if (includeHeader == true)
+        out.write(getCSVHeader() + "\n");
+      for (tilda.data.ObjectPerf_Data O : L)
+       if (O!=null)
+        {
+          toCSV(out, O);
+          out.write("\n");
+        }
+      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);
+    }
+
+   public static void toCSV(java.io.Writer out, tilda.data.ObjectPerf_Data obj) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      StringBuilder Str = new StringBuilder();
+
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getSchemaName());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getObjectName());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getStartPeriodTZ());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getStartPeriod()));
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getEndPeriodTZ());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getEndPeriod()));
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getSelectNano());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getSelectCount());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getSelectRecords());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getInsertNano());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getInsertCount());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getInsertRecords());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getUpdateNano());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getUpdateCount());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getUpdateRecords());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getDeleteNano());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getDeleteCount());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getDeleteRecords());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getCreated()));
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getLastUpdated()));
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getDeleted()));
+      out.write(Str.toString());
+      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);
+    }
+   public static void toJSON(java.io.Writer out, List<tilda.data.ObjectPerf_Data> L, String lead, boolean fullList) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      if (fullList == true)
+        {
+          if (L == null)
+           {
+             out.write("null\n");
+             return;
+           }
+          if (L.isEmpty() == true)
+           {
+             out.write("[]\n");
+             return;
+           }
+          out.write("[\n");
+        }
+      boolean First = true;
+      for (tilda.data.ObjectPerf_Data O : L)
+       if (O!=null)
+        {
+          out.write(lead);
+          toJSON(out, O, First == true ? "   " : "  ,", true);
+          if (First == true)
+           First = false;
+        }
+      if (fullList == true)
+       { 
+          out.write(lead);
+          out.write("]\n");
+       } 
+      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
+    }
+
+   public static void toJSON(java.io.Writer out, tilda.data.ObjectPerf_Data obj, boolean fullObject) throws java.io.IOException
+    {
+      toJSON(out, obj, "", fullObject, false);
+    }
+
+   public static void toJSON(java.io.Writer out, tilda.data.ObjectPerf_Data obj, String lead, boolean fullObject) throws java.io.IOException
+    {
+      toJSON(out, obj, lead, fullObject, false);
+    }
+
+   public static void toJSON(java.io.Writer outWriter, tilda.data.ObjectPerf_Data obj, String lead, boolean fullObject, boolean noNullArrays) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter();
+      tilda.data._Tilda.TILDA__OBJECTPERF Obj = (tilda.data._Tilda.TILDA__OBJECTPERF) obj;
+      if (fullObject == true)
+       {
+          out.write(lead);
+          out.write("{");
+       }
+
+      int i = -1;
+        JSONUtil.print(out, "schemaName", ++i==0, Obj.getSchemaName());
+
+        JSONUtil.print(out, "objectName", ++i==0, Obj.getObjectName());
+
+        JSONUtil.print(out, "startPeriodTZ", ++i==0, Obj.getStartPeriodTZ());
+
+        JSONUtil.print(out, "startPeriod", ++i==0, Obj.getStartPeriod());
+
+        JSONUtil.print(out, "endPeriodTZ", ++i==0, Obj.getEndPeriodTZ());
+
+        JSONUtil.print(out, "endPeriod", ++i==0, Obj.getEndPeriod());
+
+        JSONUtil.print(out, "selectNano", ++i==0, Obj.getSelectNano());
+
+        JSONUtil.print(out, "selectCount", ++i==0, Obj.getSelectCount());
+
+        JSONUtil.print(out, "selectRecords", ++i==0, Obj.getSelectRecords());
+
+        JSONUtil.print(out, "insertNano", ++i==0, Obj.getInsertNano());
+
+        JSONUtil.print(out, "insertCount", ++i==0, Obj.getInsertCount());
+
+        JSONUtil.print(out, "insertRecords", ++i==0, Obj.getInsertRecords());
+
+        JSONUtil.print(out, "updateNano", ++i==0, Obj.getUpdateNano());
+
+        JSONUtil.print(out, "updateCount", ++i==0, Obj.getUpdateCount());
+
+        JSONUtil.print(out, "updateRecords", ++i==0, Obj.getUpdateRecords());
+
+        JSONUtil.print(out, "deleteNano", ++i==0, Obj.getDeleteNano());
+
+        JSONUtil.print(out, "deleteCount", ++i==0, Obj.getDeleteCount());
+
+        JSONUtil.print(out, "deleteRecords", ++i==0, Obj.getDeleteRecords());
+
+        JSONUtil.print(out, "created", ++i==0, Obj.getCreated());
+
+        JSONUtil.print(out, "lastUpdated", ++i==0, Obj.getLastUpdated());
+
+      if (Obj.isDeletedNull() == false && Obj.getDeleted() != null)
+        JSONUtil.print(out, "deleted", ++i==0, Obj.getDeleted());
+
+      if (fullObject == true)
+       out.write(" }\n");
+
+      outWriter.append(out.getBuilder().toString());
+      out.close();
+
+      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
+    }
 
  }

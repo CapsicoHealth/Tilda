@@ -3125,6 +3125,16 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>3&nbsp;&nbsp;</TD>
+<TD align="right"><B id='RefillPerf-startDateIncr_DIV' class='columns'>startDateIncr</B>&nbsp;&nbsp;</TD>
+<TD>LocalDate&nbsp;/&nbsp;date&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The date passed in for incremental refills.</TD>
+</TR>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>4&nbsp;&nbsp;</TD>
 <TD align="right"><B id='RefillPerf-startTimeTZ_DIV' class='columns'>startTimeTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -3135,8 +3145,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TABLE>
 </TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>4&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>5&nbsp;&nbsp;</TD>
 <TD align="right"><B id='RefillPerf-startTime_DIV' class='columns'>startTime</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -3145,8 +3155,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the refill started.</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>5&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>6&nbsp;&nbsp;</TD>
 <TD align="right"><B id='RefillPerf-endTimeTZ_DIV' class='columns'>endTimeTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -3157,8 +3167,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TABLE>
 </TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>6&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>7&nbsp;&nbsp;</TD>
 <TD align="right"><B id='RefillPerf-endTime_DIV' class='columns'>endTime</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -3167,8 +3177,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the refill ended.</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>7&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>8&nbsp;&nbsp;</TD>
 <TD align="right"><B id='RefillPerf-timeInsertSec_DIV' class='columns'>timeInsertSec</B>&nbsp;&nbsp;</TD>
 <TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -3177,8 +3187,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The time, in seconds, the inserts took.</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>8&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>9&nbsp;&nbsp;</TD>
 <TD align="right"><B id='RefillPerf-timeDeleteSec_DIV' class='columns'>timeDeleteSec</B>&nbsp;&nbsp;</TD>
 <TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -3187,8 +3197,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The time, in seconds, the deletes took.</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>9&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>10&nbsp;&nbsp;</TD>
 <TD align="right"><B id='RefillPerf-timeAnalyzeSec_DIV' class='columns'>timeAnalyzeSec</B>&nbsp;&nbsp;</TD>
 <TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -3197,8 +3207,24 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The time, in seconds, the analyze took.</TD>
 </TR>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>11&nbsp;&nbsp;</TD>
+<TD align="right"><B id='RefillPerf-timeTotalSec_DIV' class='columns'>timeTotalSec</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The time, in seconds, the analyze took.<BR>This column has defined a number of constant values:
+<BLOCKQUOTE>
+<TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #999;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#fff6fc"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>timeTotalSec_CreateDefault</B>&nbsp;&nbsp;</TD><TD>0&nbsp;&nbsp;</TD><TD>timeTotalSec_CreateDefault&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>timeTotalSec_CreateDefault</TD></TR>
+</TABLE>
+</BLOCKQUOTE>
+</TD>
+</TR>
   <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>10&nbsp;&nbsp;</TD>
+    <TD>12&nbsp;&nbsp;</TD>
 <TD align="right"><B id='RefillPerf-insertCount_DIV' class='columns'>insertCount</B>&nbsp;&nbsp;</TD>
 <TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -3208,7 +3234,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD>The count of inserted rows.</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>11&nbsp;&nbsp;</TD>
+    <TD>13&nbsp;&nbsp;</TD>
 <TD align="right"><B id='RefillPerf-deleteCount_DIV' class='columns'>deleteCount</B>&nbsp;&nbsp;</TD>
 <TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -3218,7 +3244,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD>The count of rows deleted.</TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>12&nbsp;&nbsp;</TD>
+    <TD>14&nbsp;&nbsp;</TD>
 <TD align="right"><B id='RefillPerf-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -3228,7 +3254,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD>The timestamp for when the record was created. (TILDA.RefillPerf)</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>13&nbsp;&nbsp;</TD>
+    <TD>15&nbsp;&nbsp;</TD>
 <TD align="right"><B id='RefillPerf-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -3238,7 +3264,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD>The timestamp for when the record was last updated. (TILDA.RefillPerf)</TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>14&nbsp;&nbsp;</TD>
+    <TD>16&nbsp;&nbsp;</TD>
 <TD align="right"><B id='RefillPerf-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>

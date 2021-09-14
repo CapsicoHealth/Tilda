@@ -57,7 +57,7 @@ import tilda.parsing.parts.ViewJoin;
 import tilda.parsing.parts.ViewPivot;
 import tilda.parsing.parts.ViewPivotAggregate;
 import tilda.parsing.parts.ViewPivotValue;
-import tilda.parsing.parts.ViewRealizeUpsert;
+import tilda.parsing.parts.ViewRealizeIncremental;
 import tilda.parsing.parts.helpers.ValueHelper;
 import tilda.utils.PaddingTracker;
 import tilda.utils.PaddingUtil;
@@ -134,7 +134,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
     @Override
     public boolean stringNeedsTrim(Column C)
       {
-        return C.getType() == ColumnType.STRING && C._Mode != ColumnMode.CALCULATED && C.isCollection() == false && (C._Size!=null && getDBStringType(C._Size) == DBStringType.CHARACTER);
+        return C.getType() == ColumnType.STRING && C._Mode != ColumnMode.CALCULATED && C.isCollection() == false && (C._Size != null && getDBStringType(C._Size) == DBStringType.CHARACTER);
       }
 
     @Override
@@ -561,7 +561,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
               {
                 Str.append(", ").append(getFullColumnVar(OB._Col)).append(" ").append(OB._Order.name());
                 if (OB._Nulls != null)
-                  Str.append(" NULLS ").append(OB._Nulls.name());  
+                  Str.append(" NULLS ").append(OB._Nulls.name());
               }
             Str.append("\n");
           }
@@ -587,7 +587,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
     private boolean PrintViewColumn(StringBuilder Str, ViewColumn VC, TableRankTracker TI, boolean NoAs)
     throws Exception
       {
-        if (TextUtil.isNullOrEmpty(VC._Coalesce) == false && (VC._Aggregate == null || VC._Aggregate==AggregateType.COUNT))
+        if (TextUtil.isNullOrEmpty(VC._Coalesce) == false && (VC._Aggregate == null || VC._Aggregate == AggregateType.COUNT))
           Str.append("coalesce(");
 
         boolean hasAggregates = false;
@@ -621,7 +621,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 if (VC._Distinct == Boolean.TRUE)
                   Str.append("distinct ");
 
-                if (TextUtil.isNullOrEmpty(VC._Coalesce) == false && VC._Aggregate!=AggregateType.COUNT)
+                if (TextUtil.isNullOrEmpty(VC._Coalesce) == false && VC._Aggregate != AggregateType.COUNT)
                   Str.append("coalesce(");
               }
             if (trimNeeded)
@@ -634,7 +634,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
               Str.append(")");
             if (VC._Aggregate != null)
               {
-                if (TextUtil.isNullOrEmpty(VC._Coalesce) == false && VC._Aggregate!=AggregateType.COUNT)
+                if (TextUtil.isNullOrEmpty(VC._Coalesce) == false && VC._Aggregate != AggregateType.COUNT)
                   Str.append(", " + ValueHelper.printValue(VC._SameAsObj.getName(), VC.getAggregateType(), VC._Coalesce) + ")");
 
                 if (VC._OrderByObjs != null && VC._OrderByObjs.isEmpty() == false)
@@ -649,8 +649,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
                           Str.append(", ");
                         Str.append(TI.getFullName() + ".\"" + OB._Col.getName() + "\" " + OB._Order);
                         if (OB._Nulls != null)
-                          Str.append(" NULLS "+OB._Nulls);
-                        
+                          Str.append(" NULLS " + OB._Nulls);
+
                       }
                   }
                 Str.append(")");
@@ -660,7 +660,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                   }
               }
           }
-        if (TextUtil.isNullOrEmpty(VC._Coalesce) == false && (VC._Aggregate == null || VC._Aggregate==AggregateType.COUNT))
+        if (TextUtil.isNullOrEmpty(VC._Coalesce) == false && (VC._Aggregate == null || VC._Aggregate == AggregateType.COUNT))
           Str.append(", " + ValueHelper.printValue(VC._SameAsObj.getName(), VC.getAggregateType(), VC._Coalesce) + ")");
         if (NoAs == false)
           Str.append(" as \"" + VC.getName() + "\" " + (VC._SameAsObj == null ? "" : "-- " + VC._SameAsObj._Description));
@@ -687,7 +687,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         OutFinal.println(Str + ";\n");
         Set<View> SubRealizedViews = V.getSubRealizedViewRootNames();
         Set<View> AncestorRealizedViews = V.getAncestorRealizedViews();
-        
+
         if (SubRealizedViews != null || AncestorRealizedViews != null) // View depends on realized views.
           {
             if (SubRealizedViews != null)
@@ -700,9 +700,9 @@ public class Sql extends PostgreSQL implements CodeGenSql
                     r.append(srv._ParentSchema._Name.toUpperCase());
                     r.append("\\.)?");
                     r.append(srv.getRootViewName().toUpperCase());
-//                    r.append(")(PIVOT)?VIEW\\b");
-                    r.append(srv._Pivots==null||srv._Pivots.isEmpty()==true ? ")VIEW\\b" : ")PIVOTVIEW\\b");
-                    Str = Str.replaceAll(r.toString(), srv._RealizedObj != null ? srv._RealizedObj._ParentSchema._Name+"."+srv._RealizedObj._Name : "$1Realized");
+                    // r.append(")(PIVOT)?VIEW\\b");
+                    r.append(srv._Pivots == null || srv._Pivots.isEmpty() == true ? ")VIEW\\b" : ")PIVOTVIEW\\b");
+                    Str = Str.replaceAll(r.toString(), srv._RealizedObj != null ? srv._RealizedObj._ParentSchema._Name + "." + srv._RealizedObj._Name : "$1Realized");
                   }
               }
 
@@ -721,13 +721,12 @@ public class Sql extends PostgreSQL implements CodeGenSql
             OutFinal.println();
             String TName = V.getRealizedTableName(false);
             String RName = V.getRealizedTableName(true);
-            ViewRealizeUpsert Up = V._Realize._Upsert;
+            ViewRealizeIncremental VRI = V._Realize._Incremental;
 
-            if (Up != null)
+            if (VRI != null)
               {
-                String ColType = getColumnType(Up._LastUpdatedTSColumnObj._SameAsObj);
-                OutFinal.append("DROP FUNCTION IF EXISTS " + V._ParentSchema._Name + ".Refill_" + TName + "(fromInclusive " + ColType + ", toExclusive " + ColType + ");\n")
-                .append("CREATE OR REPLACE FUNCTION " + V._ParentSchema._Name + ".Refill_" + TName + "(fromInclusive " + ColType + ", toExclusive " + ColType + ")\n");
+                OutFinal.append("DROP FUNCTION IF EXISTS " + V._ParentSchema._Name + ".Refill_" + TName + "(__startDate__ DATE);\n")
+                .append("CREATE OR REPLACE FUNCTION " + V._ParentSchema._Name + ".Refill_" + TName + "(__startDate__ DATE)\n");
               }
             else
               {
@@ -743,11 +742,11 @@ public class Sql extends PostgreSQL implements CodeGenSql
             .append("  deleteEndDt    timestamptz;\n")
             .append("  analyzeStartDt timestamptz;\n")
             .append("  analyzeEndDt   timestamptz;\n")
+            .append("  endDt          timestamptz;\n")
             .append("  insertRowCount bigint;\n")
             .append("  deleteRowCount bigint;\n")
             .append("BEGIN\n")
-            .append("  startDt:= clock_timestamp();\n")
-            ;
+            .append("  startDt:= clock_timestamp();\n");
 
             StringWriter BaseLineInsert = new StringWriter();
             BaseLineInsert.append("  INSERT INTO " + RName + " (" + PrintInsertColumnNames(V) + ")\n     ");
@@ -758,97 +757,126 @@ public class Sql extends PostgreSQL implements CodeGenSql
             else
               BaseLineInsert.append("\n     FROM ").append(V._ParentSchema._Name).append(".").append(V._Name);
 
-            if (Up != null)
+            if (VRI != null)
               {
-                OutFinal.append("  IF fromInclusive is null AND toExclusive is null\n");
+                OutFinal.append("\n");
+                OutFinal.append("  IF __startDate__ is null\n");
                 OutFinal.append("  THEN\n");
+                OutFinal.append("\n");
               }
             OutFinal.append("  TRUNCATE ").append(RName).append(";\n")
-                    .append("  insertStartDt:= clock_timestamp();\n")
-                    ;
+            .append("  insertStartDt:= clock_timestamp();\n");
             OutFinal.append(BaseLineInsert.toString());
-            if (Up != null && Up._DeleteTSColumnObj != null)
-              OutFinal.append("\n     WHERE \"" + Up._DeleteTSColumnObj.getName() + "\" is null");
+
+            String vriWhereclause = resolveIncrementalWhereClause(V);
+            // if (VRI != null)
+            // OutFinal.append("\n WHERE " + vriWhereclause + "\n");
             OutFinal.append(";\n")
-                    .append("  insertEndDt:= clock_timestamp();")
-                    .append("  GET DIAGNOSTICS insertRowCount = ROW_COUNT;\n")
-                    ;
-            if (Up != null)
+            .append("  GET DIAGNOSTICS insertRowCount = ROW_COUNT;\n")
+            .append("  insertEndDt:= clock_timestamp();\n");
+            if (VRI != null)
               {
+                OutFinal.append("\n");
                 OutFinal.append("  ELSE\n");
+                OutFinal.append("\n");
+                if (VRI._deleteFirst == true)
+                  {
+                    OutFinal.append("  deleteStartDt:= clock_timestamp();\n");
+                    OutFinal.append("  delete from " + RName + " where " + vriWhereclause + ";\n");
+                    OutFinal.append("  GET DIAGNOSTICS deleteRowCount = ROW_COUNT;\n");
+                    OutFinal.append("  deleteEndDt:= clock_timestamp();\n");
+                  }
                 OutFinal.append("  insertStartDt:= clock_timestamp();\n");
                 OutFinal.append(BaseLineInsert.toString());
-                OutFinal.append("\n    WHERE (fromInclusive is null or \"").append(Up._LastUpdatedTSColumnObj.getName()).append("\" >= fromInclusive) and (toExclusive is null or \"").append(Up._LastUpdatedTSColumnObj.getName()).append("\" < toExclusive)");
-                OutFinal.append("\n  ON CONFLICT (");
-                boolean First = true;
-                for (ViewColumn VC : Up._IdentityViewColumns)
+                OutFinal.append("\n    WHERE " + vriWhereclause);
+                if (VRI._deleteFirst != true)
                   {
-                    if (First == true)
-                      First = false;
-                    else
-                      OutFinal.append(", ");
-                    OutFinal.append("\"").append(VC._Name).append("\"");
-                  }
-                OutFinal.append(")");
-                OutFinal.append("  DO UPDATE SET\n");
-                First = true;
-                for (String ColNames : V._Realize._ParentRealized.getColumnNames())
-                  {
-                    OutFinal.append("    ");
-                    if (First == true)
-                      First = false;
-                    else
-                      OutFinal.append(",");
-                    OutFinal.append("\"").append(ColNames).append("\"").append(" = EXCLUDED.").append("\"").append(ColNames).append("\"").append("\n");
+                    OutFinal.append("\n  ON CONFLICT (");
+                    boolean First = true;
+                    for (ViewColumn VC : VRI._IdentityViewColumns)
+                      {
+                        if (First == true)
+                          First = false;
+                        else
+                          OutFinal.append(", ");
+                        OutFinal.append("\"").append(VC._Name).append("\"");
+                      }
+                    OutFinal.append(")");
+                    OutFinal.append("  DO UPDATE SET\n");
+                    First = true;
+                    for (String ColNames : V._Realize._ParentRealized.getColumnNames())
+                      {
+                        OutFinal.append("    ");
+                        if (First == true)
+                          First = false;
+                        else
+                          OutFinal.append(",");
+                        OutFinal.append("\"").append(ColNames).append("\"").append(" = EXCLUDED.").append("\"").append(ColNames).append("\"").append("\n");
+                      }
                   }
                 OutFinal.append("  ;\n");
-                OutFinal.append("  insertEndDt:= clock_timestamp();");
                 OutFinal.append("  GET DIAGNOSTICS insertRowCount = ROW_COUNT;\n");
-
-                if (Up._DeleteTSColumnObj != null)
-                  OutFinal.append("  deleteStartDt:= clock_timestamp();\n");
-                  OutFinal.append("  DELETE FROM " + RName + " WHERE \"" + Up._DeleteTSColumnObj.getName() + "\" is not null;\n");
-                  OutFinal.append("  GET DIAGNOSTICS deleteRowCount = ROW_COUNT;\n");
-                  OutFinal.append("  deleteEndDt:= clock_timestamp();\n");
+                OutFinal.append("  insertEndDt:= clock_timestamp();\n");
+                OutFinal.append("\n");
                 OutFinal.append("  END IF;\n");
+                OutFinal.append("\n");
               }
-            
+
             OutFinal.append("  analyzeStartDt:= clock_timestamp();\n");
             OutFinal.append("  ANALYZE " + RName + ";\n");
             OutFinal.append("  analyzeEndDt:= clock_timestamp ( );\n");
+            OutFinal.append("  endDt:= clock_timestamp();\n"); // technically, could have used analyzeEndDt, but this is clearer.
             OutFinal.append("\n");
-            OutFinal.append("  INSERT INTO TILDA.RefillPerf(\"schemaName\", \"objectName\", \"startTimeTZ\", \"startTime\", \"endTimeTZ\", \"endTime\", \"timeInsertSec\", \"timeDeleteSec\", \"timeAnalyzeSec\", \"insertCount\", \"deleteCount\")\n");
-            OutFinal.append("                        VALUES('"+V._ParentSchema._Name+"', '"+TName+"', 'UTC', startDt, 'UTC', clock_timestamp()\n");
+            if (VRI != null)
+              {
+                OutFinal.append("  INSERT INTO TILDA.RefillPerf(\"schemaName\", \"objectName\", \"startDateIncr\", \"startTimeTZ\", \"startTime\", \"endTimeTZ\", \"endTime\", \"timeInsertSec\", \"timeDeleteSec\", \"timeAnalyzeSec\", \"timeTotalSec\", \"insertCount\", \"deleteCount\")\n");
+                OutFinal.append("                        VALUES('" + V._ParentSchema._Name + "', '" + TName + "', __startDate__, 'UTC', startDt, 'UTC', endDt\n");
+              }
+            else
+              {
+                OutFinal.append("  INSERT INTO TILDA.RefillPerf(\"schemaName\", \"objectName\", \"startTimeTZ\", \"startTime\", \"endTimeTZ\", \"endTime\", \"timeInsertSec\", \"timeDeleteSec\", \"timeAnalyzeSec\", \"timeTotalSec\", \"insertCount\", \"deleteCount\")\n");
+                OutFinal.append("                        VALUES('" + V._ParentSchema._Name + "', '" + TName + "', 'UTC', startDt, 'UTC', endDt\n");
+              }
             OutFinal.append("                                         , COALESCE(EXTRACT(EPOCH FROM insertEndDt-insertStartDt), 0)\n");
             OutFinal.append("                                         , COALESCE(EXTRACT(EPOCH FROM deleteEndDt-deleteStartDt), 0)\n");
-            OutFinal.append("                                         , COALESCE(EXTRACT(EPOCH FROM analyzeEndDt-analyzeStartDt), 0), COALESCE(insertRowCount, 0), COALESCE(deleteRowCount, 0));\n");
+            OutFinal.append("                                         , COALESCE(EXTRACT(EPOCH FROM analyzeEndDt-analyzeStartDt), 0)\n");
+            OutFinal.append("                                         , COALESCE(EXTRACT(EPOCH FROM endDt-startDt), 0)\n");
+            OutFinal.append("                                         , COALESCE(insertRowCount, 0)\n");
+            OutFinal.append("                                         , COALESCE(deleteRowCount, 0));\n");
             OutFinal.append("  return true;\n");
             OutFinal.append("END; $$\n");
             OutFinal.append("LANGUAGE PLPGSQL;\n");
-            OutFinal.append("\n")
-            ;
-            if (Up != null)
+            OutFinal.append("\n");
+            if (VRI != null)
               {
-                String ColType = getColumnType(Up._LastUpdatedTSColumnObj._SameAsObj);
-                OutFinal.append("DROP FUNCTION IF EXISTS " + V._ParentSchema._Name + ".Refill_" + TName + "(fromInclusive " + ColType + ");\n")
-                .append("CREATE OR REPLACE FUNCTION " + V._ParentSchema._Name + ".Refill_" + TName + "(fromInclusive " + ColType + ")\n");
-                OutFinal.append(" RETURNS boolean AS $$\n")
-                .append("BEGIN\n");
-                OutFinal.append("  return " + V._ParentSchema._Name + ".Refill_" + TName + "(fromInclusive, null);\n")
-                .append("END; $$\n")
-                .append("LANGUAGE PLPGSQL;\n")
-                .append("\n");
                 OutFinal.append("DROP FUNCTION IF EXISTS " + V._ParentSchema._Name + ".Refill_" + TName + "();\n")
                 .append("CREATE OR REPLACE FUNCTION " + V._ParentSchema._Name + ".Refill_" + TName + "()\n");
                 OutFinal.append(" RETURNS boolean AS $$\n")
                 .append("BEGIN\n");
-                OutFinal.append("  return " + V._ParentSchema._Name + ".Refill_" + TName + "(null, null);\n")
+                OutFinal.append("  return " + V._ParentSchema._Name + ".Refill_" + TName + "(null);\n")
                 .append("END; $$\n")
                 .append("LANGUAGE PLPGSQL;\n")
                 .append("\n");
               }
             OutFinal.append("-- SELECT " + V._ParentSchema._Name + ".Refill_" + TName + "(); -- !!! THIS MAY TAKE SEVERAL MINUTES !!!\n");
           }
+      }
+
+    private String resolveIncrementalWhereClause(View V)
+      {
+        if (V._Realize == null || V._Realize._Incremental == null)
+          return null;
+
+        String whereClause = V._Realize._Incremental._whereClause.replaceAll("\\$\\{START_DATE\\}", "__startDate__");
+        Matcher M = V._ViewColumnsRegEx.matcher(whereClause);
+        StringBuffer Str = new StringBuffer();
+        while (M.find() == true)
+          {
+            String s = M.group(1);
+            M.appendReplacement(Str, '"' + M.group(1) + '"');
+          }
+        M.appendTail(Str);
+        return Str.toString();
       }
 
     private String PrintInsertColumnNames(View V)
@@ -1095,7 +1123,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
     @Override
     public String getDDLMetadataVersion()
       {
-        return "DDL META DATA VERSION 2020-12-25";
+        return "DDL META DATA VERSION 2021-09-02";
       }
 
     @Override
@@ -1168,7 +1196,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 String[] VCNames = new String[L.size()];
                 for (int i = 0; i < L.size(); ++i)
                   {
-                    VCNames[i] =  L.get(i)._ParentView.getShortName() + "." + L.get(i)._Name;
+                    VCNames[i] = L.get(i)._ParentView.getShortName() + "." + L.get(i)._Name;
                   }
                 OutFinal.print(", ARRAY[" + TextUtil.escapeSingleQuoteForSQL(VCNames, true) + "]");
               }
@@ -1595,9 +1623,10 @@ public class Sql extends PostgreSQL implements CodeGenSql
       {
         return PrintColumnList(Out, Columns, null);
       }
-    
+
     /**
      * Prints a comma-separated list of columns, for example for an index or an FK.
+     * 
      * @param Out the output stream
      * @param Columns the list of columns to print (must not be null)
      * @param LALs For indices, the list of columns marked as LAL-enabled (Left-Anchor-Like for efficient search such as like 'abc%').
@@ -1616,11 +1645,11 @@ public class Sql extends PostgreSQL implements CodeGenSql
               Out.print(", ");
             Out.print("\"" + C.getName() + "\"");
             if (LALs != null && TextUtil.findElement(LALs, C.getName(), false, 0) != -1)
-             Out.print(" text_pattern_ops");
+              Out.print(" text_pattern_ops");
           }
         return First != true;
       }
-    
+
 
     @Override
     public void genClassEnd(PrintWriter Out, GeneratorSession G)

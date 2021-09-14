@@ -197,7 +197,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
 */
 @SuppressWarnings({ "unused" })
-public abstract class TILDA__FORMULA implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
+public abstract class TILDA__FORMULA implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject, tilda.interfaces.JSONable, tilda.interfaces.CSVable
  {
    protected transient static final Logger LOG = LogManager.getLogger(TILDA__FORMULA.class.getName());
 
@@ -2557,15 +2557,46 @@ This is the hasChanged for:<BR>
 */
    public void copyTo(tilda.data._Tilda.TILDA__FORMULA Dst) throws Exception
      {
-       Dst.setName             (_name             );
-       Dst.setType             (_type             );
-       Dst.setTitle            (_title            );
-       Dst.setDescription      (_description      );
-       if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.FORMULA._Mask) == true) Dst.setFormulaNull          (); else        Dst.setFormula          (_formula          );
-       if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.HTMLDOC._Mask) == true) Dst.setHtmlDocNull          (); else        Dst.setHtmlDoc          (_htmlDoc          );
-       if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask) == true) Dst.setReferencedColumnsNull(); else        Dst.setReferencedColumns(_referencedColumns);
-       Dst.setLastUpdated      (_lastUpdated      );
-       if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull          (); else        Dst.setDeleted          (_deleted          );
+       if (_location          != null)
+        Dst.setLocation         (_location         );
+       if (_location2         != null)
+        Dst.setLocation2        (_location2        );
+       if (_name              != null)
+        Dst.setName             (_name             );
+       if (_type              != null)
+        Dst.setType             (_type             );
+       if (_title             != null)
+        Dst.setTitle            (_title            );
+       if (_description       != null)
+        Dst.setDescription      (_description      );
+       if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.FORMULA._Mask) == true || _formula          ==null)
+        Dst.setFormulaNull          ();
+       else
+        Dst.setFormula          (_formula          );
+       if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.HTMLDOC._Mask) == true || _htmlDoc          ==null)
+        Dst.setHtmlDocNull          ();
+       else
+        Dst.setHtmlDoc          (_htmlDoc          );
+       if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask) == true || _referencedColumns==null)
+        Dst.setReferencedColumnsNull();
+       else
+        Dst.setReferencedColumns(_referencedColumns);
+       if (_created           != null)
+        Dst.setCreated          (_created          );
+       if (_lastUpdated       != null)
+        Dst.setLastUpdated      (_lastUpdated      );
+       if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.DELETED._Mask) == true || _deleted          ==null)
+        Dst.setDeletedNull          ();
+       else
+        Dst.setDeleted          (_deleted          );
+     }
+
+
+   public tilda.data.Formula_Data copy() throws Exception
+     {
+       tilda.data.Formula_Data dst = new tilda.data.Formula_Data();
+       copyTo(dst);
+       return dst;
      }
 
 /**
@@ -3141,4 +3172,36 @@ This is the hasChanged for:<BR>
       return Str;
     }
 
+   public void toJSON(java.io.Writer out, String exportName, boolean fullObject) throws Exception
+    {
+      toJSON(out, exportName, "", fullObject, false);
+    }
+   public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject) throws Exception
+    {
+      toJSON(out, exportName, lead, fullObject, false);
+    }
+   public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject, boolean noNullArrays) throws Exception
+    {
+      switch (exportName)
+        { 
+          case "": tilda.data.Formula_Factory.toJSON(out, (tilda.data.Formula_Data) this, lead, fullObject, noNullArrays); break;
+          default: throw new Exception("Unknown JSON exporter '"+exportName+"' for tilda.data.Formula_Factory");
+        } 
+    }
+   public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject, java.time.ZonedDateTime lastsync) throws Exception
+    {
+      throw new Exception("Unknown JSON sync exporter '"+exportName+"' for tilda.data.Formula_Factory");
+    }
+   public void toCSV(java.io.Writer out, String exportName) throws Exception
+    {
+      switch (exportName)
+        { 
+          case "": tilda.data.Formula_Factory.toCSV(out, (tilda.data.Formula_Data) this); break;
+          default: throw new Exception("Unknown CSV exporter '"+exportName+"' for tilda.data.Formula_Factory");
+        } 
+    }
+   public void toCSV(java.io.Writer out, String exportName, java.time.ZonedDateTime lastsync) throws Exception
+    {
+      throw new Exception("Unknown CSV sync exporter '"+exportName+"' for tilda.data.Formula_Factory");
+    }
  }

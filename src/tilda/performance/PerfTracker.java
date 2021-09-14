@@ -62,7 +62,7 @@ public abstract class PerfTracker
             }
         I.add(Type, DurationNano, Count);
         if (Count == 0)
-          LOG.warn(QueryDetails._LOGGING_HEADER + "   " + AnsiUtil.UNDERLINE + "No record " + Type._PP + " " + AnsiUtil.UNDERLINE_OFF + " in " + DurationUtil.printDurationMilliSeconds(DurationNano));
+          LOG.debug(QueryDetails._LOGGING_HEADER + "   " + AnsiUtil.UNDERLINE + "No record " + Type._PP + " " + AnsiUtil.UNDERLINE_OFF + " in " + DurationUtil.printDurationMilliSeconds(DurationNano));
         else
           LOG.debug(QueryDetails._LOGGING_HEADER + "   " + Type._PP + " " + Count + " records in " + DurationUtil.printDurationMilliSeconds(DurationNano));
       }

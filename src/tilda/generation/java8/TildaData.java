@@ -435,7 +435,7 @@ public class TildaData implements CodeGenTildaData
         if (C._Mode == ColumnMode.AUTO && C._MapperDef == null && C._FCT.isManaged() == false)
           {
             Out.println("   /**");
-            Out.println("    * Internal setter for auto field "+C.getName());
+            Out.println("    * Internal setter for auto field " + C.getName());
             Out.println("    */");
             Out.println("   protected abstract void set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "() throws Exception;");
             Out.println();
@@ -613,7 +613,7 @@ public class TildaData implements CodeGenTildaData
                 Out.println("           throw new Exception(\"Cannot set " + C.getFullName() + ": the value \'\"+v+\"\' is not a valid Enumerated value as per \'" + FactoryClassName + "\'.\");");
                 Out.println("          v = e.getId();");
                 if (C._Enum._Name != ColumnMapperMode.NONE)
-                  Out.println("          " + (C.isCollection() == true ? "addTo" : "set") + TextUtil.capitalizeFirstCharacter(C.getName()) + "EnumValue("+(C.isList()?"pos, ":"")+"e.getValue());");
+                  Out.println("          " + (C.isCollection() == true ? "addTo" : "set") + TextUtil.capitalizeFirstCharacter(C.getName()) + "EnumValue(" + (C.isList() ? "pos, " : "") + "e.getValue());");
                 Out.println("        }");
               }
             switch (C.getType())
@@ -1195,7 +1195,7 @@ public class TildaData implements CodeGenTildaData
         Helper.setSavedFields(Out, O);
         Out.println();
         Out.println("       __Changes.clear();");
-//        Out.println("       __Nulls.clear();");
+        // Out.println(" __Nulls.clear();");
         Out.println("     }");
       }
 
@@ -1355,17 +1355,17 @@ public class TildaData implements CodeGenTildaData
                 Out.println("          __Nulls.andNot(" + SecondaryMask + ");");
               }
             String ClassNameFactory = Helper.getFullAppFactoryClassName(C._Enum._DestObjectObj);
-            String ClassNameData    = Helper.getFullAppDataClassName(C._Enum._DestObjectObj);
+            String ClassNameData = Helper.getFullAppDataClassName(C._Enum._DestObjectObj);
             if (C.isList() == true)
               {
                 Out.println("          _" + C.getName() + "EnumValue = new " + (C.isList() == true ? "ArrayList" : "TreeSet") + "<" + JavaJDBCType.getFieldTypeBaseClass(C) + ">();");
                 Out.println("          for (int i = 0; i < _" + C.getName() + ".size(); ++i)");
                 Out.println("           {");
                 Out.println("             String v = _" + C.getName() + ".get(i);");
-                Out.println("             "+ClassNameData+" d = "+ClassNameFactory+".getEnumerationById(v);");
+                Out.println("             " + ClassNameData + " d = " + ClassNameFactory + ".getEnumerationById(v);");
                 Out.println("             if (d == null)");
                 Out.println("              throw new Exception(\"Cannot set " + C.getFullName() + ": the value \'\"+v+\"\' is not a valid Enumerated value as per \'" + ClassNameFactory + "\'.\");");
-                Out.println("             addTo"+TextUtil.capitalizeFirstCharacter(C.getName())+"EnumValue(i, d.getValue());");
+                Out.println("             addTo" + TextUtil.capitalizeFirstCharacter(C.getName()) + "EnumValue(i, d.getValue());");
                 Out.println("           }");
               }
             else if (C.isSet() == true)
@@ -1373,32 +1373,32 @@ public class TildaData implements CodeGenTildaData
                 Out.println("          _" + C.getName() + "EnumValue = new " + (C.isList() == true ? "ArrayList" : "TreeSet") + "<" + JavaJDBCType.getFieldTypeBaseClass(C) + ">();");
                 Out.println("          for (String v : _" + C.getName() + ")");
                 Out.println("           {");
-                Out.println("             "+ClassNameData+" d = "+ClassNameFactory+".getEnumerationById(v);");
+                Out.println("             " + ClassNameData + " d = " + ClassNameFactory + ".getEnumerationById(v);");
                 Out.println("             if (d == null)");
                 Out.println("              throw new Exception(\"Cannot set " + C.getFullName() + ": the value \'\"+v+\"\' is not a valid Enumerated value as per \'" + ClassNameFactory + "\'.\");");
-                Out.println("             addTo"+TextUtil.capitalizeFirstCharacter(C.getName())+"EnumValue(d.getValue());");
+                Out.println("             addTo" + TextUtil.capitalizeFirstCharacter(C.getName()) + "EnumValue(d.getValue());");
                 Out.println("           }");
               }
             else
               {
-                Out.println("          "+ClassNameData+" d = "+ClassNameFactory+".getEnumerationById(_"+C.getName()+");");
+                Out.println("          " + ClassNameData + " d = " + ClassNameFactory + ".getEnumerationById(_" + C.getName() + ");");
                 Out.println("          if (d == null)");
-                Out.println("           throw new Exception(\"Cannot set " + C.getFullName() + ": the value \'\"+_"+C.getName()+"+\"\' is not a valid Enumerated value as per \'" + ClassNameFactory + "\'.\");");
+                Out.println("           throw new Exception(\"Cannot set " + C.getFullName() + ": the value \'\"+_" + C.getName() + "+\"\' is not a valid Enumerated value as per \'" + ClassNameFactory + "\'.\");");
                 Out.println("          set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "EnumValue(d.getValue());");
               }
           }
-/*
- *           for (int i = 0; i < _categories.size(); ++i)
-           {
-             String v = _categories.get(i);
-             com.capsico.forms.data.FormCategory_Data d = com.capsico.forms.data.FormCategory_Factory.getEnumerationById(v);
-             if (d == null)
-              throw new Exception("ccccc");
-             addToCategoriesEnumValue(i, v);
-           }
-        
- */
-        
+        /*
+         * for (int i = 0; i < _categories.size(); ++i)
+         * {
+         * String v = _categories.get(i);
+         * com.capsico.forms.data.FormCategory_Data d = com.capsico.forms.data.FormCategory_Factory.getEnumerationById(v);
+         * if (d == null)
+         * throw new Exception("ccccc");
+         * addToCategoriesEnumValue(i, v);
+         * }
+         * 
+         */
+
       }
 
     private void genColumnTestBoolean(PrintWriter Out, List<Column> cols)
@@ -1416,7 +1416,7 @@ public class TildaData implements CodeGenTildaData
               else if (C.isCollection() == false && C.getType() == ColumnType.DATETIME)
                 {
                   if (C.isJSONColumn() == true)
-                   Out.print("TextUtil.isNullOrEmpty(Str_" + C.getName() + ") == false");
+                    Out.print("TextUtil.isNullOrEmpty(Str_" + C.getName() + ") == false");
                   else
                     Out.print("_" + C.getName() + " != null");
                 }
@@ -1625,10 +1625,25 @@ public class TildaData implements CodeGenTildaData
               String Mask = Helper.getRuntimeMask(C);
               String Pad = O._PadderColumnNames.getPad(C.getName());
               if (C._Nullable == true)
-                Out.print("       if (__Nulls.intersects(" + Mask + ") == true) Dst.set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "Null" + Pad + "(); else ");
+                Out.print("       if (__Nulls.intersects(" + Mask + ") == true || _" + C.getName() + Pad + "==null)\n"
+                + "        Dst.set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "Null" + Pad + "();\n"
+                + "       else\n "); // extra space to indent next line
+              else
+                Out.print("       if (_" + C.getName() + Pad + " != null)\n "); // extra space to indent next line
               Out.println("       Dst.set" + TextUtil.capitalizeFirstCharacter(C.getName()) + Pad + "(_" + C.getName() + Pad + ");");
+
+              if (C.getType() == ColumnType.DATETIME && C.isJSONColumn() == true)
+                Out.println("       Dst.Str_" + C.getName() + " = Str_" + C.getName() + ";");
             }
         Out.println("     }");
+        Out.println("\n");
+        Out.println("   public " + Helper.getFullAppDataClassName(O) + " copy() throws Exception");
+        Out.println("     {");
+        Out.println("       " + Helper.getFullAppDataClassName(O) + " dst = new " + Helper.getFullAppDataClassName(O) + "();");
+        Out.println("       copyTo(dst);");
+        Out.println("       return dst;");
+        Out.println("     }");
+
       }
 
     @Override
@@ -1671,7 +1686,7 @@ public class TildaData implements CodeGenTildaData
         Out.println("       java.sql.PreparedStatement PS=null;");
         Out.println("       java.sql.ResultSet RS=null;");
         if (O.hasCollectionColumn() == true || O.hasCollectionQuery() == true)
-         Out.println("       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();");
+          Out.println("       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();");
         Out.println("       int count = 0;");
         Out.println();
         Out.println("       try");
@@ -1853,16 +1868,16 @@ public class TildaData implements CodeGenTildaData
         Out.println("     __Init     = InitMode.READ;");
         Out.println("     __Changes.clear();");
 
-// LDH-NOTE: Auto fields are written to the database, i.e., they are associated to a column and so will be read already.
-//          It is therefore useless to call the auto setters here.
-        
-//        if (O.hasAutos() == true)
-//          {
-//            Out.println();
-//            for (Column C : O._Columns)
-//              if (C != null && C._Mode == ColumnMode.AUTO && C._MapperDef == null && C._FCT.isManaged() == false)
-//                Out.println("    set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "();");
-//          }
+        // LDH-NOTE: Auto fields are written to the database, i.e., they are associated to a column and so will be read already.
+        // It is therefore useless to call the auto setters here.
+
+        // if (O.hasAutos() == true)
+        // {
+        // Out.println();
+        // for (Column C : O._Columns)
+        // if (C != null && C._Mode == ColumnMode.AUTO && C._MapperDef == null && C._FCT.isManaged() == false)
+        // Out.println(" set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "();");
+        // }
 
         Out.println();
         Out.println("     return afterRead(C);");

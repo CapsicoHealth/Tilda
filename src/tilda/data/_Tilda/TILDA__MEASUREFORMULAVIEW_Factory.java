@@ -405,6 +405,16 @@ This is the column definition for:<BR>
 // THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+   static public tilda.data.MeasureFormulaView_Data lookupByAll() throws Exception
+     {
+       tilda.data._Tilda.TILDA__MEASUREFORMULAVIEW Obj = new tilda.data.MeasureFormulaView_Data();
+       Obj.initForLookup(0);
+
+
+       return (tilda.data.MeasureFormulaView_Data) Obj;
+     }
+
+
    public static SelectQuery newSelectQuery(Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, true); }
    public static SelectQuery newWhereQuery (Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, false); }
    public static ListResults<tilda.data.MeasureFormulaView_Data> runSelect(Connection C, SelectQuery Q, int start, int size) throws Exception
@@ -419,5 +429,141 @@ This is the column definition for:<BR>
        readMany(C, -7, RPI, null, Q, start, size);
      }
 
+
+   public static String getCSVHeader()
+    {
+      return "\"measureRefnum\",\"measureSchema\",\"measureName\",\"formulaRefnum\",\"formulaLocation\",\"formulaLocation2\",\"formulaName\",\"title\",\"description\",\"type\",\"formula\"";
+    }
+
+   public static void toCSV(java.io.Writer out, List<tilda.data.MeasureFormulaView_Data> L, boolean includeHeader) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      if (includeHeader == true)
+        out.write(getCSVHeader() + "\n");
+      for (tilda.data.MeasureFormulaView_Data O : L)
+       if (O!=null)
+        {
+          toCSV(out, O);
+          out.write("\n");
+        }
+      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);
+    }
+
+   public static void toCSV(java.io.Writer out, tilda.data.MeasureFormulaView_Data obj) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      StringBuilder Str = new StringBuilder();
+
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getMeasureRefnum());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getMeasureSchema());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getMeasureName());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getFormulaRefnum());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getFormulaLocation());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getFormulaLocation2());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getFormulaName());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getTitle());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getDescription());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getType());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getFormula());
+      out.write(Str.toString());
+      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);
+    }
+   public static void toJSON(java.io.Writer out, List<tilda.data.MeasureFormulaView_Data> L, String lead, boolean fullList) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      if (fullList == true)
+        {
+          if (L == null)
+           {
+             out.write("null\n");
+             return;
+           }
+          if (L.isEmpty() == true)
+           {
+             out.write("[]\n");
+             return;
+           }
+          out.write("[\n");
+        }
+      boolean First = true;
+      for (tilda.data.MeasureFormulaView_Data O : L)
+       if (O!=null)
+        {
+          out.write(lead);
+          toJSON(out, O, First == true ? "   " : "  ,", true);
+          if (First == true)
+           First = false;
+        }
+      if (fullList == true)
+       { 
+          out.write(lead);
+          out.write("]\n");
+       } 
+      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
+    }
+
+   public static void toJSON(java.io.Writer out, tilda.data.MeasureFormulaView_Data obj, boolean fullObject) throws java.io.IOException
+    {
+      toJSON(out, obj, "", fullObject, false);
+    }
+
+   public static void toJSON(java.io.Writer out, tilda.data.MeasureFormulaView_Data obj, String lead, boolean fullObject) throws java.io.IOException
+    {
+      toJSON(out, obj, lead, fullObject, false);
+    }
+
+   public static void toJSON(java.io.Writer outWriter, tilda.data.MeasureFormulaView_Data obj, String lead, boolean fullObject, boolean noNullArrays) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter();
+      tilda.data._Tilda.TILDA__MEASUREFORMULAVIEW Obj = (tilda.data._Tilda.TILDA__MEASUREFORMULAVIEW) obj;
+      if (fullObject == true)
+       {
+          out.write(lead);
+          out.write("{");
+       }
+
+      int i = -1;
+        JSONUtil.print(out, "measureRefnum", ++i==0, Obj.getMeasureRefnum());
+
+        JSONUtil.print(out, "measureSchema", ++i==0, Obj.getMeasureSchema());
+
+        JSONUtil.print(out, "measureName", ++i==0, Obj.getMeasureName());
+
+        JSONUtil.print(out, "formulaRefnum", ++i==0, Obj.getFormulaRefnum());
+
+        JSONUtil.print(out, "formulaLocation", ++i==0, Obj.getFormulaLocation());
+
+        JSONUtil.print(out, "formulaLocation2", ++i==0, Obj.getFormulaLocation2());
+
+        JSONUtil.print(out, "formulaName", ++i==0, Obj.getFormulaName());
+
+        JSONUtil.print(out, "title", ++i==0, Obj.getTitle());
+
+        JSONUtil.print(out, "description", ++i==0, Obj.getDescription());
+
+        JSONUtil.print(out, "type", ++i==0, Obj.getType());
+
+      if (Obj.isFormulaNull() == false && Obj.getFormula() != null)
+        JSONUtil.print(out, "formula", ++i==0, Obj.getFormula());
+
+      if (fullObject == true)
+       out.write(" }\n");
+
+      outWriter.append(out.getBuilder().toString());
+      out.close();
+
+      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
+    }
 
  }

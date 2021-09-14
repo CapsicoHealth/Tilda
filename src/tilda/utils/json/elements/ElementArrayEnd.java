@@ -10,13 +10,21 @@ public class ElementArrayEnd implements ElementDef
       {
         _Name = Name;
       }
+
     protected final String _Name;
 
     @Override
     public void print(Writer Out, boolean FirstElement, String Header)
     throws Exception
       {
+        Out.write(Header);
         JSONUtil.startend(Out, ']');
         JSONUtil.newline(Out);
+      }
+
+    @Override
+    public NestingStatus getNestingStatus()
+      {
+        return NestingStatus.END;
       }
   }
