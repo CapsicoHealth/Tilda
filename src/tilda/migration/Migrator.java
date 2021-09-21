@@ -176,19 +176,19 @@ public class Migrator
                   LOG.debug((included == true ? "       " : "       // ") + "(dependency) " + MA.getDescription());
               }
           }
+        LOG.info("");
+        LOG.info("A total of " + counterApplied + " migration steps will be applied.");
+
         List<MigrationDrops> drops = migrationData.getDropList();
         if (drops != null && drops.isEmpty() == false)
           {
-            LOG.info("");
             File F = new File("tilda.migration.drops.sql");
             PrintWriter out = new PrintWriter(new FileOutputStream(F, false));
             for (MigrationDrops d : drops)
               out.println("-- " + d.process());
             out.close();
-            LOG.info("A total of " + drops.size() + " drop actions have been saved to the file " + F.getCanonicalPath() + ".");
+            LOG.info("    - Separately, " + drops.size() + " drop actions have been saved to the file " + F.getCanonicalPath() + ".");
           }
-        LOG.info("");
-        LOG.info("A total of " + counterApplied + " migration steps will be applied.");
       }
 
     public static MigrationDataModel AnalyzeDatabase(Connection C, boolean checkOnly, List<Schema> tildaList, DatabaseMeta DBMeta)
@@ -388,7 +388,7 @@ public class Migrator
                                 if (CMDest == null && CMSrcs.size() == 1)
                                   {
                                     // Add the migration action
-                                    Actions.add(new TableColumnRename(MR._Column, CMSrcs.get(0)._Name));
+                                    Actions.add(new TableColumnRename(MR._Column, CMSrcs.get(0)._NameOriginal));
                                     // Rename table to avoid double-creation later in this loop
                                     // i.e., the table didn't exist in this schema when the database was originally scanned (DBMeta).
                                     if (DBMeta.getSchemaMeta(MR._Object._ParentSchema._Name).renameTableColumn(DBMeta, TM, CMSrcs.get(0)._Name, MR._Column.getName()) == false)
