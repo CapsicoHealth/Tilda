@@ -209,7 +209,7 @@ public class BQHelper
      */
     public static JobCostDetails getJobCostInBytesCents(BigQuery bq, String jobId)
       {
-        String q = "SELECT total_bytes_billed, cost_cents, cost_cents_modeling from TILDA.BQJobDetails where job_id=" + TextUtil.escapeSingleQuoteForSQL(jobId) + ";";
+        String q = "SELECT total_bytes_billed, cost_cents, cost_cents_modeling from TILDA.BQJobDetailsView where job_id=" + TextUtil.escapeSingleQuoteForSQL(jobId) + ";";
         JobResults jr = runQuery(bq, q);
         if (jr != null)
           for (FieldValueList row : jr._r.iterateAll())
