@@ -57,40 +57,22 @@ public class TableMeta
     public void load(Connection C)
     throws Exception
       {
-        long TS = System.nanoTime();
         DatabaseMetaData meta = C.getMetaData();
-        ResultSet RS = meta.getColumns(null, _SchemaName.toLowerCase(), _TableName.toLowerCase(), null);
-        while (RS.next() != false)
-          {
-            ColumnMeta CI = new ColumnMeta(C, RS, this, null);
-            _ColumnsMap.put(CI._Name.toLowerCase(), CI);
-            _ColumnsList.add(CI);
-            _PadderColumnNames.track(CI._Name);
-            ++MetaPerformance._TableColumnCount;
-          }
-        MetaPerformance._TableColumnNano+=(System.nanoTime()-TS);
-
         
-        TS = System.nanoTime();
-        RS = meta.getIndexInfo(null, _SchemaName.toLowerCase(), _TableName.toLowerCase(), true, true);
+        // Loading unique indices
+        long TS = System.nanoTime();
+        ResultSet RS = meta.getIndexInfo(null, _SchemaName.toLowerCase(), _TableName.toLowerCase(), true, true);
         loadIndices(RS);
+        RS.close();
+
+        // Loading non-unique indices
         RS = meta.getIndexInfo(null, _SchemaName.toLowerCase(), _TableName.toLowerCase(), false, true);
         loadIndices(RS);
+        RS.close();
         MetaPerformance._IndexNano+=(System.nanoTime()-TS);
         MetaPerformance._IndexCount += _Indices.size();
         
-        TS = System.nanoTime();
-        RS = meta.getImportedKeys(null, _SchemaName.toLowerCase(), _TableName.toLowerCase());
-        loadForeignKeys(RS, _ForeignKeysOut, true, this);
-        MetaPerformance._FKOutNano+=(System.nanoTime()-TS);
-        MetaPerformance._FKOutCount += _ForeignKeysOut.size();
-
-        TS = System.nanoTime();
-        RS = meta.getExportedKeys(null, _SchemaName.toLowerCase(), _TableName.toLowerCase());
-        loadForeignKeys(RS, _ForeignKeysIn, false, this);
-        MetaPerformance._FKInNano+=(System.nanoTime()-TS);
-        MetaPerformance._FKInCount += _ForeignKeysIn.size();
-
+        // Loading primary keys
         TS = System.nanoTime();
         RS = meta.getPrimaryKeys(null, _SchemaName.toLowerCase(), _TableName.toLowerCase());
         if (RS.next() == true)
@@ -113,23 +95,6 @@ public class TableMeta
             IM.addColumn(RS);
           }
       }
-
-
-    private static void loadForeignKeys(ResultSet RS, Map<String, FKMeta> FKKeyList, boolean Outgoing, TableMeta parentTable)
-    throws SQLException, Exception
-      {
-        while (RS.next() != false)
-          {
-            FKMeta FKM = new FKMeta(RS, Outgoing, parentTable);
-            FKMeta prevFKM = FKKeyList.get(FKM._Name);
-            if (prevFKM == null)
-              FKKeyList.put(FKM._Name, FKM);
-            else
-              FKM = prevFKM;
-            FKM.addColumn(RS);
-          }
-      }
-
 
     public ColumnMeta getColumnMeta(String ColumnName)
       {

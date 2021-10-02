@@ -392,7 +392,7 @@ public class Migrator
                                     // Rename table to avoid double-creation later in this loop
                                     // i.e., the table didn't exist in this schema when the database was originally scanned (DBMeta).
                                     if (DBMeta.getSchemaMeta(MR._Object._ParentSchema._Name).renameTableColumn(DBMeta, TM, CMSrcs.get(0)._Name, MR._Column.getName()) == false)
-                                      throw new Exception("An error occurred: Column '" + CMSrcs.get(0)._ParentTable._SchemaName + "." + CMSrcs.get(0)._ParentTable._TableName + "." + CMSrcs.get(0)._Name + "' is being renamed to '" + MR._ColumnName + "' but seems to already exist there even though we just tested that a second ago and found nothing!");
+                                      throw new Exception("An error occurred: Column '" + CMSrcs.get(0).getParentTable()._SchemaName + "." + CMSrcs.get(0).getParentTable()._TableName + "." + CMSrcs.get(0)._Name + "' is being renamed to '" + MR._ColumnName + "' but seems to already exist there even though we just tested that a second ago and found nothing!");
                                   }
                               }
                           }

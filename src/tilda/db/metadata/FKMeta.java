@@ -27,24 +27,32 @@ public class FKMeta
   {
     static final Logger LOG = LogManager.getLogger(FKMeta.class.getName());
 
-    protected FKMeta(ResultSet RS, boolean Outgoing, TableMeta parentTable)
+    protected FKMeta(ResultSet RS, boolean Outgoing)
       throws Exception
       {
         // LOG.debug(JDBCHelper.PrintResultSet(RS));
         _Name = RS.getString("FK_NAME");
+        _SrcSchema = RS.getString(Outgoing == true ? "FKTABLE_SCHEM" : "PKTABLE_SCHEM").toLowerCase();
+        _SrcTable = RS.getString(Outgoing == true ? "FKTABLE_NAME" : "PKTABLE_NAME").toLowerCase();
         _OtherSchema = RS.getString(Outgoing == true ? "PKTABLE_SCHEM" : "FKTABLE_SCHEM").toLowerCase();
         _OtherTable = RS.getString(Outgoing == true ? "PKTABLE_NAME" : "FKTABLE_NAME").toLowerCase();
         _Outgoing = Outgoing;
-        _ParentTable = parentTable;
       }
 
     public final String             _Name;
+    public final String             _SrcSchema;
+    public final String             _SrcTable;
     public final String             _OtherSchema;
     public final String             _OtherTable;
     public final boolean            _Outgoing;
-    public final TableMeta          _ParentTable;
+    protected TableMeta             _ParentTable;
 
     public final List<FKColumnMeta> _Columns = new ArrayList<FKColumnMeta>();
+
+    public void attachToTable(TableMeta parentTable)
+      {
+        _ParentTable = parentTable;
+      }
 
     public String getCleanName()
       {
@@ -54,8 +62,8 @@ public class FKMeta
         if (cleanName.startsWith("_") == true)
           cleanName = cleanName.substring(1);
         if (cleanName.toLowerCase().endsWith("_fkey") == true)
-          cleanName = cleanName.substring(0, cleanName.length()-"_fkey".length());
-        
+          cleanName = cleanName.substring(0, cleanName.length() - "_fkey".length());
+
         return cleanName;
       }
 
