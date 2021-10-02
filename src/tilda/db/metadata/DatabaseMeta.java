@@ -28,29 +28,31 @@ import tilda.db.Connection;
 
 public class DatabaseMeta
   {
-    protected static final Logger LOG                 = LogManager.getLogger(DatabaseMeta.class.getName());
-    
+    protected static final Logger LOG = LogManager.getLogger(DatabaseMeta.class.getName());
+
     public DatabaseMeta()
       {
       }
 
     protected Map<String, SchemaMeta> _DBSchemas = new HashMap<String, SchemaMeta>();
-    protected boolean _SupportsArrays;
+    protected boolean                 _SupportsArrays;
 
-    public void load(Connection C, String SchemaPattern, String TablePattern) throws Exception
+    public void load(Connection C, String SchemaPattern, String TablePattern)
+    throws Exception
       {
-        long TS = System.nanoTime();
         DatabaseMetaData meta = C.getMetaData();
-        ResultSet RS = meta.getSchemas(null, SchemaPattern==null?SchemaPattern:SchemaPattern.toLowerCase());
+
+        long TS = System.nanoTime();
+        ResultSet RS = meta.getSchemas(null, SchemaPattern == null ? SchemaPattern : SchemaPattern.toLowerCase());
         while (RS.next() != false)
           {
             String SchemaName = RS.getString("TABLE_SCHEM").toLowerCase();
-            LOG.debug("Reading metadata for schema '"+SchemaName+"'.");
+            LOG.debug("Reading metadata for schema '" + SchemaName + "'.");
             SchemaMeta S = _DBSchemas.get(SchemaName);
             if (S == null)
-             S = new SchemaMeta(SchemaName);
+              S = new SchemaMeta(SchemaName);
             _DBSchemas.put(SchemaName, S);
-            MetaPerformance._SchemaNano+=(System.nanoTime()-TS);
+            MetaPerformance._SchemaNano += (System.nanoTime() - TS);
             S.load(C, TablePattern);
             TS = System.nanoTime();
             ++MetaPerformance._SchemaCount;
