@@ -708,7 +708,6 @@ public class JSONUtil
         Out.write(Header);
         print(Out, elementName, firstElement);
 
-
         if (L == null)
           {
             Out.write(" null ");
@@ -791,6 +790,18 @@ public class JSONUtil
       {
         Out.write(Header);
         print(Out, elementName, firstElement);
+
+        if (Values == null)
+          {
+            Out.write(" null ");
+            return;
+          }
+        if (Values.length == 0)
+          {
+            Out.write(" [ ] ");
+            return;
+          }
+        
         Out.write(" [ ");
         boolean First = true;
         for (String[] Value : Values)

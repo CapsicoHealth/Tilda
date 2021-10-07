@@ -856,6 +856,16 @@ public class ParseUtil
       {
         return Val != null && (Val.equals("1") || Val.equalsIgnoreCase("Y") || Val.equalsIgnoreCase("T") || Val.equalsIgnoreCase("YES") || Val.equalsIgnoreCase("TRUE"));
       }
+    
+    public static Boolean parseBoolean(String Val, Boolean Default)
+      {
+        if (Val != null && (Val.equals("1") || Val.equalsIgnoreCase("Y") || Val.equalsIgnoreCase("T") || Val.equalsIgnoreCase("YES") || Val.equalsIgnoreCase("TRUE")))
+         return Boolean.TRUE;
+        if (Val != null && (Val.equals("0") || Val.equalsIgnoreCase("N") || Val.equalsIgnoreCase("F") || Val.equalsIgnoreCase("NO") || Val.equalsIgnoreCase("FALSE")))
+         return Boolean.FALSE;
+        return Default;
+      }
+
 
     /**
      * @param Name
