@@ -53,7 +53,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          FORMREFNUM     = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "formRefnum"     , 0/*0*/, "The primary key for this record", null, null);
+     public static Type_LongPrimitive          FORMREFNUM     = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "formRefnum"     , 0/*0*/, "The primary key for this record", null, null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_PivotView.formType -> TILDATUTORIAL.Test_XYZ_PivotView."formType"
@@ -72,7 +72,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        FORMTYPE       = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "formType"       , 1/*1*/, "Form template type", null, null);
+     public static Type_StringPrimitive        FORMTYPE       = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "formType"       , 1/*1*/, "Form template type", null, null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_PivotView.formFillDateTZ -> TILDATUTORIAL.Test_XYZ_PivotView."formFillDateTZ"
@@ -91,7 +91,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    FORMFILLDATETZ = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "formFillDateTZ" , 2/*2*/, "Generated helper column to hold the time zone ID for 'formFillDate'.", null, null);
+     public static Type_StringPrimitiveNull    FORMFILLDATETZ = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "formFillDateTZ" , 2/*2*/, "Generated helper column to hold the time zone ID for 'formFillDate'.", null, null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_PivotView.formFillDate -> TILDATUTORIAL.Test_XYZ_PivotView."formFillDate"
@@ -127,7 +127,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          FORMUSERREFNUM = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "formUserRefnum" , 4/*4*/, "The primary key for this record", null, null);
+     public static Type_LongPrimitive          FORMUSERREFNUM = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "formUserRefnum" , 4/*4*/, "The primary key for this record", null, null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_PivotView.formUserEmail -> TILDATUTORIAL.Test_XYZ_PivotView."formUserEmail"
@@ -146,7 +146,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        FORMUSEREMAIL  = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "formUserEmail"  , 5/*5*/, "The user's email", null, null);
+     public static Type_StringPrimitive        FORMUSEREMAIL  = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "formUserEmail"  , 5/*5*/, "The user's email", null, null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_PivotView.countCorrect -> TILDATUTORIAL.Test_XYZ_PivotView."countCorrect"
@@ -164,7 +164,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          COUNTCORRECT   = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "countCorrect"   , 6/*6*/, "Whether the answer is correct or not", null, null);
+     public static Type_LongPrimitive          COUNTCORRECT   = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "countCorrect"   , 6/*6*/, "Whether the answer is correct or not", null, null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_PivotView.countIncorrect -> TILDATUTORIAL.Test_XYZ_PivotView."countIncorrect"
@@ -182,7 +182,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          COUNTINCORRECT = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "countIncorrect" , 7/*7*/, "Whether the answer is correct or not", null, null);
+     public static Type_LongPrimitive          COUNTINCORRECT = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "countIncorrect" , 7/*7*/, "Whether the answer is correct or not", null, null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_PivotView.timeMillisTotal -> TILDATUTORIAL.Test_XYZ_PivotView."timeMillisTotal"
@@ -200,7 +200,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          TIMEMILLISTOTAL= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "timeMillisTotal", 8/*8*/, "Time in milliseconds for the time spent answering the question", null, null);
+     public static Type_LongPrimitive          TIMEMILLISTOTAL= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "timeMillisTotal", 8/*8*/, "Time in milliseconds for the time spent answering the question", null, null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_PivotView.timeMillisAvg -> TILDATUTORIAL.Test_XYZ_PivotView."timeMillisAvg"
@@ -218,7 +218,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DoublePrimitive        TIMEMILLISAVG  = new Type_DoublePrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "timeMillisAvg"  , 9/*9*/, "Time in milliseconds for the time spent answering the question", null, null);
+     public static Type_DoublePrimitive        TIMEMILLISAVG  = new Type_DoublePrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "timeMillisAvg"  , 9/*9*/, "Time in milliseconds for the time spent answering the question", null, null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_PivotView.timeMillisMin -> TILDATUTORIAL.Test_XYZ_PivotView."timeMillisMin"
@@ -236,7 +236,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerPrimitive       TIMEMILLISMIN  = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "timeMillisMin"  , 10/*10*/, "Time in milliseconds for the time spent answering the question", null, null);
+     public static Type_IntegerPrimitive       TIMEMILLISMIN  = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "timeMillisMin"  , 10/*10*/, "Time in milliseconds for the time spent answering the question", null, null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_PivotView.QX_correct -> TILDATUTORIAL.Test_XYZ_PivotView."QX_correct"
@@ -254,7 +254,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_BooleanPrimitiveNull   QX_CORRECT     = new Type_BooleanPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "QX_correct"     , 11/*11*/, "Question X (pivot of MIN(TILDATUTORIAL.TestAnswer.correct) on TILDATUTORIAL.TestAnswer.questionId='QX')", null, null);
+     public static Type_BooleanPrimitiveNull   QX_CORRECT     = new Type_BooleanPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "QX_correct"     , 11/*11*/, "Question X (pivot of MIN(TILDATUTORIAL.TestAnswer.correct) on TILDATUTORIAL.TestAnswer.questionId='QX')", null, null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_PivotView.QX_timeMillis -> TILDATUTORIAL.Test_XYZ_PivotView."QX_timeMillis"
@@ -272,7 +272,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerPrimitiveNull   QX_TIMEMILLIS  = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "QX_timeMillis"  , 12/*12*/, "Question X (pivot of MAX(TILDATUTORIAL.TestAnswer.timeMillis) on TILDATUTORIAL.TestAnswer.questionId='QX')", null, null);
+     public static Type_IntegerPrimitiveNull   QX_TIMEMILLIS  = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "QX_timeMillis"  , 12/*12*/, "Question X (pivot of MAX(TILDATUTORIAL.TestAnswer.timeMillis) on TILDATUTORIAL.TestAnswer.questionId='QX')", null, null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_PivotView.QY_correct -> TILDATUTORIAL.Test_XYZ_PivotView."QY_correct"
@@ -290,7 +290,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_BooleanPrimitiveNull   QY_CORRECT     = new Type_BooleanPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "QY_correct"     , 13/*13*/, "Question Y (pivot of MIN(TILDATUTORIAL.TestAnswer.correct) on TILDATUTORIAL.TestAnswer.questionId='QY')", null, null);
+     public static Type_BooleanPrimitiveNull   QY_CORRECT     = new Type_BooleanPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "QY_correct"     , 13/*13*/, "Question Y (pivot of MIN(TILDATUTORIAL.TestAnswer.correct) on TILDATUTORIAL.TestAnswer.questionId='QY')", null, null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_PivotView.QY_timeMillis -> TILDATUTORIAL.Test_XYZ_PivotView."QY_timeMillis"
@@ -308,7 +308,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerPrimitiveNull   QY_TIMEMILLIS  = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "QY_timeMillis"  , 14/*14*/, "Question Y (pivot of MAX(TILDATUTORIAL.TestAnswer.timeMillis) on TILDATUTORIAL.TestAnswer.questionId='QY')", null, null);
+     public static Type_IntegerPrimitiveNull   QY_TIMEMILLIS  = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "QY_timeMillis"  , 14/*14*/, "Question Y (pivot of MAX(TILDATUTORIAL.TestAnswer.timeMillis) on TILDATUTORIAL.TestAnswer.questionId='QY')", null, null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_PivotView.QZ_correct -> TILDATUTORIAL.Test_XYZ_PivotView."QZ_correct"
@@ -326,7 +326,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_BooleanPrimitiveNull   QZ_CORRECT     = new Type_BooleanPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "QZ_correct"     , 15/*15*/, "Question Z (pivot of MIN(TILDATUTORIAL.TestAnswer.correct) on TILDATUTORIAL.TestAnswer.questionId='QZ')", null, null);
+     public static Type_BooleanPrimitiveNull   QZ_CORRECT     = new Type_BooleanPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "QZ_correct"     , 15/*15*/, "Question Z (pivot of MIN(TILDATUTORIAL.TestAnswer.correct) on TILDATUTORIAL.TestAnswer.questionId='QZ')", null, null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_PivotView.QZ_timeMillis -> TILDATUTORIAL.Test_XYZ_PivotView."QZ_timeMillis"
@@ -344,7 +344,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerPrimitiveNull   QZ_TIMEMILLIS  = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "QZ_timeMillis"  , 16/*16*/, "Question Z (pivot of MAX(TILDATUTORIAL.TestAnswer.timeMillis) on TILDATUTORIAL.TestAnswer.questionId='QZ')", null, null);
+     public static Type_IntegerPrimitiveNull   QZ_TIMEMILLIS  = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "QZ_timeMillis"  , 16/*16*/, "Question Z (pivot of MAX(TILDATUTORIAL.TestAnswer.timeMillis) on TILDATUTORIAL.TestAnswer.questionId='QZ')", null, null, null);
 ;
    }
 
@@ -495,6 +495,16 @@ This is the column definition for:<BR>
 // THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+   static public tilda.tutorial.data.Test_XYZ_PivotView_Data lookupByAll() throws Exception
+     {
+       tilda.tutorial.data._Tilda.TILDA__TEST_XYZ_PIVOTVIEW Obj = new tilda.tutorial.data.Test_XYZ_PivotView_Data();
+       Obj.initForLookup(0);
+
+
+       return (tilda.tutorial.data.Test_XYZ_PivotView_Data) Obj;
+     }
+
+
 
    public static SelectQuery newSelectQuery(Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, true); }
    public static SelectQuery newWhereQuery (Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, false); }
@@ -510,5 +520,172 @@ This is the column definition for:<BR>
        readMany(C, -7, RPI, null, Q, start, size);
      }
 
+
+   public static String getCSVHeader()
+    {
+      return "\"formRefnum\",\"formType\",\"formFillDateTZ\",\"formFillDate\",\"formUserRefnum\",\"formUserEmail\",\"countCorrect\",\"countIncorrect\",\"timeMillisTotal\",\"timeMillisAvg\",\"timeMillisMin\",\"QX_correct\",\"QX_timeMillis\",\"QY_correct\",\"QY_timeMillis\",\"QZ_correct\",\"QZ_timeMillis\"";
+    }
+
+   public static void toCSV(java.io.Writer out, List<tilda.tutorial.data.Test_XYZ_PivotView_Data> L, boolean includeHeader) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      if (includeHeader == true)
+        out.write(getCSVHeader() + "\n");
+      for (tilda.tutorial.data.Test_XYZ_PivotView_Data O : L)
+       if (O!=null)
+        {
+          toCSV(out, O);
+          out.write("\n");
+        }
+      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);
+    }
+
+   public static void toCSV(java.io.Writer out, tilda.tutorial.data.Test_XYZ_PivotView_Data obj) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      StringBuilder Str = new StringBuilder();
+
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getFormRefnum());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getFormType());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getFormFillDateTZ());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getFormFillDate()));
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getFormUserRefnum());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getFormUserEmail());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getCountCorrect());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getCountIncorrect());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getTimeMillisTotal());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getTimeMillisAvg());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getTimeMillisMin());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getQX_correct());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getQX_timeMillis());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getQY_correct());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getQY_timeMillis());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getQZ_correct());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getQZ_timeMillis());
+      out.write(Str.toString());
+      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);
+    }
+   public static void toJSON(java.io.Writer out, List<tilda.tutorial.data.Test_XYZ_PivotView_Data> L, String lead, boolean fullList) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      if (fullList == true)
+        {
+          if (L == null)
+           {
+             out.write("null\n");
+             return;
+           }
+          if (L.isEmpty() == true)
+           {
+             out.write("[]\n");
+             return;
+           }
+          out.write("[\n");
+        }
+      boolean First = true;
+      for (tilda.tutorial.data.Test_XYZ_PivotView_Data O : L)
+       if (O!=null)
+        {
+          out.write(lead);
+          toJSON(out, O, First == true ? "   " : "  ,", true);
+          if (First == true)
+           First = false;
+        }
+      if (fullList == true)
+       { 
+          out.write(lead);
+          out.write("]\n");
+       } 
+      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
+    }
+
+   public static void toJSON(java.io.Writer out, tilda.tutorial.data.Test_XYZ_PivotView_Data obj, boolean fullObject) throws java.io.IOException
+    {
+      toJSON(out, obj, "", fullObject, false);
+    }
+
+   public static void toJSON(java.io.Writer out, tilda.tutorial.data.Test_XYZ_PivotView_Data obj, String lead, boolean fullObject) throws java.io.IOException
+    {
+      toJSON(out, obj, lead, fullObject, false);
+    }
+
+   public static void toJSON(java.io.Writer outWriter, tilda.tutorial.data.Test_XYZ_PivotView_Data obj, String lead, boolean fullObject, boolean noNullArrays) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter();
+      tilda.tutorial.data._Tilda.TILDA__TEST_XYZ_PIVOTVIEW Obj = (tilda.tutorial.data._Tilda.TILDA__TEST_XYZ_PIVOTVIEW) obj;
+      if (fullObject == true)
+       {
+          out.write(lead);
+          out.write("{");
+       }
+
+      int i = -1;
+        JSONUtil.print(out, "formRefnum", ++i==0, Obj.getFormRefnum());
+
+        JSONUtil.print(out, "formType", ++i==0, Obj.getFormType());
+
+      if (Obj.isFormFillDateTZNull() == false && Obj.getFormFillDateTZ() != null)
+        JSONUtil.print(out, "formFillDateTZ", ++i==0, Obj.getFormFillDateTZ());
+
+      if (Obj.isFormFillDateNull() == false && Obj.getFormFillDate() != null)
+        JSONUtil.print(out, "formFillDate", ++i==0, Obj.getFormFillDate());
+
+        JSONUtil.print(out, "formUserRefnum", ++i==0, Obj.getFormUserRefnum());
+
+        JSONUtil.print(out, "formUserEmail", ++i==0, Obj.getFormUserEmail());
+
+        JSONUtil.print(out, "countCorrect", ++i==0, Obj.getCountCorrect());
+
+        JSONUtil.print(out, "countIncorrect", ++i==0, Obj.getCountIncorrect());
+
+        JSONUtil.print(out, "timeMillisTotal", ++i==0, Obj.getTimeMillisTotal());
+
+        JSONUtil.print(out, "timeMillisAvg", ++i==0, Obj.getTimeMillisAvg());
+
+        JSONUtil.print(out, "timeMillisMin", ++i==0, Obj.getTimeMillisMin());
+
+      if (Obj.isQX_correctNull() == false)
+        JSONUtil.print(out, "QX_correct", ++i==0, Obj.getQX_correct());
+
+      if (Obj.isQX_timeMillisNull() == false)
+        JSONUtil.print(out, "QX_timeMillis", ++i==0, Obj.getQX_timeMillis());
+
+      if (Obj.isQY_correctNull() == false)
+        JSONUtil.print(out, "QY_correct", ++i==0, Obj.getQY_correct());
+
+      if (Obj.isQY_timeMillisNull() == false)
+        JSONUtil.print(out, "QY_timeMillis", ++i==0, Obj.getQY_timeMillis());
+
+      if (Obj.isQZ_correctNull() == false)
+        JSONUtil.print(out, "QZ_correct", ++i==0, Obj.getQZ_correct());
+
+      if (Obj.isQZ_timeMillisNull() == false)
+        JSONUtil.print(out, "QZ_timeMillis", ++i==0, Obj.getQZ_timeMillis());
+
+      if (fullObject == true)
+       out.write(" }\n");
+
+      outWriter.append(out.getBuilder().toString());
+      out.close();
+
+      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
+    }
 
  }

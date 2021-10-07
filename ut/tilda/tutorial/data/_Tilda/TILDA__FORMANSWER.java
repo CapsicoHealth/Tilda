@@ -123,7 +123,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
 */
 @SuppressWarnings({ "unused" })
-public abstract class TILDA__FORMANSWER implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
+public abstract class TILDA__FORMANSWER implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject, tilda.interfaces.JSONable, tilda.interfaces.CSVable
  {
    protected transient static final Logger LOG = LogManager.getLogger(TILDA__FORMANSWER.class.getName());
 
@@ -1245,10 +1245,30 @@ This is the hasChanged for:<BR>
 */
    public void copyTo(tilda.tutorial.data._Tilda.TILDA__FORMANSWER Dst) throws Exception
      {
-       Dst.setField      (_field      );
-       if (__Nulls.intersects(TILDA__FORMANSWER_Factory.COLS.VALUE._Mask) == true) Dst.setValueNull      (); else        Dst.setValue      (_value      );
-       Dst.setLastUpdated(_lastUpdated);
-       if (__Nulls.intersects(TILDA__FORMANSWER_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull    (); else        Dst.setDeleted    (_deleted    );
+       if (_formRefnum  != null)
+        Dst.setFormRefnum (_formRefnum );
+       if (_field       != null)
+        Dst.setField      (_field      );
+       if (__Nulls.intersects(TILDA__FORMANSWER_Factory.COLS.VALUE._Mask) == true || _value      ==null)
+        Dst.setValueNull      ();
+       else
+        Dst.setValue      (_value      );
+       if (_created     != null)
+        Dst.setCreated    (_created    );
+       if (_lastUpdated != null)
+        Dst.setLastUpdated(_lastUpdated);
+       if (__Nulls.intersects(TILDA__FORMANSWER_Factory.COLS.DELETED._Mask) == true || _deleted    ==null)
+        Dst.setDeletedNull    ();
+       else
+        Dst.setDeleted    (_deleted    );
+     }
+
+
+   public tilda.tutorial.data.FormAnswer_Data copy() throws Exception
+     {
+       tilda.tutorial.data.FormAnswer_Data dst = new tilda.tutorial.data.FormAnswer_Data();
+       copyTo(dst);
+       return dst;
      }
 
 /**
@@ -1734,4 +1754,36 @@ This is the hasChanged for:<BR>
       return Str;
     }
 
+   public void toJSON(java.io.Writer out, String exportName, boolean fullObject) throws Exception
+    {
+      toJSON(out, exportName, "", fullObject, false);
+    }
+   public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject) throws Exception
+    {
+      toJSON(out, exportName, lead, fullObject, false);
+    }
+   public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject, boolean noNullArrays) throws Exception
+    {
+      switch (exportName)
+        { 
+          case "": tilda.tutorial.data.FormAnswer_Factory.toJSON(out, (tilda.tutorial.data.FormAnswer_Data) this, lead, fullObject, noNullArrays); break;
+          default: throw new Exception("Unknown JSON exporter '"+exportName+"' for tilda.tutorial.data.FormAnswer_Factory");
+        } 
+    }
+   public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject, java.time.ZonedDateTime lastsync) throws Exception
+    {
+      throw new Exception("Unknown JSON sync exporter '"+exportName+"' for tilda.tutorial.data.FormAnswer_Factory");
+    }
+   public void toCSV(java.io.Writer out, String exportName) throws Exception
+    {
+      switch (exportName)
+        { 
+          case "": tilda.tutorial.data.FormAnswer_Factory.toCSV(out, (tilda.tutorial.data.FormAnswer_Data) this); break;
+          default: throw new Exception("Unknown CSV exporter '"+exportName+"' for tilda.tutorial.data.FormAnswer_Factory");
+        } 
+    }
+   public void toCSV(java.io.Writer out, String exportName, java.time.ZonedDateTime lastsync) throws Exception
+    {
+      throw new Exception("Unknown CSV sync exporter '"+exportName+"' for tilda.tutorial.data.FormAnswer_Factory");
+    }
  }

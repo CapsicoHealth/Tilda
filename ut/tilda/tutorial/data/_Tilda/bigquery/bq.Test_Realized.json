@@ -1,16 +1,16 @@
 [
-    { "name":"type", "type":"STRING", "mode":"REQUIRED", "description":"Form template type (from TILDATUTORIAL.Test_View.type)" }
-   ,{ "name":"testCount", "type":"INT64", "mode":"NULLABLE", "description":"The primary key for this record (from TILDATUTORIAL.Test_View.testCount)" }
-   ,{ "name":"testFirstTZ", "type":"STRING", "mode":"NULLABLE", "description":"Generated helper column to hold the time zone ID for 'testFirst'. (from TILDATUTORIAL.Test_View.testFirstTZ)" }
-   ,{ "name":"testFirst", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"The date the form was filled (from TILDATUTORIAL.Test_View.testFirst)" }
-   ,{ "name":"testLastTZ", "type":"STRING", "mode":"NULLABLE", "description":"Generated helper column to hold the time zone ID for 'testLast'. (from TILDATUTORIAL.Test_View.testLastTZ)" }
-   ,{ "name":"testLast", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"The date the form was filled (from TILDATUTORIAL.Test_View.testLast)" }
-   ,{ "name":"userCount", "type":"INT64", "mode":"NULLABLE", "description":"The primary key for this record (from TILDATUTORIAL.Test_View.userCount)" }
-   ,{ "name":"answerCount", "type":"INT64", "mode":"NULLABLE", "description":"Whether the answer is correct or not (from TILDATUTORIAL.Test_View.answerCount)" }
-   ,{ "name":"answerCountCorrect", "type":"INT64", "mode":"NULLABLE", "description":"Whether the answer is correct or not (from TILDATUTORIAL.Test_View.answerCountCorrect)" }
-   ,{ "name":"answerCountIncorrect", "type":"INT64", "mode":"NULLABLE", "description":"Whether the answer is correct or not (from TILDATUTORIAL.Test_View.answerCountIncorrect)" }
-   ,{ "name":"timeMillisTotal", "type":"INT64", "mode":"NULLABLE", "description":"Time in milliseconds for the time spent answering the question (from TILDATUTORIAL.Test_View.timeMillisTotal)" }
-   ,{ "name":"timeMillisAvg", "type":"FLOAT64", "mode":"NULLABLE", "description":"Time in milliseconds for the time spent answering the question (from TILDATUTORIAL.Test_View.timeMillisAvg)" }
-   ,{ "name":"timeMillisMin", "type":"INT64", "mode":"NULLABLE", "description":"Time in milliseconds for the time spent answering the question (from TILDATUTORIAL.Test_View.timeMillisMin)" }
-   ,{ "name":"timeMillisMax", "type":"INT64", "mode":"NULLABLE", "description":"Time in milliseconds for the time spent answering the question (from TILDATUTORIAL.Test_View.timeMillisMax)" }
+    { "name":"type", "type":"STRING", "mode":"REQUIRED", "description":"Form template type" }
+   ,{ "name":"testCount", "type":"INT64", "mode":"NULLABLE", "description":"The primary key for this record" }
+   ,{ "name":"testFirstTZ", "type":"STRING", "mode":"NULLABLE", "description":"Generated helper column to hold the time zone ID for 'testFirst'." }
+   ,{ "name":"testFirst", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"The date the form was filled" }
+   ,{ "name":"testLastTZ", "type":"STRING", "mode":"NULLABLE", "description":"Generated helper column to hold the time zone ID for 'testLast'." }
+   ,{ "name":"testLast", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"The date the form was filled" }
+   ,{ "name":"userCount", "type":"INT64", "mode":"NULLABLE", "description":"The primary key for this record" }
+   ,{ "name":"answerCount", "type":"INT64", "mode":"NULLABLE", "description":"Whether the answer is correct or not" }
+   ,{ "name":"answerCountCorrect", "type":"INT64", "mode":"NULLABLE", "description":"Whether the answer is correct or not" }
+   ,{ "name":"answerCountIncorrect", "type":"INT64", "mode":"NULLABLE", "description":"Whether the answer is correct or not" }
+   ,{ "name":"timeMillisTotal", "type":"INT64", "mode":"NULLABLE", "description":"Time in milliseconds for the time spent answering the question" }
+   ,{ "name":"timeMillisAvg", "type":"FLOAT64", "mode":"NULLABLE", "description":"Time in milliseconds for the time spent answering the question" }
+   ,{ "name":"timeMillisMin", "type":"INT64", "mode":"NULLABLE", "description":"Time in milliseconds for the time spent answering the question" }
+   ,{ "name":"timeMillisMax", "type":"INT64", "mode":"NULLABLE", "description":"Time in milliseconds for the time spent answering the question" }
 ]

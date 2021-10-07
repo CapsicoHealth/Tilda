@@ -53,7 +53,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          REFNUM       = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"       , 0/*0*/, "The primary key for this record", null, null);
+     public static Type_LongPrimitive          REFNUM       = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"       , 0/*0*/, "The primary key for this record", null, null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.TestQuestionAnswer.type -> TILDATUTORIAL.TestQuestionAnswer."type"
@@ -72,7 +72,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        TYPE         = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "type"         , 1/*1*/, "Form template type", null, null);
+     public static Type_StringPrimitive        TYPE         = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "type"         , 1/*1*/, "Form template type", null, null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.TestQuestionAnswer.questionSeq -> TILDATUTORIAL.TestQuestionAnswer."questionSeq"
@@ -90,7 +90,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerPrimitive       QUESTIONSEQ  = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "questionSeq"  , 2/*2*/, "Sequence of the question for the test", null, null);
+     public static Type_IntegerPrimitive       QUESTIONSEQ  = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "questionSeq"  , 2/*2*/, "Sequence of the question for the test", null, null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.TestQuestionAnswer.questionId -> TILDATUTORIAL.TestQuestionAnswer."questionId"
@@ -109,7 +109,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        QUESTIONID   = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "questionId"   , 3/*3*/, "Question id", null, null);
+     public static Type_StringPrimitive        QUESTIONID   = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "questionId"   , 3/*3*/, "Question id", null, null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.TestQuestionAnswer.questionLabel -> TILDATUTORIAL.TestQuestionAnswer."questionLabel"
@@ -128,7 +128,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        QUESTIONLABEL= new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "questionLabel", 4/*4*/, "Question label", null, null);
+     public static Type_StringPrimitive        QUESTIONLABEL= new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "questionLabel", 4/*4*/, "Question label", null, null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.TestQuestionAnswer.answerSeq -> TILDATUTORIAL.TestQuestionAnswer."answerSeq"
@@ -146,7 +146,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerPrimitive       ANSWERSEQ    = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "answerSeq"    , 5/*5*/, "Sequence of the answer for the question in the test", null, null);
+     public static Type_IntegerPrimitive       ANSWERSEQ    = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "answerSeq"    , 5/*5*/, "Sequence of the answer for the question in the test", null, null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.TestQuestionAnswer.answerId -> TILDATUTORIAL.TestQuestionAnswer."answerId"
@@ -165,7 +165,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        ANSWERID     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "answerId"     , 6/*6*/, "Answer id", null, null);
+     public static Type_StringPrimitive        ANSWERID     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "answerId"     , 6/*6*/, "Answer id", null, null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.TestQuestionAnswer.answerLabel -> TILDATUTORIAL.TestQuestionAnswer."answerLabel"
@@ -184,7 +184,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        ANSWERLABEL  = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "answerLabel"  , 7/*7*/, "Answer label", null, null);
+     public static Type_StringPrimitive        ANSWERLABEL  = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "answerLabel"  , 7/*7*/, "Answer label", null, null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.TestQuestionAnswer.correct -> TILDATUTORIAL.TestQuestionAnswer."correct"
@@ -202,7 +202,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_BooleanPrimitive       CORRECT      = new Type_BooleanPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "correct"      , 8/*8*/, "Whether the answer is a correct one or not for that question (technically, there could be more than one)", null, null);
+     public static Type_BooleanPrimitive       CORRECT      = new Type_BooleanPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "correct"      , 8/*8*/, "Whether the answer is a correct one or not for that question (technically, there could be more than one)", null, null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.TestQuestionAnswer.created -> TILDATUTORIAL.TestQuestionAnswer."created"
@@ -374,9 +374,9 @@ This is the column definition for:<BR>
                 S.append(" where ("); C.getFullColumnVar(S, "TILDATUTORIAL", "TestQuestionAnswer", "type"); S.append("=?");  S.append(")");
                 S.append(" order by "); C.getFullColumnVar(S, "TILDATUTORIAL", "TestQuestionAnswer", "questionId"); S.append(" ASC");S.append(", "); C.getFullColumnVar(S, "TILDATUTORIAL", "TestQuestionAnswer", "answerSeq"); S.append(" ASC");
                 break;
-             case 3: // Quwey 'All'
+             case 3: // Query 'All'
                 S.append(" where (");  S.append("1=1");  S.append(")");
-                S.append(" order by "); C.getFullColumnVar(S, "TILDATUTORIAL", "TestQuestionAnswer", "refnum"); S.append(" ASC");
+                S.append(" order by "); C.getFullColumnVar(S, "TILDATUTORIAL", "TestQuestionAnswer", "type"); S.append(" ASC");S.append(", "); C.getFullColumnVar(S, "TILDATUTORIAL", "TestQuestionAnswer", "questionId"); S.append(" ASC");S.append(", "); C.getFullColumnVar(S, "TILDATUTORIAL", "TestQuestionAnswer", "answerSeq"); S.append(" ASC");
                 break;
              case -77: 
              case -666: break;
@@ -754,5 +754,145 @@ object. The generic init method defaults to this general data structure as a gen
    public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
    public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
 
+
+   public static String getCSVHeader()
+    {
+      return "\"refnum\",\"type\",\"questionSeq\",\"questionId\",\"questionLabel\",\"answerSeq\",\"answerId\",\"answerLabel\",\"correct\",\"created\",\"lastUpdated\",\"deleted\"";
+    }
+
+   public static void toCSV(java.io.Writer out, List<tilda.tutorial.data.TestQuestionAnswer_Data> L, boolean includeHeader) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      if (includeHeader == true)
+        out.write(getCSVHeader() + "\n");
+      for (tilda.tutorial.data.TestQuestionAnswer_Data O : L)
+       if (O!=null)
+        {
+          toCSV(out, O);
+          out.write("\n");
+        }
+      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);
+    }
+
+   public static void toCSV(java.io.Writer out, tilda.tutorial.data.TestQuestionAnswer_Data obj) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      StringBuilder Str = new StringBuilder();
+
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getRefnum());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getType());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getQuestionSeq());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getQuestionId());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getQuestionLabel());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getAnswerSeq());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getAnswerId());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getAnswerLabel());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getCorrect());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getCreated()));
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getLastUpdated()));
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getDeleted()));
+      out.write(Str.toString());
+      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);
+    }
+   public static void toJSON(java.io.Writer out, List<tilda.tutorial.data.TestQuestionAnswer_Data> L, String lead, boolean fullList) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      if (fullList == true)
+        {
+          if (L == null)
+           {
+             out.write("null\n");
+             return;
+           }
+          if (L.isEmpty() == true)
+           {
+             out.write("[]\n");
+             return;
+           }
+          out.write("[\n");
+        }
+      boolean First = true;
+      for (tilda.tutorial.data.TestQuestionAnswer_Data O : L)
+       if (O!=null)
+        {
+          out.write(lead);
+          toJSON(out, O, First == true ? "   " : "  ,", true);
+          if (First == true)
+           First = false;
+        }
+      if (fullList == true)
+       { 
+          out.write(lead);
+          out.write("]\n");
+       } 
+      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
+    }
+
+   public static void toJSON(java.io.Writer out, tilda.tutorial.data.TestQuestionAnswer_Data obj, boolean fullObject) throws java.io.IOException
+    {
+      toJSON(out, obj, "", fullObject, false);
+    }
+
+   public static void toJSON(java.io.Writer out, tilda.tutorial.data.TestQuestionAnswer_Data obj, String lead, boolean fullObject) throws java.io.IOException
+    {
+      toJSON(out, obj, lead, fullObject, false);
+    }
+
+   public static void toJSON(java.io.Writer outWriter, tilda.tutorial.data.TestQuestionAnswer_Data obj, String lead, boolean fullObject, boolean noNullArrays) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter();
+      tilda.tutorial.data._Tilda.TILDA__TESTQUESTIONANSWER Obj = (tilda.tutorial.data._Tilda.TILDA__TESTQUESTIONANSWER) obj;
+      if (fullObject == true)
+       {
+          out.write(lead);
+          out.write("{");
+       }
+
+      int i = -1;
+        JSONUtil.print(out, "refnum", ++i==0, Obj.getRefnum());
+
+        JSONUtil.print(out, "type", ++i==0, Obj.getType());
+
+        JSONUtil.print(out, "questionSeq", ++i==0, Obj.getQuestionSeq());
+
+        JSONUtil.print(out, "questionId", ++i==0, Obj.getQuestionId());
+
+        JSONUtil.print(out, "questionLabel", ++i==0, Obj.getQuestionLabel());
+
+        JSONUtil.print(out, "answerSeq", ++i==0, Obj.getAnswerSeq());
+
+        JSONUtil.print(out, "answerId", ++i==0, Obj.getAnswerId());
+
+        JSONUtil.print(out, "answerLabel", ++i==0, Obj.getAnswerLabel());
+
+        JSONUtil.print(out, "correct", ++i==0, Obj.getCorrect());
+
+        JSONUtil.print(out, "created", ++i==0, Obj.getCreated());
+
+        JSONUtil.print(out, "lastUpdated", ++i==0, Obj.getLastUpdated());
+
+      if (Obj.isDeletedNull() == false && Obj.getDeleted() != null)
+        JSONUtil.print(out, "deleted", ++i==0, Obj.getDeleted());
+
+      if (fullObject == true)
+       out.write(" }\n");
+
+      outWriter.append(out.getBuilder().toString());
+      out.close();
+
+      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
+    }
 
  }

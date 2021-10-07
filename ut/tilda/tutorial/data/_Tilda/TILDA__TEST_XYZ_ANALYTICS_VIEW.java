@@ -64,7 +64,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The primary key for this record<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_PivotView-formRefnum_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_XYZ_PivotView<B>&nbsp;&#8226;&nbsp;</B>formRefnum</A><BR>&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#Form-refnum_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Form<B>&nbsp;&#8226;&nbsp;</B>refnum</A></DIV></TD>
+<TD>The primary key for this record<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Test_XYZ_PivotView-formRefnum_DIV', -50)">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_XYZ_PivotView<B>&nbsp;&#8226;&nbsp;</B>formRefnum</A><BR>&rarr;&nbsp;<A href="javascript:openDiv('Form-refnum_DIV', -50)">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Form<B>&nbsp;&#8226;&nbsp;</B>refnum</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
     <TD>2&nbsp;&nbsp;</TD>
@@ -74,7 +74,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Form template type<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_PivotView-formType_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_XYZ_PivotView<B>&nbsp;&#8226;&nbsp;</B>formType</A><BR>&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#Form-type_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Form<B>&nbsp;&#8226;&nbsp;</B>type</A></DIV></TD>
+<TD>Form template type<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Test_XYZ_PivotView-formType_DIV', -50)">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_XYZ_PivotView<B>&nbsp;&#8226;&nbsp;</B>formType</A><BR>&rarr;&nbsp;<A href="javascript:openDiv('Form-type_DIV', -50)">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Form<B>&nbsp;&#8226;&nbsp;</B>type</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>3&nbsp;&nbsp;</TD>
@@ -84,7 +84,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">AUTO&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Generated helper column to hold the time zone ID for 'formFillDate'.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_PivotView-formFillDateTZ_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_XYZ_PivotView<B>&nbsp;&#8226;&nbsp;</B>formFillDateTZ</A><BR>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo-id_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo<B>&nbsp;&#8226;&nbsp;</B>id</A></DIV></TD>
+<TD>Generated helper column to hold the time zone ID for 'formFillDate'.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Test_XYZ_PivotView-formFillDateTZ_DIV', -50)">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_XYZ_PivotView<B>&nbsp;&#8226;&nbsp;</B>formFillDateTZ</A><BR>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo-id_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo<B>&nbsp;&#8226;&nbsp;</B>id</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
     <TD>4&nbsp;&nbsp;</TD>
@@ -94,7 +94,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The date the form was filled<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_PivotView-formFillDate_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_XYZ_PivotView<B>&nbsp;&#8226;&nbsp;</B>formFillDate</A><BR>&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#Form-fillDate_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Form<B>&nbsp;&#8226;&nbsp;</B>fillDate</A></DIV></TD>
+<TD>The date the form was filled<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Test_XYZ_PivotView-formFillDate_DIV', -50)">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_XYZ_PivotView<B>&nbsp;&#8226;&nbsp;</B>formFillDate</A><BR>&rarr;&nbsp;<A href="javascript:openDiv('Form-fillDate_DIV', -50)">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Form<B>&nbsp;&#8226;&nbsp;</B>fillDate</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>5&nbsp;&nbsp;</TD>
@@ -104,7 +104,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The primary key for this record<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_PivotView-formUserRefnum_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_XYZ_PivotView<B>&nbsp;&#8226;&nbsp;</B>formUserRefnum</A><BR>&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#User-refnum_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>User<B>&nbsp;&#8226;&nbsp;</B>refnum</A></DIV></TD>
+<TD>The primary key for this record<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Test_XYZ_PivotView-formUserRefnum_DIV', -50)">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_XYZ_PivotView<B>&nbsp;&#8226;&nbsp;</B>formUserRefnum</A><BR>&rarr;&nbsp;<A href="javascript:openDiv('User-refnum_DIV', -50)">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>User<B>&nbsp;&#8226;&nbsp;</B>refnum</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
     <TD>6&nbsp;&nbsp;</TD>
@@ -114,7 +114,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The user's email<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_PivotView-formUserEmail_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_XYZ_PivotView<B>&nbsp;&#8226;&nbsp;</B>formUserEmail</A><BR>&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#User-email_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>User<B>&nbsp;&#8226;&nbsp;</B>email</A></DIV></TD>
+<TD>The user's email<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Test_XYZ_PivotView-formUserEmail_DIV', -50)">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_XYZ_PivotView<B>&nbsp;&#8226;&nbsp;</B>formUserEmail</A><BR>&rarr;&nbsp;<A href="javascript:openDiv('User-email_DIV', -50)">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>User<B>&nbsp;&#8226;&nbsp;</B>email</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>7&nbsp;&nbsp;</TD>
@@ -124,7 +124,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Whether the answer is correct or not<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_PivotView-countCorrect_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_XYZ_PivotView<B>&nbsp;&#8226;&nbsp;</B>countCorrect</A><BR>&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#TestAnswer-correct_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>TestAnswer<B>&nbsp;&#8226;&nbsp;</B>correct</A></DIV></TD>
+<TD>Whether the answer is correct or not<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Test_XYZ_PivotView-countCorrect_DIV', -50)">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_XYZ_PivotView<B>&nbsp;&#8226;&nbsp;</B>countCorrect</A><BR>&rarr;&nbsp;<A href="javascript:openDiv('TestAnswer-correct_DIV', -50)">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>TestAnswer<B>&nbsp;&#8226;&nbsp;</B>correct</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
     <TD>8&nbsp;&nbsp;</TD>
@@ -134,7 +134,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Time in milliseconds for the time spent answering the question<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_PivotView-timeMillisTotal_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_XYZ_PivotView<B>&nbsp;&#8226;&nbsp;</B>timeMillisTotal</A><BR>&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#TestAnswer-timeMillis_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>TestAnswer<B>&nbsp;&#8226;&nbsp;</B>timeMillis</A></DIV></TD>
+<TD>Time in milliseconds for the time spent answering the question<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Test_XYZ_PivotView-timeMillisTotal_DIV', -50)">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_XYZ_PivotView<B>&nbsp;&#8226;&nbsp;</B>timeMillisTotal</A><BR>&rarr;&nbsp;<A href="javascript:openDiv('TestAnswer-timeMillis_DIV', -50)">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>TestAnswer<B>&nbsp;&#8226;&nbsp;</B>timeMillis</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>9&nbsp;&nbsp;</TD>
@@ -144,7 +144,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The primary key for this record<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#Test_View-testCount_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_View<B>&nbsp;&#8226;&nbsp;</B>testCount</A><BR>&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#Form-refnum_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Form<B>&nbsp;&#8226;&nbsp;</B>refnum</A></DIV></TD>
+<TD>The primary key for this record<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Test_View-testCount_DIV', -50)">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_View<B>&nbsp;&#8226;&nbsp;</B>testCount</A><BR>&rarr;&nbsp;<A href="javascript:openDiv('Form-refnum_DIV', -50)">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Form<B>&nbsp;&#8226;&nbsp;</B>refnum</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
     <TD>10&nbsp;&nbsp;</TD>
@@ -154,7 +154,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Whether the answer is correct or not<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#Test_View-answerCountCorrect_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_View<B>&nbsp;&#8226;&nbsp;</B>answerCountCorrect</A><BR>&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#TestAnswer-correct_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>TestAnswer<B>&nbsp;&#8226;&nbsp;</B>correct</A></DIV></TD>
+<TD>Whether the answer is correct or not<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Test_View-answerCountCorrect_DIV', -50)">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_View<B>&nbsp;&#8226;&nbsp;</B>answerCountCorrect</A><BR>&rarr;&nbsp;<A href="javascript:openDiv('TestAnswer-correct_DIV', -50)">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>TestAnswer<B>&nbsp;&#8226;&nbsp;</B>correct</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>11&nbsp;&nbsp;</TD>
@@ -164,7 +164,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Time in milliseconds for the time spent answering the question<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#Test_View-timeMillisAvg_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_View<B>&nbsp;&#8226;&nbsp;</B>timeMillisAvg</A><BR>&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#TestAnswer-timeMillis_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>TestAnswer<B>&nbsp;&#8226;&nbsp;</B>timeMillis</A></DIV></TD>
+<TD>Time in milliseconds for the time spent answering the question<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Test_View-timeMillisAvg_DIV', -50)">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_View<B>&nbsp;&#8226;&nbsp;</B>timeMillisAvg</A><BR>&rarr;&nbsp;<A href="javascript:openDiv('TestAnswer-timeMillis_DIV', -50)">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>TestAnswer<B>&nbsp;&#8226;&nbsp;</B>timeMillis</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
     <TD>12&nbsp;&nbsp;</TD>
@@ -177,11 +177,11 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD><B>Test Passed</B>: Whether the test was passed or not by answering at least 2 out of the 3 questions.</TD></TR>
   <TR valign="top" style="background-color:#FFFFFF"><TD colspan="2"></TD><TD colspan="7">
 <TABLE border="1px" style="border-collapse:collapse; border: 1px solid #AAA;" cellspacing="0px" cellpadding="2px" width="98%">
-<TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;"><A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_Analytics_View-formCountCorrect_DIV">formCountCorrect</A> >= 2</PRE></TD><TR>
+<TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;"><A style="color:#00AA00; font-weight: bold;" href="javascript:openDiv('Test_XYZ_Analytics_View-formCountCorrect_DIV', -50)">formCountCorrect</A> >= 2</PRE></TD><TR>
 <TR valign="top"><TD width="1px" align="right"><B>Ref&nbsp;Columns</B></TD><TD>
-<A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_Analytics_View-formCountCorrect_DIV">formCountCorrect</A><BR>
-<DIV style="padding-left:10px; font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_PivotView-countCorrect_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_XYZ_PivotView<B>&nbsp;&#8226;&nbsp;</B>countCorrect</A>
-&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#TestAnswer-correct_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>TestAnswer<B>&nbsp;&#8226;&nbsp;</B>correct</A>
+<A style="color:#00AA00; font-weight: bold;" href="javascript:openDiv('Test_XYZ_Analytics_View-formCountCorrect_DIV', -50)">formCountCorrect</A><BR>
+<DIV style="padding-left:10px; font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="javascript:openDiv('Test_XYZ_PivotView-countCorrect_DIV', -50)">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_XYZ_PivotView<B>&nbsp;&#8226;&nbsp;</B>countCorrect</A>
+&nbsp;&nbsp;&rarr;&nbsp;<A href="javascript:openDiv('TestAnswer-correct_DIV', -50)">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>TestAnswer<B>&nbsp;&#8226;&nbsp;</B>correct</A>
 </DIV>
 <DIV style="padding-left:10px;">Whether the answer is correct or not</DIV>
 </TD></TR>
@@ -211,16 +211,16 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD><B>Test Took Longer Than Average</B>: Whether the test took longer that the average time spent across all tests.</TD></TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2)"><TD colspan="2"></TD><TD colspan="7">
 <TABLE border="1px" style="border-collapse:collapse; border: 1px solid #AAA;" cellspacing="0px" cellpadding="2px" width="98%">
-<TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;"><A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_Analytics_View-formTimeMillisTotal_DIV">formTimeMillisTotal</A> > <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_Analytics_View-testTimeMillisAvg_DIV">testTimeMillisAvg</A></PRE></TD><TR>
+<TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;"><A style="color:#00AA00; font-weight: bold;" href="javascript:openDiv('Test_XYZ_Analytics_View-formTimeMillisTotal_DIV', -50)">formTimeMillisTotal</A> > <A style="color:#00AA00; font-weight: bold;" href="javascript:openDiv('Test_XYZ_Analytics_View-testTimeMillisAvg_DIV', -50)">testTimeMillisAvg</A></PRE></TD><TR>
 <TR valign="top"><TD width="1px" align="right"><B>Ref&nbsp;Columns</B></TD><TD>
-<A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_Analytics_View-formTimeMillisTotal_DIV">formTimeMillisTotal</A><BR>
-<DIV style="padding-left:10px; font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_PivotView-timeMillisTotal_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_XYZ_PivotView<B>&nbsp;&#8226;&nbsp;</B>timeMillisTotal</A>
-&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#TestAnswer-timeMillis_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>TestAnswer<B>&nbsp;&#8226;&nbsp;</B>timeMillis</A>
+<A style="color:#00AA00; font-weight: bold;" href="javascript:openDiv('Test_XYZ_Analytics_View-formTimeMillisTotal_DIV', -50)">formTimeMillisTotal</A><BR>
+<DIV style="padding-left:10px; font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="javascript:openDiv('Test_XYZ_PivotView-timeMillisTotal_DIV', -50)">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_XYZ_PivotView<B>&nbsp;&#8226;&nbsp;</B>timeMillisTotal</A>
+&nbsp;&nbsp;&rarr;&nbsp;<A href="javascript:openDiv('TestAnswer-timeMillis_DIV', -50)">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>TestAnswer<B>&nbsp;&#8226;&nbsp;</B>timeMillis</A>
 </DIV>
 <DIV style="padding-left:10px;">Time in milliseconds for the time spent answering the question</DIV>
-<A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_Analytics_View-testTimeMillisAvg_DIV">testTimeMillisAvg</A><BR>
-<DIV style="padding-left:10px; font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#Test_View-timeMillisAvg_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_View<B>&nbsp;&#8226;&nbsp;</B>timeMillisAvg</A>
-&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#TestAnswer-timeMillis_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>TestAnswer<B>&nbsp;&#8226;&nbsp;</B>timeMillis</A>
+<A style="color:#00AA00; font-weight: bold;" href="javascript:openDiv('Test_XYZ_Analytics_View-testTimeMillisAvg_DIV', -50)">testTimeMillisAvg</A><BR>
+<DIV style="padding-left:10px; font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="javascript:openDiv('Test_View-timeMillisAvg_DIV', -50)">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_View<B>&nbsp;&#8226;&nbsp;</B>timeMillisAvg</A>
+&nbsp;&nbsp;&rarr;&nbsp;<A href="javascript:openDiv('TestAnswer-timeMillis_DIV', -50)">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>TestAnswer<B>&nbsp;&#8226;&nbsp;</B>timeMillis</A>
 </DIV>
 <DIV style="padding-left:10px;">Time in milliseconds for the time spent answering the question</DIV>
 </TD></TR>
@@ -250,26 +250,26 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD><B>Test Was Challenging</B>: Whether the test was challenging in that:<LI>   <LI>it was passed,</LI>   <LI>and overall, less than a third of answers across all tests were answered correctly.</LI> </UL></TD></TR>
   <TR valign="top" style="background-color:#FFFFFF"><TD colspan="2"></TD><TD colspan="7">
 <TABLE border="1px" style="border-collapse:collapse; border: 1px solid #AAA;" cellspacing="0px" cellpadding="2px" width="98%">
-<TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">    <A style="color:#0000AA; font-weight: bold;" href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_Analytics_View-isPassed_DIV">isPassed</A>=1
-AND <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_Analytics_View-testAnswerCountCorrect_DIV">testAnswerCountCorrect</A> < <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_Analytics_View-testCount_DIV">testCount</A>*3/2</PRE></TD><TR>
+<TR valign="top"><TD width="1px" align="right"><B>Formula</B></TD><TD><PRE style="padding-top: 3px; font-size:110%;">    <A style="color:#0000AA; font-weight: bold;" href="javascript:openDiv('Test_XYZ_Analytics_View-isPassed_DIV', -50)">isPassed</A>=1
+AND <A style="color:#00AA00; font-weight: bold;" href="javascript:openDiv('Test_XYZ_Analytics_View-testAnswerCountCorrect_DIV', -50)">testAnswerCountCorrect</A> < <A style="color:#00AA00; font-weight: bold;" href="javascript:openDiv('Test_XYZ_Analytics_View-testCount_DIV', -50)">testCount</A>*3/2</PRE></TD><TR>
 <TR valign="top"><TD width="1px" align="right"><B>Values</B></TD><TD><TABLE border="0px">
 <TR valign="top"><TD>0</TD><TD>The test was not challenging</TD><TR>
 <TR valign="top"><TD>1</TD><TD>The test was challenging</TD><TR>
 </TABLE></TD></TR>
 <TR valign="top"><TD width="1px" align="right"><B>Ref&nbsp;Columns</B></TD><TD>
-<A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_Analytics_View-testAnswerCountCorrect_DIV">testAnswerCountCorrect</A><BR>
-<DIV style="padding-left:10px; font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#Test_View-answerCountCorrect_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_View<B>&nbsp;&#8226;&nbsp;</B>answerCountCorrect</A>
-&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#TestAnswer-correct_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>TestAnswer<B>&nbsp;&#8226;&nbsp;</B>correct</A>
+<A style="color:#00AA00; font-weight: bold;" href="javascript:openDiv('Test_XYZ_Analytics_View-testAnswerCountCorrect_DIV', -50)">testAnswerCountCorrect</A><BR>
+<DIV style="padding-left:10px; font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="javascript:openDiv('Test_View-answerCountCorrect_DIV', -50)">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_View<B>&nbsp;&#8226;&nbsp;</B>answerCountCorrect</A>
+&nbsp;&nbsp;&rarr;&nbsp;<A href="javascript:openDiv('TestAnswer-correct_DIV', -50)">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>TestAnswer<B>&nbsp;&#8226;&nbsp;</B>correct</A>
 </DIV>
 <DIV style="padding-left:10px;">Whether the answer is correct or not</DIV>
-<A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_Analytics_View-testCount_DIV">testCount</A><BR>
-<DIV style="padding-left:10px; font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#Test_View-testCount_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_View<B>&nbsp;&#8226;&nbsp;</B>testCount</A>
-&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#Form-refnum_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Form<B>&nbsp;&#8226;&nbsp;</B>refnum</A>
+<A style="color:#00AA00; font-weight: bold;" href="javascript:openDiv('Test_XYZ_Analytics_View-testCount_DIV', -50)">testCount</A><BR>
+<DIV style="padding-left:10px; font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="javascript:openDiv('Test_View-testCount_DIV', -50)">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_View<B>&nbsp;&#8226;&nbsp;</B>testCount</A>
+&nbsp;&nbsp;&rarr;&nbsp;<A href="javascript:openDiv('Form-refnum_DIV', -50)">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Form<B>&nbsp;&#8226;&nbsp;</B>refnum</A>
 </DIV>
 <DIV style="padding-left:10px;">The primary key for this record</DIV>
 </TD></TR>
 <TR valign="top"><TD width="1px" align="right"><B>Ref&nbsp;Formulas</B></TD><TD>
-<A style="color:#0000AA; font-weight: bold;" href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_Analytics_View-isPassed_DIV">isPassed</A><BR>
+<A style="color:#0000AA; font-weight: bold;" href="javascript:openDiv('Test_XYZ_Analytics_View-isPassed_DIV', -50)">isPassed</A><BR>
 <DIV style="padding-left:10px; font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_Analytics_View-isPassed_DIV">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_XYZ_Analytics_View<B>&nbsp;&#8226;&nbsp;</B>isPassed</A></DIV>
 <DIV style="padding-left:10px;">Whether the test was passed or not by answering at least 2 out of the 3 questions.</DIV>
 </TD></TR>
@@ -293,7 +293,7 @@ AND <A style="color:#00AA00; font-weight: bold;" href="TILDA___Docs.TILDATUTORIA
 
 */
 @SuppressWarnings({ "unused" })
-public abstract class TILDA__TEST_XYZ_ANALYTICS_VIEW implements tilda.interfaces.ReaderObject
+public abstract class TILDA__TEST_XYZ_ANALYTICS_VIEW implements tilda.interfaces.ReaderObject, tilda.interfaces.JSONable, tilda.interfaces.CSVable
  {
    protected transient static final Logger LOG = LogManager.getLogger(TILDA__TEST_XYZ_ANALYTICS_VIEW.class.getName());
 
@@ -1354,9 +1354,13 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>formCountCorrect >= 2</PRE>
+</TD></TR>
+
 </TABLE>
 */
-   @SerializedName("isPassed")
    Integer _isPassed=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1374,6 +1378,11 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>formCountCorrect >= 2</PRE>
+</TD></TR>
+
 </TABLE>
 */
    public final int getIsPassed()
@@ -1394,6 +1403,11 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>formCountCorrect >= 2</PRE>
+</TD></TR>
+
 </TABLE>
 */
    public final boolean isIsPassedNull()
@@ -1414,6 +1428,11 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>formCountCorrect >= 2</PRE>
+</TD></TR>
+
 </TABLE>
 */
     void setIsPassed(int v) throws Exception
@@ -1428,16 +1447,6 @@ This is the setter for:<BR>
        _isPassed = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-   /**
-    * Being invariant, the field isPassed doesn't have a public setter. To support deserialization however, 
-    * we may need to set that field after a create/deserialization and before any write. The init methods allows
-    * to do so.
-   */
-   public void initIsPassed(int v) throws Exception
-     {
-       setIsPassed(v);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1455,6 +1464,11 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>formCountCorrect >= 2</PRE>
+</TD></TR>
+
 </TABLE>
 */
     void setIsPassedNull()
@@ -1489,9 +1503,13 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>formTimeMillisTotal > testTimeMillisAvg</PRE>
+</TD></TR>
+
 </TABLE>
 */
-   @SerializedName("tookLongerThanAverage")
    Integer _tookLongerThanAverage=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1509,6 +1527,11 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>formTimeMillisTotal > testTimeMillisAvg</PRE>
+</TD></TR>
+
 </TABLE>
 */
    public final int getTookLongerThanAverage()
@@ -1529,6 +1552,11 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>formTimeMillisTotal > testTimeMillisAvg</PRE>
+</TD></TR>
+
 </TABLE>
 */
    public final boolean isTookLongerThanAverageNull()
@@ -1549,6 +1577,11 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>formTimeMillisTotal > testTimeMillisAvg</PRE>
+</TD></TR>
+
 </TABLE>
 */
     void setTookLongerThanAverage(int v) throws Exception
@@ -1563,16 +1596,6 @@ This is the setter for:<BR>
        _tookLongerThanAverage = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-   /**
-    * Being invariant, the field tookLongerThanAverage doesn't have a public setter. To support deserialization however, 
-    * we may need to set that field after a create/deserialization and before any write. The init methods allows
-    * to do so.
-   */
-   public void initTookLongerThanAverage(int v) throws Exception
-     {
-       setTookLongerThanAverage(v);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1590,6 +1613,11 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>formTimeMillisTotal > testTimeMillisAvg</PRE>
+</TD></TR>
+
 </TABLE>
 */
     void setTookLongerThanAverageNull()
@@ -1624,9 +1652,14 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>    isPassed=1
+AND testAnswerCountCorrect < testCount*3/2</PRE>
+</TD></TR>
+
 </TABLE>
 */
-   @SerializedName("wasChallenging")
    Integer _wasChallenging=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1644,6 +1677,12 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>    isPassed=1
+AND testAnswerCountCorrect < testCount*3/2</PRE>
+</TD></TR>
+
 </TABLE>
 */
    public final int getWasChallenging()
@@ -1664,6 +1703,12 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>    isPassed=1
+AND testAnswerCountCorrect < testCount*3/2</PRE>
+</TD></TR>
+
 </TABLE>
 */
    public final boolean isWasChallengingNull()
@@ -1684,6 +1729,12 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>    isPassed=1
+AND testAnswerCountCorrect < testCount*3/2</PRE>
+</TD></TR>
+
 </TABLE>
 */
     void setWasChallenging(int v) throws Exception
@@ -1698,16 +1749,6 @@ This is the setter for:<BR>
        _wasChallenging = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-   /**
-    * Being invariant, the field wasChallenging doesn't have a public setter. To support deserialization however, 
-    * we may need to set that field after a create/deserialization and before any write. The init methods allows
-    * to do so.
-   */
-   public void initWasChallenging(int v) throws Exception
-     {
-       setWasChallenging(v);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1725,6 +1766,12 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>    isPassed=1
+AND testAnswerCountCorrect < testCount*3/2</PRE>
+</TD></TR>
+
 </TABLE>
 */
     void setWasChallengingNull()
@@ -1788,6 +1835,8 @@ This is the null setter for:<BR>
           S.append(" from "); C.getFullTableVar(S, "TILDATUTORIAL", "Test_XYZ_Analytics_View");
        switch (__LookupId)
         {
+          case 0: // Unique Query 'All'
+             break;
           case -77: 
           case -666: if (__Init == InitMode.CREATE) break;
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot create where clause.");
@@ -1807,6 +1856,8 @@ This is the null setter for:<BR>
           PS = C.prepareStatement(Q);
           switch (__LookupId)
            {
+             case 0: // Unique Query 'All'
+               break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
            }
@@ -1900,4 +1951,36 @@ This is the null setter for:<BR>
       return Str;
     }
 
+   public void toJSON(java.io.Writer out, String exportName, boolean fullObject) throws Exception
+    {
+      toJSON(out, exportName, "", fullObject, false);
+    }
+   public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject) throws Exception
+    {
+      toJSON(out, exportName, lead, fullObject, false);
+    }
+   public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject, boolean noNullArrays) throws Exception
+    {
+      switch (exportName)
+        { 
+          case "": tilda.tutorial.data.Test_XYZ_Analytics_View_Factory.toJSON(out, (tilda.tutorial.data.Test_XYZ_Analytics_View_Data) this, lead, fullObject, noNullArrays); break;
+          default: throw new Exception("Unknown JSON exporter '"+exportName+"' for tilda.tutorial.data.Test_XYZ_Analytics_View_Factory");
+        } 
+    }
+   public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject, java.time.ZonedDateTime lastsync) throws Exception
+    {
+      throw new Exception("Unknown JSON sync exporter '"+exportName+"' for tilda.tutorial.data.Test_XYZ_Analytics_View_Factory");
+    }
+   public void toCSV(java.io.Writer out, String exportName) throws Exception
+    {
+      switch (exportName)
+        { 
+          case "": tilda.tutorial.data.Test_XYZ_Analytics_View_Factory.toCSV(out, (tilda.tutorial.data.Test_XYZ_Analytics_View_Data) this); break;
+          default: throw new Exception("Unknown CSV exporter '"+exportName+"' for tilda.tutorial.data.Test_XYZ_Analytics_View_Factory");
+        } 
+    }
+   public void toCSV(java.io.Writer out, String exportName, java.time.ZonedDateTime lastsync) throws Exception
+    {
+      throw new Exception("Unknown CSV sync exporter '"+exportName+"' for tilda.tutorial.data.Test_XYZ_Analytics_View_Factory");
+    }
  }
