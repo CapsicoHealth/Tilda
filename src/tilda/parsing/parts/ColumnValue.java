@@ -121,4 +121,32 @@ public class ColumnValue
           }
         return A;
       }
+    
+    /**
+     * Prints a Java String[][] with the list of values and descriptions
+     * @param values
+     * @return
+     */
+    public static String toJavaStringDoubleArray(ColumnValue[] values)
+     {
+       if (values == null || values.length == 0)
+        return "null";
+       
+       StringBuilder str = new StringBuilder();
+       for (ColumnValue v : values)
+        {
+          if (str.length() == 0)
+           str.append("new String[][] {");
+          else
+            str.append(", ");
+          str.append("{");
+          TextUtil.escapeDoubleQuoteWithSlash(str, v._Value);
+          str.append(",");
+          TextUtil.escapeDoubleQuoteWithSlash(str, v._Description);
+          str.append("}");
+        }
+       str.append("}");
+       
+       return str.toString();
+     }
   }

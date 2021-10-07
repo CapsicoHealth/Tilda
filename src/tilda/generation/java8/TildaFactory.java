@@ -25,6 +25,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.util.StringBuilderWriter;
 
+import tilda.data.RefillPerf_Factory;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.enums.FrameworkColumnType;
@@ -37,6 +38,7 @@ import tilda.generation.GeneratorSession;
 import tilda.generation.interfaces.CodeGenTildaFactory;
 import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Column;
+import tilda.parsing.parts.ColumnValue;
 import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Object;
@@ -44,6 +46,7 @@ import tilda.parsing.parts.OutputMap;
 import tilda.parsing.parts.PrimaryKey;
 import tilda.parsing.parts.Query;
 import tilda.parsing.parts.SubWhereClause;
+import tilda.parsing.parts.helpers.ValueHelper;
 import tilda.utils.TextUtil;
 
 public class TildaFactory implements CodeGenTildaFactory
@@ -116,21 +119,25 @@ public class TildaFactory implements CodeGenTildaFactory
               String ColumnTypeClassName = "Type_" + TextUtil.normalCapitalization(C.getType().name()) + (C.isCollection() ? "Collection" : "Primitive") + (C._Nullable == true ? "Null" : "");
               G.getGenDocs().docField(Out, G, C, "column definition");
               if (C._FCT == FrameworkColumnType.FORMULA || C._FCT == FrameworkColumnType.FORMULA_DT)
-               {
-                 Out.print("     public static " + ColumnTypeClassName + TypePad + " " + C.getName().toUpperCase() 
-                                                 + ColumnPad + "= new " + ColumnTypeClassName + TypePad + "(SCHEMA_LABEL, TABLENAME_LABEL, \"" + C.getName() + "\"" + ColumnPad 
-                                                 + ", " + (++Counter) + "/*" + C.getSequenceOrder() + "*/, " + TextUtil.escapeDoubleQuoteWithSlash(C._Description)
-                                                 +", new String[] {"+TextUtil.printJavaStringArray(C._expressionStrs)
-                                                 +"}, new String[] {"+TextUtil.printJavaStringArray(C._expressionDependencyColumnNames)+"}");
-               }
+                {
+                  Out.print("     public static " + ColumnTypeClassName + TypePad + " " + C.getName().toUpperCase()
+                  + ColumnPad + "= new " + ColumnTypeClassName + TypePad + "(SCHEMA_LABEL, TABLENAME_LABEL, \"" + C.getName() + "\"" + ColumnPad
+                  + ", " + (++Counter) + "/*" + C.getSequenceOrder() + "*/, " + TextUtil.escapeDoubleQuoteWithSlash(C._Description)
+                  + ", new String[] {" + TextUtil.printJavaStringArray(C._expressionStrs)
+                  + "}, new String[] {" + TextUtil.printJavaStringArray(C._expressionDependencyColumnNames) + "}");
+                }
               else
-               Out.print("     public static " + ColumnTypeClassName + TypePad + " " + C.getName().toUpperCase() 
-                                               + ColumnPad + "= new " + ColumnTypeClassName + TypePad + "(SCHEMA_LABEL, TABLENAME_LABEL, \"" + C.getName() + "\"" + ColumnPad 
-                                               + ", " + (++Counter) + "/*" + C.getSequenceOrder() + "*/, " + TextUtil.escapeDoubleQuoteWithSlash(C._Description)+", null, null");
+                Out.print("     public static " + ColumnTypeClassName + TypePad + " " + C.getName().toUpperCase()
+                + ColumnPad + "= new " + ColumnTypeClassName + TypePad + "(SCHEMA_LABEL, TABLENAME_LABEL, \"" + C.getName() + "\"" + ColumnPad
+                + ", " + (++Counter) + "/*" + C.getSequenceOrder() + "*/, " + TextUtil.escapeDoubleQuoteWithSlash(C._Description) + ", null, null");
+
               if (C.getType() == ColumnType.DATETIME && C.needsTZ() == true && O.getColumn(C.getName() + "TZ") != null)
                 {
                   Out.print(", " + C.getName().toUpperCase() + "TZ");
                 }
+              // Although DATE and DATETIME do support values, we don't want them here because they are always markers and default values, not enumerations per se.
+              if (C.isCollection() == false && C.getType() != ColumnType.DATE && C.getType() != ColumnType.DATETIME && ValueHelper.isSuported(C.getType()) == true)
+                Out.print(", " + ColumnValue.toJavaStringDoubleArray(C._Values));
               Out.println(");");
             }
         Out.println(";");
@@ -296,7 +303,7 @@ public class TildaFactory implements CodeGenTildaFactory
 
         boolean Collection = O.hasCollectionColumn() == true || O.hasCollectionQuery() == true;
         if (Collection == true)
-         Out.println("       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();");
+          Out.println("       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();");
         Out.println("       int count = 0;");
         Out.println("       try");
         Out.println("        {");
@@ -389,7 +396,7 @@ public class TildaFactory implements CodeGenTildaFactory
                 continue;
               }
 
-            if (O.isAutoGenPrimaryKey(C)==true)
+            if (O.isAutoGenPrimaryKey(C) == true)
               {
                 Out.println("       // Even though this is a primary key, and is by definition not-null, we nevertheless check it as optional in case");
                 Out.println("       // this object is being initialized generically for a create.");
@@ -397,7 +404,7 @@ public class TildaFactory implements CodeGenTildaFactory
             if (C.isCollection() == false)
               {
                 Out.println("       if (vals!=null && vals.length > 1)");
-                Out.println("        Errors.add(new StringStringPair("+ TextUtil.escapeDoubleQuoteWithSlash(C.getName()) +", \"Parameter is not a list or a set and yet received \"+vals.length+\" values\"));");
+                Out.println("        Errors.add(new StringStringPair(" + TextUtil.escapeDoubleQuoteWithSlash(C.getName()) + ", \"Parameter is not a list or a set and yet received \"+vals.length+\" values\"));");
               }
 
             Out.print("       " + (C.isCollection() == true && C._JsonSchema == null ? JavaJDBCType.getFieldType(C) : JavaJDBCType.getFieldTypeBaseClass(C))
@@ -407,7 +414,7 @@ public class TildaFactory implements CodeGenTildaFactory
             : "")
             + "ParseUtil.parse" + JavaJDBCType.getFieldTypeBaseClass(C)
             + "(" + TextUtil.escapeDoubleQuoteWithSlash(C.getName())
-            + ", " + (C._Nullable == true || O.isAutoGenPrimaryKey(C)==true ? "false" : "true")
+            + ", " + (C._Nullable == true || O.isAutoGenPrimaryKey(C) == true ? "false" : "true")
             + ", ");
             if (C.isCollection() == false || C._JsonSchema != null)
               Out.print("vals!=null && vals.length > 0 ? vals[0] : null");
@@ -1122,7 +1129,7 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("      int i = -1;");
         for (Column C : J._ColumnObjs)
           if (C != null)
-           Helper.JSONExport(Out, C);
+            Helper.JSONExport(Out, C);
         Out.println("      if (fullObject == true)");
         Out.println("       out.write(\" }\\n\");");
         Out.println();
