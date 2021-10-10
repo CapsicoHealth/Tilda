@@ -2,27 +2,24 @@ package tilda.utils.gcp;
 
 import java.time.ZonedDateTime;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import tilda.utils.json.JSONUtil;
 
-public class FhirEntity
+public abstract class FhirEntity
   {
-    public FhirEntity(String resourceType, String primaryIdentifierSystem, String resourceJson, String uuid)
+    protected FhirEntity(String resourceType, String primaryIdentifierSystem, String uuid)
       {
         _resourceType = resourceType;
         _primaryIdentifierSystem = primaryIdentifierSystem;
-        _resourceJsonObj = new Gson().fromJson(resourceJson, JsonObject.class);
         _uuid = uuid;
       }
 
-    protected String        _resourceType;
-    protected String        _primaryIdentifierSystem;
+    protected final String  _resourceType;
+    protected final String  _primaryIdentifierSystem;
     protected String        _primaryIdentifierValue;
-    protected JsonObject    _resourceJsonObj;
     protected String        _uuid;
     protected ZonedDateTime _lastUpdated;
     protected String        _versionId;
@@ -46,7 +43,7 @@ public class FhirEntity
         if (_primaryIdentifierValue != null)
           return _primaryIdentifierValue;
 
-        JsonArray a = JSONUtil.getJsonElementFromPath(_resourceJsonObj, "identifier").getAsJsonArray();
+        JsonArray a = JSONUtil.getJsonElementFromPath(getResource(), "identifier").getAsJsonArray();
         for (int i = 0; i < a.size(); ++i) // Need to find the right identifier as per the system passed in.
           {
             JsonElement elem = a.get(i);
@@ -66,10 +63,12 @@ public class FhirEntity
         return null;
       }
 
-    public JsonObject getResource()
-      {
-        return _resourceJsonObj;
-      }
+    /**
+     * Must be called only after al dependencies have been re-hydrated. For example, an encounter depends on a patient 
+     * and an organization, so those dependencies must have been read/created before this entity is written.
+     * @return
+     */
+    public abstract JsonObject getResource();
 
     public String getUuid()
       {
@@ -78,7 +77,7 @@ public class FhirEntity
 
     public void setUuid(String uuid)
       {
-        _resourceJsonObj.addProperty("id", uuid);
+        getResource().addProperty("id", uuid);
         _uuid = uuid;
       }
 
@@ -94,7 +93,7 @@ public class FhirEntity
 
     public String getReference()
       {
-        return _resourceType+"/"+_uuid;
+        return _resourceType + "/" + getUuid();
       }
 
   }

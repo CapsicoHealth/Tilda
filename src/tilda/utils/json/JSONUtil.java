@@ -24,8 +24,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -594,14 +592,24 @@ public class JSONUtil
      * @param openObjectOrArray A character for '{' or '[' depending on whether an object is output, or an array of objects.
      * @throws IOException
      */
-    public static void startOK(Writer Out, char openObjectOrArray)
+    public static void startOK(Writer Out, char openObjectOrArray, String perfMessage)
     throws IOException
       {
         Out.write("{\"code\":");
         Out.write(Integer.toString(HttpStatus.OK._Code));
+        if (TextUtil.isNullOrEmpty(perfMessage) == false)
+          {
+            Out.write(",\"perfMessage\": ");
+            printString(Out, perfMessage);
+          }
         Out.write(",\"data\": ");
         Out.write(openObjectOrArray);
         Out.write("\n");
+      }
+    public static void startOK(Writer Out, char openObjectOrArray)
+    throws IOException
+      {
+        startOK(Out, openObjectOrArray, null);
       }
 
     public static void printArrayStart(Writer Out, String Name, boolean FirstElement, String Header)
@@ -639,13 +647,18 @@ public class JSONUtil
         Out.write("}\n");
       }
 
-    public static void response(Writer Out, String JsonExportName, JSONable Obj)
+    public static void response(Writer Out, String JsonExportName, JSONable Obj, String perfMessage)
     throws Exception
       {
         if (Obj == null)
           {
             Out.write("{\"code\":");
             Out.write(Integer.toString(HttpStatus.OK._Code));
+            if (TextUtil.isNullOrEmpty(perfMessage) == false)
+              {
+                Out.write(",\"perfMessage\": ");
+                printString(Out, perfMessage);
+              }
             Out.write(",\"data\": null}");
           }
         else
@@ -655,7 +668,12 @@ public class JSONUtil
             end(Out, '}');
           }
       }
-
+    public static void response(Writer Out, String JsonExportName, JSONable Obj)
+    throws Exception
+      {
+        response(Out, JsonExportName, Obj, null);
+      }
+        
     /**
      * When using client-side frameworks such as Dojo that may use an iFrame for ajax-contents, the protocol
      * is typically to return the json data packaged inside a textarea. This function does that. It is exactly
@@ -667,24 +685,38 @@ public class JSONUtil
      * @param Obj
      * @throws Exception
      */
-    public static void responseDojoMultipartConfig(Writer Out, String JsonExportName, JSONable Obj)
+    public static void responseDojoMultipartConfig(Writer Out, String JsonExportName, JSONable Obj, String perfMessage)
     throws Exception
       {
         Out.write("<textarea>\n");
         response(Out, JsonExportName, Obj);
         Out.write("</textarea>\n");
       }
+    public static void responseDojoMultipartConfig(Writer Out, String JsonExportName, JSONable Obj)
+    throws Exception
+      {
+        responseDojoMultipartConfig(Out, JsonExportName, Obj, null);
+      }
 
-
-    public static void response(Writer Out, String JsonExportName, List<? extends JSONable> L)
+    public static void response(Writer Out, String JsonExportName, List<? extends JSONable> L, String perfMessage)
     throws Exception
       {
         Out.write("{\"code\":");
         Out.write(Integer.toString(HttpStatus.OK._Code));
+        if (TextUtil.isNullOrEmpty(perfMessage) == false)
+          {
+            Out.write(",\"perfMessage\": ");
+            printString(Out, perfMessage);
+          }
         print(Out, "data", JsonExportName, false, L, " ");
         end(Out, ' ');
       }
-
+    public static void response(Writer Out, String JsonExportName, List<? extends JSONable> L)
+    throws Exception
+      {
+        response(Out, JsonExportName, L, null);
+      }
+    
     public static void response(Writer Out, String[][] groupValues)
     throws IOException
       {

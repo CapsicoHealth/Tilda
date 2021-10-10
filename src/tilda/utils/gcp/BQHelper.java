@@ -99,9 +99,13 @@ public class BQHelper
       {
         try
           {
+            long T0 = System.nanoTime();
             DatasetInfo datasetInfo = DatasetInfo.newBuilder(datasetName).build();
             if (bq.create(datasetInfo) != null)
-              return true;
+              {
+                LOG.debug("BQ: created dataset '" + datasetName + "' (" + DurationUtil.printDurationMilliSeconds(System.nanoTime() - T0) + "ms)");
+                return true;
+              }
           }
         catch (BigQueryException e)
           {
@@ -118,7 +122,9 @@ public class BQHelper
     public static List<Dataset> lookupDatasets(BigQuery bq)
     throws Exception
       {
+        long T0 = System.nanoTime();
         Page<Dataset> L = bq.listDatasets(DatasetListOption.all().pageSize(250));
+        LOG.debug("BQ: looked up datasets (" + DurationUtil.printDurationMilliSeconds(System.nanoTime() - T0) + "ms)");
         if (L == null)
           return new ArrayList<Dataset>();
         return (List<Dataset>) CollectionUtil.toList(L.iterateAll().iterator());
@@ -134,7 +140,9 @@ public class BQHelper
     public static List<Table> lookupTables(BigQuery bq, String datasetName)
     throws Exception
       {
+        long T0 = System.nanoTime();
         Page<Table> L = bq.listTables(datasetName, TableListOption.pageSize(250));
+        LOG.debug("BQ: looked up tables in dataset '"+datasetName+"' (" + DurationUtil.printDurationMilliSeconds(System.nanoTime() - T0) + "ms)");
         if (L == null)
           return new ArrayList<Table>();
         return (List<Table>) CollectionUtil.toList(L.iterateAll().iterator());
@@ -177,7 +185,7 @@ public class BQHelper
         try
           {
             long ts = System.nanoTime();
-            LOG.debug("BIGQUERY: " + q);
+            LOG.debug("BIGQUERY (sync): " + q);
             QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(q).setUseLegacySql(false).build();
             JobId jobId = JobId.newBuilder().build();
             JobInfo jobInfo = JobInfo.newBuilder(queryConfig).setJobId(jobId).build();
@@ -197,6 +205,16 @@ public class BQHelper
             LOG.error("Cannot execute BigQuery query:\n", E);
           }
         return null;
+      }
+
+    public static Job launchQuery(BigQuery bq, String q)
+      {
+        LOG.debug("BIGQUERY (async): " + q);
+        QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(q).setUseLegacySql(false).build();
+        // Create a job ID so that we can safely retry.
+        JobId jobId = JobId.newBuilder().build();
+        JobInfo jobInfo = JobInfo.newBuilder(queryConfig).setJobId(jobId).build();
+        return bq.create(jobInfo);
       }
 
     /**
@@ -421,6 +439,7 @@ public class BQHelper
     /**
      * Undeletes a table based on a snapshot time. As per the documentation https://cloud.google.com/bigquery/docs/samples/bigquery-undelete-table
      * one cannot undelete a table that has been re-created since. BQ will also track the most recent snapshot as per the milliseconds provided.
+     * 
      * @param bq
      * @param datasetName
      * @param tableName
@@ -458,7 +477,7 @@ public class BQHelper
           {
             Table table = bq.getTable(TableId.of(datasetName, tableName));
             if (table != null && table.exists() == true)
-             return true;
+              return true;
           }
         catch (BigQueryException e)
           {
