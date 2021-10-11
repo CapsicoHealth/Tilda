@@ -35,6 +35,7 @@ import tilda.db.Connection;
 import tilda.db.QueryDetails;
 import tilda.db.TildaMasterRuntimeMetaData;
 import tilda.db.metadata.ColumnMeta;
+import tilda.db.metadata.SchemaMeta;
 import tilda.db.metadata.TableMeta;
 import tilda.enums.ColumnType;
 import tilda.loader.GenericLoader;
@@ -64,8 +65,9 @@ public class PostgreSQLCSVImporter extends CSVImporter
     String DatePattern)
     throws Exception
       {
-        TableMeta TM = new TableMeta(schemaName, tableName, "");
-        TM.load(C);
+        SchemaMeta sMeta = new SchemaMeta(schemaName);
+        sMeta.load(C, tableName);
+        TableMeta TM = sMeta.getTableMeta(tableName);
         Map<String, ColumnMeta> ColumnsMap = TM.getColumnMetaMap();
         PreparedStatement Pst = C.prepareStatement(Str.toString());
         List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();

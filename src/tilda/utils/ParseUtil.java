@@ -33,8 +33,6 @@ public class ParseUtil
     protected static final Logger LOG = LogManager.getLogger(ParseUtil.class.getName());
 
     
-    
-    
     /************************************************************************************************************************
      * STRINGS
      ************************************************************************************************************************/
@@ -54,7 +52,7 @@ public class ParseUtil
             Errors.add(new StringStringPair(Name, "Mandatory Parameter"));
             return null;
           }
-        return Value;
+        return Value == null ? null : Value.trim();
       }
 
     /**
@@ -71,7 +69,7 @@ public class ParseUtil
         if (Values != null)
           for (String v : Values)
             if (TextUtil.isNullOrEmpty(v) == false)
-              l.add(v);
+              l.add(v.trim());
         if (l.isEmpty() == true)
           {
             if (Mandatory == true)

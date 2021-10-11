@@ -109,7 +109,7 @@ public class SchemaMeta
       {
         long TS = System.nanoTime();
         Map<String, Map<String, Map<String, ColumnMeta>>> columns = new HashMap<String, Map<String, Map<String, ColumnMeta>>>();
-        ResultSet RS = meta.getColumns(null, SchemaName, TableName, null);
+        ResultSet RS = meta.getColumns(null, SchemaName == null ? null : SchemaName.toLowerCase(), TableName == null ? null : TableName.toLowerCase(), null);
         while (RS.next() != false)
           {
             if (RS.getString("TABLE_SCHEM").equalsIgnoreCase("information_schema") == true)
