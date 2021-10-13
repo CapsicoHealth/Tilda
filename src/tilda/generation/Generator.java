@@ -127,7 +127,7 @@ public class Generator
         Out.println();
 
         for (View V : S._Views)
-          if (V != null)// && (V._Mode == ObjectMode.NORMAL || V._Mode == ObjectMode.DB_ONLY))
+          if (V != null && (V._Mode == ObjectMode.NORMAL || V._Mode == ObjectMode.DB_ONLY))
             {
               Out.println();
               Out.println();
@@ -162,7 +162,7 @@ public class Generator
             }
 
         for (View V : S._Views)
-          if (V != null)// && (V._Mode == ObjectMode.NORMAL || V._Mode == ObjectMode.DB_ONLY))
+          if (V != null && (V._Mode == ObjectMode.NORMAL || V._Mode == ObjectMode.DB_ONLY))
             {
               File f = new File(GenFolder.getAbsolutePath() + File.separator + "bq." + V._Name + ".json");
               PrintWriter Out = new PrintWriter(f);

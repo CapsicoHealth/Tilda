@@ -68,7 +68,6 @@ public class View extends Base
     @SerializedName("importFormulas"  ) public String[]              _ImportFormulas = new String[] { };
     @SerializedName("formulaColumns"  ) public List<Formula>         _Formulas = new ArrayList<Formula>();
     @SerializedName("formulaTemplates") public List<FormulaTemplate> _FormulaTemplates = new ArrayList<FormulaTemplate>();
-    @SerializedName("dbOnly"          ) public boolean               _DBOnly = false;
     /*@formatter:on*/
 
     public transient boolean           _OCC              = false;
@@ -665,7 +664,7 @@ public class View extends Base
                 PS.AddError("View '" + getFullName() + "' is defining formula '" + F._Name + "' with an infinite reference loop '" + Path + "'.");
             }
 
-        O._ModeStr = _DBOnly==true ? ObjectMode.DB_ONLY.toString() : ObjectMode.NORMAL.toString();
+        O._ModeStr = _Mode.toString();
         _ParentSchema._Objects.add(O);
         O.Validate(PS, _ParentSchema);
 
