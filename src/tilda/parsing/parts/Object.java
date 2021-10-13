@@ -34,7 +34,6 @@ import tilda.enums.ObjectMode;
 import tilda.enums.OutputFormatType;
 import tilda.enums.TildaType;
 import tilda.parsing.ParserSession;
-import tilda.parsing.parts.helpers.DefaultsHelper;
 import tilda.types.ColumnDefinition;
 
 public class Object extends Base

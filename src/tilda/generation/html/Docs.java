@@ -134,10 +134,12 @@ public class Docs
         Out.println("</TABLE>");
         Out.println("<DIV id=\"" + O._Name + "_CNT\" class=\"content\">");
         Out.println("The " + ObjType + " " + O.getShortName() + ":<UL>");
-        if (O._Mode != ObjectMode.DB_ONLY) // view == null || view._DBOnly == false)
+        if (O._Mode == ObjectMode.NORMAL || O._Mode == ObjectMode.CODE_ONLY) // view == null || view._DBOnly == false)
           Out.println("<LI>Is mapped to the generated " + Helper.getCodeGenLanguage() + "/" + G.getSql().getName() + " Tilda classes <B>" + O.getAppFactoryClassName() + "</B>, <B>" + O.getAppDataClassName() + "</B> in the package <B>" + O._ParentSchema._Package + "</B>.");
-        else
+        else if (O._Mode == ObjectMode.DB_ONLY)
           Out.println("<LI>Is not mapped to any generated code (i.e., Java code) and only exists in the database.</LI>");
+        else
+          Out.println("<LI>Is not mapped to any generated code or generated sql.</LI>");
 
         if (view != null && view._Realize != null)
           {
@@ -190,6 +192,9 @@ public class Docs
                   break;
                 case CODE_ONLY:
                   Out.println("<LI>Is configured to <B>only output application-level artifacts</B> (i.e., no database code generated).</LI>");
+                  break;
+                case NONE:
+                  Out.println("<LI>Is configured to only exist as meta-data and may or may not map to a custom artifact in the database.</LI>");
                   break;
                 default:
                   throw new Exception("Unknown Object mode value '" + O._Mode + "' when generating class docs");

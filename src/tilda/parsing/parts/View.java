@@ -665,7 +665,7 @@ public class View extends Base
                 PS.AddError("View '" + getFullName() + "' is defining formula '" + F._Name + "' with an infinite reference loop '" + Path + "'.");
             }
 
-        O._ModeStr = _DBOnly == true ? ObjectMode.DB_ONLY.toString() : ObjectMode.NORMAL.toString();
+        O._ModeStr = _DBOnly==true ? ObjectMode.DB_ONLY.toString() : ObjectMode.NORMAL.toString();
         _ParentSchema._Objects.add(O);
         O.Validate(PS, _ParentSchema);
 

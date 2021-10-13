@@ -463,10 +463,10 @@ public class Migrator
 
         for (Object Obj : S._Objects)
           {
-
             if (Obj == null)
               continue;
-            if (Obj._FST == FrameworkSourcedType.VIEW || Obj._Mode == ObjectMode.CODE_ONLY == true)
+            // No need to migrate unless there is a DB artifact
+            if (Obj._FST == FrameworkSourcedType.VIEW || Obj._Mode == ObjectMode.CODE_ONLY || Obj._Mode == ObjectMode.NONE)
               continue;
 
             TableMeta TMeta = DBMeta.getTableMeta(Obj._ParentSchema._Name, Obj._Name);
