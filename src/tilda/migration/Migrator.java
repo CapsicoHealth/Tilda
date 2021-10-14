@@ -509,10 +509,14 @@ public class Migrator
                             NeedsDdlDependencyManagement = true;
                           }
 
+                        //
+                        //@formatter:off
                         boolean condition1 = Col.isCollection() == false
-                        && (Col.getType() == ColumnType.BITFIELD && CMeta._TildaType != ColumnType.INTEGER
-                        || Col.getType() == ColumnType.JSON && CMeta._TildaType != ColumnType.STRING && CMeta._TildaType != ColumnType.JSON
-                        || Col.getType() != ColumnType.BITFIELD && Col.getType() != ColumnType.JSON && Col.getType() != CMeta._TildaType);
+                             && (   Col.getType() == ColumnType.BITFIELD && CMeta._TildaType != ColumnType.INTEGER
+                                 || Col.getType() == ColumnType.JSON && CMeta._TildaType == ColumnType.STRING // && CMeta._TildaType != ColumnType.JSON
+                                 || Col.getType() != ColumnType.BITFIELD && Col.getType() != ColumnType.JSON && Col.getType() != CMeta._TildaType
+                                );
+                        //@formatter:on
 
 
                         // We have to check if someone changed goal-posts for VARCHAR and CLOG thresholds.
@@ -534,7 +538,7 @@ public class Migrator
                           {
                             // Are the to/from types compatible?
                             if (Col.getType().isDBCompatible(CMeta._TildaType) == false)
-                              throw new Exception("Type incompatbility requested for an alter column " + Col.getShortName() + ": cannot alter from " + CMeta._TildaType + " to " + Col.getType() + ".");
+                              throw new Exception("Type incompatbility requested for an alter column " + Col.getShortName() + ": cannot alter from " + CMeta._TildaType + " in the database to " + Col.getType() + ".");
 
                             CAM.addColumnAlterType(CMeta, Col);
                             NeedsDdlDependencyManagement = true;
@@ -554,6 +558,9 @@ public class Migrator
                                 NeedsDdlDependencyManagement = true;
                               }
                           }
+                        else if (Col.getType() != CMeta._TildaType)
+                          throw new Exception("A type migration for column " + Col.getShortName() + " from " + CMeta._TildaType + " in the database to " + Col.getType() + " is not available: manual migration is required.");
+
                         if (CMeta._Nullable == 1 && Col._Nullable == false || CMeta._Nullable == 0 && Col._Nullable == true)
                           Actions.add(new ColumnAlterNull(Col));
                       }

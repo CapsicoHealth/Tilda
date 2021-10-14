@@ -599,17 +599,24 @@ public class PostgreSQL implements DBType
           {
             if (CMP._CMeta._TildaType == ColumnType.STRING)
               {
-                if (CMP._Col.getType() == ColumnType.DATETIME || CMP._Col.getType() == ColumnType.DATE || CMP._Col.getType() == ColumnType.UUID
-                || CMP._Col.getType() == ColumnType.INTEGER || CMP._Col.getType() == ColumnType.LONG || CMP._Col.getType() == ColumnType.FLOAT || CMP._Col.getType() == ColumnType.DOUBLE
-                || CMP._Col.getType() == ColumnType.BOOLEAN || CMP._Col.getType() == ColumnType.NUMERIC || CMP._Col.getType() == ColumnType.SHORT
-                || CMP._Col.getType() == ColumnType.STRING && CMP._Col._Size != CMP._CMeta._Size)
+                //@formatter:off
+                if (   CMP._Col.getType() == ColumnType.DATETIME || CMP._Col.getType() == ColumnType.DATE 
+                    || CMP._Col.getType() == ColumnType.UUID
+                    || CMP._Col.getType() == ColumnType.SHORT || CMP._Col.getType() == ColumnType.INTEGER  || CMP._Col.getType() == ColumnType.LONG 
+                    || CMP._Col.getType() == ColumnType.FLOAT || CMP._Col.getType() == ColumnType.DOUBLE
+                    || CMP._Col.getType() == ColumnType.BOOLEAN 
+                    || CMP._Col.getType() == ColumnType.NUMERIC 
+                    || CMP._Col.getType() == ColumnType.JSON 
+                    || CMP._Col.getType() == ColumnType.STRING && CMP._Col._Size != CMP._CMeta._Size
+                   )
+                //@formatter:on
                   {
                     Q += " ALTER COLUMN \"" + CMP._Col.getName()
                     + "\" TYPE " + getColumnType(CMP._Col.getType(), CMP._Col._Size, CMP._Col._Mode, CMP._Col.isCollection(), CMP._Col._Precision, CMP._Col._Scale)
                     + " USING (trim(\"" + CMP._Col.getName() + "\")::" + getColumnType(CMP._Col.getType(), CMP._Col._Size, CMP._Col._Mode, CMP._Col.isCollection(), CMP._Col._Precision, CMP._Col._Scale) + "),";
 
-                    // boolean res = Con.ExecuteDDL(CMP._Col._ParentObject._ParentSchema._Name, CMP._Col._ParentObject.getBaseName(), Q);
-                    if (CMP._Col.getType() == ColumnType.DATETIME)
+                    // For datetime columns, we have to deal with the TZ column as well.
+                    if (CMP._Col.getType() == ColumnType.DATETIME && CMP._Col.needsTZ() == true)
                       {
                         Column ColTZ = CMP._Col._ParentObject.getColumn(CMP._Col.getName() + "TZ");
                         QU.add("UPDATE " + CMP._Col._ParentObject.getShortName() + " SET \"" + ColTZ.getName() + "\" = 'UTC' WHERE \"" + ColTZ.getName() + "\" IS NULL;");

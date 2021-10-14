@@ -39,7 +39,6 @@ import tilda.enums.ColumnType;
 import tilda.enums.FrameworkColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.enums.ObjectLifecycle;
-import tilda.enums.ObjectMode;
 import tilda.enums.TildaType;
 import tilda.interfaces.PatternObject;
 import tilda.parsing.ParserSession;

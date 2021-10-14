@@ -95,12 +95,11 @@ public class TildaMasterRuntimeMetaData
             throw new Exception("Trying to register Tilda Object " + Key + " more than once!");
           }
 
-        // LDH-NOTE: I think ALL defined artifacts should be registered, not just those with a code artifact
-//        if (Obj._Mode == ObjectMode.NORMAL || Obj._Mode == ObjectMode.CODE_ONLY || Obj._Mode == ObjectMode.NONE)
-//          {
-            TildaObjectMetaData OMD = new TildaObjectMetaData(PackageName, Obj, warnings);
-            _M.put(Key, OMD);
-//          }
+        if (Obj._Mode == ObjectMode.NORMAL || Obj._Mode == ObjectMode.CODE_ONLY)
+         {
+           TildaObjectMetaData OMD = new TildaObjectMetaData(PackageName, Obj, warnings);
+           _M.put(Key, OMD);
+         }
       }
 
     public static <T> List<T> lookupWhere(Connection C, Class<T> DataClass, String WhereClause, int Start, int Size)
