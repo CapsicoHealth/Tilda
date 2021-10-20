@@ -172,19 +172,31 @@ public class ConnectionPool
                       }
                     if (/* first == true && */ Migrate.isMigrationActive() == false)
                       {
+                        List<String> performanceMessages = new ArrayList<String>();
                         LOG.info("Initializing Schemas for " + C._Url);
                         for (Schema S : TildaList)
                           {
                             LOG.info("  Initializing Schema " + S.getFullName());
+                            long T0 = System.nanoTime();
                             Method M = Class.forName(tilda.generation.java8.Helper.getSupportClassFullName(S)).getMethod("initSchema", Connection.class);
                             M.invoke(null, C);
                             if (_Schemas.get(S._Name.toUpperCase()) == null)
                               _Schemas.put(S._Name.toUpperCase(), S);
+                            performanceMessages.add("  Initializing Schema " + S.getFullName() +" took "+DurationUtil.printDurationMilliSeconds(System.nanoTime()-T0)+".");
                           }
+                        if (performanceMessages.isEmpty() == false)
+                         for (String msg : performanceMessages)
+                          LOG.info(msg);
                       }
                     first = false;
                     if (Migrate.isTesting() == false)
                       C.commit();
+                    else
+                      LOG.warn("\n"
+                              +"*******************************************************************************\n"
+                              +"**   NO COMMIT SINCE WE ARE IN TESTING MODE!\n"
+                              +"*******************************************************************************\n"
+                              );
                     C.close();
                     C = null;
                     LOG.info("\n\n\n\n\n\n\n");
