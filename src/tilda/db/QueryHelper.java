@@ -1090,6 +1090,34 @@ public abstract class QueryHelper
         return this;
       }
 
+    public QueryHelper in(Type_ShortPrimitive Col, short[] V)
+    throws Exception
+      {
+        return in(Col, V, false);
+      }
+    
+    public QueryHelper in(Type_ShortPrimitive Col, short[] V, boolean not)
+    throws Exception
+      {
+        if (V == null || V.length == 0)
+          throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty value array.");
+        if (isWhereClause() == false)
+          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
+
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        if (not == true)
+          _QueryStr.append(" not ");
+        _QueryStr.append(" in (");
+        for (int i = 0; i < V.length; ++i)
+          {
+            if (i != 0)
+              _QueryStr.append(",");
+            _QueryStr.append(V[i]);
+          }
+        _QueryStr.append(")");
+        return this;
+      }
+    
     public QueryHelper in(Type_IntegerPrimitive Col, int[] V)
     throws Exception
       {
