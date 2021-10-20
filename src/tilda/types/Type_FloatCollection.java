@@ -18,9 +18,9 @@ package tilda.types;
 
 import tilda.enums.ColumnType;
 
-public class Type_FloatCollectionNotNull extends ColumnDefinition
+public class Type_FloatCollection extends ColumnDefinition
   {
-    public Type_FloatCollectionNotNull(String SchemaName, String TableName, String ColumnName, int Count, String Description, String[] expressionStrs, String[] expressionsDependencies)
+    public Type_FloatCollection(String SchemaName, String TableName, String ColumnName, int Count, String Description, String[] expressionStrs, String[] expressionsDependencies)
       {
         super(SchemaName, TableName, ColumnName, Count, ColumnType.FLOAT, true, Description, expressionStrs, expressionsDependencies);
       }
