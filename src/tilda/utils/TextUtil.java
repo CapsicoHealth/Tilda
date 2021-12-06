@@ -22,6 +22,7 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringReader;
 import java.io.Writer;
+import java.math.BigDecimal;
 import java.text.Normalizer;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -292,7 +293,6 @@ public class TextUtil
       {
         escapeSomethingWithSomething(x, '"', "\"", str, "\"", "\"");
       }
-
 
     public static final String escapeSingleQuoteWithSlashDouble(String str)
       {

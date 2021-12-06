@@ -18,12 +18,14 @@ package tilda.utils.json;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -88,6 +90,19 @@ public class JSONUtil
         Out.write("\"");
       }
 
+    protected static void printUUID(Writer Out, UUID v)
+    throws IOException
+      {
+        if (v == null)
+          {
+            Out.write("null");
+            return;
+          }
+        Out.write("\"");
+        Out.write(v.toString());
+        Out.write("\"");
+      }
+    
     protected static void printChar(Writer Out, char v)
     throws IOException
       {
@@ -160,11 +175,25 @@ public class JSONUtil
         printLocalDate(Out, v);
       }
 
+    public static void print(Writer Out, String Name, boolean FirstElement, UUID v)
+    throws IOException
+      {
+        print(Out, Name, FirstElement);
+        printString(Out, v.toString());
+      }
+
     public static void print(Writer Out, String Name, boolean FirstElement, boolean v)
     throws IOException
       {
         print(Out, Name, FirstElement);
         Out.write(Boolean.toString(v));
+      }
+
+    public static void print(Writer Out, String Name, boolean FirstElement, short v)
+    throws IOException
+      {
+        print(Out, Name, FirstElement);
+        Out.write(Short.toString(v));
       }
 
     public static void print(Writer Out, String Name, boolean FirstElement, int v)
@@ -195,6 +224,12 @@ public class JSONUtil
         printDouble(Out, v);
       }
 
+    public static void print(Writer Out, String Name, boolean FirstElement, BigDecimal v)
+    throws IOException
+      {
+        print(Out, Name, FirstElement);
+        printString(Out, v.toString());
+      }
 
     public static void print(Writer Out, String Name, boolean FirstElement, boolean[] a)
     throws IOException
@@ -213,7 +248,7 @@ public class JSONUtil
               First = false;
             else
               Out.write(", ");
-            Out.write(((Boolean) i).toString());
+            Out.write(Boolean.toString(i));
           }
         Out.write("]");
       }
@@ -230,6 +265,50 @@ public class JSONUtil
         Out.write("[");
         boolean First = true;
         for (Boolean i : a)
+          {
+            if (First == true)
+              First = false;
+            else
+              Out.write(", ");
+            Out.write(i == null ? "null" : i.toString());
+          }
+        Out.write("]");
+      }
+
+    public static void print(Writer Out, String Name, boolean FirstElement, short[] a)
+    throws IOException
+      {
+        print(Out, Name, FirstElement);
+        if (a == null)
+          {
+            Out.write("null");
+            return;
+          }
+        Out.write("[");
+        boolean First = true;
+        for (short i : a)
+          {
+            if (First == true)
+              First = false;
+            else
+              Out.write(", ");
+            Out.write(Short.toString(i));
+          }
+        Out.write("]");
+      }
+
+    public static void print(Writer Out, String Name, boolean FirstElement, Short[] a)
+    throws IOException
+      {
+        print(Out, Name, FirstElement);
+        if (a == null)
+          {
+            Out.write("null");
+            return;
+          }
+        Out.write("[");
+        boolean First = true;
+        for (Short i : a)
           {
             if (First == true)
               First = false;
@@ -257,7 +336,7 @@ public class JSONUtil
               First = false;
             else
               Out.write(", ");
-            Out.write(((Integer) i).toString());
+            Out.write(Integer.toString(i));
           }
         Out.write("]");
       }
@@ -301,7 +380,7 @@ public class JSONUtil
               First = false;
             else
               Out.write(", ");
-            Out.write(((Long) i).toString());
+            Out.write(Long.toString(i));
           }
         Out.write("]");
       }
@@ -469,6 +548,31 @@ public class JSONUtil
         Out.write("]");
       }
 
+    public static void print(Writer Out, String Name, boolean FirstElement, BigDecimal[] a)
+    throws IOException
+      {
+        print(Out, Name, FirstElement);
+        if (a == null)
+          {
+            Out.write("null");
+            return;
+          }
+        Out.write("[");
+        boolean First = true;
+        for (BigDecimal i : a)
+          {
+            if (First == true)
+              First = false;
+            else
+              Out.write(", ");
+            if (i == null)
+              Out.write("null");
+            else
+              printString(Out, i.toString());
+          }
+        Out.write("]");
+      }
+    
     public static void print(Writer Out, String Name, boolean FirstElement, String[] a)
     throws IOException
       {
@@ -534,6 +638,32 @@ public class JSONUtil
           }
         Out.write("]");
       }
+    
+    public static void print(Writer Out, String Name, boolean FirstElement, UUID[] a)
+    throws IOException
+      {
+        print(Out, Name, FirstElement);
+        if (a == null)
+          {
+            Out.write("null");
+            return;
+          }
+        Out.write("[");
+        boolean First = true;
+        for (UUID i : a)
+          {
+            if (First == true)
+              First = false;
+            else
+              Out.write(", ");
+            if (i == null)
+              Out.write("null");
+            else
+              printString(Out, i.toString());
+          }
+        Out.write("]");
+      }
+    
 
     public static void print(Writer Out, String Name, boolean FirstElement, Collection<String> a)
     throws IOException
