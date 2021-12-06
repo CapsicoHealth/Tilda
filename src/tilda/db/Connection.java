@@ -591,6 +591,17 @@ public final class Connection
         _DB.getFullColumnVar(Str, SchemaName, TableName, ColumnName);
       }
 
+    public void getFullColumnVarList(StringBuilder str, ColumnDefinition[] cols)
+      {
+        for (int i = 0; i < cols.length; ++i)
+          {
+            if (i != 0)
+             str.append(", ");
+            ColumnDefinition col = cols[i];
+            _DB.getFullColumnVar(str, col.getSchemaName(), col.getTableName(), col.getName());
+          }
+      }
+    
     public void getColumnType(StringBuilder Str, ColumnType T, Integer S, ColumnMode M, boolean Collection, Integer Precision, Integer Scale)
       {
         _DB.getColumnType(Str, T, S, M, Collection, Precision, Scale);

@@ -25,7 +25,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.util.StringBuilderWriter;
 
-import tilda.data.RefillPerf_Factory;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.enums.FrameworkColumnType;
@@ -1218,7 +1217,7 @@ public class TildaFactory implements CodeGenTildaFactory
           if (C != null)
             {
               if (C.getType() == ColumnType.JSON)
-                throw new Error("toCSV doesn't support export of JSON columns: this should have have come all the way here.");
+                throw new Error("toCSV doesn't support export of JSON columns: this should not have have come all the way here.");
               if (header.length() != 0)
                 header.append(",");
               header.append(TextUtil.escapeDoubleQuoteForCSV(C.getName()));

@@ -224,8 +224,13 @@ public class ViewColumn
               return PS.AddError("View Column '" + getFullName() + "' defined a filter without specifying an aggregate. Filters are only valid with aggregates.");
           }
 
-        if (TextUtil.isNullOrEmpty(_Description) == true && _SameAsObj != null)
-          _Description = _SameAsObj._Description;
+        if (_SameAsObj != null)
+         {
+           if (TextUtil.isNullOrEmpty(_Description) == true)
+            _Description = _SameAsObj._Description;
+           else
+             _Description = TextUtil.searchReplace(_Description, "${DESCRIPTION}", _SameAsObj._Description);
+         }
 
         if (_OrderBy != null && _OrderBy.length > 0)
           {
