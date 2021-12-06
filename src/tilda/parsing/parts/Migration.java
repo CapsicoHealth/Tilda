@@ -27,7 +27,8 @@ public class Migration
   {
     /*@formatter:off*/
     @SerializedName("renames") public List<MigrationRename> _Renames = new ArrayList<MigrationRename>();
-    @SerializedName("drops"  ) public List<MigrationDrop>   _Drops   = new ArrayList<MigrationDrop  >();
+// DROP is currently being removed from feature list as per #58. Too complex with lots of issues.
+//    @SerializedName("drops"  ) public List<MigrationDrop>   _Drops   = new ArrayList<MigrationDrop  >();
     @SerializedName("moves"  ) public List<MigrationMove>   _Moves   = new ArrayList<MigrationMove  >();
     /*@formatter:on*/
 
@@ -41,8 +42,9 @@ public class Migration
         for (MigrationRename M : _Renames)
           M.Validate(PS, Parent);
 
-        for (MigrationDrop M : _Drops)
-          M.Validate(PS, Parent);
+        // DROP is currently being removed from feature list as per #58. Too complex with lots of issues.
+//        for (MigrationDrop M : _Drops)
+//          M.Validate(PS, Parent);
 
         for (MigrationMove M : _Moves)
           M.Validate(PS, Parent);
