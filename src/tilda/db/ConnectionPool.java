@@ -174,19 +174,23 @@ public class ConnectionPool
                       {
                         List<String> performanceMessages = new ArrayList<String>();
                         LOG.info("Initializing Schemas for " + C._Url);
+                        long T0 = System.nanoTime();
                         for (Schema S : TildaList)
                           {
                             LOG.info("  Initializing Schema " + S.getFullName());
-                            long T0 = System.nanoTime();
+                            long T1 = System.nanoTime();
                             Method M = Class.forName(tilda.generation.java8.Helper.getSupportClassFullName(S)).getMethod("initSchema", Connection.class);
                             M.invoke(null, C);
                             if (_Schemas.get(S._Name.toUpperCase()) == null)
                               _Schemas.put(S._Name.toUpperCase(), S);
-                            performanceMessages.add("  Initializing Schema " + S.getFullName() +" took "+DurationUtil.printDurationMilliSeconds(System.nanoTime()-T0)+".");
+                            performanceMessages.add("      - " + S.getFullName() +": "+DurationUtil.printDurationMilliSeconds(System.nanoTime()-T1)+".");
                           }
                         if (performanceMessages.isEmpty() == false)
-                         for (String msg : performanceMessages)
-                          LOG.info(msg);
+                          {
+                            LOG.info("  Initialized "+TildaList.size()+" Schemas in " + DurationUtil.printDurationMilliSeconds(System.nanoTime()-T0)+".");
+                            for (String msg : performanceMessages)
+                             LOG.info(msg);
+                          }
                       }
                     first = false;
                     if (Migrate.isTesting() == false)
