@@ -53,7 +53,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          REFNUM        = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"        , 0/*0*/, "The primary key for this record", null, null);
+     public static Type_LongPrimitive          REFNUM        = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"        , 0/*0*/, "The primary key for this record", null, null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing2View.name -> TILDATEST.Testing2View."name"
@@ -72,7 +72,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        NAME          = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "name"          , 1/*1*/, "Medical system unique enterprise id", null, null);
+     public static Type_StringPrimitive        NAME          = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "name"          , 1/*1*/, "Medical system unique enterprise id", null, null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing2View.lastUpdated -> TILDATEST.Testing2View."lastUpdated"
@@ -125,386 +125,6 @@ This is the column definition for:<BR>
      public static Type_DatetimePrimitive      XXXLASTUPDATED= new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "xxxLastUpdated", 3/*3*/, "The timestamp for when the record was last updated. (TILDATEST.Testing)", null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2View.a1 -> TILDATEST.Testing2View."a1"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the column definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2View.a1 of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2View.a1 of type INTEGER</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-     public static Type_BitfieldPrimitiveNull  A1            = new Type_BitfieldPrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "a1"            , 4/*4*/, "The blah", null, null);
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2View.a3b -> TILDATEST.Testing2View."a3b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the column definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2View.a3b of type List<Boolean></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2View.a3b of type boolean[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-     public static Type_BooleanCollectionNull  A3B           = new Type_BooleanCollectionNull (SCHEMA_LABEL, TABLENAME_LABEL, "a3b"           , 5/*5*/, "The blah", null, null);
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2View.a4 -> TILDATEST.Testing2View."a4"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the column definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2View.a4 of type double</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2View.a4 of type double precision</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-     public static Type_DoublePrimitiveNull    A4            = new Type_DoublePrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a4"            , 6/*6*/, "The blah", null, null);
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2View.a4b -> TILDATEST.Testing2View."a4b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the column definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2View.a4b of type List<Double></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2View.a4b of type double precision[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-     public static Type_DoubleCollectionNull   A4B           = new Type_DoubleCollectionNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a4b"           , 7/*7*/, "The blah", null, null);
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2View.a5 -> TILDATEST.Testing2View."a5"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the column definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2View.a5 of type float</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2View.a5 of type real</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-     public static Type_FloatPrimitiveNull     A5            = new Type_FloatPrimitiveNull    (SCHEMA_LABEL, TABLENAME_LABEL, "a5"            , 8/*8*/, "The blah", null, null);
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2View.a5b -> TILDATEST.Testing2View."a5b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the column definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2View.a5b of type List<Float></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2View.a5b of type real[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-     public static Type_FloatCollectionNull    A5B           = new Type_FloatCollectionNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a5b"           , 9/*9*/, "The blah", null, null);
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2View.a7 -> TILDATEST.Testing2View."a7"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the column definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2View.a7 of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2View.a7 of type integer</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-     public static Type_IntegerPrimitiveNull   A7            = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a7"            , 10/*10*/, "The blah", null, null);
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2View.a7b -> TILDATEST.Testing2View."a7b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the column definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2View.a7b of type List<Integer></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2View.a7b of type integer[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-     public static Type_IntegerCollectionNull  A7B           = new Type_IntegerCollectionNull (SCHEMA_LABEL, TABLENAME_LABEL, "a7b"           , 11/*11*/, "The blah", null, null);
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2View.a8 -> TILDATEST.Testing2View."a8"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the column definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2View.a8 of type byte[]</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2View.a8 of type BYTEA</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-     public static Type_BinaryPrimitiveNull    A8            = new Type_BinaryPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a8"            , 12/*12*/, "The blah", null, null);
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2View.a8bTZ -> TILDATEST.Testing2View."a8bTZ"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the column definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2View.a8bTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2View.a8bTZ of type varchar(10)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a8b'.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-     public static Type_StringPrimitiveNull    A8BTZ         = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a8bTZ"         , 13/*13*/, "Generated helper column to hold the time zone ID for 'a8b'.", null, null);
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2View.a8b -> TILDATEST.Testing2View."a8b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the column definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2View.a8b of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2View.a8b of type timestamptz</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-     public static Type_DatetimePrimitiveNull  A8B           = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "a8b"           , 14/*14*/, "The blah", null, null, A8BTZ);
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2View.a10a -> TILDATEST.Testing2View."a10a"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the column definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2View.a10a of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2View.a10a of type integer</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-     public static Type_IntegerPrimitiveNull   A10A          = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a10a"          , 15/*15*/, "The blah", null, null);
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2View.a10b -> TILDATEST.Testing2View."a10b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the column definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2View.a10b of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2View.a10b of type varchar(10)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-     public static Type_StringPrimitiveNull    A10B          = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a10b"          , 16/*16*/, "The blah", null, null);
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2View.a10c -> TILDATEST.Testing2View."a10c"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the column definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2View.a10c of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2View.a10c of type integer</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-     public static Type_IntegerPrimitiveNull   A10C          = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a10c"          , 17/*17*/, "The blah", null, null);
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2View.a11 -> TILDATEST.Testing2View."a11"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the column definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2View.a11 of type BigDecimal</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2View.a11 of type numeric(8,4)</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-     public static Type_NumericPrimitiveNull   A11           = new Type_NumericPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a11"           , 18/*18*/, "The blah", null, null);
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2View.a11b -> TILDATEST.Testing2View."a11b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the column definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2View.a11b of type List<BigDecimal></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2View.a11b of type numeric(6,3)[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-     public static Type_NumericCollectionNull  A11B          = new Type_NumericCollectionNull (SCHEMA_LABEL, TABLENAME_LABEL, "a11b"          , 19/*19*/, "The blah", null, null);
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2View.a11c -> TILDATEST.Testing2View."a11c"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the column definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2View.a11c of type BigDecimal</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2View.a11c of type numeric(5,0)</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-     public static Type_NumericPrimitiveNull   A11C          = new Type_NumericPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a11c"          , 20/*20*/, "The blah", null, null);
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2View.a12 -> TILDATEST.Testing2View."a12"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the column definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2View.a12 of type short</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2View.a12 of type smallint</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-     public static Type_ShortPrimitiveNull     A12           = new Type_ShortPrimitiveNull    (SCHEMA_LABEL, TABLENAME_LABEL, "a12"           , 21/*21*/, "The blah", null, null);
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2View.a12b -> TILDATEST.Testing2View."a12b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the column definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2View.a12b of type List<Short></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2View.a12b of type smallint[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-     public static Type_ShortCollectionNull    A12B          = new Type_ShortCollectionNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a12b"          , 22/*22*/, "The blah", null, null);
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2View.a13 -> TILDATEST.Testing2View."a13"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the column definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2View.a13 of type UUID</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2View.a13 of type UUID</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-     public static Type_UuidPrimitiveNull      A13           = new Type_UuidPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a13"           , 23/*23*/, "The blah", null, null);
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2View.a13b -> TILDATEST.Testing2View."a13b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the column definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2View.a13b of type List<UUID></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2View.a13b of type UUID[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-     public static Type_UuidCollectionNull     A13B          = new Type_UuidCollectionNull    (SCHEMA_LABEL, TABLENAME_LABEL, "a13b"          , 24/*24*/, "The blah", null, null);
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing2View.description -> TILDATEST.Testing2View."description"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
@@ -521,7 +141,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    DESCRIPTION   = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "description"   , 25/*25*/, "The title for a person, i.e., Mr, Miss, Mrs...", null, null);
+     public static Type_StringPrimitiveNull    DESCRIPTION   = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "description"   , 4/*4*/, "The title for a person, i.e., Mr, Miss, Mrs...", null, null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing2View.desc2 -> TILDATEST.Testing2View."desc2"
@@ -540,7 +160,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    DESC2         = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "desc2"         , 26/*26*/, "The title for a person, i.e., Mr, Miss, Mrs...", null, null);
+     public static Type_StringPrimitiveNull    DESC2         = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "desc2"         , 5/*5*/, "The title for a person, i.e., Mr, Miss, Mrs...", null, null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing2View.desc3 -> TILDATEST.Testing2View."desc3"
@@ -559,7 +179,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    DESC3         = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "desc3"         , 27/*27*/, "The title for a person, i.e., Mr, Miss, Mrs...", null, null);
+     public static Type_StringPrimitiveNull    DESC3         = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "desc3"         , 6/*6*/, "The title for a person, i.e., Mr, Miss, Mrs...", null, null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing2View.desc4 -> TILDATEST.Testing2View."desc4"
@@ -578,7 +198,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    DESC4         = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "desc4"         , 28/*28*/, "The title for a person, i.e., Mr, Miss, Mrs...", null, null);
+     public static Type_StringPrimitiveNull    DESC4         = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "desc4"         , 7/*7*/, "The title for a person, i.e., Mr, Miss, Mrs...", null, null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing2View.desc5 -> TILDATEST.Testing2View."desc5"
@@ -597,7 +217,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    DESC5         = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "desc5"         , 29/*29*/, "The title for a person, i.e., Mr, Miss, Mrs...", null, null);
+     public static Type_StringPrimitiveNull    DESC5         = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "desc5"         , 8/*8*/, "The title for a person, i.e., Mr, Miss, Mrs...", null, null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing2View.desc6 -> TILDATEST.Testing2View."desc6"
@@ -624,7 +244,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    DESC6         = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "desc6"         , 30/*30*/, "The title for a person, i.e., Mr, Miss, Mrs...", null, null);
+     public static Type_StringPrimitiveNull    DESC6         = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "desc6"         , 9/*9*/, "The title for a person, i.e., Mr, Miss, Mrs...", null, null, new String[][] {{"STR","String"}, {"DTM","DateTime"}});
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing2View.a3 -> TILDATEST.Testing2View."a3"
@@ -640,9 +260,14 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>NOT a3</PRE>
+</TD></TR>
+
 </TABLE>
 */
-     public static Type_BooleanPrimitiveNull   A3            = new Type_BooleanPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a3"            , 31/*31*/, "<B>Not A3</B>: Blah...", null, null);
+     public static Type_BooleanPrimitiveNull   A3            = new Type_BooleanPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a3"            , 10/*10*/, "<B>Not A3</B>: Blah...", new String[] {"NOT a3"}, new String[] {"a3"}, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing2View.bastille -> TILDATEST.Testing2View."bastille"
@@ -658,9 +283,14 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>'1789-07-14'</PRE>
+</TD></TR>
+
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  BASTILLE      = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "bastille"      , 32/*32*/, "<B>Bastille Day</B>: Blah...", new String[] {"'1789-07-14'"}, new String[] {});
+     public static Type_DatetimePrimitiveNull  BASTILLE      = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "bastille"      , 11/*11*/, "<B>Bastille Day</B>: Blah...", new String[] {"'1789-07-14'"}, new String[] {});
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing2View.toto -> TILDATEST.Testing2View."toto"
@@ -676,9 +306,14 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>'2018-08-10'</PRE>
+</TD></TR>
+
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  TOTO          = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "toto"          , 33/*33*/, "<B>Last Updated</B>: Blah...", new String[] {"'2018-08-10'"}, new String[] {});
+     public static Type_DatetimePrimitiveNull  TOTO          = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "toto"          , 12/*12*/, "<B>Last Updated</B>: Blah...", new String[] {"'2018-08-10'"}, new String[] {});
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing2View.desc2_Cat1 -> TILDATEST.Testing2View."desc2_Cat1"
@@ -694,9 +329,14 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when desc2  in ('a', 'b', 'c') then 1 else 0 end</PRE>
+</TD></TR>
+
 </TABLE>
 */
-     public static Type_DoublePrimitiveNull    DESC2_CAT1    = new Type_DoublePrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "desc2_Cat1"    , 34/*34*/, "<B>desc2_Cat1 Title</B>: This formula checks whether the column 'desc2' contains the values 'a', 'b', 'c' for the View TILDATEST.Testing2View.", new String[] {"case when desc2  in ('a', 'b', 'c') then 1 else 0 end"}, new String[] {"desc2"});
+     public static Type_DoublePrimitiveNull    DESC2_CAT1    = new Type_DoublePrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "desc2_Cat1"    , 13/*13*/, "<B>desc2_Cat1 Title</B>: This formula checks whether the column 'desc2' contains the values 'a', 'b', 'c' for the View TILDATEST.Testing2View.", new String[] {"case when desc2  in ('a', 'b', 'c') then 1 else 0 end"}, new String[] {"desc2"}, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing2View.desc2_Cat2 -> TILDATEST.Testing2View."desc2_Cat2"
@@ -712,9 +352,14 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when desc2  in ('x', 'y', 'z') then 1 else 0 end</PRE>
+</TD></TR>
+
 </TABLE>
 */
-     public static Type_DoublePrimitiveNull    DESC2_CAT2    = new Type_DoublePrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "desc2_Cat2"    , 35/*35*/, "<B>desc2_Cat2 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View.", new String[] {"case when desc2  in ('x', 'y', 'z') then 1 else 0 end"}, new String[] {"desc2"});
+     public static Type_DoublePrimitiveNull    DESC2_CAT2    = new Type_DoublePrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "desc2_Cat2"    , 14/*14*/, "<B>desc2_Cat2 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View.", new String[] {"case when desc2  in ('x', 'y', 'z') then 1 else 0 end"}, new String[] {"desc2"}, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing2View.desc2_Cat3 -> TILDATEST.Testing2View."desc2_Cat3"
@@ -730,9 +375,14 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when desc2  in ('x', 'y', 'z') then 1 else 0 end</PRE>
+</TD></TR>
+
 </TABLE>
 */
-     public static Type_DoublePrimitiveNull    DESC2_CAT3    = new Type_DoublePrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "desc2_Cat3"    , 36/*36*/, "<B>desc2_Cat3 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View.", new String[] {"case when desc2  in ('x', 'y', 'z') then 1 else 0 end"}, new String[] {"desc2"});
+     public static Type_DoublePrimitiveNull    DESC2_CAT3    = new Type_DoublePrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "desc2_Cat3"    , 15/*15*/, "<B>desc2_Cat3 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View.", new String[] {"case when desc2  in ('x', 'y', 'z') then 1 else 0 end"}, new String[] {"desc2"}, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing2View.a7_Cat4 -> TILDATEST.Testing2View."a7_Cat4"
@@ -748,9 +398,14 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when a7 >= 0.0 and a7 < 10.0 then 1 else 0 end</PRE>
+</TD></TR>
+
 </TABLE>
 */
-     public static Type_DoublePrimitiveNull    A7_CAT4       = new Type_DoublePrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a7_Cat4"       , 37/*37*/, "<B>a7_Cat4 Title</B>: This formula checks whether the column 'a7' value falls in the range of 0.0 and 10.0.", new String[] {"case when a7 >= 0.0 and a7 < 10.0 then 1 else 0 end"}, new String[] {"a7"});
+     public static Type_DoublePrimitiveNull    A7_CAT4       = new Type_DoublePrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a7_Cat4"       , 16/*16*/, "<B>a7_Cat4 Title</B>: This formula checks whether the column 'a7' value falls in the range of 0.0 and 10.0.", new String[] {"case when a7 >= 0.0 and a7 < 10.0 then 1 else 0 end"}, new String[] {}, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing2View.a7_Cat5 -> TILDATEST.Testing2View."a7_Cat5"
@@ -766,9 +421,14 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when a7 >= 10.0 and a7 < 20.0 then 1 else 0 end</PRE>
+</TD></TR>
+
 </TABLE>
 */
-     public static Type_DoublePrimitiveNull    A7_CAT5       = new Type_DoublePrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a7_Cat5"       , 38/*38*/, "<B>a7_Cat5 Title</B>: This formula checks whether the column 'a7' value falls in the range of 10.0 and 20.0.", new String[] {"case when a7 >= 10.0 and a7 < 20.0 then 1 else 0 end"}, new String[] {"a7"});
+     public static Type_DoublePrimitiveNull    A7_CAT5       = new Type_DoublePrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a7_Cat5"       , 17/*17*/, "<B>a7_Cat5 Title</B>: This formula checks whether the column 'a7' value falls in the range of 10.0 and 20.0.", new String[] {"case when a7 >= 10.0 and a7 < 20.0 then 1 else 0 end"}, new String[] {}, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing2View.a5_null -> TILDATEST.Testing2View."a5_null"
@@ -784,9 +444,16 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when a5 is null then 1
+     when a5 is not null then 0
+end</PRE>
+</TD></TR>
+
 </TABLE>
 */
-     public static Type_IntegerPrimitiveNull   A5_NULL       = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a5_null"       , 39/*39*/, "<B>Null a5</B>: Whether a5 is null or not", new String[] {"case when a5 is null then 1", "     when a5 is not null then 0", "end"}, new String[] {"a5"});
+     public static Type_IntegerPrimitiveNull   A5_NULL       = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a5_null"       , 18/*18*/, "<B>Null a5</B>: Whether a5 is null or not", new String[] {"case when a5 is null then 1", "     when a5 is not null then 0", "end"}, new String[] {}, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing2View.a6_null -> TILDATEST.Testing2View."a6_null"
@@ -802,9 +469,16 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when a6 is null then 1
+     when a6 is not null then 0
+end</PRE>
+</TD></TR>
+
 </TABLE>
 */
-     public static Type_IntegerPrimitiveNull   A6_NULL       = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a6_null"       , 40/*40*/, "<B>Null a6</B>: Whether a6 is null or not", new String[] {"case when a6 is null then 1", "     when a6 is not null then 0", "end"}, new String[] {"a6"});
+     public static Type_IntegerPrimitiveNull   A6_NULL       = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a6_null"       , 19/*19*/, "<B>Null a6</B>: Whether a6 is null or not", new String[] {"case when a6 is null then 1", "     when a6 is not null then 0", "end"}, new String[] {}, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing2View.a7_null -> TILDATEST.Testing2View."a7_null"
@@ -820,31 +494,20 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-     public static Type_IntegerPrimitiveNull   A7_NULL       = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a7_null"       , 41/*41*/, "<B>Null a7</B>: Whether a7 is null or not", new String[] {"case when a7 is null then 1", "     when a7 is not null then 0", "end"}, new String[] {"a7"});
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2View.a8_null -> TILDATEST.Testing2View."a8_null"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the column definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2View.a8_null of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2View.a8_null of type integer</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
 
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a8</B>: Whether a8 is null or not</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+<PRE>case when a7 is null then 1
+     when a7 is not null then 0
+end</PRE>
+</TD></TR>
+
 </TABLE>
 */
-     public static Type_IntegerPrimitiveNull   A8_NULL       = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a8_null"       , 42/*42*/, "<B>Null a8</B>: Whether a8 is null or not", new String[] {"case when a8 is null then 1", "     when a8 is not null then 0", "end"}, new String[] {"a8"});
+     public static Type_IntegerPrimitiveNull   A7_NULL       = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a7_null"       , 20/*20*/, "<B>Null a7</B>: Whether a7 is null or not", new String[] {"case when a7 is null then 1", "     when a7 is not null then 0", "end"}, new String[] {}, null);
 ;
    }
 
-   public static final ColumnDefinition[] COLUMNS = { COLS.REFNUM,COLS.NAME,COLS.LASTUPDATED,COLS.XXXLASTUPDATED,COLS.A1,COLS.A3B,COLS.A4,COLS.A4B,COLS.A5,COLS.A5B,COLS.A7,COLS.A7B,COLS.A8,COLS.A8BTZ,COLS.A8B,COLS.A10A,COLS.A10B,COLS.A10C,COLS.A11,COLS.A11B,COLS.A11C,COLS.A12,COLS.A12B,COLS.A13,COLS.A13B,COLS.DESCRIPTION,COLS.DESC2,COLS.DESC3,COLS.DESC4,COLS.DESC5,COLS.DESC6,COLS.A3,COLS.BASTILLE,COLS.TOTO,COLS.DESC2_CAT1,COLS.DESC2_CAT2,COLS.DESC2_CAT3,COLS.A7_CAT4,COLS.A7_CAT5,COLS.A5_NULL,COLS.A6_NULL,COLS.A7_NULL,COLS.A8_NULL };
+   public static final ColumnDefinition[] COLUMNS = { COLS.REFNUM,COLS.NAME,COLS.LASTUPDATED,COLS.XXXLASTUPDATED,COLS.DESCRIPTION,COLS.DESC2,COLS.DESC3,COLS.DESC4,COLS.DESC5,COLS.DESC6,COLS.A3,COLS.BASTILLE,COLS.TOTO,COLS.DESC2_CAT1,COLS.DESC2_CAT2,COLS.DESC2_CAT3,COLS.A7_CAT4,COLS.A7_CAT5,COLS.A5_NULL,COLS.A6_NULL,COLS.A7_NULL };
 
    public static final ColumnDefinition[] COLUMNS_PRIMARY = {  };
 
@@ -924,27 +587,6 @@ This is the column definition for:<BR>
           S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "name");
           S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "lastUpdated");
           S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "xxxLastUpdated");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "a1");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "a3b");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "a4");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "a4b");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "a5");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "a5b");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "a7");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "a7b");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "a8");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "a8bTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "a8b");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "a10a");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "a10b");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "a10c");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "a11");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "a11b");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "a11c");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "a12");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "a12b");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "a13");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "a13b");
           S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "description");
           S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "desc2");
           S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "desc3");
@@ -962,7 +604,6 @@ This is the column definition for:<BR>
           S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "a5_null");
           S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "a6_null");
           S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "a7_null");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "a8_null");
           S.append(" from "); C.getFullTableVar(S, "TILDATEST", "Testing2View");
           switch (LookupId)
            {
@@ -982,7 +623,6 @@ This is the column definition for:<BR>
        QueryDetails.setLastQuery(SCHEMA_TABLENAME_LABEL, Q);
        QueryDetails.logQuery("TILDATEST.Testing2View", Q, null);
        java.sql.PreparedStatement PS=null;
-       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
        int count = 0;
        try
         {
@@ -1007,9 +647,8 @@ This is the column definition for:<BR>
         }
        finally
         {
-          tilda.data_test._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__TESTING2VIEW_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, AllocatedArrays);
+          tilda.data_test._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__TESTING2VIEW_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
-          AllocatedArrays = null;
         }
 
     }
@@ -1018,6 +657,15 @@ This is the column definition for:<BR>
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+   static public tilda.data_test.Testing2View_Data lookupByAll() throws Exception
+     {
+       tilda.data_test._Tilda.TILDA__TESTING2VIEW Obj = new tilda.data_test.Testing2View_Data();
+       Obj.initForLookup(0);
+
+
+       return (tilda.data_test.Testing2View_Data) Obj;
+     }
 
 
    public static SelectQuery newSelectQuery(Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, true); }
@@ -1034,5 +682,197 @@ This is the column definition for:<BR>
        readMany(C, -7, RPI, null, Q, start, size);
      }
 
+
+   public static String getCSVHeader()
+    {
+      return "\"refnum\",\"name\",\"lastUpdated\",\"xxxLastUpdated\",\"description\",\"desc2\",\"desc3\",\"desc4\",\"desc5\",\"desc6\",\"a3\",\"bastille\",\"toto\",\"desc2_Cat1\",\"desc2_Cat2\",\"desc2_Cat3\",\"a7_Cat4\",\"a7_Cat5\",\"a5_null\",\"a6_null\",\"a7_null\"";
+    }
+
+   public static void toCSV(java.io.Writer out, List<tilda.data_test.Testing2View_Data> L, boolean includeHeader) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      if (includeHeader == true)
+        out.write(getCSVHeader() + "\n");
+      for (tilda.data_test.Testing2View_Data O : L)
+       if (O!=null)
+        {
+          toCSV(out, O);
+          out.write("\n");
+        }
+      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);
+    }
+
+   public static void toCSV(java.io.Writer out, tilda.data_test.Testing2View_Data obj) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      StringBuilder Str = new StringBuilder();
+
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getRefnum());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getName());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getLastUpdated()));
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getXxxLastUpdated()));
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getDescription());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getDesc2());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getDesc3());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getDesc4());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getDesc5());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getDesc6());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getA3());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getBastille()));
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getToto()));
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getDesc2_Cat1());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getDesc2_Cat2());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getDesc2_Cat3());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getA7_Cat4());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getA7_Cat5());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getA5_null());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getA6_null());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getA7_null());
+      out.write(Str.toString());
+      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);
+    }
+   public static void toJSON(java.io.Writer out, List<tilda.data_test.Testing2View_Data> L, String lead, boolean fullList) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      if (fullList == true)
+        {
+          if (L == null)
+           {
+             out.write("null\n");
+             return;
+           }
+          if (L.isEmpty() == true)
+           {
+             out.write("[]\n");
+             return;
+           }
+          out.write("[\n");
+        }
+      boolean First = true;
+      for (tilda.data_test.Testing2View_Data O : L)
+       if (O!=null)
+        {
+          out.write(lead);
+          toJSON(out, O, First == true ? "   " : "  ,", true);
+          if (First == true)
+           First = false;
+        }
+      if (fullList == true)
+       { 
+          out.write(lead);
+          out.write("]\n");
+       } 
+      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
+    }
+
+   public static void toJSON(java.io.Writer out, tilda.data_test.Testing2View_Data obj, boolean fullObject) throws java.io.IOException
+    {
+      toJSON(out, obj, "", fullObject, false);
+    }
+
+   public static void toJSON(java.io.Writer out, tilda.data_test.Testing2View_Data obj, String lead, boolean fullObject) throws java.io.IOException
+    {
+      toJSON(out, obj, lead, fullObject, false);
+    }
+
+   public static void toJSON(java.io.Writer outWriter, tilda.data_test.Testing2View_Data obj, String lead, boolean fullObject, boolean noNullArrays) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter();
+      tilda.data_test._Tilda.TILDA__TESTING2VIEW Obj = (tilda.data_test._Tilda.TILDA__TESTING2VIEW) obj;
+      if (fullObject == true)
+       {
+          out.write(lead);
+          out.write("{");
+       }
+
+      int i = -1;
+        JSONUtil.print(out, "refnum", ++i==0, Obj.getRefnum());
+
+        JSONUtil.print(out, "name", ++i==0, Obj.getName());
+
+        JSONUtil.print(out, "lastUpdated", ++i==0, Obj.getLastUpdated());
+
+        JSONUtil.print(out, "xxxLastUpdated", ++i==0, Obj.getXxxLastUpdated());
+
+      if (Obj.isDescriptionNull() == false && Obj.getDescription() != null)
+        JSONUtil.print(out, "description", ++i==0, Obj.getDescription());
+
+      if (Obj.isDesc2Null() == false && Obj.getDesc2() != null)
+        JSONUtil.print(out, "desc2", ++i==0, Obj.getDesc2());
+
+      if (Obj.isDesc3Null() == false && Obj.getDesc3() != null)
+        JSONUtil.print(out, "desc3", ++i==0, Obj.getDesc3());
+
+      if (Obj.isDesc4Null() == false && Obj.getDesc4() != null)
+        JSONUtil.print(out, "desc4", ++i==0, Obj.getDesc4());
+
+      if (Obj.isDesc5Null() == false && Obj.getDesc5() != null)
+        JSONUtil.print(out, "desc5", ++i==0, Obj.getDesc5());
+
+      if (Obj.isDesc6Null() == false && Obj.getDesc6() != null)
+        JSONUtil.print(out, "desc6", ++i==0, Obj.getDesc6());
+
+      if (Obj.isA3Null() == false)
+        JSONUtil.print(out, "a3", ++i==0, Obj.getA3());
+
+      if (Obj.isBastilleNull() == false && Obj.getBastille() != null)
+        JSONUtil.print(out, "bastille", ++i==0, Obj.getBastille());
+
+      if (Obj.isTotoNull() == false && Obj.getToto() != null)
+        JSONUtil.print(out, "toto", ++i==0, Obj.getToto());
+
+      if (Obj.isDesc2_Cat1Null() == false)
+        JSONUtil.print(out, "desc2_Cat1", ++i==0, Obj.getDesc2_Cat1());
+
+      if (Obj.isDesc2_Cat2Null() == false)
+        JSONUtil.print(out, "desc2_Cat2", ++i==0, Obj.getDesc2_Cat2());
+
+      if (Obj.isDesc2_Cat3Null() == false)
+        JSONUtil.print(out, "desc2_Cat3", ++i==0, Obj.getDesc2_Cat3());
+
+      if (Obj.isA7_Cat4Null() == false)
+        JSONUtil.print(out, "a7_Cat4", ++i==0, Obj.getA7_Cat4());
+
+      if (Obj.isA7_Cat5Null() == false)
+        JSONUtil.print(out, "a7_Cat5", ++i==0, Obj.getA7_Cat5());
+
+      if (Obj.isA5_nullNull() == false)
+        JSONUtil.print(out, "a5_null", ++i==0, Obj.getA5_null());
+
+      if (Obj.isA6_nullNull() == false)
+        JSONUtil.print(out, "a6_null", ++i==0, Obj.getA6_null());
+
+      if (Obj.isA7_nullNull() == false)
+        JSONUtil.print(out, "a7_null", ++i==0, Obj.getA7_null());
+
+      if (fullObject == true)
+       out.write(" }\n");
+
+      outWriter.append(out.getBuilder().toString());
+      out.close();
+
+      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
+    }
 
  }

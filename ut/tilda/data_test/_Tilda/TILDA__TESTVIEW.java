@@ -51,7 +51,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The primary key for this record<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Test-refnum_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Test<B>&nbsp;&#8226;&nbsp;</B>refnum</A></DIV></TD>
+<TD>The primary key for this record<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Test-refnum_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Test<B>&nbsp;&#8226;&nbsp;</B>refnum</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
     <TD>2&nbsp;&nbsp;</TD>
@@ -61,7 +61,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The name of the test<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Test-name_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Test<B>&nbsp;&#8226;&nbsp;</B>name</A></DIV></TD>
+<TD>The name of the test<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Test-name_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Test<B>&nbsp;&#8226;&nbsp;</B>name</A></DIV></TD>
 </TR>
 </TABLE></BLOCKQUOTE>
 </DIV>
@@ -318,6 +318,8 @@ This is the setter for:<BR>
           S.append(" from "); C.getFullTableVar(S, "TILDATEST", "TestView");
        switch (__LookupId)
         {
+          case 0: // Unique Query 'All'
+             break;
           case -77: 
           case -666: if (__Init == InitMode.CREATE) break;
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot create where clause.");
@@ -337,6 +339,8 @@ This is the setter for:<BR>
           PS = C.prepareStatement(Q);
           switch (__LookupId)
            {
+             case 0: // Unique Query 'All'
+               break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
            }

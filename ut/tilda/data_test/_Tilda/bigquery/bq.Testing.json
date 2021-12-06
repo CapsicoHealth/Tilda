@@ -27,7 +27,6 @@
    ,{ "name":"a6d", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"The blah" }
    ,{ "name":"a7", "type":"INT64", "mode":"NULLABLE", "description":"The blah" }
    ,{ "name":"a7b", "type":"INT64", "mode":"REPEATED", "description":"The blah" }
-   ,{ "name":"a8", "type":"BYTES", "mode":"NULLABLE", "description":"The blah" }
    ,{ "name":"a8bTZ", "type":"STRING", "mode":"NULLABLE", "description":"Generated helper column to hold the time zone ID for 'a8b'." }
    ,{ "name":"a8b", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"The blah" }
    ,{ "name":"a9TZ", "type":"STRING", "mode":"NULLABLE", "description":"Generated helper column to hold the time zone ID for 'a9'." }

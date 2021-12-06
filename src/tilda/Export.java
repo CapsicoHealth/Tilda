@@ -64,7 +64,8 @@ public class Export
               throw new Exception("The bq path '" + path + "' must be of the form 'bq`project.dataset`'.");
             BigQuery bq = BQHelper.getBigQuery(parts[0]);
             String schemaName = (String) factoryClass.getSuperclass().getDeclaredField("SCHEMA_LABEL").get(null);
-            Schema schema = BQHelper.getTildaBQSchema(schemaName, tableName);
+            Schema schema = BQHelper.getTildaBQSchema(schemaName, tableName, "");
+            LOG.debug("Outputting data for table schema: "+BQHelper.getSchemaColumns(schema)+"\n");
             Out = BQHelper.getTableWriterChannel(bq, parts[1], tableName, mode, schema, false);
             BQWriter writer = new BQWriter(Out);
             OP = mode.equalsIgnoreCase("csv") == true
@@ -92,14 +93,16 @@ public class Export
 
     protected static class Exporter extends SimpleRunnable
       {
-        public Exporter(String mode, String name, String path, int logFrequency)
+        public Exporter(String connectionId, String mode, String name, String path, int logFrequency)
           {
             super(name);
+            _connectionId = connectionId;
             _mode = mode;
             _path = path;
             _logFrequency = logFrequency;
           }
 
+        String _connectionId;
         String _mode;
         String _path;
         int    _logFrequency;
@@ -108,7 +111,7 @@ public class Export
         public void doRun()
         throws Exception
           {
-            Connection C = ConnectionPool.get("MAIN");
+            Connection C = ConnectionPool.get(_connectionId);
             setCount(export(C, _mode, getName(), _path, _logFrequency));
             C.rollback();
             C.close();
@@ -119,30 +122,39 @@ public class Export
     throws Exception
       {
         LOG.info("This utility exports one or more tables to CSV/JSON/JSONL or directly to BigQuery.");
-        LOG.info("  - It takes 4+ parameter: the number of threads, the export mode (CSV|JSON|JSONL), the path where the files should be saved, and one or more full class names of a Tilda object (without _Data or _Factory).");
-        LOG.info("  - ExportToCSV <threads> <mode> <export_path> <tilda_class_name>+");
-        LOG.info("  - ExportToCSV 2 CSV \"C:\\mypath\\data_export\\\" com.myCo.myProj.data.User com.myCo.myProj.data.Role");
-        LOG.info("It is possible to target BQ as well if <export_path> is of the form 'bq`<project>.<dataset>`'.");
+        LOG.info("  - Export <connection_id> <threads> <mode> <export_path> <tilda_class_name>+");
+        LOG.info("  - It takes 5+ parameter:");
+        LOG.info("      . the connection Id");
+        LOG.info("      . the number of threads");
+        LOG.info("      . the export mode (CSV|JSON|JSONL)");
+        LOG.info("      . the path(s) where the file(s) should be saved or a BQ destination as 'bq`<project>.<dataset>`'");
+        LOG.info("      . one or more full class names of a Tilda object (without _Data or _Factory).");
+        LOG.info("  - For example");
+        LOG.info("      . ExportToCSV MAIN 2 CSV \"C:\\mypath\\data_export\\\" com.myCo.myProj.data.User com.myCo.myProj.data.Role");
+        LOG.info("      . ExportToCSV MAIN 2 JSONL bq`myproject.mydataset` com.myCo.myProj.data.User com.myCo.myProj.data.Role");
         LOG.info("NOTE: Test before assuming that more threads will make this faster!");
 
-        if (args.length < 4)
-          throw new Exception("This utility needs at least 4 parameters passed.");
+        if (args.length < 5)
+          throw new Exception("This utility needs at least 5 parameters passed.");
 
-        int threads = ParseUtil.parseInteger(args[0], 1);
-        String mode = args[1];
+        String connectionId = args[0];
+        int threads = ParseUtil.parseInteger(args[1], 1);
+        String mode = args[2];
         if (mode.equalsIgnoreCase("csv") == false && mode.equalsIgnoreCase("json") == false && mode.equalsIgnoreCase("jsonl") == false)
           throw new Exception("This utility was called with mode='" + mode + "' which is not supported. Only CSV, JSON or JSONL are supported.");
 
-        String path = args[2];
+        String path = args[3];
         final int logFrequency = 10_000;
+
+        LOG.debug("connection_id: "+connectionId+"; threads: "+threads+"; mode: "+mode+"; export_path: "+path+";");
 
         if (threads == 1)
           {
             long TS = System.nanoTime();
-            Connection C = ConnectionPool.get("MAIN");
+            Connection C = ConnectionPool.get(connectionId);
             C.setReadOnly(true);
             long totalCount = 0;
-            for (int i = 3; i < args.length; ++i)
+            for (int i = 4; i < args.length; ++i)
               {
                 totalCount += export(C, mode, args[i], path, logFrequency);
                 C.rollback();
@@ -150,15 +162,15 @@ public class Export
             C.close();
             C = null;
             long durationNano = System.nanoTime() - TS;
-            LOG.info("Saved a total of " + totalCount + " records to " + mode.toUpperCase() + " from " + (args.length - 2) + " tables/views"
+            LOG.info("Saved a total of " + totalCount + " records to " + mode.toUpperCase() + " from " + (args.length - 4) + " tables/views"
             + " in " + DurationUtil.printDuration(durationNano) + " (" + DurationUtil.printPerformancePerMinute(durationNano, totalCount) + " records/min)");
           }
         else
           {
             Executor E = new Executor(threads);
-            for (int i = 3; i < args.length; ++i)
+            for (int i = 4; i < args.length; ++i)
               {
-                E.addRunnable(new Exporter(mode, args[i], path, logFrequency));
+                E.addRunnable(new Exporter(connectionId, mode, args[i], path, logFrequency));
               }
             E.run();
           }

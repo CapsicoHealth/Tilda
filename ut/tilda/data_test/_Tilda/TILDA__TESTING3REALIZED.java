@@ -53,7 +53,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The primary key for this record (from TILDATEST.Testing3View.refnum)</TD>
+<TD>The primary key for this record</TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
     <TD>2&nbsp;&nbsp;</TD>
@@ -63,54 +63,34 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Medical system unique enterprise id (from TILDATEST.Testing3View.name)</TD>
+<TD>Medical system unique enterprise id</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>3&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Testing3Realized-a8bTZ_DIV' class='columns'>a8bTZ</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;/&nbsp;varchar(10)&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Generated helper column to hold the time zone ID for 'a8b'. (from TILDATEST.Testing3View.a8bTZ)</TD>
-</TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>4&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Testing3Realized-a8b_DIV' class='columns'>a8b</B>&nbsp;&nbsp;</TD>
-<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The blah (from TILDATEST.Testing3View.a8b)</TD>
-</TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>5&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing3Realized-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The timestamp for when the record was last updated. (TILDATEST.Testing) (from TILDATEST.Testing3View.lastUpdated)</TD>
+<TD>The timestamp for when the record was last updated. (TILDATEST.Testing)</TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>6&nbsp;&nbsp;</TD>
+    <TD>4&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing3Realized-xxxLastUpdated_DIV' class='columns'>xxxLastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The timestamp for when the record was last updated. (TILDATEST.Testing) (from TILDATEST.Testing3View.xxxLastUpdated)</TD>
+<TD>The timestamp for when the record was last updated. (TILDATEST.Testing)</TD>
 </TR>
 </TABLE></BLOCKQUOTE>
 </DIV>
 
 */
 @SuppressWarnings({ "unused" })
-public abstract class TILDA__TESTING3REALIZED implements tilda.interfaces.WriterObject
+public abstract class TILDA__TESTING3REALIZED implements tilda.interfaces.WriterObject, tilda.interfaces.JSONable, tilda.interfaces.CSVable
  {
    protected transient static final Logger LOG = LogManager.getLogger(TILDA__TESTING3REALIZED.class.getName());
 
@@ -158,7 +138,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing3Realized.refnum of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record (from TILDATEST.Testing3View.refnum)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -179,7 +159,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing3Realized.refnum of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record (from TILDATEST.Testing3View.refnum)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -199,7 +179,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing3Realized.refnum of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record (from TILDATEST.Testing3View.refnum)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -219,7 +199,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing3Realized.refnum of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record (from TILDATEST.Testing3View.refnum)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -248,7 +228,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing3Realized.refnum of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record (from TILDATEST.Testing3View.refnum)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -276,7 +256,7 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing3Realized.refnum of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record (from TILDATEST.Testing3View.refnum)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -303,7 +283,7 @@ This is the definition for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Medical system unique enterprise id (from TILDATEST.Testing3View.name)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Medical system unique enterprise id</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -324,7 +304,7 @@ This is the getter for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Medical system unique enterprise id (from TILDATEST.Testing3View.name)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Medical system unique enterprise id</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -345,7 +325,7 @@ This is the isNull for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Medical system unique enterprise id (from TILDATEST.Testing3View.name)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Medical system unique enterprise id</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -366,7 +346,7 @@ This is the setter for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Medical system unique enterprise id (from TILDATEST.Testing3View.name)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Medical system unique enterprise id</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -402,7 +382,7 @@ This is the null setter for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Medical system unique enterprise id (from TILDATEST.Testing3View.name)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Medical system unique enterprise id</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -431,7 +411,7 @@ This is the hasChanged for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Medical system unique enterprise id (from TILDATEST.Testing3View.name)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Medical system unique enterprise id</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -439,381 +419,6 @@ This is the hasChanged for:<BR>
 */
    public boolean hasChangedName()
      { return __Changes.intersects(TILDA__TESTING3REALIZED_Factory.COLS.NAME._Mask); }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing3Realized.a8bTZ -> TILDATEST.Testing3Realized."a8bTZ"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing3Realized.a8bTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing3Realized.a8bTZ of type varchar(10)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a8b'. (from TILDATEST.Testing3View.a8bTZ)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   String _a8bTZ=null;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing3Realized.a8bTZ -> TILDATEST.Testing3Realized."a8bTZ"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing3Realized.a8bTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing3Realized.a8bTZ of type varchar(10)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a8b'. (from TILDATEST.Testing3View.a8bTZ)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final String getA8bTZ()
-      { return _a8bTZ; }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing3Realized.a8bTZ -> TILDATEST.Testing3Realized."a8bTZ"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the isNull for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing3Realized.a8bTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing3Realized.a8bTZ of type varchar(10)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a8b'. (from TILDATEST.Testing3View.a8bTZ)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final boolean isA8bTZNull()
-     { return __Nulls.intersects(TILDA__TESTING3REALIZED_Factory.COLS.A8BTZ._Mask); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing3Realized.a8bTZ -> TILDATEST.Testing3Realized."a8bTZ"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing3Realized.a8bTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing3Realized.a8bTZ of type varchar(10)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a8b'. (from TILDATEST.Testing3View.a8bTZ)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-    void setA8bTZ(String v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (v == null)
-        {
-          setA8bTZNull();
-        }
-       else if (v.length() > 10)
-        throw new Exception("Cannot set tilda.data_test.TILDATEST.Testing3Realized.a8bTZ: the size "+v.length()+" is larger than the max allowed of 10: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
-       else if (v.equals(_a8bTZ) == false)
-        {
-          __Changes.or(TILDA__TESTING3REALIZED_Factory.COLS.A8BTZ._Mask);
-          __Nulls.andNot(TILDA__TESTING3REALIZED_Factory.COLS.A8BTZ._Mask);
-       _a8bTZ = v;
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing3Realized.a8bTZ -> TILDATEST.Testing3Realized."a8bTZ"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the null setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing3Realized.a8bTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing3Realized.a8bTZ of type varchar(10)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a8b'. (from TILDATEST.Testing3View.a8bTZ)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-    void setA8bTZNull()
-     {
-       long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__TESTING3REALIZED_Factory.COLS.A8BTZ._Mask) == true) // already NULL
-        return;
-       __Changes.or(TILDA__TESTING3REALIZED_Factory.COLS.A8BTZ._Mask);
-       __Nulls.or(TILDA__TESTING3REALIZED_Factory.COLS.A8BTZ._Mask);
-       _a8bTZ=null;
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing3Realized.a8bTZ -> TILDATEST.Testing3Realized."a8bTZ"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the hasChanged for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing3Realized.a8bTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing3Realized.a8bTZ of type varchar(10)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a8b'. (from TILDATEST.Testing3View.a8bTZ)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public boolean hasChangedA8bTZ()
-     { return __Changes.intersects(TILDA__TESTING3REALIZED_Factory.COLS.A8BTZ._Mask); }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing3Realized.a8b -> TILDATEST.Testing3Realized."a8b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing3Realized.a8b of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing3Realized.a8b of type timestamptz</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing3View.a8b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   @SerializedName("a8b")
-   String  Str_a8b;
-   public void initA8b(String v) { Str_a8b = v; }
-   public String initA8bVal() { return Str_a8b; }
-   transient ZonedDateTime _a8b = null;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing3Realized.a8b -> TILDATEST.Testing3Realized."a8b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing3Realized.a8b of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing3Realized.a8b of type timestamptz</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing3View.a8b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final ZonedDateTime getA8b()
-      { return _a8b; }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing3Realized.a8b -> TILDATEST.Testing3Realized."a8b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the isNull for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing3Realized.a8b of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing3Realized.a8b of type timestamptz</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing3View.a8b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final boolean isA8bNull()
-     { return __Nulls.intersects(TILDA__TESTING3REALIZED_Factory.COLS.A8B._Mask); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing3Realized.a8b -> TILDATEST.Testing3Realized."a8b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing3Realized.a8b of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing3Realized.a8b of type timestamptz</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing3View.a8b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA8b(ZonedDateTime v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (v == null)
-        {
-          setA8bNull();
-        }
-       else if (v.equals(_a8b) == false)
-        {
-          __Changes.or(TILDA__TESTING3REALIZED_Factory.COLS.A8B._Mask);
-          __Nulls.andNot(TILDA__TESTING3REALIZED_Factory.COLS.A8B._Mask);
-       _a8b = v;
-          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(v.getZone().getId());
-          if (ZI == null)
-           throw new Exception("Cannot set field 'tilda.data_test.TILDATEST.Testing3Realized.a8b' because the timezone value '"+v.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-          setA8bTZ(ZI.getId());
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing3Realized.a8b -> TILDATEST.Testing3Realized."a8b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the null setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing3Realized.a8b of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing3Realized.a8b of type timestamptz</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing3View.a8b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA8bNull()
-     {
-       long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__TESTING3REALIZED_Factory.COLS.A8B._Mask) == true) // already NULL
-        return;
-       __Changes.or(TILDA__TESTING3REALIZED_Factory.COLS.A8B._Mask);
-       __Nulls.or(TILDA__TESTING3REALIZED_Factory.COLS.A8B._Mask);
-       _a8b=null;
-       setA8bTZNull();
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing3Realized.a8b -> TILDATEST.Testing3Realized."a8b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the NOW setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing3Realized.a8b of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing3Realized.a8b of type timestamptz</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing3View.a8b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final void setA8bNow() throws Exception
-    {
-      setA8b(DateTimeUtil.NOW_PLACEHOLDER_ZDT);
-    }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing3Realized.a8b -> TILDATEST.Testing3Realized."a8b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the UNDEFINED setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing3Realized.a8b of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing3Realized.a8b of type timestamptz</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing3View.a8b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final void setA8bUndefined() throws Exception
-    {
-      setA8b(DateTimeUtil.UNDEFINED_PLACEHOLDER_ZDT);
-    }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing3Realized.a8b -> TILDATEST.Testing3Realized."a8b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing3Realized.a8b of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing3Realized.a8b of type timestamptz</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing3View.a8b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final void setA8b(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
-    {
-      setA8b(DateTimeUtil.newTZ(year, month, date, hourOfDay, minute, second, millis, z));
-    }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing3Realized.a8b -> TILDATEST.Testing3Realized."a8b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the hasChanged for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing3Realized.a8b of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing3Realized.a8b of type timestamptz</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing3View.a8b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public boolean hasChangedA8b()
-     { return __Changes.intersects(TILDA__TESTING3REALIZED_Factory.COLS.A8B._Mask); }
 
 
 
@@ -832,7 +437,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing3Realized.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing) (from TILDATEST.Testing3View.lastUpdated)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -851,7 +456,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing3Realized.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing) (from TILDATEST.Testing3View.lastUpdated)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -871,7 +476,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing3Realized.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing) (from TILDATEST.Testing3View.lastUpdated)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -891,7 +496,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing3Realized.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing) (from TILDATEST.Testing3View.lastUpdated)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -924,7 +529,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing3Realized.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing) (from TILDATEST.Testing3View.lastUpdated)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -952,7 +557,7 @@ This is the NOW setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing3Realized.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing) (from TILDATEST.Testing3View.lastUpdated)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -974,7 +579,7 @@ This is the UNDEFINED setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing3Realized.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing) (from TILDATEST.Testing3View.lastUpdated)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -996,7 +601,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing3Realized.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing) (from TILDATEST.Testing3View.lastUpdated)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1018,7 +623,7 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing3Realized.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing) (from TILDATEST.Testing3View.lastUpdated)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1044,7 +649,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing3Realized.xxxLastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing) (from TILDATEST.Testing3View.xxxLastUpdated)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1063,7 +668,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing3Realized.xxxLastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing) (from TILDATEST.Testing3View.xxxLastUpdated)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1083,7 +688,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing3Realized.xxxLastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing) (from TILDATEST.Testing3View.xxxLastUpdated)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1103,7 +708,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing3Realized.xxxLastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing) (from TILDATEST.Testing3View.xxxLastUpdated)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1136,7 +741,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing3Realized.xxxLastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing) (from TILDATEST.Testing3View.xxxLastUpdated)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1164,7 +769,7 @@ This is the NOW setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing3Realized.xxxLastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing) (from TILDATEST.Testing3View.xxxLastUpdated)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1186,7 +791,7 @@ This is the UNDEFINED setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing3Realized.xxxLastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing) (from TILDATEST.Testing3View.xxxLastUpdated)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1208,7 +813,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing3Realized.xxxLastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing) (from TILDATEST.Testing3View.xxxLastUpdated)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1230,7 +835,7 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing3Realized.xxxLastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing) (from TILDATEST.Testing3View.xxxLastUpdated)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1250,12 +855,30 @@ This is the hasChanged for:<BR>
 */
    public void copyTo(tilda.data_test._Tilda.TILDA__TESTING3REALIZED Dst) throws Exception
      {
-       if (__Nulls.intersects(TILDA__TESTING3REALIZED_Factory.COLS.REFNUM._Mask) == true) Dst.setRefnumNull        (); else        Dst.setRefnum        (_refnum        );
-       if (__Nulls.intersects(TILDA__TESTING3REALIZED_Factory.COLS.NAME._Mask) == true) Dst.setNameNull          (); else        Dst.setName          (_name          );
-       if (__Nulls.intersects(TILDA__TESTING3REALIZED_Factory.COLS.A8BTZ._Mask) == true) Dst.setA8bTZNull         (); else        Dst.setA8bTZ         (_a8bTZ         );
-       if (__Nulls.intersects(TILDA__TESTING3REALIZED_Factory.COLS.A8B._Mask) == true) Dst.setA8bNull           (); else        Dst.setA8b           (_a8b           );
-       if (__Nulls.intersects(TILDA__TESTING3REALIZED_Factory.COLS.LASTUPDATED._Mask) == true) Dst.setLastUpdatedNull   (); else        Dst.setLastUpdated   (_lastUpdated   );
-       if (__Nulls.intersects(TILDA__TESTING3REALIZED_Factory.COLS.XXXLASTUPDATED._Mask) == true) Dst.setXxxLastUpdatedNull(); else        Dst.setXxxLastUpdated(_xxxLastUpdated);
+       if (__Nulls.intersects(TILDA__TESTING3REALIZED_Factory.COLS.REFNUM._Mask) == true || _refnum        ==null)
+        Dst.setRefnumNull        ();
+       else
+        Dst.setRefnum        (_refnum        );
+       if (__Nulls.intersects(TILDA__TESTING3REALIZED_Factory.COLS.NAME._Mask) == true || _name          ==null)
+        Dst.setNameNull          ();
+       else
+        Dst.setName          (_name          );
+       if (__Nulls.intersects(TILDA__TESTING3REALIZED_Factory.COLS.LASTUPDATED._Mask) == true || _lastUpdated   ==null)
+        Dst.setLastUpdatedNull   ();
+       else
+        Dst.setLastUpdated   (_lastUpdated   );
+       if (__Nulls.intersects(TILDA__TESTING3REALIZED_Factory.COLS.XXXLASTUPDATED._Mask) == true || _xxxLastUpdated==null)
+        Dst.setXxxLastUpdatedNull();
+       else
+        Dst.setXxxLastUpdated(_xxxLastUpdated);
+     }
+
+
+   public tilda.data_test.Testing3Realized_Data copy() throws Exception
+     {
+       tilda.data_test.Testing3Realized_Data dst = new tilda.data_test.Testing3Realized_Data();
+       copyTo(dst);
+       return dst;
      }
 
 /**
@@ -1354,24 +977,10 @@ This is the hasChanged for:<BR>
           __Changes.or(TILDA__TESTING3REALIZED_Factory.COLS.NAME._Mask);
           __Nulls.andNot(TILDA__TESTING3REALIZED_Factory.COLS.NAME._Mask);
         }
-
-       if (TextUtil.isNullOrEmpty(Str_a8b) == false)
-        {
-          _a8b = DateTimeUtil.parsefromJSON(Str_a8b);
-          if (   _a8b == null)
-           throw new Exception("Incoming value for 'tilda.data_test.TILDATEST.Testing3Realized.a8b' was not in the expected format. Dates should follow the ISO format.\n"+toString());
-          __Changes.or(TILDA__TESTING3REALIZED_Factory.COLS.A8B._Mask);
-          __Nulls.andNot(TILDA__TESTING3REALIZED_Factory.COLS.A8B._Mask);
-          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(_a8b.getZone().getId());
-          if (ZI == null)
-           throw new Exception("Cannot set field 'tilda.data_test.TILDATEST.Testing3Realized.a8b' because the timezone value '"+_a8b.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-          setA8bTZ(ZI.getId());
-        }
      }
    protected String getTimeStampSignature() throws Exception
      {
        StringBuilder S = new StringBuilder(1024);
-       if (__Changes.intersects(TILDA__TESTING3REALIZED_Factory.COLS.A8B._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_a8b) == true ? "C" : "X");
        if (__Changes.intersects(TILDA__TESTING3REALIZED_Factory.COLS.LASTUPDATED._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? "C" : "X");
        if (__Changes.intersects(TILDA__TESTING3REALIZED_Factory.COLS.XXXLASTUPDATED._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_xxxLastUpdated) == true ? "C" : "X");
        return S.toString();
@@ -1387,11 +996,6 @@ This is the hasChanged for:<BR>
           int Pos = S.length();
           if (__Changes.intersects(TILDA__TESTING3REALIZED_Factory.COLS.REFNUM._Mask) == true) { TILDA__TESTING3REALIZED_Factory.COLS.REFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__1_0._COMMAQUESTION);  }
           if (__Changes.intersects(TILDA__TESTING3REALIZED_Factory.COLS.NAME._Mask) == true) { TILDA__TESTING3REALIZED_Factory.COLS.NAME.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING3REALIZED_Factory.COLS.A8BTZ._Mask) == true) { TILDA__TESTING3REALIZED_Factory.COLS.A8BTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__1_0._COMMAQUESTION);  }
-
-          if (__Changes.intersects(TILDA__TESTING3REALIZED_Factory.COLS.A8B._Mask) == true) { TILDA__TESTING3REALIZED_Factory.COLS.A8B.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__TESTING3REALIZED_Factory.COLS.A8B._Mask) == false && DateTimeUtil.isNowPlaceholder(_a8b) == true ? C.getCommaCurrentTimestamp() : tilda.data_test._Tilda.TILDA__1_0._COMMAQUESTION);
-           }
 
           if (__Changes.intersects(TILDA__TESTING3REALIZED_Factory.COLS.LASTUPDATED._Mask) == true) { TILDA__TESTING3REALIZED_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S);
              V.append(__Nulls.intersects(TILDA__TESTING3REALIZED_Factory.COLS.LASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data_test._Tilda.TILDA__1_0._COMMAQUESTION);
@@ -1413,15 +1017,6 @@ This is the hasChanged for:<BR>
           int Pos = S.length();
           if (__Changes.intersects(TILDA__TESTING3REALIZED_Factory.COLS.REFNUM._Mask) == true) TILDA__TESTING3REALIZED_Factory.COLS.REFNUM.getFullColumnVarForUpdate(C, S);
           if (__Changes.intersects(TILDA__TESTING3REALIZED_Factory.COLS.NAME._Mask) == true) TILDA__TESTING3REALIZED_Factory.COLS.NAME.getFullColumnVarForUpdate(C, S);
-          if (__Changes.intersects(TILDA__TESTING3REALIZED_Factory.COLS.A8BTZ._Mask) == true) TILDA__TESTING3REALIZED_Factory.COLS.A8BTZ.getFullColumnVarForUpdate(C, S);
-
-          if (__Changes.intersects(TILDA__TESTING3REALIZED_Factory.COLS.A8B._Mask) == true)
-           {
-             if (__Nulls.intersects(TILDA__TESTING3REALIZED_Factory.COLS.A8B._Mask) == false && DateTimeUtil.isNowPlaceholder(_a8b) == true)
-              { TILDA__TESTING3REALIZED_Factory.COLS.A8B.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
-             else
-              TILDA__TESTING3REALIZED_Factory.COLS.A8B.getFullColumnVarForUpdate(C, S);
-           }
 
           if (__Changes.intersects(TILDA__TESTING3REALIZED_Factory.COLS.LASTUPDATED._Mask) == true)
            {
@@ -1469,14 +1064,6 @@ This is the hasChanged for:<BR>
        if (__Changes.intersects(TILDA__TESTING3REALIZED_Factory.COLS.NAME._Mask) == true) 
         { 
           if (__Nulls.intersects(TILDA__TESTING3REALIZED_Factory.COLS.NAME._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _name);
-        } 
-       if (__Changes.intersects(TILDA__TESTING3REALIZED_Factory.COLS.A8BTZ._Mask) == true) 
-        { 
-          if (__Nulls.intersects(TILDA__TESTING3REALIZED_Factory.COLS.A8BTZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _a8bTZ);
-        } 
-       if (__Changes.intersects(TILDA__TESTING3REALIZED_Factory.COLS.A8B._Mask) == true) 
-        { 
-          if (__Nulls.intersects(TILDA__TESTING3REALIZED_Factory.COLS.A8B._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_a8b) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_a8b.toInstant()), DateTimeUtil._UTC_CALENDAR);
         } 
        if (__Changes.intersects(TILDA__TESTING3REALIZED_Factory.COLS.LASTUPDATED._Mask) == true) 
         { 
@@ -1609,8 +1196,6 @@ This is the hasChanged for:<BR>
           S.append("select ");
           S.append(" "); C.getFullColumnVar(S, "TILDATEST", "Testing3Realized", "refnum");
           S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing3Realized", "name");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing3Realized", "a8bTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing3Realized", "a8b");
           S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing3Realized", "lastUpdated");
           S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing3Realized", "xxxLastUpdated");
           S.append(" from "); C.getFullTableVar(S, "TILDATEST", "Testing3Realized");
@@ -1673,8 +1258,6 @@ This is the hasChanged for:<BR>
      __Init = InitMode.LOOKUP;
       __Saved_refnum         = _refnum         =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING3REALIZED_Factory.COLS.REFNUM._Mask        ); _refnum = null; }
                                _name           = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING3REALIZED_Factory.COLS.NAME._Mask          ); _name = null; }
-                               _a8bTZ          = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING3REALIZED_Factory.COLS.A8BTZ._Mask         ); _a8bTZ = null; }
-                               _a8b            = processZDT(_a8bTZ           , "tilda.data_test.TILDATEST.Testing3Realized.a8b"           , RS, ++i, TILDA__TESTING3REALIZED_Factory.COLS.A8B           , TILDA__TESTING3REALIZED_Factory.COLS.A8BTZ           ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING3REALIZED_Factory.COLS.A8B._Mask           ); _a8b = null; }
                                _lastUpdated    = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING3REALIZED_Factory.COLS.LASTUPDATED._Mask   ); _lastUpdated = null; }
                                _xxxLastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING3REALIZED_Factory.COLS.XXXLASTUPDATED._Mask); _xxxLastUpdated = null; }
      __LookupId = 0;
@@ -1682,25 +1265,6 @@ This is the hasChanged for:<BR>
      __Changes.clear();
 
      return afterRead(C);
-   }
-
-  private final ZonedDateTime processZDT(String TimezoneId, String DTFieldName, java.sql.ResultSet RS, int ColumnPos, tilda.types.ColumnDefinition DTField, tilda.types.ColumnDefinition TZField)
-  throws Exception
-   {
-     tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationById(TimezoneId);
-     if (ZI == null && TextUtil.isNullOrEmpty(TimezoneId) == false)
-      throw new Exception("Cannot set field '"+DTFieldName+"' because the timezone Id '" + TimezoneId + "' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-     ZonedDateTime ZDT = DateTimeUtil.toZonedDateTime(RS.getTimestamp(ColumnPos, DateTimeUtil._UTC_CALENDAR), ZI == null ? "null" : ZI.getValue());
-     boolean DTNull = false;
-     if (RS.wasNull() == true)
-      {
-         __Nulls.or(DTField._Mask);
-         DTNull = true;
-      }
-     boolean TZNull = __Nulls.intersects(TZField._Mask);
-     if (DTNull == false && TZNull == true)
-      throw new Exception("The field "+DTFieldName+" is not null while its associated timezone field '"+DTFieldName+"TZ' is null. A TZ is mandatory for not null timestamps.");
-     return ZDT;
    }
 
    protected abstract boolean afterRead(Connection C) throws Exception;
@@ -1711,7 +1275,6 @@ This is the hasChanged for:<BR>
       String Str = 
                    "refnum"           + (__Nulls.intersects(TILDA__TESTING3REALIZED_Factory.COLS.REFNUM._Mask) == true ? ": NULL" : ": " +                                   getRefnum        () )
                + "; name"             + (__Nulls.intersects(TILDA__TESTING3REALIZED_Factory.COLS.NAME._Mask) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getName          ()))
-               + "; a8b"              + (__Nulls.intersects(TILDA__TESTING3REALIZED_Factory.COLS.A8B._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getA8b           ()))
                + "; lastUpdated"      + (__Nulls.intersects(TILDA__TESTING3REALIZED_Factory.COLS.LASTUPDATED._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getLastUpdated   ()))
                + "; xxxLastUpdated"   + (__Nulls.intersects(TILDA__TESTING3REALIZED_Factory.COLS.XXXLASTUPDATED._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getXxxLastUpdated()))
          + ";";
@@ -1719,4 +1282,36 @@ This is the hasChanged for:<BR>
       return Str;
     }
 
+   public void toJSON(java.io.Writer out, String exportName, boolean fullObject) throws Exception
+    {
+      toJSON(out, exportName, "", fullObject, false);
+    }
+   public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject) throws Exception
+    {
+      toJSON(out, exportName, lead, fullObject, false);
+    }
+   public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject, boolean noNullArrays) throws Exception
+    {
+      switch (exportName)
+        { 
+          case "": tilda.data_test.Testing3Realized_Factory.toJSON(out, (tilda.data_test.Testing3Realized_Data) this, lead, fullObject, noNullArrays); break;
+          default: throw new Exception("Unknown JSON exporter '"+exportName+"' for tilda.data_test.Testing3Realized_Factory");
+        } 
+    }
+   public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject, java.time.ZonedDateTime lastsync) throws Exception
+    {
+      throw new Exception("Unknown JSON sync exporter '"+exportName+"' for tilda.data_test.Testing3Realized_Factory");
+    }
+   public void toCSV(java.io.Writer out, String exportName) throws Exception
+    {
+      switch (exportName)
+        { 
+          case "": tilda.data_test.Testing3Realized_Factory.toCSV(out, (tilda.data_test.Testing3Realized_Data) this); break;
+          default: throw new Exception("Unknown CSV exporter '"+exportName+"' for tilda.data_test.Testing3Realized_Factory");
+        } 
+    }
+   public void toCSV(java.io.Writer out, String exportName, java.time.ZonedDateTime lastsync) throws Exception
+    {
+      throw new Exception("Unknown CSV sync exporter '"+exportName+"' for tilda.data_test.Testing3Realized_Factory");
+    }
  }

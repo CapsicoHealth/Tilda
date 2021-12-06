@@ -3,27 +3,6 @@
    ,{ "name":"name", "type":"STRING", "mode":"REQUIRED", "description":"Medical system unique enterprise id" }
    ,{ "name":"lastUpdated", "type":"TIMESTAMP", "mode":"REQUIRED", "description":"The timestamp for when the record was last updated. (TILDATEST.Testing)" }
    ,{ "name":"xxxLastUpdated", "type":"TIMESTAMP", "mode":"REQUIRED", "description":"The timestamp for when the record was last updated. (TILDATEST.Testing)" }
-   ,{ "name":"a1", "type":"BYTES", "mode":"NULLABLE", "description":"The blah" }
-   ,{ "name":"a3b", "type":"BOOL", "mode":"REPEATED", "description":"The blah" }
-   ,{ "name":"a4", "type":"FLOAT64", "mode":"NULLABLE", "description":"The blah" }
-   ,{ "name":"a4b", "type":"FLOAT64", "mode":"REPEATED", "description":"The blah" }
-   ,{ "name":"a5", "type":"FLOAT64", "mode":"NULLABLE", "description":"The blah" }
-   ,{ "name":"a5b", "type":"FLOAT64", "mode":"REPEATED", "description":"The blah" }
-   ,{ "name":"a7", "type":"INT64", "mode":"NULLABLE", "description":"The blah" }
-   ,{ "name":"a7b", "type":"INT64", "mode":"REPEATED", "description":"The blah" }
-   ,{ "name":"a8", "type":"BYTES", "mode":"NULLABLE", "description":"The blah" }
-   ,{ "name":"a8bTZ", "type":"STRING", "mode":"NULLABLE", "description":"Generated helper column to hold the time zone ID for 'a8b'." }
-   ,{ "name":"a8b", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"The blah" }
-   ,{ "name":"a10a", "type":"INT64", "mode":"NULLABLE", "description":"The blah" }
-   ,{ "name":"a10b", "type":"STRING", "mode":"NULLABLE", "description":"The blah" }
-   ,{ "name":"a10c", "type":"INT64", "mode":"NULLABLE", "description":"The blah" }
-   ,{ "name":"a11", "type":"NUMERIC", "mode":"NULLABLE", "description":"The blah" }
-   ,{ "name":"a11b", "type":"NUMERIC", "mode":"REPEATED", "description":"The blah" }
-   ,{ "name":"a11c", "type":"NUMERIC", "mode":"NULLABLE", "description":"The blah" }
-   ,{ "name":"a12", "type":"INT64", "mode":"NULLABLE", "description":"The blah" }
-   ,{ "name":"a12b", "type":"INT64", "mode":"REPEATED", "description":"The blah" }
-   ,{ "name":"a13", "type":"STRING", "mode":"NULLABLE", "description":"The blah" }
-   ,{ "name":"a13b", "type":"STRING", "mode":"REPEATED", "description":"The blah" }
    ,{ "name":"description", "type":"STRING", "mode":"NULLABLE", "description":"The title for a person, i.e., Mr, Miss, Mrs..." }
    ,{ "name":"desc2", "type":"STRING", "mode":"NULLABLE", "description":"The title for a person, i.e., Mr, Miss, Mrs..." }
    ,{ "name":"desc3", "type":"STRING", "mode":"NULLABLE", "description":"The title for a person, i.e., Mr, Miss, Mrs..." }
@@ -41,5 +20,4 @@
    ,{ "name":"a5_null", "type":"INT64", "mode":"NULLABLE", "description":"<B>Null a5</B>: Whether a5 is null or not" }
    ,{ "name":"a6_null", "type":"INT64", "mode":"NULLABLE", "description":"<B>Null a6</B>: Whether a6 is null or not" }
    ,{ "name":"a7_null", "type":"INT64", "mode":"NULLABLE", "description":"<B>Null a7</B>: Whether a7 is null or not" }
-   ,{ "name":"a8_null", "type":"INT64", "mode":"NULLABLE", "description":"<B>Null a8</B>: Whether a8 is null or not" }
 ]

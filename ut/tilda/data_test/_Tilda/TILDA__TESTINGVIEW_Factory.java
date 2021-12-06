@@ -54,7 +54,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        NAME   = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "name"   , 0/*0*/, "Medical system unique enterprise id", null, null);
+     public static Type_StringPrimitive        NAME   = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "name"   , 0/*0*/, "Medical system unique enterprise id", null, null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.TestingView.refnum -> TILDATEST.TestingView."refnum"
@@ -72,7 +72,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          REFNUM = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum" , 1/*1*/, "The primary key for this record", null, null);
+     public static Type_LongPrimitive          REFNUM = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum" , 1/*1*/, "The primary key for this record", null, null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.TestingView.a2Min -> TILDATEST.TestingView."a2Min"
@@ -90,7 +90,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_CharPrimitiveNull      A2MIN  = new Type_CharPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a2Min"  , 2/*2*/, "The blah", null, null);
+     public static Type_CharPrimitiveNull      A2MIN  = new Type_CharPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a2Min"  , 2/*2*/, "The blah", null, null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.TestingView.a2Max -> TILDATEST.TestingView."a2Max"
@@ -108,7 +108,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_CharPrimitiveNull      A2MAX  = new Type_CharPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a2Max"  , 3/*3*/, "The blah", null, null);
+     public static Type_CharPrimitiveNull      A2MAX  = new Type_CharPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a2Max"  , 3/*3*/, "The blah", null, null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.TestingView.a9TZ -> TILDATEST.TestingView."a9TZ"
@@ -188,7 +188,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitiveNull      A6FIRST= new Type_LongPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a6First", 7/*7*/, "The blah", null, null);
+     public static Type_LongPrimitiveNull      A6FIRST= new Type_LongPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a6First", 7/*7*/, "The blah", null, null, null);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.TestingView.a6Last -> TILDATEST.TestingView."a6Last"
@@ -206,7 +206,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitiveNull      A6LAST = new Type_LongPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a6Last" , 8/*8*/, "The blah", null, null);
+     public static Type_LongPrimitiveNull      A6LAST = new Type_LongPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a6Last" , 8/*8*/, "The blah", null, null, null);
 ;
    }
 
@@ -351,6 +351,16 @@ This is the column definition for:<BR>
 // THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+   static public tilda.data_test.TestingView_Data lookupByAll() throws Exception
+     {
+       tilda.data_test._Tilda.TILDA__TESTINGVIEW Obj = new tilda.data_test.TestingView_Data();
+       Obj.initForLookup(0);
+
+
+       return (tilda.data_test.TestingView_Data) Obj;
+     }
+
+
    public static SelectQuery newSelectQuery(Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, true); }
    public static SelectQuery newWhereQuery (Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, false); }
    public static ListResults<tilda.data_test.TestingView_Data> runSelect(Connection C, SelectQuery Q, int start, int size) throws Exception
@@ -365,5 +375,154 @@ This is the column definition for:<BR>
        readMany(C, -7, RPI, null, Q, start, size);
      }
 
+
+   public static String getCSVHeader()
+    {
+      return "\"name\",\"refnum\",\"a2Min\",\"a2Max\",\"a9TZ\",\"a9\",\"a9c\",\"a6First\",\"a6Last\"";
+    }
+
+   public static void toCSV(java.io.Writer out, List<tilda.data_test.TestingView_Data> L, boolean includeHeader) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      if (includeHeader == true)
+        out.write(getCSVHeader() + "\n");
+      for (tilda.data_test.TestingView_Data O : L)
+       if (O!=null)
+        {
+          toCSV(out, O);
+          out.write("\n");
+        }
+      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);
+    }
+
+   public static void toCSV(java.io.Writer out, tilda.data_test.TestingView_Data obj) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      StringBuilder Str = new StringBuilder();
+
+      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getName());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getRefnum());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getA2Min());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getA2Max());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, TextUtil.print(obj.getA9TZ(), ","));
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, TextUtil.print(obj.getA9(), ","));
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, TextUtil.print(obj.getA9c(), ","));
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getA6First());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getA6Last());
+      out.write(Str.toString());
+      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);
+    }
+   public static void toJSON(java.io.Writer out, List<tilda.data_test.TestingView_Data> L, String lead, boolean fullList) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      if (fullList == true)
+        {
+          if (L == null)
+           {
+             out.write("null\n");
+             return;
+           }
+          if (L.isEmpty() == true)
+           {
+             out.write("[]\n");
+             return;
+           }
+          out.write("[\n");
+        }
+      boolean First = true;
+      for (tilda.data_test.TestingView_Data O : L)
+       if (O!=null)
+        {
+          out.write(lead);
+          toJSON(out, O, First == true ? "   " : "  ,", true);
+          if (First == true)
+           First = false;
+        }
+      if (fullList == true)
+       { 
+          out.write(lead);
+          out.write("]\n");
+       } 
+      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
+    }
+
+   public static void toJSON(java.io.Writer out, tilda.data_test.TestingView_Data obj, boolean fullObject) throws java.io.IOException
+    {
+      toJSON(out, obj, "", fullObject, false);
+    }
+
+   public static void toJSON(java.io.Writer out, tilda.data_test.TestingView_Data obj, String lead, boolean fullObject) throws java.io.IOException
+    {
+      toJSON(out, obj, lead, fullObject, false);
+    }
+
+   public static void toJSON(java.io.Writer outWriter, tilda.data_test.TestingView_Data obj, String lead, boolean fullObject, boolean noNullArrays) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter();
+      tilda.data_test._Tilda.TILDA__TESTINGVIEW Obj = (tilda.data_test._Tilda.TILDA__TESTINGVIEW) obj;
+      if (fullObject == true)
+       {
+          out.write(lead);
+          out.write("{");
+       }
+
+      int i = -1;
+        JSONUtil.print(out, "name", ++i==0, Obj.getName());
+
+        JSONUtil.print(out, "refnum", ++i==0, Obj.getRefnum());
+
+      if (Obj.isA2MinNull() == false)
+        JSONUtil.print(out, "a2Min", ++i==0, Obj.getA2Min());
+
+      if (Obj.isA2MaxNull() == false)
+        JSONUtil.print(out, "a2Max", ++i==0, Obj.getA2Max());
+
+      if (Obj.isA9TZNull() == false && Obj.getA9TZ() != null)
+        JSONUtil.print(out, "a9TZ", ++i==0, Obj.getA9TZAsArray());
+      else if (noNullArrays == true)
+        {
+          JSONUtil.print(out, "a9TZ", ++i==0);
+          out.write("[]");
+        }
+
+      if (Obj.isA9Null() == false && Obj.getA9() != null)
+        JSONUtil.print(out, "a9", ++i==0, Obj.getA9AsArray());
+      else if (noNullArrays == true)
+        {
+          JSONUtil.print(out, "a9", ++i==0);
+          out.write("[]");
+        }
+
+      if (Obj.isA9cNull() == false && Obj.getA9c() != null)
+        JSONUtil.print(out, "a9c", ++i==0, Obj.getA9cAsArray());
+      else if (noNullArrays == true)
+        {
+          JSONUtil.print(out, "a9c", ++i==0);
+          out.write("[]");
+        }
+
+      if (Obj.isA6FirstNull() == false)
+        JSONUtil.print(out, "a6First", ++i==0, Obj.getA6First());
+
+      if (Obj.isA6LastNull() == false)
+        JSONUtil.print(out, "a6Last", ++i==0, Obj.getA6Last());
+
+      if (fullObject == true)
+       out.write(" }\n");
+
+      outWriter.append(out.getBuilder().toString());
+      out.close();
+
+      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
+    }
 
  }

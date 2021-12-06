@@ -336,16 +336,6 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>29&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Testing-a8_DIV' class='columns'>a8</B>&nbsp;&nbsp;</TD>
-<TD>byte[]&nbsp;/&nbsp;BYTEA&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The blah</TD>
-</TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>30&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing-a8bTZ_DIV' class='columns'>a8bTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -356,8 +346,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TABLE>
 </TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>31&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>30&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing-a8b_DIV' class='columns'>a8b</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -366,8 +356,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>32&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>31&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing-a9TZ_DIV' class='columns'>a9TZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -378,8 +368,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TABLE>
 </TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>33&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>32&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing-a9_DIV' class='columns'>a9</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -388,8 +378,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>34&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>33&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing-a9a1TZ_DIV' class='columns'>a9a1TZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -400,8 +390,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TABLE>
 </TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>35&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>34&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing-a9a1_DIV' class='columns'>a9a1</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -410,8 +400,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>36&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>35&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing-a9bTZ_DIV' class='columns'>a9bTZ</B>&nbsp;&nbsp;</TD>
 <TD>List<String> List<>&nbsp;/&nbsp;text[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -420,8 +410,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Generated helper column to hold the time zone ID for 'a9b'.</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>37&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>36&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing-a9b_DIV' class='columns'>a9b</B>&nbsp;&nbsp;</TD>
 <TD>List<ZonedDateTime> List<>&nbsp;/&nbsp;timestamptz[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -430,8 +420,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>38&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>37&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing-a9c_DIV' class='columns'>a9c</B>&nbsp;&nbsp;</TD>
 <TD>LocalDate&nbsp;/&nbsp;date&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -440,8 +430,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>39&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>38&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing-a9d_DIV' class='columns'>a9d</B>&nbsp;&nbsp;</TD>
 <TD>List<LocalDate> List<>&nbsp;/&nbsp;date[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -450,8 +440,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>40&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>39&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing-a10a_DIV' class='columns'>a10a</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -460,8 +450,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>41&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>40&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing-a10b_DIV' class='columns'>a10b</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(10)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -470,8 +460,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>42&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>41&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing-a10c_DIV' class='columns'>a10c</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -480,8 +470,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>43&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>42&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing-a11_DIV' class='columns'>a11</B>&nbsp;&nbsp;</TD>
 <TD>BigDecimal&nbsp;/&nbsp;numeric(8,4)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -490,8 +480,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>44&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>43&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing-a11b_DIV' class='columns'>a11b</B>&nbsp;&nbsp;</TD>
 <TD>List<BigDecimal> List<>&nbsp;/&nbsp;numeric(6,3)[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -500,8 +490,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>45&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>44&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing-a11c_DIV' class='columns'>a11c</B>&nbsp;&nbsp;</TD>
 <TD>BigDecimal&nbsp;/&nbsp;numeric(5,0)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -510,8 +500,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>46&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>45&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing-a12_DIV' class='columns'>a12</B>&nbsp;&nbsp;</TD>
 <TD>short&nbsp;/&nbsp;smallint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -520,8 +510,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>47&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>46&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing-a12b_DIV' class='columns'>a12b</B>&nbsp;&nbsp;</TD>
 <TD>List<Short> List<>&nbsp;/&nbsp;smallint[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -530,8 +520,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>48&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>47&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing-a13_DIV' class='columns'>a13</B>&nbsp;&nbsp;</TD>
 <TD>UUID&nbsp;/&nbsp;UUID&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -540,8 +530,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>49&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>48&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing-a13b_DIV' class='columns'>a13b</B>&nbsp;&nbsp;</TD>
 <TD>List<UUID> List<>&nbsp;/&nbsp;UUID[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -550,8 +540,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>50&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>49&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -560,8 +550,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was created. (TILDATEST.Testing)</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>51&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>50&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -570,8 +560,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was last updated. (TILDATEST.Testing)</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>52&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>51&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -5267,146 +5257,6 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing.a8 -> TILDATEST.Testing."a8"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing.a8 of type byte[]</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing.a8 of type BYTEA</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   @SerializedName("a8")
-   byte[] _a8=null;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing.a8 -> TILDATEST.Testing."a8"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing.a8 of type byte[]</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing.a8 of type BYTEA</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final byte[] getA8()
-      { return _a8; }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing.a8 -> TILDATEST.Testing."a8"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the isNull for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing.a8 of type byte[]</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing.a8 of type BYTEA</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final boolean isA8Null()
-     { return __Nulls.intersects(TILDA__TESTING_Factory.COLS.A8._Mask); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing.a8 -> TILDATEST.Testing."a8"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing.a8 of type byte[]</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing.a8 of type BYTEA</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA8(byte[] v) throws Exception
-     {
-       long T0 = System.nanoTime();
-          __Changes.or(TILDA__TESTING_Factory.COLS.A8._Mask);
-          __Nulls.andNot(TILDA__TESTING_Factory.COLS.A8._Mask);
-       _a8 = v;
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing.a8 -> TILDATEST.Testing."a8"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the null setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing.a8 of type byte[]</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing.a8 of type BYTEA</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA8Null()
-     {
-       long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A8._Mask) == true) // already NULL
-        return;
-       __Changes.or(TILDA__TESTING_Factory.COLS.A8._Mask);
-       __Nulls.or(TILDA__TESTING_Factory.COLS.A8._Mask);
-       _a8=null;
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing.a8 -> TILDATEST.Testing."a8"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the hasChanged for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing.a8 of type byte[]</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing.a8 of type BYTEA</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public boolean hasChangedA8()
-     { return __Changes.intersects(TILDA__TESTING_Factory.COLS.A8._Mask); }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.a8bTZ -> TILDATEST.Testing."a8bTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
@@ -9637,55 +9487,211 @@ This is the hasChanged for:<BR>
 */
    public void copyTo(tilda.data_test._Tilda.TILDA__TESTING Dst) throws Exception
      {
-       Dst.setName       (_name       );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask) == true) Dst.setDescriptionNull(); else        Dst.setDescription(_description);
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.DESC2._Mask) == true) Dst.setDesc2Null      (); else        Dst.setDesc2      (_desc2      );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.DESC3._Mask) == true) Dst.setDesc3Null      (); else        Dst.setDesc3      (_desc3      );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.DESC4._Mask) == true) Dst.setDesc4Null      (); else        Dst.setDesc4      (_desc4      );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.DESC5._Mask) == true) Dst.setDesc5Null      (); else        Dst.setDesc5      (_desc5      );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.DESC6._Mask) == true) Dst.setDesc6Null      (); else        Dst.setDesc6      (_desc6      );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.TOPS._Mask) == true) Dst.setTopsNull       (); else        Dst.setTops       (_tops       );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.TOPS2._Mask) == true) Dst.setTops2Null      (); else        Dst.setTops2      (_tops2      );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A1._Mask) == true) Dst.setA1Null         (); else        Dst.setA1         (_a1         );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A2._Mask) == true) Dst.setA2Null         (); else        Dst.setA2         (_a2         );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A2B._Mask) == true) Dst.setA2bNull        (); else        Dst.setA2b        (_a2b        );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A2C._Mask) == true) Dst.setA2cNull        (); else        Dst.setA2c        (_a2c        );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A3._Mask) == true) Dst.setA3Null         (); else        Dst.setA3         (_a3         );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A3B._Mask) == true) Dst.setA3bNull        (); else        Dst.setA3b        (_a3b        );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A4._Mask) == true) Dst.setA4Null         (); else        Dst.setA4         (_a4         );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A4B._Mask) == true) Dst.setA4bNull        (); else        Dst.setA4b        (_a4b        );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A5._Mask) == true) Dst.setA5Null         (); else        Dst.setA5         (_a5         );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A5B._Mask) == true) Dst.setA5bNull        (); else        Dst.setA5b        (_a5b        );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A6._Mask) == true) Dst.setA6Null         (); else        Dst.setA6         (_a6         );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A6B._Mask) == true) Dst.setA6bNull        (); else        Dst.setA6b        (_a6b        );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A6C._Mask) == true) Dst.setA6cNull        (); else        Dst.setA6c        (_a6c        );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A6DTZ._Mask) == true) Dst.setA6dTZNull      (); else        Dst.setA6dTZ      (_a6dTZ      );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A6D._Mask) == true) Dst.setA6dNull        (); else        Dst.setA6d        (_a6d        );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A7._Mask) == true) Dst.setA7Null         (); else        Dst.setA7         (_a7         );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A7B._Mask) == true) Dst.setA7bNull        (); else        Dst.setA7b        (_a7b        );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A8._Mask) == true) Dst.setA8Null         (); else        Dst.setA8         (_a8         );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A8BTZ._Mask) == true) Dst.setA8bTZNull      (); else        Dst.setA8bTZ      (_a8bTZ      );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A8B._Mask) == true) Dst.setA8bNull        (); else        Dst.setA8b        (_a8b        );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9TZ._Mask) == true) Dst.setA9TZNull       (); else        Dst.setA9TZ       (_a9TZ       );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9._Mask) == true) Dst.setA9Null         (); else        Dst.setA9         (_a9         );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9A1TZ._Mask) == true) Dst.setA9a1TZNull     (); else        Dst.setA9a1TZ     (_a9a1TZ     );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9A1._Mask) == true) Dst.setA9a1Null       (); else        Dst.setA9a1       (_a9a1       );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9BTZ._Mask) == true) Dst.setA9bTZNull      (); else        Dst.setA9bTZ      (_a9bTZ      );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9B._Mask) == true) Dst.setA9bNull        (); else        Dst.setA9b        (_a9b        );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9C._Mask) == true) Dst.setA9cNull        (); else        Dst.setA9c        (_a9c        );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9D._Mask) == true) Dst.setA9dNull        (); else        Dst.setA9d        (_a9d        );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A10A._Mask) == true) Dst.setA10aNull       (); else        Dst.setA10a       (_a10a       );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A10B._Mask) == true) Dst.setA10bNull       (); else        Dst.setA10b       (_a10b       );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A10C._Mask) == true) Dst.setA10cNull       (); else        Dst.setA10c       (_a10c       );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A11._Mask) == true) Dst.setA11Null        (); else        Dst.setA11        (_a11        );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A11B._Mask) == true) Dst.setA11bNull       (); else        Dst.setA11b       (_a11b       );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A11C._Mask) == true) Dst.setA11cNull       (); else        Dst.setA11c       (_a11c       );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A12._Mask) == true) Dst.setA12Null        (); else        Dst.setA12        (_a12        );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A12B._Mask) == true) Dst.setA12bNull       (); else        Dst.setA12b       (_a12b       );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A13._Mask) == true) Dst.setA13Null        (); else        Dst.setA13        (_a13        );
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A13B._Mask) == true) Dst.setA13bNull       (); else        Dst.setA13b       (_a13b       );
-       Dst.setLastUpdated(_lastUpdated);
-       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull    (); else        Dst.setDeleted    (_deleted    );
+       if (_refnum2     != null)
+        Dst.setRefnum2    (_refnum2    );
+       if (_name        != null)
+        Dst.setName       (_name       );
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask) == true || _description==null)
+        Dst.setDescriptionNull();
+       else
+        Dst.setDescription(_description);
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.DESC2._Mask) == true || _desc2      ==null)
+        Dst.setDesc2Null      ();
+       else
+        Dst.setDesc2      (_desc2      );
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.DESC3._Mask) == true || _desc3      ==null)
+        Dst.setDesc3Null      ();
+       else
+        Dst.setDesc3      (_desc3      );
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.DESC4._Mask) == true || _desc4      ==null)
+        Dst.setDesc4Null      ();
+       else
+        Dst.setDesc4      (_desc4      );
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.DESC5._Mask) == true || _desc5      ==null)
+        Dst.setDesc5Null      ();
+       else
+        Dst.setDesc5      (_desc5      );
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.DESC6._Mask) == true || _desc6      ==null)
+        Dst.setDesc6Null      ();
+       else
+        Dst.setDesc6      (_desc6      );
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.TOPS._Mask) == true || _tops       ==null)
+        Dst.setTopsNull       ();
+       else
+        Dst.setTops       (_tops       );
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.TOPS2._Mask) == true || _tops2      ==null)
+        Dst.setTops2Null      ();
+       else
+        Dst.setTops2      (_tops2      );
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A1._Mask) == true || _a1         ==null)
+        Dst.setA1Null         ();
+       else
+        Dst.setA1         (_a1         );
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A2._Mask) == true || _a2         ==null)
+        Dst.setA2Null         ();
+       else
+        Dst.setA2         (_a2         );
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A2B._Mask) == true || _a2b        ==null)
+        Dst.setA2bNull        ();
+       else
+        Dst.setA2b        (_a2b        );
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A2C._Mask) == true || _a2c        ==null)
+        Dst.setA2cNull        ();
+       else
+        Dst.setA2c        (_a2c        );
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A3._Mask) == true || _a3         ==null)
+        Dst.setA3Null         ();
+       else
+        Dst.setA3         (_a3         );
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A3B._Mask) == true || _a3b        ==null)
+        Dst.setA3bNull        ();
+       else
+        Dst.setA3b        (_a3b        );
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A4._Mask) == true || _a4         ==null)
+        Dst.setA4Null         ();
+       else
+        Dst.setA4         (_a4         );
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A4B._Mask) == true || _a4b        ==null)
+        Dst.setA4bNull        ();
+       else
+        Dst.setA4b        (_a4b        );
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A5._Mask) == true || _a5         ==null)
+        Dst.setA5Null         ();
+       else
+        Dst.setA5         (_a5         );
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A5B._Mask) == true || _a5b        ==null)
+        Dst.setA5bNull        ();
+       else
+        Dst.setA5b        (_a5b        );
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A6._Mask) == true || _a6         ==null)
+        Dst.setA6Null         ();
+       else
+        Dst.setA6         (_a6         );
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A6B._Mask) == true || _a6b        ==null)
+        Dst.setA6bNull        ();
+       else
+        Dst.setA6b        (_a6b        );
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A6C._Mask) == true || _a6c        ==null)
+        Dst.setA6cNull        ();
+       else
+        Dst.setA6c        (_a6c        );
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A6DTZ._Mask) == true || _a6dTZ      ==null)
+        Dst.setA6dTZNull      ();
+       else
+        Dst.setA6dTZ      (_a6dTZ      );
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A6D._Mask) == true || _a6d        ==null)
+        Dst.setA6dNull        ();
+       else
+        Dst.setA6d        (_a6d        );
+       Dst.Str_a6d = Str_a6d;
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A7._Mask) == true || _a7         ==null)
+        Dst.setA7Null         ();
+       else
+        Dst.setA7         (_a7         );
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A7B._Mask) == true || _a7b        ==null)
+        Dst.setA7bNull        ();
+       else
+        Dst.setA7b        (_a7b        );
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A8BTZ._Mask) == true || _a8bTZ      ==null)
+        Dst.setA8bTZNull      ();
+       else
+        Dst.setA8bTZ      (_a8bTZ      );
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A8B._Mask) == true || _a8b        ==null)
+        Dst.setA8bNull        ();
+       else
+        Dst.setA8b        (_a8b        );
+       Dst.Str_a8b = Str_a8b;
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9TZ._Mask) == true || _a9TZ       ==null)
+        Dst.setA9TZNull       ();
+       else
+        Dst.setA9TZ       (_a9TZ       );
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9._Mask) == true || _a9         ==null)
+        Dst.setA9Null         ();
+       else
+        Dst.setA9         (_a9         );
+       Dst.Str_a9 = Str_a9;
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9A1TZ._Mask) == true || _a9a1TZ     ==null)
+        Dst.setA9a1TZNull     ();
+       else
+        Dst.setA9a1TZ     (_a9a1TZ     );
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9A1._Mask) == true || _a9a1       ==null)
+        Dst.setA9a1Null       ();
+       else
+        Dst.setA9a1       (_a9a1       );
+       Dst.Str_a9a1 = Str_a9a1;
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9BTZ._Mask) == true || _a9bTZ      ==null)
+        Dst.setA9bTZNull      ();
+       else
+        Dst.setA9bTZ      (_a9bTZ      );
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9B._Mask) == true || _a9b        ==null)
+        Dst.setA9bNull        ();
+       else
+        Dst.setA9b        (_a9b        );
+       Dst.Str_a9b = Str_a9b;
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9C._Mask) == true || _a9c        ==null)
+        Dst.setA9cNull        ();
+       else
+        Dst.setA9c        (_a9c        );
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9D._Mask) == true || _a9d        ==null)
+        Dst.setA9dNull        ();
+       else
+        Dst.setA9d        (_a9d        );
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A10A._Mask) == true || _a10a       ==null)
+        Dst.setA10aNull       ();
+       else
+        Dst.setA10a       (_a10a       );
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A10B._Mask) == true || _a10b       ==null)
+        Dst.setA10bNull       ();
+       else
+        Dst.setA10b       (_a10b       );
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A10C._Mask) == true || _a10c       ==null)
+        Dst.setA10cNull       ();
+       else
+        Dst.setA10c       (_a10c       );
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A11._Mask) == true || _a11        ==null)
+        Dst.setA11Null        ();
+       else
+        Dst.setA11        (_a11        );
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A11B._Mask) == true || _a11b       ==null)
+        Dst.setA11bNull       ();
+       else
+        Dst.setA11b       (_a11b       );
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A11C._Mask) == true || _a11c       ==null)
+        Dst.setA11cNull       ();
+       else
+        Dst.setA11c       (_a11c       );
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A12._Mask) == true || _a12        ==null)
+        Dst.setA12Null        ();
+       else
+        Dst.setA12        (_a12        );
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A12B._Mask) == true || _a12b       ==null)
+        Dst.setA12bNull       ();
+       else
+        Dst.setA12b       (_a12b       );
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A13._Mask) == true || _a13        ==null)
+        Dst.setA13Null        ();
+       else
+        Dst.setA13        (_a13        );
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A13B._Mask) == true || _a13b       ==null)
+        Dst.setA13bNull       ();
+       else
+        Dst.setA13b       (_a13b       );
+       if (_created     != null)
+        Dst.setCreated    (_created    );
+       if (_lastUpdated != null)
+        Dst.setLastUpdated(_lastUpdated);
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.DELETED._Mask) == true || _deleted    ==null)
+        Dst.setDeletedNull    ();
+       else
+        Dst.setDeleted    (_deleted    );
+     }
+
+
+   public tilda.data_test.Testing_Data copy() throws Exception
+     {
+       tilda.data_test.Testing_Data dst = new tilda.data_test.Testing_Data();
+       copyTo(dst);
+       return dst;
      }
 
 /**
@@ -9942,12 +9948,6 @@ This is the hasChanged for:<BR>
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.A7B._Mask);
         }
 
-       if (_a8 != null)
-        {
-          __Changes.or(TILDA__TESTING_Factory.COLS.A8._Mask);
-          __Nulls.andNot(TILDA__TESTING_Factory.COLS.A8._Mask);
-        }
-
        if (TextUtil.isNullOrEmpty(Str_a8b) == false)
         {
           _a8b = DateTimeUtil.parsefromJSON(Str_a8b);
@@ -10127,7 +10127,6 @@ This is the hasChanged for:<BR>
            }
           if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A7._Mask) == true) { TILDA__TESTING_Factory.COLS.A7.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__1_0._COMMAQUESTION);  }
           if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A7B._Mask) == true) { TILDA__TESTING_Factory.COLS.A7B.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A8._Mask) == true) { TILDA__TESTING_Factory.COLS.A8.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__1_0._COMMAQUESTION);  }
           if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A8BTZ._Mask) == true) { TILDA__TESTING_Factory.COLS.A8BTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__1_0._COMMAQUESTION);  }
 
           if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A8B._Mask) == true) { TILDA__TESTING_Factory.COLS.A8B.getFullColumnVarForInsert(C, S);
@@ -10222,7 +10221,6 @@ This is the hasChanged for:<BR>
            }
           if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A7._Mask) == true) TILDA__TESTING_Factory.COLS.A7.getFullColumnVarForUpdate(C, S);
           if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A7B._Mask) == true) TILDA__TESTING_Factory.COLS.A7B.getFullColumnVarForUpdate(C, S);
-          if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A8._Mask) == true) TILDA__TESTING_Factory.COLS.A8.getFullColumnVarForUpdate(C, S);
           if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A8BTZ._Mask) == true) TILDA__TESTING_Factory.COLS.A8BTZ.getFullColumnVarForUpdate(C, S);
 
           if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A8B._Mask) == true)
@@ -10442,10 +10440,6 @@ This is the hasChanged for:<BR>
         { 
           if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A7B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.INTEGER   ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A7B.getType(), AllocatedArrays, _a7b);
         } 
-       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A8._Mask) == true) 
-        { 
-          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A8._Mask) == true) PS.setNull(++i, java.sql.Types.BINARY    ); else PS.setBytes     (++i, _a8);
-        } 
        if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A8BTZ._Mask) == true) 
         { 
           if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A8BTZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _a8bTZ);
@@ -10620,7 +10614,6 @@ This is the hasChanged for:<BR>
           S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "a6d");
           S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "a7");
           S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "a7b");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "a8");
           S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "a8bTZ");
           S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "a8b");
           S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "a9TZ");
@@ -10733,7 +10726,6 @@ This is the hasChanged for:<BR>
                             _a6d         = processZDT(_a6dTZ        , "tilda.data_test.TILDATEST.Testing.a6d"        , RS, ++i, TILDA__TESTING_Factory.COLS.A6D        , TILDA__TESTING_Factory.COLS.A6DTZ        ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A6D._Mask        ); _a6d = null; }
                             _a7          =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A7._Mask         ); _a7 = null; }
                             _a7b = (List<Integer>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A7B.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A7B._Mask        ); _a7b = null; }
-                            _a8          =                              RS.getBytes     (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A8._Mask         ); _a8 = null; }
                             _a8bTZ       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A8BTZ._Mask      ); _a8bTZ = null; } else _a8bTZ       = _a8bTZ      .trim();
                             _a8b         = processZDT(_a8bTZ        , "tilda.data_test.TILDATEST.Testing.a8b"        , RS, ++i, TILDA__TESTING_Factory.COLS.A8B        , TILDA__TESTING_Factory.COLS.A8BTZ        ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A8B._Mask        ); _a8b = null; }
                             _a9TZ        = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_Factory.COLS.A9TZ._Mask       ); _a9TZ = null; } else _a9TZ        = _a9TZ       .trim();
@@ -10844,7 +10836,6 @@ This is the hasChanged for:<BR>
                + "; a6d"           + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A6D._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getA6d        ()))
                + "; a7"            + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A7._Mask) == true ? ": NULL" : ": " +                                   getA7         () )
                + "; a7b"           + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A7B._Mask) == true ? ": NULL" : ": " + TextUtil.print                   (getA7b        ()))
-               + "; a8"            + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A8._Mask) == true ? ": NULL" : ": " +                                   getA8         () )
                + "; a8b"           + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A8B._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getA8b        ()))
                + "; a9"            + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getA9         ()))
                + "; a9a1"          + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9A1._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getA9a1       ()))
@@ -10883,6 +10874,7 @@ This is the hasChanged for:<BR>
         { 
           case "CCC": tilda.data_test.Testing_Factory.toJSONCCC(out, (tilda.data_test.Testing_Data) this, lead, fullObject, noNullArrays); break;
           case "AAA": tilda.data_test.Testing_Factory.toJSONAAA(out, (tilda.data_test.Testing_Data) this, lead, fullObject, noNullArrays); break;
+          case "": tilda.data_test.Testing_Factory.toJSON(out, (tilda.data_test.Testing_Data) this, lead, fullObject, noNullArrays); break;
           default: throw new Exception("Unknown JSON exporter '"+exportName+"' for tilda.data_test.Testing_Factory");
         } 
     }
@@ -10896,6 +10888,7 @@ This is the hasChanged for:<BR>
         { 
           case "CCC": tilda.data_test.Testing_Factory.toCSVCCC(out, (tilda.data_test.Testing_Data) this); break;
           case "BBB": tilda.data_test.Testing_Factory.toCSVBBB(out, (tilda.data_test.Testing_Data) this); break;
+          case "": tilda.data_test.Testing_Factory.toCSV(out, (tilda.data_test.Testing_Data) this); break;
           default: throw new Exception("Unknown CSV exporter '"+exportName+"' for tilda.data_test.Testing_Factory");
         } 
     }

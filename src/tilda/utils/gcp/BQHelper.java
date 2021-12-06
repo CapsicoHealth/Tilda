@@ -276,13 +276,20 @@ public class BQHelper
     public static Schema getTildaBQSchema(String SchemaName, String TableViewName)
     throws Exception
       {
+        return getTildaBQSchema(SchemaName, TableViewName, null);
+      }
+    
+    public static Schema getTildaBQSchema(String SchemaName, String TableViewName, String outputMapName)
+    throws Exception
+      {
         TildaObjectMetaData Obj = TildaMasterRuntimeMetaData.getTableObject(SchemaName, TableViewName);
         if (Obj == null)
           throw new Exception("Cannot locate Tilda Object/View '" + SchemaName + "." + TableViewName + "', so cannot generate a BQ-compatible Schema.");
 
         // StringBuilder str = new StringBuilder();
         List<Field> fieldsList = new ArrayList<Field>();
-        for (ColumnDefinition col : Obj.getColumnDefinitions())
+        List<ColumnDefinition> cols = outputMapName==null?Obj.getColumnDefinitions():Obj.getOutputMapColumns(outputMapName);
+        for (ColumnDefinition col : cols)
           {
             Field F = Field.newBuilder(col.getName(), StandardSQLTypeName.valueOf(col.getType().getBigQueryType()))
             .setMode(col.isCollection() == true ? Field.Mode.REPEATED : col.isNullable() == false ? Field.Mode.REQUIRED : Field.Mode.NULLABLE)
@@ -297,6 +304,19 @@ public class BQHelper
 
         return Schema.of(fieldsList);
       }
+    
+    public static String getSchemaColumns(Schema schema)
+      {
+        StringBuilder str = new StringBuilder();
+        for (Field f : schema.getFields())
+          {
+            if (str.length() > 0)
+             str.append(", ");
+            str.append(f.getName()+":"+f.getType().name());
+          }
+        return str.toString();
+      }
+    
 
     public Schema getBQTableSchema(BigQuery bq, String datasetName, String tableName)
       {
@@ -486,6 +506,5 @@ public class BQHelper
         LOG.debug("Table '" + datasetName + "." + tableName + "' not found");
         return false;
       }
-
 
   }
