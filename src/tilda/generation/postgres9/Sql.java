@@ -789,30 +789,33 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 OutFinal.append("  insertStartDt:= clock_timestamp();\n");
                 OutFinal.append(BaseLineInsert.toString());
                 OutFinal.append("\n    WHERE " + vriWhereclause);
-                if (VRI._deleteFirst != true)
+                
+                // We used to not add the ON CONFLICT clause if _deleteFirst is true. This cau cause some issues
+                // because most of the time, one would delete with a "lastUpdated" timestamp. This means that it's
+                // easy to have an object from let's say March 10th, and you run a refill on April 10th with a 10-day
+                // lookback, esentially, the delete clause won't clear the object, and the insert will fail with 
+                // a duplicate key for sure.
+                OutFinal.append("\n  ON CONFLICT (");
+                boolean First = true;
+                for (ViewColumn VC : VRI._IdentityViewColumns)
                   {
-                    OutFinal.append("\n  ON CONFLICT (");
-                    boolean First = true;
-                    for (ViewColumn VC : VRI._IdentityViewColumns)
-                      {
-                        if (First == true)
-                          First = false;
-                        else
-                          OutFinal.append(", ");
-                        OutFinal.append("\"").append(VC._Name).append("\"");
-                      }
-                    OutFinal.append(")");
-                    OutFinal.append("  DO UPDATE SET\n");
-                    First = true;
-                    for (String ColNames : V._Realize._ParentRealized.getColumnNames())
-                      {
-                        OutFinal.append("    ");
-                        if (First == true)
-                          First = false;
-                        else
-                          OutFinal.append(",");
-                        OutFinal.append("\"").append(ColNames).append("\"").append(" = EXCLUDED.").append("\"").append(ColNames).append("\"").append("\n");
-                      }
+                    if (First == true)
+                      First = false;
+                    else
+                      OutFinal.append(", ");
+                    OutFinal.append("\"").append(VC._Name).append("\"");
+                  }
+                OutFinal.append(")");
+                OutFinal.append("  DO UPDATE SET\n");
+                First = true;
+                for (String ColNames : V._Realize._ParentRealized.getColumnNames())
+                  {
+                    OutFinal.append("    ");
+                    if (First == true)
+                      First = false;
+                    else
+                      OutFinal.append(",");
+                    OutFinal.append("\"").append(ColNames).append("\"").append(" = EXCLUDED.").append("\"").append(ColNames).append("\"").append("\n");
                   }
                 OutFinal.append("  ;\n");
                 OutFinal.append("  GET DIAGNOSTICS insertRowCount = ROW_COUNT;\n");
