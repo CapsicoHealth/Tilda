@@ -109,6 +109,11 @@ CREATE OR REPLACE FUNCTION TILDA.In(v boolean[], vals boolean[])
   IMMUTABLE COST 1 LANGUAGE SQL AS
   'select v && vals;';
 
+CREATE OR REPLACE FUNCTION TILDA.In(v character[], vals character[])
+  RETURNS boolean
+  IMMUTABLE COST 1 LANGUAGE SQL AS
+  'select v && vals;';
+
 CREATE OR REPLACE FUNCTION TILDA.In(v text, vals text[])
   RETURNS boolean
   IMMUTABLE COST 1 LANGUAGE SQL AS
@@ -129,6 +134,10 @@ CREATE OR REPLACE FUNCTION TILDA.In(v boolean, vals boolean[])
   IMMUTABLE COST 1 LANGUAGE SQL AS
   'select v = ANY(vals);';
 
+CREATE OR REPLACE FUNCTION TILDA.In(v character, vals character[])
+  RETURNS boolean
+  IMMUTABLE COST 1 LANGUAGE SQL AS
+  'select v = ANY(vals);';
   
   
   
