@@ -18,14 +18,14 @@ package tilda.utils.json;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -90,6 +90,19 @@ public class JSONUtil
         Out.write("\"");
       }
 
+    protected static void printUUID(Writer Out, UUID v)
+    throws IOException
+      {
+        if (v == null)
+          {
+            Out.write("null");
+            return;
+          }
+        Out.write("\"");
+        Out.write(v.toString());
+        Out.write("\"");
+      }
+    
     protected static void printChar(Writer Out, char v)
     throws IOException
       {
@@ -162,11 +175,25 @@ public class JSONUtil
         printLocalDate(Out, v);
       }
 
+    public static void print(Writer Out, String Name, boolean FirstElement, UUID v)
+    throws IOException
+      {
+        print(Out, Name, FirstElement);
+        printString(Out, v.toString());
+      }
+
     public static void print(Writer Out, String Name, boolean FirstElement, boolean v)
     throws IOException
       {
         print(Out, Name, FirstElement);
         Out.write(Boolean.toString(v));
+      }
+
+    public static void print(Writer Out, String Name, boolean FirstElement, short v)
+    throws IOException
+      {
+        print(Out, Name, FirstElement);
+        Out.write(Short.toString(v));
       }
 
     public static void print(Writer Out, String Name, boolean FirstElement, int v)
@@ -197,6 +224,12 @@ public class JSONUtil
         printDouble(Out, v);
       }
 
+    public static void print(Writer Out, String Name, boolean FirstElement, BigDecimal v)
+    throws IOException
+      {
+        print(Out, Name, FirstElement);
+        printString(Out, v.toString());
+      }
 
     public static void print(Writer Out, String Name, boolean FirstElement, boolean[] a)
     throws IOException
@@ -215,7 +248,7 @@ public class JSONUtil
               First = false;
             else
               Out.write(", ");
-            Out.write(((Boolean) i).toString());
+            Out.write(Boolean.toString(i));
           }
         Out.write("]");
       }
@@ -232,6 +265,50 @@ public class JSONUtil
         Out.write("[");
         boolean First = true;
         for (Boolean i : a)
+          {
+            if (First == true)
+              First = false;
+            else
+              Out.write(", ");
+            Out.write(i == null ? "null" : i.toString());
+          }
+        Out.write("]");
+      }
+
+    public static void print(Writer Out, String Name, boolean FirstElement, short[] a)
+    throws IOException
+      {
+        print(Out, Name, FirstElement);
+        if (a == null)
+          {
+            Out.write("null");
+            return;
+          }
+        Out.write("[");
+        boolean First = true;
+        for (short i : a)
+          {
+            if (First == true)
+              First = false;
+            else
+              Out.write(", ");
+            Out.write(Short.toString(i));
+          }
+        Out.write("]");
+      }
+
+    public static void print(Writer Out, String Name, boolean FirstElement, Short[] a)
+    throws IOException
+      {
+        print(Out, Name, FirstElement);
+        if (a == null)
+          {
+            Out.write("null");
+            return;
+          }
+        Out.write("[");
+        boolean First = true;
+        for (Short i : a)
           {
             if (First == true)
               First = false;
@@ -259,7 +336,7 @@ public class JSONUtil
               First = false;
             else
               Out.write(", ");
-            Out.write(((Integer) i).toString());
+            Out.write(Integer.toString(i));
           }
         Out.write("]");
       }
@@ -303,7 +380,7 @@ public class JSONUtil
               First = false;
             else
               Out.write(", ");
-            Out.write(((Long) i).toString());
+            Out.write(Long.toString(i));
           }
         Out.write("]");
       }
@@ -471,6 +548,31 @@ public class JSONUtil
         Out.write("]");
       }
 
+    public static void print(Writer Out, String Name, boolean FirstElement, BigDecimal[] a)
+    throws IOException
+      {
+        print(Out, Name, FirstElement);
+        if (a == null)
+          {
+            Out.write("null");
+            return;
+          }
+        Out.write("[");
+        boolean First = true;
+        for (BigDecimal i : a)
+          {
+            if (First == true)
+              First = false;
+            else
+              Out.write(", ");
+            if (i == null)
+              Out.write("null");
+            else
+              printString(Out, i.toString());
+          }
+        Out.write("]");
+      }
+    
     public static void print(Writer Out, String Name, boolean FirstElement, String[] a)
     throws IOException
       {
@@ -536,6 +638,32 @@ public class JSONUtil
           }
         Out.write("]");
       }
+    
+    public static void print(Writer Out, String Name, boolean FirstElement, UUID[] a)
+    throws IOException
+      {
+        print(Out, Name, FirstElement);
+        if (a == null)
+          {
+            Out.write("null");
+            return;
+          }
+        Out.write("[");
+        boolean First = true;
+        for (UUID i : a)
+          {
+            if (First == true)
+              First = false;
+            else
+              Out.write(", ");
+            if (i == null)
+              Out.write("null");
+            else
+              printString(Out, i.toString());
+          }
+        Out.write("]");
+      }
+    
 
     public static void print(Writer Out, String Name, boolean FirstElement, Collection<String> a)
     throws IOException
@@ -594,14 +722,24 @@ public class JSONUtil
      * @param openObjectOrArray A character for '{' or '[' depending on whether an object is output, or an array of objects.
      * @throws IOException
      */
-    public static void startOK(Writer Out, char openObjectOrArray)
+    public static void startOK(Writer Out, char openObjectOrArray, String perfMessage)
     throws IOException
       {
         Out.write("{\"code\":");
         Out.write(Integer.toString(HttpStatus.OK._Code));
+        if (TextUtil.isNullOrEmpty(perfMessage) == false)
+          {
+            Out.write(",\"perfMessage\": ");
+            printString(Out, perfMessage);
+          }
         Out.write(",\"data\": ");
         Out.write(openObjectOrArray);
         Out.write("\n");
+      }
+    public static void startOK(Writer Out, char openObjectOrArray)
+    throws IOException
+      {
+        startOK(Out, openObjectOrArray, null);
       }
 
     public static void printArrayStart(Writer Out, String Name, boolean FirstElement, String Header)
@@ -639,13 +777,18 @@ public class JSONUtil
         Out.write("}\n");
       }
 
-    public static void response(Writer Out, String JsonExportName, JSONable Obj)
+    public static void response(Writer Out, String JsonExportName, JSONable Obj, String perfMessage)
     throws Exception
       {
         if (Obj == null)
           {
             Out.write("{\"code\":");
             Out.write(Integer.toString(HttpStatus.OK._Code));
+            if (TextUtil.isNullOrEmpty(perfMessage) == false)
+              {
+                Out.write(",\"perfMessage\": ");
+                printString(Out, perfMessage);
+              }
             Out.write(",\"data\": null}");
           }
         else
@@ -655,7 +798,12 @@ public class JSONUtil
             end(Out, '}');
           }
       }
-
+    public static void response(Writer Out, String JsonExportName, JSONable Obj)
+    throws Exception
+      {
+        response(Out, JsonExportName, Obj, null);
+      }
+        
     /**
      * When using client-side frameworks such as Dojo that may use an iFrame for ajax-contents, the protocol
      * is typically to return the json data packaged inside a textarea. This function does that. It is exactly
@@ -667,24 +815,38 @@ public class JSONUtil
      * @param Obj
      * @throws Exception
      */
-    public static void responseDojoMultipartConfig(Writer Out, String JsonExportName, JSONable Obj)
+    public static void responseDojoMultipartConfig(Writer Out, String JsonExportName, JSONable Obj, String perfMessage)
     throws Exception
       {
         Out.write("<textarea>\n");
         response(Out, JsonExportName, Obj);
         Out.write("</textarea>\n");
       }
+    public static void responseDojoMultipartConfig(Writer Out, String JsonExportName, JSONable Obj)
+    throws Exception
+      {
+        responseDojoMultipartConfig(Out, JsonExportName, Obj, null);
+      }
 
-
-    public static void response(Writer Out, String JsonExportName, List<? extends JSONable> L)
+    public static void response(Writer Out, String JsonExportName, List<? extends JSONable> L, String perfMessage)
     throws Exception
       {
         Out.write("{\"code\":");
         Out.write(Integer.toString(HttpStatus.OK._Code));
+        if (TextUtil.isNullOrEmpty(perfMessage) == false)
+          {
+            Out.write(",\"perfMessage\": ");
+            printString(Out, perfMessage);
+          }
         print(Out, "data", JsonExportName, false, L, " ");
         end(Out, ' ');
       }
-
+    public static void response(Writer Out, String JsonExportName, List<? extends JSONable> L)
+    throws Exception
+      {
+        response(Out, JsonExportName, L, null);
+      }
+    
     public static void response(Writer Out, String[][] groupValues)
     throws IOException
       {
@@ -707,7 +869,6 @@ public class JSONUtil
       {
         Out.write(Header);
         print(Out, elementName, firstElement);
-
 
         if (L == null)
           {
@@ -791,6 +952,18 @@ public class JSONUtil
       {
         Out.write(Header);
         print(Out, elementName, firstElement);
+
+        if (Values == null)
+          {
+            Out.write(" null ");
+            return;
+          }
+        if (Values.length == 0)
+          {
+            Out.write(" [ ] ");
+            return;
+          }
+        
         Out.write(" [ ");
         boolean First = true;
         for (String[] Value : Values)

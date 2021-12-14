@@ -53,7 +53,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The primary key for this record (from TILDATEST.Testing2View.refnum)</TD>
+<TD>The primary key for this record</TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
     <TD>2&nbsp;&nbsp;</TD>
@@ -63,7 +63,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Medical system unique enterprise id (from TILDATEST.Testing2View.name)</TD>
+<TD>Medical system unique enterprise id</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>3&nbsp;&nbsp;</TD>
@@ -73,7 +73,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The timestamp for when the record was last updated. (TILDATEST.Testing) (from TILDATEST.Testing2View.lastUpdated)</TD>
+<TD>The timestamp for when the record was last updated. (TILDATEST.Testing)</TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
     <TD>4&nbsp;&nbsp;</TD>
@@ -83,404 +83,184 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The timestamp for when the record was last updated. (TILDATEST.Testing) (from TILDATEST.Testing2View.xxxLastUpdated)</TD>
+<TD>The timestamp for when the record was last updated. (TILDATEST.Testing)</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>5&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Testing2Realized-a1_DIV' class='columns'>a1</B>&nbsp;&nbsp;</TD>
-<TD>int&nbsp;/&nbsp;INTEGER&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The blah (from TILDATEST.Testing2View.a1)</TD>
-</TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>6&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Testing2Realized-a3b_DIV' class='columns'>a3b</B>&nbsp;&nbsp;</TD>
-<TD>List<Boolean> List<>&nbsp;/&nbsp;boolean[]&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The blah (from TILDATEST.Testing2View.a3b)</TD>
-</TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>7&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Testing2Realized-a4_DIV' class='columns'>a4</B>&nbsp;&nbsp;</TD>
-<TD>double&nbsp;/&nbsp;double precision&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The blah (from TILDATEST.Testing2View.a4)</TD>
-</TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>8&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Testing2Realized-a4b_DIV' class='columns'>a4b</B>&nbsp;&nbsp;</TD>
-<TD>List<Double> List<>&nbsp;/&nbsp;double precision[]&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The blah (from TILDATEST.Testing2View.a4b)</TD>
-</TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>9&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Testing2Realized-a5_DIV' class='columns'>a5</B>&nbsp;&nbsp;</TD>
-<TD>float&nbsp;/&nbsp;real&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The blah (from TILDATEST.Testing2View.a5)</TD>
-</TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>10&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Testing2Realized-a5b_DIV' class='columns'>a5b</B>&nbsp;&nbsp;</TD>
-<TD>List<Float> List<>&nbsp;/&nbsp;real[]&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The blah (from TILDATEST.Testing2View.a5b)</TD>
-</TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>11&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Testing2Realized-a7_DIV' class='columns'>a7</B>&nbsp;&nbsp;</TD>
-<TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The blah (from TILDATEST.Testing2View.a7)</TD>
-</TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>12&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Testing2Realized-a7b_DIV' class='columns'>a7b</B>&nbsp;&nbsp;</TD>
-<TD>List<Integer> List<>&nbsp;/&nbsp;integer[]&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The blah (from TILDATEST.Testing2View.a7b)</TD>
-</TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>13&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Testing2Realized-a8_DIV' class='columns'>a8</B>&nbsp;&nbsp;</TD>
-<TD>byte[]&nbsp;/&nbsp;BYTEA&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The blah (from TILDATEST.Testing2View.a8)</TD>
-</TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>14&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Testing2Realized-a8bTZ_DIV' class='columns'>a8bTZ</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;/&nbsp;varchar(10)&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Generated helper column to hold the time zone ID for 'a8b'. (from TILDATEST.Testing2View.a8bTZ)</TD>
-</TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>15&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Testing2Realized-a8b_DIV' class='columns'>a8b</B>&nbsp;&nbsp;</TD>
-<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The blah (from TILDATEST.Testing2View.a8b)</TD>
-</TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>16&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Testing2Realized-a10a_DIV' class='columns'>a10a</B>&nbsp;&nbsp;</TD>
-<TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The blah (from TILDATEST.Testing2View.a10a)</TD>
-</TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>17&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Testing2Realized-a10b_DIV' class='columns'>a10b</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;/&nbsp;varchar(10)&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The blah (from TILDATEST.Testing2View.a10b)</TD>
-</TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>18&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Testing2Realized-a10c_DIV' class='columns'>a10c</B>&nbsp;&nbsp;</TD>
-<TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The blah (from TILDATEST.Testing2View.a10c)</TD>
-</TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>19&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Testing2Realized-a11_DIV' class='columns'>a11</B>&nbsp;&nbsp;</TD>
-<TD>BigDecimal&nbsp;/&nbsp;numeric(8,4)&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The blah (from TILDATEST.Testing2View.a11)</TD>
-</TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>20&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Testing2Realized-a11b_DIV' class='columns'>a11b</B>&nbsp;&nbsp;</TD>
-<TD>List<BigDecimal> List<>&nbsp;/&nbsp;numeric(6,3)[]&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The blah (from TILDATEST.Testing2View.a11b)</TD>
-</TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>21&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Testing2Realized-a11c_DIV' class='columns'>a11c</B>&nbsp;&nbsp;</TD>
-<TD>BigDecimal&nbsp;/&nbsp;numeric(5,0)&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The blah (from TILDATEST.Testing2View.a11c)</TD>
-</TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>22&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Testing2Realized-a12_DIV' class='columns'>a12</B>&nbsp;&nbsp;</TD>
-<TD>short&nbsp;/&nbsp;smallint&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The blah (from TILDATEST.Testing2View.a12)</TD>
-</TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>23&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Testing2Realized-a12b_DIV' class='columns'>a12b</B>&nbsp;&nbsp;</TD>
-<TD>List<Short> List<>&nbsp;/&nbsp;smallint[]&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The blah (from TILDATEST.Testing2View.a12b)</TD>
-</TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>24&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Testing2Realized-a13_DIV' class='columns'>a13</B>&nbsp;&nbsp;</TD>
-<TD>UUID&nbsp;/&nbsp;UUID&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The blah (from TILDATEST.Testing2View.a13)</TD>
-</TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>25&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Testing2Realized-a13b_DIV' class='columns'>a13b</B>&nbsp;&nbsp;</TD>
-<TD>List<UUID> List<>&nbsp;/&nbsp;UUID[]&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The blah (from TILDATEST.Testing2View.a13b)</TD>
-</TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>26&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-description_DIV' class='columns'>description</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(250)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.description)</TD>
+<TD>The title for a person, i.e., Mr, Miss, Mrs...</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>27&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>6&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-desc2_DIV' class='columns'>desc2</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(3000)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.desc2)</TD>
+<TD>The title for a person, i.e., Mr, Miss, Mrs...</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>28&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>7&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-desc3_DIV' class='columns'>desc3</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;text&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.desc3)</TD>
+<TD>The title for a person, i.e., Mr, Miss, Mrs...</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>29&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>8&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-desc4_DIV' class='columns'>desc4</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;text&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.desc4)</TD>
+<TD>The title for a person, i.e., Mr, Miss, Mrs...</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>30&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>9&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-desc5_DIV' class='columns'>desc5</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;text&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.desc5)</TD>
+<TD>The title for a person, i.e., Mr, Miss, Mrs...</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>31&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>10&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-desc6_DIV' class='columns'>desc6</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;text&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">SMART&nbsp;&nbsp;</TD>
-<TD>The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.desc6)</TD>
+<TD>The title for a person, i.e., Mr, Miss, Mrs...</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>32&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>11&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-a3_DIV' class='columns'>a3</B>&nbsp;&nbsp;</TD>
 <TD>boolean&nbsp;/&nbsp;boolean&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD><B>Not A3</B>: Blah... (from TILDATEST.Testing2View.a3)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a3_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a3</A></DIV></TD>
+<TD><B>Not A3</B>: Blah...<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="javascript:openDiv('Testing2View-a3_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a3</A></DIV></TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>33&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>12&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-bastille_DIV' class='columns'>bastille</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD><B>Bastille Day</B>: Blah... (from TILDATEST.Testing2View.bastille)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-bastille_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>bastille</A></DIV></TD>
+<TD><B>Bastille Day</B>: Blah...<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="javascript:openDiv('Testing2View-bastille_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>bastille</A></DIV></TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>34&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>13&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-toto_DIV' class='columns'>toto</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD><B>Last Updated</B>: Blah... (from TILDATEST.Testing2View.toto)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-toto_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>toto</A></DIV></TD>
+<TD><B>Last Updated</B>: Blah...<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="javascript:openDiv('Testing2View-toto_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>toto</A></DIV></TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>35&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>14&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-desc2_Cat1_DIV' class='columns'>desc2_Cat1</B>&nbsp;&nbsp;</TD>
 <TD>double&nbsp;/&nbsp;double precision&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD><B>desc2_Cat1 Title</B>: This formula checks whether the column 'desc2' contains the values 'a', 'b', 'c' for the View TILDATEST.Testing2View. (from TILDATEST.Testing2View.desc2_Cat1)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-desc2_Cat1_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>desc2_Cat1</A></DIV></TD>
+<TD><B>desc2_Cat1 Title</B>: This formula checks whether the column 'desc2' contains the values 'a', 'b', 'c' for the View TILDATEST.Testing2View.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="javascript:openDiv('Testing2View-desc2_Cat1_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>desc2_Cat1</A></DIV></TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>36&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>15&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-desc2_Cat2_DIV' class='columns'>desc2_Cat2</B>&nbsp;&nbsp;</TD>
 <TD>double&nbsp;/&nbsp;double precision&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD><B>desc2_Cat2 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View. (from TILDATEST.Testing2View.desc2_Cat2)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-desc2_Cat2_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>desc2_Cat2</A></DIV></TD>
+<TD><B>desc2_Cat2 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="javascript:openDiv('Testing2View-desc2_Cat2_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>desc2_Cat2</A></DIV></TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>37&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>16&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-desc2_Cat3_DIV' class='columns'>desc2_Cat3</B>&nbsp;&nbsp;</TD>
 <TD>double&nbsp;/&nbsp;double precision&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD><B>desc2_Cat3 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View. (from TILDATEST.Testing2View.desc2_Cat3)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-desc2_Cat3_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>desc2_Cat3</A></DIV></TD>
+<TD><B>desc2_Cat3 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="javascript:openDiv('Testing2View-desc2_Cat3_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>desc2_Cat3</A></DIV></TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>38&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>17&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-a7_Cat4_DIV' class='columns'>a7_Cat4</B>&nbsp;&nbsp;</TD>
 <TD>double&nbsp;/&nbsp;double precision&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD><B>a7_Cat4 Title</B>: This formula checks whether the column 'a7' value falls in the range of 0.0 and 10.0. (from TILDATEST.Testing2View.a7_Cat4)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a7_Cat4_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a7_Cat4</A></DIV></TD>
+<TD><B>a7_Cat4 Title</B>: This formula checks whether the column 'a7' value falls in the range of 0.0 and 10.0.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="javascript:openDiv('Testing2View-a7_Cat4_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a7_Cat4</A></DIV></TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>39&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>18&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-a7_Cat5_DIV' class='columns'>a7_Cat5</B>&nbsp;&nbsp;</TD>
 <TD>double&nbsp;/&nbsp;double precision&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD><B>a7_Cat5 Title</B>: This formula checks whether the column 'a7' value falls in the range of 10.0 and 20.0. (from TILDATEST.Testing2View.a7_Cat5)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a7_Cat5_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a7_Cat5</A></DIV></TD>
+<TD><B>a7_Cat5 Title</B>: This formula checks whether the column 'a7' value falls in the range of 10.0 and 20.0.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="javascript:openDiv('Testing2View-a7_Cat5_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a7_Cat5</A></DIV></TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>40&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>19&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-a5_null_DIV' class='columns'>a5_null</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD><B>Null a5</B>: Whether a5 is null or not (from TILDATEST.Testing2View.a5_null)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a5_null_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a5_null</A></DIV></TD>
+<TD><B>Null a5</B>: Whether a5 is null or not<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="javascript:openDiv('Testing2View-a5_null_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a5_null</A></DIV></TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>41&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>20&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-a6_null_DIV' class='columns'>a6_null</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD><B>Null a6</B>: Whether a6 is null or not (from TILDATEST.Testing2View.a6_null)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a6_null_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a6_null</A></DIV></TD>
+<TD><B>Null a6</B>: Whether a6 is null or not<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="javascript:openDiv('Testing2View-a6_null_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a6_null</A></DIV></TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>42&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>21&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-a7_null_DIV' class='columns'>a7_null</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD><B>Null a7</B>: Whether a7 is null or not (from TILDATEST.Testing2View.a7_null)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a7_null_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a7_null</A></DIV></TD>
-</TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>43&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Testing2Realized-a8_null_DIV' class='columns'>a8_null</B>&nbsp;&nbsp;</TD>
-<TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD><B>Null a8</B>: Whether a8 is null or not (from TILDATEST.Testing2View.a8_null)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View-a8_null_DIV">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a8_null</A></DIV></TD>
+<TD><B>Null a7</B>: Whether a7 is null or not<DIV style="margin:0px;margin-left:20px;font-size:75%;">&nbsp;&nbsp;&rarr;&nbsp;<A href="javascript:openDiv('Testing2View-a7_null_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>a7_null</A></DIV></TD>
 </TR>
 </TABLE></BLOCKQUOTE>
 </DIV>
 
 */
 @SuppressWarnings({ "unused" })
-public abstract class TILDA__TESTING2REALIZED implements tilda.interfaces.WriterObject
+public abstract class TILDA__TESTING2REALIZED implements tilda.interfaces.WriterObject, tilda.interfaces.JSONable, tilda.interfaces.CSVable
  {
    protected transient static final Logger LOG = LogManager.getLogger(TILDA__TESTING2REALIZED.class.getName());
 
@@ -528,7 +308,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.refnum of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record (from TILDATEST.Testing2View.refnum)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -549,7 +329,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.refnum of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record (from TILDATEST.Testing2View.refnum)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -569,7 +349,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.refnum of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record (from TILDATEST.Testing2View.refnum)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -589,7 +369,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.refnum of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record (from TILDATEST.Testing2View.refnum)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -618,7 +398,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.refnum of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record (from TILDATEST.Testing2View.refnum)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -646,7 +426,7 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.refnum of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record (from TILDATEST.Testing2View.refnum)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -673,7 +453,7 @@ This is the definition for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Medical system unique enterprise id (from TILDATEST.Testing2View.name)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Medical system unique enterprise id</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -694,7 +474,7 @@ This is the getter for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Medical system unique enterprise id (from TILDATEST.Testing2View.name)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Medical system unique enterprise id</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -715,7 +495,7 @@ This is the isNull for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Medical system unique enterprise id (from TILDATEST.Testing2View.name)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Medical system unique enterprise id</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -736,7 +516,7 @@ This is the setter for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Medical system unique enterprise id (from TILDATEST.Testing2View.name)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Medical system unique enterprise id</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -772,7 +552,7 @@ This is the null setter for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Medical system unique enterprise id (from TILDATEST.Testing2View.name)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Medical system unique enterprise id</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -801,7 +581,7 @@ This is the hasChanged for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Medical system unique enterprise id (from TILDATEST.Testing2View.name)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Medical system unique enterprise id</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -827,7 +607,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing) (from TILDATEST.Testing2View.lastUpdated)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -846,7 +626,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing) (from TILDATEST.Testing2View.lastUpdated)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -866,7 +646,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing) (from TILDATEST.Testing2View.lastUpdated)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -886,7 +666,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing) (from TILDATEST.Testing2View.lastUpdated)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -919,7 +699,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing) (from TILDATEST.Testing2View.lastUpdated)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -947,7 +727,7 @@ This is the NOW setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing) (from TILDATEST.Testing2View.lastUpdated)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -969,7 +749,7 @@ This is the UNDEFINED setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing) (from TILDATEST.Testing2View.lastUpdated)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -991,7 +771,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing) (from TILDATEST.Testing2View.lastUpdated)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1013,7 +793,7 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing) (from TILDATEST.Testing2View.lastUpdated)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1039,7 +819,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.xxxLastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing) (from TILDATEST.Testing2View.xxxLastUpdated)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1058,7 +838,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.xxxLastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing) (from TILDATEST.Testing2View.xxxLastUpdated)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1078,7 +858,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.xxxLastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing) (from TILDATEST.Testing2View.xxxLastUpdated)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1098,7 +878,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.xxxLastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing) (from TILDATEST.Testing2View.xxxLastUpdated)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1131,7 +911,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.xxxLastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing) (from TILDATEST.Testing2View.xxxLastUpdated)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1159,7 +939,7 @@ This is the NOW setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.xxxLastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing) (from TILDATEST.Testing2View.xxxLastUpdated)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1181,7 +961,7 @@ This is the UNDEFINED setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.xxxLastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing) (from TILDATEST.Testing2View.xxxLastUpdated)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1203,7 +983,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.xxxLastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing) (from TILDATEST.Testing2View.xxxLastUpdated)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1225,7 +1005,7 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.xxxLastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing) (from TILDATEST.Testing2View.xxxLastUpdated)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATEST.Testing)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1233,3437 +1013,6 @@ This is the hasChanged for:<BR>
 */
    public boolean hasChangedXxxLastUpdated()
      { return __Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.XXXLASTUPDATED._Mask); }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a1 -> TILDATEST.Testing2Realized."a1"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a1 of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a1 of type INTEGER</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a1)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   @SerializedName("a1")
-   Integer _a1=null;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a1 -> TILDATEST.Testing2Realized."a1"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a1 of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a1 of type INTEGER</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a1)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final int getA1()
-      { return _a1; }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a1 -> TILDATEST.Testing2Realized."a1"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the isNull for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a1 of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a1 of type INTEGER</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a1)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final boolean isA1Null()
-     { return __Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A1._Mask); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a1 -> TILDATEST.Testing2Realized."a1"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a1 of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a1 of type INTEGER</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a1)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA1(int v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || _a1 == null || v != _a1)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A1._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A1._Mask);
-       _a1 = v;
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a1 -> TILDATEST.Testing2Realized."a1"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the null setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a1 of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a1 of type INTEGER</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a1)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA1Null()
-     {
-       long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A1._Mask) == true) // already NULL
-        return;
-       __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A1._Mask);
-       __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A1._Mask);
-       _a1=null;
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a1 -> TILDATEST.Testing2Realized."a1"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the hasChanged for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a1 of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a1 of type INTEGER</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a1)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public boolean hasChangedA1()
-     { return __Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A1._Mask); }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a3b -> TILDATEST.Testing2Realized."a3b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a3b of type List<Boolean></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a3b of type boolean[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a3b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   @SerializedName("a3b")
-   List<Boolean> _a3b;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a3b -> TILDATEST.Testing2Realized."a3b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a3b of type List<Boolean></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a3b of type boolean[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a3b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final Boolean[] getA3bAsArray()
-      { return _a3b==null? null : _a3b.toArray(new Boolean[_a3b.size()]); }
-   public final Iterator<Boolean> getA3b()
-      { return _a3b==null? null : _a3b.iterator(); }
-   public final boolean hasA3b(boolean v)
-      { return _a3b==null? false : _a3b.contains(v); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a3b -> TILDATEST.Testing2Realized."a3b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the isNull for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a3b of type List<Boolean></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a3b of type boolean[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a3b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final boolean isA3bNull()
-     { return __Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A3B._Mask); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a3b -> TILDATEST.Testing2Realized."a3b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a3b of type List<Boolean></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a3b of type boolean[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a3b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA3b(List<Boolean> v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (v == null  || v.isEmpty() == true)
-        setA3bNull();
-       else if (CollectionUtil.equals(v, _a3b) == false)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A3B._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A3B._Mask);
-          if (_a3b == null)
-           {
-             _a3b = new ArrayList<Boolean>();
-           }
-          else
-           {
-             _a3b.clear();
-           }
-          for (boolean i : v)
-           {
-             _a3b.add(i);
-           }
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-   public void addToA3b(int pos, boolean v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (_a3b == null)
-        _a3b = new ArrayList<Boolean>();
-       if (pos >= _a3b.size() || _a3b.get(pos).equals(v) == false)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A3B._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A3B._Mask);
-          _a3b.add(pos, v);
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-   public void removeFromA3b(Boolean v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (_a3b.remove(v) == true)
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A3B._Mask);
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-   public void removeFromA3b(int pos) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (_a3b.remove(pos) != null)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A3B._Mask);
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a3b -> TILDATEST.Testing2Realized."a3b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the null setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a3b of type List<Boolean></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a3b of type boolean[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a3b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA3bNull()
-     {
-       long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A3B._Mask) == true) // already NULL
-        return;
-       __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A3B._Mask);
-       __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A3B._Mask);
-       _a3b=null;
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a3b -> TILDATEST.Testing2Realized."a3b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the hasChanged for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a3b of type List<Boolean></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a3b of type boolean[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a3b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public boolean hasChangedA3b()
-     { return __Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A3B._Mask); }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a4 -> TILDATEST.Testing2Realized."a4"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a4 of type double</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a4 of type double precision</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a4)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   @SerializedName("a4")
-   Double _a4=null;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a4 -> TILDATEST.Testing2Realized."a4"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a4 of type double</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a4 of type double precision</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a4)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final double getA4()
-      { return _a4==null?0d:_a4; }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a4 -> TILDATEST.Testing2Realized."a4"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the isNull for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a4 of type double</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a4 of type double precision</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a4)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final boolean isA4Null()
-     { return __Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A4._Mask); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a4 -> TILDATEST.Testing2Realized."a4"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a4 of type double</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a4 of type double precision</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a4)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA4(double v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || _a4 == null || v != _a4)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A4._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A4._Mask);
-       _a4 = v;
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a4 -> TILDATEST.Testing2Realized."a4"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the null setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a4 of type double</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a4 of type double precision</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a4)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA4Null()
-     {
-       long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A4._Mask) == true) // already NULL
-        return;
-       __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A4._Mask);
-       __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A4._Mask);
-       _a4=null;
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a4 -> TILDATEST.Testing2Realized."a4"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the hasChanged for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a4 of type double</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a4 of type double precision</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a4)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public boolean hasChangedA4()
-     { return __Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A4._Mask); }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a4b -> TILDATEST.Testing2Realized."a4b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a4b of type List<Double></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a4b of type double precision[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a4b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   @SerializedName("a4b")
-   List<Double> _a4b;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a4b -> TILDATEST.Testing2Realized."a4b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a4b of type List<Double></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a4b of type double precision[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a4b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final Double[] getA4bAsArray()
-      { return _a4b==null? null : _a4b.toArray(new Double[_a4b.size()]); }
-   public final Iterator<Double> getA4b()
-      { return _a4b==null? null : _a4b.iterator(); }
-   public final boolean hasA4b(double v)
-      { return _a4b==null? false : _a4b.contains(v); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a4b -> TILDATEST.Testing2Realized."a4b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the isNull for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a4b of type List<Double></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a4b of type double precision[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a4b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final boolean isA4bNull()
-     { return __Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A4B._Mask); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a4b -> TILDATEST.Testing2Realized."a4b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a4b of type List<Double></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a4b of type double precision[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a4b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA4b(List<Double> v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (v == null  || v.isEmpty() == true)
-        setA4bNull();
-       else if (CollectionUtil.equals(v, _a4b) == false)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A4B._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A4B._Mask);
-          if (_a4b == null)
-           {
-             _a4b = new ArrayList<Double>();
-           }
-          else
-           {
-             _a4b.clear();
-           }
-          for (double i : v)
-           {
-             _a4b.add(i);
-           }
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-   public void addToA4b(int pos, double v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (_a4b == null)
-        _a4b = new ArrayList<Double>();
-       if (pos >= _a4b.size() || _a4b.get(pos).equals(v) == false)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A4B._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A4B._Mask);
-          _a4b.add(pos, v);
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-   public void removeFromA4b(Double v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (_a4b.remove(v) == true)
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A4B._Mask);
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-   public void removeFromA4b(int pos) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (_a4b.remove(pos) != null)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A4B._Mask);
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a4b -> TILDATEST.Testing2Realized."a4b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the null setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a4b of type List<Double></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a4b of type double precision[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a4b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA4bNull()
-     {
-       long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A4B._Mask) == true) // already NULL
-        return;
-       __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A4B._Mask);
-       __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A4B._Mask);
-       _a4b=null;
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a4b -> TILDATEST.Testing2Realized."a4b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the hasChanged for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a4b of type List<Double></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a4b of type double precision[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a4b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public boolean hasChangedA4b()
-     { return __Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A4B._Mask); }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a5 -> TILDATEST.Testing2Realized."a5"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a5 of type float</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a5 of type real</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a5)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   @SerializedName("a5")
-   Float _a5=null;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a5 -> TILDATEST.Testing2Realized."a5"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a5 of type float</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a5 of type real</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a5)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final float getA5()
-      { return _a5==null?0f:_a5; }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a5 -> TILDATEST.Testing2Realized."a5"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the isNull for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a5 of type float</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a5 of type real</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a5)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final boolean isA5Null()
-     { return __Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A5._Mask); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a5 -> TILDATEST.Testing2Realized."a5"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a5 of type float</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a5 of type real</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a5)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA5(float v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || _a5 == null || v != _a5)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A5._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A5._Mask);
-       _a5 = v;
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a5 -> TILDATEST.Testing2Realized."a5"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the null setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a5 of type float</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a5 of type real</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a5)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA5Null()
-     {
-       long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A5._Mask) == true) // already NULL
-        return;
-       __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A5._Mask);
-       __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A5._Mask);
-       _a5=null;
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a5 -> TILDATEST.Testing2Realized."a5"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the hasChanged for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a5 of type float</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a5 of type real</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a5)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public boolean hasChangedA5()
-     { return __Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A5._Mask); }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a5b -> TILDATEST.Testing2Realized."a5b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a5b of type List<Float></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a5b of type real[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a5b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   @SerializedName("a5b")
-   List<Float> _a5b;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a5b -> TILDATEST.Testing2Realized."a5b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a5b of type List<Float></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a5b of type real[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a5b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final Float[] getA5bAsArray()
-      { return _a5b==null? null : _a5b.toArray(new Float[_a5b.size()]); }
-   public final Iterator<Float> getA5b()
-      { return _a5b==null? null : _a5b.iterator(); }
-   public final boolean hasA5b(float v)
-      { return _a5b==null? false : _a5b.contains(v); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a5b -> TILDATEST.Testing2Realized."a5b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the isNull for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a5b of type List<Float></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a5b of type real[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a5b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final boolean isA5bNull()
-     { return __Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A5B._Mask); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a5b -> TILDATEST.Testing2Realized."a5b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a5b of type List<Float></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a5b of type real[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a5b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA5b(List<Float> v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (v == null  || v.isEmpty() == true)
-        setA5bNull();
-       else if (CollectionUtil.equals(v, _a5b) == false)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A5B._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A5B._Mask);
-          if (_a5b == null)
-           {
-             _a5b = new ArrayList<Float>();
-           }
-          else
-           {
-             _a5b.clear();
-           }
-          for (float i : v)
-           {
-             _a5b.add(i);
-           }
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-   public void addToA5b(int pos, float v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (_a5b == null)
-        _a5b = new ArrayList<Float>();
-       if (pos >= _a5b.size() || _a5b.get(pos).equals(v) == false)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A5B._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A5B._Mask);
-          _a5b.add(pos, v);
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-   public void removeFromA5b(Float v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (_a5b.remove(v) == true)
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A5B._Mask);
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-   public void removeFromA5b(int pos) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (_a5b.remove(pos) != null)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A5B._Mask);
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a5b -> TILDATEST.Testing2Realized."a5b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the null setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a5b of type List<Float></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a5b of type real[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a5b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA5bNull()
-     {
-       long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A5B._Mask) == true) // already NULL
-        return;
-       __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A5B._Mask);
-       __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A5B._Mask);
-       _a5b=null;
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a5b -> TILDATEST.Testing2Realized."a5b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the hasChanged for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a5b of type List<Float></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a5b of type real[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a5b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public boolean hasChangedA5b()
-     { return __Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A5B._Mask); }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a7 -> TILDATEST.Testing2Realized."a7"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a7 of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a7 of type integer</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a7)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   @SerializedName("a7")
-   Integer _a7=null;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a7 -> TILDATEST.Testing2Realized."a7"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a7 of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a7 of type integer</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a7)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final int getA7()
-      { return _a7==null?0:_a7; }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a7 -> TILDATEST.Testing2Realized."a7"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the isNull for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a7 of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a7 of type integer</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a7)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final boolean isA7Null()
-     { return __Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A7._Mask); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a7 -> TILDATEST.Testing2Realized."a7"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a7 of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a7 of type integer</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a7)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA7(int v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || _a7 == null || v != _a7)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A7._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A7._Mask);
-       _a7 = v;
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a7 -> TILDATEST.Testing2Realized."a7"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the null setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a7 of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a7 of type integer</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a7)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA7Null()
-     {
-       long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A7._Mask) == true) // already NULL
-        return;
-       __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A7._Mask);
-       __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A7._Mask);
-       _a7=null;
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a7 -> TILDATEST.Testing2Realized."a7"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the hasChanged for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a7 of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a7 of type integer</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a7)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public boolean hasChangedA7()
-     { return __Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A7._Mask); }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a7b -> TILDATEST.Testing2Realized."a7b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a7b of type List<Integer></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a7b of type integer[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a7b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   @SerializedName("a7b")
-   List<Integer> _a7b;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a7b -> TILDATEST.Testing2Realized."a7b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a7b of type List<Integer></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a7b of type integer[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a7b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final Integer[] getA7bAsArray()
-      { return _a7b==null? null : _a7b.toArray(new Integer[_a7b.size()]); }
-   public final Iterator<Integer> getA7b()
-      { return _a7b==null? null : _a7b.iterator(); }
-   public final boolean hasA7b(int v)
-      { return _a7b==null? false : _a7b.contains(v); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a7b -> TILDATEST.Testing2Realized."a7b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the isNull for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a7b of type List<Integer></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a7b of type integer[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a7b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final boolean isA7bNull()
-     { return __Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A7B._Mask); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a7b -> TILDATEST.Testing2Realized."a7b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a7b of type List<Integer></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a7b of type integer[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a7b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA7b(List<Integer> v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (v == null  || v.isEmpty() == true)
-        setA7bNull();
-       else if (CollectionUtil.equals(v, _a7b) == false)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A7B._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A7B._Mask);
-          if (_a7b == null)
-           {
-             _a7b = new ArrayList<Integer>();
-           }
-          else
-           {
-             _a7b.clear();
-           }
-          for (int i : v)
-           {
-             _a7b.add(i);
-           }
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-   public void addToA7b(int pos, int v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (_a7b == null)
-        _a7b = new ArrayList<Integer>();
-       if (pos >= _a7b.size() || _a7b.get(pos).equals(v) == false)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A7B._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A7B._Mask);
-          _a7b.add(pos, v);
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-   public void removeFromA7b(Integer v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (_a7b.remove(v) == true)
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A7B._Mask);
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-   public void removeFromA7b(int pos) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (_a7b.remove(pos) != null)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A7B._Mask);
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a7b -> TILDATEST.Testing2Realized."a7b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the null setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a7b of type List<Integer></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a7b of type integer[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a7b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA7bNull()
-     {
-       long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A7B._Mask) == true) // already NULL
-        return;
-       __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A7B._Mask);
-       __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A7B._Mask);
-       _a7b=null;
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a7b -> TILDATEST.Testing2Realized."a7b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the hasChanged for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a7b of type List<Integer></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a7b of type integer[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a7b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public boolean hasChangedA7b()
-     { return __Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A7B._Mask); }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a8 -> TILDATEST.Testing2Realized."a8"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a8 of type byte[]</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a8 of type BYTEA</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a8)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   @SerializedName("a8")
-   byte[] _a8=null;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a8 -> TILDATEST.Testing2Realized."a8"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a8 of type byte[]</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a8 of type BYTEA</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a8)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final byte[] getA8()
-      { return _a8; }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a8 -> TILDATEST.Testing2Realized."a8"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the isNull for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a8 of type byte[]</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a8 of type BYTEA</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a8)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final boolean isA8Null()
-     { return __Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8._Mask); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a8 -> TILDATEST.Testing2Realized."a8"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a8 of type byte[]</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a8 of type BYTEA</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a8)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA8(byte[] v) throws Exception
-     {
-       long T0 = System.nanoTime();
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A8._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A8._Mask);
-       _a8 = v;
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a8 -> TILDATEST.Testing2Realized."a8"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the null setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a8 of type byte[]</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a8 of type BYTEA</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a8)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA8Null()
-     {
-       long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8._Mask) == true) // already NULL
-        return;
-       __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A8._Mask);
-       __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A8._Mask);
-       _a8=null;
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a8 -> TILDATEST.Testing2Realized."a8"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the hasChanged for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a8 of type byte[]</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a8 of type BYTEA</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a8)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public boolean hasChangedA8()
-     { return __Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8._Mask); }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a8bTZ -> TILDATEST.Testing2Realized."a8bTZ"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a8bTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a8bTZ of type varchar(10)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a8b'. (from TILDATEST.Testing2View.a8bTZ)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   String _a8bTZ=null;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a8bTZ -> TILDATEST.Testing2Realized."a8bTZ"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a8bTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a8bTZ of type varchar(10)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a8b'. (from TILDATEST.Testing2View.a8bTZ)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final String getA8bTZ()
-      { return _a8bTZ; }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a8bTZ -> TILDATEST.Testing2Realized."a8bTZ"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the isNull for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a8bTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a8bTZ of type varchar(10)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a8b'. (from TILDATEST.Testing2View.a8bTZ)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final boolean isA8bTZNull()
-     { return __Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8BTZ._Mask); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a8bTZ -> TILDATEST.Testing2Realized."a8bTZ"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a8bTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a8bTZ of type varchar(10)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a8b'. (from TILDATEST.Testing2View.a8bTZ)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-    void setA8bTZ(String v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (v == null)
-        {
-          setA8bTZNull();
-        }
-       else if (v.length() > 10)
-        throw new Exception("Cannot set tilda.data_test.TILDATEST.Testing2Realized.a8bTZ: the size "+v.length()+" is larger than the max allowed of 10: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
-       else if (v.equals(_a8bTZ) == false)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A8BTZ._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A8BTZ._Mask);
-       _a8bTZ = v;
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a8bTZ -> TILDATEST.Testing2Realized."a8bTZ"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the null setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a8bTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a8bTZ of type varchar(10)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a8b'. (from TILDATEST.Testing2View.a8bTZ)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-    void setA8bTZNull()
-     {
-       long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8BTZ._Mask) == true) // already NULL
-        return;
-       __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A8BTZ._Mask);
-       __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A8BTZ._Mask);
-       _a8bTZ=null;
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a8bTZ -> TILDATEST.Testing2Realized."a8bTZ"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the hasChanged for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a8bTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a8bTZ of type varchar(10)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a8b'. (from TILDATEST.Testing2View.a8bTZ)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public boolean hasChangedA8bTZ()
-     { return __Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8BTZ._Mask); }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a8b -> TILDATEST.Testing2Realized."a8b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a8b of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a8b of type timestamptz</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a8b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   @SerializedName("a8b")
-   String  Str_a8b;
-   public void initA8b(String v) { Str_a8b = v; }
-   public String initA8bVal() { return Str_a8b; }
-   transient ZonedDateTime _a8b = null;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a8b -> TILDATEST.Testing2Realized."a8b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a8b of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a8b of type timestamptz</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a8b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final ZonedDateTime getA8b()
-      { return _a8b; }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a8b -> TILDATEST.Testing2Realized."a8b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the isNull for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a8b of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a8b of type timestamptz</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a8b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final boolean isA8bNull()
-     { return __Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8B._Mask); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a8b -> TILDATEST.Testing2Realized."a8b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a8b of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a8b of type timestamptz</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a8b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA8b(ZonedDateTime v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (v == null)
-        {
-          setA8bNull();
-        }
-       else if (v.equals(_a8b) == false)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A8B._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A8B._Mask);
-       _a8b = v;
-          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(v.getZone().getId());
-          if (ZI == null)
-           throw new Exception("Cannot set field 'tilda.data_test.TILDATEST.Testing2Realized.a8b' because the timezone value '"+v.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-          setA8bTZ(ZI.getId());
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a8b -> TILDATEST.Testing2Realized."a8b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the null setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a8b of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a8b of type timestamptz</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a8b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA8bNull()
-     {
-       long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8B._Mask) == true) // already NULL
-        return;
-       __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A8B._Mask);
-       __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A8B._Mask);
-       _a8b=null;
-       setA8bTZNull();
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a8b -> TILDATEST.Testing2Realized."a8b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the NOW setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a8b of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a8b of type timestamptz</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a8b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final void setA8bNow() throws Exception
-    {
-      setA8b(DateTimeUtil.NOW_PLACEHOLDER_ZDT);
-    }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a8b -> TILDATEST.Testing2Realized."a8b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the UNDEFINED setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a8b of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a8b of type timestamptz</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a8b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final void setA8bUndefined() throws Exception
-    {
-      setA8b(DateTimeUtil.UNDEFINED_PLACEHOLDER_ZDT);
-    }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a8b -> TILDATEST.Testing2Realized."a8b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a8b of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a8b of type timestamptz</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a8b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final void setA8b(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
-    {
-      setA8b(DateTimeUtil.newTZ(year, month, date, hourOfDay, minute, second, millis, z));
-    }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a8b -> TILDATEST.Testing2Realized."a8b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the hasChanged for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a8b of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a8b of type timestamptz</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a8b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public boolean hasChangedA8b()
-     { return __Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8B._Mask); }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a10a -> TILDATEST.Testing2Realized."a10a"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a10a of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a10a of type integer</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a10a)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   @SerializedName("a10a")
-   Integer _a10a=null;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a10a -> TILDATEST.Testing2Realized."a10a"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a10a of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a10a of type integer</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a10a)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final int getA10a()
-      { return _a10a==null?0:_a10a; }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a10a -> TILDATEST.Testing2Realized."a10a"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the isNull for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a10a of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a10a of type integer</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a10a)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final boolean isA10aNull()
-     { return __Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A10A._Mask); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a10a -> TILDATEST.Testing2Realized."a10a"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a10a of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a10a of type integer</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a10a)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA10a(int v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || _a10a == null || v != _a10a)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A10A._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A10A._Mask);
-       _a10a = v;
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a10a -> TILDATEST.Testing2Realized."a10a"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the null setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a10a of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a10a of type integer</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a10a)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA10aNull()
-     {
-       long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A10A._Mask) == true) // already NULL
-        return;
-       __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A10A._Mask);
-       __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A10A._Mask);
-       _a10a=null;
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a10a -> TILDATEST.Testing2Realized."a10a"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the hasChanged for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a10a of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a10a of type integer</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a10a)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public boolean hasChangedA10a()
-     { return __Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A10A._Mask); }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a10b -> TILDATEST.Testing2Realized."a10b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a10b of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a10b of type varchar(10)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a10b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   @SerializedName("a10b")
-   String _a10b=null;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a10b -> TILDATEST.Testing2Realized."a10b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a10b of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a10b of type varchar(10)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a10b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final String getA10b()
-      { return _a10b; }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a10b -> TILDATEST.Testing2Realized."a10b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the isNull for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a10b of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a10b of type varchar(10)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a10b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final boolean isA10bNull()
-     { return __Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A10B._Mask); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a10b -> TILDATEST.Testing2Realized."a10b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a10b of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a10b of type varchar(10)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a10b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA10b(String v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (v == null)
-        {
-          setA10bNull();
-        }
-       else if (v.length() > 10)
-        throw new Exception("Cannot set tilda.data_test.TILDATEST.Testing2Realized.a10b: the size "+v.length()+" is larger than the max allowed of 10: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
-       else if (v.equals(_a10b) == false)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A10B._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A10B._Mask);
-       _a10b = v;
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a10b -> TILDATEST.Testing2Realized."a10b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the null setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a10b of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a10b of type varchar(10)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a10b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA10bNull()
-     {
-       long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A10B._Mask) == true) // already NULL
-        return;
-       __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A10B._Mask);
-       __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A10B._Mask);
-       _a10b=null;
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a10b -> TILDATEST.Testing2Realized."a10b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the hasChanged for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a10b of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a10b of type varchar(10)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a10b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public boolean hasChangedA10b()
-     { return __Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A10B._Mask); }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a10c -> TILDATEST.Testing2Realized."a10c"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a10c of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a10c of type integer</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a10c)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   @SerializedName("a10c")
-   Integer _a10c=null;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a10c -> TILDATEST.Testing2Realized."a10c"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a10c of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a10c of type integer</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a10c)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final int getA10c()
-      { return _a10c==null?0:_a10c; }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a10c -> TILDATEST.Testing2Realized."a10c"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the isNull for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a10c of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a10c of type integer</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a10c)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final boolean isA10cNull()
-     { return __Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A10C._Mask); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a10c -> TILDATEST.Testing2Realized."a10c"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a10c of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a10c of type integer</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a10c)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA10c(int v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || _a10c == null || v != _a10c)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A10C._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A10C._Mask);
-       _a10c = v;
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a10c -> TILDATEST.Testing2Realized."a10c"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the null setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a10c of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a10c of type integer</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a10c)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA10cNull()
-     {
-       long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A10C._Mask) == true) // already NULL
-        return;
-       __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A10C._Mask);
-       __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A10C._Mask);
-       _a10c=null;
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a10c -> TILDATEST.Testing2Realized."a10c"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the hasChanged for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a10c of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a10c of type integer</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a10c)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public boolean hasChangedA10c()
-     { return __Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A10C._Mask); }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a11 -> TILDATEST.Testing2Realized."a11"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a11 of type BigDecimal</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a11 of type numeric(8,4)</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a11)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   @SerializedName("a11")
-   BigDecimal _a11=null;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a11 -> TILDATEST.Testing2Realized."a11"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a11 of type BigDecimal</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a11 of type numeric(8,4)</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a11)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final BigDecimal getA11()
-      { return _a11; }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a11 -> TILDATEST.Testing2Realized."a11"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the isNull for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a11 of type BigDecimal</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a11 of type numeric(8,4)</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a11)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final boolean isA11Null()
-     { return __Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A11._Mask); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a11 -> TILDATEST.Testing2Realized."a11"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a11 of type BigDecimal</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a11 of type numeric(8,4)</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a11)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA11(BigDecimal v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || _a11 == null || v != _a11)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A11._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A11._Mask);
-       _a11 = v;
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a11 -> TILDATEST.Testing2Realized."a11"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the null setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a11 of type BigDecimal</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a11 of type numeric(8,4)</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a11)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA11Null()
-     {
-       long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A11._Mask) == true) // already NULL
-        return;
-       __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A11._Mask);
-       __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A11._Mask);
-       _a11=null;
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a11 -> TILDATEST.Testing2Realized."a11"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the hasChanged for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a11 of type BigDecimal</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a11 of type numeric(8,4)</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a11)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public boolean hasChangedA11()
-     { return __Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A11._Mask); }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a11b -> TILDATEST.Testing2Realized."a11b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a11b of type List<BigDecimal></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a11b of type numeric(6,3)[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a11b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   @SerializedName("a11b")
-   List<BigDecimal> _a11b;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a11b -> TILDATEST.Testing2Realized."a11b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a11b of type List<BigDecimal></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a11b of type numeric(6,3)[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a11b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final BigDecimal[] getA11bAsArray()
-      { return _a11b==null? null : _a11b.toArray(new BigDecimal[_a11b.size()]); }
-   public final Iterator<BigDecimal> getA11b()
-      { return _a11b==null? null : _a11b.iterator(); }
-   public final boolean hasA11b(BigDecimal v)
-      { return _a11b==null? false : _a11b.contains(v); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a11b -> TILDATEST.Testing2Realized."a11b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the isNull for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a11b of type List<BigDecimal></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a11b of type numeric(6,3)[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a11b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final boolean isA11bNull()
-     { return __Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A11B._Mask); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a11b -> TILDATEST.Testing2Realized."a11b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a11b of type List<BigDecimal></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a11b of type numeric(6,3)[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a11b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA11b(List<BigDecimal> v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (v == null  || v.isEmpty() == true)
-        setA11bNull();
-       else if (CollectionUtil.equals(v, _a11b) == false)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A11B._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A11B._Mask);
-          if (_a11b == null)
-           {
-             _a11b = new ArrayList<BigDecimal>();
-           }
-          else
-           {
-             _a11b.clear();
-           }
-          for (BigDecimal i : v)
-           {
-             _a11b.add(i);
-           }
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-   public void addToA11b(int pos, BigDecimal v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (_a11b == null)
-        _a11b = new ArrayList<BigDecimal>();
-       if (pos >= _a11b.size() || _a11b.get(pos).equals(v) == false)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A11B._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A11B._Mask);
-          _a11b.add(pos, v);
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-   public void removeFromA11b(BigDecimal v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (_a11b.remove(v) == true)
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A11B._Mask);
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-   public void removeFromA11b(int pos) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (_a11b.remove(pos) != null)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A11B._Mask);
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a11b -> TILDATEST.Testing2Realized."a11b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the null setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a11b of type List<BigDecimal></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a11b of type numeric(6,3)[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a11b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA11bNull()
-     {
-       long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A11B._Mask) == true) // already NULL
-        return;
-       __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A11B._Mask);
-       __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A11B._Mask);
-       _a11b=null;
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a11b -> TILDATEST.Testing2Realized."a11b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the hasChanged for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a11b of type List<BigDecimal></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a11b of type numeric(6,3)[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a11b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public boolean hasChangedA11b()
-     { return __Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A11B._Mask); }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a11c -> TILDATEST.Testing2Realized."a11c"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a11c of type BigDecimal</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a11c of type numeric(5,0)</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a11c)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   @SerializedName("a11c")
-   BigDecimal _a11c=null;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a11c -> TILDATEST.Testing2Realized."a11c"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a11c of type BigDecimal</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a11c of type numeric(5,0)</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a11c)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final BigDecimal getA11c()
-      { return _a11c; }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a11c -> TILDATEST.Testing2Realized."a11c"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the isNull for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a11c of type BigDecimal</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a11c of type numeric(5,0)</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a11c)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final boolean isA11cNull()
-     { return __Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A11C._Mask); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a11c -> TILDATEST.Testing2Realized."a11c"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a11c of type BigDecimal</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a11c of type numeric(5,0)</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a11c)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA11c(BigDecimal v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || _a11c == null || v != _a11c)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A11C._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A11C._Mask);
-       _a11c = v;
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a11c -> TILDATEST.Testing2Realized."a11c"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the null setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a11c of type BigDecimal</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a11c of type numeric(5,0)</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a11c)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA11cNull()
-     {
-       long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A11C._Mask) == true) // already NULL
-        return;
-       __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A11C._Mask);
-       __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A11C._Mask);
-       _a11c=null;
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a11c -> TILDATEST.Testing2Realized."a11c"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the hasChanged for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a11c of type BigDecimal</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a11c of type numeric(5,0)</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a11c)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public boolean hasChangedA11c()
-     { return __Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A11C._Mask); }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a12 -> TILDATEST.Testing2Realized."a12"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a12 of type short</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a12 of type smallint</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a12)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   @SerializedName("a12")
-   Short _a12=null;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a12 -> TILDATEST.Testing2Realized."a12"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a12 of type short</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a12 of type smallint</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a12)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final short getA12()
-      { return _a12==null?0:_a12; }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a12 -> TILDATEST.Testing2Realized."a12"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the isNull for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a12 of type short</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a12 of type smallint</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a12)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final boolean isA12Null()
-     { return __Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A12._Mask); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a12 -> TILDATEST.Testing2Realized."a12"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a12 of type short</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a12 of type smallint</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a12)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA12(short v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || _a12 == null || v != _a12)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A12._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A12._Mask);
-       _a12 = v;
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a12 -> TILDATEST.Testing2Realized."a12"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the null setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a12 of type short</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a12 of type smallint</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a12)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA12Null()
-     {
-       long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A12._Mask) == true) // already NULL
-        return;
-       __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A12._Mask);
-       __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A12._Mask);
-       _a12=null;
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a12 -> TILDATEST.Testing2Realized."a12"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the hasChanged for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a12 of type short</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a12 of type smallint</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a12)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public boolean hasChangedA12()
-     { return __Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A12._Mask); }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a12b -> TILDATEST.Testing2Realized."a12b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a12b of type List<Short></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a12b of type smallint[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a12b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   @SerializedName("a12b")
-   List<Short> _a12b;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a12b -> TILDATEST.Testing2Realized."a12b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a12b of type List<Short></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a12b of type smallint[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a12b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final Short[] getA12bAsArray()
-      { return _a12b==null? null : _a12b.toArray(new Short[_a12b.size()]); }
-   public final Iterator<Short> getA12b()
-      { return _a12b==null? null : _a12b.iterator(); }
-   public final boolean hasA12b(short v)
-      { return _a12b==null? false : _a12b.contains(v); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a12b -> TILDATEST.Testing2Realized."a12b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the isNull for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a12b of type List<Short></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a12b of type smallint[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a12b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final boolean isA12bNull()
-     { return __Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A12B._Mask); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a12b -> TILDATEST.Testing2Realized."a12b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a12b of type List<Short></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a12b of type smallint[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a12b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA12b(List<Short> v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (v == null  || v.isEmpty() == true)
-        setA12bNull();
-       else if (CollectionUtil.equals(v, _a12b) == false)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A12B._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A12B._Mask);
-          if (_a12b == null)
-           {
-             _a12b = new ArrayList<Short>();
-           }
-          else
-           {
-             _a12b.clear();
-           }
-          for (short i : v)
-           {
-             _a12b.add(i);
-           }
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-   public void addToA12b(int pos, short v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (_a12b == null)
-        _a12b = new ArrayList<Short>();
-       if (pos >= _a12b.size() || _a12b.get(pos).equals(v) == false)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A12B._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A12B._Mask);
-          _a12b.add(pos, v);
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-   public void removeFromA12b(Short v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (_a12b.remove(v) == true)
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A12B._Mask);
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-   public void removeFromA12b(int pos) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (_a12b.remove(pos) != null)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A12B._Mask);
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a12b -> TILDATEST.Testing2Realized."a12b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the null setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a12b of type List<Short></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a12b of type smallint[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a12b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA12bNull()
-     {
-       long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A12B._Mask) == true) // already NULL
-        return;
-       __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A12B._Mask);
-       __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A12B._Mask);
-       _a12b=null;
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a12b -> TILDATEST.Testing2Realized."a12b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the hasChanged for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a12b of type List<Short></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a12b of type smallint[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a12b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public boolean hasChangedA12b()
-     { return __Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A12B._Mask); }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a13 -> TILDATEST.Testing2Realized."a13"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a13 of type UUID</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a13 of type UUID</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a13)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   @SerializedName("a13")
-   UUID _a13=null;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a13 -> TILDATEST.Testing2Realized."a13"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a13 of type UUID</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a13 of type UUID</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a13)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final UUID getA13()
-      { return _a13; }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a13 -> TILDATEST.Testing2Realized."a13"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the isNull for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a13 of type UUID</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a13 of type UUID</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a13)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final boolean isA13Null()
-     { return __Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A13._Mask); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a13 -> TILDATEST.Testing2Realized."a13"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a13 of type UUID</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a13 of type UUID</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a13)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA13(UUID v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (v == null)
-        {
-          setA13Null();
-        }
-       else if (v.equals(_a13) == false)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A13._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A13._Mask);
-       _a13 = v;
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a13 -> TILDATEST.Testing2Realized."a13"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the null setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a13 of type UUID</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a13 of type UUID</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a13)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA13Null()
-     {
-       long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A13._Mask) == true) // already NULL
-        return;
-       __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A13._Mask);
-       __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A13._Mask);
-       _a13=null;
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a13 -> TILDATEST.Testing2Realized."a13"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the hasChanged for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a13 of type UUID</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a13 of type UUID</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a13)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public boolean hasChangedA13()
-     { return __Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A13._Mask); }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a13b -> TILDATEST.Testing2Realized."a13b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a13b of type List<UUID></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a13b of type UUID[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a13b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   @SerializedName("a13b")
-   List<UUID> _a13b;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a13b -> TILDATEST.Testing2Realized."a13b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a13b of type List<UUID></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a13b of type UUID[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a13b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final UUID[] getA13bAsArray()
-      { return _a13b==null? null : _a13b.toArray(new UUID[_a13b.size()]); }
-   public final Iterator<UUID> getA13b()
-      { return _a13b==null? null : _a13b.iterator(); }
-   public final boolean hasA13b(UUID v)
-      { return _a13b==null? false : _a13b.contains(v); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a13b -> TILDATEST.Testing2Realized."a13b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the isNull for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a13b of type List<UUID></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a13b of type UUID[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a13b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final boolean isA13bNull()
-     { return __Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A13B._Mask); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a13b -> TILDATEST.Testing2Realized."a13b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a13b of type List<UUID></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a13b of type UUID[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a13b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA13b(List<UUID> v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (v == null  || v.isEmpty() == true)
-        setA13bNull();
-       else if (CollectionUtil.equals(v, _a13b) == false)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A13B._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A13B._Mask);
-          if (_a13b == null)
-           {
-             _a13b = new ArrayList<UUID>();
-           }
-          else
-           {
-             _a13b.clear();
-           }
-          for (UUID i : v)
-           {
-             _a13b.add(i);
-           }
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-   public void addToA13b(int pos, UUID v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (_a13b == null)
-        _a13b = new ArrayList<UUID>();
-       if (v == null)
-        {
-          setA13bNull();
-        }
-       else if (pos >= _a13b.size() || _a13b.get(pos).equals(v) == false)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A13B._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A13B._Mask);
-          _a13b.add(pos, v);
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-   public void removeFromA13b(UUID v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (_a13b.remove(v) == true)
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A13B._Mask);
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-   public void removeFromA13b(int pos) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (_a13b.remove(pos) != null)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A13B._Mask);
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a13b -> TILDATEST.Testing2Realized."a13b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the null setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a13b of type List<UUID></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a13b of type UUID[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a13b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA13bNull()
-     {
-       long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A13B._Mask) == true) // already NULL
-        return;
-       __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A13B._Mask);
-       __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A13B._Mask);
-       _a13b=null;
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a13b -> TILDATEST.Testing2Realized."a13b"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the hasChanged for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a13b of type List<UUID></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a13b of type UUID[]</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah (from TILDATEST.Testing2View.a13b)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public boolean hasChangedA13b()
-     { return __Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A13B._Mask); }
 
 
 
@@ -4683,7 +1032,7 @@ This is the definition for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>250</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.description)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -4704,7 +1053,7 @@ This is the getter for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>250</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.description)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -4725,7 +1074,7 @@ This is the isNull for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>250</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.description)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -4746,7 +1095,7 @@ This is the setter for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>250</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.description)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -4782,7 +1131,7 @@ This is the null setter for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>250</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.description)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -4811,7 +1160,7 @@ This is the hasChanged for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>250</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.description)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -4838,7 +1187,7 @@ This is the definition for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>3000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.desc2)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -4859,7 +1208,7 @@ This is the getter for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>3000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.desc2)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -4880,7 +1229,7 @@ This is the isNull for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>3000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.desc2)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -4901,7 +1250,7 @@ This is the setter for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>3000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.desc2)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -4937,7 +1286,7 @@ This is the null setter for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>3000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.desc2)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -4966,7 +1315,7 @@ This is the hasChanged for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>3000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.desc2)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -4993,7 +1342,7 @@ This is the definition for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.desc3)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -5014,7 +1363,7 @@ This is the getter for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.desc3)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -5035,7 +1384,7 @@ This is the isNull for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.desc3)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -5056,7 +1405,7 @@ This is the setter for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.desc3)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -5092,7 +1441,7 @@ This is the null setter for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.desc3)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -5121,7 +1470,7 @@ This is the hasChanged for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.desc3)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -5148,7 +1497,7 @@ This is the definition for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>9000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.desc4)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -5169,7 +1518,7 @@ This is the getter for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>9000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.desc4)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -5190,7 +1539,7 @@ This is the isNull for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>9000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.desc4)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -5211,7 +1560,7 @@ This is the setter for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>9000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.desc4)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -5247,7 +1596,7 @@ This is the null setter for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>9000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.desc4)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -5276,7 +1625,7 @@ This is the hasChanged for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>9000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.desc4)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -5303,7 +1652,7 @@ This is the definition for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>17000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.desc5)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -5324,7 +1673,7 @@ This is the getter for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>17000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.desc5)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -5345,7 +1694,7 @@ This is the isNull for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>17000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.desc5)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -5366,7 +1715,7 @@ This is the setter for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>17000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.desc5)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -5402,7 +1751,7 @@ This is the null setter for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>17000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.desc5)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -5431,7 +1780,7 @@ This is the hasChanged for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>17000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.desc5)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -5458,7 +1807,7 @@ This is the definition for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>33000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.desc6)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>SMART</TD></TR>
@@ -5479,7 +1828,7 @@ This is the getter for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>33000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.desc6)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>SMART</TD></TR>
@@ -5500,7 +1849,7 @@ This is the isNull for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>33000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.desc6)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>SMART</TD></TR>
@@ -5521,7 +1870,7 @@ This is the setter for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>33000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.desc6)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>SMART</TD></TR>
@@ -5558,7 +1907,7 @@ This is the null setter for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>33000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.desc6)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>SMART</TD></TR>
@@ -5587,7 +1936,7 @@ This is the hasChanged for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>33000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing2View.desc6)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>SMART</TD></TR>
@@ -5613,13 +1962,17 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a3 of type boolean</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Not A3</B>: Blah... (from TILDATEST.Testing2View.a3)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Not A3</B>: Blah...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>NOT a3</PRE>
+</TD></TR>
+
 </TABLE>
 */
-   @SerializedName("a3")
    Boolean _a3=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -5633,10 +1986,15 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a3 of type boolean</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Not A3</B>: Blah... (from TILDATEST.Testing2View.a3)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Not A3</B>: Blah...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>NOT a3</PRE>
+</TD></TR>
+
 </TABLE>
 */
    public final boolean getA3()
@@ -5653,10 +2011,15 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a3 of type boolean</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Not A3</B>: Blah... (from TILDATEST.Testing2View.a3)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Not A3</B>: Blah...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>NOT a3</PRE>
+</TD></TR>
+
 </TABLE>
 */
    public final boolean isA3Null()
@@ -5673,13 +2036,18 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a3 of type boolean</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Not A3</B>: Blah... (from TILDATEST.Testing2View.a3)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Not A3</B>: Blah...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>NOT a3</PRE>
+</TD></TR>
+
 </TABLE>
 */
-   public void setA3(boolean v) throws Exception
+    void setA3(boolean v) throws Exception
      {
        long T0 = System.nanoTime();
        if (__Init == InitMode.CREATE || _a3 == null || v != _a3)
@@ -5702,13 +2070,18 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a3 of type boolean</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Not A3</B>: Blah... (from TILDATEST.Testing2View.a3)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Not A3</B>: Blah...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>NOT a3</PRE>
+</TD></TR>
+
 </TABLE>
 */
-   public void setA3Null()
+    void setA3Null()
      {
        long T0 = System.nanoTime();
        if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A3._Mask) == true) // already NULL
@@ -5730,10 +2103,15 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a3 of type boolean</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Not A3</B>: Blah... (from TILDATEST.Testing2View.a3)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Not A3</B>: Blah...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>NOT a3</PRE>
+</TD></TR>
+
 </TABLE>
 */
    public boolean hasChangedA3()
@@ -5756,10 +2134,15 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.bastille of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Bastille Day</B>: Blah... (from TILDATEST.Testing2View.bastille)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Bastille Day</B>: Blah...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>'1789-07-14'</PRE>
+</TD></TR>
+
 </TABLE>
 */
    transient ZonedDateTime _bastille = null;
@@ -5775,10 +2158,15 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.bastille of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Bastille Day</B>: Blah... (from TILDATEST.Testing2View.bastille)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Bastille Day</B>: Blah...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>'1789-07-14'</PRE>
+</TD></TR>
+
 </TABLE>
 */
    public final ZonedDateTime getBastille()
@@ -5795,10 +2183,15 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.bastille of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Bastille Day</B>: Blah... (from TILDATEST.Testing2View.bastille)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Bastille Day</B>: Blah...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>'1789-07-14'</PRE>
+</TD></TR>
+
 </TABLE>
 */
    public final boolean isBastilleNull()
@@ -5815,10 +2208,15 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.bastille of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Bastille Day</B>: Blah... (from TILDATEST.Testing2View.bastille)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Bastille Day</B>: Blah...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>'1789-07-14'</PRE>
+</TD></TR>
+
 </TABLE>
 */
     void setBastille(ZonedDateTime v) throws Exception
@@ -5848,10 +2246,15 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.bastille of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Bastille Day</B>: Blah... (from TILDATEST.Testing2View.bastille)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Bastille Day</B>: Blah...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>'1789-07-14'</PRE>
+</TD></TR>
+
 </TABLE>
 */
     void setBastilleNull()
@@ -5876,10 +2279,15 @@ This is the NOW setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.bastille of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Bastille Day</B>: Blah... (from TILDATEST.Testing2View.bastille)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Bastille Day</B>: Blah...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>'1789-07-14'</PRE>
+</TD></TR>
+
 </TABLE>
 */
     final void setBastilleNow() throws Exception
@@ -5898,10 +2306,15 @@ This is the UNDEFINED setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.bastille of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Bastille Day</B>: Blah... (from TILDATEST.Testing2View.bastille)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Bastille Day</B>: Blah...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>'1789-07-14'</PRE>
+</TD></TR>
+
 </TABLE>
 */
     final void setBastilleUndefined() throws Exception
@@ -5920,10 +2333,15 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.bastille of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Bastille Day</B>: Blah... (from TILDATEST.Testing2View.bastille)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Bastille Day</B>: Blah...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>'1789-07-14'</PRE>
+</TD></TR>
+
 </TABLE>
 */
     final void setBastille(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
@@ -5942,10 +2360,15 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.bastille of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Bastille Day</B>: Blah... (from TILDATEST.Testing2View.bastille)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Bastille Day</B>: Blah...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>'1789-07-14'</PRE>
+</TD></TR>
+
 </TABLE>
 */
    public boolean hasChangedBastille()
@@ -5968,10 +2391,15 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.toto of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Last Updated</B>: Blah... (from TILDATEST.Testing2View.toto)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Last Updated</B>: Blah...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>'2018-08-10'</PRE>
+</TD></TR>
+
 </TABLE>
 */
    transient ZonedDateTime _toto = null;
@@ -5987,10 +2415,15 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.toto of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Last Updated</B>: Blah... (from TILDATEST.Testing2View.toto)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Last Updated</B>: Blah...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>'2018-08-10'</PRE>
+</TD></TR>
+
 </TABLE>
 */
    public final ZonedDateTime getToto()
@@ -6007,10 +2440,15 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.toto of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Last Updated</B>: Blah... (from TILDATEST.Testing2View.toto)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Last Updated</B>: Blah...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>'2018-08-10'</PRE>
+</TD></TR>
+
 </TABLE>
 */
    public final boolean isTotoNull()
@@ -6027,10 +2465,15 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.toto of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Last Updated</B>: Blah... (from TILDATEST.Testing2View.toto)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Last Updated</B>: Blah...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>'2018-08-10'</PRE>
+</TD></TR>
+
 </TABLE>
 */
     void setToto(ZonedDateTime v) throws Exception
@@ -6060,10 +2503,15 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.toto of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Last Updated</B>: Blah... (from TILDATEST.Testing2View.toto)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Last Updated</B>: Blah...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>'2018-08-10'</PRE>
+</TD></TR>
+
 </TABLE>
 */
     void setTotoNull()
@@ -6088,10 +2536,15 @@ This is the NOW setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.toto of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Last Updated</B>: Blah... (from TILDATEST.Testing2View.toto)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Last Updated</B>: Blah...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>'2018-08-10'</PRE>
+</TD></TR>
+
 </TABLE>
 */
     final void setTotoNow() throws Exception
@@ -6110,10 +2563,15 @@ This is the UNDEFINED setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.toto of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Last Updated</B>: Blah... (from TILDATEST.Testing2View.toto)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Last Updated</B>: Blah...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>'2018-08-10'</PRE>
+</TD></TR>
+
 </TABLE>
 */
     final void setTotoUndefined() throws Exception
@@ -6132,10 +2590,15 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.toto of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Last Updated</B>: Blah... (from TILDATEST.Testing2View.toto)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Last Updated</B>: Blah...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>'2018-08-10'</PRE>
+</TD></TR>
+
 </TABLE>
 */
     final void setToto(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
@@ -6154,10 +2617,15 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.toto of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Last Updated</B>: Blah... (from TILDATEST.Testing2View.toto)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Last Updated</B>: Blah...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>'2018-08-10'</PRE>
+</TD></TR>
+
 </TABLE>
 */
    public boolean hasChangedToto()
@@ -6180,10 +2648,15 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.desc2_Cat1 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>desc2_Cat1 Title</B>: This formula checks whether the column 'desc2' contains the values 'a', 'b', 'c' for the View TILDATEST.Testing2View. (from TILDATEST.Testing2View.desc2_Cat1)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>desc2_Cat1 Title</B>: This formula checks whether the column 'desc2' contains the values 'a', 'b', 'c' for the View TILDATEST.Testing2View.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when desc2  in ('a', 'b', 'c') then 1 else 0 end</PRE>
+</TD></TR>
+
 </TABLE>
 */
    Double _desc2_Cat1=null;
@@ -6199,10 +2672,15 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.desc2_Cat1 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>desc2_Cat1 Title</B>: This formula checks whether the column 'desc2' contains the values 'a', 'b', 'c' for the View TILDATEST.Testing2View. (from TILDATEST.Testing2View.desc2_Cat1)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>desc2_Cat1 Title</B>: This formula checks whether the column 'desc2' contains the values 'a', 'b', 'c' for the View TILDATEST.Testing2View.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when desc2  in ('a', 'b', 'c') then 1 else 0 end</PRE>
+</TD></TR>
+
 </TABLE>
 */
    public final double getDesc2_Cat1()
@@ -6219,10 +2697,15 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.desc2_Cat1 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>desc2_Cat1 Title</B>: This formula checks whether the column 'desc2' contains the values 'a', 'b', 'c' for the View TILDATEST.Testing2View. (from TILDATEST.Testing2View.desc2_Cat1)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>desc2_Cat1 Title</B>: This formula checks whether the column 'desc2' contains the values 'a', 'b', 'c' for the View TILDATEST.Testing2View.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when desc2  in ('a', 'b', 'c') then 1 else 0 end</PRE>
+</TD></TR>
+
 </TABLE>
 */
    public final boolean isDesc2_Cat1Null()
@@ -6239,10 +2722,15 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.desc2_Cat1 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>desc2_Cat1 Title</B>: This formula checks whether the column 'desc2' contains the values 'a', 'b', 'c' for the View TILDATEST.Testing2View. (from TILDATEST.Testing2View.desc2_Cat1)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>desc2_Cat1 Title</B>: This formula checks whether the column 'desc2' contains the values 'a', 'b', 'c' for the View TILDATEST.Testing2View.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when desc2  in ('a', 'b', 'c') then 1 else 0 end</PRE>
+</TD></TR>
+
 </TABLE>
 */
     void setDesc2_Cat1(double v) throws Exception
@@ -6268,10 +2756,15 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.desc2_Cat1 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>desc2_Cat1 Title</B>: This formula checks whether the column 'desc2' contains the values 'a', 'b', 'c' for the View TILDATEST.Testing2View. (from TILDATEST.Testing2View.desc2_Cat1)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>desc2_Cat1 Title</B>: This formula checks whether the column 'desc2' contains the values 'a', 'b', 'c' for the View TILDATEST.Testing2View.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when desc2  in ('a', 'b', 'c') then 1 else 0 end</PRE>
+</TD></TR>
+
 </TABLE>
 */
     void setDesc2_Cat1Null()
@@ -6296,10 +2789,15 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.desc2_Cat1 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>desc2_Cat1 Title</B>: This formula checks whether the column 'desc2' contains the values 'a', 'b', 'c' for the View TILDATEST.Testing2View. (from TILDATEST.Testing2View.desc2_Cat1)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>desc2_Cat1 Title</B>: This formula checks whether the column 'desc2' contains the values 'a', 'b', 'c' for the View TILDATEST.Testing2View.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when desc2  in ('a', 'b', 'c') then 1 else 0 end</PRE>
+</TD></TR>
+
 </TABLE>
 */
    public boolean hasChangedDesc2_Cat1()
@@ -6322,10 +2820,15 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.desc2_Cat2 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>desc2_Cat2 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View. (from TILDATEST.Testing2View.desc2_Cat2)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>desc2_Cat2 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when desc2  in ('x', 'y', 'z') then 1 else 0 end</PRE>
+</TD></TR>
+
 </TABLE>
 */
    Double _desc2_Cat2=null;
@@ -6341,10 +2844,15 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.desc2_Cat2 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>desc2_Cat2 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View. (from TILDATEST.Testing2View.desc2_Cat2)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>desc2_Cat2 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when desc2  in ('x', 'y', 'z') then 1 else 0 end</PRE>
+</TD></TR>
+
 </TABLE>
 */
    public final double getDesc2_Cat2()
@@ -6361,10 +2869,15 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.desc2_Cat2 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>desc2_Cat2 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View. (from TILDATEST.Testing2View.desc2_Cat2)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>desc2_Cat2 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when desc2  in ('x', 'y', 'z') then 1 else 0 end</PRE>
+</TD></TR>
+
 </TABLE>
 */
    public final boolean isDesc2_Cat2Null()
@@ -6381,10 +2894,15 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.desc2_Cat2 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>desc2_Cat2 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View. (from TILDATEST.Testing2View.desc2_Cat2)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>desc2_Cat2 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when desc2  in ('x', 'y', 'z') then 1 else 0 end</PRE>
+</TD></TR>
+
 </TABLE>
 */
     void setDesc2_Cat2(double v) throws Exception
@@ -6410,10 +2928,15 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.desc2_Cat2 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>desc2_Cat2 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View. (from TILDATEST.Testing2View.desc2_Cat2)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>desc2_Cat2 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when desc2  in ('x', 'y', 'z') then 1 else 0 end</PRE>
+</TD></TR>
+
 </TABLE>
 */
     void setDesc2_Cat2Null()
@@ -6438,10 +2961,15 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.desc2_Cat2 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>desc2_Cat2 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View. (from TILDATEST.Testing2View.desc2_Cat2)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>desc2_Cat2 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when desc2  in ('x', 'y', 'z') then 1 else 0 end</PRE>
+</TD></TR>
+
 </TABLE>
 */
    public boolean hasChangedDesc2_Cat2()
@@ -6464,10 +2992,15 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.desc2_Cat3 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>desc2_Cat3 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View. (from TILDATEST.Testing2View.desc2_Cat3)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>desc2_Cat3 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when desc2  in ('x', 'y', 'z') then 1 else 0 end</PRE>
+</TD></TR>
+
 </TABLE>
 */
    Double _desc2_Cat3=null;
@@ -6483,10 +3016,15 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.desc2_Cat3 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>desc2_Cat3 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View. (from TILDATEST.Testing2View.desc2_Cat3)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>desc2_Cat3 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when desc2  in ('x', 'y', 'z') then 1 else 0 end</PRE>
+</TD></TR>
+
 </TABLE>
 */
    public final double getDesc2_Cat3()
@@ -6503,10 +3041,15 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.desc2_Cat3 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>desc2_Cat3 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View. (from TILDATEST.Testing2View.desc2_Cat3)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>desc2_Cat3 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when desc2  in ('x', 'y', 'z') then 1 else 0 end</PRE>
+</TD></TR>
+
 </TABLE>
 */
    public final boolean isDesc2_Cat3Null()
@@ -6523,10 +3066,15 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.desc2_Cat3 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>desc2_Cat3 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View. (from TILDATEST.Testing2View.desc2_Cat3)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>desc2_Cat3 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when desc2  in ('x', 'y', 'z') then 1 else 0 end</PRE>
+</TD></TR>
+
 </TABLE>
 */
     void setDesc2_Cat3(double v) throws Exception
@@ -6552,10 +3100,15 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.desc2_Cat3 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>desc2_Cat3 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View. (from TILDATEST.Testing2View.desc2_Cat3)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>desc2_Cat3 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when desc2  in ('x', 'y', 'z') then 1 else 0 end</PRE>
+</TD></TR>
+
 </TABLE>
 */
     void setDesc2_Cat3Null()
@@ -6580,10 +3133,15 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.desc2_Cat3 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>desc2_Cat3 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View. (from TILDATEST.Testing2View.desc2_Cat3)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>desc2_Cat3 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when desc2  in ('x', 'y', 'z') then 1 else 0 end</PRE>
+</TD></TR>
+
 </TABLE>
 */
    public boolean hasChangedDesc2_Cat3()
@@ -6606,10 +3164,15 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a7_Cat4 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>a7_Cat4 Title</B>: This formula checks whether the column 'a7' value falls in the range of 0.0 and 10.0. (from TILDATEST.Testing2View.a7_Cat4)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>a7_Cat4 Title</B>: This formula checks whether the column 'a7' value falls in the range of 0.0 and 10.0.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when a7 >= 0.0 and a7 < 10.0 then 1 else 0 end</PRE>
+</TD></TR>
+
 </TABLE>
 */
    Double _a7_Cat4=null;
@@ -6625,10 +3188,15 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a7_Cat4 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>a7_Cat4 Title</B>: This formula checks whether the column 'a7' value falls in the range of 0.0 and 10.0. (from TILDATEST.Testing2View.a7_Cat4)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>a7_Cat4 Title</B>: This formula checks whether the column 'a7' value falls in the range of 0.0 and 10.0.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when a7 >= 0.0 and a7 < 10.0 then 1 else 0 end</PRE>
+</TD></TR>
+
 </TABLE>
 */
    public final double getA7_Cat4()
@@ -6645,10 +3213,15 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a7_Cat4 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>a7_Cat4 Title</B>: This formula checks whether the column 'a7' value falls in the range of 0.0 and 10.0. (from TILDATEST.Testing2View.a7_Cat4)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>a7_Cat4 Title</B>: This formula checks whether the column 'a7' value falls in the range of 0.0 and 10.0.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when a7 >= 0.0 and a7 < 10.0 then 1 else 0 end</PRE>
+</TD></TR>
+
 </TABLE>
 */
    public final boolean isA7_Cat4Null()
@@ -6665,10 +3238,15 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a7_Cat4 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>a7_Cat4 Title</B>: This formula checks whether the column 'a7' value falls in the range of 0.0 and 10.0. (from TILDATEST.Testing2View.a7_Cat4)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>a7_Cat4 Title</B>: This formula checks whether the column 'a7' value falls in the range of 0.0 and 10.0.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when a7 >= 0.0 and a7 < 10.0 then 1 else 0 end</PRE>
+</TD></TR>
+
 </TABLE>
 */
     void setA7_Cat4(double v) throws Exception
@@ -6694,10 +3272,15 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a7_Cat4 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>a7_Cat4 Title</B>: This formula checks whether the column 'a7' value falls in the range of 0.0 and 10.0. (from TILDATEST.Testing2View.a7_Cat4)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>a7_Cat4 Title</B>: This formula checks whether the column 'a7' value falls in the range of 0.0 and 10.0.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when a7 >= 0.0 and a7 < 10.0 then 1 else 0 end</PRE>
+</TD></TR>
+
 </TABLE>
 */
     void setA7_Cat4Null()
@@ -6722,10 +3305,15 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a7_Cat4 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>a7_Cat4 Title</B>: This formula checks whether the column 'a7' value falls in the range of 0.0 and 10.0. (from TILDATEST.Testing2View.a7_Cat4)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>a7_Cat4 Title</B>: This formula checks whether the column 'a7' value falls in the range of 0.0 and 10.0.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when a7 >= 0.0 and a7 < 10.0 then 1 else 0 end</PRE>
+</TD></TR>
+
 </TABLE>
 */
    public boolean hasChangedA7_Cat4()
@@ -6748,10 +3336,15 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a7_Cat5 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>a7_Cat5 Title</B>: This formula checks whether the column 'a7' value falls in the range of 10.0 and 20.0. (from TILDATEST.Testing2View.a7_Cat5)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>a7_Cat5 Title</B>: This formula checks whether the column 'a7' value falls in the range of 10.0 and 20.0.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when a7 >= 10.0 and a7 < 20.0 then 1 else 0 end</PRE>
+</TD></TR>
+
 </TABLE>
 */
    Double _a7_Cat5=null;
@@ -6767,10 +3360,15 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a7_Cat5 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>a7_Cat5 Title</B>: This formula checks whether the column 'a7' value falls in the range of 10.0 and 20.0. (from TILDATEST.Testing2View.a7_Cat5)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>a7_Cat5 Title</B>: This formula checks whether the column 'a7' value falls in the range of 10.0 and 20.0.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when a7 >= 10.0 and a7 < 20.0 then 1 else 0 end</PRE>
+</TD></TR>
+
 </TABLE>
 */
    public final double getA7_Cat5()
@@ -6787,10 +3385,15 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a7_Cat5 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>a7_Cat5 Title</B>: This formula checks whether the column 'a7' value falls in the range of 10.0 and 20.0. (from TILDATEST.Testing2View.a7_Cat5)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>a7_Cat5 Title</B>: This formula checks whether the column 'a7' value falls in the range of 10.0 and 20.0.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when a7 >= 10.0 and a7 < 20.0 then 1 else 0 end</PRE>
+</TD></TR>
+
 </TABLE>
 */
    public final boolean isA7_Cat5Null()
@@ -6807,10 +3410,15 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a7_Cat5 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>a7_Cat5 Title</B>: This formula checks whether the column 'a7' value falls in the range of 10.0 and 20.0. (from TILDATEST.Testing2View.a7_Cat5)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>a7_Cat5 Title</B>: This formula checks whether the column 'a7' value falls in the range of 10.0 and 20.0.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when a7 >= 10.0 and a7 < 20.0 then 1 else 0 end</PRE>
+</TD></TR>
+
 </TABLE>
 */
     void setA7_Cat5(double v) throws Exception
@@ -6836,10 +3444,15 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a7_Cat5 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>a7_Cat5 Title</B>: This formula checks whether the column 'a7' value falls in the range of 10.0 and 20.0. (from TILDATEST.Testing2View.a7_Cat5)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>a7_Cat5 Title</B>: This formula checks whether the column 'a7' value falls in the range of 10.0 and 20.0.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when a7 >= 10.0 and a7 < 20.0 then 1 else 0 end</PRE>
+</TD></TR>
+
 </TABLE>
 */
     void setA7_Cat5Null()
@@ -6864,10 +3477,15 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a7_Cat5 of type double precision</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>a7_Cat5 Title</B>: This formula checks whether the column 'a7' value falls in the range of 10.0 and 20.0. (from TILDATEST.Testing2View.a7_Cat5)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>a7_Cat5 Title</B>: This formula checks whether the column 'a7' value falls in the range of 10.0 and 20.0.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when a7 >= 10.0 and a7 < 20.0 then 1 else 0 end</PRE>
+</TD></TR>
+
 </TABLE>
 */
    public boolean hasChangedA7_Cat5()
@@ -6890,10 +3508,17 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a5_null of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a5</B>: Whether a5 is null or not (from TILDATEST.Testing2View.a5_null)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a5</B>: Whether a5 is null or not</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when a5 is null then 1
+     when a5 is not null then 0
+end</PRE>
+</TD></TR>
+
 </TABLE>
 */
    Integer _a5_null=null;
@@ -6909,10 +3534,17 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a5_null of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a5</B>: Whether a5 is null or not (from TILDATEST.Testing2View.a5_null)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a5</B>: Whether a5 is null or not</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when a5 is null then 1
+     when a5 is not null then 0
+end</PRE>
+</TD></TR>
+
 </TABLE>
 */
    public final int getA5_null()
@@ -6929,10 +3561,17 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a5_null of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a5</B>: Whether a5 is null or not (from TILDATEST.Testing2View.a5_null)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a5</B>: Whether a5 is null or not</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when a5 is null then 1
+     when a5 is not null then 0
+end</PRE>
+</TD></TR>
+
 </TABLE>
 */
    public final boolean isA5_nullNull()
@@ -6949,10 +3588,17 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a5_null of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a5</B>: Whether a5 is null or not (from TILDATEST.Testing2View.a5_null)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a5</B>: Whether a5 is null or not</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when a5 is null then 1
+     when a5 is not null then 0
+end</PRE>
+</TD></TR>
+
 </TABLE>
 */
     void setA5_null(int v) throws Exception
@@ -6978,10 +3624,17 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a5_null of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a5</B>: Whether a5 is null or not (from TILDATEST.Testing2View.a5_null)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a5</B>: Whether a5 is null or not</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when a5 is null then 1
+     when a5 is not null then 0
+end</PRE>
+</TD></TR>
+
 </TABLE>
 */
     void setA5_nullNull()
@@ -7006,10 +3659,17 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a5_null of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a5</B>: Whether a5 is null or not (from TILDATEST.Testing2View.a5_null)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a5</B>: Whether a5 is null or not</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when a5 is null then 1
+     when a5 is not null then 0
+end</PRE>
+</TD></TR>
+
 </TABLE>
 */
    public boolean hasChangedA5_null()
@@ -7032,10 +3692,17 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a6_null of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a6</B>: Whether a6 is null or not (from TILDATEST.Testing2View.a6_null)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a6</B>: Whether a6 is null or not</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when a6 is null then 1
+     when a6 is not null then 0
+end</PRE>
+</TD></TR>
+
 </TABLE>
 */
    Integer _a6_null=null;
@@ -7051,10 +3718,17 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a6_null of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a6</B>: Whether a6 is null or not (from TILDATEST.Testing2View.a6_null)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a6</B>: Whether a6 is null or not</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when a6 is null then 1
+     when a6 is not null then 0
+end</PRE>
+</TD></TR>
+
 </TABLE>
 */
    public final int getA6_null()
@@ -7071,10 +3745,17 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a6_null of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a6</B>: Whether a6 is null or not (from TILDATEST.Testing2View.a6_null)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a6</B>: Whether a6 is null or not</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when a6 is null then 1
+     when a6 is not null then 0
+end</PRE>
+</TD></TR>
+
 </TABLE>
 */
    public final boolean isA6_nullNull()
@@ -7091,10 +3772,17 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a6_null of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a6</B>: Whether a6 is null or not (from TILDATEST.Testing2View.a6_null)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a6</B>: Whether a6 is null or not</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when a6 is null then 1
+     when a6 is not null then 0
+end</PRE>
+</TD></TR>
+
 </TABLE>
 */
     void setA6_null(int v) throws Exception
@@ -7120,10 +3808,17 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a6_null of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a6</B>: Whether a6 is null or not (from TILDATEST.Testing2View.a6_null)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a6</B>: Whether a6 is null or not</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when a6 is null then 1
+     when a6 is not null then 0
+end</PRE>
+</TD></TR>
+
 </TABLE>
 */
     void setA6_nullNull()
@@ -7148,10 +3843,17 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a6_null of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a6</B>: Whether a6 is null or not (from TILDATEST.Testing2View.a6_null)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a6</B>: Whether a6 is null or not</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when a6 is null then 1
+     when a6 is not null then 0
+end</PRE>
+</TD></TR>
+
 </TABLE>
 */
    public boolean hasChangedA6_null()
@@ -7174,10 +3876,17 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a7_null of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a7</B>: Whether a7 is null or not (from TILDATEST.Testing2View.a7_null)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a7</B>: Whether a7 is null or not</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when a7 is null then 1
+     when a7 is not null then 0
+end</PRE>
+</TD></TR>
+
 </TABLE>
 */
    Integer _a7_null=null;
@@ -7193,10 +3902,17 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a7_null of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a7</B>: Whether a7 is null or not (from TILDATEST.Testing2View.a7_null)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a7</B>: Whether a7 is null or not</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when a7 is null then 1
+     when a7 is not null then 0
+end</PRE>
+</TD></TR>
+
 </TABLE>
 */
    public final int getA7_null()
@@ -7213,10 +3929,17 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a7_null of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a7</B>: Whether a7 is null or not (from TILDATEST.Testing2View.a7_null)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a7</B>: Whether a7 is null or not</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when a7 is null then 1
+     when a7 is not null then 0
+end</PRE>
+</TD></TR>
+
 </TABLE>
 */
    public final boolean isA7_nullNull()
@@ -7233,10 +3956,17 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a7_null of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a7</B>: Whether a7 is null or not (from TILDATEST.Testing2View.a7_null)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a7</B>: Whether a7 is null or not</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when a7 is null then 1
+     when a7 is not null then 0
+end</PRE>
+</TD></TR>
+
 </TABLE>
 */
     void setA7_null(int v) throws Exception
@@ -7262,10 +3992,17 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a7_null of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a7</B>: Whether a7 is null or not (from TILDATEST.Testing2View.a7_null)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a7</B>: Whether a7 is null or not</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when a7 is null then 1
+     when a7 is not null then 0
+end</PRE>
+</TD></TR>
+
 </TABLE>
 */
     void setA7_nullNull()
@@ -7290,156 +4027,21 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a7_null of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a7</B>: Whether a7 is null or not (from TILDATEST.Testing2View.a7_null)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a7</B>: Whether a7 is null or not</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
+
+<PRE>case when a7 is null then 1
+     when a7 is not null then 0
+end</PRE>
+</TD></TR>
+
 </TABLE>
 */
    public boolean hasChangedA7_null()
      { return __Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A7_NULL._Mask); }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a8_null -> TILDATEST.Testing2Realized."a8_null"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a8_null of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a8_null of type integer</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a8</B>: Whether a8 is null or not (from TILDATEST.Testing2View.a8_null)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   Integer _a8_null=null;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a8_null -> TILDATEST.Testing2Realized."a8_null"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a8_null of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a8_null of type integer</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a8</B>: Whether a8 is null or not (from TILDATEST.Testing2View.a8_null)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final int getA8_null()
-      { return _a8_null==null?0:_a8_null; }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a8_null -> TILDATEST.Testing2Realized."a8_null"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the isNull for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a8_null of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a8_null of type integer</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a8</B>: Whether a8 is null or not (from TILDATEST.Testing2View.a8_null)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final boolean isA8_nullNull()
-     { return __Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8_NULL._Mask); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a8_null -> TILDATEST.Testing2Realized."a8_null"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a8_null of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a8_null of type integer</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a8</B>: Whether a8 is null or not (from TILDATEST.Testing2View.a8_null)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-    void setA8_null(int v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || _a8_null == null || v != _a8_null)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A8_NULL._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A8_NULL._Mask);
-       _a8_null = v;
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a8_null -> TILDATEST.Testing2Realized."a8_null"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the null setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a8_null of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a8_null of type integer</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a8</B>: Whether a8 is null or not (from TILDATEST.Testing2View.a8_null)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-    void setA8_nullNull()
-     {
-       long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8_NULL._Mask) == true) // already NULL
-        return;
-       __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A8_NULL._Mask);
-       __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A8_NULL._Mask);
-       _a8_null=null;
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing2Realized.a8_null -> TILDATEST.Testing2Realized."a8_null"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the hasChanged for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing2Realized.a8_null of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing2Realized.a8_null of type integer</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a8</B>: Whether a8 is null or not (from TILDATEST.Testing2View.a8_null)</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public boolean hasChangedA8_null()
-     { return __Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8_NULL._Mask); }
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -7452,49 +4054,98 @@ This is the hasChanged for:<BR>
 */
    public void copyTo(tilda.data_test._Tilda.TILDA__TESTING2REALIZED Dst) throws Exception
      {
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.REFNUM._Mask) == true) Dst.setRefnumNull        (); else        Dst.setRefnum        (_refnum        );
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.NAME._Mask) == true) Dst.setNameNull          (); else        Dst.setName          (_name          );
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.LASTUPDATED._Mask) == true) Dst.setLastUpdatedNull   (); else        Dst.setLastUpdated   (_lastUpdated   );
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.XXXLASTUPDATED._Mask) == true) Dst.setXxxLastUpdatedNull(); else        Dst.setXxxLastUpdated(_xxxLastUpdated);
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A1._Mask) == true) Dst.setA1Null            (); else        Dst.setA1            (_a1            );
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A3B._Mask) == true) Dst.setA3bNull           (); else        Dst.setA3b           (_a3b           );
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A4._Mask) == true) Dst.setA4Null            (); else        Dst.setA4            (_a4            );
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A4B._Mask) == true) Dst.setA4bNull           (); else        Dst.setA4b           (_a4b           );
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A5._Mask) == true) Dst.setA5Null            (); else        Dst.setA5            (_a5            );
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A5B._Mask) == true) Dst.setA5bNull           (); else        Dst.setA5b           (_a5b           );
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A7._Mask) == true) Dst.setA7Null            (); else        Dst.setA7            (_a7            );
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A7B._Mask) == true) Dst.setA7bNull           (); else        Dst.setA7b           (_a7b           );
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8._Mask) == true) Dst.setA8Null            (); else        Dst.setA8            (_a8            );
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8BTZ._Mask) == true) Dst.setA8bTZNull         (); else        Dst.setA8bTZ         (_a8bTZ         );
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8B._Mask) == true) Dst.setA8bNull           (); else        Dst.setA8b           (_a8b           );
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A10A._Mask) == true) Dst.setA10aNull          (); else        Dst.setA10a          (_a10a          );
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A10B._Mask) == true) Dst.setA10bNull          (); else        Dst.setA10b          (_a10b          );
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A10C._Mask) == true) Dst.setA10cNull          (); else        Dst.setA10c          (_a10c          );
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A11._Mask) == true) Dst.setA11Null           (); else        Dst.setA11           (_a11           );
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A11B._Mask) == true) Dst.setA11bNull          (); else        Dst.setA11b          (_a11b          );
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A11C._Mask) == true) Dst.setA11cNull          (); else        Dst.setA11c          (_a11c          );
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A12._Mask) == true) Dst.setA12Null           (); else        Dst.setA12           (_a12           );
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A12B._Mask) == true) Dst.setA12bNull          (); else        Dst.setA12b          (_a12b          );
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A13._Mask) == true) Dst.setA13Null           (); else        Dst.setA13           (_a13           );
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A13B._Mask) == true) Dst.setA13bNull          (); else        Dst.setA13b          (_a13b          );
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.DESCRIPTION._Mask) == true) Dst.setDescriptionNull   (); else        Dst.setDescription   (_description   );
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.DESC2._Mask) == true) Dst.setDesc2Null         (); else        Dst.setDesc2         (_desc2         );
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.DESC3._Mask) == true) Dst.setDesc3Null         (); else        Dst.setDesc3         (_desc3         );
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.DESC4._Mask) == true) Dst.setDesc4Null         (); else        Dst.setDesc4         (_desc4         );
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.DESC5._Mask) == true) Dst.setDesc5Null         (); else        Dst.setDesc5         (_desc5         );
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.DESC6._Mask) == true) Dst.setDesc6Null         (); else        Dst.setDesc6         (_desc6         );
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A3._Mask) == true) Dst.setA3Null            (); else        Dst.setA3            (_a3            );
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.BASTILLE._Mask) == true) Dst.setBastilleNull      (); else        Dst.setBastille      (_bastille      );
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.TOTO._Mask) == true) Dst.setTotoNull          (); else        Dst.setToto          (_toto          );
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.DESC2_CAT1._Mask) == true) Dst.setDesc2_Cat1Null    (); else        Dst.setDesc2_Cat1    (_desc2_Cat1    );
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.DESC2_CAT2._Mask) == true) Dst.setDesc2_Cat2Null    (); else        Dst.setDesc2_Cat2    (_desc2_Cat2    );
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.DESC2_CAT3._Mask) == true) Dst.setDesc2_Cat3Null    (); else        Dst.setDesc2_Cat3    (_desc2_Cat3    );
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A7_CAT4._Mask) == true) Dst.setA7_Cat4Null       (); else        Dst.setA7_Cat4       (_a7_Cat4       );
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A7_CAT5._Mask) == true) Dst.setA7_Cat5Null       (); else        Dst.setA7_Cat5       (_a7_Cat5       );
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A5_NULL._Mask) == true) Dst.setA5_nullNull       (); else        Dst.setA5_null       (_a5_null       );
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A6_NULL._Mask) == true) Dst.setA6_nullNull       (); else        Dst.setA6_null       (_a6_null       );
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A7_NULL._Mask) == true) Dst.setA7_nullNull       (); else        Dst.setA7_null       (_a7_null       );
-       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8_NULL._Mask) == true) Dst.setA8_nullNull       (); else        Dst.setA8_null       (_a8_null       );
+       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.REFNUM._Mask) == true || _refnum        ==null)
+        Dst.setRefnumNull        ();
+       else
+        Dst.setRefnum        (_refnum        );
+       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.NAME._Mask) == true || _name          ==null)
+        Dst.setNameNull          ();
+       else
+        Dst.setName          (_name          );
+       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.LASTUPDATED._Mask) == true || _lastUpdated   ==null)
+        Dst.setLastUpdatedNull   ();
+       else
+        Dst.setLastUpdated   (_lastUpdated   );
+       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.XXXLASTUPDATED._Mask) == true || _xxxLastUpdated==null)
+        Dst.setXxxLastUpdatedNull();
+       else
+        Dst.setXxxLastUpdated(_xxxLastUpdated);
+       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.DESCRIPTION._Mask) == true || _description   ==null)
+        Dst.setDescriptionNull   ();
+       else
+        Dst.setDescription   (_description   );
+       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.DESC2._Mask) == true || _desc2         ==null)
+        Dst.setDesc2Null         ();
+       else
+        Dst.setDesc2         (_desc2         );
+       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.DESC3._Mask) == true || _desc3         ==null)
+        Dst.setDesc3Null         ();
+       else
+        Dst.setDesc3         (_desc3         );
+       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.DESC4._Mask) == true || _desc4         ==null)
+        Dst.setDesc4Null         ();
+       else
+        Dst.setDesc4         (_desc4         );
+       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.DESC5._Mask) == true || _desc5         ==null)
+        Dst.setDesc5Null         ();
+       else
+        Dst.setDesc5         (_desc5         );
+       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.DESC6._Mask) == true || _desc6         ==null)
+        Dst.setDesc6Null         ();
+       else
+        Dst.setDesc6         (_desc6         );
+       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A3._Mask) == true || _a3            ==null)
+        Dst.setA3Null            ();
+       else
+        Dst.setA3            (_a3            );
+       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.BASTILLE._Mask) == true || _bastille      ==null)
+        Dst.setBastilleNull      ();
+       else
+        Dst.setBastille      (_bastille      );
+       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.TOTO._Mask) == true || _toto          ==null)
+        Dst.setTotoNull          ();
+       else
+        Dst.setToto          (_toto          );
+       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.DESC2_CAT1._Mask) == true || _desc2_Cat1    ==null)
+        Dst.setDesc2_Cat1Null    ();
+       else
+        Dst.setDesc2_Cat1    (_desc2_Cat1    );
+       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.DESC2_CAT2._Mask) == true || _desc2_Cat2    ==null)
+        Dst.setDesc2_Cat2Null    ();
+       else
+        Dst.setDesc2_Cat2    (_desc2_Cat2    );
+       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.DESC2_CAT3._Mask) == true || _desc2_Cat3    ==null)
+        Dst.setDesc2_Cat3Null    ();
+       else
+        Dst.setDesc2_Cat3    (_desc2_Cat3    );
+       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A7_CAT4._Mask) == true || _a7_Cat4       ==null)
+        Dst.setA7_Cat4Null       ();
+       else
+        Dst.setA7_Cat4       (_a7_Cat4       );
+       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A7_CAT5._Mask) == true || _a7_Cat5       ==null)
+        Dst.setA7_Cat5Null       ();
+       else
+        Dst.setA7_Cat5       (_a7_Cat5       );
+       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A5_NULL._Mask) == true || _a5_null       ==null)
+        Dst.setA5_nullNull       ();
+       else
+        Dst.setA5_null       (_a5_null       );
+       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A6_NULL._Mask) == true || _a6_null       ==null)
+        Dst.setA6_nullNull       ();
+       else
+        Dst.setA6_null       (_a6_null       );
+       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A7_NULL._Mask) == true || _a7_null       ==null)
+        Dst.setA7_nullNull       ();
+       else
+        Dst.setA7_null       (_a7_null       );
+     }
+
+
+   public tilda.data_test.Testing2Realized_Data copy() throws Exception
+     {
+       tilda.data_test.Testing2Realized_Data dst = new tilda.data_test.Testing2Realized_Data();
+       copyTo(dst);
+       return dst;
      }
 
 /**
@@ -7569,9 +4220,8 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data_test._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__TESTING2REALIZED_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+          tilda.data_test._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__TESTING2REALIZED_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
           PS = null;
-          AllocatedArrays = null;
         }
 
        stateUpdatePostWrite();
@@ -7593,133 +4243,6 @@ This is the hasChanged for:<BR>
         {
           __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.NAME._Mask);
           __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.NAME._Mask);
-        }
-
-       if (_a1 != null)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A1._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A1._Mask);
-        }
-
-       if (_a3b != null && _a3b.isEmpty() == false)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A3B._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A3B._Mask);
-        }
-
-       if (_a4 != null)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A4._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A4._Mask);
-        }
-
-       if (_a4b != null && _a4b.isEmpty() == false)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A4B._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A4B._Mask);
-        }
-
-       if (_a5 != null)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A5._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A5._Mask);
-        }
-
-       if (_a5b != null && _a5b.isEmpty() == false)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A5B._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A5B._Mask);
-        }
-
-       if (_a7 != null)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A7._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A7._Mask);
-        }
-
-       if (_a7b != null && _a7b.isEmpty() == false)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A7B._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A7B._Mask);
-        }
-
-       if (_a8 != null)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A8._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A8._Mask);
-        }
-
-       if (TextUtil.isNullOrEmpty(Str_a8b) == false)
-        {
-          _a8b = DateTimeUtil.parsefromJSON(Str_a8b);
-          if (   _a8b == null)
-           throw new Exception("Incoming value for 'tilda.data_test.TILDATEST.Testing2Realized.a8b' was not in the expected format. Dates should follow the ISO format.\n"+toString());
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A8B._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A8B._Mask);
-          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(_a8b.getZone().getId());
-          if (ZI == null)
-           throw new Exception("Cannot set field 'tilda.data_test.TILDATEST.Testing2Realized.a8b' because the timezone value '"+_a8b.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-          setA8bTZ(ZI.getId());
-        }
-
-       if (_a10a != null)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A10A._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A10A._Mask);
-        }
-
-       if (TextUtil.isNullOrEmpty(_a10b) == false)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A10B._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A10B._Mask);
-        }
-
-       if (_a10c != null)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A10C._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A10C._Mask);
-        }
-
-       if (_a11 != null)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A11._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A11._Mask);
-        }
-
-       if (_a11b != null && _a11b.isEmpty() == false)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A11B._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A11B._Mask);
-        }
-
-       if (_a11c != null)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A11C._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A11C._Mask);
-        }
-
-       if (_a12 != null)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A12._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A12._Mask);
-        }
-
-       if (_a12b != null && _a12b.isEmpty() == false)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A12B._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A12B._Mask);
-        }
-
-       if (_a13 != null)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A13._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A13._Mask);
-        }
-
-       if (_a13b != null && _a13b.isEmpty() == false)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A13B._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A13B._Mask);
         }
 
        if (TextUtil.isNullOrEmpty(_description) == false)
@@ -7757,19 +4280,12 @@ This is the hasChanged for:<BR>
           __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.DESC6._Mask);
           __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.DESC6._Mask);
         }
-
-       if (_a3 != null)
-        {
-          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A3._Mask);
-          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.A3._Mask);
-        }
      }
    protected String getTimeStampSignature() throws Exception
      {
        StringBuilder S = new StringBuilder(1024);
        if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.LASTUPDATED._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? "C" : "X");
        if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.XXXLASTUPDATED._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_xxxLastUpdated) == true ? "C" : "X");
-       if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8B._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_a8b) == true ? "C" : "X");
        if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.BASTILLE._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_bastille) == true ? "C" : "X");
        if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.TOTO._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_toto) == true ? "C" : "X");
        return S.toString();
@@ -7793,30 +4309,6 @@ This is the hasChanged for:<BR>
           if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.XXXLASTUPDATED._Mask) == true) { TILDA__TESTING2REALIZED_Factory.COLS.XXXLASTUPDATED.getFullColumnVarForInsert(C, S);
              V.append(__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.XXXLASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_xxxLastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data_test._Tilda.TILDA__1_0._COMMAQUESTION);
            }
-          if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A1._Mask) == true) { TILDA__TESTING2REALIZED_Factory.COLS.A1.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A3B._Mask) == true) { TILDA__TESTING2REALIZED_Factory.COLS.A3B.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A4._Mask) == true) { TILDA__TESTING2REALIZED_Factory.COLS.A4.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A4B._Mask) == true) { TILDA__TESTING2REALIZED_Factory.COLS.A4B.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A5._Mask) == true) { TILDA__TESTING2REALIZED_Factory.COLS.A5.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A5B._Mask) == true) { TILDA__TESTING2REALIZED_Factory.COLS.A5B.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A7._Mask) == true) { TILDA__TESTING2REALIZED_Factory.COLS.A7.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A7B._Mask) == true) { TILDA__TESTING2REALIZED_Factory.COLS.A7B.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8._Mask) == true) { TILDA__TESTING2REALIZED_Factory.COLS.A8.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8BTZ._Mask) == true) { TILDA__TESTING2REALIZED_Factory.COLS.A8BTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__1_0._COMMAQUESTION);  }
-
-          if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8B._Mask) == true) { TILDA__TESTING2REALIZED_Factory.COLS.A8B.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8B._Mask) == false && DateTimeUtil.isNowPlaceholder(_a8b) == true ? C.getCommaCurrentTimestamp() : tilda.data_test._Tilda.TILDA__1_0._COMMAQUESTION);
-           }
-          if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A10A._Mask) == true) { TILDA__TESTING2REALIZED_Factory.COLS.A10A.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A10B._Mask) == true) { TILDA__TESTING2REALIZED_Factory.COLS.A10B.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A10C._Mask) == true) { TILDA__TESTING2REALIZED_Factory.COLS.A10C.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A11._Mask) == true) { TILDA__TESTING2REALIZED_Factory.COLS.A11.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A11B._Mask) == true) { TILDA__TESTING2REALIZED_Factory.COLS.A11B.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A11C._Mask) == true) { TILDA__TESTING2REALIZED_Factory.COLS.A11C.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A12._Mask) == true) { TILDA__TESTING2REALIZED_Factory.COLS.A12.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A12B._Mask) == true) { TILDA__TESTING2REALIZED_Factory.COLS.A12B.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A13._Mask) == true) { TILDA__TESTING2REALIZED_Factory.COLS.A13.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A13B._Mask) == true) { TILDA__TESTING2REALIZED_Factory.COLS.A13B.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__1_0._COMMAQUESTION);  }
           if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.DESCRIPTION._Mask) == true) { TILDA__TESTING2REALIZED_Factory.COLS.DESCRIPTION.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__1_0._COMMAQUESTION);  }
           if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.DESC2._Mask) == true) { TILDA__TESTING2REALIZED_Factory.COLS.DESC2.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__1_0._COMMAQUESTION);  }
           if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.DESC3._Mask) == true) { TILDA__TESTING2REALIZED_Factory.COLS.DESC3.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__1_0._COMMAQUESTION);  }
@@ -7840,7 +4332,6 @@ This is the hasChanged for:<BR>
           if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A5_NULL._Mask) == true) { TILDA__TESTING2REALIZED_Factory.COLS.A5_NULL.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__1_0._COMMAQUESTION);  }
           if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A6_NULL._Mask) == true) { TILDA__TESTING2REALIZED_Factory.COLS.A6_NULL.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__1_0._COMMAQUESTION);  }
           if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A7_NULL._Mask) == true) { TILDA__TESTING2REALIZED_Factory.COLS.A7_NULL.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8_NULL._Mask) == true) { TILDA__TESTING2REALIZED_Factory.COLS.A8_NULL.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__1_0._COMMAQUESTION);  }
 
           S.setCharAt(Pos, '(');
           V.setCharAt(0, '(');
@@ -7870,34 +4361,6 @@ This is the hasChanged for:<BR>
              else
               TILDA__TESTING2REALIZED_Factory.COLS.XXXLASTUPDATED.getFullColumnVarForUpdate(C, S);
            }
-          if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A1._Mask) == true) TILDA__TESTING2REALIZED_Factory.COLS.A1.getFullColumnVarForUpdate(C, S);
-          if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A3B._Mask) == true) TILDA__TESTING2REALIZED_Factory.COLS.A3B.getFullColumnVarForUpdate(C, S);
-          if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A4._Mask) == true) TILDA__TESTING2REALIZED_Factory.COLS.A4.getFullColumnVarForUpdate(C, S);
-          if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A4B._Mask) == true) TILDA__TESTING2REALIZED_Factory.COLS.A4B.getFullColumnVarForUpdate(C, S);
-          if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A5._Mask) == true) TILDA__TESTING2REALIZED_Factory.COLS.A5.getFullColumnVarForUpdate(C, S);
-          if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A5B._Mask) == true) TILDA__TESTING2REALIZED_Factory.COLS.A5B.getFullColumnVarForUpdate(C, S);
-          if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A7._Mask) == true) TILDA__TESTING2REALIZED_Factory.COLS.A7.getFullColumnVarForUpdate(C, S);
-          if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A7B._Mask) == true) TILDA__TESTING2REALIZED_Factory.COLS.A7B.getFullColumnVarForUpdate(C, S);
-          if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8._Mask) == true) TILDA__TESTING2REALIZED_Factory.COLS.A8.getFullColumnVarForUpdate(C, S);
-          if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8BTZ._Mask) == true) TILDA__TESTING2REALIZED_Factory.COLS.A8BTZ.getFullColumnVarForUpdate(C, S);
-
-          if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8B._Mask) == true)
-           {
-             if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8B._Mask) == false && DateTimeUtil.isNowPlaceholder(_a8b) == true)
-              { TILDA__TESTING2REALIZED_Factory.COLS.A8B.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
-             else
-              TILDA__TESTING2REALIZED_Factory.COLS.A8B.getFullColumnVarForUpdate(C, S);
-           }
-          if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A10A._Mask) == true) TILDA__TESTING2REALIZED_Factory.COLS.A10A.getFullColumnVarForUpdate(C, S);
-          if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A10B._Mask) == true) TILDA__TESTING2REALIZED_Factory.COLS.A10B.getFullColumnVarForUpdate(C, S);
-          if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A10C._Mask) == true) TILDA__TESTING2REALIZED_Factory.COLS.A10C.getFullColumnVarForUpdate(C, S);
-          if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A11._Mask) == true) TILDA__TESTING2REALIZED_Factory.COLS.A11.getFullColumnVarForUpdate(C, S);
-          if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A11B._Mask) == true) TILDA__TESTING2REALIZED_Factory.COLS.A11B.getFullColumnVarForUpdate(C, S);
-          if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A11C._Mask) == true) TILDA__TESTING2REALIZED_Factory.COLS.A11C.getFullColumnVarForUpdate(C, S);
-          if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A12._Mask) == true) TILDA__TESTING2REALIZED_Factory.COLS.A12.getFullColumnVarForUpdate(C, S);
-          if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A12B._Mask) == true) TILDA__TESTING2REALIZED_Factory.COLS.A12B.getFullColumnVarForUpdate(C, S);
-          if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A13._Mask) == true) TILDA__TESTING2REALIZED_Factory.COLS.A13.getFullColumnVarForUpdate(C, S);
-          if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A13B._Mask) == true) TILDA__TESTING2REALIZED_Factory.COLS.A13B.getFullColumnVarForUpdate(C, S);
           if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.DESCRIPTION._Mask) == true) TILDA__TESTING2REALIZED_Factory.COLS.DESCRIPTION.getFullColumnVarForUpdate(C, S);
           if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.DESC2._Mask) == true) TILDA__TESTING2REALIZED_Factory.COLS.DESC2.getFullColumnVarForUpdate(C, S);
           if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.DESC3._Mask) == true) TILDA__TESTING2REALIZED_Factory.COLS.DESC3.getFullColumnVarForUpdate(C, S);
@@ -7929,7 +4392,6 @@ This is the hasChanged for:<BR>
           if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A5_NULL._Mask) == true) TILDA__TESTING2REALIZED_Factory.COLS.A5_NULL.getFullColumnVarForUpdate(C, S);
           if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A6_NULL._Mask) == true) TILDA__TESTING2REALIZED_Factory.COLS.A6_NULL.getFullColumnVarForUpdate(C, S);
           if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A7_NULL._Mask) == true) TILDA__TESTING2REALIZED_Factory.COLS.A7_NULL.getFullColumnVarForUpdate(C, S);
-          if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8_NULL._Mask) == true) TILDA__TESTING2REALIZED_Factory.COLS.A8_NULL.getFullColumnVarForUpdate(C, S);
 
           switch (__LookupId)
            {
@@ -7969,90 +4431,6 @@ This is the hasChanged for:<BR>
        if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.XXXLASTUPDATED._Mask) == true) 
         { 
           if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.XXXLASTUPDATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_xxxLastUpdated) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_xxxLastUpdated.toInstant()), DateTimeUtil._UTC_CALENDAR);
-        } 
-       if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A1._Mask) == true) 
-        { 
-          if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A1._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT    ); else PS.setInt       (++i, _a1);
-        } 
-       if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A3B._Mask) == true) 
-        { 
-          if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A3B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.BOOLEAN   ); else C.setArray(PS, ++i, TILDA__TESTING2REALIZED_Factory.COLS.A3B.getType(), AllocatedArrays, _a3b);
-        } 
-       if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A4._Mask) == true) 
-        { 
-          if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A4._Mask) == true) PS.setNull(++i, java.sql.Types.DOUBLE    ); else PS.setDouble    (++i, _a4);
-        } 
-       if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A4B._Mask) == true) 
-        { 
-          if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A4B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.DOUBLE    ); else C.setArray(PS, ++i, TILDA__TESTING2REALIZED_Factory.COLS.A4B.getType(), AllocatedArrays, _a4b);
-        } 
-       if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A5._Mask) == true) 
-        { 
-          if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A5._Mask) == true) PS.setNull(++i, java.sql.Types.FLOAT     ); else PS.setFloat     (++i, _a5);
-        } 
-       if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A5B._Mask) == true) 
-        { 
-          if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A5B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.FLOAT     ); else C.setArray(PS, ++i, TILDA__TESTING2REALIZED_Factory.COLS.A5B.getType(), AllocatedArrays, _a5b);
-        } 
-       if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A7._Mask) == true) 
-        { 
-          if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A7._Mask) == true) PS.setNull(++i, java.sql.Types.INTEGER   ); else PS.setInt       (++i, _a7);
-        } 
-       if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A7B._Mask) == true) 
-        { 
-          if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A7B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.INTEGER   ); else C.setArray(PS, ++i, TILDA__TESTING2REALIZED_Factory.COLS.A7B.getType(), AllocatedArrays, _a7b);
-        } 
-       if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8._Mask) == true) 
-        { 
-          if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8._Mask) == true) PS.setNull(++i, java.sql.Types.BINARY    ); else PS.setBytes     (++i, _a8);
-        } 
-       if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8BTZ._Mask) == true) 
-        { 
-          if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8BTZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _a8bTZ);
-        } 
-       if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8B._Mask) == true) 
-        { 
-          if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8B._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_a8b) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_a8b.toInstant()), DateTimeUtil._UTC_CALENDAR);
-        } 
-       if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A10A._Mask) == true) 
-        { 
-          if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A10A._Mask) == true) PS.setNull(++i, java.sql.Types.INTEGER   ); else PS.setInt       (++i, _a10a);
-        } 
-       if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A10B._Mask) == true) 
-        { 
-          if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A10B._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _a10b);
-        } 
-       if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A10C._Mask) == true) 
-        { 
-          if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A10C._Mask) == true) PS.setNull(++i, java.sql.Types.INTEGER   ); else PS.setInt       (++i, _a10c);
-        } 
-       if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A11._Mask) == true) 
-        { 
-          if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A11._Mask) == true) PS.setNull(++i, java.sql.Types.NUMERIC   ); else PS.setBigDecimal(++i, _a11);
-        } 
-       if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A11B._Mask) == true) 
-        { 
-          if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A11B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.NUMERIC   ); else C.setArray(PS, ++i, TILDA__TESTING2REALIZED_Factory.COLS.A11B.getType(), AllocatedArrays, _a11b);
-        } 
-       if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A11C._Mask) == true) 
-        { 
-          if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A11C._Mask) == true) PS.setNull(++i, java.sql.Types.NUMERIC   ); else PS.setBigDecimal(++i, _a11c);
-        } 
-       if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A12._Mask) == true) 
-        { 
-          if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A12._Mask) == true) PS.setNull(++i, java.sql.Types.SMALLINT  ); else PS.setShort     (++i, _a12);
-        } 
-       if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A12B._Mask) == true) 
-        { 
-          if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A12B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.SMALLINT  ); else C.setArray(PS, ++i, TILDA__TESTING2REALIZED_Factory.COLS.A12B.getType(), AllocatedArrays, _a12b);
-        } 
-       if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A13._Mask) == true) 
-        { 
-          if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A13._Mask) == true) PS.setNull(++i, java.sql.Types.OTHER     ); else PS.setObject    (++i, _a13, java.sql.Types.OTHER     );
-        } 
-       if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A13B._Mask) == true) 
-        { 
-          if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A13B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.OTHER     ); else C.setArray(PS, ++i, TILDA__TESTING2REALIZED_Factory.COLS.A13B.getType(), AllocatedArrays, _a13b);
         } 
        if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.DESCRIPTION._Mask) == true) 
         { 
@@ -8121,10 +4499,6 @@ This is the hasChanged for:<BR>
        if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A7_NULL._Mask) == true) 
         { 
           if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A7_NULL._Mask) == true) PS.setNull(++i, java.sql.Types.INTEGER   ); else PS.setInt       (++i, _a7_null);
-        } 
-       if (__Changes.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8_NULL._Mask) == true) 
-        { 
-          if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8_NULL._Mask) == true) PS.setNull(++i, java.sql.Types.INTEGER   ); else PS.setInt       (++i, _a8_null);
         } 
        return i;
      }
@@ -8251,27 +4625,6 @@ This is the hasChanged for:<BR>
           S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2Realized", "name");
           S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2Realized", "lastUpdated");
           S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2Realized", "xxxLastUpdated");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2Realized", "a1");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2Realized", "a3b");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2Realized", "a4");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2Realized", "a4b");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2Realized", "a5");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2Realized", "a5b");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2Realized", "a7");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2Realized", "a7b");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2Realized", "a8");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2Realized", "a8bTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2Realized", "a8b");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2Realized", "a10a");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2Realized", "a10b");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2Realized", "a10c");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2Realized", "a11");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2Realized", "a11b");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2Realized", "a11c");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2Realized", "a12");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2Realized", "a12b");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2Realized", "a13");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2Realized", "a13b");
           S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2Realized", "description");
           S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2Realized", "desc2");
           S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2Realized", "desc3");
@@ -8289,7 +4642,6 @@ This is the hasChanged for:<BR>
           S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2Realized", "a5_null");
           S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2Realized", "a6_null");
           S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2Realized", "a7_null");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2Realized", "a8_null");
           S.append(" from "); C.getFullTableVar(S, "TILDATEST", "Testing2Realized");
        switch (__LookupId)
         {
@@ -8308,7 +4660,6 @@ This is the hasChanged for:<BR>
        QueryDetails.logQuery("TILDATEST.Testing2Realized", Q, toString());
        java.sql.PreparedStatement PS=null;
        java.sql.ResultSet RS=null;
-       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
        int count = 0;
 
        try
@@ -8340,13 +4691,11 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data_test._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__TESTING2REALIZED_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, AllocatedArrays);
+          tilda.data_test._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__TESTING2REALIZED_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
-          AllocatedArrays = null;
         }
     }
 
-   @SuppressWarnings("unchecked")
    boolean init(Connection C, java.sql.ResultSet RS) throws Exception
     {
       int i = 0;
@@ -8355,27 +4704,6 @@ This is the hasChanged for:<BR>
                                _name           = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.NAME._Mask          ); _name = null; }
                                _lastUpdated    = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.LASTUPDATED._Mask   ); _lastUpdated = null; }
                                _xxxLastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.XXXLASTUPDATED._Mask); _xxxLastUpdated = null; }
-                               _a1             =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A1._Mask            ); _a1 = null; }
-                               _a3b = (List<Boolean>) C.getArray(RS, ++i, TILDA__TESTING2REALIZED_Factory.COLS.A3B.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A3B._Mask           ); _a3b = null; }
-                               _a4             =                              RS.getDouble    (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A4._Mask            ); _a4 = null; }
-                               _a4b = (List<Double>) C.getArray(RS, ++i, TILDA__TESTING2REALIZED_Factory.COLS.A4B.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A4B._Mask           ); _a4b = null; }
-                               _a5             =                              RS.getFloat     (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A5._Mask            ); _a5 = null; }
-                               _a5b = (List<Float>) C.getArray(RS, ++i, TILDA__TESTING2REALIZED_Factory.COLS.A5B.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A5B._Mask           ); _a5b = null; }
-                               _a7             =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A7._Mask            ); _a7 = null; }
-                               _a7b = (List<Integer>) C.getArray(RS, ++i, TILDA__TESTING2REALIZED_Factory.COLS.A7B.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A7B._Mask           ); _a7b = null; }
-                               _a8             =                              RS.getBytes     (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A8._Mask            ); _a8 = null; }
-                               _a8bTZ          = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A8BTZ._Mask         ); _a8bTZ = null; }
-                               _a8b            = processZDT(_a8bTZ           , "tilda.data_test.TILDATEST.Testing2Realized.a8b"           , RS, ++i, TILDA__TESTING2REALIZED_Factory.COLS.A8B           , TILDA__TESTING2REALIZED_Factory.COLS.A8BTZ           ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A8B._Mask           ); _a8b = null; }
-                               _a10a           =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A10A._Mask          ); _a10a = null; }
-                               _a10b           = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A10B._Mask          ); _a10b = null; }
-                               _a10c           =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A10C._Mask          ); _a10c = null; }
-                               _a11            =                              RS.getBigDecimal(++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A11._Mask           ); _a11 = null; }
-                               _a11b = (List<BigDecimal>) C.getArray(RS, ++i, TILDA__TESTING2REALIZED_Factory.COLS.A11B.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A11B._Mask          ); _a11b = null; }
-                               _a11c           =                              RS.getBigDecimal(++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A11C._Mask          ); _a11c = null; }
-                               _a12            =                              RS.getShort     (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A12._Mask           ); _a12 = null; }
-                               _a12b = (List<Short>) C.getArray(RS, ++i, TILDA__TESTING2REALIZED_Factory.COLS.A12B.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A12B._Mask          ); _a12b = null; }
-                               _a13            =                              (java.util.UUID) RS.getObject(++i);  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A13._Mask           ); _a13 = null; }
-                               _a13b = (List<UUID>) C.getArray(RS, ++i, TILDA__TESTING2REALIZED_Factory.COLS.A13B.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A13B._Mask          ); _a13b = null; }
                                _description    = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.DESCRIPTION._Mask   ); _description = null; }
                                _desc2          = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.DESC2._Mask         ); _desc2 = null; }
                                _desc3          = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.DESC3._Mask         ); _desc3 = null; }
@@ -8393,31 +4721,11 @@ This is the hasChanged for:<BR>
                                _a5_null        =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A5_NULL._Mask       ); _a5_null = null; }
                                _a6_null        =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A6_NULL._Mask       ); _a6_null = null; }
                                _a7_null        =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A7_NULL._Mask       ); _a7_null = null; }
-                               _a8_null        =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A8_NULL._Mask       ); _a8_null = null; }
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();
 
      return afterRead(C);
-   }
-
-  private final ZonedDateTime processZDT(String TimezoneId, String DTFieldName, java.sql.ResultSet RS, int ColumnPos, tilda.types.ColumnDefinition DTField, tilda.types.ColumnDefinition TZField)
-  throws Exception
-   {
-     tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationById(TimezoneId);
-     if (ZI == null && TextUtil.isNullOrEmpty(TimezoneId) == false)
-      throw new Exception("Cannot set field '"+DTFieldName+"' because the timezone Id '" + TimezoneId + "' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-     ZonedDateTime ZDT = DateTimeUtil.toZonedDateTime(RS.getTimestamp(ColumnPos, DateTimeUtil._UTC_CALENDAR), ZI == null ? "null" : ZI.getValue());
-     boolean DTNull = false;
-     if (RS.wasNull() == true)
-      {
-         __Nulls.or(DTField._Mask);
-         DTNull = true;
-      }
-     boolean TZNull = __Nulls.intersects(TZField._Mask);
-     if (DTNull == false && TZNull == true)
-      throw new Exception("The field "+DTFieldName+" is not null while its associated timezone field '"+DTFieldName+"TZ' is null. A TZ is mandatory for not null timestamps.");
-     return ZDT;
    }
 
    protected abstract boolean afterRead(Connection C) throws Exception;
@@ -8430,26 +4738,6 @@ This is the hasChanged for:<BR>
                + "; name"             + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.NAME._Mask) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getName          ()))
                + "; lastUpdated"      + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.LASTUPDATED._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getLastUpdated   ()))
                + "; xxxLastUpdated"   + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.XXXLASTUPDATED._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getXxxLastUpdated()))
-               + "; a1"               + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A1._Mask) == true ? ": NULL" : ": " +                                   getA1            () )
-               + "; a3b"              + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A3B._Mask) == true ? ": NULL" : ": " + TextUtil.print                   (getA3b           ()))
-               + "; a4"               + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A4._Mask) == true ? ": NULL" : ": " +                                   getA4            () )
-               + "; a4b"              + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A4B._Mask) == true ? ": NULL" : ": " + TextUtil.print                   (getA4b           ()))
-               + "; a5"               + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A5._Mask) == true ? ": NULL" : ": " +                                   getA5            () )
-               + "; a5b"              + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A5B._Mask) == true ? ": NULL" : ": " + TextUtil.print                   (getA5b           ()))
-               + "; a7"               + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A7._Mask) == true ? ": NULL" : ": " +                                   getA7            () )
-               + "; a7b"              + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A7B._Mask) == true ? ": NULL" : ": " + TextUtil.print                   (getA7b           ()))
-               + "; a8"               + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8._Mask) == true ? ": NULL" : ": " +                                   getA8            () )
-               + "; a8b"              + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8B._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getA8b           ()))
-               + "; a10a"             + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A10A._Mask) == true ? ": NULL" : ": " +                                   getA10a          () )
-               + "; a10b"             + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A10B._Mask) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getA10b          ()))
-               + "; a10c"             + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A10C._Mask) == true ? ": NULL" : ": " +                                   getA10c          () )
-               + "; a11"              + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A11._Mask) == true ? ": NULL" : ": " +                                   getA11           () )
-               + "; a11b"             + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A11B._Mask) == true ? ": NULL" : ": " + TextUtil.print                   (getA11b          ()))
-               + "; a11c"             + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A11C._Mask) == true ? ": NULL" : ": " +                                   getA11c          () )
-               + "; a12"              + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A12._Mask) == true ? ": NULL" : ": " +                                   getA12           () )
-               + "; a12b"             + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A12B._Mask) == true ? ": NULL" : ": " + TextUtil.print                   (getA12b          ()))
-               + "; a13"              + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A13._Mask) == true ? ": NULL" : ": " +                                   getA13           () )
-               + "; a13b"             + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A13B._Mask) == true ? ": NULL" : ": " + TextUtil.print                   (getA13b          ()))
                + "; description"      + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.DESCRIPTION._Mask) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getDescription   ()))
                + "; desc2"            + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.DESC2._Mask) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getDesc2         ()))
                + "; desc3"            + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.DESC3._Mask) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getDesc3         ()))
@@ -8467,10 +4755,41 @@ This is the hasChanged for:<BR>
                + "; a5_null"          + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A5_NULL._Mask) == true ? ": NULL" : ": " +                                   getA5_null       () )
                + "; a6_null"          + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A6_NULL._Mask) == true ? ": NULL" : ": " +                                   getA6_null       () )
                + "; a7_null"          + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A7_NULL._Mask) == true ? ": NULL" : ": " +                                   getA7_null       () )
-               + "; a8_null"          + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8_NULL._Mask) == true ? ": NULL" : ": " +                                   getA8_null       () )
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;
     }
 
+   public void toJSON(java.io.Writer out, String exportName, boolean fullObject) throws Exception
+    {
+      toJSON(out, exportName, "", fullObject, false);
+    }
+   public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject) throws Exception
+    {
+      toJSON(out, exportName, lead, fullObject, false);
+    }
+   public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject, boolean noNullArrays) throws Exception
+    {
+      switch (exportName)
+        { 
+          case "": tilda.data_test.Testing2Realized_Factory.toJSON(out, (tilda.data_test.Testing2Realized_Data) this, lead, fullObject, noNullArrays); break;
+          default: throw new Exception("Unknown JSON exporter '"+exportName+"' for tilda.data_test.Testing2Realized_Factory");
+        } 
+    }
+   public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject, java.time.ZonedDateTime lastsync) throws Exception
+    {
+      throw new Exception("Unknown JSON sync exporter '"+exportName+"' for tilda.data_test.Testing2Realized_Factory");
+    }
+   public void toCSV(java.io.Writer out, String exportName) throws Exception
+    {
+      switch (exportName)
+        { 
+          case "": tilda.data_test.Testing2Realized_Factory.toCSV(out, (tilda.data_test.Testing2Realized_Data) this); break;
+          default: throw new Exception("Unknown CSV exporter '"+exportName+"' for tilda.data_test.Testing2Realized_Factory");
+        } 
+    }
+   public void toCSV(java.io.Writer out, String exportName, java.time.ZonedDateTime lastsync) throws Exception
+    {
+      throw new Exception("Unknown CSV sync exporter '"+exportName+"' for tilda.data_test.Testing2Realized_Factory");
+    }
  }

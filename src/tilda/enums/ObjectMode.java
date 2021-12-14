@@ -33,8 +33,13 @@ public enum ObjectMode
      * Only the code-side artifacts are generated and nothing is defined in the DB. This is useful to customize a complex query where
      * columns are known in advance and reuse JDBC Row handling, queries, JSON formatting etc on the code-side.
      */
-    CODE_ONLY;
+    CODE_ONLY,
 
+    /**
+     * No code is generated at all. The object exists purely as meta-data, for example, to map to a custom table/view not defined in Tilda per se.
+     */
+    NONE;
+    
     public static ObjectMode parse(String Str)
       {
         for (ObjectMode e : ObjectMode.values())

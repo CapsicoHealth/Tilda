@@ -41,10 +41,10 @@ public class SelectQueryParsedAndValidated extends SelectQuery
     public SelectQueryParsedAndValidated(TildaObjectMetaData OMD, String WhereClause)
       throws Exception
       {
-        super(null, null, OMD._ObjectName, false);
+        super(null, null, OMD._objectName, false);
 
         TildaSQLValidator Validator = new TildaSQLValidator(WhereClause);
-        Validator.setColumnEnvironment(OMD._Cols);
+        Validator.setColumnEnvironment(OMD._cols);
 
         if (Validator.getParserSyntaxErrors() != 0)
           throw new Exception("WhereClause expression had " + Validator.getParserSyntaxErrors() + " syntax error(s).");
@@ -72,13 +72,13 @@ public class SelectQueryParsedAndValidated extends SelectQuery
     public <T> List<T> execute(Connection C, int Start, int Size)
     throws Exception
       {
-        return (List<T>) _OMD._RunSelectMethodList.invoke(null, C, this, Start, Size);
+        return (List<T>) _OMD._runSelectMethodList.invoke(null, C, this, Start, Size);
       }
 
     public <T> void execute(Connection C, ObjectProcessor<T> OP, int Start, int Size)
     throws Exception
       {
-        _OMD._RunSelectMethodOP.invoke(null, C, this, OP, Start, Size);
+        _OMD._runSelectMethodOP.invoke(null, C, this, OP, Start, Size);
       }
     
   }

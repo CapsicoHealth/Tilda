@@ -99,9 +99,13 @@ public class BQHelper
       {
         try
           {
+            long T0 = System.nanoTime();
             DatasetInfo datasetInfo = DatasetInfo.newBuilder(datasetName).build();
             if (bq.create(datasetInfo) != null)
-              return true;
+              {
+                LOG.debug("BQ: created dataset '" + datasetName + "' (" + DurationUtil.printDurationMilliSeconds(System.nanoTime() - T0) + "ms)");
+                return true;
+              }
           }
         catch (BigQueryException e)
           {
@@ -118,7 +122,9 @@ public class BQHelper
     public static List<Dataset> lookupDatasets(BigQuery bq)
     throws Exception
       {
+        long T0 = System.nanoTime();
         Page<Dataset> L = bq.listDatasets(DatasetListOption.all().pageSize(250));
+        LOG.debug("BQ: looked up datasets (" + DurationUtil.printDurationMilliSeconds(System.nanoTime() - T0) + "ms)");
         if (L == null)
           return new ArrayList<Dataset>();
         return (List<Dataset>) CollectionUtil.toList(L.iterateAll().iterator());
@@ -134,7 +140,9 @@ public class BQHelper
     public static List<Table> lookupTables(BigQuery bq, String datasetName)
     throws Exception
       {
+        long T0 = System.nanoTime();
         Page<Table> L = bq.listTables(datasetName, TableListOption.pageSize(250));
+        LOG.debug("BQ: looked up tables in dataset '"+datasetName+"' (" + DurationUtil.printDurationMilliSeconds(System.nanoTime() - T0) + "ms)");
         if (L == null)
           return new ArrayList<Table>();
         return (List<Table>) CollectionUtil.toList(L.iterateAll().iterator());
@@ -177,7 +185,7 @@ public class BQHelper
         try
           {
             long ts = System.nanoTime();
-            LOG.debug("BIGQUERY: " + q);
+            LOG.debug("BIGQUERY (sync): " + q);
             QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(q).setUseLegacySql(false).build();
             JobId jobId = JobId.newBuilder().build();
             JobInfo jobInfo = JobInfo.newBuilder(queryConfig).setJobId(jobId).build();
@@ -199,6 +207,16 @@ public class BQHelper
         return null;
       }
 
+    public static Job launchQuery(BigQuery bq, String q)
+      {
+        LOG.debug("BIGQUERY (async): " + q);
+        QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(q).setUseLegacySql(false).build();
+        // Create a job ID so that we can safely retry.
+        JobId jobId = JobId.newBuilder().build();
+        JobInfo jobInfo = JobInfo.newBuilder(queryConfig).setJobId(jobId).build();
+        return bq.create(jobInfo);
+      }
+
     /**
      * Returns the billed bytes and cost in cents for a given job, or null if the job could be
      * located or an exception occurred internally (see logs).
@@ -209,7 +227,7 @@ public class BQHelper
      */
     public static JobCostDetails getJobCostInBytesCents(BigQuery bq, String jobId)
       {
-        String q = "SELECT total_bytes_billed, cost_cents, cost_cents_modeling from TILDA.BQJobDetails where job_id=" + TextUtil.escapeSingleQuoteForSQL(jobId) + ";";
+        String q = "SELECT total_bytes_billed, cost_cents, cost_cents_modeling from TILDA.BQJobDetailsView where job_id=" + TextUtil.escapeSingleQuoteForSQL(jobId) + ";";
         JobResults jr = runQuery(bq, q);
         if (jr != null)
           for (FieldValueList row : jr._r.iterateAll())
@@ -258,13 +276,20 @@ public class BQHelper
     public static Schema getTildaBQSchema(String SchemaName, String TableViewName)
     throws Exception
       {
+        return getTildaBQSchema(SchemaName, TableViewName, null);
+      }
+    
+    public static Schema getTildaBQSchema(String SchemaName, String TableViewName, String outputMapName)
+    throws Exception
+      {
         TildaObjectMetaData Obj = TildaMasterRuntimeMetaData.getTableObject(SchemaName, TableViewName);
         if (Obj == null)
           throw new Exception("Cannot locate Tilda Object/View '" + SchemaName + "." + TableViewName + "', so cannot generate a BQ-compatible Schema.");
 
         // StringBuilder str = new StringBuilder();
         List<Field> fieldsList = new ArrayList<Field>();
-        for (ColumnDefinition col : Obj.getColumnDefinitions())
+        List<ColumnDefinition> cols = outputMapName==null?Obj.getColumnDefinitions():Obj.getOutputMapColumns(outputMapName);
+        for (ColumnDefinition col : cols)
           {
             Field F = Field.newBuilder(col.getName(), StandardSQLTypeName.valueOf(col.getType().getBigQueryType()))
             .setMode(col.isCollection() == true ? Field.Mode.REPEATED : col.isNullable() == false ? Field.Mode.REQUIRED : Field.Mode.NULLABLE)
@@ -279,6 +304,19 @@ public class BQHelper
 
         return Schema.of(fieldsList);
       }
+    
+    public static String getSchemaColumns(Schema schema)
+      {
+        StringBuilder str = new StringBuilder();
+        for (Field f : schema.getFields())
+          {
+            if (str.length() > 0)
+             str.append(", ");
+            str.append(f.getName()+":"+f.getType().name());
+          }
+        return str.toString();
+      }
+    
 
     public Schema getBQTableSchema(BigQuery bq, String datasetName, String tableName)
       {
@@ -421,6 +459,7 @@ public class BQHelper
     /**
      * Undeletes a table based on a snapshot time. As per the documentation https://cloud.google.com/bigquery/docs/samples/bigquery-undelete-table
      * one cannot undelete a table that has been re-created since. BQ will also track the most recent snapshot as per the milliseconds provided.
+     * 
      * @param bq
      * @param datasetName
      * @param tableName
@@ -458,7 +497,7 @@ public class BQHelper
           {
             Table table = bq.getTable(TableId.of(datasetName, tableName));
             if (table != null && table.exists() == true)
-             return true;
+              return true;
           }
         catch (BigQueryException e)
           {
@@ -467,6 +506,5 @@ public class BQHelper
         LOG.debug("Table '" + datasetName + "." + tableName + "' not found");
         return false;
       }
-
 
   }

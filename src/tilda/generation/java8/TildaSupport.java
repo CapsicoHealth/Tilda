@@ -98,7 +98,7 @@ public class TildaSupport implements CodeGenTildaSupport
         Out.println("   public static void initSchema(Connection C) throws Exception");
         Out.println("    {");
         for (Object O : S._Objects)
-          if (O != null && O._Mode != ObjectMode.DB_ONLY)
+          if (O != null && (O._Mode == ObjectMode.NORMAL || O._Mode == ObjectMode.CODE_ONLY))
             Out.println("      " + Helper.getFullBaseClassName(O) + "_Factory.initObject(C);");
         Out.println("    }");
       }

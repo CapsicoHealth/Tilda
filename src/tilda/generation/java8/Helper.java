@@ -21,6 +21,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.generation.Generator;
@@ -41,6 +44,8 @@ import tilda.utils.TextUtil;
 
 public class Helper
   {
+    protected static final Logger LOG = LogManager.getLogger(Helper.class.getName());
+    
     public static String getSingleLineComment()
       {
         return "//";
@@ -702,8 +707,14 @@ public class Helper
       {
         if (First == false)
           Out.println("      Str.append(\",\");");
-        if (C.getType() == ColumnType.DOUBLE || C.getType() == ColumnType.FLOAT || C.getType() == ColumnType.LONG || C.getType() == ColumnType.INTEGER
-        || C.getType() == ColumnType.SHORT || C.getType() == ColumnType.CHAR || C.getType() == ColumnType.BINARY || C.getType() == ColumnType.BOOLEAN)
+        //@formatter:off
+        if (   C.getType() == ColumnType.DOUBLE || C.getType() == ColumnType.FLOAT || C.getType() == ColumnType.NUMERIC
+            || C.getType() == ColumnType.LONG || C.getType() == ColumnType.INTEGER || C.getType() == ColumnType.SHORT
+            || C.getType() == ColumnType.CHAR 
+            || C.getType() == ColumnType.BINARY || C.getType() == ColumnType.BITFIELD || C.getType() == ColumnType.UUID
+            || C.getType() == ColumnType.BOOLEAN
+           )
+        //@formatter:on
           Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, \"\" + " + "obj.get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "());");
         else if (C.isCollection() == true)
           Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, " + "TextUtil.print(obj.get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "(), \",\"));");
@@ -757,6 +768,9 @@ public class Helper
     public static void SelectFrom(PrintWriter Out, Object O)
       {
         Out.println("          S.append(\"select \");");
+        Out.println("          C.getFullColumnVarList(S, " + O.getBaseClassName() + "_Factory.COLUMNS);");
+/*
+        C.getFullColumnVarList(S, Model_Factory.COLUMNS);
         boolean First = true;
         for (Column C : O._Columns)
           if (C != null && C._Mode != ColumnMode.CALCULATED)
@@ -772,6 +786,7 @@ public class Helper
                 }
               Out.println(" " + getFullColVarAtRuntime(C) + ";");
             }
+*/
         Out.println("          S.append(\" from \"); C.getFullTableVar(S, " + TextUtil.escapeDoubleQuoteWithSlash(O._ParentSchema._Name) + ", " + TextUtil.escapeDoubleQuoteWithSlash(O._Name) + ");");
       }
 

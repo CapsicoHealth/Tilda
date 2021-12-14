@@ -17,7 +17,7 @@
 package tilda.types;
 
 
-public class Type_UuidPrimitiveNull extends Type_StringPrimitive implements Nullable
+public class Type_UuidPrimitiveNull extends Type_UuidPrimitive implements Nullable
   {
     public Type_UuidPrimitiveNull(String SchemaName, String TableName, String ColumnName, int Count, String Description, String[] expressionStrs, String[] expressionsDependencies)
       {

@@ -36,7 +36,9 @@ public class ScalarRP implements RecordProcessor
     public boolean process(int Index, ResultSet RS)
       throws SQLException
       {
-        _Res = RS.getLong(1);
+        long res = RS.getLong(1);
+        if (RS.wasNull()==false)
+          _Res = res;
         return true;
       }
 

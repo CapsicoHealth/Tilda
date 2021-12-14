@@ -94,7 +94,7 @@ public class DateTimeUtil
       {
         return ZonedDateTime.ofInstant(Instant.ofEpochMilli(epochMillis), _UTC);
       }
-    
+
     /**
      * Returns a new ZonedDateTime object based on the information provided using
      * the ZonedDateTime class conventions.
@@ -247,9 +247,43 @@ public class DateTimeUtil
         return Str.toString();
       }
 
+    public static void printDateTimeForSQL(StringBuilder str, ZonedDateTime ZDT, boolean printNull)
+      {
+        if (ZDT != null)
+          {
+            str.append("'");
+            str.append(printDateTimeForSQL(ZDT));
+            str.append("'");
+          }
+        else if (printNull == true)
+          str.append("null");
+      }
+
+    public static void printDateTimeForSQL(StringBuilder str, ZonedDateTime ZDT)
+      {
+        printDateTimeForSQL(str, ZDT, false);
+      }
+
     public static String printDateTimeForSQL(ZonedDateTime ZDT)
       {
         return ZDT == null ? null : ZDT.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+      }
+
+    public static void printDateForSQL(StringBuilder str, LocalDate DT, boolean printNull)
+      {
+        if (DT != null)
+          {
+            str.append("'");
+            str.append(printDateForSQL(DT));
+            str.append("'");
+          }
+        else if (printNull == true)
+          str.append("null");
+      }
+
+    public static void printDateForSQL(StringBuilder str, LocalDate DT)
+      {
+        printDateForSQL(str, DT, false);
       }
 
     public static String printDateForSQL(LocalDate DT)
@@ -276,7 +310,7 @@ public class DateTimeUtil
       {
         // LDH-NOTE: Not understanding why ISO_OFFSET_DATE_TIME doesn't deliver formatting like yyyy-MM-dd'T'HH:mm:ss.SSSXXX which it is supposed to be.
         return ZDT == null ? null : forceISOZDT == true ? ZDT.format(DateTimeFormatter.ISO_ZONED_DATE_TIME) : ZDT.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSxxx")); // DateTimeFormatter.ISO_OFFSET_DATE_TIME);
-                                                                                                                                                                                     // //ISO_ZONED_DATE_TIME);
+        // //ISO_ZONED_DATE_TIME);
       }
 
     public static String printDate(LocalDate D)

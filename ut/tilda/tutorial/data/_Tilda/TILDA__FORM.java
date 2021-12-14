@@ -134,7 +134,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
 */
 @SuppressWarnings({ "unused" })
-public abstract class TILDA__FORM implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
+public abstract class TILDA__FORM implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject, tilda.interfaces.JSONable, tilda.interfaces.CSVable
  {
    protected transient static final Logger LOG = LogManager.getLogger(TILDA__FORM.class.getName());
 
@@ -1462,12 +1462,35 @@ This is the hasChanged for:<BR>
 */
    public void copyTo(tilda.tutorial.data._Tilda.TILDA__FORM Dst) throws Exception
      {
-       Dst.setUserRefnum (_userRefnum );
-       Dst.setType       (_type       );
-       if (__Nulls.intersects(TILDA__FORM_Factory.COLS.FILLDATETZ._Mask) == true) Dst.setFillDateTZNull (); else        Dst.setFillDateTZ (_fillDateTZ );
-       if (__Nulls.intersects(TILDA__FORM_Factory.COLS.FILLDATE._Mask) == true) Dst.setFillDateNull   (); else        Dst.setFillDate   (_fillDate   );
-       Dst.setLastUpdated(_lastUpdated);
-       if (__Nulls.intersects(TILDA__FORM_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull    (); else        Dst.setDeleted    (_deleted    );
+       if (_userRefnum  != null)
+        Dst.setUserRefnum (_userRefnum );
+       if (_type        != null)
+        Dst.setType       (_type       );
+       if (__Nulls.intersects(TILDA__FORM_Factory.COLS.FILLDATETZ._Mask) == true || _fillDateTZ ==null)
+        Dst.setFillDateTZNull ();
+       else
+        Dst.setFillDateTZ (_fillDateTZ );
+       if (__Nulls.intersects(TILDA__FORM_Factory.COLS.FILLDATE._Mask) == true || _fillDate   ==null)
+        Dst.setFillDateNull   ();
+       else
+        Dst.setFillDate   (_fillDate   );
+       Dst.Str_fillDate = Str_fillDate;
+       if (_created     != null)
+        Dst.setCreated    (_created    );
+       if (_lastUpdated != null)
+        Dst.setLastUpdated(_lastUpdated);
+       if (__Nulls.intersects(TILDA__FORM_Factory.COLS.DELETED._Mask) == true || _deleted    ==null)
+        Dst.setDeletedNull    ();
+       else
+        Dst.setDeleted    (_deleted    );
+     }
+
+
+   public tilda.tutorial.data.Form_Data copy() throws Exception
+     {
+       tilda.tutorial.data.Form_Data dst = new tilda.tutorial.data.Form_Data();
+       copyTo(dst);
+       return dst;
      }
 
 /**
@@ -1903,4 +1926,36 @@ This is the hasChanged for:<BR>
       return Str;
     }
 
+   public void toJSON(java.io.Writer out, String exportName, boolean fullObject) throws Exception
+    {
+      toJSON(out, exportName, "", fullObject, false);
+    }
+   public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject) throws Exception
+    {
+      toJSON(out, exportName, lead, fullObject, false);
+    }
+   public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject, boolean noNullArrays) throws Exception
+    {
+      switch (exportName)
+        { 
+          case "": tilda.tutorial.data.Form_Factory.toJSON(out, (tilda.tutorial.data.Form_Data) this, lead, fullObject, noNullArrays); break;
+          default: throw new Exception("Unknown JSON exporter '"+exportName+"' for tilda.tutorial.data.Form_Factory");
+        } 
+    }
+   public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject, java.time.ZonedDateTime lastsync) throws Exception
+    {
+      throw new Exception("Unknown JSON sync exporter '"+exportName+"' for tilda.tutorial.data.Form_Factory");
+    }
+   public void toCSV(java.io.Writer out, String exportName) throws Exception
+    {
+      switch (exportName)
+        { 
+          case "": tilda.tutorial.data.Form_Factory.toCSV(out, (tilda.tutorial.data.Form_Data) this); break;
+          default: throw new Exception("Unknown CSV exporter '"+exportName+"' for tilda.tutorial.data.Form_Factory");
+        } 
+    }
+   public void toCSV(java.io.Writer out, String exportName, java.time.ZonedDateTime lastsync) throws Exception
+    {
+      throw new Exception("Unknown CSV sync exporter '"+exportName+"' for tilda.tutorial.data.Form_Factory");
+    }
  }

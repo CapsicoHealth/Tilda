@@ -27,6 +27,7 @@ import org.apache.logging.log4j.Logger;
 import com.google.gson.annotations.SerializedName;
 
 import tilda.enums.ObjectLifecycle;
+import tilda.enums.ObjectMode;
 import tilda.enums.TildaType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.DefaultsHelper;
@@ -41,6 +42,8 @@ public abstract class Base
 
     /*@formatter:off*/
     @SerializedName("name"       ) public String               _Name       = null;
+    @SerializedName("dbOnly"     ) private Boolean              _DBOnly_DEPRECATED;
+    @SerializedName("mode"       ) public String               _ModeStr    ;
     @SerializedName("shortAlias" ) public String               _ShortAlias = null;
     @SerializedName("description") public String               _Description= null;
     @SerializedName("queries"    ) public List<SubWhereClause> _Queries    = new ArrayList<SubWhereClause>();
@@ -60,6 +63,7 @@ public abstract class Base
     public transient Object          _RealizedObj;
     public transient View            _RealizedView;
     public transient boolean         _HasUniqueQuery;
+    public transient ObjectMode      _Mode;
 
     public abstract Column getColumn(String name);
 
@@ -79,6 +83,8 @@ public abstract class Base
         _Name = b._Name;
         _ShortAlias = b._ShortAlias;
         _Description = b._Description;
+        _DBOnly_DEPRECATED = b._DBOnly_DEPRECATED;
+        _ModeStr = b._ModeStr;
 
         // SubWhereClauses are being modified as part of validation, and so we need a clean copy here.
         _Queries = new ArrayList<SubWhereClause>();
@@ -179,6 +185,19 @@ public abstract class Base
           PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring " + _TildaType.name() + " '" + getBaseName() + "' without a description.");
 
         // _Name = _Name.toUpperCase();
+        
+        // if dbOnly has been set, we have to check for deprecation condition
+        if (_DBOnly_DEPRECATED != null)
+          {
+            if (_ModeStr != null)
+              return PS.AddError("Object '" + getFullName() + "' defined both 'dbOnly' and 'mode'. dbOnly is deprecated. Stop using it and use mode=NORMAL|DB_ONLY|CODE_ONLY instead.");
+            else
+              _Mode = _DBOnly_DEPRECATED == true ? ObjectMode.DB_ONLY : ObjectMode.NORMAL;
+          }
+        else if (_ModeStr == null)
+          _Mode = ObjectMode.NORMAL;
+        else if ((_Mode = ObjectMode.parse(_ModeStr)) == null)
+          return PS.AddError("Object '" + getFullName() + "' defined an invalid 'mode' '" + _ModeStr + "'.");
 
         _BaseClassName = "TILDA__" + _Name.toUpperCase();
         _AppDataClassName = _OriginalName + "_Data";

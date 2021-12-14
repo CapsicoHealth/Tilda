@@ -32,8 +32,8 @@ public class ViewRealizeIncremental
     static final Logger LOG            = LogManager.getLogger(ViewRealizeIncremental.class.getName());
 
     /*@formatter:off*/
-    @SerializedName("deleteFirst") public Boolean _deleteFirst  = null;
-    @SerializedName("whereClause") public String  _whereClause  = null;
+    @SerializedName("deleteFirst")  public boolean _deleteFirst  = false;
+    @SerializedName("whereClause")  public String  _whereClause  = null;
     /*@formatter:on*/
 
 

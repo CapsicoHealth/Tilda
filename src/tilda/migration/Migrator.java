@@ -176,19 +176,19 @@ public class Migrator
                   LOG.debug((included == true ? "       " : "       // ") + "(dependency) " + MA.getDescription());
               }
           }
+        LOG.info("");
+        LOG.info("A total of " + counterApplied + " migration steps will be applied.");
+
         List<MigrationDrops> drops = migrationData.getDropList();
         if (drops != null && drops.isEmpty() == false)
           {
-            LOG.info("");
             File F = new File("tilda.migration.drops.sql");
             PrintWriter out = new PrintWriter(new FileOutputStream(F, false));
             for (MigrationDrops d : drops)
               out.println("-- " + d.process());
             out.close();
-            LOG.info("A total of " + drops.size() + " drop actions have been saved to the file " + F.getCanonicalPath() + ".");
+            LOG.info("    - Separately, " + drops.size() + " drop actions have been saved to the file " + F.getCanonicalPath() + ".");
           }
-        LOG.info("");
-        LOG.info("A total of " + counterApplied + " migration steps will be applied.");
       }
 
     public static MigrationDataModel AnalyzeDatabase(Connection C, boolean checkOnly, List<Schema> tildaList, DatabaseMeta DBMeta)
@@ -388,11 +388,11 @@ public class Migrator
                                 if (CMDest == null && CMSrcs.size() == 1)
                                   {
                                     // Add the migration action
-                                    Actions.add(new TableColumnRename(MR._Column, CMSrcs.get(0)._Name));
+                                    Actions.add(new TableColumnRename(MR._Column, CMSrcs.get(0)._NameOriginal));
                                     // Rename table to avoid double-creation later in this loop
                                     // i.e., the table didn't exist in this schema when the database was originally scanned (DBMeta).
                                     if (DBMeta.getSchemaMeta(MR._Object._ParentSchema._Name).renameTableColumn(DBMeta, TM, CMSrcs.get(0)._Name, MR._Column.getName()) == false)
-                                      throw new Exception("An error occurred: Column '" + CMSrcs.get(0)._ParentTable._SchemaName + "." + CMSrcs.get(0)._ParentTable._TableName + "." + CMSrcs.get(0)._Name + "' is being renamed to '" + MR._ColumnName + "' but seems to already exist there even though we just tested that a second ago and found nothing!");
+                                      throw new Exception("An error occurred: Column '" + CMSrcs.get(0).getParentTable()._SchemaName + "." + CMSrcs.get(0).getParentTable()._TableName + "." + CMSrcs.get(0)._Name + "' is being renamed to '" + MR._ColumnName + "' but seems to already exist there even though we just tested that a second ago and found nothing!");
                                   }
                               }
                           }
@@ -463,10 +463,10 @@ public class Migrator
 
         for (Object Obj : S._Objects)
           {
-
             if (Obj == null)
               continue;
-            if (Obj._FST == FrameworkSourcedType.VIEW || Obj._Mode == ObjectMode.CODE_ONLY == true)
+            // No need to migrate unless there is a DB artifact
+            if (Obj._FST == FrameworkSourcedType.VIEW || Obj._Mode == ObjectMode.CODE_ONLY || Obj._Mode == ObjectMode.NONE)
               continue;
 
             TableMeta TMeta = DBMeta.getTableMeta(Obj._ParentSchema._Name, Obj._Name);
@@ -509,10 +509,14 @@ public class Migrator
                             NeedsDdlDependencyManagement = true;
                           }
 
+                        //
+                        //@formatter:off
                         boolean condition1 = Col.isCollection() == false
-                        && (Col.getType() == ColumnType.BITFIELD && CMeta._TildaType != ColumnType.INTEGER
-                        || Col.getType() == ColumnType.JSON && CMeta._TildaType != ColumnType.STRING && CMeta._TildaType != ColumnType.JSON
-                        || Col.getType() != ColumnType.BITFIELD && Col.getType() != ColumnType.JSON && Col.getType() != CMeta._TildaType);
+                             && (   Col.getType() == ColumnType.BITFIELD && CMeta._TildaType != ColumnType.INTEGER
+                                 || Col.getType() == ColumnType.JSON && CMeta._TildaType == ColumnType.STRING // && CMeta._TildaType != ColumnType.JSON
+                                 || Col.getType() != ColumnType.BITFIELD && Col.getType() != ColumnType.JSON && Col.getType() != CMeta._TildaType
+                                );
+                        //@formatter:on
 
 
                         // We have to check if someone changed goal-posts for VARCHAR and CLOG thresholds.
@@ -534,7 +538,7 @@ public class Migrator
                           {
                             // Are the to/from types compatible?
                             if (Col.getType().isDBCompatible(CMeta._TildaType) == false)
-                              throw new Exception("Type incompatbility requested for an alter column " + Col.getShortName() + ": cannot alter from " + CMeta._TildaType + " to " + Col.getType() + ".");
+                              throw new Exception("Type incompatbility requested for an alter column " + Col.getShortName() + ": cannot alter from " + CMeta._TildaType + " in the database to " + Col.getType() + ".");
 
                             CAM.addColumnAlterType(CMeta, Col);
                             NeedsDdlDependencyManagement = true;
@@ -554,6 +558,9 @@ public class Migrator
                                 NeedsDdlDependencyManagement = true;
                               }
                           }
+                        else if (Col.getType() != CMeta._TildaType)
+                          throw new Exception("A type migration for column " + Col.getShortName() + " from " + CMeta._TildaType + " in the database to " + Col.getType() + " is not available: manual migration is required.");
+
                         if (CMeta._Nullable == 1 && Col._Nullable == false || CMeta._Nullable == 0 && Col._Nullable == true)
                           Actions.add(new ColumnAlterNull(Col));
                       }

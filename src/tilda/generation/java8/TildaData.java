@@ -269,6 +269,21 @@ public class TildaData implements CodeGenTildaData
                   Out.println("\" }");
                 }
             Out.println("                                  };");
+            
+            Out.println("   public static final boolean check" + TextUtil.capitalizeFirstCharacter(C.getName()) + "(" + JavaJDBCType.getFieldType(C) + " v)");
+            Out.println("    {");
+            Out.println("      for (String[] a : _"+ C.getName() + "_Values)");
+            Out.println("       if (a[0].equals(v) == true)");
+            Out.println("        return true;");
+            Out.println("      return false;");
+            Out.println("    }");
+            Out.println("   public static final String map" + TextUtil.capitalizeFirstCharacter(C.getName()) + "(" + JavaJDBCType.getFieldType(C) + " v)");
+            Out.println("    {");
+            Out.println("      for (String[] a : _"+ C.getName() + "_Values)");
+            Out.println("       if (a[0].equals(v) == true)");
+            Out.println("        return a[2];");
+            Out.println("      return null;");
+            Out.println("    }");
           }
 
         for (ColumnValue V : C._Values)

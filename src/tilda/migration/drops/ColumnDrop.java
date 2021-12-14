@@ -23,7 +23,7 @@ public class ColumnDrop extends MigrationDrops
   {
     public ColumnDrop(ColumnMeta Col)
       {
-        super(Col._ParentTable._SchemaName, Col._ParentTable._TableName);
+        super(Col.getParentTable()._SchemaName, Col.getParentTable()._TableName);
         _Col = Col;
       }
 

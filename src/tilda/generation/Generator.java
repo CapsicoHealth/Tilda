@@ -77,7 +77,7 @@ public class Generator
         genTildaSupport(G, GenFolder, S);
 
         for (Object O : S._Objects)
-          if (O != null && O._Mode != ObjectMode.DB_ONLY)
+          if (O != null && (O._Mode == ObjectMode.NORMAL || O._Mode == ObjectMode.CODE_ONLY))
             {
               LOG.debug("  Generating Tilda classes for Object '" + O.getFullName() + "'.");
               genTildaData(G, GenFolder, O);
@@ -116,7 +116,7 @@ public class Generator
         CG.genFileStart(Out, S);
 
         for (Object O : S._Objects)
-          if (O != null && O._FST != FrameworkSourcedType.VIEW && O._Mode != ObjectMode.CODE_ONLY)
+          if (O != null && O._FST != FrameworkSourcedType.VIEW && (O._Mode == ObjectMode.NORMAL || O._Mode == ObjectMode.DB_ONLY))
             {
               Out.println();
               Out.println();
@@ -127,7 +127,7 @@ public class Generator
         Out.println();
 
         for (View V : S._Views)
-          if (V != null)
+          if (V != null && (V._Mode == ObjectMode.NORMAL || V._Mode == ObjectMode.DB_ONLY))
             {
               Out.println();
               Out.println();
@@ -153,7 +153,7 @@ public class Generator
           throw new Exception("Cannot create the Tilda folder " + GenFolder.getAbsolutePath());
 
         for (Object O : S._Objects)
-          if (O != null && O._FST != FrameworkSourcedType.VIEW && O._Mode != ObjectMode.CODE_ONLY)
+          if (O != null && O._FST != FrameworkSourcedType.VIEW && (O._Mode == ObjectMode.NORMAL || O._Mode == ObjectMode.DB_ONLY))
             {
               File f = new File(GenFolder.getAbsolutePath() + File.separator + "bq." + O._Name + ".json");
               PrintWriter Out = new PrintWriter(f);
@@ -162,7 +162,7 @@ public class Generator
             }
 
         for (View V : S._Views)
-          if (V != null)
+          if (V != null && (V._Mode == ObjectMode.NORMAL || V._Mode == ObjectMode.DB_ONLY))
             {
               File f = new File(GenFolder.getAbsolutePath() + File.separator + "bq." + V._Name + ".json");
               PrintWriter Out = new PrintWriter(f);

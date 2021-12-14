@@ -76,13 +76,13 @@ public class JobHelper
               return null;
           }
         String stats = null;
-        try // Bad Google... job.getStatistics can throw on nullptr on their own internal API calls.
+        try // Bad Google... job.getStatistics can throw nullptr on their own internal API calls.
           {
             stats = job.getStatistics().toString();
           }
         catch (Exception E)
           {
-            LOG.warn("job.getStatistics() threw:\n", E);
+            LOG.warn("job.getStatistics() threw an exception:\n", E);
             stats = E.getMessage();
           }
         LOG.info("BigQuery job completed successfully.\n" + stats + "\n");

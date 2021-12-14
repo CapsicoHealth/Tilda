@@ -1,44 +1,22 @@
 [
-    { "name":"refnum", "type":"INT64", "mode":"NULLABLE", "description":"The primary key for this record (from TILDATEST.Testing4View.refnum)" }
-   ,{ "name":"name", "type":"STRING", "mode":"NULLABLE", "description":"Medical system unique enterprise id (from TILDATEST.Testing4View.name)" }
-   ,{ "name":"a1", "type":"BYTES", "mode":"NULLABLE", "description":"The blah (from TILDATEST.Testing4View.a1)" }
-   ,{ "name":"a3b", "type":"BOOL", "mode":"REPEATED", "description":"The blah (from TILDATEST.Testing4View.a3b)" }
-   ,{ "name":"a4", "type":"FLOAT64", "mode":"NULLABLE", "description":"The blah (from TILDATEST.Testing4View.a4)" }
-   ,{ "name":"a4b", "type":"FLOAT64", "mode":"REPEATED", "description":"The blah (from TILDATEST.Testing4View.a4b)" }
-   ,{ "name":"a5", "type":"FLOAT64", "mode":"NULLABLE", "description":"The blah (from TILDATEST.Testing4View.a5)" }
-   ,{ "name":"a5b", "type":"FLOAT64", "mode":"REPEATED", "description":"The blah (from TILDATEST.Testing4View.a5b)" }
-   ,{ "name":"a7", "type":"INT64", "mode":"NULLABLE", "description":"The blah (from TILDATEST.Testing4View.a7)" }
-   ,{ "name":"a7b", "type":"INT64", "mode":"REPEATED", "description":"The blah (from TILDATEST.Testing4View.a7b)" }
-   ,{ "name":"a8", "type":"BYTES", "mode":"NULLABLE", "description":"The blah (from TILDATEST.Testing4View.a8)" }
-   ,{ "name":"a8bTZ", "type":"STRING", "mode":"NULLABLE", "description":"Generated helper column to hold the time zone ID for 'a8b'. (from TILDATEST.Testing4View.a8bTZ)" }
-   ,{ "name":"a8b", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"The blah (from TILDATEST.Testing4View.a8b)" }
-   ,{ "name":"a10a", "type":"INT64", "mode":"NULLABLE", "description":"The blah (from TILDATEST.Testing4View.a10a)" }
-   ,{ "name":"a10b", "type":"STRING", "mode":"NULLABLE", "description":"The blah (from TILDATEST.Testing4View.a10b)" }
-   ,{ "name":"a10c", "type":"INT64", "mode":"NULLABLE", "description":"The blah (from TILDATEST.Testing4View.a10c)" }
-   ,{ "name":"a11", "type":"NUMERIC", "mode":"NULLABLE", "description":"The blah (from TILDATEST.Testing4View.a11)" }
-   ,{ "name":"a11b", "type":"NUMERIC", "mode":"REPEATED", "description":"The blah (from TILDATEST.Testing4View.a11b)" }
-   ,{ "name":"a11c", "type":"NUMERIC", "mode":"NULLABLE", "description":"The blah (from TILDATEST.Testing4View.a11c)" }
-   ,{ "name":"a12", "type":"INT64", "mode":"NULLABLE", "description":"The blah (from TILDATEST.Testing4View.a12)" }
-   ,{ "name":"a12b", "type":"INT64", "mode":"REPEATED", "description":"The blah (from TILDATEST.Testing4View.a12b)" }
-   ,{ "name":"a13", "type":"STRING", "mode":"NULLABLE", "description":"The blah (from TILDATEST.Testing4View.a13)" }
-   ,{ "name":"a13b", "type":"STRING", "mode":"REPEATED", "description":"The blah (from TILDATEST.Testing4View.a13b)" }
-   ,{ "name":"description", "type":"STRING", "mode":"NULLABLE", "description":"The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing4View.description)" }
-   ,{ "name":"desc2", "type":"STRING", "mode":"NULLABLE", "description":"The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing4View.desc2)" }
-   ,{ "name":"desc3", "type":"STRING", "mode":"NULLABLE", "description":"The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing4View.desc3)" }
-   ,{ "name":"desc4", "type":"STRING", "mode":"NULLABLE", "description":"The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing4View.desc4)" }
-   ,{ "name":"desc5", "type":"STRING", "mode":"NULLABLE", "description":"The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing4View.desc5)" }
-   ,{ "name":"desc6", "type":"STRING", "mode":"NULLABLE", "description":"The title for a person, i.e., Mr, Miss, Mrs... (from TILDATEST.Testing4View.desc6)" }
-   ,{ "name":"bastille", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"<B>Bastille Day</B>: Blah... (from TILDATEST.Testing4View.bastille)" }
-   ,{ "name":"toto", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"<B>Last Updated</B>: Blah... (from TILDATEST.Testing4View.toto)" }
-   ,{ "name":"desc2_Cat1", "type":"FLOAT64", "mode":"NULLABLE", "description":"<B>desc2_Cat1 Title</B>: This formula checks whether the column 'desc2' contains the values 'a', 'b', 'c' for the View TILDATEST.Testing2View. (from TILDATEST.Testing4View.desc2_Cat1)" }
-   ,{ "name":"desc2_Cat2", "type":"FLOAT64", "mode":"NULLABLE", "description":"<B>desc2_Cat2 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View. (from TILDATEST.Testing4View.desc2_Cat2)" }
-   ,{ "name":"desc2_Cat3", "type":"FLOAT64", "mode":"NULLABLE", "description":"<B>desc2_Cat3 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View. (from TILDATEST.Testing4View.desc2_Cat3)" }
-   ,{ "name":"a7_Cat4", "type":"FLOAT64", "mode":"NULLABLE", "description":"<B>a7_Cat4 Title</B>: This formula checks whether the column 'a7' value falls in the range of 0.0 and 10.0. (from TILDATEST.Testing4View.a7_Cat4)" }
-   ,{ "name":"a7_Cat5", "type":"FLOAT64", "mode":"NULLABLE", "description":"<B>a7_Cat5 Title</B>: This formula checks whether the column 'a7' value falls in the range of 10.0 and 20.0. (from TILDATEST.Testing4View.a7_Cat5)" }
-   ,{ "name":"a5_null", "type":"INT64", "mode":"NULLABLE", "description":"<B>Null a5</B>: Whether a5 is null or not (from TILDATEST.Testing4View.a5_null)" }
-   ,{ "name":"a6_null", "type":"INT64", "mode":"NULLABLE", "description":"<B>Null a6</B>: Whether a6 is null or not (from TILDATEST.Testing4View.a6_null)" }
-   ,{ "name":"a7_null", "type":"INT64", "mode":"NULLABLE", "description":"<B>Null a7</B>: Whether a7 is null or not (from TILDATEST.Testing4View.a7_null)" }
-   ,{ "name":"a8_null", "type":"INT64", "mode":"NULLABLE", "description":"<B>Null a8</B>: Whether a8 is null or not (from TILDATEST.Testing4View.a8_null)" }
-   ,{ "name":"a3", "type":"BOOL", "mode":"NULLABLE", "description":"<B>Always True</B>: Blah... (from TILDATEST.Testing4View.a3)" }
-   ,{ "name":"lastUpdated", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"<B>Always True</B>: Blah... (from TILDATEST.Testing4View.lastUpdated)" }
+    { "name":"refnum", "type":"INT64", "mode":"NULLABLE", "description":"The primary key for this record" }
+   ,{ "name":"name", "type":"STRING", "mode":"NULLABLE", "description":"Medical system unique enterprise id" }
+   ,{ "name":"description", "type":"STRING", "mode":"NULLABLE", "description":"The title for a person, i.e., Mr, Miss, Mrs..." }
+   ,{ "name":"desc2", "type":"STRING", "mode":"NULLABLE", "description":"The title for a person, i.e., Mr, Miss, Mrs..." }
+   ,{ "name":"desc3", "type":"STRING", "mode":"NULLABLE", "description":"The title for a person, i.e., Mr, Miss, Mrs..." }
+   ,{ "name":"desc4", "type":"STRING", "mode":"NULLABLE", "description":"The title for a person, i.e., Mr, Miss, Mrs..." }
+   ,{ "name":"desc5", "type":"STRING", "mode":"NULLABLE", "description":"The title for a person, i.e., Mr, Miss, Mrs..." }
+   ,{ "name":"desc6", "type":"STRING", "mode":"NULLABLE", "description":"The title for a person, i.e., Mr, Miss, Mrs..." }
+   ,{ "name":"bastille", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"<B>Bastille Day</B>: Blah..." }
+   ,{ "name":"toto", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"<B>Last Updated</B>: Blah..." }
+   ,{ "name":"desc2_Cat1", "type":"FLOAT64", "mode":"NULLABLE", "description":"<B>desc2_Cat1 Title</B>: This formula checks whether the column 'desc2' contains the values 'a', 'b', 'c' for the View TILDATEST.Testing2View." }
+   ,{ "name":"desc2_Cat2", "type":"FLOAT64", "mode":"NULLABLE", "description":"<B>desc2_Cat2 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View." }
+   ,{ "name":"desc2_Cat3", "type":"FLOAT64", "mode":"NULLABLE", "description":"<B>desc2_Cat3 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View." }
+   ,{ "name":"a7_Cat4", "type":"FLOAT64", "mode":"NULLABLE", "description":"<B>a7_Cat4 Title</B>: This formula checks whether the column 'a7' value falls in the range of 0.0 and 10.0." }
+   ,{ "name":"a7_Cat5", "type":"FLOAT64", "mode":"NULLABLE", "description":"<B>a7_Cat5 Title</B>: This formula checks whether the column 'a7' value falls in the range of 10.0 and 20.0." }
+   ,{ "name":"a5_null", "type":"INT64", "mode":"NULLABLE", "description":"<B>Null a5</B>: Whether a5 is null or not" }
+   ,{ "name":"a6_null", "type":"INT64", "mode":"NULLABLE", "description":"<B>Null a6</B>: Whether a6 is null or not" }
+   ,{ "name":"a7_null", "type":"INT64", "mode":"NULLABLE", "description":"<B>Null a7</B>: Whether a7 is null or not" }
+   ,{ "name":"a3", "type":"BOOL", "mode":"NULLABLE", "description":"<B>Always True</B>: Blah..." }
+   ,{ "name":"lastUpdated", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"<B>Always True</B>: Blah..." }
 ]

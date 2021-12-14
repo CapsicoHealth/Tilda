@@ -19,6 +19,7 @@ package tilda.db.processors;
 import java.io.FileNotFoundException;
 import java.io.Writer;
 
+import org.apache.commons.io.output.StringBuilderWriter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -55,7 +56,16 @@ public class ExporterJSONObjectProcessor<T extends JSONable> extends ExporterObj
     public boolean process(int count, T obj)
     throws Exception
       {
-//        LOG.debug("------------> "+count);
+
+// LDH-NOTE: for debugging purpose only... Don't print to the logs potentially sensitive info.  
+/*
+        if (count == 0)
+         {
+           StringBuilderWriter strOut = new StringBuilderWriter();
+           obj.toJSON(strOut, "", "", true, true);
+           LOG.debug(strOut.getBuilder().toString());
+         }
+*/
         if (_jsonLines == false)
           obj.toJSON(_out, "", count == 0 ? "   " : "  ,", true, true);
         else

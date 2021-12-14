@@ -17,7 +17,7 @@
 package tilda.types;
 
 
-public class Type_FloatCollectionNull extends Type_FloatCollectionNotNull implements Nullable
+public class Type_FloatCollectionNull extends Type_FloatCollection implements Nullable
   {
     public Type_FloatCollectionNull(String SchemaName, String TableName, String ColumnName, int Count, String Description, String[] expressionStrs, String[] expressionsDependencies)
       {

@@ -17,7 +17,7 @@
 package tilda.types;
 
 
-public class Type_DateCollectionNull extends Type_DatetimeCollection implements Nullable
+public class Type_DateCollectionNull extends Type_DateCollection implements Nullable
   {
     public Type_DateCollectionNull(String SchemaName, String TableName, String ColumnName, int Count, String Description, String[] expressionStrs, String[] expressionsDependencies)
       {

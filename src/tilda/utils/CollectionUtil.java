@@ -544,6 +544,19 @@ public class CollectionUtil
         return L;
       }
 
+    public static short[] toShortArray(String[] v)
+    throws Exception
+      {
+        short[] result = new short[v.length];
+        for (int i = 0; i < v.length; ++i)
+          {
+            result[i] = ParseUtil.parseShort(v[i], SystemValues.EVIL_VALUE);
+            if (result[i] == SystemValues.EVIL_VALUE)
+              throw new Exception("Short integer value #" + i + " coming in as " + v[i] + ".");
+          }
+        return result;
+      }
+
     public static int[] toIntArray(String[] v)
     throws Exception
       {

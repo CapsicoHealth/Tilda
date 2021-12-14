@@ -84,7 +84,7 @@
         { "name": "a6d"          , "type": "DATETIME"   ,                                                       "description": "The blah"},
         { "name": "a7"           , "type": "INTEGER"    ,                                                       "description": "The blah"},
         { "name": "a7b"          , "type": "INTEGER[]"  ,                                                       "description": "The blah"},
-        { "name": "a8"           , "type": "BINARY"     ,                                                       "description": "The blah"},
+//        { "name": "a8"           , "type": "BINARY"     ,                                                       "description": "The blah"},
         { "name": "a8b"          , "type": "DATETIME"   ,                                                       "description": "The blah"},
         { "name": "a9"           , "type": "DATETIME"   , "default":"NOW",                                      "description": "The blah"},
         { "name": "a9a1"         , "type": "DATETIME"   , "default":"UNDEFINED",                                "description": "The blah"},
@@ -199,10 +199,10 @@
          ,{ "sameas": "Testing.lastUpdated"                }
          ,{ "sameas": "Testing.lastUpdated"                , "name":"xxxLastUpdated"}
          ,{ "sameas": "Testing.created",   "joinOnly":true }
-         ,{ "sameas": "Testing.a*" 
-           ,"exclude":["a2*"]
-           ,"block"  :["a3", "a6*", "a9*"]
-          }
+//         ,{ "sameas": "Testing.a*" 
+//           ,"exclude":["a2*"]
+//           ,"block"  :["a3", "a6*", "a9*"]
+//          }
          ,{ "sameas": "Testing.desc*"                      }
         ]
       ,"subWhereX":{
@@ -259,7 +259,7 @@
                     { "name":"a5", "title":"a5", "expr":"a5", "description":"a5" }
                    ,{ "name":"a6", "title":"a6", "expr":"a6" }
                    ,{ "name":"a7", "title":"a7" }
-                   ,{ "name":"a8" }
+//                   ,{ "name":"a8" }
                   ]
                }
              ]

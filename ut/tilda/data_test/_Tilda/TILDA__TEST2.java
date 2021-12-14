@@ -1091,8 +1091,26 @@ This is the hasChanged for:<BR>
 */
    public void copyTo(tilda.data_test._Tilda.TILDA__TEST2 Dst) throws Exception
      {
-       Dst.setLastUpdated(_lastUpdated);
-       if (__Nulls.intersects(TILDA__TEST2_Factory.COLS.DELETED._Mask) == true) Dst.setDeletedNull    (); else        Dst.setDeleted    (_deleted    );
+       if (_name        != null)
+        Dst.setName       (_name       );
+       if (_test_fk     != null)
+        Dst.setTest_fk    (_test_fk    );
+       if (_created     != null)
+        Dst.setCreated    (_created    );
+       if (_lastUpdated != null)
+        Dst.setLastUpdated(_lastUpdated);
+       if (__Nulls.intersects(TILDA__TEST2_Factory.COLS.DELETED._Mask) == true || _deleted    ==null)
+        Dst.setDeletedNull    ();
+       else
+        Dst.setDeleted    (_deleted    );
+     }
+
+
+   public tilda.data_test.Test2_Data copy() throws Exception
+     {
+       tilda.data_test.Test2_Data dst = new tilda.data_test.Test2_Data();
+       copyTo(dst);
+       return dst;
      }
 
 /**

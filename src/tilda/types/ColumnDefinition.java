@@ -28,6 +28,7 @@ import tilda.db.Connection;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.interfaces.JSONable;
+import tilda.parsing.parts.helpers.ValueHelper;
 import tilda.utils.TextUtil;
 import tilda.utils.json.JSONUtil;
 
@@ -35,7 +36,7 @@ public class ColumnDefinition implements JSONable
   {
     protected static final Logger LOG = LogManager.getLogger(ColumnDefinition.class.getName());
 
-    public ColumnDefinition(String SchemaName, String TableName, String ColumnName, int Count, ColumnType Type, boolean Collection, String Description, String[] expressionStrs, String[] expressionDependencyColumnNames)
+    public ColumnDefinition(String SchemaName, String TableName, String ColumnName, int Count, ColumnType Type, boolean Collection, String Description, String[] expressionStrs, String[] expressionDependencyColumnNames, String[][] values)
       {
         _SchemaName = SchemaName;
         _TableName = TableName;
@@ -48,6 +49,17 @@ public class ColumnDefinition implements JSONable
         _Description = Description;
         _expressionStrs = expressionStrs;
         _expressionDependencyColumnNames = expressionDependencyColumnNames;
+        _values = values;
+      }
+
+    public ColumnDefinition(String SchemaName, String TableName, String ColumnName, int Count, ColumnType Type, boolean Collection, String Description, String[] expressionStrs, String[] expressionDependencyColumnNames)
+      {
+        this(SchemaName, TableName, ColumnName, Count, Type, Collection, Description, expressionStrs, expressionDependencyColumnNames, null);
+      }
+
+    public ColumnDefinition(String SchemaName, String TableName, String ColumnName, int Count, ColumnType Type, boolean Collection, String Description)
+      {
+        this(SchemaName, TableName, ColumnName, Count, Type, Collection, Description, null, null, null);
       }
 
     public static final int _MAX_COL_COUNT = 512;
@@ -58,6 +70,7 @@ public class ColumnDefinition implements JSONable
     final String            _Description;
     final String[]          _expressionStrs;
     final String[]          _expressionDependencyColumnNames;
+    final String[][]        _values;
     final ColumnType        _Type;
     final boolean           _Collection;
     public final BitSet     _Mask          = new BitSet(64);
@@ -159,14 +172,28 @@ public class ColumnDefinition implements JSONable
         return _expressionDependencyColumnNames;
       }
 
+    public String[][] getValues()
+      {
+        return _values;
+      }
+
     public static ColumnDefinition create(String SchemaName, String TableName, String ColumnName, ColumnType Type, boolean Collection, boolean Nullable, String Description)
       {
         String ClassName = "tilda.types.Type_" + Type._SimpleName + (Collection == true ? "Collection" : "Primitive") + (Nullable == true ? "Null" : "");
         try
           {
             Class<?> C = Class.forName(ClassName);
-            Constructor<?> cons = C.getConstructor(String.class, String.class, String.class, Integer.TYPE, String.class, String[].class, String[].class);
-            return (ColumnDefinition) cons.newInstance(SchemaName, TableName, ColumnName, 0, Description, null, null);
+            if (ValueHelper.isSuported(Type) == true && Collection == false)
+              {
+                Constructor<?> cons = C.getConstructor(String.class, String.class, String.class, Integer.TYPE, String.class, String[].class, String[].class, String[][].class);
+                return (ColumnDefinition) cons.newInstance(SchemaName, TableName, ColumnName, 0, Description, null, null, null);
+              }
+            else
+              {
+                Constructor<?> cons = C.getConstructor(String.class, String.class, String.class, Integer.TYPE, String.class, String[].class, String[].class);
+                return (ColumnDefinition) cons.newInstance(SchemaName, TableName, ColumnName, 0, Description, null, null);
+              }
+
           }
         catch (Exception E)
           {
@@ -264,6 +291,7 @@ public class ColumnDefinition implements JSONable
         JSONUtil.print(out, "type", ++i == 0, getType().name());
         JSONUtil.print(out, "description", ++i == 0, getDescription());
         JSONUtil.print(out, "formula", ++i == 0, getExpression());
+        JSONUtil.print(out, "values", ++i == 0, getValues(), lead+lead);
 
         if (fullObject == true)
           out.write(" }\n");

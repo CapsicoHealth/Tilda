@@ -34,7 +34,6 @@ import tilda.enums.ObjectMode;
 import tilda.enums.OutputFormatType;
 import tilda.enums.TildaType;
 import tilda.parsing.ParserSession;
-import tilda.parsing.parts.helpers.DefaultsHelper;
 import tilda.types.ColumnDefinition;
 
 public class Object extends Base
@@ -44,9 +43,7 @@ public class Object extends Base
 
     /*@formatter:off*/
     @SerializedName("occ"           ) public boolean              _OCC        = true ;
-    @SerializedName("dbOnly"        ) public Boolean              _DBOnly_DEPRECATED;
     @SerializedName("tzFk"          ) public Boolean              _TZFK       = true;
-    @SerializedName("mode"          ) public String               _ModeStr    ;
     @SerializedName("etl"           ) public boolean              _ETL        = false;
     @SerializedName("lc"            ) public String               _LCStr      ;
     @SerializedName("cloneAs"       ) public Cloner[]             _CloneAs    ;
@@ -66,7 +63,6 @@ public class Object extends Base
     public transient View                 _SourceView   = null;                                        // For tables such as Realized tables generated out of views.
     public transient Object               _SourceObject = null;                                        // For tables such as Realized tables generated out of views.
     public transient ObjectLifecycle      _LC;
-    public transient ObjectMode           _Mode;
 
     public Object()
       {
@@ -77,9 +73,7 @@ public class Object extends Base
       {
         super(obj);
         _OCC = obj._OCC;
-        _DBOnly_DEPRECATED = obj._DBOnly_DEPRECATED;
         _TZFK = obj._TZFK;
-        _ModeStr = obj._ModeStr;
         _ETL = obj._ETL;
         _LCStr = obj._LCStr;
         for (Column C : obj._Columns)
@@ -270,19 +264,6 @@ public class Object extends Base
             if (I._Unique == true)
               _HasUniqueIndex = true;
           }
-
-        // if dbOnly has been set, we have to check for deprecation condition
-        if (_DBOnly_DEPRECATED != null)
-          {
-            if (_ModeStr != null)
-              return PS.AddError("Object '" + getFullName() + "' defined both 'dbOnly' and 'mode'. dbOnly is deprecated. Stop using it and use mode=NORMAL|DB_ONLY|CODE_ONLY instead.");
-            else
-              _Mode = _DBOnly_DEPRECATED == true ? ObjectMode.DB_ONLY : ObjectMode.NORMAL;
-          }
-        else if (_ModeStr == null)
-          _Mode = ObjectMode.NORMAL;
-        else if ((_Mode = ObjectMode.parse(_ModeStr)) == null)
-          return PS.AddError("Object '" + getFullName() + "' defined an invalid 'mode' '" + _ModeStr + "'.");
 
         // If an object is CODE_ONLY, then it can only be READ_ONLY, i.e., selects. Since CODE_ONLY objects are meant
         // to be used with complex queries matching a known set of columns, there is nothing to insert, update or delete.

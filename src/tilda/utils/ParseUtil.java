@@ -33,8 +33,6 @@ public class ParseUtil
     protected static final Logger LOG = LogManager.getLogger(ParseUtil.class.getName());
 
     
-    
-    
     /************************************************************************************************************************
      * STRINGS
      ************************************************************************************************************************/
@@ -54,7 +52,7 @@ public class ParseUtil
             Errors.add(new StringStringPair(Name, "Mandatory Parameter"));
             return null;
           }
-        return Value;
+        return Value == null ? null : Value.trim();
       }
 
     /**
@@ -71,7 +69,7 @@ public class ParseUtil
         if (Values != null)
           for (String v : Values)
             if (TextUtil.isNullOrEmpty(v) == false)
-              l.add(v);
+              l.add(v.trim());
         if (l.isEmpty() == true)
           {
             if (Mandatory == true)
@@ -856,6 +854,16 @@ public class ParseUtil
       {
         return Val != null && (Val.equals("1") || Val.equalsIgnoreCase("Y") || Val.equalsIgnoreCase("T") || Val.equalsIgnoreCase("YES") || Val.equalsIgnoreCase("TRUE"));
       }
+    
+    public static Boolean parseBoolean(String Val, Boolean Default)
+      {
+        if (Val != null && (Val.equals("1") || Val.equalsIgnoreCase("Y") || Val.equalsIgnoreCase("T") || Val.equalsIgnoreCase("YES") || Val.equalsIgnoreCase("TRUE")))
+         return Boolean.TRUE;
+        if (Val != null && (Val.equals("0") || Val.equalsIgnoreCase("N") || Val.equalsIgnoreCase("F") || Val.equalsIgnoreCase("NO") || Val.equalsIgnoreCase("FALSE")))
+         return Boolean.FALSE;
+        return Default;
+      }
+
 
     /**
      * @param Name

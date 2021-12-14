@@ -22,6 +22,7 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringReader;
 import java.io.Writer;
+import java.math.BigDecimal;
 import java.text.Normalizer;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -292,7 +293,6 @@ public class TextUtil
       {
         escapeSomethingWithSomething(x, '"', "\"", str, "\"", "\"");
       }
-
 
     public static final String escapeSingleQuoteWithSlashDouble(String str)
       {
@@ -772,6 +772,7 @@ public class TextUtil
         return true;
       }
 
+/*
     public static boolean isAllJavaIdentifier(String Str)
       {
         if (Str == null)
@@ -784,20 +785,33 @@ public class TextUtil
           }
         return true;
       }
-
+*/
     public static boolean isJavaIdentifier(String Str)
       {
-        if (Str == null || Str.length() == 0 || !Character.isJavaIdentifierStart(Str.charAt(0)))
+        if (Str == null || Str.length() == 0 || Character.isJavaIdentifierStart(Str.charAt(0)) == false)
           return false;
 
         for (int i = 1; i < Str.length(); i++)
           {
-            if (!Character.isJavaIdentifierPart(Str.charAt(i)))
+            if (Character.isJavaIdentifierPart(Str.charAt(i)) == false)
               return false;
           }
         return true;
       }
 
+    public static boolean isJavaIdentifierWithSpacesAndDashes(String Str)
+      {
+        if (Str == null || Str.length() == 0 || Character.isJavaIdentifierStart(Str.charAt(0)) == false)
+          return false;
+
+        for (int i = 1; i < Str.length(); i++)
+          {
+            if (Character.isJavaIdentifierPart(Str.charAt(i)) == false && Str.charAt(i) != ' ' && Str.charAt(i) != '-')
+              return false;
+          }
+        return true;
+      }
+    
     public static String processTextToHTMLParagraphs(String Text, String StyleClass)
       {
         Text = Text.replace("<br>", "</P><P class='" + StyleClass + "'>");

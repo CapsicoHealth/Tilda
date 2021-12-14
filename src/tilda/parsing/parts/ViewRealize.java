@@ -199,7 +199,7 @@ public class ViewRealize
 
         // We can't just copy the OCC status of the view because we don't know which columns are actually used.
         O._OCC = O.getColumn("created") != null && O.getColumn("lastUpdated") != null && O.getColumn("deleted") != null;
-        O._ModeStr = ParentView._DBOnly == true || targetSchema != null ? ObjectMode.DB_ONLY.toString() : ObjectMode.NORMAL.toString();
+        O._ModeStr = targetSchema != null ? ObjectMode.DB_ONLY.toString() : ParentView._Mode.toString();
 
         ParentView._ParentSchema._Objects.add(O);
         ParentView._RealizedObj = O;

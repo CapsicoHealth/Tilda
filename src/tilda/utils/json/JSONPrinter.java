@@ -246,14 +246,19 @@ public class JSONPrinter
         throw new Exception("A JSON object is being printed out with unclosed elements or arrays: " + TextUtil.print(_NestingStack.iterator()));
       }
 
-    public void print(Writer Out)
+    public void print(Writer Out, String perfMessage)
     throws Exception
       {
-        JSONUtil.startOK(Out, '{');
+        JSONUtil.startOK(Out, '{', perfMessage);
         printRaw(Out);
         JSONUtil.end(Out, '}');
       }
-
+    public void print(Writer Out)
+    throws Exception
+      {
+        print(Out, null);
+      }
+    
     public void printRawObj(Writer Out)
     throws Exception
       {

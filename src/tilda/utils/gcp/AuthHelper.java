@@ -79,7 +79,7 @@ public class AuthHelper
         if (i == 0)
           {
             LOG.error("The GCP credentials key file '" + dataProjectName + ".*.key."+appName+".json' not found in '" + path + "'.");
-            throw new IOException("GCP credentials key file not found.");
+            throw new IOException("GCP credentials key file not found for dataProjectName='"+dataProjectName+" and appName='"+appName+"'.");
           }
         else if (i > 1)
           throw new IOException("There are more than 1 file matching the pattern '" + dataProjectName + ".*.key."+appName+".json' in '" + path + "' for GCP credentials key files: only 1 was expected.");

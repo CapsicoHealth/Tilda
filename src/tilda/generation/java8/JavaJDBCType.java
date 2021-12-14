@@ -30,7 +30,7 @@ public enum JavaJDBCType
   {
 
     /*@formatter:off*/
-    STRING  ("String"       , String.class       , "String    ", "CHAR      "             , ColumnType.STRING  ),
+    STRING  ("String"       , String.class       , "String    ", "VARCHAR   "             , ColumnType.STRING  ),
     JSON    ("String"       , String.class       , "String    ", "CHAR      "             , ColumnType.JSON    ),
     CHAR    ("char"         , Character.class    , "String    ", "CHAR      "             , ColumnType.CHAR    ),
     SHORT   ("short"        , Short.class        , "Short     ", "SMALLINT  "             , ColumnType.SHORT   ),
