@@ -660,6 +660,7 @@ for v_curr in
                            join pg_class rwr_cl on rwr.ev_class = rwr_cl.oid
                            join pg_namespace rwr_nsp on rwr_cl.relnamespace = rwr_nsp.oid
                         where dep.deptype = 'n'
+                          and dep.refclassid = 'pg_class'::regclass
                           and dep.classid = 'pg_rewrite'::regclass
                      ) deps
                   join recursive_deps on upper(deps.ref_schema) = upper(recursive_deps.obj_schema) and upper(deps.ref_name) = upper(recursive_deps.obj_name)

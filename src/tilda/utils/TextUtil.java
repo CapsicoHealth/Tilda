@@ -1289,18 +1289,15 @@ public class TextUtil
         for (int i = 0; i < Str.length(); ++i)
           {
             char c = Str.charAt(i);
-            if (c == '<')
-              s.append("&lt;");
-            else if (c == '&')
-              s.append("&amp;");
-            else if (c == '>')
-              s.append("&gt;");
-            else if (c == '"')
-              s.append("&quot;");
-            else if (c == '\'')
-              s.append("&apos;");
-            else
-              s.append(c);
+            switch(c)
+             {
+               case '<': s.append("&lt;"); break;
+               case '&': s.append("&amp;"); break;
+               case '>': s.append("&gt;"); break;
+               case '"': s.append("&quot;"); break;
+               case '\'': s.append("&apos;"); break;
+               default: s.append(c);
+             }
           }
         return s.toString();
       }
