@@ -199,7 +199,8 @@ public class TildaData implements CodeGenTildaData
               {
                 Out.println("   @SerializedName(\"" + C.getName() + "\"" + ")");
                 Out.println("   " + (C.isList() == true ? "List<String>" : C.isSet() == true ? "Set<String>" : "String") + "  Str_" + C.getName() + ";");
-                Out.println("   public void init" + TextUtil.capitalizeFirstCharacter(C.getName()) + "(" + (C.isList() == true ? "List<String>" : C.isSet() == true ? "Set<String>" : "String") + " v) { Str_" + C.getName() + " = v; }");
+                Out.println("   /** Pre-init the field as it would come from a JSON stream, in text form, e.g., timestamps. */");
+                Out.println("   public void initJson_" + TextUtil.capitalizeFirstCharacter(C.getName()) + "(" + (C.isList() == true ? "List<String>" : C.isSet() == true ? "Set<String>" : "String") + " v) { Str_" + C.getName() + " = v; }");
                 Out.println("   public " + (C.isList() == true ? "List<String>" : C.isSet() == true ? "Set<String>" : "String") + " init" + TextUtil.capitalizeFirstCharacter(C.getName()) + "Val(" + ") { return Str_" + C.getName() + "; }");
               }
             Out.println("   transient " + JavaJDBCType.getFieldType(C) + " _" + C.getName() + " = null;");
