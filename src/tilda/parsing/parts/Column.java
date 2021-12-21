@@ -63,6 +63,7 @@ public class Column extends TypeDef
 
     public transient FrameworkColumnType _FCT               = FrameworkColumnType.NONE;
     public transient AggregateType       _Aggregate         = null;                                        // For view columns really.
+    public transient List<OrderBy>       _OrderByObjs       = null;
     public transient ColumnMode          _Mode;
     public transient ProtectionType      _Protect;
     public transient Column              _SameAsObj;
@@ -612,7 +613,7 @@ public class Column extends TypeDef
     @Override
     public String toString()
       {
-        return getClass().getName() + ":" + getFullName() + " (" + super.toString() + ")";
+        return getClass().getName() + ": " + getFullName() + " (" + super.toString() + ")";
 
       }
 

@@ -259,4 +259,16 @@ public class TypeDef
       {
         return _TypeCollection;
       }
+    
+    @Override
+    public String toString()
+     {
+       return _Type==null?"XXX"
+             :_Type.name()+(isList() ? "[]"
+                           :isSet() ? "{}"
+                           :_Type == ColumnType.STRING ? "("+_Size+")"
+                           : ""
+                           );
+                           
+     }
   }

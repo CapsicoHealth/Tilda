@@ -42,6 +42,7 @@ public class ViewColumnWrapper extends Column
         if (VCol._Aggregate != null)
           {
             _Aggregate = VCol._Aggregate;
+            _OrderByObjs   = VCol._OrderByObjs;
             _TypeStr = VCol.getAggregateType().name();
             _Precision = SameAsCol._Precision;
             _Scale = SameAsCol._Scale;

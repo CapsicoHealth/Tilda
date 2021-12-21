@@ -58,6 +58,7 @@ import tilda.parsing.parts.ViewPivot;
 import tilda.parsing.parts.ViewPivotAggregate;
 import tilda.parsing.parts.ViewPivotValue;
 import tilda.parsing.parts.ViewRealizeIncremental;
+import tilda.parsing.parts.helpers.PivotHelper;
 import tilda.parsing.parts.helpers.ValueHelper;
 import tilda.utils.PaddingTracker;
 import tilda.utils.PaddingUtil;
@@ -637,26 +638,11 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 if (TextUtil.isNullOrEmpty(VC._Coalesce) == false && VC._Aggregate != AggregateType.COUNT)
                   Str.append(", " + ValueHelper.printValue(VC._SameAsObj.getName(), VC.getAggregateType(), VC._Coalesce) + ")");
 
-                if (VC._OrderByObjs != null && VC._OrderByObjs.isEmpty() == false)
-                  {
-                    Str.append(" order by ");
-                    boolean First = true;
-                    for (OrderBy OB : VC._OrderByObjs)
-                      {
-                        if (First == true)
-                          First = false;
-                        else
-                          Str.append(", ");
-                        Str.append(TI.getFullName() + ".\"" + OB._Col.getName() + "\" " + OB._Order);
-                        if (OB._Nulls != null)
-                          Str.append(" NULLS " + OB._Nulls);
-
-                      }
-                  }
+                printAggregateOrderBy(Str, VC._OrderByObjs, TI.getFullName());
                 Str.append(")");
                 if (TextUtil.isNullOrEmpty(VC._Filter) == false)
                   {
-                    Str.append(" filter(where ").append(VC._Filter).append(")");
+                    Str.append(" filter (where ").append(VC._Filter).append(")");
                   }
               }
           }
@@ -667,6 +653,26 @@ public class Sql extends PostgreSQL implements CodeGenSql
         if (VC._FormulaOnly == true)
           Str.append(" -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)");
         return hasAggregates;
+      }
+
+    protected void printAggregateOrderBy(StringBuilder Str, List<OrderBy> OrderByObjs, String ObjectFullName)
+      {
+        if (OrderByObjs != null && OrderByObjs.isEmpty() == false)
+          {
+            Str.append(" order by ");
+            boolean First = true;
+            for (OrderBy OB : OrderByObjs)
+              {
+                if (First == true)
+                  First = false;
+                else
+                  Str.append(", ");
+                Str.append(ObjectFullName + ".\"" + OB._Col.getName() + "\" " + OB._Order);
+                if (OB._Nulls != null)
+                  Str.append(" NULLS " + OB._Nulls);
+
+              }
+          }
       }
 
     @Override
@@ -894,7 +900,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
               continue;
             if (TextUtil.findStarElement(V._Realize._Exclude_DEPRECATED, VC._Name, true, 0) != -1)
               continue;
-            if (V.isPivotColumn(VC) == true || V.isPivotAggregate(VC) == true)
+            if (PivotHelper.isPivotColumn(VC) == true || PivotHelper.isPivotAggregate(VC) == true)
               continue;
             if (First == true)
               First = false;
@@ -945,7 +951,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 b.append("--     \"").append(VC._Name).append("\"  REALIZE-EXCLUDED\n");
                 continue;
               }
-            if (V._Pivots.isEmpty() == false && (V.isPivotColumn(VC) == true || V.isPivotAggregate(VC) == true))
+            if (V._Pivots.isEmpty() == false && (PivotHelper.isPivotColumn(VC) == true || PivotHelper.isPivotAggregate(VC) == true))
               {
                 b.append("--     \"").append(VC._Name).append(VC._Aggregate != null ? "\"  PIVOT AGGREGATE\n" : "\"  PIVOTED ON\n");
                 continue;
@@ -1003,7 +1009,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
             ViewColumn VC = V._ViewColumns.get(i);
             if (VC == null)
               continue;
-            if (V.isPivotColumn(VC) == true)
+            if (PivotHelper.isPivotColumn(VC) == true)
               break;
             if (VC._SameAs.equals("_TS.p") == true || VC._SameAsObj._Mode != ColumnMode.CALCULATED && VC._JoinOnly == false)// && VC._FormulaOnly == false)
               {
@@ -1016,7 +1022,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         for (; i < V._ViewColumns.size(); ++i)
           {
             ViewColumn VC = V._ViewColumns.get(i);
-            if (VC._Aggregate != null)
+            if (VC._Aggregate != null && PivotHelper.isPivotColumn(VC) == false) // don't output pivoted aggregates if not ok
               {
                 Str += genCompositeAggregateColumnSQL(VC);
               }
@@ -1045,7 +1051,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         Str += "     group by ";
         int count = 0;
         for (i = 0; i < V._ViewColumns.size(); ++i)
-          if (V.isPivotColumn(V._ViewColumns.get(i)) == true)
+          if (PivotHelper.isPivotColumn(V._ViewColumns.get(i)) == true)
             break;
           else if (V._ViewColumns.get(i)._JoinOnly == false)
             {
@@ -1060,15 +1066,24 @@ public class Sql extends PostgreSQL implements CodeGenSql
       {
         ViewColumn VC = V.getViewColumn(A._Name);
 
-        String aggr = VC._Aggregate == AggregateType.COUNT ? AggregateType.SUM.name()
-        : VC._Aggregate == AggregateType.ARRAY ? "array_agg"
-        : VC._Aggregate.name();
-        String Expr = aggr + "(\"" + VC.getName() + "\") filter (where \"" + P._VC.getName() + "\"= " + TextUtil.escapeSingleQuoteForSQL(VPV._Value) + ") ";
+        AggregateType Agg = A._Aggregate != null ? A._Aggregate : VC._Aggregate;
+        List<OrderBy> OrderByObjs = A._OrderByObjs != null ? A._OrderByObjs : VC._OrderByObjs;
 
+        String aggr = Agg == AggregateType.COUNT ? AggregateType.SUM.name()
+        : Agg == AggregateType.ARRAY ? "array_agg"
+        : Agg.name();
+
+        StringBuilder Str = new StringBuilder();
+        Str.append(aggr).append("(\"").append(VC.getName()).append("\"");
+        printAggregateOrderBy(Str,  OrderByObjs, "T");
+        Str.append(") filter (where \"").append(P._VC.getName()).append("\"= ").append(TextUtil.escapeSingleQuoteForSQL(VPV._Value)).append(") ");
+
+        String Expr = Str.toString();
         if (TextUtil.isNullOrEmpty(VPV._Expression) == false)
           Expr = VPV._Expression.replaceAll("\\?", Expr);
         if (VPV._Type != null)
           Expr = "(" + Expr + ")::" + getColumnType(VPV._Type.getType(), VPV._Type._Size, ColumnMode.NORMAL, VPV._Type.isCollection(), VPV._Precision, VPV._Scale);
+
         return "\n     , " + Expr + " as \"" + A.makeName(VPV) + "\"";
       }
 
@@ -1098,7 +1113,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         for (int i = 0; i < V._ViewColumns.size(); ++i)
           {
             ViewColumn VC = V._ViewColumns.get(i);
-            if (V._Pivots.isEmpty() == false && (V.isPivotColumn(VC) == true || V.isPivotAggregate(VC) == true))
+            if (V._Pivots.isEmpty() == false && (PivotHelper.isPivotColumn(VC) == true || PivotHelper.isPivotAggregate(VC) == true))
               continue;
             if (VC != null && VC._SameAsObj != null && VC._SameAsObj._Mode != ColumnMode.CALCULATED && VC._JoinOnly == false && VC._FormulaOnly == false)
               OutFinal.println("COMMENT ON COLUMN " + V.getShortName() + ".\"" + VC.getName() + "\" IS E" + TextUtil.escapeSingleQuoteForSQL(VC._SameAsObj._Description) + ";");
@@ -1457,7 +1472,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         // LOG.debug("View " + V._Name + ": " + TextUtil.print(V.getColumnNames()));
         for (ViewColumn VC : V._ViewColumns)
           {
-            if (V.isPivotColumn(VC) == true || V.isPivotAggregate(VC) == true)
+            if (PivotHelper.isPivotColumn(VC) == true || PivotHelper.isPivotAggregate(VC) == true)
               continue;
             if (VC == null || (VC._SameAsObj != null && VC._SameAsObj._Mode == ColumnMode.CALCULATED) || VC._JoinOnly == true || VC._FormulaOnly == true)
               {

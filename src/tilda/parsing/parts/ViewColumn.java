@@ -132,6 +132,17 @@ public class ViewColumn
       {
         return _Type != null ? _Type._Type : getAggregateType();
       }
+    
+    /**
+     * If the ViewColumn defines an expression and type, returns that. Otherwise, it returns the aggregate or original type.
+     * 
+     * @return
+     */
+    public int getSize()
+      {
+        return _Size != null ? _Size : _SameAsObj!=null && _SameAsObj._Size != null ? _SameAsObj._Size : 0;
+      }
+    
 
     /**
      * if it's not an aggregate, returns the original type of the sameAs obj, otherwise, returns the aggregate type.
@@ -142,6 +153,7 @@ public class ViewColumn
       {
         return _Aggregate == null && _SameAsObj != null ? _SameAsObj.getType()
         : _Aggregate == AggregateType.COUNT && _SameAsObj == null ? ColumnType.LONG
+        : _SameAsObj != null && _SameAsObj.getType()==ColumnType.DATETIME && _SameAsObj.needsTZ()==false ? ColumnType.DATETIME
         : _SameAsObj != null ? _Aggregate.getType(_SameAsObj.getType())
         : null;
       }
