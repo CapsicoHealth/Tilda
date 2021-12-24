@@ -22,14 +22,13 @@ import java.util.Set;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import tilda.enums.ColumnMode;
-import tilda.enums.ColumnType;
 import tilda.enums.FrameworkColumnType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.View;
 import tilda.parsing.parts.ViewColumn;
+import tilda.parsing.parts.ViewColumnWrapper;
 import tilda.parsing.parts.ViewPivot;
 import tilda.parsing.parts.ViewPivotAggregate;
 import tilda.parsing.parts.ViewPivotValue;
@@ -55,29 +54,61 @@ public class PivotHelper
         return VC;
       }
 
-    public static Column createPivotColumn(ViewPivot P, ViewPivotAggregate A, ViewColumn VC, ViewPivotValue VPV)
+    public static ViewColumn handlePivotColumn(ParserSession PS, ViewColumn VC, ViewPivot P, ViewPivotAggregate A, ViewPivotValue VPV, Object O)
       {
-        ColumnType AggregateType = VC.getAggregateType();
-        ColumnType Type = VPV._Type != null ? VPV._Type.getType() : AggregateType;
-        Column C = new Column(A.makeName(VPV), Type.name(), VC.getSize(), true, ColumnMode.NORMAL, true, null,
-        VPV._Description + " (pivot of " + VC.getAggregateName() + " on " + P._VC._SameAsObj.getShortName() + "='" + VPV._Value + "')", A._VC._SameAsObj._Precision, A._VC._SameAsObj._Scale);
-        C._Aggregate = A._Aggregate;
-        C._OrderByObjs = A._OrderByObjs;
-        if (C._Aggregate != null && C._Aggregate.isList() == true)
+//        ColumnType AggregateType = VC.getType();
+//        ColumnType Type = VPV._Type != null ? VPV._Type.getType() : AggregateType;
+
+        ViewColumn PVC = new ViewColumn();
+        PVC._Name = A.makeName(VPV);
+        PVC._SameAs = VC._SameAs;
+        PVC._As = VC._As;
+        // If there is an expression at the VPV level, it overwrites that of the VC. So for all type overrides, we
+        // check and prioritize VPV first, then VC, then null (no type override so the baseline type of the SameAs 
+        // will automatically kick in.
+        PVC._Expression = TextUtil.isNullOrEmpty(VPV._Expression)== false ? VPV._Expression : VC._Expression;
+        PVC._TypeStr = getPivotedViewColumnTypeStr(VC, A, VPV);
+        PVC._Precision = TextUtil.isNullOrEmpty(VPV._Expression)== false ? VPV._Precision 
+                       : TextUtil.isNullOrEmpty(VC._Expression)== false ? VC._Precision 
+                       : null;
+        PVC._Scale = TextUtil.isNullOrEmpty(VPV._Expression)== false ? VPV._Scale 
+                   : TextUtil.isNullOrEmpty(VC._Expression)== false ? VC._Scale
+                   : null;
+        PVC._Size = A._Aggregate != null && A._Aggregate.isList() == true ? null 
+                  : TextUtil.isNullOrEmpty(VPV._Expression)== false ? VPV._Size 
+                  : TextUtil.isNullOrEmpty(VC._Expression)== false ? VC._Size
+                  : null;
+        PVC._AggregateStr = A._Aggregate.name();
+        PVC._OrderBy = A._OrderByStr;
+        PVC._Coalesce = A._Coalesce;
+        PVC._Distinct = A._Distinct;
+        PVC._Filter = "\""+P._VC.getName()+"\"= "+TextUtil.escapeSingleQuoteForSQL(VPV._Value);
+        PVC._UseMapper = VC._UseMapper;
+        PVC._UseEnum = VC._UseEnum;
+        PVC._Description = VPV._Description + " (pivot of " + VC.getAggregateName() + " on " + P._VC._SameAsObj.getShortName() + "='" + VPV._Value + "')";
+        PVC.Validate(PS, VC._ParentView);
+        
+        VC._ParentView._PivotColumns.add(PVC);
+        Column C = new ViewColumnWrapper(PVC._SameAsObj, PVC, O._Columns.size());
+        O._Columns.add(C);
+        
+        if (PVC.needsTZ() == true)
           {
-            C._TypeStr += "[]";
-            C._Size = null;
+            PVC.needsTZ();
+            ViewColumn TZViewCol = View.createTZ(PS, PVC);
+            TZViewCol._Filter = "\""+P._VC.getName()+"\"= "+TextUtil.escapeSingleQuoteForSQL(VPV._Value);
+            VC._ParentView._PivotColumns.add(TZViewCol);
+            // LDH-NOTE: No need to add the column to O because TZ handling is automated in the Object's Validation logic.
           }
-         
-        return C;
+        
+        return PVC;
       }
 
-    public static Column handlePivotColumn(ParserSession PS, ViewColumn VC, ViewPivot P, ViewPivotAggregate A, ViewPivotValue VPV, Object O)
+    public static String getPivotedViewColumnTypeStr(ViewColumn VC, ViewPivotAggregate A, ViewPivotValue VPV)
       {
-        Column C = createPivotColumn(P, A, VC, VPV);
-        O._Columns.add(C);
-        VC._ParentView._PivotColumns.add(C);
-        return C;
+        return VPV!=null && TextUtil.isNullOrEmpty(VPV._Expression)== false ? VPV._Type.getType().name()+(A._Aggregate != null && A._Aggregate.isList() == true ? "[]": "") 
+                           :TextUtil.isNullOrEmpty(VC._Expression)== false ? VC._Type.getType().name()+(A._Aggregate != null && A._Aggregate.isList() == true ? "[]": "")
+                           :null;
       }
 
     public static void genPivotColumns(ParserSession PS, View V, Object O)
@@ -95,7 +126,7 @@ public class PivotHelper
                       continue;
                     for (ViewPivotValue VPV : P._Values)
                       {
-                        Column C = handlePivotColumn(PS, VC, P, A, VPV, O);
+                        handlePivotColumn(PS, VC, P, A, VPV, O);
                       }
                   }
               }
@@ -108,7 +139,7 @@ public class PivotHelper
                         ViewColumn VC = getPivotViewColumn(PS, V, A);
                         if (VC == null)
                           continue;
-                        Column C = handlePivotColumn(PS, VC, P, A, VPV, O);
+                        handlePivotColumn(PS, VC, P, A, VPV, O);
                       }
                   }
 
@@ -116,11 +147,11 @@ public class PivotHelper
           }
       }
 
-    public static Column getPivottedColumn(View V, String Name)
+    public static ViewColumn getPivottedColumn(View V, String Name)
       {
-        for (Column C : V._PivotColumns)
-          if (C.getName().equals(Name) == true)
-            return C;
+        for (ViewColumn VC : V._PivotColumns)
+          if (VC.getName().equals(Name) == true)
+            return VC;
         return null;
       }
 
@@ -151,16 +182,19 @@ public class PivotHelper
 
     public static boolean isPivotColumn(ViewColumn VC)
       {
-        if (VC._FCT == FrameworkColumnType.TZ && VC._Aggregate == null)
-          return true;
         for (ViewPivot P : VC._ParentView._Pivots)
           {
             if (P._VC == VC)
               return true;
             for (ViewPivotAggregate VPA : P._Aggregates)
-              // A aggregated column should be excluded if it's sourced from a non aggregate column, of the globals flag is false
-              if (VPA._VC == VC && (P._Globals == false || VPA._VC._Aggregate == null))
-                return true;
+              {
+                // A aggregated column should be excluded if it's sourced from a non aggregate column, of the globals flag is false
+                if (VPA._VC == VC && (P._Globals == false || VPA._VC._Aggregate == null))
+                 return true;
+                // Is it a TZ companion to a column that needs TZ? 
+                if (VPA._VC.needsTZ() == true && VC._FCT == FrameworkColumnType.TZ && VC._Name.equals(VPA._VC._Name+"TZ") == true)
+                 return true;
+              }
           }
         return false;
       }
@@ -169,7 +203,7 @@ public class PivotHelper
       {
         // First, let's validate and link all the Pivot info
         Set<String> PivotNames = new HashSet<String>();
-        Set<String> PivotFixes = new HashSet<String>();
+        Set<String> PivotFixes = new HashSet<String>(); // prefixes + suffixes
         // Let's validate
         for (ViewPivot P : V._Pivots)
           {

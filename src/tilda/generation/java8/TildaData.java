@@ -1868,7 +1868,7 @@ public class TildaData implements CodeGenTildaData
                     }
 
                 }
-              if (C._Aggregate == AggregateType.ARRAY && C.getTypeCollection() == MultiType.LIST && C.getType() == ColumnType.STRING)
+              if (/*C._Aggregate == AggregateType.ARRAY &&*/ C.getTypeCollection() == MultiType.LIST && C.getType() == ColumnType.STRING)
                 {
                   Out.println("                             //This looks weird, but with array aggregates on strings, gotta watch out on left joins with NULL values.");
                   Out.println("                             //Those values show up as a [null] array (1 element, which is null).");

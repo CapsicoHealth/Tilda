@@ -96,17 +96,17 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/log4j-api-2.17.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/log4j-api-2.17.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/log4j-core-2.17.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/log4j-core-2.17.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/log4j-web-2.17.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/log4j-web-2.17.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>

@@ -64,6 +64,7 @@ public class ViewPivot
           return PS.AddError("View '" + ParentView.getFullName() + "' is defining a pivot without any 'values' specified.");
 
         _VC = new ViewColumn();
+        _VC._FormulaOnly = true; // the folded pivot columns shouldn't not be output in the final result.
         _VC._SameAs = _ColumnName;
         _VC.Validate(PS, _ParentView);
 
@@ -77,23 +78,15 @@ public class ViewPivot
               continue;
             if (AggregateNames.add(A._Name) == false)
               PS.AddError("View '" + ParentView.getFullName() + "' is defining a Pivot on column " + _VC.getShortName() + " with a duplicate aggregate name '" + A._Name + "'.");
-            if (A._VC.needsTZ() == true)
-              {
-                ViewPivotAggregate ATZ = new ViewPivotAggregate(A);
-                ATZ._Name = A._Name+"TZ";
-                if (TextUtil.isNullOrEmpty(ATZ._Suffix) == true)
-                  ATZ._Suffix = "TZ";
-                else
-                  ATZ._Suffix += "TZ";
-                _Aggregates.add(i+1, ATZ);
-              }
+
+            // LDH-NOTE: The logic to handle fields that need TZ is automated in the general process, so no need to do it here.
           }
         if (AggregateNames.isEmpty() == true)
           PS.AddError("View '" + ParentView.getFullName() + "' is defining a Pivot on column " + _VC.getShortName() + " without specifying any aggregate targets.");
 
         for (ViewPivotValue VPV : _Values)
           if (VPV != null)
-            VPV.Validate(PS, ParentView, "pivot value");
+            VPV.Validate(PS, ParentView, this, _Aggregates);
 
         return Errs == PS.getErrorCount();
       }

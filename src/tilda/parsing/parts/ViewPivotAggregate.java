@@ -38,6 +38,8 @@ public class ViewPivotAggregate
     @SerializedName("suffix")    public String   _Suffix;
     @SerializedName("aggregate") public String   _AggregateStr ;
     @SerializedName("orderBy"  ) public String[] _OrderByStr;
+    @SerializedName("distinct" ) public Boolean  _Distinct = false;
+    @SerializedName("coalesce" ) public String   _Coalesce     = null;
     /*@formatter:on*/
 
     public transient ViewPivot     _ParentPivot;
@@ -55,10 +57,12 @@ public class ViewPivotAggregate
         _Name = from._Name;
         _Prefix = from._Prefix;
         _Suffix = from._Suffix;
-        _AggregateStr = from._AggregateStr ;
+        _AggregateStr = from._AggregateStr;
         _OrderByStr = from._OrderByStr;
+        _Distinct = from._Distinct;
+        _Coalesce = from._Coalesce;
       }
-    
+
     public boolean Validate(ParserSession PS, ViewPivot ParentPivot)
       {
         int Errs = PS.getErrorCount();
@@ -71,6 +75,15 @@ public class ViewPivotAggregate
         if (_VC == null)
           return PS.AddError("View '" + ParentPivot._ParentView.getFullName() + "' is defining a pivot on " + ParentPivot._ColumnName + " for an aggregate " + _Name + " which cannot be found in the view.");
 
+        // Hide pivoted columns from being folded in final query.
+        _VC._FormulaOnly = true;
+        if (_VC.needsTZ() == true)
+          {
+            ViewColumn TZ = ParentPivot._ParentView.getViewColumn(_Name+"TZ");
+            if (TZ != null)
+             TZ._FormulaOnly = true;
+          }
+        
         if (_AggregateStr != null)
           {
             if ((_Aggregate = AggregateType.parse(_AggregateStr)) == null)
@@ -88,8 +101,14 @@ public class ViewPivotAggregate
           return PS.AddError("View '" + ParentPivot._ParentView.getFullName() + "' is defining a pivot on " + ParentPivot._ColumnName + " for " + _Name + " which is not an aggregate, nor does it define a local aggregate.");
 
         if (_Aggregate == null)
-         _Aggregate = _VC._Aggregate;
+          _Aggregate = _VC._Aggregate;
+        
+        if (_Distinct == null)
+          _Distinct = _VC._Distinct;
 
+        if (_Coalesce == null)
+          _Coalesce = _VC._Coalesce;
+        
         _OrderByObjs = OrderBy.processOrderBys(PS, "View Column '" + _VC.getFullName() + "' aggregate orderby's", ParentPivot._ParentView, _OrderByStr, true);
 
         if (_OrderByObjs == null || _OrderByObjs.isEmpty() == true)
@@ -107,6 +126,11 @@ public class ViewPivotAggregate
         if (TextUtil.isNullOrEmpty(_Suffix) == false)
           Str.append(_Suffix);
         return Str.toString();
+      }
+
+    public String getTypeStr()
+      {
+        return _VC.getType().name()+(_Aggregate != null && _Aggregate.isList() == true ? "[]": "");
       }
 
   }

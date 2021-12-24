@@ -124,13 +124,21 @@ public class ViewColumn
       }
 
     /**
-     * If the ViewColumn defines an expression and type, returns that. Otherwise, it returns the aggregate or original type.
+     * Returns the final type of the view column, which is the expression's type if defined, or else sameAs' type. 
+     * Additionally, It takes into account whether an aggregate has been defined and how the type will be modified.
      * 
      * @return
      */
     public ColumnType getType()
       {
-        return _Type != null ? _Type._Type : getAggregateType();
+        // A Type is allowed in a view column only if there is an expression, in which case, it will override the type of the sameAs.
+        ColumnType baseLineType = _Type != null ? _Type._Type : _SameAsObj != null ? _SameAsObj.getType() : null;
+
+        // No aggregates, so no change 
+        if (_Aggregate == null)
+         return  baseLineType;
+
+        return baseLineType == null ? null : _Aggregate.getType(baseLineType, needsTZ());
       }
     
     /**
@@ -145,18 +153,14 @@ public class ViewColumn
     
 
     /**
-     * if it's not an aggregate, returns the original type of the sameAs obj, otherwise, returns the aggregate type.
+     * if it's not an aggregate, returns the type if an expression is specified, of the type of the sameAs obj, otherwise, returns the aggregate type.
      * 
      * @return
      */
-    public ColumnType getAggregateType()
-      {
-        return _Aggregate == null && _SameAsObj != null ? _SameAsObj.getType()
-        : _Aggregate == AggregateType.COUNT && _SameAsObj == null ? ColumnType.LONG
-        : _SameAsObj != null && _SameAsObj.getType()==ColumnType.DATETIME && _SameAsObj.needsTZ()==false ? ColumnType.DATETIME
-        : _SameAsObj != null ? _Aggregate.getType(_SameAsObj.getType())
-        : null;
-      }
+//    public ColumnType getAggregateType()
+//      {
+//        return getType();
+//`      }
 
 
     /**
@@ -250,8 +254,8 @@ public class ViewColumn
               PS.AddError("View Column '" + getFullName() + "' defined an orderBy value without specifying an aggregate. OrderBys are meant only for ARRAY, FIRST or LAST aggregates.");
             else if (_Aggregate.isOrderable() == false)
               PS.AddError("View Column '" + getFullName() + "' defined an orderBy value without specifying an ARRAY/FIRST/LAST aggregate. OrderBys are meant only for ARRAY, FIRST or LAST aggregates.");
-            else if (_Distinct == true)
-              PS.AddError("View Column '" + getFullName() + "' defined an orderBy value in a Distinct aggregate, which is not supported.");
+//            else if (_Distinct == true)
+//              PS.AddError("View Column '" + getFullName() + "' defined an orderBy value in a Distinct aggregate, which is not supported.");
             Set<String> Names = new HashSet<String>();
             _OrderByObjs = OrderBy.processOrderBys(PS, "View Column '" + getFullName() + "' array aggregate", ParentView, _OrderBy, true);
           }
@@ -301,7 +305,7 @@ public class ViewColumn
                   }
               }
             if (Col == null)
-              PS.AddError("View column '" + ColFullName + "' is declaring sameas '" + SameAs + "' resolving to '" + R.getFullName() + "' which cannot be found.");
+              PS.AddError("View column '" + ColFullName + "' is declaring sameas '" + SameAs + "' resolving to '" + R.getFullName() + "' with a column which cannot be found.");
             else
               {
                 // If the view is realized, it should not have direct dependencies on other realized views since the system can handle automatically these dependencies
@@ -392,7 +396,7 @@ public class ViewColumn
       {
         return (_SameAsObj == null || _SameAsObj.needsTZ() == true)
         && (_Aggregate == null || _Aggregate.isZonedDateTimeCompatible() == true)
-        && (TextUtil.isNullOrEmpty(_Expression) == true || _Type._Type == ColumnType.DATETIME)
+        && (TextUtil.isNullOrEmpty(_Expression) == true || (_Type != null ? _Type._Type : _SameAsObj._Type) == ColumnType.DATETIME)
         && _FCT == FrameworkColumnType.NONE
         ;
       }

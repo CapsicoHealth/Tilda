@@ -188,7 +188,7 @@ public class ViewRealize
                 newCol._expressionStrs = C._expressionStrs;
                 newCol._expressionDependencyColumnNames = C._expressionDependencyColumnNames;
                 newCol._Aggregate = C._Aggregate;
-                newCol._OrderByObjs = C._OrderByObjs;
+//                newCol._OrderByObjs = C._OrderByObjs;
                 // LDH-NOTE: Not sure why we need to define SAME_AS here given that we specify all the information previously. This is causing issues with some aggregates...
                 // newCol._SameAs = C._SameAs;
                 // newCol._SameAsObj = C._SameAsObj;

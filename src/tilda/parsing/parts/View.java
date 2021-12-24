@@ -75,7 +75,7 @@ public class View extends Base
     public transient Pattern           _ViewColumnsRegEx;
     public transient Pattern           _FormulasRegEx;
     public transient Map<String, Base> _Dependencies     = new HashMap<String, Base>();
-    public transient List<Column>      _PivotColumns     = new ArrayList<Column>();
+    public transient List<ViewColumn>  _PivotColumns     = new ArrayList<ViewColumn>();
 
     public View()
       {
@@ -116,9 +116,9 @@ public class View extends Base
         for (ViewColumn VC : _ViewColumns)
           if (VC != null && VC._Name != null && VC._Name.equalsIgnoreCase(name) == true)
             return VC._ProxyCol;
-        for (Column C : _PivotColumns)
-          if (C != null && C._Name != null && C._Name.equalsIgnoreCase(name) == true)
-            return C;
+        for (ViewColumn VC : _PivotColumns)
+          if (VC != null && VC._Name != null && VC._Name.equalsIgnoreCase(name) == true)
+            return VC._ProxyCol;
         return null;
       }
 
@@ -592,9 +592,6 @@ public class View extends Base
                 PS.AddError("View '" + getFullName() + "' is defining formula '" + F._Name + "' with an infinite reference loop '" + Path + "'.");
             }
 
-        if (O._Name.equals("PatientRecentVitals_PivotView") == true)
-          LOG.debug("XXX");
-        
         O._ModeStr = _Mode.toString();
         _ParentSchema._Objects.add(O);
         O.Validate(PS, _ParentSchema);
@@ -638,12 +635,12 @@ public class View extends Base
             Names.add(VC._Name);
             Str.append(VC._Name);
           }
-        for (Column C : _PivotColumns)
+        for (ViewColumn VC : _PivotColumns)
           {
             if (Str.length() != 0)
               Str.append("|");
-            Names.add(C.getName());
-            Str.append(C.getName());
+            Names.add(VC.getName());
+            Str.append(VC.getName());
           }
         _ViewColumnsRegEx = Pattern.compile("\\b(" + Str.toString() + ")\\b");
 
@@ -670,6 +667,7 @@ public class View extends Base
         TZCol._As = VC._As;
         TZCol._AggregateStr = VC._AggregateStr;
         TZCol._OrderBy = VC._OrderBy;
+        TZCol._Distinct = VC._Distinct;
 
         // want to make sure that the TZ col follows directives from source col.
         TZCol._FCT = FrameworkColumnType.TZ;
@@ -874,27 +872,6 @@ public class View extends Base
           }
       }
 
-    /*
-     * private Column getSameAsColumn(String ObjectFullName, String ColName)
-     * {
-     * for (ViewColumn VC : _ViewColumns)
-     * {
-     * if (VC._SameAsObj != null && VC._SameAsObj._ParentObject.getFullName().equals(ObjectFullName) == true && VC._SameAsObj.getName().equals(ColName) == true)
-     * return VC._SameAsObj;
-     * }
-     * return null;
-     * }
-     * 
-     * private ViewColumn getViewColumnFromSameAsColumn(String ObjectFullName, String ColName)
-     * {
-     * for (ViewColumn VC : _ViewColumns)
-     * {
-     * if (VC._SameAsObj != null && VC._SameAsObj._ParentObject.getFullName().equals(ObjectFullName) == true && VC._SameAsObj.getName().equals(ColName) == true)
-     * return VC;
-     * }
-     * return null;
-     * }
-     */
     private void CreateMappedViewColumn(ParserSession PS, Set<String> ColumnNames, int i, ViewColumn C, String ExtraName)
       {
         ViewColumn VC = new ViewColumn();
