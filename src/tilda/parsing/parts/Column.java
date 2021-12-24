@@ -589,11 +589,11 @@ public class Column extends TypeDef
      * @param L
      * @return
      */
-    public static String PrintColumnList(List<Column> L)
+    public static String printColumnList(List<Column> L, boolean simple)
       {
         StringBuilder Str = new StringBuilder();
         for (Column C : L)
-          Str.append(Str.length() == 0 ? "" : ", ").append(C.getShortName());
+          Str.append(Str.length() == 0 ? "" : ", ").append(simple==true ? C.getName() : C.getShortName());
         return Str.toString();
       }
 
