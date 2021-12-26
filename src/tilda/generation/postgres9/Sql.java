@@ -1056,18 +1056,19 @@ public class Sql extends PostgreSQL implements CodeGenSql
         Str.append(aggr).append("(");
         if (VC._Distinct == true)
          Str.append("distinct ");
-        Str.append("\"").append(VC._SameAsObj.getName()).append("\"");
+        Str.append("\"").append(VC._NameInner).append("\"");
         printAggregateOrderBy(Str, VC._OrderByObjs, "T");
         Str.append(") filter (where ").append(VC._Filter).append(") ");
 
         String Expr = Str.toString();
         if (TextUtil.isNullOrEmpty(VC._Expression) == false)
           Expr = VC._Expression.replaceAll("\\?", Expr);
-//        if (VC._Type != null)
-//          Expr = "(" + Expr + ")::" + getColumnType(VC._Type.getType(), VC._Type._Size, ColumnMode.NORMAL, VC._Type.isCollection(), VC._Precision, VC._Scale);
 
         if (TextUtil.isNullOrEmpty(VC._Coalesce) == false)
-          Expr = "coalesce("+Expr+", "+ValueHelper.printValue(VC._SameAsObj.getName(), VC.getType(), VC.isCollection(), VC._Coalesce)+")";
+          Expr = "coalesce("+Expr+", "+ValueHelper.printValue(VC.getName(), VC.getType(), VC.isCollection(), VC._Coalesce)+")";
+
+        if (VC._Type != null)
+         Expr = "(" + Expr + ")::" + getColumnType(VC._Type.getType(), VC._Type._Size, ColumnMode.NORMAL, VC._Type.isCollection(), VC._Precision, VC._Scale);
         
         return "\n     , " + Expr + " as \"" + VC.getName() + "\"";
       }

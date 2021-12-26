@@ -62,6 +62,7 @@ public class PivotHelper
         ViewColumn PVC = new ViewColumn();
         PVC._Name = A.makeName(VPV);
         PVC._SameAs = VC._SameAs;
+        PVC._NameInner = VC._Name;
         PVC._As = VC._As;
         // If there is an expression at the VPV level, it overwrites that of the VC. So for all type overrides, we
         // check and prioritize VPV first, then VC, then null (no type override so the baseline type of the SameAs 
@@ -97,6 +98,7 @@ public class PivotHelper
             PVC.needsTZ();
             ViewColumn TZViewCol = View.createTZ(PS, PVC);
             TZViewCol._Filter = "\""+P._VC.getName()+"\"= "+TextUtil.escapeSingleQuoteForSQL(VPV._Value);
+            TZViewCol._NameInner = VC._Name+"TZ";
             VC._ParentView._PivotColumns.add(TZViewCol);
             // LDH-NOTE: No need to add the column to O because TZ handling is automated in the Object's Validation logic.
           }
