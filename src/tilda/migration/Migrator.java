@@ -829,7 +829,7 @@ public class Migrator
         String defaultValue = Col._DefaultCreateValue == null
         ? null
         : Col.getType() == ColumnType.DATE || Col.getType() == ColumnType.DATETIME || Col.getType() == ColumnType.CHAR || Col.getType() == ColumnType.STRING
-        ? ValueHelper.printValue(Col.getName(), Col.getType(), Col._DefaultCreateValue._Value)
+        ? ValueHelper.printValue(Col.getName(), Col.getType(), Col.isCollection(), Col._DefaultCreateValue._Value)
         : Col._DefaultCreateValue._Value;
         String defaultValueDB = CMeta._Default;
         if (defaultValueDB != null)

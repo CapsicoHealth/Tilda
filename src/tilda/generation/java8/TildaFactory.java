@@ -560,10 +560,6 @@ public class TildaFactory implements CodeGenTildaFactory
 
         String MethodName = "lookupWhere" + I._Name;
 
-        if (q != null && q._Attributes.isEmpty() == false)
-          Helper.MakeParamStaticClass(Out, q._Attributes, MethodName);
-        Out.println();
-
         Out.print("   static public ListResults<" + Helper.getFullAppDataClassName(I._Parent) + "> " + MethodName + "(Connection C");
         genMethodLookupWhereIndexSignature(Out, G, I, q);
         Out.println("     {");
@@ -574,6 +570,7 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("       return RPI._L;");
         Out.println("     }");
         Out.println();
+        G.getGenDocs().docMethodLookupWhereIndex(Out, G, I);
         Out.print("   static public void " + MethodName + "(Connection C, tilda.db.processors.ObjectProcessor<" + Helper.getFullAppDataClassName(I._Parent) + "> OP");
         genMethodLookupWhereIndexSignature(Out, G, I, q);
         Out.println("     {");
@@ -582,6 +579,9 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("       RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);");
         Out.println("       readMany(C, " + LookupId + ", RPI, Obj, " + (q != null && q._Attributes.isEmpty() == false ? "P" : "null") + ", start, size);");
         Out.println("     }");
+        Out.println();
+        if (q != null && q._Attributes.isEmpty() == false)
+          Helper.MakeParamStaticClass(Out, q._Attributes, MethodName);
         Out.println();
       }
 
@@ -633,9 +633,6 @@ public class TildaFactory implements CodeGenTildaFactory
 
         String MethodName = "lookupWhere" + SWC._Name;
 
-        if (SWC._Attributes.isEmpty() == false)
-          Helper.MakeParamStaticClass(Out, SWC._Attributes, MethodName);
-        Out.println();
         Out.print("   static public ListResults<" + Helper.getFullAppDataClassName(SWC._ParentObject) + "> " + MethodName + "(Connection C");
         genMethodLookupWhereQuerySignature(Out, G, SWC);
         Out.println("     {");
@@ -647,6 +644,7 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("     }");
         Out.println();
         Out.println();
+        G.getGenDocs().docMethodLookupWhereQuery(Out, G, SWC);
         Out.print("   static public void " + MethodName + "(Connection C, tilda.db.processors.ObjectProcessor<" + Helper.getFullAppDataClassName(SWC._ParentObject) + "> OP");
         genMethodLookupWhereQuerySignature(Out, G, SWC);
         Out.println("     {");
@@ -655,6 +653,9 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("       RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);");
         Out.println("       readMany(C, " + LookupId + ", RPI, Obj, " + (SWC != null && SWC._Attributes.isEmpty() == false ? "P" : "null") + ", start, size);");
         Out.println("     }");
+        Out.println();
+        if (SWC._Attributes.isEmpty() == false)
+          Helper.MakeParamStaticClass(Out, SWC._Attributes, MethodName);
         Out.println();
       }
 

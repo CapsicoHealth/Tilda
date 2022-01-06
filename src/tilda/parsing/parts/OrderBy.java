@@ -153,5 +153,19 @@ public class OrderBy
 
         return L;
       }
+    
+    /**
+     * returns a comma-separated string containing the <B>unescaped</B> column short names
+     * 
+     * @param L
+     * @return
+     */
+    public static String printOrderByList(List<OrderBy> L)
+      {
+        StringBuilder Str = new StringBuilder();
+        for (OrderBy ob : L)
+          Str.append(Str.length() == 0 ? "" : ", ").append(ob._Col.getName()).append(ob._Order == OrderType.ASC ? " asc" : " desc");
+        return Str.toString();
+      }
 
   }

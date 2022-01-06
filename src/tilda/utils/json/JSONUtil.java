@@ -102,7 +102,7 @@ public class JSONUtil
         Out.write(v.toString());
         Out.write("\"");
       }
-    
+
     protected static void printChar(Writer Out, char v)
     throws IOException
       {
@@ -572,7 +572,7 @@ public class JSONUtil
           }
         Out.write("]");
       }
-    
+
     public static void print(Writer Out, String Name, boolean FirstElement, String[] a)
     throws IOException
       {
@@ -638,7 +638,7 @@ public class JSONUtil
           }
         Out.write("]");
       }
-    
+
     public static void print(Writer Out, String Name, boolean FirstElement, UUID[] a)
     throws IOException
       {
@@ -663,7 +663,7 @@ public class JSONUtil
           }
         Out.write("]");
       }
-    
+
 
     public static void print(Writer Out, String Name, boolean FirstElement, Collection<String> a)
     throws IOException
@@ -736,6 +736,7 @@ public class JSONUtil
         Out.write(openObjectOrArray);
         Out.write("\n");
       }
+
     public static void startOK(Writer Out, char openObjectOrArray)
     throws IOException
       {
@@ -798,12 +799,13 @@ public class JSONUtil
             end(Out, '}');
           }
       }
+
     public static void response(Writer Out, String JsonExportName, JSONable Obj)
     throws Exception
       {
         response(Out, JsonExportName, Obj, null);
       }
-        
+
     /**
      * When using client-side frameworks such as Dojo that may use an iFrame for ajax-contents, the protocol
      * is typically to return the json data packaged inside a textarea. This function does that. It is exactly
@@ -822,6 +824,7 @@ public class JSONUtil
         response(Out, JsonExportName, Obj);
         Out.write("</textarea>\n");
       }
+
     public static void responseDojoMultipartConfig(Writer Out, String JsonExportName, JSONable Obj)
     throws Exception
       {
@@ -841,12 +844,13 @@ public class JSONUtil
         print(Out, "data", JsonExportName, false, L, " ");
         end(Out, ' ');
       }
+
     public static void response(Writer Out, String JsonExportName, List<? extends JSONable> L)
     throws Exception
       {
         response(Out, JsonExportName, L, null);
       }
-    
+
     public static void response(Writer Out, String[][] groupValues)
     throws IOException
       {
@@ -867,37 +871,7 @@ public class JSONUtil
     public static void print(Writer Out, String elementName, String JsonExportName, boolean firstElement, List<? extends JSONable> L, String Header)
     throws Exception
       {
-        Out.write(Header);
-        print(Out, elementName, firstElement);
-
-        if (L == null)
-          {
-            Out.write(" null ");
-            return;
-          }
-        if (L.isEmpty() == true)
-          {
-            Out.write(" [ ] ");
-            return;
-          }
-        Out.write(" [\n");
-        boolean First = true;
-        for (JSONable Obj : L)
-          {
-            if (Obj == null)
-              continue;
-            Out.write(Header);
-            if (First == true)
-              {
-                Out.write(Header + "   ");
-                First = false;
-              }
-            else
-              Out.write(Header + "  ,");
-            Obj.toJSON(Out, JsonExportName, "", true);
-            // Out.write("\n");
-          }
-        Out.write(Header + "  ]\n");
+        print(Out, elementName, JsonExportName, firstElement, L, Header, null);
       }
 
     public static void print(Writer Out, String elementName, String JsonExportName, boolean firstElement, List<? extends JSONable> L, String Header, ZonedDateTime lastSync)
@@ -905,7 +879,12 @@ public class JSONUtil
       {
         Out.write(Header);
         print(Out, elementName, firstElement);
+        print(Out, JsonExportName, L, Header, null);
+      }
 
+    public static void print(Writer Out, String JsonExportName, List<? extends JSONable> L, String Header, ZonedDateTime lastSync)
+    throws Exception
+      {
         if (L == null)
           {
             Out.write(" null ");
@@ -930,11 +909,14 @@ public class JSONUtil
               }
             else
               Out.write(Header + "  ,");
-            Obj.toJSON(Out, JsonExportName, "", true, lastSync);
+            if (lastSync != null)
+              Obj.toJSON(Out, JsonExportName, "", true, lastSync);
+            else
+              Obj.toJSON(Out, JsonExportName, "", true);
           }
         Out.write(Header + "  ]\n");
       }
-
+    
 
     public static void print(Writer Out, String elementName, String JsonExportName, boolean firstElement, JSONable Obj, String Header)
     throws Exception
@@ -963,7 +945,7 @@ public class JSONUtil
             Out.write(" [ ] ");
             return;
           }
-        
+
         Out.write(" [ ");
         boolean First = true;
         for (String[] Value : Values)
@@ -1004,7 +986,7 @@ public class JSONUtil
       }
 
     /**
-     * Prints a raw json object. It's assumed to be properly formed.
+     * Prints a raw json object as a property. It's assumed to be properly formed.
      * 
      * @param out
      * @param name
@@ -1016,6 +998,19 @@ public class JSONUtil
     throws IOException
       {
         JSONUtil.print(out, name, firstElement);
+        printRawArray(out, rawJsonObjects);
+      }
+
+    /**
+     * Prints a raw json object. It's assumed to be properly formed.
+     * 
+     * @param out
+     * @param rawJsonObject
+     * @throws IOException
+     */
+    public static void printRawArray(Writer out, List<String> rawJsonObjects)
+    throws IOException
+      {
         out.write("[\n");
         boolean first = true;
         for (String s : rawJsonObjects)

@@ -318,7 +318,7 @@ public class PostgreSQL implements DBType
         String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ADD COLUMN \"" + Col.getName() + "\" " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection(), Col._Precision, Col._Scale);
         if (Col._Nullable == false && DefaultValue != null)
           {
-            Q += " not null DEFAULT " + ValueHelper.printValue(Col.getName(), Col.getType(), DefaultValue);
+            Q += " not null DEFAULT " + ValueHelper.printValue(Col.getName(), Col.getType(), Col.isCollection(), DefaultValue);
           }
         if (Con.executeDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) == false)
           return false;
@@ -334,7 +334,7 @@ public class PostgreSQL implements DBType
         if (Col._DefaultCreateValue == null)
           Q += "DROP DEFAULT;";
         else
-          Q += "SET DEFAULT " + ValueHelper.printValue(Col.getName(), Col.getType(), Col._DefaultCreateValue._Value) + ";";
+          Q += "SET DEFAULT " + ValueHelper.printValue(Col.getName(), Col.getType(), Col.isCollection(), Col._DefaultCreateValue._Value) + ";";
 
         return Con.executeDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
       }
@@ -372,7 +372,7 @@ public class PostgreSQL implements DBType
               {
                 if (DefaultValue == null)
                   throw new Exception("Cannot alter column '" + Col.getFullName() + "' to not null without a default value. Add a default value in the model, or manually migrate your database.");
-                Q = "UPDATE " + Col._ParentObject.getShortName() + " set \"" + Col.getName() + "\" = " + ValueHelper.printValue(Col.getName(), Col.getType(), DefaultValue) + " where \"" + Col.getName() + "\" IS NULL";
+                Q = "UPDATE " + Col._ParentObject.getShortName() + " set \"" + Col.getName() + "\" = " + ValueHelper.printValue(Col.getName(), Col.getType(), Col.isCollection(), DefaultValue) + " where \"" + Col.getName() + "\" IS NULL";
                 Con.executeUpdate(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
               }
           }

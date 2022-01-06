@@ -42,6 +42,7 @@ import tilda.enums.ObjectLifecycle;
 import tilda.enums.TildaType;
 import tilda.interfaces.PatternObject;
 import tilda.parsing.ParserSession;
+import tilda.parsing.parts.helpers.PivotHelper;
 import tilda.parsing.parts.helpers.ReferenceHelper;
 import tilda.parsing.parts.helpers.SameAsHelper;
 import tilda.utils.Graph;
@@ -74,7 +75,7 @@ public class View extends Base
     public transient Pattern           _ViewColumnsRegEx;
     public transient Pattern           _FormulasRegEx;
     public transient Map<String, Base> _Dependencies     = new HashMap<String, Base>();
-    public transient List<Column>      _PivotColumns     = new ArrayList<Column>();
+    public transient List<ViewColumn>  _PivotColumns     = new ArrayList<ViewColumn>();
 
     public View()
       {
@@ -115,9 +116,9 @@ public class View extends Base
         for (ViewColumn VC : _ViewColumns)
           if (VC != null && VC._Name != null && VC._Name.equalsIgnoreCase(name) == true)
             return VC._ProxyCol;
-        for (Column C : _PivotColumns)
-          if (C != null && C._Name != null && C._Name.equalsIgnoreCase(name) == true)
-            return C;
+        for (ViewColumn VC : _PivotColumns)
+          if (VC != null && VC._Name != null && VC._Name.equalsIgnoreCase(name) == true)
+            return VC._ProxyCol;
         return null;
       }
 
@@ -265,19 +266,7 @@ public class View extends Base
             // The column must need such a timezone and not be an aggregate, and not have an expression unless it's of type datetime.
             if (VC.needsTZ() == true)
               {
-                ViewColumn TZCol = new ViewColumn();
-                TZCol._SameAs = VC._SameAs + "TZ";
-                TZCol._Name = VC._Name == null ? null : VC._Name + "TZ";
-                TZCol._As = VC._As;
-                TZCol._AggregateStr = VC._AggregateStr;
-                TZCol._OrderBy = VC._OrderBy;
-
-                // want to make sure that the TZ col follows directives from source col.
-                TZCol._FCT = FrameworkColumnType.TZ;
-                TZCol._FormulaOnly = VC._FormulaOnly;
-                TZCol._JoinOnly = VC._JoinOnly;
-
-                TZCol.Validate(PS, this);
+                ViewColumn TZCol = createTZ(PS, VC);
                 _ViewColumns.add(i, TZCol);
                 ++i;
                 if (ColumnNames.add(TZCol.getName().toUpperCase()) == false)
@@ -363,7 +352,7 @@ public class View extends Base
 
         // Let's do the pivot(s).
         if (_Pivots.isEmpty() == false)
-          HandlePivots(PS, ColumnNames);
+          PivotHelper.HandlePivots(PS, this, ColumnNames);
 
         // Deprecations
         if (_PivotColumnsDeprecated != null)
@@ -422,66 +411,6 @@ public class View extends Base
           }
         return true;
       }
-
-    private void HandlePivots(ParserSession PS, Set<String> ColumnNames)
-      {
-        // First, let's validate and link all the Pivot info
-        Set<String> PivotNames = new HashSet<String>();
-        Set<String> PivotFixes = new HashSet<String>();
-        // Let's validate
-        for (ViewPivot P : _Pivots)
-          {
-            P.Validate(PS, this);
-            if (PivotNames.add(P._VC.getShortName()) == false)
-              PS.AddError("View '" + getFullName() + "' is defining a duplicate Pivot on column " + P._VC.getShortName() + ".");
-            for (ViewPivotAggregate F : P._Aggregates)
-              {
-                String fixes = TextUtil.print(F._Prefix, "") + TextUtil.print(F._Suffix, "");
-                if (TextUtil.isNullOrEmpty(fixes) == false && PivotFixes.add(fixes) == false)
-                  PS.AddError("View '" + getFullName() + "' is defining a Pivot on column " + P._VC.getShortName() + " with an aggregate-prefix/suffix combination '" + fixes + "' which has already been used.");
-              }
-          }
-
-        // then let's check the order of columns: pivots need to be defined a certain way, i.e., grouped-by columns first, then aggregates that pass through, then pivot aggregates
-        int aggregateLevel = 0; // 0=baseline cols, 1=non-pivot-aggregates, 2=pivot-aggregates.
-        int i = 0;
-        boolean composableAggregates = true;
-        for (ViewColumn VC : _ViewColumns)
-          {
-            if (VC._Aggregate != null) // We are hitting an aggregate
-              {
-                if (isPivotAggregate(VC) == false) // non pivot aggregate, we are starting or already in zone 1.
-                  {
-                    if (aggregateLevel == 2) // This is non pivot aggregate and yet we are already in zone 2.
-                      PS.AddError("View '" + getFullName() + "' is defining a non-pivot aggregate view column " + VC.getShortName() + " after the pivot aggregate section started. Please define grouped-by columns first, followed by non-pivoted aggregates, then pivoted aggregates.");
-                    else
-                      aggregateLevel = 1; // switch to the non-pivoted aggregates zone
-                  }
-                else // pivot aggregate, last zone (danger zone).
-                  aggregateLevel = 2; // switch to the pivoted aggregates zone (the danger zone!)
-
-                if (VC._Aggregate.isComposable() == false || VC._Distinct == true)
-                  composableAggregates = false;
-              }
-            else // non aggregate column
-              {
-                ++i;
-                if (aggregateLevel != 0) // We better still be in zone 0
-                  PS.AddError("View '" + getFullName() + "' is defining a non-aggregate view column " + VC.getShortName() + " after the aggregate section started. Please define grouped-by columns first, followed by non-pivoted aggregates, then pivoted aggregates.");
-              }
-          }
-        if (composableAggregates == false && _Pivots.size() > 1)
-          PS.AddError("View '" + getFullName() + "' is defining multiple Pivots but uses distinct or non-composable (e.g., avg, dev...) aggregates.");
-
-        // Finally let's fold the Pivotted-on columns back into the main view.
-        for (ViewPivot P : _Pivots)
-          {
-            if (ColumnNames.add(P._VC.getName().toUpperCase()) == false)
-              PS.AddError("Pivot column '" + P._VC.getFullName() + "' conflicts with another column already named the same in view '" + getFullName() + "'. You only need to define pivot columns in the pivot construct, not in the baseline list of view columns.");
-            _ViewColumns.add(i++, P._VC);
-          }
-      }
-
 
     private void HandleTimeSeries(ParserSession PS)
       {
@@ -553,7 +482,7 @@ public class View extends Base
         for (ViewColumn VC : _ViewColumns)
           {
             // Skip intermediary pivot-making columns (i.e., pivoted aggregate columns) so we capture only the "grouped-by" and "non-pivoted aggregate" columns
-            if (_Pivots.isEmpty() == false && (isPivotColumn(VC) == true || isPivotAggregate(VC) == true))
+            if (_Pivots.isEmpty() == false && (PivotHelper.isPivotColumn(VC) == true || PivotHelper.isPivotAggregate(VC) == true))
               continue;
 
             // LOG.debug(VC._Name+": VC._SameAsObj="+(VC._SameAsObj != null ? VC._SameAsObj.getFullName():"NULL")+"; isOCCGenerated="+(VC._SameAsObj == null ?
@@ -584,7 +513,7 @@ public class View extends Base
           }
 
         // LOG.debug(O._Name+": "+TextUtil.print(O.getColumnNames()));
-        genPivotColumns(PS, O);
+        PivotHelper.genPivotColumns(PS, this, O);
 
         if (_ImportFormulas != null)
           for (String s : _ImportFormulas)
@@ -706,12 +635,12 @@ public class View extends Base
             Names.add(VC._Name);
             Str.append(VC._Name);
           }
-        for (Column C : _PivotColumns)
+        for (ViewColumn VC : _PivotColumns)
           {
             if (Str.length() != 0)
               Str.append("|");
-            Names.add(C.getName());
-            Str.append(C.getName());
+            Names.add(VC.getName());
+            Str.append(VC.getName());
           }
         _ViewColumnsRegEx = Pattern.compile("\\b(" + Str.toString() + ")\\b");
 
@@ -730,64 +659,23 @@ public class View extends Base
         _FormulasRegEx = Str.length() == 0 ? null : Pattern.compile("\\b(" + Str.toString() + ")\\b");
       }
 
-    private void genPivotColumns(ParserSession PS, Object O)
+    public static ViewColumn createTZ(ParserSession PS, ViewColumn VC)
       {
-        for (ViewPivot P : _Pivots)
-          {
-            if (P._Values == null || P._Values.length == 0)
-              continue;
-            if (P._Interleave == false)
-              {
-                for (ViewPivotAggregate A : P._Aggregates)
-                  {
-                    ViewColumn VC = getViewColumn(A._Name);
-                    if (VC == null)
-                      {
-                        String Msg = "View '" + getFullName() + "' is using an aggregate '" + A._Name + "' which cannot be resolved.";
-                        if (PS != null)
-                          PS.AddError(Msg);
-                        else
-                          throw new Error("View.genPivotColumns() being called with a null ParserSession but stil generating at least one error: " + Msg);
-                        continue;
-                      }
-                    ColumnType AggregateType = VC.getAggregateType();
-                    for (ViewPivotValue VPV : P._Values)
-                      {
-                        ColumnType Type = VPV._Type != null ? VPV._Type._Type : AggregateType;
-                        Column C = new Column(A.makeName(VPV), Type.name(), Type == ColumnType.STRING ? A._VC._SameAsObj._Size : 0, true, ColumnMode.NORMAL, true, null,
-                        VPV._Description + " (pivot of " + VC.getAggregateName() + " on " + P._VC._SameAsObj.getShortName() + "='" + VPV._Value + "')", A._VC._SameAsObj._Precision, A._VC._SameAsObj._Scale);
-                        O._Columns.add(C);
-                        _PivotColumns.add(C);
-                      }
-                  }
-              }
-            else
-              {
-                for (ViewPivotValue VPV : P._Values)
-                  {
-                    for (ViewPivotAggregate A : P._Aggregates)
-                      {
-                        ViewColumn VC = getViewColumn(A._Name);
-                        if (VC == null)
-                          {
-                            String Msg = "View '" + getFullName() + "' is using an aggregate '" + A._Name + "' which cannot be resolved.";
-                            if (PS != null)
-                              PS.AddError(Msg);
-                            else
-                              throw new Error("View.genPivotColumns() being called with a null ParserSession but stil generating at least one error: " + Msg);
-                            continue;
-                          }
-                        ColumnType AggregateType = VC.getAggregateType();
-                        ColumnType Type = VPV._Type != null ? VPV._Type._Type : AggregateType;
-                        Column C = new Column(A.makeName(VPV), Type.name(), Type == ColumnType.STRING ? A._VC._SameAsObj._Size : 0, true, ColumnMode.NORMAL, true, null,
-                        VPV._Description + " (pivot of " + VC.getAggregateName() + " on " + P._VC._SameAsObj.getShortName() + "='" + VPV._Value + "')", A._VC._SameAsObj._Precision, A._VC._SameAsObj._Scale);
-                        O._Columns.add(C);
-                        _PivotColumns.add(C);
-                      }
-                  }
+        ViewColumn TZCol = new ViewColumn();
+        TZCol._SameAs = VC._SameAs + "TZ";
+        TZCol._Name = VC._Name == null ? null : VC._Name + "TZ";
+        TZCol._As = VC._As;
+        TZCol._AggregateStr = VC._AggregateStr;
+        TZCol._OrderBy = VC._OrderBy;
+        TZCol._Distinct = VC._Distinct;
 
-              }
-          }
+        // want to make sure that the TZ col follows directives from source col.
+        TZCol._FCT = FrameworkColumnType.TZ;
+        TZCol._FormulaOnly = VC._FormulaOnly;
+        TZCol._JoinOnly = VC._JoinOnly;
+
+        TZCol.Validate(PS, VC._ParentView);
+        return TZCol;
       }
 
 
@@ -866,7 +754,7 @@ public class View extends Base
               continue;
             if (col._JoinOnly == true || col._FormulaOnly == true)
               continue;
-            if (V.isPivotColumn(col) == true)
+            if (PivotHelper.isPivotColumn(col) == true)
               break;
             if (col._Name != null && col._Name.startsWith(startingWith) == false)
               continue;
@@ -984,27 +872,6 @@ public class View extends Base
           }
       }
 
-    /*
-     * private Column getSameAsColumn(String ObjectFullName, String ColName)
-     * {
-     * for (ViewColumn VC : _ViewColumns)
-     * {
-     * if (VC._SameAsObj != null && VC._SameAsObj._ParentObject.getFullName().equals(ObjectFullName) == true && VC._SameAsObj.getName().equals(ColName) == true)
-     * return VC._SameAsObj;
-     * }
-     * return null;
-     * }
-     * 
-     * private ViewColumn getViewColumnFromSameAsColumn(String ObjectFullName, String ColName)
-     * {
-     * for (ViewColumn VC : _ViewColumns)
-     * {
-     * if (VC._SameAsObj != null && VC._SameAsObj._ParentObject.getFullName().equals(ObjectFullName) == true && VC._SameAsObj.getName().equals(ColName) == true)
-     * return VC;
-     * }
-     * return null;
-     * }
-     */
     private void CreateMappedViewColumn(ParserSession PS, Set<String> ColumnNames, int i, ViewColumn C, String ExtraName)
       {
         ViewColumn VC = new ViewColumn();
@@ -1190,47 +1057,6 @@ public class View extends Base
          * return G;
          * }
          */
-      }
-
-    public ViewPivot getPivotWithValue(String val)
-      {
-        for (ViewPivot P : _Pivots)
-          if (P.hasValue(val) == true)
-            return P;
-        return null;
-      }
-
-    public ViewPivot getPivotWithColumn(String ColName)
-      {
-        for (ViewPivot P : _Pivots)
-          if (P._ColumnName.equals(ColName) == true)
-            return P;
-        return null;
-      }
-
-    public boolean isPivotColumn(ViewColumn VC)
-      {
-        for (ViewPivot P : _Pivots)
-          if (P._VC == VC)
-            return true;
-        return false;
-      }
-
-    public Column getPivottedColumn(String Name)
-      {
-        for (Column C : _PivotColumns)
-          if (C.getName().equals(Name) == true)
-            return C;
-        return null;
-      }
-
-    public boolean isPivotAggregate(ViewColumn VC)
-      {
-        for (ViewPivot P : _Pivots)
-          for (ViewPivotAggregate A : P._Aggregates)
-            if (A._Name.equals(VC._Name) == true)
-              return true;
-        return false;
       }
 
     /**

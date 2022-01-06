@@ -28,7 +28,7 @@ public class ViewColumnWrapper extends Column
 
     public ViewColumnWrapper(Column SameAsCol, ViewColumn VCol, int SequenceOrder)
       {
-        super(VCol._Name, VCol._SameAs, TextUtil.isNullOrEmpty(VCol._Description) == false ? VCol._Description : SameAsCol!=null ? SameAsCol._Description : "Frmework generated column");
+        super(VCol._Name, VCol._SameAs, TextUtil.isNullOrEmpty(VCol._Description) == false ? VCol._Description : SameAsCol!=null ? SameAsCol._Description : "Framework generated column");
 
         _VCol = VCol;
         _SequenceOrder = SequenceOrder;
@@ -42,7 +42,8 @@ public class ViewColumnWrapper extends Column
         if (VCol._Aggregate != null)
           {
             _Aggregate = VCol._Aggregate;
-            _TypeStr = VCol.getAggregateType().name();
+//            _OrderByObjs   = VCol._OrderByObjs;
+            _TypeStr = VCol.getType().name();
             _Precision = SameAsCol._Precision;
             _Scale = SameAsCol._Scale;
             // If the aggregate is a list (e.g., ARRAY, ARRAY_CAT), or if the original type if a collection, we propagate as LIST.
@@ -108,7 +109,7 @@ public class ViewColumnWrapper extends Column
     public ColumnType getType()
       {
         if (_VCol._Aggregate != null)
-          return _VCol.getAggregateType();
+          return _VCol.getType();
         if (TextUtil.isNullOrEmpty(_VCol._Expression) == false)
           return _VCol._Type._Type;
         return super.getType();

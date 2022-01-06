@@ -84,20 +84,21 @@ public class ViewColumn
      */
 
     public transient View                _ParentView;
-    public transient Column              _SameAsObj;                                    // The column this ViewColumn matches to, which could be to an object column OR a view
-                                                                                        // column.
-    public transient View                _SameAsView;                                   // If a View column, this is the view from which it came. Otherwise.
-                                                                                        // _SameAsObj._ParentObject is the source object.
+    public transient Column              _SameAsObj;                                  // The column this ViewColumn matches to, which could be to an object column OR a view
+                                                                                      // column.
+    public transient View                _SameAsView;                                 // If a View column, this is the view from which it came. Otherwise.
+                                                                                      // _SameAsObj._ParentObject is the source object.
     public transient JoinType            _Join;
     public transient AggregateType       _Aggregate;
     public transient List<OrderBy>       _OrderByObjs      = new ArrayList<OrderBy>();
     public transient TypeDef             _Type;
+    public transient String              _NameInner; // The name of the column when used in an inner query fashion, like for pivots.
 
     public transient boolean             _FailedValidation = false;
 
     public transient FrameworkColumnType _FCT              = FrameworkColumnType.NONE;
 
-    public transient Column              _ProxyCol         = null;                      // The column generated for the proxy object representing the parent view.
+    public transient Column              _ProxyCol         = null;                    // The column generated for the proxy object representing the parent view.
 
     public String getFullName()
       {
@@ -124,31 +125,48 @@ public class ViewColumn
       }
 
     /**
-     * If the ViewColumn defines an expression and type, returns that. Otherwise, it returns the aggregate or original type.
+     * Returns the final type of the view column, which is the expression's type if defined, or else sameAs' type.
+     * Additionally, It takes into account whether an aggregate has been defined and how the type will be modified.
      * 
      * @return
      */
     public ColumnType getType()
       {
-        return _Type != null ? _Type._Type : getAggregateType();
+        // A Type is allowed in a view column only if there is an expression, in which case, it will override the type of the sameAs.
+        ColumnType baseLineType = _Type != null ? _Type._Type : _SameAsObj != null ? _SameAsObj.getType() : null;
+
+        // No aggregates, so no change
+        if (_Aggregate == null)
+          return baseLineType;
+
+        return baseLineType == null ? null : _Aggregate.getType(baseLineType, needsTZ());
       }
 
     /**
-     * if it's not an aggregate, returns the original type of the sameAs obj, otherwise, returns the aggregate type.
+     * If the ViewColumn defines an expression and type, returns that. Otherwise, it returns the aggregate or original type.
      * 
      * @return
      */
-    public ColumnType getAggregateType()
+    public int getSize()
       {
-        return _Aggregate == null && _SameAsObj != null ? _SameAsObj.getType()
-        : _Aggregate == AggregateType.COUNT && _SameAsObj == null ? ColumnType.LONG
-        : _SameAsObj != null ? _Aggregate.getType(_SameAsObj.getType())
-        : null;
+        return _Size != null ? _Size : _SameAsObj != null && _SameAsObj._Size != null ? _SameAsObj._Size : 0;
       }
+
+
+    /**
+     * if it's not an aggregate, returns the type if an expression is specified, of the type of the sameAs obj, otherwise, returns the aggregate type.
+     * 
+     * @return
+     */
+    // public ColumnType getAggregateType()
+    // {
+    // return getType();
+    // ` }
 
 
     /**
      * Handles deprecated "sameas" and replaces with "sameAs" if appropriate.
+     * 
      * @param PS
      * @return
      */
@@ -189,7 +207,7 @@ public class ViewColumn
           {
             _Name = _SameAsObj.getName();
           }
-        
+
         if (_Name.length() > PS._CGSql.getMaxColumnNameSize())
           PS.AddError("View Column '" + getFullName() + "' has a name that's too long: max allowed by your database is " + PS._CGSql.getMaxColumnNameSize() + " vs " + _Name.length() + " for this identifier.");
         if (_Name.equals(TextUtil.sanitizeName(_Name)) == false)
@@ -225,12 +243,12 @@ public class ViewColumn
           }
 
         if (_SameAsObj != null)
-         {
-           if (TextUtil.isNullOrEmpty(_Description) == true)
-            _Description = _SameAsObj._Description;
-           else
-             _Description = TextUtil.searchReplace(_Description, "${DESCRIPTION}", _SameAsObj._Description);
-         }
+          {
+            if (TextUtil.isNullOrEmpty(_Description) == true)
+              _Description = _SameAsObj._Description;
+            else
+              _Description = TextUtil.searchReplace(_Description, "${DESCRIPTION}", _SameAsObj._Description);
+          }
 
         if (_OrderBy != null && _OrderBy.length > 0)
           {
@@ -238,8 +256,8 @@ public class ViewColumn
               PS.AddError("View Column '" + getFullName() + "' defined an orderBy value without specifying an aggregate. OrderBys are meant only for ARRAY, FIRST or LAST aggregates.");
             else if (_Aggregate.isOrderable() == false)
               PS.AddError("View Column '" + getFullName() + "' defined an orderBy value without specifying an ARRAY/FIRST/LAST aggregate. OrderBys are meant only for ARRAY, FIRST or LAST aggregates.");
-            else if (_Distinct == true)
-              PS.AddError("View Column '" + getFullName() + "' defined an orderBy value in a Distinct aggregate, which is not supported.");
+            // else if (_Distinct == true)
+            // PS.AddError("View Column '" + getFullName() + "' defined an orderBy value in a Distinct aggregate, which is not supported.");
             Set<String> Names = new HashSet<String>();
             _OrderByObjs = OrderBy.processOrderBys(PS, "View Column '" + getFullName() + "' array aggregate", ParentView, _OrderBy, true);
           }
@@ -289,7 +307,7 @@ public class ViewColumn
                   }
               }
             if (Col == null)
-              PS.AddError("View column '" + ColFullName + "' is declaring sameas '" + SameAs + "' resolving to '" + R.getFullName() + "' which cannot be found.");
+              PS.AddError("View column '" + ColFullName + "' is declaring sameas '" + SameAs + "' resolving to '" + R.getFullName() + "' with a column which cannot be found.");
             else
               {
                 // If the view is realized, it should not have direct dependencies on other realized views since the system can handle automatically these dependencies
@@ -371,7 +389,7 @@ public class ViewColumn
 
     /**
      * A view column of type 'DATETIME' needs an extra timezone support field if the underlying column needs one, and the
-     * view column is not an aggregate, and does not have an expression unless it's of type datetime, and is a 
+     * view column is not an aggregate, and does not have an expression unless it's of type datetime, and is a
      * non-framework-generated column.
      * 
      * @return
@@ -380,15 +398,15 @@ public class ViewColumn
       {
         return (_SameAsObj == null || _SameAsObj.needsTZ() == true)
         && (_Aggregate == null || _Aggregate.isZonedDateTimeCompatible() == true)
-        && (TextUtil.isNullOrEmpty(_Expression) == true || _Type._Type == ColumnType.DATETIME)
-        && _FCT == FrameworkColumnType.NONE
-        ;
+        && (TextUtil.isNullOrEmpty(_Expression) == true || (_Type != null ? _Type._Type : _SameAsObj._Type) == ColumnType.DATETIME)
+        && _FCT == FrameworkColumnType.NONE;
       }
 
     public boolean isList()
       {
         return _SameAsObj != null && _SameAsObj.isList() == true || _Aggregate != null && _Aggregate.isList() == true;
       }
+
     public boolean isSet()
       {
         return _SameAsObj != null && _SameAsObj.isSet() == true && _Aggregate == null;
@@ -398,5 +416,5 @@ public class ViewColumn
       {
         return _SameAsObj != null && _SameAsObj.isCollection() == true || _Aggregate != null && _Aggregate.isList() == true;
       }
-    
+
   }

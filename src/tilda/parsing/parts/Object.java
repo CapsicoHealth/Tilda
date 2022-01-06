@@ -227,8 +227,7 @@ public class Object extends Base
                           PS.AddError("Generated column '" + TZCol.getFullName() + "' conflicts with another column already named the same in Object '" + getFullName() + "'.");
                         if (C.isCollection() == false && _TZFK == true)
                           {
-                            addForeignKey(C.getName(), new String[] { TZCol.getName()
-                            }, "tilda.data.TILDA.ZONEINFO");
+                            addForeignKey(C.getName(), new String[] { TZCol.getName()}, "tilda.data.TILDA.ZONEINFO");
                           }
                       }
                   }

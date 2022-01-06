@@ -87,12 +87,17 @@ public class ValueHelper
           }
       }
 
-    public static String printValue(String colName, ColumnType colType, String defaultValue)
+    public static String printValue(String colName, ColumnType colType, boolean isCollection, String defaultValue)
     throws Exception
       {
         if (isSuported(colType) == false)
           throw new Exception("Column '" + colName + "' defines default value '" + defaultValue + "' which is not allowed for type '" + colType + "'.");
           
+        if (isCollection == true)
+          {
+            // Coalesce default values will be literals
+            return defaultValue;
+          }
         switch (colType)
           {
             case BOOLEAN:

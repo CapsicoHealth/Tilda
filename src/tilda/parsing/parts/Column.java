@@ -62,7 +62,11 @@ public class Column extends TypeDef
     /*@formatter:on*/
 
     public transient FrameworkColumnType _FCT               = FrameworkColumnType.NONE;
-    public transient AggregateType       _Aggregate         = null;                                        // For view columns really.
+    
+    // LDH-NOTE: Because views can be materialized, we decided to create Proxy Objects. Since Aggregates
+    //          can affect the type of the column, we propagate it.
+    public transient AggregateType       _Aggregate         = null;
+
     public transient ColumnMode          _Mode;
     public transient ProtectionType      _Protect;
     public transient Column              _SameAsObj;
@@ -77,9 +81,9 @@ public class Column extends TypeDef
     public transient ColumnValue         _DefaultUpdateValue;
 
     protected transient int              _SequenceOrder     = -1;
-    
-    public transient String[] _expressionStrs;
-    public transient String[] _expressionDependencyColumnNames;
+
+    public transient String[]            _expressionStrs;
+    public transient String[]            _expressionDependencyColumnNames;
 
     private transient ValidationStatus   _Validation        = ValidationStatus.NONE;
 
@@ -214,7 +218,7 @@ public class Column extends TypeDef
             PS.AddError("Column '" + getFullName() + "' didn't define a 'name'. It is mandatory.");
             return;
           }
-        
+
         if (N.length() > PS._CGSql.getMaxColumnNameSize())
           PS.AddError("Column '" + getFullName() + "' has a name that's too long: max allowed by your database is " + PS._CGSql.getMaxColumnNameSize() + " vs " + N.length() + " for this identifier.");
 
@@ -529,7 +533,7 @@ public class Column extends TypeDef
     public boolean isCopyToColumn()
       {
         // LDH-NOTE: Why would invariants be excluded? They are write-once-read-many so they should be set to a new copy of an object.
-        return _PrimaryKey == false && _Mode != ColumnMode.CALCULATED; // && _Invariant == false; 
+        return _PrimaryKey == false && _Mode != ColumnMode.CALCULATED; // && _Invariant == false;
       }
 
     public boolean isSavedField()
@@ -585,11 +589,11 @@ public class Column extends TypeDef
      * @param L
      * @return
      */
-    public static String PrintColumnList(List<Column> L)
+    public static String printColumnList(List<Column> L, boolean simple)
       {
         StringBuilder Str = new StringBuilder();
         for (Column C : L)
-          Str.append(Str.length() == 0 ? "" : ", ").append(C.getShortName());
+          Str.append(Str.length() == 0 ? "" : ", ").append(simple==true ? C.getName() : C.getShortName());
         return Str.toString();
       }
 
@@ -605,14 +609,14 @@ public class Column extends TypeDef
           return null;
         String[] names = new String[L.size()];
         for (int i = 0; i < L.size(); ++i)
-         names[i] = L.get(i)._Name;
+          names[i] = L.get(i)._Name;
         return names;
       }
 
     @Override
     public String toString()
       {
-        return getClass().getName() + ":" + getFullName() + " (" + super.toString() + ")";
+        return getClass().getName() + ": " + getFullName() + " (" + super.toString() + ")";
 
       }
 

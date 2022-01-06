@@ -199,7 +199,8 @@ public class TildaData implements CodeGenTildaData
               {
                 Out.println("   @SerializedName(\"" + C.getName() + "\"" + ")");
                 Out.println("   " + (C.isList() == true ? "List<String>" : C.isSet() == true ? "Set<String>" : "String") + "  Str_" + C.getName() + ";");
-                Out.println("   public void init" + TextUtil.capitalizeFirstCharacter(C.getName()) + "(" + (C.isList() == true ? "List<String>" : C.isSet() == true ? "Set<String>" : "String") + " v) { Str_" + C.getName() + " = v; }");
+                Out.println("   /** Pre-init the field as it would come from a JSON stream, in text form, e.g., timestamps. */");
+                Out.println("   public void initJson_" + TextUtil.capitalizeFirstCharacter(C.getName()) + "(" + (C.isList() == true ? "List<String>" : C.isSet() == true ? "Set<String>" : "String") + " v) { Str_" + C.getName() + " = v; }");
                 Out.println("   public " + (C.isList() == true ? "List<String>" : C.isSet() == true ? "Set<String>" : "String") + " init" + TextUtil.capitalizeFirstCharacter(C.getName()) + "Val(" + ") { return Str_" + C.getName() + "; }");
               }
             Out.println("   transient " + JavaJDBCType.getFieldType(C) + " _" + C.getName() + " = null;");
@@ -1867,7 +1868,7 @@ public class TildaData implements CodeGenTildaData
                     }
 
                 }
-              if (C._Aggregate == AggregateType.ARRAY && C.getTypeCollection() == MultiType.LIST && C.getType() == ColumnType.STRING)
+              if (/*C._Aggregate == AggregateType.ARRAY &&*/ C.getTypeCollection() == MultiType.LIST && C.getType() == ColumnType.STRING)
                 {
                   Out.println("                             //This looks weird, but with array aggregates on strings, gotta watch out on left joins with NULL values.");
                   Out.println("                             //Those values show up as a [null] array (1 element, which is null).");

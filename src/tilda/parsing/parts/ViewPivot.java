@@ -26,18 +26,18 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
-import tilda.enums.ColumnType;
 import tilda.parsing.ParserSession;
 import tilda.utils.TextUtil;
 
 public class ViewPivot
   {
-    static final Logger LOG             = LogManager.getLogger(ViewPivot.class.getName());
+    static final Logger             LOG         = LogManager.getLogger(ViewPivot.class.getName());
 
     /*@formatter:off*/
 	@SerializedName("on"        ) public String                    _ColumnName;
-    @SerializedName("interleave") public boolean                   _Interleave = false;
     @SerializedName("aggregates") public List<ViewPivotAggregate>  _Aggregates=new ArrayList<ViewPivotAggregate>();
+    @SerializedName("interleave") public boolean                   _Interleave = false;
+    @SerializedName("globals"   ) public boolean                   _Globals = true;
     @SerializedName("values"    ) public ViewPivotValue[]          _Values    ;
     /*@formatter:on*/
 
@@ -64,35 +64,30 @@ public class ViewPivot
           return PS.AddError("View '" + ParentView.getFullName() + "' is defining a pivot without any 'values' specified.");
 
         _VC = new ViewColumn();
+        _VC._FormulaOnly = true; // the folded pivot columns shouldn't not be output in the final result.
         _VC._SameAs = _ColumnName;
         _VC.Validate(PS, _ParentView);
 
-        boolean StringAgg = true;
-        Set<String> AggregateNames = new HashSet<String>();        
-        for (ViewPivotAggregate A : _Aggregates)
+        Set<String> AggregateNames = new HashSet<String>();
+        for (int i = 0; i < _Aggregates.size(); ++i)
           {
+            ViewPivotAggregate A = _Aggregates.get(i);
             if (A == null)
-             continue;
-             if (A.Validate(PS, this) == false)
               continue;
-            ViewColumn VC = ParentView.getViewColumn(A._Name);
-            if (VC == null)
-              return PS.AddError("View '" + ParentView.getFullName() + "' is defining a pivot on " + _ColumnName + " for an aggregate " + A._Name + " which cannot be found in the view.");
-            else if (VC._Aggregate == null)
-              return PS.AddError("View '" + ParentView.getFullName() + "' is defining a pivot on " + _ColumnName + " for " + A._Name + " which is not an aggregate.");
-            else if (VC._Aggregate.getType(VC._SameAsObj.getType()) != ColumnType.STRING)
-              StringAgg = false;
-            A._VC = VC;
+            if (A.Validate(PS, this) == false)
+              continue;
             if (AggregateNames.add(A._Name) == false)
-              PS.AddError("View '" + ParentView.getFullName() + "' is defining a Pivot on column " + _VC.getShortName() + " with a duplicate aggregate name '"+A._Name+"'.");
+              PS.AddError("View '" + ParentView.getFullName() + "' is defining a Pivot on column " + _VC.getShortName() + " with a duplicate aggregate name '" + A._Name + "'.");
+
+            // LDH-NOTE: The logic to handle fields that need TZ is automated in the general process, so no need to do it here.
           }
         if (AggregateNames.isEmpty() == true)
           PS.AddError("View '" + ParentView.getFullName() + "' is defining a Pivot on column " + _VC.getShortName() + " without specifying any aggregate targets.");
 
         for (ViewPivotValue VPV : _Values)
           if (VPV != null)
-            VPV.Validate(PS, ParentView, "pivot value");
-        
+            VPV.Validate(PS, ParentView, this, _Aggregates);
+
         return Errs == PS.getErrorCount();
       }
 
