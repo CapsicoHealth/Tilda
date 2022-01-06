@@ -354,7 +354,7 @@ public class Docs implements CodeGenDocs
       {
         Out.println(
         Helper.getMultiLineDocCommentStart() + SystemValues.NEWLINE
-        + "Lookup records by the index '" + I._Name + "': "
+        + "Lookup records by the index '" + I._Name + "' over  "
         + Column.printColumnList(I._ColumnObjs, true)
         + ".<BR>"
         + "The results are ordered by: "
@@ -368,7 +368,7 @@ public class Docs implements CodeGenDocs
       {
         Out.println(
         Helper.getMultiLineDocCommentStart() + SystemValues.NEWLINE
-        + "Lookup records by the query '" + Q._Name + "': ");
+        + "Lookup records by the query '" + Q._Name + "' over ");
         boolean first = true;
         for (Attribute a : Q._Attributes)
           {
@@ -391,7 +391,7 @@ public class Docs implements CodeGenDocs
       {
         Out.println(
         Helper.getMultiLineDocCommentStart() + SystemValues.NEWLINE
-        + "Lookup records by the query '" + Q._Name + "': ");
+        + "Lookup records by the query '" + Q._Name + "' over ");
         boolean first = true;
         for (Attribute a : Q._Attributes)
           {
