@@ -741,9 +741,6 @@ public class Sql extends PostgreSQL implements CodeGenSql
             .append("BEGIN\n")
             .append("  startDt:= clock_timestamp();\n");
 
-            if (V._Name.equals("ClaimInpatientClaimSummaryView") == true)
-              LOG.debug("XXX");
-            
             StringWriter BaseLineInsert = new StringWriter();
             BaseLineInsert.append("  INSERT INTO " + RName + " (" + PrintInsertColumnNames(V) + ")\n     ");
             BaseLineInsert.append("SELECT ").append(genRealizedColumnList(V, "\n          "));

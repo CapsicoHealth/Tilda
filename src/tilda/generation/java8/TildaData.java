@@ -23,7 +23,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.util.StringBuilderWriter;
 
-import tilda.enums.AggregateType;
+import tilda.db.InitMode;
 import tilda.enums.ColumnMapperMode;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
@@ -1644,8 +1644,14 @@ public class TildaData implements CodeGenTildaData
                 Out.print("       if (__Nulls.intersects(" + Mask + ") == true || _" + C.getName() + Pad + "==null)\n"
                 + "        Dst.set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "Null" + Pad + "();\n"
                 + "       else\n "); // extra space to indent next line
+              else if (true == C._Invariant)
+                {
+                  Out.print("       if (__Init == InitMode.CREATE && _" + C.getName() + Pad + " != null)\n "); // extra space to indent next line
+                }
               else
-                Out.print("       if (_" + C.getName() + Pad + " != null)\n "); // extra space to indent next line
+                {
+                  Out.print("       if (_" + C.getName() + Pad + " != null)\n "); // extra space to indent next line
+                }
               Out.println("       Dst.set" + TextUtil.capitalizeFirstCharacter(C.getName()) + Pad + "(_" + C.getName() + Pad + ");");
 
               if (C.getType() == ColumnType.DATETIME && C.isJSONColumn() == true)
