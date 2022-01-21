@@ -23,6 +23,7 @@ import com.google.cloud.bigquery.Dataset;
 import com.google.cloud.bigquery.DatasetInfo;
 import com.google.cloud.bigquery.Field;
 import com.google.cloud.bigquery.FieldList;
+import com.google.cloud.bigquery.FieldValue;
 import com.google.cloud.bigquery.FieldValueList;
 import com.google.cloud.bigquery.FormatOptions;
 import com.google.cloud.bigquery.Job;
@@ -232,9 +233,12 @@ public class BQHelper
         if (jr != null)
           for (FieldValueList row : jr._r.iterateAll())
             {
-              long bytes = row.get("total_bytes_billed").getLongValue();
-              double cost = row.get("cost_cents").getDoubleValue();
-              double costModeling = row.get("cost_cents_modeling").getDoubleValue();
+              FieldValue v = row.get("total_bytes_billed");
+              long bytes = v.isNull() == true ? 0 : v.getLongValue();
+              v = row.get("cost_cents");
+              double cost = v.isNull() == true ? 0 : v.getDoubleValue();
+              v = row.get("cost_cents_modeling");
+              double costModeling = v.isNull() == true ? 0 : v.getDoubleValue();
               return new JobCostDetails(bytes, cost, costModeling);
             }
         return null;
