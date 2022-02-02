@@ -35,7 +35,12 @@ public class TILDA__DATEDIM_Factory
    public static final String SCHEMA_TABLENAME_LABEL = TextUtil.print("TILDA.DateDim", "");
    public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "DateDim"); }
 
-   public static abstract class COLS {
+   public static final class COLS_BASE
+    {
+      private COLS_BASE() { }
+
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.DateDim.dt -> TILDA.DateDim."dt"
@@ -53,7 +58,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatePrimitive          DT            = new Type_DatePrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "dt"            , 0/*0*/, "The Date date", null, null);
+     public final Type_DatePrimitive          DT            = new Type_DatePrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "dt"            , 0/*0*/, "The Date date", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.DateDim.epoch -> TILDA.DateDim."epoch"
@@ -71,7 +78,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          EPOCH         = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "epoch"         , 1/*1*/, "The epoch date", null, null, null);
+     public final Type_LongPrimitive          EPOCH         = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "epoch"         , 1/*1*/, "The epoch date", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.DateDim.dayName -> TILDA.DateDim."dayName"
@@ -90,7 +99,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    DAYNAME       = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "dayName"       , 2/*2*/, "Day name (i.e., Monday, Tuesday...) of the date", null, null, null);
+     public final Type_StringPrimitiveNull    DAYNAME       = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "dayName"       , 2/*2*/, "Day name (i.e., Monday, Tuesday...) of the date", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.DateDim.dayOfWeek -> TILDA.DateDim."dayOfWeek"
@@ -108,7 +119,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerPrimitiveNull   DAYOFWEEK     = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "dayOfWeek"     , 3/*3*/, "ISO 8601 day of the week (Monday=1 to Sunday=7) of the date", null, null, null);
+     public final Type_IntegerPrimitiveNull   DAYOFWEEK     = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "dayOfWeek"     , 3/*3*/, "ISO 8601 day of the week (Monday=1 to Sunday=7) of the date", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.DateDim.dayOfMonth -> TILDA.DateDim."dayOfMonth"
@@ -126,7 +139,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerPrimitiveNull   DAYOFMONTH    = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "dayOfMonth"    , 4/*4*/, "ISO 8601 day of the month (starting with 1) of the date", null, null, null);
+     public final Type_IntegerPrimitiveNull   DAYOFMONTH    = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "dayOfMonth"    , 4/*4*/, "ISO 8601 day of the month (starting with 1) of the date", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.DateDim.dayOfQuarter -> TILDA.DateDim."dayOfQuarter"
@@ -144,7 +159,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerPrimitiveNull   DAYOFQUARTER  = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "dayOfQuarter"  , 5/*5*/, "ISO 8601 day of the quarter (starting with 1) of the date", null, null, null);
+     public final Type_IntegerPrimitiveNull   DAYOFQUARTER  = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "dayOfQuarter"  , 5/*5*/, "ISO 8601 day of the quarter (starting with 1) of the date", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.DateDim.dayOfYear -> TILDA.DateDim."dayOfYear"
@@ -162,7 +179,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerPrimitiveNull   DAYOFYEAR     = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "dayOfYear"     , 6/*6*/, "ISO 8601 day of the year (starting with 1) of the date", null, null, null);
+     public final Type_IntegerPrimitiveNull   DAYOFYEAR     = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "dayOfYear"     , 6/*6*/, "ISO 8601 day of the year (starting with 1) of the date", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.DateDim.weekOfMonth -> TILDA.DateDim."weekOfMonth"
@@ -180,7 +199,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerPrimitiveNull   WEEKOFMONTH   = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "weekOfMonth"   , 7/*7*/, "ISO 8601 week of the month (starting with 1) of the date", null, null, null);
+     public final Type_IntegerPrimitiveNull   WEEKOFMONTH   = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "weekOfMonth"   , 7/*7*/, "ISO 8601 week of the month (starting with 1) of the date", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.DateDim.weekOfYear -> TILDA.DateDim."weekOfYear"
@@ -198,7 +219,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerPrimitiveNull   WEEKOFYEAR    = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "weekOfYear"    , 8/*8*/, "ISO 8601 week of the year (starting with 1) of the date", null, null, null);
+     public final Type_IntegerPrimitiveNull   WEEKOFYEAR    = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "weekOfYear"    , 8/*8*/, "ISO 8601 week of the year (starting with 1) of the date", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.DateDim.month -> TILDA.DateDim."month"
@@ -216,7 +239,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatePrimitiveNull      MONTH         = new Type_DatePrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "month"         , 9/*9*/, "Month-truncated date.", null, null);
+     public final Type_DatePrimitiveNull      MONTH         = new Type_DatePrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "month"         , 9/*9*/, "Month-truncated date.", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.DateDim.monthOfYear -> TILDA.DateDim."monthOfYear"
@@ -234,7 +259,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerPrimitiveNull   MONTHOFYEAR   = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "monthOfYear"   , 10/*10*/, "ISO 8601 month of the year (starting with 1) of the date", null, null, null);
+     public final Type_IntegerPrimitiveNull   MONTHOFYEAR   = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "monthOfYear"   , 10/*10*/, "ISO 8601 month of the year (starting with 1) of the date", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.DateDim.monthName -> TILDA.DateDim."monthName"
@@ -253,7 +280,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    MONTHNAME     = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "monthName"     , 11/*11*/, "Month name (i.e., January, February...) of the date.", null, null, null);
+     public final Type_StringPrimitiveNull    MONTHNAME     = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "monthName"     , 11/*11*/, "Month name (i.e., January, February...) of the date.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.DateDim.monthNameShort -> TILDA.DateDim."monthNameShort"
@@ -272,7 +301,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    MONTHNAMESHORT= new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "monthNameShort", 12/*12*/, "Monday short name (i.e., Jan, Feb...) of the date.", null, null, null);
+     public final Type_StringPrimitiveNull    MONTHNAMESHORT= new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "monthNameShort", 12/*12*/, "Monday short name (i.e., Jan, Feb...) of the date.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.DateDim.quarterOfYear -> TILDA.DateDim."quarterOfYear"
@@ -290,7 +321,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerPrimitiveNull   QUARTEROFYEAR = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "quarterOfYear" , 13/*13*/, "ISO 8601 quarter of the year (starting with 1) of the date.", null, null, null);
+     public final Type_IntegerPrimitiveNull   QUARTEROFYEAR = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "quarterOfYear" , 13/*13*/, "ISO 8601 quarter of the year (starting with 1) of the date.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.DateDim.quarterName -> TILDA.DateDim."quarterName"
@@ -309,7 +342,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    QUARTERNAME   = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "quarterName"   , 14/*14*/, "Quarter name (i.e., Q1, Q2...) of the date.", null, null, null);
+     public final Type_StringPrimitiveNull    QUARTERNAME   = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "quarterName"   , 14/*14*/, "Quarter name (i.e., Q1, Q2...) of the date.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.DateDim.year -> TILDA.DateDim."year"
@@ -327,7 +362,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerPrimitiveNull   YEAR          = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "year"          , 15/*15*/, "ISO 8601 year (1.e., 2018) of the date.", null, null, null);
+     public final Type_IntegerPrimitiveNull   YEAR          = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "year"          , 15/*15*/, "ISO 8601 year (1.e., 2018) of the date.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.DateDim.mmyyyy -> TILDA.DateDim."mmyyyy"
@@ -346,7 +383,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    MMYYYY        = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "mmyyyy"        , 16/*16*/, "The mmyyyy printable version of a date.", null, null, null);
+     public final Type_StringPrimitiveNull    MMYYYY        = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "mmyyyy"        , 16/*16*/, "The mmyyyy printable version of a date.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.DateDim.mmddyyyy -> TILDA.DateDim."mmddyyyy"
@@ -365,7 +404,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    MMDDYYYY      = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "mmddyyyy"      , 17/*17*/, "The mmddyyyy printable version of a date.", null, null, null);
+     public final Type_StringPrimitiveNull    MMDDYYYY      = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "mmddyyyy"      , 17/*17*/, "The mmddyyyy printable version of a date.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.DateDim.yyyymmdd -> TILDA.DateDim."yyyymmdd"
@@ -384,7 +425,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    YYYYMMDD      = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "yyyymmdd"      , 18/*18*/, "The yyyymmdd sortable printable version of a date.", null, null, null);
+     public final Type_StringPrimitiveNull    YYYYMMDD      = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "yyyymmdd"      , 18/*18*/, "The yyyymmdd sortable printable version of a date.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.DateDim.isWeekend -> TILDA.DateDim."isWeekend"
@@ -402,7 +445,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerPrimitiveNull   ISWEEKEND     = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "isWeekend"     , 19/*19*/, "1 if this is a weekend day, 0 otherwise.", null, null, null);
+     public final Type_IntegerPrimitiveNull   ISWEEKEND     = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "isWeekend"     , 19/*19*/, "1 if this is a weekend day, 0 otherwise.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.DateDim.isBusinessDay -> TILDA.DateDim."isBusinessDay"
@@ -420,7 +465,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerPrimitiveNull   ISBUSINESSDAY = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "isBusinessDay" , 20/*20*/, "1 if this is a business day, 0 otherwise.", null, null, null);
+     public final Type_IntegerPrimitiveNull   ISBUSINESSDAY = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "isBusinessDay" , 20/*20*/, "1 if this is a business day, 0 otherwise.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.DateDim.isHoliday -> TILDA.DateDim."isHoliday"
@@ -438,7 +485,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerPrimitiveNull   ISHOLIDAY     = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "isHoliday"     , 21/*21*/, "1 if this is a holiday, 0 otherwise.", null, null, null);
+     public final Type_IntegerPrimitiveNull   ISHOLIDAY     = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "isHoliday"     , 21/*21*/, "1 if this is a holiday, 0 otherwise.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.DateDim.holidayName -> TILDA.DateDim."holidayName"
@@ -457,7 +506,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    HOLIDAYNAME   = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "holidayName"   , 22/*22*/, "The name of the holiday if applicable.", null, null, null);
+     public final Type_StringPrimitiveNull    HOLIDAYNAME   = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "holidayName"   , 22/*22*/, "The name of the holiday if applicable.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.DateDim.created -> TILDA.DateDim."created"
@@ -482,7 +533,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      CREATED       = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"       , 23/*23*/, "The timestamp for when the record was created. (TILDA.DateDim)", null, null);
+     public final Type_DatetimePrimitive      CREATED       = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"       , 23/*23*/, "The timestamp for when the record was created. (TILDA.DateDim)", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.DateDim.lastUpdated -> TILDA.DateDim."lastUpdated"
@@ -507,7 +560,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      LASTUPDATED   = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"   , 24/*24*/, "The timestamp for when the record was last updated. (TILDA.DateDim)", null, null);
+     public final Type_DatetimePrimitive      LASTUPDATED   = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"   , 24/*24*/, "The timestamp for when the record was last updated. (TILDA.DateDim)", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.DateDim.deleted -> TILDA.DateDim."deleted"
@@ -525,15 +580,15 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  DELETED       = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"       , 25/*25*/, "The timestamp for when the record was deleted. (TILDA.DateDim)", null, null);
-;
+     public final Type_DatetimePrimitiveNull  DELETED       = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"       , 25/*25*/, "The timestamp for when the record was deleted. (TILDA.DateDim)", null, null);
    }
 
-   public static final ColumnDefinition[] COLUMNS = { COLS.DT,COLS.EPOCH,COLS.DAYNAME,COLS.DAYOFWEEK,COLS.DAYOFMONTH,COLS.DAYOFQUARTER,COLS.DAYOFYEAR,COLS.WEEKOFMONTH,COLS.WEEKOFYEAR,COLS.MONTH,COLS.MONTHOFYEAR,COLS.MONTHNAME,COLS.MONTHNAMESHORT,COLS.QUARTEROFYEAR,COLS.QUARTERNAME,COLS.YEAR,COLS.MMYYYY,COLS.MMDDYYYY,COLS.YYYYMMDD,COLS.ISWEEKEND,COLS.ISBUSINESSDAY,COLS.ISHOLIDAY,COLS.HOLIDAYNAME,COLS.CREATED,COLS.LASTUPDATED,COLS.DELETED };
+   public static COLS_BASE COLS = new COLS_BASE();
+   public static final ColumnDefinition[] COLUMNS = new ColumnDefinition[] { COLS.DT,COLS.EPOCH,COLS.DAYNAME,COLS.DAYOFWEEK,COLS.DAYOFMONTH,COLS.DAYOFQUARTER,COLS.DAYOFYEAR,COLS.WEEKOFMONTH,COLS.WEEKOFYEAR,COLS.MONTH,COLS.MONTHOFYEAR,COLS.MONTHNAME,COLS.MONTHNAMESHORT,COLS.QUARTEROFYEAR,COLS.QUARTERNAME,COLS.YEAR,COLS.MMYYYY,COLS.MMDDYYYY,COLS.YYYYMMDD,COLS.ISWEEKEND,COLS.ISBUSINESSDAY,COLS.ISHOLIDAY,COLS.HOLIDAYNAME,COLS.CREATED,COLS.LASTUPDATED,COLS.DELETED };
 
-   public static final ColumnDefinition[] COLUMNS_PRIMARY = { COLS.DT };
+   public static final ColumnDefinition[] COLUMNS_PRIMARY = new ColumnDefinition[] { COLS.DT };
 
-   public static final ColumnDefinition[][] COLUMNS_UNIQUE_INDICES = { 
+   public static final ColumnDefinition[][] COLUMNS_UNIQUE_INDICES = new ColumnDefinition[][]{ 
         };
 
    public static final ColumnDefinition[] COLUMNS_FIRST_IDENTITY = {};
@@ -605,32 +660,7 @@ This is the column definition for:<BR>
        else
         {
           S.append("select ");
-          S.append(" "); C.getFullColumnVar(S, "TILDA", "DateDim", "dt");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "epoch");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "dayName");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "dayOfWeek");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "dayOfMonth");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "dayOfQuarter");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "dayOfYear");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "weekOfMonth");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "weekOfYear");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "month");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "monthOfYear");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "monthName");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "monthNameShort");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "quarterOfYear");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "quarterName");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "year");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "mmyyyy");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "mmddyyyy");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "yyyymmdd");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "isWeekend");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "isBusinessDay");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "isHoliday");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "holidayName");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "created");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "lastUpdated");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "deleted");
+          C.getFullColumnVarList(S, TILDA__DATEDIM_Factory.COLUMNS);
           S.append(" from "); C.getFullTableVar(S, "TILDA", "DateDim");
           switch (LookupId)
            {
@@ -991,6 +1021,9 @@ object. The generic init method defaults to this general data structure as a gen
          }
        }
 
+/**
+Lookup one record by the primary key: dt.
+*/
    static public tilda.data.DateDim_Data lookupByPrimaryKey(LocalDate dt) throws Exception
      {
        tilda.data._Tilda.TILDA__DATEDIM Obj = new tilda.data.DateDim_Data();
@@ -1001,8 +1034,11 @@ object. The generic init method defaults to this general data structure as a gen
        return (tilda.data.DateDim_Data) Obj;
      }
 
-
-   static public ListResults<tilda.data.DateDim_Data> lookupWhereAll(Connection C, int start, int size) throws Exception
+/**
+Lookup records by the query 'All' over 
+.<BR>
+The results are ordered by: dt asc
+*/   static public ListResults<tilda.data.DateDim_Data> lookupWhereAll(Connection C, int start, int size) throws Exception
      {
        tilda.data._Tilda.TILDA__DATEDIM Obj = new tilda.data.DateDim_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -1014,7 +1050,11 @@ object. The generic init method defaults to this general data structure as a gen
      }
 
 
-   static public void lookupWhereAll(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.DateDim_Data> OP, int start, int size) throws Exception
+/**
+Lookup records by the query 'All' over 
+.<BR>
+The results are ordered by: dt asc
+*/   static public void lookupWhereAll(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.DateDim_Data> OP, int start, int size) throws Exception
      {
        tilda.data._Tilda.TILDA__DATEDIM Obj = new tilda.data.DateDim_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -1023,6 +1063,7 @@ object. The generic init method defaults to this general data structure as a gen
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
        readMany(C, 1, RPI, Obj, null, start, size);
      }
+
 
 
    public static SelectQuery newSelectQuery(Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, true); }

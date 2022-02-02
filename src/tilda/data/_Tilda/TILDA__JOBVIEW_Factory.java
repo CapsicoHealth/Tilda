@@ -35,7 +35,12 @@ public class TILDA__JOBVIEW_Factory
    public static final String SCHEMA_TABLENAME_LABEL = TextUtil.print("TILDA.JobView", "");
    public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "JobView"); }
 
-   public static abstract class COLS {
+   public static final class COLS_BASE
+    {
+      private COLS_BASE() { }
+
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JobView.jobRefnum -> TILDA.JobView."jobRefnum"
@@ -53,7 +58,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          JOBREFNUM          = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "jobRefnum"          , 0/*0*/, "The primary key for this record", null, null, null);
+     public final Type_LongPrimitive          JOBREFNUM          = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "jobRefnum"          , 0/*0*/, "The primary key for this record", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JobView.jobName -> TILDA.JobView."jobName"
@@ -72,7 +79,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        JOBNAME            = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "jobName"            , 1/*1*/, "Name", null, null, null);
+     public final Type_StringPrimitive        JOBNAME            = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "jobName"            , 1/*1*/, "Name", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JobView.jobType -> TILDA.JobView."jobType"
@@ -91,7 +100,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    JOBTYPE            = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobType"            , 2/*2*/, "Job type", null, null, null);
+     public final Type_StringPrimitiveNull    JOBTYPE            = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobType"            , 2/*2*/, "Job type", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JobView.jobUserId -> TILDA.JobView."jobUserId"
@@ -110,7 +121,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    JOBUSERID          = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobUserId"          , 3/*3*/, "Job user Id", null, null, null);
+     public final Type_StringPrimitiveNull    JOBUSERID          = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobUserId"          , 3/*3*/, "Job user Id", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JobView.jobDataStartTZ -> TILDA.JobView."jobDataStartTZ"
@@ -129,7 +142,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    JOBDATASTARTTZ     = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobDataStartTZ"     , 4/*4*/, "Generated helper column to hold the time zone ID for 'jobDataStart'.", null, null, null);
+     public final Type_StringPrimitiveNull    JOBDATASTARTTZ     = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobDataStartTZ"     , 4/*4*/, "Generated helper column to hold the time zone ID for 'jobDataStart'.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JobView.jobDataStart -> TILDA.JobView."jobDataStart"
@@ -147,7 +162,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  JOBDATASTART       = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "jobDataStart"       , 5/*5*/, "StartTime", null, null, JOBDATASTARTTZ);
+     public final Type_DatetimePrimitiveNull  JOBDATASTART       = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "jobDataStart"       , 5/*5*/, "StartTime", null, null, JOBDATASTARTTZ);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JobView.jobDataEndTZ -> TILDA.JobView."jobDataEndTZ"
@@ -166,7 +183,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    JOBDATAENDTZ       = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobDataEndTZ"       , 6/*6*/, "Generated helper column to hold the time zone ID for 'jobDataEnd'.", null, null, null);
+     public final Type_StringPrimitiveNull    JOBDATAENDTZ       = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobDataEndTZ"       , 6/*6*/, "Generated helper column to hold the time zone ID for 'jobDataEnd'.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JobView.jobDataEnd -> TILDA.JobView."jobDataEnd"
@@ -184,7 +203,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  JOBDATAEND         = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "jobDataEnd"         , 7/*7*/, "StartTime", null, null, JOBDATAENDTZ);
+     public final Type_DatetimePrimitiveNull  JOBDATAEND         = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "jobDataEnd"         , 7/*7*/, "StartTime", null, null, JOBDATAENDTZ);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JobView.jobStartTZ -> TILDA.JobView."jobStartTZ"
@@ -203,7 +224,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        JOBSTARTTZ         = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "jobStartTZ"         , 8/*8*/, "Generated helper column to hold the time zone ID for 'jobStart'.", null, null, null);
+     public final Type_StringPrimitive        JOBSTARTTZ         = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "jobStartTZ"         , 8/*8*/, "Generated helper column to hold the time zone ID for 'jobStart'.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JobView.jobStart -> TILDA.JobView."jobStart"
@@ -221,7 +244,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitive      JOBSTART           = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "jobStart"           , 9/*9*/, "StartTime", null, null, JOBSTARTTZ);
+     public final Type_DatetimePrimitive      JOBSTART           = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "jobStart"           , 9/*9*/, "StartTime", null, null, JOBSTARTTZ);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JobView.jobEndTZ -> TILDA.JobView."jobEndTZ"
@@ -240,7 +265,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    JOBENDTZ           = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobEndTZ"           , 10/*10*/, "Generated helper column to hold the time zone ID for 'jobEnd'.", null, null, null);
+     public final Type_StringPrimitiveNull    JOBENDTZ           = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobEndTZ"           , 10/*10*/, "Generated helper column to hold the time zone ID for 'jobEnd'.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JobView.jobEnd -> TILDA.JobView."jobEnd"
@@ -258,7 +285,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  JOBEND             = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "jobEnd"             , 11/*11*/, "EndTime", null, null, JOBENDTZ);
+     public final Type_DatetimePrimitiveNull  JOBEND             = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "jobEnd"             , 11/*11*/, "EndTime", null, null, JOBENDTZ);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JobView.jobStatus -> TILDA.JobView."jobStatus"
@@ -276,7 +305,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_BooleanPrimitiveNull   JOBSTATUS          = new Type_BooleanPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "jobStatus"          , 12/*12*/, "Status", null, null, null);
+     public final Type_BooleanPrimitiveNull   JOBSTATUS          = new Type_BooleanPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "jobStatus"          , 12/*12*/, "Status", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JobView.jobMsg -> TILDA.JobView."jobMsg"
@@ -295,7 +326,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    JOBMSG             = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobMsg"             , 13/*13*/, "Message details", null, null, null);
+     public final Type_StringPrimitiveNull    JOBMSG             = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobMsg"             , 13/*13*/, "Message details", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JobView.jobPartName -> TILDA.JobView."jobPartName"
@@ -314,7 +347,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        JOBPARTNAME        = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartName"        , 14/*14*/, "Job part name", null, null, null);
+     public final Type_StringPrimitive        JOBPARTNAME        = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartName"        , 14/*14*/, "Job part name", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JobView.jobPartType -> TILDA.JobView."jobPartType"
@@ -333,7 +368,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    JOBPARTTYPE        = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartType"        , 15/*15*/, "Job part type", null, null, null);
+     public final Type_StringPrimitiveNull    JOBPARTTYPE        = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartType"        , 15/*15*/, "Job part type", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JobView.jobPartDataStartTZ -> TILDA.JobView."jobPartDataStartTZ"
@@ -352,7 +389,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    JOBPARTDATASTARTTZ = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartDataStartTZ" , 16/*16*/, "Generated helper column to hold the time zone ID for 'jobPartDataStart'.", null, null, null);
+     public final Type_StringPrimitiveNull    JOBPARTDATASTARTTZ = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartDataStartTZ" , 16/*16*/, "Generated helper column to hold the time zone ID for 'jobPartDataStart'.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JobView.jobPartDataStart -> TILDA.JobView."jobPartDataStart"
@@ -370,7 +409,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  JOBPARTDATASTART   = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartDataStart"   , 17/*17*/, "Job part data start", null, null, JOBPARTDATASTARTTZ);
+     public final Type_DatetimePrimitiveNull  JOBPARTDATASTART   = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartDataStart"   , 17/*17*/, "Job part data start", null, null, JOBPARTDATASTARTTZ);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JobView.jobPartDataEndTZ -> TILDA.JobView."jobPartDataEndTZ"
@@ -389,7 +430,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    JOBPARTDATAENDTZ   = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartDataEndTZ"   , 18/*18*/, "Generated helper column to hold the time zone ID for 'jobPartDataEnd'.", null, null, null);
+     public final Type_StringPrimitiveNull    JOBPARTDATAENDTZ   = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartDataEndTZ"   , 18/*18*/, "Generated helper column to hold the time zone ID for 'jobPartDataEnd'.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JobView.jobPartDataEnd -> TILDA.JobView."jobPartDataEnd"
@@ -407,7 +450,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  JOBPARTDATAEND     = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartDataEnd"     , 19/*19*/, "Job part data end", null, null, JOBPARTDATAENDTZ);
+     public final Type_DatetimePrimitiveNull  JOBPARTDATAEND     = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartDataEnd"     , 19/*19*/, "Job part data end", null, null, JOBPARTDATAENDTZ);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JobView.jobPartStartTZ -> TILDA.JobView."jobPartStartTZ"
@@ -426,7 +471,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        JOBPARTSTARTTZ     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartStartTZ"     , 20/*20*/, "Generated helper column to hold the time zone ID for 'jobPartStart'.", null, null, null);
+     public final Type_StringPrimitive        JOBPARTSTARTTZ     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartStartTZ"     , 20/*20*/, "Generated helper column to hold the time zone ID for 'jobPartStart'.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JobView.jobPartStart -> TILDA.JobView."jobPartStart"
@@ -444,7 +491,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitive      JOBPARTSTART       = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartStart"       , 21/*21*/, "Job part execution start", null, null, JOBPARTSTARTTZ);
+     public final Type_DatetimePrimitive      JOBPARTSTART       = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartStart"       , 21/*21*/, "Job part execution start", null, null, JOBPARTSTARTTZ);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JobView.jobPartEndTZ -> TILDA.JobView."jobPartEndTZ"
@@ -463,7 +512,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    JOBPARTENDTZ       = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartEndTZ"       , 22/*22*/, "Generated helper column to hold the time zone ID for 'jobPartEnd'.", null, null, null);
+     public final Type_StringPrimitiveNull    JOBPARTENDTZ       = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartEndTZ"       , 22/*22*/, "Generated helper column to hold the time zone ID for 'jobPartEnd'.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JobView.jobPartEnd -> TILDA.JobView."jobPartEnd"
@@ -481,7 +532,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  JOBPARTEND         = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartEnd"         , 23/*23*/, "Job part execution end", null, null, JOBPARTENDTZ);
+     public final Type_DatetimePrimitiveNull  JOBPARTEND         = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartEnd"         , 23/*23*/, "Job part execution end", null, null, JOBPARTENDTZ);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JobView.jobPartRecordsCount -> TILDA.JobView."jobPartRecordsCount"
@@ -499,7 +552,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerPrimitiveNull   JOBPARTRECORDSCOUNT= new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartRecordsCount", 24/*24*/, "count of database or file or ... records.", null, null, null);
+     public final Type_IntegerPrimitiveNull   JOBPARTRECORDSCOUNT= new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartRecordsCount", 24/*24*/, "count of database or file or ... records.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JobView.jobPartStatus -> TILDA.JobView."jobPartStatus"
@@ -517,7 +572,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_BooleanPrimitiveNull   JOBPARTSTATUS      = new Type_BooleanPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartStatus"      , 25/*25*/, "Status flag, i.e., success=true and failure-false", null, null, null);
+     public final Type_BooleanPrimitiveNull   JOBPARTSTATUS      = new Type_BooleanPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartStatus"      , 25/*25*/, "Status flag, i.e., success=true and failure-false", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JobView.jobPartNotify -> TILDA.JobView."jobPartNotify"
@@ -535,7 +592,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_BooleanPrimitive       JOBPARTNOTIFY      = new Type_BooleanPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartNotify"      , 26/*26*/, "Notification flag", null, null, null);
+     public final Type_BooleanPrimitive       JOBPARTNOTIFY      = new Type_BooleanPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartNotify"      , 26/*26*/, "Notification flag", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JobView.jobPartMessage -> TILDA.JobView."jobPartMessage"
@@ -554,15 +613,15 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        JOBPARTMESSAGE     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartMessage"     , 27/*27*/, "Message details", null, null, null);
-;
+     public final Type_StringPrimitive        JOBPARTMESSAGE     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartMessage"     , 27/*27*/, "Message details", null, null, null);
    }
 
-   public static final ColumnDefinition[] COLUMNS = { COLS.JOBREFNUM,COLS.JOBNAME,COLS.JOBTYPE,COLS.JOBUSERID,COLS.JOBDATASTARTTZ,COLS.JOBDATASTART,COLS.JOBDATAENDTZ,COLS.JOBDATAEND,COLS.JOBSTARTTZ,COLS.JOBSTART,COLS.JOBENDTZ,COLS.JOBEND,COLS.JOBSTATUS,COLS.JOBMSG,COLS.JOBPARTNAME,COLS.JOBPARTTYPE,COLS.JOBPARTDATASTARTTZ,COLS.JOBPARTDATASTART,COLS.JOBPARTDATAENDTZ,COLS.JOBPARTDATAEND,COLS.JOBPARTSTARTTZ,COLS.JOBPARTSTART,COLS.JOBPARTENDTZ,COLS.JOBPARTEND,COLS.JOBPARTRECORDSCOUNT,COLS.JOBPARTSTATUS,COLS.JOBPARTNOTIFY,COLS.JOBPARTMESSAGE };
+   public static COLS_BASE COLS = new COLS_BASE();
+   public static final ColumnDefinition[] COLUMNS = new ColumnDefinition[] { COLS.JOBREFNUM,COLS.JOBNAME,COLS.JOBTYPE,COLS.JOBUSERID,COLS.JOBDATASTARTTZ,COLS.JOBDATASTART,COLS.JOBDATAENDTZ,COLS.JOBDATAEND,COLS.JOBSTARTTZ,COLS.JOBSTART,COLS.JOBENDTZ,COLS.JOBEND,COLS.JOBSTATUS,COLS.JOBMSG,COLS.JOBPARTNAME,COLS.JOBPARTTYPE,COLS.JOBPARTDATASTARTTZ,COLS.JOBPARTDATASTART,COLS.JOBPARTDATAENDTZ,COLS.JOBPARTDATAEND,COLS.JOBPARTSTARTTZ,COLS.JOBPARTSTART,COLS.JOBPARTENDTZ,COLS.JOBPARTEND,COLS.JOBPARTRECORDSCOUNT,COLS.JOBPARTSTATUS,COLS.JOBPARTNOTIFY,COLS.JOBPARTMESSAGE };
 
-   public static final ColumnDefinition[] COLUMNS_PRIMARY = {  };
+   public static final ColumnDefinition[] COLUMNS_PRIMARY = new ColumnDefinition[] {  };
 
-   public static final ColumnDefinition[][] COLUMNS_UNIQUE_INDICES = { 
+   public static final ColumnDefinition[][] COLUMNS_UNIQUE_INDICES = new ColumnDefinition[][]{ 
         };
 
    public static final ColumnDefinition[] COLUMNS_FIRST_IDENTITY = {};
@@ -634,34 +693,7 @@ This is the column definition for:<BR>
        else
         {
           S.append("select ");
-          S.append(" "); C.getFullColumnVar(S, "TILDA", "JobView", "jobRefnum");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobName");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobType");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobUserId");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobDataStartTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobDataStart");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobDataEndTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobDataEnd");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobStartTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobStart");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobEndTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobEnd");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobStatus");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobMsg");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobPartName");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobPartType");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobPartDataStartTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobPartDataStart");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobPartDataEndTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobPartDataEnd");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobPartStartTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobPartStart");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobPartEndTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobPartEnd");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobPartRecordsCount");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobPartStatus");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobPartNotify");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobPartMessage");
+          C.getFullColumnVarList(S, TILDA__JOBVIEW_Factory.COLUMNS);
           S.append(" from "); C.getFullTableVar(S, "TILDA", "JobView");
           switch (LookupId)
            {
@@ -716,6 +748,10 @@ This is the column definition for:<BR>
 // THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/**
+Lookup records by the query 'All' over 
+.<BR>
+*/
    static public tilda.data.JobView_Data lookupByAll() throws Exception
      {
        tilda.data._Tilda.TILDA__JOBVIEW Obj = new tilda.data.JobView_Data();

@@ -1136,7 +1136,7 @@ This is the hasChanged for:<BR>
         Dst.setValueNull      ();
        else
         Dst.setValue      (_value      );
-       if (_created     != null)
+       if (__Init == InitMode.CREATE && _created     != null)
         Dst.setCreated    (_created    );
        if (_lastUpdated != null)
         Dst.setLastUpdated(_lastUpdated);
@@ -1362,15 +1362,15 @@ This is the hasChanged for:<BR>
        int i = 0;
        if (__Changes.intersects(TILDA__MAINTENANCE_Factory.COLS.TYPE._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__MAINTENANCE_Factory.COLS.TYPE._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _type);
+          if (__Nulls.intersects(TILDA__MAINTENANCE_Factory.COLS.TYPE._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _type);
         } 
        if (__Changes.intersects(TILDA__MAINTENANCE_Factory.COLS.NAME._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__MAINTENANCE_Factory.COLS.NAME._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _name);
+          if (__Nulls.intersects(TILDA__MAINTENANCE_Factory.COLS.NAME._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _name);
         } 
        if (__Changes.intersects(TILDA__MAINTENANCE_Factory.COLS.VALUE._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__MAINTENANCE_Factory.COLS.VALUE._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _value);
+          if (__Nulls.intersects(TILDA__MAINTENANCE_Factory.COLS.VALUE._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _value);
         } 
        if (__Changes.intersects(TILDA__MAINTENANCE_Factory.COLS.CREATED._Mask) == true) 
         { 
@@ -1428,7 +1428,7 @@ This is the hasChanged for:<BR>
                     || __Init == null && __LookupId==0 // Loaded via some deserialization mechamism, e.g., Json or CSV loader
                ;
        if (OK == false)
-        throw new Exception("Object has not been instanciated via deserialization or the factory create() method.");
+        throw new Exception("Object has not been instanciated via deserialization or the factory create() method: __Init:"+__Init+"; __NewlyCreated:"+__NewlyCreated+"; __LookupId: "+__LookupId+";");
 
        if (__Init == null && __LookupId==0)  // object deserialized
         validateDeserialization();
@@ -1506,12 +1506,7 @@ This is the hasChanged for:<BR>
         }
        StringBuilder S = new StringBuilder(1024);
           S.append("select ");
-          S.append(" "); C.getFullColumnVar(S, "TILDA", "Maintenance", "type");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Maintenance", "name");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Maintenance", "value");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Maintenance", "created");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Maintenance", "lastUpdated");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Maintenance", "deleted");
+          C.getFullColumnVarList(S, TILDA__MAINTENANCE_Factory.COLUMNS);
           S.append(" from "); C.getFullTableVar(S, "TILDA", "Maintenance");
        switch (__LookupId)
         {

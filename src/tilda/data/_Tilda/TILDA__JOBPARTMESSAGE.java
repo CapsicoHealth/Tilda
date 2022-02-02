@@ -1335,7 +1335,7 @@ This is the hasChanged for:<BR>
         Dst.setNotify       (_notify       );
        if (_msg           != null)
         Dst.setMsg          (_msg          );
-       if (_created       != null)
+       if (__Init == InitMode.CREATE && _created       != null)
         Dst.setCreated      (_created      );
        if (_lastUpdated   != null)
         Dst.setLastUpdated  (_lastUpdated  );
@@ -1587,7 +1587,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.MSG._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.MSG._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _msg);
+          if (__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.MSG._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _msg);
         } 
        if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.CREATED._Mask) == true) 
         { 
@@ -1655,14 +1655,7 @@ This is the hasChanged for:<BR>
         }
        StringBuilder S = new StringBuilder(1024);
           S.append("select ");
-          S.append(" "); C.getFullColumnVar(S, "TILDA", "JobPartMessage", "refnum");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobPartMessage", "jobRefnum");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobPartMessage", "jobPartRefnum");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobPartMessage", "notify");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobPartMessage", "msg");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobPartMessage", "created");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobPartMessage", "lastUpdated");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobPartMessage", "deleted");
+          C.getFullColumnVarList(S, TILDA__JOBPARTMESSAGE_Factory.COLUMNS);
           S.append(" from "); C.getFullTableVar(S, "TILDA", "JobPartMessage");
        switch (__LookupId)
         {

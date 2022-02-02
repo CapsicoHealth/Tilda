@@ -35,7 +35,12 @@ public class TILDA__CONNECTION_Factory
    public static final String SCHEMA_TABLENAME_LABEL = TextUtil.print("TILDA.Connection", "");
    public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "Connection"); }
 
-   public static abstract class COLS {
+   public static final class COLS_BASE
+    {
+      private COLS_BASE() { }
+
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Connection.active -> TILDA.Connection."active"
@@ -53,7 +58,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_BooleanPrimitiveNull   ACTIVE     = new Type_BooleanPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "active"     , 0/*0*/, "Status Flag", null, null, null);
+     public final Type_BooleanPrimitiveNull   ACTIVE     = new Type_BooleanPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "active"     , 0/*0*/, "Status Flag", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Connection.id -> TILDA.Connection."id"
@@ -72,7 +79,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        ID         = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "id"         , 1/*1*/, "Connection ID", null, null, null);
+     public final Type_StringPrimitive        ID         = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "id"         , 1/*1*/, "Connection ID", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Connection.driver -> TILDA.Connection."driver"
@@ -91,7 +100,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        DRIVER     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "driver"     , 2/*2*/, "DB Driver", null, null, null);
+     public final Type_StringPrimitive        DRIVER     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "driver"     , 2/*2*/, "DB Driver", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Connection.db -> TILDA.Connection."db"
@@ -110,7 +121,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        DB         = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "db"         , 3/*3*/, "DB Url", null, null, null);
+     public final Type_StringPrimitive        DB         = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "db"         , 3/*3*/, "DB Url", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Connection.user -> TILDA.Connection."user"
@@ -129,7 +142,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        USER       = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "user"       , 4/*4*/, "DB User", null, null, null);
+     public final Type_StringPrimitive        USER       = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "user"       , 4/*4*/, "DB User", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Connection.pswd -> TILDA.Connection."pswd"
@@ -148,7 +163,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        PSWD       = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "pswd"       , 5/*5*/, "DB Password", null, null, null);
+     public final Type_StringPrimitive        PSWD       = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "pswd"       , 5/*5*/, "DB Password", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Connection.initial -> TILDA.Connection."initial"
@@ -166,7 +183,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerPrimitive       INITIAL    = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "initial"    , 6/*6*/, "Minimum Connections", null, null, null);
+     public final Type_IntegerPrimitive       INITIAL    = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "initial"    , 6/*6*/, "Minimum Connections", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Connection.max -> TILDA.Connection."max"
@@ -184,7 +203,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerPrimitive       MAX        = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "max"        , 7/*7*/, "Maximum Connections", null, null, null);
+     public final Type_IntegerPrimitive       MAX        = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "max"        , 7/*7*/, "Maximum Connections", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Connection.schemas -> TILDA.Connection."schemas"
@@ -203,7 +224,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringCollection       SCHEMAS    = new Type_StringCollection      (SCHEMA_LABEL, TABLENAME_LABEL, "schemas"    , 8/*8*/, "Schemas", null, null);
+     public final Type_StringCollection       SCHEMAS    = new Type_StringCollection      (SCHEMA_LABEL, TABLENAME_LABEL, "schemas"    , 8/*8*/, "Schemas", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Connection.created -> TILDA.Connection."created"
@@ -228,7 +251,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      CREATED    = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"    , 9/*9*/, "The timestamp for when the record was created. (TILDA.Connection)", null, null);
+     public final Type_DatetimePrimitive      CREATED    = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"    , 9/*9*/, "The timestamp for when the record was created. (TILDA.Connection)", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Connection.lastUpdated -> TILDA.Connection."lastUpdated"
@@ -253,7 +278,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      LASTUPDATED= new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated", 10/*10*/, "The timestamp for when the record was last updated. (TILDA.Connection)", null, null);
+     public final Type_DatetimePrimitive      LASTUPDATED= new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated", 10/*10*/, "The timestamp for when the record was last updated. (TILDA.Connection)", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Connection.deleted -> TILDA.Connection."deleted"
@@ -271,15 +298,15 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  DELETED    = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"    , 11/*11*/, "The timestamp for when the record was deleted. (TILDA.Connection)", null, null);
-;
+     public final Type_DatetimePrimitiveNull  DELETED    = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"    , 11/*11*/, "The timestamp for when the record was deleted. (TILDA.Connection)", null, null);
    }
 
-   public static final ColumnDefinition[] COLUMNS = { COLS.ACTIVE,COLS.ID,COLS.DRIVER,COLS.DB,COLS.USER,COLS.PSWD,COLS.INITIAL,COLS.MAX,COLS.SCHEMAS,COLS.CREATED,COLS.LASTUPDATED,COLS.DELETED };
+   public static COLS_BASE COLS = new COLS_BASE();
+   public static final ColumnDefinition[] COLUMNS = new ColumnDefinition[] { COLS.ACTIVE,COLS.ID,COLS.DRIVER,COLS.DB,COLS.USER,COLS.PSWD,COLS.INITIAL,COLS.MAX,COLS.SCHEMAS,COLS.CREATED,COLS.LASTUPDATED,COLS.DELETED };
 
-   public static final ColumnDefinition[] COLUMNS_PRIMARY = { COLS.ID };
+   public static final ColumnDefinition[] COLUMNS_PRIMARY = new ColumnDefinition[] { COLS.ID };
 
-   public static final ColumnDefinition[][] COLUMNS_UNIQUE_INDICES = { 
+   public static final ColumnDefinition[][] COLUMNS_UNIQUE_INDICES = new ColumnDefinition[][]{ 
         };
 
    public static final ColumnDefinition[] COLUMNS_FIRST_IDENTITY = {};
@@ -351,18 +378,7 @@ This is the column definition for:<BR>
        else
         {
           S.append("select ");
-          S.append(" "); C.getFullColumnVar(S, "TILDA", "Connection", "active");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Connection", "id");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Connection", "driver");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Connection", "db");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Connection", "user");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Connection", "pswd");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Connection", "initial");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Connection", "max");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Connection", "schemas");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Connection", "created");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Connection", "lastUpdated");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Connection", "deleted");
+          C.getFullColumnVarList(S, TILDA__CONNECTION_Factory.COLUMNS);
           S.append(" from "); C.getFullTableVar(S, "TILDA", "Connection");
           switch (LookupId)
            {
@@ -664,6 +680,9 @@ object. The generic init method defaults to this general data structure as a gen
          }
        }
 
+/**
+Lookup one record by the primary key: id.
+*/
    static public tilda.data.Connection_Data lookupByPrimaryKey(String id) throws Exception
      {
        tilda.data._Tilda.TILDA__CONNECTION Obj = new tilda.data.Connection_Data();
@@ -674,7 +693,9 @@ object. The generic init method defaults to this general data structure as a gen
        return (tilda.data.Connection_Data) Obj;
      }
 
-
+/**
+Lookup records by the index 'AllById' over  .<BR>The results are ordered by: id asc
+*/
    static public ListResults<tilda.data.Connection_Data> lookupWhereAllById(Connection C, int start, int size) throws Exception
      {
        tilda.data._Tilda.TILDA__CONNECTION Obj = new tilda.data.Connection_Data();
@@ -687,6 +708,9 @@ object. The generic init method defaults to this general data structure as a gen
        return RPI._L;
      }
 
+/**
+Lookup records by the index 'AllById' over  .<BR>The results are ordered by: id asc
+*/
    static public void lookupWhereAllById(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Connection_Data> OP, int start, int size) throws Exception
      {
        tilda.data._Tilda.TILDA__CONNECTION Obj = new tilda.data.Connection_Data();
@@ -700,7 +724,11 @@ object. The generic init method defaults to this general data structure as a gen
 
 
 
-   static public ListResults<tilda.data.Connection_Data> lookupWhereActive(Connection C, int start, int size) throws Exception
+/**
+Lookup records by the query 'Active' over 
+.<BR>
+The results are ordered by: id asc
+*/   static public ListResults<tilda.data.Connection_Data> lookupWhereActive(Connection C, int start, int size) throws Exception
      {
        tilda.data._Tilda.TILDA__CONNECTION Obj = new tilda.data.Connection_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -712,7 +740,11 @@ object. The generic init method defaults to this general data structure as a gen
      }
 
 
-   static public void lookupWhereActive(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Connection_Data> OP, int start, int size) throws Exception
+/**
+Lookup records by the query 'Active' over 
+.<BR>
+The results are ordered by: id asc
+*/   static public void lookupWhereActive(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Connection_Data> OP, int start, int size) throws Exception
      {
        tilda.data._Tilda.TILDA__CONNECTION Obj = new tilda.data.Connection_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -724,7 +756,11 @@ object. The generic init method defaults to this general data structure as a gen
 
 
 
-   static public ListResults<tilda.data.Connection_Data> lookupWhereAll(Connection C, int start, int size) throws Exception
+/**
+Lookup records by the query 'All' over 
+.<BR>
+The results are ordered by: id asc
+*/   static public ListResults<tilda.data.Connection_Data> lookupWhereAll(Connection C, int start, int size) throws Exception
      {
        tilda.data._Tilda.TILDA__CONNECTION Obj = new tilda.data.Connection_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -736,7 +772,11 @@ object. The generic init method defaults to this general data structure as a gen
      }
 
 
-   static public void lookupWhereAll(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Connection_Data> OP, int start, int size) throws Exception
+/**
+Lookup records by the query 'All' over 
+.<BR>
+The results are ordered by: id asc
+*/   static public void lookupWhereAll(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Connection_Data> OP, int start, int size) throws Exception
      {
        tilda.data._Tilda.TILDA__CONNECTION Obj = new tilda.data.Connection_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -745,6 +785,7 @@ object. The generic init method defaults to this general data structure as a gen
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
        readMany(C, 3, RPI, Obj, null, start, size);
      }
+
 
 
    public static SelectQuery newSelectQuery(Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, true); }

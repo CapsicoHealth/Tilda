@@ -729,7 +729,8 @@ This is the definition for:<BR>
 */
    @SerializedName("startTime")
    String  Str_startTime;
-   public void initStartTime(String v) { Str_startTime = v; }
+   /** Pre-init the field as it would come from a JSON stream, in text form, e.g., timestamps. */
+   public void initJson_StartTime(String v) { Str_startTime = v; }
    public String initStartTimeVal() { return Str_startTime; }
    transient ZonedDateTime _startTime = null;
    transient ZonedDateTime __Saved_startTime;
@@ -930,7 +931,8 @@ This is the definition for:<BR>
 */
    @SerializedName("endTime")
    String  Str_endTime;
-   public void initEndTime(String v) { Str_endTime = v; }
+   /** Pre-init the field as it would come from a JSON stream, in text form, e.g., timestamps. */
+   public void initJson_EndTime(String v) { Str_endTime = v; }
    public String initEndTimeVal() { return Str_endTime; }
    transient ZonedDateTime _endTime = null;
 
@@ -1414,6 +1416,20 @@ These are the enumerated values for tilda.data.TILDA.RefillPerf.timeTotalSec, wh
    public static final String[][] _timeTotalSec_Values = {
                                                { "0", "timeTotalSec_CreateDefault", "timeTotalSec_CreateDefault", "" }
                                   };
+   public static final boolean checkTimeTotalSec(long v)
+    {
+      for (String[] a : _timeTotalSec_Values)
+       if (a[0].equals(v) == true)
+        return true;
+      return false;
+    }
+   public static final String mapTimeTotalSec(long v)
+    {
+      for (String[] a : _timeTotalSec_Values)
+       if (a[0].equals(v) == true)
+        return a[2];
+      return null;
+    }
    public static final long _timeTotalSecTimeTotalSec_CreateDefault = 0l;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2375,11 +2391,11 @@ This is the hasChanged for:<BR>
         Dst.setStartDateIncrNull ();
        else
         Dst.setStartDateIncr (_startDateIncr );
-       if (_startTimeTZ    != null)
+       if (__Init == InitMode.CREATE && _startTimeTZ    != null)
         Dst.setStartTimeTZ   (_startTimeTZ   );
-       if (_endTimeTZ      != null)
+       if (__Init == InitMode.CREATE && _endTimeTZ      != null)
         Dst.setEndTimeTZ     (_endTimeTZ     );
-       if (_endTime        != null)
+       if (__Init == InitMode.CREATE && _endTime        != null)
         Dst.setEndTime       (_endTime       );
        Dst.Str_endTime = Str_endTime;
        if (_timeInsertSec  != null)
@@ -2394,7 +2410,7 @@ This is the hasChanged for:<BR>
         Dst.setInsertCount   (_insertCount   );
        if (_deleteCount    != null)
         Dst.setDeleteCount   (_deleteCount   );
-       if (_created        != null)
+       if (__Init == InitMode.CREATE && _created        != null)
         Dst.setCreated       (_created       );
        if (_lastUpdated    != null)
         Dst.setLastUpdated   (_lastUpdated   );
@@ -2733,11 +2749,11 @@ This is the hasChanged for:<BR>
        int i = 0;
        if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.SCHEMANAME._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__REFILLPERF_Factory.COLS.SCHEMANAME._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _schemaName);
+          if (__Nulls.intersects(TILDA__REFILLPERF_Factory.COLS.SCHEMANAME._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _schemaName);
         } 
        if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.OBJECTNAME._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__REFILLPERF_Factory.COLS.OBJECTNAME._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _objectName);
+          if (__Nulls.intersects(TILDA__REFILLPERF_Factory.COLS.OBJECTNAME._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _objectName);
         } 
        if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.STARTDATEINCR._Mask) == true) 
         { 
@@ -2745,7 +2761,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.STARTTIMETZ._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__REFILLPERF_Factory.COLS.STARTTIMETZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _startTimeTZ);
+          if (__Nulls.intersects(TILDA__REFILLPERF_Factory.COLS.STARTTIMETZ._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _startTimeTZ);
         } 
        if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.STARTTIME._Mask) == true) 
         { 
@@ -2753,7 +2769,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.ENDTIMETZ._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__REFILLPERF_Factory.COLS.ENDTIMETZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _endTimeTZ);
+          if (__Nulls.intersects(TILDA__REFILLPERF_Factory.COLS.ENDTIMETZ._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _endTimeTZ);
         } 
        if (__Changes.intersects(TILDA__REFILLPERF_Factory.COLS.ENDTIME._Mask) == true) 
         { 
@@ -2840,7 +2856,7 @@ This is the hasChanged for:<BR>
                     || __Init == null && __LookupId==0 // Loaded via some deserialization mechamism, e.g., Json or CSV loader
                ;
        if (OK == false)
-        throw new Exception("Object has not been instanciated via deserialization or the factory create() method.");
+        throw new Exception("Object has not been instanciated via deserialization or the factory create() method: __Init:"+__Init+"; __NewlyCreated:"+__NewlyCreated+"; __LookupId: "+__LookupId+";");
 
        if (__Init == null && __LookupId==0)  // object deserialized
         validateDeserialization();
@@ -2918,22 +2934,7 @@ This is the hasChanged for:<BR>
         }
        StringBuilder S = new StringBuilder(1024);
           S.append("select ");
-          S.append(" "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "schemaName");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "objectName");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "startDateIncr");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "startTimeTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "startTime");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "endTimeTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "endTime");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "timeInsertSec");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "timeDeleteSec");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "timeAnalyzeSec");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "timeTotalSec");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "insertCount");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "deleteCount");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "created");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "lastUpdated");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "deleted");
+          C.getFullColumnVarList(S, TILDA__REFILLPERF_Factory.COLUMNS);
           S.append(" from "); C.getFullTableVar(S, "TILDA", "RefillPerf");
        switch (__LookupId)
         {
