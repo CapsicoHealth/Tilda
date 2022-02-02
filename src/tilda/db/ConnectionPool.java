@@ -57,6 +57,7 @@ import tilda.parsing.ParserSession;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.performance.PerfTracker;
+import tilda.utils.AsciiArt;
 import tilda.utils.ClassStaticInit;
 import tilda.utils.DurationUtil;
 import tilda.utils.FileUtil;
@@ -423,7 +424,7 @@ public class ConnectionPool
         if (TildaList == null || TildaList.isEmpty() == true)
           throw new Exception("Tilda cannot start as we didn't find the necessary Tilda resources.");
 
-        List<String> Warnings = new ArrayList<String>();
+        List<String> warnings = new ArrayList<String>();
         for (Schema S : TildaList)
           {
             CodeGenSql Sql = C.getSQlCodeGen();
@@ -467,15 +468,19 @@ public class ConnectionPool
 
             for (Object Obj : S._Objects)
               if (Obj != null)
-                TildaMasterRuntimeMetaData.register(S._Package, Obj, Warnings);
+                TildaMasterRuntimeMetaData.register(S._Package, Obj, warnings);
           }
-        if (Warnings.isEmpty() == false)
+        if (warnings.isEmpty() == false)
           {
             StringBuilder Str = new StringBuilder();
             Str.append("\n\n#############################################################################################################################\n");
-            Str.append("There were " + Warnings.size() + " runtime warnings:\n");
-            for (String w : Warnings)
+            Str.append("\n");
+            Str.append(AsciiArt.Warning(""));
+            Str.append("\n");
+            Str.append("There were " + warnings.size() + " runtime warnings:\n");
+            for (String w : warnings)
               Str.append("    - " + w + "\n");
+            Str.append("\n");
             Str.append("These errors are typically due to the model having been updated but\n");
             Str.append("the Gen utility was not run, or the workspace was not refreshed and built.\n");
             Str.append("#############################################################################################################################\n\n");

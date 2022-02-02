@@ -20,6 +20,7 @@ import java.io.Writer;
 import java.lang.reflect.Constructor;
 import java.time.ZonedDateTime;
 import java.util.BitSet;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -257,6 +258,23 @@ public class ColumnDefinition implements JSONable
 
         return Names;
       }
+    
+    public static ColumnDefinition getColumnDefinition(List<ColumnDefinition> cols, String columnName)
+      {
+        for (ColumnDefinition cd : cols)
+          if (cd.getName().equals(columnName) == true)
+            return cd;
+        return null;
+      }
+    
+    public static ColumnDefinition getColumnDefinition(ColumnDefinition[] cols, String columnName)
+      {
+        for (ColumnDefinition cd : cols)
+          if (cd.getName().equals(columnName) == true)
+            return cd;
+        return null;
+      }
+    
 
     @Override
     public void toJSON(Writer out, String jsonExportName, String lead, boolean fullObject)
@@ -291,9 +309,15 @@ public class ColumnDefinition implements JSONable
         JSONUtil.print(out, "type", ++i == 0, getType().name());
         JSONUtil.print(out, "description", ++i == 0, getDescription());
         JSONUtil.print(out, "formula", ++i == 0, getExpression());
-        JSONUtil.print(out, "values", ++i == 0, getValues(), lead+lead);
+        JSONUtil.print(out, "values", ++i == 0, getValues(), lead + lead);
 
         if (fullObject == true)
           out.write(" }\n");
+      }
+
+    @Override
+    public String toString()
+      {
+        return getClass().getSimpleName()+" ("+getName()+":"+getType()+")";
       }
   }
