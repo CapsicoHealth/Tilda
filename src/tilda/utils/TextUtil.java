@@ -312,7 +312,7 @@ public class TextUtil
       {
         escapeSomethingWithSlash(x, '\'', str, "'", "'", false);
       }
-
+    
     public static final void escapeAllQuotesWithSlash(StringBuilder x, String str)
       {
         escapeAllQuotesWithSlash(x, str, "\"", "\"");
@@ -325,6 +325,18 @@ public class TextUtil
         escapeSomethingWithSlash(x, '\'', XX.toString(), before, end, false);
       }
 
+    public static final String escapeBacktickWithSlash(String str)
+      {
+        StringBuilder X = new StringBuilder();
+        escapeSomethingWithSlash(X, '`', str, "`", "`", false);
+        return X.toString();
+      }
+
+    public static final void escapeBacktickWithSlash(StringBuilder x, String str)
+      {
+        escapeSomethingWithSlash(x, '`', str, "`", "`", false);
+      }
+    
     private static final void escapeSomethingWithSlash(StringBuilder x, char something, String str, String before, String end, boolean doubleEscape)
       {
         escapeSomethingWithSomething(x, something, doubleEscape ? "\\\\\\" : "\\", str, before, end);

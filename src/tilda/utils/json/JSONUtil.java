@@ -867,6 +867,11 @@ public class JSONUtil
         Gson gson = new Gson();
         return (Map<String, Object>) gson.fromJson(JsonStr, Filter.getClass());
       }
+    
+    public static JsonObject fromJSONObj(String JsonStr)
+      {
+        return new Gson().fromJson(JsonStr.toString(), JsonObject.class);
+      }
 
     public static void print(Writer Out, String elementName, String JsonExportName, boolean firstElement, List<? extends JSONable> L, String Header)
     throws Exception

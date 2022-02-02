@@ -249,9 +249,9 @@ public class JSONPrinter
     public void print(Writer Out, String perfMessage)
     throws Exception
       {
-        JSONUtil.startOK(Out, '{', perfMessage);
+        JSONUtil.startOK(Out, _array==true?'[':'{', perfMessage);
         printRaw(Out);
-        JSONUtil.end(Out, '}');
+        JSONUtil.end(Out, _array==true?']':'}');
       }
     public void print(Writer Out)
     throws Exception
