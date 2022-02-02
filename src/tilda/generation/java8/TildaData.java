@@ -23,7 +23,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.util.StringBuilderWriter;
 
-import tilda.db.InitMode;
 import tilda.enums.ColumnMapperMode;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
@@ -1575,7 +1574,7 @@ public class TildaData implements CodeGenTildaData
         Out.println("                    || __Init == null && __LookupId==0 // Loaded via some deserialization mechamism, e.g., Json or CSV loader");
         Out.println("               ;");
         Out.println("       if (OK == false)");
-        Out.println("        throw new Exception(\"Object has not been instanciated via deserialization or the factory create() method.\");");
+        Out.println("        throw new Exception(\"Object has not been instanciated via deserialization or the factory create() method: __Init:\"+__Init+\"; __NewlyCreated:\"+__NewlyCreated+\"; __LookupId: \"+__LookupId+\";\");");
         Out.println();
         Out.println("       if (__Init == null && __LookupId==0)  // object deserialized");
         Out.println("        validateDeserialization();");
