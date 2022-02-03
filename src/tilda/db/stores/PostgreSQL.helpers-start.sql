@@ -395,7 +395,7 @@ RETURNS anyelement LANGUAGE SQL COST 1 IMMUTABLE STRICT AS $$
         SELECT $2;
 $$;
 DO $$ BEGIN
-if not exists (SELECT 1 FROM pg_aggregate WHERE aggfnoid::TEXT = 'public.last') THEN
+if not exists (SELECT 1 FROM pg_aggregate WHERE lower(aggfnoid::text) = 'public.last' or aggfnoid::TEXT = 'last') THEN
 CREATE AGGREGATE public.LAST (
         sfunc    = TILDA.last_agg,
         basetype = anyelement,

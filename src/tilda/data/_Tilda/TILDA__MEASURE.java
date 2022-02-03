@@ -1077,7 +1077,7 @@ This is the hasChanged for:<BR>
         Dst.setSchema     (_schema     );
        if (_name        != null)
         Dst.setName       (_name       );
-       if (_created     != null)
+       if (__Init == InitMode.CREATE && _created     != null)
         Dst.setCreated    (_created    );
        if (_lastUpdated != null)
         Dst.setLastUpdated(_lastUpdated);
@@ -1309,11 +1309,11 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__MEASURE_Factory.COLS.SCHEMA._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__MEASURE_Factory.COLS.SCHEMA._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _schema);
+          if (__Nulls.intersects(TILDA__MEASURE_Factory.COLS.SCHEMA._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _schema);
         } 
        if (__Changes.intersects(TILDA__MEASURE_Factory.COLS.NAME._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__MEASURE_Factory.COLS.NAME._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _name);
+          if (__Nulls.intersects(TILDA__MEASURE_Factory.COLS.NAME._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _name);
         } 
        if (__Changes.intersects(TILDA__MEASURE_Factory.COLS.CREATED._Mask) == true) 
         { 
@@ -1374,7 +1374,7 @@ This is the hasChanged for:<BR>
                     || __Init == null && __LookupId==0 // Loaded via some deserialization mechamism, e.g., Json or CSV loader
                ;
        if (OK == false)
-        throw new Exception("Object has not been instanciated via deserialization or the factory create() method.");
+        throw new Exception("Object has not been instanciated via deserialization or the factory create() method: __Init:"+__Init+"; __NewlyCreated:"+__NewlyCreated+"; __LookupId: "+__LookupId+";");
 
        if (__Init == null && __LookupId==0)  // object deserialized
         validateDeserialization();
@@ -1462,12 +1462,7 @@ This is the hasChanged for:<BR>
         }
        StringBuilder S = new StringBuilder(1024);
           S.append("select ");
-          S.append(" "); C.getFullColumnVar(S, "TILDA", "Measure", "refnum");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Measure", "schema");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Measure", "name");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Measure", "created");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Measure", "lastUpdated");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Measure", "deleted");
+          C.getFullColumnVarList(S, TILDA__MEASURE_Factory.COLUMNS);
           S.append(" from "); C.getFullTableVar(S, "TILDA", "Measure");
        switch (__LookupId)
         {

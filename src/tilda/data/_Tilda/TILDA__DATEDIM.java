@@ -4361,7 +4361,7 @@ This is the hasChanged for:<BR>
         Dst.setHolidayNameNull   ();
        else
         Dst.setHolidayName   (_holidayName   );
-       if (_created        != null)
+       if (__Init == InitMode.CREATE && _created        != null)
         Dst.setCreated       (_created       );
        if (_lastUpdated    != null)
         Dst.setLastUpdated   (_lastUpdated   );
@@ -4770,7 +4770,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.DAYNAME._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYNAME._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _dayName);
+          if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYNAME._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _dayName);
         } 
        if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFWEEK._Mask) == true) 
         { 
@@ -4806,11 +4806,11 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.MONTHNAME._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTHNAME._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _monthName);
+          if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTHNAME._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _monthName);
         } 
        if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.MONTHNAMESHORT._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTHNAMESHORT._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _monthNameShort);
+          if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTHNAMESHORT._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _monthNameShort);
         } 
        if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.QUARTEROFYEAR._Mask) == true) 
         { 
@@ -4818,7 +4818,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.QUARTERNAME._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.QUARTERNAME._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _quarterName);
+          if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.QUARTERNAME._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _quarterName);
         } 
        if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.YEAR._Mask) == true) 
         { 
@@ -4826,15 +4826,15 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.MMYYYY._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MMYYYY._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _mmyyyy);
+          if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MMYYYY._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _mmyyyy);
         } 
        if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.MMDDYYYY._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MMDDYYYY._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _mmddyyyy);
+          if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MMDDYYYY._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _mmddyyyy);
         } 
        if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.YYYYMMDD._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.YYYYMMDD._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _yyyymmdd);
+          if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.YYYYMMDD._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _yyyymmdd);
         } 
        if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.ISWEEKEND._Mask) == true) 
         { 
@@ -4850,7 +4850,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.HOLIDAYNAME._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.HOLIDAYNAME._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _holidayName);
+          if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.HOLIDAYNAME._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _holidayName);
         } 
        if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.CREATED._Mask) == true) 
         { 
@@ -4907,7 +4907,7 @@ This is the hasChanged for:<BR>
                     || __Init == null && __LookupId==0 // Loaded via some deserialization mechamism, e.g., Json or CSV loader
                ;
        if (OK == false)
-        throw new Exception("Object has not been instanciated via deserialization or the factory create() method.");
+        throw new Exception("Object has not been instanciated via deserialization or the factory create() method: __Init:"+__Init+"; __NewlyCreated:"+__NewlyCreated+"; __LookupId: "+__LookupId+";");
 
        if (__Init == null && __LookupId==0)  // object deserialized
         validateDeserialization();
@@ -4985,32 +4985,7 @@ This is the hasChanged for:<BR>
         }
        StringBuilder S = new StringBuilder(1024);
           S.append("select ");
-          S.append(" "); C.getFullColumnVar(S, "TILDA", "DateDim", "dt");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "epoch");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "dayName");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "dayOfWeek");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "dayOfMonth");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "dayOfQuarter");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "dayOfYear");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "weekOfMonth");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "weekOfYear");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "month");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "monthOfYear");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "monthName");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "monthNameShort");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "quarterOfYear");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "quarterName");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "year");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "mmyyyy");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "mmddyyyy");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "yyyymmdd");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "isWeekend");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "isBusinessDay");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "isHoliday");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "holidayName");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "created");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "lastUpdated");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateDim", "deleted");
+          C.getFullColumnVarList(S, TILDA__DATEDIM_Factory.COLUMNS);
           S.append(" from "); C.getFullTableVar(S, "TILDA", "DateDim");
        switch (__LookupId)
         {

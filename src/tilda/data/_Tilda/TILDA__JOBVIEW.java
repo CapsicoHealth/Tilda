@@ -963,7 +963,8 @@ This is the definition for:<BR>
 */
    @SerializedName("jobDataStart")
    String  Str_jobDataStart;
-   public void initJobDataStart(String v) { Str_jobDataStart = v; }
+   /** Pre-init the field as it would come from a JSON stream, in text form, e.g., timestamps. */
+   public void initJson_JobDataStart(String v) { Str_jobDataStart = v; }
    public String initJobDataStartVal() { return Str_jobDataStart; }
    transient ZonedDateTime _jobDataStart = null;
 
@@ -1235,7 +1236,8 @@ This is the definition for:<BR>
 */
    @SerializedName("jobDataEnd")
    String  Str_jobDataEnd;
-   public void initJobDataEnd(String v) { Str_jobDataEnd = v; }
+   /** Pre-init the field as it would come from a JSON stream, in text form, e.g., timestamps. */
+   public void initJson_JobDataEnd(String v) { Str_jobDataEnd = v; }
    public String initJobDataEndVal() { return Str_jobDataEnd; }
    transient ZonedDateTime _jobDataEnd = null;
 
@@ -1455,7 +1457,8 @@ This is the definition for:<BR>
 */
    @SerializedName("jobStart")
    String  Str_jobStart;
-   public void initJobStart(String v) { Str_jobStart = v; }
+   /** Pre-init the field as it would come from a JSON stream, in text form, e.g., timestamps. */
+   public void initJson_JobStart(String v) { Str_jobStart = v; }
    public String initJobStartVal() { return Str_jobStart; }
    transient ZonedDateTime _jobStart = null;
 
@@ -1676,7 +1679,8 @@ This is the definition for:<BR>
 */
    @SerializedName("jobEnd")
    String  Str_jobEnd;
-   public void initJobEnd(String v) { Str_jobEnd = v; }
+   /** Pre-init the field as it would come from a JSON stream, in text form, e.g., timestamps. */
+   public void initJson_JobEnd(String v) { Str_jobEnd = v; }
    public String initJobEndVal() { return Str_jobEnd; }
    transient ZonedDateTime _jobEnd = null;
 
@@ -2429,7 +2433,8 @@ This is the definition for:<BR>
 */
    @SerializedName("jobPartDataStart")
    String  Str_jobPartDataStart;
-   public void initJobPartDataStart(String v) { Str_jobPartDataStart = v; }
+   /** Pre-init the field as it would come from a JSON stream, in text form, e.g., timestamps. */
+   public void initJson_JobPartDataStart(String v) { Str_jobPartDataStart = v; }
    public String initJobPartDataStartVal() { return Str_jobPartDataStart; }
    transient ZonedDateTime _jobPartDataStart = null;
 
@@ -2701,7 +2706,8 @@ This is the definition for:<BR>
 */
    @SerializedName("jobPartDataEnd")
    String  Str_jobPartDataEnd;
-   public void initJobPartDataEnd(String v) { Str_jobPartDataEnd = v; }
+   /** Pre-init the field as it would come from a JSON stream, in text form, e.g., timestamps. */
+   public void initJson_JobPartDataEnd(String v) { Str_jobPartDataEnd = v; }
    public String initJobPartDataEndVal() { return Str_jobPartDataEnd; }
    transient ZonedDateTime _jobPartDataEnd = null;
 
@@ -2921,7 +2927,8 @@ This is the definition for:<BR>
 */
    @SerializedName("jobPartStart")
    String  Str_jobPartStart;
-   public void initJobPartStart(String v) { Str_jobPartStart = v; }
+   /** Pre-init the field as it would come from a JSON stream, in text form, e.g., timestamps. */
+   public void initJson_JobPartStart(String v) { Str_jobPartStart = v; }
    public String initJobPartStartVal() { return Str_jobPartStart; }
    transient ZonedDateTime _jobPartStart = null;
 
@@ -3142,7 +3149,8 @@ This is the definition for:<BR>
 */
    @SerializedName("jobPartEnd")
    String  Str_jobPartEnd;
-   public void initJobPartEnd(String v) { Str_jobPartEnd = v; }
+   /** Pre-init the field as it would come from a JSON stream, in text form, e.g., timestamps. */
+   public void initJson_JobPartEnd(String v) { Str_jobPartEnd = v; }
    public String initJobPartEndVal() { return Str_jobPartEnd; }
    transient ZonedDateTime _jobPartEnd = null;
 
@@ -3698,34 +3706,7 @@ This is the setter for:<BR>
         }
        StringBuilder S = new StringBuilder(1024);
           S.append("select ");
-          S.append(" "); C.getFullColumnVar(S, "TILDA", "JobView", "jobRefnum");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobName");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobType");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobUserId");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobDataStartTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobDataStart");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobDataEndTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobDataEnd");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobStartTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobStart");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobEndTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobEnd");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobStatus");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobMsg");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobPartName");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobPartType");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobPartDataStartTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobPartDataStart");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobPartDataEndTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobPartDataEnd");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobPartStartTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobPartStart");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobPartEndTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobPartEnd");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobPartRecordsCount");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobPartStatus");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobPartNotify");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobView", "jobPartMessage");
+          C.getFullColumnVarList(S, TILDA__JOBVIEW_Factory.COLUMNS);
           S.append(" from "); C.getFullTableVar(S, "TILDA", "JobView");
        switch (__LookupId)
         {

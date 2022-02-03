@@ -35,7 +35,12 @@ public class TILDA__JOBPARTMESSAGE_Factory
    public static final String SCHEMA_TABLENAME_LABEL = TextUtil.print("TILDA.JobPartMessage", "");
    public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "JobPartMessage"); }
 
-   public static abstract class COLS {
+   public static final class COLS_BASE
+    {
+      private COLS_BASE() { }
+
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JobPartMessage.refnum -> TILDA.JobPartMessage."refnum"
@@ -53,7 +58,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          REFNUM       = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"       , 0/*0*/, "The primary key for this record", null, null, null);
+     public final Type_LongPrimitive          REFNUM       = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"       , 0/*0*/, "The primary key for this record", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JobPartMessage.jobRefnum -> TILDA.JobPartMessage."jobRefnum"
@@ -71,7 +78,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          JOBREFNUM    = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "jobRefnum"    , 1/*1*/, "Parent Job Refnum", null, null, null);
+     public final Type_LongPrimitive          JOBREFNUM    = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "jobRefnum"    , 1/*1*/, "Parent Job Refnum", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JobPartMessage.jobPartRefnum -> TILDA.JobPartMessage."jobPartRefnum"
@@ -89,7 +98,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitiveNull      JOBPARTREFNUM= new Type_LongPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartRefnum", 2/*2*/, "Parent Job Part Refnum", null, null, null);
+     public final Type_LongPrimitiveNull      JOBPARTREFNUM= new Type_LongPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartRefnum", 2/*2*/, "Parent Job Part Refnum", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JobPartMessage.notify -> TILDA.JobPartMessage."notify"
@@ -107,7 +118,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_BooleanPrimitive       NOTIFY       = new Type_BooleanPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "notify"       , 3/*3*/, "Notification flag", null, null, null);
+     public final Type_BooleanPrimitive       NOTIFY       = new Type_BooleanPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "notify"       , 3/*3*/, "Notification flag", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JobPartMessage.msg -> TILDA.JobPartMessage."msg"
@@ -126,7 +139,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        MSG          = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "msg"          , 4/*4*/, "Message details", null, null, null);
+     public final Type_StringPrimitive        MSG          = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "msg"          , 4/*4*/, "Message details", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JobPartMessage.created -> TILDA.JobPartMessage."created"
@@ -151,7 +166,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      CREATED      = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"      , 5/*5*/, "The timestamp for when the record was created. (TILDA.JobPartMessage)", null, null);
+     public final Type_DatetimePrimitive      CREATED      = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"      , 5/*5*/, "The timestamp for when the record was created. (TILDA.JobPartMessage)", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JobPartMessage.lastUpdated -> TILDA.JobPartMessage."lastUpdated"
@@ -176,7 +193,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      LASTUPDATED  = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"  , 6/*6*/, "The timestamp for when the record was last updated. (TILDA.JobPartMessage)", null, null);
+     public final Type_DatetimePrimitive      LASTUPDATED  = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"  , 6/*6*/, "The timestamp for when the record was last updated. (TILDA.JobPartMessage)", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JobPartMessage.deleted -> TILDA.JobPartMessage."deleted"
@@ -194,15 +213,15 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  DELETED      = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"      , 7/*7*/, "The timestamp for when the record was deleted. (TILDA.JobPartMessage)", null, null);
-;
+     public final Type_DatetimePrimitiveNull  DELETED      = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"      , 7/*7*/, "The timestamp for when the record was deleted. (TILDA.JobPartMessage)", null, null);
    }
 
-   public static final ColumnDefinition[] COLUMNS = { COLS.REFNUM,COLS.JOBREFNUM,COLS.JOBPARTREFNUM,COLS.NOTIFY,COLS.MSG,COLS.CREATED,COLS.LASTUPDATED,COLS.DELETED };
+   public static COLS_BASE COLS = new COLS_BASE();
+   public static final ColumnDefinition[] COLUMNS = new ColumnDefinition[] { COLS.REFNUM,COLS.JOBREFNUM,COLS.JOBPARTREFNUM,COLS.NOTIFY,COLS.MSG,COLS.CREATED,COLS.LASTUPDATED,COLS.DELETED };
 
-   public static final ColumnDefinition[] COLUMNS_PRIMARY = { COLS.REFNUM };
+   public static final ColumnDefinition[] COLUMNS_PRIMARY = new ColumnDefinition[] { COLS.REFNUM };
 
-   public static final ColumnDefinition[][] COLUMNS_UNIQUE_INDICES = { 
+   public static final ColumnDefinition[][] COLUMNS_UNIQUE_INDICES = new ColumnDefinition[][]{ 
         };
 
    public static final ColumnDefinition[] COLUMNS_FIRST_IDENTITY = {};
@@ -274,14 +293,7 @@ This is the column definition for:<BR>
        else
         {
           S.append("select ");
-          S.append(" "); C.getFullColumnVar(S, "TILDA", "JobPartMessage", "refnum");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobPartMessage", "jobRefnum");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobPartMessage", "jobPartRefnum");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobPartMessage", "notify");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobPartMessage", "msg");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobPartMessage", "created");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobPartMessage", "lastUpdated");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "JobPartMessage", "deleted");
+          C.getFullColumnVarList(S, TILDA__JOBPARTMESSAGE_Factory.COLUMNS);
           S.append(" from "); C.getFullTableVar(S, "TILDA", "JobPartMessage");
           switch (LookupId)
            {
@@ -558,6 +570,9 @@ object. The generic init method defaults to this general data structure as a gen
          }
        }
 
+/**
+Lookup one record by the primary key: refnum.
+*/
    static public tilda.data.JobPartMessage_Data lookupByPrimaryKey(long refnum) throws Exception
      {
        tilda.data._Tilda.TILDA__JOBPARTMESSAGE Obj = new tilda.data.JobPartMessage_Data();
@@ -568,7 +583,9 @@ object. The generic init method defaults to this general data structure as a gen
        return (tilda.data.JobPartMessage_Data) Obj;
      }
 
-
+/**
+Lookup records by the index 'Job' over  jobRefnum.<BR>The results are ordered by: created desc
+*/
    static public ListResults<tilda.data.JobPartMessage_Data> lookupWhereJob(Connection C, long jobRefnum, int start, int size) throws Exception
      {
        tilda.data._Tilda.TILDA__JOBPARTMESSAGE Obj = new tilda.data.JobPartMessage_Data();
@@ -582,6 +599,9 @@ object. The generic init method defaults to this general data structure as a gen
        return RPI._L;
      }
 
+/**
+Lookup records by the index 'Job' over  jobRefnum.<BR>The results are ordered by: created desc
+*/
    static public void lookupWhereJob(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.JobPartMessage_Data> OP, long jobRefnum, int start, int size) throws Exception
      {
        tilda.data._Tilda.TILDA__JOBPARTMESSAGE Obj = new tilda.data.JobPartMessage_Data();
@@ -596,6 +616,9 @@ object. The generic init method defaults to this general data structure as a gen
 
 
 
+/**
+Lookup records by the index 'JobPart' over  jobPartRefnum.<BR>The results are ordered by: created desc
+*/
    static public ListResults<tilda.data.JobPartMessage_Data> lookupWhereJobPart(Connection C, long jobPartRefnum, int start, int size) throws Exception
      {
        tilda.data._Tilda.TILDA__JOBPARTMESSAGE Obj = new tilda.data.JobPartMessage_Data();
@@ -609,6 +632,9 @@ object. The generic init method defaults to this general data structure as a gen
        return RPI._L;
      }
 
+/**
+Lookup records by the index 'JobPart' over  jobPartRefnum.<BR>The results are ordered by: created desc
+*/
    static public void lookupWhereJobPart(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.JobPartMessage_Data> OP, long jobPartRefnum, int start, int size) throws Exception
      {
        tilda.data._Tilda.TILDA__JOBPARTMESSAGE Obj = new tilda.data.JobPartMessage_Data();
@@ -623,7 +649,11 @@ object. The generic init method defaults to this general data structure as a gen
 
 
 
-   static public ListResults<tilda.data.JobPartMessage_Data> lookupWhereAll(Connection C, int start, int size) throws Exception
+/**
+Lookup records by the query 'All' over 
+.<BR>
+The results are ordered by: refnum asc
+*/   static public ListResults<tilda.data.JobPartMessage_Data> lookupWhereAll(Connection C, int start, int size) throws Exception
      {
        tilda.data._Tilda.TILDA__JOBPARTMESSAGE Obj = new tilda.data.JobPartMessage_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -635,7 +665,11 @@ object. The generic init method defaults to this general data structure as a gen
      }
 
 
-   static public void lookupWhereAll(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.JobPartMessage_Data> OP, int start, int size) throws Exception
+/**
+Lookup records by the query 'All' over 
+.<BR>
+The results are ordered by: refnum asc
+*/   static public void lookupWhereAll(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.JobPartMessage_Data> OP, int start, int size) throws Exception
      {
        tilda.data._Tilda.TILDA__JOBPARTMESSAGE Obj = new tilda.data.JobPartMessage_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -644,6 +678,7 @@ object. The generic init method defaults to this general data structure as a gen
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
        readMany(C, 3, RPI, Obj, null, start, size);
      }
+
 
 
 

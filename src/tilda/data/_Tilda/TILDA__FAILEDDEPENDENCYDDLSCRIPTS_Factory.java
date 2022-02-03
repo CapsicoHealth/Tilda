@@ -35,7 +35,12 @@ public class TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory
    public static final String SCHEMA_TABLENAME_LABEL = TextUtil.print("TILDA.FailedDependencyDDLScripts", "");
    public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "FailedDependencyDDLScripts"); }
 
-   public static abstract class COLS {
+   public static final class COLS_BASE
+    {
+      private COLS_BASE() { }
+
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.FailedDependencyDDLScripts.srcSchemaName -> TILDA.FailedDependencyDDLScripts."srcSchemaName"
@@ -54,7 +59,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        SRCSCHEMANAME= new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "srcSchemaName", 0/*0*/, "The result value.", null, null, null);
+     public final Type_StringPrimitive        SRCSCHEMANAME= new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "srcSchemaName", 0/*0*/, "The result value.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.FailedDependencyDDLScripts.srcTVName -> TILDA.FailedDependencyDDLScripts."srcTVName"
@@ -73,7 +80,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        SRCTVNAME    = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "srcTVName"    , 1/*1*/, "The result value.", null, null, null);
+     public final Type_StringPrimitive        SRCTVNAME    = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "srcTVName"    , 1/*1*/, "The result value.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.FailedDependencyDDLScripts.seq -> TILDA.FailedDependencyDDLScripts."seq"
@@ -91,7 +100,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerPrimitive       SEQ          = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "seq"          , 2/*2*/, "The blah", null, null, null);
+     public final Type_IntegerPrimitive       SEQ          = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "seq"          , 2/*2*/, "The blah", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.FailedDependencyDDLScripts.depSchemaName -> TILDA.FailedDependencyDDLScripts."depSchemaName"
@@ -110,7 +121,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        DEPSCHEMANAME= new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "depSchemaName", 3/*3*/, "The result value.", null, null, null);
+     public final Type_StringPrimitive        DEPSCHEMANAME= new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "depSchemaName", 3/*3*/, "The result value.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.FailedDependencyDDLScripts.depViewName -> TILDA.FailedDependencyDDLScripts."depViewName"
@@ -129,7 +142,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        DEPVIEWNAME  = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "depViewName"  , 4/*4*/, "The result value.", null, null, null);
+     public final Type_StringPrimitive        DEPVIEWNAME  = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "depViewName"  , 4/*4*/, "The result value.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.FailedDependencyDDLScripts.restoreScript -> TILDA.FailedDependencyDDLScripts."restoreScript"
@@ -148,7 +163,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        RESTORESCRIPT= new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "restoreScript", 5/*5*/, "The result value.", null, null, null);
+     public final Type_StringPrimitive        RESTORESCRIPT= new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "restoreScript", 5/*5*/, "The result value.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.FailedDependencyDDLScripts.created -> TILDA.FailedDependencyDDLScripts."created"
@@ -173,7 +190,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      CREATED      = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"      , 6/*6*/, "The timestamp for when the record was created. (TILDA.FailedDependencyDDLScripts)", null, null);
+     public final Type_DatetimePrimitive      CREATED      = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"      , 6/*6*/, "The timestamp for when the record was created. (TILDA.FailedDependencyDDLScripts)", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.FailedDependencyDDLScripts.lastUpdated -> TILDA.FailedDependencyDDLScripts."lastUpdated"
@@ -198,7 +217,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      LASTUPDATED  = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"  , 7/*7*/, "The timestamp for when the record was last updated. (TILDA.FailedDependencyDDLScripts)", null, null);
+     public final Type_DatetimePrimitive      LASTUPDATED  = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"  , 7/*7*/, "The timestamp for when the record was last updated. (TILDA.FailedDependencyDDLScripts)", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.FailedDependencyDDLScripts.deleted -> TILDA.FailedDependencyDDLScripts."deleted"
@@ -216,15 +237,15 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  DELETED      = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"      , 8/*8*/, "The timestamp for when the record was deleted. (TILDA.FailedDependencyDDLScripts)", null, null);
-;
+     public final Type_DatetimePrimitiveNull  DELETED      = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"      , 8/*8*/, "The timestamp for when the record was deleted. (TILDA.FailedDependencyDDLScripts)", null, null);
    }
 
-   public static final ColumnDefinition[] COLUMNS = { COLS.SRCSCHEMANAME,COLS.SRCTVNAME,COLS.SEQ,COLS.DEPSCHEMANAME,COLS.DEPVIEWNAME,COLS.RESTORESCRIPT,COLS.CREATED,COLS.LASTUPDATED,COLS.DELETED };
+   public static COLS_BASE COLS = new COLS_BASE();
+   public static final ColumnDefinition[] COLUMNS = new ColumnDefinition[] { COLS.SRCSCHEMANAME,COLS.SRCTVNAME,COLS.SEQ,COLS.DEPSCHEMANAME,COLS.DEPVIEWNAME,COLS.RESTORESCRIPT,COLS.CREATED,COLS.LASTUPDATED,COLS.DELETED };
 
-   public static final ColumnDefinition[] COLUMNS_PRIMARY = {  };
+   public static final ColumnDefinition[] COLUMNS_PRIMARY = new ColumnDefinition[] {  };
 
-   public static final ColumnDefinition[][] COLUMNS_UNIQUE_INDICES = { 
+   public static final ColumnDefinition[][] COLUMNS_UNIQUE_INDICES = new ColumnDefinition[][]{ 
                    {COLS.SRCSCHEMANAME,COLS.SRCTVNAME,COLS.CREATED,COLS.SEQ}
         };
 
@@ -297,15 +318,7 @@ This is the column definition for:<BR>
        else
         {
           S.append("select ");
-          S.append(" "); C.getFullColumnVar(S, "TILDA", "FailedDependencyDDLScripts", "srcSchemaName");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "FailedDependencyDDLScripts", "srcTVName");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "FailedDependencyDDLScripts", "seq");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "FailedDependencyDDLScripts", "depSchemaName");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "FailedDependencyDDLScripts", "depViewName");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "FailedDependencyDDLScripts", "restoreScript");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "FailedDependencyDDLScripts", "created");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "FailedDependencyDDLScripts", "lastUpdated");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "FailedDependencyDDLScripts", "deleted");
+          C.getFullColumnVarList(S, TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLUMNS);
           S.append(" from "); C.getFullTableVar(S, "TILDA", "FailedDependencyDDLScripts");
           switch (LookupId)
            {
@@ -572,6 +585,9 @@ object. The generic init method defaults to this general data structure as a gen
          }
        }
 
+/**
+Lookup one record by the unique index 'DepedencySequence': srcSchemaName, srcTVName, created, seq.
+*/
    static public tilda.data.FailedDependencyDDLScripts_Data lookupByDepedencySequence(String srcSchemaName, String srcTVName, ZonedDateTime created, int seq) throws Exception
      {
        tilda.data._Tilda.TILDA__FAILEDDEPENDENCYDDLSCRIPTS Obj = new tilda.data.FailedDependencyDDLScripts_Data();
@@ -585,8 +601,11 @@ object. The generic init method defaults to this general data structure as a gen
        return (tilda.data.FailedDependencyDDLScripts_Data) Obj;
      }
 
-
-   static public ListResults<tilda.data.FailedDependencyDDLScripts_Data> lookupWhereAll(Connection C, int start, int size) throws Exception
+/**
+Lookup records by the query 'All' over 
+.<BR>
+The results are ordered by: srcSchemaName asc, srcTVName asc, created asc, seq asc
+*/   static public ListResults<tilda.data.FailedDependencyDDLScripts_Data> lookupWhereAll(Connection C, int start, int size) throws Exception
      {
        tilda.data._Tilda.TILDA__FAILEDDEPENDENCYDDLSCRIPTS Obj = new tilda.data.FailedDependencyDDLScripts_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -598,7 +617,11 @@ object. The generic init method defaults to this general data structure as a gen
      }
 
 
-   static public void lookupWhereAll(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.FailedDependencyDDLScripts_Data> OP, int start, int size) throws Exception
+/**
+Lookup records by the query 'All' over 
+.<BR>
+The results are ordered by: srcSchemaName asc, srcTVName asc, created asc, seq asc
+*/   static public void lookupWhereAll(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.FailedDependencyDDLScripts_Data> OP, int start, int size) throws Exception
      {
        tilda.data._Tilda.TILDA__FAILEDDEPENDENCYDDLSCRIPTS Obj = new tilda.data.FailedDependencyDDLScripts_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -607,6 +630,7 @@ object. The generic init method defaults to this general data structure as a gen
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
        readMany(C, 1, RPI, Obj, null, start, size);
      }
+
 
 
    public static SelectQuery newSelectQuery(Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, true); }

@@ -101,7 +101,11 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.print(" + TextUtil.escapeDoubleQuoteWithSlash(O.getShortName()) + ", \"\");");
         Out.println("   public static void getFullTableNameVar(Connection C, StringBuilder S) { " + Helper.getFullTableVarAtRuntime(O) + "; }");
         Out.println();
-        Out.println("   public static abstract class COLS {");
+        Out.println("   public static final class COLS_BASE");
+        Out.println("    {");
+        Out.println("      private COLS_BASE() { }");
+        Out.println();
+
         int Counter = -1;
         for (Column C : O._Columns)
           if (C != null && C._Mode != ColumnMode.CALCULATED)
@@ -116,17 +120,19 @@ public class TildaFactory implements CodeGenTildaFactory
               // String ColVarShort = TextUtil.escapeDoubleQuoteWithSlash(G.getSql().getShortColumnVar(C), "", false);
               // String ColVarOthers = TextUtil.escapeDoubleQuoteWithSlash(G.getSql().getShortColumnVar(C), "", false);
               String ColumnTypeClassName = "Type_" + TextUtil.normalCapitalization(C.getType().name()) + (C.isCollection() ? "Collection" : "Primitive") + (C._Nullable == true ? "Null" : "");
+              Out.println();
+              Out.println();
               G.getGenDocs().docField(Out, G, C, "column definition");
               if (C._FCT == FrameworkColumnType.FORMULA || C._FCT == FrameworkColumnType.FORMULA_DT)
                 {
-                  Out.print("     public static " + ColumnTypeClassName + TypePad + " " + C.getName().toUpperCase()
+                  Out.print("     public final " + ColumnTypeClassName + TypePad + " " + C.getName().toUpperCase()
                   + ColumnPad + "= new " + ColumnTypeClassName + TypePad + "(SCHEMA_LABEL, TABLENAME_LABEL, \"" + C.getName() + "\"" + ColumnPad
                   + ", " + (++Counter) + "/*" + C.getSequenceOrder() + "*/, " + TextUtil.escapeDoubleQuoteWithSlash(C._Description)
                   + ", new String[] {" + TextUtil.printJavaStringArray(C._expressionStrs)
                   + "}, new String[] {" + TextUtil.printJavaStringArray(C._expressionDependencyColumnNames) + "}");
                 }
               else
-                Out.print("     public static " + ColumnTypeClassName + TypePad + " " + C.getName().toUpperCase()
+                Out.print("     public final " + ColumnTypeClassName + TypePad + " " + C.getName().toUpperCase()
                 + ColumnPad + "= new " + ColumnTypeClassName + TypePad + "(SCHEMA_LABEL, TABLENAME_LABEL, \"" + C.getName() + "\"" + ColumnPad
                 + ", " + (++Counter) + "/*" + C.getSequenceOrder() + "*/, " + TextUtil.escapeDoubleQuoteWithSlash(C._Description) + ", null, null");
 
@@ -139,10 +145,11 @@ public class TildaFactory implements CodeGenTildaFactory
                 Out.print(", " + ColumnValue.toJavaStringDoubleArray(C._Values));
               Out.println(");");
             }
-        Out.println(";");
         Out.println("   }");
         Out.println();
-        Out.print("   public static final ColumnDefinition[] COLUMNS = { ");
+        Out.println("   public static COLS_BASE COLS = new COLS_BASE();");
+
+        Out.print("   public static final ColumnDefinition[] COLUMNS = new ColumnDefinition[] { ");
         Counter = -1;
         for (Column C : O._Columns)
           if (C != null && C._Mode != ColumnMode.CALCULATED)
@@ -155,7 +162,7 @@ public class TildaFactory implements CodeGenTildaFactory
 
         Out.println();
         String FirstIdentityColumns = null;
-        Out.print("   public static final ColumnDefinition[] COLUMNS_PRIMARY = { ");
+        Out.print("   public static final ColumnDefinition[] COLUMNS_PRIMARY = new ColumnDefinition[] { ");
         Counter = -1;
         for (Column C : O._Columns)
           if (C != null && C.isPrimaryKey() == true)
@@ -169,7 +176,7 @@ public class TildaFactory implements CodeGenTildaFactory
         if (Counter > 0)
           FirstIdentityColumns = "COLUMNS_PRIMARY";
 
-        Out.println("   public static final ColumnDefinition[][] COLUMNS_UNIQUE_INDICES = { ");
+        Out.println("   public static final ColumnDefinition[][] COLUMNS_UNIQUE_INDICES = new ColumnDefinition[][]{ ");
         Counter = -1;
         for (Index I : O._Indices)
           if (I != null && I._Unique == true)

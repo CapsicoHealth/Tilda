@@ -35,7 +35,12 @@ public class TILDA__DATELIMITDIM_Factory
    public static final String SCHEMA_TABLENAME_LABEL = TextUtil.print("TILDA.DateLimitDim", "");
    public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "DateLimitDim"); }
 
-   public static abstract class COLS {
+   public static final class COLS_BASE
+    {
+      private COLS_BASE() { }
+
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.DateLimitDim.invalidDate -> TILDA.DateLimitDim."invalidDate"
@@ -53,7 +58,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatePrimitive          INVALIDDATE= new Type_DatePrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "invalidDate", 0/*0*/, "The invalid date", null, null);
+     public final Type_DatePrimitive          INVALIDDATE= new Type_DatePrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "invalidDate", 0/*0*/, "The invalid date", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.DateLimitDim.minDate -> TILDA.DateLimitDim."minDate"
@@ -71,7 +78,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatePrimitive          MINDATE    = new Type_DatePrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "minDate"    , 1/*1*/, "The min date", null, null);
+     public final Type_DatePrimitive          MINDATE    = new Type_DatePrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "minDate"    , 1/*1*/, "The min date", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.DateLimitDim.maxDate -> TILDA.DateLimitDim."maxDate"
@@ -89,15 +98,15 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatePrimitive          MAXDATE    = new Type_DatePrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "maxDate"    , 2/*2*/, "The max date", null, null);
-;
+     public final Type_DatePrimitive          MAXDATE    = new Type_DatePrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "maxDate"    , 2/*2*/, "The max date", null, null);
    }
 
-   public static final ColumnDefinition[] COLUMNS = { COLS.INVALIDDATE,COLS.MINDATE,COLS.MAXDATE };
+   public static COLS_BASE COLS = new COLS_BASE();
+   public static final ColumnDefinition[] COLUMNS = new ColumnDefinition[] { COLS.INVALIDDATE,COLS.MINDATE,COLS.MAXDATE };
 
-   public static final ColumnDefinition[] COLUMNS_PRIMARY = {  };
+   public static final ColumnDefinition[] COLUMNS_PRIMARY = new ColumnDefinition[] {  };
 
-   public static final ColumnDefinition[][] COLUMNS_UNIQUE_INDICES = { 
+   public static final ColumnDefinition[][] COLUMNS_UNIQUE_INDICES = new ColumnDefinition[][]{ 
                    {COLS.INVALIDDATE}
         };
 
@@ -170,9 +179,7 @@ This is the column definition for:<BR>
        else
         {
           S.append("select ");
-          S.append(" "); C.getFullColumnVar(S, "TILDA", "DateLimitDim", "invalidDate");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateLimitDim", "minDate");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "DateLimitDim", "maxDate");
+          C.getFullColumnVarList(S, TILDA__DATELIMITDIM_Factory.COLUMNS);
           S.append(" from "); C.getFullTableVar(S, "TILDA", "DateLimitDim");
           switch (LookupId)
            {
@@ -410,6 +417,9 @@ object. The generic init method defaults to this general data structure as a gen
          }
        }
 
+/**
+Lookup one record by the unique index 'InvalidDate': invalidDate.
+*/
    static public tilda.data.DateLimitDim_Data lookupByInvalidDate(LocalDate invalidDate) throws Exception
      {
        tilda.data._Tilda.TILDA__DATELIMITDIM Obj = new tilda.data.DateLimitDim_Data();
@@ -420,8 +430,11 @@ object. The generic init method defaults to this general data structure as a gen
        return (tilda.data.DateLimitDim_Data) Obj;
      }
 
-
-   static public ListResults<tilda.data.DateLimitDim_Data> lookupWhereAll(Connection C, int start, int size) throws Exception
+/**
+Lookup records by the query 'All' over 
+.<BR>
+The results are ordered by: invalidDate asc
+*/   static public ListResults<tilda.data.DateLimitDim_Data> lookupWhereAll(Connection C, int start, int size) throws Exception
      {
        tilda.data._Tilda.TILDA__DATELIMITDIM Obj = new tilda.data.DateLimitDim_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -433,7 +446,11 @@ object. The generic init method defaults to this general data structure as a gen
      }
 
 
-   static public void lookupWhereAll(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.DateLimitDim_Data> OP, int start, int size) throws Exception
+/**
+Lookup records by the query 'All' over 
+.<BR>
+The results are ordered by: invalidDate asc
+*/   static public void lookupWhereAll(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.DateLimitDim_Data> OP, int start, int size) throws Exception
      {
        tilda.data._Tilda.TILDA__DATELIMITDIM Obj = new tilda.data.DateLimitDim_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -442,6 +459,7 @@ object. The generic init method defaults to this general data structure as a gen
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
        readMany(C, 1, RPI, Obj, null, start, size);
      }
+
 
 
 

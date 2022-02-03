@@ -647,7 +647,8 @@ This is the definition for:<BR>
 */
    @SerializedName("deactivated")
    String  Str_deactivated;
-   public void initDeactivated(String v) { Str_deactivated = v; }
+   /** Pre-init the field as it would come from a JSON stream, in text form, e.g., timestamps. */
+   public void initJson_Deactivated(String v) { Str_deactivated = v; }
    public String initDeactivatedVal() { return Str_deactivated; }
    transient ZonedDateTime _deactivated = null;
 
@@ -1503,7 +1504,7 @@ This is the hasChanged for:<BR>
        else
         Dst.setDeactivated  (_deactivated  );
        Dst.Str_deactivated = Str_deactivated;
-       if (_created       != null)
+       if (__Init == InitMode.CREATE && _created       != null)
         Dst.setCreated      (_created      );
        if (_lastUpdated   != null)
         Dst.setLastUpdated  (_lastUpdated  );
@@ -1767,19 +1768,19 @@ This is the hasChanged for:<BR>
        int i = 0;
        if (__Changes.intersects(TILDA__ZONEINFO_Factory.COLS.ID._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__ZONEINFO_Factory.COLS.ID._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _id);
+          if (__Nulls.intersects(TILDA__ZONEINFO_Factory.COLS.ID._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _id);
         } 
        if (__Changes.intersects(TILDA__ZONEINFO_Factory.COLS.VALUE._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__ZONEINFO_Factory.COLS.VALUE._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _value);
+          if (__Nulls.intersects(TILDA__ZONEINFO_Factory.COLS.VALUE._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _value);
         } 
        if (__Changes.intersects(TILDA__ZONEINFO_Factory.COLS.LABEL._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__ZONEINFO_Factory.COLS.LABEL._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _label);
+          if (__Nulls.intersects(TILDA__ZONEINFO_Factory.COLS.LABEL._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _label);
         } 
        if (__Changes.intersects(TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _deactivatedTZ);
+          if (__Nulls.intersects(TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _deactivatedTZ);
         } 
        if (__Changes.intersects(TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask) == true) 
         { 
@@ -1846,7 +1847,7 @@ This is the hasChanged for:<BR>
                     || __Init == null && __LookupId==0 // Loaded via some deserialization mechamism, e.g., Json or CSV loader
                ;
        if (OK == false)
-        throw new Exception("Object has not been instanciated via deserialization or the factory create() method.");
+        throw new Exception("Object has not been instanciated via deserialization or the factory create() method: __Init:"+__Init+"; __NewlyCreated:"+__NewlyCreated+"; __LookupId: "+__LookupId+";");
 
        if (__Init == null && __LookupId==0)  // object deserialized
         validateDeserialization();
@@ -1932,14 +1933,7 @@ This is the hasChanged for:<BR>
         }
        StringBuilder S = new StringBuilder(1024);
           S.append("select ");
-          S.append(" "); C.getFullColumnVar(S, "TILDA", "ZoneInfo", "id");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "ZoneInfo", "value");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "ZoneInfo", "label");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "ZoneInfo", "deactivatedTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "ZoneInfo", "deactivated");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "ZoneInfo", "created");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "ZoneInfo", "lastUpdated");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "ZoneInfo", "deleted");
+          C.getFullColumnVarList(S, TILDA__ZONEINFO_Factory.COLUMNS);
           S.append(" from "); C.getFullTableVar(S, "TILDA", "ZoneInfo");
        switch (__LookupId)
         {

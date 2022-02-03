@@ -603,11 +603,7 @@ This is the setter for:<BR>
         }
        StringBuilder S = new StringBuilder(1024);
           S.append("select ");
-          S.append(" "); C.getFullColumnVar(S, "TILDA", "FormulaResultView", "formulaRefnum");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaResultView", "value");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaResultView", "description");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaResultView", "location");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaResultView", "name");
+          C.getFullColumnVarList(S, TILDA__FORMULARESULTVIEW_Factory.COLUMNS);
           S.append(" from "); C.getFullTableVar(S, "TILDA", "FormulaResultView");
        switch (__LookupId)
         {

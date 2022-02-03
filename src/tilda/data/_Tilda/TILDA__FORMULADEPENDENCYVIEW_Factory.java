@@ -35,7 +35,12 @@ public class TILDA__FORMULADEPENDENCYVIEW_Factory
    public static final String SCHEMA_TABLENAME_LABEL = TextUtil.print("TILDA.FormulaDependencyView", "");
    public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "FormulaDependencyView"); }
 
-   public static abstract class COLS {
+   public static final class COLS_BASE
+    {
+      private COLS_BASE() { }
+
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.FormulaDependencyView.formulaRefnum -> TILDA.FormulaDependencyView."formulaRefnum"
@@ -53,7 +58,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          FORMULAREFNUM             = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "formulaRefnum"             , 0/*0*/, "The parent formula.", null, null, null);
+     public final Type_LongPrimitive          FORMULAREFNUM             = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "formulaRefnum"             , 0/*0*/, "The parent formula.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.FormulaDependencyView.location -> TILDA.FormulaDependencyView."location"
@@ -72,7 +79,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        LOCATION                  = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "location"                  , 1/*1*/, "The name of the primary table/view this formula is defined in.", null, null, null);
+     public final Type_StringPrimitive        LOCATION                  = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "location"                  , 1/*1*/, "The name of the primary table/view this formula is defined in.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.FormulaDependencyView.name -> TILDA.FormulaDependencyView."name"
@@ -91,7 +100,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        NAME                      = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "name"                      , 2/*2*/, "The name of the formula/column.", null, null, null);
+     public final Type_StringPrimitive        NAME                      = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "name"                      , 2/*2*/, "The name of the formula/column.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.FormulaDependencyView.referencedColumns -> TILDA.FormulaDependencyView."referencedColumns"
@@ -110,7 +121,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringCollectionNull   REFERENCEDCOLUMNS         = new Type_StringCollectionNull  (SCHEMA_LABEL, TABLENAME_LABEL, "referencedColumns"         , 3/*3*/, "The list of columns this formula depends on.", null, null);
+     public final Type_StringCollectionNull   REFERENCEDCOLUMNS         = new Type_StringCollectionNull  (SCHEMA_LABEL, TABLENAME_LABEL, "referencedColumns"         , 3/*3*/, "The list of columns this formula depends on.", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.FormulaDependencyView.dependencyRefnum -> TILDA.FormulaDependencyView."dependencyRefnum"
@@ -128,7 +141,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          DEPENDENCYREFNUM          = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "dependencyRefnum"          , 4/*4*/, "The dependent formula.", null, null, null);
+     public final Type_LongPrimitive          DEPENDENCYREFNUM          = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "dependencyRefnum"          , 4/*4*/, "The dependent formula.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.FormulaDependencyView.dependentFormulaName -> TILDA.FormulaDependencyView."dependentFormulaName"
@@ -147,7 +162,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        DEPENDENTFORMULANAME      = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "dependentFormulaName"      , 5/*5*/, "The name of the formula/column.", null, null, null);
+     public final Type_StringPrimitive        DEPENDENTFORMULANAME      = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "dependentFormulaName"      , 5/*5*/, "The name of the formula/column.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.FormulaDependencyView.dependentFormulaLocation -> TILDA.FormulaDependencyView."dependentFormulaLocation"
@@ -166,7 +183,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        DEPENDENTFORMULALOCATION  = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "dependentFormulaLocation"  , 6/*6*/, "The name of the primary table/view this formula is defined in.", null, null, null);
+     public final Type_StringPrimitive        DEPENDENTFORMULALOCATION  = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "dependentFormulaLocation"  , 6/*6*/, "The name of the primary table/view this formula is defined in.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.FormulaDependencyView.dependentReferencedColumns -> TILDA.FormulaDependencyView."dependentReferencedColumns"
@@ -185,15 +204,15 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringCollectionNull   DEPENDENTREFERENCEDCOLUMNS= new Type_StringCollectionNull  (SCHEMA_LABEL, TABLENAME_LABEL, "dependentReferencedColumns", 7/*7*/, "The list of columns this formula depends on.", null, null);
-;
+     public final Type_StringCollectionNull   DEPENDENTREFERENCEDCOLUMNS= new Type_StringCollectionNull  (SCHEMA_LABEL, TABLENAME_LABEL, "dependentReferencedColumns", 7/*7*/, "The list of columns this formula depends on.", null, null);
    }
 
-   public static final ColumnDefinition[] COLUMNS = { COLS.FORMULAREFNUM,COLS.LOCATION,COLS.NAME,COLS.REFERENCEDCOLUMNS,COLS.DEPENDENCYREFNUM,COLS.DEPENDENTFORMULANAME,COLS.DEPENDENTFORMULALOCATION,COLS.DEPENDENTREFERENCEDCOLUMNS };
+   public static COLS_BASE COLS = new COLS_BASE();
+   public static final ColumnDefinition[] COLUMNS = new ColumnDefinition[] { COLS.FORMULAREFNUM,COLS.LOCATION,COLS.NAME,COLS.REFERENCEDCOLUMNS,COLS.DEPENDENCYREFNUM,COLS.DEPENDENTFORMULANAME,COLS.DEPENDENTFORMULALOCATION,COLS.DEPENDENTREFERENCEDCOLUMNS };
 
-   public static final ColumnDefinition[] COLUMNS_PRIMARY = {  };
+   public static final ColumnDefinition[] COLUMNS_PRIMARY = new ColumnDefinition[] {  };
 
-   public static final ColumnDefinition[][] COLUMNS_UNIQUE_INDICES = { 
+   public static final ColumnDefinition[][] COLUMNS_UNIQUE_INDICES = new ColumnDefinition[][]{ 
         };
 
    public static final ColumnDefinition[] COLUMNS_FIRST_IDENTITY = {};
@@ -265,14 +284,7 @@ This is the column definition for:<BR>
        else
         {
           S.append("select ");
-          S.append(" "); C.getFullColumnVar(S, "TILDA", "FormulaDependencyView", "formulaRefnum");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaDependencyView", "location");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaDependencyView", "name");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaDependencyView", "referencedColumns");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaDependencyView", "dependencyRefnum");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaDependencyView", "dependentFormulaName");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaDependencyView", "dependentFormulaLocation");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaDependencyView", "dependentReferencedColumns");
+          C.getFullColumnVarList(S, TILDA__FORMULADEPENDENCYVIEW_Factory.COLUMNS);
           S.append(" from "); C.getFullTableVar(S, "TILDA", "FormulaDependencyView");
           switch (LookupId)
            {
@@ -329,6 +341,10 @@ This is the column definition for:<BR>
 // THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/**
+Lookup records by the query 'All' over 
+.<BR>
+*/
    static public tilda.data.FormulaDependencyView_Data lookupByAll() throws Exception
      {
        tilda.data._Tilda.TILDA__FORMULADEPENDENCYVIEW Obj = new tilda.data.FormulaDependencyView_Data();

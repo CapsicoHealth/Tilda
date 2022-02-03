@@ -919,7 +919,8 @@ This is the definition for:<BR>
 */
    @SerializedName("dataStart")
    String  Str_dataStart;
-   public void initDataStart(String v) { Str_dataStart = v; }
+   /** Pre-init the field as it would come from a JSON stream, in text form, e.g., timestamps. */
+   public void initJson_DataStart(String v) { Str_dataStart = v; }
    public String initDataStartVal() { return Str_dataStart; }
    transient ZonedDateTime _dataStart = null;
 
@@ -1294,7 +1295,8 @@ This is the definition for:<BR>
 */
    @SerializedName("dataEnd")
    String  Str_dataEnd;
-   public void initDataEnd(String v) { Str_dataEnd = v; }
+   /** Pre-init the field as it would come from a JSON stream, in text form, e.g., timestamps. */
+   public void initJson_DataEnd(String v) { Str_dataEnd = v; }
    public String initDataEndVal() { return Str_dataEnd; }
    transient ZonedDateTime _dataEnd = null;
 
@@ -1617,7 +1619,8 @@ This is the definition for:<BR>
 */
    @SerializedName("start")
    String  Str_start;
-   public void initStart(String v) { Str_start = v; }
+   /** Pre-init the field as it would come from a JSON stream, in text form, e.g., timestamps. */
+   public void initJson_Start(String v) { Str_start = v; }
    public String initStartVal() { return Str_start; }
    transient ZonedDateTime _start = null;
 
@@ -1941,7 +1944,8 @@ This is the definition for:<BR>
 */
    @SerializedName("end")
    String  Str_end;
-   public void initEnd(String v) { Str_end = v; }
+   /** Pre-init the field as it would come from a JSON stream, in text form, e.g., timestamps. */
+   public void initJson_End(String v) { Str_end = v; }
    public String initEndVal() { return Str_end; }
    transient ZonedDateTime _end = null;
 
@@ -3132,7 +3136,7 @@ This is the hasChanged for:<BR>
         Dst.setMsgNull        ();
        else
         Dst.setMsg        (_msg        );
-       if (_created     != null)
+       if (__Init == InitMode.CREATE && _created     != null)
         Dst.setCreated    (_created    );
        if (_lastUpdated != null)
         Dst.setLastUpdated(_lastUpdated);
@@ -3497,19 +3501,19 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__JOB_Factory.COLS.NAME._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOB_Factory.COLS.NAME._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _name);
+          if (__Nulls.intersects(TILDA__JOB_Factory.COLS.NAME._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _name);
         } 
        if (__Changes.intersects(TILDA__JOB_Factory.COLS.TYPE._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOB_Factory.COLS.TYPE._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _type);
+          if (__Nulls.intersects(TILDA__JOB_Factory.COLS.TYPE._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _type);
         } 
        if (__Changes.intersects(TILDA__JOB_Factory.COLS.USERID._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOB_Factory.COLS.USERID._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _userId);
+          if (__Nulls.intersects(TILDA__JOB_Factory.COLS.USERID._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _userId);
         } 
        if (__Changes.intersects(TILDA__JOB_Factory.COLS.DATASTARTTZ._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOB_Factory.COLS.DATASTARTTZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _dataStartTZ);
+          if (__Nulls.intersects(TILDA__JOB_Factory.COLS.DATASTARTTZ._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _dataStartTZ);
         } 
        if (__Changes.intersects(TILDA__JOB_Factory.COLS.DATASTART._Mask) == true) 
         { 
@@ -3517,7 +3521,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__JOB_Factory.COLS.DATAENDTZ._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOB_Factory.COLS.DATAENDTZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _dataEndTZ);
+          if (__Nulls.intersects(TILDA__JOB_Factory.COLS.DATAENDTZ._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _dataEndTZ);
         } 
        if (__Changes.intersects(TILDA__JOB_Factory.COLS.DATAEND._Mask) == true) 
         { 
@@ -3525,7 +3529,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__JOB_Factory.COLS.STARTTZ._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOB_Factory.COLS.STARTTZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _startTZ);
+          if (__Nulls.intersects(TILDA__JOB_Factory.COLS.STARTTZ._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _startTZ);
         } 
        if (__Changes.intersects(TILDA__JOB_Factory.COLS.START._Mask) == true) 
         { 
@@ -3533,7 +3537,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__JOB_Factory.COLS.ENDTZ._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOB_Factory.COLS.ENDTZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _endTZ);
+          if (__Nulls.intersects(TILDA__JOB_Factory.COLS.ENDTZ._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _endTZ);
         } 
        if (__Changes.intersects(TILDA__JOB_Factory.COLS.END._Mask) == true) 
         { 
@@ -3545,7 +3549,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__JOB_Factory.COLS.MSG._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOB_Factory.COLS.MSG._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _msg);
+          if (__Nulls.intersects(TILDA__JOB_Factory.COLS.MSG._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _msg);
         } 
        if (__Changes.intersects(TILDA__JOB_Factory.COLS.CREATED._Mask) == true) 
         { 
@@ -3613,23 +3617,7 @@ This is the hasChanged for:<BR>
         }
        StringBuilder S = new StringBuilder(1024);
           S.append("select ");
-          S.append(" "); C.getFullColumnVar(S, "TILDA", "Job", "refnum");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Job", "name");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Job", "type");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Job", "userId");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Job", "dataStartTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Job", "dataStart");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Job", "dataEndTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Job", "dataEnd");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Job", "startTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Job", "start");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Job", "endTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Job", "end");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Job", "status");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Job", "msg");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Job", "created");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Job", "lastUpdated");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Job", "deleted");
+          C.getFullColumnVarList(S, TILDA__JOB_Factory.COLUMNS);
           S.append(" from "); C.getFullTableVar(S, "TILDA", "Job");
        switch (__LookupId)
         {

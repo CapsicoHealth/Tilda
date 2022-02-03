@@ -1852,7 +1852,7 @@ This is the hasChanged for:<BR>
         Dst.setMax        (_max        );
        if (_schemas     != null)
         Dst.setSchemas    (_schemas    );
-       if (_created     != null)
+       if (__Init == InitMode.CREATE && _created     != null)
         Dst.setCreated    (_created    );
        if (_lastUpdated != null)
         Dst.setLastUpdated(_lastUpdated);
@@ -2124,23 +2124,23 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.ID._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.ID._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _id);
+          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.ID._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _id);
         } 
        if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.DRIVER._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.DRIVER._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _driver);
+          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.DRIVER._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _driver);
         } 
        if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.DB._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.DB._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _db);
+          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.DB._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _db);
         } 
        if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.USER._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.USER._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _user);
+          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.USER._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _user);
         } 
        if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.PSWD._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.PSWD._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _pswd);
+          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.PSWD._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _pswd);
         } 
        if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.INITIAL._Mask) == true) 
         { 
@@ -2152,7 +2152,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR      ); else C.setArray(PS, ++i, TILDA__CONNECTION_Factory.COLS.SCHEMAS.getType(), AllocatedArrays, _schemas);
+          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.VARCHAR   ); else C.setArray(PS, ++i, TILDA__CONNECTION_Factory.COLS.SCHEMAS.getType(), AllocatedArrays, _schemas);
         } 
        if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.CREATED._Mask) == true) 
         { 
@@ -2209,7 +2209,7 @@ This is the hasChanged for:<BR>
                     || __Init == null && __LookupId==0 // Loaded via some deserialization mechamism, e.g., Json or CSV loader
                ;
        if (OK == false)
-        throw new Exception("Object has not been instanciated via deserialization or the factory create() method.");
+        throw new Exception("Object has not been instanciated via deserialization or the factory create() method: __Init:"+__Init+"; __NewlyCreated:"+__NewlyCreated+"; __LookupId: "+__LookupId+";");
 
        if (__Init == null && __LookupId==0)  // object deserialized
         validateDeserialization();
@@ -2287,18 +2287,7 @@ This is the hasChanged for:<BR>
         }
        StringBuilder S = new StringBuilder(1024);
           S.append("select ");
-          S.append(" "); C.getFullColumnVar(S, "TILDA", "Connection", "active");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Connection", "id");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Connection", "driver");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Connection", "db");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Connection", "user");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Connection", "pswd");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Connection", "initial");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Connection", "max");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Connection", "schemas");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Connection", "created");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Connection", "lastUpdated");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Connection", "deleted");
+          C.getFullColumnVarList(S, TILDA__CONNECTION_Factory.COLUMNS);
           S.append(" from "); C.getFullTableVar(S, "TILDA", "Connection");
        switch (__LookupId)
         {
@@ -2369,6 +2358,13 @@ This is the hasChanged for:<BR>
                             _initial     =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__CONNECTION_Factory.COLS.INITIAL._Mask    ); _initial = null; }
                             _max         =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__CONNECTION_Factory.COLS.MAX._Mask        ); _max = null; }
                             _schemas = (List<String>) C.getArray(RS, ++i, TILDA__CONNECTION_Factory.COLS.SCHEMAS.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask    ); _schemas = null; }
+                             //This looks weird, but with array aggregates on strings, gotta watch out on left joins with NULL values.
+                             //Those values show up as a [null] array (1 element, which is null).
+                             if (_schemas != null && _schemas.size() == 1 && _schemas.get(0) == null)
+                               {
+                                 _schemas = new ArrayList<String>();
+                                 __Nulls.or(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask);
+                               }
                             _created     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__CONNECTION_Factory.COLS.CREATED._Mask    ); _created = null; }
                             _lastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__CONNECTION_Factory.COLS.LASTUPDATED._Mask); _lastUpdated = null; }
                             _deleted     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__CONNECTION_Factory.COLS.DELETED._Mask    ); _deleted = null; }

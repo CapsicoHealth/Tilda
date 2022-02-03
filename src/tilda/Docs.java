@@ -265,6 +265,8 @@ public class Docs
                 LOG.debug("Extracting bigquery JSON file " + Name);
                 for (tilda.parsing.parts.Object o : S._Objects)
                   {
+                    if (o == null)
+                      continue;
                     Name = FileUtil.getBasePathFromFileOrResource(S._ResourceName) + "_Tilda/bigquery/bq." + o.getBaseName() + ".json";
                     Out = FileUtil.getBufferedPrintWriter(Args[0] + File.separator + "/bigquery/" + S._Name.toUpperCase() + "/bq." + o.getBaseName() + ".json", false);
                     try

@@ -686,7 +686,8 @@ This is the definition for:<BR>
 */
    @SerializedName("startPeriod")
    String  Str_startPeriod;
-   public void initStartPeriod(String v) { Str_startPeriod = v; }
+   /** Pre-init the field as it would come from a JSON stream, in text form, e.g., timestamps. */
+   public void initJson_StartPeriod(String v) { Str_startPeriod = v; }
    public String initStartPeriodVal() { return Str_startPeriod; }
    transient ZonedDateTime _startPeriod = null;
    transient ZonedDateTime __Saved_startPeriod;
@@ -885,7 +886,8 @@ This is the definition for:<BR>
 */
    @SerializedName("endPeriod")
    String  Str_endPeriod;
-   public void initEndPeriod(String v) { Str_endPeriod = v; }
+   /** Pre-init the field as it would come from a JSON stream, in text form, e.g., timestamps. */
+   public void initJson_EndPeriod(String v) { Str_endPeriod = v; }
    public String initEndPeriodVal() { return Str_endPeriod; }
    transient ZonedDateTime _endPeriod = null;
 
@@ -1072,6 +1074,20 @@ These are the enumerated values for tilda.data.TILDA.ObjectPerf.selectNano, whic
    public static final String[][] _selectNano_Values = {
                                                { "0", "selectNano_CreateDefault", "selectNano_CreateDefault", "" }
                                   };
+   public static final boolean checkSelectNano(long v)
+    {
+      for (String[] a : _selectNano_Values)
+       if (a[0].equals(v) == true)
+        return true;
+      return false;
+    }
+   public static final String mapSelectNano(long v)
+    {
+      for (String[] a : _selectNano_Values)
+       if (a[0].equals(v) == true)
+        return a[2];
+      return null;
+    }
    public static final long _selectNanoSelectNano_CreateDefault = 0l;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1234,6 +1250,20 @@ These are the enumerated values for tilda.data.TILDA.ObjectPerf.selectCount, whi
    public static final String[][] _selectCount_Values = {
                                                { "0", "selectCount_CreateDefault", "selectCount_CreateDefault", "" }
                                   };
+   public static final boolean checkSelectCount(int v)
+    {
+      for (String[] a : _selectCount_Values)
+       if (a[0].equals(v) == true)
+        return true;
+      return false;
+    }
+   public static final String mapSelectCount(int v)
+    {
+      for (String[] a : _selectCount_Values)
+       if (a[0].equals(v) == true)
+        return a[2];
+      return null;
+    }
    public static final int _selectCountSelectCount_CreateDefault = 0;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1396,6 +1426,20 @@ These are the enumerated values for tilda.data.TILDA.ObjectPerf.selectRecords, w
    public static final String[][] _selectRecords_Values = {
                                                { "0", "selectRecords_CreateDefault", "selectRecords_CreateDefault", "" }
                                   };
+   public static final boolean checkSelectRecords(int v)
+    {
+      for (String[] a : _selectRecords_Values)
+       if (a[0].equals(v) == true)
+        return true;
+      return false;
+    }
+   public static final String mapSelectRecords(int v)
+    {
+      for (String[] a : _selectRecords_Values)
+       if (a[0].equals(v) == true)
+        return a[2];
+      return null;
+    }
    public static final int _selectRecordsSelectRecords_CreateDefault = 0;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1558,6 +1602,20 @@ These are the enumerated values for tilda.data.TILDA.ObjectPerf.insertNano, whic
    public static final String[][] _insertNano_Values = {
                                                { "0", "insertNano_CreateDefault", "insertNano_CreateDefault", "" }
                                   };
+   public static final boolean checkInsertNano(long v)
+    {
+      for (String[] a : _insertNano_Values)
+       if (a[0].equals(v) == true)
+        return true;
+      return false;
+    }
+   public static final String mapInsertNano(long v)
+    {
+      for (String[] a : _insertNano_Values)
+       if (a[0].equals(v) == true)
+        return a[2];
+      return null;
+    }
    public static final long _insertNanoInsertNano_CreateDefault = 0l;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1720,6 +1778,20 @@ These are the enumerated values for tilda.data.TILDA.ObjectPerf.insertCount, whi
    public static final String[][] _insertCount_Values = {
                                                { "0", "insertCount_CreateDefault", "insertCount_CreateDefault", "" }
                                   };
+   public static final boolean checkInsertCount(int v)
+    {
+      for (String[] a : _insertCount_Values)
+       if (a[0].equals(v) == true)
+        return true;
+      return false;
+    }
+   public static final String mapInsertCount(int v)
+    {
+      for (String[] a : _insertCount_Values)
+       if (a[0].equals(v) == true)
+        return a[2];
+      return null;
+    }
    public static final int _insertCountInsertCount_CreateDefault = 0;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1882,6 +1954,20 @@ These are the enumerated values for tilda.data.TILDA.ObjectPerf.insertRecords, w
    public static final String[][] _insertRecords_Values = {
                                                { "0", "insertRecords_CreateDefault", "insertRecords_CreateDefault", "" }
                                   };
+   public static final boolean checkInsertRecords(int v)
+    {
+      for (String[] a : _insertRecords_Values)
+       if (a[0].equals(v) == true)
+        return true;
+      return false;
+    }
+   public static final String mapInsertRecords(int v)
+    {
+      for (String[] a : _insertRecords_Values)
+       if (a[0].equals(v) == true)
+        return a[2];
+      return null;
+    }
    public static final int _insertRecordsInsertRecords_CreateDefault = 0;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2044,6 +2130,20 @@ These are the enumerated values for tilda.data.TILDA.ObjectPerf.updateNano, whic
    public static final String[][] _updateNano_Values = {
                                                { "0", "updateNano_CreateDefault", "updateNano_CreateDefault", "" }
                                   };
+   public static final boolean checkUpdateNano(long v)
+    {
+      for (String[] a : _updateNano_Values)
+       if (a[0].equals(v) == true)
+        return true;
+      return false;
+    }
+   public static final String mapUpdateNano(long v)
+    {
+      for (String[] a : _updateNano_Values)
+       if (a[0].equals(v) == true)
+        return a[2];
+      return null;
+    }
    public static final long _updateNanoUpdateNano_CreateDefault = 0l;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2206,6 +2306,20 @@ These are the enumerated values for tilda.data.TILDA.ObjectPerf.updateCount, whi
    public static final String[][] _updateCount_Values = {
                                                { "0", "updateCount_CreateDefault", "updateCount_CreateDefault", "" }
                                   };
+   public static final boolean checkUpdateCount(int v)
+    {
+      for (String[] a : _updateCount_Values)
+       if (a[0].equals(v) == true)
+        return true;
+      return false;
+    }
+   public static final String mapUpdateCount(int v)
+    {
+      for (String[] a : _updateCount_Values)
+       if (a[0].equals(v) == true)
+        return a[2];
+      return null;
+    }
    public static final int _updateCountUpdateCount_CreateDefault = 0;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2368,6 +2482,20 @@ These are the enumerated values for tilda.data.TILDA.ObjectPerf.updateRecords, w
    public static final String[][] _updateRecords_Values = {
                                                { "0", "updateRecords_CreateDefault", "updateRecords_CreateDefault", "" }
                                   };
+   public static final boolean checkUpdateRecords(int v)
+    {
+      for (String[] a : _updateRecords_Values)
+       if (a[0].equals(v) == true)
+        return true;
+      return false;
+    }
+   public static final String mapUpdateRecords(int v)
+    {
+      for (String[] a : _updateRecords_Values)
+       if (a[0].equals(v) == true)
+        return a[2];
+      return null;
+    }
    public static final int _updateRecordsUpdateRecords_CreateDefault = 0;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2530,6 +2658,20 @@ These are the enumerated values for tilda.data.TILDA.ObjectPerf.deleteNano, whic
    public static final String[][] _deleteNano_Values = {
                                                { "0", "deleteNano_CreateDefault", "deleteNano_CreateDefault", "" }
                                   };
+   public static final boolean checkDeleteNano(long v)
+    {
+      for (String[] a : _deleteNano_Values)
+       if (a[0].equals(v) == true)
+        return true;
+      return false;
+    }
+   public static final String mapDeleteNano(long v)
+    {
+      for (String[] a : _deleteNano_Values)
+       if (a[0].equals(v) == true)
+        return a[2];
+      return null;
+    }
    public static final long _deleteNanoDeleteNano_CreateDefault = 0l;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2692,6 +2834,20 @@ These are the enumerated values for tilda.data.TILDA.ObjectPerf.deleteCount, whi
    public static final String[][] _deleteCount_Values = {
                                                { "0", "deleteCount_CreateDefault", "deleteCount_CreateDefault", "" }
                                   };
+   public static final boolean checkDeleteCount(int v)
+    {
+      for (String[] a : _deleteCount_Values)
+       if (a[0].equals(v) == true)
+        return true;
+      return false;
+    }
+   public static final String mapDeleteCount(int v)
+    {
+      for (String[] a : _deleteCount_Values)
+       if (a[0].equals(v) == true)
+        return a[2];
+      return null;
+    }
    public static final int _deleteCountDeleteCount_CreateDefault = 0;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2854,6 +3010,20 @@ These are the enumerated values for tilda.data.TILDA.ObjectPerf.deleteRecords, w
    public static final String[][] _deleteRecords_Values = {
                                                { "0", "deleteRecords_CreateDefault", "deleteRecords_CreateDefault", "" }
                                   };
+   public static final boolean checkDeleteRecords(int v)
+    {
+      for (String[] a : _deleteRecords_Values)
+       if (a[0].equals(v) == true)
+        return true;
+      return false;
+    }
+   public static final String mapDeleteRecords(int v)
+    {
+      for (String[] a : _deleteRecords_Values)
+       if (a[0].equals(v) == true)
+        return a[2];
+      return null;
+    }
    public static final int _deleteRecordsDeleteRecords_CreateDefault = 0;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3621,7 +3791,7 @@ This is the hasChanged for:<BR>
 */
    public void copyTo(tilda.data._Tilda.TILDA__OBJECTPERF Dst) throws Exception
      {
-       if (_startPeriodTZ != null)
+       if (__Init == InitMode.CREATE && _startPeriodTZ != null)
         Dst.setStartPeriodTZ(_startPeriodTZ);
        if (_endPeriodTZ   != null)
         Dst.setEndPeriodTZ  (_endPeriodTZ  );
@@ -3652,7 +3822,7 @@ This is the hasChanged for:<BR>
         Dst.setDeleteCount  (_deleteCount  );
        if (_deleteRecords != null)
         Dst.setDeleteRecords(_deleteRecords);
-       if (_created       != null)
+       if (__Init == InitMode.CREATE && _created       != null)
         Dst.setCreated      (_created      );
        if (_lastUpdated   != null)
         Dst.setLastUpdated  (_lastUpdated  );
@@ -4017,15 +4187,15 @@ This is the hasChanged for:<BR>
        int i = 0;
        if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _schemaName);
+          if (__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _schemaName);
         } 
        if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _objectName);
+          if (__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _objectName);
         } 
        if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _startPeriodTZ);
+          if (__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _startPeriodTZ);
         } 
        if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask) == true) 
         { 
@@ -4033,7 +4203,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _endPeriodTZ);
+          if (__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _endPeriodTZ);
         } 
        if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask) == true) 
         { 
@@ -4144,7 +4314,7 @@ This is the hasChanged for:<BR>
                     || __Init == null && __LookupId==0 // Loaded via some deserialization mechamism, e.g., Json or CSV loader
                ;
        if (OK == false)
-        throw new Exception("Object has not been instanciated via deserialization or the factory create() method.");
+        throw new Exception("Object has not been instanciated via deserialization or the factory create() method: __Init:"+__Init+"; __NewlyCreated:"+__NewlyCreated+"; __LookupId: "+__LookupId+";");
 
        if (__Init == null && __LookupId==0)  // object deserialized
         validateDeserialization();
@@ -4222,27 +4392,7 @@ This is the hasChanged for:<BR>
         }
        StringBuilder S = new StringBuilder(1024);
           S.append("select ");
-          S.append(" "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "schemaName");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "objectName");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "startPeriodTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "startPeriod");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "endPeriodTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "endPeriod");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "selectNano");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "selectCount");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "selectRecords");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "insertNano");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "insertCount");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "insertRecords");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "updateNano");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "updateCount");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "updateRecords");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "deleteNano");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "deleteCount");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "deleteRecords");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "created");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "lastUpdated");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "deleted");
+          C.getFullColumnVarList(S, TILDA__OBJECTPERF_Factory.COLUMNS);
           S.append(" from "); C.getFullTableVar(S, "TILDA", "ObjectPerf");
        switch (__LookupId)
         {

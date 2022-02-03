@@ -1,4 +1,6 @@
 [
+  "googlecloudstorage",
+  "googlebiqqueryapi",
   "googlebiqquerydatatransferapi",
-  "googlebiqqueryapi"
+  "googlecloudpubsub"
 ]

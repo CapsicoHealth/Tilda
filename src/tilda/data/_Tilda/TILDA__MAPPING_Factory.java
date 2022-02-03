@@ -35,7 +35,12 @@ public class TILDA__MAPPING_Factory
    public static final String SCHEMA_TABLENAME_LABEL = TextUtil.print("TILDA.Mapping", "");
    public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "Mapping"); }
 
-   public static abstract class COLS {
+   public static final class COLS_BASE
+    {
+      private COLS_BASE() { }
+
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Mapping.type -> TILDA.Mapping."type"
@@ -54,7 +59,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        TYPE       = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "type"       , 0/*0*/, "The type this mapping is for", null, null, null);
+     public final Type_StringPrimitive        TYPE       = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "type"       , 0/*0*/, "The type this mapping is for", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Mapping.src -> TILDA.Mapping."src"
@@ -73,7 +80,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        SRC        = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "src"        , 1/*1*/, "The source value for this mapping", null, null, null);
+     public final Type_StringPrimitive        SRC        = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "src"        , 1/*1*/, "The source value for this mapping", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Mapping.dst -> TILDA.Mapping."dst"
@@ -92,7 +101,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        DST        = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "dst"        , 2/*2*/, "The the destination (mapped) value for this mapping.", null, null, null);
+     public final Type_StringPrimitive        DST        = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "dst"        , 2/*2*/, "The the destination (mapped) value for this mapping.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Mapping.created -> TILDA.Mapping."created"
@@ -117,7 +128,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      CREATED    = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"    , 3/*3*/, "The timestamp for when the record was created. (TILDA.Mapping)", null, null);
+     public final Type_DatetimePrimitive      CREATED    = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"    , 3/*3*/, "The timestamp for when the record was created. (TILDA.Mapping)", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Mapping.lastUpdated -> TILDA.Mapping."lastUpdated"
@@ -142,7 +155,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      LASTUPDATED= new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated", 4/*4*/, "The timestamp for when the record was last updated. (TILDA.Mapping)", null, null);
+     public final Type_DatetimePrimitive      LASTUPDATED= new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated", 4/*4*/, "The timestamp for when the record was last updated. (TILDA.Mapping)", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Mapping.deleted -> TILDA.Mapping."deleted"
@@ -160,15 +175,15 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  DELETED    = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"    , 5/*5*/, "The timestamp for when the record was deleted. (TILDA.Mapping)", null, null);
-;
+     public final Type_DatetimePrimitiveNull  DELETED    = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"    , 5/*5*/, "The timestamp for when the record was deleted. (TILDA.Mapping)", null, null);
    }
 
-   public static final ColumnDefinition[] COLUMNS = { COLS.TYPE,COLS.SRC,COLS.DST,COLS.CREATED,COLS.LASTUPDATED,COLS.DELETED };
+   public static COLS_BASE COLS = new COLS_BASE();
+   public static final ColumnDefinition[] COLUMNS = new ColumnDefinition[] { COLS.TYPE,COLS.SRC,COLS.DST,COLS.CREATED,COLS.LASTUPDATED,COLS.DELETED };
 
-   public static final ColumnDefinition[] COLUMNS_PRIMARY = {  };
+   public static final ColumnDefinition[] COLUMNS_PRIMARY = new ColumnDefinition[] {  };
 
-   public static final ColumnDefinition[][] COLUMNS_UNIQUE_INDICES = { 
+   public static final ColumnDefinition[][] COLUMNS_UNIQUE_INDICES = new ColumnDefinition[][]{ 
                    {COLS.TYPE,COLS.SRC,COLS.DST}
         };
 
@@ -241,12 +256,7 @@ This is the column definition for:<BR>
        else
         {
           S.append("select ");
-          S.append(" "); C.getFullColumnVar(S, "TILDA", "Mapping", "type");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Mapping", "src");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Mapping", "dst");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Mapping", "created");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Mapping", "lastUpdated");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Mapping", "deleted");
+          C.getFullColumnVarList(S, TILDA__MAPPING_Factory.COLUMNS);
           S.append(" from "); C.getFullTableVar(S, "TILDA", "Mapping");
           switch (LookupId)
            {
@@ -489,6 +499,9 @@ object. The generic init method defaults to this general data structure as a gen
          }
        }
 
+/**
+Lookup one record by the unique index 'TypeSrcDst': type, src, dst.
+*/
    static public tilda.data.Mapping_Data lookupByTypeSrcDst(String type, String src, String dst) throws Exception
      {
        tilda.data._Tilda.TILDA__MAPPING Obj = new tilda.data.Mapping_Data();
@@ -501,8 +514,11 @@ object. The generic init method defaults to this general data structure as a gen
        return (tilda.data.Mapping_Data) Obj;
      }
 
-
-   static public ListResults<tilda.data.Mapping_Data> lookupWhereAll(Connection C, int start, int size) throws Exception
+/**
+Lookup records by the query 'All' over 
+.<BR>
+The results are ordered by: type asc, src asc, dst asc
+*/   static public ListResults<tilda.data.Mapping_Data> lookupWhereAll(Connection C, int start, int size) throws Exception
      {
        tilda.data._Tilda.TILDA__MAPPING Obj = new tilda.data.Mapping_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -514,7 +530,11 @@ object. The generic init method defaults to this general data structure as a gen
      }
 
 
-   static public void lookupWhereAll(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Mapping_Data> OP, int start, int size) throws Exception
+/**
+Lookup records by the query 'All' over 
+.<BR>
+The results are ordered by: type asc, src asc, dst asc
+*/   static public void lookupWhereAll(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Mapping_Data> OP, int start, int size) throws Exception
      {
        tilda.data._Tilda.TILDA__MAPPING Obj = new tilda.data.Mapping_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -523,6 +543,7 @@ object. The generic init method defaults to this general data structure as a gen
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
        readMany(C, 1, RPI, Obj, null, start, size);
      }
+
 
 
    public static SelectQuery newSelectQuery(Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, true); }

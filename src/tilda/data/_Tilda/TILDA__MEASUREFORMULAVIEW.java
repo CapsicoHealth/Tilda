@@ -1062,6 +1062,20 @@ These are the enumerated values for tilda.data.TILDA.MeasureFormulaView.type, wh
                                              , { "NUM", "Numeric", "Numeric", "" }
                                              , { "UI" , "Uuid", "Uuid", "" }
                                   };
+   public static final boolean checkType(String v)
+    {
+      for (String[] a : _type_Values)
+       if (a[0].equals(v) == true)
+        return true;
+      return false;
+    }
+   public static final String mapType(String v)
+    {
+      for (String[] a : _type_Values)
+       if (a[0].equals(v) == true)
+        return a[2];
+      return null;
+    }
    public static final String _typeString    = "STR";
    public static final String _typeCharacter = "CHR";
    public static final String _typeBoolean   = "BOL";
@@ -1505,17 +1519,7 @@ This is the null setter for:<BR>
         }
        StringBuilder S = new StringBuilder(1024);
           S.append("select ");
-          S.append(" "); C.getFullColumnVar(S, "TILDA", "MeasureFormulaView", "measureRefnum");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "MeasureFormulaView", "measureSchema");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "MeasureFormulaView", "measureName");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "MeasureFormulaView", "formulaRefnum");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "MeasureFormulaView", "formulaLocation");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "MeasureFormulaView", "formulaLocation2");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "MeasureFormulaView", "formulaName");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "MeasureFormulaView", "title");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "MeasureFormulaView", "description");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "MeasureFormulaView", "type");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "MeasureFormulaView", "formula");
+          C.getFullColumnVarList(S, TILDA__MEASUREFORMULAVIEW_Factory.COLUMNS);
           S.append(" from "); C.getFullTableVar(S, "TILDA", "MeasureFormulaView");
        switch (__LookupId)
         {

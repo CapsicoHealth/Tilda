@@ -35,7 +35,12 @@ public class TILDA__FORMULADEPENDENCY_Factory
    public static final String SCHEMA_TABLENAME_LABEL = TextUtil.print("TILDA.FormulaDependency", "");
    public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "FormulaDependency"); }
 
-   public static abstract class COLS {
+   public static final class COLS_BASE
+    {
+      private COLS_BASE() { }
+
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.FormulaDependency.formulaRefnum -> TILDA.FormulaDependency."formulaRefnum"
@@ -53,7 +58,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          FORMULAREFNUM   = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "formulaRefnum"   , 0/*0*/, "The parent formula.", null, null, null);
+     public final Type_LongPrimitive          FORMULAREFNUM   = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "formulaRefnum"   , 0/*0*/, "The parent formula.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.FormulaDependency.dependencyRefnum -> TILDA.FormulaDependency."dependencyRefnum"
@@ -71,7 +78,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          DEPENDENCYREFNUM= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "dependencyRefnum", 1/*1*/, "The dependent formula.", null, null, null);
+     public final Type_LongPrimitive          DEPENDENCYREFNUM= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "dependencyRefnum", 1/*1*/, "The dependent formula.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.FormulaDependency.created -> TILDA.FormulaDependency."created"
@@ -96,7 +105,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      CREATED         = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"         , 2/*2*/, "The timestamp for when the record was created. (TILDA.FormulaDependency)", null, null);
+     public final Type_DatetimePrimitive      CREATED         = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"         , 2/*2*/, "The timestamp for when the record was created. (TILDA.FormulaDependency)", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.FormulaDependency.lastUpdated -> TILDA.FormulaDependency."lastUpdated"
@@ -121,7 +132,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      LASTUPDATED     = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"     , 3/*3*/, "The timestamp for when the record was last updated. (TILDA.FormulaDependency)", null, null);
+     public final Type_DatetimePrimitive      LASTUPDATED     = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"     , 3/*3*/, "The timestamp for when the record was last updated. (TILDA.FormulaDependency)", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.FormulaDependency.deleted -> TILDA.FormulaDependency."deleted"
@@ -139,15 +152,15 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  DELETED         = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"         , 4/*4*/, "The timestamp for when the record was deleted. (TILDA.FormulaDependency)", null, null);
-;
+     public final Type_DatetimePrimitiveNull  DELETED         = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"         , 4/*4*/, "The timestamp for when the record was deleted. (TILDA.FormulaDependency)", null, null);
    }
 
-   public static final ColumnDefinition[] COLUMNS = { COLS.FORMULAREFNUM,COLS.DEPENDENCYREFNUM,COLS.CREATED,COLS.LASTUPDATED,COLS.DELETED };
+   public static COLS_BASE COLS = new COLS_BASE();
+   public static final ColumnDefinition[] COLUMNS = new ColumnDefinition[] { COLS.FORMULAREFNUM,COLS.DEPENDENCYREFNUM,COLS.CREATED,COLS.LASTUPDATED,COLS.DELETED };
 
-   public static final ColumnDefinition[] COLUMNS_PRIMARY = { COLS.FORMULAREFNUM,COLS.DEPENDENCYREFNUM };
+   public static final ColumnDefinition[] COLUMNS_PRIMARY = new ColumnDefinition[] { COLS.FORMULAREFNUM,COLS.DEPENDENCYREFNUM };
 
-   public static final ColumnDefinition[][] COLUMNS_UNIQUE_INDICES = { 
+   public static final ColumnDefinition[][] COLUMNS_UNIQUE_INDICES = new ColumnDefinition[][]{ 
         };
 
    public static final ColumnDefinition[] COLUMNS_FIRST_IDENTITY = COLUMNS_PRIMARY;
@@ -219,11 +232,7 @@ This is the column definition for:<BR>
        else
         {
           S.append("select ");
-          S.append(" "); C.getFullColumnVar(S, "TILDA", "FormulaDependency", "formulaRefnum");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaDependency", "dependencyRefnum");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaDependency", "created");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaDependency", "lastUpdated");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaDependency", "deleted");
+          C.getFullColumnVarList(S, TILDA__FORMULADEPENDENCY_Factory.COLUMNS);
           S.append(" from "); C.getFullTableVar(S, "TILDA", "FormulaDependency");
           switch (LookupId)
            {
@@ -458,6 +467,9 @@ object. The generic init method defaults to this general data structure as a gen
          }
        }
 
+/**
+Lookup one record by the primary key: formulaRefnum, dependencyRefnum.
+*/
    static public tilda.data.FormulaDependency_Data lookupByPrimaryKey(long formulaRefnum, long dependencyRefnum) throws Exception
      {
        tilda.data._Tilda.TILDA__FORMULADEPENDENCY Obj = new tilda.data.FormulaDependency_Data();
@@ -469,8 +481,11 @@ object. The generic init method defaults to this general data structure as a gen
        return (tilda.data.FormulaDependency_Data) Obj;
      }
 
-
-   static public ListResults<tilda.data.FormulaDependency_Data> lookupWhereAll(Connection C, int start, int size) throws Exception
+/**
+Lookup records by the query 'All' over 
+.<BR>
+The results are ordered by: formulaRefnum asc, dependencyRefnum asc
+*/   static public ListResults<tilda.data.FormulaDependency_Data> lookupWhereAll(Connection C, int start, int size) throws Exception
      {
        tilda.data._Tilda.TILDA__FORMULADEPENDENCY Obj = new tilda.data.FormulaDependency_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -482,7 +497,11 @@ object. The generic init method defaults to this general data structure as a gen
      }
 
 
-   static public void lookupWhereAll(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.FormulaDependency_Data> OP, int start, int size) throws Exception
+/**
+Lookup records by the query 'All' over 
+.<BR>
+The results are ordered by: formulaRefnum asc, dependencyRefnum asc
+*/   static public void lookupWhereAll(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.FormulaDependency_Data> OP, int start, int size) throws Exception
      {
        tilda.data._Tilda.TILDA__FORMULADEPENDENCY Obj = new tilda.data.FormulaDependency_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -491,6 +510,7 @@ object. The generic init method defaults to this general data structure as a gen
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
        readMany(C, 1, RPI, Obj, null, start, size);
      }
+
 
 
 

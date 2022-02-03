@@ -35,7 +35,12 @@ public class TILDA__TRANSPERF_Factory
    public static final String SCHEMA_TABLENAME_LABEL = TextUtil.print("TILDA.TransPerf", "");
    public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "TransPerf"); }
 
-   public static abstract class COLS {
+   public static final class COLS_BASE
+    {
+      private COLS_BASE() { }
+
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.TransPerf.startPeriodTZ -> TILDA.TransPerf."startPeriodTZ"
@@ -54,7 +59,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        STARTPERIODTZ         = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "startPeriodTZ"         , 0/*0*/, "Generated helper column to hold the time zone ID for 'startPeriod'.", null, null, null);
+     public final Type_StringPrimitive        STARTPERIODTZ         = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "startPeriodTZ"         , 0/*0*/, "Generated helper column to hold the time zone ID for 'startPeriod'.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.TransPerf.startPeriod -> TILDA.TransPerf."startPeriod"
@@ -72,7 +79,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitive      STARTPERIOD           = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "startPeriod"           , 1/*1*/, "The timestamp for when the record was created.", null, null, STARTPERIODTZ);
+     public final Type_DatetimePrimitive      STARTPERIOD           = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "startPeriod"           , 1/*1*/, "The timestamp for when the record was created.", null, null, STARTPERIODTZ);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.TransPerf.endPeriodTZ -> TILDA.TransPerf."endPeriodTZ"
@@ -91,7 +100,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        ENDPERIODTZ           = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "endPeriodTZ"           , 2/*2*/, "Generated helper column to hold the time zone ID for 'endPeriod'.", null, null, null);
+     public final Type_StringPrimitive        ENDPERIODTZ           = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "endPeriodTZ"           , 2/*2*/, "Generated helper column to hold the time zone ID for 'endPeriod'.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.TransPerf.endPeriod -> TILDA.TransPerf."endPeriod"
@@ -109,7 +120,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitive      ENDPERIOD             = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "endPeriod"             , 3/*3*/, "The timestamp for when the record was created.", null, null, ENDPERIODTZ);
+     public final Type_DatetimePrimitive      ENDPERIOD             = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "endPeriod"             , 3/*3*/, "The timestamp for when the record was created.", null, null, ENDPERIODTZ);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.TransPerf.commitNano -> TILDA.TransPerf."commitNano"
@@ -134,7 +147,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_LongPrimitive          COMMITNANO            = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "commitNano"            , 4/*4*/, "Blah...", null, null, new String[][] {{"0","commitNano_CreateDefault"}});
+     public final Type_LongPrimitive          COMMITNANO            = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "commitNano"            , 4/*4*/, "Blah...", null, null, new String[][] {{"0","commitNano_CreateDefault"}});
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.TransPerf.commitCount -> TILDA.TransPerf."commitCount"
@@ -159,7 +174,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_IntegerPrimitive       COMMITCOUNT           = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "commitCount"           , 5/*5*/, "Blah...", null, null, new String[][] {{"0","commitCount_CreateDefault"}});
+     public final Type_IntegerPrimitive       COMMITCOUNT           = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "commitCount"           , 5/*5*/, "Blah...", null, null, new String[][] {{"0","commitCount_CreateDefault"}});
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.TransPerf.rollbackNano -> TILDA.TransPerf."rollbackNano"
@@ -184,7 +201,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_LongPrimitive          ROLLBACKNANO          = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "rollbackNano"          , 6/*6*/, "Blah...", null, null, new String[][] {{"0","rollbackNano_CreateDefault"}});
+     public final Type_LongPrimitive          ROLLBACKNANO          = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "rollbackNano"          , 6/*6*/, "Blah...", null, null, new String[][] {{"0","rollbackNano_CreateDefault"}});
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.TransPerf.rollbackCount -> TILDA.TransPerf."rollbackCount"
@@ -209,7 +228,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_IntegerPrimitive       ROLLBACKCOUNT         = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "rollbackCount"         , 7/*7*/, "Blah...", null, null, new String[][] {{"0","rollbackCount_CreateDefault"}});
+     public final Type_IntegerPrimitive       ROLLBACKCOUNT         = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "rollbackCount"         , 7/*7*/, "Blah...", null, null, new String[][] {{"0","rollbackCount_CreateDefault"}});
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.TransPerf.savepointSetNano -> TILDA.TransPerf."savepointSetNano"
@@ -234,7 +255,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_LongPrimitive          SAVEPOINTSETNANO      = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "savepointSetNano"      , 8/*8*/, "Blah...", null, null, new String[][] {{"0","savepointSetNano_CreateDefault"}});
+     public final Type_LongPrimitive          SAVEPOINTSETNANO      = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "savepointSetNano"      , 8/*8*/, "Blah...", null, null, new String[][] {{"0","savepointSetNano_CreateDefault"}});
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.TransPerf.savepointSetCount -> TILDA.TransPerf."savepointSetCount"
@@ -259,7 +282,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_IntegerPrimitive       SAVEPOINTSETCOUNT     = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "savepointSetCount"     , 9/*9*/, "Blah...", null, null, new String[][] {{"0","savepointSetCount_CreateDefault"}});
+     public final Type_IntegerPrimitive       SAVEPOINTSETCOUNT     = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "savepointSetCount"     , 9/*9*/, "Blah...", null, null, new String[][] {{"0","savepointSetCount_CreateDefault"}});
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.TransPerf.savepointCommitNano -> TILDA.TransPerf."savepointCommitNano"
@@ -284,7 +309,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_LongPrimitive          SAVEPOINTCOMMITNANO   = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "savepointCommitNano"   , 10/*10*/, "Blah...", null, null, new String[][] {{"0","savepointCommitNano_CreateDefault"}});
+     public final Type_LongPrimitive          SAVEPOINTCOMMITNANO   = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "savepointCommitNano"   , 10/*10*/, "Blah...", null, null, new String[][] {{"0","savepointCommitNano_CreateDefault"}});
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.TransPerf.savepointCommitCount -> TILDA.TransPerf."savepointCommitCount"
@@ -309,7 +336,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_IntegerPrimitive       SAVEPOINTCOMMITCOUNT  = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "savepointCommitCount"  , 11/*11*/, "Blah...", null, null, new String[][] {{"0","savepointCommitCount_CreateDefault"}});
+     public final Type_IntegerPrimitive       SAVEPOINTCOMMITCOUNT  = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "savepointCommitCount"  , 11/*11*/, "Blah...", null, null, new String[][] {{"0","savepointCommitCount_CreateDefault"}});
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.TransPerf.savepointRollbackNano -> TILDA.TransPerf."savepointRollbackNano"
@@ -334,7 +363,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_LongPrimitive          SAVEPOINTROLLBACKNANO = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "savepointRollbackNano" , 12/*12*/, "Blah...", null, null, new String[][] {{"0","savepointRollbackNano_CreateDefault"}});
+     public final Type_LongPrimitive          SAVEPOINTROLLBACKNANO = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "savepointRollbackNano" , 12/*12*/, "Blah...", null, null, new String[][] {{"0","savepointRollbackNano_CreateDefault"}});
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.TransPerf.savepointRollbackCount -> TILDA.TransPerf."savepointRollbackCount"
@@ -359,7 +390,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_IntegerPrimitive       SAVEPOINTROLLBACKCOUNT= new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "savepointRollbackCount", 13/*13*/, "Blah...", null, null, new String[][] {{"0","savepointRollbackCount_CreateDefault"}});
+     public final Type_IntegerPrimitive       SAVEPOINTROLLBACKCOUNT= new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "savepointRollbackCount", 13/*13*/, "Blah...", null, null, new String[][] {{"0","savepointRollbackCount_CreateDefault"}});
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.TransPerf.statementCloseNano -> TILDA.TransPerf."statementCloseNano"
@@ -384,7 +417,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_LongPrimitive          STATEMENTCLOSENANO    = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "statementCloseNano"    , 14/*14*/, "Blah...", null, null, new String[][] {{"0","statementCloseNano_CreateDefault"}});
+     public final Type_LongPrimitive          STATEMENTCLOSENANO    = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "statementCloseNano"    , 14/*14*/, "Blah...", null, null, new String[][] {{"0","statementCloseNano_CreateDefault"}});
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.TransPerf.statementCloseCount -> TILDA.TransPerf."statementCloseCount"
@@ -409,7 +444,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_IntegerPrimitive       STATEMENTCLOSECOUNT   = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "statementCloseCount"   , 15/*15*/, "Blah...", null, null, new String[][] {{"0","statementCloseCount_CreateDefault"}});
+     public final Type_IntegerPrimitive       STATEMENTCLOSECOUNT   = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "statementCloseCount"   , 15/*15*/, "Blah...", null, null, new String[][] {{"0","statementCloseCount_CreateDefault"}});
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.TransPerf.connectionCloseNano -> TILDA.TransPerf."connectionCloseNano"
@@ -434,7 +471,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_LongPrimitive          CONNECTIONCLOSENANO   = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "connectionCloseNano"   , 16/*16*/, "Blah...", null, null, new String[][] {{"0","connectionCloseNano_CreateDefault"}});
+     public final Type_LongPrimitive          CONNECTIONCLOSENANO   = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "connectionCloseNano"   , 16/*16*/, "Blah...", null, null, new String[][] {{"0","connectionCloseNano_CreateDefault"}});
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.TransPerf.connectionCloseCount -> TILDA.TransPerf."connectionCloseCount"
@@ -459,7 +498,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_IntegerPrimitive       CONNECTIONCLOSECOUNT  = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "connectionCloseCount"  , 17/*17*/, "Blah...", null, null, new String[][] {{"0","connectionCloseCount_CreateDefault"}});
+     public final Type_IntegerPrimitive       CONNECTIONCLOSECOUNT  = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "connectionCloseCount"  , 17/*17*/, "Blah...", null, null, new String[][] {{"0","connectionCloseCount_CreateDefault"}});
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.TransPerf.connectionGetNano -> TILDA.TransPerf."connectionGetNano"
@@ -484,7 +525,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_LongPrimitive          CONNECTIONGETNANO     = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "connectionGetNano"     , 18/*18*/, "Blah...", null, null, new String[][] {{"0","connectionGetNano_CreateDefault"}});
+     public final Type_LongPrimitive          CONNECTIONGETNANO     = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "connectionGetNano"     , 18/*18*/, "Blah...", null, null, new String[][] {{"0","connectionGetNano_CreateDefault"}});
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.TransPerf.connectionGetCount -> TILDA.TransPerf."connectionGetCount"
@@ -509,7 +552,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_IntegerPrimitive       CONNECTIONGETCOUNT    = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "connectionGetCount"    , 19/*19*/, "Blah...", null, null, new String[][] {{"0","connectionGetCount_CreateDefault"}});
+     public final Type_IntegerPrimitive       CONNECTIONGETCOUNT    = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "connectionGetCount"    , 19/*19*/, "Blah...", null, null, new String[][] {{"0","connectionGetCount_CreateDefault"}});
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.TransPerf.tildaSetterNano -> TILDA.TransPerf."tildaSetterNano"
@@ -534,7 +579,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_LongPrimitive          TILDASETTERNANO       = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "tildaSetterNano"       , 20/*20*/, "Blah...", null, null, new String[][] {{"0","tildaSetterNano_CreateDefault"}});
+     public final Type_LongPrimitive          TILDASETTERNANO       = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "tildaSetterNano"       , 20/*20*/, "Blah...", null, null, new String[][] {{"0","tildaSetterNano_CreateDefault"}});
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.TransPerf.tildaSetterCount -> TILDA.TransPerf."tildaSetterCount"
@@ -559,7 +606,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_IntegerPrimitive       TILDASETTERCOUNT      = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "tildaSetterCount"      , 21/*21*/, "Blah...", null, null, new String[][] {{"0","tildaSetterCount_CreateDefault"}});
+     public final Type_IntegerPrimitive       TILDASETTERCOUNT      = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "tildaSetterCount"      , 21/*21*/, "Blah...", null, null, new String[][] {{"0","tildaSetterCount_CreateDefault"}});
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.TransPerf.tildaToStringNano -> TILDA.TransPerf."tildaToStringNano"
@@ -584,7 +633,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_LongPrimitive          TILDATOSTRINGNANO     = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "tildaToStringNano"     , 22/*22*/, "Blah...", null, null, new String[][] {{"0","tildaToStringNano_CreateDefault"}});
+     public final Type_LongPrimitive          TILDATOSTRINGNANO     = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "tildaToStringNano"     , 22/*22*/, "Blah...", null, null, new String[][] {{"0","tildaToStringNano_CreateDefault"}});
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.TransPerf.tildaToStringCount -> TILDA.TransPerf."tildaToStringCount"
@@ -609,7 +660,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_IntegerPrimitive       TILDATOSTRINGCOUNT    = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "tildaToStringCount"    , 23/*23*/, "Blah...", null, null, new String[][] {{"0","tildaToStringCount_CreateDefault"}});
+     public final Type_IntegerPrimitive       TILDATOSTRINGCOUNT    = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "tildaToStringCount"    , 23/*23*/, "Blah...", null, null, new String[][] {{"0","tildaToStringCount_CreateDefault"}});
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.TransPerf.tildaToJsonNano -> TILDA.TransPerf."tildaToJsonNano"
@@ -634,7 +687,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_LongPrimitive          TILDATOJSONNANO       = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "tildaToJsonNano"       , 24/*24*/, "Blah...", null, null, new String[][] {{"0","tildaToJsonNano_CreateDefault"}});
+     public final Type_LongPrimitive          TILDATOJSONNANO       = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "tildaToJsonNano"       , 24/*24*/, "Blah...", null, null, new String[][] {{"0","tildaToJsonNano_CreateDefault"}});
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.TransPerf.tildaToJsonCount -> TILDA.TransPerf."tildaToJsonCount"
@@ -659,7 +714,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_IntegerPrimitive       TILDATOJSONCOUNT      = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "tildaToJsonCount"      , 25/*25*/, "Blah...", null, null, new String[][] {{"0","tildaToJsonCount_CreateDefault"}});
+     public final Type_IntegerPrimitive       TILDATOJSONCOUNT      = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "tildaToJsonCount"      , 25/*25*/, "Blah...", null, null, new String[][] {{"0","tildaToJsonCount_CreateDefault"}});
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.TransPerf.tildaToCsvNano -> TILDA.TransPerf."tildaToCsvNano"
@@ -684,7 +741,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_LongPrimitive          TILDATOCSVNANO        = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "tildaToCsvNano"        , 26/*26*/, "Blah...", null, null, new String[][] {{"0","tildaToCsvNano_CreateDefault"}});
+     public final Type_LongPrimitive          TILDATOCSVNANO        = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "tildaToCsvNano"        , 26/*26*/, "Blah...", null, null, new String[][] {{"0","tildaToCsvNano_CreateDefault"}});
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.TransPerf.tildaToCsvCount -> TILDA.TransPerf."tildaToCsvCount"
@@ -709,7 +768,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_IntegerPrimitive       TILDATOCSVCOUNT       = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "tildaToCsvCount"       , 27/*27*/, "Blah...", null, null, new String[][] {{"0","tildaToCsvCount_CreateDefault"}});
+     public final Type_IntegerPrimitive       TILDATOCSVCOUNT       = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "tildaToCsvCount"       , 27/*27*/, "Blah...", null, null, new String[][] {{"0","tildaToCsvCount_CreateDefault"}});
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.TransPerf.created -> TILDA.TransPerf."created"
@@ -734,7 +795,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      CREATED               = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"               , 28/*28*/, "The timestamp for when the record was created. (TILDA.TransPerf)", null, null);
+     public final Type_DatetimePrimitive      CREATED               = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"               , 28/*28*/, "The timestamp for when the record was created. (TILDA.TransPerf)", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.TransPerf.lastUpdated -> TILDA.TransPerf."lastUpdated"
@@ -759,7 +822,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      LASTUPDATED           = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"           , 29/*29*/, "The timestamp for when the record was last updated. (TILDA.TransPerf)", null, null);
+     public final Type_DatetimePrimitive      LASTUPDATED           = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"           , 29/*29*/, "The timestamp for when the record was last updated. (TILDA.TransPerf)", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.TransPerf.deleted -> TILDA.TransPerf."deleted"
@@ -777,15 +842,15 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  DELETED               = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"               , 30/*30*/, "The timestamp for when the record was deleted. (TILDA.TransPerf)", null, null);
-;
+     public final Type_DatetimePrimitiveNull  DELETED               = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"               , 30/*30*/, "The timestamp for when the record was deleted. (TILDA.TransPerf)", null, null);
    }
 
-   public static final ColumnDefinition[] COLUMNS = { COLS.STARTPERIODTZ,COLS.STARTPERIOD,COLS.ENDPERIODTZ,COLS.ENDPERIOD,COLS.COMMITNANO,COLS.COMMITCOUNT,COLS.ROLLBACKNANO,COLS.ROLLBACKCOUNT,COLS.SAVEPOINTSETNANO,COLS.SAVEPOINTSETCOUNT,COLS.SAVEPOINTCOMMITNANO,COLS.SAVEPOINTCOMMITCOUNT,COLS.SAVEPOINTROLLBACKNANO,COLS.SAVEPOINTROLLBACKCOUNT,COLS.STATEMENTCLOSENANO,COLS.STATEMENTCLOSECOUNT,COLS.CONNECTIONCLOSENANO,COLS.CONNECTIONCLOSECOUNT,COLS.CONNECTIONGETNANO,COLS.CONNECTIONGETCOUNT,COLS.TILDASETTERNANO,COLS.TILDASETTERCOUNT,COLS.TILDATOSTRINGNANO,COLS.TILDATOSTRINGCOUNT,COLS.TILDATOJSONNANO,COLS.TILDATOJSONCOUNT,COLS.TILDATOCSVNANO,COLS.TILDATOCSVCOUNT,COLS.CREATED,COLS.LASTUPDATED,COLS.DELETED };
+   public static COLS_BASE COLS = new COLS_BASE();
+   public static final ColumnDefinition[] COLUMNS = new ColumnDefinition[] { COLS.STARTPERIODTZ,COLS.STARTPERIOD,COLS.ENDPERIODTZ,COLS.ENDPERIOD,COLS.COMMITNANO,COLS.COMMITCOUNT,COLS.ROLLBACKNANO,COLS.ROLLBACKCOUNT,COLS.SAVEPOINTSETNANO,COLS.SAVEPOINTSETCOUNT,COLS.SAVEPOINTCOMMITNANO,COLS.SAVEPOINTCOMMITCOUNT,COLS.SAVEPOINTROLLBACKNANO,COLS.SAVEPOINTROLLBACKCOUNT,COLS.STATEMENTCLOSENANO,COLS.STATEMENTCLOSECOUNT,COLS.CONNECTIONCLOSENANO,COLS.CONNECTIONCLOSECOUNT,COLS.CONNECTIONGETNANO,COLS.CONNECTIONGETCOUNT,COLS.TILDASETTERNANO,COLS.TILDASETTERCOUNT,COLS.TILDATOSTRINGNANO,COLS.TILDATOSTRINGCOUNT,COLS.TILDATOJSONNANO,COLS.TILDATOJSONCOUNT,COLS.TILDATOCSVNANO,COLS.TILDATOCSVCOUNT,COLS.CREATED,COLS.LASTUPDATED,COLS.DELETED };
 
-   public static final ColumnDefinition[] COLUMNS_PRIMARY = { COLS.STARTPERIOD };
+   public static final ColumnDefinition[] COLUMNS_PRIMARY = new ColumnDefinition[] { COLS.STARTPERIOD };
 
-   public static final ColumnDefinition[][] COLUMNS_UNIQUE_INDICES = { 
+   public static final ColumnDefinition[][] COLUMNS_UNIQUE_INDICES = new ColumnDefinition[][]{ 
         };
 
    public static final ColumnDefinition[] COLUMNS_FIRST_IDENTITY = {};
@@ -857,37 +922,7 @@ This is the column definition for:<BR>
        else
         {
           S.append("select ");
-          S.append(" "); C.getFullColumnVar(S, "TILDA", "TransPerf", "startPeriodTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "startPeriod");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "endPeriodTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "endPeriod");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "commitNano");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "commitCount");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "rollbackNano");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "rollbackCount");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "savepointSetNano");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "savepointSetCount");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "savepointCommitNano");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "savepointCommitCount");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "savepointRollbackNano");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "savepointRollbackCount");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "statementCloseNano");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "statementCloseCount");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "connectionCloseNano");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "connectionCloseCount");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "connectionGetNano");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "connectionGetCount");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "tildaSetterNano");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "tildaSetterCount");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "tildaToStringNano");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "tildaToStringCount");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "tildaToJsonNano");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "tildaToJsonCount");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "tildaToCsvNano");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "tildaToCsvCount");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "created");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "lastUpdated");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "deleted");
+          C.getFullColumnVarList(S, TILDA__TRANSPERF_Factory.COLUMNS);
           S.append(" from "); C.getFullTableVar(S, "TILDA", "TransPerf");
           switch (LookupId)
            {
@@ -1290,6 +1325,9 @@ object. The generic init method defaults to this general data structure as a gen
          }
        }
 
+/**
+Lookup one record by the primary key: startPeriod.
+*/
    static public tilda.data.TransPerf_Data lookupByPrimaryKey(ZonedDateTime startPeriod) throws Exception
      {
        tilda.data._Tilda.TILDA__TRANSPERF Obj = new tilda.data.TransPerf_Data();
@@ -1300,8 +1338,11 @@ object. The generic init method defaults to this general data structure as a gen
        return (tilda.data.TransPerf_Data) Obj;
      }
 
-
-   static public ListResults<tilda.data.TransPerf_Data> lookupWhereAll(Connection C, int start, int size) throws Exception
+/**
+Lookup records by the query 'All' over 
+.<BR>
+The results are ordered by: startPeriod asc
+*/   static public ListResults<tilda.data.TransPerf_Data> lookupWhereAll(Connection C, int start, int size) throws Exception
      {
        tilda.data._Tilda.TILDA__TRANSPERF Obj = new tilda.data.TransPerf_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -1313,7 +1354,11 @@ object. The generic init method defaults to this general data structure as a gen
      }
 
 
-   static public void lookupWhereAll(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.TransPerf_Data> OP, int start, int size) throws Exception
+/**
+Lookup records by the query 'All' over 
+.<BR>
+The results are ordered by: startPeriod asc
+*/   static public void lookupWhereAll(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.TransPerf_Data> OP, int start, int size) throws Exception
      {
        tilda.data._Tilda.TILDA__TRANSPERF Obj = new tilda.data.TransPerf_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -1322,6 +1367,7 @@ object. The generic init method defaults to this general data structure as a gen
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
        readMany(C, 1, RPI, Obj, null, start, size);
      }
+
 
 
 

@@ -1084,14 +1084,7 @@ This is the null setter for:<BR>
         }
        StringBuilder S = new StringBuilder(1024);
           S.append("select ");
-          S.append(" "); C.getFullColumnVar(S, "TILDA", "FormulaDependencyView", "formulaRefnum");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaDependencyView", "location");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaDependencyView", "name");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaDependencyView", "referencedColumns");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaDependencyView", "dependencyRefnum");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaDependencyView", "dependentFormulaName");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaDependencyView", "dependentFormulaLocation");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaDependencyView", "dependentReferencedColumns");
+          C.getFullColumnVarList(S, TILDA__FORMULADEPENDENCYVIEW_Factory.COLUMNS);
           S.append(" from "); C.getFullTableVar(S, "TILDA", "FormulaDependencyView");
        switch (__LookupId)
         {
@@ -1154,10 +1147,24 @@ This is the null setter for:<BR>
                                            _location                   = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.LOCATION._Mask                  ); _location = null; }
                                            _name                       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.NAME._Mask                      ); _name = null; }
                                            _referencedColumns = (List<String>) C.getArray(RS, ++i, TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.REFERENCEDCOLUMNS.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.REFERENCEDCOLUMNS._Mask         ); _referencedColumns = null; }
+                             //This looks weird, but with array aggregates on strings, gotta watch out on left joins with NULL values.
+                             //Those values show up as a [null] array (1 element, which is null).
+                             if (_referencedColumns != null && _referencedColumns.size() == 1 && _referencedColumns.get(0) == null)
+                               {
+                                 _referencedColumns = new ArrayList<String>();
+                                 __Nulls.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.REFERENCEDCOLUMNS._Mask);
+                               }
                                            _dependencyRefnum           =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENCYREFNUM._Mask          ); _dependencyRefnum = null; }
                                            _dependentFormulaName       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENTFORMULANAME._Mask      ); _dependentFormulaName = null; }
                                            _dependentFormulaLocation   = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENTFORMULALOCATION._Mask  ); _dependentFormulaLocation = null; }
                                            _dependentReferencedColumns = (List<String>) C.getArray(RS, ++i, TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENTREFERENCEDCOLUMNS.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENTREFERENCEDCOLUMNS._Mask); _dependentReferencedColumns = null; }
+                             //This looks weird, but with array aggregates on strings, gotta watch out on left joins with NULL values.
+                             //Those values show up as a [null] array (1 element, which is null).
+                             if (_dependentReferencedColumns != null && _dependentReferencedColumns.size() == 1 && _dependentReferencedColumns.get(0) == null)
+                               {
+                                 _dependentReferencedColumns = new ArrayList<String>();
+                                 __Nulls.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENTREFERENCEDCOLUMNS._Mask);
+                               }
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();

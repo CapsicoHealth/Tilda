@@ -35,7 +35,12 @@ public class TILDA__FORMULARESULTVIEW_Factory
    public static final String SCHEMA_TABLENAME_LABEL = TextUtil.print("TILDA.FormulaResultView", "");
    public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "FormulaResultView"); }
 
-   public static abstract class COLS {
+   public static final class COLS_BASE
+    {
+      private COLS_BASE() { }
+
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.FormulaResultView.formulaRefnum -> TILDA.FormulaResultView."formulaRefnum"
@@ -53,7 +58,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          FORMULAREFNUM= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "formulaRefnum", 0/*0*/, "The parent formula.", null, null, null);
+     public final Type_LongPrimitive          FORMULAREFNUM= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "formulaRefnum", 0/*0*/, "The parent formula.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.FormulaResultView.value -> TILDA.FormulaResultView."value"
@@ -72,7 +79,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        VALUE        = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "value"        , 1/*1*/, "The result value.", null, null, null);
+     public final Type_StringPrimitive        VALUE        = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "value"        , 1/*1*/, "The result value.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.FormulaResultView.description -> TILDA.FormulaResultView."description"
@@ -91,7 +100,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        DESCRIPTION  = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "description"  , 2/*2*/, "The description of the result value.", null, null, null);
+     public final Type_StringPrimitive        DESCRIPTION  = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "description"  , 2/*2*/, "The description of the result value.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.FormulaResultView.location -> TILDA.FormulaResultView."location"
@@ -110,7 +121,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        LOCATION     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "location"     , 3/*3*/, "The name of the primary table/view this formula is defined in.", null, null, null);
+     public final Type_StringPrimitive        LOCATION     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "location"     , 3/*3*/, "The name of the primary table/view this formula is defined in.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.FormulaResultView.name -> TILDA.FormulaResultView."name"
@@ -129,15 +142,15 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        NAME         = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "name"         , 4/*4*/, "The name of the formula/column.", null, null, null);
-;
+     public final Type_StringPrimitive        NAME         = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "name"         , 4/*4*/, "The name of the formula/column.", null, null, null);
    }
 
-   public static final ColumnDefinition[] COLUMNS = { COLS.FORMULAREFNUM,COLS.VALUE,COLS.DESCRIPTION,COLS.LOCATION,COLS.NAME };
+   public static COLS_BASE COLS = new COLS_BASE();
+   public static final ColumnDefinition[] COLUMNS = new ColumnDefinition[] { COLS.FORMULAREFNUM,COLS.VALUE,COLS.DESCRIPTION,COLS.LOCATION,COLS.NAME };
 
-   public static final ColumnDefinition[] COLUMNS_PRIMARY = {  };
+   public static final ColumnDefinition[] COLUMNS_PRIMARY = new ColumnDefinition[] {  };
 
-   public static final ColumnDefinition[][] COLUMNS_UNIQUE_INDICES = { 
+   public static final ColumnDefinition[][] COLUMNS_UNIQUE_INDICES = new ColumnDefinition[][]{ 
         };
 
    public static final ColumnDefinition[] COLUMNS_FIRST_IDENTITY = {};
@@ -209,11 +222,7 @@ This is the column definition for:<BR>
        else
         {
           S.append("select ");
-          S.append(" "); C.getFullColumnVar(S, "TILDA", "FormulaResultView", "formulaRefnum");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaResultView", "value");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaResultView", "description");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaResultView", "location");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaResultView", "name");
+          C.getFullColumnVarList(S, TILDA__FORMULARESULTVIEW_Factory.COLUMNS);
           S.append(" from "); C.getFullTableVar(S, "TILDA", "FormulaResultView");
           switch (LookupId)
            {
@@ -268,6 +277,10 @@ This is the column definition for:<BR>
 // THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/**
+Lookup records by the query 'All' over 
+.<BR>
+*/
    static public tilda.data.FormulaResultView_Data lookupByAll() throws Exception
      {
        tilda.data._Tilda.TILDA__FORMULARESULTVIEW Obj = new tilda.data.FormulaResultView_Data();

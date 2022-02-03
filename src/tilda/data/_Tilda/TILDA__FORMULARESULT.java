@@ -1078,7 +1078,7 @@ This is the hasChanged for:<BR>
      {
        if (_description   != null)
         Dst.setDescription  (_description  );
-       if (_created       != null)
+       if (__Init == InitMode.CREATE && _created       != null)
         Dst.setCreated      (_created      );
        if (_lastUpdated   != null)
         Dst.setLastUpdated  (_lastUpdated  );
@@ -1307,11 +1307,11 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__FORMULARESULT_Factory.COLS.VALUE._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__FORMULARESULT_Factory.COLS.VALUE._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _value);
+          if (__Nulls.intersects(TILDA__FORMULARESULT_Factory.COLS.VALUE._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _value);
         } 
        if (__Changes.intersects(TILDA__FORMULARESULT_Factory.COLS.DESCRIPTION._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__FORMULARESULT_Factory.COLS.DESCRIPTION._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _description);
+          if (__Nulls.intersects(TILDA__FORMULARESULT_Factory.COLS.DESCRIPTION._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _description);
         } 
        if (__Changes.intersects(TILDA__FORMULARESULT_Factory.COLS.CREATED._Mask) == true) 
         { 
@@ -1369,7 +1369,7 @@ This is the hasChanged for:<BR>
                     || __Init == null && __LookupId==0 // Loaded via some deserialization mechamism, e.g., Json or CSV loader
                ;
        if (OK == false)
-        throw new Exception("Object has not been instanciated via deserialization or the factory create() method.");
+        throw new Exception("Object has not been instanciated via deserialization or the factory create() method: __Init:"+__Init+"; __NewlyCreated:"+__NewlyCreated+"; __LookupId: "+__LookupId+";");
 
        if (__Init == null && __LookupId==0)  // object deserialized
         validateDeserialization();
@@ -1447,12 +1447,7 @@ This is the hasChanged for:<BR>
         }
        StringBuilder S = new StringBuilder(1024);
           S.append("select ");
-          S.append(" "); C.getFullColumnVar(S, "TILDA", "FormulaResult", "formulaRefnum");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaResult", "value");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaResult", "description");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaResult", "created");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaResult", "lastUpdated");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaResult", "deleted");
+          C.getFullColumnVarList(S, TILDA__FORMULARESULT_Factory.COLUMNS);
           S.append(" from "); C.getFullTableVar(S, "TILDA", "FormulaResult");
        switch (__LookupId)
         {

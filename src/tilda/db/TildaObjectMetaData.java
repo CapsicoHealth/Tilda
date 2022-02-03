@@ -1,6 +1,5 @@
 package tilda.db;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +14,13 @@ import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.OutputMap;
 import tilda.types.ColumnDefinition;
+import tilda.utils.CollectionUtil;
 
 public class TildaObjectMetaData
   {
     protected static final Logger LOG = LogManager.getLogger(TildaObjectMetaData.class.getName());
 
-    protected TildaObjectMetaData(String PackageName, Object Obj, List<String> Warnings)
+    protected TildaObjectMetaData(String PackageName, Object Obj, List<String> warnings)
       throws Exception
       {
         _obj = Obj;
@@ -36,11 +36,11 @@ public class TildaObjectMetaData
           }
         _objectName = Obj.getShortName();
 
-        _cols.addAll(convertColumnsToColumnDefinitions(Obj, Obj._Columns, Warnings));
+        _cols.addAll(convertColumnsToColumnDefinitions(Obj, Obj._Columns, warnings));
 
         OutputMap om = _obj.getOutputMap("");
         if (om != null)
-          _defaultOutputMapCols.addAll(convertColumnsToColumnDefinitions(Obj, om._ColumnObjs, Warnings));
+          _defaultOutputMapCols.addAll(convertColumnsToColumnDefinitions(Obj, om._ColumnObjs, warnings));
 
         _runSelectMethodList = _factoryClass.getMethod("runSelect", Connection.class, SelectQuery.class, Integer.TYPE, Integer.TYPE);
         _runSelectMethodOP = _factoryClass.getMethod("runSelect", Connection.class, SelectQuery.class, ObjectProcessor.class, Integer.TYPE, Integer.TYPE);
@@ -76,7 +76,7 @@ public class TildaObjectMetaData
       }
 
     public List<ColumnDefinition> getOutputMapColumns(String outputMapName)
-    throws ClassNotFoundException
+    throws ClassNotFoundException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException
       {
         if ("".equals(outputMapName) == true)
           return _defaultOutputMapCols;
@@ -84,42 +84,33 @@ public class TildaObjectMetaData
         return om == null ? null : convertColumnsToColumnDefinitions(_obj, om._ColumnObjs, null);
       }
 
-    public ColumnDefinition getColumnDefinition(String columnName)
+    protected static List<ColumnDefinition> convertColumnsToColumnDefinitions(Object obj, List<Column> cols, List<String> warnings)
+    throws ClassNotFoundException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException
       {
-        for (ColumnDefinition cd : _cols)
-          if (cd.getName().equals(columnName) == true)
-            return cd;
-        return null;
-      }
-
-    protected static List<ColumnDefinition> convertColumnsToColumnDefinitions(Object obj, List<Column> cols, List<String> Warnings)
-    throws ClassNotFoundException
-      {
-        List<ColumnDefinition> colDefs = new ArrayList<ColumnDefinition>();
-
-        String colsClassName = Helper.getFullBaseClassName(obj) + "_Factory$COLS";
-        Class<?> colsClass = Class.forName(colsClassName);
+        String factoryClassName = Helper.getFullBaseClassName(obj) + "_Factory";
+        Class<?> factoryClass = Class.forName(factoryClassName);
+        List<ColumnDefinition> COLUMNS = CollectionUtil.toList((ColumnDefinition[]) factoryClass.getDeclaredField("COLUMNS").get(null));
 
         for (Column C : cols)
           // LDH-NOTE: Not sure why managed columns were excluded... That means that formula columns or OCC columns for example couldn't be accessed dynamically.
           if (C != null /* && C._FCT.isManaged() == false */ && C._Mode != ColumnMode.CALCULATED)
             {
-              try
-                {
-                  Field F = colsClass.getDeclaredField(C.getName().toUpperCase());
-                  ColumnDefinition CD = (ColumnDefinition) F.get(null);
-                  colDefs.add(CD);
-                }
-              catch (Throwable T)
+              ColumnDefinition CD = ColumnDefinition.getColumnDefinition(COLUMNS, C.getName());
+              if (CD == null)
                 {
                   String w = "No generated code for '" + C.getFullName() + "'.";
-                  LOG.warn(w + "\n", T);
-                  if (Warnings != null)
-                    Warnings.add(w);
+                  if (warnings != null)
+                    warnings.add(w);
+                  else
+                    LOG.warn(w);
                 }
             }
+        return COLUMNS;
+      }
 
-        return colDefs;
+    public ColumnDefinition getColumnDefinition(String columnName)
+      {
+        return ColumnDefinition.getColumnDefinition(_cols, columnName);
       }
 
   }

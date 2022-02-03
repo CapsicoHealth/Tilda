@@ -668,7 +668,8 @@ This is the definition for:<BR>
 */
    @SerializedName("startPeriod")
    String  Str_startPeriod;
-   public void initStartPeriod(String v) { Str_startPeriod = v; }
+   /** Pre-init the field as it would come from a JSON stream, in text form, e.g., timestamps. */
+   public void initJson_StartPeriod(String v) { Str_startPeriod = v; }
    public String initStartPeriodVal() { return Str_startPeriod; }
    transient ZonedDateTime _startPeriod = null;
    transient ZonedDateTime __Saved_startPeriod;
@@ -867,7 +868,8 @@ This is the definition for:<BR>
 */
    @SerializedName("endPeriod")
    String  Str_endPeriod;
-   public void initEndPeriod(String v) { Str_endPeriod = v; }
+   /** Pre-init the field as it would come from a JSON stream, in text form, e.g., timestamps. */
+   public void initJson_EndPeriod(String v) { Str_endPeriod = v; }
    public String initEndPeriodVal() { return Str_endPeriod; }
    transient ZonedDateTime _endPeriod = null;
 
@@ -1054,6 +1056,20 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.commitNano, which
    public static final String[][] _commitNano_Values = {
                                                { "0", "commitNano_CreateDefault", "commitNano_CreateDefault", "" }
                                   };
+   public static final boolean checkCommitNano(long v)
+    {
+      for (String[] a : _commitNano_Values)
+       if (a[0].equals(v) == true)
+        return true;
+      return false;
+    }
+   public static final String mapCommitNano(long v)
+    {
+      for (String[] a : _commitNano_Values)
+       if (a[0].equals(v) == true)
+        return a[2];
+      return null;
+    }
    public static final long _commitNanoCommitNano_CreateDefault = 0l;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1216,6 +1232,20 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.commitCount, whic
    public static final String[][] _commitCount_Values = {
                                                { "0", "commitCount_CreateDefault", "commitCount_CreateDefault", "" }
                                   };
+   public static final boolean checkCommitCount(int v)
+    {
+      for (String[] a : _commitCount_Values)
+       if (a[0].equals(v) == true)
+        return true;
+      return false;
+    }
+   public static final String mapCommitCount(int v)
+    {
+      for (String[] a : _commitCount_Values)
+       if (a[0].equals(v) == true)
+        return a[2];
+      return null;
+    }
    public static final int _commitCountCommitCount_CreateDefault = 0;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1378,6 +1408,20 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.rollbackNano, whi
    public static final String[][] _rollbackNano_Values = {
                                                { "0", "rollbackNano_CreateDefault", "rollbackNano_CreateDefault", "" }
                                   };
+   public static final boolean checkRollbackNano(long v)
+    {
+      for (String[] a : _rollbackNano_Values)
+       if (a[0].equals(v) == true)
+        return true;
+      return false;
+    }
+   public static final String mapRollbackNano(long v)
+    {
+      for (String[] a : _rollbackNano_Values)
+       if (a[0].equals(v) == true)
+        return a[2];
+      return null;
+    }
    public static final long _rollbackNanoRollbackNano_CreateDefault = 0l;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1540,6 +1584,20 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.rollbackCount, wh
    public static final String[][] _rollbackCount_Values = {
                                                { "0", "rollbackCount_CreateDefault", "rollbackCount_CreateDefault", "" }
                                   };
+   public static final boolean checkRollbackCount(int v)
+    {
+      for (String[] a : _rollbackCount_Values)
+       if (a[0].equals(v) == true)
+        return true;
+      return false;
+    }
+   public static final String mapRollbackCount(int v)
+    {
+      for (String[] a : _rollbackCount_Values)
+       if (a[0].equals(v) == true)
+        return a[2];
+      return null;
+    }
    public static final int _rollbackCountRollbackCount_CreateDefault = 0;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1702,6 +1760,20 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.savepointSetNano,
    public static final String[][] _savepointSetNano_Values = {
                                                { "0", "savepointSetNano_CreateDefault", "savepointSetNano_CreateDefault", "" }
                                   };
+   public static final boolean checkSavepointSetNano(long v)
+    {
+      for (String[] a : _savepointSetNano_Values)
+       if (a[0].equals(v) == true)
+        return true;
+      return false;
+    }
+   public static final String mapSavepointSetNano(long v)
+    {
+      for (String[] a : _savepointSetNano_Values)
+       if (a[0].equals(v) == true)
+        return a[2];
+      return null;
+    }
    public static final long _savepointSetNanoSavepointSetNano_CreateDefault = 0l;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1864,6 +1936,20 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.savepointSetCount
    public static final String[][] _savepointSetCount_Values = {
                                                { "0", "savepointSetCount_CreateDefault", "savepointSetCount_CreateDefault", "" }
                                   };
+   public static final boolean checkSavepointSetCount(int v)
+    {
+      for (String[] a : _savepointSetCount_Values)
+       if (a[0].equals(v) == true)
+        return true;
+      return false;
+    }
+   public static final String mapSavepointSetCount(int v)
+    {
+      for (String[] a : _savepointSetCount_Values)
+       if (a[0].equals(v) == true)
+        return a[2];
+      return null;
+    }
    public static final int _savepointSetCountSavepointSetCount_CreateDefault = 0;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2026,6 +2112,20 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.savepointCommitNa
    public static final String[][] _savepointCommitNano_Values = {
                                                { "0", "savepointCommitNano_CreateDefault", "savepointCommitNano_CreateDefault", "" }
                                   };
+   public static final boolean checkSavepointCommitNano(long v)
+    {
+      for (String[] a : _savepointCommitNano_Values)
+       if (a[0].equals(v) == true)
+        return true;
+      return false;
+    }
+   public static final String mapSavepointCommitNano(long v)
+    {
+      for (String[] a : _savepointCommitNano_Values)
+       if (a[0].equals(v) == true)
+        return a[2];
+      return null;
+    }
    public static final long _savepointCommitNanoSavepointCommitNano_CreateDefault = 0l;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2188,6 +2288,20 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.savepointCommitCo
    public static final String[][] _savepointCommitCount_Values = {
                                                { "0", "savepointCommitCount_CreateDefault", "savepointCommitCount_CreateDefault", "" }
                                   };
+   public static final boolean checkSavepointCommitCount(int v)
+    {
+      for (String[] a : _savepointCommitCount_Values)
+       if (a[0].equals(v) == true)
+        return true;
+      return false;
+    }
+   public static final String mapSavepointCommitCount(int v)
+    {
+      for (String[] a : _savepointCommitCount_Values)
+       if (a[0].equals(v) == true)
+        return a[2];
+      return null;
+    }
    public static final int _savepointCommitCountSavepointCommitCount_CreateDefault = 0;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2350,6 +2464,20 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.savepointRollback
    public static final String[][] _savepointRollbackNano_Values = {
                                                { "0", "savepointRollbackNano_CreateDefault", "savepointRollbackNano_CreateDefault", "" }
                                   };
+   public static final boolean checkSavepointRollbackNano(long v)
+    {
+      for (String[] a : _savepointRollbackNano_Values)
+       if (a[0].equals(v) == true)
+        return true;
+      return false;
+    }
+   public static final String mapSavepointRollbackNano(long v)
+    {
+      for (String[] a : _savepointRollbackNano_Values)
+       if (a[0].equals(v) == true)
+        return a[2];
+      return null;
+    }
    public static final long _savepointRollbackNanoSavepointRollbackNano_CreateDefault = 0l;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2512,6 +2640,20 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.savepointRollback
    public static final String[][] _savepointRollbackCount_Values = {
                                                { "0", "savepointRollbackCount_CreateDefault", "savepointRollbackCount_CreateDefault", "" }
                                   };
+   public static final boolean checkSavepointRollbackCount(int v)
+    {
+      for (String[] a : _savepointRollbackCount_Values)
+       if (a[0].equals(v) == true)
+        return true;
+      return false;
+    }
+   public static final String mapSavepointRollbackCount(int v)
+    {
+      for (String[] a : _savepointRollbackCount_Values)
+       if (a[0].equals(v) == true)
+        return a[2];
+      return null;
+    }
    public static final int _savepointRollbackCountSavepointRollbackCount_CreateDefault = 0;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2674,6 +2816,20 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.statementCloseNan
    public static final String[][] _statementCloseNano_Values = {
                                                { "0", "statementCloseNano_CreateDefault", "statementCloseNano_CreateDefault", "" }
                                   };
+   public static final boolean checkStatementCloseNano(long v)
+    {
+      for (String[] a : _statementCloseNano_Values)
+       if (a[0].equals(v) == true)
+        return true;
+      return false;
+    }
+   public static final String mapStatementCloseNano(long v)
+    {
+      for (String[] a : _statementCloseNano_Values)
+       if (a[0].equals(v) == true)
+        return a[2];
+      return null;
+    }
    public static final long _statementCloseNanoStatementCloseNano_CreateDefault = 0l;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2836,6 +2992,20 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.statementCloseCou
    public static final String[][] _statementCloseCount_Values = {
                                                { "0", "statementCloseCount_CreateDefault", "statementCloseCount_CreateDefault", "" }
                                   };
+   public static final boolean checkStatementCloseCount(int v)
+    {
+      for (String[] a : _statementCloseCount_Values)
+       if (a[0].equals(v) == true)
+        return true;
+      return false;
+    }
+   public static final String mapStatementCloseCount(int v)
+    {
+      for (String[] a : _statementCloseCount_Values)
+       if (a[0].equals(v) == true)
+        return a[2];
+      return null;
+    }
    public static final int _statementCloseCountStatementCloseCount_CreateDefault = 0;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2998,6 +3168,20 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.connectionCloseNa
    public static final String[][] _connectionCloseNano_Values = {
                                                { "0", "connectionCloseNano_CreateDefault", "connectionCloseNano_CreateDefault", "" }
                                   };
+   public static final boolean checkConnectionCloseNano(long v)
+    {
+      for (String[] a : _connectionCloseNano_Values)
+       if (a[0].equals(v) == true)
+        return true;
+      return false;
+    }
+   public static final String mapConnectionCloseNano(long v)
+    {
+      for (String[] a : _connectionCloseNano_Values)
+       if (a[0].equals(v) == true)
+        return a[2];
+      return null;
+    }
    public static final long _connectionCloseNanoConnectionCloseNano_CreateDefault = 0l;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3160,6 +3344,20 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.connectionCloseCo
    public static final String[][] _connectionCloseCount_Values = {
                                                { "0", "connectionCloseCount_CreateDefault", "connectionCloseCount_CreateDefault", "" }
                                   };
+   public static final boolean checkConnectionCloseCount(int v)
+    {
+      for (String[] a : _connectionCloseCount_Values)
+       if (a[0].equals(v) == true)
+        return true;
+      return false;
+    }
+   public static final String mapConnectionCloseCount(int v)
+    {
+      for (String[] a : _connectionCloseCount_Values)
+       if (a[0].equals(v) == true)
+        return a[2];
+      return null;
+    }
    public static final int _connectionCloseCountConnectionCloseCount_CreateDefault = 0;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3322,6 +3520,20 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.connectionGetNano
    public static final String[][] _connectionGetNano_Values = {
                                                { "0", "connectionGetNano_CreateDefault", "connectionGetNano_CreateDefault", "" }
                                   };
+   public static final boolean checkConnectionGetNano(long v)
+    {
+      for (String[] a : _connectionGetNano_Values)
+       if (a[0].equals(v) == true)
+        return true;
+      return false;
+    }
+   public static final String mapConnectionGetNano(long v)
+    {
+      for (String[] a : _connectionGetNano_Values)
+       if (a[0].equals(v) == true)
+        return a[2];
+      return null;
+    }
    public static final long _connectionGetNanoConnectionGetNano_CreateDefault = 0l;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3484,6 +3696,20 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.connectionGetCoun
    public static final String[][] _connectionGetCount_Values = {
                                                { "0", "connectionGetCount_CreateDefault", "connectionGetCount_CreateDefault", "" }
                                   };
+   public static final boolean checkConnectionGetCount(int v)
+    {
+      for (String[] a : _connectionGetCount_Values)
+       if (a[0].equals(v) == true)
+        return true;
+      return false;
+    }
+   public static final String mapConnectionGetCount(int v)
+    {
+      for (String[] a : _connectionGetCount_Values)
+       if (a[0].equals(v) == true)
+        return a[2];
+      return null;
+    }
    public static final int _connectionGetCountConnectionGetCount_CreateDefault = 0;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3646,6 +3872,20 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.tildaSetterNano, 
    public static final String[][] _tildaSetterNano_Values = {
                                                { "0", "tildaSetterNano_CreateDefault", "tildaSetterNano_CreateDefault", "" }
                                   };
+   public static final boolean checkTildaSetterNano(long v)
+    {
+      for (String[] a : _tildaSetterNano_Values)
+       if (a[0].equals(v) == true)
+        return true;
+      return false;
+    }
+   public static final String mapTildaSetterNano(long v)
+    {
+      for (String[] a : _tildaSetterNano_Values)
+       if (a[0].equals(v) == true)
+        return a[2];
+      return null;
+    }
    public static final long _tildaSetterNanoTildaSetterNano_CreateDefault = 0l;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3808,6 +4048,20 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.tildaSetterCount,
    public static final String[][] _tildaSetterCount_Values = {
                                                { "0", "tildaSetterCount_CreateDefault", "tildaSetterCount_CreateDefault", "" }
                                   };
+   public static final boolean checkTildaSetterCount(int v)
+    {
+      for (String[] a : _tildaSetterCount_Values)
+       if (a[0].equals(v) == true)
+        return true;
+      return false;
+    }
+   public static final String mapTildaSetterCount(int v)
+    {
+      for (String[] a : _tildaSetterCount_Values)
+       if (a[0].equals(v) == true)
+        return a[2];
+      return null;
+    }
    public static final int _tildaSetterCountTildaSetterCount_CreateDefault = 0;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3970,6 +4224,20 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.tildaToStringNano
    public static final String[][] _tildaToStringNano_Values = {
                                                { "0", "tildaToStringNano_CreateDefault", "tildaToStringNano_CreateDefault", "" }
                                   };
+   public static final boolean checkTildaToStringNano(long v)
+    {
+      for (String[] a : _tildaToStringNano_Values)
+       if (a[0].equals(v) == true)
+        return true;
+      return false;
+    }
+   public static final String mapTildaToStringNano(long v)
+    {
+      for (String[] a : _tildaToStringNano_Values)
+       if (a[0].equals(v) == true)
+        return a[2];
+      return null;
+    }
    public static final long _tildaToStringNanoTildaToStringNano_CreateDefault = 0l;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4132,6 +4400,20 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.tildaToStringCoun
    public static final String[][] _tildaToStringCount_Values = {
                                                { "0", "tildaToStringCount_CreateDefault", "tildaToStringCount_CreateDefault", "" }
                                   };
+   public static final boolean checkTildaToStringCount(int v)
+    {
+      for (String[] a : _tildaToStringCount_Values)
+       if (a[0].equals(v) == true)
+        return true;
+      return false;
+    }
+   public static final String mapTildaToStringCount(int v)
+    {
+      for (String[] a : _tildaToStringCount_Values)
+       if (a[0].equals(v) == true)
+        return a[2];
+      return null;
+    }
    public static final int _tildaToStringCountTildaToStringCount_CreateDefault = 0;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4294,6 +4576,20 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.tildaToJsonNano, 
    public static final String[][] _tildaToJsonNano_Values = {
                                                { "0", "tildaToJsonNano_CreateDefault", "tildaToJsonNano_CreateDefault", "" }
                                   };
+   public static final boolean checkTildaToJsonNano(long v)
+    {
+      for (String[] a : _tildaToJsonNano_Values)
+       if (a[0].equals(v) == true)
+        return true;
+      return false;
+    }
+   public static final String mapTildaToJsonNano(long v)
+    {
+      for (String[] a : _tildaToJsonNano_Values)
+       if (a[0].equals(v) == true)
+        return a[2];
+      return null;
+    }
    public static final long _tildaToJsonNanoTildaToJsonNano_CreateDefault = 0l;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4456,6 +4752,20 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.tildaToJsonCount,
    public static final String[][] _tildaToJsonCount_Values = {
                                                { "0", "tildaToJsonCount_CreateDefault", "tildaToJsonCount_CreateDefault", "" }
                                   };
+   public static final boolean checkTildaToJsonCount(int v)
+    {
+      for (String[] a : _tildaToJsonCount_Values)
+       if (a[0].equals(v) == true)
+        return true;
+      return false;
+    }
+   public static final String mapTildaToJsonCount(int v)
+    {
+      for (String[] a : _tildaToJsonCount_Values)
+       if (a[0].equals(v) == true)
+        return a[2];
+      return null;
+    }
    public static final int _tildaToJsonCountTildaToJsonCount_CreateDefault = 0;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4618,6 +4928,20 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.tildaToCsvNano, w
    public static final String[][] _tildaToCsvNano_Values = {
                                                { "0", "tildaToCsvNano_CreateDefault", "tildaToCsvNano_CreateDefault", "" }
                                   };
+   public static final boolean checkTildaToCsvNano(long v)
+    {
+      for (String[] a : _tildaToCsvNano_Values)
+       if (a[0].equals(v) == true)
+        return true;
+      return false;
+    }
+   public static final String mapTildaToCsvNano(long v)
+    {
+      for (String[] a : _tildaToCsvNano_Values)
+       if (a[0].equals(v) == true)
+        return a[2];
+      return null;
+    }
    public static final long _tildaToCsvNanoTildaToCsvNano_CreateDefault = 0l;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4780,6 +5104,20 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.tildaToCsvCount, 
    public static final String[][] _tildaToCsvCount_Values = {
                                                { "0", "tildaToCsvCount_CreateDefault", "tildaToCsvCount_CreateDefault", "" }
                                   };
+   public static final boolean checkTildaToCsvCount(int v)
+    {
+      for (String[] a : _tildaToCsvCount_Values)
+       if (a[0].equals(v) == true)
+        return true;
+      return false;
+    }
+   public static final String mapTildaToCsvCount(int v)
+    {
+      for (String[] a : _tildaToCsvCount_Values)
+       if (a[0].equals(v) == true)
+        return a[2];
+      return null;
+    }
    public static final int _tildaToCsvCountTildaToCsvCount_CreateDefault = 0;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -5547,7 +5885,7 @@ This is the hasChanged for:<BR>
 */
    public void copyTo(tilda.data._Tilda.TILDA__TRANSPERF Dst) throws Exception
      {
-       if (_startPeriodTZ          != null)
+       if (__Init == InitMode.CREATE && _startPeriodTZ          != null)
         Dst.setStartPeriodTZ         (_startPeriodTZ         );
        if (_endPeriodTZ            != null)
         Dst.setEndPeriodTZ           (_endPeriodTZ           );
@@ -5602,7 +5940,7 @@ This is the hasChanged for:<BR>
         Dst.setTildaToCsvNano        (_tildaToCsvNano        );
        if (_tildaToCsvCount        != null)
         Dst.setTildaToCsvCount       (_tildaToCsvCount       );
-       if (_created                != null)
+       if (__Init == InitMode.CREATE && _created                != null)
         Dst.setCreated               (_created               );
        if (_lastUpdated            != null)
         Dst.setLastUpdated           (_lastUpdated           );
@@ -6035,7 +6373,7 @@ This is the hasChanged for:<BR>
        int i = 0;
        if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.STARTPERIODTZ._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.STARTPERIODTZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _startPeriodTZ);
+          if (__Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.STARTPERIODTZ._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _startPeriodTZ);
         } 
        if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.STARTPERIOD._Mask) == true) 
         { 
@@ -6043,7 +6381,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.ENDPERIODTZ._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.ENDPERIODTZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _endPeriodTZ);
+          if (__Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.ENDPERIODTZ._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _endPeriodTZ);
         } 
        if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.ENDPERIOD._Mask) == true) 
         { 
@@ -6200,7 +6538,7 @@ This is the hasChanged for:<BR>
                     || __Init == null && __LookupId==0 // Loaded via some deserialization mechamism, e.g., Json or CSV loader
                ;
        if (OK == false)
-        throw new Exception("Object has not been instanciated via deserialization or the factory create() method.");
+        throw new Exception("Object has not been instanciated via deserialization or the factory create() method: __Init:"+__Init+"; __NewlyCreated:"+__NewlyCreated+"; __LookupId: "+__LookupId+";");
 
        if (__Init == null && __LookupId==0)  // object deserialized
         validateDeserialization();
@@ -6278,37 +6616,7 @@ This is the hasChanged for:<BR>
         }
        StringBuilder S = new StringBuilder(1024);
           S.append("select ");
-          S.append(" "); C.getFullColumnVar(S, "TILDA", "TransPerf", "startPeriodTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "startPeriod");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "endPeriodTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "endPeriod");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "commitNano");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "commitCount");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "rollbackNano");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "rollbackCount");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "savepointSetNano");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "savepointSetCount");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "savepointCommitNano");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "savepointCommitCount");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "savepointRollbackNano");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "savepointRollbackCount");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "statementCloseNano");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "statementCloseCount");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "connectionCloseNano");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "connectionCloseCount");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "connectionGetNano");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "connectionGetCount");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "tildaSetterNano");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "tildaSetterCount");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "tildaToStringNano");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "tildaToStringCount");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "tildaToJsonNano");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "tildaToJsonCount");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "tildaToCsvNano");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "tildaToCsvCount");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "created");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "lastUpdated");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "deleted");
+          C.getFullColumnVarList(S, TILDA__TRANSPERF_Factory.COLUMNS);
           S.append(" from "); C.getFullTableVar(S, "TILDA", "TransPerf");
        switch (__LookupId)
         {

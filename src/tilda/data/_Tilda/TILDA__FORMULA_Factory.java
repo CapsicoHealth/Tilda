@@ -35,7 +35,12 @@ public class TILDA__FORMULA_Factory
    public static final String SCHEMA_TABLENAME_LABEL = TextUtil.print("TILDA.Formula", "");
    public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "Formula"); }
 
-   public static abstract class COLS {
+   public static final class COLS_BASE
+    {
+      private COLS_BASE() { }
+
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Formula.refnum -> TILDA.Formula."refnum"
@@ -53,7 +58,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          REFNUM           = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"           , 0/*0*/, "The primary key for this record", null, null, null);
+     public final Type_LongPrimitive          REFNUM           = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"           , 0/*0*/, "The primary key for this record", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Formula.location -> TILDA.Formula."location"
@@ -72,7 +79,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        LOCATION         = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "location"         , 1/*1*/, "The name of the primary table/view this formula is defined in.", null, null, null);
+     public final Type_StringPrimitive        LOCATION         = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "location"         , 1/*1*/, "The name of the primary table/view this formula is defined in.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Formula.location2 -> TILDA.Formula."location2"
@@ -91,7 +100,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        LOCATION2        = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "location2"        , 2/*2*/, "The name of the secondary table/view (a derived view, a realized table), if appropriate.", null, null, null);
+     public final Type_StringPrimitive        LOCATION2        = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "location2"        , 2/*2*/, "The name of the secondary table/view (a derived view, a realized table), if appropriate.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Formula.name -> TILDA.Formula."name"
@@ -110,7 +121,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        NAME             = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "name"             , 3/*3*/, "The name of the formula/column.", null, null, null);
+     public final Type_StringPrimitive        NAME             = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "name"             , 3/*3*/, "The name of the formula/column.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Formula.type -> TILDA.Formula."type"
@@ -147,7 +160,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_StringPrimitive        TYPE             = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "type"             , 4/*4*/, "The type of the formula/column value/outcome.", null, null, new String[][] {{"STR","String"}, {"CHR","Character"}, {"BOL","Boolean"}, {"SHT","Short"}, {"INT","Integer"}, {"LNG","Long"}, {"FLT","Float"}, {"DBL","Double"}, {"DT","Date"}, {"DTM","DateTime"}, {"NUM","Numeric"}, {"UI","Uuid"}});
+     public final Type_StringPrimitive        TYPE             = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "type"             , 4/*4*/, "The type of the formula/column value/outcome.", null, null, new String[][] {{"STR","String"}, {"CHR","Character"}, {"BOL","Boolean"}, {"SHT","Short"}, {"INT","Integer"}, {"LNG","Long"}, {"FLT","Float"}, {"DBL","Double"}, {"DT","Date"}, {"DTM","DateTime"}, {"NUM","Numeric"}, {"UI","Uuid"}});
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Formula.title -> TILDA.Formula."title"
@@ -166,7 +181,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        TITLE            = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "title"            , 5/*5*/, "The title of the formula/column.", null, null, null);
+     public final Type_StringPrimitive        TITLE            = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "title"            , 5/*5*/, "The title of the formula/column.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Formula.description -> TILDA.Formula."description"
@@ -185,7 +202,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        DESCRIPTION      = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "description"      , 6/*6*/, "The description of the formula/column.", null, null, null);
+     public final Type_StringPrimitive        DESCRIPTION      = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "description"      , 6/*6*/, "The description of the formula/column.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Formula.formula -> TILDA.Formula."formula"
@@ -204,7 +223,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    FORMULA          = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "formula"          , 7/*7*/, "The formula.", null, null, null);
+     public final Type_StringPrimitiveNull    FORMULA          = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "formula"          , 7/*7*/, "The formula.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Formula.htmlDoc -> TILDA.Formula."htmlDoc"
@@ -223,7 +244,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    HTMLDOC          = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "htmlDoc"          , 8/*8*/, "Pre-rendered html fragment with the full documentation for this formula.", null, null, null);
+     public final Type_StringPrimitiveNull    HTMLDOC          = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "htmlDoc"          , 8/*8*/, "Pre-rendered html fragment with the full documentation for this formula.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Formula.referencedColumns -> TILDA.Formula."referencedColumns"
@@ -242,7 +265,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringCollectionNull   REFERENCEDCOLUMNS= new Type_StringCollectionNull  (SCHEMA_LABEL, TABLENAME_LABEL, "referencedColumns", 9/*9*/, "The list of columns this formula depends on.", null, null);
+     public final Type_StringCollectionNull   REFERENCEDCOLUMNS= new Type_StringCollectionNull  (SCHEMA_LABEL, TABLENAME_LABEL, "referencedColumns", 9/*9*/, "The list of columns this formula depends on.", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Formula.created -> TILDA.Formula."created"
@@ -267,7 +292,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      CREATED          = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"          , 10/*10*/, "The timestamp for when the record was created. (TILDA.Formula)", null, null);
+     public final Type_DatetimePrimitive      CREATED          = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"          , 10/*10*/, "The timestamp for when the record was created. (TILDA.Formula)", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Formula.lastUpdated -> TILDA.Formula."lastUpdated"
@@ -292,7 +319,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      LASTUPDATED      = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"      , 11/*11*/, "The timestamp for when the record was last updated. (TILDA.Formula)", null, null);
+     public final Type_DatetimePrimitive      LASTUPDATED      = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"      , 11/*11*/, "The timestamp for when the record was last updated. (TILDA.Formula)", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Formula.deleted -> TILDA.Formula."deleted"
@@ -310,15 +339,15 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  DELETED          = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"          , 12/*12*/, "The timestamp for when the record was deleted. (TILDA.Formula)", null, null);
-;
+     public final Type_DatetimePrimitiveNull  DELETED          = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"          , 12/*12*/, "The timestamp for when the record was deleted. (TILDA.Formula)", null, null);
    }
 
-   public static final ColumnDefinition[] COLUMNS = { COLS.REFNUM,COLS.LOCATION,COLS.LOCATION2,COLS.NAME,COLS.TYPE,COLS.TITLE,COLS.DESCRIPTION,COLS.FORMULA,COLS.HTMLDOC,COLS.REFERENCEDCOLUMNS,COLS.CREATED,COLS.LASTUPDATED,COLS.DELETED };
+   public static COLS_BASE COLS = new COLS_BASE();
+   public static final ColumnDefinition[] COLUMNS = new ColumnDefinition[] { COLS.REFNUM,COLS.LOCATION,COLS.LOCATION2,COLS.NAME,COLS.TYPE,COLS.TITLE,COLS.DESCRIPTION,COLS.FORMULA,COLS.HTMLDOC,COLS.REFERENCEDCOLUMNS,COLS.CREATED,COLS.LASTUPDATED,COLS.DELETED };
 
-   public static final ColumnDefinition[] COLUMNS_PRIMARY = { COLS.REFNUM };
+   public static final ColumnDefinition[] COLUMNS_PRIMARY = new ColumnDefinition[] { COLS.REFNUM };
 
-   public static final ColumnDefinition[][] COLUMNS_UNIQUE_INDICES = { 
+   public static final ColumnDefinition[][] COLUMNS_UNIQUE_INDICES = new ColumnDefinition[][]{ 
                    {COLS.LOCATION,COLS.NAME}
         };
 
@@ -391,19 +420,7 @@ This is the column definition for:<BR>
        else
         {
           S.append("select ");
-          S.append(" "); C.getFullColumnVar(S, "TILDA", "Formula", "refnum");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Formula", "location");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Formula", "location2");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Formula", "name");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Formula", "type");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Formula", "title");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Formula", "description");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Formula", "formula");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Formula", "htmlDoc");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Formula", "referencedColumns");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Formula", "created");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Formula", "lastUpdated");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Formula", "deleted");
+          C.getFullColumnVarList(S, TILDA__FORMULA_Factory.COLUMNS);
           S.append(" from "); C.getFullTableVar(S, "TILDA", "Formula");
           switch (LookupId)
            {
@@ -705,6 +722,9 @@ object. The generic init method defaults to this general data structure as a gen
          }
        }
 
+/**
+Lookup one record by the primary key: refnum.
+*/
    static public tilda.data.Formula_Data lookupByPrimaryKey(long refnum) throws Exception
      {
        tilda.data._Tilda.TILDA__FORMULA Obj = new tilda.data.Formula_Data();
@@ -715,6 +735,9 @@ object. The generic init method defaults to this general data structure as a gen
        return (tilda.data.Formula_Data) Obj;
      }
 
+/**
+Lookup one record by the unique index 'Formula': location, name.
+*/
    static public tilda.data.Formula_Data lookupByFormula(String location, String name) throws Exception
      {
        tilda.data._Tilda.TILDA__FORMULA Obj = new tilda.data.Formula_Data();
@@ -726,7 +749,9 @@ object. The generic init method defaults to this general data structure as a gen
        return (tilda.data.Formula_Data) Obj;
      }
 
-
+/**
+Lookup records by the index 'RefCols' over  .<BR>The results are ordered by: referencedColumns asc
+*/
    static public ListResults<tilda.data.Formula_Data> lookupWhereRefCols(Connection C, int start, int size) throws Exception
      {
        tilda.data._Tilda.TILDA__FORMULA Obj = new tilda.data.Formula_Data();
@@ -739,6 +764,9 @@ object. The generic init method defaults to this general data structure as a gen
        return RPI._L;
      }
 
+/**
+Lookup records by the index 'RefCols' over  .<BR>The results are ordered by: referencedColumns asc
+*/
    static public void lookupWhereRefCols(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Formula_Data> OP, int start, int size) throws Exception
      {
        tilda.data._Tilda.TILDA__FORMULA Obj = new tilda.data.Formula_Data();
@@ -752,7 +780,11 @@ object. The generic init method defaults to this general data structure as a gen
 
 
 
-   static public ListResults<tilda.data.Formula_Data> lookupWhereAll(Connection C, int start, int size) throws Exception
+/**
+Lookup records by the query 'All' over 
+.<BR>
+The results are ordered by: location asc, name asc
+*/   static public ListResults<tilda.data.Formula_Data> lookupWhereAll(Connection C, int start, int size) throws Exception
      {
        tilda.data._Tilda.TILDA__FORMULA Obj = new tilda.data.Formula_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -764,7 +796,11 @@ object. The generic init method defaults to this general data structure as a gen
      }
 
 
-   static public void lookupWhereAll(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Formula_Data> OP, int start, int size) throws Exception
+/**
+Lookup records by the query 'All' over 
+.<BR>
+The results are ordered by: location asc, name asc
+*/   static public void lookupWhereAll(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Formula_Data> OP, int start, int size) throws Exception
      {
        tilda.data._Tilda.TILDA__FORMULA Obj = new tilda.data.Formula_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -773,6 +809,7 @@ object. The generic init method defaults to this general data structure as a gen
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
        readMany(C, 3, RPI, Obj, null, start, size);
      }
+
 
 
    public static SelectQuery newSelectQuery(Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, true); }

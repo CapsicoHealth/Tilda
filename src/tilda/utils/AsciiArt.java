@@ -44,7 +44,7 @@ public class AsciiArt
 
     public static String Warning(String Lead)
       {
-        return Lead + "_  _  _   _______    ______   __     _   _____   __     _    ______         /\n" 
+        return Lead + "_  _  _   _______    ______   __     _   _____   __     _    ______        /\n" 
              + Lead + "|  |  |   |_____|   |____/    |  \\   |     |     |  \\   |   |    __       / \n" 
              + Lead + "|  |  |   |     |   |   \\     |   \\  |     |     |   \\  |   |      |     /      \n" 
              + Lead + "|__|__|   |     |   |    \\_   |    \\_|   __|__   |    \\_|   |______|    o      \n" 
