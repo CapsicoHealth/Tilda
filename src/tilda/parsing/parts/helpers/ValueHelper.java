@@ -54,12 +54,16 @@ public class ValueHelper
               if (ParseUtil.parseLong(Value, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
                 PS.AddError("Column '" + Col.getFullName() + "' defines Value '" + Name + "' with value '" + Value + "' which is incompatible with type '" + Col.getType() + "'.");
               break;
+            case FLOAT:
+              if (ParseUtil.parseFloat(Value, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
+                PS.AddError("Column '" + Col.getFullName() + "' defines Value '" + Name + "' with value '" + Value + "' which is incompatible with type '" + Col.getType() + "'.");
+              break;
             case DOUBLE:
               if (ParseUtil.parseDouble(Value, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
                 PS.AddError("Column '" + Col.getFullName() + "' defines Value '" + Name + "' with value '" + Value + "' which is incompatible with type '" + Col.getType() + "'.");
               break;
-            case FLOAT:
-              if (ParseUtil.parseFloat(Value, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
+            case NUMERIC:
+              if (ParseUtil.parseBigDecimal(Value, null) == null)
                 PS.AddError("Column '" + Col.getFullName() + "' defines Value '" + Name + "' with value '" + Value + "' which is incompatible with type '" + Col.getType() + "'.");
               break;
             case CHAR:
@@ -106,6 +110,7 @@ public class ValueHelper
             case LONG:
             case DOUBLE:
             case FLOAT:
+            case NUMERIC:
               return defaultValue;
             case CHAR:
             case STRING:
@@ -130,9 +135,9 @@ public class ValueHelper
             case BINARY:
             case BITFIELD:
             case JSON:
-            case NUMERIC:
             case UUID:
               return false;
+            case NUMERIC:
             case BOOLEAN:
             case SHORT:
             case INTEGER:

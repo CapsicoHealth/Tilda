@@ -119,17 +119,17 @@ public enum ColumnType
             } // CHAR
             , { SHORT, BOOLEAN, STRING, INTEGER, LONG, DOUBLE, FLOAT, NUMERIC, BITFIELD
             } // SHORT TODO:CHECK
-            , { INTEGER, BOOLEAN, STRING, LONG, DOUBLE, FLOAT, SHORT, NUMERIC, BITFIELD
+            , { INTEGER, BOOLEAN, STRING, SHORT, LONG, FLOAT, DOUBLE, NUMERIC, BITFIELD
             } // INTEGER
-            , { LONG, BOOLEAN, STRING, INTEGER, DOUBLE, FLOAT
+            , { LONG, STRING, SHORT, INTEGER, FLOAT, DOUBLE, NUMERIC
             } // LONG
-            , { FLOAT, BOOLEAN, STRING, INTEGER, DOUBLE, LONG
+            , { FLOAT, STRING, DOUBLE, NUMERIC
             } // FLOAT
-            , { DOUBLE, FLOAT, INTEGER, LONG, BOOLEAN, STRING
+            , { DOUBLE, STRING, NUMERIC
             } // DOUBLE
-            , { NUMERIC, DOUBLE, FLOAT, INTEGER, LONG, BOOLEAN, STRING
+            , { NUMERIC, STRING
             } // NUMERIC TODO:CHECK
-            , { BOOLEAN, DOUBLE, FLOAT, LONG, INTEGER, CHAR, STRING
+            , { BOOLEAN, STRING, DOUBLE, SHORT, INTEGER, LONG, CHAR, FLOAT, DOUBLE
             } // BOOLEAN
             , { DATE, DATETIME, STRING
             } // DATE

@@ -41,8 +41,8 @@ public class Query
     @SerializedName("db"    ) public String   _DB    ;
     @SerializedName("clause") public String   _Clause;
     /*@formatter:on*/
-    
-    transient public Base _ParentObject;
+
+    transient public Base         _ParentObject;
 
     public static class Attribute
       {
@@ -59,7 +59,7 @@ public class Query
       }
 
     public transient List<Attribute> _Attributes = new ArrayList<Attribute>();
-    public transient String _ClauseDynamic;
+    public transient String          _ClauseDynamic;
 
     public Query()
       {
@@ -118,7 +118,7 @@ public class Query
     public boolean Validate(ParserSession PS, Base ParentObject, String OwnerObjName)
       {
         int Errs = PS.getErrorCount();
-        _ParentObject = ParentObject; 
+        _ParentObject = ParentObject;
 
         // Does it have a name?
         if (TextUtil.isNullOrEmpty(_Clause) == true)
@@ -171,22 +171,22 @@ public class Query
         // LOG.debug(" "+m._type+": "+m._name+" ("+m._start+"-"+m._end+")");
         // }
 
-        StringBuilder NewClauseStatic  = new StringBuilder();
+        StringBuilder NewClauseStatic = new StringBuilder();
         StringBuilder NewClauseDynamic = new StringBuilder();
         int clauseStrIndex = 0;
         Column lastColumnMatch = null;
         for (int i = 0; i < Matches.size(); ++i)
           {
             Match m = Matches.get(i);
-            if (clauseStrIndex <  m._start)
-             {
-               NewClauseStatic .append(_Clause, clauseStrIndex, m._start);
-               String Sub = TextUtil.escapeDoubleQuoteWithSlash(_Clause.substring(clauseStrIndex, m._start));
-               if (clauseStrIndex == 0)
-                NewClauseDynamic.append(Sub.substring(1, Sub.length()-1));
-               else
-                NewClauseDynamic.append(Sub);
-             }
+            if (clauseStrIndex < m._start)
+              {
+                NewClauseStatic.append(_Clause, clauseStrIndex, m._start);
+                String Sub = TextUtil.escapeDoubleQuoteWithSlash(_Clause.substring(clauseStrIndex, m._start));
+                if (clauseStrIndex == 0)
+                  NewClauseDynamic.append(Sub.substring(1, Sub.length() - 1));
+                else
+                  NewClauseDynamic.append(Sub);
+              }
             if (m._type == 'P' || m._type == 'A')
               {
                 if (lastColumnMatch == null)
@@ -212,10 +212,22 @@ public class Query
             else if (m._type == 'C')
               {
                 ReferenceHelper R = ReferenceHelper.parseColumnReference(m._name, ParentObject);
-                Column C = PS.getColumn(R._P, R._S, R._O, R._C);
+                Schema S = PS.getSchema(R._P, R._S);
+                if (S == null)
+                  {
+                    PS.AddError(OwnerObjName + " is defining a subWhereclause '" + _Clause + "' which refers to an unknown schema '" + R._P + "." + R._S + "' from '" + m._name + "'.");
+                    continue;
+                  }
+                Object O = S.getObject(R._O);
+                if (O == null)
+                  {
+                    PS.AddError(OwnerObjName + " is defining a subWhereclause '" + _Clause + "' which refers to an unknown object/view '" + R._O + "' from '" + m._name + "'.");
+                    continue;
+                  }
+                Column C = O.getColumn(R._C);
                 if (C == null)
                   {
-                    PS.AddError(OwnerObjName + " is defining a subWhereclause '" + _Clause + "' which refers to an unknown column '" + m._name + "'.");
+                    PS.AddError(OwnerObjName + " is defining a subWhereclause '" + _Clause + "' which refers to an unknown column '" + R._C + "' from '"+m._name + "'.");
                     continue;
                   }
                 if (C.hasBeenValidatedSuccessfully() == false)
@@ -235,23 +247,23 @@ public class Query
                   }
                 lastColumnMatch = C;
                 NewClauseStatic.append(PS._CGSql.getFullColumnVar(C));
-                NewClauseDynamic.append(clauseStrIndex==0?"\"); " : "); ").append(Helper.getFullColVarAtRuntime(C)).append("; S.append(");
+                NewClauseDynamic.append(clauseStrIndex == 0 ? "\"); " : "); ").append(Helper.getFullColVarAtRuntime(C)).append("; S.append(");
               }
             clauseStrIndex = m._end;
           }
         if (clauseStrIndex < _Clause.length())
           {
-            NewClauseStatic .append(_Clause, clauseStrIndex, _Clause.length());
+            NewClauseStatic.append(_Clause, clauseStrIndex, _Clause.length());
             String Sub = TextUtil.escapeDoubleQuoteWithSlash(_Clause.substring(clauseStrIndex, _Clause.length()));
-            NewClauseDynamic.append(Sub.substring(clauseStrIndex == 0 ? 1 : 0, Sub.length()-1));
+            NewClauseDynamic.append(Sub.substring(clauseStrIndex == 0 ? 1 : 0, Sub.length() - 1));
           }
-        
+
         _Clause = NewClauseStatic.toString();
         _ClauseDynamic = NewClauseDynamic.toString();
-        
+
         if (_ClauseDynamic.endsWith(".append(") == true)
           {
-            _ClauseDynamic+="\"";
+            _ClauseDynamic += "\"";
           }
 
         if (TextUtil.isNullOrEmpty(_DB) == true)
@@ -292,9 +304,9 @@ public class Query
             StringBuilder Str = new StringBuilder();
             for (Query q : Querries)
               Str.append(Str.length() == 0 ? "" : ", ").append(q._DB);
-            LOG.error("Cannot find a query for DB '"+Db.getName()+"'. Only choices available were "+Str.toString()+".");
+            LOG.error("Cannot find a query for DB '" + Db.getName() + "'. Only choices available were " + Str.toString() + ".");
           }
-        
+
         return Default;
       }
   }

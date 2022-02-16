@@ -502,7 +502,8 @@ public class Migrator
                         if (CheckArrays(DBMeta, Errors, Col, CMeta) == false)
                           continue;
 
-                        if (Col.getType() == ColumnType.NUMERIC
+                        // Check changes in NUMERIC precision/scale
+                        if (Col.getType() == ColumnType.NUMERIC && CMeta._TildaType == ColumnType.NUMERIC
                         && (CMeta._Precision != Col._Precision && (CMeta._Scale != Col._Scale || Col._Scale == 0)))
                           {
                             Actions.add(new ColumnAlterNumericSize(CMeta, Col));
