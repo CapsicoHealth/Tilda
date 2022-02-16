@@ -63,6 +63,8 @@ public enum AggregateType
             case VAR:
               if (T == ColumnType.FLOAT || T == ColumnType.DOUBLE || T == ColumnType.INTEGER || T == ColumnType.LONG || T == ColumnType.SHORT)
                 return ColumnType.DOUBLE;
+              if (T == ColumnType.NUMERIC)
+                return ColumnType.NUMERIC;
               break;
             case COUNT:
               return ColumnType.LONG;
@@ -79,6 +81,8 @@ public enum AggregateType
                 return ColumnType.DOUBLE;
               if (T == ColumnType.INTEGER || T == ColumnType.LONG || T == ColumnType.SHORT)
                 return ColumnType.LONG;
+              if (T == ColumnType.NUMERIC)
+                return ColumnType.NUMERIC;
               break;
             default:
               throw new Error("Incomplete Switch statment: unknown Aggregate " + this.name() + ";");

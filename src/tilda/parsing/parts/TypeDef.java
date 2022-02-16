@@ -39,8 +39,8 @@ public class TypeDef
     /*@formatter:off*/
     @SerializedName("type"      ) public String         _TypeStr    ;
     @SerializedName("size"      ) public Integer        _Size       ;
-    @SerializedName("precision" ) public Integer        _Precision  ;
-    @SerializedName("scale"     ) public Integer        _Scale      ;
+    @SerializedName("precision" ) public Integer        _Precision  = 19; // Default values commonly used for Monetary amounts which is a very common use
+    @SerializedName("scale"     ) public Integer        _Scale      =  4; // for numeric. https://stackoverflow.com/questions/224462/storing-money-in-a-decimal-column-what-precision-and-scale
     /*@formatter:on*/
 
     protected transient ColumnType     _Type;
@@ -140,7 +140,6 @@ public class TypeDef
           }
         else if (_Type == ColumnType.NUMERIC)
           {
-
             if (_Scale != null && _Precision == null)
               {
                 PS.AddError(What + " is defined as a '" + _Type + "' and has defined a Scale without a Precision. This is not allowed per Standard SQL.");

@@ -1801,6 +1801,12 @@ public class TextUtil
       }
 
 
+    public static final String printSQLIn(String Start, String CommaSeparatedList, String End)
+     {
+       StringBuilder str = new StringBuilder();
+       printSQLIn(str, Start, CommaSeparatedList, End);
+       return str.toString();
+     }
     public static final boolean printSQLIn(StringBuilder Str, String Start, String CommaSeparatedList, String End)
       {
         String[] Parts = split(CommaSeparatedList, "\\s*,\\s*");
@@ -1823,6 +1829,13 @@ public class TextUtil
         if (First == false)
           Str.append(End);
         return !First;
+      }
+
+    public static final String printSQLLike(String Start, String ColumnName, String CommaSeparatedList, String BooleanOperator)
+      {
+        StringBuilder str = new StringBuilder();
+        printSQLLike(str, Start, ColumnName, CommaSeparatedList, BooleanOperator);
+        return str.toString();
       }
 
     public static final boolean printSQLLike(StringBuilder Str, String Start, String ColumnName, String CommaSeparatedList, String BooleanOperator)
