@@ -21,6 +21,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import tilda.enums.ColumnMode;
 import tilda.enums.OrderNulls;
 import tilda.enums.OrderType;
@@ -30,6 +33,9 @@ import tilda.utils.TextUtil;
 
 public class OrderBy
   {
+
+    static final Logger         LOG = LogManager.getLogger(OrderBy.class.getName());
+
     public String               _OrderByStr;
 
     public transient Column     _Col;
@@ -66,13 +72,13 @@ public class OrderBy
         _Col = Parent.getColumn(Col);
         if (_Col == null)
           {
-             if (Parent._TildaType == TildaType.VIEW) // Let's do a deeper search for the other columns from the tables/views brought in
+            if (Parent._TildaType == TildaType.VIEW) // Let's do a deeper search for the other columns from the tables/views brought in
               {
                 // LDH-NOTE: This should be abstracted better as a utility method. Looking up
-                //          a column by name across the entire view space is important moving forward
-                //          with a few new tilda features.
+                // a column by name across the entire view space is important moving forward
+                // with a few new tilda features.
                 Set<String> objs = new HashSet<String>();
-                for (ViewColumn vc : ((View)_Parent)._ViewColumns)
+                for (ViewColumn vc : ((View) _Parent)._ViewColumns)
                   {
                     if (vc._SameAsObj != null && vc._SameAsObj._ParentObject != null && objs.add(vc._SameAsObj._ParentObject._Name) == true)
                       {
@@ -84,14 +90,14 @@ public class OrderBy
                             }
                       }
                     if (_Col != null)
-                     break;
+                      break;
                   }
               }
-             if (_Col == null)
-               {
-                 PS.AddError(what + " with orderby '" + Col + "' which cannot be found." + (Parent._TildaType != TildaType.VIEW ? "" : " If you do need that column for the orderBy but do not want it in the final view, add it with \"joinOnly\"=true."));
-                 return false;
-               }
+            if (_Col == null)
+              {
+                PS.AddError(what + " with orderby '" + Col + "' which cannot be found." + (Parent._TildaType != TildaType.VIEW ? "" : " If you do need that column for the orderBy but do not want it in the final view, add it with \"joinOnly\"=true."));
+                return false;
+              }
           }
         if (_Col._Mode == ColumnMode.CALCULATED)
           {
@@ -153,7 +159,7 @@ public class OrderBy
 
         return L;
       }
-    
+
     /**
      * returns a comma-separated string containing the <B>unescaped</B> column short names
      * 

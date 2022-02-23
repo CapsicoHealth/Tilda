@@ -624,7 +624,9 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 if (TextUtil.isNullOrEmpty(VC._Coalesce) == false && VC._Aggregate != AggregateType.COUNT)
                   Str.append(", " + ValueHelper.printValue(VC._SameAsObj.getName(), VC.getType(), VC.isCollection(), VC._Coalesce) + ")");
 
-                printAggregateOrderBy(Str, VC._OrderByObjs, TI.getFullName());
+                // We have to be able to handle cases for joins with an "as". If so, we have to use that, otherwise
+                // we have to use the internal source of the column being ordered by.
+                printAggregateOrderBy(Str, VC._OrderByObjs, TextUtil.isNullOrEmpty(TI._As)==false ? TI.getFullName() : null);
                 Str.append(")");
                 if (TextUtil.isNullOrEmpty(VC._Filter) == false)
                   {
@@ -654,7 +656,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                   First = false;
                 else
                   Str.append(", ");
-                Str.append(ObjectFullName + ".\"" + OB._Col.getName() + "\" " + OB._Order);
+                Str.append((TextUtil.isNullOrEmpty(ObjectFullName)==false?ObjectFullName:OB._Col._ParentObject.getShortName()) + ".\"" + OB._Col.getName() + "\" " + OB._Order);
                 if (OB._Nulls != null)
                   Str.append(" NULLS " + OB._Nulls);
 

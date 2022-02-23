@@ -987,7 +987,7 @@ public class JSONUtil
     throws IOException
       {
         JSONUtil.print(out, name, firstElement);
-        out.write(rawJsonObject);
+        out.write(TextUtil.isNullOrEmpty(rawJsonObject) == true ? "null" : rawJsonObject);
       }
 
     /**
