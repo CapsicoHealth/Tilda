@@ -1038,6 +1038,8 @@ public class Docs
                 if (parentView != null)
                   for (ViewJoin VJ : parentView._Joins)
                     {
+                      if (VJ == null)
+                       continue;
                       if (VJ._ObjectObj.getShortName().equals(DW.getObj().getShortName()) == true)
                         {
                           found = true;

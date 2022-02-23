@@ -141,8 +141,6 @@ public final class Connection
     /**
      * Wrapper to {@link java.sql.Connection#commit()} with extra logging and performance tracking
      * 
-     * @return
-     * @return an SQException (instead of throwing) if one happens.
      * @throws SQLException
      */
     public final void commit()
@@ -167,9 +165,29 @@ public final class Connection
       }
 
     /**
+     * Wrapper to {@link java.sql.Connection#commit()} with extra logging and performance tracking, but
+     * returns the exception, if any, instead of throwing. This should be typically used in a catch block
+     * when managing exceptions.
+     * 
+     * @return an SQLException (instead of throwing) if one happens.
+     */
+    public final SQLException commitNoThrow()
+      {
+        try
+          {
+            commit();
+          }
+        catch (SQLException E)
+          {
+            return E;
+          }
+        return null;
+      }
+
+    /**
      * Wrapper to {@link java.sql.Connection#rollback()} with extra logging and performance tracking
      * 
-     * @return an SQException (instead of throwing) if one happens.
+     * @throws SQLException
      */
     public final void rollback()
     throws SQLException
@@ -193,10 +211,29 @@ public final class Connection
       }
 
     /**
+     * Wrapper to {@link java.sql.Connection#rollback()} with extra logging and performance tracking, but
+     * returns the exception, if any, instead of throwing. This should be typically used in a catch block
+     * when managing exceptions.
+     * 
+     * @return an SQLException (instead of throwing) if one happens.
+     */
+    public final SQLException rollbackNoThrow()
+      {
+        try
+          {
+            rollback();
+          }
+        catch (SQLException E)
+          {
+            return E;
+          }
+        return null;
+      }
+
+    /**
      * Wrapper to {@link #commit()} or {@link #rollback()} based on parameter
      * 
      * @param Commit true if commit is needed, or false if rollback
-     * @return an SQException (instead of throwing) if one happens.
      * @throws SQLException
      */
     public final void commitRollbackConnection(boolean Commit)
@@ -209,9 +246,32 @@ public final class Connection
       }
 
     /**
+     * Wrapper to {@link #commitNoThrow()} or {@link #rollbackNoThrow()} based on parameter. 
+     * This should be typically used in a catch block when managing exceptions.
+     * 
+     * @param Commit true if commit is needed, or false if rollback
+     * @return an SQLException (instead of throwing) if one happens.
+     */
+    public final SQLException commitRollbackConnectionNoThrow(boolean Commit)
+      {
+        try
+          {
+            if (Commit == true)
+              commit();
+            else
+              rollback();
+          }
+        catch (SQLException E)
+          {
+            return E;
+          }
+        return null;
+      }
+
+
+    /**
      * Wrapper to {@link java.sql.Connection#close()} with extra logging and performance tracking
      * 
-     * @return an SQException (instead of throwing) if one happens.
      * @throws SQLException
      */
     public final void close()
@@ -236,6 +296,27 @@ public final class Connection
             throw E;
           }
       }
+
+    /**
+     * Wrapper to {@link java.sql.Connection#close()} with extra logging and performance tracking, but
+     * returns the exception, if any, instead of throwing. This should be typically used in a catch block
+     * when managing exceptions.
+     * 
+     * @return an SQLException (instead of throwing) if one happens.
+     */
+    public final SQLException closeNoThrow()
+      {
+        try
+          {
+            close();
+          }
+        catch (SQLException E)
+          {
+            return E;
+          }
+        return null;
+      }
+
 
     /**
      * Straight wrapper to {@link java.sql.Connection#createStatement()}
@@ -596,12 +677,12 @@ public final class Connection
         for (int i = 0; i < cols.length; ++i)
           {
             if (i != 0)
-             str.append(", ");
+              str.append(", ");
             ColumnDefinition col = cols[i];
             _DB.getFullColumnVar(str, col.getSchemaName(), col.getTableName(), col.getName());
           }
       }
-    
+
     public void getColumnType(StringBuilder Str, ColumnType T, Integer S, ColumnMode M, boolean Collection, Integer Precision, Integer Scale)
       {
         _DB.getColumnType(Str, T, S, M, Collection, Precision, Scale);
@@ -624,7 +705,7 @@ public final class Connection
       {
         _DB.setArray(this, PS, i, Type, allocatedArrays, CollectionUtil.toList(val));
       }
-    
+
     public void setArray(PreparedStatement PS, int i, ColumnType Type, List<java.sql.Array> allocatedArrays, Collection<?> val)
     throws Exception
       {

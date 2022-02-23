@@ -320,6 +320,7 @@ public class TildaData implements CodeGenTildaData
             case LONG:
               return V + "l";
             case NUMERIC:
+              return "new BigDecimal("+V+"d)";
             case DOUBLE:
               return V + "d";
             case CHAR:

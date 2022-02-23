@@ -141,6 +141,8 @@ public class TotalMess
                 PotentialFKs.clear();
                 for (ForeignKey FK : T._ForeignKeys)
                   {
+                    if (FK == null)
+                     continue;
 //                    LOG.debug("      Looking at FK " + FK._Name + " to " + FK._DestObjectObj.getShortName() + " from " + FK._ParentObject.getShortName());
                     if (FK._DestObjectObj.getFullName().equals(FT._C._ParentObject.getFullName()) == true)
                       PotentialFKs.add(FK);
