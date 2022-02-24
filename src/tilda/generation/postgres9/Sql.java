@@ -1013,7 +1013,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
         for (; i < V._ViewColumns.size(); ++i)
           {
             ViewColumn VC = V._ViewColumns.get(i);
-            if (VC._Aggregate != null && PivotHelper.getPivottedColumn(V, VC.getName()) == null) //PivotHelper.isPivotColumn(VC) == false) // don't output pivoted aggregates if not ok
+            // don't output pivoted aggregates if not ok
+            if (PivotHelper.isAllowedSourceAggregate(VC) == true)
              Str += genCompositeAggregateColumnSQL(VC);
           }
 

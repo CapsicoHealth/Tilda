@@ -190,8 +190,8 @@ public class PivotHelper
               return true;
             for (ViewPivotAggregate VPA : P._Aggregates)
               {
-                // A aggregated column should be excluded if it's sourced from a non aggregate column, of the globals flag is false
-                if (VPA._VC == VC && (P._Globals == false || VPA._VC._Aggregate == null))
+                // An aggregate column should be output in the final view only if the globals flag is true
+                if (VPA._VC == VC && P._Globals == true)
                  return true;
                 // Is it a TZ companion to a column that needs TZ? 
                 if (VPA._VC.needsTZ() == true && VC._FCT == FrameworkColumnType.TZ && VC._Name.equals(VPA._VC._Name+"TZ") == true)
@@ -199,6 +199,24 @@ public class PivotHelper
               }
           }
         return false;
+      }
+
+    public static boolean isAllowedSourceAggregate(ViewColumn VC)
+      {
+        if (getPivottedColumn(VC._ParentView, VC.getName()) != null)
+         return false;
+        if (VC._Aggregate == null)
+         return false;
+        for (ViewPivot P : VC._ParentView._Pivots)
+          {
+            for (ViewPivotAggregate VPA : P._Aggregates)
+              {
+                // An aggregate column should be output in the final view only if the globals flag is true
+                if (VPA._VC == VC && P._Globals == false)
+                 return false;
+              }
+          }
+        return true;
       }
 
     public static void HandlePivots(ParserSession PS, View V, Set<String> ColumnNames)
@@ -261,5 +279,4 @@ public class PivotHelper
             V._ViewColumns.add(i++, P._VC);
           }
       }
-
   }
