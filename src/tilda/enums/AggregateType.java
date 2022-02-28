@@ -20,32 +20,85 @@ import tilda.parsing.parts.ViewColumn;
 
 public enum AggregateType
   {
-  SUM,
+//@formatter:off
+     SUM         (false, true , OrderableType.NONE    , TargetColumnType.REQUIRED)
+    ,AVG         (false, false, OrderableType.NONE    , TargetColumnType.REQUIRED)
+    ,MIN         (false, true , OrderableType.NONE    , TargetColumnType.REQUIRED)
+    ,MAX         (false, true , OrderableType.NONE    , TargetColumnType.REQUIRED)
+    ,FIRST       (false, true , OrderableType.REQUIRED, TargetColumnType.REQUIRED)
+    ,LAST        (false, true , OrderableType.REQUIRED , TargetColumnType.REQUIRED)
+    ,DEV         (false, false, OrderableType.NONE    , TargetColumnType.REQUIRED)
+    ,VAR         (false, false, OrderableType.NONE    , TargetColumnType.REQUIRED)
+    ,COUNT       (false, true , OrderableType.NONE    , TargetColumnType.OPTIONAL)
+    ,ARRAY       (false, true , OrderableType.OPTIONAL, TargetColumnType.REQUIRED)
+    ,ARRAYCAT    (false, false, OrderableType.OPTIONAL, TargetColumnType.REQUIRED)
+    ,ROW_NUMBER  (true , false, OrderableType.REQUIRED, TargetColumnType.NONE    )
+    ,RANK        (true , false, OrderableType.REQUIRED, TargetColumnType.NONE    )
+    ,PERCENT_RANK(true , false, OrderableType.REQUIRED, TargetColumnType.NONE    )
+    ,LEAD        (true , false, OrderableType.REQUIRED, TargetColumnType.REQUIRED)
+    ,LAG         (true , false, OrderableType.REQUIRED, TargetColumnType.REQUIRED)
+    ,NTH_VALUE   (true , false, OrderableType.REQUIRED, TargetColumnType.REQUIRED)
+    ;
+//@formatter:on
+    
+    public static enum TargetColumnType { REQUIRED, OPTIONAL, NONE };
+    public static enum OrderableType { REQUIRED, OPTIONAL, NONE };
 
-  AVG,
-
-  MIN,
-
-  FIRST,
-
-  MAX,
-
-  LAST,
-
-  DEV,
-
-  VAR,
-
-  COUNT,
-
-  ARRAY,
-
-  ARRAYCAT;
-
-    public static AggregateType parse(String Str)
+    private AggregateType(boolean windowOnly, boolean composable, OrderableType orderable, TargetColumnType targetColumn)
       {
+        _windowOnly = windowOnly;
+        _composable = composable;
+        _orderable = orderable;
+        _targetColumn = targetColumn;
+      }
+
+    protected final boolean _windowOnly;
+    protected final boolean _composable;
+    protected final OrderableType _orderable;
+    protected final TargetColumnType _targetColumn;
+
+    public boolean isWindowOnly()
+      {
+        return _windowOnly;
+      }
+    public boolean isComposable()
+      {
+        return _composable;
+      }
+    public OrderableType getOrderable()
+      {
+        return _orderable;
+      }
+    
+    public TargetColumnType isTargetColumnRequired()
+      {
+        return _targetColumn;
+      }
+
+  //@formatter:off
+    protected static String[][] _ALIASES = {{"ROW_NUM"     , "ROW_NUMBER"   }
+                                           ,{"ROWNUMBER"   , "ROW_NUMBER"   }
+                                           ,{"ROWNUM"      , "ROW_NUMBER"   }
+                                           ,{"ARRAY_CAT"   , "ARRAYCAT" }
+                                           ,{"RANK_PCT"    , "PERCENT_RANK"  }
+                                           ,{"RANK_PERCENT", "PERCENT_RANK"  }
+                                           ,{"RANKPCT"     , "PERCENT_RANK"  }
+                                           ,{"NTH"         , "NTH_VALUE"     }
+                                           };
+//@formatter:on
+
+    public static AggregateType parse(String str)
+      {
+        if (str == null)
+         return null;
+        for (String[] alias : _ALIASES)
+          if (str.equals(alias[0]) == true)
+            {
+              str = alias[1];
+              break;
+            }
         for (AggregateType e : AggregateType.values())
-          if (Str.equalsIgnoreCase(e.name()) == true)
+          if (str.equalsIgnoreCase(e.name()) == true)
             return e;
         return null;
       }
@@ -75,6 +128,9 @@ public enum AggregateType
               break;
             case FIRST:
             case LAST:
+            case LEAD:
+            case LAG:
+            case NTH_VALUE:
               return T;
             case SUM:
               if (T == ColumnType.FLOAT || T == ColumnType.DOUBLE)
@@ -84,6 +140,11 @@ public enum AggregateType
               if (T == ColumnType.NUMERIC)
                 return ColumnType.NUMERIC;
               break;
+            case ROW_NUMBER:
+            case RANK:
+              return ColumnType.LONG;
+            case PERCENT_RANK:
+              return ColumnType.DOUBLE;
             default:
               throw new Error("Incomplete Switch statment: unknown Aggregate " + this.name() + ";");
           }
@@ -114,28 +175,6 @@ public enum AggregateType
         return false;
       }
 
-
-    public boolean isComposable()
-      {
-        switch (this)
-          {
-            case ARRAY:
-            case COUNT:
-            case MIN:
-            case FIRST:
-            case MAX:
-            case LAST:
-            case SUM:
-              return true;
-            case AVG:
-            case DEV:
-            case VAR:
-              return false;
-            default:
-              throw new Error("Incomplete Switch statment: unknown ColumnType " + this.name() + ";");
-          }
-      }
-
     public AggregateType getComposedAggregate()
       {
         if (isComposable() == false)
@@ -144,27 +183,6 @@ public enum AggregateType
         return this == COUNT ? SUM : this;
       }
 
-    public boolean isOrderable()
-      {
-        switch (this)
-          {
-            case ARRAY:
-            case ARRAYCAT:
-            case FIRST:
-            case LAST:
-              return true;
-            case COUNT:
-            case MIN:
-            case MAX:
-            case SUM:
-            case AVG:
-            case DEV:
-            case VAR:
-              return false;
-            default:
-              throw new Error("Incomplete Switch statment: unknown ColumnType " + this.name() + ";");
-          }
-      }
 
     /**
      * Tests whether an aggregate is friendly with DateTime columns. Because DateTime columns have a companion
@@ -176,7 +194,7 @@ public enum AggregateType
      */
     public boolean isZonedDateTimeCompatible()
       {
-        return isOrderable() == true;
+        return getOrderable() != OrderableType.NONE;
       }
 
     public boolean isList()

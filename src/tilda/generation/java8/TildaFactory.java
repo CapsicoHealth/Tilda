@@ -1125,23 +1125,24 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("   public static void toJSON" + J._Name + "(java.io.Writer outWriter, " + Helper.getFullAppDataClassName(J._ParentObject) + " obj, String lead, boolean fullObject, boolean noNullArrays) throws java.io.IOException");
         Out.println("    {");
         Out.println("      long T0 = System.nanoTime();");
-        Out.println("      org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter();");
-        Out.println("      " + Helper.getFullBaseClassName(J._ParentObject) + " Obj = (" + Helper.getFullBaseClassName(J._ParentObject) + ") obj;");
-        Out.println("      if (fullObject == true)");
+        Out.println("      try(org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter())");
         Out.println("       {");
-        Out.println("          out.write(lead);");
-        Out.println("          out.write(\"{\");");
-        Out.println("       }");
+        Out.println("        " + Helper.getFullBaseClassName(J._ParentObject) + " Obj = (" + Helper.getFullBaseClassName(J._ParentObject) + ") obj;");
+        Out.println("        if (fullObject == true)");
+        Out.println("         {");
+        Out.println("           out.write(lead);");
+        Out.println("           out.write(\"{\");");
+        Out.println("         }");
         Out.println();
-        Out.println("      int i = -1;");
+        Out.println("        int i = -1;");
         for (Column C : J._ColumnObjs)
           if (C != null)
             Helper.JSONExport(Out, C);
-        Out.println("      if (fullObject == true)");
-        Out.println("       out.write(\" }\\n\");");
+        Out.println("        if (fullObject == true)");
+        Out.println("         out.write(\" }\\n\");");
         Out.println();
-        Out.println("      outWriter.append(out.getBuilder().toString());");
-        Out.println("      out.close();");
+        Out.println("        outWriter.append(out.getBuilder().toString());");
+        Out.println("       }");
         Out.println();
         Out.println("      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);");
         Out.println("    }");

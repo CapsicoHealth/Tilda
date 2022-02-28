@@ -613,7 +613,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
               }
             if (trimNeeded)
               Str.append("trim(");
-            String ColExpr = TI.getFullName() + ".\"" + VC._SameAsObj.getName() + "\"" + (textConversionNeeded ? "::TEXT" : "");
+            String ColExpr = VC._Aggregate != null && VC._Aggregate.isWindowOnly() == true ? "" : TI.getFullName() + ".\"" + VC._SameAsObj.getName() + "\"" + (textConversionNeeded ? "::TEXT" : "");
             if (TextUtil.isNullOrEmpty(VC._Expression) == false)
               ColExpr = VC._Expression.replaceAll("\\?", ColExpr);
             Str.append(ColExpr);
@@ -626,7 +626,10 @@ public class Sql extends PostgreSQL implements CodeGenSql
 
                 // We have to be able to handle cases for joins with an "as". If so, we have to use that, otherwise
                 // we have to use the internal source of the column being ordered by.
-                printAggregateOrderBy(Str, VC._OrderByObjs, TextUtil.isNullOrEmpty(TI._As)==false ? TI.getFullName() : null);
+                if (VC._partitionByObjs.size() != 0 || TextUtil.isNullOrEmpty(VC._Range) == false || VC._Aggregate.isWindowOnly() == true)
+                  Str.append(") OVER (");
+                printAggregatePartitionBy(Str, VC._partitionByObjs, TextUtil.isNullOrEmpty(TI._As) == false ? TI.getFullName() : null);
+                printAggregateOrderBy(Str, VC._OrderByObjs, TextUtil.isNullOrEmpty(TI._As) == false ? TI.getFullName() : null, VC._Range);
                 Str.append(")");
                 if (TextUtil.isNullOrEmpty(VC._Filter) == false)
                   {
@@ -644,22 +647,40 @@ public class Sql extends PostgreSQL implements CodeGenSql
         return hasAggregates;
       }
 
-    protected void printAggregateOrderBy(StringBuilder Str, List<OrderBy> OrderByObjs, String ObjectFullName)
+    protected static void printAggregateOrderBy(StringBuilder str, List<OrderBy> orderByObjs, String objectFullName, String range)
       {
-        if (OrderByObjs != null && OrderByObjs.isEmpty() == false)
+        if (orderByObjs != null && orderByObjs.isEmpty() == false)
           {
-            Str.append(" order by ");
+            str.append(" order by ");
             boolean First = true;
-            for (OrderBy OB : OrderByObjs)
+            for (OrderBy OB : orderByObjs)
               {
                 if (First == true)
                   First = false;
                 else
-                  Str.append(", ");
-                Str.append((TextUtil.isNullOrEmpty(ObjectFullName)==false?ObjectFullName:OB._Col._ParentObject.getShortName()) + ".\"" + OB._Col.getName() + "\" " + OB._Order);
+                  str.append(", ");
+                str.append((TextUtil.isNullOrEmpty(objectFullName) == false ? objectFullName : OB._Col._ParentObject.getShortName()) + ".\"" + OB._Col.getName() + "\" " + OB._Order);
                 if (OB._Nulls != null)
-                  Str.append(" NULLS " + OB._Nulls);
+                  str.append(" NULLS " + OB._Nulls);
+              }
+            if (TextUtil.isNullOrEmpty(range) == false)
+              str.append(" rows between ").append(range);
+          }
+      }
 
+    protected static void printAggregatePartitionBy(StringBuilder str, List<Column> partitionByObjs, String objectFullName)
+      {
+        if (partitionByObjs != null && partitionByObjs.isEmpty() == false)
+          {
+            str.append(" partition by ");
+            boolean First = true;
+            for (Column col : partitionByObjs)
+              {
+                if (First == true)
+                  First = false;
+                else
+                  str.append(", ");
+                str.append((TextUtil.isNullOrEmpty(objectFullName) == false ? objectFullName : col._ParentObject.getShortName()) + ".\"" + col.getName() + "\"");
               }
           }
       }
@@ -860,7 +881,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
           }
       }
 
-    private String resolveIncrementalWhereClause(View V)
+    private static String resolveIncrementalWhereClause(View V)
       {
         if (V._Realize == null || V._Realize._Incremental == null)
           return null;
@@ -877,7 +898,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         return Str.toString();
       }
 
-    private String PrintInsertColumnNames(View V)
+    private static String PrintInsertColumnNames(View V)
       {
         StringBuilder Str = new StringBuilder();
         boolean First = true;
@@ -940,7 +961,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 b.append("--     \"").append(VC._Name).append("\"  REALIZE-EXCLUDED\n");
                 continue;
               }
-            if (PivotHelper.getPivottedColumn(V, VC.getName()) != null) // V._Pivots.isEmpty() == false && (PivotHelper.isPivotColumn(VC) == true || PivotHelper.isPivotAggregate(VC) == true))
+            if (PivotHelper.getPivottedColumn(V, VC.getName()) != null) // V._Pivots.isEmpty() == false && (PivotHelper.isPivotColumn(VC) == true ||
+                                                                        // PivotHelper.isPivotAggregate(VC) == true))
               {
                 b.append("--     \"").append(VC._Name).append(VC._Aggregate != null ? "\"  PIVOT AGGREGATE\n" : "\"  PIVOTED ON\n");
                 continue;
@@ -1015,32 +1037,41 @@ public class Sql extends PostgreSQL implements CodeGenSql
             ViewColumn VC = V._ViewColumns.get(i);
             // don't output pivoted aggregates if not ok
             if (PivotHelper.isAllowedSourceAggregate(VC) == true)
-             Str += genCompositeAggregateColumnSQL(VC);
+              {
+                Str += genCompositeAggregateColumnSQL(VC);
+                ++count;
+              }
+            // Window-only columns are treated like regular columns for the purpose of the outer view. They are not composable.
+            else if (VC._Aggregate != null && VC._Aggregate.isWindowOnly() == true)
+              {
+                groupByStr.append(count == 0 ? "" : ", ").append(++count);
+                Str += "\n       , \"" + VC._Name + "\"";
+              }
           }
 
         // Output the pivots now for the "second level".
         for (ViewColumn VC : V._PivotColumns)
-         Str += genPivotColumnSQL(VC);
+          Str += genPivotColumnSQL(VC);
 
         Str += "\n"
         + "from T\n";
-        Str += "     group by "+groupByStr.toString();
-//        int count = 0;
-//        for (ViewColumn VC : V._ViewColumns.size())
-//          {
-//          if (VC == null)
-//            continue;
-//          if (PivotHelper.getPivottedColumn(V, VC.getName()) != null || PivotHelper.isPivotColumn(VC) == true)
-//            break;
-//
-//          if (PivotHelper.getPivottedColumn(V, VC.getName()) != null) // PivotHelper.isPivotColumn(V._ViewColumns.get(i)) == true)
-//            break;
-//          else if (V._ViewColumns.get(i)._JoinOnly == false)
-//            {
-//              ++count;
-//              Str += (count == 1 ? "" : ", ") + count;
-//            }
-//          }
+        Str += "     group by " + groupByStr.toString();
+        // int count = 0;
+        // for (ViewColumn VC : V._ViewColumns.size())
+        // {
+        // if (VC == null)
+        // continue;
+        // if (PivotHelper.getPivottedColumn(V, VC.getName()) != null || PivotHelper.isPivotColumn(VC) == true)
+        // break;
+        //
+        // if (PivotHelper.getPivottedColumn(V, VC.getName()) != null) // PivotHelper.isPivotColumn(V._ViewColumns.get(i)) == true)
+        // break;
+        // else if (V._ViewColumns.get(i)._JoinOnly == false)
+        // {
+        // ++count;
+        // Str += (count == 1 ? "" : ", ") + count;
+        // }
+        // }
         Str += "\n";
         return Str;
       }
@@ -1048,6 +1079,9 @@ public class Sql extends PostgreSQL implements CodeGenSql
     public String genPivotColumnSQL(ViewColumn VC)
     throws Exception
       {
+        if (VC._Aggregate.isWindowOnly() == true)
+          throw new Error("Fuction genPivotColumnSQL called for '" + VC.getFullName() + "' with a window-only aggregate '" + VC._Aggregate.name() + "'.");
+
         String aggr = VC._Aggregate == AggregateType.COUNT ? AggregateType.SUM.name()
         : VC._Aggregate == AggregateType.ARRAY ? "array_agg"
         : VC._Aggregate.name();
@@ -1055,9 +1089,13 @@ public class Sql extends PostgreSQL implements CodeGenSql
         StringBuilder Str = new StringBuilder();
         Str.append(aggr).append("(");
         if (VC._Distinct == true)
-         Str.append("distinct ");
+          Str.append("distinct ");
         Str.append("\"").append(VC._NameInner).append("\"");
-        printAggregateOrderBy(Str, VC._OrderByObjs, "T");
+        // If there is a partition or a range, we gotta switch to an OVER statement.
+        if (VC._partitionByObjs.size() != 0 || TextUtil.isNullOrEmpty(VC._Range) == false)
+          Str.append(") OVER (");
+        printAggregatePartitionBy(Str, VC._partitionByObjs, "T");
+        printAggregateOrderBy(Str, VC._OrderByObjs, "T", null);
         Str.append(") filter (where ").append(VC._Filter).append(") ");
 
         String Expr = Str.toString();
@@ -1065,11 +1103,11 @@ public class Sql extends PostgreSQL implements CodeGenSql
           Expr = VC._Expression.replaceAll("\\?", Expr);
 
         if (TextUtil.isNullOrEmpty(VC._Coalesce) == false)
-          Expr = "coalesce("+Expr+", "+ValueHelper.printValue(VC.getName(), VC.getType(), VC.isCollection(), VC._Coalesce)+")";
+          Expr = "coalesce(" + Expr + ", " + ValueHelper.printValue(VC.getName(), VC.getType(), VC.isCollection(), VC._Coalesce) + ")";
 
         if (VC._Type != null)
-         Expr = "(" + Expr + ")::" + getColumnType(VC._Type.getType(), VC._Type._Size, ColumnMode.NORMAL, VC._Type.isCollection(), VC._Precision, VC._Scale);
-        
+          Expr = "(" + Expr + ")::" + getColumnType(VC._Type.getType(), VC._Type._Size, ColumnMode.NORMAL, VC._Type.isCollection(), VC._Precision, VC._Scale);
+
         return "\n     , " + Expr + " as \"" + VC.getName() + "\"";
       }
 
@@ -1077,12 +1115,15 @@ public class Sql extends PostgreSQL implements CodeGenSql
       {
         if (VC._Aggregate == null)
           throw new Error("Method genCompositeAggregateColumnSQL called with non aggregate view column.");
+        if (VC._Aggregate.isComposable() == false)
+          throw new Error("Method genCompositeAggregateColumnSQL called with an aggregate view column that is not composable.");
 
         String aggr = VC._Aggregate == AggregateType.COUNT ? AggregateType.SUM.name()
         : VC._Aggregate == AggregateType.ARRAY ? "array_agg"
         : VC._Aggregate.name();
 
-        return "\n     , " + aggr + "(\"" + VC.getName() + "\") as \"" + VC._Name + "\"";
+        return VC._Aggregate.isWindowOnly() == true ? "\n     , " + aggr + "() over() as \"" + VC._Name + "\""
+        : "\n     , " + aggr + "(\"" + VC.getName() + "\") as \"" + VC._Name + "\"";
       }
 
 
@@ -1099,7 +1140,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
         for (int i = 0; i < V._ViewColumns.size(); ++i)
           {
             ViewColumn VC = V._ViewColumns.get(i);
-            if (PivotHelper.getPivottedColumn(V, VC.getName()) != null) //V._Pivots.isEmpty() == false && (PivotHelper.isPivotColumn(VC) == true || PivotHelper.isPivotAggregate(VC) == true))
+            if (PivotHelper.getPivottedColumn(V, VC.getName()) != null) // V._Pivots.isEmpty() == false && (PivotHelper.isPivotColumn(VC) == true ||
+                                                                        // PivotHelper.isPivotAggregate(VC) == true))
               continue;
             if (VC != null && VC._SameAsObj != null && VC._SameAsObj._Mode != ColumnMode.CALCULATED && VC._JoinOnly == false && VC._FormulaOnly == false)
               OutFinal.println("COMMENT ON COLUMN " + V.getShortName() + ".\"" + VC.getName() + "\" IS E" + TextUtil.escapeSingleQuoteForSQL(VC._SameAsObj._Description) + ";");
@@ -1449,7 +1491,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         return Str.toString();
       }
 
-    private String genRealizedColumnList(View V, String Lead)
+    private static String genRealizedColumnList(View V, String Lead)
       {
         StringBuilder Str = new StringBuilder();
         Str.append("/*genRealizedColumnList*/");
@@ -1458,7 +1500,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         // LOG.debug("View " + V._Name + ": " + TextUtil.print(V.getColumnNames()));
         for (ViewColumn VC : V._ViewColumns)
           {
-            if (PivotHelper.getPivottedColumn(V, VC.getName()) != null) //PivotHelper.isPivotColumn(VC) == true || PivotHelper.isPivotAggregate(VC) == true)
+            if (PivotHelper.getPivottedColumn(V, VC.getName()) != null) // PivotHelper.isPivotColumn(VC) == true || PivotHelper.isPivotAggregate(VC) == true)
               continue;
             if (VC == null || (VC._SameAsObj != null && VC._SameAsObj._Mode == ColumnMode.CALCULATED) || VC._JoinOnly == true || VC._FormulaOnly == true)
               {

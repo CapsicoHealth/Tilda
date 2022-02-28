@@ -60,9 +60,11 @@ public class PivotHelper
 //        ColumnType Type = VPV._Type != null ? VPV._Type.getType() : AggregateType;
 
         ViewColumn PVC = new ViewColumn();
+        PVC._FCT = FrameworkColumnType.PIVOT;
         PVC._Name = A.makeName(VPV);
         PVC._SameAs = VC._SameAs;
         PVC._NameInner = VC._Name;
+        
         PVC._As = VC._As;
         // If there is an expression at the VPV level, it overwrites that of the VC. So for all type overrides, we
         // check and prioritize VPV first, then VC, then null (no type override so the baseline type of the SameAs 
@@ -92,7 +94,7 @@ public class PivotHelper
         VC._ParentView._PivotColumns.add(PVC);
         Column C = new ViewColumnWrapper(PVC._SameAsObj, PVC, O._Columns.size());
         O._Columns.add(C);
-        
+
         if (PVC.needsTZ() == true)
           {
             PVC.needsTZ();
@@ -194,7 +196,7 @@ public class PivotHelper
                 if (VPA._VC == VC && P._Globals == true)
                  return true;
                 // Is it a TZ companion to a column that needs TZ? 
-                if (VPA._VC.needsTZ() == true && VC._FCT == FrameworkColumnType.TZ && VC._Name.equals(VPA._VC._Name+"TZ") == true)
+                if (VPA._VC != null && VPA._VC.needsTZ() == true && VC._FCT == FrameworkColumnType.TZ && VC._Name.equals(VPA._VC._Name+"TZ") == true)
                  return true;
               }
           }
@@ -206,6 +208,8 @@ public class PivotHelper
         if (getPivottedColumn(VC._ParentView, VC.getName()) != null)
          return false;
         if (VC._Aggregate == null)
+         return false;
+        if (VC._Aggregate.isComposable() == false)
          return false;
         for (ViewPivot P : VC._ParentView._Pivots)
           {

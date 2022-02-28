@@ -159,12 +159,27 @@ public enum ColumnType
 
       }
 
-    public static ColumnType parse(String Str)
+//@formatter:off
+    protected static String[][] _ALIASES = {{"BIGINT"   , "LONG"    }
+                                           ,{"SMALLINT" , "SHORT"   }
+                                           ,{"VARCHAR"  , "STRING"  }
+                                           ,{"TEXT"     , "STRING"  }
+                                           ,{"TIMESTAMP", "DATETIME"}
+                                           };
+//@formatter:on
+    
+    public static ColumnType parse(String str)
       {
-        if (Str == null)
+        if (str == null)
           return null;
+        for (String[] alias : _ALIASES)
+          if (str.equals(alias[0]) == true)
+            {
+              str = alias[1];
+              break;
+            }
         for (ColumnType e : ColumnType.values())
-          if (Str.equalsIgnoreCase(e.name()) == true)
+          if (str.equalsIgnoreCase(e.name()) == true)
             return e;
         return null;
       }
@@ -215,7 +230,7 @@ public enum ColumnType
         return false;
       }
 
-    public String getCompatibleTypesString(ColumnType Type)
+    public static String getCompatibleTypesString(ColumnType Type)
       {
         String compatibleTypes = Type.name();
         for (int i = 0; i < _CompatibleTypes.length; i++)
@@ -226,7 +241,7 @@ public enum ColumnType
         return compatibleTypes;
       }
 
-    public String getCompatibleDBTypesString(ColumnType Type)
+    public static String getCompatibleDBTypesString(ColumnType Type)
       {
         String compatibleTypes = Type.name();
         for (int i = 0; i < _CompatibleDBTypes.length; i++)

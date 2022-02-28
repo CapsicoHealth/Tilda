@@ -86,6 +86,10 @@ public class ValueHelper
               if (Default == DefaultType.NONE)
                 PS.AddError("Column '" + Col.getFullName() + "' defines Value '" + Name + "' which is not set as a default. Only default values are allowed for Dates.");
               break;
+            case BINARY:
+            case BITFIELD:
+            case JSON:
+            case UUID:
             default:
               throw new Error("Unhandled switch case for type '" + Col.getType() + "'.");
           }
@@ -123,6 +127,10 @@ public class ValueHelper
                 return "'" + DateTimeUtil.printDateTimeForSQL(DateTimeUtil.UNDEFINED_PLACEHOLDER_ZDT) + "'";
               else
                 return TextUtil.escapeSingleQuoteForSQL(defaultValue);
+            case BINARY:
+            case BITFIELD:
+            case JSON:
+            case UUID:
             default:
               throw new Error("Unhandled switch case for type '" + colType + "'.");
           }

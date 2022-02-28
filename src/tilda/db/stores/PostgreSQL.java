@@ -182,24 +182,36 @@ public class PostgreSQL implements DBType
               return "count";
             case AVG:
               return "avg";
-            case DEV:
-              return "stddev";
             case MIN:
               return "min";
-            case FIRST:
-              return "first";
             case MAX:
               return "max";
-            case LAST:
-              return "last";
             case SUM:
               return "sum";
+            case FIRST:
+              return "first";
+            case LAST:
+              return "last";
+            case DEV:
+              return "stddev";
             case VAR:
               return "variance";
             case ARRAY:
               return "array_agg";
             case ARRAYCAT:
               return "array_cat_agg";
+            case ROW_NUMBER:
+              return "row_number";
+            case RANK:
+              return "rank";
+            case PERCENT_RANK:
+              return "percent_rank";
+            case LEAD:
+              return "lead";
+            case LAG:
+              return "lag";
+            case NTH_VALUE:
+              return "nth_value";
             default:
               throw new Error("Cannot convert AggregateType " + AT + " to a database aggregate function name.");
           }
@@ -1045,7 +1057,7 @@ public class PostgreSQL implements DBType
       }
 
 
-    private ColumnType getSubTypeMapping(String Name, String TypeName, ColumnType TildaType)
+    private static ColumnType getSubTypeMapping(String Name, String TypeName, ColumnType TildaType)
     throws Exception
       {
         switch (TypeName)

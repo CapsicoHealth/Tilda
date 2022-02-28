@@ -33,6 +33,7 @@ import tilda.enums.FrameworkColumnType;
 import tilda.enums.MultiType;
 import tilda.enums.ObjectLifecycle;
 import tilda.enums.ProtectionType;
+import tilda.enums.TildaType;
 import tilda.enums.ValidationStatus;
 import tilda.enums.VisibilityType;
 import tilda.parsing.ParserSession;
@@ -641,6 +642,31 @@ public class Column extends TypeDef
      */
     public boolean needsTZ()
       {
-        return getType() == ColumnType.DATETIME && _FCT == FrameworkColumnType.NONE;
+        return getType() == ColumnType.DATETIME && (_FCT == FrameworkColumnType.NONE || _FCT == FrameworkColumnType.PIVOT);
       }
+
+    protected static Column deepColumnSearch(ParserSession PS, Base parent, String colName)
+    {
+      Column col = parent.getColumn(colName);
+      if (col != null)
+        return col;
+    
+      if (parent._TildaType == TildaType.VIEW) // Let's do a deeper search for the other columns from the tables/views brought in
+        {
+          // LDH-NOTE: This should be abstracted better as a utility method. Looking up
+          // a column by name across the entire view space is important moving forward
+          // with a few new tilda features.
+          Set<String> objs = new HashSet<String>();
+          for (ViewColumn vc : ((View) parent)._ViewColumns)
+            {
+              if (vc._SameAsObj != null && vc._SameAsObj._ParentObject != null && objs.add(vc._SameAsObj._ParentObject._Name) == true)
+                {
+                  for (Column c : vc._SameAsObj._ParentObject._Columns)
+                    if (c._Name.equals(colName) == true)
+                      return c;
+                }
+            }
+        }
+      return null;
+    }
   }
