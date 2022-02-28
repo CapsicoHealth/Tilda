@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -35,6 +37,8 @@ import tilda.enums.TildaType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ReferenceHelper;
 import tilda.parsing.parts.helpers.ValidationHelper;
+import tilda.utils.ParseUtil;
+import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
 
 public class ViewColumn
@@ -58,7 +62,9 @@ public class ViewColumn
     @SerializedName("formulaOnly") public boolean        _FormulaOnly   = false;
     @SerializedName("joinOnly"   ) public boolean        _JoinOnly      = false;
     @SerializedName("aggregate"  ) public String         _AggregateStr ;
-    @SerializedName("orderBy"    ) public String[]       _OrderBy;
+    @SerializedName("orderBy"    ) public String[]       _OrderBy      ;
+    @SerializedName("partitionBy") public String[]       _PartitionBy  ;
+    @SerializedName("range"      ) public String         _Range        ;
     @SerializedName("coalesce"   ) public String         _Coalesce     = null;
     @SerializedName("distinct"   ) public Boolean        _Distinct     = false;
     @SerializedName("filter"     ) public String         _Filter       ;
@@ -91,8 +97,9 @@ public class ViewColumn
     public transient JoinType            _Join;
     public transient AggregateType       _Aggregate;
     public transient List<OrderBy>       _OrderByObjs      = new ArrayList<OrderBy>();
+    public transient List<Column>        _partitionByObjs  = new ArrayList<Column>();
     public transient TypeDef             _Type;
-    public transient String              _NameInner; // The name of the column when used in an inner query fashion, like for pivots.
+    public transient String              _NameInner;                                  // The name of the column when used in an inner query fashion, like for pivots.
 
     public transient boolean             _FailedValidation = false;
 
@@ -183,6 +190,8 @@ public class ViewColumn
         return true;
       }
 
+    static protected final Pattern _RANGEREGEX = Pattern.compile("((UNBOUNDED|\\d+|CURRENT)\\s+(PRECEDING|FOLLOWING|ROW))\\s+AND\\s+((UNBOUNDED|\\d+|CURRENT)\\s+(PRECEDING|FOLLOWING|ROW))", Pattern.CASE_INSENSITIVE);
+
     public boolean Validate(ParserSession PS, View ParentView)
       {
         int Errs = PS.getErrorCount();
@@ -199,7 +208,8 @@ public class ViewColumn
             _SameAsObj = ValidateSameAs(PS, getFullName(), _SameAs, _ParentView);
             if (_SameAsObj == null)
               return false;
-            _FCT = _SameAsObj._FCT;
+            if (_FCT != FrameworkColumnType.PIVOT)
+              _FCT = _SameAsObj._FCT;
             _SameAsView = _SameAsObj._ParentObject._ParentSchema.getView(_SameAsObj._ParentObject._Name);
           }
 
@@ -234,6 +244,7 @@ public class ViewColumn
                   PS.AddError(Str.toString());
               }
           }
+
         if (_Aggregate == null)
           {
             if (_Distinct == true)
@@ -254,12 +265,52 @@ public class ViewColumn
           {
             if (_Aggregate == null)
               PS.AddError("View Column '" + getFullName() + "' defined an orderBy value without specifying an aggregate. OrderBys are meant only for ARRAY, FIRST or LAST aggregates.");
-            else if (_Aggregate.isOrderable() == false)
-              PS.AddError("View Column '" + getFullName() + "' defined an orderBy value without specifying an ARRAY/FIRST/LAST aggregate. OrderBys are meant only for ARRAY, FIRST or LAST aggregates.");
+            else if (_Aggregate.getOrderable() == AggregateType.OrderableType.NONE)
+              PS.AddError("View Column '" + getFullName() + "' defined an orderBy value without specifying an orderable aggregate (such as FIRST/LAST/ARRAY/ROW_NUMBER... OrderBys are meant only for orderable aggregates.");
             // else if (_Distinct == true)
             // PS.AddError("View Column '" + getFullName() + "' defined an orderBy value in a Distinct aggregate, which is not supported.");
-            Set<String> Names = new HashSet<String>();
             _OrderByObjs = OrderBy.processOrderBys(PS, "View Column '" + getFullName() + "' array aggregate", ParentView, _OrderBy, true);
+          }
+
+        if (_PartitionBy != null && _PartitionBy.length > 0)
+          {
+            if (_Aggregate == null)
+              PS.AddError("View Column '" + getFullName() + "' defined a partitionBy value without specifying an aggregate.");
+            Set<String> names = new HashSet<String>();
+            for (String pb : _PartitionBy)
+              {
+                if (names.add(pb) == false)
+                  {
+                    PS.AddError("View Column '" + getFullName() + "' defined a duplicate partitionBy value '" + pb + "'.");
+                    continue;
+                  }
+                Column col = Column.deepColumnSearch(PS, ParentView, pb);
+                if (col == null)
+                  {
+                    PS.AddError("View Column '" + getFullName() + "' defined a partitionBy column '" + pb + "' which cannot be found. Try bringing that column as a 'joinOnly=true' viewcolumn.");
+                    continue;
+                  }
+                _partitionByObjs.add(col);
+              }
+          }
+
+        if (TextUtil.isNullOrEmpty(_Range) == false)
+          {
+            _Range = _Range.trim();
+            if (_Aggregate == null)
+              PS.AddError("View Column '" + getFullName() + "' defined a window range '" + _Range + "' without defining an aggregate: you cannot define a range without an aggregate.");
+            if (_OrderByObjs == null || _OrderByObjs.isEmpty() == true)
+              PS.AddError("View Column '" + getFullName() + "' defined a window range '" + _Range + "' without defining an orderBy: you cannot define a range without an aggregate ordering.");
+
+            validateRange(PS, getFullName(), _Range);
+
+          }
+
+        // Check extra rules if an aggregate has been defined, such as orderability
+        if (_Aggregate != null)
+          {
+            if (_FCT != FrameworkColumnType.PIVOT && _Aggregate.getOrderable() == AggregateType.OrderableType.REQUIRED && _OrderByObjs.isEmpty() == true)
+              PS.AddError("View Column '" + getFullName() + "' defined an aggregate '" + _Aggregate.name() + "' without defining an orderBy element: this aggregate requires an order by to be semanticaly correct.");
           }
 
         if (_Exclude.length > 0 || _Block.length > 0)
@@ -279,6 +330,58 @@ public class ViewColumn
           PS.AddError("View Column '" + getFullName() + "' defined extra type/size information without an 'expression': type and size are for expressions only.");
 
         return Errs == PS.getErrorCount();
+      }
+
+    public static boolean validateRange(ParserSession PS, String viewColumnName, String range)
+      {
+        // if (range.equals("current row and 10 preceding") == true)
+        // LOG.debug("xxx");
+        int errCount = PS.getErrorCount();
+        // Let's check that the range matches the syntax required and that the first part is technically before the second part logically speaking.
+        // for example, something like "10 following and 10 preceding" is not valid.
+        Matcher M = _RANGEREGEX.matcher(range);
+        if (M.matches() == false)
+          {
+            PS.AddError("View Column '" + viewColumnName + "' defined a window range '" + range + "' which is syntactically incorrect. Allowed pattern is '(((UNBOUNDED|<number>) PRECEDING)|CURRENT ROW) AND (((UNBOUNDED|<number>) FOLLOWING)|CURRENT ROW)'.");
+            return false;
+          }
+        // for (int i = 0; i <= M.groupCount(); ++i)
+        // LOG.debug(i+": "+M.group(i));
+        String quantity1 = M.group(2).toUpperCase();
+        String direction1 = M.group(3).toUpperCase();
+        String quantity2 = M.group(5).toUpperCase();
+        String direction2 = M.group(6).toUpperCase();
+        if (quantity1.equals("CURRENT") == true && direction1.equals("ROW") == false
+        || quantity1.equals("CURRENT") == false && direction1.equals("ROW") == true
+        || quantity2.equals("CURRENT") == true && direction2.equals("ROW") == false
+        || quantity2.equals("CURRENT") == false && direction2.equals("ROW") == true)
+          PS.AddError("View Column '" + viewColumnName + "' defined a window range '" + range + "' with incorrect syntax: 'CURRENT ROW' must stand together.");
+        else if (quantity1.equals("CURRENT") == true && quantity2.equals("CURRENT") == true)
+          PS.AddError("View Column '" + viewColumnName + "' defined a window range '" + range + "' which goes between current row and current row, which doesn't make much sense.");
+        else if (direction1.equals(direction2) == true || quantity1.equals("CURRENT") == true || quantity2.equals("CURRENT") == true)
+          {
+            long q1 = quantity1.equals("CURRENT") == true ? 0 : ParseUtil.parseLong(quantity1, SystemValues.EVIL_VALUE);
+            long q2 = quantity2.equals("CURRENT") == true ? 0 : ParseUtil.parseLong(quantity2, SystemValues.EVIL_VALUE);
+
+            if (quantity1.equals("UNBOUNDED") == false && q1 == SystemValues.EVIL_VALUE)
+              PS.AddError("View Column '" + viewColumnName + "' defined a window range '" + range + "' with a 'from' value that isn't a positive integer or UNBOUNDED.");
+            if (quantity2.equals("UNBOUNDED") == false && q2 == SystemValues.EVIL_VALUE)
+              PS.AddError("View Column '" + viewColumnName + "' defined a window range '" + range + "' with a 'to' value that isn't a positive integer or UNBOUNDED.");
+
+            if (quantity1.equals("UNBOUNDED") == true)
+              q1 = direction1.equals("PRECEDING") == true ? Long.MIN_VALUE : Long.MAX_VALUE;
+            else if (direction1.equals("PRECEDING") == true)
+              q1 = -q1;
+
+            if (quantity2.equals("UNBOUNDED") == true)
+              q2 = direction2.equals("PRECEDING") == true ? Long.MIN_VALUE : Long.MAX_VALUE;
+            else if (direction2.equals("PRECEDING") == true)
+              q2 = -q2;
+
+            if (q1 >= q2)
+              PS.AddError("View Column '" + viewColumnName + "' defined a window range '" + range + "' with a 'from' value '" + q1 + "' which is not smaller than the 'to' value '" + q2 + "'.");
+          }
+        return errCount == PS.getErrorCount();
       }
 
 
@@ -399,7 +502,7 @@ public class ViewColumn
         return (_SameAsObj == null || _SameAsObj.needsTZ() == true)
         && (_Aggregate == null || _Aggregate.isZonedDateTimeCompatible() == true)
         && (TextUtil.isNullOrEmpty(_Expression) == true || (_Type != null ? _Type._Type : _SameAsObj._Type) == ColumnType.DATETIME)
-        && _FCT == FrameworkColumnType.NONE;
+        && (_FCT == FrameworkColumnType.NONE || _FCT == FrameworkColumnType.PIVOT);
       }
 
     public boolean isList()

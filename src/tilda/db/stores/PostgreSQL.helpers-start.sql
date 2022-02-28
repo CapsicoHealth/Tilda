@@ -734,6 +734,42 @@ LANGUAGE plpgsql COST 5000 ;
 
 
 
+-- Get the list of tables that have a foreign key to a target table.
+drop function if exists Tilda.getFKDependencies(_schema_name varchar, _table_name varchar) ;
+create or replace function Tilda.getFKDependencies(_schema_name varchar, _table_name varchar) 
+returns table (schema_name    TEXT
+              ,table_name     TEXT
+              ,column_name    TEXT
+              ,fk_schema_name TEXT
+              ,fk_table_name  TEXT
+              ,fk_name        TEXT
+              ,fk_column_name TEXT
+              )
+as
+$$
+begin
+  RETURN QUERY
+  SELECT ccu.table_schema  ::TEXT AS schema_name
+       , ccu.table_name    ::TEXT AS table_name
+       , ccu.column_name   ::TEXT AS column_name
+       , tc.table_schema   ::TEXT AS fk_schema_name
+       , tc.table_name     ::TEXT AS fk_table_name
+       , tc.constraint_name::TEXT AS fk_name
+       , kcu.column_name   ::TEXT AS fk_column_name
+    FROM information_schema.table_constraints tc
+       JOIN information_schema.key_column_usage kcu ON tc.constraint_name = kcu.constraint_name
+       JOIN information_schema.constraint_column_usage ccu ON ccu.constraint_name = tc.constraint_name
+   WHERE constraint_type = 'FOREIGN KEY'
+     AND ccu.table_schema=_schema_name
+     AND ccu.table_name=_table_name
+   ORDER BY tc.table_schema, tc.table_name, kcu.column_name
+   ;
+end;
+$$
+LANGUAGE plpgsql COST 1000 ;
+
+
+
 -- Renames a column and properly handles cases where the table doesn't exist, source column doesn't exist, or dest column already exists.  
 -- Furthermore, the function handles a list of possible source names. For example, V2 of something renames a to b, and then V3 renames 
 -- b to c. This function can then handle a case of renaming either a or b to c. This can be useful when migrating different existing versions.
@@ -1065,16 +1101,6 @@ $$ LANGUAGE SQL COST 1000 ;
 
 
 
--- Get the list of tables and columns that have a foreign key to a target table.
-/*
-SELECT tc.table_schema, tc.table_name, tc.constraint_name, kcu.column_name, ccu.table_schema AS foreign_schema_name, ccu.table_name AS foreign_table_name, ccu.column_name AS foreign_column_name
-  FROM information_schema.table_constraints tc
-    JOIN information_schema.key_column_usage kcu ON tc.constraint_name = kcu.constraint_name
-    JOIN information_schema.constraint_column_usage ccu ON ccu.constraint_name = tc.constraint_name
- WHERE constraint_type = 'FOREIGN KEY'
-   AND ccu.table_name='clinician_dim'
- ORDER BY tc.table_schema, tc.table_name, kcu.column_name
-*/
 
 
 

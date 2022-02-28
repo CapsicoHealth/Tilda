@@ -91,7 +91,7 @@ public class TildaSQLServlet extends HttpServlet
       {
       }
 
-    private void LogRequestHeader(final long TransactionID, HttpServletRequest Request)
+    private static void LogRequestHeader(final long TransactionID, HttpServletRequest Request)
       {
         LOG.info(SystemValues.NEWLINEx2);
         LOG.info("********************************************************************************************************************************************");

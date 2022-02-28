@@ -90,7 +90,7 @@ public class ViewJoinSimple
         return Errs == PS.getErrorCount();
       }
 
-    private void PrintKnownColumns(View Source)
+    private static void PrintKnownColumns(View Source)
       {
         LOG.debug("Known columns from view " + Source.getFullName() + ":");
         for (ViewColumn c : Source._ViewColumns)

@@ -140,6 +140,25 @@ public class MSSQL implements DBType
               return "sum";
             case VAR:
               return "var";
+            case FIRST:
+              return "first_value";
+            case LAST:
+              return "last_value";
+            case ARRAY:
+            case ARRAYCAT:
+              throw new Error("Aggregate type " + AT + " is not compatible for SQLServer.");
+            case ROW_NUMBER:
+              return "row_number";
+            case RANK:
+              return "rank";
+            case PERCENT_RANK:
+              return "percent_rank";
+            case LEAD:
+              return "lead";
+            case LAG:
+              return "lag";
+            case NTH_VALUE:
+              return "nth_value";
             default:
               throw new Error("Cannot convert AggregateType " + AT + " to a database aggregate function name.");
           }

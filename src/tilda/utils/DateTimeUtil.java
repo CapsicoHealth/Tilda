@@ -317,6 +317,10 @@ public class DateTimeUtil
       {
         return D == null ? null : D.format(DateTimeFormatter.ISO_DATE);
       }
+    public static String printDate(LocalDate D, DateTimeFormatter formatter)
+      {
+        return D == null ? null : D.format(formatter);
+      }
 
     public static String printDateForJSON(LocalDate D)
       {

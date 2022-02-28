@@ -41,6 +41,8 @@ public enum FrameworkColumnType
   , FORMULA_DT // DATETIME formula which doesn't need TZ
 
   , FORMULA // Formula column
+  
+  , PIVOT // Pivotted column
 
     ;
 
