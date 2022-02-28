@@ -133,13 +133,13 @@ public class DocGen
         writer.println("</BLOCKQUOTE>");
       }
 
-    private void writeHeader(PrintWriter writer, ParserSession PS)
+    private static void writeHeader(PrintWriter writer, ParserSession PS)
     throws Exception
       {
         Docs.writeHeader(writer, PS._Main);
       }
 
-    private void writeFooter(PrintWriter writer, ParserSession PS)
+    private static void writeFooter(PrintWriter writer, ParserSession PS)
     throws Exception
       {
         Docs.writeFooter(writer, PS._Main);

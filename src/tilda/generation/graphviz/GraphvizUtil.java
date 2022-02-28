@@ -209,7 +209,7 @@ public class GraphvizUtil
         this.G = G;
       }
 
-    private LinkedHashSet<String> getViewObjects(View view)
+    private static LinkedHashSet<String> getViewObjects(View view)
       {
         LinkedHashSet<String> lhs = new LinkedHashSet<String>();
         if (view == null)
@@ -225,7 +225,7 @@ public class GraphvizUtil
         return lhs;
       }
 
-    private LinkedHashSet<String> getMapperObjectNames(Mapper mapper)
+    private static LinkedHashSet<String> getMapperObjectNames(Mapper mapper)
       {
         LinkedHashSet<String> lhs = new LinkedHashSet<String>();
         for (Column c : mapper._PrimaryColumns)
@@ -245,7 +245,7 @@ public class GraphvizUtil
         return lhs;
       }
 
-    private LinkedHashSet<String> getObjectEnums(Object object)
+    private static LinkedHashSet<String> getObjectEnums(Object object)
       {
         LinkedHashSet<String> lhs = new LinkedHashSet<String>();
         for (Column c : object._Columns)
@@ -265,7 +265,7 @@ public class GraphvizUtil
 
       }
 
-    private LinkedHashSet<String> getObjectMappers(Object object)
+    private static LinkedHashSet<String> getObjectMappers(Object object)
       {
         LinkedHashSet<String> lhs = new LinkedHashSet<String>();
         for (Column c : object._Columns)
@@ -284,7 +284,7 @@ public class GraphvizUtil
         return lhs;
       }
 
-    private <T> boolean containsObject(List<T> collection, java.lang.Object object)
+    private static <T> boolean containsObject(List<T> collection, java.lang.Object object)
       {
         boolean flag = false;
         String name = null;
@@ -836,7 +836,7 @@ public class GraphvizUtil
 
       }
 
-    private void showDotPathError()
+    private static void showDotPathError()
       {
         LOG.warn("Unable to find the GraphViz 'dot' binary: the documentation for Tilda schemas won't include any ER Diagram");
         LOG.warn("To set up the dependent GraphViz library, please follow the following steps:");

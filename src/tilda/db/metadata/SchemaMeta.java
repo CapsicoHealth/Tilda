@@ -139,7 +139,7 @@ public class SchemaMeta
         return columns;
       }
 
-    private void setColumns(Map<String, Map<String, Map<String, ColumnMeta>>> columns, TableMeta T)
+    private static void setColumns(Map<String, Map<String, Map<String, ColumnMeta>>> columns, TableMeta T)
     throws Exception
       {
         Map<String, Map<String, ColumnMeta>> schema = columns.get(T._SchemaName.toLowerCase());
@@ -158,7 +158,7 @@ public class SchemaMeta
           }
       }
 
-    private void setColumns(Map<String, Map<String, Map<String, ColumnMeta>>> columns, ViewMeta V)
+    private static void setColumns(Map<String, Map<String, Map<String, ColumnMeta>>> columns, ViewMeta V)
     throws Exception
       {
         Map<String, Map<String, ColumnMeta>> schema = columns.get(V._SchemaName.toLowerCase());

@@ -1128,7 +1128,7 @@ public class TildaData implements CodeGenTildaData
         Out.println("     }");
       }
 
-    private void genWritePreparedStatementPopulation(PrintWriter Out, Object O)
+    private static void genWritePreparedStatementPopulation(PrintWriter Out, Object O)
     throws Error
       {
         Out.println("   protected int populatePreparedStatement(Connection C, java.sql.PreparedStatement PS, List<java.sql.Array> AllocatedArrays) throws Exception");
@@ -1194,7 +1194,7 @@ public class TildaData implements CodeGenTildaData
         Out.println("     }");
       }
 
-    private void genPostWriteObjectStateUpdate(PrintWriter Out, Object O)
+    private static void genPostWriteObjectStateUpdate(PrintWriter Out, Object O)
       {
         Out.println("   protected void stateUpdatePostWrite() throws Exception");
         Out.println("     {");
@@ -1417,7 +1417,7 @@ public class TildaData implements CodeGenTildaData
 
       }
 
-    private void genColumnTestBoolean(PrintWriter Out, List<Column> cols)
+    private static void genColumnTestBoolean(PrintWriter Out, List<Column> cols)
       {
         boolean first = true;
         for (Column C : cols)
@@ -1443,7 +1443,7 @@ public class TildaData implements CodeGenTildaData
             }
       }
 
-    private void genLookupByCheck(PrintWriter Out, Object O)
+    private static void genLookupByCheck(PrintWriter Out, Object O)
       {
         Out.println("   /**");
         Out.println("   * Returns the first satisfied natural identify (i.e., unique indices), or if defined, the PK. by 'satisfied',");

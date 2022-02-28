@@ -396,7 +396,7 @@ public final class Connection
         return isSQLExcception(T) == false ? false : _DB.isCanceledError((SQLException) T);
       }
 
-    private boolean isSQLExcception(Throwable T)
+    private static boolean isSQLExcception(Throwable T)
       {
         if (T == null)
           return false;
