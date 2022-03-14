@@ -1560,11 +1560,11 @@ public abstract class QueryHelper
         return this;
       }
 
-    public QueryHelper equals(Type_DatePrimitive Col, LocalDate DT)
+    public QueryHelper equals(Type_DatePrimitive Col, LocalDate LDT)
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        opVal(Op.EQUALS, DT);
+        opVal(Op.EQUALS, LDT);
         return this;
       }
 
@@ -1642,6 +1642,15 @@ public abstract class QueryHelper
         opVal(Op.LT, ZDT);
         return this;
       }
+    
+    public QueryHelper lt(Type_DatePrimitive Col, LocalDate LDT)
+    throws Exception
+      {
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        opVal(Op.LT, LDT);
+        return this;
+      }
+    
 
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Col < Col
@@ -1658,6 +1667,12 @@ public abstract class QueryHelper
         return compareBase(Col1, Col2, Op.LT);
       }
 
+    public QueryHelper lt(Type_DatePrimitive Col1, Type_DatePrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.LT);
+      }
+    
     public QueryHelper lt(Type_CharPrimitive Col1, Type_CharPrimitive Col2)
     throws Exception
       {
@@ -1788,6 +1803,13 @@ public abstract class QueryHelper
         return this;
       }
 
+    public QueryHelper lte(Type_DatePrimitive Col, LocalDate LDT)
+    throws Exception
+      {
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        opVal(Op.LTE, LDT);
+        return this;
+      }
 
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Col <= Col
@@ -1799,6 +1821,12 @@ public abstract class QueryHelper
       }
 
     public QueryHelper lte(Type_DatetimePrimitive Col1, Type_DatetimePrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.LTE);
+      }
+
+    public QueryHelper lte(Type_DatePrimitive Col1, Type_DatePrimitive Col2)
     throws Exception
       {
         return compareBase(Col1, Col2, Op.LTE);
@@ -1922,7 +1950,15 @@ public abstract class QueryHelper
         return this;
       }
 
+    public QueryHelper gt(Type_DatePrimitive Col, LocalDate LDT)
+    throws Exception
+      {
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        opVal(Op.GT, LDT);
+        return this;
+      }
 
+    
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Col > Col
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1933,6 +1969,12 @@ public abstract class QueryHelper
       }
 
     public QueryHelper gt(Type_DatetimePrimitive Col1, Type_DatetimePrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.GT);
+      }
+
+    public QueryHelper gt(Type_DatePrimitive Col1, Type_DatePrimitive Col2)
     throws Exception
       {
         return compareBase(Col1, Col2, Op.GT);
@@ -2066,7 +2108,15 @@ public abstract class QueryHelper
         return this;
       }
 
+    public QueryHelper gte(Type_DatePrimitive Col, LocalDate LDT)
+    throws Exception
+      {
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        opVal(Op.GTE, LDT);
+        return this;
+      }
 
+    
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Col >= Col
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2077,6 +2127,12 @@ public abstract class QueryHelper
       }
 
     public QueryHelper gte(Type_DatetimePrimitive Col1, Type_DatetimePrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.GTE);
+      }
+
+    public QueryHelper gte(Type_DatePrimitive Col1, Type_DatePrimitive Col2)
     throws Exception
       {
         return compareBase(Col1, Col2, Op.GTE);
@@ -2202,6 +2258,14 @@ public abstract class QueryHelper
         return this;
       }
 
+    public QueryHelper notEquals(Type_DatePrimitive Col, LocalDate LDT)
+    throws Exception
+      {
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        opVal(Op.NOT_EQUALS, LDT);
+        return this;
+      }
+    
 
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Col <> Col
@@ -2218,6 +2282,12 @@ public abstract class QueryHelper
         return compareBase(Col1, Col2, Op.NOT_EQUALS);
       }
 
+    public QueryHelper notEquals(Type_DatePrimitive Col1, Type_DatePrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.NOT_EQUALS);
+      }
+    
     public QueryHelper notEquals(Type_CharPrimitive Col1, Type_CharPrimitive Col2)
     throws Exception
       {
@@ -2328,6 +2398,12 @@ public abstract class QueryHelper
         opVal(Op.PLUS, ZDT);
         return this;
       }
+    public QueryHelper plus(LocalDate LDT)
+    throws Exception
+      {
+        opVal(Op.PLUS, LDT);
+        return this;
+      }
 
     public QueryHelper minus(ColumnDefinition Col)
     throws Exception
@@ -2392,6 +2468,13 @@ public abstract class QueryHelper
         return this;
       }
 
+    public QueryHelper minus(LocalDate LDT)
+    throws Exception
+      {
+        opVal(Op.MINUS, LDT);
+        return this;
+      }
+    
     public QueryHelper multiply(ColumnDefinition Col)
     throws Exception
       {
@@ -2445,13 +2528,6 @@ public abstract class QueryHelper
     throws Exception
       {
         opVal(Op.MULTIPLY, V);
-        return this;
-      }
-
-    public QueryHelper multiply(ZonedDateTime ZDT)
-    throws Exception
-      {
-        opVal(Op.MULTIPLY, ZDT);
         return this;
       }
 
@@ -2510,16 +2586,6 @@ public abstract class QueryHelper
         opVal(Op.DIVIDE, V);
         return this;
       }
-
-    public QueryHelper divide(ZonedDateTime ZDT)
-    throws Exception
-      {
-        opVal(Op.DIVIDE, ZDT);
-        return this;
-      }
-
-
-
 
 
 

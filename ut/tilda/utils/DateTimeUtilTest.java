@@ -59,13 +59,52 @@ public class DateTimeUtilTest
             // Test4();
             // Test5();
 
-            //test6();
-            test7();
+            // test6();
+//            test7();
+            test8();
           }
         catch (Exception e)
           {
             LOG.catching(e);
           }
+      }
+
+    private static void test8()
+      {
+        LocalDate D1 = DateTimeUtil.newYMD(2022, 02, 14);
+        LocalDate D2 = DateTimeUtil.newYMD(2022, 02, 14);
+        int days1 = DateTimeUtil.daysBetween(D1, D2, true);
+        int days2 = DateTimeUtil.daysBetween(D1, D2, false);
+        LOG.debug(DateTimeUtil.printDate(D1)+" - "+DateTimeUtil.printDate(D2)+" - midnight==true  >> "+days1);
+        if (days1 != 0)
+          LOG.error(" ---> ERROR: expected '0'.");
+        LOG.debug(DateTimeUtil.printDate(D1)+" - "+DateTimeUtil.printDate(D2)+" - midnight==false >> "+days2);
+        if (days2 != 1)
+          LOG.error(" ---> ERROR: expected '1'.");
+
+        
+        D1 = DateTimeUtil.newYMD(2022, 02, 14);
+        D2 = DateTimeUtil.newYMD(2022, 02, 24);
+        days1 = DateTimeUtil.daysBetween(D1, D2, true);
+        days2 = DateTimeUtil.daysBetween(D1, D2, false);
+        LOG.debug(DateTimeUtil.printDate(D1)+" - "+DateTimeUtil.printDate(D2)+" - midnight==true  >> "+days1);
+        if (days1 != 10)
+          LOG.error(" ---> ERROR: expected '10'.");
+        LOG.debug(DateTimeUtil.printDate(D1)+" - "+DateTimeUtil.printDate(D2)+" - midnight==false >> "+days2);
+        if (days2 != 11)
+          LOG.error(" ---> ERROR: expected '11'.");
+        
+        D1 = DateTimeUtil.newYMD(2022, 02, 15);
+        D2 = DateTimeUtil.newYMD(2022, 02, 14);
+        days1 = DateTimeUtil.daysBetween(D1, D2, true);
+        days2 = DateTimeUtil.daysBetween(D1, D2, false);
+        LOG.debug(DateTimeUtil.printDate(D1)+" - "+DateTimeUtil.printDate(D2)+" - midnight==true  >> "+days1);
+        if (days1 != -1)
+          LOG.error(" ---> ERROR: expected '-1'.");
+        LOG.debug(DateTimeUtil.printDate(D1)+" - "+DateTimeUtil.printDate(D2)+" - midnight==false >> "+days2);
+        if (days2 != -1)
+          LOG.error(" ---> ERROR: expected '-1'.");
+        
       }
 
     private static void test7()
