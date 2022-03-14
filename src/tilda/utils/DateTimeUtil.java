@@ -663,6 +663,25 @@ public class DateTimeUtil
         return days;
       }
 
+    /**
+     * Compute the number of days, with or without the midnight rule, between two dates.
+     * The midnight rule implies that midnight needs to be crossed to count as 1 day. So,
+     * if the two dates are identical (same day), then with midnight==true is 0 whereas 
+     * with midnight==false, it's 1.
+     * 
+     * @param Start
+     * @param End
+     * @return -1 if either of the dates are null or if start > end
+     */
+    public static int daysBetween(LocalDate Start, LocalDate End, boolean midnight)
+      {
+        if (Start == null || End == null || Start.compareTo(End) > 0)
+          return -1;
+        int days = (int) ChronoUnit.DAYS.between(Start, End);
+        if (midnight == false)
+          ++days;
+        return days;
+      }
 
 
     private static int secondsSinceMidnight(ZonedDateTime ZDT)

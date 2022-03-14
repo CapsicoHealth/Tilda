@@ -987,6 +987,7 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("               int i = d.populatePreparedStatement(C, PS, AllocatedArrays);");
         Out.println();
         Out.println("               PS.addBatch();");
+        Out.println("               ++count;\n");
         Out.println("               if (index != 0 && (index + 1) % batchSize == 0)");
         Out.println("                 {");
         Out.println("                   int[] results = PS.executeBatch();");
