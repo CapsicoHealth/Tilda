@@ -88,7 +88,7 @@ public class PostgreSQLCSVImporter extends CSVImporter
                   continue;
                 if (record.isConsistent() == false)
                   {
-                    LOG.error("Inconsistent values coming through this record" + (NumOfRecs + 1));
+                    LOG.error("Inconsistent values coming through record #" + (NumOfRecs + 1)+". Won't be loaded.");
                     continue;
                   }
 

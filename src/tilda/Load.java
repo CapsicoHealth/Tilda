@@ -100,7 +100,7 @@ public class Load
         arguments.remove(0);
         arguments.remove(0);
 
-        if (isSilentMode)
+        if (isSilentMode == true)
           {
             LOG.debug("Starting the utility in silent mode.");
 
@@ -113,7 +113,7 @@ public class Load
                 LOG.debug("Validating file " + ConfigFileName);
                 List<String> selectedObjectsList = new ArrayList<>(Arrays.asList(arguments.get(i + 3).split(",")));
                 List<String> connectionIdsList = new ArrayList<>(Arrays.asList(arguments.get(i + 5).split(",")));
-                List<DataObject> filteredObjects = filterObjects(selectedObjectsList, Conf._CmsData, true);
+                List<DataObject> filteredObjects = filterObjects(selectedObjectsList, Conf._CmsData, isSilentMode);
                 List<String> errors = validateDataObjects(connectionIdsList, filteredObjects);
                 if (errors.size() > 0)
                   {
@@ -122,7 +122,7 @@ public class Load
                     LOG.error("File " + ConfigFileName + " failed validation. Aborting !!");
                     System.exit(1);
                   }
-                
+
                 for (DataObject DO : filteredObjects)
                   if (DO.isTruncateFirst() == true)
                     truncatedTables.add(DO.getTableFullName());
@@ -140,7 +140,7 @@ public class Load
                 List<String> selectedObjectsList = new ArrayList<>(Arrays.asList(arguments.get(i + 3).split(",")));
                 List<String> connectionIdsList = new ArrayList<>(Arrays.asList(arguments.get(i + 5).split(",")));
                 validateDataObjects(connectionIdsList, Conf._CmsData);
-                startImportProcessor(selectedObjectsList, connectionIdsList, Conf, Conf._CmsData);
+                startImportProcessor(selectedObjectsList, connectionIdsList, Conf, Conf._CmsData, isSilentMode);
               }
             LOG.debug("Import Tables completed.");
           }
@@ -155,7 +155,7 @@ public class Load
                 DataObject DO = list.get(i);
                 if (DO == null)
                   continue;
-                data[i][0] = DO._SchemaName.toUpperCase()+"."+DO._TableName + (TextUtil.isNullOrEmpty(DO._DatasetName)==true?"":" ("+DO._DatasetName+")");
+                data[i][0] = DO._SchemaName.toUpperCase() + "." + DO._TableName + (TextUtil.isNullOrEmpty(DO._DatasetName) == true ? "" : " (" + DO._DatasetName + ")");
                 data[i][1] = Boolean.FALSE;
               }
 
@@ -180,7 +180,7 @@ public class Load
                   {
                     try
                       {
-                        Load window = new Load();
+                        Load window = new Load(isSilentMode);
                         window.frmDataImport.setVisible(true);
                       }
                     catch (Exception e)
@@ -197,7 +197,7 @@ public class Load
       {
         if (truncatedTables.isEmpty() == false)
           {
-            LOG.info("Your load file includes "+truncatedTables.size()+" truncate operations: "+TextUtil.print(truncatedTables.iterator())+".");
+            LOG.info("Your load file includes " + truncatedTables.size() + " truncate operations: " + TextUtil.print(truncatedTables.iterator()) + ".");
             LOG.info("Press 'y' followed by enter to continue, or anything else to abort.");
             try (Scanner scanner = new Scanner(System.in))
               {
@@ -244,10 +244,10 @@ public class Load
         return errorMessages;
       }
 
-    private static void startImportProcessor(List<String> selectedObjectNames, List<String> connectionIdsList, Config conf, List<DataObject> _CmsData)
+    private static void startImportProcessor(List<String> selectedObjectNames, List<String> connectionIdsList, Config conf, List<DataObject> _CmsData, boolean isSilentMode)
     throws Exception
       {
-        List<DataObject> filteredObjects = filterObjects(selectedObjectNames, _CmsData, false);
+        List<DataObject> filteredObjects = filterObjects(selectedObjectNames, _CmsData, isSilentMode);
         if (connectionIdsList.size() > 0 && filteredObjects.size() > 0)
           runImportProcessor(connectionIdsList, conf, filteredObjects);
       }
@@ -256,20 +256,37 @@ public class Load
       {
         List<DataObject> filteredList = new ArrayList<>();
 
-        LOG.debug("Looking at all datasets: "+TextUtil.print(selectedObjects, ", "));
+        LOG.debug("Looking at all requested datasets: " + TextUtil.print(selectedObjects, ", "));
         Iterator<DataObject> iterator = AllDataObjects.iterator();
         while (iterator.hasNext())
           {
             DataObject dataObject = iterator.next();
-            String tempObjectName = dataObject._SchemaName.toUpperCase()+"."+dataObject._TableName + (silent==true||TextUtil.isNullOrEmpty(dataObject._DatasetName)==true?"":" ("+dataObject._DatasetName+")");
+            String tempObjectName = dataObject._SchemaName.toUpperCase() + "." + dataObject._TableName + (silent == true || TextUtil.isNullOrEmpty(dataObject._DatasetName) == true ? "" : " (" + dataObject._DatasetName + ")");
             if (selectedObjects.contains(tempObjectName) == true)
               {
-                LOG.debug("Selecting dataset "+tempObjectName);
+                LOG.debug("Selecting dataset " + tempObjectName + (silent == true && TextUtil.isNullOrEmpty(dataObject._DatasetName) == false ? " (" + dataObject._DatasetName + ")" : ""));
                 filteredList.add(dataObject);
               }
             else
               {
-                LOG.debug("Ignoring dataset "+tempObjectName);
+                LOG.debug("Ignoring dataset " + tempObjectName + (silent == true && TextUtil.isNullOrEmpty(dataObject._DatasetName) == false ? " (" + dataObject._DatasetName + ")" : ""));
+              }
+          }
+        if (filteredList.size() >= selectedObjects.size()) // some couldn't be found
+          {
+            LOG.warn("There were " + (selectedObjects.size() - filteredList.size()) + " requested datasets that couldn't be matched:");
+            for (int i = 0; i < selectedObjects.size(); ++i)
+              {
+                boolean found = false;
+                for (int j = 0; j < AllDataObjects.size(); ++j)
+                  {
+                    DataObject dataObject = AllDataObjects.get(j);
+                    String tempObjectName = dataObject._SchemaName.toUpperCase() + "." + dataObject._TableName + (silent == true || TextUtil.isNullOrEmpty(dataObject._DatasetName) == true ? "" : " (" + dataObject._DatasetName + ")");
+                    if (selectedObjects.get(i).equals(tempObjectName) == true)
+                      found = true;
+                  }
+                if (found == false)
+                  LOG.warn("   - " + selectedObjects.get(i));
               }
           }
         return filteredList;
@@ -291,7 +308,7 @@ public class Load
         long timeTaken = System.nanoTime();
         long TotalRowCount = ImportProcessor.parallelProcess(connectionIdsList, Conf._RootFolder, threadsCount, dataObjects);
         timeTaken = System.nanoTime() - timeTaken;
-        LOG.debug("Total time taken for ImportProcessor.process() = " + DurationUtil.printDuration(timeTaken) + " with a combined throughput of "+DurationUtil.printPerformancePerMinute(timeTaken, TotalRowCount) + " Records/min)");
+        LOG.debug("Total time taken for ImportProcessor.process() = " + DurationUtil.printDuration(timeTaken) + " with a combined throughput of " + DurationUtil.printPerformancePerMinute(timeTaken, TotalRowCount) + " Records/min)");
       }
 
     private static boolean isValidArguments(List<String> arguments)
@@ -374,9 +391,9 @@ public class Load
       }
 
     // Constructor
-    public Load()
+    public Load(boolean isSilentMode)
       {
-        initialize();
+        initialize(isSilentMode);
         this.app = this;
       }
 
@@ -385,7 +402,7 @@ public class Load
      * 
      * @wbp.parser.entryPoint
      */
-    private void initialize()
+    private void initialize(boolean isSilentMode)
       {
 
         try
@@ -444,7 +461,7 @@ public class Load
 
                                 // Validate configurations
                                 List<DataObject> selectedDO = filterObjects(ImportTables, Conf._CmsData, false);
-                                LOG.debug("Validating Selected Table Indices..");
+                                LOG.debug("Validating Selected Table Indices...");
                                 List<String> errors = validateDataObjects(ConnectionIds, selectedDO);
                                 if (errors.size() > 0)
                                   {
@@ -461,7 +478,7 @@ public class Load
                                 checkTruncates(truncatedTables);
 
                                 // Processing
-                                startImportProcessor(ImportTables, ConnectionIds, Conf, Conf._CmsData);
+                                startImportProcessor(ImportTables, ConnectionIds, Conf, Conf._CmsData, isSilentMode);
                                 frmDataImport.dispose(); // Doesn't trigger listeners
                                 LOG.debug("Import Tables completed.");
                               }
@@ -469,7 +486,7 @@ public class Load
                               {
                                 LOG.error(e);
                                 System.exit(-1);
-                              }                            
+                              }
                           }
                       });
                   }
