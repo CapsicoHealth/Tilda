@@ -224,7 +224,9 @@ public class View extends Base
                 continue;
               }
             else if (TextUtil.isNullOrEmpty(VC._Prefix) == false)
-              PS.AddError("Column '" + VC.getFullName() + "' defined a prefix but is not a .* column.");
+              PS.AddError("Column '" + VC._Name + "' from view '"+getShortName()+"' defined a prefix but is not a .* column.");
+            else if (TextUtil.isNullOrEmpty(VC._Postfix) == false)
+              PS.AddError("Column '" + VC._Name + "' from view '"+getShortName()+"' defined a postfix but is not a .* column.");
 
             if (VC.Validate(PS, this) == false)
               {
@@ -388,6 +390,7 @@ public class View extends Base
         if (TextUtil.isNullOrEmpty(R._S) == true || TextUtil.isNullOrEmpty(R._O) == true)
           return PS.AddError("View '" + getFullName() + "' is defining a .* view column as " + VC._SameAs + " with an incorrect syntax. It should be '((package\\.)?schema\\.)?object\\.\\*'.");
         String Prefix = TextUtil.print(VC._Prefix, "");
+        String Postfix = TextUtil.print(VC._Postfix, "");
         Schema S = PS.getSchema(R._P, R._S);
         if (S == null)
           return PS.AddError("View '" + getFullName() + "' is defining a .* view column as " + VC._SameAs + " resolving to '" + R.getFullName() + "' with a schema which cannot be found. Please check the declared dependencies for this schema.");
@@ -397,7 +400,7 @@ public class View extends Base
             _Dependencies.put(V.getShortName().toUpperCase(), V);
             if (V._Validated == false)
               return PS.AddError("View '" + getFullName() + "' is defining a .* view column as " + VC._SameAs + " which has failed validation.");
-            CopyDependentViewFields(i, VC, Prefix, V, startingWith);
+            CopyDependentViewFields(i, VC, Prefix, Postfix, V, startingWith);
           }
         else
           {
@@ -407,7 +410,7 @@ public class View extends Base
             if (O._Validated == false)
               return PS.AddError("View '" + getFullName() + "' is defining a .* view column as " + VC._SameAs + " which has failed validation.");
             _Dependencies.put(O.getShortName().toUpperCase(), O);
-            CopyDependentObjectFields(i, VC, Prefix, O, startingWith);
+            CopyDependentObjectFields(i, VC, Prefix, Postfix, O, startingWith);
           }
         return true;
       }
@@ -714,7 +717,7 @@ public class View extends Base
         return true;
       }
 
-    private void CopyDependentObjectFields(int i, ViewColumn VC, String Prefix, Object O, String startingWith)
+    private void CopyDependentObjectFields(int i, ViewColumn VC, String Prefix, String Postfix, Object O, String startingWith)
       {
         int j = 0;
         for (Column col : O._Columns)
@@ -731,7 +734,7 @@ public class View extends Base
               NewVC._FormulaOnly = true;
             NewVC._SameAs = col.getFullName();
             NewVC._As = VC._As;
-            NewVC._Name = Prefix + col.getName();
+            NewVC._Name = Prefix + col.getName() + Postfix;
             NewVC._FCT = col._FCT;
             copyAdvancedViewColumnFields(VC, NewVC);
             _ViewColumns.add(i + j, NewVC);
@@ -740,7 +743,7 @@ public class View extends Base
       }
 
 
-    private void CopyDependentViewFields(int i, ViewColumn VC, String Prefix, View V, String startingWith)
+    private void CopyDependentViewFields(int i, ViewColumn VC, String Prefix, String Postfix, View V, String startingWith)
       {
         int j = 0;
 //        LOG.debug("VIEWCOLUMN * - "+VC._SameAs+" -> "+ V.getFullName()+": "+TextUtil.print(V.getColumnNames()));
@@ -762,7 +765,7 @@ public class View extends Base
             // LOG.debug(col._Name);
             NewVC._SameAs = col.getFullName();
             NewVC._As = VC._As;
-            NewVC._Name = Prefix + col._Name;
+            NewVC._Name = Prefix + col._Name + Postfix;
             NewVC._FCT = col._FCT;
             if (col._FCT == FrameworkColumnType.TS)
               {
@@ -798,7 +801,7 @@ public class View extends Base
                       ViewColumn NewVC = new ViewColumn();
                       NewVC._SameAs = V.getFullName() + "." + SrcColName;
                       NewVC._As = VC._As;
-                      NewVC._Name = Prefix + SrcColName;
+                      NewVC._Name = Prefix + SrcColName + Postfix;
                       copyAdvancedViewColumnFields(VC, NewVC);
                       _ViewColumns.add(i + j, NewVC);
                       _PadderColumnNames.track(NewVC.getName());
@@ -818,7 +821,7 @@ public class View extends Base
                       ViewColumn NewVC = new ViewColumn();
                       NewVC._SameAs = V.getFullName() + "." + SrcColName;
                       NewVC._As = VC._As;
-                      NewVC._Name = Prefix + SrcColName;
+                      NewVC._Name = Prefix + SrcColName + Postfix;
                       copyAdvancedViewColumnFields(VC, NewVC);
                       _ViewColumns.add(i + j, NewVC);
                       _PadderColumnNames.track(NewVC.getName());
@@ -834,7 +837,7 @@ public class View extends Base
               continue;
             ViewColumn NewVC = new ViewColumn();
             NewVC._SameAs = V.getFullName() + "." + F._Name;
-            NewVC._Name = Prefix + F._Name;
+            NewVC._Name = Prefix + F._Name + Postfix;
             NewVC._As = VC._As;
             // When copying a formula from a prior view, the column type should become NONE as it no longer has the properties of a formula.
             NewVC._FCT = FrameworkColumnType.NONE;//VC._FCT;
