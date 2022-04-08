@@ -56,6 +56,7 @@ public class ViewColumn
     @SerializedName("scale"      ) public Integer        _Scale        ;
     @SerializedName("size"       ) public Integer        _Size         ;
     @SerializedName("prefix"     ) public String         _Prefix       ;
+    @SerializedName("postfix"    ) public String         _Postfix      ;
     @SerializedName("exclude"    ) public String[]       _Exclude       = new String[] { };
     @SerializedName("block"      ) public String[]       _Block         = new String[] { };
     @SerializedName("joinType"   ) public String         _JoinStr      ;

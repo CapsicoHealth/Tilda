@@ -317,6 +317,7 @@ public class DateTimeUtil
       {
         return D == null ? null : D.format(DateTimeFormatter.ISO_DATE);
       }
+
     public static String printDate(LocalDate D, DateTimeFormatter formatter)
       {
         return D == null ? null : D.format(formatter);
@@ -666,7 +667,7 @@ public class DateTimeUtil
     /**
      * Compute the number of days, with or without the midnight rule, between two dates.
      * The midnight rule implies that midnight needs to be crossed to count as 1 day. So,
-     * if the two dates are identical (same day), then with midnight==true is 0 whereas 
+     * if the two dates are identical (same day), then with midnight==true is 0 whereas
      * with midnight==false, it's 1.
      * 
      * @param Start
@@ -822,4 +823,23 @@ public class DateTimeUtil
         LOG.debug("newL: " + TextUtil.print(newL.iterator()));
         return newL;
       }
+
+    public static LocalDate least(LocalDate d1, LocalDate d2)
+      {
+        if (d1 == null)
+          return d2;
+        if (d2 == null)
+          return d1;
+        return d1.isBefore(d2) ? d1 : d2;
+      }
+
+    public static LocalDate greatest(LocalDate d1, LocalDate d2)
+      {
+        if (d1 == null)
+          return d2;
+        if (d2 == null)
+          return d1;
+        return d1.isAfter(d2) ? d1 : d2;
+      }
+
   }

@@ -19,6 +19,7 @@ package tilda.utils;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -42,6 +43,7 @@ import java.util.StringJoiner;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
+import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -407,22 +409,44 @@ public class FileUtil
         return new BufferedReader(new InputStreamReader(In));
       }
 
+    protected static String readToString(BufferedReader R)
+    throws IOException
+      {
+        StringBuilder str = new StringBuilder();
+        String L = R.readLine();
+        boolean first = true;
+        while (L != null)
+          {
+            if (first == true)
+              first = false;
+            else
+              str.append("\n");
+            str.append(L);
+            L = R.readLine();
+          }
+        return str.toString();
+      }
+
     public static String getFileOfResourceContents(String Name)
     throws IOException
       {
-        BufferedReader R = getReaderFromFileOrResource(Name);
-        if (R == null)
-          return null;
-        StringBuilder Str = new StringBuilder();
-        String L = R.readLine();
-        while (L != null)
+        try (BufferedReader R = getReaderFromFileOrResource(Name))
           {
-            Str.append(L).append("\n");
-            L = R.readLine();
+            if (R == null)
+              return null;
+            return readToString(R);
           }
-        R.close();
-        return Str.toString();
       }
+
+    public static String getFileOfResourceContents(File F)
+    throws IOException
+      {
+        try (BufferedReader R = new BufferedReader(new FileReader(F)))
+          {
+            return readToString(R);
+          }
+      }
+
 
     public static String getBasePathFromFileOrResource(String Name)
     throws Exception
@@ -501,6 +525,45 @@ public class FileUtil
               Str.append("\n"); // not append newline for the last line.
           }
         return Str.toString();
+      }
+
+
+    public static final String _DEFAULT_ENV_VAR_NAME = "SERVICE_ACCOUNTS_CREDENTIALS_PATH";
+
+    public static File getKeyFile(String dataProjectName, String appName)
+    throws FileNotFoundException, IOException
+      {
+        return getKeyFile(_DEFAULT_ENV_VAR_NAME, dataProjectName, appName);
+      }
+
+    public static File getKeyFile(String envVariable, String dataProjectName, String appName)
+    throws FileNotFoundException, IOException
+      {
+        String path = System.getenv(envVariable);
+        if (TextUtil.isNullOrEmpty(path) == true)
+          throw new FileNotFoundException("Cannot find the environment variable '" + envVariable + "' for the services credentials key file.");
+
+        dataProjectName = dataProjectName.toLowerCase();
+        appName = appName.toLowerCase();
+
+        // We are looking for the bq key file, ad only one file
+        File P = new File(path);
+        File K = null;
+        int i = 0;
+        for (File F : P.listFiles())
+          if (F.isFile() == true && F.getName().startsWith(dataProjectName + ".") == true && F.getName().endsWith(".key." + appName + ".json") == true)
+            {
+              ++i;
+              K = F;
+            }
+        if (i == 0)
+          {
+            LOG.error("The services credentials key file '" + dataProjectName + ".*.key." + appName + ".json' not found in '" + path + "'.");
+            throw new IOException("services credentials key file not found for dataProjectName='" + dataProjectName + " and appName='" + appName + "'.");
+          }
+        else if (i > 1)
+          throw new IOException("There are more than 1 file matching the pattern '" + dataProjectName + ".*.key." + appName + ".json' in '" + path + "' for services credentials key files: only 1 was expected.");
+        return K;
       }
 
   }

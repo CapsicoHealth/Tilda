@@ -20,6 +20,7 @@ public class PswdHash
   {
     public static void main(String[] args)
       {
+        System.out.println("PswdHash: This programs takes one parameter representing a clear password and returns a hash.");
         try
           {
             if (args.length != 1)
