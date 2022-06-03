@@ -74,8 +74,6 @@ public class ViewColumn
     @SerializedName("description") public String         _Description   = null;
     /*@formatter:on*/
 
-
-
     public ViewColumn()
       {
       }
@@ -101,6 +99,7 @@ public class ViewColumn
     public transient List<Column>        _partitionByObjs  = new ArrayList<Column>();
     public transient TypeDef             _Type;
     public transient String              _NameInner;                                  // The name of the column when used in an inner query fashion, like for pivots.
+    public transient String              _MaskDef;
 
     public transient boolean             _FailedValidation = false;
 
@@ -329,6 +328,9 @@ public class ViewColumn
           PS.AddError("View Column '" + getFullName() + "' defined an 'expression' but neglected to specify type information and optionally, size.");
         if (TextUtil.isNullOrEmpty(_Expression) == true && _Type != null && _FCT != FrameworkColumnType.TS)
           PS.AddError("View Column '" + getFullName() + "' defined extra type/size information without an 'expression': type and size are for expressions only.");
+        
+//        if (TextUtil.isNullOrEmpty(_Mask) == false)
+//          ValueHelper.CheckColumnValue(PS, this, _Name, _Mask, DefaultType.NONE);
 
         return Errs == PS.getErrorCount();
       }

@@ -42,6 +42,7 @@ import tilda.parsing.parts.Index;
 import tilda.parsing.parts.JsonField;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.OutputMap;
+import tilda.parsing.parts.helpers.ValueHelper;
 import tilda.utils.AnsiUtil;
 import tilda.utils.PaddingUtil;
 import tilda.utils.TextUtil;
@@ -118,26 +119,9 @@ public class TildaData implements CodeGenTildaData
         Out.println("   transient BitSet   __Nulls       = new BitSet(64);");
         Out.println("   transient BitSet   __Changes     = new BitSet(64);");
         Out.println("   transient boolean  __NewlyCreated= false;");
-        Out.println();
-        /*
-         * Out.println("   public static enum LookupByMethod");
-         * Out.println("     {");
-         * int LookupId = -1;
-         * if (O._PrimaryKey != null)
-         * Out.println("         PrimaryKey // Lookup by primary key - Id: " + (++LookupId));
-         * if (O._Indices != null)
-         * for (Index I : O._Indices)
-         * if (I != null && I._Unique == true)
-         * {
-         * if (LookupId == -1)
-         * Out.print("         ");
-         * else
-         * Out.print("       , ");
-         * Out.println(I._Name + " // Lookup by " + I._Name + " - Id: " + (++LookupId));
-         * }
-         * Out.println("     };");
-         */
         Out.println("   transient int      __LookupId;");
+        if (O.hasMasking() == true)
+          Out.println("   transient boolean  __MaskMode = false;");
         Out.println();
         Out.println("   public  boolean hasChanged    () { return __Changes.isEmpty() == false; }");
         Out.println("   public  boolean isNewlyCreated() { return __NewlyCreated; }");
@@ -298,57 +282,13 @@ public class TildaData implements CodeGenTildaData
               else
                 {
                   Out.print("   public static final " + JavaJDBCType.getFieldTypeBase(C) + " _" + C.getName() + TextUtil.capitalizeFirstCharacter(V._Name) + C._PadderValueNames.getPad(V._Name) + " = ");
-                  Out.print(PrintColumnValue(V._ParentColumn, V._Value));
+                  Out.print(ValueHelper.printValueJava(V._ParentColumn.getName(), V._ParentColumn.getType(), V._ParentColumn.isCollection(), V._Value));
                   Out.println(";");
                 }
             }
 
 
       }
-
-    public static String PrintColumnValue(Column C, String V)
-    throws Error
-      {
-        switch (C.getType())
-          {
-            case BOOLEAN:
-            case SHORT:
-            case INTEGER:
-              return V;
-            case FLOAT:
-              return V + "f";
-            case LONG:
-              return V + "l";
-            case NUMERIC:
-              return "new BigDecimal("+V+"d)";
-            case DOUBLE:
-              return V + "d";
-            case CHAR:
-              return TextUtil.escapeSingleQuoteForSQL(V);
-            case DATETIME:
-              if (V.equalsIgnoreCase("NOW") == true)
-                return "DateTimeUtil.NOW_PLACEHOLDER_ZDT";
-              else if (V.equalsIgnoreCase("UNDEFINED") == true)
-                return "DateTimeUtil.UNDEFINED_PLACEHOLDER_ZDT";
-              return "DateTimeUtil.toCalendarNoThrow(" + TextUtil.escapeDoubleQuoteWithSlash(V) + ")";
-            case DATE:
-              if (V.equalsIgnoreCase("NOW") == true)
-                return "DateTimeUtil.NOW_PLACEHOLDER_D";
-              else if (V.equalsIgnoreCase("UNDEFINED") == true)
-                return "DateTimeUtil.UNDEFINED_PLACEHOLDER_D";
-              return "DateTimeUtil.parseDate(" + TextUtil.escapeDoubleQuoteWithSlash(V) + ", \"yyyy-MM-dd\")";
-            case STRING:
-            case JSON:
-            case UUID:
-              return TextUtil.escapeDoubleQuoteWithSlash(V);
-            case BINARY:
-            case BITFIELD:
-              throw new Error("An invalid type '" + C.getType() + "' was assigned column values for code gen.");
-            default:
-              throw new Error("Unhandled case in switch for type '" + C.getType() + "'.");
-          }
-      }
-
 
     @Override
     public void genMethodGet(PrintWriter Out, GeneratorSession G, Column C)
@@ -1243,7 +1183,7 @@ public class TildaData implements CodeGenTildaData
                 if (C._DefaultCreateValue == null)
                   Out.println("        throw new Exception(\"Incoming value for '" + C.getFullName() + "' was null or empty. It's not nullable in the model.\\n\"+toString());");
                 else
-                  Out.println("        _" + C.getName() + "=" + TildaData.PrintColumnValue(C, C._DefaultCreateValue._Value) + ";");
+                  Out.println("        _" + C.getName() + "=" + ValueHelper.printValueJava(C.getName(), C.getType(), C.isCollection(), C._DefaultCreateValue._Value) + ";");
                 validateHousekeeping(Out, C, Mask);
               }
 
@@ -1668,6 +1608,31 @@ public class TildaData implements CodeGenTildaData
 
       }
 
+    
+    @Override
+    public void genMethodMask(PrintWriter Out, GeneratorSession G, Object O)
+    throws Exception
+      {
+        Out.println("   public void maskMode(boolean val)");
+        Out.println("     {");
+        Out.println("       __MaskMode = val;");
+        Out.println("     }");
+        Out.println("   public boolean maskMode()");
+        Out.println("     {");
+        Out.println("       return __MaskMode;");
+        Out.println("     }");
+        
+/*        
+        for (Column c : O._Columns)
+          if (TextUtil.isNullOrEmpty(c._Mask) == false)
+            {
+              String Pad = O._PadderColumnNames.getPad(c.getName());
+              Out.println("       set" + TextUtil.capitalizeFirstCharacter(c.getName()) + Pad + "(" + ValueHelper.printValueJava(c.getName(), c.getType(), c.isCollection(), c._Mask) + ");");
+            }
+*/
+      }
+
+    
     @Override
     public void genMethodRefresh(PrintWriter Out, GeneratorSession G, Object O)
       {
@@ -1986,34 +1951,34 @@ public class TildaData implements CodeGenTildaData
               Out.print((First == false ? "               + \"; " : "                   \"") + C.getName());
 
               if (Nullable)
-                Out.print("\"" + Pad + "   + (__Nulls.intersects(" + Mask + ") == true ? \": NULL\" : \"");
+                Out.print("\"" + Pad + "   + (__Nulls.intersects(" + Mask + Pad +") == true ? \": NULL\" : \"");
 
               String Lead = Nullable == true ? "" : PaddingUtil.getPad(Mask.length() + Pad.length() * 2) + "                                        ";
               if (C.isCollection() == false)
                 {
                   if (C.getType() == ColumnType.DATETIME)
                     {
-                      Out.print(": \"" + Lead + " + DateTimeUtil.printDateTimeForJSON(get" + TextUtil.capitalizeFirstCharacter(C.getName()) + Pad + "())");
+                      Out.print(": \"" + Lead + " + DateTimeUtil.printDateTimeForJSON("+Helper.printGetterCode("", "get" + TextUtil.capitalizeFirstCharacter(C.getName()) + Pad + "()", C.getName(), C.getType(), C.isCollection(), C._MaskDef) + ")");
                     }
                   else if (C.getType() == ColumnType.JSON)
                     {
-                      Out.print(": \"" + Lead + " + TextUtil.printVariableStr        (_" + C.getName() + ")");
+                      Out.print(": \"" + Lead + " + TextUtil.printVariableStr        ("+Helper.printGetterCode("", "_" + C.getName() + Pad, C.getName(), C.getType(), C.isCollection(), C._MaskDef)+ ")");
                     }
                   else if (C.getType() == ColumnType.STRING)
                     {
-                      Out.print(": \"" + Lead + " + TextUtil.printVariableStr        (get" + TextUtil.capitalizeFirstCharacter(C.getName()) + Pad + "())");
+                      Out.print(": \"" + Lead + " + TextUtil.printVariableStr        ("+Helper.printGetterCode("", "get" + TextUtil.capitalizeFirstCharacter(C.getName()) + Pad + "()", C.getName(), C.getType(), C.isCollection(), C._MaskDef)+")");
                     }
                   else
                     {
-                      Out.print(": \"" + Lead + " +                                   get" + TextUtil.capitalizeFirstCharacter(C.getName()) + Pad + "() ");
+                      Out.print(": \"" + Lead + " +                                   "+Helper.printGetterCode("", "get" + TextUtil.capitalizeFirstCharacter(C.getName()) + Pad + "()", C.getName(), C.getType(), C.isCollection(), C._MaskDef));
                     }
                 }
               else
                 {
                   if (C.getType() == ColumnType.JSON)
-                    Out.print(": \"" + Lead + " + TextUtil.printVariableStr        (_" + C.getName() + ")");
+                    Out.print(": \"" + Lead + " + TextUtil.printVariableStr        ("+Helper.printGetterCode("", "_" + C.getName() + Pad, C.getName(), C.getType(), C.isCollection(), C._MaskDef)+")");
                   else
-                    Out.print(": \"" + Lead + " + TextUtil.print                   (get" + TextUtil.capitalizeFirstCharacter(C.getName()) + Pad + "())");
+                    Out.print(": \"" + Lead + " + TextUtil.print                   ("+ Helper.printGetterCode("", "get" + TextUtil.capitalizeFirstCharacter(C.getName()) + Pad + "()", C.getName(), C.getType(), C.isCollection(), C._MaskDef)+")");
                 }
 
               if (C._Nullable == true && C._Mode != ColumnMode.CALCULATED)

@@ -32,6 +32,7 @@ import tilda.parsing.parts.OrderBy;
 import tilda.parsing.parts.OutputMap;
 import tilda.parsing.parts.PrimaryKey;
 import tilda.parsing.parts.Query.Attribute;
+import tilda.parsing.parts.helpers.ValueHelper;
 import tilda.parsing.parts.SubWhereClause;
 import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
@@ -261,6 +262,22 @@ public class Docs implements CodeGenDocs
         + Helper.getMultiLineCommentEnd());
       }
 
+    @Override
+    public void docMethodMask(PrintWriter Out, GeneratorSession G, Object O)
+      {
+        Out.println(
+        Helper.getMultiLineDocCommentStart() + SystemValues.NEWLINE
+        + " Sets the masking status of this object to true/false. When true, the toString, toJSON and toCSV methods will output masked data for the following fields:" + SystemValues.NEWLINE
+        + "<TABLE border=\"0\">"
+        );
+        for (Column c : O._Columns)
+          if (TextUtil.isNullOrEmpty(c._MaskDef) == false)
+            {
+              Out.println("     <TR><TD align=\"right\"><B>"+c.getName()+"</B>:&nbsp;</TD><TD>"+ValueHelper.printValueJava(c.getName(), c.getType(), c.isCollection(), c._MaskDef)+"</TD></TR>");
+            }
+        Out.println("</TABLE><BR>Note that the internal state of the object doesn't change, so the getters return the actual field values irrespective of the masking status." + SystemValues.NEWLINE
+             +Helper.getMultiLineCommentEnd());
+      }
 
     @Override
     public void docMethodCreate(PrintWriter Out, GeneratorSession G, Object O, List<Column> CreateColumns)
