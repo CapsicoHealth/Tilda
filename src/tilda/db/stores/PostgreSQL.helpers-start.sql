@@ -465,6 +465,13 @@ LANGUAGE sql COST 2 AS $$
 select a[floor(random() * (array_upper(a, 1) - array_lower(a, 1) + 1)+1)];
 $$;
 
+
+CREATE OR REPLACE FUNCTION TILDA.array_sort (a ANYARRAY)
+RETURNS ANYARRAY LANGUAGE SQL COST 2
+AS $$
+SELECT ARRAY(SELECT unnest($1) ORDER BY 1)
+$$;
+
 CREATE OR REPLACE FUNCTION TILDA.expRandom(mean float)
 RETURNS float
 LANGUAGE sql COST 2 AS $$
