@@ -20,6 +20,7 @@ import tilda.enums.ColumnType;
 import tilda.enums.DefaultType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.Column;
+import tilda.parsing.parts.ViewColumn;
 import tilda.utils.DateTimeUtil;
 import tilda.utils.ParseUtil;
 import tilda.utils.SystemValues;
@@ -27,84 +28,96 @@ import tilda.utils.TextUtil;
 
 public class ValueHelper
   {
+    public static void CheckColumnValue(ParserSession PS, ViewColumn Col, String Name, String Value, DefaultType Default)
+    throws Error
+      {
+        CheckColumnValue(PS, "ViewColumn", Col.getFullName(), Col.getType(), Col.isCollection(), Col._Size, Name, Value, Default);
+      }
+
     public static void CheckColumnValue(ParserSession PS, Column Col, String Name, String Value, DefaultType Default)
     throws Error
       {
-        if (isSuported(Col.getType()) == false)
+        CheckColumnValue(PS, "Column", Col.getFullName(), Col.getType(), Col.isCollection(), Col._Size==null?0:Col._Size, Name, Value, Default);
+      }
+    
+    protected static void CheckColumnValue(ParserSession PS, String Label, String ColFullName, ColumnType ColType, boolean ColCollection, int ColSize, String Name, String Value, DefaultType Default)
+    throws Error
+      {
+        if (isSuported(ColType) == false)
           {
-            PS.AddError("Column '" + Col.getFullName() + "' defines values which is not allowed for type '" + Col.getType() + "'.");
+            PS.AddError(Label+" '" + ColFullName + "' defines values which is not allowed for type '" + ColType + "'.");
             return;
           }
 
-        switch (Col.getType())
+        switch (ColType)
           {
             case BOOLEAN:
               if (ParseUtil.parseBoolean(Value, null) == null)
-                PS.AddError("Column '" + Col.getFullName() + "' defines Value '" + Name + "' with value '" + Value + "' which is incompatible with type '" + Col.getType() + "'.");
+                PS.AddError(Label+" '" + ColFullName + "' defines Value '" + Name + "' with value '" + Value + "' which is incompatible with type '" + ColType + "'.");
               break;
             case SHORT:
               if (ParseUtil.parseShort(Value, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
-                PS.AddError("Column '" + Col.getFullName() + "' defines Value '" + Name + "' with value '" + Value + "' which is incompatible with type '" + Col.getType() + "'.");
+                PS.AddError(Label+" '" + ColFullName + "' defines Value '" + Name + "' with value '" + Value + "' which is incompatible with type '" + ColType + "'.");
               break;
             case INTEGER:
               if (ParseUtil.parseInteger(Value, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
-                PS.AddError("Column '" + Col.getFullName() + "' defines Value '" + Name + "' with value '" + Value + "' which is incompatible with type '" + Col.getType() + "'.");
+                PS.AddError(Label+" '" + ColFullName + "' defines Value '" + Name + "' with value '" + Value + "' which is incompatible with type '" + ColType + "'.");
               break;
             case LONG:
               if (ParseUtil.parseLong(Value, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
-                PS.AddError("Column '" + Col.getFullName() + "' defines Value '" + Name + "' with value '" + Value + "' which is incompatible with type '" + Col.getType() + "'.");
+                PS.AddError(Label+" '" + ColFullName + "' defines Value '" + Name + "' with value '" + Value + "' which is incompatible with type '" + ColType + "'.");
               break;
             case FLOAT:
               if (ParseUtil.parseFloat(Value, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
-                PS.AddError("Column '" + Col.getFullName() + "' defines Value '" + Name + "' with value '" + Value + "' which is incompatible with type '" + Col.getType() + "'.");
+                PS.AddError(Label+" '" + ColFullName + "' defines Value '" + Name + "' with value '" + Value + "' which is incompatible with type '" + ColType + "'.");
               break;
             case DOUBLE:
               if (ParseUtil.parseDouble(Value, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
-                PS.AddError("Column '" + Col.getFullName() + "' defines Value '" + Name + "' with value '" + Value + "' which is incompatible with type '" + Col.getType() + "'.");
+                PS.AddError(Label+" '" + ColFullName + "' defines Value '" + Name + "' with value '" + Value + "' which is incompatible with type '" + ColType + "'.");
               break;
             case NUMERIC:
               if (ParseUtil.parseBigDecimal(Value, null) == null)
-                PS.AddError("Column '" + Col.getFullName() + "' defines Value '" + Name + "' with value '" + Value + "' which is incompatible with type '" + Col.getType() + "'.");
+                PS.AddError(Label+" '" + ColFullName + "' defines Value '" + Name + "' with value '" + Value + "' which is incompatible with type '" + ColType + "'.");
               break;
             case CHAR:
               if (Value.length() != 1)
-                PS.AddError("Column '" + Col.getFullName() + "' defines Value '" + Name + "' with value '" + Value + "' which is incompatible with type '" + Col.getType() + "'.");
+                PS.AddError(Label+" '" + ColFullName + "' defines Value '" + Name + "' with value '" + Value + "' which is incompatible with type '" + ColType + "'.");
               break;
             case STRING:
-              if (Col.isCollection() == false && Value.length() > Col._Size)
-                PS.AddError("Column '" + Col.getFullName() + "' defines Value '" + Name + "' with value '" + Value + "' larger than the defined size=" + Col._Size + ".");
+              if (ColCollection == false && Value.length() > ColSize)
+                PS.AddError(Label+" '" + ColFullName + "' defines Value '" + Name + "' with value '" + Value + "' larger than the defined size=" + ColSize + ".");
               break;
             case DATETIME:
               if (Value.equalsIgnoreCase("NOW") == false && Value.equalsIgnoreCase("UNDEFINED") == false)
-                PS.AddError("Column '" + Col.getFullName() + "' defines Value '" + Name + "->" + Value + "' which is not a default NOW or UNDEFINED value. Only these pre-defined values are allowed for timestamps.");
+                PS.AddError(Label+" '" + ColFullName + "' defines Value '" + Name + "->" + Value + "' which is not a default NOW or UNDEFINED value. Only these pre-defined values are allowed for timestamps.");
               if (Default == DefaultType.NONE)
-                PS.AddError("Column '" + Col.getFullName() + "' defines Value '" + Name + "' which is not set as a default. Only default values are allowed for timestamps.");
+                PS.AddError(Label+" '" + ColFullName + "' defines Value '" + Name + "' which is not set as a default. Only default values are allowed for timestamps.");
               break;
             case DATE:
               if (Value.equalsIgnoreCase("NOW") == false && Value.equalsIgnoreCase("UNDEFINED") == false && DateTimeUtil.parseDate(Value, "yyyy-MM-dd") == null)
-                PS.AddError("Column '" + Col.getFullName() + "' defines Value '" + Name + "->" + Value + "' which is not a default NOW or UNDEFINED, or valid yyyy-MM-dd value. Only these pre-defined values or date format are allowed for dates.");
+                PS.AddError(Label+" '" + ColFullName + "' defines Value '" + Name + "->" + Value + "' which is not a default NOW or UNDEFINED, or valid yyyy-MM-dd value. Only these pre-defined values or date format are allowed for dates.");
               if (Default == DefaultType.NONE)
-                PS.AddError("Column '" + Col.getFullName() + "' defines Value '" + Name + "' which is not set as a default. Only default values are allowed for Dates.");
+                PS.AddError(Label+" '" + ColFullName + "' defines Value '" + Name + "' which is not set as a default. Only default values are allowed for Dates.");
               break;
             case BINARY:
             case BITFIELD:
             case JSON:
             case UUID:
             default:
-              throw new Error("Unhandled switch case for type '" + Col.getType() + "'.");
+              throw new Error("Unhandled switch case for type '" + ColType + "'.");
           }
       }
 
-    public static String printValue(String colName, ColumnType colType, boolean isCollection, String defaultValue)
+    public static String printValueSQL(String colName, ColumnType colType, boolean isCollection, String val)
     throws Exception
       {
         if (isSuported(colType) == false)
-          throw new Exception("Column '" + colName + "' defines default value '" + defaultValue + "' which is not allowed for type '" + colType + "'.");
+          throw new Exception("Column '" + colName + "' defines default value '" + val + "' which is not allowed for type '" + colType + "'.");
           
         if (isCollection == true)
           {
             // Coalesce default values will be literals
-            return defaultValue;
+            return val;
           }
         switch (colType)
           {
@@ -115,18 +128,18 @@ public class ValueHelper
             case DOUBLE:
             case FLOAT:
             case NUMERIC:
-              return defaultValue;
+              return val;
             case CHAR:
             case STRING:
-              return TextUtil.escapeSingleQuoteForSQL(defaultValue);
+              return TextUtil.escapeSingleQuoteForSQL(val);
             case DATE:
             case DATETIME:
-              if (defaultValue.equalsIgnoreCase("now") == true)
+              if (val.equalsIgnoreCase("now") == true)
                 return "now()";
-              else if (defaultValue.equalsIgnoreCase("undefined") == true)
+              else if (val.equalsIgnoreCase("undefined") == true)
                 return "'" + DateTimeUtil.printDateTimeForSQL(DateTimeUtil.UNDEFINED_PLACEHOLDER_ZDT) + "'";
               else
-                return TextUtil.escapeSingleQuoteForSQL(defaultValue);
+                return TextUtil.escapeSingleQuoteForSQL(val);
             case BINARY:
             case BITFIELD:
             case JSON:
@@ -135,6 +148,50 @@ public class ValueHelper
               throw new Error("Unhandled switch case for type '" + colType + "'.");
           }
       }
+    
+    public static String printValueJava(String colName, ColumnType colType, boolean isCollection, String val)
+    throws Error
+      {
+        switch (colType)
+          {
+            case BOOLEAN:
+            case SHORT:
+            case INTEGER:
+              return val;
+            case FLOAT:
+              return val + "f";
+            case LONG:
+              return val + "l";
+            case NUMERIC:
+              return "new BigDecimal("+val+"d)";
+            case DOUBLE:
+              return val + "d";
+            case CHAR:
+              return TextUtil.escapeSingleQuoteForSQL(val);
+            case DATETIME:
+              if (val.equalsIgnoreCase("NOW") == true)
+                return "DateTimeUtil.NOW_PLACEHOLDER_ZDT";
+              else if (val.equalsIgnoreCase("UNDEFINED") == true)
+                return "DateTimeUtil.UNDEFINED_PLACEHOLDER_ZDT";
+              return "DateTimeUtil.toCalendarNoThrow(" + TextUtil.escapeDoubleQuoteWithSlash(val) + ")";
+            case DATE:
+              if (val.equalsIgnoreCase("NOW") == true)
+                return "DateTimeUtil.NOW_PLACEHOLDER_D";
+              else if (val.equalsIgnoreCase("UNDEFINED") == true)
+                return "DateTimeUtil.UNDEFINED_PLACEHOLDER_D";
+              return "DateTimeUtil.parseDate(" + TextUtil.escapeDoubleQuoteWithSlash(val) + ", \"yyyy-MM-dd\")";
+            case STRING:
+            case JSON:
+            case UUID:
+              return TextUtil.escapeDoubleQuoteWithSlash(val);
+            case BINARY:
+            case BITFIELD:
+              throw new Error("An invalid type '" + colType + "' was assigned column values for code gen.");
+            default:
+              throw new Error("Unhandled case in switch for type '" + colType + "'.");
+          }
+      }
+    
 
     public static boolean isSuported(ColumnType colType)
       {
