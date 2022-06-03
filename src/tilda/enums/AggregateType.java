@@ -75,15 +75,19 @@ public enum AggregateType
         return _targetColumn;
       }
 
-  //@formatter:off
+//@formatter:off
     protected static String[][] _ALIASES = {{"ROW_NUM"     , "ROW_NUMBER"   }
                                            ,{"ROWNUMBER"   , "ROW_NUMBER"   }
                                            ,{"ROWNUM"      , "ROW_NUMBER"   }
-                                           ,{"ARRAY_CAT"   , "ARRAYCAT" }
-                                           ,{"RANK_PCT"    , "PERCENT_RANK"  }
-                                           ,{"RANK_PERCENT", "PERCENT_RANK"  }
-                                           ,{"RANKPCT"     , "PERCENT_RANK"  }
-                                           ,{"NTH"         , "NTH_VALUE"     }
+                                           ,{"ARRAY_CAT"   , "ARRAYCAT"     }
+                                           ,{"PERCENTRANK" , "PERCENT_RANK" }
+                                           ,{"PCT_RANK"    , "PERCENT_RANK" }
+                                           ,{"PCTRANK"     , "PERCENT_RANK" }
+                                           ,{"RANK_PERCENT", "PERCENT_RANK" }
+                                           ,{"RANKPERCENT" , "PERCENT_RANK" }
+                                           ,{"RANK_PCT"    , "PERCENT_RANK" }
+                                           ,{"RANKPCT"     , "PERCENT_RANK" }
+                                           ,{"NTH"         , "NTH_VALUE"    }
                                            };
 //@formatter:on
 
