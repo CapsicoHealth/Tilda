@@ -36,6 +36,7 @@ import tilda.performance.PerfTracker;
 import tilda.utils.DurationUtil;
 import tilda.utils.FileUtil;
 import tilda.utils.TextUtil;
+import tilda.utils.json.gson_serializers.GSONSerializerInitializer;
 
 public class Import
   {
@@ -195,7 +196,7 @@ public class Import
           }
 
         // long T = System.nanoTime();
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        Gson gson = GSONSerializerInitializer.registerSerializers(new GsonBuilder().setPrettyPrinting()).create();
         Importer I = (Importer) gson.fromJson(R, RootClass);
         // TODO OPTIONAL: Print Time taken to read File
         R.close();
