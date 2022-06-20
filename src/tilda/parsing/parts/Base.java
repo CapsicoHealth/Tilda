@@ -49,6 +49,7 @@ public abstract class Base
     @SerializedName("queries"    ) public List<SubWhereClause> _Queries    = new ArrayList<SubWhereClause>();
     @SerializedName("json"       ) public List<OutputMap>      _JsonDEPRECATED = new ArrayList<OutputMap >();
     @SerializedName("outputMaps" ) public List<OutputMap>      _OutputMaps = new ArrayList<OutputMap>();
+    @SerializedName("masks"      ) public List<Mask>           _Masks = new ArrayList<Mask>();
     @SerializedName("tenantInit" ) public Boolean              _TenantInit = Boolean.FALSE;
     /*@formatter:on*/
 
@@ -93,10 +94,13 @@ public abstract class Base
             _Queries.add(new SubWhereClause(SWC));
 
         // OutputMaps are being modified as part of validation, and so we need a clean copy here.
-        for (OutputMap OM : b._JsonDEPRECATED)
-          _JsonDEPRECATED.add(new OutputMap(OM));
-        for (OutputMap OM : b._OutputMaps)
-          _OutputMaps.add(new OutputMap(OM));
+        // for (OutputMap OM : b._JsonDEPRECATED)
+        // _JsonDEPRECATED.add(new OutputMap(OM));
+        // for (OutputMap OM : b._OutputMaps)
+        // _OutputMaps.add(new OutputMap(OM));
+        _JsonDEPRECATED = OutputMap.newInstances(b._JsonDEPRECATED);
+        _OutputMaps = OutputMap.newInstances(b._OutputMaps);
+        _Masks = Mask.newInstances(b._Masks);
 
         _TenantInit = b._TenantInit;
         _TildaType = b._TildaType;
@@ -180,12 +184,12 @@ public abstract class Base
           PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring " + _TildaType.name() + " '" + getBaseName() + "' with a name '" + _Name + "' which is not valid. " + ValidationHelper._ValidIdentifierMessage);
         if (ValidationHelper.isReservedIdentifier(_Name) == true)
           PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring " + _TildaType.name() + " '" + getBaseName() + "' with a name '" + _Name + "' which is a reserved identifier.");
-        
+
         if (TextUtil.isNullOrEmpty(_Description) == true)
           PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring " + _TildaType.name() + " '" + getBaseName() + "' without a description.");
 
         // _Name = _Name.toUpperCase();
-        
+
         // if dbOnly has been set, we have to check for deprecation condition
         if (_DBOnly_DEPRECATED != null)
           {
@@ -204,9 +208,9 @@ public abstract class Base
         _AppFactoryClassName = _OriginalName + "_Factory";
 
         // LDH-NOTE: We do not validate the mappings at this time, because the whole parent object
-        // has not finished being validated. As such, columns and other generetated
-        // artifacts won't exist yet at this point.
-
+        // has not finished being validated. As such, columns and other generated
+        // artifacts won't exist yet at this point. All we do is transfer the entries in the
+        // deprecated tag 'json' to the new tag 'outputMaps'.
         if (_JsonDEPRECATED.isEmpty() == false)
           {
             for (OutputMap J : _JsonDEPRECATED)
@@ -221,7 +225,7 @@ public abstract class Base
     protected void validateQueries(ParserSession PS, Set<String> Names)
       {
         DefaultsHelper.defaultAllQuery(PS, this);
-        
+
         _HasUniqueQuery = false;
         for (SubWhereClause SWC : _Queries)
           {
@@ -238,7 +242,7 @@ public abstract class Base
     protected void validateOutputMaps(ParserSession PS)
       {
         DefaultsHelper.defaultOutputMap(PS, this);
-        
+
         Set<String> Names = new HashSet<String>();
         for (OutputMap OM : _OutputMaps)
           if (OM != null)
@@ -248,6 +252,20 @@ public abstract class Base
               OM.Validate(PS, this);
             }
       }
+
+    protected void validateMasks(ParserSession PS)
+      {
+        Set<String> colNames = new HashSet<String>();
+        for (Mask M : _Masks)
+          if (M != null)
+            {
+              M.Validate(PS, this);
+              for (Column C : M._ColumnObjs)
+                if (C != null && colNames.add(C._Name) == false)
+                  PS.AddError(_TildaType.name() + " '" + getFullName() + "' is defining a mask with a duplicate column '" + C._Name + "'.");
+            }
+      }
+
 
     /**
      * "colA", "abc*"
@@ -309,6 +327,17 @@ public abstract class Base
               return om;
         return null;
       }
+    
+    public boolean hasMasking()
+     {
+       for (String colName : getColumnNames())
+         {
+           Column c = getColumn(colName);
+           if (c != null && c._MaskDef != null)
+            return true;
+         }
+       return false;
+     }
 
     /**
      * Returns the list of columns that represent the first identity of the object. If a PK is defined,

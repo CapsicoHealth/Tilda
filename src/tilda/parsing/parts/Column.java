@@ -80,6 +80,7 @@ public class Column extends TypeDef
     public transient ColumnMapper        _MapperDef;
     public transient ColumnValue         _DefaultCreateValue;
     public transient ColumnValue         _DefaultUpdateValue;
+    public transient String              _MaskDef;
 
     protected transient int              _SequenceOrder     = -1;
 
@@ -102,6 +103,7 @@ public class Column extends TypeDef
         _ModeStr = c._ModeStr;
         _Invariant = c._Invariant;
         _ProtectStr = c._ProtectStr;
+//        _Mask = c._Mask;
         _Description = c._Description;
         if (c._Mapper != null)
           _Mapper = new ColumnMapper(c._Mapper);
@@ -126,7 +128,7 @@ public class Column extends TypeDef
 
       }
 
-    public Column(String Name, String TypeStr, Integer Size, boolean Nullable, ColumnMode Mode, boolean Invariant, ProtectionType Protect, String Description, Integer Precision, Integer Scale)
+    public Column(String Name, String TypeStr, Integer Size, boolean Nullable, ColumnMode Mode, boolean Invariant, ProtectionType Protect, String Description, Integer Precision, Integer Scale, String Mask)
       {
         super(TypeStr, Size, Precision, Scale);
         _Name = Name;
@@ -134,6 +136,7 @@ public class Column extends TypeDef
         _ModeStr = Mode == null ? null : Mode.name();
         _Invariant = Invariant;
         _ProtectStr = Protect == null ? null : Protect.name();
+//        _Mask = Mask;
         _Description = Description;
         _Precision = Precision;
         _Scale = Scale;
@@ -212,7 +215,6 @@ public class Column extends TypeDef
 
     private void ValidateBase(ParserSession PS, Object ParentObject)
       {
-
         String N = getLogicalName();
         if (TextUtil.isNullOrEmpty(N) == true)
           {
@@ -284,6 +286,9 @@ public class Column extends TypeDef
         // {
         // PS.AddNote("Column '" + getFullName() + "' is defining a default value for a nullable column.");
         // }
+        
+//        if (TextUtil.isNullOrEmpty(_Mask) == false)
+//         ValueHelper.CheckColumnValue(PS, this, _Name, _Mask, DefaultType.NONE);
       }
 
 
@@ -405,8 +410,13 @@ public class Column extends TypeDef
               _Values = ColumnValue.deepCopy(_SameAsObj._Values);
           }
 
-        if (_ProtectStr != null && _ProtectStr.equals(_SameAsObj._ProtectStr) == false)
-          PS.AddError("Column '" + getFullName() + "' is a 'sameas' and is redefining 'protect', which is not allowed.");
+        if (_ProtectStr != null)
+          {
+            if (   TextUtil.isNullOrEmpty(_SameAsObj._ProtectStr) == false 
+                && ProtectionType.parse(_SameAsObj._ProtectStr).ordinal() >  ProtectionType.parse(_ProtectStr).ordinal()
+               )
+             PS.AddError("Column '" + getFullName() + "' is a 'sameas' and is redefining 'protect' from '"+_SameAsObj._ProtectStr+"' to '"+_ProtectStr+"', which is not allowed: only protection upgrades are allowed, not downgrades.");
+          }
         else
           _ProtectStr = _SameAsObj._ProtectStr;
 

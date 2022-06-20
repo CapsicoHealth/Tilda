@@ -1665,14 +1665,27 @@ public class TextUtil
         return new String(str);
       }
 
+    /**
+     * Returns a standardized name string as "[title] UPPER([last]), CAPITALIZED([first]) UPPER(FIRST_CHAR([middle])).".
+     * If both [last] and [first] are null or empty, a null string is returned. If one of them is null or empty, the output
+     * is adapted as necessary, i.e., "[title] CAPITALIZED([first]) UPPER(FIRST_CHAR([middle]))." or "[title] <UPPER[last]] UPPER(FIRST_CHAR([middle])).".
+     * The [title] and [middle] parts are omitted if null or empty.
+     * @param Title
+     * @param Last
+     * @param First
+     * @param Middle
+     * @return
+     */
     public static final String standardizeFullName(String Title, String Last, String First, String Middle)
       {
         Title = isNullOrEmpty(Title) ? "" : Title + " ";
-        Last = isNullOrEmpty(Last) ? "" : Last.trim().toUpperCase();
-        First = isNullOrEmpty(First) ? "" : capitalizeEachWord(First.trim());
+        Last = isNullOrEmpty(Last) ? null : Last.trim().toUpperCase();
+        First = isNullOrEmpty(First) ? null : capitalizeEachWord(First.trim());
         Middle = isNullOrEmpty(Middle) ? "" : " " + Character.toUpperCase(Middle.trim().charAt(0)) + ".";
 
-        return Title + Last + ", " + First + Middle;
+        return Last == null && First == null ? null
+                                             : Title + (Last==null ? "" : (Last + (First == null ? "" : ", "))) + (First==null ? "" : First) + Middle
+               ;
       }
 
     public static final String maskName(String Last, String First, long RefNum)

@@ -65,6 +65,8 @@ public interface CodeGenDocs
 
     public void docMethodCopyTo(PrintWriter Out, GeneratorSession G, Object O);
 
+    public void docMethodMask(PrintWriter out, GeneratorSession G, Object O);
+    
     public void docMethodTouch(PrintWriter Out, GeneratorSession G, Column C);
 
     public void docMethodWrite(PrintWriter Out, GeneratorSession G, Object O);
@@ -106,5 +108,6 @@ public interface CodeGenDocs
     public void docMethodUpsert(PrintWriter Out, GeneratorSession G, Object O);
 
     public void docMethodInit(PrintWriter Out, GeneratorSession G, Object O);
+
     
   }

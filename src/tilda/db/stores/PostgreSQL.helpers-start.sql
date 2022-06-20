@@ -406,16 +406,34 @@ END $$;
 
 ---------------------
 -- array_cat_agg
+-- With Postgres 14, there was a major Type change, and array functions were change from working with ANYARRAY
+-- to ANYCOMPATIBLEARRAY. We use 'array_cat' in this aggregate and so we have to create this convoluted piece
+-- of code to try to create the "anyarray" version (the default), but catch the exception that should occur on V14
+-- and do the "anycompatiblearray" version instead.
 DO $$ BEGIN
-if not exists (SELECT 1 FROM pg_aggregate WHERE aggfnoid::TEXT = 'public.array_cat_agg') THEN
-CREATE AGGREGATE public.array_cat_agg (anyarray)
-(
-    sfunc = array_cat,
-    stype = anyarray,
-    initcond = '{}'
-);  
+RAISE NOTICE 'create public.array_cat_agg';
+IF NOT exists (SELECT 1 FROM pg_aggregate WHERE aggfnoid::TEXT IN ('public.array_cat_agg', 'array_cat_agg'))  
+THEN
+  CREATE AGGREGATE public.array_cat_agg (anyarray)
+   (
+     sfunc = array_cat,
+     stype = anyarray,
+     initcond = '{}'
+   );
+  RAISE NOTICE 'public.array_cat_agg (anyarray) created';
+ELSE
+RAISE NOTICE 'public.array_cat_agg already exists';
 END IF;
-END $$;
+EXCEPTION WHEN OTHERS THEN
+  CREATE AGGREGATE public.array_cat_agg (anycompatiblearray)
+   (
+     sfunc = array_cat,
+     stype = anycompatiblearray,
+     initcond = '{}'
+   );
+  RAISE NOTICE 'public.array_cat_agg (anycompatiblearray) created';
+ END;
+$$;
 
 
 
@@ -463,6 +481,13 @@ CREATE OR REPLACE FUNCTION TILDA.arrayPick(a anyarray)
 RETURNS anyelement
 LANGUAGE sql COST 2 AS $$
 select a[floor(random() * (array_upper(a, 1) - array_lower(a, 1) + 1)+1)];
+$$;
+
+
+CREATE OR REPLACE FUNCTION TILDA.array_sort (a ANYARRAY)
+RETURNS ANYARRAY LANGUAGE SQL COST 2
+AS $$
+SELECT ARRAY(SELECT unnest($1) ORDER BY 1)
 $$;
 
 CREATE OR REPLACE FUNCTION TILDA.expRandom(mean float)

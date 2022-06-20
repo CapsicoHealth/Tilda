@@ -52,11 +52,11 @@ public class MappingColumn
       if (_Group != null)
        _Group.Validate(PS, "Mapper "+ParentMapper._Name+"'s 'group'", false, true);
       
-      _IdColumn    = new Column("id"   , _Id   ._TypeStr, _Id   ._Size, false, null, true , null, "The original id of this type",_Id   ._Precision, _Id   ._Scale);
-      _NameColumn  = new Column("name" , _Name ._TypeStr, _Name ._Size, false, null, false, null, "The mapped name for this type", _Name._Precision, _Name._Scale);
+      _IdColumn    = new Column("id"   , _Id   ._TypeStr, _Id   ._Size, false, null, true , null, "The original id of this type",_Id   ._Precision, _Id   ._Scale, null);
+      _NameColumn  = new Column("name" , _Name ._TypeStr, _Name ._Size, false, null, false, null, "The mapped name for this type", _Name._Precision, _Name._Scale, null);
       
       if (_Group != null)
-       _GroupColumn = new Column("group", _Group._TypeStr, _Group._Size, false, null, false, null, "The mapped group for this type", _Group._Precision, _Group._Scale);
+       _GroupColumn = new Column("group", _Group._TypeStr, _Group._Size, false, null, false, null, "The mapped group for this type", _Group._Precision, _Group._Scale, null);
       
       return Errs == PS.getErrorCount();
     }

@@ -182,6 +182,19 @@ public interface CodeGenTildaData extends CodeGenBase
     public void genMethodCopyTo(PrintWriter Out, GeneratorSession G, Object O, List<Column> CopyToColumns)
     throws Exception;
 
+
+    /**
+     * 
+     * @param Out
+     * @param G
+     * @param O
+     * @param CopyToColumns
+     * @throws Exception
+     */
+    public void genMethodMask(PrintWriter Out, GeneratorSession G, Object O)
+    throws Exception;
+
+    
     /**
      * 
      * @param Out

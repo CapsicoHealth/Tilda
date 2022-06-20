@@ -50,6 +50,7 @@ import tilda.parsing.parts.OutputMap;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.SubWhereClause;
 import tilda.parsing.parts.View;
+import tilda.utils.TextUtil;
 import tilda.utils.json.JSONUtil;
 
 public class Generator
@@ -182,7 +183,7 @@ public class Generator
             {
               Column col = O.getColumn(name);
               if (col == null)
-               continue;
+                continue;
               if (First == true)
                 {
                   First = false;
@@ -429,6 +430,12 @@ public class Generator
         Out.println();
         Out.println();
         DG.MustNotBeModified(Out, G);
+        
+        if (O.hasMasking() == true)
+          {
+            DG.docMethodMask(Out, G, O);
+            CG.genMethodMask(Out, G, O);
+          }
 
         Out.println();
         DG.docMethodRefresh(Out, G, O);

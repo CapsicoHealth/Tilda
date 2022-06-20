@@ -1027,7 +1027,7 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("               if(commitSize > 0)");
         Out.println("                 {");
         Out.println("                   C.commit();");
-        Out.println("                   LOG.debug(\"Commited \" + insertCount + \" batch records.\");");
+//        Out.println("                   LOG.debug(\"Commited \" + insertCount + \" batch records.\");");
         Out.println("                 }");
         Out.println("               LOG.debug(\"Final Batch-inserted objects between positions #\" + insertCount + \" and #\" + index + \".\");");
         Out.println("             }");
@@ -1253,6 +1253,7 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("   public static void toCSV" + J._Name + "(java.io.Writer out, " + Helper.getFullAppDataClassName(J._ParentObject) + " obj) throws java.io.IOException");
         Out.println("    {");
         Out.println("      long T0 = System.nanoTime();");
+        Out.println("     " + Helper.getFullBaseClassName(J._ParentObject) + " Obj = (" + Helper.getFullBaseClassName(J._ParentObject) + ") obj;");
         Out.println("      StringBuilder Str = new StringBuilder();");
         Out.println();
         boolean First = true;
@@ -1289,6 +1290,7 @@ public class TildaFactory implements CodeGenTildaFactory
             Out.println("   throws java.io.IOException");
             Out.println("    {");
             Out.println("      long T0 = System.nanoTime();");
+            Out.println("     " + Helper.getFullBaseClassName(J._ParentObject) + " Obj = (" + Helper.getFullBaseClassName(J._ParentObject) + ") obj;");
             Out.println("      SyncStatus s = SyncStatus.get(lastSync, obj);");
             Out.println("      if (s == SyncStatus.OLD || s == SyncStatus.GHOST)");
             Out.println("       return false;");

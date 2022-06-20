@@ -509,7 +509,7 @@ public class View extends Base
         if (_TimeSeries != null)
           {
             ColumnType Type = ColumnType.DATE;
-            Column C = new Column(_TimeSeries._Name, Type.name(), null, true, ColumnMode.NORMAL, true, null, "Timeseries period", null, null);
+            Column C = new Column(_TimeSeries._Name, Type.name(), null, true, ColumnMode.NORMAL, true, null, "Timeseries period", null, null, null);
             C._FCT = FrameworkColumnType.TS;
             C.Validate(PS, O);
             O._Columns.add(C);
@@ -575,7 +575,7 @@ public class View extends Base
                 else
                   {
                     F.Validate(PS, this);
-                    Column C = new Column(F._Name, F._TypeStr, F._Size, true, ColumnMode.NORMAL, true, null, "<B>" + F._Title + "</B>: " + String.join(" ", F._Description), F._Precision, F._Scale);
+                    Column C = new Column(F._Name, F._TypeStr, F._Size, true, ColumnMode.NORMAL, true, null, "<B>" + F._Title + "</B>: " + String.join(" ", F._Description), F._Precision, F._Scale, null);
                     if (F.getType() == ColumnType.DATETIME)
                       C._FCT = FrameworkColumnType.FORMULA_DT;
                     else
