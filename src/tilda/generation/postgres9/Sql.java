@@ -776,7 +776,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
             if (VRI != null)
               {
                 OutFinal.append("\n");
-                OutFinal.append("  IF __startDate__ is null\n");
+                OutFinal.append("  IF __startDate__ is null or __startDate__='1111-11-11'\n");
                 OutFinal.append("  THEN\n");
                 OutFinal.append("\n");
               }
