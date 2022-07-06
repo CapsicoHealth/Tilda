@@ -58,15 +58,18 @@ public class Export
         if (path.startsWith("bq`") == true)
           {
             if (path.endsWith("`") == false)
-              throw new Exception("The <export_path> parameter '" + path + "' must be of the form 'bq`project.dataset`'.");
+              throw new Exception("The <export_path> parameter '" + path + "' must be of the form 'bq`project.dataset{.tablename}`'.");
             String[] parts = path.substring("bq`".length(), path.length() - 1).split("\\.");
-            if (parts.length != 2)
+            if (parts.length != 2 && parts.length != 3)
               throw new Exception("The bq path '" + path + "' must be of the form 'bq`project.dataset`'.");
             BigQuery bq = BQHelper.getBigQuery(parts[0]);
             String schemaName = (String) factoryClass.getSuperclass().getDeclaredField("SCHEMA_LABEL").get(null);
             Schema schema = BQHelper.getTildaBQSchema(schemaName, tableName, "");
-            LOG.debug("Outputting data for table schema: "+BQHelper.getSchemaColumns(schema)+"\n");
-            Out = BQHelper.getTableWriterChannel(bq, parts[1], tableName, mode, schema, false);
+            LOG.debug("Source schema for "+schemaName+"."+tableName+":\n "+BQHelper.getSchemaColumns(schema)+"\n");
+            String bqSchemaName = parts[1];
+            String bqTableName = parts.length == 3 ? parts[2] : tableName;
+            LOG.debug("Destination table: "+parts[0]+"."+bqSchemaName+"."+bqTableName+".");
+            Out = BQHelper.getTableWriterChannel(bq, bqSchemaName, bqTableName, mode, schema, false);
             BQWriter writer = new BQWriter(Out);
             OP = mode.equalsIgnoreCase("csv") == true
             ? new ExporterCSVObjectProcessor(writer, path, logFrequency, factoryClass, false)
@@ -121,18 +124,23 @@ public class Export
     public static void main(String[] args)
     throws Exception
       {
+        LOG.info("----------------------------------------------------------------------------------------------------------------------------");
         LOG.info("This utility exports one or more tables to CSV/JSON/JSONL or directly to BigQuery.");
         LOG.info("  - Export <connection_id> <threads> <mode> <export_path> <tilda_class_name>+");
         LOG.info("  - It takes 5+ parameter:");
         LOG.info("      . the connection Id");
         LOG.info("      . the number of threads");
         LOG.info("      . the export mode (CSV|JSON|JSONL)");
-        LOG.info("      . the path(s) where the file(s) should be saved or a BQ destination as 'bq`<project>.<dataset>`'");
+        LOG.info("      . the path(s) where the file(s) should be saved or a BQ destination as 'bq`<project>.<dataset>{.<tablename>}`'");
         LOG.info("      . one or more full class names of a Tilda object (without _Data or _Factory).");
         LOG.info("  - For example");
         LOG.info("      . ExportToCSV MAIN 2 CSV \"C:\\mypath\\data_export\\\" com.myCo.myProj.data.User com.myCo.myProj.data.Role");
         LOG.info("      . ExportToCSV MAIN 2 JSONL bq`myproject.mydataset` com.myCo.myProj.data.User com.myCo.myProj.data.Role");
         LOG.info("NOTE: Test before assuming that more threads will make this faster!");
+        LOG.info("NOTE: If specifying a BQ destination with a table name, only one tilda_class_name is expected.");
+        LOG.info("----------------------------------------------------------------------------------------------------------------------------");
+        LOG.info("");
+        LOG.info("");
 
         if (args.length < 5)
           throw new Exception("This utility needs at least 5 parameters passed.");
@@ -142,9 +150,13 @@ public class Export
         String mode = args[2];
         if (mode.equalsIgnoreCase("csv") == false && mode.equalsIgnoreCase("json") == false && mode.equalsIgnoreCase("jsonl") == false)
           throw new Exception("This utility was called with mode='" + mode + "' which is not supported. Only CSV, JSON or JSONL are supported.");
-
+        
         String path = args[3];
         final int logFrequency = 10_000;
+
+//        LOG.debug("path: "+path+"; path.startsWith(\"bq`\"): "+path.startsWith("bq`")+"; path.split(\"\\\\.\").length: "+path.split("\\.").length+": args.length: "+args.length+";");
+        if (path.startsWith("bq`")==true && path.split("\\.").length == 3 && args.length > 5)
+          throw new Exception("This utility was called with path='" + path + "' which contains a target table name in BQ: only one <tilda_class_name source> can be provided in that case whereas "+(args.length-4)+" were found.");
 
         LOG.debug("connection_id: "+connectionId+"; threads: "+threads+"; mode: "+mode+"; export_path: "+path+";");
 
