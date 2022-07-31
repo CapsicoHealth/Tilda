@@ -35,7 +35,12 @@ public class TILDA__TESTING_Factory
    public static final String SCHEMA_TABLENAME_LABEL = TextUtil.print("TILDATEST.Testing", "");
    public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDATEST", "Testing"); }
 
-   public static abstract class COLS {
+   public static final class COLS_BASE
+    {
+      private COLS_BASE() { }
+
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.refnum -> TILDATEST.Testing."refnum"
@@ -53,7 +58,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          REFNUM     = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"     , 0/*0*/, "The primary key for this record", null, null, null);
+     public final Type_LongPrimitive          REFNUM     = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"     , 0/*0*/, "The primary key for this record", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.refnum2 -> TILDATEST.Testing."refnum2"
@@ -71,7 +78,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongCollection         REFNUM2    = new Type_LongCollection        (SCHEMA_LABEL, TABLENAME_LABEL, "refnum2"    , 1/*1*/, "The person's primary key", null, null);
+     public final Type_LongCollection         REFNUM2    = new Type_LongCollection        (SCHEMA_LABEL, TABLENAME_LABEL, "refnum2"    , 1/*1*/, "The person's primary key", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.name -> TILDATEST.Testing."name"
@@ -90,7 +99,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        NAME       = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "name"       , 2/*2*/, "Medical system unique enterprise id", null, null, null);
+     public final Type_StringPrimitive        NAME       = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "name"       , 2/*2*/, "Medical system unique enterprise id", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.description -> TILDATEST.Testing."description"
@@ -109,7 +120,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    DESCRIPTION= new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "description", 3/*3*/, "The title for a person, i.e., Mr, Miss, Mrs...", null, null, null);
+     public final Type_StringPrimitiveNull    DESCRIPTION= new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "description", 3/*3*/, "The title for a person, i.e., Mr, Miss, Mrs...", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.desc2 -> TILDATEST.Testing."desc2"
@@ -128,7 +141,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    DESC2      = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "desc2"      , 4/*4*/, "The title for a person, i.e., Mr, Miss, Mrs...", null, null, null);
+     public final Type_StringPrimitiveNull    DESC2      = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "desc2"      , 4/*4*/, "The title for a person, i.e., Mr, Miss, Mrs...", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.desc3 -> TILDATEST.Testing."desc3"
@@ -147,7 +162,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    DESC3      = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "desc3"      , 5/*5*/, "The title for a person, i.e., Mr, Miss, Mrs...", null, null, null);
+     public final Type_StringPrimitiveNull    DESC3      = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "desc3"      , 5/*5*/, "The title for a person, i.e., Mr, Miss, Mrs...", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.desc4 -> TILDATEST.Testing."desc4"
@@ -166,7 +183,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    DESC4      = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "desc4"      , 6/*6*/, "The title for a person, i.e., Mr, Miss, Mrs...", null, null, null);
+     public final Type_StringPrimitiveNull    DESC4      = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "desc4"      , 6/*6*/, "The title for a person, i.e., Mr, Miss, Mrs...", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.desc5 -> TILDATEST.Testing."desc5"
@@ -185,7 +204,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    DESC5      = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "desc5"      , 7/*7*/, "The title for a person, i.e., Mr, Miss, Mrs...", null, null, null);
+     public final Type_StringPrimitiveNull    DESC5      = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "desc5"      , 7/*7*/, "The title for a person, i.e., Mr, Miss, Mrs...", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.desc6 -> TILDATEST.Testing."desc6"
@@ -212,7 +233,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    DESC6      = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "desc6"      , 8/*8*/, "The title for a person, i.e., Mr, Miss, Mrs...", null, null, new String[][] {{"STR","String"}, {"DTM","DateTime"}});
+     public final Type_StringPrimitiveNull    DESC6      = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "desc6"      , 8/*8*/, "The title for a person, i.e., Mr, Miss, Mrs...", null, null, new String[][] {{"STR","String"}, {"DTM","DateTime"}});
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.tops -> TILDATEST.Testing."tops"
@@ -231,7 +254,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringCollectionNull   TOPS       = new Type_StringCollectionNull  (SCHEMA_LABEL, TABLENAME_LABEL, "tops"       , 9/*9*/, "The blah", null, null);
+     public final Type_StringCollectionNull   TOPS       = new Type_StringCollectionNull  (SCHEMA_LABEL, TABLENAME_LABEL, "tops"       , 9/*9*/, "The blah", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.tops2 -> TILDATEST.Testing."tops2"
@@ -250,7 +275,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringCollectionNull   TOPS2      = new Type_StringCollectionNull  (SCHEMA_LABEL, TABLENAME_LABEL, "tops2"      , 10/*10*/, "The blah", null, null);
+     public final Type_StringCollectionNull   TOPS2      = new Type_StringCollectionNull  (SCHEMA_LABEL, TABLENAME_LABEL, "tops2"      , 10/*10*/, "The blah", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.a1 -> TILDATEST.Testing."a1"
@@ -268,7 +295,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_BitfieldPrimitiveNull  A1         = new Type_BitfieldPrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "a1"         , 11/*11*/, "The blah", null, null);
+     public final Type_BitfieldPrimitiveNull  A1         = new Type_BitfieldPrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "a1"         , 11/*11*/, "The blah", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.a2 -> TILDATEST.Testing."a2"
@@ -286,7 +315,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_CharPrimitiveNull      A2         = new Type_CharPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a2"         , 12/*12*/, "The blah", null, null, null);
+     public final Type_CharPrimitiveNull      A2         = new Type_CharPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a2"         , 12/*12*/, "The blah", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.a2b -> TILDATEST.Testing."a2b"
@@ -304,7 +335,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_CharCollectionNull     A2B        = new Type_CharCollectionNull    (SCHEMA_LABEL, TABLENAME_LABEL, "a2b"        , 13/*13*/, "The blah", null, null);
+     public final Type_CharCollectionNull     A2B        = new Type_CharCollectionNull    (SCHEMA_LABEL, TABLENAME_LABEL, "a2b"        , 13/*13*/, "The blah", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.a2c -> TILDATEST.Testing."a2c"
@@ -322,7 +355,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_CharCollectionNull     A2C        = new Type_CharCollectionNull    (SCHEMA_LABEL, TABLENAME_LABEL, "a2c"        , 14/*14*/, "The blah", null, null);
+     public final Type_CharCollectionNull     A2C        = new Type_CharCollectionNull    (SCHEMA_LABEL, TABLENAME_LABEL, "a2c"        , 14/*14*/, "The blah", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.a3 -> TILDATEST.Testing."a3"
@@ -340,7 +375,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_BooleanPrimitiveNull   A3         = new Type_BooleanPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a3"         , 15/*15*/, "The blah", null, null, null);
+     public final Type_BooleanPrimitiveNull   A3         = new Type_BooleanPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a3"         , 15/*15*/, "The blah", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.a3b -> TILDATEST.Testing."a3b"
@@ -358,7 +395,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_BooleanCollectionNull  A3B        = new Type_BooleanCollectionNull (SCHEMA_LABEL, TABLENAME_LABEL, "a3b"        , 16/*16*/, "The blah", null, null);
+     public final Type_BooleanCollectionNull  A3B        = new Type_BooleanCollectionNull (SCHEMA_LABEL, TABLENAME_LABEL, "a3b"        , 16/*16*/, "The blah", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.a4 -> TILDATEST.Testing."a4"
@@ -376,7 +415,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DoublePrimitiveNull    A4         = new Type_DoublePrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a4"         , 17/*17*/, "The blah", null, null, null);
+     public final Type_DoublePrimitiveNull    A4         = new Type_DoublePrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a4"         , 17/*17*/, "The blah", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.a4b -> TILDATEST.Testing."a4b"
@@ -394,7 +435,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DoubleCollectionNull   A4B        = new Type_DoubleCollectionNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a4b"        , 18/*18*/, "The blah", null, null);
+     public final Type_DoubleCollectionNull   A4B        = new Type_DoubleCollectionNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a4b"        , 18/*18*/, "The blah", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.a5 -> TILDATEST.Testing."a5"
@@ -412,7 +455,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_FloatPrimitiveNull     A5         = new Type_FloatPrimitiveNull    (SCHEMA_LABEL, TABLENAME_LABEL, "a5"         , 19/*19*/, "The blah", null, null, null);
+     public final Type_FloatPrimitiveNull     A5         = new Type_FloatPrimitiveNull    (SCHEMA_LABEL, TABLENAME_LABEL, "a5"         , 19/*19*/, "The blah", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.a5b -> TILDATEST.Testing."a5b"
@@ -430,7 +475,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_FloatCollectionNull    A5B        = new Type_FloatCollectionNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a5b"        , 20/*20*/, "The blah", null, null);
+     public final Type_FloatCollectionNull    A5B        = new Type_FloatCollectionNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a5b"        , 20/*20*/, "The blah", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.a6 -> TILDATEST.Testing."a6"
@@ -448,7 +495,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitiveNull      A6         = new Type_LongPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a6"         , 21/*21*/, "The blah", null, null, null);
+     public final Type_LongPrimitiveNull      A6         = new Type_LongPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a6"         , 21/*21*/, "The blah", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.a6b -> TILDATEST.Testing."a6b"
@@ -466,7 +515,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongCollectionNull     A6B        = new Type_LongCollectionNull    (SCHEMA_LABEL, TABLENAME_LABEL, "a6b"        , 22/*22*/, "The blah", null, null);
+     public final Type_LongCollectionNull     A6B        = new Type_LongCollectionNull    (SCHEMA_LABEL, TABLENAME_LABEL, "a6b"        , 22/*22*/, "The blah", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.a6c -> TILDATEST.Testing."a6c"
@@ -484,7 +535,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongCollectionNull     A6C        = new Type_LongCollectionNull    (SCHEMA_LABEL, TABLENAME_LABEL, "a6c"        , 23/*23*/, "The blah", null, null);
+     public final Type_LongCollectionNull     A6C        = new Type_LongCollectionNull    (SCHEMA_LABEL, TABLENAME_LABEL, "a6c"        , 23/*23*/, "The blah", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.a6dTZ -> TILDATEST.Testing."a6dTZ"
@@ -503,7 +556,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    A6DTZ      = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a6dTZ"      , 24/*24*/, "Generated helper column to hold the time zone ID for 'a6d'.", null, null, null);
+     public final Type_StringPrimitiveNull    A6DTZ      = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a6dTZ"      , 24/*24*/, "Generated helper column to hold the time zone ID for 'a6d'.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.a6d -> TILDATEST.Testing."a6d"
@@ -521,7 +576,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  A6D        = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "a6d"        , 25/*25*/, "The blah", null, null, A6DTZ);
+     public final Type_DatetimePrimitiveNull  A6D        = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "a6d"        , 25/*25*/, "The blah", null, null, A6DTZ);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.a7 -> TILDATEST.Testing."a7"
@@ -539,7 +596,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerPrimitiveNull   A7         = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a7"         , 26/*26*/, "The blah", null, null, null);
+     public final Type_IntegerPrimitiveNull   A7         = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a7"         , 26/*26*/, "The blah", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.a7b -> TILDATEST.Testing."a7b"
@@ -557,7 +616,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerCollectionNull  A7B        = new Type_IntegerCollectionNull (SCHEMA_LABEL, TABLENAME_LABEL, "a7b"        , 27/*27*/, "The blah", null, null);
+     public final Type_IntegerCollectionNull  A7B        = new Type_IntegerCollectionNull (SCHEMA_LABEL, TABLENAME_LABEL, "a7b"        , 27/*27*/, "The blah", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.a8bTZ -> TILDATEST.Testing."a8bTZ"
@@ -576,7 +637,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    A8BTZ      = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a8bTZ"      , 28/*28*/, "Generated helper column to hold the time zone ID for 'a8b'.", null, null, null);
+     public final Type_StringPrimitiveNull    A8BTZ      = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a8bTZ"      , 28/*28*/, "Generated helper column to hold the time zone ID for 'a8b'.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.a8b -> TILDATEST.Testing."a8b"
@@ -594,7 +657,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  A8B        = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "a8b"        , 29/*29*/, "The blah", null, null, A8BTZ);
+     public final Type_DatetimePrimitiveNull  A8B        = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "a8b"        , 29/*29*/, "The blah", null, null, A8BTZ);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.a9TZ -> TILDATEST.Testing."a9TZ"
@@ -613,7 +678,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    A9TZ       = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a9TZ"       , 30/*30*/, "Generated helper column to hold the time zone ID for 'a9'.", null, null, null);
+     public final Type_StringPrimitiveNull    A9TZ       = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a9TZ"       , 30/*30*/, "Generated helper column to hold the time zone ID for 'a9'.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.a9 -> TILDATEST.Testing."a9"
@@ -638,7 +705,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  A9         = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "a9"         , 31/*31*/, "The blah", null, null, A9TZ);
+     public final Type_DatetimePrimitiveNull  A9         = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "a9"         , 31/*31*/, "The blah", null, null, A9TZ);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.a9a1TZ -> TILDATEST.Testing."a9a1TZ"
@@ -657,7 +726,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    A9A1TZ     = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a9a1TZ"     , 32/*32*/, "Generated helper column to hold the time zone ID for 'a9a1'.", null, null, null);
+     public final Type_StringPrimitiveNull    A9A1TZ     = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a9a1TZ"     , 32/*32*/, "Generated helper column to hold the time zone ID for 'a9a1'.", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.a9a1 -> TILDATEST.Testing."a9a1"
@@ -682,7 +753,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  A9A1       = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "a9a1"       , 33/*33*/, "The blah", null, null, A9A1TZ);
+     public final Type_DatetimePrimitiveNull  A9A1       = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "a9a1"       , 33/*33*/, "The blah", null, null, A9A1TZ);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.a9bTZ -> TILDATEST.Testing."a9bTZ"
@@ -701,7 +774,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringCollectionNull   A9BTZ      = new Type_StringCollectionNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a9bTZ"      , 34/*34*/, "Generated helper column to hold the time zone ID for 'a9b'.", null, null);
+     public final Type_StringCollectionNull   A9BTZ      = new Type_StringCollectionNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a9bTZ"      , 34/*34*/, "Generated helper column to hold the time zone ID for 'a9b'.", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.a9b -> TILDATEST.Testing."a9b"
@@ -719,7 +794,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimeCollectionNull A9B        = new Type_DatetimeCollectionNull(SCHEMA_LABEL, TABLENAME_LABEL, "a9b"        , 35/*35*/, "The blah", null, null, A9BTZ);
+     public final Type_DatetimeCollectionNull A9B        = new Type_DatetimeCollectionNull(SCHEMA_LABEL, TABLENAME_LABEL, "a9b"        , 35/*35*/, "The blah", null, null, A9BTZ);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.a9c -> TILDATEST.Testing."a9c"
@@ -737,7 +814,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatePrimitiveNull      A9C        = new Type_DatePrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a9c"        , 36/*36*/, "The blah", null, null);
+     public final Type_DatePrimitiveNull      A9C        = new Type_DatePrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a9c"        , 36/*36*/, "The blah", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.a9d -> TILDATEST.Testing."a9d"
@@ -755,7 +834,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DateCollectionNull     A9D        = new Type_DateCollectionNull    (SCHEMA_LABEL, TABLENAME_LABEL, "a9d"        , 37/*37*/, "The blah", null, null);
+     public final Type_DateCollectionNull     A9D        = new Type_DateCollectionNull    (SCHEMA_LABEL, TABLENAME_LABEL, "a9d"        , 37/*37*/, "The blah", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.a10a -> TILDATEST.Testing."a10a"
@@ -773,7 +854,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerPrimitiveNull   A10A       = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a10a"       , 38/*38*/, "The blah", null, null, null);
+     public final Type_IntegerPrimitiveNull   A10A       = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a10a"       , 38/*38*/, "The blah", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.a10b -> TILDATEST.Testing."a10b"
@@ -792,7 +875,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    A10B       = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a10b"       , 39/*39*/, "The blah", null, null, null);
+     public final Type_StringPrimitiveNull    A10B       = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a10b"       , 39/*39*/, "The blah", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.a10c -> TILDATEST.Testing."a10c"
@@ -810,7 +895,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerPrimitiveNull   A10C       = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a10c"       , 40/*40*/, "The blah", null, null, null);
+     public final Type_IntegerPrimitiveNull   A10C       = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a10c"       , 40/*40*/, "The blah", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.a11 -> TILDATEST.Testing."a11"
@@ -828,7 +915,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_NumericPrimitiveNull   A11        = new Type_NumericPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a11"        , 41/*41*/, "The blah", null, null, null);
+     public final Type_NumericPrimitiveNull   A11        = new Type_NumericPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a11"        , 41/*41*/, "The blah", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.a11b -> TILDATEST.Testing."a11b"
@@ -846,7 +935,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_NumericCollectionNull  A11B       = new Type_NumericCollectionNull (SCHEMA_LABEL, TABLENAME_LABEL, "a11b"       , 42/*42*/, "The blah", null, null);
+     public final Type_NumericCollectionNull  A11B       = new Type_NumericCollectionNull (SCHEMA_LABEL, TABLENAME_LABEL, "a11b"       , 42/*42*/, "The blah", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.a11c -> TILDATEST.Testing."a11c"
@@ -855,7 +946,7 @@ This is the column definition for:<BR>
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing.a11c of type BigDecimal</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing.a11c of type numeric(5,0)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing.a11c of type numeric(5,4)</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
@@ -864,7 +955,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_NumericPrimitiveNull   A11C       = new Type_NumericPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a11c"       , 43/*43*/, "The blah", null, null, null);
+     public final Type_NumericPrimitiveNull   A11C       = new Type_NumericPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a11c"       , 43/*43*/, "The blah", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.a12 -> TILDATEST.Testing."a12"
@@ -882,7 +975,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_ShortPrimitiveNull     A12        = new Type_ShortPrimitiveNull    (SCHEMA_LABEL, TABLENAME_LABEL, "a12"        , 44/*44*/, "The blah", null, null, null);
+     public final Type_ShortPrimitiveNull     A12        = new Type_ShortPrimitiveNull    (SCHEMA_LABEL, TABLENAME_LABEL, "a12"        , 44/*44*/, "The blah", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.a12b -> TILDATEST.Testing."a12b"
@@ -900,7 +995,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_ShortCollectionNull    A12B       = new Type_ShortCollectionNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a12b"       , 45/*45*/, "The blah", null, null);
+     public final Type_ShortCollectionNull    A12B       = new Type_ShortCollectionNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a12b"       , 45/*45*/, "The blah", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.a13 -> TILDATEST.Testing."a13"
@@ -918,7 +1015,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_UuidPrimitiveNull      A13        = new Type_UuidPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a13"        , 46/*46*/, "The blah", null, null);
+     public final Type_UuidPrimitiveNull      A13        = new Type_UuidPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a13"        , 46/*46*/, "The blah", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.a13b -> TILDATEST.Testing."a13b"
@@ -936,7 +1035,29 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_UuidCollectionNull     A13B       = new Type_UuidCollectionNull    (SCHEMA_LABEL, TABLENAME_LABEL, "a13b"       , 47/*47*/, "The blah", null, null);
+     public final Type_UuidCollectionNull     A13B       = new Type_UuidCollectionNull    (SCHEMA_LABEL, TABLENAME_LABEL, "a13b"       , 47/*47*/, "The blah", null, null);
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data_test.TILDATEST.Testing.a14 -> TILDATEST.Testing."a14"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the column definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing.a14 of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing.a14 of type jsonb</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+     public final Type_JsonPrimitiveNull      A14        = new Type_JsonPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a14"        , 48/*48*/, "The blah", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.created -> TILDATEST.Testing."created"
@@ -961,7 +1082,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      CREATED    = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"    , 48/*48*/, "The timestamp for when the record was created. (TILDATEST.Testing)", null, null);
+     public final Type_DatetimePrimitive      CREATED    = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"    , 49/*49*/, "The timestamp for when the record was created. (TILDATEST.Testing)", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.lastUpdated -> TILDATEST.Testing."lastUpdated"
@@ -986,7 +1109,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      LASTUPDATED= new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated", 49/*49*/, "The timestamp for when the record was last updated. (TILDATEST.Testing)", null, null);
+     public final Type_DatetimePrimitive      LASTUPDATED= new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated", 50/*50*/, "The timestamp for when the record was last updated. (TILDATEST.Testing)", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing.deleted -> TILDATEST.Testing."deleted"
@@ -1004,15 +1129,15 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  DELETED    = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"    , 50/*50*/, "The timestamp for when the record was deleted. (TILDATEST.Testing)", null, null);
-;
+     public final Type_DatetimePrimitiveNull  DELETED    = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"    , 51/*51*/, "The timestamp for when the record was deleted. (TILDATEST.Testing)", null, null);
    }
 
-   public static final ColumnDefinition[] COLUMNS = { COLS.REFNUM,COLS.REFNUM2,COLS.NAME,COLS.DESCRIPTION,COLS.DESC2,COLS.DESC3,COLS.DESC4,COLS.DESC5,COLS.DESC6,COLS.TOPS,COLS.TOPS2,COLS.A1,COLS.A2,COLS.A2B,COLS.A2C,COLS.A3,COLS.A3B,COLS.A4,COLS.A4B,COLS.A5,COLS.A5B,COLS.A6,COLS.A6B,COLS.A6C,COLS.A6DTZ,COLS.A6D,COLS.A7,COLS.A7B,COLS.A8BTZ,COLS.A8B,COLS.A9TZ,COLS.A9,COLS.A9A1TZ,COLS.A9A1,COLS.A9BTZ,COLS.A9B,COLS.A9C,COLS.A9D,COLS.A10A,COLS.A10B,COLS.A10C,COLS.A11,COLS.A11B,COLS.A11C,COLS.A12,COLS.A12B,COLS.A13,COLS.A13B,COLS.CREATED,COLS.LASTUPDATED,COLS.DELETED };
+   public static COLS_BASE COLS = new COLS_BASE();
+   public static final ColumnDefinition[] COLUMNS = new ColumnDefinition[] { COLS.REFNUM,COLS.REFNUM2,COLS.NAME,COLS.DESCRIPTION,COLS.DESC2,COLS.DESC3,COLS.DESC4,COLS.DESC5,COLS.DESC6,COLS.TOPS,COLS.TOPS2,COLS.A1,COLS.A2,COLS.A2B,COLS.A2C,COLS.A3,COLS.A3B,COLS.A4,COLS.A4B,COLS.A5,COLS.A5B,COLS.A6,COLS.A6B,COLS.A6C,COLS.A6DTZ,COLS.A6D,COLS.A7,COLS.A7B,COLS.A8BTZ,COLS.A8B,COLS.A9TZ,COLS.A9,COLS.A9A1TZ,COLS.A9A1,COLS.A9BTZ,COLS.A9B,COLS.A9C,COLS.A9D,COLS.A10A,COLS.A10B,COLS.A10C,COLS.A11,COLS.A11B,COLS.A11C,COLS.A12,COLS.A12B,COLS.A13,COLS.A13B,COLS.A14,COLS.CREATED,COLS.LASTUPDATED,COLS.DELETED };
 
-   public static final ColumnDefinition[] COLUMNS_PRIMARY = { COLS.REFNUM };
+   public static final ColumnDefinition[] COLUMNS_PRIMARY = new ColumnDefinition[] { COLS.REFNUM };
 
-   public static final ColumnDefinition[][] COLUMNS_UNIQUE_INDICES = { 
+   public static final ColumnDefinition[][] COLUMNS_UNIQUE_INDICES = new ColumnDefinition[][]{ 
         };
 
    public static final ColumnDefinition[] COLUMNS_FIRST_IDENTITY = {};
@@ -1084,57 +1209,7 @@ This is the column definition for:<BR>
        else
         {
           S.append("select ");
-          S.append(" "); C.getFullColumnVar(S, "TILDATEST", "Testing", "refnum");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "refnum2");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "name");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "description");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "desc2");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "desc3");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "desc4");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "desc5");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "desc6");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "tops");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "tops2");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "a1");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "a2");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "a2b");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "a2c");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "a3");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "a3b");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "a4");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "a4b");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "a5");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "a5b");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "a6");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "a6b");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "a6c");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "a6dTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "a6d");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "a7");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "a7b");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "a8bTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "a8b");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "a9TZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "a9");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "a9a1TZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "a9a1");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "a9bTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "a9b");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "a9c");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "a9d");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "a10a");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "a10b");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "a10c");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "a11");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "a11b");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "a11c");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "a12");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "a12b");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "a13");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "a13b");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "created");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "lastUpdated");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing", "deleted");
+          C.getFullColumnVarList(S, TILDA__TESTING_Factory.COLUMNS);
           S.append(" from "); C.getFullTableVar(S, "TILDATEST", "Testing");
           switch (LookupId)
            {
@@ -1462,6 +1537,12 @@ object. The generic init method defaults to this general data structure as a gen
        List<UUID> _a13b = CollectionUtil.toList(ParseUtil.parseUUID("a13b", false, vals, Errors));
        if (_a13b != null) Obj.setA13b(_a13b);
 
+       vals = Values.get("a14");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("a14", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _a14 = ParseUtil.parseString("a14", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_a14 != null) Obj.setA14(_a14);
+
 
        return (tilda.data_test.Testing_Data) Obj;
      }
@@ -1557,6 +1638,8 @@ object. The generic init method defaults to this general data structure as a gen
                int i = d.populatePreparedStatement(C, PS, AllocatedArrays);
 
                PS.addBatch();
+               ++count;
+
                if (index != 0 && (index + 1) % batchSize == 0)
                  {
                    int[] results = PS.executeBatch();
@@ -1595,7 +1678,6 @@ object. The generic init method defaults to this general data structure as a gen
                if(commitSize > 0)
                  {
                    C.commit();
-                   LOG.debug("Commited " + insertCount + " batch records.");
                  }
                LOG.debug("Final Batch-inserted objects between positions #" + insertCount + " and #" + index + ".");
              }
@@ -1617,6 +1699,9 @@ object. The generic init method defaults to this general data structure as a gen
          }
        }
 
+/**
+Lookup one record by the primary key: refnum.
+*/
    static public tilda.data_test.Testing_Data lookupByPrimaryKey(long refnum) throws Exception
      {
        tilda.data_test._Tilda.TILDA__TESTING Obj = new tilda.data_test.Testing_Data();
@@ -1627,7 +1712,9 @@ object. The generic init method defaults to this general data structure as a gen
        return (tilda.data_test.Testing_Data) Obj;
      }
 
-
+/**
+Lookup records by the index 'AllByName' over  .<BR>The results are ordered by: name asc
+*/
    static public ListResults<tilda.data_test.Testing_Data> lookupWhereAllByName(Connection C, int start, int size) throws Exception
      {
        tilda.data_test._Tilda.TILDA__TESTING Obj = new tilda.data_test.Testing_Data();
@@ -1640,6 +1727,9 @@ object. The generic init method defaults to this general data structure as a gen
        return RPI._L;
      }
 
+/**
+Lookup records by the index 'AllByName' over  .<BR>The results are ordered by: name asc
+*/
    static public void lookupWhereAllByName(Connection C, tilda.db.processors.ObjectProcessor<tilda.data_test.Testing_Data> OP, int start, int size) throws Exception
      {
        tilda.data_test._Tilda.TILDA__TESTING Obj = new tilda.data_test.Testing_Data();
@@ -1653,6 +1743,9 @@ object. The generic init method defaults to this general data structure as a gen
 
 
 
+/**
+Lookup records by the index 'AllByName2' over  .<BR>The results are ordered by: name asc
+*/
    static public ListResults<tilda.data_test.Testing_Data> lookupWhereAllByName2(Connection C, int start, int size) throws Exception
      {
        tilda.data_test._Tilda.TILDA__TESTING Obj = new tilda.data_test.Testing_Data();
@@ -1665,6 +1758,9 @@ object. The generic init method defaults to this general data structure as a gen
        return RPI._L;
      }
 
+/**
+Lookup records by the index 'AllByName2' over  .<BR>The results are ordered by: name asc
+*/
    static public void lookupWhereAllByName2(Connection C, tilda.db.processors.ObjectProcessor<tilda.data_test.Testing_Data> OP, int start, int size) throws Exception
      {
        tilda.data_test._Tilda.TILDA__TESTING Obj = new tilda.data_test.Testing_Data();
@@ -1678,6 +1774,9 @@ object. The generic init method defaults to this general data structure as a gen
 
 
 
+/**
+Lookup records by the index 'AllByName3' over  .<BR>The results are ordered by: name desc
+*/
    static public ListResults<tilda.data_test.Testing_Data> lookupWhereAllByName3(Connection C, int start, int size) throws Exception
      {
        tilda.data_test._Tilda.TILDA__TESTING Obj = new tilda.data_test.Testing_Data();
@@ -1690,6 +1789,9 @@ object. The generic init method defaults to this general data structure as a gen
        return RPI._L;
      }
 
+/**
+Lookup records by the index 'AllByName3' over  .<BR>The results are ordered by: name desc
+*/
    static public void lookupWhereAllByName3(Connection C, tilda.db.processors.ObjectProcessor<tilda.data_test.Testing_Data> OP, int start, int size) throws Exception
      {
        tilda.data_test._Tilda.TILDA__TESTING Obj = new tilda.data_test.Testing_Data();
@@ -1703,6 +1805,9 @@ object. The generic init method defaults to this general data structure as a gen
 
 
 
+/**
+Lookup records by the index 'AllByName4' over  .<BR>The results are ordered by: name asc, description desc
+*/
    static public ListResults<tilda.data_test.Testing_Data> lookupWhereAllByName4(Connection C, int start, int size) throws Exception
      {
        tilda.data_test._Tilda.TILDA__TESTING Obj = new tilda.data_test.Testing_Data();
@@ -1715,6 +1820,9 @@ object. The generic init method defaults to this general data structure as a gen
        return RPI._L;
      }
 
+/**
+Lookup records by the index 'AllByName4' over  .<BR>The results are ordered by: name asc, description desc
+*/
    static public void lookupWhereAllByName4(Connection C, tilda.db.processors.ObjectProcessor<tilda.data_test.Testing_Data> OP, int start, int size) throws Exception
      {
        tilda.data_test._Tilda.TILDA__TESTING Obj = new tilda.data_test.Testing_Data();
@@ -1728,7 +1836,11 @@ object. The generic init method defaults to this general data structure as a gen
 
 
 
-   static public ListResults<tilda.data_test.Testing_Data> lookupWhereAll(Connection C, int start, int size) throws Exception
+/**
+Lookup records by the query 'All' over 
+.<BR>
+The results are ordered by: refnum asc
+*/   static public ListResults<tilda.data_test.Testing_Data> lookupWhereAll(Connection C, int start, int size) throws Exception
      {
        tilda.data_test._Tilda.TILDA__TESTING Obj = new tilda.data_test.Testing_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -1740,7 +1852,11 @@ object. The generic init method defaults to this general data structure as a gen
      }
 
 
-   static public void lookupWhereAll(Connection C, tilda.db.processors.ObjectProcessor<tilda.data_test.Testing_Data> OP, int start, int size) throws Exception
+/**
+Lookup records by the query 'All' over 
+.<BR>
+The results are ordered by: refnum asc
+*/   static public void lookupWhereAll(Connection C, tilda.db.processors.ObjectProcessor<tilda.data_test.Testing_Data> OP, int start, int size) throws Exception
      {
        tilda.data_test._Tilda.TILDA__TESTING Obj = new tilda.data_test.Testing_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -1749,6 +1865,7 @@ object. The generic init method defaults to this general data structure as a gen
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
        readMany(C, 5, RPI, Obj, null, start, size);
      }
+
 
 
 
@@ -1794,15 +1911,16 @@ object. The generic init method defaults to this general data structure as a gen
    public static void toCSVCCC(java.io.Writer out, tilda.data_test.Testing_Data obj) throws java.io.IOException
     {
       long T0 = System.nanoTime();
+     tilda.data_test._Tilda.TILDA__TESTING Obj = (tilda.data_test._Tilda.TILDA__TESTING) obj;
       StringBuilder Str = new StringBuilder();
 
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getRefnum());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getRefnum());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getName());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getName());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getDescription());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getDescription());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getDesc2());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getDesc2());
       out.write(Str.toString());
       PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);
     }
@@ -1853,15 +1971,16 @@ object. The generic init method defaults to this general data structure as a gen
    public static void toJSONCCC(java.io.Writer outWriter, tilda.data_test.Testing_Data obj, String lead, boolean fullObject, boolean noNullArrays) throws java.io.IOException
     {
       long T0 = System.nanoTime();
-      org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter();
-      tilda.data_test._Tilda.TILDA__TESTING Obj = (tilda.data_test._Tilda.TILDA__TESTING) obj;
-      if (fullObject == true)
+      try(org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter())
        {
-          out.write(lead);
-          out.write("{");
-       }
+        tilda.data_test._Tilda.TILDA__TESTING Obj = (tilda.data_test._Tilda.TILDA__TESTING) obj;
+        if (fullObject == true)
+         {
+           out.write(lead);
+           out.write("{");
+         }
 
-      int i = -1;
+        int i = -1;
         JSONUtil.print(out, "refnum", ++i==0, Obj.getRefnum());
 
         JSONUtil.print(out, "name", ++i==0, Obj.getName());
@@ -1872,11 +1991,11 @@ object. The generic init method defaults to this general data structure as a gen
       if (Obj.isDesc2Null() == false && Obj.getDesc2() != null)
         JSONUtil.print(out, "desc2", ++i==0, Obj.getDesc2());
 
-      if (fullObject == true)
-       out.write(" }\n");
+        if (fullObject == true)
+         out.write(" }\n");
 
-      outWriter.append(out.getBuilder().toString());
-      out.close();
+        outWriter.append(out.getBuilder().toString());
+       }
 
       PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
     }
@@ -1950,15 +2069,16 @@ object. The generic init method defaults to this general data structure as a gen
    public static void toJSONAAA(java.io.Writer outWriter, tilda.data_test.Testing_Data obj, String lead, boolean fullObject, boolean noNullArrays) throws java.io.IOException
     {
       long T0 = System.nanoTime();
-      org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter();
-      tilda.data_test._Tilda.TILDA__TESTING Obj = (tilda.data_test._Tilda.TILDA__TESTING) obj;
-      if (fullObject == true)
+      try(org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter())
        {
-          out.write(lead);
-          out.write("{");
-       }
+        tilda.data_test._Tilda.TILDA__TESTING Obj = (tilda.data_test._Tilda.TILDA__TESTING) obj;
+        if (fullObject == true)
+         {
+           out.write(lead);
+           out.write("{");
+         }
 
-      int i = -1;
+        int i = -1;
         JSONUtil.print(out, "refnum", ++i==0, Obj.getRefnum());
 
         JSONUtil.print(out, "refnum2", ++i==0, Obj.getRefnum2AsArray());
@@ -2091,11 +2211,11 @@ object. The generic init method defaults to this general data structure as a gen
 
         JSONUtil.print(out, "lastUpdated", ++i==0, Obj.getLastUpdated());
 
-      if (fullObject == true)
-       out.write(" }\n");
+        if (fullObject == true)
+         out.write(" }\n");
 
-      outWriter.append(out.getBuilder().toString());
-      out.close();
+        outWriter.append(out.getBuilder().toString());
+       }
 
       PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
     }
@@ -2122,26 +2242,27 @@ object. The generic init method defaults to this general data structure as a gen
    public static void toCSVBBB(java.io.Writer out, tilda.data_test.Testing_Data obj) throws java.io.IOException
     {
       long T0 = System.nanoTime();
+     tilda.data_test._Tilda.TILDA__TESTING Obj = (tilda.data_test._Tilda.TILDA__TESTING) obj;
       StringBuilder Str = new StringBuilder();
 
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getRefnum());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getRefnum());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getRefnum2());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getRefnum2());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getName());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getName());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getDescription());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getDescription());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getDesc2());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getDesc2());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getDesc3());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getDesc3());
       out.write(Str.toString());
       PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);
     }
 
    public static String getCSVHeader()
     {
-      return "\"refnum\",\"refnum2\",\"name\",\"description\",\"desc2\",\"desc3\",\"desc4\",\"desc5\",\"desc6\",\"tops\",\"tops2\",\"a1\",\"a2\",\"a2b\",\"a2c\",\"a3\",\"a3b\",\"a4\",\"a4b\",\"a5\",\"a5b\",\"a6\",\"a6b\",\"a6c\",\"a6dTZ\",\"a6d\",\"a7\",\"a7b\",\"a8bTZ\",\"a8b\",\"a9TZ\",\"a9\",\"a9a1TZ\",\"a9a1\",\"a9bTZ\",\"a9b\",\"a9c\",\"a9d\",\"a10a\",\"a10b\",\"a10c\",\"a11\",\"a11b\",\"a11c\",\"a12\",\"a12b\",\"a13\",\"a13b\",\"created\",\"lastUpdated\",\"deleted\"";
+      return "\"refnum\",\"refnum2\",\"name\",\"description\",\"desc2\",\"desc3\",\"desc4\",\"desc5\",\"desc6\",\"tops\",\"tops2\",\"a1\",\"a2\",\"a2b\",\"a2c\",\"a3\",\"a3b\",\"a4\",\"a4b\",\"a5\",\"a5b\",\"a6\",\"a6b\",\"a6c\",\"a6dTZ\",\"a6d\",\"a7\",\"a7b\",\"a8bTZ\",\"a8b\",\"a9TZ\",\"a9\",\"a9a1TZ\",\"a9a1\",\"a9bTZ\",\"a9b\",\"a9c\",\"a9d\",\"a10a\",\"a10b\",\"a10c\",\"a11\",\"a11b\",\"a11c\",\"a12\",\"a12b\",\"a13\",\"a13b\",\"a14\",\"created\",\"lastUpdated\",\"deleted\"";
     }
 
    public static void toCSV(java.io.Writer out, List<tilda.data_test.Testing_Data> L, boolean includeHeader) throws java.io.IOException
@@ -2161,109 +2282,112 @@ object. The generic init method defaults to this general data structure as a gen
    public static void toCSV(java.io.Writer out, tilda.data_test.Testing_Data obj) throws java.io.IOException
     {
       long T0 = System.nanoTime();
+     tilda.data_test._Tilda.TILDA__TESTING Obj = (tilda.data_test._Tilda.TILDA__TESTING) obj;
       StringBuilder Str = new StringBuilder();
 
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getRefnum());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getRefnum());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getRefnum2());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getRefnum2());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getName());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getName());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getDescription());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getDescription());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getDesc2());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getDesc2());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getDesc3());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getDesc3());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getDesc4());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getDesc4());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getDesc5());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getDesc5());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getDesc6());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getDesc6());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, TextUtil.print(obj.getTops(), ","));
+      TextUtil.escapeDoubleQuoteForCSV(Str, TextUtil.print(Obj.getTops(), ","));
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, TextUtil.print(obj.getTops2(), ","));
+      TextUtil.escapeDoubleQuoteForCSV(Str, TextUtil.print(Obj.getTops2(), ","));
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getA1());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getA1());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getA2());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getA2());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getA2b());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getA2b());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getA2c());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getA2c());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getA3());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getA3());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getA3b());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getA3b());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getA4());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getA4());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getA4b());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getA4b());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getA5());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getA5());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getA5b());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getA5b());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getA6());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getA6());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getA6b());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getA6b());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getA6c());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getA6c());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getA6dTZ());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getA6dTZ());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getA6d()));
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getA6d()));
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getA7());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getA7());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getA7b());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getA7b());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getA8bTZ());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getA8bTZ());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getA8b()));
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getA8b()));
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getA9TZ());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getA9TZ());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getA9()));
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getA9()));
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getA9a1TZ());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getA9a1TZ());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getA9a1()));
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getA9a1()));
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, TextUtil.print(obj.getA9bTZ(), ","));
+      TextUtil.escapeDoubleQuoteForCSV(Str, TextUtil.print(Obj.getA9bTZ(), ","));
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, TextUtil.print(obj.getA9b(), ","));
+      TextUtil.escapeDoubleQuoteForCSV(Str, TextUtil.print(Obj.getA9b(), ","));
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDate(obj.getA9c()));
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDate(Obj.getA9c()));
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, TextUtil.print(obj.getA9d(), ","));
+      TextUtil.escapeDoubleQuoteForCSV(Str, TextUtil.print(Obj.getA9d(), ","));
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getA10a());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getA10a());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getA10b());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getA10b());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getA10c());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getA10c());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getA11());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getA11());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getA11b());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getA11b());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getA11c());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getA11c());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getA12());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getA12());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getA12b());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getA12b());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getA13());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getA13());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getA13b());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getA13b());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getCreated()));
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getA14());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getLastUpdated()));
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getCreated()));
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getDeleted()));
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getLastUpdated()));
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getDeleted()));
       out.write(Str.toString());
       PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);
     }
@@ -2314,15 +2438,16 @@ object. The generic init method defaults to this general data structure as a gen
    public static void toJSON(java.io.Writer outWriter, tilda.data_test.Testing_Data obj, String lead, boolean fullObject, boolean noNullArrays) throws java.io.IOException
     {
       long T0 = System.nanoTime();
-      org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter();
-      tilda.data_test._Tilda.TILDA__TESTING Obj = (tilda.data_test._Tilda.TILDA__TESTING) obj;
-      if (fullObject == true)
+      try(org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter())
        {
-          out.write(lead);
-          out.write("{");
-       }
+        tilda.data_test._Tilda.TILDA__TESTING Obj = (tilda.data_test._Tilda.TILDA__TESTING) obj;
+        if (fullObject == true)
+         {
+           out.write(lead);
+           out.write("{");
+         }
 
-      int i = -1;
+        int i = -1;
         JSONUtil.print(out, "refnum", ++i==0, Obj.getRefnum());
 
         JSONUtil.print(out, "refnum2", ++i==0, Obj.getRefnum2AsArray());
@@ -2544,6 +2669,9 @@ object. The generic init method defaults to this general data structure as a gen
           out.write("[]");
         }
 
+      if (Obj.isA14Null() == false && Obj.getA14() != null)
+        JSONUtil.printSubJson(out, "a14", ++i==0, Obj._a14);
+
         JSONUtil.print(out, "created", ++i==0, Obj.getCreated());
 
         JSONUtil.print(out, "lastUpdated", ++i==0, Obj.getLastUpdated());
@@ -2551,11 +2679,11 @@ object. The generic init method defaults to this general data structure as a gen
       if (Obj.isDeletedNull() == false && Obj.getDeleted() != null)
         JSONUtil.print(out, "deleted", ++i==0, Obj.getDeleted());
 
-      if (fullObject == true)
-       out.write(" }\n");
+        if (fullObject == true)
+         out.write(" }\n");
 
-      outWriter.append(out.getBuilder().toString());
-      out.close();
+        outWriter.append(out.getBuilder().toString());
+       }
 
       PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
     }

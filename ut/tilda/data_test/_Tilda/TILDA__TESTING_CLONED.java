@@ -494,7 +494,7 @@ This Table contains the following columns:<BLOCKQUOTE>
   <TR valign="top" style="background-color:#FFFFFF;">
     <TD>44&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-a11c_DIV' class='columns'>a11c</B>&nbsp;&nbsp;</TD>
-<TD>BigDecimal&nbsp;/&nbsp;numeric(5,0)&nbsp;&nbsp;</TD>
+<TD>BigDecimal&nbsp;/&nbsp;numeric(5,4)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -543,6 +543,16 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>49&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing_Cloned-a14_DIV' class='columns'>a14</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;jsonb&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah</TD>
+</TR>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>50&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -551,8 +561,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was created. (TILDATEST.Testing_Cloned)</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>50&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>51&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -561,8 +571,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was last updated. (TILDATEST.Testing_Cloned)</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>51&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>52&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -589,7 +599,6 @@ public abstract class TILDA__TESTING_CLONED implements tilda.interfaces.WriterOb
    transient BitSet   __Nulls       = new BitSet(64);
    transient BitSet   __Changes     = new BitSet(64);
    transient boolean  __NewlyCreated= false;
-
    transient int      __LookupId;
 
    public  boolean hasChanged    () { return __Changes.isEmpty() == false; }
@@ -1763,6 +1772,20 @@ These are the enumerated values for tilda.data_test.TILDATEST.Testing_Cloned.des
                                                { "STR", "String", "String", "" }
                                              , { "DTM", "DateTime", "DateTime", "" }
                                   };
+   public static final boolean checkDesc6(String v)
+    {
+      for (String[] a : _desc6_Values)
+       if (a[0].equals(v) == true)
+        return true;
+      return false;
+    }
+   public static final String mapDesc6(String v)
+    {
+      for (String[] a : _desc6_Values)
+       if (a[0].equals(v) == true)
+        return a[2];
+      return null;
+    }
    public static final String _desc6String   = "STR";
    public static final String _desc6DateTime = "DTM";
 
@@ -4722,7 +4745,8 @@ This is the definition for:<BR>
 */
    @SerializedName("a6d")
    String  Str_a6d;
-   public void initA6d(String v) { Str_a6d = v; }
+   /** Pre-init the field as it would come from a JSON stream, in text form, e.g., timestamps. */
+   public void initJson_A6d(String v) { Str_a6d = v; }
    public String initA6dVal() { return Str_a6d; }
    transient ZonedDateTime _a6d = null;
 
@@ -5429,7 +5453,8 @@ This is the definition for:<BR>
 */
    @SerializedName("a8b")
    String  Str_a8b;
-   public void initA8b(String v) { Str_a8b = v; }
+   /** Pre-init the field as it would come from a JSON stream, in text form, e.g., timestamps. */
+   public void initJson_A8b(String v) { Str_a8b = v; }
    public String initA8bVal() { return Str_a8b; }
    transient ZonedDateTime _a8b = null;
 
@@ -5811,7 +5836,8 @@ This is the definition for:<BR>
 */
    @SerializedName("a9")
    String  Str_a9;
-   public void initA9(String v) { Str_a9 = v; }
+   /** Pre-init the field as it would come from a JSON stream, in text form, e.g., timestamps. */
+   public void initJson_A9(String v) { Str_a9 = v; }
    public String initA9Val() { return Str_a9; }
    transient ZonedDateTime _a9 = null;
 
@@ -6249,7 +6275,8 @@ This is the definition for:<BR>
 */
    @SerializedName("a9a1")
    String  Str_a9a1;
-   public void initA9a1(String v) { Str_a9a1 = v; }
+   /** Pre-init the field as it would come from a JSON stream, in text form, e.g., timestamps. */
+   public void initJson_A9a1(String v) { Str_a9a1 = v; }
    public String initA9a1Val() { return Str_a9a1; }
    transient ZonedDateTime _a9a1 = null;
 
@@ -6724,7 +6751,8 @@ This is the definition for:<BR>
 */
    @SerializedName("a9b")
    List<String>  Str_a9b;
-   public void initA9b(List<String> v) { Str_a9b = v; }
+   /** Pre-init the field as it would come from a JSON stream, in text form, e.g., timestamps. */
+   public void initJson_A9b(List<String> v) { Str_a9b = v; }
    public List<String> initA9bVal() { return Str_a9b; }
    transient List<ZonedDateTime> _a9b = null;
 
@@ -8040,7 +8068,7 @@ This is the hasChanged for:<BR>
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing_Cloned.a11c of type BigDecimal</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing_Cloned.a11c of type numeric(5,0)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing_Cloned.a11c of type numeric(5,4)</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
@@ -8060,7 +8088,7 @@ This is the definition for:<BR>
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing_Cloned.a11c of type BigDecimal</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing_Cloned.a11c of type numeric(5,0)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing_Cloned.a11c of type numeric(5,4)</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
@@ -8080,7 +8108,7 @@ This is the getter for:<BR>
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing_Cloned.a11c of type BigDecimal</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing_Cloned.a11c of type numeric(5,0)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing_Cloned.a11c of type numeric(5,4)</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
@@ -8100,7 +8128,7 @@ This is the isNull for:<BR>
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing_Cloned.a11c of type BigDecimal</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing_Cloned.a11c of type numeric(5,0)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing_Cloned.a11c of type numeric(5,4)</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
@@ -8129,7 +8157,7 @@ This is the setter for:<BR>
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing_Cloned.a11c of type BigDecimal</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing_Cloned.a11c of type numeric(5,0)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing_Cloned.a11c of type numeric(5,4)</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
@@ -8157,7 +8185,7 @@ This is the null setter for:<BR>
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing_Cloned.a11c of type BigDecimal</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing_Cloned.a11c of type numeric(5,0)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing_Cloned.a11c of type numeric(5,4)</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
@@ -8849,6 +8877,153 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data_test.TILDATEST.Testing_Cloned.a14 -> TILDATEST.Testing_Cloned."a14"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing_Cloned.a14 of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing_Cloned.a14 of type jsonb</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   @SerializedName("a14")
+   String _a14=null;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data_test.TILDATEST.Testing_Cloned.a14 -> TILDATEST.Testing_Cloned."a14"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing_Cloned.a14 of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing_Cloned.a14 of type jsonb</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final String getA14()
+      { return _a14; }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data_test.TILDATEST.Testing_Cloned.a14 -> TILDATEST.Testing_Cloned."a14"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the isNull for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing_Cloned.a14 of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing_Cloned.a14 of type jsonb</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final boolean isA14Null()
+     { return __Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A14._Mask); }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data_test.TILDATEST.Testing_Cloned.a14 -> TILDATEST.Testing_Cloned."a14"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing_Cloned.a14 of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing_Cloned.a14 of type jsonb</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public void setA14(String v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (v == null)
+        {
+          setA14Null();
+        }
+       else if (v.equals(_a14) == false)
+        {
+          __Changes.or(TILDA__TESTING_CLONED_Factory.COLS.A14._Mask);
+          __Nulls.andNot(TILDA__TESTING_CLONED_Factory.COLS.A14._Mask);
+       _a14 = v;
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data_test.TILDATEST.Testing_Cloned.a14 -> TILDATEST.Testing_Cloned."a14"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the null setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing_Cloned.a14 of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing_Cloned.a14 of type jsonb</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public void setA14Null()
+     {
+       long T0 = System.nanoTime();
+       if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A14._Mask) == true) // already NULL
+        return;
+       __Changes.or(TILDA__TESTING_CLONED_Factory.COLS.A14._Mask);
+       __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A14._Mask);
+       _a14=null;
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data_test.TILDATEST.Testing_Cloned.a14 -> TILDATEST.Testing_Cloned."a14"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the hasChanged for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.Testing_Cloned.a14 of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing_Cloned.a14 of type jsonb</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public boolean hasChangedA14()
+     { return __Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A14._Mask); }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing_Cloned.created -> TILDATEST.Testing_Cloned."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
@@ -9488,7 +9663,7 @@ This is the hasChanged for:<BR>
 */
    public void copyTo(tilda.data_test._Tilda.TILDA__TESTING_CLONED Dst) throws Exception
      {
-       if (_refnum2     != null)
+       if (__Init == InitMode.CREATE && _refnum2     != null)
         Dst.setRefnum2    (_refnum2    );
        if (_name        != null)
         Dst.setName       (_name       );
@@ -9677,7 +9852,11 @@ This is the hasChanged for:<BR>
         Dst.setA13bNull       ();
        else
         Dst.setA13b       (_a13b       );
-       if (_created     != null)
+       if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A14._Mask) == true || _a14        ==null)
+        Dst.setA14Null        ();
+       else
+        Dst.setA14        (_a14        );
+       if (__Init == InitMode.CREATE && _created     != null)
         Dst.setCreated    (_created    );
        if (_lastUpdated != null)
         Dst.setLastUpdated(_lastUpdated);
@@ -10075,6 +10254,12 @@ This is the hasChanged for:<BR>
           __Changes.or(TILDA__TESTING_CLONED_Factory.COLS.A13B._Mask);
           __Nulls.andNot(TILDA__TESTING_CLONED_Factory.COLS.A13B._Mask);
         }
+
+       if (_a14 != null)
+        {
+          __Changes.or(TILDA__TESTING_CLONED_Factory.COLS.A14._Mask);
+          __Nulls.andNot(TILDA__TESTING_CLONED_Factory.COLS.A14._Mask);
+        }
      }
    protected String getTimeStampSignature() throws Exception
      {
@@ -10164,6 +10349,7 @@ This is the hasChanged for:<BR>
           if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A12B._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A12B.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__1_0._COMMAQUESTION);  }
           if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A13._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A13.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__1_0._COMMAQUESTION);  }
           if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A13B._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A13B.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A14._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A14.getFullColumnVarForInsert(C, S); V.append(",").append(C.getJsonParametrizedQueryPlaceHolder()); }
 
           if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.CREATED._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
              V.append(__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.CREATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data_test._Tilda.TILDA__1_0._COMMAQUESTION);
@@ -10276,6 +10462,7 @@ This is the hasChanged for:<BR>
           if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A12B._Mask) == true) TILDA__TESTING_CLONED_Factory.COLS.A12B.getFullColumnVarForUpdate(C, S);
           if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A13._Mask) == true) TILDA__TESTING_CLONED_Factory.COLS.A13.getFullColumnVarForUpdate(C, S);
           if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A13B._Mask) == true) TILDA__TESTING_CLONED_Factory.COLS.A13B.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A14._Mask) == true) TILDA__TESTING_CLONED_Factory.COLS.A14.getFullColumnVarForUpdate(C, S);
 
           if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.CREATED._Mask) == true)
            {
@@ -10339,39 +10526,39 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.NAME._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.NAME._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _name);
+          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.NAME._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _name);
         } 
        if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.DESCRIPTION._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.DESCRIPTION._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _description);
+          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.DESCRIPTION._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _description);
         } 
        if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.DESC2._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.DESC2._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _desc2);
+          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.DESC2._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _desc2);
         } 
        if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.DESC3._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.DESC3._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _desc3);
+          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.DESC3._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _desc3);
         } 
        if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.DESC4._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.DESC4._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _desc4);
+          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.DESC4._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _desc4);
         } 
        if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.DESC5._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.DESC5._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _desc5);
+          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.DESC5._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _desc5);
         } 
        if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.DESC6._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.DESC6._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _desc6);
+          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.DESC6._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _desc6);
         } 
        if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.TOPS._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.TOPS._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR      ); else C.setArray(PS, ++i, TILDA__TESTING_CLONED_Factory.COLS.TOPS.getType(), AllocatedArrays, _tops);
+          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.TOPS._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.VARCHAR   ); else C.setArray(PS, ++i, TILDA__TESTING_CLONED_Factory.COLS.TOPS.getType(), AllocatedArrays, _tops);
         } 
        if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.TOPS2._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.TOPS2._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR      ); else C.setArray(PS, ++i, TILDA__TESTING_CLONED_Factory.COLS.TOPS2.getType(), AllocatedArrays, _tops2);
+          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.TOPS2._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.VARCHAR   ); else C.setArray(PS, ++i, TILDA__TESTING_CLONED_Factory.COLS.TOPS2.getType(), AllocatedArrays, _tops2);
         } 
        if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A1._Mask) == true) 
         { 
@@ -10427,7 +10614,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A6DTZ._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A6DTZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _a6dTZ);
+          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A6DTZ._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _a6dTZ);
         } 
        if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A6D._Mask) == true) 
         { 
@@ -10443,7 +10630,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A8BTZ._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A8BTZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _a8bTZ);
+          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A8BTZ._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _a8bTZ);
         } 
        if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A8B._Mask) == true) 
         { 
@@ -10451,7 +10638,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9TZ._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9TZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _a9TZ);
+          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9TZ._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _a9TZ);
         } 
        if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9._Mask) == true) 
         { 
@@ -10459,7 +10646,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9A1TZ._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9A1TZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _a9a1TZ);
+          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9A1TZ._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _a9a1TZ);
         } 
        if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9A1._Mask) == true) 
         { 
@@ -10467,7 +10654,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9BTZ._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9BTZ._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR      ); else C.setArray(PS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A9BTZ.getType(), AllocatedArrays, _a9bTZ);
+          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9BTZ._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.VARCHAR   ); else C.setArray(PS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A9BTZ.getType(), AllocatedArrays, _a9bTZ);
         } 
        if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9B._Mask) == true) 
         { 
@@ -10487,7 +10674,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A10B._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A10B._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _a10b);
+          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A10B._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _a10b);
         } 
        if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A10C._Mask) == true) 
         { 
@@ -10520,6 +10707,10 @@ This is the hasChanged for:<BR>
        if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A13B._Mask) == true) 
         { 
           if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A13B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.OTHER     ); else C.setArray(PS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A13B.getType(), AllocatedArrays, _a13b);
+        } 
+       if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A14._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A14._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _a14);
         } 
        if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.CREATED._Mask) == true) 
         { 
@@ -10587,57 +10778,7 @@ This is the hasChanged for:<BR>
         }
        StringBuilder S = new StringBuilder(1024);
           S.append("select ");
-          S.append(" "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "refnum");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "refnum2");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "name");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "description");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "desc2");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "desc3");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "desc4");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "desc5");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "desc6");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "tops");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "tops2");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "a1");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "a2");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "a2b");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "a2c");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "a3");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "a3b");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "a4");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "a4b");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "a5");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "a5b");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "a6");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "a6b");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "a6c");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "a6dTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "a6d");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "a7");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "a7b");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "a8bTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "a8b");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "a9TZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "a9");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "a9a1TZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "a9a1");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "a9bTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "a9b");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "a9c");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "a9d");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "a10a");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "a10b");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "a10c");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "a11");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "a11b");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "a11c");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "a12");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "a12b");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "a13");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "a13b");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "created");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "lastUpdated");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing_Cloned", "deleted");
+          C.getFullColumnVarList(S, TILDA__TESTING_CLONED_Factory.COLUMNS);
           S.append(" from "); C.getFullTableVar(S, "TILDATEST", "Testing_Cloned");
        switch (__LookupId)
         {
@@ -10709,6 +10850,13 @@ This is the hasChanged for:<BR>
                             _desc5       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.DESC5._Mask      ); _desc5 = null; }
                             _desc6       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.DESC6._Mask      ); _desc6 = null; }
                             _tops = (List<String>) C.getArray(RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.TOPS.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.TOPS._Mask       ); _tops = null; }
+                             //This looks weird, but with array aggregates on strings, gotta watch out on left joins with NULL values.
+                             //Those values show up as a [null] array (1 element, which is null).
+                             if (_tops != null && _tops.size() == 1 && _tops.get(0) == null)
+                               {
+                                 _tops = new ArrayList<String>();
+                                 __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.TOPS._Mask);
+                               }
                             _tops2 = (Set<String>) C.getArray(RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.TOPS2.getType(), true); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.TOPS2._Mask      ); _tops2 = null; }
                             _a1          =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A1._Mask         ); _a1 = null; }
                             _a2          = ParseUtil.parseCharacter    (RS.getString    (++i));  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A2._Mask         ); _a2 = null; }
@@ -10734,6 +10882,13 @@ This is the hasChanged for:<BR>
                             _a9a1TZ      = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A9A1TZ._Mask     ); _a9a1TZ = null; } else _a9a1TZ      = _a9a1TZ     .trim();
                             _a9a1        = processZDT(_a9a1TZ       , "tilda.data_test.TILDATEST.Testing_Cloned.a9a1"       , RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A9A1       , TILDA__TESTING_CLONED_Factory.COLS.A9A1TZ       ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A9A1._Mask       ); _a9a1 = null; }
                             _a9bTZ = (List<String>) C.getArray(RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A9BTZ.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A9BTZ._Mask      ); _a9bTZ = null; }
+                             //This looks weird, but with array aggregates on strings, gotta watch out on left joins with NULL values.
+                             //Those values show up as a [null] array (1 element, which is null).
+                             if (_a9bTZ != null && _a9bTZ.size() == 1 && _a9bTZ.get(0) == null)
+                               {
+                                 _a9bTZ = new ArrayList<String>();
+                                 __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A9BTZ._Mask);
+                               }
                             _a9b         = processZDTs(C, _a9bTZ        , "tilda.data_test.TILDATEST.Testing_Cloned.a9b"        , RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A9B        , TILDA__TESTING_CLONED_Factory.COLS.A9BTZ        ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A9B._Mask        ); _a9b = null; }
                             _a9c         = DateTimeUtil.toLocalDate(RS.getDate(++i)); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A9C._Mask        ); _a9c = null; }
                             _a9d         = DateTimeUtil.toLocalDates((List<java.sql.Date>) C.getArray(RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A9D.getType(), false)); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A9D._Mask        ); _a9d = null; }
@@ -10747,6 +10902,8 @@ This is the hasChanged for:<BR>
                             _a12b = (List<Short>) C.getArray(RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A12B.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A12B._Mask       ); _a12b = null; }
                             _a13         =                              (java.util.UUID) RS.getObject(++i);  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A13._Mask        ); _a13 = null; }
                             _a13b = (List<UUID>) C.getArray(RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A13B.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A13B._Mask       ); _a13b = null; }
+                            _a14         =                              RS.getString    (++i) ; 
+ if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A14._Mask        ); _a14 = null; }
                             _created     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.CREATED._Mask    ); _created = null; }
                             _lastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.LASTUPDATED._Mask); _lastUpdated = null; }
                             _deleted     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.DELETED._Mask    ); _deleted = null; }
@@ -10810,52 +10967,53 @@ This is the hasChanged for:<BR>
     {
       long T0 = System.nanoTime();
       String Str = 
-                   "refnum: "                                                                                                  +                                   getRefnum     () 
+                   "refnum: "                                                                                                  +                                   getRefnum     ()
                + "; refnum2: "                                                                                                 + TextUtil.print                   (getRefnum2    ())
                + "; name: "                                                                                                    + TextUtil.printVariableStr        (getName       ())
                + "; description"   + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.DESCRIPTION._Mask) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getDescription()))
-               + "; desc2"         + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.DESC2._Mask) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getDesc2      ()))
-               + "; desc3"         + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.DESC3._Mask) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getDesc3      ()))
-               + "; desc4"         + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.DESC4._Mask) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getDesc4      ()))
-               + "; desc5"         + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.DESC5._Mask) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getDesc5      ()))
-               + "; desc6"         + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.DESC6._Mask) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getDesc6      ()))
-               + "; tops"          + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.TOPS._Mask) == true ? ": NULL" : ": " + TextUtil.print                   (getTops       ()))
-               + "; tops2"         + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.TOPS2._Mask) == true ? ": NULL" : ": " + TextUtil.print                   (getTops2      ()))
-               + "; a1"            + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A1._Mask) == true ? ": NULL" : ": " +                                   getA1         () )
-               + "; a2"            + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A2._Mask) == true ? ": NULL" : ": " +                                   getA2         () )
-               + "; a2b"           + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A2B._Mask) == true ? ": NULL" : ": " + TextUtil.print                   (getA2b        ()))
-               + "; a2c"           + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A2C._Mask) == true ? ": NULL" : ": " + TextUtil.print                   (getA2c        ()))
-               + "; a3"            + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A3._Mask) == true ? ": NULL" : ": " +                                   getA3         () )
-               + "; a3b"           + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A3B._Mask) == true ? ": NULL" : ": " + TextUtil.print                   (getA3b        ()))
-               + "; a4"            + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A4._Mask) == true ? ": NULL" : ": " +                                   getA4         () )
-               + "; a4b"           + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A4B._Mask) == true ? ": NULL" : ": " + TextUtil.print                   (getA4b        ()))
-               + "; a5"            + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A5._Mask) == true ? ": NULL" : ": " +                                   getA5         () )
-               + "; a5b"           + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A5B._Mask) == true ? ": NULL" : ": " + TextUtil.print                   (getA5b        ()))
-               + "; a6"            + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A6._Mask) == true ? ": NULL" : ": " +                                   getA6         () )
-               + "; a6b"           + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A6B._Mask) == true ? ": NULL" : ": " + TextUtil.print                   (getA6b        ()))
-               + "; a6c"           + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A6C._Mask) == true ? ": NULL" : ": " + TextUtil.print                   (getA6c        ()))
-               + "; a6d"           + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A6D._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getA6d        ()))
-               + "; a7"            + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A7._Mask) == true ? ": NULL" : ": " +                                   getA7         () )
-               + "; a7b"           + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A7B._Mask) == true ? ": NULL" : ": " + TextUtil.print                   (getA7b        ()))
-               + "; a8b"           + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A8B._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getA8b        ()))
-               + "; a9"            + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getA9         ()))
-               + "; a9a1"          + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9A1._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getA9a1       ()))
-               + "; a9b"           + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9B._Mask) == true ? ": NULL" : ": " + TextUtil.print                   (getA9b        ()))
-               + "; a9c"           + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9C._Mask) == true ? ": NULL" : ": " +                                   getA9c        () )
-               + "; a9d"           + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9D._Mask) == true ? ": NULL" : ": " + TextUtil.print                   (getA9d        ()))
-               + "; a10a"          + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A10A._Mask) == true ? ": NULL" : ": " +                                   getA10a       () )
-               + "; a10b"          + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A10B._Mask) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getA10b       ()))
-               + "; a10c"          + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A10C._Mask) == true ? ": NULL" : ": " +                                   getA10c       () )
-               + "; a11"           + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A11._Mask) == true ? ": NULL" : ": " +                                   getA11        () )
-               + "; a11b"          + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A11B._Mask) == true ? ": NULL" : ": " + TextUtil.print                   (getA11b       ()))
-               + "; a11c"          + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A11C._Mask) == true ? ": NULL" : ": " +                                   getA11c       () )
-               + "; a12"           + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A12._Mask) == true ? ": NULL" : ": " +                                   getA12        () )
-               + "; a12b"          + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A12B._Mask) == true ? ": NULL" : ": " + TextUtil.print                   (getA12b       ()))
-               + "; a13"           + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A13._Mask) == true ? ": NULL" : ": " +                                   getA13        () )
-               + "; a13b"          + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A13B._Mask) == true ? ": NULL" : ": " + TextUtil.print                   (getA13b       ()))
+               + "; desc2"         + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.DESC2._Mask      ) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getDesc2      ()))
+               + "; desc3"         + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.DESC3._Mask      ) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getDesc3      ()))
+               + "; desc4"         + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.DESC4._Mask      ) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getDesc4      ()))
+               + "; desc5"         + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.DESC5._Mask      ) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getDesc5      ()))
+               + "; desc6"         + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.DESC6._Mask      ) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getDesc6      ()))
+               + "; tops"          + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.TOPS._Mask       ) == true ? ": NULL" : ": " + TextUtil.print                   (getTops       ()))
+               + "; tops2"         + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.TOPS2._Mask      ) == true ? ": NULL" : ": " + TextUtil.print                   (getTops2      ()))
+               + "; a1"            + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A1._Mask         ) == true ? ": NULL" : ": " +                                   getA1         ())
+               + "; a2"            + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A2._Mask         ) == true ? ": NULL" : ": " +                                   getA2         ())
+               + "; a2b"           + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A2B._Mask        ) == true ? ": NULL" : ": " + TextUtil.print                   (getA2b        ()))
+               + "; a2c"           + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A2C._Mask        ) == true ? ": NULL" : ": " + TextUtil.print                   (getA2c        ()))
+               + "; a3"            + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A3._Mask         ) == true ? ": NULL" : ": " +                                   getA3         ())
+               + "; a3b"           + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A3B._Mask        ) == true ? ": NULL" : ": " + TextUtil.print                   (getA3b        ()))
+               + "; a4"            + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A4._Mask         ) == true ? ": NULL" : ": " +                                   getA4         ())
+               + "; a4b"           + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A4B._Mask        ) == true ? ": NULL" : ": " + TextUtil.print                   (getA4b        ()))
+               + "; a5"            + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A5._Mask         ) == true ? ": NULL" : ": " +                                   getA5         ())
+               + "; a5b"           + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A5B._Mask        ) == true ? ": NULL" : ": " + TextUtil.print                   (getA5b        ()))
+               + "; a6"            + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A6._Mask         ) == true ? ": NULL" : ": " +                                   getA6         ())
+               + "; a6b"           + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A6B._Mask        ) == true ? ": NULL" : ": " + TextUtil.print                   (getA6b        ()))
+               + "; a6c"           + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A6C._Mask        ) == true ? ": NULL" : ": " + TextUtil.print                   (getA6c        ()))
+               + "; a6d"           + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A6D._Mask        ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getA6d        ()))
+               + "; a7"            + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A7._Mask         ) == true ? ": NULL" : ": " +                                   getA7         ())
+               + "; a7b"           + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A7B._Mask        ) == true ? ": NULL" : ": " + TextUtil.print                   (getA7b        ()))
+               + "; a8b"           + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A8B._Mask        ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getA8b        ()))
+               + "; a9"            + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9._Mask         ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getA9         ()))
+               + "; a9a1"          + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9A1._Mask       ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getA9a1       ()))
+               + "; a9b"           + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9B._Mask        ) == true ? ": NULL" : ": " + TextUtil.print                   (getA9b        ()))
+               + "; a9c"           + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9C._Mask        ) == true ? ": NULL" : ": " +                                   getA9c        ())
+               + "; a9d"           + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9D._Mask        ) == true ? ": NULL" : ": " + TextUtil.print                   (getA9d        ()))
+               + "; a10a"          + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A10A._Mask       ) == true ? ": NULL" : ": " +                                   getA10a       ())
+               + "; a10b"          + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A10B._Mask       ) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getA10b       ()))
+               + "; a10c"          + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A10C._Mask       ) == true ? ": NULL" : ": " +                                   getA10c       ())
+               + "; a11"           + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A11._Mask        ) == true ? ": NULL" : ": " +                                   getA11        ())
+               + "; a11b"          + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A11B._Mask       ) == true ? ": NULL" : ": " + TextUtil.print                   (getA11b       ()))
+               + "; a11c"          + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A11C._Mask       ) == true ? ": NULL" : ": " +                                   getA11c       ())
+               + "; a12"           + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A12._Mask        ) == true ? ": NULL" : ": " +                                   getA12        ())
+               + "; a12b"          + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A12B._Mask       ) == true ? ": NULL" : ": " + TextUtil.print                   (getA12b       ()))
+               + "; a13"           + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A13._Mask        ) == true ? ": NULL" : ": " +                                   getA13        ())
+               + "; a13b"          + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A13B._Mask       ) == true ? ": NULL" : ": " + TextUtil.print                   (getA13b       ()))
+               + "; a14"           + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A14._Mask        ) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (_a14        ))
                + "; created: "                                                                                                 + DateTimeUtil.printDateTimeForJSON(getCreated    ())
                + "; lastUpdated: "                                                                                             + DateTimeUtil.printDateTimeForJSON(getLastUpdated())
-               + "; deleted"       + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.DELETED._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDeleted    ()))
+               + "; deleted"       + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.DELETED._Mask    ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDeleted    ()))
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;

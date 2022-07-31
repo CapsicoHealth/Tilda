@@ -81,7 +81,6 @@ public abstract class TILDA__TESTVIEW implements tilda.interfaces.ReaderObject, 
    transient BitSet   __Nulls       = new BitSet(64);
    transient BitSet   __Changes     = new BitSet(64);
    transient boolean  __NewlyCreated= false;
-
    transient int      __LookupId;
 
    public  boolean hasChanged    () { return __Changes.isEmpty() == false; }
@@ -313,8 +312,7 @@ This is the setter for:<BR>
         }
        StringBuilder S = new StringBuilder(1024);
           S.append("select ");
-          S.append(" "); C.getFullColumnVar(S, "TILDATEST", "TestView", "refnum");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "TestView", "name");
+          C.getFullColumnVarList(S, TILDA__TESTVIEW_Factory.COLUMNS);
           S.append(" from "); C.getFullTableVar(S, "TILDATEST", "TestView");
        switch (__LookupId)
         {
@@ -385,7 +383,7 @@ This is the setter for:<BR>
     {
       long T0 = System.nanoTime();
       String Str = 
-                   "refnum: "                                                                                  +                                   getRefnum() 
+                   "refnum: "                                                                                  +                                   getRefnum()
                + "; name: "                                                                                    + TextUtil.printVariableStr        (getName  ())
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);

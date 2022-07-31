@@ -47,6 +47,7 @@
    ,{ "name":"a12b", "type":"INT64", "mode":"REPEATED", "description":"The blah" }
    ,{ "name":"a13", "type":"STRING", "mode":"NULLABLE", "description":"The blah" }
    ,{ "name":"a13b", "type":"STRING", "mode":"REPEATED", "description":"The blah" }
+   ,{ "name":"a14", "type":"STRING", "mode":"NULLABLE", "description":"The blah" }
    ,{ "name":"created", "type":"TIMESTAMP", "mode":"REQUIRED", "description":"The timestamp for when the record was created. (TILDATEST.Testing_Cloned)" }
    ,{ "name":"lastUpdated", "type":"TIMESTAMP", "mode":"REQUIRED", "description":"The timestamp for when the record was last updated. (TILDATEST.Testing_Cloned)" }
    ,{ "name":"deleted", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"The timestamp for when the record was deleted. (TILDATEST.Testing_Cloned)" }

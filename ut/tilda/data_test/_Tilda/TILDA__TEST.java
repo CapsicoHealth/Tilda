@@ -136,7 +136,6 @@ public abstract class TILDA__TEST implements tilda.interfaces.WriterObject, tild
    transient BitSet   __Nulls       = new BitSet(64);
    transient BitSet   __Changes     = new BitSet(64);
    transient boolean  __NewlyCreated= false;
-
    transient int      __LookupId;
 
    public  boolean hasChanged    () { return __Changes.isEmpty() == false; }
@@ -1216,13 +1215,13 @@ This is the hasChanged for:<BR>
 */
    public void copyTo(tilda.data_test._Tilda.TILDA__TEST Dst) throws Exception
      {
-       if (_id          != null)
+       if (__Init == InitMode.CREATE && _id          != null)
         Dst.setId         (_id         );
-       if (_name        != null)
+       if (__Init == InitMode.CREATE && _name        != null)
         Dst.setName       (_name       );
-       if (_test_fk     != null)
+       if (__Init == InitMode.CREATE && _test_fk     != null)
         Dst.setTest_fk    (_test_fk    );
-       if (_created     != null)
+       if (__Init == InitMode.CREATE && _created     != null)
         Dst.setCreated    (_created    );
        if (_lastUpdated != null)
         Dst.setLastUpdated(_lastUpdated);
@@ -1460,11 +1459,11 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__TEST_Factory.COLS.ID._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TEST_Factory.COLS.ID._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _id);
+          if (__Nulls.intersects(TILDA__TEST_Factory.COLS.ID._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _id);
         } 
        if (__Changes.intersects(TILDA__TEST_Factory.COLS.NAME._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TEST_Factory.COLS.NAME._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _name);
+          if (__Nulls.intersects(TILDA__TEST_Factory.COLS.NAME._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _name);
         } 
        if (__Changes.intersects(TILDA__TEST_Factory.COLS.TEST_FK._Mask) == true) 
         { 
@@ -1528,7 +1527,7 @@ This is the hasChanged for:<BR>
                     || __Init == null && __LookupId==0 // Loaded via some deserialization mechamism, e.g., Json or CSV loader
                ;
        if (OK == false)
-        throw new Exception("Object has not been instanciated via deserialization or the factory create() method.");
+        throw new Exception("Object has not been instanciated via deserialization or the factory create() method: __Init:"+__Init+"; __NewlyCreated:"+__NewlyCreated+"; __LookupId: "+__LookupId+";");
 
        if (__Init == null && __LookupId==0)  // object deserialized
         validateDeserialization();
@@ -1616,13 +1615,7 @@ This is the hasChanged for:<BR>
         }
        StringBuilder S = new StringBuilder(1024);
           S.append("select ");
-          S.append(" "); C.getFullColumnVar(S, "TILDATEST", "Test", "refnum");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Test", "id");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Test", "name");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Test", "test_fk");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Test", "created");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Test", "lastUpdated");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Test", "deleted");
+          C.getFullColumnVarList(S, TILDA__TEST_Factory.COLUMNS);
           S.append(" from "); C.getFullTableVar(S, "TILDATEST", "Test");
        switch (__LookupId)
         {
@@ -1707,13 +1700,13 @@ This is the hasChanged for:<BR>
     {
       long T0 = System.nanoTime();
       String Str = 
-                   "refnum: "                                                                                        +                                   getRefnum     () 
+                   "refnum: "                                                                                        +                                   getRefnum     ()
                + "; id: "                                                                                            + TextUtil.printVariableStr        (getId         ())
                + "; name: "                                                                                          + TextUtil.printVariableStr        (getName       ())
-               + "; test_fk: "                                                                                       +                                   getTest_fk    () 
+               + "; test_fk: "                                                                                       +                                   getTest_fk    ()
                + "; created: "                                                                                       + DateTimeUtil.printDateTimeForJSON(getCreated    ())
                + "; lastUpdated: "                                                                                   + DateTimeUtil.printDateTimeForJSON(getLastUpdated())
-               + "; deleted"       + (__Nulls.intersects(TILDA__TEST_Factory.COLS.DELETED._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDeleted    ()))
+               + "; deleted"       + (__Nulls.intersects(TILDA__TEST_Factory.COLS.DELETED._Mask    ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDeleted    ()))
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;

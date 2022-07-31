@@ -105,7 +105,6 @@ public abstract class TILDA__TESTING3VIEW implements tilda.interfaces.ReaderObje
    transient BitSet   __Nulls       = new BitSet(64);
    transient BitSet   __Changes     = new BitSet(64);
    transient boolean  __NewlyCreated= false;
-
    transient int      __LookupId;
 
    public  boolean hasChanged    () { return __Changes.isEmpty() == false; }
@@ -525,10 +524,7 @@ This is the setter for:<BR>
         }
        StringBuilder S = new StringBuilder(1024);
           S.append("select ");
-          S.append(" "); C.getFullColumnVar(S, "TILDATEST", "Testing3View", "refnum");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing3View", "name");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing3View", "lastUpdated");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing3View", "xxxLastUpdated");
+          C.getFullColumnVarList(S, TILDA__TESTING3VIEW_Factory.COLUMNS);
           S.append(" from "); C.getFullTableVar(S, "TILDATEST", "Testing3View");
        switch (__LookupId)
         {
@@ -601,7 +597,7 @@ This is the setter for:<BR>
     {
       long T0 = System.nanoTime();
       String Str = 
-                   "refnum: "                                                                                                      +                                   getRefnum        () 
+                   "refnum: "                                                                                                      +                                   getRefnum        ()
                + "; name: "                                                                                                        + TextUtil.printVariableStr        (getName          ())
                + "; lastUpdated: "                                                                                                 + DateTimeUtil.printDateTimeForJSON(getLastUpdated   ())
                + "; xxxLastUpdated: "                                                                                              + DateTimeUtil.printDateTimeForJSON(getXxxLastUpdated())

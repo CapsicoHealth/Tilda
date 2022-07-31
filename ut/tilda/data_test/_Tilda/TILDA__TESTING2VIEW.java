@@ -413,7 +413,6 @@ public abstract class TILDA__TESTING2VIEW implements tilda.interfaces.ReaderObje
    transient BitSet   __Nulls       = new BitSet(64);
    transient BitSet   __Changes     = new BitSet(64);
    transient boolean  __NewlyCreated= false;
-
    transient int      __LookupId;
 
    public  boolean hasChanged    () { return __Changes.isEmpty() == false; }
@@ -1526,6 +1525,20 @@ These are the enumerated values for tilda.data_test.TILDATEST.Testing2View.desc6
                                                { "STR", "String", "String", "" }
                                              , { "DTM", "DateTime", "DateTime", "" }
                                   };
+   public static final boolean checkDesc6(String v)
+    {
+      for (String[] a : _desc6_Values)
+       if (a[0].equals(v) == true)
+        return true;
+      return false;
+    }
+   public static final String mapDesc6(String v)
+    {
+      for (String[] a : _desc6_Values)
+       if (a[0].equals(v) == true)
+        return a[2];
+      return null;
+    }
    public static final String _desc6String   = "STR";
    public static final String _desc6DateTime = "DTM";
 
@@ -3409,27 +3422,7 @@ end</PRE>
         }
        StringBuilder S = new StringBuilder(1024);
           S.append("select ");
-          S.append(" "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "refnum");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "name");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "lastUpdated");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "xxxLastUpdated");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "description");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "desc2");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "desc3");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "desc4");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "desc5");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "desc6");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "a3");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "bastille");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "toto");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "desc2_Cat1");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "desc2_Cat2");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "desc2_Cat3");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "a7_Cat4");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "a7_Cat5");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "a5_null");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "a6_null");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing2View", "a7_null");
+          C.getFullColumnVarList(S, TILDA__TESTING2VIEW_Factory.COLUMNS);
           S.append(" from "); C.getFullTableVar(S, "TILDATEST", "Testing2View");
        switch (__LookupId)
         {
@@ -3519,27 +3512,27 @@ end</PRE>
     {
       long T0 = System.nanoTime();
       String Str = 
-                   "refnum: "                                                                                                      +                                   getRefnum        () 
+                   "refnum: "                                                                                                      +                                   getRefnum        ()
                + "; name: "                                                                                                        + TextUtil.printVariableStr        (getName          ())
                + "; lastUpdated: "                                                                                                 + DateTimeUtil.printDateTimeForJSON(getLastUpdated   ())
                + "; xxxLastUpdated: "                                                                                              + DateTimeUtil.printDateTimeForJSON(getXxxLastUpdated())
-               + "; description"      + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.DESCRIPTION._Mask) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getDescription   ()))
-               + "; desc2"            + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.DESC2._Mask) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getDesc2         ()))
-               + "; desc3"            + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.DESC3._Mask) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getDesc3         ()))
-               + "; desc4"            + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.DESC4._Mask) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getDesc4         ()))
-               + "; desc5"            + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.DESC5._Mask) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getDesc5         ()))
-               + "; desc6"            + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.DESC6._Mask) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getDesc6         ()))
-               + "; a3"               + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A3._Mask) == true ? ": NULL" : ": " +                                   getA3            () )
-               + "; bastille"         + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.BASTILLE._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getBastille      ()))
-               + "; toto"             + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.TOTO._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getToto          ()))
-               + "; desc2_Cat1"       + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.DESC2_CAT1._Mask) == true ? ": NULL" : ": " +                                   getDesc2_Cat1    () )
-               + "; desc2_Cat2"       + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.DESC2_CAT2._Mask) == true ? ": NULL" : ": " +                                   getDesc2_Cat2    () )
-               + "; desc2_Cat3"       + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.DESC2_CAT3._Mask) == true ? ": NULL" : ": " +                                   getDesc2_Cat3    () )
-               + "; a7_Cat4"          + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A7_CAT4._Mask) == true ? ": NULL" : ": " +                                   getA7_Cat4       () )
-               + "; a7_Cat5"          + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A7_CAT5._Mask) == true ? ": NULL" : ": " +                                   getA7_Cat5       () )
-               + "; a5_null"          + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A5_NULL._Mask) == true ? ": NULL" : ": " +                                   getA5_null       () )
-               + "; a6_null"          + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A6_NULL._Mask) == true ? ": NULL" : ": " +                                   getA6_null       () )
-               + "; a7_null"          + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A7_NULL._Mask) == true ? ": NULL" : ": " +                                   getA7_null       () )
+               + "; description"      + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.DESCRIPTION._Mask   ) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getDescription   ()))
+               + "; desc2"            + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.DESC2._Mask         ) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getDesc2         ()))
+               + "; desc3"            + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.DESC3._Mask         ) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getDesc3         ()))
+               + "; desc4"            + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.DESC4._Mask         ) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getDesc4         ()))
+               + "; desc5"            + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.DESC5._Mask         ) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getDesc5         ()))
+               + "; desc6"            + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.DESC6._Mask         ) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getDesc6         ()))
+               + "; a3"               + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A3._Mask            ) == true ? ": NULL" : ": " +                                   getA3            ())
+               + "; bastille"         + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.BASTILLE._Mask      ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getBastille      ()))
+               + "; toto"             + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.TOTO._Mask          ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getToto          ()))
+               + "; desc2_Cat1"       + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.DESC2_CAT1._Mask    ) == true ? ": NULL" : ": " +                                   getDesc2_Cat1    ())
+               + "; desc2_Cat2"       + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.DESC2_CAT2._Mask    ) == true ? ": NULL" : ": " +                                   getDesc2_Cat2    ())
+               + "; desc2_Cat3"       + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.DESC2_CAT3._Mask    ) == true ? ": NULL" : ": " +                                   getDesc2_Cat3    ())
+               + "; a7_Cat4"          + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A7_CAT4._Mask       ) == true ? ": NULL" : ": " +                                   getA7_Cat4       ())
+               + "; a7_Cat5"          + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A7_CAT5._Mask       ) == true ? ": NULL" : ": " +                                   getA7_Cat5       ())
+               + "; a5_null"          + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A5_NULL._Mask       ) == true ? ": NULL" : ": " +                                   getA5_null       ())
+               + "; a6_null"          + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A6_NULL._Mask       ) == true ? ": NULL" : ": " +                                   getA6_null       ())
+               + "; a7_null"          + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A7_NULL._Mask       ) == true ? ": NULL" : ": " +                                   getA7_null       ())
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;
