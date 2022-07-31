@@ -16,8 +16,6 @@
 
 package tilda.db.metadata;
 
-import java.sql.DatabaseMetaData;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +24,6 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import tilda.db.Connection;
 import tilda.utils.PaddingTracker;
 
 public class ViewMeta
@@ -47,7 +44,7 @@ public class ViewMeta
     protected Map<String, ColumnMeta> _DBColumns         = new HashMap<String, ColumnMeta>();
     public List<ColumnMeta>           _ColumnsList       = new ArrayList<ColumnMeta>();
     public PaddingTracker             _PadderColumnNames = new PaddingTracker();
-
+    
     /*
      * public void load(Connection C)
      * throws Exception

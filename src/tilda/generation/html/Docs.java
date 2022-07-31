@@ -51,6 +51,7 @@ import tilda.parsing.parts.View.DepWrapper;
 import tilda.parsing.parts.ViewColumn;
 import tilda.parsing.parts.ViewJoin;
 import tilda.parsing.parts.ViewPivot;
+import tilda.parsing.parts.helpers.SameAsHelper;
 import tilda.utils.FileUtil;
 import tilda.utils.Graph;
 import tilda.utils.Graph.Visitor;
@@ -363,7 +364,7 @@ public class Docs
                 ViewColumn VC = view.getViewColumn(C.getName());
                 if (VC != null)
                   {
-                    List<Column> L = VC.getSameAsLineage();
+                    List<Column> L = SameAsHelper.getSameAsLineage(VC);
                     Out.print("<DIV style=\"margin:0px;margin-left:20px;font-size:75%;\">");
                     boolean first = true;
                     for (Column c : L)
@@ -914,7 +915,7 @@ public class Docs
                 Column C = V.getProxyColumn(ColName);
                 Out.println("<A style=\"color:#00AA00; font-weight: bold;\" href=\"" + makeColumnHref(C, V.getSchema()) + "\">" + ColName + "</A><BR>");
                 ViewColumn VC = V.getViewColumn(ColName);
-                List<Column> L = VC == null ? null : VC.getSameAsLineage();
+                List<Column> L = VC == null ? null : SameAsHelper.getSameAsLineage(VC);
                 if (L != null && L.isEmpty() == false)
                   {
                     Out.println("<DIV style=\"padding-left:10px; font-size:75%;\">&nbsp;&nbsp;&rarr;&nbsp;" + makeColumnLink(L.get(0), V.getSchema()));

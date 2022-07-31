@@ -42,8 +42,12 @@ import com.google.cloud.bigquery.TableInfo;
 import com.google.cloud.bigquery.TableResult;
 import com.google.cloud.bigquery.WriteChannelConfiguration;
 
+import tilda.db.Connection;
 import tilda.db.TildaMasterRuntimeMetaData;
 import tilda.db.TildaObjectMetaData;
+import tilda.db.metadata.ColumnMeta;
+import tilda.db.metadata.SchemaMeta;
+import tilda.db.metadata.TableMeta;
 import tilda.types.ColumnDefinition;
 import tilda.utils.CollectionUtil;
 import tilda.utils.DurationUtil;
@@ -282,15 +286,18 @@ public class BQHelper
     public static Schema getTildaBQSchema(String SchemaName, String TableViewName)
     throws Exception
       {
-        return getTildaBQSchema(SchemaName, TableViewName, null);
+        return getBQSchemaFromTilda(SchemaName, TableViewName, null);
       }
     
-    public static Schema getTildaBQSchema(String SchemaName, String TableViewName, String outputMapName)
+    public static Schema getBQSchemaFromTilda(String SchemaName, String TableViewName, String outputMapName)
     throws Exception
       {
         TildaObjectMetaData Obj = TildaMasterRuntimeMetaData.getTableObject(SchemaName, TableViewName);
         if (Obj == null)
-          throw new Exception("Cannot locate Tilda Object/View '" + SchemaName + "." + TableViewName + "', so cannot generate a BQ-compatible Schema.");
+          {
+            LOG.warn("Cannot locate Tilda Object/View '" + SchemaName + "." + TableViewName + "', so cannot generate a BQ-compatible Schema.");
+            return null;
+          }
 
         // StringBuilder str = new StringBuilder();
         List<Field> fieldsList = new ArrayList<Field>();
@@ -310,6 +317,37 @@ public class BQHelper
 
         return Schema.of(fieldsList);
       }
+    
+    public static Schema getBQSchemaFromDB(Connection C, String SchemaName, String TableViewName)
+    throws Exception
+      {
+        SchemaMeta S = new SchemaMeta(SchemaName);
+        S.load(C, TableViewName);
+        TableMeta T = S.getTableMeta(TableViewName);
+        if (T == null)
+          {
+            LOG.debug("Cannot load meta-data from the database about "+SchemaName+"."+TableViewName+".");
+            return null;
+          }
+        // StringBuilder str = new StringBuilder();
+        List<Field> fieldsList = new ArrayList<Field>();
+        List<ColumnMeta> cols = T.getColumnMetaList();
+        for (ColumnMeta col : cols)
+          {
+            Field F = Field.newBuilder(col._NameOriginal, StandardSQLTypeName.valueOf(col._TildaType.getBigQueryType()))
+            .setMode(col.isArray() == true ? Field.Mode.REPEATED : col._Nullable == 1 ? Field.Mode.REQUIRED : Field.Mode.NULLABLE)
+            .setDescription(col._Descr)
+            .build();
+            fieldsList.add(F);
+            // if (str.length()!=0)
+            // str.append(", ");
+            // str.append(col.getName());
+          }
+        // LOG.debug("Schema for "+SchemaName+"."+TableViewName+": "+str.toString());
+
+        return Schema.of(fieldsList);
+      }
+    
     
     public static String getSchemaColumns(Schema schema)
       {

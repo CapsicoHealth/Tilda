@@ -30,6 +30,7 @@ import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.enums.DefaultType;
 import tilda.enums.FrameworkColumnType;
+import tilda.enums.FrameworkSourcedType;
 import tilda.enums.MultiType;
 import tilda.enums.ObjectLifecycle;
 import tilda.enums.ProtectionType;
@@ -38,6 +39,7 @@ import tilda.enums.ValidationStatus;
 import tilda.enums.VisibilityType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ReferenceHelper;
+import tilda.parsing.parts.helpers.SameAsHelper;
 import tilda.parsing.parts.helpers.ValidationHelper;
 import tilda.utils.PaddingTracker;
 import tilda.utils.TextUtil;
@@ -63,9 +65,9 @@ public class Column extends TypeDef
     /*@formatter:on*/
 
     public transient FrameworkColumnType _FCT               = FrameworkColumnType.NONE;
-    
+
     // LDH-NOTE: Because views can be materialized, we decided to create Proxy Objects. Since Aggregates
-    //          can affect the type of the column, we propagate it.
+    // can affect the type of the column, we propagate it.
     public transient AggregateType       _Aggregate         = null;
 
     public transient ColumnMode          _Mode;
@@ -103,7 +105,7 @@ public class Column extends TypeDef
         _ModeStr = c._ModeStr;
         _Invariant = c._Invariant;
         _ProtectStr = c._ProtectStr;
-//        _Mask = c._Mask;
+        // _Mask = c._Mask;
         _Description = c._Description;
         if (c._Mapper != null)
           _Mapper = new ColumnMapper(c._Mapper);
@@ -136,7 +138,7 @@ public class Column extends TypeDef
         _ModeStr = Mode == null ? null : Mode.name();
         _Invariant = Invariant;
         _ProtectStr = Protect == null ? null : Protect.name();
-//        _Mask = Mask;
+        // _Mask = Mask;
         _Description = Description;
         _Precision = Precision;
         _Scale = Scale;
@@ -286,9 +288,9 @@ public class Column extends TypeDef
         // {
         // PS.AddNote("Column '" + getFullName() + "' is defining a default value for a nullable column.");
         // }
-        
-//        if (TextUtil.isNullOrEmpty(_Mask) == false)
-//         ValueHelper.CheckColumnValue(PS, this, _Name, _Mask, DefaultType.NONE);
+
+        // if (TextUtil.isNullOrEmpty(_Mask) == false)
+        // ValueHelper.CheckColumnValue(PS, this, _Name, _Mask, DefaultType.NONE);
       }
 
 
@@ -336,8 +338,10 @@ public class Column extends TypeDef
           }
 
         return Errs == PS.getErrorCount();
-
       }
+
+
+
 
     protected void copyFromSameAs(ParserSession PS)
       {
@@ -347,8 +351,18 @@ public class Column extends TypeDef
         if (_Name == null)
           _Name = _SameAsObj._Name;
 
+//        String sameAs_TypeStr = SameAsHelper.getSameAsRoot_TypeStr(this);
+//        Integer sameAs_Size = SameAsHelper.getSameAsRoot_Size(this);
+//        Integer sameAs_Precision = SameAsHelper.getSameAsRoot_Precision(this);
+//        Integer sameAs_Scale = SameAsHelper.getSameAsRoot_Scale(this);
+//        ColumnValue[] sameAs_Values = SameAsHelper.getSameAsRoot_ColumnValues(this);
+//        String sameAs_ProtectStr = SameAsHelper.getSameAsRoot_ProtectStr(this);
+//        String sameAs_ModeStr = SameAsHelper.getSameAsRoot_ModeStr(this);
+//        Boolean sameAs_Nullable = SameAsHelper.getSameAsRoot_Nullable(this);
+//        String sameAs_Description = SameAsHelper.getSameAsRoot_Description(this);
+
         if (_TypeStr != null && _TypeStr.equals(_SameAsObj._TypeStr) == false && _Aggregate == null)
-          PS.AddError("Column '" + getFullName() + "' is a 'sameas' and is redefining a type '" + _TypeStr + "' which doesn't match the destination column's type '" + _SameAsObj._TypeStr + "'. Note that redefining a type for a sameas column is superfluous in the first place.");
+          PS.AddError("Column '" + getFullName() + "' is a 'sameAs' and is redefining a type '" + _TypeStr + "' which doesn't match the destination column's type '" + _SameAsObj._TypeStr + "'. Note that redefining a type for a sameas column is superfluous in the first place.");
         else if (_Aggregate == null)
           _TypeStr = _SameAsObj._TypeStr;
 
@@ -378,7 +392,7 @@ public class Column extends TypeDef
           _Scale = _SameAsObj._Scale;
 
         if (_Size != null && _Size != 0 && _SameAsObj._Size != null && _Size < _SameAsObj._Size)
-          PS.AddError("Column '" + getFullName() + "' is a 'sameas' and is redefining a size '" + _Size + "' that is lower that the origianal column's size '" + _SameAsObj._Size + "'. You can only enlarge a column (for example to go from a CHAR to a VARCHAR), not shrink it.");
+          PS.AddError("Column '" + getFullName() + "' is a 'sameAs' and is redefining a size '" + _Size + "' that is lower than the origianal column's size '" + _SameAsObj._Size + "'. You can only enlarge a column (for example to go from a CHAR to a VARCHAR), not shrink it.");
         else if (_Mapper != null && _Mapper._Multi != MultiType.NONE)
           {
             _TypeStr += _Mapper._Multi == MultiType.LIST ? "[]"
@@ -405,17 +419,17 @@ public class Column extends TypeDef
         if (_SameAsObj._Values != null)
           {
             if (_Values != null)
-              PS.AddError("Column '" + getFullName() + "' is a 'sameas' and is redefining 'values', which is not allowed.");
+              PS.AddError("Column '" + getFullName() + "' is a 'sameAs' and is redefining 'values', which is not allowed.");
             else
               _Values = ColumnValue.deepCopy(_SameAsObj._Values);
           }
 
         if (_ProtectStr != null)
           {
-            if (   TextUtil.isNullOrEmpty(_SameAsObj._ProtectStr) == false 
-                && ProtectionType.parse(_SameAsObj._ProtectStr).ordinal() >  ProtectionType.parse(_ProtectStr).ordinal()
+            if (   TextUtil.isNullOrEmpty(_SameAsObj._ProtectStr) == false
+                && ProtectionType.parse(_SameAsObj._ProtectStr).ordinal() > ProtectionType.parse(_ProtectStr).ordinal()
                )
-             PS.AddError("Column '" + getFullName() + "' is a 'sameas' and is redefining 'protect' from '"+_SameAsObj._ProtectStr+"' to '"+_ProtectStr+"', which is not allowed: only protection upgrades are allowed, not downgrades.");
+              PS.AddError("Column '" + getFullName() + "' is a 'sameAs' and is redefining 'protect' from '" + _SameAsObj._ProtectStr + "' to '" + _ProtectStr + "', which is not allowed: only protection upgrades are allowed, not downgrades.");
           }
         else
           _ProtectStr = _SameAsObj._ProtectStr;
@@ -604,7 +618,7 @@ public class Column extends TypeDef
       {
         StringBuilder Str = new StringBuilder();
         for (Column C : L)
-          Str.append(Str.length() == 0 ? "" : ", ").append(simple==true ? C.getName() : C.getShortName());
+          Str.append(Str.length() == 0 ? "" : ", ").append(simple == true ? C.getName() : C.getShortName());
         return Str.toString();
       }
 
@@ -656,27 +670,27 @@ public class Column extends TypeDef
       }
 
     protected static Column deepColumnSearch(ParserSession PS, Base parent, String colName)
-    {
-      Column col = parent.getColumn(colName);
-      if (col != null)
-        return col;
-    
-      if (parent._TildaType == TildaType.VIEW) // Let's do a deeper search for the other columns from the tables/views brought in
-        {
-          // LDH-NOTE: This should be abstracted better as a utility method. Looking up
-          // a column by name across the entire view space is important moving forward
-          // with a few new tilda features.
-          Set<String> objs = new HashSet<String>();
-          for (ViewColumn vc : ((View) parent)._ViewColumns)
-            {
-              if (vc._SameAsObj != null && vc._SameAsObj._ParentObject != null && objs.add(vc._SameAsObj._ParentObject._Name) == true)
-                {
-                  for (Column c : vc._SameAsObj._ParentObject._Columns)
-                    if (c._Name.equals(colName) == true)
-                      return c;
-                }
-            }
-        }
-      return null;
-    }
+      {
+        Column col = parent.getColumn(colName);
+        if (col != null)
+          return col;
+
+        if (parent._TildaType == TildaType.VIEW) // Let's do a deeper search for the other columns from the tables/views brought in
+          {
+            // LDH-NOTE: This should be abstracted better as a utility method. Looking up
+            // a column by name across the entire view space is important moving forward
+            // with a few new tilda features.
+            Set<String> objs = new HashSet<String>();
+            for (ViewColumn vc : ((View) parent)._ViewColumns)
+              {
+                if (vc._SameAsObj != null && vc._SameAsObj._ParentObject != null && objs.add(vc._SameAsObj._ParentObject._Name) == true)
+                  {
+                    for (Column c : vc._SameAsObj._ParentObject._Columns)
+                      if (c._Name.equals(colName) == true)
+                        return c;
+                  }
+              }
+          }
+        return null;
+      }
   }

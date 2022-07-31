@@ -603,6 +603,8 @@ public class Migrator
                     // LOG.debug("Checking db FK " + Sig + ".");
                     for (ForeignKey FK : Obj._ForeignKeys)
                       {
+                        if (FK == null)
+                          continue;
                         // LOG.debug("Checking model FK " + FK.getSignature() + ".");
                         if (Sig.equals(FK.getSignature()) == true)
                           {
@@ -616,6 +618,8 @@ public class Migrator
                 // Checking any FK defined in the Model which are not in the DB, so they can be added.
                 for (ForeignKey FK : Obj._ForeignKeys)
                   {
+                    if (FK == null)
+                      continue;
                     boolean Found = false;
                     String Sig = FK.getSignature();
                     for (FKMeta fk : TMeta._ForeignKeysOut.values())

@@ -427,47 +427,6 @@ public class ViewColumn
         return null;
       }
 
-    public Column getSameAsRoot()
-      {
-        // LOG.debug("SameAs Root for " + getShortName() + ": " + _SameAsObj.getShortName());
-        if (_SameAsObj != null && _SameAsObj._ParentObject._FST == FrameworkSourcedType.VIEW)
-          {
-            View SubV = _ParentView._ParentSchema.getSourceView(_SameAsObj._ParentObject);
-            if (SubV == null)
-              return null;
-            // LOG.debug("SameAs is part of a sub-view " + SubV.getShortName());
-            ViewColumn VC = SubV.getViewColumn(_SameAsObj.getName());
-            if (VC != null)
-              return VC.getSameAsRoot();
-            else
-              {
-                // LOG.error("Could not find column " + _SameAsObj.getShortName() + " in view " + SubV.getShortName());
-                return null;
-              }
-          }
-        return _SameAsObj;
-      }
-
-    public List<Column> getSameAsLineage()
-      {
-        return getSameAsLineage(this);
-      }
-
-    public static List<Column> getSameAsLineage(ViewColumn VC)
-      {
-        List<Column> L = new ArrayList<Column>();
-        Column C = VC._SameAsObj;
-        while (C != null)
-          {
-            L.add(C);
-            if (C.isForeignKey() == true || C._ParentObject._FST == FrameworkSourcedType.VIEW)
-              C = C._SameAsObj;
-            else
-              break;
-          }
-        return L;
-      }
-
     @Override
     public String toString()
       {

@@ -646,7 +646,7 @@ public class TextUtil
      */
     public static int findStarElement(String[] A, String Val, boolean IgnoreCase, int Start)
       {
-        if (A == null)
+        if (A == null || Val == null)
           return -1;
         if (IgnoreCase == true)
           Val = Val.toLowerCase();

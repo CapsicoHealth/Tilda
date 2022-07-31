@@ -1147,7 +1147,20 @@ public class PostgreSQL implements DBType
         return val;
       }
 
-
+    @Override
+    public Collection<?> getArray(ResultSet RS, String colName, ColumnType Type, boolean isSet)
+    throws Exception
+      {
+        Array A = RS.getArray(colName);
+        if (A == null)
+          return null;
+        Collection<?> val = isSet == true ? CollectionUtil.toSet(A.getArray())
+        : CollectionUtil.toList(A.getArray());
+        A.free();
+        return val;
+      }
+    
+/*
     @Override
     public void setJson(PreparedStatement PS, int i, String jsonValue)
     throws Exception
@@ -1165,6 +1178,14 @@ public class PostgreSQL implements DBType
         return null;
       }
 
+    @Override
+    public String getJson(ResultSet RS, String colName)
+    throws Exception
+      {
+        // TODO Auto-generated method stub
+        return null;
+      }
+*/    
 
     @Override
     public String getJsonParametrizedQueryPlaceHolder()

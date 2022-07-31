@@ -26,12 +26,13 @@ import com.google.cloud.bigquery.TableDataWriteChannel;
 
 import tilda.db.Connection;
 import tilda.db.ConnectionPool;
-import tilda.db.processors.ExporterCSVObjectProcessor;
-import tilda.db.processors.ExporterJSONObjectProcessor;
 import tilda.db.processors.ExporterObjectProcessor;
+import tilda.db.processors.ExporterObjectProcessorCSV;
+import tilda.db.processors.ExporterObjectProcessorJSON;
 import tilda.db.processors.ObjectProcessor;
 import tilda.utils.DurationUtil;
 import tilda.utils.ParseUtil;
+import tilda.utils.SystemValues;
 import tilda.utils.concurrent.Executor;
 import tilda.utils.concurrent.SimpleRunnable;
 import tilda.utils.gcp.BQHelper;
@@ -42,7 +43,7 @@ public class Export
   {
     protected static final Logger LOG = LogManager.getLogger(Export.class.getName());
 
-    public static long export(Connection C, String mode, String fullName, String path, int logFrequency)
+    public static long export(Connection C, String mode, String fullName, String path, int logFrequency, int maxCount)
     throws Exception
       {
         int lastDot = fullName.lastIndexOf(".");
@@ -64,26 +65,40 @@ public class Export
               throw new Exception("The bq path '" + path + "' must be of the form 'bq`project.dataset`'.");
             BigQuery bq = BQHelper.getBigQuery(parts[0]);
             String schemaName = (String) factoryClass.getSuperclass().getDeclaredField("SCHEMA_LABEL").get(null);
-            Schema schema = BQHelper.getTildaBQSchema(schemaName, tableName, "");
-            LOG.debug("Source schema for "+schemaName+"."+tableName+":\n "+BQHelper.getSchemaColumns(schema)+"\n");
+            Schema schema = BQHelper.getBQSchemaFromTilda(schemaName, tableName, "");
+            boolean fromDB = false;
+            if (schema == null)
+              {
+                fromDB = true;
+                schema = BQHelper.getBQSchemaFromDB(C, schemaName, tableName);
+              }
+            LOG.debug("Source schema for " + schemaName + "." + tableName + ":\n " + BQHelper.getSchemaColumns(schema) + "\n");
             String bqSchemaName = parts[1];
             String bqTableName = parts.length == 3 ? parts[2] : tableName;
-            LOG.debug("Destination table: "+parts[0]+"."+bqSchemaName+"."+bqTableName+".");
+            LOG.debug("Destination table: " + parts[0] + "." + bqSchemaName + "." + bqTableName + ".");
             Out = BQHelper.getTableWriterChannel(bq, bqSchemaName, bqTableName, mode, schema, false);
             BQWriter writer = new BQWriter(Out);
-            OP = mode.equalsIgnoreCase("csv") == true
-            ? new ExporterCSVObjectProcessor(writer, path, logFrequency, factoryClass, false)
-            : new ExporterJSONObjectProcessor(writer, path, logFrequency, mode.equalsIgnoreCase("jsonl"));
+            if (fromDB == false)
+              {
+                OP = mode.equalsIgnoreCase("csv") == true
+                ? new ExporterObjectProcessorCSV(writer, path, logFrequency, factoryClass, false)
+                : new ExporterObjectProcessorJSON(writer, path, logFrequency, mode.equalsIgnoreCase("jsonl"));
+              }
+            else
+              {
+//                OP = new ExporterRecordProcessorCSVJSON(C, writer, path, logFrequency, tvm, mode, true)
+//                C.executeMetaFullSelect(schemaName, tableName, OP);
+              }
           }
         else
           {
             OP = mode.equalsIgnoreCase("csv") == true
-            ? new ExporterCSVObjectProcessor(path + "\\" + tableName + ".csv", logFrequency, factoryClass, true)
-            : new ExporterJSONObjectProcessor(path + "\\" + tableName + (mode.equalsIgnoreCase("jsonl") ? ".jsonl" : ".json"), logFrequency, mode.equalsIgnoreCase("jsonl"));
+            ? new ExporterObjectProcessorCSV(path + "\\" + tableName + ".csv", logFrequency, factoryClass, true)
+            : new ExporterObjectProcessorJSON(path + "\\" + tableName + (mode.equalsIgnoreCase("jsonl") ? ".jsonl" : ".json"), logFrequency, mode.equalsIgnoreCase("jsonl"));
           }
 
         Method M = factoryClass.getMethod("lookupWhereAll", Connection.class, ObjectProcessor.class, int.class, int.class);
-        M.invoke(null, C, OP, 0, -1);
+        M.invoke(null, C, OP, 0, maxCount);
 
         if (Out != null)
           {
@@ -115,7 +130,7 @@ public class Export
         throws Exception
           {
             Connection C = ConnectionPool.get(_connectionId);
-            setCount(export(C, _mode, getName(), _path, _logFrequency));
+            setCount(export(C, _mode, getName(), _path, _logFrequency, -1));
             C.rollback();
             C.close();
           }
@@ -126,13 +141,14 @@ public class Export
       {
         LOG.info("----------------------------------------------------------------------------------------------------------------------------");
         LOG.info("This utility exports one or more tables to CSV/JSON/JSONL or directly to BigQuery.");
-        LOG.info("  - Export <connection_id> <threads> <mode> <export_path> <tilda_class_name>+");
+        LOG.info("  - Export <connection_id> <threads> <mode> <export_path> <tilda_class_name> ( <max_count> | <tilda_class_name>+ )");
         LOG.info("  - It takes 5+ parameter:");
         LOG.info("      . the connection Id");
         LOG.info("      . the number of threads");
         LOG.info("      . the export mode (CSV|JSON|JSONL)");
         LOG.info("      . the path(s) where the file(s) should be saved or a BQ destination as 'bq`<project>.<dataset>{.<tablename>}`'");
         LOG.info("      . one or more full class names of a Tilda object (without _Data or _Factory).");
+        LOG.info("      . if only one class name is provided, the ability to specify a max count to limit the number of rows exported.");
         LOG.info("  - For example");
         LOG.info("      . ExportToCSV MAIN 2 CSV \"C:\\mypath\\data_export\\\" com.myCo.myProj.data.User com.myCo.myProj.data.Role");
         LOG.info("      . ExportToCSV MAIN 2 JSONL bq`myproject.mydataset` com.myCo.myProj.data.User com.myCo.myProj.data.Role");
@@ -150,15 +166,21 @@ public class Export
         String mode = args[2];
         if (mode.equalsIgnoreCase("csv") == false && mode.equalsIgnoreCase("json") == false && mode.equalsIgnoreCase("jsonl") == false)
           throw new Exception("This utility was called with mode='" + mode + "' which is not supported. Only CSV, JSON or JSONL are supported.");
-        
+
         String path = args[3];
         final int logFrequency = 10_000;
+        int max_count = args.length <= 5 ? SystemValues.EVIL_VALUE : ParseUtil.parseInteger(args[5], SystemValues.EVIL_VALUE);
 
-//        LOG.debug("path: "+path+"; path.startsWith(\"bq`\"): "+path.startsWith("bq`")+"; path.split(\"\\\\.\").length: "+path.split("\\.").length+": args.length: "+args.length+";");
-        if (path.startsWith("bq`")==true && path.split("\\.").length == 3 && args.length > 5)
-          throw new Exception("This utility was called with path='" + path + "' which contains a target table name in BQ: only one <tilda_class_name source> can be provided in that case whereas "+(args.length-4)+" were found.");
+        LOG.debug("connection_id: " + connectionId + "; threads: " + threads + "; mode: " + mode + "; export_path: " + path + ";");
 
-        LOG.debug("connection_id: "+connectionId+"; threads: "+threads+"; mode: "+mode+"; export_path: "+path+";");
+        if (args.length == 6 && max_count != SystemValues.EVIL_VALUE)
+          { // if there are 6 parameters, and the 6th parameter is a number, we are in the max_count scenario
+            // and threads better be equal to 1.
+            if (threads != 1)
+              throw new Exception("If specifying a single output with a max_count value, threads must be equal to 1.");
+          }
+        else if (path.startsWith("bq`") == true && path.split("\\.").length == 3 && args.length > 5)
+          throw new Exception("This utility was called with path='" + path + "' which contains a target table name in BQ: only one <tilda_class_name source> can be provided in that case whereas " + (args.length - 4) + " were found.");
 
         if (threads == 1)
           {
@@ -166,11 +188,18 @@ public class Export
             Connection C = ConnectionPool.get(connectionId);
             C.setReadOnly(true);
             long totalCount = 0;
-            for (int i = 4; i < args.length; ++i)
+            // if there are 6 parameters, and the 6th parameter is a number, we are in the max_count scenario
+            if (args.length == 6 && max_count != SystemValues.EVIL_VALUE)
               {
-                totalCount += export(C, mode, args[i], path, logFrequency);
+                totalCount += export(C, mode, args[4], path, logFrequency, max_count);
                 C.rollback();
               }
+            else
+              for (int i = 4; i < args.length; ++i)
+                {
+                  totalCount += export(C, mode, args[i], path, logFrequency, -1);
+                  C.rollback();
+                }
             C.close();
             C = null;
             long durationNano = System.nanoTime() - TS;

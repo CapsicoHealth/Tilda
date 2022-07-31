@@ -108,4 +108,9 @@ public class ColumnMeta
 
         return null;
       }
+
+    public ColumnMeta getTZCol()
+      {
+        return _ParentTable!=null?_ParentTable.getColumnMeta(_NameOriginal+"TZ") : null; // : _ParentView.getColumnMeta(_NameOriginal+"TZ");
+      }
   }

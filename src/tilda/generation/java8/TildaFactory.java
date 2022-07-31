@@ -1226,8 +1226,8 @@ public class TildaFactory implements CodeGenTildaFactory
         for (Column C : J._ColumnObjs)
           if (C != null)
             {
-              if (C.getType() == ColumnType.JSON)
-                throw new Error("toCSV doesn't support export of JSON columns: this should not have have come all the way here.");
+//              if (C.getType() == ColumnType.JSON)
+//                throw new Error("toCSV doesn't support export of JSON columns: this should not have have come all the way here.");
               if (header.length() != 0)
                 header.append(",");
               header.append(TextUtil.escapeDoubleQuoteForCSV(C.getName()));

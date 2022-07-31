@@ -454,6 +454,33 @@ public class MSSQL implements DBType
       }
 
     @Override
+    public Collection<?> getArray(ResultSet RS, String colName, ColumnType Type, boolean isSet)
+    throws Exception
+      {
+        String Str = RS.getString(colName);
+        if (Str == null)
+          return null;
+
+        String[] parts = Str.split("\\s*',\\s*'\\s*");
+        if (parts == null || parts.length == 0)
+          return null;
+
+        // Remove the leading and trailing " in the entire string sequence.
+        if (TextUtil.isNullOrEmpty(parts[0]) == false)
+          {
+            parts[0] = parts[0].substring(1);
+          }
+        if (TextUtil.isNullOrEmpty(parts[parts.length - 1]) == false)
+          {
+            parts[parts.length - 1] = parts[parts.length - 1].substring(0, parts[parts.length - 1].length() - 1);
+          }
+
+        // Convert String[] to proper type and collection.
+        return Type.parse(isSet, parts);
+      }
+    
+/*
+    @Override
     public void setJson(PreparedStatement PS, int i, String jsonValue)
     throws Exception
       {
@@ -468,6 +495,7 @@ public class MSSQL implements DBType
         // TODO Auto-generated method stub
         return null;
       }
+*/
 
     @Override
     public String getJsonParametrizedQueryPlaceHolder()

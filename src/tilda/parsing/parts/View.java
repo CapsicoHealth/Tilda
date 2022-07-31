@@ -994,7 +994,7 @@ public class View extends Base
         for (ViewColumn VC : _ViewColumns)
           {
             // LOG.debug("Looking at VC " + VC.getShortName() + ".");
-            List<Column> L = VC.getSameAsLineage();
+            List<Column> L = SameAsHelper.getSameAsLineage(VC);
             for (Column C : L)
               {
                 // LOG.debug(" Ancestor " + C.getShortName() + ".");
