@@ -41,16 +41,17 @@ public abstract class Base
     static final Logger              LOG                = LogManager.getLogger(Object.class.getName());
 
     /*@formatter:off*/
-    @SerializedName("name"       ) public String               _Name       = null;
-    @SerializedName("dbOnly"     ) private Boolean              _DBOnly_DEPRECATED;
-    @SerializedName("mode"       ) public String               _ModeStr    ;
-    @SerializedName("shortAlias" ) public String               _ShortAlias = null;
-    @SerializedName("description") public String               _Description= null;
-    @SerializedName("queries"    ) public List<SubWhereClause> _Queries    = new ArrayList<SubWhereClause>();
-    @SerializedName("json"       ) public List<OutputMap>      _JsonDEPRECATED = new ArrayList<OutputMap >();
-    @SerializedName("outputMaps" ) public List<OutputMap>      _OutputMaps = new ArrayList<OutputMap>();
-    @SerializedName("masks"      ) public List<Mask>           _Masks = new ArrayList<Mask>();
-    @SerializedName("tenantInit" ) public Boolean              _TenantInit = Boolean.FALSE;
+    @SerializedName("name"        ) public String               _Name       = null;
+    @SerializedName("dbOnly"      ) private Boolean              _DBOnly_DEPRECATED;
+    @SerializedName("mode"        ) public String               _ModeStr    ;
+    @SerializedName("shortAlias"  ) public String               _ShortAlias = null;
+    @SerializedName("description" ) public String               _Description= null;
+    @SerializedName("descriptionX") public String[]             _DescriptionX= null;
+    @SerializedName("queries"     ) public List<SubWhereClause> _Queries    = new ArrayList<SubWhereClause>();
+    @SerializedName("json"        ) public List<OutputMap>      _JsonDEPRECATED = new ArrayList<OutputMap >();
+    @SerializedName("outputMaps"  ) public List<OutputMap>      _OutputMaps = new ArrayList<OutputMap>();
+    @SerializedName("masks"       ) public List<Mask>           _Masks = new ArrayList<Mask>();
+    @SerializedName("tenantInit"  ) public Boolean              _TenantInit = Boolean.FALSE;
     /*@formatter:on*/
 
     public transient Schema          _ParentSchema;
@@ -185,9 +186,15 @@ public abstract class Base
         if (ValidationHelper.isReservedIdentifier(_Name) == true)
           PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring " + _TildaType.name() + " '" + getBaseName() + "' with a name '" + _Name + "' which is a reserved identifier.");
 
-        if (TextUtil.isNullOrEmpty(_Description) == true)
-          PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring " + _TildaType.name() + " '" + getBaseName() + "' without a description.");
+        if (TextUtil.isNullOrEmpty(_Description) == true && TextUtil.isNullOrEmpty(_DescriptionX) == true)
+          PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring " + _TildaType.name() + " '" + getBaseName() + "' without a description or descriptionX.");
 
+        if (TextUtil.isNullOrEmpty(_Description) == false && TextUtil.isNullOrEmpty(_DescriptionX) == false)
+          PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring " + _TildaType.name() + " '" + getBaseName() + "' with both a description and descriptionX: only one must be specified.");
+
+        if (TextUtil.isNullOrEmpty(_DescriptionX) == false)
+          _Description = String.join("\n", _DescriptionX);
+        
         // _Name = _Name.toUpperCase();
 
         // if dbOnly has been set, we have to check for deprecation condition
