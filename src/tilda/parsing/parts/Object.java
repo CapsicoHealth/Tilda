@@ -591,7 +591,7 @@ public class Object extends Base
 
         if (_Indices != null)
           for (Index I : _Indices)
-            if (I._Unique == true)
+            if (I != null && I._Unique == true)
               return I._ColumnObjs;
 
         if (_PrimaryKey != null)
@@ -610,7 +610,7 @@ public class Object extends Base
       {
         if (_Indices == null || _Indices.isEmpty() == false)
           for (Index idx : _Indices)
-            if (idx._Name.equalsIgnoreCase(name) == true)
+            if (idx != null && idx._Name.equalsIgnoreCase(name) == true)
               return idx;
         return null;
       }
