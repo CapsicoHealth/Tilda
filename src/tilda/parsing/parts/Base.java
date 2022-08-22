@@ -193,7 +193,7 @@ public abstract class Base
           PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring " + _TildaType.name() + " '" + getBaseName() + "' with both a description and descriptionX: only one must be specified.");
 
         if (TextUtil.isNullOrEmpty(_DescriptionX) == false)
-          _Description = String.join("\n", _DescriptionX);
+          _Description = String.join(" ", _DescriptionX);
         
         // _Name = _Name.toUpperCase();
 
