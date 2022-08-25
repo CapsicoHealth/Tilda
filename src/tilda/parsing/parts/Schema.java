@@ -41,6 +41,7 @@ public class Schema
     /*@formatter:off*/
     @SerializedName("package"      ) public String            _Package;
     @SerializedName("dynamic"      ) public boolean           _Dynamic = false;
+    @SerializedName("conventions"  ) public Convention        _Conventions   = new Convention();
     @SerializedName("documentation") public Documentation     _Documentation = new Documentation();
     @SerializedName("extraDDL"     ) public ExtraDDL          _ExtraDDL      = new ExtraDDL();
     @SerializedName("dependencies" ) public String[]          _Dependencies  = new String[] { };
@@ -238,6 +239,9 @@ public class Schema
         int i = -1;
 
         setDefaultDependencies(PS);
+
+        if (_Conventions != null)
+         _Conventions.Validate(PS, this);
 
         for (Enumeration E : _Enumerations)
           if (E != null)

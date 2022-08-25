@@ -62,7 +62,7 @@ public class Index
 
     public String getName()
       {
-        return TextUtil.print(_Parent._ShortAlias, _Parent._OriginalName) + "_" + _Name;
+        return TextUtil.print(_Parent._Prefix, _Parent._OriginalName) + "_" + _Name;
       }
 
     public boolean Validate(ParserSession PS, Base Parent)

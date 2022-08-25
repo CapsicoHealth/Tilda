@@ -44,7 +44,8 @@ public abstract class Base
     @SerializedName("name"        ) public String               _Name       = null;
     @SerializedName("dbOnly"      ) private Boolean              _DBOnly_DEPRECATED;
     @SerializedName("mode"        ) public String               _ModeStr    ;
-    @SerializedName("shortAlias"  ) public String               _ShortAlias = null;
+    @SerializedName("shortAlias"  ) public String               _ShortAlias_DEPRECATED = null;
+    @SerializedName("prefix"      ) public String               _Prefix = null;
     @SerializedName("description" ) public String               _Description= null;
     @SerializedName("descriptionX") public String[]             _DescriptionX= null;
     @SerializedName("queries"     ) public List<SubWhereClause> _Queries    = new ArrayList<SubWhereClause>();
@@ -83,7 +84,7 @@ public abstract class Base
     public Base(Base b)
       {
         _Name = b._Name;
-        _ShortAlias = b._ShortAlias;
+        _Prefix = b._Prefix;
         _Description = b._Description;
         _DBOnly_DEPRECATED = b._DBOnly_DEPRECATED;
         _ModeStr = b._ModeStr;
@@ -201,14 +202,19 @@ public abstract class Base
         if (_DBOnly_DEPRECATED != null)
           {
             if (_ModeStr != null)
-              return PS.AddError("Object '" + getFullName() + "' defined both 'dbOnly' and 'mode'. dbOnly is deprecated. Stop using it and use mode=NORMAL|DB_ONLY|CODE_ONLY instead.");
+              PS.AddError("Object/View '" + getFullName() + "' defined both 'dbOnly' and 'mode'. dbOnly is deprecated. Stop using it and use mode=NORMAL|DB_ONLY|CODE_ONLY instead.");
             else
               _Mode = _DBOnly_DEPRECATED == true ? ObjectMode.DB_ONLY : ObjectMode.NORMAL;
           }
         else if (_ModeStr == null)
           _Mode = ObjectMode.NORMAL;
         else if ((_Mode = ObjectMode.parse(_ModeStr)) == null)
-          return PS.AddError("Object '" + getFullName() + "' defined an invalid 'mode' '" + _ModeStr + "'.");
+          PS.AddError("Object/View '" + getFullName() + "' defined an invalid 'mode' '" + _ModeStr + "'.");
+        
+        if (TextUtil.isNullOrEmpty(_ShortAlias_DEPRECATED) == false && TextUtil.isNullOrEmpty(_Prefix) == false)
+         PS.AddError("Object/View '" + getFullName() + "' is defining both 'shortAlias' and 'prefix'. 'shortAlias' has been deprecated in favor of 'prefix' so both cannot be supplied. Fix and use 'prefix' only.");
+        else if (TextUtil.isNullOrEmpty(_ShortAlias_DEPRECATED) == false)
+          _Prefix = _ShortAlias_DEPRECATED;
 
         _BaseClassName = "TILDA__" + _Name.toUpperCase();
         _AppDataClassName = _OriginalName + "_Data";
