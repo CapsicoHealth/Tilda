@@ -16,8 +16,12 @@ public class Convention
     /*@formatter:off*/
     @SerializedName("sameAs"                 ) public String  _SameAs                   ;
     @SerializedName("primaryKeyName"         ) public String  _PrimaryKeyName           ;
+//    @SerializedName("primaryKeyNamePostfix"  ) public String  _PrimaryKeyNamePostfix  ;
+//    @SerializedName("foreignKeyNamePostfix"  ) public String  _ForeignKeyNamePostfix  ;
     @SerializedName("prefix"                 ) public Boolean _Prefix                   ;
+//    @SerializedName("uniquePrefixes"         ) public Boolean _UniquePrefixes           ;
     @SerializedName("columnNamingConvention" ) public String  _ColumnNamingConventionStr;
+//    @SerializedName("uniqueColumnNames"      ) public Boolean _UniqueColumnNames        ;
     @SerializedName("dbColumnNameTranslation") public Boolean _DBColumnNameTranslation  ;
     /*@formatter:on*/
 
@@ -42,8 +46,9 @@ public class Convention
 
         if (TextUtil.isNullOrEmpty(_SameAs) == false)
           {
-            if (_PrimaryKeyName != null || _Prefix != null || _ColumnNamingConventionStr != null || _DBColumnNameTranslation != null)
-              PS.AddError("Schema '" + _ParentSchema.getFullName() + "' defined conventions with a 'sameAs' as well as an individual value for 'primaryKeyName', 'prefix', 'columnNamingConvention' and/or 'dbColumnNameTranslation'. You cannot reuse a set of conventions and change values as this would work against standardization of conventions across schemas.");
+            if (_PrimaryKeyName != null || _Prefix != null || _ColumnNamingConventionStr != null || _DBColumnNameTranslation != null) // || _PrimaryKeyNamePostfix != null ||
+                                                                                                                                      // _ForeignKeyNamePostfix != null)
+              PS.AddError("Schema '" + _ParentSchema.getFullName() + "' defined conventions with a 'sameAs' as well as values for one or more other fields. You cannot reuse a set of conventions and change values as this would work against standardization of conventions across schemas.");
             Schema S = PS.getSchema(_SameAs);
             if (S == null)
               PS.AddError("Schema '" + _ParentSchema.getFullName() + "' defined conventions with a 'sameAs' value of '" + _SameAs + "' which cannot be found.");
@@ -55,13 +60,28 @@ public class Convention
               copyValues(S._Conventions);
           }
 
+        // if (TextUtil.isNullOrEmpty(_PrimaryKeyName) == false && )
+
         if (TextUtil.isNullOrEmpty(_ColumnNamingConventionStr) == true)
           _ColumnNamingConvention = ConventionNaming.NONE;
         else if ((_ColumnNamingConvention = ConventionNaming.parse(_ColumnNamingConventionStr)) == null)
           PS.AddError("Schema '" + _ParentSchema.getFullName() + "' defined an invalid 'columnNamingConvention' value of '" + _ColumnNamingConventionStr + "'.");
 
-        if (_DBColumnNameTranslation != null && _DBColumnNameTranslation == true && _ColumnNamingConvention != ConventionNaming.CAMEL_CASE_JS)
-          PS.AddError("Schema '" + _ParentSchema.getFullName() + "' defined an invalid 'dbColumnNameTranslation' to true, but 'columnNamingConvention' has a value of '" + _ColumnNamingConventionStr + "'. dbColumnNameTranslation can only be set if 'columnNamingConvention' is '"+ConventionNaming.CAMEL_CASE_JS+"'.");          
+        if (_DBColumnNameTranslation == null)
+          _DBColumnNameTranslation = Boolean.FALSE;
+        else if (_DBColumnNameTranslation == true && _ColumnNamingConvention != ConventionNaming.CAMEL_CASE_JS)
+          PS.AddError("Schema '" + _ParentSchema.getFullName() + "' defined 'dbColumnNameTranslation' to true, but 'columnNamingConvention' has a value of '" + _ColumnNamingConventionStr + "'. dbColumnNameTranslation can only be set to true if 'columnNamingConvention' is '" + ConventionNaming.CAMEL_CASE_JS + "'.");
+
+        if (TextUtil.isNullOrEmpty(_PrimaryKeyName) == true)
+          _PrimaryKeyName = "refnum";
+
+        // if (TextUtil.isNullOrEmpty(_PrimaryKeyNamePostfix) == true)
+        // _PrimaryKeyName = null;
+        // if (TextUtil.isNullOrEmpty(_ForeignKeyNamePostfix) == true)
+        // _ForeignKeyNamePostfix = null;
+
+        if (_Prefix == null)
+          _Prefix = Boolean.FALSE;
 
         return _Validated = Errs == PS.getErrorCount();
       }
@@ -69,6 +89,8 @@ public class Convention
     private void copyValues(Convention conventions)
       {
         _PrimaryKeyName = conventions._PrimaryKeyName;
+        _PrimaryKeyNamePostfix = conventions._PrimaryKeyNamePostfix;
+        _ForeignKeyNamePostfix = conventions._ForeignKeyNamePostfix;
         _Prefix = conventions._Prefix;
         _ColumnNamingConventionStr = conventions._ColumnNamingConventionStr;
         _DBColumnNameTranslation = conventions._DBColumnNameTranslation;

@@ -158,6 +158,7 @@ public class Object extends Base
         if (_History != null)
           setupHistory(PS, ParentSchema);
 
+        // We get a lot of reusable bits from this central TILDA table, so let's check it's all good.
         if (getFullName().equals("tilda.data.TILDA.Key") == true)
           {
             Column created = getColumn("created");
@@ -325,6 +326,7 @@ public class Object extends Base
         obj._FST = FrameworkSourcedType.HISTORY;
         obj._LC = ObjectLifecycle.WORM;
         obj._SourceObject = this;
+        obj._ParentSchema = ParentSchema;
         if (obj._PrimaryKey != null)
           {
             // Replace the primary key with a regular index
@@ -335,7 +337,7 @@ public class Object extends Base
             else
               {
                 obj.CreateAutogenPK(PS);
-                I._Columns = new String[] { "refnum"
+                I._Columns = new String[] { _ParentSchema.getConventionPrimaryKeyName()
                 };
               }
             I._OrderBy = new String[] { "lastUpdated desc"
@@ -408,11 +410,11 @@ public class Object extends Base
               continue;
 
             String N = C.getLogicalName();
-            if (N != null && N.equalsIgnoreCase("refnum") == true)
-              return PS.AddError("Object '" + getFullName() + "' has defined an autogen primary key but is also defining column 'refnum', which is a reserved name.");
+            if (N != null && N.equalsIgnoreCase(_ParentSchema.getConventionPrimaryKeyName()) == true)
+              return PS.AddError("Object '" + getFullName() + "' has defined an autogen primary key but is also defining column '"+_ParentSchema.getConventionPrimaryKeyName()+"', which is a reserved name.");
           }
 
-        Column C = new Column("refnum", null, 0, false, null, true, null, PS.getColumn("tilda.data", "TILDA", "Key", "refnum")._Description, null, null, null);
+        Column C = new Column(_ParentSchema.getConventionPrimaryKeyName(), null, 0, false, null, true, null, PS.getColumn("tilda.data", "TILDA", "Key", "refnum")._Description, null, null, null);
         C._SameAs = "tilda.data.TILDA.Key.refnum";
         _Columns.add(0, C);
 

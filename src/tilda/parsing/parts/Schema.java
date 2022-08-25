@@ -31,6 +31,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.enums.ConventionNaming;
 import tilda.parsing.ParserSession;
 import tilda.utils.TextUtil;
 
@@ -619,6 +620,23 @@ public class Schema
                     S.getFullDependencies(TildaList, SchemaNames);
                     break;
                   }
+      }
+    
+    public String getConventionPrimaryKeyName()
+     {
+       return _Conventions._PrimaryKeyName;
+     }
+    public boolean getConventionPrefix()
+      {
+        return _Conventions._Prefix;
+      }
+    public ConventionNaming getConventionColumnNaming()
+      {
+        return _Conventions._ColumnNamingConvention;
+      }
+    public boolean getConventionDBColumnNameTranslation()
+      {
+        return _Conventions._DBColumnNameTranslation;
       }
 
   }

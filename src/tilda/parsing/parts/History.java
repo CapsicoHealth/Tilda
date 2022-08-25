@@ -44,8 +44,8 @@ public class History
         
         // If refnum should change, which makes no sense, shouldn't be part of the signature.
         List<String> X = CollectionUtil.toList(_Exclude);
-        if (TextUtil.contains(_Exclude, "refnum", true, 0) == false)
-         X.add("refnum");
+        if (TextUtil.contains(_Exclude, obj._ParentSchema.getConventionPrimaryKeyName(), true, 0) == false)
+         X.add(obj._ParentSchema.getConventionPrimaryKeyName());
         // 'created' shouldn't be part of the signature.
         if (TextUtil.contains(_Exclude, "created", true, 0) == false)
           X.add("created");
