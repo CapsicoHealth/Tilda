@@ -1510,6 +1510,11 @@ public class TextUtil
           }
       }
 
+    public static final boolean contains(String Str, String[] A)
+      {
+        return indexOf(Str, A);
+      }
+    
     public static final boolean indexOf(String Str, String[] A)
       {
         if (Str == null || A == null)

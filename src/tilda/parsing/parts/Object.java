@@ -54,7 +54,7 @@ public class Object extends Base
     @SerializedName("foreign"       ) public List<ForeignKey>     _ForeignKeys= new ArrayList<ForeignKey>();
     @SerializedName("indices"       ) public List<Index>          _Indices    = new ArrayList<Index     >();
     @SerializedName("http"          ) public HttpMapping[]        _Http       = { };
-    @SerializedName("history"       ) public String     []        _History    = { };
+    @SerializedName("history"       ) public History              _History;
     /*@formatter:on*/
 
     public transient boolean              _HasUniqueIndex;
@@ -155,6 +155,9 @@ public class Object extends Base
               ParentSchema._Objects.add(obj);
             }
 
+        if (_History != null)
+          setupHistory(PS, ParentSchema);
+
         if (getFullName().equals("tilda.data.TILDA.Key") == true)
           {
             Column created = getColumn("created");
@@ -227,7 +230,8 @@ public class Object extends Base
                           PS.AddError("Generated column '" + TZCol.getFullName() + "' conflicts with another column already named the same in Object '" + getFullName() + "'.");
                         if (C.isCollection() == false && _TZFK == true)
                           {
-                            addForeignKey(C.getName(), new String[] { TZCol.getName()}, "tilda.data.TILDA.ZONEINFO");
+                            addForeignKey(C.getName(), new String[] { TZCol.getName()
+                            }, "tilda.data.TILDA.ZONEINFO");
                           }
                       }
                   }
@@ -293,17 +297,71 @@ public class Object extends Base
         if (_PrimaryKey == null && _HasUniqueIndex == false && _FST != FrameworkSourcedType.VIEW)
           PS.AddError("Object '" + getFullName() + "' doesn't have any identity. You must define at least a primary key or a unique index.");
 
-        _Validated = Errs == PS.getErrorCount();
-
         _HasNaturalIdentity = _HasUniqueIndex == true || _PrimaryKey != null && _PrimaryKey._Autogen == false;
 
-        // LDH-NOTE: We have to validate queries, mappings and masks here, because the whole parent object
+        // LDH-NOTE: We have to validate queries, mappings, masks and history here, because the whole parent object
         // only finishes being validated at this time.
         super.validateQueries(PS, Names);
         super.validateOutputMaps(PS);
         super.validateMasks(PS);
+        if (_History != null)
+          _History.Validate(PS, this);
 
-        return _Validated;
+        return _Validated = Errs == PS.getErrorCount();
+      }
+
+    /**
+     * To call after parent object has been validated
+     * 
+     * @param PS
+     * @param ParentSchema
+     */
+    protected void setupHistory(ParserSession PS, Schema ParentSchema)
+      {
+        Object obj = new Object(this);
+        obj._History = null;
+        obj._Name = _Name + _History._Postfix;
+        obj._Description = "History table for " + getShortName() + ".<BR>" + _Description;
+        obj._FST = FrameworkSourcedType.HISTORY;
+        obj._LC = ObjectLifecycle.WORM;
+        obj._SourceObject = this;
+        if (obj._PrimaryKey != null)
+          {
+            // Replace the primary key with a regular index
+            Index I = new Index();
+            I._Name = "PKHistory";
+            if (obj._PrimaryKey._Columns != null && _PrimaryKey._Columns.length > 0)
+              I._Columns = _PrimaryKey._Columns;
+            else
+              {
+                obj.CreateAutogenPK(PS);
+                I._Columns = new String[] { "refnum"
+                };
+              }
+            I._OrderBy = new String[] { "lastUpdated desc"
+            };
+            I._Db = true;
+            obj._Indices.add(I);
+            obj._PrimaryKey = null;
+          }
+        // Changing unique indices, if any, to non-unique indices by adding the lastUpdated column as an orderBy;
+        if (obj._Indices != null)
+          for (Index I : obj._Indices)
+            if (I != null && (I._OrderBy == null || I._OrderBy.length == 0))
+              {
+                I._OrderBy = new String[] { "lastUpdated desc"
+                };
+              }
+        
+        // because we are stripping the object of its identities, we have to create a new fake one and make sure it doesn't 
+        // get pushed to the DB given that it'll overlap with the non-unique index created above from the original identity.
+        Index I = new Index();
+        I._Name = "FakeIdentity";
+        I._Columns = new String[]{"lastUpdated", "created"};
+        I._Db = false;
+        obj._Indices.add(I);
+
+        ParentSchema._Objects.add(obj);
       }
 
     /**
@@ -586,7 +644,7 @@ public class Object extends Base
      */
     public List<Column> getFirstIdentityColumns(boolean naturalIdentitiesFirst)
       {
-        if (_PrimaryKey != null && (naturalIdentitiesFirst == false || _PrimaryKey._Autogen == false) )
+        if (_PrimaryKey != null && (naturalIdentitiesFirst == false || _PrimaryKey._Autogen == false))
           return _PrimaryKey._ColumnObjs;
 
         if (_Indices != null)
