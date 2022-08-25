@@ -89,8 +89,8 @@ public class Convention
     private void copyValues(Convention conventions)
       {
         _PrimaryKeyName = conventions._PrimaryKeyName;
-        _PrimaryKeyNamePostfix = conventions._PrimaryKeyNamePostfix;
-        _ForeignKeyNamePostfix = conventions._ForeignKeyNamePostfix;
+//        _PrimaryKeyNamePostfix = conventions._PrimaryKeyNamePostfix;
+//        _ForeignKeyNamePostfix = conventions._ForeignKeyNamePostfix;
         _Prefix = conventions._Prefix;
         _ColumnNamingConventionStr = conventions._ColumnNamingConventionStr;
         _DBColumnNameTranslation = conventions._DBColumnNameTranslation;
