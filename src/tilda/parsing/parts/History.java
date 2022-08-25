@@ -44,17 +44,17 @@ public class History
         
         // If refnum should change, which makes no sense, shouldn't be part of the signature.
         List<String> X = CollectionUtil.toList(_Exclude);
-        if (TextUtil.contains("refnum", _Exclude) == false)
+        if (TextUtil.contains(_Exclude, "refnum", true, 0) == false)
          X.add("refnum");
         // 'created' shouldn't be part of the signature.
-        if (TextUtil.contains("created", _Exclude) == false)
+        if (TextUtil.contains(_Exclude, "created", true, 0) == false)
           X.add("created");
         // It's redundant to have "lastUpdated" in the signature. If that's the only that changes and nothing else of importance does, then why? 
-        if (TextUtil.contains("lastUpdated", _Exclude) == true)
+        if (TextUtil.contains(_Exclude, "lastUpdated", true, 0) == true)
           PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a History but excludes 'lastUpated' which is not allowed.");
         // LDH-NOTE: deleted is the inverse behavior compared to lastUpdated. It's possible that only that field changes and it's critical
         // to detect deletions. So we don't remove it. Actually we check it's never listed
-        if (TextUtil.contains("deleted", _Exclude) == true)
+        if (TextUtil.contains(_Exclude, "deleted", true, 0) == true)
           PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a History which excludes 'deleted', which is not allowed.");
         _Exclude = CollectionUtil.toStringArray(X);
         

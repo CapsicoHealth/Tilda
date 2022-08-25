@@ -607,26 +607,41 @@ public class TextUtil
         return Index;
       }
 
+    
+    /**
+     * Returns whether A contains Val (strict equal case sensitive or not based on IgnoreCase).
+     * 
+     * @param A
+     * @param val
+     * @param ignoreCase
+     * @param start
+     * @return
+     */
+    public static final boolean contains(String[] A, String val, boolean ignoreCase, int start)
+      {
+        return findElement(A, val, ignoreCase, start) >= 0;
+      }
+    
     /**
      * Returns the index in A that matched the value of Val (strict equal case sensitive or not based on IgnoreCase).
      * If no match is found, returns -1;
      * 
      * @param A
-     * @param Val
-     * @param IgnoreCase
-     * @param Start
+     * @param val
+     * @param ignoreCase
+     * @param start
      * @return
      */
-    public static int findElement(String[] A, String Val, boolean IgnoreCase, int Start)
+    public static int findElement(String[] A, String val, boolean ignoreCase, int start)
       {
         if (A == null)
           return -1;
-        for (int i = Start; i < A.length; ++i)
+        for (int i = start; i < A.length; ++i)
           {
-            String Str = A[i];
-            if (Str == null)
+            String str = A[i];
+            if (str == null)
               continue;
-            if (IgnoreCase == true && Str.equalsIgnoreCase(Val) == true || IgnoreCase == false && Str.equals(Val) == true)
+            if (ignoreCase == true && str.equalsIgnoreCase(val) == true || ignoreCase == false && str.equals(val) == true)
               return i;
           }
         return -1;
@@ -1510,11 +1525,12 @@ public class TextUtil
           }
       }
 
-    public static final boolean contains(String Str, String[] A)
-      {
-        return indexOf(Str, A);
-      }
-    
+    /**
+     * Returns true if any element in A matches an indexOf query on Str
+     * @param Str
+     * @param A
+     * @return
+     */
     public static final boolean indexOf(String Str, String[] A)
       {
         if (Str == null || A == null)
