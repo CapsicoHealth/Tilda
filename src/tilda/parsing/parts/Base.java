@@ -161,14 +161,14 @@ public abstract class Base
         return _PadderColumnNames.getPad(Name);
       }
 
-    protected boolean Validate(ParserSession PS, Schema ParentSchema)
+    protected boolean Validate(ParserSession PS, Schema parentSchema)
       {
         if (_Validated == true)
           return true;
 
         int Errs = PS.getErrorCount();
 
-        _ParentSchema = ParentSchema;
+        _ParentSchema = parentSchema;
 
         // Mandatories
         if (TextUtil.isNullOrEmpty(_Name) == true)
@@ -204,13 +204,16 @@ public abstract class Base
             if (_ModeStr != null)
               PS.AddError("Object/View '" + getFullName() + "' defined both 'dbOnly' and 'mode'. dbOnly is deprecated. Stop using it and use mode=NORMAL|DB_ONLY|CODE_ONLY instead.");
             else
-              _Mode = _DBOnly_DEPRECATED == true ? ObjectMode.DB_ONLY : ObjectMode.NORMAL;
+              _ModeStr = _DBOnly_DEPRECATED == true ? ObjectMode.DB_ONLY.name() : ObjectMode.NORMAL.name();
           }
-        else if (_ModeStr == null)
+        // Pick up Mode from Schema conventions if present and local value is empty. 
+        if (TextUtil.isNullOrEmpty(_ModeStr) == true && parentSchema._Conventions != null && parentSchema._Conventions._DefaultMode != null)
+          _ModeStr = parentSchema._Conventions._DefaultMode.name();
+        if (TextUtil.isNullOrEmpty(_ModeStr) == true)
           _Mode = ObjectMode.NORMAL;
         else if ((_Mode = ObjectMode.parse(_ModeStr)) == null)
           PS.AddError("Object/View '" + getFullName() + "' defined an invalid 'mode' '" + _ModeStr + "'.");
-        
+
         if (TextUtil.isNullOrEmpty(_ShortAlias_DEPRECATED) == false && TextUtil.isNullOrEmpty(_Prefix) == false)
          PS.AddError("Object/View '" + getFullName() + "' is defining both 'shortAlias' and 'prefix'. 'shortAlias' has been deprecated in favor of 'prefix' so both cannot be supplied. Fix and use 'prefix' only.");
         else if (TextUtil.isNullOrEmpty(_ShortAlias_DEPRECATED) == false)

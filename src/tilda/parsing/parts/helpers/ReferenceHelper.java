@@ -31,8 +31,8 @@ public class ReferenceHelper
     protected ReferenceHelper(String P, String S, String O, String C)
       {
         _P = P;
-        _S = S.toUpperCase();
-        _O = O.toUpperCase();
+        _S = S==null ? null : S.toUpperCase();
+        _O = O==null ? null : O.toUpperCase();
         _C = C;
       }
 
@@ -57,35 +57,48 @@ public class ReferenceHelper
       }
 
 
-    public static ReferenceHelper parseColumnReference(String Ref, Base ParentObject)
+    public static ReferenceHelper parseColumnReference(String ref, Base parentObject)
       {
-        String[] parts = Ref.split("\\.");
+        String[] parts = ref.split("\\.");
         String P = ParsePackage(parts, 4);
         int i = P == null ? -1 : parts.length - 4;
         if (P == null)
-          P = ParentObject.getSchema()._Package;
+          P = parentObject.getSchema()._Package;
         String S = parts.length >= 3 ? parts[++i]
-        : ParentObject.getSchema()._Name;
-        String O = parts.length >= 2 ? parts[++i] : ParentObject.getBaseName();
+        : parentObject.getSchema()._Name;
+        String O = parts.length >= 2 ? parts[++i] : parentObject.getBaseName();
         String C = parts.length >= 1 ? parts[++i] : null;
 
         return new ReferenceHelper(P, S, O, C);
       }
 
-    public static ReferenceHelper parseObjectReference(String Ref, Schema ParentSchema)
+    public static ReferenceHelper parseObjectReference(String ref, Schema parentSchema)
       {
-        String[] parts = Ref.split("\\.");
+        String[] parts = ref.split("\\.");
         String P = ParsePackage(parts, 3);
         int i = P == null ? -1 : parts.length - 3;
         if (P == null)
-          P = ParentSchema._Package;
+          P = parentSchema._Package;
         String S = parts.length >= 2 ? parts[++i]
-        : ParentSchema._Name;
+        : parentSchema._Name;
         String O = parts.length >= 1 ? parts[++i] : null;
 
         return new ReferenceHelper(P, S, O, null);
       }
 
+    public static ReferenceHelper parseSchemaReference(String ref, Schema parentSchema)
+      {
+        String[] parts = ref.split("\\.");
+        String P = ParsePackage(parts, 2);
+        int i = P == null ? -1 : parts.length - 2;
+        if (P == null)
+          P = parentSchema._Package;
+        String S = parts.length >= 2 ? parts[++i]
+        : parentSchema._Name;
+
+        return new ReferenceHelper(P, S, null, null);
+      }
+    
 
     protected static String ParsePackage(String[] Parts, int ExpectedSize)
       {

@@ -35,6 +35,7 @@ import tilda.enums.OutputFormatType;
 import tilda.enums.TildaType;
 import tilda.parsing.ParserSession;
 import tilda.types.ColumnDefinition;
+import tilda.utils.TextUtil;
 
 public class Object extends Base
   {
@@ -132,12 +133,12 @@ public class Object extends Base
         return _OCC;
       }
 
-    public boolean Validate(ParserSession PS, Schema ParentSchema)
+    public boolean Validate(ParserSession PS, Schema parentSchema)
       {
         if (_Validated == true)
           return true;
 
-        if (super.Validate(PS, ParentSchema) == false)
+        if (super.Validate(PS, parentSchema) == false)
           return false;
 
         int Errs = PS.getErrorCount();
@@ -152,11 +153,11 @@ public class Object extends Base
               obj._Description = C._Description;
               obj._FST = FrameworkSourcedType.CLONED;
               obj._SourceObject = this;
-              ParentSchema._Objects.add(obj);
+              parentSchema._Objects.add(obj);
             }
 
         if (_History != null)
-          setupHistory(PS, ParentSchema);
+          setupHistory(PS, parentSchema);
 
         // We get a lot of reusable bits from this central TILDA table, so let's check it's all good.
         if (getFullName().equals("tilda.data.TILDA.Key") == true)
@@ -268,6 +269,10 @@ public class Object extends Base
             if (I._Unique == true)
               _HasUniqueIndex = true;
           }
+
+        // Pick up LC from Schema conventions if present and local value is empty. 
+        if (TextUtil.isNullOrEmpty(_LCStr) == true && parentSchema._Conventions != null && parentSchema._Conventions._DefaultLC != null)
+          _LCStr = parentSchema._Conventions._DefaultLC.name();
 
         // If an object is CODE_ONLY, then it can only be READ_ONLY, i.e., selects. Since CODE_ONLY objects are meant
         // to be used with complex queries matching a known set of columns, there is nothing to insert, update or delete.
