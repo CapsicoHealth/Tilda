@@ -308,6 +308,12 @@ public class Column extends TypeDef
           }
 
         _SameAs = _SameAs.trim();
+        boolean multi = false;
+        if (_SameAs.endsWith("[]") == true)
+          {
+            _SameAs = _SameAs.substring(0, _SameAs.length()-2);
+            multi = true;
+          }
         ReferenceHelper R = ReferenceHelper.parseColumnReference(_SameAs, _ParentObject);
 
         if (TextUtil.isNullOrEmpty(R._S) == true || TextUtil.isNullOrEmpty(R._O) == true || TextUtil.isNullOrEmpty(R._C) == true)
@@ -330,7 +336,7 @@ public class Column extends TypeDef
                     else if (_SameAsObj == this)
                       PS.AddError("Column '" + getFullName() + "' is declaring a 'sameas' to itself! That makes no sense.");
                     else
-                      copyFromSameAs(PS);
+                      copyFromSameAs(PS, multi);
                   }
               }
           }
@@ -341,7 +347,7 @@ public class Column extends TypeDef
 
 
 
-    protected void copyFromSameAs(ParserSession PS)
+    protected void copyFromSameAs(ParserSession PS, boolean multi)
       {
         if (_SameAsObj == null)
           return;
@@ -362,7 +368,7 @@ public class Column extends TypeDef
         if (_TypeStr != null && _TypeStr.equals(_SameAsObj._TypeStr) == false && _Aggregate == null)
           PS.AddError("Column '" + getFullName() + "' is a 'sameAs' and is redefining a type '" + _TypeStr + "' which doesn't match the destination column's type '" + _SameAsObj._TypeStr + "'. Note that redefining a type for a sameas column is superfluous in the first place.");
         else if (_Aggregate == null)
-          _TypeStr = _SameAsObj._TypeStr;
+          _TypeStr = _SameAsObj._TypeStr+(_SameAsObj.isCollection() == false && multi==true?"[]":"");
 
         /*
          * Should we do this or not? For mappers with extra PKs, this adds additional requirements on the new table with
@@ -409,7 +415,7 @@ public class Column extends TypeDef
             : _MapperDef._Multi == MultiType.SET ? "{}"
             : null;
           }
-        else if (_Aggregate == null)
+        else if (_Aggregate == null && multi == false)
           {
             _Size = _SameAsObj._Size;
           }

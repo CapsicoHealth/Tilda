@@ -209,19 +209,30 @@ public class Docs
 
         if (O._ForeignKeys != null && O._ForeignKeys.isEmpty() == false)
           {
-            Out.print("<LI>Defines " + (O._ForeignKeys.size() == 1 ? "a " : "") + "foreign key" + (O._ForeignKeys.size() == 1 ? "" : "(s)") + " to ");
-            int x = 0;
+            Out.println("<LI>Defines " + (O._ForeignKeys.size() == 1 ? "a" : ""+O._ForeignKeys.size()) + " foreign key" + (O._ForeignKeys.size() == 1 ? "" : "(s)") + ":<BR>");
+            Out.println("<TABLE style=\"margin-left: 25px; border:1px solid #BBB;\" cellspacing=\"0px\" cellpadding=\"5px\" border=\"0px\">");
+            Out.println("<TR style=\"background-color:#DDD; font-weight:bold;\"><TD></TD><TD>Source Columns</TD><TD>Destination Object</TD><TD>Destination Columns</TD><TD>Notes</TD></TR>");
             Set<String> Names = new HashSet<String>();
+            int i = 0;
             for (ForeignKey FK : O._ForeignKeys)
               {
                 if (FK == null)
                   continue;
                 if (Names.add(FK._DestObjectObj.getShortName()) == false)
                   continue;
-                Out.print((x == 0 ? "" : ", ") + makeObjectLink(FK._DestObjectObj));
-                ++x;
+                ++i;
+                Out.print("<TR "+(i%2==0?"style=\"background-color:#F7F7F7;\"":"")+"><TD>"+i+"</TD><TD>" + TextUtil.print(FK._SrcColumns) + "</TD>"
+                             +"<TD>" + makeObjectLink(FK._DestObjectObj)+"</TD>"
+                             +"<TD>" + TextUtil.print(FK._DestObjectObj._PrimaryKey._Columns)+"</TD>"
+                             );
+                if (FK._multi == true)
+                 Out.print("<TD>multi-key, not implemented database-side</TD>");
+                else
+                  Out.print("<TD>&nbsp;</TD>");
+                 
+                Out.println("</TR>");
               }
-            Out.println(" </LI>");
+            Out.println("</TABLE></LI>");
           }
         if (O._PrimaryKey != null || O._HasUniqueIndex == true)
           {
@@ -260,7 +271,7 @@ public class Docs
 
         Out.println("</UL>");
 
-        Out.println("<B>Description</B>: " + O._Description + "<BR>");
+        Out.println("<B>Description</B>:<BLOCKQUOTE style=\"border-left: 1px solid #EEE;padding-left: 5px;\">" + processExternalLinks(O._Description) + "</BLOCKQUOTE>");
         Out.println("<BR>");
 
         if (view != null)
@@ -268,7 +279,7 @@ public class Docs
 
 
         Out.print("This " + ObjType + " contains the following columns:<BLOCKQUOTE>" + SystemValues.NEWLINE
-        + " <TABLE id=\"" + O._Name + "_TBL\" border=\"0px\" cellpadding=\"3px\" cellspacing=\"0px\" style=\"border:1px solid grey;\">" + SystemValues.NEWLINE
+        + " <TABLE id=\"" + O._Name + "_TBL\" border=\"0px\" cellpadding=\"3px\" cellspacing=\"0px\" style=\"border:1px solid #BBB;\">" + SystemValues.NEWLINE
         + "   <TR valign=\"bottom\"><TH>&nbsp;</TH><TH align=\"right\">Name&nbsp;&nbsp;</TH><TH align=\"left\">Type</TH><TH align=\"left\">Nullable</TH>");
         int colCount = 4;
         if (view != null && view._Realize != null)
@@ -328,7 +339,7 @@ public class Docs
                 Out.println("<TD align=\"center\">" + (C._Protect == null ? "-" : C._Protect) + "&nbsp;&nbsp;</TD>");
               }
 
-            Out.print("<TD>" + C._Description);
+            Out.print("<TD>" + processExternalLinks(C._Description));
             if (O._SourceView != null)
               {
                 Formula F = O._SourceView.getFormula(C.getName(), true);
@@ -445,6 +456,11 @@ public class Docs
          * }
          */
         Out.println("</DIV>");
+      }
+
+    private static String processExternalLinks(String str)
+      {
+        return str.replaceAll("<\\s*[aA]\\s*", "<A target=\"_other\" ");
       }
 
     /*
@@ -744,7 +760,7 @@ public class Docs
 
     private static void docFieldValues(PrintWriter Out, Column C)
       {
-        Out.println("<TABLE border=\"0px\" cellpadding=\"2px\" cellspacing=\"0px\" style=\"border:1px solid #999;\">"
+        Out.println("<TABLE border=\"0px\" cellpadding=\"2px\" cellspacing=\"0px\" style=\"border:1px solid #BBB;\">"
         + "   <TR align=\"left\"><TH>&nbsp;</TH><TH align=\"right\">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>");
         int i = 0;
         for (ColumnValue V : C._Values)

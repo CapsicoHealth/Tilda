@@ -628,7 +628,7 @@ public class Migrator
                           Found = true;
                           break;
                         }
-                    if (Found == false)
+                    if (Found == false && FK._multi == false)
                       Actions.add(new TableFKAdd(FK));
                   }
 
