@@ -16,9 +16,13 @@
 
 package tilda.parsing.parts.helpers;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.parsing.parts.Column;
 import tilda.utils.HTMLFilter;
 import tilda.utils.TextUtil;
 
@@ -28,9 +32,23 @@ public class ReferenceUrlHelper
 
     public static String processReferenceUrl(String description, String referenceUrl)
       {
-        return TextUtil.isNullOrEmpty(referenceUrl) == false 
+        return TextUtil.isNullOrEmpty(referenceUrl) == true 
         ? description
-        : description.replaceAll("${REFERENCE_URL}", "<A target=\"_other\" href=\""+TextUtil.escapeDoubleQuoteWithSlash(referenceUrl)+"\">"+HTMLFilter.cleanAbsolute(referenceUrl)+"</A>");
+        : description.replaceAll("\\$\\{REFERENCE_URL\\}", "<A target=\"_other\" href="+TextUtil.escapeDoubleQuoteWithSlash(referenceUrl)+">"+HTMLFilter.cleanAbsolute(referenceUrl)+"</A>");
+      }
+
+    protected static Pattern _REGEX_FK_TABLE_DESCRIPTION = Pattern.compile("\\$\\{FK_TABLE_DESCRIPTION\\.([^\\}]+)\\}");
+
+    public static String processFKTableDescription(String description, tilda.parsing.parts.Object obj)
+      {
+        Matcher M = _REGEX_FK_TABLE_DESCRIPTION.matcher(description);
+        if (M.matches() == true && M.groupCount() > 0)
+          {
+            Column C = obj.getColumn(M.group(1));
+            if (C != null)
+             return M.replaceFirst(C._Description);
+          }
+        return description;
       }
     
   }

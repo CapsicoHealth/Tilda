@@ -26,6 +26,7 @@ import tilda.enums.FrameworkColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ReferenceHelper;
+import tilda.parsing.parts.helpers.ReferenceUrlHelper;
 import tilda.parsing.parts.helpers.SameAsHelper;
 import tilda.parsing.parts.helpers.ValidationHelper;
 import tilda.utils.TextUtil;
@@ -84,7 +85,12 @@ public class ForeignKey
         if (Errs != PS.getErrorCount())
           return false;
 
-        CheckForeignKeyMapping(PS, _ParentObject, _SrcColumnObjs, _DestObjectObj, "foreign key '" + _Name + "'");
+        if (CheckForeignKeyMapping(PS, _ParentObject, _SrcColumnObjs, _DestObjectObj, "foreign key '" + _Name + "'") == true)
+         {
+           for (Column col : _SrcColumnObjs)
+             col._Description = ReferenceUrlHelper.processFKTableDescription(col._Description, _DestObjectObj);
+         }
+
 
         return Errs == PS.getErrorCount();
       }

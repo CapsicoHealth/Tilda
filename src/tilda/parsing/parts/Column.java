@@ -256,8 +256,8 @@ public class Column extends TypeDef
               PS.AddError("Column '" + getFullName() + "' didn't define a 'description'. It is mandatory.");
           }
         
-        _Description = ReferenceUrlHelper.processReferenceUrl(_Description, _ParentObject._ReferenceUrl);        
-        
+        _Description = ReferenceUrlHelper.processReferenceUrl(_Description, _ParentObject._ReferenceUrl);
+
         if (_Protect != null && _Type != ColumnType.STRING)
           PS.AddError("Column '" + getFullName() + "' is defined as a '" + _Type + "' with a '_Protect'. Only String columns should have a '_Protect' defined.");
 
