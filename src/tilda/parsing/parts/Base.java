@@ -31,7 +31,9 @@ import tilda.enums.ObjectMode;
 import tilda.enums.TildaType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.DefaultsHelper;
+import tilda.parsing.parts.helpers.ReferenceUrlHelper;
 import tilda.parsing.parts.helpers.ValidationHelper;
+import tilda.utils.HTMLFilter;
 import tilda.utils.PaddingTracker;
 import tilda.utils.TextUtil;
 
@@ -48,6 +50,7 @@ public abstract class Base
     @SerializedName("prefix"      ) public String               _Prefix = null;
     @SerializedName("description" ) public String               _Description= null;
     @SerializedName("descriptionX") public String[]             _DescriptionX= null;
+    @SerializedName("referenceUrl") public String               _ReferenceUrl;
     @SerializedName("queries"     ) public List<SubWhereClause> _Queries    = new ArrayList<SubWhereClause>();
     @SerializedName("json"        ) public List<OutputMap>      _JsonDEPRECATED = new ArrayList<OutputMap >();
     @SerializedName("outputMaps"  ) public List<OutputMap>      _OutputMaps = new ArrayList<OutputMap>();
@@ -195,6 +198,8 @@ public abstract class Base
 
         if (TextUtil.isNullOrEmpty(_DescriptionX) == false)
           _Description = String.join(" ", _DescriptionX);
+        
+        _Description = ReferenceUrlHelper.processReferenceUrl(_Description, _ReferenceUrl);
         
         // _Name = _Name.toUpperCase();
 
