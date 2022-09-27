@@ -38,6 +38,7 @@ import tilda.enums.ValidationStatus;
 import tilda.enums.VisibilityType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ReferenceHelper;
+import tilda.parsing.parts.helpers.ReferenceUrlHelper;
 import tilda.parsing.parts.helpers.ValidationHelper;
 import tilda.utils.PaddingTracker;
 import tilda.utils.TextUtil;
@@ -222,14 +223,7 @@ public class Column extends TypeDef
             return;
           }
 
-        if (N.length() > PS._CGSql.getMaxColumnNameSize())
-          PS.AddError("Column '" + getFullName() + "' has a name that's too long: max allowed by your database is " + PS._CGSql.getMaxColumnNameSize() + " vs " + N.length() + " for this identifier.");
-
-        if (ValidationHelper.isValidIdentifier(N) == false)
-          PS.AddError("Column '" + getFullName() + "' has a name '" + N + "' which is not valid. " + ValidationHelper._ValidIdentifierMessage);
-
-        if (ValidationHelper.isReservedIdentifier(_Name) == true)
-          PS.AddError("Column '" + getFullName() + "' has a name '" + N + "' which is a reserved identifier.");
+        ValidationHelper.validateColumnName(PS, "Object", N, getFullName(), _ParentObject._ParentSchema._Conventions);
 
         if (ValidateSameAs(PS) == false)
           return;
@@ -261,7 +255,7 @@ public class Column extends TypeDef
             else
               PS.AddError("Column '" + getFullName() + "' didn't define a 'description'. It is mandatory.");
           }
-
+        
         if (_Protect != null && _Type != ColumnType.STRING)
           PS.AddError("Column '" + getFullName() + "' is defined as a '" + _Type + "' with a '_Protect'. Only String columns should have a '_Protect' defined.");
 

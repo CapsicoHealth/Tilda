@@ -16,22 +16,31 @@
 
 package tilda.enums;
 
+import java.util.regex.Pattern;
+
 public enum ConventionNaming
   {
-    /**
-     * No convention set
-     */
-    NONE, 
-    
-    /**
-     * Traditional Java/JS variable naming convention [a-z][a-zA-Z0-9]+ such as "nameTitle", "nameFirst" "dbType" etc...
-     */
-    CAMEL_CASE_JS,
-    
-    /**
-     * Traditional database-style naming convention [a-z][a-zA-Z0-9_]+ such as "name_title", "name_first", "db_type"
-     */
-    UNDERSCORE_LOWER_DB;
+  /**
+   * No convention set
+   */
+  NONE(null),
+
+  /**
+   * Traditional Java/JS variable naming convention [a-z][a-zA-Z0-9]+ such as "nameTitle", "nameFirst" "dbType" etc...
+   */
+  CAMEL_CASE_JS(Pattern.compile("[a-z][a-zA-Z0-9]")),
+
+  /**
+   * Traditional database-style naming convention [a-z][a-zA-Z0-9_]+ such as "name_title", "name_first", "db_type"
+   */
+  UNDERSCORE_LOWER_DB(Pattern.compile("[a-z][a-z0-9_]"));
+
+    private ConventionNaming(Pattern p)
+      {
+        _p = p;
+      }
+
+    protected final Pattern _p;
 
     public static ConventionNaming parse(String Str)
       {
@@ -39,6 +48,11 @@ public enum ConventionNaming
           if (Str.equalsIgnoreCase(e.name()) == true)
             return e;
         return null;
+      }
+
+    public boolean validateColumnName(String name)
+      {
+        return _p == null ? true : _p.matcher(name).matches();
       }
 
   }

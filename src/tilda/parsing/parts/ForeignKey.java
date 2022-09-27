@@ -155,7 +155,7 @@ public class ForeignKey
 
         if (_SrcColumns.length == 1 && _multi == true && _SrcColumnObjs.get(0).isCollection() == false)
          PS.AddError("Object '" + _ParentObject.getFullName() + "' declares a multi foreign key '" + _Name + "' with non-array source column '" + _SrcColumns[0] + "'.");
-        if (_SrcColumns.length == 1 && _multi == false && _SrcColumnObjs.get(0).isCollection() == true)
+        if (_SrcColumns.length == 1 && _multi == false && _SrcColumnObjs.isEmpty() == false && _SrcColumnObjs.get(0).isCollection() == true)
           PS.AddError("Object '" + _ParentObject.getFullName() + "' declares a non-multi foreign key '" + _Name + "' with an array source column '" + _SrcColumns[0] + "'. The foreign key should be defined as a multi key '"+_SrcColumns[0]+"[]'.");        
         
         /*@formatter:off*/

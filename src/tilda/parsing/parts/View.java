@@ -479,6 +479,7 @@ public class View extends Base
         O._OutputMaps = _OutputMaps;
         O._LCStr = ObjectLifecycle.READONLY.name();
         O._OCC = _OCC;
+        O._ParentSchema = _ParentSchema;
 
         // LOG.debug(getFullName()+": "+TextUtil.print(getColumnNames()));
         int Counter = -1;

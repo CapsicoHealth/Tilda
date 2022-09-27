@@ -27,6 +27,7 @@ import org.apache.logging.log4j.Logger;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Column;
+import tilda.parsing.parts.Convention;
 import tilda.utils.TextUtil;
 
 
@@ -46,7 +47,7 @@ public class ValidationHelper
               Column C = ParentObject.getColumn(c);
               if (C == null)
                 {
-                  PS.AddError ("Object '" + ParentObject.getFullName() + "' is defining " + What + " with column '" + c + "' which cannot be found.");
+                  PS.AddError("Object '" + ParentObject.getFullName() + "' is defining " + What + " with column '" + c + "' which cannot be found.");
                   continue;
                 }
               if (C.hasBeenValidatedSuccessfully() == false)
@@ -81,7 +82,7 @@ public class ValidationHelper
         for (int i = 1; i < chars.length; ++i)
           if (Character.isJavaIdentifierPart(chars[i]) == false)
             return false;
-        
+
         return true;
       }
 
@@ -89,7 +90,26 @@ public class ValidationHelper
       {
         if (name != null && name.equalsIgnoreCase("class") == true)
           return true;
-        
+
         return false;
+      }
+
+
+    public static boolean validateColumnName(ParserSession PS, String containerType, String columnName, String fullName, Convention convention)
+      {
+        int Errs = PS.getErrorCount();
+
+        if (columnName.length() > PS._CGSql.getMaxColumnNameSize())
+          PS.AddError(containerType+" column '" + fullName + "' has a name that's too long: max allowed by your database is " + PS._CGSql.getMaxColumnNameSize() + " vs " + columnName.length() + " for this identifier.");
+        if (convention != null && convention._ColumnNamingConvention.validateColumnName(columnName) == false)
+          PS.AddError("Column '" + fullName + "' has a name '" + columnName + "' which doesn't match the schema's column naming convention '" + convention._ColumnNamingConvention.name() + "'.");
+        if (columnName.equals(TextUtil.sanitizeName(columnName)) == false)
+          PS.AddError(containerType+" column '" + fullName + "' has a name containing invalid characters (must all be alphanumeric or underscore).");
+        if (ValidationHelper.isValidIdentifier(columnName) == false)
+          PS.AddError(containerType+" column '" + fullName + "' has a name '" + columnName + "' which is not valid. " + ValidationHelper._ValidIdentifierMessage);
+        if (ValidationHelper.isReservedIdentifier(columnName) == true)
+          PS.AddError(containerType+" column '" + fullName + "' has a name '" + columnName + "' which is a reserved identifier.");
+
+        return Errs == PS.getErrorCount();
       }
   }
