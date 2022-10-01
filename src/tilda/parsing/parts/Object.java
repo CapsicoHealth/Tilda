@@ -61,6 +61,7 @@ public class Object extends Base
     /*@formatter:on*/
 
     public transient boolean              _HasUniqueIndex;
+    public transient boolean              _HasNonUniqueIndex;
     public transient boolean              _HasNaturalIdentity;
     public transient FrameworkSourcedType _FST          = FrameworkSourcedType.NONE;
     public transient View                 _SourceView   = null;                                        // For tables such as Realized tables generated out of views.
@@ -255,6 +256,7 @@ public class Object extends Base
         Set<String> Names = new HashSet<String>();
 
         _HasUniqueIndex = false;
+        _HasNonUniqueIndex = false;
         Set<String> Signatures = new HashSet<String>();
         Names.clear();
         for (Index I : _Indices)
@@ -268,6 +270,8 @@ public class Object extends Base
               PS.AddError("Object '" + getFullName() + "' is defining a duplicate index on signature '" + I.getSignature() + "'.");
             if (I._Unique == true)
               _HasUniqueIndex = true;
+            else
+              _HasNonUniqueIndex = true;
           }
 
         // Pick up LC from Schema conventions if present and local value is empty. 
@@ -344,13 +348,10 @@ public class Object extends Base
         // We also need to clean up mappings if they reference a column that is not being carried over
         for (OutputMap OM : obj._OutputMaps)
           if (OM != null)
-            {
-              OM._Columns = Column.cleanupColumnList(OM._Columns, _History._IncludedColumns);
-//              OM._ColumnObjs = Column.cleanupColumnList(OM._ColumnObjs, _History._IncludedColumns);
-            }
+           OM._Columns = Column.cleanupColumnList(OM._Columns, _History._IncludedColumns);
         
         // We also need to clean up Indices
-        
+        /// TO DO !!!!!
         
         if (obj._PrimaryKey != null)
           {

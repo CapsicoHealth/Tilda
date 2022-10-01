@@ -44,6 +44,7 @@ import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Formula;
 import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Object;
+import tilda.parsing.parts.OrderBy;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.Value;
 import tilda.parsing.parts.View;
@@ -273,13 +274,39 @@ public class Docs
             for (Index I : O._Indices)
               if (I != null && I._Unique == true)
                 {
-                  Out.print("<LI>Unique Index: ");
+                  Out.print("<LI>Unique Index"+(I._Db == false?"  <B><I>(Application-side Only)</I></B>: ":": "));
                   int x = 0;
                   for (Column c : I._ColumnObjs)
                     {
                       Out.print((x == 0 ? "" : ", ") + c.getName());
                       ++x;
                     }
+                  Out.println("</LI>");
+                }
+            Out.println("</UL></LI>");
+          }
+
+        if (O._HasNonUniqueIndex == true)
+          {
+            int count = 0;
+            for (Index I : O._Indices)
+              if (I != null && I._Unique != true)
+                ++count;
+            Out.print("<LI>Has the following " + (count > 1 ? "indices" : "index") + ":<UL>");
+            for (Index I : O._Indices)
+              if (I != null && I._Unique != true)
+                {
+                  Out.print("<LI>");
+                  int x = 0;
+                  for (Column c : I._ColumnObjs)
+                    {
+                      Out.print((x == 0 ? "" : ", ") + c.getName());
+                      ++x;
+                    }
+                  if (I._OrderByObjs != null && I._OrderByObjs.isEmpty() == false)
+                   Out.println((x == 0 ? "" : ", ") + OrderBy.printOrderByList(I._OrderByObjs));
+                  if (I._Db != true)
+                    Out.print(" <B><I>(Application-side Only)</I></B>");
                   Out.println("</LI>");
                 }
             Out.println("</UL></LI>");

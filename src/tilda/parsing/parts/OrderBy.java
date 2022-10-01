@@ -146,7 +146,11 @@ public class OrderBy
       {
         StringBuilder Str = new StringBuilder();
         for (OrderBy ob : L)
-          Str.append(Str.length() == 0 ? "" : ", ").append(ob._Col.getName()).append(ob._Order == OrderType.ASC ? " asc" : " desc");
+          {
+            Str.append(Str.length() == 0 ? "" : ", ").append(ob._Col.getName()).append(ob._Order == OrderType.ASC ? " asc" : " desc");
+            if (ob._Nulls != null)
+             Str.append(" nulls "+ob._Nulls.name());
+          }
         return Str.toString();
       }
 
