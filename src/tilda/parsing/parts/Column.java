@@ -16,6 +16,7 @@
 
 package tilda.parsing.parts;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -40,6 +41,7 @@ import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ReferenceHelper;
 import tilda.parsing.parts.helpers.ReferenceUrlHelper;
 import tilda.parsing.parts.helpers.ValidationHelper;
+import tilda.utils.CollectionUtil;
 import tilda.utils.PaddingTracker;
 import tilda.utils.TextUtil;
 
@@ -255,7 +257,7 @@ public class Column extends TypeDef
             else
               PS.AddError("Column '" + getFullName() + "' didn't define a 'description'. It is mandatory.");
           }
-        
+
         _Description = ReferenceUrlHelper.processReferenceUrl(_Description, _ParentObject._ReferenceUrl);
 
         if (_Protect != null && _Type != ColumnType.STRING)
@@ -307,7 +309,7 @@ public class Column extends TypeDef
         boolean multi = false;
         if (_SameAs.endsWith("[]") == true)
           {
-            _SameAs = _SameAs.substring(0, _SameAs.length()-2);
+            _SameAs = _SameAs.substring(0, _SameAs.length() - 2);
             multi = true;
           }
         ReferenceHelper R = ReferenceHelper.parseColumnReference(_SameAs, _ParentObject);
@@ -351,20 +353,20 @@ public class Column extends TypeDef
         if (_Name == null)
           _Name = _SameAsObj._Name;
 
-//        String sameAs_TypeStr = SameAsHelper.getSameAsRoot_TypeStr(this);
-//        Integer sameAs_Size = SameAsHelper.getSameAsRoot_Size(this);
-//        Integer sameAs_Precision = SameAsHelper.getSameAsRoot_Precision(this);
-//        Integer sameAs_Scale = SameAsHelper.getSameAsRoot_Scale(this);
-//        ColumnValue[] sameAs_Values = SameAsHelper.getSameAsRoot_ColumnValues(this);
-//        String sameAs_ProtectStr = SameAsHelper.getSameAsRoot_ProtectStr(this);
-//        String sameAs_ModeStr = SameAsHelper.getSameAsRoot_ModeStr(this);
-//        Boolean sameAs_Nullable = SameAsHelper.getSameAsRoot_Nullable(this);
-//        String sameAs_Description = SameAsHelper.getSameAsRoot_Description(this);
+        // String sameAs_TypeStr = SameAsHelper.getSameAsRoot_TypeStr(this);
+        // Integer sameAs_Size = SameAsHelper.getSameAsRoot_Size(this);
+        // Integer sameAs_Precision = SameAsHelper.getSameAsRoot_Precision(this);
+        // Integer sameAs_Scale = SameAsHelper.getSameAsRoot_Scale(this);
+        // ColumnValue[] sameAs_Values = SameAsHelper.getSameAsRoot_ColumnValues(this);
+        // String sameAs_ProtectStr = SameAsHelper.getSameAsRoot_ProtectStr(this);
+        // String sameAs_ModeStr = SameAsHelper.getSameAsRoot_ModeStr(this);
+        // Boolean sameAs_Nullable = SameAsHelper.getSameAsRoot_Nullable(this);
+        // String sameAs_Description = SameAsHelper.getSameAsRoot_Description(this);
 
         if (_TypeStr != null && _TypeStr.equals(_SameAsObj._TypeStr) == false && _Aggregate == null)
           PS.AddError("Column '" + getFullName() + "' is a 'sameAs' and is redefining a type '" + _TypeStr + "' which doesn't match the destination column's type '" + _SameAsObj._TypeStr + "'. Note that redefining a type for a sameas column is superfluous in the first place.");
         else if (_Aggregate == null)
-          _TypeStr = _SameAsObj._TypeStr+(_SameAsObj.isCollection() == false && multi==true?"[]":"");
+          _TypeStr = _SameAsObj._TypeStr + (_SameAsObj.isCollection() == false && multi == true ? "[]" : "");
 
         /*
          * Should we do this or not? For mappers with extra PKs, this adds additional requirements on the new table with
@@ -426,9 +428,8 @@ public class Column extends TypeDef
 
         if (_ProtectStr != null)
           {
-            if (   TextUtil.isNullOrEmpty(_SameAsObj._ProtectStr) == false
-                && ProtectionType.parse(_SameAsObj._ProtectStr).ordinal() > ProtectionType.parse(_ProtectStr).ordinal()
-               )
+            if (TextUtil.isNullOrEmpty(_SameAsObj._ProtectStr) == false
+            && ProtectionType.parse(_SameAsObj._ProtectStr).ordinal() > ProtectionType.parse(_ProtectStr).ordinal())
               PS.AddError("Column '" + getFullName() + "' is a 'sameAs' and is redefining 'protect' from '" + _SameAsObj._ProtectStr + "' to '" + _ProtectStr + "', which is not allowed: only protection upgrades are allowed, not downgrades.");
           }
         else
@@ -550,7 +551,7 @@ public class Column extends TypeDef
 
     public VisibilityType getVisibility()
       {
-        return _ParentObject.getLifecycle() == ObjectLifecycle.READONLY || _MapperDef != null || (_FCT != FrameworkColumnType.NONE && _FCT != FrameworkColumnType.OCC_LASTUPDATED && _FCT != FrameworkColumnType.OCC_DELETED) ? VisibilityType.PRIVATE
+        return _ParentObject.getLifecycle() == ObjectLifecycle.READONLY || _MapperDef != null || (_FCT != FrameworkColumnType.NONE && _FCT != FrameworkColumnType.OCC_CREATED && _FCT != FrameworkColumnType.OCC_LASTUPDATED && _FCT != FrameworkColumnType.OCC_DELETED) ? VisibilityType.PRIVATE
         : _Invariant == true || _PrimaryKey == true || (_Mode == ColumnMode.AUTO && _FCT != FrameworkColumnType.OCC_LASTUPDATED && _FCT != FrameworkColumnType.OCC_DELETED) ? VisibilityType.PROTECTED
         : VisibilityType.PUBLIC;
       }
@@ -637,6 +638,24 @@ public class Column extends TypeDef
           names[i] = L.get(i)._Name;
         return names;
       }
+
+    public static String[] cleanupColumnList(String[] columns, String[] masterColumns)
+      {
+        List<String> L = new ArrayList<String>();
+        for (String colName : columns)
+          if (TextUtil.contains(masterColumns, colName, true, 0) == true)
+            L.add(colName);
+        return L.toArray(new String[L.size()]);
+      }
+    public static List<Column> cleanupColumnList(List<Column> columns, String[] masterColumns)
+      {
+        List<Column> L = new ArrayList<Column>();
+        for (Column col : columns)
+          if (col != null && TextUtil.contains(masterColumns, col._Name, true, 0) == true)
+            L.add(col);
+        return L;
+      }
+
 
     @Override
     public String toString()

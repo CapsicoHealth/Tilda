@@ -65,6 +65,8 @@ public interface CodeGenDocs
 
     public void docMethodCopyTo(PrintWriter Out, GeneratorSession G, Object O);
 
+    public void docMethodCopyForHistory(PrintWriter Out, GeneratorSession G, Object O);
+
     public void docMethodMask(PrintWriter out, GeneratorSession G, Object O);
     
     public void docMethodTouch(PrintWriter Out, GeneratorSession G, Column C);

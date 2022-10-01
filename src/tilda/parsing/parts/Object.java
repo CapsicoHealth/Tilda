@@ -18,11 +18,13 @@ package tilda.parsing.parts;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.bouncycastle.util.Arrays;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -64,6 +66,8 @@ public class Object extends Base
     public transient View                 _SourceView   = null;                                        // For tables such as Realized tables generated out of views.
     public transient Object               _SourceObject = null;                                        // For tables such as Realized tables generated out of views.
     public transient ObjectLifecycle      _LC;
+    public transient Object               _HistoryObj   = null;                                        // For tables with history settings
+    
 
     public Object()
       {
@@ -90,7 +94,6 @@ public class Object extends Base
           for (Index I : obj._Indices)
             if (I != null)
               _Indices.add(new Index(I));
-
         _Http = obj._Http;
         _History = obj._History;
       }
@@ -155,9 +158,6 @@ public class Object extends Base
               obj._SourceObject = this;
               parentSchema._Objects.add(obj);
             }
-
-        if (_History != null)
-          setupHistory(PS, parentSchema);
 
         // We get a lot of reusable bits from this central TILDA table, so let's check it's all good.
         if (getFullName().equals("tilda.data.TILDA.Key") == true)
@@ -310,8 +310,11 @@ public class Object extends Base
         super.validateQueries(PS, Names);
         super.validateOutputMaps(PS);
         super.validateMasks(PS);
-        if (_History != null)
-          _History.Validate(PS, this);
+
+        if (_History != null && _History.Validate(PS, this) == true)
+          {
+            setupHistory(PS, parentSchema);
+          }
 
         return _Validated = Errs == PS.getErrorCount();
       }
@@ -332,6 +335,23 @@ public class Object extends Base
         obj._LC = ObjectLifecycle.WORM;
         obj._SourceObject = this;
         obj._ParentSchema = ParentSchema;
+
+        _HistoryObj = obj;
+        
+        // We need to clean up columns that were not included in the history definition.
+        obj._Columns = Column.cleanupColumnList(obj._Columns, _History._IncludedColumns);
+        
+        // We also need to clean up mappings if they reference a column that is not being carried over
+        for (OutputMap OM : obj._OutputMaps)
+          if (OM != null)
+            {
+              OM._Columns = Column.cleanupColumnList(OM._Columns, _History._IncludedColumns);
+//              OM._ColumnObjs = Column.cleanupColumnList(OM._ColumnObjs, _History._IncludedColumns);
+            }
+        
+        // We also need to clean up Indices
+        
+        
         if (obj._PrimaryKey != null)
           {
             // Replace the primary key with a regular index
@@ -370,6 +390,11 @@ public class Object extends Base
 
         ParentSchema._Objects.add(obj);
       }
+    
+    public Object getHistoryObjectName()
+     {
+       return _HistoryObj;
+     }
 
     /**
      * A Column is an autogen PK if and only if it is the one column defined by the PK. All AutoGen PKs must

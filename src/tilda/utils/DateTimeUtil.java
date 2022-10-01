@@ -452,8 +452,8 @@ public class DateTimeUtil
 
 
     private static final DateTimeFormatter GeneralFormater        = DateTimeFormatter.ofPattern("MMM d yyyy");
-    private static final DateTimeFormatter GeneralFormaterTime    = DateTimeFormatter.ofPattern("MMM d yyyy, HH:mmz");
-    private static final DateTimeFormatter GeneralFormaterTimeSec = DateTimeFormatter.ofPattern("MMM d yyyy, HH:mm:ssz");
+    private static final DateTimeFormatter GeneralFormaterTime    = DateTimeFormatter.ofPattern("MMM d yyyy, HH:mm z");
+    private static final DateTimeFormatter GeneralFormaterTimeSec = DateTimeFormatter.ofPattern("MMM d yyyy, HH:mm:ss z");
 
     public static String printDateTimeFriendly(ZonedDateTime ZDT, boolean PrintTime, boolean PrintSeconds)
       {

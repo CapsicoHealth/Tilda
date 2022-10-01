@@ -200,6 +200,22 @@ public class Docs
                 default:
                   throw new Exception("Unknown Object mode value '" + O._Mode + "' when generating class docs");
               }
+            if (O._HistoryObj != null)
+              {
+                Out.println("<LI>Has a History mapping to "+makeObjectLink(O._HistoryObj)+":<UL>" + SystemValues.NEWLINE
+                + "<LI><B>Signature</B>: "+Column.printColumnList(O._History._SignatureColumnObjs, true)+"</LI>" + SystemValues.NEWLINE
+                + "<LI><B>History</B>: "+Column.printColumnList(O._History._IncludedColumnObjs, true)+"</LI>" + SystemValues.NEWLINE
+                +"</UL>"
+                );
+              }
+            else if (O._FST == FrameworkSourcedType.HISTORY)
+              {
+                Out.println("<LI>Is a History mapping from "+makeObjectLink(O._SourceObject)+":<UL>" + SystemValues.NEWLINE
+                + "<LI><B>Signature</B>: "+Column.printColumnList(O._SourceObject._History._SignatureColumnObjs, true)+"</LI>" + SystemValues.NEWLINE
+                + "<LI><B>History</B>: "+Column.printColumnList(O._SourceObject._History._IncludedColumnObjs, true)+"</LI>" + SystemValues.NEWLINE
+                +"</UL>"
+                );
+              }
           }
 
         if (O._OCC == true)
