@@ -185,6 +185,16 @@ public interface CodeGenTildaData extends CodeGenBase
 
     /**
      * 
+     * @param out
+     * @param g
+     * @param o
+     */
+    public void genMethodCopyForHistory(PrintWriter out, GeneratorSession G, Object obj, Object histObj)
+    throws Exception;
+    
+
+    /**
+     * 
      * @param Out
      * @param G
      * @param O

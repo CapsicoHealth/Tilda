@@ -31,7 +31,9 @@ import tilda.enums.ObjectMode;
 import tilda.enums.TildaType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.DefaultsHelper;
+import tilda.parsing.parts.helpers.ReferenceUrlHelper;
 import tilda.parsing.parts.helpers.ValidationHelper;
+import tilda.utils.HTMLFilter;
 import tilda.utils.PaddingTracker;
 import tilda.utils.TextUtil;
 
@@ -41,16 +43,19 @@ public abstract class Base
     static final Logger              LOG                = LogManager.getLogger(Object.class.getName());
 
     /*@formatter:off*/
-    @SerializedName("name"       ) public String               _Name       = null;
-    @SerializedName("dbOnly"     ) private Boolean              _DBOnly_DEPRECATED;
-    @SerializedName("mode"       ) public String               _ModeStr    ;
-    @SerializedName("shortAlias" ) public String               _ShortAlias = null;
-    @SerializedName("description") public String               _Description= null;
-    @SerializedName("queries"    ) public List<SubWhereClause> _Queries    = new ArrayList<SubWhereClause>();
-    @SerializedName("json"       ) public List<OutputMap>      _JsonDEPRECATED = new ArrayList<OutputMap >();
-    @SerializedName("outputMaps" ) public List<OutputMap>      _OutputMaps = new ArrayList<OutputMap>();
-    @SerializedName("masks"      ) public List<Mask>           _Masks = new ArrayList<Mask>();
-    @SerializedName("tenantInit" ) public Boolean              _TenantInit = Boolean.FALSE;
+    @SerializedName("name"        ) public String               _Name       = null;
+    @SerializedName("dbOnly"      ) private Boolean              _DBOnly_DEPRECATED;
+    @SerializedName("mode"        ) public String               _ModeStr    ;
+    @SerializedName("shortAlias"  ) public String               _ShortAlias_DEPRECATED = null;
+    @SerializedName("prefix"      ) public String               _Prefix = null;
+    @SerializedName("description" ) public String               _Description= null;
+    @SerializedName("descriptionX") public String[]             _DescriptionX= null;
+    @SerializedName("referenceUrl") public String               _ReferenceUrl;
+    @SerializedName("queries"     ) public List<SubWhereClause> _Queries    = new ArrayList<SubWhereClause>();
+    @SerializedName("json"        ) public List<OutputMap>      _JsonDEPRECATED = new ArrayList<OutputMap >();
+    @SerializedName("outputMaps"  ) public List<OutputMap>      _OutputMaps = new ArrayList<OutputMap>();
+    @SerializedName("masks"       ) public List<Mask>           _Masks = new ArrayList<Mask>();
+    @SerializedName("tenantInit"  ) public Boolean              _TenantInit = Boolean.FALSE;
     /*@formatter:on*/
 
     public transient Schema          _ParentSchema;
@@ -82,7 +87,7 @@ public abstract class Base
     public Base(Base b)
       {
         _Name = b._Name;
-        _ShortAlias = b._ShortAlias;
+        _Prefix = b._Prefix;
         _Description = b._Description;
         _DBOnly_DEPRECATED = b._DBOnly_DEPRECATED;
         _ModeStr = b._ModeStr;
@@ -159,14 +164,14 @@ public abstract class Base
         return _PadderColumnNames.getPad(Name);
       }
 
-    protected boolean Validate(ParserSession PS, Schema ParentSchema)
+    protected boolean Validate(ParserSession PS, Schema parentSchema)
       {
         if (_Validated == true)
           return true;
 
         int Errs = PS.getErrorCount();
 
-        _ParentSchema = ParentSchema;
+        _ParentSchema = parentSchema;
 
         // Mandatories
         if (TextUtil.isNullOrEmpty(_Name) == true)
@@ -185,23 +190,39 @@ public abstract class Base
         if (ValidationHelper.isReservedIdentifier(_Name) == true)
           PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring " + _TildaType.name() + " '" + getBaseName() + "' with a name '" + _Name + "' which is a reserved identifier.");
 
-        if (TextUtil.isNullOrEmpty(_Description) == true)
-          PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring " + _TildaType.name() + " '" + getBaseName() + "' without a description.");
+        if (TextUtil.isNullOrEmpty(_Description) == true && TextUtil.isNullOrEmpty(_DescriptionX) == true)
+          PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring " + _TildaType.name() + " '" + getBaseName() + "' without a description or descriptionX.");
 
+        if (TextUtil.isNullOrEmpty(_Description) == false && TextUtil.isNullOrEmpty(_DescriptionX) == false)
+          PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring " + _TildaType.name() + " '" + getBaseName() + "' with both a description and descriptionX: only one must be specified.");
+
+        if (TextUtil.isNullOrEmpty(_DescriptionX) == false)
+          _Description = String.join(" ", _DescriptionX);
+        
+        _Description = ReferenceUrlHelper.processReferenceUrl(_Description, _ReferenceUrl);
+        
         // _Name = _Name.toUpperCase();
 
         // if dbOnly has been set, we have to check for deprecation condition
         if (_DBOnly_DEPRECATED != null)
           {
             if (_ModeStr != null)
-              return PS.AddError("Object '" + getFullName() + "' defined both 'dbOnly' and 'mode'. dbOnly is deprecated. Stop using it and use mode=NORMAL|DB_ONLY|CODE_ONLY instead.");
+              PS.AddError("Object/View '" + getFullName() + "' defined both 'dbOnly' and 'mode'. dbOnly is deprecated. Stop using it and use mode=NORMAL|DB_ONLY|CODE_ONLY instead.");
             else
-              _Mode = _DBOnly_DEPRECATED == true ? ObjectMode.DB_ONLY : ObjectMode.NORMAL;
+              _ModeStr = _DBOnly_DEPRECATED == true ? ObjectMode.DB_ONLY.name() : ObjectMode.NORMAL.name();
           }
-        else if (_ModeStr == null)
+        // Pick up Mode from Schema conventions if present and local value is empty. 
+        if (TextUtil.isNullOrEmpty(_ModeStr) == true && parentSchema._Conventions != null && parentSchema._Conventions._DefaultMode != null)
+          _ModeStr = parentSchema._Conventions._DefaultMode.name();
+        if (TextUtil.isNullOrEmpty(_ModeStr) == true)
           _Mode = ObjectMode.NORMAL;
         else if ((_Mode = ObjectMode.parse(_ModeStr)) == null)
-          return PS.AddError("Object '" + getFullName() + "' defined an invalid 'mode' '" + _ModeStr + "'.");
+          PS.AddError("Object/View '" + getFullName() + "' defined an invalid 'mode' '" + _ModeStr + "'.");
+
+        if (TextUtil.isNullOrEmpty(_ShortAlias_DEPRECATED) == false && TextUtil.isNullOrEmpty(_Prefix) == false)
+         PS.AddError("Object/View '" + getFullName() + "' is defining both 'shortAlias' and 'prefix'. 'shortAlias' has been deprecated in favor of 'prefix' so both cannot be supplied. Fix and use 'prefix' only.");
+        else if (TextUtil.isNullOrEmpty(_ShortAlias_DEPRECATED) == false)
+          _Prefix = _ShortAlias_DEPRECATED;
 
         _BaseClassName = "TILDA__" + _Name.toUpperCase();
         _AppDataClassName = _OriginalName + "_Data";

@@ -361,7 +361,7 @@ This is the column definition for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__JOBPARTMESSAGE_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__2_2.handleFinally(PS, T0, TILDA__JOBPARTMESSAGE_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
 
@@ -510,6 +510,8 @@ object. The generic init method defaults to this general data structure as a gen
                int i = d.populatePreparedStatement(C, PS, AllocatedArrays);
 
                PS.addBatch();
+               ++count;
+
                if (index != 0 && (index + 1) % batchSize == 0)
                  {
                    int[] results = PS.executeBatch();
@@ -548,7 +550,6 @@ object. The generic init method defaults to this general data structure as a gen
                if(commitSize > 0)
                  {
                    C.commit();
-                   LOG.debug("Commited " + insertCount + " batch records.");
                  }
                LOG.debug("Final Batch-inserted objects between positions #" + insertCount + " and #" + index + ".");
              }
@@ -564,7 +565,7 @@ object. The generic init method defaults to this general data structure as a gen
          }
        finally
          {
-           TILDA__1_0.handleFinally(PS, T0, TILDA__JOBPARTMESSAGE_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+           TILDA__2_2.handleFinally(PS, T0, TILDA__JOBPARTMESSAGE_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
            PS = null;
            AllocatedArrays = null;
          }
@@ -722,23 +723,24 @@ The results are ordered by: refnum asc
    public static void toCSV(java.io.Writer out, tilda.data.JobPartMessage_Data obj) throws java.io.IOException
     {
       long T0 = System.nanoTime();
+     tilda.data._Tilda.TILDA__JOBPARTMESSAGE Obj = (tilda.data._Tilda.TILDA__JOBPARTMESSAGE) obj;
       StringBuilder Str = new StringBuilder();
 
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getRefnum());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getRefnum());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getJobRefnum());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getJobRefnum());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getJobPartRefnum());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getJobPartRefnum());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getNotify());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getNotify());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getMsg());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getMsg());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getCreated()));
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getCreated()));
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getLastUpdated()));
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getLastUpdated()));
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getDeleted()));
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getDeleted()));
       out.write(Str.toString());
       PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);
     }
@@ -789,15 +791,16 @@ The results are ordered by: refnum asc
    public static void toJSON(java.io.Writer outWriter, tilda.data.JobPartMessage_Data obj, String lead, boolean fullObject, boolean noNullArrays) throws java.io.IOException
     {
       long T0 = System.nanoTime();
-      org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter();
-      tilda.data._Tilda.TILDA__JOBPARTMESSAGE Obj = (tilda.data._Tilda.TILDA__JOBPARTMESSAGE) obj;
-      if (fullObject == true)
+      try(org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter())
        {
-          out.write(lead);
-          out.write("{");
-       }
+        tilda.data._Tilda.TILDA__JOBPARTMESSAGE Obj = (tilda.data._Tilda.TILDA__JOBPARTMESSAGE) obj;
+        if (fullObject == true)
+         {
+           out.write(lead);
+           out.write("{");
+         }
 
-      int i = -1;
+        int i = -1;
         JSONUtil.print(out, "refnum", ++i==0, Obj.getRefnum());
 
         JSONUtil.print(out, "jobRefnum", ++i==0, Obj.getJobRefnum());
@@ -816,11 +819,11 @@ The results are ordered by: refnum asc
       if (Obj.isDeletedNull() == false && Obj.getDeleted() != null)
         JSONUtil.print(out, "deleted", ++i==0, Obj.getDeleted());
 
-      if (fullObject == true)
-       out.write(" }\n");
+        if (fullObject == true)
+         out.write(" }\n");
 
-      outWriter.append(out.getBuilder().toString());
-      out.close();
+        outWriter.append(out.getBuilder().toString());
+       }
 
       PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
     }

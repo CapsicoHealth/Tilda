@@ -35,7 +35,12 @@ public class TILDA__TESTVIEW_Factory
    public static final String SCHEMA_TABLENAME_LABEL = TextUtil.print("TILDATEST.TestView", "");
    public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDATEST", "TestView"); }
 
-   public static abstract class COLS {
+   public static final class COLS_BASE
+    {
+      private COLS_BASE() { }
+
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.TestView.refnum -> TILDATEST.TestView."refnum"
@@ -53,7 +58,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          REFNUM= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum", 0/*0*/, "The primary key for this record", null, null, null);
+     public final Type_LongPrimitive          REFNUM= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum", 0/*0*/, "The primary key for this record", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.TestView.name -> TILDATEST.TestView."name"
@@ -72,15 +79,15 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        NAME  = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "name"  , 1/*1*/, "The name of the test", null, null, null);
-;
+     public final Type_StringPrimitive        NAME  = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "name"  , 1/*1*/, "The name of the test", null, null, null);
    }
 
-   public static final ColumnDefinition[] COLUMNS = { COLS.REFNUM,COLS.NAME };
+   public static COLS_BASE COLS = new COLS_BASE();
+   public static final ColumnDefinition[] COLUMNS = new ColumnDefinition[] { COLS.REFNUM,COLS.NAME };
 
-   public static final ColumnDefinition[] COLUMNS_PRIMARY = {  };
+   public static final ColumnDefinition[] COLUMNS_PRIMARY = new ColumnDefinition[] {  };
 
-   public static final ColumnDefinition[][] COLUMNS_UNIQUE_INDICES = { 
+   public static final ColumnDefinition[][] COLUMNS_UNIQUE_INDICES = new ColumnDefinition[][]{ 
         };
 
    public static final ColumnDefinition[] COLUMNS_FIRST_IDENTITY = {};
@@ -152,8 +159,7 @@ This is the column definition for:<BR>
        else
         {
           S.append("select ");
-          S.append(" "); C.getFullColumnVar(S, "TILDATEST", "TestView", "refnum");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "TestView", "name");
+          C.getFullColumnVarList(S, TILDA__TESTVIEW_Factory.COLUMNS);
           S.append(" from "); C.getFullTableVar(S, "TILDATEST", "TestView");
           switch (LookupId)
            {
@@ -208,6 +214,10 @@ This is the column definition for:<BR>
 // THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/**
+Lookup records by the query 'All' over 
+.<BR>
+*/
    static public tilda.data_test.TestView_Data lookupByAll() throws Exception
      {
        tilda.data_test._Tilda.TILDA__TESTVIEW Obj = new tilda.data_test.TestView_Data();
@@ -280,24 +290,25 @@ This is the column definition for:<BR>
    public static void toJSON(java.io.Writer outWriter, tilda.data_test.TestView_Data obj, String lead, boolean fullObject, boolean noNullArrays) throws java.io.IOException
     {
       long T0 = System.nanoTime();
-      org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter();
-      tilda.data_test._Tilda.TILDA__TESTVIEW Obj = (tilda.data_test._Tilda.TILDA__TESTVIEW) obj;
-      if (fullObject == true)
+      try(org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter())
        {
-          out.write(lead);
-          out.write("{");
-       }
+        tilda.data_test._Tilda.TILDA__TESTVIEW Obj = (tilda.data_test._Tilda.TILDA__TESTVIEW) obj;
+        if (fullObject == true)
+         {
+           out.write(lead);
+           out.write("{");
+         }
 
-      int i = -1;
+        int i = -1;
         JSONUtil.print(out, "refnum", ++i==0, Obj.getRefnum());
 
         JSONUtil.print(out, "name", ++i==0, Obj.getName());
 
-      if (fullObject == true)
-       out.write(" }\n");
+        if (fullObject == true)
+         out.write(" }\n");
 
-      outWriter.append(out.getBuilder().toString());
-      out.close();
+        outWriter.append(out.getBuilder().toString());
+       }
 
       PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
     }

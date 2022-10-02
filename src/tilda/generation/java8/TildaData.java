@@ -1605,9 +1605,74 @@ public class TildaData implements CodeGenTildaData
         Out.println("       copyTo(dst);");
         Out.println("       return dst;");
         Out.println("     }");
-
       }
 
+    @Override
+    public void genMethodCopyForHistory(PrintWriter Out, GeneratorSession G, Object obj, Object histObj)
+    throws Exception
+      {
+        
+        Out.println("   public "+Helper.getFullAppDataClassName(histObj)+" copyForHistory() throws Exception");
+        Out.println("     {");
+        Out.println("       boolean sigChanges = false;");
+        Out.println();
+        boolean first = true;
+        for (Column C : obj._History._SignatureColumnObjs)
+          if (C != null && C.isCopyToColumn() == true)
+            {
+              if (first == true)
+               {
+                  Out.print("            if");
+                  first = false;
+               }
+              else
+                Out.print("       else if");
+              
+              Out.println(" (hasChanged" + TextUtil.capitalizeFirstCharacter(C.getName())+obj._PadderColumnNames.getPad(C.getName())+"() == true) sigChanges = true;");
+            }
+        Out.println();
+        Out.println("       if (sigChanges == false)");
+        Out.println("        return null;");
+        Out.println();
+        Out.print("       "+Helper.getFullAppDataClassName(histObj)+" dst = "+Helper.getFullAppFactoryClassName(histObj)+".create(");
+        boolean First = true;
+        for (Column C : histObj.getCreateColumns())
+          if (C != null && (C._PrimaryKey == false || histObj._PrimaryKey._Autogen == false))
+            {
+              if (First == true)
+                First = false;
+              else
+                Out.print(", ");
+              Out.print("_"+C.getName());
+            }
+        Out.println(");");
+
+        for (Column C : histObj._Columns)
+          if (C != null)
+            {
+              String Mask = Helper.getRuntimeMask(C);
+              String Pad = histObj._PadderColumnNames.getPad(C.getName());
+              if (C._Nullable == true)
+                Out.print("       if (__Nulls.intersects(" + Mask + ") == true || _" + C.getName() + Pad + "==null)\n"
+                + "        dst.set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "Null" + Pad + "();\n"
+                + "       else\n "); // extra space to indent next line
+              else if (true == C._Invariant)
+                {
+                  Out.print("       if (__Init == InitMode.CREATE && _" + C.getName() + Pad + " != null)\n "); // extra space to indent next line
+                }
+              else
+                {
+                  Out.print("       if (_" + C.getName() + Pad + " != null)\n "); // extra space to indent next line
+                }
+              Out.println("       dst.set" + TextUtil.capitalizeFirstCharacter(C.getName()) + Pad + "(_" + C.getName() + Pad + ");");
+
+              if (C.getType() == ColumnType.DATETIME && C.isJSONColumn() == true)
+                Out.println("       dst.Str_" + C.getName() + " = Str_" + C.getName() + ";");
+            }
+        Out.println("       return dst;");
+        Out.println("     }");
+        Out.println("\n");
+      }
     
     @Override
     public void genMethodMask(PrintWriter Out, GeneratorSession G, Object O)

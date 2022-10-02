@@ -35,7 +35,12 @@ public class TILDA__TESTING3VIEW_Factory
    public static final String SCHEMA_TABLENAME_LABEL = TextUtil.print("TILDATEST.Testing3View", "");
    public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDATEST", "Testing3View"); }
 
-   public static abstract class COLS {
+   public static final class COLS_BASE
+    {
+      private COLS_BASE() { }
+
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing3View.refnum -> TILDATEST.Testing3View."refnum"
@@ -53,7 +58,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          REFNUM        = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"        , 0/*0*/, "The primary key for this record", null, null, null);
+     public final Type_LongPrimitive          REFNUM        = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"        , 0/*0*/, "The primary key for this record", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing3View.name -> TILDATEST.Testing3View."name"
@@ -72,7 +79,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        NAME          = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "name"          , 1/*1*/, "Medical system unique enterprise id", null, null, null);
+     public final Type_StringPrimitive        NAME          = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "name"          , 1/*1*/, "Medical system unique enterprise id", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing3View.lastUpdated -> TILDATEST.Testing3View."lastUpdated"
@@ -97,7 +106,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      LASTUPDATED   = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"   , 2/*2*/, "The timestamp for when the record was last updated. (TILDATEST.Testing)", null, null);
+     public final Type_DatetimePrimitive      LASTUPDATED   = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"   , 2/*2*/, "The timestamp for when the record was last updated. (TILDATEST.Testing)", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing3View.xxxLastUpdated -> TILDATEST.Testing3View."xxxLastUpdated"
@@ -122,15 +133,15 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      XXXLASTUPDATED= new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "xxxLastUpdated", 3/*3*/, "The timestamp for when the record was last updated. (TILDATEST.Testing)", null, null);
-;
+     public final Type_DatetimePrimitive      XXXLASTUPDATED= new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "xxxLastUpdated", 3/*3*/, "The timestamp for when the record was last updated. (TILDATEST.Testing)", null, null);
    }
 
-   public static final ColumnDefinition[] COLUMNS = { COLS.REFNUM,COLS.NAME,COLS.LASTUPDATED,COLS.XXXLASTUPDATED };
+   public static COLS_BASE COLS = new COLS_BASE();
+   public static final ColumnDefinition[] COLUMNS = new ColumnDefinition[] { COLS.REFNUM,COLS.NAME,COLS.LASTUPDATED,COLS.XXXLASTUPDATED };
 
-   public static final ColumnDefinition[] COLUMNS_PRIMARY = {  };
+   public static final ColumnDefinition[] COLUMNS_PRIMARY = new ColumnDefinition[] {  };
 
-   public static final ColumnDefinition[][] COLUMNS_UNIQUE_INDICES = { 
+   public static final ColumnDefinition[][] COLUMNS_UNIQUE_INDICES = new ColumnDefinition[][]{ 
         };
 
    public static final ColumnDefinition[] COLUMNS_FIRST_IDENTITY = {};
@@ -202,10 +213,7 @@ This is the column definition for:<BR>
        else
         {
           S.append("select ");
-          S.append(" "); C.getFullColumnVar(S, "TILDATEST", "Testing3View", "refnum");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing3View", "name");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing3View", "lastUpdated");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Testing3View", "xxxLastUpdated");
+          C.getFullColumnVarList(S, TILDA__TESTING3VIEW_Factory.COLUMNS);
           S.append(" from "); C.getFullTableVar(S, "TILDATEST", "Testing3View");
           switch (LookupId)
            {
@@ -260,6 +268,10 @@ This is the column definition for:<BR>
 // THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/**
+Lookup records by the query 'All' over 
+.<BR>
+*/
    static public tilda.data_test.Testing3View_Data lookupByAll() throws Exception
      {
        tilda.data_test._Tilda.TILDA__TESTING3VIEW Obj = new tilda.data_test.Testing3View_Data();
@@ -307,15 +319,16 @@ This is the column definition for:<BR>
    public static void toCSV(java.io.Writer out, tilda.data_test.Testing3View_Data obj) throws java.io.IOException
     {
       long T0 = System.nanoTime();
+     tilda.data_test._Tilda.TILDA__TESTING3VIEW Obj = (tilda.data_test._Tilda.TILDA__TESTING3VIEW) obj;
       StringBuilder Str = new StringBuilder();
 
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getRefnum());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getRefnum());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getName());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getName());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getLastUpdated()));
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getLastUpdated()));
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getXxxLastUpdated()));
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getXxxLastUpdated()));
       out.write(Str.toString());
       PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);
     }
@@ -366,15 +379,16 @@ This is the column definition for:<BR>
    public static void toJSON(java.io.Writer outWriter, tilda.data_test.Testing3View_Data obj, String lead, boolean fullObject, boolean noNullArrays) throws java.io.IOException
     {
       long T0 = System.nanoTime();
-      org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter();
-      tilda.data_test._Tilda.TILDA__TESTING3VIEW Obj = (tilda.data_test._Tilda.TILDA__TESTING3VIEW) obj;
-      if (fullObject == true)
+      try(org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter())
        {
-          out.write(lead);
-          out.write("{");
-       }
+        tilda.data_test._Tilda.TILDA__TESTING3VIEW Obj = (tilda.data_test._Tilda.TILDA__TESTING3VIEW) obj;
+        if (fullObject == true)
+         {
+           out.write(lead);
+           out.write("{");
+         }
 
-      int i = -1;
+        int i = -1;
         JSONUtil.print(out, "refnum", ++i==0, Obj.getRefnum());
 
         JSONUtil.print(out, "name", ++i==0, Obj.getName());
@@ -383,11 +397,11 @@ This is the column definition for:<BR>
 
         JSONUtil.print(out, "xxxLastUpdated", ++i==0, Obj.getXxxLastUpdated());
 
-      if (fullObject == true)
-       out.write(" }\n");
+        if (fullObject == true)
+         out.write(" }\n");
 
-      outWriter.append(out.getBuilder().toString());
-      out.close();
+        outWriter.append(out.getBuilder().toString());
+       }
 
       PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
     }

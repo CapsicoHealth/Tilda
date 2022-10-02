@@ -290,7 +290,14 @@ public class IBMDB2 implements DBType
         throw new UnsupportedOperationException();
       }
 
-
+    @Override
+    public Collection<?> getArray(ResultSet RS, String colName, ColumnType Type, boolean isSet)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+    
+/*
     @Override
     public void setJson(PreparedStatement PS, int i, String jsonValue)
     throws Exception
@@ -307,7 +314,7 @@ public class IBMDB2 implements DBType
         // TODO Auto-generated method stub
         return null;
       }
-
+*/
 
     @Override
     public String getJsonParametrizedQueryPlaceHolder()
@@ -520,4 +527,6 @@ public class IBMDB2 implements DBType
       {
         throw new UnsupportedOperationException();
       }
+
+
   }

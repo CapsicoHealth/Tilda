@@ -1,5 +1,5 @@
 /*
- Tilda V1.0 data object.
+ Tilda V2.2 data object.
 
  Code is generated: do not modify! Instead, create a derived class and override desired functionality
 */
@@ -36,14 +36,18 @@ The Table TILDA.DateLimitDim:<UL>
 <LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>DateLimitDim_Factory</B>, <B>DateLimitDim_Data</B> in the package <B>tilda.data</B>.
 <LI>Is configured for normal <B>read/write</B> access.</LI>
 <LI>Is not OCC-Enabled. No record lifecycle columns (created/updated/deleted) have been generated.</LI>
-<LI>Defines foreign key(s) to <A href="TILDA___Docs.TILDA.html#DateDim_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>DateDim</A> </LI>
+<LI>Defines 3 foreign key(s):<BR>
+<TABLE style="margin-left: 25px; border:1px solid #BBB;" cellspacing="0px" cellpadding="5px" border="0px">
+<TR style="background-color:#DDD; font-weight:bold;"><TD></TD><TD>Source Columns</TD><TD>Destination Object</TD><TD>Destination Columns</TD><TD>Notes</TD></TR>
+<TR ><TD>1</TD><TD>invalidDate</TD><TD><A href="TILDA___Docs.TILDA.html#DateDim_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>DateDim</A></TD><TD>dt</TD><TD>&nbsp;</TD></TR>
+</TABLE></LI>
 <LI>Has the following identity:<UL><LI>Unique Index: invalidDate</LI>
 </UL></LI>
 </UL>
-<B>Description</B>: A single row for min, max and invalid dates for the Date_Dim<BR>
+<B>Description</B>:<BLOCKQUOTE style="border-left: 1px solid #EEE;padding-left: 5px;">A single row for min, max and invalid dates for the Date_Dim</BLOCKQUOTE>
 <BR>
 This Table contains the following columns:<BLOCKQUOTE>
- <TABLE id="DateLimitDim_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
+ <TABLE id="DateLimitDim_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid #BBB;">
    <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>1&nbsp;&nbsp;</TD>
@@ -99,7 +103,6 @@ public abstract class TILDA__DATELIMITDIM implements tilda.interfaces.WriterObje
    transient BitSet   __Nulls       = new BitSet(64);
    transient BitSet   __Changes     = new BitSet(64);
    transient boolean  __NewlyCreated= false;
-
    transient int      __LookupId;
 
    public  boolean hasChanged    () { return __Changes.isEmpty() == false; }
@@ -508,7 +511,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__DATELIMITDIM_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
+          tilda.data._Tilda.TILDA__2_2.handleFinally(PS, T0, TILDA__DATELIMITDIM_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
           PS = null;
         }
 
@@ -551,13 +554,13 @@ This is the hasChanged for:<BR>
           S.append("insert into "); C.getFullTableVar(S, "TILDA", "DateLimitDim");
           int Pos = S.length();
           if (__Changes.intersects(TILDA__DATELIMITDIM_Factory.COLS.INVALIDDATE._Mask) == true) { TILDA__DATELIMITDIM_Factory.COLS.INVALIDDATE.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__DATELIMITDIM_Factory.COLS.INVALIDDATE._Mask) == false && DateTimeUtil.isNowPlaceholder(_invalidDate) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__DATELIMITDIM_Factory.COLS.INVALIDDATE._Mask) == false && DateTimeUtil.isNowPlaceholder(_invalidDate) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_2._COMMAQUESTION);
            }
           if (__Changes.intersects(TILDA__DATELIMITDIM_Factory.COLS.MINDATE._Mask) == true) { TILDA__DATELIMITDIM_Factory.COLS.MINDATE.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__DATELIMITDIM_Factory.COLS.MINDATE._Mask) == false && DateTimeUtil.isNowPlaceholder(_minDate) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__DATELIMITDIM_Factory.COLS.MINDATE._Mask) == false && DateTimeUtil.isNowPlaceholder(_minDate) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_2._COMMAQUESTION);
            }
           if (__Changes.intersects(TILDA__DATELIMITDIM_Factory.COLS.MAXDATE._Mask) == true) { TILDA__DATELIMITDIM_Factory.COLS.MAXDATE.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__DATELIMITDIM_Factory.COLS.MAXDATE._Mask) == false && DateTimeUtil.isNowPlaceholder(_maxDate) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__DATELIMITDIM_Factory.COLS.MAXDATE._Mask) == false && DateTimeUtil.isNowPlaceholder(_maxDate) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_2._COMMAQUESTION);
            }
 
           S.setCharAt(Pos, '(');
@@ -798,7 +801,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__DATELIMITDIM_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__2_2.handleFinally(PS, T0, TILDA__DATELIMITDIM_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
     }
@@ -823,9 +826,9 @@ This is the hasChanged for:<BR>
     {
       long T0 = System.nanoTime();
       String Str = 
-                   "invalidDate: "                                                                                           +                                   getInvalidDate() 
-               + "; minDate: "                                                                                               +                                   getMinDate    () 
-               + "; maxDate: "                                                                                               +                                   getMaxDate    () 
+                   "invalidDate: "                                                                                           +                                   getInvalidDate()
+               + "; minDate: "                                                                                               +                                   getMinDate    ()
+               + "; maxDate: "                                                                                               +                                   getMaxDate    ()
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;

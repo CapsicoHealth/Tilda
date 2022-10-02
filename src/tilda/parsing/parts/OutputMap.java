@@ -95,8 +95,8 @@ public class OutputMap
                   {
                     if (C._Type == ColumnType.BINARY)
                       PS.AddError(ParentObject._TildaType.name() + " '" + _ParentObject.getFullName() + "' is defining an Output map '" + _Name + "' with column '" + C.getName() + "' which is a binary. Binaries cannot be JSONed.");
-                    if (C._Type == ColumnType.JSON && _OutputTypes.contains(OutputFormatType.CSV) == true)
-                      PS.AddError(ParentObject._TildaType.name() + " '" + _ParentObject.getFullName() + "' is defining an Output map '" + _Name + "' with column '" + C.getName() + "' which is a JSON object. JSON objects cannot be exported in CSV format.");
+//                    if (C._Type == ColumnType.JSON && _OutputTypes.contains(OutputFormatType.CSV) == true)
+//                      PS.AddError(ParentObject._TildaType.name() + " '" + _ParentObject.getFullName() + "' is defining an Output map '" + _Name + "' with column '" + C.getName() + "' which is a JSON object. JSON objects cannot be exported in CSV format.");
                     return true;
                   }
               });

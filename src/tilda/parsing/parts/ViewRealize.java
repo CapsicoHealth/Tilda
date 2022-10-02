@@ -92,7 +92,7 @@ public class ViewRealize
         O._FST = FrameworkSourcedType.REALIZED;
         O._SourceView = ParentView;
         O._Name = ParentView.getRealizedTableName(false);
-        O._ShortAlias = ParentView._ShortAlias;
+        O._Prefix = ParentView._Prefix;
         
         Schema targetSchema = null;
         if (TextUtil.isNullOrEmpty(_TargetSchema) == false)

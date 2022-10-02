@@ -737,7 +737,7 @@ This is the column definition for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__JOBVIEW_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__2_2.handleFinally(PS, T0, TILDA__JOBVIEW_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
 
@@ -807,63 +807,64 @@ Lookup records by the query 'All' over
    public static void toCSV(java.io.Writer out, tilda.data.JobView_Data obj) throws java.io.IOException
     {
       long T0 = System.nanoTime();
+     tilda.data._Tilda.TILDA__JOBVIEW Obj = (tilda.data._Tilda.TILDA__JOBVIEW) obj;
       StringBuilder Str = new StringBuilder();
 
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getJobRefnum());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getJobRefnum());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getJobName());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getJobName());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getJobType());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getJobType());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getJobUserId());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getJobUserId());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getJobDataStartTZ());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getJobDataStartTZ());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getJobDataStart()));
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getJobDataStart()));
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getJobDataEndTZ());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getJobDataEndTZ());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getJobDataEnd()));
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getJobDataEnd()));
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getJobStartTZ());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getJobStartTZ());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getJobStart()));
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getJobStart()));
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getJobEndTZ());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getJobEndTZ());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getJobEnd()));
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getJobEnd()));
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getJobStatus());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getJobStatus());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getJobMsg());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getJobMsg());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getJobPartName());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getJobPartName());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getJobPartType());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getJobPartType());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getJobPartDataStartTZ());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getJobPartDataStartTZ());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getJobPartDataStart()));
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getJobPartDataStart()));
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getJobPartDataEndTZ());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getJobPartDataEndTZ());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getJobPartDataEnd()));
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getJobPartDataEnd()));
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getJobPartStartTZ());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getJobPartStartTZ());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getJobPartStart()));
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getJobPartStart()));
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getJobPartEndTZ());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getJobPartEndTZ());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getJobPartEnd()));
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getJobPartEnd()));
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getJobPartRecordsCount());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getJobPartRecordsCount());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getJobPartStatus());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getJobPartStatus());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getJobPartNotify());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getJobPartNotify());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getJobPartMessage());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getJobPartMessage());
       out.write(Str.toString());
       PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);
     }
@@ -914,15 +915,16 @@ Lookup records by the query 'All' over
    public static void toJSON(java.io.Writer outWriter, tilda.data.JobView_Data obj, String lead, boolean fullObject, boolean noNullArrays) throws java.io.IOException
     {
       long T0 = System.nanoTime();
-      org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter();
-      tilda.data._Tilda.TILDA__JOBVIEW Obj = (tilda.data._Tilda.TILDA__JOBVIEW) obj;
-      if (fullObject == true)
+      try(org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter())
        {
-          out.write(lead);
-          out.write("{");
-       }
+        tilda.data._Tilda.TILDA__JOBVIEW Obj = (tilda.data._Tilda.TILDA__JOBVIEW) obj;
+        if (fullObject == true)
+         {
+           out.write(lead);
+           out.write("{");
+         }
 
-      int i = -1;
+        int i = -1;
         JSONUtil.print(out, "jobRefnum", ++i==0, Obj.getJobRefnum());
 
         JSONUtil.print(out, "jobName", ++i==0, Obj.getJobName());
@@ -998,11 +1000,11 @@ Lookup records by the query 'All' over
 
         JSONUtil.print(out, "jobPartMessage", ++i==0, Obj.getJobPartMessage());
 
-      if (fullObject == true)
-       out.write(" }\n");
+        if (fullObject == true)
+         out.write(" }\n");
 
-      outWriter.append(out.getBuilder().toString());
-      out.close();
+        outWriter.append(out.getBuilder().toString());
+       }
 
       PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
     }

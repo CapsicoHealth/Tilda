@@ -19,8 +19,11 @@ package tilda.utils.json;
 import java.io.IOException;
 import java.io.Writer;
 import java.math.BigDecimal;
+import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -35,8 +38,14 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import tilda.data._Tilda.TILDA__CONNECTION_Factory;
+import tilda.data._Tilda.TILDA__JOBVIEW_Factory;
+import tilda.data_test._Tilda.TILDA__TESTING_Factory;
+import tilda.db.Connection;
 import tilda.db.JDBCHelper;
+import tilda.db.metadata.ColumnMeta;
 import tilda.interfaces.JSONable;
+import tilda.utils.CollectionUtil;
 import tilda.utils.DateTimeUtil;
 import tilda.utils.HttpStatus;
 import tilda.utils.ParseUtil;
@@ -867,7 +876,7 @@ public class JSONUtil
         Gson gson = new Gson();
         return (Map<String, Object>) gson.fromJson(JsonStr, Filter.getClass());
       }
-    
+
     public static JsonObject fromJSONObj(String JsonStr)
       {
         return new Gson().fromJson(JsonStr.toString(), JsonObject.class);
@@ -921,7 +930,7 @@ public class JSONUtil
           }
         Out.write(Header + "  ]\n");
       }
-    
+
 
     public static void print(Writer Out, String elementName, String JsonExportName, boolean firstElement, JSONable Obj, String Header)
     throws Exception
@@ -1086,6 +1095,214 @@ public class JSONUtil
       {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         return gson.toJson(e);
+      }
+
+    public static void print(Writer out, Connection C, String elementName, ResultSet RS, int idx, ColumnMeta cm)
+    throws Exception
+      {
+        switch (cm._TildaType)
+          {
+            case BINARY:
+            case BITFIELD:
+              throw new Exception("Column Type '" + cm._TildaType.name() + "' is not supported for a json export.");
+            case BOOLEAN:
+              if (cm.isArray() == true)
+                {
+                  List<Boolean> v_bool = (List<Boolean>) C.getArray(RS, idx, cm._TildaType, false);
+                  if (RS.wasNull() == true)
+                    v_bool = null;
+                  print(out, elementName, idx == 1, (Boolean[]) CollectionUtil.toObjectArray(v_bool));
+                }
+              else
+                {
+                  boolean v_bool = RS.getBoolean(idx);
+                  if (RS.wasNull())
+                    print(out, elementName, idx == 1, (String) null);
+                  else
+                    print(out, elementName, idx == 1, v_bool);
+                }
+              break;
+            case CHAR:
+            case STRING:
+            case JSON:
+              if (cm.isArray() == true)
+                {
+                  List<String> v_str = (List<String>) C.getArray(RS, idx, cm._TildaType, false);
+                  if (RS.wasNull() == true)
+                    v_str = null;
+                  print(out, elementName, idx == 1, CollectionUtil.toStringArray(v_str));
+                }
+              else
+                {
+                  String v_str = RS.getString(idx);
+                  print(out, elementName, idx == 1, RS.wasNull() == true ? null : v_str);
+                }
+              break;
+            case DATE:
+              if (cm.isArray() == true)
+                {
+                  List<LocalDate> v_ld = DateTimeUtil.toLocalDates((List<java.sql.Date>) C.getArray(RS, idx, cm._TildaType, false));
+                  if (RS.wasNull() == true)
+                    v_ld = null;
+                  print(out, elementName, idx == 1, (LocalDate[]) CollectionUtil.toObjectArray(v_ld));
+                }
+              else
+                {
+                  LocalDate v_ld = DateTimeUtil.toLocalDate(RS.getDate(idx));
+                  print(out, elementName, idx == 1, RS.wasNull() == true ? null : v_ld);
+                }
+              break;
+            case DATETIME:
+              // most Tilda tables have a "TZ" column accompanying a datetime column, but not all. Also,
+              // if this is used for a plain table, we have to assume that the TX info is not there and
+              // use UTC as a default.
+              if (cm.isArray() == true)
+                {
+                  ColumnMeta tzCol = cm.getTZCol();
+                  List<String> v_tz = null;
+                  if (tzCol != null)
+                    {
+                      v_tz = (List<String>) C.getArray(RS, tzCol._NameOriginal, tzCol._TildaType, false);
+                      if (RS.wasNull() == true)
+                       v_tz = null;
+                    }
+                  
+                  List<Timestamp> v_ts = (List<Timestamp>) C.getArray(RS, idx, cm._TildaType, false);
+                  if (RS.wasNull() == true)
+                   v_ts = null;
+
+                  
+                  List<ZonedDateTime> v_zdt = new ArrayList<ZonedDateTime>();
+                  if (v_ts != null)
+                  for (int i = 0; i < v_ts.size(); ++i)
+                    {
+                      String TimezoneId = v_tz!=null && i < v_tz.size() && v_tz.get(i) != v_tz.get(i) ? v_tz.get(i) : "UTC";
+                      tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationById(TimezoneId);
+                      ZonedDateTime ZDT = DateTimeUtil.toZonedDateTime(v_ts.get(i), ZI.getValue());
+                      v_zdt.add(ZDT);
+                    }
+                  print(out, elementName, idx == 1, (ZonedDateTime[]) CollectionUtil.toObjectArray(v_zdt));
+                }
+              else
+                {
+                  ColumnMeta tzCol = cm.getTZCol();
+                  String v_tz = null;
+                  if (tzCol != null)
+                    {
+                      v_tz = RS.getString(tzCol._NameOriginal);
+                      if (RS.wasNull() == true)
+                       v_tz = null;
+                    }
+                  tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationById(v_tz);
+                  if (ZI == null && TextUtil.isNullOrEmpty(v_tz) == false)
+                    ZI = tilda.data.ZoneInfo_Factory.getEnumerationById("UTC"); // assume UTC
+                  ZonedDateTime v_zdt = DateTimeUtil.toZonedDateTime(RS.getTimestamp(idx, DateTimeUtil._UTC_CALENDAR), ZI == null ? "null" : ZI.getValue());
+                  if (RS.wasNull() == true)
+                    v_zdt = null;
+                  print(out, elementName, idx == 1, RS.wasNull() == true ? null : v_zdt);
+                }
+              break;
+            case DOUBLE:
+              if (cm.isArray() == true)
+                {
+                  List<Double> v = (List<Double>) C.getArray(RS, idx, cm._TildaType, false);
+                  if (RS.wasNull() == true)
+                    v = null;
+                  print(out, elementName, idx == 1, (Double[]) CollectionUtil.toObjectArray(v));
+                }
+              else
+                {
+                  double v = RS.getDouble(idx);
+                  print(out, elementName, idx == 1, RS.wasNull() == true ? null : v);
+                }
+              break;
+            case FLOAT:
+              if (cm.isArray() == true)
+                {
+                  List<Float> v = (List<Float>) C.getArray(RS, idx, cm._TildaType, false);
+                  if (RS.wasNull() == true)
+                    v = null;
+                  print(out, elementName, idx == 1, (Float[]) CollectionUtil.toObjectArray(v));
+                }
+              else
+                {
+                  float v = RS.getFloat(idx);
+                  print(out, elementName, idx == 1, RS.wasNull() == true ? null : v);
+                }
+              break;
+            case INTEGER:
+              if (cm.isArray() == true)
+                {
+                  List<Integer> v = (List<Integer>) C.getArray(RS, idx, cm._TildaType, false);
+                  if (RS.wasNull() == true)
+                    v = null;
+                  print(out, elementName, idx == 1, (Integer[]) CollectionUtil.toObjectArray(v));
+                }
+              else
+                {
+                  int v = RS.getInt(idx);
+                  print(out, elementName, idx == 1, RS.wasNull() == true ? null : v);
+                }
+              break;
+            case LONG:
+              if (cm.isArray() == true)
+                {
+                  List<Long> v = (List<Long>) C.getArray(RS, idx, cm._TildaType, false);
+                  if (RS.wasNull() == true)
+                    v = null;
+                  print(out, elementName, idx == 1, (Integer[]) CollectionUtil.toObjectArray(v));
+                }
+              else
+                {
+                  long v = RS.getLong(idx);
+                  print(out, elementName, idx == 1, RS.wasNull() == true ? null : v);
+                }
+              break;
+            case SHORT:
+              if (cm.isArray() == true)
+                {
+                  List<Short> v = (List<Short>) C.getArray(RS, idx, cm._TildaType, false);
+                  if (RS.wasNull() == true)
+                    v = null;
+                  print(out, elementName, idx == 1, (Short[]) CollectionUtil.toObjectArray(v));
+                }
+              else
+                {
+                  short v = RS.getShort(idx);
+                  print(out, elementName, idx == 1, RS.wasNull() == true ? null : v);
+                }
+              break;
+            case NUMERIC:
+              if (cm.isArray() == true)
+                {
+                  List<BigDecimal> v = (List<BigDecimal>) C.getArray(RS, idx, cm._TildaType, false);
+                  if (RS.wasNull() == true)
+                    v = null;
+                  print(out, elementName, idx == 1, (BigDecimal[]) CollectionUtil.toObjectArray(v));
+                }
+              else
+                {
+                  BigDecimal v = RS.getBigDecimal(idx);
+                  print(out, elementName, idx == 1, RS.wasNull() == true ? null : v);
+                }
+              break;
+            case UUID:
+              if (cm.isArray() == true)
+                {
+                  List<UUID> v = (List<UUID>) C.getArray(RS, idx, cm._TildaType, false);
+                  if (RS.wasNull() == true)
+                    v = null;
+                  print(out, elementName, idx == 1, (UUID[]) CollectionUtil.toObjectArray(v));
+                }
+              else
+                {
+                  UUID v = (java.util.UUID) RS.getObject(idx);
+                  print(out, elementName, idx == 1, RS.wasNull() == true ? null : v);
+                }
+              break;
+            default:
+              throw new Exception("Unhandle switch case for '" + cm._TildaType.name() + "'.");
+          }
       }
 
   }

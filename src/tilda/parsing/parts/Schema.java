@@ -31,6 +31,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.enums.ConventionNaming;
 import tilda.parsing.ParserSession;
 import tilda.utils.TextUtil;
 
@@ -41,6 +42,7 @@ public class Schema
     /*@formatter:off*/
     @SerializedName("package"      ) public String            _Package;
     @SerializedName("dynamic"      ) public boolean           _Dynamic = false;
+    @SerializedName("conventions"  ) public Convention        _Conventions   = new Convention();
     @SerializedName("documentation") public Documentation     _Documentation = new Documentation();
     @SerializedName("extraDDL"     ) public ExtraDDL          _ExtraDDL      = new ExtraDDL();
     @SerializedName("dependencies" ) public String[]          _Dependencies  = new String[] { };
@@ -238,6 +240,9 @@ public class Schema
         int i = -1;
 
         setDefaultDependencies(PS);
+
+        if (_Conventions != null)
+         _Conventions.Validate(PS, this);
 
         for (Enumeration E : _Enumerations)
           if (E != null)
@@ -616,5 +621,22 @@ public class Schema
                     break;
                   }
       }
+    
+    public String getConventionPrimaryKeyName()
+     {
+       return _Conventions._PrimaryKeyName;
+     }
+//    public boolean getConventionPrefix()
+//      {
+//        return _Conventions._Prefix;
+//      }
+    public ConventionNaming getConventionColumnNaming()
+      {
+        return _Conventions._ColumnNamingConvention;
+      }
+//    public boolean getConventionDBColumnNameTranslation()
+//      {
+//        return _Conventions._DBColumnNameTranslation;
+//      }
 
   }

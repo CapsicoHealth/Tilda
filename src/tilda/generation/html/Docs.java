@@ -44,6 +44,7 @@ import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Formula;
 import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Object;
+import tilda.parsing.parts.OrderBy;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.Value;
 import tilda.parsing.parts.View;
@@ -51,6 +52,7 @@ import tilda.parsing.parts.View.DepWrapper;
 import tilda.parsing.parts.ViewColumn;
 import tilda.parsing.parts.ViewJoin;
 import tilda.parsing.parts.ViewPivot;
+import tilda.parsing.parts.helpers.SameAsHelper;
 import tilda.utils.FileUtil;
 import tilda.utils.Graph;
 import tilda.utils.Graph.Visitor;
@@ -199,6 +201,22 @@ public class Docs
                 default:
                   throw new Exception("Unknown Object mode value '" + O._Mode + "' when generating class docs");
               }
+            if (O._HistoryObj != null)
+              {
+                Out.println("<LI>Has a History mapping to "+makeObjectLink(O._HistoryObj)+":<UL>" + SystemValues.NEWLINE
+                + "<LI><B>Signature</B>: "+Column.printColumnList(O._History._SignatureColumnObjs, true)+"</LI>" + SystemValues.NEWLINE
+                + "<LI><B>History</B>: "+Column.printColumnList(O._History._IncludedColumnObjs, true)+"</LI>" + SystemValues.NEWLINE
+                +"</UL>"
+                );
+              }
+            else if (O._FST == FrameworkSourcedType.HISTORY)
+              {
+                Out.println("<LI>Is a History mapping from "+makeObjectLink(O._SourceObject)+":<UL>" + SystemValues.NEWLINE
+                + "<LI><B>Signature</B>: "+Column.printColumnList(O._SourceObject._History._SignatureColumnObjs, true)+"</LI>" + SystemValues.NEWLINE
+                + "<LI><B>History</B>: "+Column.printColumnList(O._SourceObject._History._IncludedColumnObjs, true)+"</LI>" + SystemValues.NEWLINE
+                +"</UL>"
+                );
+              }
           }
 
         if (O._OCC == true)
@@ -208,19 +226,30 @@ public class Docs
 
         if (O._ForeignKeys != null && O._ForeignKeys.isEmpty() == false)
           {
-            Out.print("<LI>Defines " + (O._ForeignKeys.size() == 1 ? "a " : "") + "foreign key" + (O._ForeignKeys.size() == 1 ? "" : "(s)") + " to ");
-            int x = 0;
+            Out.println("<LI>Defines " + (O._ForeignKeys.size() == 1 ? "a" : ""+O._ForeignKeys.size()) + " foreign key" + (O._ForeignKeys.size() == 1 ? "" : "(s)") + ":<BR>");
+            Out.println("<TABLE style=\"margin-left: 25px; border:1px solid #BBB;\" cellspacing=\"0px\" cellpadding=\"5px\" border=\"0px\">");
+            Out.println("<TR style=\"background-color:#DDD; font-weight:bold;\"><TD></TD><TD>Source Columns</TD><TD>Destination Object</TD><TD>Destination Columns</TD><TD>Notes</TD></TR>");
             Set<String> Names = new HashSet<String>();
+            int i = 0;
             for (ForeignKey FK : O._ForeignKeys)
               {
                 if (FK == null)
                   continue;
                 if (Names.add(FK._DestObjectObj.getShortName()) == false)
                   continue;
-                Out.print((x == 0 ? "" : ", ") + makeObjectLink(FK._DestObjectObj));
-                ++x;
+                ++i;
+                Out.print("<TR "+(i%2==0?"style=\"background-color:#F7F7F7;\"":"")+"><TD>"+i+"</TD><TD>" + TextUtil.print(FK._SrcColumns) + "</TD>"
+                             +"<TD>" + makeObjectLink(FK._DestObjectObj)+"</TD>"
+                             +"<TD>" + TextUtil.print(FK._DestObjectObj._PrimaryKey._Columns)+"</TD>"
+                             );
+                if (FK._multi == true)
+                 Out.print("<TD>multi-key, not implemented database-side</TD>");
+                else
+                  Out.print("<TD>&nbsp;</TD>");
+                 
+                Out.println("</TR>");
               }
-            Out.println(" </LI>");
+            Out.println("</TABLE></LI>");
           }
         if (O._PrimaryKey != null || O._HasUniqueIndex == true)
           {
@@ -245,7 +274,7 @@ public class Docs
             for (Index I : O._Indices)
               if (I != null && I._Unique == true)
                 {
-                  Out.print("<LI>Unique Index: ");
+                  Out.print("<LI>Unique Index"+(I._Db == false?"  <B><I>(Application-side Only)</I></B>: ":": "));
                   int x = 0;
                   for (Column c : I._ColumnObjs)
                     {
@@ -257,9 +286,35 @@ public class Docs
             Out.println("</UL></LI>");
           }
 
+        if (O._HasNonUniqueIndex == true)
+          {
+            int count = 0;
+            for (Index I : O._Indices)
+              if (I != null && I._Unique != true)
+                ++count;
+            Out.print("<LI>Has the following " + (count > 1 ? "indices" : "index") + ":<UL>");
+            for (Index I : O._Indices)
+              if (I != null && I._Unique != true)
+                {
+                  Out.print("<LI>");
+                  int x = 0;
+                  for (Column c : I._ColumnObjs)
+                    {
+                      Out.print((x == 0 ? "" : ", ") + c.getName());
+                      ++x;
+                    }
+                  if (I._OrderByObjs != null && I._OrderByObjs.isEmpty() == false)
+                   Out.println((x == 0 ? "" : ", ") + OrderBy.printOrderByList(I._OrderByObjs));
+                  if (I._Db != true)
+                    Out.print(" <B><I>(Application-side Only)</I></B>");
+                  Out.println("</LI>");
+                }
+            Out.println("</UL></LI>");
+          }
+
         Out.println("</UL>");
 
-        Out.println("<B>Description</B>: " + O._Description + "<BR>");
+        Out.println("<B>Description</B>:<BLOCKQUOTE style=\"border-left: 1px solid #EEE;padding-left: 5px;\">" + processExternalLinks(O._Description) + "</BLOCKQUOTE>");
         Out.println("<BR>");
 
         if (view != null)
@@ -267,7 +322,7 @@ public class Docs
 
 
         Out.print("This " + ObjType + " contains the following columns:<BLOCKQUOTE>" + SystemValues.NEWLINE
-        + " <TABLE id=\"" + O._Name + "_TBL\" border=\"0px\" cellpadding=\"3px\" cellspacing=\"0px\" style=\"border:1px solid grey;\">" + SystemValues.NEWLINE
+        + " <TABLE id=\"" + O._Name + "_TBL\" border=\"0px\" cellpadding=\"3px\" cellspacing=\"0px\" style=\"border:1px solid #BBB;\">" + SystemValues.NEWLINE
         + "   <TR valign=\"bottom\"><TH>&nbsp;</TH><TH align=\"right\">Name&nbsp;&nbsp;</TH><TH align=\"left\">Type</TH><TH align=\"left\">Nullable</TH>");
         int colCount = 4;
         if (view != null && view._Realize != null)
@@ -327,7 +382,7 @@ public class Docs
                 Out.println("<TD align=\"center\">" + (C._Protect == null ? "-" : C._Protect) + "&nbsp;&nbsp;</TD>");
               }
 
-            Out.print("<TD>" + C._Description);
+            Out.print("<TD>" + processExternalLinks(C._Description));
             if (O._SourceView != null)
               {
                 Formula F = O._SourceView.getFormula(C.getName(), true);
@@ -363,7 +418,7 @@ public class Docs
                 ViewColumn VC = view.getViewColumn(C.getName());
                 if (VC != null)
                   {
-                    List<Column> L = VC.getSameAsLineage();
+                    List<Column> L = SameAsHelper.getSameAsLineage(VC);
                     Out.print("<DIV style=\"margin:0px;margin-left:20px;font-size:75%;\">");
                     boolean first = true;
                     for (Column c : L)
@@ -444,6 +499,11 @@ public class Docs
          * }
          */
         Out.println("</DIV>");
+      }
+
+    private static String processExternalLinks(String str)
+      {
+        return str.replaceAll("<\\s*[aA]\\s*", "<A target=\"_other\" ");
       }
 
     /*
@@ -743,7 +803,7 @@ public class Docs
 
     private static void docFieldValues(PrintWriter Out, Column C)
       {
-        Out.println("<TABLE border=\"0px\" cellpadding=\"2px\" cellspacing=\"0px\" style=\"border:1px solid #999;\">"
+        Out.println("<TABLE border=\"0px\" cellpadding=\"2px\" cellspacing=\"0px\" style=\"border:1px solid #BBB;\">"
         + "   <TR align=\"left\"><TH>&nbsp;</TH><TH align=\"right\">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>");
         int i = 0;
         for (ColumnValue V : C._Values)
@@ -914,7 +974,7 @@ public class Docs
                 Column C = V.getProxyColumn(ColName);
                 Out.println("<A style=\"color:#00AA00; font-weight: bold;\" href=\"" + makeColumnHref(C, V.getSchema()) + "\">" + ColName + "</A><BR>");
                 ViewColumn VC = V.getViewColumn(ColName);
-                List<Column> L = VC == null ? null : VC.getSameAsLineage();
+                List<Column> L = VC == null ? null : SameAsHelper.getSameAsLineage(VC);
                 if (L != null && L.isEmpty() == false)
                   {
                     Out.println("<DIV style=\"padding-left:10px; font-size:75%;\">&nbsp;&nbsp;&rarr;&nbsp;" + makeColumnLink(L.get(0), V.getSchema()));

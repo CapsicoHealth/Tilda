@@ -104,8 +104,9 @@
         { "name": "a12b"         , "type": "SHORT[]"    ,                                                        "description": "The blah"},
         
         { "name": "a13"         , "type": "UUID"        ,                                                        "description": "The blah"},
-        { "name": "a13b"        , "type": "UUID[]"      ,                                                        "description": "The blah"}
+        { "name": "a13b"        , "type": "UUID[]"      ,                                                        "description": "The blah"},
                                                             
+        { "name": "a14"         , "type": "JSON"        ,                                                        "description": "The blah"}
                                                             
       ],
       "primary": { "autogen": true, "keyBatch": 25000 },

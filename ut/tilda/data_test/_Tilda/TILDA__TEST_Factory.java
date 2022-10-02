@@ -35,7 +35,12 @@ public class TILDA__TEST_Factory
    public static final String SCHEMA_TABLENAME_LABEL = TextUtil.print("TILDATEST.Test", "");
    public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDATEST", "Test"); }
 
-   public static abstract class COLS {
+   public static final class COLS_BASE
+    {
+      private COLS_BASE() { }
+
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Test.refnum -> TILDATEST.Test."refnum"
@@ -53,7 +58,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          REFNUM     = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"     , 0/*0*/, "The primary key for this record", null, null, null);
+     public final Type_LongPrimitive          REFNUM     = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"     , 0/*0*/, "The primary key for this record", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Test.id -> TILDATEST.Test."id"
@@ -72,7 +79,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        ID         = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "id"         , 1/*1*/, "The name of the test", null, null, null);
+     public final Type_StringPrimitive        ID         = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "id"         , 1/*1*/, "The name of the test", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Test.name -> TILDATEST.Test."name"
@@ -91,7 +100,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        NAME       = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "name"       , 2/*2*/, "The name of the test", null, null, null);
+     public final Type_StringPrimitive        NAME       = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "name"       , 2/*2*/, "The name of the test", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Test.test_fk -> TILDATEST.Test."test_fk"
@@ -109,7 +120,9 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          TEST_FK    = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "test_fk"    , 3/*3*/, "The name of the test", null, null, null);
+     public final Type_LongPrimitive          TEST_FK    = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "test_fk"    , 3/*3*/, "The name of the test", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Test.created -> TILDATEST.Test."created"
@@ -134,7 +147,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      CREATED    = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"    , 4/*4*/, "The timestamp for when the record was created. (TILDATEST.Test)", null, null);
+     public final Type_DatetimePrimitive      CREATED    = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"    , 4/*4*/, "The timestamp for when the record was created. (TILDATEST.Test)", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Test.lastUpdated -> TILDATEST.Test."lastUpdated"
@@ -159,7 +174,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      LASTUPDATED= new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated", 5/*5*/, "The timestamp for when the record was last updated. (TILDATEST.Test)", null, null);
+     public final Type_DatetimePrimitive      LASTUPDATED= new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated", 5/*5*/, "The timestamp for when the record was last updated. (TILDATEST.Test)", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Test.deleted -> TILDATEST.Test."deleted"
@@ -177,15 +194,15 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  DELETED    = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"    , 6/*6*/, "The timestamp for when the record was deleted. (TILDATEST.Test)", null, null);
-;
+     public final Type_DatetimePrimitiveNull  DELETED    = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"    , 6/*6*/, "The timestamp for when the record was deleted. (TILDATEST.Test)", null, null);
    }
 
-   public static final ColumnDefinition[] COLUMNS = { COLS.REFNUM,COLS.ID,COLS.NAME,COLS.TEST_FK,COLS.CREATED,COLS.LASTUPDATED,COLS.DELETED };
+   public static COLS_BASE COLS = new COLS_BASE();
+   public static final ColumnDefinition[] COLUMNS = new ColumnDefinition[] { COLS.REFNUM,COLS.ID,COLS.NAME,COLS.TEST_FK,COLS.CREATED,COLS.LASTUPDATED,COLS.DELETED };
 
-   public static final ColumnDefinition[] COLUMNS_PRIMARY = { COLS.REFNUM };
+   public static final ColumnDefinition[] COLUMNS_PRIMARY = new ColumnDefinition[] { COLS.REFNUM };
 
-   public static final ColumnDefinition[][] COLUMNS_UNIQUE_INDICES = { 
+   public static final ColumnDefinition[][] COLUMNS_UNIQUE_INDICES = new ColumnDefinition[][]{ 
                    {COLS.NAME}
         };
 
@@ -258,13 +275,7 @@ This is the column definition for:<BR>
        else
         {
           S.append("select ");
-          S.append(" "); C.getFullColumnVar(S, "TILDATEST", "Test", "refnum");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Test", "id");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Test", "name");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Test", "test_fk");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Test", "created");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Test", "lastUpdated");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "Test", "deleted");
+          C.getFullColumnVarList(S, TILDA__TEST_Factory.COLUMNS);
           S.append(" from "); C.getFullTableVar(S, "TILDATEST", "Test");
           switch (LookupId)
            {
@@ -458,6 +469,8 @@ object. The generic init method defaults to this general data structure as a gen
                int i = d.populatePreparedStatement(C, PS, AllocatedArrays);
 
                PS.addBatch();
+               ++count;
+
                if (index != 0 && (index + 1) % batchSize == 0)
                  {
                    int[] results = PS.executeBatch();
@@ -496,7 +509,6 @@ object. The generic init method defaults to this general data structure as a gen
                if(commitSize > 0)
                  {
                    C.commit();
-                   LOG.debug("Commited " + insertCount + " batch records.");
                  }
                LOG.debug("Final Batch-inserted objects between positions #" + insertCount + " and #" + index + ".");
              }
@@ -518,6 +530,9 @@ object. The generic init method defaults to this general data structure as a gen
          }
        }
 
+/**
+Lookup one record by the primary key: refnum.
+*/
    static public tilda.data_test.Test_Data lookupByPrimaryKey(long refnum) throws Exception
      {
        tilda.data_test._Tilda.TILDA__TEST Obj = new tilda.data_test.Test_Data();
@@ -528,6 +543,9 @@ object. The generic init method defaults to this general data structure as a gen
        return (tilda.data_test.Test_Data) Obj;
      }
 
+/**
+Lookup one record by the unique index 'Name': name.
+*/
    static public tilda.data_test.Test_Data lookupByName(String name) throws Exception
      {
        tilda.data_test._Tilda.TILDA__TEST Obj = new tilda.data_test.Test_Data();
@@ -538,8 +556,11 @@ object. The generic init method defaults to this general data structure as a gen
        return (tilda.data_test.Test_Data) Obj;
      }
 
-
-   static public ListResults<tilda.data_test.Test_Data> lookupWhereAll(Connection C, int start, int size) throws Exception
+/**
+Lookup records by the query 'All' over 
+.<BR>
+The results are ordered by: name asc
+*/   static public ListResults<tilda.data_test.Test_Data> lookupWhereAll(Connection C, int start, int size) throws Exception
      {
        tilda.data_test._Tilda.TILDA__TEST Obj = new tilda.data_test.Test_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -551,7 +572,11 @@ object. The generic init method defaults to this general data structure as a gen
      }
 
 
-   static public void lookupWhereAll(Connection C, tilda.db.processors.ObjectProcessor<tilda.data_test.Test_Data> OP, int start, int size) throws Exception
+/**
+Lookup records by the query 'All' over 
+.<BR>
+The results are ordered by: name asc
+*/   static public void lookupWhereAll(Connection C, tilda.db.processors.ObjectProcessor<tilda.data_test.Test_Data> OP, int start, int size) throws Exception
      {
        tilda.data_test._Tilda.TILDA__TEST Obj = new tilda.data_test.Test_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -560,6 +585,7 @@ object. The generic init method defaults to this general data structure as a gen
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
        readMany(C, 2, RPI, Obj, null, start, size);
      }
+
 
 
 
@@ -627,24 +653,25 @@ object. The generic init method defaults to this general data structure as a gen
    public static void toJSON(java.io.Writer outWriter, tilda.data_test.Test_Data obj, String lead, boolean fullObject, boolean noNullArrays) throws java.io.IOException
     {
       long T0 = System.nanoTime();
-      org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter();
-      tilda.data_test._Tilda.TILDA__TEST Obj = (tilda.data_test._Tilda.TILDA__TEST) obj;
-      if (fullObject == true)
+      try(org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter())
        {
-          out.write(lead);
-          out.write("{");
-       }
+        tilda.data_test._Tilda.TILDA__TEST Obj = (tilda.data_test._Tilda.TILDA__TEST) obj;
+        if (fullObject == true)
+         {
+           out.write(lead);
+           out.write("{");
+         }
 
-      int i = -1;
+        int i = -1;
         JSONUtil.print(out, "refnum", ++i==0, Obj.getRefnum());
 
         JSONUtil.print(out, "name", ++i==0, Obj.getName());
 
-      if (fullObject == true)
-       out.write(" }\n");
+        if (fullObject == true)
+         out.write(" }\n");
 
-      outWriter.append(out.getBuilder().toString());
-      out.close();
+        outWriter.append(out.getBuilder().toString());
+       }
 
       PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
     }

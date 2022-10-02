@@ -479,6 +479,7 @@ public class View extends Base
         O._OutputMaps = _OutputMaps;
         O._LCStr = ObjectLifecycle.READONLY.name();
         O._OCC = _OCC;
+        O._ParentSchema = _ParentSchema;
 
         // LOG.debug(getFullName()+": "+TextUtil.print(getColumnNames()));
         int Counter = -1;
@@ -994,7 +995,7 @@ public class View extends Base
         for (ViewColumn VC : _ViewColumns)
           {
             // LOG.debug("Looking at VC " + VC.getShortName() + ".");
-            List<Column> L = VC.getSameAsLineage();
+            List<Column> L = SameAsHelper.getSameAsLineage(VC);
             for (Column C : L)
               {
                 // LOG.debug(" Ancestor " + C.getShortName() + ".");

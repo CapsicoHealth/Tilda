@@ -95,11 +95,12 @@ create table if not exists TILDATEST.Testing -- blah blah
   , "a10c"         integer                        -- The blah
   , "a11"          numeric(8,4)                   -- The blah
   , "a11b"         numeric(6,3)[]                 -- The blah
-  , "a11c"         numeric(5,0)                   -- The blah
+  , "a11c"         numeric(5,4)                   -- The blah
   , "a12"          smallint                       -- The blah
   , "a12b"         smallint[]                     -- The blah
   , "a13"          UUID                           -- The blah
   , "a13b"         UUID[]                         -- The blah
+  , "a14"          jsonb                          -- The blah
   , "created"      timestamptz         not null DEFAULT now()   -- The timestamp for when the record was created. (TILDATEST.Testing)
   , "lastUpdated"  timestamptz         not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDATEST.Testing)
   , "deleted"      timestamptz                    -- The timestamp for when the record was deleted. (TILDATEST.Testing)
@@ -158,6 +159,7 @@ COMMENT ON COLUMN TILDATEST.Testing."a12" IS E'The blah';
 COMMENT ON COLUMN TILDATEST.Testing."a12b" IS E'The blah';
 COMMENT ON COLUMN TILDATEST.Testing."a13" IS E'The blah';
 COMMENT ON COLUMN TILDATEST.Testing."a13b" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.Testing."a14" IS E'The blah';
 COMMENT ON COLUMN TILDATEST.Testing."created" IS E'The timestamp for when the record was created. (TILDATEST.Testing)';
 COMMENT ON COLUMN TILDATEST.Testing."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDATEST.Testing)';
 COMMENT ON COLUMN TILDATEST.Testing."deleted" IS E'The timestamp for when the record was deleted. (TILDATEST.Testing)';
@@ -214,11 +216,12 @@ create table if not exists TILDATEST.Testing_Cloned -- blah blah - Ready for pub
   , "a10c"         integer                        -- The blah
   , "a11"          numeric(8,4)                   -- The blah
   , "a11b"         numeric(6,3)[]                 -- The blah
-  , "a11c"         numeric(5,0)                   -- The blah
+  , "a11c"         numeric(5,4)                   -- The blah
   , "a12"          smallint                       -- The blah
   , "a12b"         smallint[]                     -- The blah
   , "a13"          UUID                           -- The blah
   , "a13b"         UUID[]                         -- The blah
+  , "a14"          jsonb                          -- The blah
   , "created"      timestamptz         not null DEFAULT now()   -- The timestamp for when the record was created. (TILDATEST.Testing_Cloned)
   , "lastUpdated"  timestamptz         not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDATEST.Testing_Cloned)
   , "deleted"      timestamptz                    -- The timestamp for when the record was deleted. (TILDATEST.Testing_Cloned)
@@ -277,6 +280,7 @@ COMMENT ON COLUMN TILDATEST.Testing_Cloned."a12" IS E'The blah';
 COMMENT ON COLUMN TILDATEST.Testing_Cloned."a12b" IS E'The blah';
 COMMENT ON COLUMN TILDATEST.Testing_Cloned."a13" IS E'The blah';
 COMMENT ON COLUMN TILDATEST.Testing_Cloned."a13b" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.Testing_Cloned."a14" IS E'The blah';
 COMMENT ON COLUMN TILDATEST.Testing_Cloned."created" IS E'The timestamp for when the record was created. (TILDATEST.Testing_Cloned)';
 COMMENT ON COLUMN TILDATEST.Testing_Cloned."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDATEST.Testing_Cloned)';
 COMMENT ON COLUMN TILDATEST.Testing_Cloned."deleted" IS E'The timestamp for when the record was deleted. (TILDATEST.Testing_Cloned)';

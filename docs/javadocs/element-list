@@ -32,6 +32,7 @@ tilda.loader.parser
 tilda.loader.ui
 tilda.migration
 tilda.migration.actions
+tilda.migration.drops
 tilda.parsing
 tilda.parsing.parts
 tilda.parsing.parts.formulaTemplates
@@ -39,9 +40,13 @@ tilda.parsing.parts.helpers
 tilda.performance
 tilda.types
 tilda.utils
+tilda.utils.cms
 tilda.utils.comparators
 tilda.utils.compiler
 tilda.utils.concurrent
+tilda.utils.fhir
+tilda.utils.gcp
 tilda.utils.json
 tilda.utils.json.elements
+tilda.utils.json.gson_serializers
 tilda.utils.pairs

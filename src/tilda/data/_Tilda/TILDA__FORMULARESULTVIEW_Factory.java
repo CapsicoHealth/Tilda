@@ -266,7 +266,7 @@ This is the column definition for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__FORMULARESULTVIEW_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__2_2.handleFinally(PS, T0, TILDA__FORMULARESULTVIEW_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
 
@@ -328,17 +328,18 @@ Lookup records by the query 'All' over
    public static void toCSV(java.io.Writer out, tilda.data.FormulaResultView_Data obj) throws java.io.IOException
     {
       long T0 = System.nanoTime();
+     tilda.data._Tilda.TILDA__FORMULARESULTVIEW Obj = (tilda.data._Tilda.TILDA__FORMULARESULTVIEW) obj;
       StringBuilder Str = new StringBuilder();
 
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getFormulaRefnum());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getFormulaRefnum());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getValue());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getValue());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getDescription());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getDescription());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getLocation());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getLocation());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getName());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getName());
       out.write(Str.toString());
       PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);
     }
@@ -389,15 +390,16 @@ Lookup records by the query 'All' over
    public static void toJSON(java.io.Writer outWriter, tilda.data.FormulaResultView_Data obj, String lead, boolean fullObject, boolean noNullArrays) throws java.io.IOException
     {
       long T0 = System.nanoTime();
-      org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter();
-      tilda.data._Tilda.TILDA__FORMULARESULTVIEW Obj = (tilda.data._Tilda.TILDA__FORMULARESULTVIEW) obj;
-      if (fullObject == true)
+      try(org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter())
        {
-          out.write(lead);
-          out.write("{");
-       }
+        tilda.data._Tilda.TILDA__FORMULARESULTVIEW Obj = (tilda.data._Tilda.TILDA__FORMULARESULTVIEW) obj;
+        if (fullObject == true)
+         {
+           out.write(lead);
+           out.write("{");
+         }
 
-      int i = -1;
+        int i = -1;
         JSONUtil.print(out, "formulaRefnum", ++i==0, Obj.getFormulaRefnum());
 
         JSONUtil.print(out, "value", ++i==0, Obj.getValue());
@@ -408,11 +410,11 @@ Lookup records by the query 'All' over
 
         JSONUtil.print(out, "name", ++i==0, Obj.getName());
 
-      if (fullObject == true)
-       out.write(" }\n");
+        if (fullObject == true)
+         out.write(" }\n");
 
-      outWriter.append(out.getBuilder().toString());
-      out.close();
+        outWriter.append(out.getBuilder().toString());
+       }
 
       PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
     }

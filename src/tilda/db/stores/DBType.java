@@ -115,8 +115,10 @@ public interface DBType
     public void             getColumnType   (StringBuilder Str, ColumnType T, Integer S, ColumnMode M, boolean Collection, Integer Precision, Integer Scale);
     public void             setArray(Connection Con, PreparedStatement PS, int i, ColumnType Type, List<Array> allocatedArrays, Collection<?> val) throws Exception;
     public Collection<?>    getArray(                ResultSet         RS, int i, ColumnType Type, boolean isSet) throws Exception;
-    public void             setJson (                PreparedStatement PS, int i, String jsonValue) throws Exception;
-    public String           getJson (                ResultSet         RS, int i) throws Exception;
+    public Collection<?>    getArray(                ResultSet         RS, String colName, ColumnType Type, boolean isSet) throws Exception;
+//    public void             setJson (                PreparedStatement PS, int i, String jsonValue) throws Exception;
+//    public String           getJson (                ResultSet         RS, int i) throws Exception;
+//    public String           getJson (                ResultSet         RS, String colName) throws Exception;
     public String           getJsonParametrizedQueryPlaceHolder();
     public void             setOrderByWithNullsOrdering(Connection Con, StringBuilder Str, ColumnDefinition Col, boolean Asc, boolean NullsLast);
     public void             age(Connection Con, StringBuilder Str, Type_DatetimePrimitive ColStart, Type_DatetimePrimitive ColEnd, IntervalEnum Type, int Count, String Operator);

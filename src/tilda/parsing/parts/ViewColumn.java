@@ -217,16 +217,8 @@ public class ViewColumn
           {
             _Name = _SameAsObj.getName();
           }
-
-        if (_Name.length() > PS._CGSql.getMaxColumnNameSize())
-          PS.AddError("View Column '" + getFullName() + "' has a name that's too long: max allowed by your database is " + PS._CGSql.getMaxColumnNameSize() + " vs " + _Name.length() + " for this identifier.");
-        if (_Name.equals(TextUtil.sanitizeName(_Name)) == false)
-          PS.AddError("View Column '" + getFullName() + "' has a name containing invalid characters (must all be alphanumeric or underscore).");
-        if (ValidationHelper.isValidIdentifier(_Name) == false)
-          PS.AddError("View Column '" + getFullName() + "' has a name '" + _Name + "' which is not valid. " + ValidationHelper._ValidIdentifierMessage);
-        if (ValidationHelper.isReservedIdentifier(_Name) == true)
-          PS.AddError("View Column '" + getFullName() + "' has a name '" + _Name + "' which is a reserved identifier.");
-
+        
+        ValidationHelper.validateColumnName(PS, "View", _Name, getFullName(), _ParentView._ParentSchema._Conventions);
 
         if (_JoinStr != null)
           if ((_Join = JoinType.parse(_JoinStr)) == null)
@@ -425,47 +417,6 @@ public class ViewColumn
           }
 
         return null;
-      }
-
-    public Column getSameAsRoot()
-      {
-        // LOG.debug("SameAs Root for " + getShortName() + ": " + _SameAsObj.getShortName());
-        if (_SameAsObj != null && _SameAsObj._ParentObject._FST == FrameworkSourcedType.VIEW)
-          {
-            View SubV = _ParentView._ParentSchema.getSourceView(_SameAsObj._ParentObject);
-            if (SubV == null)
-              return null;
-            // LOG.debug("SameAs is part of a sub-view " + SubV.getShortName());
-            ViewColumn VC = SubV.getViewColumn(_SameAsObj.getName());
-            if (VC != null)
-              return VC.getSameAsRoot();
-            else
-              {
-                // LOG.error("Could not find column " + _SameAsObj.getShortName() + " in view " + SubV.getShortName());
-                return null;
-              }
-          }
-        return _SameAsObj;
-      }
-
-    public List<Column> getSameAsLineage()
-      {
-        return getSameAsLineage(this);
-      }
-
-    public static List<Column> getSameAsLineage(ViewColumn VC)
-      {
-        List<Column> L = new ArrayList<Column>();
-        Column C = VC._SameAsObj;
-        while (C != null)
-          {
-            L.add(C);
-            if (C.isForeignKey() == true || C._ParentObject._FST == FrameworkSourcedType.VIEW)
-              C = C._SameAsObj;
-            else
-              break;
-          }
-        return L;
       }
 
     @Override

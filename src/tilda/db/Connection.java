@@ -35,9 +35,12 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.data.ZoneInfo_Data;
 import tilda.db.metadata.ColumnMeta;
+import tilda.db.metadata.DatabaseMeta;
 import tilda.db.metadata.FKMeta;
 import tilda.db.metadata.IndexMeta;
 import tilda.db.metadata.PKMeta;
+import tilda.db.metadata.SchemaMeta;
+import tilda.db.metadata.TableMeta;
 import tilda.db.metadata.ViewMeta;
 import tilda.db.processors.RecordProcessor;
 import tilda.db.stores.DBType;
@@ -445,6 +448,34 @@ public final class Connection
             throw E;
           }
       }
+    
+    public int executeMetaFullSelect(String schemaName, String tableViewName, RecordProcessor RP)
+    throws Exception
+      {
+        SchemaMeta S = new SchemaMeta(schemaName);
+        S.load(this, tableViewName);
+        TableMeta tvm = S.getTableMeta(tableViewName);
+        return executeMetaFullSelect(tvm, RP);
+      }
+    
+    public int executeMetaFullSelect(TableMeta tvm, RecordProcessor RP)
+    throws Exception
+      {
+        StringBuilder str = new StringBuilder();
+        str.append("select ");
+        boolean first = true;
+        for (ColumnMeta cm : tvm._ColumnsList)
+          {
+            if (first == false)
+             str.append(", ");
+            else
+             first = false;
+            getFullColumnVar(str, tvm._SchemaName, tvm._TableName, cm._NameOriginal);
+          }
+        str.append(" from "+tvm._SchemaName+"."+tvm._TableName);
+        return executeSelect(tvm._SchemaName, tvm._TableName, str.toString(), RP);
+      }    
+    
 
 
     public int executeUpdate(String SchemaName, String TableName, String Query)
@@ -717,6 +748,12 @@ public final class Connection
       {
         return _DB.getArray(RS, i, Type, isSet);
       }
+    public Collection<?> getArray(ResultSet RS, String colName, ColumnType Type, boolean isSet)
+    throws Exception
+      {
+        return _DB.getArray(RS, colName, Type, isSet);
+      }
+    
 
     public String getJsonParametrizedQueryPlaceHolder()
       {

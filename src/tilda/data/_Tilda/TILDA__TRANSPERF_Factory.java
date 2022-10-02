@@ -973,7 +973,7 @@ This is the column definition for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__TRANSPERF_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__2_2.handleFinally(PS, T0, TILDA__TRANSPERF_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
 
@@ -1265,6 +1265,8 @@ object. The generic init method defaults to this general data structure as a gen
                int i = d.populatePreparedStatement(C, PS, AllocatedArrays);
 
                PS.addBatch();
+               ++count;
+
                if (index != 0 && (index + 1) % batchSize == 0)
                  {
                    int[] results = PS.executeBatch();
@@ -1303,7 +1305,6 @@ object. The generic init method defaults to this general data structure as a gen
                if(commitSize > 0)
                  {
                    C.commit();
-                   LOG.debug("Commited " + insertCount + " batch records.");
                  }
                LOG.debug("Final Batch-inserted objects between positions #" + insertCount + " and #" + index + ".");
              }
@@ -1319,7 +1320,7 @@ object. The generic init method defaults to this general data structure as a gen
          }
        finally
          {
-           TILDA__1_0.handleFinally(PS, T0, TILDA__TRANSPERF_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+           TILDA__2_2.handleFinally(PS, T0, TILDA__TRANSPERF_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
            PS = null;
            AllocatedArrays = null;
          }
@@ -1411,69 +1412,70 @@ The results are ordered by: startPeriod asc
    public static void toCSV(java.io.Writer out, tilda.data.TransPerf_Data obj) throws java.io.IOException
     {
       long T0 = System.nanoTime();
+     tilda.data._Tilda.TILDA__TRANSPERF Obj = (tilda.data._Tilda.TILDA__TRANSPERF) obj;
       StringBuilder Str = new StringBuilder();
 
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getStartPeriodTZ());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getStartPeriodTZ());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getStartPeriod()));
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getStartPeriod()));
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getEndPeriodTZ());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getEndPeriodTZ());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getEndPeriod()));
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getEndPeriod()));
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getCommitNano());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getCommitNano());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getCommitCount());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getCommitCount());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getRollbackNano());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getRollbackNano());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getRollbackCount());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getRollbackCount());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getSavepointSetNano());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getSavepointSetNano());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getSavepointSetCount());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getSavepointSetCount());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getSavepointCommitNano());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getSavepointCommitNano());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getSavepointCommitCount());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getSavepointCommitCount());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getSavepointRollbackNano());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getSavepointRollbackNano());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getSavepointRollbackCount());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getSavepointRollbackCount());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getStatementCloseNano());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getStatementCloseNano());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getStatementCloseCount());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getStatementCloseCount());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getConnectionCloseNano());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getConnectionCloseNano());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getConnectionCloseCount());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getConnectionCloseCount());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getConnectionGetNano());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getConnectionGetNano());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getConnectionGetCount());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getConnectionGetCount());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getTildaSetterNano());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getTildaSetterNano());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getTildaSetterCount());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getTildaSetterCount());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getTildaToStringNano());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getTildaToStringNano());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getTildaToStringCount());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getTildaToStringCount());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getTildaToJsonNano());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getTildaToJsonNano());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getTildaToJsonCount());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getTildaToJsonCount());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getTildaToCsvNano());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getTildaToCsvNano());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getTildaToCsvCount());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getTildaToCsvCount());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getCreated()));
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getCreated()));
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getLastUpdated()));
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getLastUpdated()));
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getDeleted()));
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getDeleted()));
       out.write(Str.toString());
       PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);
     }
@@ -1524,15 +1526,16 @@ The results are ordered by: startPeriod asc
    public static void toJSON(java.io.Writer outWriter, tilda.data.TransPerf_Data obj, String lead, boolean fullObject, boolean noNullArrays) throws java.io.IOException
     {
       long T0 = System.nanoTime();
-      org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter();
-      tilda.data._Tilda.TILDA__TRANSPERF Obj = (tilda.data._Tilda.TILDA__TRANSPERF) obj;
-      if (fullObject == true)
+      try(org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter())
        {
-          out.write(lead);
-          out.write("{");
-       }
+        tilda.data._Tilda.TILDA__TRANSPERF Obj = (tilda.data._Tilda.TILDA__TRANSPERF) obj;
+        if (fullObject == true)
+         {
+           out.write(lead);
+           out.write("{");
+         }
 
-      int i = -1;
+        int i = -1;
         JSONUtil.print(out, "startPeriodTZ", ++i==0, Obj.getStartPeriodTZ());
 
         JSONUtil.print(out, "startPeriod", ++i==0, Obj.getStartPeriod());
@@ -1596,11 +1599,11 @@ The results are ordered by: startPeriod asc
       if (Obj.isDeletedNull() == false && Obj.getDeleted() != null)
         JSONUtil.print(out, "deleted", ++i==0, Obj.getDeleted());
 
-      if (fullObject == true)
-       out.write(" }\n");
+        if (fullObject == true)
+         out.write(" }\n");
 
-      outWriter.append(out.getBuilder().toString());
-      out.close();
+        outWriter.append(out.getBuilder().toString());
+       }
 
       PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
     }

@@ -1,8 +1,7 @@
-// Generated from TildaComposition.g4 by ANTLR 4.4
+// Generated from TildaComposition.g4 by ANTLR 4.10.1
 package tilda.grammar;
 
 import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
@@ -17,108 +16,108 @@ public class TildaCompositionBaseListener implements TildaCompositionListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExpr_sub(@NotNull TildaCompositionParser.Expr_subContext ctx) { }
+	@Override public void enterWhere(TildaCompositionParser.WhereContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExpr_sub(@NotNull TildaCompositionParser.Expr_subContext ctx) { }
+	@Override public void exitWhere(TildaCompositionParser.WhereContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBool_expr(@NotNull TildaCompositionParser.Bool_exprContext ctx) { }
+	@Override public void enterExpr(TildaCompositionParser.ExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitBool_expr(@NotNull TildaCompositionParser.Bool_exprContext ctx) { }
+	@Override public void exitExpr(TildaCompositionParser.ExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBool_expr_sub(@NotNull TildaCompositionParser.Bool_expr_subContext ctx) { }
+	@Override public void enterExpr_sub(TildaCompositionParser.Expr_subContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitBool_expr_sub(@NotNull TildaCompositionParser.Bool_expr_subContext ctx) { }
+	@Override public void exitExpr_sub(TildaCompositionParser.Expr_subContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterParameter(@NotNull TildaCompositionParser.ParameterContext ctx) { }
+	@Override public void enterBool_expr(TildaCompositionParser.Bool_exprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitParameter(@NotNull TildaCompositionParser.ParameterContext ctx) { }
+	@Override public void exitBool_expr(TildaCompositionParser.Bool_exprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterWhere(@NotNull TildaCompositionParser.WhereContext ctx) { }
+	@Override public void enterBool_op(TildaCompositionParser.Bool_opContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitWhere(@NotNull TildaCompositionParser.WhereContext ctx) { }
+	@Override public void exitBool_op(TildaCompositionParser.Bool_opContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExpr(@NotNull TildaCompositionParser.ExprContext ctx) { }
+	@Override public void enterBool_expr_sub(TildaCompositionParser.Bool_expr_subContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExpr(@NotNull TildaCompositionParser.ExprContext ctx) { }
+	@Override public void exitBool_expr_sub(TildaCompositionParser.Bool_expr_subContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBool_op(@NotNull TildaCompositionParser.Bool_opContext ctx) { }
+	@Override public void enterParameter(TildaCompositionParser.ParameterContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitBool_op(@NotNull TildaCompositionParser.Bool_opContext ctx) { }
+	@Override public void exitParameter(TildaCompositionParser.ParameterContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterEveryRule(@NotNull ParserRuleContext ctx) { }
+	@Override public void enterEveryRule(ParserRuleContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitEveryRule(@NotNull ParserRuleContext ctx) { }
+	@Override public void exitEveryRule(ParserRuleContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void visitTerminal(@NotNull TerminalNode node) { }
+	@Override public void visitTerminal(TerminalNode node) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void visitErrorNode(@NotNull ErrorNode node) { }
+	@Override public void visitErrorNode(ErrorNode node) { }
 }

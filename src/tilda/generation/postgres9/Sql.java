@@ -241,6 +241,11 @@ public class Sql extends PostgreSQL implements CodeGenSql
           for (ForeignKey FK : O._ForeignKeys)
             if (FK != null)
               {
+                if (FK._multi == true)
+                 { 
+                   Out.println("  -- FK defined from an array column. FK won't me created on DB");
+                   Out.print  ("  -- , CONSTRAINT " + FK.getName() + " FOREIGN KEY (");
+                 }
                 Out.print("  , CONSTRAINT " + FK.getName() + " FOREIGN KEY (");
                 PrintColumnList(Out, FK._SrcColumnObjs);
                 Out.println(") REFERENCES " + FK._DestObjectObj._ParentSchema._Name + "." + FK._DestObjectObj._Name + " ON DELETE restrict ON UPDATE cascade");
@@ -1661,7 +1666,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
       {
         Out.println("delete from TILDA.Key where \"name\" = '" + O._ParentSchema._Name + "." + O._Name.toUpperCase() + "';");
         Out.println("insert into TILDA.Key (\"refnum\", \"name\", \"max\", \"count\", \"created\", \"lastUpdated\") values ((select COALESCE(max(\"refnum\"),0)+1 from TILDA.Key), '"
-        + O._ParentSchema._Name + "." + O._Name.toUpperCase() + "',(select COALESCE(max(\"refnum\"),0)+1 from " + O._ParentSchema._Name + "." + O._Name
+        + O._ParentSchema._Name + "." + O._Name.toUpperCase() + "',(select COALESCE(max(\""+O._ParentSchema.getConventionPrimaryKeyName()+"\"),0)+1 from " + O._ParentSchema._Name + "." + O._Name
         + "), " + O._PrimaryKey._KeyBatch + ", current_timestamp, current_timestamp);");
       }
 

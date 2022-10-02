@@ -1,5 +1,5 @@
 /*
- Tilda V1.0 data object.
+ Tilda V2.2 data object.
 
  Code is generated: do not modify! Instead, create a derived class and override desired functionality
 */
@@ -36,14 +36,18 @@ The Table TILDA.FormulaDependency:<UL>
 <LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>FormulaDependency_Factory</B>, <B>FormulaDependency_Data</B> in the package <B>tilda.data</B>.
 <LI>Is configured for normal <B>read/write</B> access.</LI>
 <LI>Is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
-<LI>Defines foreign key(s) to <A href="TILDA___Docs.TILDA.html#Formula_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>Formula</A> </LI>
+<LI>Defines 2 foreign key(s):<BR>
+<TABLE style="margin-left: 25px; border:1px solid #BBB;" cellspacing="0px" cellpadding="5px" border="0px">
+<TR style="background-color:#DDD; font-weight:bold;"><TD></TD><TD>Source Columns</TD><TD>Destination Object</TD><TD>Destination Columns</TD><TD>Notes</TD></TR>
+<TR ><TD>1</TD><TD>formulaRefnum</TD><TD><A href="TILDA___Docs.TILDA.html#Formula_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>Formula</A></TD><TD>refnum</TD><TD>&nbsp;</TD></TR>
+</TABLE></LI>
 <LI>Has the following identity:<UL><LI>Primary Key: formulaRefnum, dependencyRefnum</LI>
 </UL></LI>
 </UL>
-<B>Description</B>: Master formula dependency information<BR>
+<B>Description</B>:<BLOCKQUOTE style="border-left: 1px solid #EEE;padding-left: 5px;">Master formula dependency information</BLOCKQUOTE>
 <BR>
 This Table contains the following columns:<BLOCKQUOTE>
- <TABLE id="FormulaDependency_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
+ <TABLE id="FormulaDependency_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid #BBB;">
    <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>1&nbsp;&nbsp;</TD>
@@ -117,7 +121,6 @@ public abstract class TILDA__FORMULADEPENDENCY implements tilda.interfaces.Write
    transient BitSet   __Nulls       = new BitSet(64);
    transient BitSet   __Changes     = new BitSet(64);
    transient boolean  __NewlyCreated= false;
-
    transient int      __LookupId;
 
    public  boolean hasChanged    () { return __Changes.isEmpty() == false; }
@@ -394,7 +397,7 @@ This is the setter for:<BR>
 
 </TABLE>
 */
-    void setCreated(ZonedDateTime v) throws Exception
+   protected void setCreated(ZonedDateTime v) throws Exception
      {
        long T0 = System.nanoTime();
        if (v == null)
@@ -434,7 +437,7 @@ This is the NOW setter for:<BR>
 
 </TABLE>
 */
-    final void setCreatedNow() throws Exception
+   protected final void setCreatedNow() throws Exception
     {
       setCreated(DateTimeUtil.NOW_PLACEHOLDER_ZDT);
     }
@@ -463,7 +466,7 @@ This is the UNDEFINED setter for:<BR>
 
 </TABLE>
 */
-    final void setCreatedUndefined() throws Exception
+   protected final void setCreatedUndefined() throws Exception
     {
       setCreated(DateTimeUtil.UNDEFINED_PLACEHOLDER_ZDT);
     }
@@ -492,7 +495,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 
 </TABLE>
 */
-    final void setCreated(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
+   protected final void setCreated(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
     {
       setCreated(DateTimeUtil.newTZ(year, month, date, hourOfDay, minute, second, millis, z));
     }
@@ -1054,7 +1057,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__FORMULADEPENDENCY_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
+          tilda.data._Tilda.TILDA__2_2.handleFinally(PS, T0, TILDA__FORMULADEPENDENCY_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
           PS = null;
         }
 
@@ -1094,19 +1097,19 @@ This is the hasChanged for:<BR>
           StringBuilder V = new StringBuilder(1024);
           S.append("insert into "); C.getFullTableVar(S, "TILDA", "FormulaDependency");
           int Pos = S.length();
-          if (__Changes.intersects(TILDA__FORMULADEPENDENCY_Factory.COLS.FORMULAREFNUM._Mask) == true) { TILDA__FORMULADEPENDENCY_Factory.COLS.FORMULAREFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__FORMULADEPENDENCY_Factory.COLS.DEPENDENCYREFNUM._Mask) == true) { TILDA__FORMULADEPENDENCY_Factory.COLS.DEPENDENCYREFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__FORMULADEPENDENCY_Factory.COLS.FORMULAREFNUM._Mask) == true) { TILDA__FORMULADEPENDENCY_Factory.COLS.FORMULAREFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_2._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__FORMULADEPENDENCY_Factory.COLS.DEPENDENCYREFNUM._Mask) == true) { TILDA__FORMULADEPENDENCY_Factory.COLS.DEPENDENCYREFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_2._COMMAQUESTION);  }
 
           if (__Changes.intersects(TILDA__FORMULADEPENDENCY_Factory.COLS.CREATED._Mask) == true) { TILDA__FORMULADEPENDENCY_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__FORMULADEPENDENCY_Factory.COLS.CREATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__FORMULADEPENDENCY_Factory.COLS.CREATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_2._COMMAQUESTION);
            }
           else { TILDA__FORMULADEPENDENCY_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
           if (__Changes.intersects(TILDA__FORMULADEPENDENCY_Factory.COLS.LASTUPDATED._Mask) == true) { TILDA__FORMULADEPENDENCY_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__FORMULADEPENDENCY_Factory.COLS.LASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__FORMULADEPENDENCY_Factory.COLS.LASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_2._COMMAQUESTION);
            }
           else { TILDA__FORMULADEPENDENCY_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
           if (__Changes.intersects(TILDA__FORMULADEPENDENCY_Factory.COLS.DELETED._Mask) == true) { TILDA__FORMULADEPENDENCY_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__FORMULADEPENDENCY_Factory.COLS.DELETED._Mask) == false && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__FORMULADEPENDENCY_Factory.COLS.DELETED._Mask) == false && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_2._COMMAQUESTION);
            }
 
           S.setCharAt(Pos, '(');
@@ -1367,7 +1370,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__FORMULADEPENDENCY_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__2_2.handleFinally(PS, T0, TILDA__FORMULADEPENDENCY_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
     }
@@ -1394,11 +1397,11 @@ This is the hasChanged for:<BR>
     {
       long T0 = System.nanoTime();
       String Str = 
-                   "formulaRefnum: "                                                                                                        +                                   getFormulaRefnum   () 
-               + "; dependencyRefnum: "                                                                                                     +                                   getDependencyRefnum() 
+                   "formulaRefnum: "                                                                                                        +                                   getFormulaRefnum   ()
+               + "; dependencyRefnum: "                                                                                                     +                                   getDependencyRefnum()
                + "; created: "                                                                                                              + DateTimeUtil.printDateTimeForJSON(getCreated         ())
                + "; lastUpdated: "                                                                                                          + DateTimeUtil.printDateTimeForJSON(getLastUpdated     ())
-               + "; deleted"            + (__Nulls.intersects(TILDA__FORMULADEPENDENCY_Factory.COLS.DELETED._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDeleted         ()))
+               + "; deleted"            + (__Nulls.intersects(TILDA__FORMULADEPENDENCY_Factory.COLS.DELETED._Mask         ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDeleted         ()))
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;

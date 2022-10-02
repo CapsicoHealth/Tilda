@@ -50,15 +50,14 @@ import tilda.parsing.parts.OutputMap;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.SubWhereClause;
 import tilda.parsing.parts.View;
-import tilda.utils.TextUtil;
 import tilda.utils.json.JSONUtil;
 
 public class Generator
   {
     protected static final Logger LOG                 = LogManager.getLogger(Parser.class.getName());
 
-    public static final String    TILDA_VERSION       = "1.0";
-    public static final String    TILDA_VERSION_VAROK = "1_0";
+    public static final String    TILDA_VERSION       = "2.2";
+    public static final String    TILDA_VERSION_VAROK = "2_2";
 
 
     public static boolean generate(Schema S, GeneratorSession G)
@@ -400,6 +399,12 @@ public class Generator
             Out.println();
             DG.docMethodCopyTo(Out, G, O);
             CG.genMethodCopyTo(Out, G, O, O.getCopyToColumns());
+            if (O._HistoryObj != null)
+              {
+                Out.println();
+                DG.docMethodCopyForHistory(Out, G, O);
+                CG.genMethodCopyForHistory(Out, G, O, O._HistoryObj);
+              }
 
             if (O._OCC == true)
               {

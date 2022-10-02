@@ -48,10 +48,10 @@ public class PrimaryKey
     public transient List<Column> _ColumnObjs = new ArrayList<Column>();
     public transient Object       _ParentObject;
 
-    public boolean Validate(ParserSession PS, Object O)
+    public boolean Validate(ParserSession PS, Object obj)
       {
         int Errs = PS.getErrorCount();
-        _ParentObject = O;
+        _ParentObject = obj;
 
         if (_Autogen == null && _Columns == null)
           PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a primary key without any column or autogen setting: it needs one or the other.");
@@ -64,7 +64,7 @@ public class PrimaryKey
 
         if (_Autogen == true)
           {
-            _Columns = new String[] { "refnum"
+            _Columns = new String[] { obj._ParentSchema.getConventionPrimaryKeyName()
             };
             if (_KeyBatch == null)
               _KeyBatch = 250;
@@ -74,7 +74,7 @@ public class PrimaryKey
             if (_KeyBatch != null)
               return PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a keyBatch which is not valid for a non autogen primary key.");
           }
-        _ColumnObjs = ValidationHelper.ProcessColumn(PS, O, "a primary key", _Columns, new ValidationHelper.Processor()
+        _ColumnObjs = ValidationHelper.ProcessColumn(PS, obj, "a primary key", _Columns, new ValidationHelper.Processor()
           {
             @Override
             public boolean process(ParserSession PS, Base ParentObject, String What, Column C)

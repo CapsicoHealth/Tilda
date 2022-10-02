@@ -15,6 +15,7 @@ import tilda.parsing.parts.Object;
 import tilda.parsing.parts.PrimaryKey;
 import tilda.parsing.parts.View;
 import tilda.parsing.parts.ViewColumn;
+import tilda.parsing.parts.helpers.SameAsHelper;
 
 public class TotalMess
   {
@@ -62,7 +63,7 @@ public class TotalMess
         for (ViewColumn VC : V._ViewColumns)
           {
             ++i;
-            Column C = VC.getSameAsRoot();
+            Column C = SameAsHelper.getSameAsRoot(VC);
             if (C == null || C._FCT.isManaged() == true || C._Mode == ColumnMode.CALCULATED) // for counts and calculated fields where there is no mapping to an actual column.
               continue;
             // LOG.debug(" - " + VC.getShortName() + " as " + VC._SameAsObj.getShortName());
@@ -175,7 +176,7 @@ public class TotalMess
                 for (ViewColumn VC : V._ViewColumns)
                   {
                     ++i;
-                    Column sameAsRoot = VC.getSameAsRoot();
+                    Column sameAsRoot = SameAsHelper.getSameAsRoot(VC);
                     if (sameAsRoot != null && sameAsRoot.getFullName().equals(C.getFullName()) == true)
                       {
                         if (i < columnSequenceOrder && i > MostRecentSequenceOrder)

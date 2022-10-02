@@ -35,6 +35,8 @@ import tilda.enums.OutputFormatType;
 import tilda.enums.TildaType;
 import tilda.parsing.ParserSession;
 import tilda.types.ColumnDefinition;
+import tilda.utils.CollectionUtil;
+import tilda.utils.TextUtil;
 
 public class Object extends Base
   {
@@ -42,7 +44,7 @@ public class Object extends Base
     static final Logger                   LOG           = LogManager.getLogger(Object.class.getName());
 
     /*@formatter:off*/
-    @SerializedName("occ"           ) public boolean              _OCC        = true ;
+    @SerializedName("occ"           ) public boolean              _OCC        = true;
     @SerializedName("tzFk"          ) public Boolean              _TZFK       = true;
     @SerializedName("etl"           ) public boolean              _ETL        = false;
     @SerializedName("lc"            ) public String               _LCStr      ;
@@ -54,15 +56,18 @@ public class Object extends Base
     @SerializedName("foreign"       ) public List<ForeignKey>     _ForeignKeys= new ArrayList<ForeignKey>();
     @SerializedName("indices"       ) public List<Index>          _Indices    = new ArrayList<Index     >();
     @SerializedName("http"          ) public HttpMapping[]        _Http       = { };
-    @SerializedName("history"       ) public String     []        _History    = { };
+    @SerializedName("history"       ) public History              _History;
     /*@formatter:on*/
 
     public transient boolean              _HasUniqueIndex;
+    public transient boolean              _HasNonUniqueIndex;
     public transient boolean              _HasNaturalIdentity;
     public transient FrameworkSourcedType _FST          = FrameworkSourcedType.NONE;
     public transient View                 _SourceView   = null;                                        // For tables such as Realized tables generated out of views.
     public transient Object               _SourceObject = null;                                        // For tables such as Realized tables generated out of views.
     public transient ObjectLifecycle      _LC;
+    public transient Object               _HistoryObj   = null;                                        // For tables with history settings
+    
 
     public Object()
       {
@@ -89,7 +94,6 @@ public class Object extends Base
           for (Index I : obj._Indices)
             if (I != null)
               _Indices.add(new Index(I));
-
         _Http = obj._Http;
         _History = obj._History;
       }
@@ -132,12 +136,12 @@ public class Object extends Base
         return _OCC;
       }
 
-    public boolean Validate(ParserSession PS, Schema ParentSchema)
+    public boolean Validate(ParserSession PS, Schema parentSchema)
       {
         if (_Validated == true)
           return true;
 
-        if (super.Validate(PS, ParentSchema) == false)
+        if (super.Validate(PS, parentSchema) == false)
           return false;
 
         int Errs = PS.getErrorCount();
@@ -152,9 +156,10 @@ public class Object extends Base
               obj._Description = C._Description;
               obj._FST = FrameworkSourcedType.CLONED;
               obj._SourceObject = this;
-              ParentSchema._Objects.add(obj);
+              parentSchema._Objects.add(obj);
             }
 
+        // We get a lot of reusable bits from this central TILDA table, so let's check it's all good.
         if (getFullName().equals("tilda.data.TILDA.Key") == true)
           {
             Column created = getColumn("created");
@@ -227,7 +232,8 @@ public class Object extends Base
                           PS.AddError("Generated column '" + TZCol.getFullName() + "' conflicts with another column already named the same in Object '" + getFullName() + "'.");
                         if (C.isCollection() == false && _TZFK == true)
                           {
-                            addForeignKey(C.getName(), new String[] { TZCol.getName()}, "tilda.data.TILDA.ZONEINFO");
+                            addForeignKey(C.getName(), new String[] { TZCol.getName()
+                            }, "tilda.data.TILDA.ZONEINFO");
                           }
                       }
                   }
@@ -249,6 +255,7 @@ public class Object extends Base
         Set<String> Names = new HashSet<String>();
 
         _HasUniqueIndex = false;
+        _HasNonUniqueIndex = false;
         Set<String> Signatures = new HashSet<String>();
         Names.clear();
         for (Index I : _Indices)
@@ -262,7 +269,13 @@ public class Object extends Base
               PS.AddError("Object '" + getFullName() + "' is defining a duplicate index on signature '" + I.getSignature() + "'.");
             if (I._Unique == true)
               _HasUniqueIndex = true;
+            else
+              _HasNonUniqueIndex = true;
           }
+
+        // Pick up LC from Schema conventions if present and local value is empty. 
+        if (TextUtil.isNullOrEmpty(_LCStr) == true && parentSchema._Conventions != null && parentSchema._Conventions._DefaultLC != null)
+          _LCStr = parentSchema._Conventions._DefaultLC.name();
 
         // If an object is CODE_ONLY, then it can only be READ_ONLY, i.e., selects. Since CODE_ONLY objects are meant
         // to be used with complex queries matching a known set of columns, there is nothing to insert, update or delete.
@@ -293,18 +306,102 @@ public class Object extends Base
         if (_PrimaryKey == null && _HasUniqueIndex == false && _FST != FrameworkSourcedType.VIEW)
           PS.AddError("Object '" + getFullName() + "' doesn't have any identity. You must define at least a primary key or a unique index.");
 
-        _Validated = Errs == PS.getErrorCount();
-
         _HasNaturalIdentity = _HasUniqueIndex == true || _PrimaryKey != null && _PrimaryKey._Autogen == false;
 
-        // LDH-NOTE: We have to validate queries, mappings and masks here, because the whole parent object
+        // LDH-NOTE: We have to validate queries, mappings, masks and history here, because the whole parent object
         // only finishes being validated at this time.
         super.validateQueries(PS, Names);
         super.validateOutputMaps(PS);
         super.validateMasks(PS);
 
-        return _Validated;
+        if (_History != null && _History.Validate(PS, this) == true)
+          {
+            setupHistory(PS, parentSchema);
+          }
+
+        return _Validated = Errs == PS.getErrorCount();
       }
+
+    /**
+     * To call after parent object has been validated
+     * 
+     * @param PS
+     * @param ParentSchema
+     */
+    protected void setupHistory(ParserSession PS, Schema ParentSchema)
+      {
+        Object obj = new Object(this);
+        obj._History = null;
+        obj._Name = _Name + _History._Postfix;
+        obj._Description = "History table for " + getShortName() + ".<BR>" + _Description;
+        obj._FST = FrameworkSourcedType.HISTORY;
+        obj._LC = ObjectLifecycle.WORM;
+//        obj._OCC = false;
+        obj._SourceObject = this;
+        obj._ParentSchema = ParentSchema;
+
+        _HistoryObj = obj;
+        
+        // We need to clean up columns that were not included in the history definition.
+        obj._Columns = Column.cleanupColumnList(obj._Columns, _History._IncludedColumns);
+        
+        // We also need to clean up mappings if they reference a column that is not being carried over
+        for (OutputMap OM : obj._OutputMaps)
+          if (OM != null)
+           {
+             List<String> X = CollectionUtil.toList(_History._IncludedColumns);
+             X.add("created");
+             X.add("lastUpdated");
+             X.add("deleted");
+             OM._Columns = Column.cleanupColumnList(OM._Columns, X.toArray(new String[X.size()]));
+           }
+        
+        // We also need to clean up Indices
+        /// TO DO !!!!!
+        
+        if (obj._PrimaryKey !=  null)
+          {
+            // Replace the primary key with a regular index
+            Index I = new Index();
+            I._Name = "PKHistory";
+            if (obj._PrimaryKey._Columns != null && _PrimaryKey._Columns.length > 0)
+              I._Columns = _PrimaryKey._Columns;
+            else
+              {
+                obj.CreateAutogenPK(PS);
+                I._Columns = new String[] { _ParentSchema.getConventionPrimaryKeyName()
+                };
+              }
+            I._OrderBy = new String[] { "lastUpdated desc"
+            };
+            I._Db = true;
+            obj._Indices.add(I);
+            obj._PrimaryKey = null;
+          }
+        // Changing unique indices, if any, to non-unique indices by adding the lastUpdated column as an orderBy;
+        if (obj._Indices != null)
+          for (Index I : obj._Indices)
+            if (I != null && (I._OrderBy == null || I._OrderBy.length == 0))
+              {
+                I._OrderBy = new String[] { "lastUpdated desc"
+                };
+              }
+        
+        // because we are stripping the object of its identities, we have to create a new fake one and make sure it doesn't 
+        // get pushed to the DB given that it'll overlap with the non-unique index created above from the original identity.
+        Index I = new Index();
+        I._Name = "FakeIdentity";
+        I._Columns = new String[]{"lastUpdated", "created"};
+        I._Db = false;
+        obj._Indices.add(I);
+
+        ParentSchema._Objects.add(obj);
+      }
+    
+    public Object getHistoryObjectName()
+     {
+       return _HistoryObj;
+     }
 
     /**
      * A Column is an autogen PK if and only if it is the one column defined by the PK. All AutoGen PKs must
@@ -350,11 +447,11 @@ public class Object extends Base
               continue;
 
             String N = C.getLogicalName();
-            if (N != null && N.equalsIgnoreCase("refnum") == true)
-              return PS.AddError("Object '" + getFullName() + "' has defined an autogen primary key but is also defining column 'refnum', which is a reserved name.");
+            if (N != null && N.equalsIgnoreCase(_ParentSchema.getConventionPrimaryKeyName()) == true)
+              return PS.AddError("Object '" + getFullName() + "' has defined an autogen primary key but is also defining column '"+_ParentSchema.getConventionPrimaryKeyName()+"', which is a reserved name.");
           }
 
-        Column C = new Column("refnum", null, 0, false, null, true, null, PS.getColumn("tilda.data", "TILDA", "Key", "refnum")._Description, null, null, null);
+        Column C = new Column(_ParentSchema.getConventionPrimaryKeyName(), null, 0, false, null, true, null, PS.getColumn("tilda.data", "TILDA", "Key", "refnum")._Description, null, null, null);
         C._SameAs = "tilda.data.TILDA.Key.refnum";
         _Columns.add(0, C);
 
@@ -586,12 +683,12 @@ public class Object extends Base
      */
     public List<Column> getFirstIdentityColumns(boolean naturalIdentitiesFirst)
       {
-        if (_PrimaryKey != null && (naturalIdentitiesFirst == false || _PrimaryKey._Autogen == false) )
+        if (_PrimaryKey != null && (naturalIdentitiesFirst == false || _PrimaryKey._Autogen == false))
           return _PrimaryKey._ColumnObjs;
 
         if (_Indices != null)
           for (Index I : _Indices)
-            if (I._Unique == true)
+            if (I != null && I._Unique == true)
               return I._ColumnObjs;
 
         if (_PrimaryKey != null)
@@ -610,7 +707,7 @@ public class Object extends Base
       {
         if (_Indices == null || _Indices.isEmpty() == false)
           for (Index idx : _Indices)
-            if (idx._Name.equalsIgnoreCase(name) == true)
+            if (idx != null && idx._Name.equalsIgnoreCase(name) == true)
               return idx;
         return null;
       }

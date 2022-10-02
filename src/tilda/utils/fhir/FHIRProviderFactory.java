@@ -14,6 +14,7 @@ public class FHIRProviderFactory
     public static FHIRProvider create(String className, String projectName, String fhirStoreUri, String applicationName)
     throws Exception
       {
+        LOG.debug("Looking up FHIRProvider className:"+className+"; projectName: "+projectName+";");
         return (FHIRProvider) Class.forName(className).getDeclaredConstructor(String.class, String.class, String.class).newInstance(projectName, fhirStoreUri, applicationName);
       }
 

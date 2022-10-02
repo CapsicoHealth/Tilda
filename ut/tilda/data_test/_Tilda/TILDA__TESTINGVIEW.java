@@ -153,7 +153,6 @@ public abstract class TILDA__TESTINGVIEW implements tilda.interfaces.ReaderObjec
    transient BitSet   __Nulls       = new BitSet(64);
    transient BitSet   __Changes     = new BitSet(64);
    transient boolean  __NewlyCreated= false;
-
    transient int      __LookupId;
 
    public  boolean hasChanged    () { return __Changes.isEmpty() == false; }
@@ -805,7 +804,8 @@ This is the definition for:<BR>
 */
    @SerializedName("a9")
    List<String>  Str_a9;
-   public void initA9(List<String> v) { Str_a9 = v; }
+   /** Pre-init the field as it would come from a JSON stream, in text form, e.g., timestamps. */
+   public void initJson_A9(List<String> v) { Str_a9 = v; }
    public List<String> initA9Val() { return Str_a9; }
    transient List<ZonedDateTime> _a9 = null;
 
@@ -1466,15 +1466,7 @@ This is the null setter for:<BR>
         }
        StringBuilder S = new StringBuilder(1024);
           S.append("select ");
-          S.append(" "); C.getFullColumnVar(S, "TILDATEST", "TestingView", "name");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "TestingView", "refnum");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "TestingView", "a2Min");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "TestingView", "a2Max");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "TestingView", "a9TZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "TestingView", "a9");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "TestingView", "a9c");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "TestingView", "a6First");
-          S.append(", "); C.getFullColumnVar(S, "TILDATEST", "TestingView", "a6Last");
+          C.getFullColumnVarList(S, TILDA__TESTINGVIEW_Factory.COLUMNS);
           S.append(" from "); C.getFullTableVar(S, "TILDATEST", "TestingView");
        switch (__LookupId)
         {
@@ -1538,6 +1530,13 @@ This is the null setter for:<BR>
                         _a2Min   = ParseUtil.parseCharacter    (RS.getString    (++i));  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A2MIN._Mask  ); _a2Min = null; }
                         _a2Max   = ParseUtil.parseCharacter    (RS.getString    (++i));  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A2MAX._Mask  ); _a2Max = null; }
                         _a9TZ = (List<String>) C.getArray(RS, ++i, TILDA__TESTINGVIEW_Factory.COLS.A9TZ.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A9TZ._Mask   ); _a9TZ = null; }
+                             //This looks weird, but with array aggregates on strings, gotta watch out on left joins with NULL values.
+                             //Those values show up as a [null] array (1 element, which is null).
+                             if (_a9TZ != null && _a9TZ.size() == 1 && _a9TZ.get(0) == null)
+                               {
+                                 _a9TZ = new ArrayList<String>();
+                                 __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A9TZ._Mask);
+                               }
                         _a9      = processZDTs(C, _a9TZ     , "tilda.data_test.TILDATEST.TestingView.a9"     , RS, ++i, TILDA__TESTINGVIEW_Factory.COLS.A9     , TILDA__TESTINGVIEW_Factory.COLS.A9TZ     ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A9._Mask     ); _a9 = null; }
                         _a9c     = DateTimeUtil.toLocalDates((List<java.sql.Date>) C.getArray(RS, ++i, TILDA__TESTINGVIEW_Factory.COLS.A9C.getType(), false)); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A9C._Mask    ); _a9c = null; }
                         _a6First =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A6FIRST._Mask); _a6First = null; }
@@ -1603,13 +1602,13 @@ This is the null setter for:<BR>
       long T0 = System.nanoTime();
       String Str = 
                    "name: "                                                                                         + TextUtil.printVariableStr        (getName   ())
-               + "; refnum: "                                                                                       +                                   getRefnum () 
-               + "; a2Min"     + (__Nulls.intersects(TILDA__TESTINGVIEW_Factory.COLS.A2MIN._Mask) == true ? ": NULL" : ": " +                                   getA2Min  () )
-               + "; a2Max"     + (__Nulls.intersects(TILDA__TESTINGVIEW_Factory.COLS.A2MAX._Mask) == true ? ": NULL" : ": " +                                   getA2Max  () )
-               + "; a9"        + (__Nulls.intersects(TILDA__TESTINGVIEW_Factory.COLS.A9._Mask) == true ? ": NULL" : ": " + TextUtil.print                   (getA9     ()))
-               + "; a9c"       + (__Nulls.intersects(TILDA__TESTINGVIEW_Factory.COLS.A9C._Mask) == true ? ": NULL" : ": " + TextUtil.print                   (getA9c    ()))
-               + "; a6First"   + (__Nulls.intersects(TILDA__TESTINGVIEW_Factory.COLS.A6FIRST._Mask) == true ? ": NULL" : ": " +                                   getA6First() )
-               + "; a6Last"    + (__Nulls.intersects(TILDA__TESTINGVIEW_Factory.COLS.A6LAST._Mask) == true ? ": NULL" : ": " +                                   getA6Last () )
+               + "; refnum: "                                                                                       +                                   getRefnum ()
+               + "; a2Min"     + (__Nulls.intersects(TILDA__TESTINGVIEW_Factory.COLS.A2MIN._Mask  ) == true ? ": NULL" : ": " +                                   getA2Min  ())
+               + "; a2Max"     + (__Nulls.intersects(TILDA__TESTINGVIEW_Factory.COLS.A2MAX._Mask  ) == true ? ": NULL" : ": " +                                   getA2Max  ())
+               + "; a9"        + (__Nulls.intersects(TILDA__TESTINGVIEW_Factory.COLS.A9._Mask     ) == true ? ": NULL" : ": " + TextUtil.print                   (getA9     ()))
+               + "; a9c"       + (__Nulls.intersects(TILDA__TESTINGVIEW_Factory.COLS.A9C._Mask    ) == true ? ": NULL" : ": " + TextUtil.print                   (getA9c    ()))
+               + "; a6First"   + (__Nulls.intersects(TILDA__TESTINGVIEW_Factory.COLS.A6FIRST._Mask) == true ? ": NULL" : ": " +                                   getA6First())
+               + "; a6Last"    + (__Nulls.intersects(TILDA__TESTINGVIEW_Factory.COLS.A6LAST._Mask ) == true ? ": NULL" : ": " +                                   getA6Last ())
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;

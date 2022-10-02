@@ -26,6 +26,7 @@ import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
 import tilda.utils.CollectionUtil;
+import tilda.utils.DateTimeUtil;
 import tilda.utils.FileUtil;
 import tilda.utils.TextUtil;
 import tilda.utils.json.JSONUtil;
@@ -82,12 +83,16 @@ public class DocGen
         writeHeader(writer, PS);
         writer.println("</HEAD>");
         writer.println("<BODY>");
-        writer.println("<H1>Schema " + schema._Name + (exportPublish == true ? " (Publish Export Version)" : "") + "</H1>");
+        writer.println("<TABLE width=\"100%\"><TR><TD><H1>Schema " + schema._Name + (exportPublish == true ? " (Publish Export Version)" : "") 
+                     + "</H1></TD><TD align=\"right\"><I>This documentation was generated on "+DateTimeUtil.printDateTimeFriendly(DateTimeUtil.nowLocal(), true, true)
+                     + "</I></TD></TR></TABLE>"
+                     );
         if (schema._Documentation != null && schema._Documentation._Description != null)
           for (String str : schema._Documentation._Description)
             writer.println(str);
         writer.println("<BR><BR>");
         writeSearchHTML(writer, true); // Add Search Box
+        writer.println("");
 
         File f = new File(base64FileName);
         if (f.exists())
@@ -153,6 +158,7 @@ public class DocGen
             WriteObjectDocsList(writer, FrameworkSourcedType.MAPPER, "Mappers", exportPublish);
             WriteObjectDocsList(writer, FrameworkSourcedType.NONE, "Tables", exportPublish);
             WriteObjectDocsList(writer, FrameworkSourcedType.CLONED, "Cloned Tables", exportPublish);
+            WriteObjectDocsList(writer, FrameworkSourcedType.HISTORY, "History Tables", exportPublish);
             WriteObjectDocsList(writer, FrameworkSourcedType.VIEW, "Views", exportPublish);
           }
         WriteObjectDocsList(writer, FrameworkSourcedType.REALIZED, "Realized Tables", exportPublish);

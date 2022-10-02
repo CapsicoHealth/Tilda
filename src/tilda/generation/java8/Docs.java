@@ -263,6 +263,21 @@ public class Docs implements CodeGenDocs
       }
 
     @Override
+    public void docMethodCopyForHistory(PrintWriter Out, GeneratorSession G, Object O)
+      {
+        Out.println(
+        Helper.getMultiLineDocCommentStart() + SystemValues.NEWLINE
+        + " If any of the 'signature' columns have changed, creates a new instance of '"+O.getHistoryObjectName()+"' and " + SystemValues.NEWLINE
+        + "copies all columns included for history over." + SystemValues.NEWLINE
+        + "<BR>" + SystemValues.NEWLINE
+        + "<B>Signature</B>:<UL><LI>"+Column.printColumnList(O._History._SignatureColumnObjs, true)+"</LI></UL>" + SystemValues.NEWLINE
+        + "<B>History</B>:<UL><LI>"+Column.printColumnList(O._History._IncludedColumnObjs, true)+"</LI></UL>" + SystemValues.NEWLINE
+        + Helper.getMultiLineCommentEnd()
+        );
+      }
+    
+    
+    @Override
     public void docMethodMask(PrintWriter Out, GeneratorSession G, Object O)
       {
         Out.println(

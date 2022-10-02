@@ -1,5 +1,5 @@
 /*
- Tilda V1.0 data object.
+ Tilda V2.2 data object.
 
  Code is generated: do not modify! Instead, create a derived class and override desired functionality
 */
@@ -36,16 +36,23 @@ The Table TILDA.ZoneInfo:<UL>
 <LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>ZoneInfo_Factory</B>, <B>ZoneInfo_Data</B> in the package <B>tilda.data</B>.
 <LI>Is configured for normal <B>read/write</B> access.</LI>
 <LI>Is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
-<LI>Defines a foreign key to <A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A> </LI>
+<LI>Defines a foreign key:<BR>
+<TABLE style="margin-left: 25px; border:1px solid #BBB;" cellspacing="0px" cellpadding="5px" border="0px">
+<TR style="background-color:#DDD; font-weight:bold;"><TD></TD><TD>Source Columns</TD><TD>Destination Object</TD><TD>Destination Columns</TD><TD>Notes</TD></TR>
+<TR ><TD>1</TD><TD>deactivatedTZ</TD><TD><A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A></TD><TD>id</TD><TD>&nbsp;</TD></TR>
+</TABLE></LI>
 <LI>Has the following identities:<UL><LI>Primary Key: id</LI>
 <LI>Unique Index: id</LI>
 <LI>Unique Index: value</LI>
 </UL></LI>
+<LI>Has the following index:<UL><LI>id asc
+ <B><I>(Application-side Only)</I></B></LI>
+</UL></LI>
 </UL>
-<B>Description</B>: blah blah<BR>
+<B>Description</B>:<BLOCKQUOTE style="border-left: 1px solid #EEE;padding-left: 5px;">blah blah</BLOCKQUOTE>
 <BR>
 This Table contains the following columns:<BLOCKQUOTE>
- <TABLE id="ZoneInfo_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
+ <TABLE id="ZoneInfo_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid #BBB;">
    <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>1&nbsp;&nbsp;</TD>
@@ -147,7 +154,6 @@ public abstract class TILDA__ZONEINFO implements tilda.interfaces.WriterObject, 
    transient BitSet   __Nulls       = new BitSet(64);
    transient BitSet   __Changes     = new BitSet(64);
    transient boolean  __NewlyCreated= false;
-
    transient int      __LookupId;
 
    public  boolean hasChanged    () { return __Changes.isEmpty() == false; }
@@ -927,7 +933,7 @@ This is the setter for:<BR>
 
 </TABLE>
 */
-    void setCreated(ZonedDateTime v) throws Exception
+   protected void setCreated(ZonedDateTime v) throws Exception
      {
        long T0 = System.nanoTime();
        if (v == null)
@@ -967,7 +973,7 @@ This is the NOW setter for:<BR>
 
 </TABLE>
 */
-    final void setCreatedNow() throws Exception
+   protected final void setCreatedNow() throws Exception
     {
       setCreated(DateTimeUtil.NOW_PLACEHOLDER_ZDT);
     }
@@ -996,7 +1002,7 @@ This is the UNDEFINED setter for:<BR>
 
 </TABLE>
 */
-    final void setCreatedUndefined() throws Exception
+   protected final void setCreatedUndefined() throws Exception
     {
       setCreated(DateTimeUtil.UNDEFINED_PLACEHOLDER_ZDT);
     }
@@ -1025,7 +1031,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 
 </TABLE>
 */
-    final void setCreated(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
+   protected final void setCreated(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
     {
       setCreated(DateTimeUtil.newTZ(year, month, date, hourOfDay, minute, second, millis, z));
     }
@@ -1605,7 +1611,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__ZONEINFO_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
+          tilda.data._Tilda.TILDA__2_2.handleFinally(PS, T0, TILDA__ZONEINFO_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
           PS = null;
         }
 
@@ -1664,25 +1670,25 @@ This is the hasChanged for:<BR>
           StringBuilder V = new StringBuilder(1024);
           S.append("insert into "); C.getFullTableVar(S, "TILDA", "ZoneInfo");
           int Pos = S.length();
-          if (__Changes.intersects(TILDA__ZONEINFO_Factory.COLS.ID._Mask) == true) { TILDA__ZONEINFO_Factory.COLS.ID.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__ZONEINFO_Factory.COLS.VALUE._Mask) == true) { TILDA__ZONEINFO_Factory.COLS.VALUE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__ZONEINFO_Factory.COLS.LABEL._Mask) == true) { TILDA__ZONEINFO_Factory.COLS.LABEL.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask) == true) { TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__ZONEINFO_Factory.COLS.ID._Mask) == true) { TILDA__ZONEINFO_Factory.COLS.ID.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_2._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__ZONEINFO_Factory.COLS.VALUE._Mask) == true) { TILDA__ZONEINFO_Factory.COLS.VALUE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_2._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__ZONEINFO_Factory.COLS.LABEL._Mask) == true) { TILDA__ZONEINFO_Factory.COLS.LABEL.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_2._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask) == true) { TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_2._COMMAQUESTION);  }
 
           if (__Changes.intersects(TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask) == true) { TILDA__ZONEINFO_Factory.COLS.DEACTIVATED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_deactivated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_deactivated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_2._COMMAQUESTION);
            }
 
           if (__Changes.intersects(TILDA__ZONEINFO_Factory.COLS.CREATED._Mask) == true) { TILDA__ZONEINFO_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__ZONEINFO_Factory.COLS.CREATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__ZONEINFO_Factory.COLS.CREATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_2._COMMAQUESTION);
            }
           else { TILDA__ZONEINFO_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
           if (__Changes.intersects(TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Mask) == true) { TILDA__ZONEINFO_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_2._COMMAQUESTION);
            }
           else { TILDA__ZONEINFO_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
           if (__Changes.intersects(TILDA__ZONEINFO_Factory.COLS.DELETED._Mask) == true) { TILDA__ZONEINFO_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__ZONEINFO_Factory.COLS.DELETED._Mask) == false && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__ZONEINFO_Factory.COLS.DELETED._Mask) == false && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_2._COMMAQUESTION);
            }
 
           S.setCharAt(Pos, '(');
@@ -1995,7 +2001,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__ZONEINFO_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__2_2.handleFinally(PS, T0, TILDA__ZONEINFO_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
     }
@@ -2047,10 +2053,10 @@ This is the hasChanged for:<BR>
                    "id: "                                                                                                    + TextUtil.printVariableStr        (getId           ())
                + "; value: "                                                                                                 + TextUtil.printVariableStr        (getValue        ())
                + "; label: "                                                                                                 + TextUtil.printVariableStr        (getLabel        ())
-               + "; deactivated"     + (__Nulls.intersects(TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDeactivated  ()))
+               + "; deactivated"     + (__Nulls.intersects(TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask  ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDeactivated  ()))
                + "; created: "                                                                                               + DateTimeUtil.printDateTimeForJSON(getCreated      ())
                + "; lastUpdated: "                                                                                           + DateTimeUtil.printDateTimeForJSON(getLastUpdated  ())
-               + "; deleted"         + (__Nulls.intersects(TILDA__ZONEINFO_Factory.COLS.DELETED._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDeleted      ()))
+               + "; deleted"         + (__Nulls.intersects(TILDA__ZONEINFO_Factory.COLS.DELETED._Mask      ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDeleted      ()))
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;

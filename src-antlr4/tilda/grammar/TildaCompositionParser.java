@@ -1,4 +1,4 @@
-// Generated from TildaComposition.g4 by ANTLR 4.4
+// Generated from TildaComposition.g4 by ANTLR 4.10.1
 package tilda.grammar;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -11,30 +11,71 @@ import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class TildaCompositionParser extends Parser {
-	static { RuntimeMetaData.checkVersion("4.4", RuntimeMetaData.VERSION); }
+	static { RuntimeMetaData.checkVersion("4.10.1", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__1=1, T__0=2, K_AND=3, K_NOT=4, K_OR=5, IDENTIFIER=6, SPACES=7, UNEXPECTED_CHAR=8;
-	public static final String[] tokenNames = {
-		"<INVALID>", "'('", "')'", "K_AND", "K_NOT", "K_OR", "IDENTIFIER", "SPACES", 
-		"UNEXPECTED_CHAR"
-	};
+		T__0=1, T__1=2, K_AND=3, K_NOT=4, K_OR=5, IDENTIFIER=6, SPACES=7, UNEXPECTED_CHAR=8;
 	public static final int
 		RULE_where = 0, RULE_expr = 1, RULE_expr_sub = 2, RULE_bool_expr = 3, 
 		RULE_bool_op = 4, RULE_bool_expr_sub = 5, RULE_parameter = 6;
-	public static final String[] ruleNames = {
-		"where", "expr", "expr_sub", "bool_expr", "bool_op", "bool_expr_sub", 
-		"parameter"
-	};
+	private static String[] makeRuleNames() {
+		return new String[] {
+			"where", "expr", "expr_sub", "bool_expr", "bool_op", "bool_expr_sub", 
+			"parameter"
+		};
+	}
+	public static final String[] ruleNames = makeRuleNames();
+
+	private static String[] makeLiteralNames() {
+		return new String[] {
+			null, "'('", "')'"
+		};
+	}
+	private static final String[] _LITERAL_NAMES = makeLiteralNames();
+	private static String[] makeSymbolicNames() {
+		return new String[] {
+			null, null, null, "K_AND", "K_NOT", "K_OR", "IDENTIFIER", "SPACES", "UNEXPECTED_CHAR"
+		};
+	}
+	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
+	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
+
+	/**
+	 * @deprecated Use {@link #VOCABULARY} instead.
+	 */
+	@Deprecated
+	public static final String[] tokenNames;
+	static {
+		tokenNames = new String[_SYMBOLIC_NAMES.length];
+		for (int i = 0; i < tokenNames.length; i++) {
+			tokenNames[i] = VOCABULARY.getLiteralName(i);
+			if (tokenNames[i] == null) {
+				tokenNames[i] = VOCABULARY.getSymbolicName(i);
+			}
+
+			if (tokenNames[i] == null) {
+				tokenNames[i] = "<INVALID>";
+			}
+		}
+	}
+
+	@Override
+	@Deprecated
+	public String[] getTokenNames() {
+		return tokenNames;
+	}
+
+	@Override
+
+	public Vocabulary getVocabulary() {
+		return VOCABULARY;
+	}
 
 	@Override
 	public String getGrammarFileName() { return "TildaComposition.g4"; }
-
-	@Override
-	public String[] getTokenNames() { return tokenNames; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }
@@ -49,6 +90,7 @@ public class TildaCompositionParser extends Parser {
 		super(input);
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
+
 	public static class WhereContext extends ParserRuleContext {
 		public ExprContext expr() {
 			return getRuleContext(ExprContext.class,0);
@@ -74,8 +116,10 @@ public class TildaCompositionParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(14); expr();
-			setState(15); match(EOF);
+			setState(14);
+			expr();
+			setState(15);
+			match(EOF);
 			}
 		}
 		catch (RecognitionException re) {
@@ -90,11 +134,11 @@ public class TildaCompositionParser extends Parser {
 	}
 
 	public static class ExprContext extends ParserRuleContext {
-		public Expr_subContext expr_sub() {
-			return getRuleContext(Expr_subContext.class,0);
-		}
 		public Bool_exprContext bool_expr() {
 			return getRuleContext(Bool_exprContext.class,0);
+		}
+		public Expr_subContext expr_sub() {
+			return getRuleContext(Expr_subContext.class,0);
 		}
 		public ExprContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -115,17 +159,20 @@ public class TildaCompositionParser extends Parser {
 		enterRule(_localctx, 2, RULE_expr);
 		try {
 			setState(19);
+			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,0,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(17); bool_expr(0);
+				setState(17);
+				bool_expr(0);
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(18); expr_sub();
+				setState(18);
+				expr_sub();
 				}
 				break;
 			}
@@ -165,9 +212,12 @@ public class TildaCompositionParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(21); match(T__1);
-			setState(22); expr();
-			setState(23); match(T__0);
+			setState(21);
+			match(T__0);
+			setState(22);
+			expr();
+			setState(23);
+			match(T__1);
 			}
 		}
 		catch (RecognitionException re) {
@@ -185,20 +235,20 @@ public class TildaCompositionParser extends Parser {
 		public Bool_exprContext l_expr;
 		public Bool_opContext op;
 		public Bool_exprContext r_expr;
-		public ParameterContext parameter() {
-			return getRuleContext(ParameterContext.class,0);
-		}
-		public Bool_opContext bool_op() {
-			return getRuleContext(Bool_opContext.class,0);
-		}
 		public Bool_expr_subContext bool_expr_sub() {
 			return getRuleContext(Bool_expr_subContext.class,0);
+		}
+		public ParameterContext parameter() {
+			return getRuleContext(ParameterContext.class,0);
 		}
 		public List<Bool_exprContext> bool_expr() {
 			return getRuleContexts(Bool_exprContext.class);
 		}
 		public Bool_exprContext bool_expr(int i) {
 			return getRuleContext(Bool_exprContext.class,i);
+		}
+		public Bool_opContext bool_op() {
+			return getRuleContext(Bool_opContext.class,0);
 		}
 		public Bool_exprContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -230,15 +280,18 @@ public class TildaCompositionParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(28);
+			_errHandler.sync(this);
 			switch (_input.LA(1)) {
-			case T__1:
+			case T__0:
 				{
-				setState(26); bool_expr_sub();
+				setState(26);
+				bool_expr_sub();
 				}
 				break;
 			case IDENTIFIER:
 				{
-				setState(27); parameter();
+				setState(27);
+				parameter();
 				}
 				break;
 			default:
@@ -256,11 +309,14 @@ public class TildaCompositionParser extends Parser {
 					{
 					_localctx = new Bool_exprContext(_parentctx, _parentState);
 					_localctx.l_expr = _prevctx;
+					_localctx.l_expr = _prevctx;
 					pushNewRecursionContext(_localctx, _startState, RULE_bool_expr);
 					setState(30);
 					if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
-					setState(31); ((Bool_exprContext)_localctx).op = bool_op();
-					setState(32); ((Bool_exprContext)_localctx).r_expr = bool_expr(4);
+					setState(31);
+					((Bool_exprContext)_localctx).op = bool_op();
+					setState(32);
+					((Bool_exprContext)_localctx).r_expr = bool_expr(4);
 					}
 					} 
 				}
@@ -305,16 +361,20 @@ public class TildaCompositionParser extends Parser {
 		int _la;
 		try {
 			setState(47);
+			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case K_AND:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(39); match(K_AND);
+				setState(39);
+				match(K_AND);
 				setState(41);
+				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==K_NOT) {
 					{
-					setState(40); match(K_NOT);
+					setState(40);
+					match(K_NOT);
 					}
 				}
 
@@ -323,12 +383,15 @@ public class TildaCompositionParser extends Parser {
 			case K_OR:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(43); match(K_OR);
+				setState(43);
+				match(K_OR);
 				setState(45);
+				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==K_NOT) {
 					{
-					setState(44); match(K_NOT);
+					setState(44);
+					match(K_NOT);
 					}
 				}
 
@@ -373,9 +436,12 @@ public class TildaCompositionParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(49); match(T__1);
-			setState(50); bool_expr(0);
-			setState(51); match(T__0);
+			setState(49);
+			match(T__0);
+			setState(50);
+			bool_expr(0);
+			setState(51);
+			match(T__1);
 			}
 		}
 		catch (RecognitionException re) {
@@ -411,7 +477,8 @@ public class TildaCompositionParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(53); match(IDENTIFIER);
+			setState(53);
+			match(IDENTIFIER);
 			}
 		}
 		catch (RecognitionException re) {
@@ -427,33 +494,54 @@ public class TildaCompositionParser extends Parser {
 
 	public boolean sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
 		switch (ruleIndex) {
-		case 3: return bool_expr_sempred((Bool_exprContext)_localctx, predIndex);
+		case 3:
+			return bool_expr_sempred((Bool_exprContext)_localctx, predIndex);
 		}
 		return true;
 	}
 	private boolean bool_expr_sempred(Bool_exprContext _localctx, int predIndex) {
 		switch (predIndex) {
-		case 0: return precpred(_ctx, 3);
+		case 0:
+			return precpred(_ctx, 3);
 		}
 		return true;
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\n:\4\2\t\2\4\3\t"+
-		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\3\2\3\2\3\2\3\3\3\3\5\3\26"+
-		"\n\3\3\4\3\4\3\4\3\4\3\5\3\5\3\5\5\5\37\n\5\3\5\3\5\3\5\3\5\7\5%\n\5\f"+
-		"\5\16\5(\13\5\3\6\3\6\5\6,\n\6\3\6\3\6\5\6\60\n\6\5\6\62\n\6\3\7\3\7\3"+
-		"\7\3\7\3\b\3\b\3\b\2\3\b\t\2\4\6\b\n\f\16\2\28\2\20\3\2\2\2\4\25\3\2\2"+
-		"\2\6\27\3\2\2\2\b\36\3\2\2\2\n\61\3\2\2\2\f\63\3\2\2\2\16\67\3\2\2\2\20"+
-		"\21\5\4\3\2\21\22\7\2\2\3\22\3\3\2\2\2\23\26\5\b\5\2\24\26\5\6\4\2\25"+
-		"\23\3\2\2\2\25\24\3\2\2\2\26\5\3\2\2\2\27\30\7\3\2\2\30\31\5\4\3\2\31"+
-		"\32\7\4\2\2\32\7\3\2\2\2\33\34\b\5\1\2\34\37\5\f\7\2\35\37\5\16\b\2\36"+
-		"\33\3\2\2\2\36\35\3\2\2\2\37&\3\2\2\2 !\f\5\2\2!\"\5\n\6\2\"#\5\b\5\6"+
-		"#%\3\2\2\2$ \3\2\2\2%(\3\2\2\2&$\3\2\2\2&\'\3\2\2\2\'\t\3\2\2\2(&\3\2"+
-		"\2\2)+\7\5\2\2*,\7\6\2\2+*\3\2\2\2+,\3\2\2\2,\62\3\2\2\2-/\7\7\2\2.\60"+
-		"\7\6\2\2/.\3\2\2\2/\60\3\2\2\2\60\62\3\2\2\2\61)\3\2\2\2\61-\3\2\2\2\62"+
-		"\13\3\2\2\2\63\64\7\3\2\2\64\65\5\b\5\2\65\66\7\4\2\2\66\r\3\2\2\2\67"+
-		"8\7\b\2\28\17\3\2\2\2\b\25\36&+/\61";
+		"\u0004\u0001\b8\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
+		"\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0002\u0004\u0007\u0004\u0002"+
+		"\u0005\u0007\u0005\u0002\u0006\u0007\u0006\u0001\u0000\u0001\u0000\u0001"+
+		"\u0000\u0001\u0001\u0001\u0001\u0003\u0001\u0014\b\u0001\u0001\u0002\u0001"+
+		"\u0002\u0001\u0002\u0001\u0002\u0001\u0003\u0001\u0003\u0001\u0003\u0003"+
+		"\u0003\u001d\b\u0003\u0001\u0003\u0001\u0003\u0001\u0003\u0001\u0003\u0005"+
+		"\u0003#\b\u0003\n\u0003\f\u0003&\t\u0003\u0001\u0004\u0001\u0004\u0003"+
+		"\u0004*\b\u0004\u0001\u0004\u0001\u0004\u0003\u0004.\b\u0004\u0003\u0004"+
+		"0\b\u0004\u0001\u0005\u0001\u0005\u0001\u0005\u0001\u0005\u0001\u0006"+
+		"\u0001\u0006\u0001\u0006\u0000\u0001\u0006\u0007\u0000\u0002\u0004\u0006"+
+		"\b\n\f\u0000\u00006\u0000\u000e\u0001\u0000\u0000\u0000\u0002\u0013\u0001"+
+		"\u0000\u0000\u0000\u0004\u0015\u0001\u0000\u0000\u0000\u0006\u001c\u0001"+
+		"\u0000\u0000\u0000\b/\u0001\u0000\u0000\u0000\n1\u0001\u0000\u0000\u0000"+
+		"\f5\u0001\u0000\u0000\u0000\u000e\u000f\u0003\u0002\u0001\u0000\u000f"+
+		"\u0010\u0005\u0000\u0000\u0001\u0010\u0001\u0001\u0000\u0000\u0000\u0011"+
+		"\u0014\u0003\u0006\u0003\u0000\u0012\u0014\u0003\u0004\u0002\u0000\u0013"+
+		"\u0011\u0001\u0000\u0000\u0000\u0013\u0012\u0001\u0000\u0000\u0000\u0014"+
+		"\u0003\u0001\u0000\u0000\u0000\u0015\u0016\u0005\u0001\u0000\u0000\u0016"+
+		"\u0017\u0003\u0002\u0001\u0000\u0017\u0018\u0005\u0002\u0000\u0000\u0018"+
+		"\u0005\u0001\u0000\u0000\u0000\u0019\u001a\u0006\u0003\uffff\uffff\u0000"+
+		"\u001a\u001d\u0003\n\u0005\u0000\u001b\u001d\u0003\f\u0006\u0000\u001c"+
+		"\u0019\u0001\u0000\u0000\u0000\u001c\u001b\u0001\u0000\u0000\u0000\u001d"+
+		"$\u0001\u0000\u0000\u0000\u001e\u001f\n\u0003\u0000\u0000\u001f \u0003"+
+		"\b\u0004\u0000 !\u0003\u0006\u0003\u0004!#\u0001\u0000\u0000\u0000\"\u001e"+
+		"\u0001\u0000\u0000\u0000#&\u0001\u0000\u0000\u0000$\"\u0001\u0000\u0000"+
+		"\u0000$%\u0001\u0000\u0000\u0000%\u0007\u0001\u0000\u0000\u0000&$\u0001"+
+		"\u0000\u0000\u0000\')\u0005\u0003\u0000\u0000(*\u0005\u0004\u0000\u0000"+
+		")(\u0001\u0000\u0000\u0000)*\u0001\u0000\u0000\u0000*0\u0001\u0000\u0000"+
+		"\u0000+-\u0005\u0005\u0000\u0000,.\u0005\u0004\u0000\u0000-,\u0001\u0000"+
+		"\u0000\u0000-.\u0001\u0000\u0000\u0000.0\u0001\u0000\u0000\u0000/\'\u0001"+
+		"\u0000\u0000\u0000/+\u0001\u0000\u0000\u00000\t\u0001\u0000\u0000\u0000"+
+		"12\u0005\u0001\u0000\u000023\u0003\u0006\u0003\u000034\u0005\u0002\u0000"+
+		"\u00004\u000b\u0001\u0000\u0000\u000056\u0005\u0006\u0000\u00006\r\u0001"+
+		"\u0000\u0000\u0000\u0006\u0013\u001c$)-/";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

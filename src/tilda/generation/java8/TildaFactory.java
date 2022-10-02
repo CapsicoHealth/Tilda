@@ -33,6 +33,7 @@ import tilda.enums.NVPSourceType;
 import tilda.enums.ObjectLifecycle;
 import tilda.enums.OutputFormatType;
 import tilda.enums.TildaType;
+import tilda.generation.Generator;
 import tilda.generation.GeneratorSession;
 import tilda.generation.interfaces.CodeGenTildaFactory;
 import tilda.parsing.parts.Base;
@@ -1046,7 +1047,7 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("         }");
         Out.println("       finally");
         Out.println("         {");
-        Out.println("           TILDA__1_0.handleFinally(PS, T0, " + O._BaseClassName + "_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);");
+        Out.println("           TILDA__"+Generator.TILDA_VERSION_VAROK+".handleFinally(PS, T0, " + O._BaseClassName + "_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);");
         Out.println("           PS = null;");
         Out.println("           AllocatedArrays = null;");
         Out.println("         }");
@@ -1226,8 +1227,8 @@ public class TildaFactory implements CodeGenTildaFactory
         for (Column C : J._ColumnObjs)
           if (C != null)
             {
-              if (C.getType() == ColumnType.JSON)
-                throw new Error("toCSV doesn't support export of JSON columns: this should not have have come all the way here.");
+//              if (C.getType() == ColumnType.JSON)
+//                throw new Error("toCSV doesn't support export of JSON columns: this should not have have come all the way here.");
               if (header.length() != 0)
                 header.append(",");
               header.append(TextUtil.escapeDoubleQuoteForCSV(C.getName()));
