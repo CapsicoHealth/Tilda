@@ -443,7 +443,7 @@ This is the column definition for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__CONNECTION_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, AllocatedArrays);
+          tilda.data._Tilda.TILDA__2_2.handleFinally(PS, T0, TILDA__CONNECTION_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, AllocatedArrays);
           PS = null;
           AllocatedArrays = null;
         }
@@ -620,6 +620,8 @@ object. The generic init method defaults to this general data structure as a gen
                int i = d.populatePreparedStatement(C, PS, AllocatedArrays);
 
                PS.addBatch();
+               ++count;
+
                if (index != 0 && (index + 1) % batchSize == 0)
                  {
                    int[] results = PS.executeBatch();
@@ -658,7 +660,6 @@ object. The generic init method defaults to this general data structure as a gen
                if(commitSize > 0)
                  {
                    C.commit();
-                   LOG.debug("Commited " + insertCount + " batch records.");
                  }
                LOG.debug("Final Batch-inserted objects between positions #" + insertCount + " and #" + index + ".");
              }
@@ -674,7 +675,7 @@ object. The generic init method defaults to this general data structure as a gen
          }
        finally
          {
-           TILDA__1_0.handleFinally(PS, T0, TILDA__CONNECTION_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+           TILDA__2_2.handleFinally(PS, T0, TILDA__CONNECTION_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
            PS = null;
            AllocatedArrays = null;
          }
@@ -827,31 +828,32 @@ The results are ordered by: id asc
    public static void toCSV(java.io.Writer out, tilda.data.Connection_Data obj) throws java.io.IOException
     {
       long T0 = System.nanoTime();
+     tilda.data._Tilda.TILDA__CONNECTION Obj = (tilda.data._Tilda.TILDA__CONNECTION) obj;
       StringBuilder Str = new StringBuilder();
 
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getActive());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getActive());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getId());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getId());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getDriver());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getDriver());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getDb());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getDb());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getUser());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getUser());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getPswd());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getPswd());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getInitial());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getInitial());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getMax());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getMax());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, TextUtil.print(obj.getSchemas(), ","));
+      TextUtil.escapeDoubleQuoteForCSV(Str, TextUtil.print(Obj.getSchemas(), ","));
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getCreated()));
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getCreated()));
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getLastUpdated()));
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getLastUpdated()));
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getDeleted()));
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getDeleted()));
       out.write(Str.toString());
       PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);
     }
@@ -902,15 +904,16 @@ The results are ordered by: id asc
    public static void toJSON(java.io.Writer outWriter, tilda.data.Connection_Data obj, String lead, boolean fullObject, boolean noNullArrays) throws java.io.IOException
     {
       long T0 = System.nanoTime();
-      org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter();
-      tilda.data._Tilda.TILDA__CONNECTION Obj = (tilda.data._Tilda.TILDA__CONNECTION) obj;
-      if (fullObject == true)
+      try(org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter())
        {
-          out.write(lead);
-          out.write("{");
-       }
+        tilda.data._Tilda.TILDA__CONNECTION Obj = (tilda.data._Tilda.TILDA__CONNECTION) obj;
+        if (fullObject == true)
+         {
+           out.write(lead);
+           out.write("{");
+         }
 
-      int i = -1;
+        int i = -1;
       if (Obj.isActiveNull() == false)
         JSONUtil.print(out, "active", ++i==0, Obj.getActive());
 
@@ -937,11 +940,11 @@ The results are ordered by: id asc
       if (Obj.isDeletedNull() == false && Obj.getDeleted() != null)
         JSONUtil.print(out, "deleted", ++i==0, Obj.getDeleted());
 
-      if (fullObject == true)
-       out.write(" }\n");
+        if (fullObject == true)
+         out.write(" }\n");
 
-      outWriter.append(out.getBuilder().toString());
-      out.close();
+        outWriter.append(out.getBuilder().toString());
+       }
 
       PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
     }

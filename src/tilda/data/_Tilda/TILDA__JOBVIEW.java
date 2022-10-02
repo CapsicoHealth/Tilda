@@ -1,5 +1,5 @@
 /*
- Tilda V1.0 data object.
+ Tilda V2.2 data object.
 
  Code is generated: do not modify! Instead, create a derived class and override desired functionality
 */
@@ -35,14 +35,18 @@ import java.math.*;
 The View TILDA.JobView:<UL>
 <LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>JobView_Factory</B>, <B>JobView_Data</B> in the package <B>tilda.data</B>.
 <LI>Is not OCC-Enabled. No record lifecycle columns (created/updated/deleted) have been generated.</LI>
-<LI>Defines foreign key(s) to <A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A> </LI>
+<LI>Defines 8 foreign key(s):<BR>
+<TABLE style="margin-left: 25px; border:1px solid #BBB;" cellspacing="0px" cellpadding="5px" border="0px">
+<TR style="background-color:#DDD; font-weight:bold;"><TD></TD><TD>Source Columns</TD><TD>Destination Object</TD><TD>Destination Columns</TD><TD>Notes</TD></TR>
+<TR ><TD>1</TD><TD>jobDataStartTZ</TD><TD><A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A></TD><TD>id</TD><TD>&nbsp;</TD></TR>
+</TABLE></LI>
 </UL>
-<B>Description</B>: A view of the job data.<BR>
+<B>Description</B>:<BLOCKQUOTE style="border-left: 1px solid #EEE;padding-left: 5px;">A view of the job data.</BLOCKQUOTE>
 <BR>
 This view depends on the following filter(s), sub-view(s), and/or root table(s):
 <BLOCKQUOTE><TABLE class="TreeTable Rowed" border="0px" cellspacing="0px" cellpadding="2px"></TABLE></BLOCKQUOTE>
 This View contains the following columns:<BLOCKQUOTE>
- <TABLE id="JobView_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
+ <TABLE id="JobView_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid #BBB;">
    <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>1&nbsp;&nbsp;</TD>
@@ -342,7 +346,6 @@ public abstract class TILDA__JOBVIEW implements tilda.interfaces.ReaderObject, t
    transient BitSet   __Nulls       = new BitSet(64);
    transient BitSet   __Changes     = new BitSet(64);
    transient boolean  __NewlyCreated= false;
-
    transient int      __LookupId;
 
    public  boolean hasChanged    () { return __Changes.isEmpty() == false; }
@@ -3753,7 +3756,7 @@ This is the setter for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__JOBVIEW_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__2_2.handleFinally(PS, T0, TILDA__JOBVIEW_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
     }
@@ -3822,25 +3825,25 @@ This is the setter for:<BR>
     {
       long T0 = System.nanoTime();
       String Str = 
-                   "jobRefnum: "                                                                                                        +                                   getJobRefnum          () 
+                   "jobRefnum: "                                                                                                        +                                   getJobRefnum          ()
                + "; jobName: "                                                                                                          + TextUtil.printVariableStr        (getJobName            ())
-               + "; jobType"               + (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBTYPE._Mask) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getJobType            ()))
-               + "; jobUserId"             + (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBUSERID._Mask) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getJobUserId          ()))
-               + "; jobDataStart"          + (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBDATASTART._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getJobDataStart       ()))
-               + "; jobDataEnd"            + (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBDATAEND._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getJobDataEnd         ()))
+               + "; jobType"               + (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBTYPE._Mask            ) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getJobType            ()))
+               + "; jobUserId"             + (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBUSERID._Mask          ) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getJobUserId          ()))
+               + "; jobDataStart"          + (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBDATASTART._Mask       ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getJobDataStart       ()))
+               + "; jobDataEnd"            + (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBDATAEND._Mask         ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getJobDataEnd         ()))
                + "; jobStart: "                                                                                                         + DateTimeUtil.printDateTimeForJSON(getJobStart           ())
-               + "; jobEnd"                + (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBEND._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getJobEnd             ()))
-               + "; jobStatus"             + (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBSTATUS._Mask) == true ? ": NULL" : ": " +                                   getJobStatus          () )
-               + "; jobMsg"                + (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBMSG._Mask) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getJobMsg             ()))
+               + "; jobEnd"                + (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBEND._Mask             ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getJobEnd             ()))
+               + "; jobStatus"             + (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBSTATUS._Mask          ) == true ? ": NULL" : ": " +                                   getJobStatus          ())
+               + "; jobMsg"                + (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBMSG._Mask             ) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getJobMsg             ()))
                + "; jobPartName: "                                                                                                      + TextUtil.printVariableStr        (getJobPartName        ())
-               + "; jobPartType"           + (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBPARTTYPE._Mask) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getJobPartType        ()))
-               + "; jobPartDataStart"      + (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBPARTDATASTART._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getJobPartDataStart   ()))
-               + "; jobPartDataEnd"        + (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBPARTDATAEND._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getJobPartDataEnd     ()))
+               + "; jobPartType"           + (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBPARTTYPE._Mask        ) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getJobPartType        ()))
+               + "; jobPartDataStart"      + (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBPARTDATASTART._Mask   ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getJobPartDataStart   ()))
+               + "; jobPartDataEnd"        + (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBPARTDATAEND._Mask     ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getJobPartDataEnd     ()))
                + "; jobPartStart: "                                                                                                     + DateTimeUtil.printDateTimeForJSON(getJobPartStart       ())
-               + "; jobPartEnd"            + (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBPARTEND._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getJobPartEnd         ()))
-               + "; jobPartRecordsCount"   + (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBPARTRECORDSCOUNT._Mask) == true ? ": NULL" : ": " +                                   getJobPartRecordsCount() )
-               + "; jobPartStatus"         + (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBPARTSTATUS._Mask) == true ? ": NULL" : ": " +                                   getJobPartStatus      () )
-               + "; jobPartNotify: "                                                                                                    +                                   getJobPartNotify      () 
+               + "; jobPartEnd"            + (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBPARTEND._Mask         ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getJobPartEnd         ()))
+               + "; jobPartRecordsCount"   + (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBPARTRECORDSCOUNT._Mask) == true ? ": NULL" : ": " +                                   getJobPartRecordsCount())
+               + "; jobPartStatus"         + (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBPARTSTATUS._Mask      ) == true ? ": NULL" : ": " +                                   getJobPartStatus      ())
+               + "; jobPartNotify: "                                                                                                    +                                   getJobPartNotify      ()
                + "; jobPartMessage: "                                                                                                   + TextUtil.printVariableStr        (getJobPartMessage     ())
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);

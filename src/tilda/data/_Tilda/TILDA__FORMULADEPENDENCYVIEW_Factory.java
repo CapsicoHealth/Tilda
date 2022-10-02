@@ -329,7 +329,7 @@ This is the column definition for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__FORMULADEPENDENCYVIEW_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, AllocatedArrays);
+          tilda.data._Tilda.TILDA__2_2.handleFinally(PS, T0, TILDA__FORMULADEPENDENCYVIEW_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, AllocatedArrays);
           PS = null;
           AllocatedArrays = null;
         }
@@ -392,23 +392,24 @@ Lookup records by the query 'All' over
    public static void toCSV(java.io.Writer out, tilda.data.FormulaDependencyView_Data obj) throws java.io.IOException
     {
       long T0 = System.nanoTime();
+     tilda.data._Tilda.TILDA__FORMULADEPENDENCYVIEW Obj = (tilda.data._Tilda.TILDA__FORMULADEPENDENCYVIEW) obj;
       StringBuilder Str = new StringBuilder();
 
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getFormulaRefnum());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getFormulaRefnum());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getLocation());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getLocation());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getName());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getName());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, TextUtil.print(obj.getReferencedColumns(), ","));
+      TextUtil.escapeDoubleQuoteForCSV(Str, TextUtil.print(Obj.getReferencedColumns(), ","));
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getDependencyRefnum());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getDependencyRefnum());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getDependentFormulaName());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getDependentFormulaName());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getDependentFormulaLocation());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getDependentFormulaLocation());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, TextUtil.print(obj.getDependentReferencedColumns(), ","));
+      TextUtil.escapeDoubleQuoteForCSV(Str, TextUtil.print(Obj.getDependentReferencedColumns(), ","));
       out.write(Str.toString());
       PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);
     }
@@ -459,15 +460,16 @@ Lookup records by the query 'All' over
    public static void toJSON(java.io.Writer outWriter, tilda.data.FormulaDependencyView_Data obj, String lead, boolean fullObject, boolean noNullArrays) throws java.io.IOException
     {
       long T0 = System.nanoTime();
-      org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter();
-      tilda.data._Tilda.TILDA__FORMULADEPENDENCYVIEW Obj = (tilda.data._Tilda.TILDA__FORMULADEPENDENCYVIEW) obj;
-      if (fullObject == true)
+      try(org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter())
        {
-          out.write(lead);
-          out.write("{");
-       }
+        tilda.data._Tilda.TILDA__FORMULADEPENDENCYVIEW Obj = (tilda.data._Tilda.TILDA__FORMULADEPENDENCYVIEW) obj;
+        if (fullObject == true)
+         {
+           out.write(lead);
+           out.write("{");
+         }
 
-      int i = -1;
+        int i = -1;
         JSONUtil.print(out, "formulaRefnum", ++i==0, Obj.getFormulaRefnum());
 
         JSONUtil.print(out, "location", ++i==0, Obj.getLocation());
@@ -496,11 +498,11 @@ Lookup records by the query 'All' over
           out.write("[]");
         }
 
-      if (fullObject == true)
-       out.write(" }\n");
+        if (fullObject == true)
+         out.write(" }\n");
 
-      outWriter.append(out.getBuilder().toString());
-      out.close();
+        outWriter.append(out.getBuilder().toString());
+       }
 
       PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
     }

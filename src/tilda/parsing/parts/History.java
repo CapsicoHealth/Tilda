@@ -38,7 +38,7 @@ public class History
         int Errs = PS.getErrorCount();
 
         _ParentObject = obj;
-        
+
         if (_Validated != null)
           {
             LOG.info("Tilda Object '" + _ParentObject.getFullName() + "' history info has already been validated.");
@@ -47,29 +47,41 @@ public class History
         LOG.info("Validating Tilda Object '" + _ParentObject.getFullName() + "' history info.");
 
         if (_ParentObject.getLifecycle() != ObjectLifecycle.NORMAL)
-         return PS.AddError("Object '" + _ParentObject.getFullName() + "' with a "+_ParentObject.getLifecycle().name()+" lifecycle setting is defining a History configuration. Only NORMAL tables that can be updated can have a history.");
+          return PS.AddError("Object '" + _ParentObject.getFullName() + "' with a " + _ParentObject.getLifecycle().name() + " lifecycle setting is defining a History configuration. Only NORMAL tables that can be updated can have a history.");
 
-        
+        if (_ParentObject._OCC == false)
+          return PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a History configuration without being set as OCC. Only OCC tables can have a history.");
+
         // validating included columns.
+        List<String> X = CollectionUtil.toList(_ExcludedColumns);
+        if (TextUtil.contains(_ExcludedColumns, "created", true, 0) == false)
+          X.add("created");
+        if (TextUtil.contains(_ExcludedColumns, "lastUpdated", true, 0) == false)
+          X.add("lastUpdated");
+        if (TextUtil.contains(_ExcludedColumns, "deleted", true, 0) == false)
+          X.add("deleted");
+        _ExcludedColumns = CollectionUtil.toStringArray(X);
         if (_IncludedColumns != null && _IncludedColumns.length > 0)
           _IncludedColumns = CollectionUtil.toStringArray(_ParentObject.expandColumnNames(_IncludedColumns, PS, "History '" + _ParentObject._Name + "'s included columns", _ParentObject._Name, _ExcludedColumns));
         if (TextUtil.isNullOrEmpty(_IncludedColumns) == true)
           PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a History with no included column: maybe the definition is missing, or the combination of included and excluded columns yields no result.");
         else
-          _IncludedColumnObjs = ValidationHelper.ProcessColumn(PS, _ParentObject, "History '" + _ParentObject._Name + "'s included columns", _IncludedColumns, new ValidationHelper.Processor()
-            {
-              @Override
-              public boolean process(ParserSession PS, Base ParentObject, String What, Column C)
-                {
-                  if (C._Type == ColumnType.BINARY)
-                    PS.AddError(ParentObject._TildaType.name() + " '" + _ParentObject.getFullName() + "' is defining a History with included column '" + C.getName() + "' which is a binary. Binaries cannot be managed for Histories.");
-                  return true;
-                }
-            });
+          {
+            _IncludedColumnObjs = ValidationHelper.ProcessColumn(PS, _ParentObject, "History '" + _ParentObject._Name + "'s included columns", _IncludedColumns, new ValidationHelper.Processor()
+              {
+                @Override
+                public boolean process(ParserSession PS, Base ParentObject, String What, Column C)
+                  {
+                    if (C._Type == ColumnType.BINARY)
+                      PS.AddError(ParentObject._TildaType.name() + " '" + _ParentObject.getFullName() + "' is defining a History with included column '" + C.getName() + "' which is a binary. Binaries cannot be managed for Histories.");
+                    return true;
+                  }
+              });
+          }
 
         // validating signature columns.
         // If refnum should change, which makes no sense, shouldn't be part of the signature.
-        List<String> X = CollectionUtil.toList(_SignatureColumnsExcluded);
+        X = CollectionUtil.toList(_SignatureColumnsExcluded);
         if (TextUtil.contains(_SignatureColumnsExcluded, obj._ParentSchema.getConventionPrimaryKeyName(), true, 0) == false)
           X.add(obj._ParentSchema.getConventionPrimaryKeyName());
         // 'created' shouldn't be part of the signature.

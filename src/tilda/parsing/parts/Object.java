@@ -18,13 +18,11 @@ package tilda.parsing.parts;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.bouncycastle.util.Arrays;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -37,6 +35,7 @@ import tilda.enums.OutputFormatType;
 import tilda.enums.TildaType;
 import tilda.parsing.ParserSession;
 import tilda.types.ColumnDefinition;
+import tilda.utils.CollectionUtil;
 import tilda.utils.TextUtil;
 
 public class Object extends Base
@@ -45,7 +44,7 @@ public class Object extends Base
     static final Logger                   LOG           = LogManager.getLogger(Object.class.getName());
 
     /*@formatter:off*/
-    @SerializedName("occ"           ) public boolean              _OCC        = true ;
+    @SerializedName("occ"           ) public boolean              _OCC        = true;
     @SerializedName("tzFk"          ) public Boolean              _TZFK       = true;
     @SerializedName("etl"           ) public boolean              _ETL        = false;
     @SerializedName("lc"            ) public String               _LCStr      ;
@@ -337,6 +336,7 @@ public class Object extends Base
         obj._Description = "History table for " + getShortName() + ".<BR>" + _Description;
         obj._FST = FrameworkSourcedType.HISTORY;
         obj._LC = ObjectLifecycle.WORM;
+//        obj._OCC = false;
         obj._SourceObject = this;
         obj._ParentSchema = ParentSchema;
 
@@ -348,12 +348,18 @@ public class Object extends Base
         // We also need to clean up mappings if they reference a column that is not being carried over
         for (OutputMap OM : obj._OutputMaps)
           if (OM != null)
-           OM._Columns = Column.cleanupColumnList(OM._Columns, _History._IncludedColumns);
+           {
+             List<String> X = CollectionUtil.toList(_History._IncludedColumns);
+             X.add("created");
+             X.add("lastUpdated");
+             X.add("deleted");
+             OM._Columns = Column.cleanupColumnList(OM._Columns, X.toArray(new String[X.size()]));
+           }
         
         // We also need to clean up Indices
         /// TO DO !!!!!
         
-        if (obj._PrimaryKey != null)
+        if (obj._PrimaryKey !=  null)
           {
             // Replace the primary key with a regular index
             Index I = new Index();
