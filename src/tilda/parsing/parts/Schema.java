@@ -626,17 +626,17 @@ public class Schema
      {
        return _Conventions._PrimaryKeyName;
      }
-    public boolean getConventionPrefix()
-      {
-        return _Conventions._Prefix;
-      }
+//    public boolean getConventionPrefix()
+//      {
+//        return _Conventions._Prefix;
+//      }
     public ConventionNaming getConventionColumnNaming()
       {
         return _Conventions._ColumnNamingConvention;
       }
-    public boolean getConventionDBColumnNameTranslation()
-      {
-        return _Conventions._DBColumnNameTranslation;
-      }
+//    public boolean getConventionDBColumnNameTranslation()
+//      {
+//        return _Conventions._DBColumnNameTranslation;
+//      }
 
   }

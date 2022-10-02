@@ -21,11 +21,11 @@ public class Convention
     @SerializedName("primaryKeyName"         ) public String  _PrimaryKeyName           ;
 //    @SerializedName("primaryKeyNamePostfix"  ) public String  _PrimaryKeyNamePostfix    ;
     @SerializedName("foreignKeyNamePostfix"  ) public String  _ForeignKeyNamePostfix    ;
-    @SerializedName("prefix"                 ) public Boolean _Prefix                   ;
-    @SerializedName("uniquePrefixes"         ) public Boolean _UniquePrefixes           ;
+//    @SerializedName("prefix"                 ) public Boolean _Prefix                   ;
+//    @SerializedName("uniquePrefixes"         ) public Boolean _UniquePrefixes           ;
     @SerializedName("columnNamingConvention" ) public String  _ColumnNamingConventionStr;
 //    @SerializedName("uniqueColumnNames"      ) public Boolean _UniqueColumnNames        ;
-    @SerializedName("dbColumnNameTranslation") public Boolean _DBColumnNameTranslation  ;
+//    @SerializedName("dbColumnNameTranslation") public Boolean _DBColumnNameTranslation  ;
     @SerializedName("defaultMode")             public String  _DefaultModeStr           ;
     @SerializedName("defaultLC")               public String  _DefaultLCStr             ;
     /*@formatter:on*/
@@ -57,12 +57,12 @@ public class Convention
               PS.AddError("Schema '" + _ParentSchema.getFullName() + "' defined conventions with a 'sameAs' as well as 'primaryKeyName'. You cannot reuse a set of conventions and redefine directivess as this would work against standardization of conventions across schemas. Only 'default' fields can be overriden.");
             if (_ForeignKeyNamePostfix != null)
               PS.AddError("Schema '" + _ParentSchema.getFullName() + "' defined conventions with a 'sameAs' as well as 'foreignKeyNamePostfix'. You cannot reuse a set of conventions and redefine directivess as this would work against standardization of conventions across schemas. Only 'default' fields can be overriden.");
-            if (_Prefix != null)
-              PS.AddError("Schema '" + _ParentSchema.getFullName() + "' defined conventions with a 'sameAs' as well as 'prefix'. You cannot reuse a set of conventions and redefine directivess as this would work against standardization of conventions across schemas. Only 'default' fields can be overriden.");
+//            if (_Prefix != null)
+//              PS.AddError("Schema '" + _ParentSchema.getFullName() + "' defined conventions with a 'sameAs' as well as 'prefix'. You cannot reuse a set of conventions and redefine directivess as this would work against standardization of conventions across schemas. Only 'default' fields can be overriden.");
             if (_ColumnNamingConventionStr != null)
               PS.AddError("Schema '" + _ParentSchema.getFullName() + "' defined conventions with a 'sameAs' as well as 'columnNamingConvention'. You cannot reuse a set of conventions and redefine directivess as this would work against standardization of conventions across schemas. Only 'default' fields can be overriden.");
-            if (_DBColumnNameTranslation != null)
-              PS.AddError("Schema '" + _ParentSchema.getFullName() + "' defined conventions with a 'sameAs' as well as 'dbColumnNameTranslation'. You cannot reuse a set of conventions and redefine directivess as this would work against standardization of conventions across schemas. Only 'default' fields can be overriden.");
+//            if (_DBColumnNameTranslation != null)
+//              PS.AddError("Schema '" + _ParentSchema.getFullName() + "' defined conventions with a 'sameAs' as well as 'dbColumnNameTranslation'. You cannot reuse a set of conventions and redefine directivess as this would work against standardization of conventions across schemas. Only 'default' fields can be overriden.");
 //            if (_PrimaryKeyNamePostfix != null || _ForeignKeyNamePostfix != null)
 //              PS.AddError("Schema '" + _ParentSchema.getFullName() + "' defined conventions with a 'sameAs' as well as values for one or more other fields. You cannot reuse a set of conventions and change values as this would work against standardization of conventions across schemas.");
 
@@ -89,10 +89,10 @@ public class Convention
         else if ((_ColumnNamingConvention = ConventionNaming.parse(_ColumnNamingConventionStr)) == null)
           PS.AddError("Schema '" + _ParentSchema.getFullName() + "' defined an invalid convention 'columnNamingConvention' value of '" + _ColumnNamingConventionStr + "'.");
 
-        if (_DBColumnNameTranslation == null)
-          _DBColumnNameTranslation = Boolean.FALSE;
-        else if (_DBColumnNameTranslation == true && _ColumnNamingConvention != ConventionNaming.CAMEL_CASE_JS)
-          PS.AddError("Schema '" + _ParentSchema.getFullName() + "' defined convention 'dbColumnNameTranslation' to true, but 'columnNamingConvention' has a value of '" + _ColumnNamingConventionStr + "'. dbColumnNameTranslation can only be set to true if 'columnNamingConvention' is '" + ConventionNaming.CAMEL_CASE_JS + "'.");
+//        if (_DBColumnNameTranslation == null)
+//          _DBColumnNameTranslation = Boolean.FALSE;
+//        else if (_DBColumnNameTranslation == true && _ColumnNamingConvention != ConventionNaming.CAMEL_CASE_JS)
+//          PS.AddError("Schema '" + _ParentSchema.getFullName() + "' defined convention 'dbColumnNameTranslation' to true, but 'columnNamingConvention' has a value of '" + _ColumnNamingConventionStr + "'. dbColumnNameTranslation can only be set to true if 'columnNamingConvention' is '" + ConventionNaming.CAMEL_CASE_JS + "'.");
 
         if (TextUtil.isNullOrEmpty(_PrimaryKeyName) == true)
           _PrimaryKeyName = "refnum";
@@ -105,11 +105,11 @@ public class Convention
         // if (TextUtil.isNullOrEmpty(_ForeignKeyNamePostfix) == true)
         // _ForeignKeyNamePostfix = null;
 
-        if (_Prefix == null)
-          _Prefix = Boolean.FALSE;
+//        if (_Prefix == null)
+//          _Prefix = Boolean.FALSE;
 
-        if (_UniquePrefixes == null)
-          _UniquePrefixes = Boolean.FALSE;
+//        if (_UniquePrefixes == null)
+//          _UniquePrefixes = Boolean.FALSE;
         
         // Default Mode
         if (_DefaultModeStr != null && (_DefaultMode = ObjectMode.parse(_DefaultModeStr)) == null)
@@ -134,9 +134,9 @@ public class Convention
         _PrimaryKeyName = conventions._PrimaryKeyName;
 //        _PrimaryKeyNamePostfix = conventions._PrimaryKeyNamePostfix;
         _ForeignKeyNamePostfix = conventions._ForeignKeyNamePostfix;
-        _Prefix = conventions._Prefix;
+//        _Prefix = conventions._Prefix;
         _ColumnNamingConventionStr = conventions._ColumnNamingConventionStr;
-        _DBColumnNameTranslation = conventions._DBColumnNameTranslation;
+//        _DBColumnNameTranslation = conventions._DBColumnNameTranslation;
 
         // Defaults are optional and can be overridden.
         if (TextUtil.isNullOrEmpty(_DefaultModeStr) == true)
