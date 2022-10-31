@@ -17,6 +17,7 @@
 package tilda.utils.json;
 
 import java.io.Writer;
+import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -43,6 +44,8 @@ import tilda.utils.json.elements.ElementDoubleArray;
 import tilda.utils.json.elements.ElementEnd;
 import tilda.utils.json.elements.ElementStart;
 import tilda.utils.json.elements.ElementList;
+import tilda.utils.json.elements.ElementLocalDate;
+import tilda.utils.json.elements.ElementLocalDateArray;
 import tilda.utils.json.elements.ElementLong;
 import tilda.utils.json.elements.ElementLongArray;
 import tilda.utils.json.elements.ElementObj;
@@ -164,6 +167,18 @@ public class JSONPrinter
     public JSONPrinter addElement(String Name, ZonedDateTime[] Val)
       {
         _Elements.add(new ElementZonedDateTimeArray(Name, Val));
+        return this;
+      }
+
+    public JSONPrinter addElement(String Name, LocalDate Val)
+      {
+        _Elements.add(new ElementLocalDate(Name, Val));
+        return this;
+      }
+
+    public JSONPrinter addElement(String Name, LocalDate[] Val)
+      {
+        _Elements.add(new ElementLocalDateArray(Name, Val));
         return this;
       }
 
