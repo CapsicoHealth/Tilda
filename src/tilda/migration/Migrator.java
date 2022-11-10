@@ -496,7 +496,7 @@ public class Migrator
                           Actions.add(new ColumnComment(Col));
 
                         // Check default values
-                        checkDefaultValue(Actions, Col, CMeta);
+                        checkDefaultValue(CGSQL, Actions, Col, CMeta);
 
                         // Check arrays
                         if (CheckArrays(DBMeta, Errors, Col, CMeta) == false)
@@ -825,7 +825,7 @@ public class Migrator
       }
 
 
-    private static void checkDefaultValue(List<MigrationAction> Actions, Column Col, ColumnMeta CMeta)
+    private static void checkDefaultValue(CodeGenSql sqlGen, List<MigrationAction> Actions, Column Col, ColumnMeta CMeta)
     throws Exception
       {
         // Default values are a pain because (1) typing, and (2) the DB often rewrites the values. Therefore
@@ -834,7 +834,7 @@ public class Migrator
         String defaultValue = Col._DefaultCreateValue == null
         ? null
         : Col.getType() == ColumnType.DATE || Col.getType() == ColumnType.DATETIME || Col.getType() == ColumnType.CHAR || Col.getType() == ColumnType.STRING
-        ? ValueHelper.printValueSQL(Col.getName(), Col.getType(), Col.isCollection(), Col._DefaultCreateValue._Value)
+        ? ValueHelper.printValueSQL(sqlGen, Col.getName(), Col.getType(), Col.isCollection(), Col._DefaultCreateValue._Value)
         : Col._DefaultCreateValue._Value;
         String defaultValueDB = CMeta._Default;
         if (defaultValueDB != null)

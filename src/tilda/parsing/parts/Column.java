@@ -41,7 +41,6 @@ import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ReferenceHelper;
 import tilda.parsing.parts.helpers.ReferenceUrlHelper;
 import tilda.parsing.parts.helpers.ValidationHelper;
-import tilda.utils.CollectionUtil;
 import tilda.utils.PaddingTracker;
 import tilda.utils.TextUtil;
 
@@ -343,7 +342,10 @@ public class Column extends TypeDef
       }
 
 
-
+    protected static String withoutCollection(String typeStr)
+     {
+       return typeStr==null ? null : typeStr.replace("[]", "").replace("{}", ""); 
+     }
 
     protected void copyFromSameAs(ParserSession PS, boolean multi)
       {
@@ -363,10 +365,14 @@ public class Column extends TypeDef
         // Boolean sameAs_Nullable = SameAsHelper.getSameAsRoot_Nullable(this);
         // String sameAs_Description = SameAsHelper.getSameAsRoot_Description(this);
 
-        if (_TypeStr != null && _TypeStr.equals(_SameAsObj._TypeStr) == false && _Aggregate == null)
+        if (_TypeStr != null && withoutCollection(_TypeStr).equals(withoutCollection(_SameAsObj._TypeStr)) == false && _Aggregate == null)
           PS.AddError("Column '" + getFullName() + "' is a 'sameAs' and is redefining a type '" + _TypeStr + "' which doesn't match the destination column's type '" + _SameAsObj._TypeStr + "'. Note that redefining a type for a sameas column is superfluous in the first place.");
         else if (_Aggregate == null)
           _TypeStr = _SameAsObj._TypeStr + (_SameAsObj.isCollection() == false && multi == true ? "[]" : "");
+        
+        // put back the '[]' notation in the sameas if it was there in the first place.
+        if (multi == true)
+         _SameAs = _SameAs+"[]";
 
         /*
          * Should we do this or not? For mappers with extra PKs, this adds additional requirements on the new table with
@@ -656,6 +662,15 @@ public class Column extends TypeDef
         return L;
       }
 
+    public static List<Column> cleanupFrameworkColumns(List<Column> columns)
+      {
+        List<Column> L = new ArrayList<Column>();
+        for (Column col : columns)
+          if (col != null && col._FCT != FrameworkColumnType.TZ)
+            L.add(col);
+        return L;
+      }
+    
 
     @Override
     public String toString()
@@ -712,4 +727,5 @@ public class Column extends TypeDef
           }
         return null;
       }
+
   }

@@ -72,21 +72,22 @@ public class Generator
         if (GenFolder.mkdir() == false)
           throw new Exception("Cannot create the Tilda folder " + GenFolder.getAbsolutePath());
 
-        genTildaSql(G, GenFolder, S);
-        genTildaBigQuerySchemas(G, GenFolder, S);
         genTildaSupport(G, GenFolder, S);
-
         for (Object O : S._Objects)
           if (O != null && (O._Mode == ObjectMode.NORMAL || O._Mode == ObjectMode.CODE_ONLY))
             {
               LOG.debug("  Generating Tilda classes for Object '" + O.getFullName() + "'.");
               genTildaData(G, GenFolder, O);
               genTildaFactory(G, GenFolder, O);
-              // genTildaJson(G, GenFolder, O);
               genAppData(G, Res.getParentFile(), O);
               genAppFactory(G, Res.getParentFile(), O);
-              // genAppJson(G, Res.getParentFile(), O);
             }
+        
+        genTildaBigQuerySchemas(G, GenFolder, S);
+        genTildaSql(G, GenFolder, S);
+        G.switchDBGenerator("bigquery", 0, 0);
+        genTildaSql(G, GenFolder, S);
+        G.switchDBGeneratorBack();
         return true;
       }
 
@@ -169,6 +170,10 @@ public class Generator
               genTildaBigQuerySchema(V, Out);
               Out.close();
             }
+        
+        LOG.debug("  Generating the BigQuery JSON Schema files.");
+        
+        
       }
 
 

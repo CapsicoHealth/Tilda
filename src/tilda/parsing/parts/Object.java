@@ -82,13 +82,13 @@ public class Object extends Base
         _ETL = obj._ETL;
         _LCStr = obj._LCStr;
         for (Column C : obj._Columns)
-          if (C != null)
+          if (C != null && C._FCT != FrameworkColumnType.TZ)
             _Columns.add(new Column(C));
         if (obj._PrimaryKey != null)
           _PrimaryKey = new PrimaryKey(obj._PrimaryKey);
         if (obj._ForeignKeys.isEmpty() == false)
           for (ForeignKey FK : obj._ForeignKeys)
-            if (FK != null)
+            if (FK != null && FK.isTZ() == false)
               _ForeignKeys.add(new ForeignKey(FK));
         if (obj._Indices.isEmpty() == false)
           for (Index I : obj._Indices)
@@ -140,7 +140,7 @@ public class Object extends Base
       {
         if (_Validated == true)
           return true;
-
+        
         if (super.Validate(PS, parentSchema) == false)
           return false;
 
@@ -344,6 +344,7 @@ public class Object extends Base
         
         // We need to clean up columns that were not included in the history definition.
         obj._Columns = Column.cleanupColumnList(obj._Columns, _History._IncludedColumns);
+//        obj._Columns = Column.cleanupFrameworkColumns(obj._Columns);
         
         // We also need to clean up mappings if they reference a column that is not being carried over
         for (OutputMap OM : obj._OutputMaps)

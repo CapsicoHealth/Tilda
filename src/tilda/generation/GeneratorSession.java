@@ -32,104 +32,169 @@ public class GeneratorSession
   {
     protected static final Logger LOG = LogManager.getLogger(GeneratorSession.class.getName());
 
-    public GeneratorSession(String Language, int LanguageMajorVersion, int LanguageMinorVersion, String Database, int DatabaseMajorVersion, int DatabaseMinorVersion)
+    public GeneratorSession(String language, int languageMajorVersion, int languageMinorVersion, String database, int databaseMajorVersion, int databaseMinorVersion)
+      throws Exception
+      {
+        initCodeGenerators(language, languageMajorVersion, languageMinorVersion);
+        initDBGenerators(database, databaseMajorVersion, databaseMinorVersion);
+      }
+
+    protected void initCodeGenerators(String language, int languageMajorVersion, int languageMinorVersion)
     throws Exception
-     {
-       Language = Language.toLowerCase();
-       //Database = Database.toLowerCase();
-       
-       for (int i = LanguageMajorVersion; i >= 1; --i)
-         {
-           for (int j = LanguageMinorVersion; j >= 0; --j)
-             {
-               if (InitCodeGenerators(Language+i+"_"+j) == true)
-                break;
-             }
-           if (_TildaSupportGenerator != null || InitCodeGenerators(Language+i) == true)
-            break;
-           if (LanguageMinorVersion < 0)
-             LanguageMinorVersion = 15;
-         }
-       if (_TildaSupportGenerator == null && InitCodeGenerators(Language) == false)
-        throw new Exception("Could not load code generators for language "+Language+LanguageMajorVersion+(LanguageMinorVersion<0?"":"_"+LanguageMinorVersion));
-       
-       for (int i = DatabaseMajorVersion; i >= 1; --i)
-         {
-           for (int j = DatabaseMinorVersion; j >= 0; --j)
-             {
-               if (InitDBGenerators(Database+i+"_"+j) == true)
-                break;
-             }
-           if (_SqlClassGenerator != null || InitDBGenerators(Database+i) == true)
-            break;
-           if (DatabaseMinorVersion < 0)
-             DatabaseMinorVersion = 15;
-         }
-       if (_SqlClassGenerator == null && InitDBGenerators(Database) == false)
-        throw new Exception("Could not load code generators for database "+Database+DatabaseMajorVersion+(DatabaseMinorVersion < 0 ? "" : "_"+DatabaseMinorVersion));
-       
-     }
+      {
+        language = language.toLowerCase();
+        for (int i = languageMajorVersion; i >= 1; --i)
+          {
+            for (int j = languageMinorVersion; j >= 0; --j)
+              {
+                if (InitCodeGenerators(language + i + "_" + j) == true)
+                  break;
+              }
+            if (_TildaSupportGenerator != null || InitCodeGenerators(language + i) == true)
+              break;
+            if (languageMinorVersion < 0)
+              languageMinorVersion = 15;
+          }
+        if (_TildaSupportGenerator == null && InitCodeGenerators(language) == false)
+          throw new Exception("Could not load code generators for language " + language + languageMajorVersion + (languageMinorVersion < 0 ? "" : "_" + languageMinorVersion));
+      }
+
+    public void switchDBGenerator(String database, int databaseMajorVersion, int databaseMinorVersion)
+    throws Exception
+      {
+        if (_SqlClassGeneratorSaved != null)
+          throw new Exception("The DBGenerator was previously switched and not restored.");
+        _SqlClassGeneratorSaved = _SqlClassGenerator;
+        _SqlDocsGeneratorSaved = _SqlDocsGenerator;
+        _SqlClassGenerator = null;
+        _SqlDocsGenerator = null;
+        initDBGenerators(database, databaseMajorVersion, databaseMinorVersion);
+      }
+
+    public void switchDBGeneratorBack()
+    throws Exception
+      {
+        if (_SqlClassGeneratorSaved == null)
+          throw new Exception("The DBGenerator was not previously switched and so it cannot be restored.");
+        _SqlClassGenerator = _SqlClassGeneratorSaved;
+        _SqlClassGeneratorSaved = null;
+        _SqlDocsGenerator = _SqlDocsGeneratorSaved;
+        _SqlDocsGeneratorSaved = null;
+      }
+    
+    protected void initDBGenerators(String database, int databaseMajorVersion, int databaseMinorVersion)
+    throws Exception
+      {
+        database = database.toLowerCase();
+        for (int i = databaseMajorVersion; i >= 1; --i)
+          {
+            for (int j = databaseMinorVersion; j >= 0; --j)
+              {
+                if (InitDBGenerators(database + i + "_" + j) == true)
+                  break;
+              }
+            if (_SqlClassGenerator != null || InitDBGenerators(database + i) == true)
+              break;
+            if (databaseMinorVersion < 0)
+              databaseMinorVersion = 15;
+          }
+        if (_SqlClassGenerator == null && InitDBGenerators(database) == false)
+          throw new Exception("Could not load code generators for database " + database + databaseMajorVersion + (databaseMinorVersion < 0 ? "" : "_" + databaseMinorVersion));
+      }
+
     protected boolean InitCodeGenerators(String ClassKey)
       {
-        try{
-          _DocsGenerator         = (CodeGenDocs        ) Class.forName("tilda.generation."+ClassKey+".Docs"   ).getDeclaredConstructor().newInstance();
+        try
+          {
+            _DocsGenerator = (CodeGenDocs) Class.forName("tilda.generation." + ClassKey + ".Docs").getDeclaredConstructor().newInstance();
 
-          _TildaSupportGenerator = (CodeGenTildaSupport) Class.forName("tilda.generation."+ClassKey+".TildaSupport").getDeclaredConstructor().newInstance();
-          _TildaDataGenerator    = (CodeGenTildaData   ) Class.forName("tilda.generation."+ClassKey+".TildaData"   ).getDeclaredConstructor().newInstance();
-          _TildaFactoryGenerator = (CodeGenTildaFactory) Class.forName("tilda.generation."+ClassKey+".TildaFactory").getDeclaredConstructor().newInstance();
-//          _TildaJsonGenerator    = (CodeGenTildaJson   ) Class.forName("tilda.generation."+ClassKey+".TildaJson"   ).getDeclaredConstructor().newInstance();
+            _TildaSupportGenerator = (CodeGenTildaSupport) Class.forName("tilda.generation." + ClassKey + ".TildaSupport").getDeclaredConstructor().newInstance();
+            _TildaDataGenerator = (CodeGenTildaData) Class.forName("tilda.generation." + ClassKey + ".TildaData").getDeclaredConstructor().newInstance();
+            _TildaFactoryGenerator = (CodeGenTildaFactory) Class.forName("tilda.generation." + ClassKey + ".TildaFactory").getDeclaredConstructor().newInstance();
+            // _TildaJsonGenerator = (CodeGenTildaJson ) Class.forName("tilda.generation."+ClassKey+".TildaJson" ).getDeclaredConstructor().newInstance();
 
-          _AppDataGenerator      = (CodeGenAppData     ) Class.forName("tilda.generation."+ClassKey+".AppData"     ).getDeclaredConstructor().newInstance();
-          _AppFactoryGenerator   = (CodeGenAppFactory  ) Class.forName("tilda.generation."+ClassKey+".AppFactory"  ).getDeclaredConstructor().newInstance();
-//          _AppJsonGenerator      = (CodeGenAppJson     ) Class.forName("tilda.generation."+ClassKey+".AppJson"     ).getDeclaredConstructor().newInstance();
-        }
+            _AppDataGenerator = (CodeGenAppData) Class.forName("tilda.generation." + ClassKey + ".AppData").getDeclaredConstructor().newInstance();
+            _AppFactoryGenerator = (CodeGenAppFactory) Class.forName("tilda.generation." + ClassKey + ".AppFactory").getDeclaredConstructor().newInstance();
+            // _AppJsonGenerator = (CodeGenAppJson ) Class.forName("tilda.generation."+ClassKey+".AppJson" ).getDeclaredConstructor().newInstance();
+          }
         catch (Throwable T)
           {
             return false;
           }
         return true;
       }
-    
+
     protected boolean InitDBGenerators(String ClassKey)
       {
-        try{
-          _SqlClassGenerator = (CodeGenSql    ) Class.forName("tilda.generation."+ClassKey+".Sql" ).getDeclaredConstructor().newInstance();
-          _SqlDocsGenerator  = (CodeGenSqlDocs) Class.forName("tilda.generation."+ClassKey+".Docs").getDeclaredConstructor().newInstance();
-        }
+        try
+          {
+            _SqlClassGenerator = (CodeGenSql) Class.forName("tilda.generation." + ClassKey + ".Sql").getDeclaredConstructor().newInstance();
+            _SqlDocsGenerator = (CodeGenSqlDocs) Class.forName("tilda.generation." + ClassKey + ".Docs").getDeclaredConstructor().newInstance();
+          }
         catch (Throwable T)
           {
             return false;
           }
         return true;
       }
-    
-    
-    protected CodeGenSql          _SqlClassGenerator    ;
-    protected CodeGenSqlDocs      _SqlDocsGenerator     ;
-    
-    protected CodeGenDocs         _DocsGenerator        ;
+
+
+    protected CodeGenSql          _SqlClassGenerator;
+    protected CodeGenSql          _SqlClassGeneratorSaved;
+    protected CodeGenSqlDocs      _SqlDocsGenerator;
+    protected CodeGenSqlDocs      _SqlDocsGeneratorSaved;
+
+    protected CodeGenDocs         _DocsGenerator;
 
     protected CodeGenTildaSupport _TildaSupportGenerator;
-    protected CodeGenTildaData    _TildaDataGenerator   ;
+    protected CodeGenTildaData    _TildaDataGenerator;
     protected CodeGenTildaFactory _TildaFactoryGenerator;
-//    protected CodeGenTildaJson    _TildaJsonGenerator   ;
-    
-    protected CodeGenAppData      _AppDataGenerator     ;
-    protected CodeGenAppFactory   _AppFactoryGenerator  ;
-//    protected CodeGenAppJson      _AppJsonGenerator     ;
-    
-    public CodeGenSql          getSql            () { return _SqlClassGenerator    ; }
-    public CodeGenSqlDocs      getSqlDocs        () { return _SqlDocsGenerator     ; }
+    // protected CodeGenTildaJson _TildaJsonGenerator ;
 
-    public CodeGenDocs         getGenDocs        () { return _DocsGenerator        ; }
+    protected CodeGenAppData      _AppDataGenerator;
+    protected CodeGenAppFactory   _AppFactoryGenerator;
+    // protected CodeGenAppJson _AppJsonGenerator ;
 
-    public CodeGenTildaSupport getGenTildaSupport() { return _TildaSupportGenerator; }
-    public CodeGenTildaData    getGenTildaData   () { return _TildaDataGenerator   ; }
-    public CodeGenTildaFactory getGenTildaFactory() { return _TildaFactoryGenerator; }
-//    public CodeGenTildaJson    getGenTildaJson   () { return _TildaJsonGenerator   ; }
-    
-    public CodeGenAppData      getGenAppData     () { return _AppDataGenerator     ; }
-    public CodeGenAppFactory   getGenAppFactory  () { return _AppFactoryGenerator  ; }
-//    public CodeGenAppJson      getGenAppJson     () { return _AppJsonGenerator     ; }
+    public CodeGenSql getSql()
+      {
+        return _SqlClassGenerator;
+      }
+
+    public CodeGenSqlDocs getSqlDocs()
+      {
+        return _SqlDocsGenerator;
+      }
+
+    public CodeGenDocs getGenDocs()
+      {
+        return _DocsGenerator;
+      }
+
+    public CodeGenTildaSupport getGenTildaSupport()
+      {
+        return _TildaSupportGenerator;
+      }
+
+    public CodeGenTildaData getGenTildaData()
+      {
+        return _TildaDataGenerator;
+      }
+
+    public CodeGenTildaFactory getGenTildaFactory()
+      {
+        return _TildaFactoryGenerator;
+      }
+    // public CodeGenTildaJson getGenTildaJson () { return _TildaJsonGenerator ; }
+
+    public CodeGenAppData getGenAppData()
+      {
+        return _AppDataGenerator;
+      }
+
+    public CodeGenAppFactory getGenAppFactory()
+      {
+        return _AppFactoryGenerator;
+      }
+    // public CodeGenAppJson getGenAppJson () { return _AppJsonGenerator ; }
 
   }

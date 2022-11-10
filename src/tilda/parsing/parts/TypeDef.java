@@ -262,7 +262,7 @@ public class TypeDef
     @Override
     public String toString()
      {
-       return _Type==null?"XXX"
+       return _Type==null?"NULL_TYPE"
              :_Type.name()+(isList() ? "[]"
                            :isSet() ? "{}"
                            :_Type == ColumnType.STRING ? "("+_Size+")"

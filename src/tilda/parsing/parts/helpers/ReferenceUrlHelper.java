@@ -28,7 +28,7 @@ import tilda.utils.TextUtil;
 
 public class ReferenceUrlHelper
   {
-    static final Logger LOG = LogManager.getLogger(DefaultsHelper.class.getName());
+    static final Logger LOG = LogManager.getLogger(ReferenceUrlHelper.class.getName());
 
     public static String processReferenceUrl(String description, String referenceUrl)
       {

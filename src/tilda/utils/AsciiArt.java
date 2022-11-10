@@ -24,6 +24,8 @@ package tilda.utils;
  */
 public class AsciiArt
   {
+    public static final String _DEFAULT_LEAD = "          ";
+    
     public static String OK(String Lead)
       {
         return Lead + "   ____     __ __    __  \n"
@@ -33,6 +35,17 @@ public class AsciiArt
              + Lead + "\\____/  /_/ |_|  (_)    \n";
       }
 
+    public static String printOK(String lead, String msg)
+      {
+        return "\n"
+             + lead+"======================================================================================\n"
+             + OK(lead)
+             + "\n"
+             + lead+"  "+msg+"\n"
+             + lead+"======================================================================================\n"
+             ;
+      }
+    
     public static String Woohoo(String Lead)
       {
         return Lead + " __    __                  _                          _   \n"
@@ -42,6 +55,17 @@ public class AsciiArt
              + Lead + "  \\/  \\/   \\___/   \\___/  |_| |_|  \\___/   \\___/   \\/     \n";
       }
 
+    public static String printWoohoo(String lead, String msg)
+      {
+        return "\n"
+             + lead+"======================================================================================\n"
+             + Woohoo(lead)
+             + "\n"
+             + lead+"  "+msg+"\n"
+             + lead+"======================================================================================\n"
+             ;
+      }
+    
     public static String Warning(String Lead)
       {
         return Lead + "_  _  _   _______    ______   __     _   _____   __     _    ______        /\n" 
@@ -50,6 +74,18 @@ public class AsciiArt
              + Lead + "|__|__|   |     |   |    \\_   |    \\_|   __|__   |    \\_|   |______|    o      \n" 
         ;
       }
+
+    public static String printWarning(String lead, String msg)
+      {
+        return "\n"
+             + lead+"======================================================================================\n"
+             + Warning(lead)
+             + "\n"
+             + lead+"  "+msg+"\n"
+             + lead+"======================================================================================\n"
+             ;
+      }
+    
     
     public static String Error(String Lead)
       {
@@ -59,6 +95,17 @@ public class AsciiArt
              + Lead + "(_)(_)     (_)(_)    (_)(_)     (_)    (_)  (_)(_)      (_)\n"      
              + Lead + "(_) _  _   (_) (_)_  (_) (_)_   (_)_  _(_)  (_) (_)_     _ \n"      
              + Lead + "(_)(_)(_)  (_)   (_) (_)   (_)    (_)(_)    (_)   (_)   (_)\n"
+             ;
+      }
+    
+    public static String printError(String lead, String msg)
+      {
+        return "\n"
+             + lead+"======================================================================================\n"
+             + Error(lead)
+             + "\n"
+             + lead+"  "+msg+"\n"
+             + lead+"======================================================================================\n"
              ;
       }
     

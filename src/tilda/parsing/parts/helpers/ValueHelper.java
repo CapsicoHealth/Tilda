@@ -18,6 +18,7 @@ package tilda.parsing.parts.helpers;
 
 import tilda.enums.ColumnType;
 import tilda.enums.DefaultType;
+import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ViewColumn;
@@ -108,7 +109,7 @@ public class ValueHelper
           }
       }
 
-    public static String printValueSQL(String colName, ColumnType colType, boolean isCollection, String val)
+    public static String printValueSQL(CodeGenSql sqlGen, String colName, ColumnType colType, boolean isCollection, String val)
     throws Exception
       {
         if (isSuported(colType) == false)
@@ -135,7 +136,7 @@ public class ValueHelper
             case DATE:
             case DATETIME:
               if (val.equalsIgnoreCase("now") == true)
-                return "now()";
+                return sqlGen.getCurrentTimestampStr();
               else if (val.equalsIgnoreCase("undefined") == true)
                 return "'" + DateTimeUtil.printDateTimeForSQL(DateTimeUtil.UNDEFINED_PLACEHOLDER_ZDT) + "'";
               else
