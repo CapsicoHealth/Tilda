@@ -263,15 +263,13 @@ public class BigQuery extends CommonStoreImpl
         if (Type == ColumnType.STRING && M != ColumnMode.CALCULATED)
           {
             DBStringType ST = Size == null ? null : getDBStringType(Size);
-            return isCollection == true ? "text[]"
-            : ST == DBStringType.CHARACTER ? BigQueryType.CHAR._SQLType + "(" + Size + ")"
-            : ST == DBStringType.VARCHAR ? BigQueryType.STRING._SQLType + "(" + Size + ")"
-            : "text";
+            return isCollection == true ? "ARRAY<STRING>" : "STRING";
           }
 
-        return BigQueryType.get(Type)._SQLType
+        return (Type != ColumnType.JSON && isCollection == true ? "ARRAY<":"")
+        + BigQueryType.get(Type)._SQLType
         + (Type == ColumnType.NUMERIC && Precision != null ? "(" + Precision + (Scale != null ? "," + Scale : "") + ")" : "")
-        + (Type != ColumnType.JSON && isCollection == true ? "[]" : "");
+        + (Type != ColumnType.JSON && isCollection == true ? ">" : "");
       }
 
  // LDH-NOTE: What is the difference between getColumnType and getColumnTypeRaw????
@@ -282,13 +280,13 @@ public class BigQuery extends CommonStoreImpl
         if (Type == ColumnType.STRING && Calculated == false)
           {
             DBStringType DBT = getDBStringType(Size);
-            return isCollection == true || MultiOverride == true ? "text"
+            return isCollection == true || MultiOverride == true ? "STRING"
             : DBT == DBStringType.CHARACTER ? BigQueryType.CHAR._SQLType
             : DBT == DBStringType.VARCHAR ? BigQueryType.STRING._SQLType
-            : "text";
+            : "STRING";
           }
         if (Type == ColumnType.JSON)
-          return "jsonb";
+          return "json";
         return isCollection == true ? BigQueryType.get(Type)._SQLArrayType : BigQueryType.get(Type)._SQLType;
       }    
 
@@ -623,6 +621,8 @@ public class BigQuery extends CommonStoreImpl
           throw new Exception(IX._Parent.getFullName() + " is defining index '" + IX.getName() + "' which is GIN-Elligible and also defined as UNIQUE: GIN indices cannot be unique.");
         if (IX._Db == false)
           Out.print("-- app-level index only -- ");
+        if (supportsIndices() == false)
+          Out.print("-- ");
         Out.print("CREATE" + (IX._Unique == true ? " UNIQUE" : "") + " INDEX IF NOT EXISTS " + IX.getName() + " ON " + IX._Parent.getShortName() + (Gin ? " USING gin " : "") + " (");
         if (IX._ColumnObjs.isEmpty() == false)
           Sql.PrintColumnList(Out, IX._ColumnObjs, IX._LALColumns);

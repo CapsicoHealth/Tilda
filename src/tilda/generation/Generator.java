@@ -210,6 +210,9 @@ public class Generator
         if (mainDDL == true)
           {
             CG.genDDL(Out, O);
+            if (CG.supportsIndices() == false && O._Indices.isEmpty() == false)
+             Out.println("-- Indices not supported for this database");
+
             for (Index I : O._Indices)
               if (I != null)
                 CG.genIndex(Out, I);

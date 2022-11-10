@@ -147,10 +147,10 @@ public class Sql extends BigQuery implements CodeGenSql
                 First = false;
               else
                 Out.print("  , ");
-              Out.print("\"" + C.getName() + "\"" + O._PadderColumnNames.getPad(C.getName()) + "  " + PadderColumnTypes.pad(getColumnType(C)));
-              Out.print(C._Nullable == false ? "  not null" : "          ");
+              Out.print(getShortColumnVar(C)+ O._PadderColumnNames.getPad(C.getName()) + "  " + PadderColumnTypes.pad(getColumnType(C)));
               if (C._DefaultCreateValue != null)
                 Out.print(" DEFAULT " + ValueHelper.printValueSQL(getSQlCodeGen(), C.getName(), C.getType(), C.isCollection(), C._DefaultCreateValue._Value));
+              Out.print(C._Nullable == false ? "  not null" : "          ");
               Out.println("  OPTIONS(description=" + TextUtil.escapeDoubleQuoteWithSlash(C._Description)+")");
             }
         if (O._PrimaryKey != null)
@@ -1579,6 +1579,9 @@ public class Sql extends BigQuery implements CodeGenSql
     @Override
     public void genKeysManagement(PrintWriter Out, Object O)
       {
+        if (supportsPrimaryKeys() == false)
+         return;
+
         Out.println("delete from TILDA.Key where \"name\" = '" + O._ParentSchema._Name + "." + O._Name.toUpperCase() + "';");
         Out.println("insert into TILDA.Key (\"refnum\", \"name\", \"max\", \"count\", \"created\", \"lastUpdated\") values ((select COALESCE(max(\"refnum\"),0)+1 from TILDA.Key), '"
         + O._ParentSchema._Name + "." + O._Name.toUpperCase() + "',(select COALESCE(max(\"" + O._ParentSchema.getConventionPrimaryKeyName() + "\"),0)+1 from " + O._ParentSchema._Name + "." + O._Name
