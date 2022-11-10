@@ -161,8 +161,25 @@ public class Gen
         + AsciiArt.Woohoo("                       ")
         + "\n"
         + "              All Tilda code, migration scripts and documentation was generated succesfully.    \n"
-        + "                                                " + DurationUtil.printDuration(System.nanoTime() - TS) + "\n"
-        + "                                                " + SchemaCache.size() + " Schemas Processed\n"
+        + "                            " + DurationUtil.printDuration(System.nanoTime() - TS) + "\n"
+        + "                            " + SchemaCache.size() + " Schemas, " + countTables(SchemaCache) + " Tables, and " + countViews(SchemaCache) + " Views\n"
         + "          ======================================================================================");
       }
+
+    private static int countTables(Map<String, Schema> schemaCache)
+      {
+        int count = 0;
+        for (Schema s : schemaCache.values())
+         count += s._Objects.size();
+        return count;
+      }
+
+    private static int countViews(Map<String, Schema> schemaCache)
+      {
+        int count = 0;
+        for (Schema s : schemaCache.values())
+         count += s._Views.size();
+        return count;
+      }
+
   }
