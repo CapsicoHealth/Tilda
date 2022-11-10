@@ -353,7 +353,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                                 {
                                   FromList.append("\n     " + JoinType.printJoinType(VC._Join) + " " + VJ._ObjectObj.getShortName());
                                   FromList.append(" as " + getFullTableVar(VC._SameAsObj._ParentObject, TI._V));
-                                  FromList.append(" on " + Q._Clause);
+                                  FromList.append(" on " + rewriteExpressionColumnQuoting(Q._Clause));
                                 }
                           }
                         else
@@ -371,7 +371,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                                 FromList.append("     " + JT + " " + TI._N);
                                 if (TI._V > 1 || TextUtil.isNullOrEmpty(TI._As) == false)
                                   FromList.append(" as " + TI.getFullName());
-                                FromList.append(" on " + getFKStatement(FK, TableStack));
+                                FromList.append(" on " + rewriteExpressionColumnQuoting(getFKStatement(FK, TableStack)));
                               }
                           }
                       }
@@ -586,7 +586,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         Query Q = VJ.getQuery(this);
         if (Q == null)
           throw new Exception("Cannot generate the view because an 'on' clause matching the active database '" + this.getName() + "' is not available.");
-        Str.append(" on " + Q._Clause);
+        Str.append(" on " + rewriteExpressionColumnQuoting(Q._Clause));
         return Q;
       }
 
@@ -638,7 +638,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 Str.append(")");
                 if (TextUtil.isNullOrEmpty(VC._Filter) == false)
                   {
-                    Str.append(" filter(where ").append(VC._Filter).append(")");
+                    Str.append(" filter(where ").append(rewriteExpressionColumnQuoting(VC._Filter)).append(")");
                   }
               }
           }

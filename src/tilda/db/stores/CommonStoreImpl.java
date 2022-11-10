@@ -26,6 +26,7 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.apache.commons.io.output.StringBuilderWriter;
 import org.apache.logging.log4j.LogManager;
@@ -527,10 +528,26 @@ public abstract class CommonStoreImpl implements DBType
       }
 
     @Override
+    public String getShortColumnVar(String name)
+      {
+        return getColumnQuotingStartChar() + name + getColumnQuotingEndChar();
+      }
+
+    @Override
     public String getShortColumnVar(Column C)
       {
         return getColumnQuotingStartChar() + C.getName() + getColumnQuotingEndChar();
       }
+    
+    protected static Pattern REQUOTE1 = Pattern.compile("\\.(\\w+)([^\\w\\.\\(]|\\z)");
+    protected static Pattern REQUOTE2 = Pattern.compile("\\.\"([^\"]+)\"");
+    @Override
+    public String rewriteExpressionColumnQuoting(String expr)
+     {
+       return expr.replaceAll(REQUOTE1.pattern(), "."+getColumnQuotingStartChar()+"$1"+getColumnQuotingEndChar()+"$2")
+                  .replaceAll(REQUOTE2.pattern(), "."+getColumnQuotingStartChar()+"$1"+getColumnQuotingEndChar());
+     }
+    
     
     @Override
     public String getFullColumnVar(Column C)
@@ -816,4 +833,5 @@ public abstract class CommonStoreImpl implements DBType
         Con.executeSelect("TILDA", "CURRENT_DATE", "select " + getCurrentDateStr(), RP);
         return RP.getResult();
       }
+    
   }
