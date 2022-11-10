@@ -796,5 +796,23 @@ public class MSSQL implements DBType
       {
         throw new UnsupportedOperationException();
       }
+
+    @Override
+    public boolean supportsFirstLastAggregates()
+      {
+        return false;
+      }
+
+    @Override
+    public String getShortColumnVar(String name)
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public String rewriteExpressionColumnQuoting(String expr)
+      {
+        throw new UnsupportedOperationException();
+      }
     
   }
