@@ -16,15 +16,9 @@
 
 package tilda.db.stores;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.sql.Array;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
-import java.util.Collection;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -32,9 +26,6 @@ import org.apache.logging.log4j.Logger;
 import org.postgresql.core.BaseConnection;
 
 import tilda.db.Connection;
-import tilda.db.metadata.FKMeta;
-import tilda.db.metadata.IndexMeta;
-import tilda.db.metadata.PKMeta;
 import tilda.db.processors.LocalDateRP;
 import tilda.db.processors.ScalarRP;
 import tilda.db.processors.StringRP;
@@ -46,19 +37,12 @@ import tilda.enums.DBStringType;
 import tilda.enums.TildaType;
 import tilda.generation.bigquery.BigQueryType;
 import tilda.generation.interfaces.CodeGenSql;
-import tilda.generation.postgres9.Sql;
 import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Column;
-import tilda.parsing.parts.ForeignKey;
-import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Object;
-import tilda.parsing.parts.OrderBy;
-import tilda.parsing.parts.Query;
 import tilda.parsing.parts.Schema;
-import tilda.types.ColumnDefinition;
 import tilda.types.Type_DatetimePrimitive;
 import tilda.utils.AsciiArt;
-import tilda.utils.CollectionUtil;
 import tilda.utils.DurationUtil.IntervalEnum;
 import tilda.utils.FileUtil;
 import tilda.utils.TextUtil;
