@@ -430,113 +430,10 @@ public class BigQuery extends CommonStoreImpl
       }
 
     @Override
-    public void getFullColumnVar(StringBuilder Str, String SchemaName, String TableName, String ColumnName)
-      {
-        if (TextUtil.isNullOrEmpty(SchemaName) == false)
-          Str.append(SchemaName).append(".").append(TableName).append(".");
-        else if (TextUtil.isNullOrEmpty(TableName) == false)
-          Str.append(TableName).append(".");
-        Str.append("\"").append(ColumnName).append("\"");
-      }
-
-    @Override
-    public void getFullTableVar(StringBuilder Str, String SchemaName, String TableName)
-      {
-        Str.append(SchemaName).append(".").append(TableName);
-      }
-
-
-    @Override
-    public void setArray(Connection C, PreparedStatement PS, int i, ColumnType Type, List<Array> allocatedArrays, Collection<?> val)
-    throws Exception
-      {
-        java.sql.Array A = C.createArrayOf(_SQL.getColumnTypeRaw(Type, -1, true), val.toArray());
-        allocatedArrays.add(A);
-        PS.setArray(i, A);
-      }
-
-
-    @Override
-    public Collection<?> getArray(ResultSet RS, int i, ColumnType Type, boolean isSet)
-    throws Exception
-      {
-        Array A = RS.getArray(i);
-        if (A == null)
-          return null;
-        Collection<?> val = isSet == true ? CollectionUtil.toSet(A.getArray())
-        : CollectionUtil.toList(A.getArray());
-        A.free();
-        return val;
-      }
-
-    @Override
-    public Collection<?> getArray(ResultSet RS, String colName, ColumnType Type, boolean isSet)
-    throws Exception
-      {
-        Array A = RS.getArray(colName);
-        if (A == null)
-          return null;
-        Collection<?> val = isSet == true ? CollectionUtil.toSet(A.getArray())
-        : CollectionUtil.toList(A.getArray());
-        A.free();
-        return val;
-      }
-
-    /*
-     * @Override
-     * public void setJson(PreparedStatement PS, int i, String jsonValue)
-     * throws Exception
-     * {
-     * // TODO Auto-generated method stub
-     * 
-     * }
-     * 
-     * 
-     * @Override
-     * public String getJson(ResultSet RS, int i)
-     * throws Exception
-     * {
-     * // TODO Auto-generated method stub
-     * return null;
-     * }
-     * 
-     * @Override
-     * public String getJson(ResultSet RS, String colName)
-     * throws Exception
-     * {
-     * // TODO Auto-generated method stub
-     * return null;
-     * }
-     */
-
-    @Override
     public String getJsonParametrizedQueryPlaceHolder()
       {
-        return "cast(? as jsonb)";
+        return "cast(? as json)";
       }
-
-
-    @Override
-    public void setOrderByWithNullsOrdering(Connection C, StringBuilder Str, ColumnDefinition Col, boolean Asc, boolean NullsLast)
-      {
-        Col.getFullColumnVarForSelect(C, Str);
-        Str.append(Asc == true ? " ASC" : " DESC");
-        Str.append(" NULLS ").append(NullsLast == true ? "LAST" : "FIRST");
-      }
-
-
-    @Override
-    public void truncateTable(Connection C, String schemaName, String tableName, boolean cascade)
-    throws Exception
-      {
-        StringBuilder Str = new StringBuilder();
-        Str.append("TRUNCATE ");
-        getFullTableVar(Str, schemaName, tableName);
-        if (cascade == true)
-          Str.append(" CASCADE");
-        C.executeUpdate(schemaName, tableName, Str.toString());
-      }
-
 
     @Override
     public void age(Connection C, StringBuilder Str, Type_DatetimePrimitive ColStart, Type_DatetimePrimitive ColEnd, IntervalEnum Type, int Count, String Operator)
@@ -550,148 +447,25 @@ public class BigQuery extends CommonStoreImpl
 
 
     @Override
-    public boolean alterTableComment(Connection Con, Object Obj)
+    public boolean alterTableComment(Connection con, Object obj)
     throws Exception
       {
-        String Q = "COMMENT ON TABLE " + Obj.getShortName() + " IS " + TextUtil.escapeSingleQuoteForSQL(Obj._Description) + ";";
-        return Con.executeDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q);
+        String Q = "ALTER TABLE " + obj.getShortName() 
+        + "SET OPTIONS (description="+TextUtil.escapeDoubleQuoteWithSlash(obj._Description)+");";
+
+        return con.executeDDL(obj._ParentSchema._Name, obj.getBaseName(), Q);
       }
 
     @Override
-    public boolean alterTableReplaceTablePK(Connection Con, Object Obj, PKMeta oldPK)
+    public boolean alterTableAlterColumnComment(Connection con, Column col)
     throws Exception
       {
-        if (oldPK != null)
-          {
-            String Q = "ALTER TABLE " + Obj.getShortName() + " DROP CONSTRAINT \"" + oldPK._Name + "\";";
-            if (Con.executeDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q) == false)
-              return false;
-          }
-        if (Obj._PrimaryKey != null)
-          {
-            String Q = "ALTER TABLE " + Obj.getShortName() + " ADD PRIMARY KEY (" + PrintColumnList(Obj._PrimaryKey._ColumnObjs) + ");";
-            return Con.executeDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q);
-          }
-        return true;
+        String Q = "ALTER TABLE " + col._ParentObject.getShortName() 
+                 + "ALTER COLUMN " + getShortColumnVar(col)
+                 + "SET OPTIONS (description="+TextUtil.escapeDoubleQuoteWithSlash(col._Description)+");";
+        return con.executeDDL(col._ParentObject._ParentSchema._Name, col._ParentObject.getBaseName(), Q);
       }
-
-    @Override
-    public boolean alterTableDropFK(Connection Con, Object Obj, FKMeta FK)
-    throws Exception
-      {
-        String Q = "ALTER TABLE " + Obj.getShortName() + " DROP CONSTRAINT \"" + FK._Name + "\";";
-        return Con.executeDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q);
-      }
-
-    @Override
-    public boolean alterTableAddFK(Connection Con, ForeignKey FK)
-    throws Exception
-      {
-        String Q = "ALTER TABLE " + FK._ParentObject.getShortName() + " ADD CONSTRAINT \"" + FK._Name + "\""
-        + " FOREIGN KEY (" + PrintColumnList(FK._SrcColumnObjs) + ") REFERENCES " + FK._DestObjectObj._ParentSchema._Name + "." + FK._DestObjectObj._Name
-        + " ON DELETE restrict ON UPDATE cascade";
-        return Con.executeDDL(FK._ParentObject._ParentSchema._Name, FK._ParentObject.getBaseName(), Q);
-      }
-
-    @Override
-    public boolean alterTableDropIndex(Connection Con, Object Obj, IndexMeta IX)
-    throws Exception
-      {
-        // If the DB Name comes in as all lower case, it's case-insensitive. Otherwise, we have to quote.
-        String DropName = IX._Name.equals(IX._Name.toLowerCase()) == false ? "\"" + IX._Name + "\"" : IX._Name;
-        String Q = "DROP INDEX " + Obj._ParentSchema._Name + "." + DropName + ";";
-        return Con.executeDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q);
-      }
-
-
-    @Override
-    public String alterTableAddIndexDDL(Index IX)
-    throws Exception
-      {
-        StringWriter OutStr = new StringWriter();
-        PrintWriter Out = new PrintWriter(OutStr);
-        boolean Gin = true;
-        for (Column C : IX._ColumnObjs)
-          if (C.getType() != ColumnType.JSON && (C.getType() != ColumnType.STRING || C.isCollection() == false))
-            Gin = false;
-        for (OrderBy OB : IX._OrderByObjs)
-          if (OB._Col.getType() != ColumnType.JSON && (OB._Col.getType() != ColumnType.STRING || OB._Col.isCollection() == false))
-            Gin = false;
-        if (Gin == true && IX._Unique == true)
-          throw new Exception(IX._Parent.getFullName() + " is defining index '" + IX.getName() + "' which is GIN-Elligible and also defined as UNIQUE: GIN indices cannot be unique.");
-        if (IX._Db == false)
-          Out.print("-- app-level index only -- ");
-        if (supportsIndices() == false)
-          Out.print("-- ");
-        Out.print("CREATE" + (IX._Unique == true ? " UNIQUE" : "") + " INDEX IF NOT EXISTS " + IX.getName() + " ON " + IX._Parent.getShortName() + (Gin ? " USING gin " : "") + " (");
-        if (IX._ColumnObjs.isEmpty() == false)
-          Sql.PrintColumnList(Out, IX._ColumnObjs, IX._LALColumns);
-        if (IX._OrderByObjs.isEmpty() == false)
-          {
-            boolean First = IX._ColumnObjs.isEmpty();
-            for (OrderBy OB : IX._OrderByObjs)
-              {
-                if (OB == null)
-                  continue;
-
-                if (First == true)
-                  First = false;
-                else
-                  Out.print(", ");
-                Out.print("\"" + OB._Col.getName() + "\" " + (Gin ? "" : OB._Order));
-                if (OB._Nulls != null)
-                  Out.print(" NULLS " + OB._Nulls);
-              }
-          }
-        Out.print(")");
-        if (IX._SubQuery != null)
-          {
-            Query Q = IX._SubQuery.getQuery(DBType.Postgres);
-            Out.print(" where " + Q._Clause);
-          }
-        Out.println(";");
-        return OutStr.toString();
-      }
-
-    @Override
-    public boolean alterTableAddIndex(Connection Con, Index IX)
-    throws Exception
-      {
-        return Con.executeDDL(IX._Parent._ParentSchema._Name, IX._Parent.getBaseName(), alterTableAddIndexDDL(IX));
-      }
-
-
-    @Override
-    public boolean alterTableRenameIndex(Connection Con, Object Obj, String OldName, String NewName)
-    throws Exception
-      {
-        // If the DB Name comes in as all lower case, it's case-insensitive. Otherwise, we have to quote.
-        if (OldName.equals(OldName.toLowerCase()) == false || OldName.equals(TextUtil.sanitizeName(OldName)) == false)
-          OldName = "\"" + OldName + "\"";
-
-        String Q = "ALTER INDEX " + Obj._ParentSchema._Name + "." + OldName + " RENAME TO " + NewName + ";";
-
-        return Con.executeDDL(Obj._ParentSchema._Name, Obj._Name, Q);
-      }
-
-
-    private static String PrintColumnList(List<Column> Columns)
-      {
-        StringBuilder Str = new StringBuilder();
-        boolean First = true;
-        for (Column C : Columns)
-          {
-            if (C == null)
-              continue;
-            if (First == true)
-              First = false;
-            else
-              Str.append(", ");
-            Str.append("\"" + C.getName() + "\"");
-          }
-        return Str.toString();
-      }
-
+    
     @Override
     public void within(Connection C, StringBuilder Str, Type_DatetimePrimitive Col, Type_DatetimePrimitive ColStart, long DurationCount, IntervalEnum DurationType)
       {

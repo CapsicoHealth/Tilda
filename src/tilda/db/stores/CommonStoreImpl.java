@@ -205,15 +205,6 @@ public abstract class CommonStoreImpl implements DBType
         return Con.executeDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
       }
 
-
-    @Override
-    public boolean alterTableAlterColumnComment(Connection Con, Column Col)
-    throws Exception
-      {
-        String Q = "COMMENT ON COLUMN " + Col._ParentObject.getShortName() + ".\"" + Col.getName() + "\" IS " + TextUtil.escapeSingleQuoteForSQL(Col._Description) + ";";
-        return Con.executeDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
-      }
-
     @Override
     public boolean alterTableDropColumn(Connection Con, Object Obj, String ColumnName)
     throws Exception

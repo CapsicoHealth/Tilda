@@ -32,6 +32,7 @@ import tilda.enums.ColumnType;
 import tilda.enums.DBStringType;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.generation.postgres9.PostgresType;
+import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.types.Type_DatetimePrimitive;
@@ -477,6 +478,14 @@ public class PostgreSQL extends CommonStoreImpl
         return Con.executeDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q);
       }
 
+    @Override
+    public boolean alterTableAlterColumnComment(Connection Con, Column Col)
+    throws Exception
+      {
+        String Q = "COMMENT ON COLUMN " + Col._ParentObject.getShortName() + ".\"" + Col.getName() + "\" IS " + TextUtil.escapeSingleQuoteForSQL(Col._Description) + ";";
+        return Con.executeDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
+      }
+    
     @Override
     public void within(Connection C, StringBuilder Str, Type_DatetimePrimitive Col, Type_DatetimePrimitive ColStart, long DurationCount, IntervalEnum DurationType)
       {
