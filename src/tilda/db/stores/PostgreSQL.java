@@ -153,6 +153,12 @@ public class PostgreSQL extends CommonStoreImpl
       {
         return true;
       }
+
+    @Override
+    public boolean supportsFirstLastAggregates()
+      {
+        return true;
+      }
     
     @Override
     public boolean supportsArrays()

@@ -61,6 +61,7 @@ public interface DBType
     public boolean  supportsSelectLimit();
     public boolean  supportsSelectOffset();
     public boolean  supportsFilterClause();
+    public boolean  supportsFirstLastAggregates();
     public boolean  supportsPrimaryKeys();
     public boolean  supportsForeignKeys();
     public boolean  supportsIndices();
@@ -124,7 +125,9 @@ public interface DBType
     public String           getFullTableVar (Object O);
     public String           getFullTableVar(Object O, int i);
     public void             getFullTableVar (StringBuilder Str, String SchemaName, String TableName);
+    public String           getShortColumnVar(String name);
     public String           getShortColumnVar(Column C);
+    public String           rewriteExpressionColumnQuoting(String expr);
     public String           getFullColumnVar(Column C);
     public String           getFullColumnVar(Column C, int i);
     public void             getFullColumnVar(StringBuilder Str, String SchemaName, String TableName, String ColumnName);

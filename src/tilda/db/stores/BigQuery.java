@@ -139,6 +139,12 @@ public class BigQuery extends CommonStoreImpl
       }
 
     @Override
+    public boolean supportsFirstLastAggregates()
+      {
+        return false;
+      }
+    
+    @Override
     public boolean supportsArrays()
       {
         return true;
