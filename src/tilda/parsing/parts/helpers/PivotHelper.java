@@ -85,7 +85,7 @@ public class PivotHelper
         PVC._OrderBy = A._OrderByStr;
         PVC._Coalesce = A._Coalesce;
         PVC._Distinct = A._Distinct;
-        PVC._Filter = "\""+P._VC.getName()+"\"= "+TextUtil.escapeSingleQuoteForSQL(VPV._Value);
+        PVC._Filter = PS._CGSql.getShortColumnVar(P._VC.getName())+" = "+TextUtil.escapeSingleQuoteForSQL(VPV._Value);
         PVC._UseMapper = VC._UseMapper;
         PVC._UseEnum = VC._UseEnum;
         PVC._Description = VPV._Description + " (pivot of " + VC.getAggregateName() + " on " + P._VC._SameAsObj.getShortName() + "='" + VPV._Value + "')";
@@ -99,7 +99,7 @@ public class PivotHelper
           {
             PVC.needsTZ();
             ViewColumn TZViewCol = View.createTZ(PS, PVC);
-            TZViewCol._Filter = "\""+P._VC.getName()+"\"= "+TextUtil.escapeSingleQuoteForSQL(VPV._Value);
+            TZViewCol._Filter = PS._CGSql.getShortColumnVar(P._VC.getName())+" = "+TextUtil.escapeSingleQuoteForSQL(VPV._Value);
             TZViewCol._NameInner = VC._Name+"TZ";
             VC._ParentView._PivotColumns.add(TZViewCol);
             // LDH-NOTE: No need to add the column to O because TZ handling is automated in the Object's Validation logic.

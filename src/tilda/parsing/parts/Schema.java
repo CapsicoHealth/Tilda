@@ -304,13 +304,14 @@ public class Schema
     public void setDefaultDependencies(ParserSession PS)
     throws Exception
       {
-        if (_Name.equals("TILDA") == false && _Name.equals("TILDATMP") == false && TextUtil.isNullOrEmpty(_Dependencies) == true)
+        if (_Name.equals("TILDA") == false && _Name.equals("TILDATMP") == false)
           {
-            _Dependencies = new String[] { _BASE_TILDA_SCHEMA_RESOURCE
-            };
             Schema TildaSchema = PS.getSchema(_BASE_TILDA_SCHEMA_RESOURCE);
             if (TildaSchema != null)
-              _DependencySchemas.add(TildaSchema);
+             {
+               if (_DependencySchemas.contains(TildaSchema) == false)
+                _DependencySchemas.add(0, TildaSchema);
+             }
             else
               throw new Exception("Cannot find Tilda schema '" + _BASE_TILDA_SCHEMA_RESOURCE + "' in the dependencies!!!");
           }

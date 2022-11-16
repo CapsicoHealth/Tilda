@@ -525,6 +525,7 @@ public class View extends Base
               if (TextUtil.isNullOrEmpty(s) == true)
                 continue;
               ReferenceHelper R = ReferenceHelper.parseColumnReference(s, this);
+              // LDH-NOTE: Need to fold into ReferenceHelper.resolve. Need to account for Object vs View lookups, and column vs formulas vs other stuff lookups.
               if (TextUtil.isNullOrEmpty(R._O) == true || TextUtil.isNullOrEmpty(R._C) == true)
                 PS.AddError("View '" + getFullName() + "' is importing formula '" + s + "' which cannot be parsed as a reference.");
               View V = PS.getView(R._P, R._S, R._O);
