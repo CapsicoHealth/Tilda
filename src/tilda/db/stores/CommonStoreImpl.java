@@ -700,9 +700,6 @@ public abstract class CommonStoreImpl implements DBType
     public String alterTableAddIndexDDL(Index IX)
     throws Exception
       {
-        if (supportsIndices() == false)
-          return null;
-         
         StringWriter OutStr = new StringWriter();
         PrintWriter Out = new PrintWriter(OutStr);
         boolean Gin = true;
@@ -714,8 +711,11 @@ public abstract class CommonStoreImpl implements DBType
             Gin = false;
         if (Gin == true && IX._Unique == true)
           throw new Exception(IX._Parent.getFullName() + " is defining index '" + IX.getName() + "' which is GIN-Elligible and also defined as UNIQUE: GIN indices cannot be unique.");
-        if (IX._Db == false)
+        if (supportsIndices() == false)
+          Out.print("--  ");
+        else if (IX._Db == false)
           Out.print("-- app-level index only -- ");
+
         Out.print("CREATE" + (IX._Unique == true ? " UNIQUE" : "") + " INDEX IF NOT EXISTS " + IX.getName() + " ON " + IX._Parent.getShortName() + (Gin ? " USING gin " : "") + " (");
         if (IX._ColumnObjs.isEmpty() == false)
           Sql.PrintColumnList(Out, IX._ColumnObjs, IX._LALColumns);

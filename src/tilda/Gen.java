@@ -71,7 +71,7 @@ public class Gen
           {
             if (path.endsWith(".jsonX") == true)
               {
-                LOG.info("File '"+path+"' ends in .jsonX and will be skipped");
+                LOG.info("File '" + path + "' ends in .jsonX and will be skipped");
                 continue;
               }
             try
@@ -162,7 +162,7 @@ public class Gen
         + "\n"
         + "              All Tilda code, migration scripts and documentation was generated succesfully.    \n"
         + "                            " + DurationUtil.printDuration(System.nanoTime() - TS) + "\n"
-        + "                            " + SchemaCache.size() + " Schemas, " + countTables(SchemaCache) + " Tables, and " + countViews(SchemaCache) + " Views\n"
+        + "                            " + (SchemaCache.size()-1) + " Schemas, " + countTables(SchemaCache) + " Tables, and " + countViews(SchemaCache) + " Views\n"
         + "          ======================================================================================");
       }
 
@@ -170,7 +170,8 @@ public class Gen
       {
         int count = 0;
         for (Schema s : schemaCache.values())
-         count += s._Objects.size();
+          if (s._Name.equalsIgnoreCase("TILDA") == false)
+            count += s._Objects.size();
         return count;
       }
 
@@ -178,7 +179,8 @@ public class Gen
       {
         int count = 0;
         for (Schema s : schemaCache.values())
-         count += s._Views.size();
+          if (s._Name.equalsIgnoreCase("TILDA") == false)
+            count += s._Views.size();
         return count;
       }
 

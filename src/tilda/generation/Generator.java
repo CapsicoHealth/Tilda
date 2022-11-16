@@ -211,7 +211,7 @@ public class Generator
           {
             CG.genDDL(Out, O);
             if (CG.supportsIndices() == false && O._Indices.isEmpty() == false)
-             Out.println("-- Indices not supported for this database");
+             Out.println("-- Indices are not supported for this database, so logical definition only");
 
             for (Index I : O._Indices)
               if (I != null)
