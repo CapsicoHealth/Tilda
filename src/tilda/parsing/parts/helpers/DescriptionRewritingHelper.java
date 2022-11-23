@@ -22,19 +22,24 @@ import java.util.regex.Pattern;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Column;
 import tilda.utils.HTMLFilter;
 import tilda.utils.TextUtil;
 
-public class ReferenceUrlHelper
+public class DescriptionRewritingHelper
   {
-    static final Logger LOG = LogManager.getLogger(ReferenceUrlHelper.class.getName());
+    static final Logger LOG = LogManager.getLogger(DescriptionRewritingHelper.class.getName());
 
-    public static String processReferenceUrl(String description, String referenceUrl)
+    public static String processReferenceUrl(String description, Base b)
       {
-        return TextUtil.isNullOrEmpty(referenceUrl) == true 
-        ? description
-        : description.replaceAll("\\$\\{REFERENCE_URL\\}", "<A target=\"_other\" href="+TextUtil.escapeDoubleQuoteWithSlash(referenceUrl)+">"+HTMLFilter.cleanAbsolute(referenceUrl)+"</A>");
+        if (TextUtil.isNullOrEmpty(b._ReferenceUrl) == false)
+         description = TextUtil.searchReplace(description, "${REFERENCE_URL}", "<A target=\"_other\" href="+TextUtil.escapeDoubleQuoteWithSlash(b._ReferenceUrl)+">"+HTMLFilter.cleanAbsolute(b._ReferenceUrl)+"</A>");
+         
+        if (TextUtil.isNullOrEmpty(b._Tag) == false)
+          description = TextUtil.searchReplace(description, "${TAG}", b._Tag);
+         
+        return description;
       }
 
     protected static Pattern _REGEX_FK_TABLE_DESCRIPTION = Pattern.compile("\\$\\{FK_TABLE_DESCRIPTION\\.([^\\}]+)\\}");

@@ -39,7 +39,7 @@ import tilda.enums.ValidationStatus;
 import tilda.enums.VisibilityType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ReferenceHelper;
-import tilda.parsing.parts.helpers.ReferenceUrlHelper;
+import tilda.parsing.parts.helpers.DescriptionRewritingHelper;
 import tilda.parsing.parts.helpers.ValidationHelper;
 import tilda.utils.PaddingTracker;
 import tilda.utils.TextUtil;
@@ -257,7 +257,7 @@ public class Column extends TypeDef
               PS.AddError("Column '" + getFullName() + "' didn't define a 'description'. It is mandatory.");
           }
 
-        _Description = ReferenceUrlHelper.processReferenceUrl(_Description, _ParentObject._ReferenceUrl);
+        _Description = DescriptionRewritingHelper.processReferenceUrl(_Description, _ParentObject);
 
         if (_Protect != null && _Type != ColumnType.STRING)
           PS.AddError("Column '" + getFullName() + "' is defined as a '" + _Type + "' with a '_Protect'. Only String columns should have a '_Protect' defined.");
@@ -342,10 +342,6 @@ public class Column extends TypeDef
           PS.AddError("Column '" + getFullName() + "' is a 'sameAs' and is redefining a type '" + _TypeStr + "' which doesn't match the destination column's type '" + _SameAsObj._TypeStr + "'. Note that redefining a type for a sameAs column is superfluous in the first place.");
         else if (_Aggregate == null)
           _TypeStr = _SameAsObj._TypeStr + (_SameAsObj.isCollection() == false && multi == true ? "[]" : "");
-
-        // put back the '[]' notation in the sameAs if it was there in the first place.
-        if (multi == true)
-          _SameAs = _SameAs + "[]";
 
         /*
          * Should we do this or not? For mappers with extra PKs, this adds additional requirements on the new table with

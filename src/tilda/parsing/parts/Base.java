@@ -31,7 +31,7 @@ import tilda.enums.ObjectMode;
 import tilda.enums.TildaType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.DefaultsHelper;
-import tilda.parsing.parts.helpers.ReferenceUrlHelper;
+import tilda.parsing.parts.helpers.DescriptionRewritingHelper;
 import tilda.parsing.parts.helpers.ValidationHelper;
 import tilda.utils.HTMLFilter;
 import tilda.utils.PaddingTracker;
@@ -51,6 +51,7 @@ public abstract class Base
     @SerializedName("description" ) public String               _Description= null;
     @SerializedName("descriptionX") public String[]             _DescriptionX= null;
     @SerializedName("referenceUrl") public String               _ReferenceUrl;
+    @SerializedName("tag"         ) public String               _Tag;
     @SerializedName("queries"     ) public List<SubWhereClause> _Queries    = new ArrayList<SubWhereClause>();
     @SerializedName("json"        ) public List<OutputMap>      _JsonDEPRECATED = new ArrayList<OutputMap >();
     @SerializedName("outputMaps"  ) public List<OutputMap>      _OutputMaps = new ArrayList<OutputMap>();
@@ -199,7 +200,7 @@ public abstract class Base
         if (TextUtil.isNullOrEmpty(_DescriptionX) == false)
           _Description = String.join(" ", _DescriptionX);
         
-        _Description = ReferenceUrlHelper.processReferenceUrl(_Description, _ReferenceUrl);
+        _Description = DescriptionRewritingHelper.processReferenceUrl(_Description, this);
         
         // _Name = _Name.toUpperCase();
 
@@ -269,7 +270,7 @@ public abstract class Base
           if (OM != null)
             {
               if (Names.add(OM._Name) == false)
-                PS.AddError(_TildaType.name() + " '" + getFullName() + "' is defining a duplicate Output mapping '" + OM._Name + "'.");
+                PS.AddError(_TildaType.name() + " '" + getFullName() + "' is defining a duplicate Output mapping named '" + OM._Name + "'.");
               OM.Validate(PS, this);
             }
       }
