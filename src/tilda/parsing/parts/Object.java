@@ -142,27 +142,27 @@ public class Object extends Base
           return true;
 
         int Errs = PS.getErrorCount();
-        
+                
+        if (super.Validate(PS, parentSchema) == false)
+          return false;
+
         if (_CloneAs != null)
           for (Cloner C : _CloneAs)
             {
               if (C.Validate(PS, this) == false)
                 return false;
               Object obj = new Object(this);
-              obj._Name = (C._FullName == true ? "" : _Name + "_") + C._Name;
-              obj._Description = C._Description;
+              obj._Name = C._Name;
               if (TextUtil.isNullOrEmpty(C._ReferenceUrl) == false)
                obj._ReferenceUrl = C._ReferenceUrl;
               if (TextUtil.isNullOrEmpty(C._Tag) == false)
                 obj._Tag = C._Tag;
+              obj._Description = C._Description;
               obj._FST = FrameworkSourcedType.CLONED;
               obj._SourceObject = this;
               parentSchema._Objects.add(obj);
             }
         
-        if (super.Validate(PS, parentSchema) == false)
-          return false;
-
         // We get a lot of reusable bits from this central TILDA table, so let's check it's all good.
         if (getFullName().equals("tilda.data.TILDA.Key") == true)
           {

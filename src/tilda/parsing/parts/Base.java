@@ -48,7 +48,7 @@ public abstract class Base
     @SerializedName("mode"        ) public String               _ModeStr    ;
     @SerializedName("shortAlias"  ) public String               _ShortAlias_DEPRECATED = null;
     @SerializedName("prefix"      ) public String               _Prefix = null;
-    @SerializedName("description" ) public String               _Description= null;
+    @SerializedName("description" ) public String               _Description= null;    
     @SerializedName("descriptionX") public String[]             _DescriptionX= null;
     @SerializedName("referenceUrl") public String               _ReferenceUrl;
     @SerializedName("tag"         ) public String               _Tag;
@@ -61,6 +61,7 @@ public abstract class Base
 
     public transient Schema          _ParentSchema;
     public transient PaddingTracker  _PadderColumnNames = new PaddingTracker();
+    public transient String          _OriginalDescription;
     public transient String          _OriginalName;
     public transient String          _BaseClassName;
     public transient String          _AppDataClassName;
@@ -200,7 +201,8 @@ public abstract class Base
         if (TextUtil.isNullOrEmpty(_DescriptionX) == false)
           _Description = String.join(" ", _DescriptionX);
         
-        _Description = DescriptionRewritingHelper.processReferenceUrl(_Description, this);
+        _OriginalDescription = _Description;
+        _Description = DescriptionRewritingHelper.processReferenceUrl(_OriginalDescription, this);
         
         // _Name = _Name.toUpperCase();
 
