@@ -113,7 +113,7 @@ public class ReferenceHelper
         String[] parts = ref.split("\\.");
         String P = ParsePackage(parts, 2);
         int i = P == null ? -1 : parts.length - 2;
-        String S = parts.length >= 2 ? parts[++i] : parentSchema._Name;
+        String S = parts.length == 1 || parts.length >= 2 ? parts[++i] : null;
 
         if (P == null)
           P = searchPackage(S, parentSchema);

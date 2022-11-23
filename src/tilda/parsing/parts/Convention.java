@@ -70,6 +70,8 @@ public class Convention
 
             if (TextUtil.isNullOrEmpty(R._P) == true || TextUtil.isNullOrEmpty(R._S) == true)
               PS.AddError("Schema '" + _ParentSchema.getFullName() + "' defined conventions with a sameas '" + _SameAs + "' with an incorrect syntax. It should be 'package.schema'.");
+            else if (R._S.equalsIgnoreCase(parentSchema._Name) == true)
+              PS.AddError("Schema '" + _ParentSchema.getFullName() + "' defined conventions with a sameas '" + _SameAs + "' which strangely resolved to itself, which is not right.");
             else
               {
                 Schema S = PS.getSchema(R._P, R._S);
@@ -77,7 +79,7 @@ public class Convention
                   PS.AddError("Schema '" + _ParentSchema.getFullName() + "' defined conventions with a sameas '" + _SameAs + "' resolving to '" + R.getFullName() + "' with a schema that cannot be found.");
                 else if (S._Conventions == null)
                   PS.AddError("Schema '" + _ParentSchema.getFullName() + "' defined conventions with a 'sameAs' value of '" + _SameAs + "' which doesn't define any conventions.");
-                else if (S._Conventions._Validated == false)
+                else if (S._Conventions._Validated == Boolean.FALSE)
                   PS.AddError("Schema '" + _ParentSchema.getFullName() + "' defined conventions with a 'sameAs' value of '" + _SameAs + "' with a conventions element that failed validation.");
                 else
                   copyValues(S._Conventions);
