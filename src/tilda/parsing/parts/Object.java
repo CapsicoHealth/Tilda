@@ -140,12 +140,9 @@ public class Object extends Base
       {
         if (_Validated == true)
           return true;
-        
-        if (super.Validate(PS, parentSchema) == false)
-          return false;
 
         int Errs = PS.getErrorCount();
-
+        
         if (_CloneAs != null)
           for (Cloner C : _CloneAs)
             {
@@ -154,10 +151,17 @@ public class Object extends Base
               Object obj = new Object(this);
               obj._Name = (C._FullName == true ? "" : _Name + "_") + C._Name;
               obj._Description = C._Description;
+              if (TextUtil.isNullOrEmpty(C._ReferenceUrl) == false)
+               obj._ReferenceUrl = C._ReferenceUrl;
+              if (TextUtil.isNullOrEmpty(C._Tag) == false)
+                obj._Tag = C._Tag;
               obj._FST = FrameworkSourcedType.CLONED;
               obj._SourceObject = this;
               parentSchema._Objects.add(obj);
             }
+        
+        if (super.Validate(PS, parentSchema) == false)
+          return false;
 
         // We get a lot of reusable bits from this central TILDA table, so let's check it's all good.
         if (getFullName().equals("tilda.data.TILDA.Key") == true)
@@ -264,7 +268,7 @@ public class Object extends Base
               continue;
             if (I.Validate(PS, this) == true)
               if (Names.add(I._Name.toUpperCase()) == false)
-                PS.AddError("Object '" + getFullName() + "' is defining a duplicate index '" + I._Name + "'.");
+                PS.AddError("Object '" + getFullName() + "' is defining a duplicate index named '" + I._Name + "'.");
             if (I._Db == true && Signatures.add(I.getSignature()) == false)
               PS.AddError("Object '" + getFullName() + "' is defining a duplicate index on signature '" + I.getSignature() + "'.");
             if (I._Unique == true)
@@ -300,7 +304,7 @@ public class Object extends Base
               continue;
             if (FK.Validate(PS, this) == true)
               if (FKNames.add(FK._Name.toUpperCase()) == false)
-                PS.AddError("Object '" + getFullName() + "' is defining a duplicate foreignKey '" + FK._Name + "'.");
+                PS.AddError("Object '" + getFullName() + "' is defining a duplicate foreignKey named '" + FK._Name + "'.");
           }
 
         if (_PrimaryKey == null && _HasUniqueIndex == false && _FST != FrameworkSourcedType.VIEW)

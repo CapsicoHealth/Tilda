@@ -28,9 +28,11 @@ public class Cloner
       }
 
     /*@formatter:off*/
-    @SerializedName("name"       ) public String  _Name       ;
-    @SerializedName("fullName"   ) public boolean _FullName   = false;
-    @SerializedName("description") public String  _Description;
+    @SerializedName("name"        ) public String  _Name       ;
+    @SerializedName("fullName"    ) public boolean _FullName   = false;
+    @SerializedName("referenceUrl") public String  _ReferenceUrl;
+    @SerializedName("description" ) public String  _Description;
+    @SerializedName("tag"         ) public String  _Tag;
     /*@formatter:on*/
 
     public transient Object _ParentObject;

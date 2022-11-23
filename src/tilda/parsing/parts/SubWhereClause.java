@@ -155,7 +155,7 @@ public class SubWhereClause
                     continue;
                   }
                 if (Froms.add(O.getFullName()) == false)
-                  PS.AddError(What + " is defining SubWhereClauses with a duplicate from '" + s + "'.");
+                  PS.AddError(What + " is defining SubWhereClauses with a duplicate from table '" + s + "'.");
                 else if (O == _ParentObject)
                   PS.AddError(What + " is defining SubWhereClauses with a from '" + s + "' refering to itself.");
                 else

@@ -1,5 +1,5 @@
-antlr4.antlrRegisteredTools=4.4@C\:\\Users\\LAUREN~1\\AppData\\Local\\Temp\\antlr-4.4-complete.jar
-antlr4.antlrToolPath=C\:\\Users\\LAUREN~1\\AppData\\Local\\Temp\\antlr-4.4-complete.jar
+antlr4.antlrRegisteredTools=4.10.1@C\:\\Projects\\repos\\OSS\\Tilda\\lib\\antlr-4.10.1-complete.jar
+antlr4.antlrToolPath=C\:\\Projects\\repos\\OSS\\Tilda\\lib\\antlr-4.10.1-complete.jar
 antlr4.encoding=UTF-8
 antlr4.listener=true
 antlr4.visitor=false
