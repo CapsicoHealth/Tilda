@@ -56,9 +56,8 @@ public class Generator
   {
     protected static final Logger LOG                 = LogManager.getLogger(Parser.class.getName());
 
-    public static final String    TILDA_VERSION       = "2.2";
-    public static final String    TILDA_VERSION_VAROK = "2_2";
-
+    public static final String    TILDA_VERSION       = "2.3";
+    public static final String    TILDA_VERSION_VAROK = "2_3";
 
     public static boolean generate(Schema S, GeneratorSession G)
     throws Exception

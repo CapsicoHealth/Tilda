@@ -14,9 +14,9 @@ import tilda.utils.*;
 /** @author    Tilda code gen for Java 8/PostgreSQL
     @version   Tilda 1.0
 */
-public final class TILDA__2_2
+public final class TILDA__2_3
  {
-   protected static final Logger LOG = LogManager.getLogger(TILDA__2_2.class.getName());
+   protected static final Logger LOG = LogManager.getLogger(TILDA__2_3.class.getName());
 
    protected static final String _COMMAQUESTION            =TextUtil.identity(",?");
    protected static final String _EQUALQUESTION            =TextUtil.identity("=?");
