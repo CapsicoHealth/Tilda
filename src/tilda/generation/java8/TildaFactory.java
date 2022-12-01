@@ -128,14 +128,18 @@ public class TildaFactory implements CodeGenTildaFactory
                 {
                   Out.print("     public final " + ColumnTypeClassName + TypePad + " " + C.getName().toUpperCase()
                   + ColumnPad + "= new " + ColumnTypeClassName + TypePad + "(SCHEMA_LABEL, TABLENAME_LABEL, \"" + C.getName() + "\"" + ColumnPad
-                  + ", " + (++Counter) + "/*" + C.getSequenceOrder() + "*/, " + TextUtil.escapeDoubleQuoteWithSlash(C._Description)
+                  + ", " + (++Counter) + "/*" + C.getSequenceOrder() + "*/, "
+                  + (C.isCollection() == false && C.getType() == ColumnType.STRING ? ""+C._Size+", " : "")
+                  + TextUtil.escapeDoubleQuoteWithSlash(C._Description)
                   + ", new String[] {" + TextUtil.printJavaStringArray(C._expressionStrs)
                   + "}, new String[] {" + TextUtil.printJavaStringArray(C._expressionDependencyColumnNames) + "}");
                 }
               else
                 Out.print("     public final " + ColumnTypeClassName + TypePad + " " + C.getName().toUpperCase()
                 + ColumnPad + "= new " + ColumnTypeClassName + TypePad + "(SCHEMA_LABEL, TABLENAME_LABEL, \"" + C.getName() + "\"" + ColumnPad
-                + ", " + (++Counter) + "/*" + C.getSequenceOrder() + "*/, " + TextUtil.escapeDoubleQuoteWithSlash(C._Description) + ", null, null");
+                + ", " + (++Counter) + "/*" + C.getSequenceOrder() + "*/, " 
+                + (C.isCollection() == false && C.getType() == ColumnType.STRING ? ""+C._Size+", " : "")
+                + TextUtil.escapeDoubleQuoteWithSlash(C._Description) + ", null, null");
 
               if (C.getType() == ColumnType.DATETIME && C.needsTZ() == true && O.getColumn(C.getName() + "TZ") != null)
                 {

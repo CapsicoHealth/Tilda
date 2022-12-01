@@ -30,6 +30,7 @@ import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.interfaces.JSONable;
 import tilda.parsing.parts.helpers.ValueHelper;
+import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
 import tilda.utils.json.JSONUtil;
 
@@ -37,12 +38,13 @@ public class ColumnDefinition implements JSONable
   {
     protected static final Logger LOG = LogManager.getLogger(ColumnDefinition.class.getName());
 
-    public ColumnDefinition(String SchemaName, String TableName, String ColumnName, int Count, ColumnType Type, boolean Collection, String Description, String[] expressionStrs, String[] expressionDependencyColumnNames, String[][] values)
+    public ColumnDefinition(String SchemaName, String TableName, String ColumnName, int Count, ColumnType Type, boolean Collection, int Size, String Description, String[] expressionStrs, String[] expressionDependencyColumnNames, String[][] values)
       {
         _SchemaName = SchemaName;
         _TableName = TableName;
         _ColumnName = ColumnName;
         _Type = Type;
+        _Size = Size;
         _Collection = Collection;
         _Mask.set(Count);
         if (Count > _MAX_COL_COUNT)
@@ -51,6 +53,11 @@ public class ColumnDefinition implements JSONable
         _expressionStrs = expressionStrs;
         _expressionDependencyColumnNames = expressionDependencyColumnNames;
         _values = values;
+      }
+
+    public ColumnDefinition(String SchemaName, String TableName, String ColumnName, int Count, ColumnType Type, boolean Collection, String Description, String[] expressionStrs, String[] expressionDependencyColumnNames, String[][] values)
+      {
+        this(SchemaName, TableName, ColumnName, Count, Type, Collection, SystemValues.EVIL_VALUE, Description, expressionStrs, expressionDependencyColumnNames, values);
       }
 
     public ColumnDefinition(String SchemaName, String TableName, String ColumnName, int Count, ColumnType Type, boolean Collection, String Description, String[] expressionStrs, String[] expressionDependencyColumnNames)
@@ -73,6 +80,7 @@ public class ColumnDefinition implements JSONable
     final String[]          _expressionDependencyColumnNames;
     final String[][]        _values;
     final ColumnType        _Type;
+    final int               _Size;
     final boolean           _Collection;
     public final BitSet     _Mask          = new BitSet(64);
 
@@ -258,7 +266,7 @@ public class ColumnDefinition implements JSONable
 
         return Names;
       }
-    
+
     public static ColumnDefinition getColumnDefinition(List<ColumnDefinition> cols, String columnName)
       {
         for (ColumnDefinition cd : cols)
@@ -266,7 +274,7 @@ public class ColumnDefinition implements JSONable
             return cd;
         return null;
       }
-    
+
     public static ColumnDefinition getColumnDefinition(ColumnDefinition[] cols, String columnName)
       {
         for (ColumnDefinition cd : cols)
@@ -274,7 +282,7 @@ public class ColumnDefinition implements JSONable
             return cd;
         return null;
       }
-    
+
 
     @Override
     public void toJSON(Writer out, String jsonExportName, String lead, boolean fullObject)
@@ -318,6 +326,6 @@ public class ColumnDefinition implements JSONable
     @Override
     public String toString()
       {
-        return getClass().getSimpleName()+" ("+getName()+":"+getType()+")";
+        return getClass().getSimpleName() + " (" + getName() + ":" + getType() + ")";
       }
   }
