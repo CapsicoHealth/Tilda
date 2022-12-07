@@ -137,7 +137,7 @@
     },
     {
       "name": "Connection",
-      "description": "Tilda DB Connections Configurations",
+      "description": "Tilda DB Connections Configurations.",
       "columns": [
 		{ "name": "active",     "type": "BOOLEAN",    "nullable": true,                 "description": "Status Flag"                                },
         { "name": "id",         "type": "STRING",     "nullable": false, "size": 15,    "description": "Connection ID",        "invariant": true    },
@@ -151,7 +151,7 @@
       ],
       "primary": { "columns": ["id"], "autogen": false },
       "indices": [
-        { "name": "AllById", "orderBy": ["id asc"], "db": true }
+         { "name": "AllById", "orderBy": ["id asc"], "db": true }
       ],
       "queries": [
         {
