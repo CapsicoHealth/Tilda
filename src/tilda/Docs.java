@@ -256,9 +256,12 @@ public class Docs
                     Out.close();
                   }
 
-                Name = FileUtil.getBasePathFromFileOrResource(S._ResourceName) + "_Tilda/TILDA___PostgreSQL." + S._Name.toUpperCase() + ".sql";
+                Name = FileUtil.getBasePathFromFileOrResource(S._ResourceName) + "_Tilda/TILDA___Schema." + S._Name.toUpperCase() + ".PostgreSQL.sql";
                 LOG.debug("Extracting Tilda SQL file " + Name);
-                Out = FileUtil.getBufferedPrintWriter(Args[0] + File.separator + "/sql/TILDA___PostgreSQL." + S._Name.toUpperCase() + ".sql", false);
+                Out = FileUtil.getBufferedPrintWriter(Args[0] + File.separator + "/sql/TILDA___Schema." + S._Name.toUpperCase() + ".PostgreSQL.sql", false);
+                FileUtil.copyFileContentsIntoAnotherFile(Name, Out);
+                Out.close();
+                Out = FileUtil.getBufferedPrintWriter(Args[0] + File.separator + "/sql/TILDA___Schema." + S._Name.toUpperCase() + ".BigQuery.sql", false);
                 FileUtil.copyFileContentsIntoAnotherFile(Name, Out);
                 Out.close();
 
