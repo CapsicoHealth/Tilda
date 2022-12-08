@@ -293,7 +293,7 @@ public class DocGen
                             writer.print(++c == 0 ? "            {" : "           ,{");
                             JSONUtil.print(writer, "name", true, C.getName());
                             JSONUtil.print(writer, "type", false, C._Size == null ? C._TypeStr : C._TypeStr + "(" + C._Size + ")");
-                            JSONUtil.print(writer, "nullable", false, C._Nullable);
+                            JSONUtil.print(writer, "nullable", false, C._Nullable==null?true:C._Nullable);
 
                             Formula F = O._ParentSchema.getSourceFormula(C);
                             if (F == null)

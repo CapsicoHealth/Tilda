@@ -271,7 +271,7 @@ public class SchemaMeta
 
     public boolean renameTableColumn(DatabaseMeta DBMeta, TableMeta src, String colName, String newName)
       {
-        ColumnMeta CM = src.getColumnMeta(colName);
+        ColumnMeta CM = src.getColumnMeta(colName, false);
         CM._Name = newName;
         src._ColumnsMap.remove(colName);
         return src._ColumnsMap.put(CM._Name.toLowerCase(), CM) == null;

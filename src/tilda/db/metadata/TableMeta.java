@@ -96,9 +96,12 @@ public class TableMeta
           }
       }
 
-    public ColumnMeta getColumnMeta(String ColumnName)
+    public ColumnMeta getColumnMeta(String ColumnName, boolean caseSensitive)
       {
-        return _ColumnsMap.get(ColumnName.toLowerCase());
+        ColumnMeta cm = _ColumnsMap.get(ColumnName.toLowerCase());
+        if (cm == null || caseSensitive == true && cm._NameOriginal.equals(ColumnName) == false)
+         return null;
+        return cm;
       }
 
     public List<ColumnMeta> getColumnMetaList()

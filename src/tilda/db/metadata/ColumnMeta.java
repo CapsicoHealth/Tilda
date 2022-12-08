@@ -111,6 +111,6 @@ public class ColumnMeta
 
     public ColumnMeta getTZCol()
       {
-        return _ParentTable!=null?_ParentTable.getColumnMeta(_NameOriginal+"TZ") : null; // : _ParentView.getColumnMeta(_NameOriginal+"TZ");
+        return _ParentTable!=null?_ParentTable.getColumnMeta(_NameOriginal+"TZ", false) : null; // : _ParentView.getColumnMeta(_NameOriginal+"TZ");
       }
   }

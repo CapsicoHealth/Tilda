@@ -147,8 +147,8 @@ public class PostgreSQLCSVImporter extends CSVImporter
                                     throw new Exception("Not null constraint will be violated.");
                                   }
                               }
-                            else
-                              LOG.info("The column " + c + " does not exist in the CSV file and does not have a default value in the mapping file.");
+//                            else
+//                              LOG.info("The column " + c + " does not exist in the CSV file and does not have a default value in the mapping file.");
                           }
                       }
                     else
