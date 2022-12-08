@@ -378,6 +378,27 @@ public class TildaFactory implements CodeGenTildaFactory
             Out.println("       // Default Create-time setters");
             Helper.SetDefaultValues(Out, DefaultColumns, "       Obj.");
           }
+        
+        // nullables
+        boolean nullables = false;
+        for (Column c : O._Columns)
+          {
+            if (c.isCreateColumn() == true || c._DefaultCreateValue != null || c._PrimaryKey == true 
+            || c._FCT != FrameworkColumnType.NONE || c._Mode != ColumnMode.NORMAL)
+             continue;
+            if (c._Nullable == true)
+              {
+                if (nullables == false)
+                  {
+                    Out.println();
+                    Out.println("       // Default Nullables");
+                    nullables = true;
+                  }
+                String Mask = Helper.getRuntimeMask(c);
+                Out.println("       Obj.__Nulls.or(" + Mask + ");");
+              }
+             
+          }
 
         Out.println();
         Out.println("       return (" + Helper.getFullAppDataClassName(O) + ") Obj;");
