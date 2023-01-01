@@ -635,6 +635,10 @@ public final class Connection
         return _DB.getSelectLimitClause(Start, Size);
       }
 
+    public boolean supportsSuperMetaDataQueries()
+      {
+        return _DB.supportsSuperMetaDataQueries();
+      }
 
     /**
      * For String Columns, checks is the Database would type as a CHARACTER, VARCHAR, or TEXT
@@ -978,6 +982,7 @@ public final class Connection
       {
         _C.setReadOnly(readOnly);
       }
+
   }
 
 

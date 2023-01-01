@@ -65,6 +65,7 @@ public interface DBType
     public boolean  supportsPrimaryKeys();
     public boolean  supportsForeignKeys();
     public boolean  supportsIndices();
+    public boolean  supportsSuperMetaDataQueries();
     public String   getSelectLimitClause(int Start, int Size);
     public int      getMaxColumnNameSize();
     public int      getMaxTableNameSize();

@@ -131,6 +131,12 @@ public class PostgreSQL extends CommonStoreImpl
       }
 
     @Override
+    public boolean supportsSuperMetaDataQueries()
+      {
+        return true;
+      }
+
+    @Override
     public boolean needsSavepoint()
       {
         return true;
@@ -396,7 +402,7 @@ public class PostgreSQL extends CommonStoreImpl
             case java.sql.Types.STRUCT       : TypeSql = "STRUCT"       ; TildaType = null; break;
             case java.sql.Types.TIME         : TypeSql = "TIME"         ; TildaType = null; break;
             case java.sql.Types.TIMESTAMP    : TypeSql = "TIMESTAMP"    ; TildaType = ColumnType.DATETIME; break;
-            case java.sql.Types.TINYINT      : TypeSql = "TINYINT"      ; TildaType = null; break;
+            case java.sql.Types.TINYINT      : TypeSql = "TINYINT"      ; TildaType = ColumnType.SHORT; break;
             case java.sql.Types.VARBINARY    : TypeSql = "VARBINARY"    ; TildaType = ColumnType.BINARY; break;
             case java.sql.Types.VARCHAR      : TypeSql = "VARCHAR"      ; TildaType = ColumnType.STRING; break;
             default:
@@ -576,4 +582,5 @@ public class PostgreSQL extends CommonStoreImpl
       {
         return null;
       }
+
   }

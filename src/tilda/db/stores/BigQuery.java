@@ -583,4 +583,10 @@ public class BigQuery extends CommonStoreImpl
         return RP.getResult();
       }
 
+    @Override
+    public boolean supportsSuperMetaDataQueries()
+      {
+        return false;
+      }
+
   }

@@ -48,8 +48,14 @@ public class SchemaMeta
         long TS = System.nanoTime();
         DatabaseMetaData meta = C.getMetaData();
 
-        Map<String, FKMeta> outFKs = loadForeignKeys(meta, _SchemaName, TablePattern, true);
-        Map<String, FKMeta> inFKs = loadForeignKeys(meta, _SchemaName, TablePattern, false);
+        Map<String, FKMeta> outFKs = null;
+        Map<String, FKMeta> inFKs = null;
+        
+        if (C.supportsSuperMetaDataQueries() == true)
+         {
+           outFKs = loadForeignKeys(meta, _SchemaName, TablePattern, true);
+           inFKs = loadForeignKeys(meta, _SchemaName, TablePattern, false);
+         }
         Map<String, Map<String, Map<String, ColumnMeta>>> columns = loadColumns(C, meta, _SchemaName, TablePattern);
 
         ResultSet RS = meta.getTables(null, _SchemaName.toLowerCase(), TablePattern == null ? null : TablePattern.toLowerCase(), null);
@@ -61,6 +67,11 @@ public class SchemaMeta
             if ("table".equalsIgnoreCase(Type) == true)
               {
                 TableMeta T = new TableMeta(_SchemaName, Name, Descr);
+                if (C.supportsSuperMetaDataQueries() == false)
+                  {
+                    outFKs = loadForeignKeys(meta, _SchemaName, T._TableName, true);
+                    inFKs = loadForeignKeys(meta, _SchemaName, T._TableName, false);
+                  }
                 setColumns(columns, T);
                 setFKs(inFKs, outFKs, T);
                 MetaPerformance._TableNano += (System.nanoTime() - TS);

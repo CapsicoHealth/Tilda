@@ -56,7 +56,7 @@ public class Reverse
           {
             Connection C = ConnectionPool.get("MAIN");
             SchemaMeta S = new SchemaMeta(Args[0]);
-            S.load(C, null);
+            S.load(C, Args.length == 2 && TextUtil.isNullOrEmpty(Args[1]) == false ? Args[1] : null);
             StringBuilder Str = new StringBuilder();
             int tableNum = -1;
 

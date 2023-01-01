@@ -125,6 +125,12 @@ public class MSSQL implements DBType
       }
 
     @Override
+    public boolean supportsSuperMetaDataQueries()
+      {
+        return false;
+      }
+
+    @Override
     public String getSelectLimitClause(int Start, int Size)
       {
         return "";
@@ -358,12 +364,13 @@ public class MSSQL implements DBType
             case java.sql.Types.CHAR         : TypeSql = "CHAR"         ; TildaType = Size==1 ? ColumnType.CHAR : ColumnType.STRING; break;
             case java.sql.Types.CLOB         : TypeSql = "CLOB"         ; TildaType = ColumnType.STRING; break;
             case java.sql.Types.DATALINK     : TypeSql = "DATALINK"     ; TildaType = null; break;
-            case java.sql.Types.DATE         : TypeSql = "DATE"         ; TildaType = null; break;
+            case java.sql.Types.DATE         : TypeSql = "DATE"         ; TildaType = ColumnType.DATE; break;
             case java.sql.Types.DECIMAL      : TypeSql = "DECIMAL"      ; TildaType = ColumnType.DOUBLE; break;
             case java.sql.Types.DISTINCT     : TypeSql = "DISTINCT"     ; TildaType = null; break;
             case java.sql.Types.DOUBLE       : TypeSql = "DOUBLE"       ; TildaType = ColumnType.DOUBLE; break;
             case java.sql.Types.FLOAT        : TypeSql = "FLOAT"        ; TildaType = ColumnType.FLOAT; break;
             case java.sql.Types.INTEGER      : TypeSql = "INTEGER"      ; TildaType = ColumnType.INTEGER; break;
+            case -150: // sql_variant
             case java.sql.Types.JAVA_OBJECT  : TypeSql = "JAVA_OBJECT"  ; TildaType = null; break;
             case java.sql.Types.LONGNVARCHAR : TypeSql = "LONGNVARCHAR" ; TildaType = ColumnType.STRING; break;
             case java.sql.Types.LONGVARBINARY: TypeSql = "LONGVARBINARY"; TildaType = ColumnType.BINARY; break;
@@ -388,19 +395,21 @@ public class MSSQL implements DBType
             case java.sql.Types.REAL         : TypeSql = "REAL"         ; TildaType = ColumnType.FLOAT; break;
             case java.sql.Types.REF          : TypeSql = "REF"          ; TildaType = null; break;
             case java.sql.Types.ROWID        : TypeSql = "ROWID"        ; TildaType = null; break;
-            case java.sql.Types.SMALLINT     : TypeSql = "SMALLINT"     ; TildaType = null; break;
+            case java.sql.Types.SMALLINT     : TypeSql = "SMALLINT"     ; TildaType = ColumnType.SHORT; break;
             case java.sql.Types.SQLXML       : TypeSql = "SQLXML"       ; TildaType = null; break;
             case java.sql.Types.STRUCT       : TypeSql = "STRUCT"       ; TildaType = null; break;
             case java.sql.Types.TIME         : TypeSql = "TIME"         ; TildaType = null; break;
             case microsoft.sql.Types.DATETIMEOFFSET:             
             case java.sql.Types.TIMESTAMP    : TypeSql = "TIMESTAMP"    ; TildaType = ColumnType.DATETIME; break;
-            case java.sql.Types.TINYINT      : TypeSql = "TINYINT"      ; TildaType = null; break;
+            case java.sql.Types.TINYINT      : TypeSql = "TINYINT"      ; TildaType = ColumnType.SHORT; break;
             case java.sql.Types.VARBINARY    : TypeSql = "VARBINARY"    ; TildaType = ColumnType.BINARY; break;
             case java.sql.Types.VARCHAR      : TypeSql = "VARCHAR"      ; TildaType = ColumnType.STRING; break;
             default: throw new Exception("Cannot map SQL Type "+Type+" for column "+Name+"("+TypeName+").");
             /*@formatter:on*/
           }
-        return new StringStringPair(TypeSql, TildaType.name());
+        if (TildaType == null)
+         LOG.warn("Found a map for SQL Type "+Type+" for column "+Name+"("+TypeName+"), but couldn't resolve to a TildaType.");
+        return new StringStringPair(TypeSql, TildaType == null ? TypeName : TildaType.name());
       }
 
     @Override
