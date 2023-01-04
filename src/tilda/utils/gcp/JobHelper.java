@@ -18,13 +18,17 @@ public class JobHelper
   {
     protected static final Logger LOG = LogManager.getLogger(JobHelper.class.getName());
 
+    public static Job completeJob(Job job)
+      {
+        return completeJob(job, null);
+      }
     /**
      * 
      * @param job
      * @return
      * @throws InterruptedException
      */
-    public static Job completeJob(Job job)
+    public static Job completeJob(Job job, List<String> errorMessages)
       {
         List<BigQueryError> errs = null;
         try
@@ -69,7 +73,10 @@ public class JobHelper
                   {
                     ++errorCount;
                   }
-                str.append(" - " + err.getMessage() + " - " + err.getReason() + "\n");
+                String msg = err.getMessage() + ": " + err.getReason();
+                if (errorMessages != null)
+                 errorMessages.add(msg);
+                str.append(" - " + msg + "\n");
               }
             LOG.error("BigQuery job was unable to load data to the table due to an error: \n" + str.toString());
             if (errorCount > 0)

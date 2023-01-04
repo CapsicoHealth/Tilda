@@ -197,7 +197,8 @@ public class BQHelper
             JobId jobId = JobId.newBuilder().build();
             JobInfo jobInfo = JobInfo.newBuilder(queryConfig).setJobId(jobId).build();
             Job job = bq.create(jobInfo);
-            if (JobHelper.completeJob(job) != null)
+            List<String> errMessages = new ArrayList<String>();
+            if (JobHelper.completeJob(job, errMessages) != null)
               {
                 TableResult results = job.getQueryResults();
                 if (results != null)
@@ -428,7 +429,8 @@ public class BQHelper
           }
         LOG.debug("Wrote " + i + " records out to BQ.");
         writer.close();
-        if (JobHelper.completeJob(out.getJob()) == null)
+        List<String> errMessages = new ArrayList<String>();
+        if (JobHelper.completeJob(out.getJob(), errMessages) == null)
           throw new Exception("Some error occurred");
         LOG.debug("SUCCESS!");
       }
@@ -525,7 +527,8 @@ public class BQHelper
             .build();
 
             Job job = bq.create(JobInfo.of(configuration));
-            return JobHelper.completeJob(job) != null;
+            List<String> errMessages = new ArrayList<String>();
+            return JobHelper.completeJob(job, errMessages) != null;
           }
         catch (BigQueryException e)
           {
