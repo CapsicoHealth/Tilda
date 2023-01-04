@@ -111,10 +111,6 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/postgresql-42.5.0.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="lib/postgresql-42.5.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
