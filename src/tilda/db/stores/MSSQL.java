@@ -42,7 +42,7 @@ import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.enums.DBStringType;
 import tilda.generation.Generator;
-import tilda.generation.SQLServer2014.SQLServerType;
+import tilda.generation.sqlserver2014.SQLServerType;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.generation.postgres9.PostgresType;
 import tilda.parsing.parts.Base;
@@ -70,11 +70,19 @@ public class MSSQL implements DBType
         return "MSSQL";
       }
 
+    protected static final String[] _NODATA_SQL_STATES = { "23505"
+    };    
     @Override
-    public boolean isErrNoData(SQLException E)
+    public String[] getConnectionNoDataStates()
       {
-        return E.getSQLState().equals("23000") || E.getErrorCode() == 2601;
+        return _NODATA_SQL_STATES;
       }
+    
+//    @Override
+//    public boolean isErrNoData(SQLException E)
+//      {
+//        return E.getSQLState().equals("23000") || E.getErrorCode() == 2601;
+//      }
 
 
     @Override
@@ -86,11 +94,10 @@ public class MSSQL implements DBType
     protected static final String[] _LOCK_CONN_ERROR_SUBSTR = {
         "deadlocked on lock", "lock request time out", "lock inconsistency found", "connection reset", "connection is closed", "connection has been closed"
     };
-
     @Override
-    public boolean isLockOrConnectionError(SQLException E)
+    public String[] getConnectionLockMsgs()
       {
-        return TextUtil.indexOf(E.getMessage().toLowerCase(), _LOCK_CONN_ERROR_SUBSTR);
+        return _LOCK_CONN_ERROR_SUBSTR;
       }
 
     @Override
@@ -113,6 +120,12 @@ public class MSSQL implements DBType
 
     @Override
     public boolean supportsArrays()
+      {
+        return false;
+      }
+
+    @Override
+    public boolean supportsSuperMetaDataQueries()
       {
         return false;
       }
@@ -170,7 +183,7 @@ public class MSSQL implements DBType
         return false;
       }
 
-    protected static CodeGenSql _SQL = new tilda.generation.SQLServer2014.Sql();
+    protected static CodeGenSql _SQL = new tilda.generation.sqlserver2014.Sql();
 
     @Override
     public CodeGenSql getSQlCodeGen()
@@ -255,7 +268,7 @@ public class MSSQL implements DBType
         String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ADD \"" + Col.getName() + "\" " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection());
         if (Col._Nullable == false)
           {
-            Q += " not null DEFAULT " + ValueHelper.printValueSQL(Col.getName(), Col.getType(), Col.isCollection(), DefaultValue);
+            Q += " not null DEFAULT " + ValueHelper.printValueSQL(getSQlCodeGen(), Col.getName(), Col.getType(), Col.isCollection(), DefaultValue);
           }
 
         Con.executeDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
@@ -351,12 +364,13 @@ public class MSSQL implements DBType
             case java.sql.Types.CHAR         : TypeSql = "CHAR"         ; TildaType = Size==1 ? ColumnType.CHAR : ColumnType.STRING; break;
             case java.sql.Types.CLOB         : TypeSql = "CLOB"         ; TildaType = ColumnType.STRING; break;
             case java.sql.Types.DATALINK     : TypeSql = "DATALINK"     ; TildaType = null; break;
-            case java.sql.Types.DATE         : TypeSql = "DATE"         ; TildaType = null; break;
+            case java.sql.Types.DATE         : TypeSql = "DATE"         ; TildaType = ColumnType.DATE; break;
             case java.sql.Types.DECIMAL      : TypeSql = "DECIMAL"      ; TildaType = ColumnType.DOUBLE; break;
             case java.sql.Types.DISTINCT     : TypeSql = "DISTINCT"     ; TildaType = null; break;
             case java.sql.Types.DOUBLE       : TypeSql = "DOUBLE"       ; TildaType = ColumnType.DOUBLE; break;
             case java.sql.Types.FLOAT        : TypeSql = "FLOAT"        ; TildaType = ColumnType.FLOAT; break;
             case java.sql.Types.INTEGER      : TypeSql = "INTEGER"      ; TildaType = ColumnType.INTEGER; break;
+            case -150: // sql_variant
             case java.sql.Types.JAVA_OBJECT  : TypeSql = "JAVA_OBJECT"  ; TildaType = null; break;
             case java.sql.Types.LONGNVARCHAR : TypeSql = "LONGNVARCHAR" ; TildaType = ColumnType.STRING; break;
             case java.sql.Types.LONGVARBINARY: TypeSql = "LONGVARBINARY"; TildaType = ColumnType.BINARY; break;
@@ -381,19 +395,21 @@ public class MSSQL implements DBType
             case java.sql.Types.REAL         : TypeSql = "REAL"         ; TildaType = ColumnType.FLOAT; break;
             case java.sql.Types.REF          : TypeSql = "REF"          ; TildaType = null; break;
             case java.sql.Types.ROWID        : TypeSql = "ROWID"        ; TildaType = null; break;
-            case java.sql.Types.SMALLINT     : TypeSql = "SMALLINT"     ; TildaType = null; break;
+            case java.sql.Types.SMALLINT     : TypeSql = "SMALLINT"     ; TildaType = ColumnType.SHORT; break;
             case java.sql.Types.SQLXML       : TypeSql = "SQLXML"       ; TildaType = null; break;
             case java.sql.Types.STRUCT       : TypeSql = "STRUCT"       ; TildaType = null; break;
             case java.sql.Types.TIME         : TypeSql = "TIME"         ; TildaType = null; break;
             case microsoft.sql.Types.DATETIMEOFFSET:             
             case java.sql.Types.TIMESTAMP    : TypeSql = "TIMESTAMP"    ; TildaType = ColumnType.DATETIME; break;
-            case java.sql.Types.TINYINT      : TypeSql = "TINYINT"      ; TildaType = null; break;
+            case java.sql.Types.TINYINT      : TypeSql = "TINYINT"      ; TildaType = ColumnType.SHORT; break;
             case java.sql.Types.VARBINARY    : TypeSql = "VARBINARY"    ; TildaType = ColumnType.BINARY; break;
             case java.sql.Types.VARCHAR      : TypeSql = "VARCHAR"      ; TildaType = ColumnType.STRING; break;
             default: throw new Exception("Cannot map SQL Type "+Type+" for column "+Name+"("+TypeName+").");
             /*@formatter:on*/
           }
-        return new StringStringPair(TypeSql, TildaType.name());
+        if (TildaType == null)
+         LOG.warn("Found a map for SQL Type "+Type+" for column "+Name+"("+TypeName+"), but couldn't resolve to a TildaType.");
+        return new StringStringPair(TypeSql, TildaType == null ? TypeName : TildaType.name());
       }
 
     @Override
@@ -643,12 +659,6 @@ public class MSSQL implements DBType
       }
 
     @Override
-    public boolean isCanceledError(SQLException t)
-      {
-        throw new UnsupportedOperationException();
-      }
-
-    @Override
     public String getCurrentDateStr()
       {
         throw new UnsupportedOperationException();
@@ -696,6 +706,120 @@ public class MSSQL implements DBType
     @Override
     public boolean moveTableView(Connection con, Base base, String oldSchemaName)
     throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public boolean supportsFilterClause()
+      {
+        return false;
+      }
+
+    @Override
+    public boolean supportsPrimaryKeys()
+      {
+        return true;
+      }
+
+    @Override
+    public boolean supportsForeignKeys()
+      {
+        return true;
+      }
+
+    @Override
+    public boolean supportsIndices()
+      {
+        return true;
+      }
+
+    @Override
+    public char getColumnQuotingStartChar()
+      {
+        return '[';
+      }
+
+    @Override
+    public char getColumnQuotingEndChar()
+      {
+        return ']';
+      }
+
+    @Override
+    public String[] getConnectionCancelStates()
+      {
+        return null;
+      }
+
+    @Override
+    public String getFullTableVar(Object O)
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public String getFullTableVar(Object O, int i)
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public String getShortColumnVar(Column C)
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public String getFullColumnVar(Column C)
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public String getFullColumnVar(Column C, int i)
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public String getColumnType(Column C)
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public String getColumnType(Column C, ColumnType AggregateType)
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public String getColumnTypeRaw(Column C, boolean MultiOverride)
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public String getColumnTypeRaw(ColumnType Type, int Size, boolean isArray)
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public boolean supportsFirstLastAggregates()
+      {
+        return false;
+      }
+
+    @Override
+    public String getShortColumnVar(String name)
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public String rewriteExpressionColumnQuoting(String expr)
       {
         throw new UnsupportedOperationException();
       }

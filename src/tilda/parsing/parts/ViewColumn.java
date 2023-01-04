@@ -217,7 +217,7 @@ public class ViewColumn
           {
             _Name = _SameAsObj.getName();
           }
-        
+
         ValidationHelper.validateColumnName(PS, "View", _Name, getFullName(), _ParentView._ParentSchema._Conventions);
 
         if (_JoinStr != null)
@@ -320,9 +320,9 @@ public class ViewColumn
           PS.AddError("View Column '" + getFullName() + "' defined an 'expression' but neglected to specify type information and optionally, size.");
         if (TextUtil.isNullOrEmpty(_Expression) == true && _Type != null && _FCT != FrameworkColumnType.TS)
           PS.AddError("View Column '" + getFullName() + "' defined extra type/size information without an 'expression': type and size are for expressions only.");
-        
-//        if (TextUtil.isNullOrEmpty(_Mask) == false)
-//          ValueHelper.CheckColumnValue(PS, this, _Name, _Mask, DefaultType.NONE);
+
+        // if (TextUtil.isNullOrEmpty(_Mask) == false)
+        // ValueHelper.CheckColumnValue(PS, this, _Name, _Mask, DefaultType.NONE);
 
         return Errs == PS.getErrorCount();
       }
@@ -383,40 +383,18 @@ public class ViewColumn
     public static Column ValidateSameAs(ParserSession PS, String ColFullName, String SameAs, View ParentView)
       {
         ReferenceHelper R = ReferenceHelper.parseColumnReference(SameAs, ParentView);
+        Column Col = R.resolveAsColumn(PS, "View column '" + ColFullName + "'", "sameAs '" + SameAs + "'", false);
+        if (Col == null)
+          return null;
 
-        if (TextUtil.isNullOrEmpty(R._S) == true || TextUtil.isNullOrEmpty(R._O) == true || TextUtil.isNullOrEmpty(R._C) == true)
-          PS.AddError("View column '" + ColFullName + "' is declaring sameas '" + SameAs + "' with an incorrect syntax. It should be '(((package\\.)?schema\\.)?object\\.)?column'.");
-        else
+        // If the view is realized, it should not have direct dependencies on other realized views since the system can handle automatically these dependencies
+        if (ParentView._Realize != null && (Col._ParentObject._TildaType == TildaType.REALIZED_VIEW || Col._ParentObject._FST == FrameworkSourcedType.REALIZED))
           {
-            Column Col = null;
-            Schema S = PS.getSchema(R._P, R._S);
-            if (S == null)
-              PS.AddError("View column '" + ColFullName + "' is declaring sameas '" + SameAs + "' resolving to '" + R.getFullName() + "' where schema '" + R._P + "." + R._S + "' cannot be found.");
-            else
-              {
-                Object O = S.getObject(R._O);
-                if (O == null)
-                  R.LogErrorKnownObjects(S);
-                else
-                  {
-                    Col = O.getColumn(R._C);
-                    if (Col == null)
-                      R.LogErrorKnownColumns(O);
-                  }
-              }
-            if (Col == null)
-              PS.AddError("View column '" + ColFullName + "' is declaring sameas '" + SameAs + "' resolving to '" + R.getFullName() + "' with a column which cannot be found.");
-            else
-              {
-                // If the view is realized, it should not have direct dependencies on other realized views since the system can handle automatically these dependencies
-                if (ParentView._Realize != null && (Col._ParentObject._TildaType == TildaType.REALIZED_VIEW || Col._ParentObject._FST == FrameworkSourcedType.REALIZED))
-                  PS.AddError("View column '" + ColFullName + "' is declaring sameas '" + SameAs + "' resolving to a realized view '" + R.getFullObjectName() + "', which is not allowed. Refills automatically handle cases when realized views reference other realized views. If you want to break the chain, create an intermediate unrealized view.");
-                else
-                  return Col;
-              }
+            PS.AddError("View column '" + ColFullName + "' is declaring sameas '" + SameAs + "' resolving to a realized view '" + R.getFullObjectName() + "', which is not allowed. Refills automatically handle cases when realized views reference other realized views. If you want to break the chain, create an intermediate unrealized view.");
+            return null;
           }
 
-        return null;
+        return Col;
       }
 
     @Override

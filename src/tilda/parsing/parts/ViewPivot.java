@@ -77,7 +77,7 @@ public class ViewPivot
             if (A.Validate(PS, this) == false)
               continue;
             if (AggregateNames.add(A._Name) == false)
-              PS.AddError("View '" + ParentView.getFullName() + "' is defining a Pivot on column " + _VC.getShortName() + " with a duplicate aggregate name '" + A._Name + "'.");
+              PS.AddError("View '" + ParentView.getFullName() + "' is defining a Pivot on column " + _VC.getShortName() + " with a duplicate aggregate named '" + A._Name + "'.");
 
             // LDH-NOTE: The logic to handle fields that need TZ is automated in the general process, so no need to do it here.
           }

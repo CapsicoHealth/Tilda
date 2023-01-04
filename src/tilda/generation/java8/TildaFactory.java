@@ -128,14 +128,18 @@ public class TildaFactory implements CodeGenTildaFactory
                 {
                   Out.print("     public final " + ColumnTypeClassName + TypePad + " " + C.getName().toUpperCase()
                   + ColumnPad + "= new " + ColumnTypeClassName + TypePad + "(SCHEMA_LABEL, TABLENAME_LABEL, \"" + C.getName() + "\"" + ColumnPad
-                  + ", " + (++Counter) + "/*" + C.getSequenceOrder() + "*/, " + TextUtil.escapeDoubleQuoteWithSlash(C._Description)
+                  + ", " + (++Counter) + "/*" + C.getSequenceOrder() + "*/, "
+                  + (C.isCollection() == false && C.getType() == ColumnType.STRING ? ""+C._Size+", " : "")
+                  + TextUtil.escapeDoubleQuoteWithSlash(C._Description)
                   + ", new String[] {" + TextUtil.printJavaStringArray(C._expressionStrs)
                   + "}, new String[] {" + TextUtil.printJavaStringArray(C._expressionDependencyColumnNames) + "}");
                 }
               else
                 Out.print("     public final " + ColumnTypeClassName + TypePad + " " + C.getName().toUpperCase()
                 + ColumnPad + "= new " + ColumnTypeClassName + TypePad + "(SCHEMA_LABEL, TABLENAME_LABEL, \"" + C.getName() + "\"" + ColumnPad
-                + ", " + (++Counter) + "/*" + C.getSequenceOrder() + "*/, " + TextUtil.escapeDoubleQuoteWithSlash(C._Description) + ", null, null");
+                + ", " + (++Counter) + "/*" + C.getSequenceOrder() + "*/, " 
+                + (C.isCollection() == false && C.getType() == ColumnType.STRING ? ""+C._Size+", " : "")
+                + TextUtil.escapeDoubleQuoteWithSlash(C._Description) + ", null, null");
 
               if (C.getType() == ColumnType.DATETIME && C.needsTZ() == true && O.getColumn(C.getName() + "TZ") != null)
                 {
@@ -373,6 +377,27 @@ public class TildaFactory implements CodeGenTildaFactory
             Out.println();
             Out.println("       // Default Create-time setters");
             Helper.SetDefaultValues(Out, DefaultColumns, "       Obj.");
+          }
+        
+        // nullables
+        boolean nullables = false;
+        for (Column c : O._Columns)
+          {
+            if (c.isCreateColumn() == true || c._DefaultCreateValue != null || c._PrimaryKey == true 
+            || c._FCT != FrameworkColumnType.NONE || c._Mode != ColumnMode.NORMAL)
+             continue;
+            if (c._Nullable == true)
+              {
+                if (nullables == false)
+                  {
+                    Out.println();
+                    Out.println("       // Default Nullables");
+                    nullables = true;
+                  }
+                String Mask = Helper.getRuntimeMask(c);
+                Out.println("       Obj.__Nulls.or(" + Mask + ");");
+              }
+             
           }
 
         Out.println();

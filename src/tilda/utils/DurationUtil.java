@@ -84,6 +84,7 @@ public class DurationUtil
         long s = (long) Math.floor(NanoSeconds / 1000000000.0);
         NanoSeconds -= s * 1000000000;
         long ms = NanoSeconds / 1000000;
+        
         StringBuilder Str = new StringBuilder();
         if (d != 0)
           Str.append(d).append("d");
@@ -95,7 +96,8 @@ public class DurationUtil
           Str.append(Str.length() != 0 ? " " : "").append(s).append("s");
         if (ms != 0)
           Str.append(Str.length() != 0 ? " " : "").append(ms).append("ms");
-        return Str.toString();
+        
+        return Str.length() > 0 ? Str.toString() : "0ms";
       }
 
     /**

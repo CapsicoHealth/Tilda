@@ -26,7 +26,7 @@ import tilda.enums.FrameworkColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ReferenceHelper;
-import tilda.parsing.parts.helpers.ReferenceUrlHelper;
+import tilda.parsing.parts.helpers.DescriptionRewritingHelper;
 import tilda.parsing.parts.helpers.SameAsHelper;
 import tilda.parsing.parts.helpers.ValidationHelper;
 import tilda.utils.TextUtil;
@@ -88,7 +88,7 @@ public class ForeignKey
         if (CheckForeignKeyMapping(PS, _ParentObject, _SrcColumnObjs, _DestObjectObj, "foreign key '" + _Name + "'") == true)
          {
            for (Column col : _SrcColumnObjs)
-             col._Description = ReferenceUrlHelper.processFKTableDescription(col._Description, _DestObjectObj);
+             col._Description = DescriptionRewritingHelper.processFKTableDescription(col._Description, _DestObjectObj);
          }
 
 
@@ -159,7 +159,7 @@ public class ForeignKey
         for (Column C : _SrcColumnObjs)
           C._ForeignKey = true;
 
-        if (_SrcColumns.length == 1 && _multi == true && _SrcColumnObjs.get(0).isCollection() == false)
+        if (_SrcColumns.length == 1 && _multi == true  && _SrcColumnObjs.isEmpty() == false && _SrcColumnObjs.get(0).isCollection() == false)
          PS.AddError("Object '" + _ParentObject.getFullName() + "' declares a multi foreign key '" + _Name + "' with non-array source column '" + _SrcColumns[0] + "'.");
         if (_SrcColumns.length == 1 && _multi == false && _SrcColumnObjs.isEmpty() == false && _SrcColumnObjs.get(0).isCollection() == true)
           PS.AddError("Object '" + _ParentObject.getFullName() + "' declares a non-multi foreign key '" + _Name + "' with an array source column '" + _SrcColumns[0] + "'. The foreign key should be defined as a multi key '"+_SrcColumns[0]+"[]'.");        
@@ -171,8 +171,8 @@ public class ForeignKey
             && _ParentObject._ParentSchema._Conventions._ForeignKeyNamePostfix != null // must be a FK postfix namin convention defined
             && _SrcColumnObjs.get(0)._Name.endsWith(_ParentObject._ParentSchema._Conventions._ForeignKeyNamePostfix) == false // is it compliant?
            )
-        /*@formatter:on*/
           return PS.AddError("Object '" + _ParentObject.getFullName() + "' declares foreign key '" + _Name + "' with source column '" + _SrcColumns[0] + "' which doesn't follow the convention 'foreignKeyNamePostfix' requiring a postfix of '" + _ParentObject._ParentSchema._Conventions._ForeignKeyNamePostfix + "'.");
+        /*@formatter:on*/
 
         return true;
       }
@@ -185,5 +185,10 @@ public class ForeignKey
     public String getSignature()
       {
         return _DestObjectObj.getShortName().toUpperCase() + "(" + getColumnList() + ")";
+      }
+
+    public boolean isTZ()
+      {
+        return _SrcColumnObjs.isEmpty() == false && _SrcColumnObjs.get(0)._FCT == FrameworkColumnType.TZ;
       }
   }

@@ -91,9 +91,6 @@ public class Migrator
   {
     protected static final Logger LOG                 = LogManager.getLogger(Parser.class.getName());
 
-    public static final String    TILDA_VERSION       = "1.0";
-    public static final String    TILDA_VERSION_VAROK = "1_0";
-
     public static void MigrateDatabase(Connection C, boolean CheckOnly, List<Schema> TildaList, DatabaseMeta DBMeta, boolean first, List<String> connectionUrls, String[] DependencySchemas)
     throws Exception
       {
@@ -379,11 +376,11 @@ public class Migrator
                                 List<ColumnMeta> CMSrcs = new ArrayList<ColumnMeta>();
                                 for (String n : MR._OldNames)
                                   {
-                                    ColumnMeta CMSrc = TM.getColumnMeta(n); // src column
+                                    ColumnMeta CMSrc = TM.getColumnMeta(n, false); // src column
                                     if (CMSrc != null)
                                       CMSrcs.add(CMSrc);
                                   }
-                                ColumnMeta CMDest = TM.getColumnMeta(MR._Column.getName()); // dst column
+                                ColumnMeta CMDest = TM.getColumnMeta(MR._Column.getName(), true); // dst column
                                 // dst column must not exist and only one src column must be existing in the DB (i.e., if it doesn't, it's been migrated previously already).
                                 if (CMDest == null && CMSrcs.size() == 1)
                                   {
@@ -487,16 +484,19 @@ public class Migrator
                     if (Col == null || Col._Mode == ColumnMode.CALCULATED)
                       continue;
 
-                    ColumnMeta CMeta = TMeta.getColumnMeta(Col.getName());
+                    ColumnMeta CMeta = TMeta.getColumnMeta(Col.getName(), false);
                     if (CMeta == null)
                       Actions.add(new ColumnAdd(Col));
                     else
                       {
+                        // Check if it's just a change in case for the column name
+                        if (Col.getName().equals(CMeta._NameOriginal) == false)
+                         Actions.add(new TableColumnRename(Col, CMeta._NameOriginal));
                         if (Col._Description.equalsIgnoreCase(CMeta._Descr) == false)
                           Actions.add(new ColumnComment(Col));
 
                         // Check default values
-                        checkDefaultValue(Actions, Col, CMeta);
+                        checkDefaultValue(CGSQL, Actions, Col, CMeta);
 
                         // Check arrays
                         if (CheckArrays(DBMeta, Errors, Col, CMeta) == false)
@@ -825,7 +825,7 @@ public class Migrator
       }
 
 
-    private static void checkDefaultValue(List<MigrationAction> Actions, Column Col, ColumnMeta CMeta)
+    private static void checkDefaultValue(CodeGenSql sqlGen, List<MigrationAction> Actions, Column Col, ColumnMeta CMeta)
     throws Exception
       {
         // Default values are a pain because (1) typing, and (2) the DB often rewrites the values. Therefore
@@ -834,7 +834,7 @@ public class Migrator
         String defaultValue = Col._DefaultCreateValue == null
         ? null
         : Col.getType() == ColumnType.DATE || Col.getType() == ColumnType.DATETIME || Col.getType() == ColumnType.CHAR || Col.getType() == ColumnType.STRING
-        ? ValueHelper.printValueSQL(Col.getName(), Col.getType(), Col.isCollection(), Col._DefaultCreateValue._Value)
+        ? ValueHelper.printValueSQL(sqlGen, Col.getName(), Col.getType(), Col.isCollection(), Col._DefaultCreateValue._Value)
         : Col._DefaultCreateValue._Value;
         String defaultValueDB = CMeta._Default;
         if (defaultValueDB != null)

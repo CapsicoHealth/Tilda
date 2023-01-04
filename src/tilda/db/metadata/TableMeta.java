@@ -84,21 +84,30 @@ public class TableMeta
     private void loadIndices(ResultSet RS)
     throws SQLException, Exception
       {
+        int indexCount = 0;
         while (RS.next() != false)
           {
-            IndexMeta IM = new IndexMeta(RS, this);
+            IndexMeta IM = new IndexMeta(RS, this/*, indexCount*/);
+            if (IM._Name == null)
+             continue;
             IndexMeta prevIM = _Indices.get(IM._Name);
             if (prevIM == null)
-              _Indices.put(IM._Name, IM);
+              {
+                _Indices.put(IM._Name, IM);
+                ++indexCount;
+              }
             else
               IM = prevIM;
             IM.addColumn(RS);
           }
       }
 
-    public ColumnMeta getColumnMeta(String ColumnName)
+    public ColumnMeta getColumnMeta(String ColumnName, boolean caseSensitive)
       {
-        return _ColumnsMap.get(ColumnName.toLowerCase());
+        ColumnMeta cm = _ColumnsMap.get(ColumnName.toLowerCase());
+        if (cm == null || caseSensitive == true && cm._NameOriginal.equals(ColumnName) == false)
+         return null;
+        return cm;
       }
 
     public List<ColumnMeta> getColumnMetaList()

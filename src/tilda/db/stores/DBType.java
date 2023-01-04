@@ -52,19 +52,30 @@ import tilda.utils.pairs.StringStringPair;
 
 public interface DBType
   {
-    public String  getName();
-    public boolean isErrNoData(SQLException t);
-    public String  getCurrentTimestampStr();
-    public String  getCurrentDateStr();
-    public boolean isLockOrConnectionError(SQLException t);
-    public boolean isCanceledError(SQLException t);
-    public boolean needsSavepoint();
-    public boolean supportsArrays();
-    public boolean supportsSelectLimit();
-    public boolean supportsSelectOffset();
-    public String  getSelectLimitClause(int Start, int Size);
-    public int     getMaxColumnNameSize();
-    public int     getMaxTableNameSize();
+    public String   getName();
+//    public boolean isErrNoData(SQLException t);
+//    public boolean isLockOrConnectionError(SQLException t);
+//    public boolean isCanceledError(SQLException t);
+    public boolean  needsSavepoint();
+    public boolean  supportsArrays();
+    public boolean  supportsSelectLimit();
+    public boolean  supportsSelectOffset();
+    public boolean  supportsFilterClause();
+    public boolean  supportsFirstLastAggregates();
+    public boolean  supportsPrimaryKeys();
+    public boolean  supportsForeignKeys();
+    public boolean  supportsIndices();
+    public boolean  supportsSuperMetaDataQueries();
+    public String   getSelectLimitClause(int Start, int Size);
+    public int      getMaxColumnNameSize();
+    public int      getMaxTableNameSize();
+    public char     getColumnQuotingStartChar();
+    public char     getColumnQuotingEndChar();
+    public String[] getConnectionNoDataStates();
+    public String[] getConnectionLockMsgs();
+    public String[] getConnectionCancelStates();
+    public String   getCurrentTimestampStr();
+    public String   getCurrentDateStr();
     
     public CodeGenSql getSQlCodeGen();
 
@@ -98,11 +109,12 @@ public interface DBType
 
     public void   truncateTable(Connection C, String schemaName, String tableName, boolean cascade) throws Exception;
 
-    public static DBType DB2       = new IBMDB2    ();
+//    public static DBType DB2       = new IBMDB2    ();
     public static DBType SQLServer = new MSSQL     ();
     public static DBType Postgres  = new PostgreSQL();
+    public static DBType BigQuery  = new BigQuery  ();
     
-    public static DBType[] _DBTypes = { Postgres, SQLServer, DB2 };
+    public static DBType[] _DBTypes = { Postgres, BigQuery, SQLServer/*, DB2*/ };
 
     public boolean fullIdentifierOnUpdate();
     public String getAggregateStr(AggregateType AT);
@@ -110,21 +122,28 @@ public interface DBType
     public DBStringType getDBStringType(int Size);
 
     public StringStringPair getTypeMapping(int type, String name, int size, String typeName) throws Exception;
-    public void             getFullColumnVar(StringBuilder Str, String SchemaName, String TableName, String ColumnName);
+    
+    public String           getFullTableVar (Object O);
+    public String           getFullTableVar(Object O, int i);
     public void             getFullTableVar (StringBuilder Str, String SchemaName, String TableName);
+    public String           getShortColumnVar(String name);
+    public String           getShortColumnVar(Column C);
+    public String           rewriteExpressionColumnQuoting(String expr);
+    public String           getFullColumnVar(Column C);
+    public String           getFullColumnVar(Column C, int i);
+    public void             getFullColumnVar(StringBuilder Str, String SchemaName, String TableName, String ColumnName);
+    public String           getColumnType(Column C);
+    public String           getColumnType(Column C, ColumnType AggregateType);
     public void             getColumnType   (StringBuilder Str, ColumnType T, Integer S, ColumnMode M, boolean Collection, Integer Precision, Integer Scale);
+    public String           getColumnTypeRaw(Column C, boolean MultiOverride);
+    public String           getColumnTypeRaw(ColumnType Type, int Size, boolean isArray);
     public void             setArray(Connection Con, PreparedStatement PS, int i, ColumnType Type, List<Array> allocatedArrays, Collection<?> val) throws Exception;
     public Collection<?>    getArray(                ResultSet         RS, int i, ColumnType Type, boolean isSet) throws Exception;
     public Collection<?>    getArray(                ResultSet         RS, String colName, ColumnType Type, boolean isSet) throws Exception;
-//    public void             setJson (                PreparedStatement PS, int i, String jsonValue) throws Exception;
-//    public String           getJson (                ResultSet         RS, int i) throws Exception;
-//    public String           getJson (                ResultSet         RS, String colName) throws Exception;
     public String           getJsonParametrizedQueryPlaceHolder();
     public void             setOrderByWithNullsOrdering(Connection Con, StringBuilder Str, ColumnDefinition Col, boolean Asc, boolean NullsLast);
     public void             age(Connection Con, StringBuilder Str, Type_DatetimePrimitive ColStart, Type_DatetimePrimitive ColEnd, IntervalEnum Type, int Count, String Operator);
     public void             within(Connection Con, StringBuilder Str, Type_DatetimePrimitive Col, Type_DatetimePrimitive ColStart, long DurationCount, IntervalEnum DurationType);
-    // LDH-NOTE: UNLOGGED Tables behave strangely in some situations... Disabling this feature.
-//    public boolean setTableLogging(Connection connection, String schemaName, String tableName, boolean logged) throws Exception;
     public String getBackendConnectionId(Connection con) throws Exception;
     void cancel(Connection con) throws SQLException;
     public boolean moveTableView(Connection con, Base base, String oldSchemaName) throws Exception;

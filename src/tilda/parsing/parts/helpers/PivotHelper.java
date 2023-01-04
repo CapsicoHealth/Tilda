@@ -56,41 +56,41 @@ public class PivotHelper
 
     public static ViewColumn handlePivotColumn(ParserSession PS, ViewColumn VC, ViewPivot P, ViewPivotAggregate A, ViewPivotValue VPV, Object O)
       {
-//        ColumnType AggregateType = VC.getType();
-//        ColumnType Type = VPV._Type != null ? VPV._Type.getType() : AggregateType;
+        // ColumnType AggregateType = VC.getType();
+        // ColumnType Type = VPV._Type != null ? VPV._Type.getType() : AggregateType;
 
         ViewColumn PVC = new ViewColumn();
         PVC._FCT = FrameworkColumnType.PIVOT;
         PVC._Name = A.makeName(VPV);
         PVC._SameAs = VC._SameAs;
         PVC._NameInner = VC._Name;
-        
+
         PVC._As = VC._As;
         // If there is an expression at the VPV level, it overwrites that of the VC. So for all type overrides, we
-        // check and prioritize VPV first, then VC, then null (no type override so the baseline type of the SameAs 
+        // check and prioritize VPV first, then VC, then null (no type override so the baseline type of the SameAs
         // will automatically kick in.
-        PVC._Expression = TextUtil.isNullOrEmpty(VPV._Expression)== false ? VPV._Expression : VC._Expression;
+        PVC._Expression = TextUtil.isNullOrEmpty(VPV._Expression) == false ? VPV._Expression : VC._Expression;
         PVC._TypeStr = getPivotedViewColumnTypeStr(VC, A, VPV);
-        PVC._Precision = TextUtil.isNullOrEmpty(VPV._Expression)== false ? VPV._Precision 
-                       : TextUtil.isNullOrEmpty(VC._Expression)== false ? VC._Precision 
-                       : null;
-        PVC._Scale = TextUtil.isNullOrEmpty(VPV._Expression)== false ? VPV._Scale 
-                   : TextUtil.isNullOrEmpty(VC._Expression)== false ? VC._Scale
-                   : null;
-        PVC._Size = A._Aggregate != null && A._Aggregate.isList() == true ? null 
-                  : TextUtil.isNullOrEmpty(VPV._Expression)== false ? VPV._Size 
-                  : TextUtil.isNullOrEmpty(VC._Expression)== false ? VC._Size
-                  : null;
+        PVC._Precision = TextUtil.isNullOrEmpty(VPV._Expression) == false ? VPV._Precision
+        : TextUtil.isNullOrEmpty(VC._Expression) == false ? VC._Precision
+        : null;
+        PVC._Scale = TextUtil.isNullOrEmpty(VPV._Expression) == false ? VPV._Scale
+        : TextUtil.isNullOrEmpty(VC._Expression) == false ? VC._Scale
+        : null;
+        PVC._Size = A._Aggregate != null && A._Aggregate.isList() == true ? null
+        : TextUtil.isNullOrEmpty(VPV._Expression) == false ? VPV._Size
+        : TextUtil.isNullOrEmpty(VC._Expression) == false ? VC._Size
+        : null;
         PVC._AggregateStr = A._Aggregate.name();
         PVC._OrderBy = A._OrderByStr;
         PVC._Coalesce = A._Coalesce;
         PVC._Distinct = A._Distinct;
-        PVC._Filter = "\""+P._VC.getName()+"\"= "+TextUtil.escapeSingleQuoteForSQL(VPV._Value);
+        PVC._Filter = PS._CGSql.getShortColumnVar(P._VC.getName()) + " = " + TextUtil.escapeSingleQuoteForSQL(VPV._Value);
         PVC._UseMapper = VC._UseMapper;
         PVC._UseEnum = VC._UseEnum;
         PVC._Description = VPV._Description + " (pivot of " + VC.getAggregateName() + " on " + P._VC._SameAsObj.getShortName() + "='" + VPV._Value + "')";
         PVC.Validate(PS, VC._ParentView);
-        
+
         VC._ParentView._PivotColumns.add(PVC);
         Column C = new ViewColumnWrapper(PVC._SameAsObj, PVC, O._Columns.size());
         O._Columns.add(C);
@@ -99,20 +99,20 @@ public class PivotHelper
           {
             PVC.needsTZ();
             ViewColumn TZViewCol = View.createTZ(PS, PVC);
-            TZViewCol._Filter = "\""+P._VC.getName()+"\"= "+TextUtil.escapeSingleQuoteForSQL(VPV._Value);
-            TZViewCol._NameInner = VC._Name+"TZ";
+            TZViewCol._Filter = PS._CGSql.getShortColumnVar(P._VC.getName()) + " = " + TextUtil.escapeSingleQuoteForSQL(VPV._Value);
+            TZViewCol._NameInner = VC._Name + "TZ";
             VC._ParentView._PivotColumns.add(TZViewCol);
             // LDH-NOTE: No need to add the column to O because TZ handling is automated in the Object's Validation logic.
           }
-        
+
         return PVC;
       }
 
     public static String getPivotedViewColumnTypeStr(ViewColumn VC, ViewPivotAggregate A, ViewPivotValue VPV)
       {
-        return VPV!=null && TextUtil.isNullOrEmpty(VPV._Expression)== false ? VPV._Type.getType().name()+(A._Aggregate != null && A._Aggregate.isList() == true ? "[]": "") 
-                           :TextUtil.isNullOrEmpty(VC._Expression)== false ? VC._Type.getType().name()+(A._Aggregate != null && A._Aggregate.isList() == true ? "[]": "")
-                           :null;
+        return VPV != null && TextUtil.isNullOrEmpty(VPV._Expression) == false ? VPV._Type.getType().name() + (A._Aggregate != null && A._Aggregate.isList() == true ? "[]" : "")
+        : TextUtil.isNullOrEmpty(VC._Expression) == false ? VC._Type.getType().name() + (A._Aggregate != null && A._Aggregate.isList() == true ? "[]" : "")
+        : null;
       }
 
     public static void genPivotColumns(ParserSession PS, View V, Object O)
@@ -186,38 +186,39 @@ public class PivotHelper
 
     public static boolean isPivotColumn(ViewColumn VC)
       {
-        for (ViewPivot P : VC._ParentView._Pivots)
-          {
-            if (P._VC == VC)
-              return true;
-            for (ViewPivotAggregate VPA : P._Aggregates)
-              {
-                // An aggregate column should be output in the final view only if the globals flag is true
-                if (VPA._VC == VC && P._Globals == true)
-                 return true;
-                // Is it a TZ companion to a column that needs TZ? 
-                if (VPA._VC != null && VPA._VC.needsTZ() == true && VC._FCT == FrameworkColumnType.TZ && VC._Name.equals(VPA._VC._Name+"TZ") == true)
-                 return true;
-              }
-          }
+        if (VC._ParentView._Pivots != null)
+          for (ViewPivot P : VC._ParentView._Pivots)
+            {
+              if (P._VC == VC)
+                return true;
+              for (ViewPivotAggregate VPA : P._Aggregates)
+                {
+                  // An aggregate column should be output in the final view only if the globals flag is true
+                  if (VPA._VC == VC && P._Globals == true)
+                    return true;
+                  // Is it a TZ companion to a column that needs TZ?
+                  if (VPA._VC != null && VPA._VC.needsTZ() == true && VC._FCT == FrameworkColumnType.TZ && VC._Name.equals(VPA._VC._Name + "TZ") == true)
+                    return true;
+                }
+            }
         return false;
       }
 
     public static boolean isAllowedSourceAggregate(ViewColumn VC)
       {
         if (getPivottedColumn(VC._ParentView, VC.getName()) != null)
-         return false;
+          return false;
         if (VC._Aggregate == null)
-         return false;
+          return false;
         if (VC._Aggregate.isComposable() == false)
-         return false;
+          return false;
         for (ViewPivot P : VC._ParentView._Pivots)
           {
             for (ViewPivotAggregate VPA : P._Aggregates)
               {
                 // An aggregate column should be output in the final view only if the globals flag is true
                 if (VPA._VC == VC && P._Globals == false)
-                 return false;
+                  return false;
               }
           }
         return true;

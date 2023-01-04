@@ -99,6 +99,16 @@ public class TypeDef
             _TypeCollection = MultiType.SET;
             BaseType = _TypeStr.substring(0, _TypeStr.length() - 2);
           }
+        else if (_TypeStr.startsWith("STRING(") == true)
+          {
+            _Size = ParseUtil.parseInteger(_TypeStr.substring("STRING(".length(), _TypeStr.length()-1), SystemValues.EVIL_VALUE);
+            if (_Size == SystemValues.EVIL_VALUE)
+             {
+               PS.AddError(What + " defined an invalid 'type' '" + _TypeStr + "' which was thought to be a String+size, e.g. STRING(250), but cannot parse the size value as an integer.");
+               return;
+             }
+            BaseType = "STRING";
+          }
 
         if ((_Type = ColumnType.parse(BaseType)) == null)
           {
@@ -262,7 +272,7 @@ public class TypeDef
     @Override
     public String toString()
      {
-       return _Type==null?"XXX"
+       return _Type==null?"NULL_TYPE"
              :_Type.name()+(isList() ? "[]"
                            :isSet() ? "{}"
                            :_Type == ColumnType.STRING ? "("+_Size+")"

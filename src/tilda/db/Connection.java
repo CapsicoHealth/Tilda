@@ -35,7 +35,6 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.data.ZoneInfo_Data;
 import tilda.db.metadata.ColumnMeta;
-import tilda.db.metadata.DatabaseMeta;
 import tilda.db.metadata.FKMeta;
 import tilda.db.metadata.IndexMeta;
 import tilda.db.metadata.PKMeta;
@@ -64,6 +63,7 @@ import tilda.utils.AnsiUtil;
 import tilda.utils.CollectionUtil;
 import tilda.utils.DurationUtil.IntervalEnum;
 import tilda.utils.SystemValues;
+import tilda.utils.TextUtil;
 import tilda.utils.pairs.ColMetaColPair;
 import tilda.utils.pairs.StringStringPair;
 
@@ -87,8 +87,9 @@ public final class Connection
         _Url = _C.getMetaData().getURL();
         // LDH-NOTE: YEAH YEAH.... This is ugly!!! Need a virtual constructor pattern here.
         _DB = _Url.startsWith("jdbc:postgresql:") ? DBType.Postgres
+        : _Url.startsWith("jdbc:datadirect:googlebigquery:") ? DBType.BigQuery
         : _Url.startsWith("jdbc:sqlserver:") ? DBType.SQLServer
-        : _Url.startsWith("jdbc:db2:") ? DBType.DB2
+//        : _Url.startsWith("jdbc:db2:") ? DBType.DB2
         : null;
         if (_DB == null)
           throw new Exception("Can't find the DBType based on URL " + _Url);
@@ -384,19 +385,25 @@ public final class Connection
     public boolean isErrNoData(Throwable T)
     throws SQLException
       {
-        return isSQLExcception(T) == false ? false : _DB.isErrNoData((SQLException) T);
+        return isSQLExcception(T) == false 
+                     ? false 
+                     : TextUtil.indexOf(((SQLException)T).getSQLState(), _DB.getConnectionNoDataStates());
       }
 
     public boolean isLockOrConnectionError(Throwable T)
     throws SQLException
       {
-        return isSQLExcception(T) == false ? false : _DB.isLockOrConnectionError((SQLException) T);
+        return isSQLExcception(T) == false 
+                     ? false 
+                     : TextUtil.indexOf(((SQLException)T).getMessage(), _DB.getConnectionLockMsgs());
       }
 
     public boolean isCanceledError(Throwable T)
     throws SQLException
       {
-        return isSQLExcception(T) == false ? false : _DB.isCanceledError((SQLException) T);
+        return isSQLExcception(T) == false 
+                     ? false 
+                     : TextUtil.indexOf(((SQLException)T).getSQLState(), _DB.getConnectionCancelStates());
       }
 
     private static boolean isSQLExcception(Throwable T)
@@ -628,6 +635,10 @@ public final class Connection
         return _DB.getSelectLimitClause(Start, Size);
       }
 
+    public boolean supportsSuperMetaDataQueries()
+      {
+        return _DB.supportsSuperMetaDataQueries();
+      }
 
     /**
      * For String Columns, checks is the Database would type as a CHARACTER, VARCHAR, or TEXT
@@ -971,6 +982,7 @@ public final class Connection
       {
         _C.setReadOnly(readOnly);
       }
+
   }
 
 

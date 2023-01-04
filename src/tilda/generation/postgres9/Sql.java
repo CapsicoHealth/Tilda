@@ -71,7 +71,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
     @Override
     public String getFileName(Base O)
       {
-        return "TILDA___" + getName() + "." + O.getSchema()._Name + ".sql";
+        return "TILDA___Schema" + "." + O.getSchema()._Name + "." + getName() + ".sql";
       }
 
     @Override
@@ -228,7 +228,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
               Out.print("\"" + C.getName() + "\"" + O._PadderColumnNames.getPad(C.getName()) + "  " + PadderColumnTypes.pad(getColumnType(C)));
               Out.print(C._Nullable == false ? "  not null" : "          ");
               if (C._DefaultCreateValue != null)
-                Out.print(" DEFAULT " + ValueHelper.printValueSQL(C.getName(), C.getType(), C.isCollection(), C._DefaultCreateValue._Value));
+                Out.print(" DEFAULT " + ValueHelper.printValueSQL(getSQlCodeGen(), C.getName(), C.getType(), C.isCollection(), C._DefaultCreateValue._Value));
               Out.println("   -- " + C._Description);
             }
         if (O._PrimaryKey != null)
@@ -353,7 +353,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                                 {
                                   FromList.append("\n     " + JoinType.printJoinType(VC._Join) + " " + VJ._ObjectObj.getShortName());
                                   FromList.append(" as " + getFullTableVar(VC._SameAsObj._ParentObject, TI._V));
-                                  FromList.append(" on " + Q._Clause);
+                                  FromList.append(" on " + rewriteExpressionColumnQuoting(Q._Clause));
                                 }
                           }
                         else
@@ -371,7 +371,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                                 FromList.append("     " + JT + " " + TI._N);
                                 if (TI._V > 1 || TextUtil.isNullOrEmpty(TI._As) == false)
                                   FromList.append(" as " + TI.getFullName());
-                                FromList.append(" on " + getFKStatement(FK, TableStack));
+                                FromList.append(" on " + rewriteExpressionColumnQuoting(getFKStatement(FK, TableStack)));
                               }
                           }
                       }
@@ -586,7 +586,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         Query Q = VJ.getQuery(this);
         if (Q == null)
           throw new Exception("Cannot generate the view because an 'on' clause matching the active database '" + this.getName() + "' is not available.");
-        Str.append(" on " + Q._Clause);
+        Str.append(" on " + rewriteExpressionColumnQuoting(Q._Clause));
         return Q;
       }
 
@@ -627,7 +627,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
             if (VC._Aggregate != null)
               {
                 if (TextUtil.isNullOrEmpty(VC._Coalesce) == false && VC._Aggregate != AggregateType.COUNT)
-                  Str.append(", " + ValueHelper.printValueSQL(VC._SameAsObj.getName(), VC.getType(), VC.isCollection(), VC._Coalesce) + ")");
+                  Str.append(", " + ValueHelper.printValueSQL(getSQlCodeGen(), VC._SameAsObj.getName(), VC.getType(), VC.isCollection(), VC._Coalesce) + ")");
 
                 // We have to be able to handle cases for joins with an "as". If so, we have to use that, otherwise
                 // we have to use the internal source of the column being ordered by.
@@ -638,13 +638,13 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 Str.append(")");
                 if (TextUtil.isNullOrEmpty(VC._Filter) == false)
                   {
-                    Str.append(" filter(where ").append(VC._Filter).append(")");
+                    Str.append(" filter(where ").append(rewriteExpressionColumnQuoting(VC._Filter)).append(")");
                   }
               }
           }
 
         if (TextUtil.isNullOrEmpty(VC._Coalesce) == false && (VC._Aggregate == null || VC._Aggregate == AggregateType.COUNT))
-          Str.append(", " + ValueHelper.printValueSQL(VC._SameAsObj.getName(), VC.getType(), VC.isCollection(), VC._Coalesce) + ")");
+          Str.append(", " + ValueHelper.printValueSQL(getSQlCodeGen(), VC._SameAsObj.getName(), VC.getType(), VC.isCollection(), VC._Coalesce) + ")");
         if (NoAs == false)
           Str.append(" as \"" + VC.getName() + "\" " + (VC._SameAsObj == null ? "" : "-- " + VC._SameAsObj._Description));
         if (VC._FormulaOnly == true)
@@ -1108,7 +1108,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
           Expr = VC._Expression.replaceAll("\\?", Expr);
 
         if (TextUtil.isNullOrEmpty(VC._Coalesce) == false)
-          Expr = "coalesce(" + Expr + ", " + ValueHelper.printValueSQL(VC.getName(), VC.getType(), VC.isCollection(), VC._Coalesce) + ")";
+          Expr = "coalesce(" + Expr + ", " + ValueHelper.printValueSQL(getSQlCodeGen(), VC.getName(), VC.getType(), VC.isCollection(), VC._Coalesce) + ")";
 
         if (VC._Type != null)
           Expr = "(" + Expr + ")::" + getColumnType(VC._Type.getType(), VC._Type._Size, ColumnMode.NORMAL, VC._Type.isCollection(), VC._Precision, VC._Scale);

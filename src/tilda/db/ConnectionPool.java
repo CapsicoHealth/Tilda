@@ -93,8 +93,8 @@ public class ConnectionPool
 
     static
       {
-        Connection C = null;
-        Connection Keys = null;
+        Connection conMain = null;
+        Connection conKeys = null;
         try
           {
             initBootstrappers();
@@ -106,8 +106,9 @@ public class ConnectionPool
               }
             if (isTildaEnabled() == true)
               {
-                Keys = get("KEYS");
-                readConnections(Keys);
+                conKeys = get("KEYS");
+                readConnections(conKeys);
+                conKeys.rollback();
 
                 if (Migrate.isMigrationActive() == true)
                   {
@@ -147,10 +148,10 @@ public class ConnectionPool
                 while (connectionIds.hasNext())
                   {
                     String connectionId = connectionIds.next();
-                    C = get(connectionId);
+                    conMain = get(connectionId);
                     if (TildaList == null)
-                      TildaList = loadTildaResources(C);
-                    if (C.isSuperUser() == true)
+                      TildaList = loadTildaResources(conMain);
+                    if (conMain.isSuperUser() == true)
                       {
                         LOG.warn("###################################################################################################################");
                         LOG.warn("###                                                                                                             ###");
@@ -168,20 +169,20 @@ public class ConnectionPool
 
                     if (Migrate.isMigrationActive() == true || _SkipValidation == false)
                       {
-                        DatabaseMeta DBMeta = loadDatabaseMetaData(C, TildaList);
-                        Migrator.MigrateDatabase(C, Migrate.isMigrationActive() == false, TildaList, DBMeta, first, connectionUrls, _DependencySchemas);
+                        DatabaseMeta DBMeta = loadDatabaseMetaData(conMain, TildaList);
+                        Migrator.MigrateDatabase(conMain, Migrate.isMigrationActive() == false, TildaList, DBMeta, first, connectionUrls, _DependencySchemas);
                       }
                     if (/* first == true && */ Migrate.isMigrationActive() == false)
                       {
                         List<String> performanceMessages = new ArrayList<String>();
-                        LOG.info("Initializing Schemas for " + C._Url);
+                        LOG.info("Initializing Schemas for " + conMain._Url);
                         long T0 = System.nanoTime();
                         for (Schema S : TildaList)
                           {
                             LOG.info("  Initializing Schema " + S.getFullName());
                             long T1 = System.nanoTime();
                             Method M = Class.forName(tilda.generation.java8.Helper.getSupportClassFullName(S)).getMethod("initSchema", Connection.class);
-                            M.invoke(null, C);
+                            M.invoke(null, conMain);
                             if (_Schemas.get(S._Name.toUpperCase()) == null)
                               _Schemas.put(S._Name.toUpperCase(), S);
                             performanceMessages.add("      - " + S.getFullName() +": "+DurationUtil.printDurationMilliSeconds(System.nanoTime()-T1)+".");
@@ -195,15 +196,15 @@ public class ConnectionPool
                       }
                     first = false;
                     if (Migrate.isTesting() == false)
-                      C.commit();
+                      conMain.commit();
                     else
                       LOG.warn("\n"
                               +"*******************************************************************************\n"
                               +"**   NO COMMIT SINCE WE ARE IN TESTING MODE!\n"
                               +"*******************************************************************************\n"
                               );
-                    C.close();
-                    C = null;
+                    conMain.close();
+                    conMain = null;
                     LOG.info("\n\n\n\n\n\n\n");
                   }
               }
@@ -216,10 +217,10 @@ public class ConnectionPool
           {
             try
               {
-                if (C != null)
-                  C.close();
-                if (Keys != null)
-                  Keys.close();
+                if (conMain != null)
+                  conMain.close();
+                if (conKeys != null)
+                  conKeys.close();
               }
             catch (SQLException E)
               {

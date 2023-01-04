@@ -63,6 +63,7 @@ public class LogUtil
     /**
      * Logs the Throwable using the provided Logger, then logs the throwable causes up to causeLevel. If causeLevel is 0, then
      * no sub-causes are logged. If there are no sub-causes, then causeLevel is ignored.
+     * 
      * @param log the Logger to log the Throwable against, using catching()
      * @param T the Throwable to log
      * @param causeLevel the number of levels deep to also log the Throwable's sub causes if any.
@@ -74,9 +75,15 @@ public class LogUtil
           {
             T = T.getCause();
             if (T == null)
-             return;
+              return;
             log.catching(T);
             --causeLevel;
           }
+      }
+
+    public static String logError(Logger l, String msg)
+      {
+        l.error(msg);
+        return msg;
       }
   }

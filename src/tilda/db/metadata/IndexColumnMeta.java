@@ -28,6 +28,7 @@ public class IndexColumnMeta
     protected IndexColumnMeta(ResultSet RS)
     throws Exception
       {
+//        LOG.debug(JDBCHelper.printResultSet(RS));
         _Pos = RS.getInt("ORDINAL_POSITION");
         _Col = RS.getString("COLUMN_NAME");
         _AscStr = RS.getString("ASC_OR_DESC");

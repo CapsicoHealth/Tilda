@@ -858,9 +858,10 @@ public class TildaData implements CodeGenTildaData
         Out.println("       long T0 = System.nanoTime();");
         if (C._Mode != ColumnMode.CALCULATED)
           {
+            // If the set method was called explicitly, we have to make sure the "changes" flag is set, even if the column was null by default.
+            Out.println("       __Changes.or(" + Mask + ");");
             Out.println("       if (__Nulls.intersects(" + Mask + ") == true) // already NULL");
             Out.println("        return;");
-            Out.println("       __Changes.or(" + Mask + ");");
             Out.println("       __Nulls.or(" + Mask + ");");
           }
 

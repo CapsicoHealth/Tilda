@@ -212,29 +212,9 @@ public class Query
             else if (m._type == 'C')
               {
                 ReferenceHelper R = ReferenceHelper.parseColumnReference(m._name, ParentObject);
-                Schema S = PS.getSchema(R._P, R._S);
-                if (S == null)
-                  {
-                    PS.AddError(OwnerObjName + " is defining a subWhereclause '" + _Clause + "' which refers to an unknown schema '" + R._P + "." + R._S + "' from '" + m._name + "'.");
-                    continue;
-                  }
-                Object O = S.getObject(R._O);
-                if (O == null)
-                  {
-                    PS.AddError(OwnerObjName + " is defining a subWhereclause '" + _Clause + "' which refers to an unknown object/view '" + R._O + "' from '" + m._name + "'.");
-                    continue;
-                  }
-                Column C = O.getColumn(R._C);
+                Column C = R.resolveAsColumn(PS, "Object '"+OwnerObjName+"'", "subWhereclause '" + _Clause + "'", false);
                 if (C == null)
-                  {
-                    PS.AddError(OwnerObjName + " is defining a subWhereclause '" + _Clause + "' which refers to an unknown column '" + R._C + "' from '"+m._name + "'.");
-                    continue;
-                  }
-                if (C.hasBeenValidatedSuccessfully() == false)
-                  {
-                    PS.AddError(OwnerObjName + " is defining a subWhereclause '" + _Clause + "' which refers to column '" + C.getShortName() + "' which has failed validation previously and cannot be processed any more.");
-                    continue;
-                  }
+                 continue;
                 // if (C.isCollection() == true)
                 // {
                 // PS.AddError(OwnerObjName + " is defining a subWhereclause '" + _Clause + "' which refers to an array column, which is not supported.");

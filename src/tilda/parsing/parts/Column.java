@@ -39,9 +39,8 @@ import tilda.enums.ValidationStatus;
 import tilda.enums.VisibilityType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ReferenceHelper;
-import tilda.parsing.parts.helpers.ReferenceUrlHelper;
+import tilda.parsing.parts.helpers.DescriptionRewritingHelper;
 import tilda.parsing.parts.helpers.ValidationHelper;
-import tilda.utils.CollectionUtil;
 import tilda.utils.PaddingTracker;
 import tilda.utils.TextUtil;
 
@@ -258,7 +257,7 @@ public class Column extends TypeDef
               PS.AddError("Column '" + getFullName() + "' didn't define a 'description'. It is mandatory.");
           }
 
-        _Description = ReferenceUrlHelper.processReferenceUrl(_Description, _ParentObject._ReferenceUrl);
+        _Description = DescriptionRewritingHelper.processReferenceUrl(_Description, _ParentObject);
 
         if (_Protect != null && _Type != ColumnType.STRING)
           PS.AddError("Column '" + getFullName() + "' is defined as a '" + _Type + "' with a '_Protect'. Only String columns should have a '_Protect' defined.");
@@ -306,44 +305,20 @@ public class Column extends TypeDef
           }
 
         _SameAs = _SameAs.trim();
-        boolean multi = false;
-        if (_SameAs.endsWith("[]") == true)
-          {
-            _SameAs = _SameAs.substring(0, _SameAs.length() - 2);
-            multi = true;
-          }
         ReferenceHelper R = ReferenceHelper.parseColumnReference(_SameAs, _ParentObject);
-
-        if (TextUtil.isNullOrEmpty(R._S) == true || TextUtil.isNullOrEmpty(R._O) == true || TextUtil.isNullOrEmpty(R._C) == true)
-          PS.AddError("Column '" + getFullName() + "' is declaring sameas '" + _SameAs + "' with an incorrect syntax. It should be '(((package\\.)?schema\\.)?object\\.)?column'.");
-        else
-          {
-            Schema S = PS.getSchema(R._P, R._S);
-            if (S == null)
-              PS.AddError("Column '" + getFullName() + "' is declaring sameas '" + _SameAs + "' resolving to '" + R.getFullName() + "' with a schema that cannot be found.");
-            else
-              {
-                Object O = PS.getObject(R._P, R._S, R._O);
-                if (O == null)
-                  PS.AddError("Column '" + getFullName() + "' is declaring sameas '" + _SameAs + "' resolving to '" + R.getFullName() + "' with an Object/View that cannot be found.");
-                else
-                  {
-                    _SameAsObj = PS.getColumn(R._P, R._S, R._O, R._C);
-                    if (_SameAsObj == null)
-                      PS.AddError("Column '" + getFullName() + "' is declaring sameas '" + _SameAs + "' resolving to '" + R.getFullName() + "' with a column that cannot be found.");
-                    else if (_SameAsObj == this)
-                      PS.AddError("Column '" + getFullName() + "' is declaring a 'sameas' to itself! That makes no sense.");
-                    else
-                      copyFromSameAs(PS, multi);
-                  }
-              }
-          }
+        _SameAsObj = R.resolveAsColumn(PS, "Column '" + getFullName() + "'", "sameAs '" + _SameAs + "'", true);
+        if (_SameAsObj == this)
+          PS.AddError("Column '" + getFullName() + "' is declaring a 'sameAs' to itself! That makes no sense.");
+        else if (_SameAsObj != null)
+          copyFromSameAs(PS, R._multi);
 
         return Errs == PS.getErrorCount();
       }
 
-
-
+    protected static String withoutCollection(String typeStr)
+      {
+        return typeStr == null ? null : typeStr.replace("[]", "").replace("{}", "");
+      }
 
     protected void copyFromSameAs(ParserSession PS, boolean multi)
       {
@@ -363,8 +338,8 @@ public class Column extends TypeDef
         // Boolean sameAs_Nullable = SameAsHelper.getSameAsRoot_Nullable(this);
         // String sameAs_Description = SameAsHelper.getSameAsRoot_Description(this);
 
-        if (_TypeStr != null && _TypeStr.equals(_SameAsObj._TypeStr) == false && _Aggregate == null)
-          PS.AddError("Column '" + getFullName() + "' is a 'sameAs' and is redefining a type '" + _TypeStr + "' which doesn't match the destination column's type '" + _SameAsObj._TypeStr + "'. Note that redefining a type for a sameas column is superfluous in the first place.");
+        if (_TypeStr != null && withoutCollection(_TypeStr).equals(withoutCollection(_SameAsObj._TypeStr)) == false && _Aggregate == null)
+          PS.AddError("Column '" + getFullName() + "' is a 'sameAs' and is redefining a type '" + _TypeStr + "' which doesn't match the destination column's type '" + _SameAsObj._TypeStr + "'. Note that redefining a type for a sameAs column is superfluous in the first place.");
         else if (_Aggregate == null)
           _TypeStr = _SameAsObj._TypeStr + (_SameAsObj.isCollection() == false && multi == true ? "[]" : "");
 
@@ -374,14 +349,14 @@ public class Column extends TypeDef
          * if (_SameAsObj._Mapper != null)
          * {
          * if (_Mapper != null)
-         * PS.AddError("Column '" + getFullName() + "' is a 'sameas' and is redefining a mapper, which is not allowed.");
+         * PS.AddError("Column '" + getFullName() + "' is a 'sameAs' and is redefining a mapper, which is not allowed.");
          * else
          * _Mapper = new ColumnMapper(_SameAsObj._Mapper);
          * }
          * else if (_SameAsObj._Enum != null)
          * {
          * if (_Enum != null)
-         * PS.AddError("Column '" + getFullName() + "' is a 'sameas' and is redefining an enum, which is not allowed.");
+         * PS.AddError("Column '" + getFullName() + "' is a 'sameAs' and is redefining an enum, which is not allowed.");
          * else
          * _Enum = new ColumnEnum(_SameAsObj._Enum);
          * }
@@ -647,11 +622,21 @@ public class Column extends TypeDef
             L.add(colName);
         return L.toArray(new String[L.size()]);
       }
+
     public static List<Column> cleanupColumnList(List<Column> columns, String[] masterColumns)
       {
         List<Column> L = new ArrayList<Column>();
         for (Column col : columns)
           if (col != null && TextUtil.contains(masterColumns, col._Name, true, 0) == true)
+            L.add(col);
+        return L;
+      }
+
+    public static List<Column> cleanupFrameworkColumns(List<Column> columns)
+      {
+        List<Column> L = new ArrayList<Column>();
+        for (Column col : columns)
+          if (col != null && col._FCT != FrameworkColumnType.TZ)
             L.add(col);
         return L;
       }
@@ -669,7 +654,7 @@ public class Column extends TypeDef
         String N = getName();
         if (N == null)
           {
-            // This method could be called before validation of columns, and so sameas may not have been validated yet
+            // This method could be called before validation of columns, and so sameAs may not have been validated yet
             if (_SameAs != null)
               N = _SameAs.substring(_SameAs.lastIndexOf('.') + 1);
             else if (_SameAs__DEPRECATED != null)
@@ -712,4 +697,5 @@ public class Column extends TypeDef
           }
         return null;
       }
+
   }

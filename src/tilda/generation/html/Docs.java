@@ -38,6 +38,7 @@ import tilda.generation.java8.Helper;
 import tilda.generation.java8.JavaJDBCType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.Base;
+import tilda.parsing.parts.Cloner;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ColumnValue;
 import tilda.parsing.parts.ForeignKey;
@@ -167,6 +168,17 @@ public class Docs
           {
             Object OR = O._ParentSchema.getObject(O._SourceObject._Name);
             Out.println("<LI>Is Cloned from <B>" + makeObjectLink(OR) + "</B>.</LI>");
+          }
+        else if (O._CloneAs != null && O._CloneAs.length > 0)
+          {
+            Out.println("<LI>Is cloned as:<UL>");
+            for (Cloner c : O._CloneAs)
+              {
+                Object OR = O._ParentSchema.getObject(c._Name);
+                if (OR != null)
+                 Out.println("<LI>" + makeObjectLink(OR) + "</LI>");
+              }
+            Out.println("</UL></LI>");
           }
 
         if (view == null)

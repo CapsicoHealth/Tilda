@@ -43,7 +43,6 @@ import java.util.StringJoiner;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
-import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -495,6 +494,11 @@ public class FileUtil
         return dir.delete();
       }
 
+    /**
+     * Reads a whole CSV file in memory. Do not use for large files obviously!
+     * @param fileName
+     * @return
+     */
     public static List<CSVRecord> getCSVRecords(String fileName)
       {
         List<CSVRecord> L = new ArrayList<CSVRecord>();

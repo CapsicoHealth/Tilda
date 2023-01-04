@@ -28,18 +28,21 @@ public class IndexMeta
     
     static final Logger LOG = LogManager.getLogger(IndexMeta.class.getName());
     
-    protected IndexMeta(ResultSet RS, TableMeta parentTable)
+    protected IndexMeta(ResultSet RS, TableMeta parentTable/*, int indexPos*/)
     throws Exception
       {
 //        LOG.debug(JDBCHelper.printResultSet(RS));
-        _Name   = RS.getString("INDEX_NAME" );//.toLowerCase();
+        _Name = RS.getString("INDEX_NAME" );
         _Unique = RS.getBoolean("NON_UNIQUE") == false;
         _ParentTable = parentTable;
+//        _indexPos = indexPos;
+//        _Name = name != null ? name : (_Unique ? "ui_":"i_")+_indexPos;
       }
 
     public final String     _Name  ;
     public final boolean    _Unique;
     public final TableMeta  _ParentTable;    
+//    public final int        _indexPos ;
     public final List<IndexColumnMeta> _Columns = new ArrayList<IndexColumnMeta>();
     
     public String getCleanName()
@@ -64,8 +67,11 @@ public class IndexMeta
              Found = true;
              break;
            }
+        // LDH-NOTE: Records are supposed to come in ordered, as per the JDBC spec. So it's easier to just add
+        //          because otherwise, seems like ORDINAL_VALUE may be 1-based on 0-based depending on the database.
+        //          For SQLServer, appears to be 0-based, causing the index-based add call to fail with entry '0' of course.
         if (Found == false)
-         _Columns.add(CM._Pos-1, CM);
+         _Columns.add(/*CM._Pos-1,*/ CM);
       }
     
     public String toString()

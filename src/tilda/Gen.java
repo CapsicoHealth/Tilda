@@ -69,6 +69,11 @@ public class Gen
         Map<String, Schema> SchemaCache = new HashMap<String, Schema>();
         for (String path : Args)
           {
+            if (path.endsWith(".jsonX") == true)
+              {
+                LOG.info("File '" + path + "' ends in .jsonX and will be skipped");
+                continue;
+              }
             try
               {
                 GeneratorSession G = new GeneratorSession("java", 8, -1, "postgres", 9, 6);
@@ -112,7 +117,7 @@ public class Gen
               }
           }
         // Now that we can realize views into tables in another schema, we have to output
-        // documentation of a given realized table twice. The first time is in the schema 
+        // documentation of a given realized table twice. The first time is in the schema
         // of its originating view. The second is in its destination. Because the target
         // schemas are modified in the pass above, we do this second pass to make sure the
         // docs are completed and output (i.e., the first pass of the target schema did not
@@ -156,8 +161,27 @@ public class Gen
         + AsciiArt.Woohoo("                       ")
         + "\n"
         + "              All Tilda code, migration scripts and documentation was generated succesfully.    \n"
-        + "                                                " + DurationUtil.printDuration(System.nanoTime() - TS) + "\n"
-        + "                                                " + SchemaCache.size() + " Schemas Processed\n"
+        + "                            " + DurationUtil.printDuration(System.nanoTime() - TS) + "\n"
+        + "                            " + (SchemaCache.size()-1) + " Schemas, " + countTables(SchemaCache) + " Tables, and " + countViews(SchemaCache) + " Views\n"
         + "          ======================================================================================");
       }
+
+    private static int countTables(Map<String, Schema> schemaCache)
+      {
+        int count = 0;
+        for (Schema s : schemaCache.values())
+          if (s._Name.equalsIgnoreCase("TILDA") == false)
+            count += s._Objects.size();
+        return count;
+      }
+
+    private static int countViews(Map<String, Schema> schemaCache)
+      {
+        int count = 0;
+        for (Schema s : schemaCache.values())
+          if (s._Name.equalsIgnoreCase("TILDA") == false)
+            count += s._Views.size();
+        return count;
+      }
+
   }

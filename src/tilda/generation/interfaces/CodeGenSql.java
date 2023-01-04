@@ -20,7 +20,6 @@ import java.io.PrintWriter;
 import java.util.List;
 
 import tilda.db.stores.DBType;
-import tilda.enums.ColumnType;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Object;
@@ -42,28 +41,9 @@ public interface CodeGenSql extends DBType, CodeGenBase
     public void genFileStart(PrintWriter Out, Schema S)
     throws Exception;
 
-
-    public String getFullTableVar(Object O);
-
-    public String getFullColumnVar(Column C);
-
-    public String getFullColumnVar(Column C, int i);
-
-    public String getFullTableVar(Object O, int i);
-
-    public String getShortColumnVar(Column C);
-
-    public String getColumnType(Column C);
-    public String getColumnType(Column C, ColumnType AggregateType);
-
-    public String getColumnTypeRaw(Column C, boolean MultiOverride);
-
-    public String getColumnTypeRaw(ColumnType Type, int Size, boolean isArray);
-
     public boolean stringNeedsTrim(Column C);
-    public boolean stringArrayAggNeedsText(ViewColumn C);
 
-    boolean supportsArrays();
+    public boolean stringArrayAggNeedsText(ViewColumn C);
 
     public String getBaseSelectStatement(List<Column> Columns);
 
@@ -76,16 +56,20 @@ public interface CodeGenSql extends DBType, CodeGenBase
 
     public void genDDL(PrintWriter Out, View V)
     throws Exception;
+
     public void genDDLComments(PrintWriter Out, View V)
     throws Exception;
+
     public String getDDLMetadataVersion();
+
     public void genDDLMetadata(PrintWriter Out, View V)
     throws Exception;
 
     public Query genViewJoin(StringBuilder Str, ViewJoin VJ)
     throws Exception;
 
-    public void genIndex(PrintWriter Out, Index I) throws Exception;
+    public void genIndex(PrintWriter Out, Index I)
+    throws Exception;
 
     public void genKeysManagement(PrintWriter Out, Object O);
   }

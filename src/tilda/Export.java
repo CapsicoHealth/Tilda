@@ -16,6 +16,8 @@
 package tilda;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -103,7 +105,8 @@ public class Export
         if (Out != null)
           {
             Out.close();
-            if (JobHelper.completeJob(Out.getJob()) == null)
+            List<String> errMessages = new ArrayList<String>();
+            if (JobHelper.completeJob(Out.getJob(), errMessages) == null)
               return 0;
           }
         return OP.getTotalCount();
