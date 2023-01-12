@@ -101,6 +101,8 @@ public interface DBType
     public boolean alterTableDropIndex             (Connection Con, Object Obj, IndexMeta IX) throws Exception;
     public String  alterTableAddIndexDDL           (Index IX) throws Exception;
     public boolean alterTableAddIndex              (Connection Con, Index IX) throws Exception;
+    public boolean alterTableIndexDropCluster      (Connection Con, IndexMeta IX) throws Exception;
+    public boolean alterTableIndexAddCluster       (Connection Con, Index IX) throws Exception;
     public boolean alterTableRenameIndex           (Connection Con, Object Obj, String OldName, String NewName) throws Exception;
     public String  getHelperFunctionsScript        (Connection Con, boolean start) throws Exception;    
     public String  getAclRolesScript               (Connection Con, List<Schema> TildaList) throws Exception;

@@ -67,7 +67,7 @@ public class Object extends Base
     public transient Object               _SourceObject = null;                                        // For tables such as Realized tables generated out of views.
     public transient ObjectLifecycle      _LC;
     public transient Object               _HistoryObj   = null;                                        // For tables with history settings
-    
+
 
     public Object()
       {
@@ -142,7 +142,7 @@ public class Object extends Base
           return true;
 
         int Errs = PS.getErrorCount();
-                
+
         if (super.Validate(PS, parentSchema) == false)
           return false;
 
@@ -154,7 +154,7 @@ public class Object extends Base
               Object obj = new Object(this);
               obj._Name = C._Name;
               if (TextUtil.isNullOrEmpty(C._ReferenceUrl) == false)
-               obj._ReferenceUrl = C._ReferenceUrl;
+                obj._ReferenceUrl = C._ReferenceUrl;
               if (TextUtil.isNullOrEmpty(C._Tag) == false)
                 obj._Tag = C._Tag;
               obj._Description = C._Description;
@@ -162,7 +162,7 @@ public class Object extends Base
               obj._SourceObject = this;
               parentSchema._Objects.add(obj);
             }
-        
+
         // We get a lot of reusable bits from this central TILDA table, so let's check it's all good.
         if (getFullName().equals("tilda.data.TILDA.Key") == true)
           {
@@ -262,6 +262,7 @@ public class Object extends Base
         _HasNonUniqueIndex = false;
         Set<String> Signatures = new HashSet<String>();
         Names.clear();
+        Index clusterIndex = null;
         for (Index I : _Indices)
           {
             if (I == null)
@@ -275,9 +276,16 @@ public class Object extends Base
               _HasUniqueIndex = true;
             else
               _HasNonUniqueIndex = true;
+            if (I._Cluster == true)
+              {
+                if (clusterIndex != null)
+                  PS.AddError("Object '" + getFullName() + "' is defining index '" + I.getSignature() + "' as a cluster while '" + clusterIndex.getSignature() + "' was already defined so. Only one index can be nominated as a cluster index.");
+                else
+                  clusterIndex = I;
+              }
           }
 
-        // Pick up LC from Schema conventions if present and local value is empty. 
+        // Pick up LC from Schema conventions if present and local value is empty.
         if (TextUtil.isNullOrEmpty(_LCStr) == true && parentSchema._Conventions != null && parentSchema._Conventions._DefaultLC != null)
           _LCStr = parentSchema._Conventions._DefaultLC.name();
 
@@ -340,31 +348,31 @@ public class Object extends Base
         obj._Description = "History table for " + getShortName() + ".<BR>" + _Description;
         obj._FST = FrameworkSourcedType.HISTORY;
         obj._LC = ObjectLifecycle.WORM;
-//        obj._OCC = false;
+        // obj._OCC = false;
         obj._SourceObject = this;
         obj._ParentSchema = ParentSchema;
 
         _HistoryObj = obj;
-        
+
         // We need to clean up columns that were not included in the history definition.
         obj._Columns = Column.cleanupColumnList(obj._Columns, _History._IncludedColumns);
-//        obj._Columns = Column.cleanupFrameworkColumns(obj._Columns);
-        
+        // obj._Columns = Column.cleanupFrameworkColumns(obj._Columns);
+
         // We also need to clean up mappings if they reference a column that is not being carried over
         for (OutputMap OM : obj._OutputMaps)
           if (OM != null)
-           {
-             List<String> X = CollectionUtil.toList(_History._IncludedColumns);
-             X.add("created");
-             X.add("lastUpdated");
-             X.add("deleted");
-             OM._Columns = Column.cleanupColumnList(OM._Columns, X.toArray(new String[X.size()]));
-           }
-        
+            {
+              List<String> X = CollectionUtil.toList(_History._IncludedColumns);
+              X.add("created");
+              X.add("lastUpdated");
+              X.add("deleted");
+              OM._Columns = Column.cleanupColumnList(OM._Columns, X.toArray(new String[X.size()]));
+            }
+
         // We also need to clean up Indices
         /// TO DO !!!!!
-        
-        if (obj._PrimaryKey !=  null)
+
+        if (obj._PrimaryKey != null)
           {
             // Replace the primary key with a regular index
             Index I = new Index();
@@ -391,22 +399,23 @@ public class Object extends Base
                 I._OrderBy = new String[] { "lastUpdated desc"
                 };
               }
-        
-        // because we are stripping the object of its identities, we have to create a new fake one and make sure it doesn't 
+
+        // because we are stripping the object of its identities, we have to create a new fake one and make sure it doesn't
         // get pushed to the DB given that it'll overlap with the non-unique index created above from the original identity.
         Index I = new Index();
         I._Name = "FakeIdentity";
-        I._Columns = new String[]{"lastUpdated", "created"};
+        I._Columns = new String[] { "lastUpdated", "created"
+        };
         I._Db = false;
         obj._Indices.add(I);
 
         ParentSchema._Objects.add(obj);
       }
-    
+
     public Object getHistoryObjectName()
-     {
-       return _HistoryObj;
-     }
+      {
+        return _HistoryObj;
+      }
 
     /**
      * A Column is an autogen PK if and only if it is the one column defined by the PK. All AutoGen PKs must
@@ -453,7 +462,7 @@ public class Object extends Base
 
             String N = C.getLogicalName();
             if (N != null && N.equalsIgnoreCase(_ParentSchema.getConventionPrimaryKeyName()) == true)
-              return PS.AddError("Object '" + getFullName() + "' has defined an autogen primary key but is also defining column '"+_ParentSchema.getConventionPrimaryKeyName()+"', which is a reserved name.");
+              return PS.AddError("Object '" + getFullName() + "' has defined an autogen primary key but is also defining column '" + _ParentSchema.getConventionPrimaryKeyName() + "', which is a reserved name.");
           }
 
         Column C = new Column(_ParentSchema.getConventionPrimaryKeyName(), null, 0, false, null, true, null, PS.getColumn("tilda.data", "TILDA", "Key", "refnum")._Description, null, null, null);

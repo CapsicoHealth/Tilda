@@ -694,6 +694,15 @@ public abstract class CommonStoreImpl implements DBType
         String Q = "DROP INDEX " + Obj._ParentSchema._Name + "." + DropName + ";";
         return Con.executeDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q);
       }
+    
+    @Override
+    public boolean alterTableIndexDropCluster(Connection Con, IndexMeta IX) throws Exception
+      {
+        if (supportsIndices() == false)
+          return true;
+
+        return Con.executeDDL(IX._ParentTable._SchemaName, IX._ParentTable._TableName, "ALTER TABLE " + IX._ParentTable.getName() + " SET WITHOUT CLUSTER;");
+      }
 
 
     @Override
@@ -743,6 +752,10 @@ public abstract class CommonStoreImpl implements DBType
             Out.print(" where " + Q._Clause);
           }
         Out.println(";");
+
+        if (IX._Cluster == true)
+          Out.println("ALTER TABLE " + IX._Parent.getShortName() + " CLUSTER on " + IX.getName() + ";");
+         
         return OutStr.toString();
       }
 
@@ -754,6 +767,16 @@ public abstract class CommonStoreImpl implements DBType
           return true;
          
         return Con.executeDDL(IX._Parent._ParentSchema._Name, IX._Parent.getBaseName(), alterTableAddIndexDDL(IX));
+      }
+
+    @Override
+    public boolean alterTableIndexAddCluster(Connection Con, Index IX)
+    throws Exception
+      {
+        if (supportsIndices() == false)
+          return true;
+
+        return Con.executeDDL(IX._Parent._ParentSchema._Name, IX._Parent.getBaseName(), "ALTER TABLE " + IX._Parent.getShortName() + " CLUSTER on " + IX.getName() + ";");
       }
 
 

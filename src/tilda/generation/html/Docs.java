@@ -286,13 +286,8 @@ public class Docs
             for (Index I : O._Indices)
               if (I != null && I._Unique == true)
                 {
-                  Out.print("<LI>Unique Index"+(I._Db == false?"  <B><I>(Application-side Only)</I></B>: ":": "));
-                  int x = 0;
-                  for (Column c : I._ColumnObjs)
-                    {
-                      Out.print((x == 0 ? "" : ", ") + c.getName());
-                      ++x;
-                    }
+                  Out.print("<LI>Unique Index"+(I._Db == false?"  <B><I>(Application-side Only)</I></B>: ": I._Cluster==true ?"<B><I>(Clustered)</I></B>: ":": "));
+                  Out.print(Column.printColumnList(I._ColumnObjs, true));
                   Out.println("</LI>");
                 }
             Out.println("</UL></LI>");
@@ -309,16 +304,14 @@ public class Docs
               if (I != null && I._Unique != true)
                 {
                   Out.print("<LI>");
-                  int x = 0;
-                  for (Column c : I._ColumnObjs)
-                    {
-                      Out.print((x == 0 ? "" : ", ") + c.getName());
-                      ++x;
-                    }
+                  if (I._ColumnObjs.isEmpty() == false)
+                  Out.print(Column.printColumnList(I._ColumnObjs, true));
                   if (I._OrderByObjs != null && I._OrderByObjs.isEmpty() == false)
-                   Out.println((x == 0 ? "" : ", ") + OrderBy.printOrderByList(I._OrderByObjs));
+                   Out.println((I._ColumnObjs.isEmpty() == false ? "" : ", ") + OrderBy.printOrderByList(I._OrderByObjs));
                   if (I._Db != true)
                     Out.print(" <B><I>(Application-side Only)</I></B>");
+                  else if (I._Cluster == true)
+                    Out.print(" <B><I>(Clustered)</I></B>");
                   Out.println("</LI>");
                 }
             Out.println("</UL></LI>");

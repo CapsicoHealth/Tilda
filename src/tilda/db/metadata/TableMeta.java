@@ -58,7 +58,7 @@ public class TableMeta
     throws Exception
       {
         DatabaseMetaData meta = C.getMetaData();
-        
+
         // Loading unique indices
         long TS = System.nanoTime();
         ResultSet RS = meta.getIndexInfo(null, _SchemaName.toLowerCase(), _TableName.toLowerCase(), true, true);
@@ -69,16 +69,21 @@ public class TableMeta
         RS = meta.getIndexInfo(null, _SchemaName.toLowerCase(), _TableName.toLowerCase(), false, true);
         loadIndices(RS);
         RS.close();
-        MetaPerformance._IndexNano+=(System.nanoTime()-TS);
+        MetaPerformance._IndexNano += (System.nanoTime() - TS);
         MetaPerformance._IndexCount += _Indices.size();
-        
+
         // Loading primary keys
         TS = System.nanoTime();
         RS = meta.getPrimaryKeys(null, _SchemaName.toLowerCase(), _TableName.toLowerCase());
         if (RS.next() == true)
           _PrimaryKey = new PKMeta(RS);
-        MetaPerformance._PKNano+=(System.nanoTime()-TS);
+        MetaPerformance._PKNano += (System.nanoTime() - TS);
         MetaPerformance._PKCount++;
+      }
+
+    public String getName()
+      {
+        return _SchemaName.toUpperCase() + "." + _TableName;
       }
 
     private void loadIndices(ResultSet RS)
@@ -87,9 +92,9 @@ public class TableMeta
         int indexCount = 0;
         while (RS.next() != false)
           {
-            IndexMeta IM = new IndexMeta(RS, this/*, indexCount*/);
+            IndexMeta IM = new IndexMeta(RS, this/* , indexCount */);
             if (IM._Name == null)
-             continue;
+              continue;
             IndexMeta prevIM = _Indices.get(IM._Name);
             if (prevIM == null)
               {
@@ -106,7 +111,7 @@ public class TableMeta
       {
         ColumnMeta cm = _ColumnsMap.get(ColumnName.toLowerCase());
         if (cm == null || caseSensitive == true && cm._NameOriginal.equals(ColumnName) == false)
-         return null;
+          return null;
         return cm;
       }
 
@@ -142,10 +147,10 @@ public class TableMeta
       {
         return _Indices.get(Name);
       }
-    
+
     public Collection<IndexMeta> getIndexMetas()
       {
         return _Indices.values();
       }
-    
+
   }

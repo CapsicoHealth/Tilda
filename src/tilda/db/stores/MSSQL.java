@@ -604,6 +604,20 @@ public class MSSQL implements DBType
       {
         throw new UnsupportedOperationException();
       }
+
+    @Override
+    public boolean alterTableIndexDropCluster(Connection Con, IndexMeta IX)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public boolean alterTableIndexAddCluster(Connection Con, Index IX)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
     
     @Override
     public boolean alterTableRenameIndex(Connection Con, Object Obj, String OldName, String NewName)

@@ -32,6 +32,7 @@ public class Index
     /*@formatter:off*/
     @SerializedName("name"    ) public String         _Name   ;
     @SerializedName("columns" ) public String[]       _Columns;
+    @SerializedName("cluster" ) public boolean        _Cluster = false;
     @SerializedName("orderBy" ) public String[]       _OrderBy;
     @SerializedName("db"      ) public boolean        _Db     = true;
     @SerializedName("subWhere") public String         _SubWhere;
@@ -150,7 +151,9 @@ public class Index
             if (TextUtil.isNullOrEmpty(_SubWhere) == false)
               PS.AddError("Object '" + _Parent.getFullName() + "' is defining unique index '" + _Name + "' with a subWhere, which is not allowed.");
           }
-
+        
+        if (_Cluster == true && _Db == false)
+         PS.AddError("Object '" + _Parent.getFullName() + "' is defining a non-database index '" + _Name + "' as clustered. Only database indices can be made clustered.");
 
         return Errs == PS.getErrorCount();
       }

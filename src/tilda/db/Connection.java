@@ -89,7 +89,7 @@ public final class Connection
         _DB = _Url.startsWith("jdbc:postgresql:") ? DBType.Postgres
         : _Url.startsWith("jdbc:datadirect:googlebigquery:") ? DBType.BigQuery
         : _Url.startsWith("jdbc:sqlserver:") ? DBType.SQLServer
-//        : _Url.startsWith("jdbc:db2:") ? DBType.DB2
+        // : _Url.startsWith("jdbc:db2:") ? DBType.DB2
         : null;
         if (_DB == null)
           throw new Exception("Can't find the DBType based on URL " + _Url);
@@ -250,7 +250,7 @@ public final class Connection
       }
 
     /**
-     * Wrapper to {@link #commitNoThrow()} or {@link #rollbackNoThrow()} based on parameter. 
+     * Wrapper to {@link #commitNoThrow()} or {@link #rollbackNoThrow()} based on parameter.
      * This should be typically used in a catch block when managing exceptions.
      * 
      * @param Commit true if commit is needed, or false if rollback
@@ -385,25 +385,25 @@ public final class Connection
     public boolean isErrNoData(Throwable T)
     throws SQLException
       {
-        return isSQLExcception(T) == false 
-                     ? false 
-                     : TextUtil.indexOf(((SQLException)T).getSQLState(), _DB.getConnectionNoDataStates());
+        return isSQLExcception(T) == false
+        ? false
+        : TextUtil.indexOf(((SQLException) T).getSQLState(), _DB.getConnectionNoDataStates());
       }
 
     public boolean isLockOrConnectionError(Throwable T)
     throws SQLException
       {
-        return isSQLExcception(T) == false 
-                     ? false 
-                     : TextUtil.indexOf(((SQLException)T).getMessage(), _DB.getConnectionLockMsgs());
+        return isSQLExcception(T) == false
+        ? false
+        : TextUtil.indexOf(((SQLException) T).getMessage(), _DB.getConnectionLockMsgs());
       }
 
     public boolean isCanceledError(Throwable T)
     throws SQLException
       {
-        return isSQLExcception(T) == false 
-                     ? false 
-                     : TextUtil.indexOf(((SQLException)T).getSQLState(), _DB.getConnectionCancelStates());
+        return isSQLExcception(T) == false
+        ? false
+        : TextUtil.indexOf(((SQLException) T).getSQLState(), _DB.getConnectionCancelStates());
       }
 
     private static boolean isSQLExcception(Throwable T)
@@ -455,7 +455,7 @@ public final class Connection
             throw E;
           }
       }
-    
+
     public int executeMetaFullSelect(String schemaName, String tableViewName, RecordProcessor RP)
     throws Exception
       {
@@ -464,7 +464,7 @@ public final class Connection
         TableMeta tvm = S.getTableMeta(tableViewName);
         return executeMetaFullSelect(tvm, RP);
       }
-    
+
     public int executeMetaFullSelect(TableMeta tvm, RecordProcessor RP)
     throws Exception
       {
@@ -474,15 +474,15 @@ public final class Connection
         for (ColumnMeta cm : tvm._ColumnsList)
           {
             if (first == false)
-             str.append(", ");
+              str.append(", ");
             else
-             first = false;
+              first = false;
             getFullColumnVar(str, tvm._SchemaName, tvm._TableName, cm._NameOriginal);
           }
-        str.append(" from "+tvm._SchemaName+"."+tvm._TableName);
+        str.append(" from " + tvm._SchemaName + "." + tvm._TableName);
         return executeSelect(tvm._SchemaName, tvm._TableName, str.toString(), RP);
-      }    
-    
+      }
+
 
 
     public int executeUpdate(String SchemaName, String TableName, String Query)
@@ -759,12 +759,13 @@ public final class Connection
       {
         return _DB.getArray(RS, i, Type, isSet);
       }
+
     public Collection<?> getArray(ResultSet RS, String colName, ColumnType Type, boolean isSet)
     throws Exception
       {
         return _DB.getArray(RS, colName, Type, isSet);
       }
-    
+
 
     public String getJsonParametrizedQueryPlaceHolder()
       {
@@ -858,10 +859,22 @@ public final class Connection
         return _DB.alterTableDropIndex(this, Obj, IX);
       }
 
+    public boolean alterTableIndexDropCluster(IndexMeta IX)
+    throws Exception
+      {
+        return _DB.alterTableIndexDropCluster(this, IX);
+      }
+
     public boolean alterTableAddIndex(Index IX)
     throws Exception
       {
         return _DB.alterTableAddIndex(this, IX);
+      }
+
+    public boolean alterTableIndexAddCluster(Index IX)
+    throws Exception
+      {
+        return _DB.alterTableIndexAddCluster(this, IX);
       }
 
     public boolean alterTableRenameIndex(Object Obj, String OldName, String NewName)
