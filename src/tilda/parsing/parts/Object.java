@@ -34,6 +34,7 @@ import tilda.enums.ObjectMode;
 import tilda.enums.OutputFormatType;
 import tilda.enums.TildaType;
 import tilda.parsing.ParserSession;
+import tilda.parsing.parts.helpers.ClonerHelper;
 import tilda.types.ColumnDefinition;
 import tilda.utils.CollectionUtil;
 import tilda.utils.TextUtil;
@@ -48,6 +49,7 @@ public class Object extends Base
     @SerializedName("tzFk"          ) public Boolean              _TZFK       = true;
     @SerializedName("etl"           ) public boolean              _ETL        = false;
     @SerializedName("lc"            ) public String               _LCStr      ;
+    @SerializedName("cloneFrom"     ) public ClonerFrom           _CloneFrom  ;
     @SerializedName("cloneAs"       ) public Cloner[]             _CloneAs    ;
 
     @SerializedName("columns"       ) public List<Column>         _Columns    = new ArrayList<Column    >();
@@ -143,25 +145,23 @@ public class Object extends Base
 
         int Errs = PS.getErrorCount();
 
+        if (_CloneFrom != null)
+          {
+            // Handle cloneFrom logic to find columns from source obj and copy them to this object's columns.
+            _ParentSchema = parentSchema;
+            _OriginalName = _Name;
+            if (_CloneFrom.validate(PS, this) == true)
+              ClonerHelper.handleClonefrom(PS, this);
+            _ParentSchema = null;
+            _OriginalName = null;
+          }
+
         if (super.Validate(PS, parentSchema) == false)
           return false;
 
         if (_CloneAs != null)
-          for (Cloner C : _CloneAs)
-            {
-              if (C.Validate(PS, this) == false)
-                return false;
-              Object obj = new Object(this);
-              obj._Name = C._Name;
-              if (TextUtil.isNullOrEmpty(C._ReferenceUrl) == false)
-                obj._ReferenceUrl = C._ReferenceUrl;
-              if (TextUtil.isNullOrEmpty(C._Tag) == false)
-                obj._Tag = C._Tag;
-              obj._Description = C._Description;
-              obj._FST = FrameworkSourcedType.CLONED;
-              obj._SourceObject = this;
-              parentSchema._Objects.add(obj);
-            }
+          if (ClonerHelper.handleCloneAs(PS, this) == false)
+           return false;
 
         // We get a lot of reusable bits from this central TILDA table, so let's check it's all good.
         if (getFullName().equals("tilda.data.TILDA.Key") == true)
@@ -333,6 +333,7 @@ public class Object extends Base
 
         return _Validated = Errs == PS.getErrorCount();
       }
+
 
     /**
      * To call after parent object has been validated

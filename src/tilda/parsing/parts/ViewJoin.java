@@ -61,6 +61,9 @@ public class ViewJoin
         if (_Ons == null || _Ons.length == 0)
           return PS.AddError("View '" + ParentView.getFullName() + "' is defining a join without any 'on' specified.");
 
+        for (Query q : _Ons)
+          q._ClauseStatic = q._Clause;
+        
         ReferenceHelper R = ReferenceHelper.parseObjectReference(_Object, ParentView._ParentSchema);
         if (TextUtil.isNullOrEmpty(R._S) == true || TextUtil.isNullOrEmpty(R._O) == true)
           PS.AddError("View '" + ParentView.getFullName() + "' declares a join '" + _Object + "' with an incorrect syntax. It should be '((package\\.)?schema\\.)?object'.");

@@ -26,9 +26,9 @@ public enum FrameworkColumnType
   {
   NONE // Normal column, i.e., user-defined directly
 
-  , OCC_CREATED // Generated OCC columns for created.
-  , OCC_LASTUPDATED // Generated OCC columns for lastUpdated.
-  , OCC_DELETED // Generated OCC columns for deleted.
+  , OCC_CREATED // Generated OCC column for created.
+  , OCC_LASTUPDATED // Generated OCC column for lastUpdated.
+  , OCC_DELETED // Generated OCC column for deleted.
 
   , TZ // added xxxTZ column to defined DATETIME columns
 

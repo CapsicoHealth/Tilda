@@ -76,7 +76,7 @@ public class ViewRealizeIncremental
           }
         
         _SubQuery = new SubWhereClause(_whereClause);
-        _SubQuery.Validate(PS, ParentView, "Realized View", false);
+        _SubQuery.validate(PS, ParentView, "Realized View", false);
         
         return Errs == PS.getErrorCount();
       }

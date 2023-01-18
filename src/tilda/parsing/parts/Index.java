@@ -140,7 +140,7 @@ public class Index
                         if (SubWhere._Clause.contains("?"))
                           PS.AddError("Object '" + _Parent.getFullName() + "' defines index '" + _Name + "' with a subQuery that contains a \"?\" variable placeholder: this is not allowed in an Index SubQuery.");
                       }
-                    _SubQuery.Validate(PS, _Parent, "Object " + _Parent.getFullName() + "'s index '" + _Name + "'", false);
+                    _SubQuery.validate(PS, _Parent, "Object " + _Parent.getFullName() + "'s index '" + _Name + "'", false);
                   }
               }
           }

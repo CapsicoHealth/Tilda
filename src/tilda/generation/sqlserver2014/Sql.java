@@ -305,7 +305,7 @@ public class Sql extends MSSQL implements CodeGenSql
                       Query Q = VJ.getQuery(this);
                       if (Q == null)
                         throw new Exception("Cannot generate the view because an 'on' clause matching the active database '" + getName() + "' is not available.");
-                      Out.print(" on " + Q._Clause);
+                      Out.print(" on " + Q._ClauseStatic);
                       Integer I = M.get(VJ._ObjectObj._Name);
                       if (I != null)
                         for (int i = 2; i <= I.intValue(); ++i)
@@ -313,7 +313,7 @@ public class Sql extends MSSQL implements CodeGenSql
                             Out.println();
                             Out.print("     " + (C._Join == null ? "left" : C._Join) + " join " + getFullTableVar(VJ._ObjectObj));
                             Out.print(" as " + getFullTableVar(C._SameAsObj._ParentObject, I.intValue()));
-                            Out.print(" on " + Q._Clause);
+                            Out.print(" on " + Q._ClauseStatic);
                           }
                     }
                   else
@@ -340,7 +340,7 @@ public class Sql extends MSSQL implements CodeGenSql
           {
             Query q = V._SubQuery.getQuery(this);
             if (q != null)
-              Out.print("     where " + q._Clause);
+              Out.print("     where " + q._ClauseStatic);
             Out.println();
           }
 

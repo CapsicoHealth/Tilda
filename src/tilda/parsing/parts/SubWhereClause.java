@@ -56,9 +56,9 @@ public class SubWhereClause
       {
       }
 
-    public SubWhereClause(String _SubWhere)
+    public SubWhereClause(String subWhere)
       {
-        _Wheres = new Query[] { new Query(_SubWhere)
+        _Wheres = new Query[] { new Query(subWhere)
         };
       }
 
@@ -73,7 +73,7 @@ public class SubWhereClause
         _OrderBy = Arrays.copyOf(SWC._OrderBy, SWC._OrderBy.length);
       }
 
-    public boolean Validate(ParserSession PS, Base ParentObject, String What, boolean TopLevel)
+    public boolean validate(ParserSession PS, Base ParentObject, String What, boolean TopLevel)
       {
         _ParentObject = ParentObject;
         // Does it have a name?
@@ -96,7 +96,7 @@ public class SubWhereClause
           {
             if (DBs.add(q._DB) == false)
               PS.AddError(What + " is defining a SubWhereClause with a duplicate DB value '" + q._DB + ".");
-            q.Validate(PS, _ParentObject, What);
+            q.validate(PS, _ParentObject, What);
           }
 
         _Attributes = _Wheres[0]._Attributes;

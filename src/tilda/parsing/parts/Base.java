@@ -33,7 +33,6 @@ import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.DefaultsHelper;
 import tilda.parsing.parts.helpers.DescriptionRewritingHelper;
 import tilda.parsing.parts.helpers.ValidationHelper;
-import tilda.utils.HTMLFilter;
 import tilda.utils.PaddingTracker;
 import tilda.utils.TextUtil;
 
@@ -255,7 +254,7 @@ public abstract class Base
           {
             if (SWC == null)
               continue;
-            if (SWC.Validate(PS, this, "Object '" + getFullName() + "'", true) == true)
+            if (SWC.validate(PS, this, "Object '" + getFullName() + "'", true) == true)
               if (Names.add(SWC._Name.toUpperCase()) == false)
                 PS.AddError("Object '" + getFullName() + "' is defining a query '" + SWC._Name + "' that has a name clashing with another query or index.");
             if (SWC._Unique == true)

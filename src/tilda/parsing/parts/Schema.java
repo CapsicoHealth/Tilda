@@ -121,6 +121,29 @@ public class Schema
         return null;
       }
 
+    public Object getObjectByClonedFrom(String fullName)
+      {
+//        LOG.debug("Looking for an object cloned from "+fullName);
+        for (Object O : _Objects)
+         {
+           if (O == null)
+            continue;
+//           LOG.debug("     "+O._Name+" - "+(O._CloneFrom != null ? "CLONED FROM "+O._CloneFrom._SrcObject : " NOT CLONED FROM ANYTHING"));
+//           if (O._CloneFrom == null)
+//             LOG.debug("          - Not a cloned resource.");
+//           else if (O._CloneFrom._SrcObjectObj == null)
+//            LOG.debug("          - Clone definition was not fully validated as O._CloneFrom._SrcObjectObj is null.");
+           if (O._CloneFrom != null && O._CloneFrom._SrcObjectObj != null && O._CloneFrom._SrcObjectObj.getFullName().equalsIgnoreCase(fullName) == true)
+             {
+//               LOG.debug("          - Found match to object "+O.getFullName()+".");
+               return O;
+             }
+         }
+//        LOG.debug("          - Did not find a object cloned from "+fullName+".");
+        return null;
+      }
+
+    
     public String getObjectList()
       {
         StringBuilder Str = new StringBuilder();

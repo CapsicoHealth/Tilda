@@ -749,7 +749,7 @@ public abstract class CommonStoreImpl implements DBType
         if (IX._SubQuery != null)
           {
             Query Q = IX._SubQuery.getQuery(DBType.Postgres);
-            Out.print(" where " + Q._Clause);
+            Out.print(" where " + Q._ClauseStatic);
           }
         Out.println(";");
 

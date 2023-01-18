@@ -33,6 +33,21 @@ public class History
     public transient List<Column> _IncludedColumnObjs;
     public transient List<Column> _SignatureColumnObjs;
 
+    public History()
+      {
+
+      }
+
+    public History(History h)
+      {
+        _Postfix = h._Postfix;
+        _IncludedColumns = h._IncludedColumns.clone();
+        _ExcludedColumns = h._ExcludedColumns.clone();
+        _SignatureColumns = h._SignatureColumns.clone();
+        _SignatureColumnsExcluded = h._SignatureColumnsExcluded.clone();
+        _CompressionSeconds = h._CompressionSeconds;
+      }
+
     public boolean Validate(ParserSession PS, Object obj)
       {
         int Errs = PS.getErrorCount();

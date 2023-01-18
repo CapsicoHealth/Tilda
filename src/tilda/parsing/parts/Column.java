@@ -203,6 +203,15 @@ public class Column extends TypeDef
       {
         return _Name;
       }
+    
+    /**
+     * Changes the column's name. Must only be called before any validation has occurred.
+     * @param newName
+     */
+    public void renameTo(String newName)
+      {
+        _Name = newName;
+      }
 
     public boolean Validate(ParserSession PS, Object ParentObject)
       {

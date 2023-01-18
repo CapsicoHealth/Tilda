@@ -54,11 +54,9 @@ public class Cloner
         if (_FullName == false)
          _Name = parentObject._Name + "_" + _Name;
         
-
         if (TextUtil.isNullOrEmpty(_Description) == true)
-          PS.AddError("Object '" + parentObject.getFullName() + "' defined a cloneAs without a description.");
-        else
-          _Description = _Description.replace("?{}", parentObject._OriginalDescription) + " (cloned from "+parentObject.getShortName()+")";
+          _Description = "?{}";
+        _Description = _Description.replace("?{}", parentObject._OriginalDescription) + " (cloned from "+parentObject.getShortName()+")";
 
         return true;
       }

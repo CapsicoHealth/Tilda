@@ -353,7 +353,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                                 {
                                   FromList.append("\n     " + JoinType.printJoinType(VC._Join) + " " + VJ._ObjectObj.getShortName());
                                   FromList.append(" as " + getFullTableVar(VC._SameAsObj._ParentObject, TI._V));
-                                  FromList.append(" on " + rewriteExpressionColumnQuoting(Q._Clause));
+                                  FromList.append(" on " + rewriteExpressionColumnQuoting(Q._ClauseStatic));
                                 }
                           }
                         else
@@ -487,9 +487,9 @@ public class Sql extends PostgreSQL implements CodeGenSql
             Query q = V._SubQuery.getQuery(this);
             if (q != null)
               {
-                boolean NewLine = q._Clause.indexOf("\n") >= 0;
+                boolean NewLine = q._ClauseStatic.indexOf("\n") >= 0;
                 Str.append(" where (");
-                Str.append(NewLine == true ? q._Clause.replaceAll("\n", "\n        ") : q._Clause);
+                Str.append(NewLine == true ? q._ClauseStatic.replaceAll("\n", "\n        ") : q._ClauseStatic);
                 Str.append(NewLine == true ? "\n       )" : ")");
               }
             Str.append("\n");
@@ -586,7 +586,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         Query Q = VJ.getQuery(this);
         if (Q == null)
           throw new Exception("Cannot generate the view because an 'on' clause matching the active database '" + this.getName() + "' is not available.");
-        Str.append(" on " + rewriteExpressionColumnQuoting(Q._Clause));
+        Str.append(" on " + rewriteExpressionColumnQuoting(Q._ClauseStatic));
         return Q;
       }
 
