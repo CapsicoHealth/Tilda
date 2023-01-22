@@ -50,7 +50,7 @@ public abstract class Base
     @SerializedName("description" ) public String               _Description= null;    
     @SerializedName("descriptionX") public String[]             _DescriptionX= null;
     @SerializedName("referenceUrl") public String               _ReferenceUrl;
-    @SerializedName("tag"         ) public String               _Tag;
+    @SerializedName("referenfeTag") public String               _ReferenceTag;
     @SerializedName("entityClass" ) public String               _EntityClass;
     @SerializedName("queries"     ) public List<SubWhereClause> _Queries    = new ArrayList<SubWhereClause>();
     @SerializedName("json"        ) public List<OutputMap>      _JsonDEPRECATED = new ArrayList<OutputMap >();

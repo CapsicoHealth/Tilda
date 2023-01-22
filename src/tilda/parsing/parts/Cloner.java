@@ -32,7 +32,7 @@ public class Cloner
     @SerializedName("fullName"    ) public boolean _FullName   = false;
     @SerializedName("referenceUrl") public String  _ReferenceUrl;
     @SerializedName("description" ) public String  _Description;
-    @SerializedName("tag"         ) public String  _Tag;
+    @SerializedName("referenceTag") public String  _ReferenceTag;
     /*@formatter:on*/
 
     public transient Object _ParentObject;

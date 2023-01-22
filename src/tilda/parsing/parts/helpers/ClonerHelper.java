@@ -228,8 +228,8 @@ public class ClonerHelper
             newObj._Name = C._Name;
             if (TextUtil.isNullOrEmpty(C._ReferenceUrl) == false)
               newObj._ReferenceUrl = C._ReferenceUrl;
-            if (TextUtil.isNullOrEmpty(C._Tag) == false)
-              newObj._Tag = C._Tag;
+            if (TextUtil.isNullOrEmpty(C._ReferenceTag) == false)
+              newObj._ReferenceTag = C._ReferenceTag;
             newObj._Description = C._Description;
             newObj._FST = FrameworkSourcedType.CLONED;
             newObj._SourceObject = obj;

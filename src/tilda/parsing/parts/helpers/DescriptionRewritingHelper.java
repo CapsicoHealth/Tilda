@@ -36,8 +36,8 @@ public class DescriptionRewritingHelper
         if (TextUtil.isNullOrEmpty(b._ReferenceUrl) == false)
          description = TextUtil.searchReplace(description, "${REFERENCE_URL}", "<A target=\"_other\" href="+TextUtil.escapeDoubleQuoteWithSlash(b._ReferenceUrl)+">"+HTMLFilter.cleanAbsolute(b._ReferenceUrl)+"</A>");
          
-        if (TextUtil.isNullOrEmpty(b._Tag) == false)
-          description = TextUtil.searchReplace(description, "${TAG}", b._Tag);
+        if (TextUtil.isNullOrEmpty(b._ReferenceTag) == false)
+          description = TextUtil.searchReplace(description, "${REFERENCE_TAG}", b._ReferenceTag);
          
         return description;
       }
