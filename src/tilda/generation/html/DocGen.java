@@ -94,7 +94,7 @@ public class DocGen
         writeSearchHTML(writer, true); // Add Search Box
         writer.println("<BR>");
         writeMasterIndexHTML(writer);
-        writer.println("<BR><BR>");
+        writer.println("<BR>");
         File f = new File(base64FileName);
         if (f.exists())
           {
@@ -149,26 +149,27 @@ public class DocGen
 
     protected void writeMasterIndexHTML(PrintWriter writer)
       {
-        writer.print("<DIV style=\"position: relative; overflow-x: auto; width: 98%; left: 1%; height: 300px;\">");
-        writer.print("<DIV style=\"columns:5;\">");
-
         List<NamedList<Object>> lists = new ArrayList<NamedList<Object>>();
         if (TextUtil.isNullOrEmpty(schema._EntityClasses) == true)
           {
             List<Object> objectBucket = new ArrayList<Object>();
+            List<Object> derivedBucket = new ArrayList<Object>();
             List<Object> viewBucket = new ArrayList<Object>();
             List<Object> realizedBucket = new ArrayList<Object>();
             for (Object obj : schema._Objects)
               if (obj != null)
                 {
-                  if (obj._FST == FrameworkSourcedType.NONE || obj._FST == FrameworkSourcedType.CLONED || obj._FST == FrameworkSourcedType.HISTORY)
+                  if (obj._FST == FrameworkSourcedType.NONE)
                     objectBucket.add(obj);
+                  if (obj._FST == FrameworkSourcedType.CLONED || obj._FST == FrameworkSourcedType.HISTORY)
+                    derivedBucket.add(obj);
                   else if (obj._FST == FrameworkSourcedType.VIEW)
                     viewBucket.add(obj);
                   else if (obj._FST == FrameworkSourcedType.REALIZED)
                     realizedBucket.add(obj);
                 }
             lists.add(new NamedList<Object>("Objects", objectBucket));
+            lists.add(new NamedList<Object>("Derived", derivedBucket));
             lists.add(new NamedList<Object>("Views", viewBucket));
             lists.add(new NamedList<Object>("Realized Views", realizedBucket));
           }
@@ -187,9 +188,21 @@ public class DocGen
           }
 
         NamedList.sortLists(lists, _ObjNameComparator);
-
+        int maxLen = 0;
+        int count = 0;
+        for (NamedList<Object> nl : lists)
+         for (Object obj : nl._list)
+           {
+             ++count;
+             if (obj.getShortName().length() > maxLen)
+              maxLen = obj.getShortName().length();
+           }
+        int columns = maxLen<=40?5:maxLen<=50?4:3;
+        int height = count/columns<=15?300:count/columns<=25?450:550;
+        writer.print("Total Number of entities defined: "+count+"<BR><BR>");
+        writer.print("<DIV style=\"position: relative; overflow: auto; resize: vertical; width: 98%; left: 1%; height: "+height+"px;\">");
+        writer.print("<DIV style=\"columns: "+columns+";\">");
         writeBucketList(writer, lists);
-
         writer.println("</DIV></DIV>");
       }
 
@@ -204,10 +217,10 @@ public class DocGen
                   {
                     writer.print("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
                     writer.print(UrlMaker.makeObjectLink(obj));
-                    if (obj._FST == FrameworkSourcedType.CLONED)
-                      writer.print(" <SUP><B>CLONE</B></SUP>");
+                    if (obj._FST == FrameworkSourcedType.CLONED || obj._CloneFrom != null)
+                      writer.print(" <SUP>CLONE</SUP>");
                     else if (obj._FST == FrameworkSourcedType.HISTORY)
-                      writer.print(" <SUP><B>History</B></SUP>");
+                      writer.print(" <SUP>History</SUP>");
                     writer.println("<BR>");
                   }
                 writer.print("<BR>");
