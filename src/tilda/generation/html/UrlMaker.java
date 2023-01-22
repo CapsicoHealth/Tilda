@@ -16,8 +16,46 @@
 
 package tilda.generation.html;
 
+import tilda.parsing.parts.Base;
+import tilda.parsing.parts.Column;
+import tilda.parsing.parts.Formula;
+import tilda.parsing.parts.Schema;
+import tilda.utils.TextUtil;
 
-public interface UrlMaker
+public class UrlMaker
   {
-    public int makeUrl(String x) throws Exception;
+
+    public static String makeSchemaLink(Schema S)
+      {
+        return "<A href=\"TILDA___Docs." + S.getShortName() + ".html\">" + UrlMaker.coolPrint(S.getShortName()) + "</A>";
+      }
+
+    public static String makeObjectLink(Base O)
+      {
+        return "<A href=\"TILDA___Docs." + (O._RealizedView == null ? O : O._RealizedView).getSchema().getShortName() + ".html#" + O._Name + "_CNT\">" + UrlMaker.coolPrint(O.getShortName()) + "</A>";
+      }
+
+    protected static String coolPrint(String Name)
+      {
+        return TextUtil.searchReplace(Name, ".", "<B>&nbsp;&#8226;&nbsp;</B>");
+      }
+
+    public static String makeColumnLink(Column C, Schema parentSchema)
+      {
+        return "<A href=\"" + UrlMaker.makeColumnHref(C, parentSchema) + "\">" + coolPrint(C.getShortName()) + "</A>";
+      }
+
+    protected static String makeFormulaLink(Formula F)
+      {
+        return "<A href=\"TILDA___Docs." + F._ParentView.getSchema().getShortName() + ".html#"
+        + F._ParentView._Name + "-" + F._Name + "_DIV\">" + coolPrint(F.getShortName()) + "</A>";
+      }
+
+    public static String makeColumnHref(Column C, Schema parentSchema)
+      {
+        boolean inSchema = C._ParentObject.getSchema().getShortName().equalsIgnoreCase(parentSchema.getShortName());
+        return inSchema == true ? "javascript:openDiv('" + C._ParentObject._Name + "-" + C.getName() + "_DIV', -50)"
+        : "TILDA___Docs." + C._ParentObject.getSchema().getShortName() + ".html#" + C._ParentObject._Name + "-" + C.getName() + "_DIV";
+      }
+
   }

@@ -51,6 +51,7 @@ public abstract class Base
     @SerializedName("descriptionX") public String[]             _DescriptionX= null;
     @SerializedName("referenceUrl") public String               _ReferenceUrl;
     @SerializedName("tag"         ) public String               _Tag;
+    @SerializedName("entityClass" ) public String               _EntityClass;
     @SerializedName("queries"     ) public List<SubWhereClause> _Queries    = new ArrayList<SubWhereClause>();
     @SerializedName("json"        ) public List<OutputMap>      _JsonDEPRECATED = new ArrayList<OutputMap >();
     @SerializedName("outputMaps"  ) public List<OutputMap>      _OutputMaps = new ArrayList<OutputMap>();
@@ -89,6 +90,7 @@ public abstract class Base
       {
         _Name = b._Name;
         _Prefix = b._Prefix;
+        _EntityClass = b._EntityClass;
         _Description = b._Description;
         _DBOnly_DEPRECATED = b._DBOnly_DEPRECATED;
         _ModeStr = b._ModeStr;
@@ -199,6 +201,20 @@ public abstract class Base
 
         if (TextUtil.isNullOrEmpty(_DescriptionX) == false)
           _Description = String.join(" ", _DescriptionX);
+        
+        if (TextUtil.isNullOrEmpty(_EntityClass) == true)
+          {
+            if (_ParentSchema._EntityClasses!=null && _ParentSchema._EntityClasses.length > 0)
+             PS.AddError("Object '" + _Name + "' is not declaring an entity class when the schema defined one or more. Once a schema defined one or more entity class, all entities must define one as well.");
+          }
+        else
+          {
+            if (_ParentSchema._EntityClasses==null || _ParentSchema._EntityClasses.length == 0)
+             PS.AddError("Object '" + _Name + "' is declaring an entity class when the schema did not define any. An entity cannot define a class if the schema did not define them.");
+            else if (TextUtil.contains(_ParentSchema._EntityClasses, _EntityClass, true, 0) == false)
+              PS.AddError("Object '" + _Name + "' is declaring an entity class '"+_EntityClass+"' which cannot be found in the list defined by the schema. Note that checke are done in a cese-insensitive way.");
+          }
+        
         
         _OriginalDescription = _Description;
         _Description = DescriptionRewritingHelper.processReferenceUrl(_OriginalDescription, this);

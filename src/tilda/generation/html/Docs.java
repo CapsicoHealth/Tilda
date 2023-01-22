@@ -37,7 +37,6 @@ import tilda.generation.interfaces.CodeGenSql;
 import tilda.generation.java8.Helper;
 import tilda.generation.java8.JavaJDBCType;
 import tilda.parsing.ParserSession;
-import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Cloner;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ColumnValue;
@@ -69,40 +68,6 @@ public class Docs
 
     protected static final Logger LOG = LogManager.getLogger(Docs.class.getName());
 
-
-    protected static String coolPrint(String Name)
-      {
-        return TextUtil.searchReplace(Name, ".", "<B>&nbsp;&#8226;&nbsp;</B>");
-      }
-
-    public static String makeSchemaLink(Schema S)
-      {
-        return "<A href=\"TILDA___Docs." + S.getShortName() + ".html\">" + coolPrint(S.getShortName()) + "</A>";
-      }
-
-    public static String makeObjectLink(Base O)
-      {
-        return "<A href=\"TILDA___Docs." + (O._RealizedView==null ? O : O._RealizedView).getSchema().getShortName() + ".html#" + O._Name + "_CNT\">" + coolPrint(O.getShortName()) + "</A>";
-      }
-
-    public static String makeColumnHref(Column C, Schema parentSchema)
-      {
-        boolean inSchema = C._ParentObject.getSchema().getShortName().equalsIgnoreCase(parentSchema.getShortName());
-        return inSchema == true ? "javascript:openDiv('" + C._ParentObject._Name + "-" + C.getName() + "_DIV', -50)"
-                                : "TILDA___Docs." + C._ParentObject.getSchema().getShortName() + ".html#" + C._ParentObject._Name + "-" + C.getName() + "_DIV"
-                                ;
-      }
-
-    public static String makeColumnLink(Column C, Schema parentSchema)
-      {
-        return "<A href=\"" + makeColumnHref(C, parentSchema) + "\">" + coolPrint(C.getShortName()) + "</A>";
-      }
-
-    protected static String makeFormulaLink(Formula F)
-      {
-        return "<A href=\"TILDA___Docs." + F._ParentView.getSchema().getShortName() + ".html#"
-        + F._ParentView._Name + "-" + F._Name + "_DIV\">" + coolPrint(F.getShortName()) + "</A>";
-      }
 
     public static void writeHeader(PrintWriter Out, Schema S)
     throws Exception
@@ -136,7 +101,7 @@ public class Docs
         Out.println("<TR valign=\"top\"><TD><H2>" + O._Name + "&nbsp;&nbsp;&nbsp;&nbsp;<SUP style=\"font-size: 70%;\"><SPAN class=\"BackToDetails\"><A href=\"#" + O._Name + "_CNT\">details</A>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><A href=\"#\">top</A></SUP></H2></TD><TD align=\"right\"></TD></TR>");
         Out.println("</TABLE>");
         Out.println("<DIV id=\"" + O._Name + "_CNT\" class=\"content\">");
-        Out.println("The " + ObjType + " " + O.getShortName() + ":<UL>");
+        Out.println("The " + ObjType + " " + O.getShortName() + " "+(TextUtil.isNullOrEmpty(O._EntityClass)==true?"":"(defined with an entity class of "+O._EntityClass+")")+":<UL>");
         if (O._Mode == ObjectMode.NORMAL || O._Mode == ObjectMode.CODE_ONLY) // view == null || view._DBOnly == false)
           Out.println("<LI>Is mapped to the generated " + Helper.getCodeGenLanguage() + "/" + G.getSql().getName() + " Tilda classes <B>" + O.getAppFactoryClassName() + "</B>, <B>" + O.getAppDataClassName() + "</B> in the package <B>" + O._ParentSchema._Package + "</B>.");
         else if (O._Mode == ObjectMode.DB_ONLY)
@@ -149,7 +114,7 @@ public class Docs
             Object RO = view._RealizedObj;
             if (RO != null)
              {
-               Out.print("<LI>Configured to be Realized to <B>" + makeObjectLink(RO) + "</B> through DB function <B>" + coolPrint(view._ParentSchema.getShortName() + ".Refill_" + view.getRealizedTableName(false)) + "()</B>.");
+               Out.print("<LI>Configured to be Realized to <B>" + UrlMaker.makeObjectLink(RO) + "</B> through DB function <B>" + UrlMaker.coolPrint(view._ParentSchema.getShortName() + ".Refill_" + view.getRealizedTableName(false)) + "()</B>.");
                if (RO._ParentSchema._Name.equals(view._ParentSchema._Name) == false)
                  Out.print("<BR><B>The target table exists in a different schema: "+RO._ParentSchema._Name+".</B></LI>");
                Out.println("</LI>");
@@ -159,7 +124,7 @@ public class Docs
           {
             View V = O._RealizedView;
             if (V != null)
-             Out.print("<LI>Is Realized from <B>" + makeObjectLink(V) + "</B> through DB function <B>" + coolPrint(O._ParentSchema.getShortName() + ".Refill_" + O._Name) + "()</B>.");
+             Out.print("<LI>Is Realized from <B>" + UrlMaker.makeObjectLink(V) + "</B> through DB function <B>" + UrlMaker.coolPrint(O._ParentSchema.getShortName() + ".Refill_" + O._Name) + "()</B>.");
             if (O._ParentSchema._Name.equals(V._ParentSchema._Name) == false)
               Out.print("<BR><B>This target table exists in a different schema: "+O._ParentSchema._Name+".</B></LI>");
             Out.println("</LI>");
@@ -167,7 +132,12 @@ public class Docs
         else if (O._FST == FrameworkSourcedType.CLONED)
           {
             Object OR = O._ParentSchema.getObject(O._SourceObject._Name);
-            Out.println("<LI>Is Cloned from <B>" + makeObjectLink(OR) + "</B>.</LI>");
+            Out.println("<LI>Is Cloned from <B>" + UrlMaker.makeObjectLink(OR) + "</B>.</LI>");
+          }
+        else if (O._CloneFrom != null)
+          {
+            Object OR = O._CloneFrom._SrcObjectObj;
+            Out.println("<LI>Is Cloned from <B>" + UrlMaker.makeObjectLink(OR) + "</B>.</LI>");
           }
         else if (O._CloneAs != null && O._CloneAs.length > 0)
           {
@@ -176,7 +146,7 @@ public class Docs
               {
                 Object OR = O._ParentSchema.getObject(c._Name);
                 if (OR != null)
-                 Out.println("<LI>" + makeObjectLink(OR) + "</LI>");
+                 Out.println("<LI>" + UrlMaker.makeObjectLink(OR) + "</LI>");
               }
             Out.println("</UL></LI>");
           }
@@ -215,7 +185,7 @@ public class Docs
               }
             if (O._HistoryObj != null)
               {
-                Out.println("<LI>Has a History mapping to "+makeObjectLink(O._HistoryObj)+":<UL>" + SystemValues.NEWLINE
+                Out.println("<LI>Has a History mapping to "+UrlMaker.makeObjectLink(O._HistoryObj)+":<UL>" + SystemValues.NEWLINE
                 + "<LI><B>Signature</B>: "+Column.printColumnList(O._History._SignatureColumnObjs, true)+"</LI>" + SystemValues.NEWLINE
                 + "<LI><B>History</B>: "+Column.printColumnList(O._History._IncludedColumnObjs, true)+"</LI>" + SystemValues.NEWLINE
                 +"</UL>"
@@ -223,7 +193,7 @@ public class Docs
               }
             else if (O._FST == FrameworkSourcedType.HISTORY)
               {
-                Out.println("<LI>Is a History mapping from "+makeObjectLink(O._SourceObject)+":<UL>" + SystemValues.NEWLINE
+                Out.println("<LI>Is a History mapping from "+UrlMaker.makeObjectLink(O._SourceObject)+":<UL>" + SystemValues.NEWLINE
                 + "<LI><B>Signature</B>: "+Column.printColumnList(O._SourceObject._History._SignatureColumnObjs, true)+"</LI>" + SystemValues.NEWLINE
                 + "<LI><B>History</B>: "+Column.printColumnList(O._SourceObject._History._IncludedColumnObjs, true)+"</LI>" + SystemValues.NEWLINE
                 +"</UL>"
@@ -251,7 +221,7 @@ public class Docs
                   continue;
                 ++i;
                 Out.print("<TR "+(i%2==0?"style=\"background-color:#F7F7F7;\"":"")+"><TD>"+i+"</TD><TD>" + TextUtil.print(FK._SrcColumns) + "</TD>"
-                             +"<TD>" + makeObjectLink(FK._DestObjectObj)+"</TD>"
+                             +"<TD>" + UrlMaker.makeObjectLink(FK._DestObjectObj)+"</TD>"
                              +"<TD>" + TextUtil.print(FK._DestObjectObj._PrimaryKey._Columns)+"</TD>"
                              );
                 if (FK._multi == true)
@@ -401,7 +371,7 @@ public class Docs
                           {
                             Out.print("<DIV style=\"margin:0px;margin-left:20px;font-size:75%;\">");
                             Out.print("&nbsp;&nbsp;&rarr;&nbsp;");
-                            Out.print(makeColumnLink(c, O.getSchema()));
+                            Out.print(UrlMaker.makeColumnLink(c, O.getSchema()));
                             Out.print("</DIV>");
                           }
                       }
@@ -433,7 +403,7 @@ public class Docs
                         else
                           Out.print("<BR>");
                         Out.print("&rarr;&nbsp;");
-                        Out.print(makeColumnLink(c, O.getSchema()));
+                        Out.print(UrlMaker.makeColumnLink(c, O.getSchema()));
                       }
                     Out.print("</DIV>");
                   }
@@ -447,7 +417,7 @@ public class Docs
                     int x = 0;
                     for (ForeignKey FK : FKs)
                       {
-                        Out.print("<TR><TD>" + (x == 0 ? "<B style=\"color:white;background-color:fuchsia;\">FK</B>" : "") + "</TD><TD>&rarr;&nbsp;" + makeObjectLink(FK._DestObjectObj) + ": ");
+                        Out.print("<TR><TD>" + (x == 0 ? "<B style=\"color:white;background-color:fuchsia;\">FK</B>" : "") + "</TD><TD>&rarr;&nbsp;" + UrlMaker.makeObjectLink(FK._DestObjectObj) + ": ");
                         int xx = 0;
                         for (Column c : FK._DestObjectObj._PrimaryKey._ColumnObjs)
                           {
@@ -977,16 +947,16 @@ public class Docs
             for (String ColName : ColumnMatches)
               {
                 Column C = V.getProxyColumn(ColName);
-                Out.println("<A style=\"color:#00AA00; font-weight: bold;\" href=\"" + makeColumnHref(C, V.getSchema()) + "\">" + ColName + "</A><BR>");
+                Out.println("<A style=\"color:#00AA00; font-weight: bold;\" href=\"" + UrlMaker.makeColumnHref(C, V.getSchema()) + "\">" + ColName + "</A><BR>");
                 ViewColumn VC = V.getViewColumn(ColName);
                 List<Column> L = VC == null ? null : SameAsHelper.getSameAsLineage(VC);
                 if (L != null && L.isEmpty() == false)
                   {
-                    Out.println("<DIV style=\"padding-left:10px; font-size:75%;\">&nbsp;&nbsp;&rarr;&nbsp;" + makeColumnLink(L.get(0), V.getSchema()));
+                    Out.println("<DIV style=\"padding-left:10px; font-size:75%;\">&nbsp;&nbsp;&rarr;&nbsp;" + UrlMaker.makeColumnLink(L.get(0), V.getSchema()));
                     if (L.size() > 2)
                       Out.println("&nbsp;&nbsp;&rarr;&nbsp;&nbsp;&hellip;");
                     if (L.size() >= 2)
-                      Out.println("&nbsp;&nbsp;&rarr;&nbsp;" + makeColumnLink(L.get(L.size() - 1), V.getSchema()));
+                      Out.println("&nbsp;&nbsp;&rarr;&nbsp;" + UrlMaker.makeColumnLink(L.get(L.size() - 1), V.getSchema()));
                     Out.println("</DIV>");
                     Out.println("<DIV style=\"padding-left:10px;\">" + L.get(0)._Description + "</DIV>");
                   }
@@ -1002,8 +972,8 @@ public class Docs
               {
                 Formula subF = V.getFormula(FormulaName, true);
                 Column C = V.getProxyColumn(FormulaName);
-                Out.println("<A style=\"color:#0000AA; font-weight: bold;\" href=\"" + makeColumnHref(C, V.getSchema()) + "\">" + FormulaName + "</A><BR>");
-                Out.println("<DIV style=\"padding-left:10px; font-size:75%;\">&nbsp;&nbsp;&rarr;&nbsp;" + makeFormulaLink(subF) + "</DIV>");
+                Out.println("<A style=\"color:#0000AA; font-weight: bold;\" href=\"" + UrlMaker.makeColumnHref(C, V.getSchema()) + "\">" + FormulaName + "</A><BR>");
+                Out.println("<DIV style=\"padding-left:10px; font-size:75%;\">&nbsp;&nbsp;&rarr;&nbsp;" + UrlMaker.makeFormulaLink(subF) + "</DIV>");
                 Out.println("<DIV style=\"padding-left:10px;\">" + CleanForHTML(subF._Description) + "</DIV>");
               }
             Out.println("</TD></TR>");
@@ -1046,7 +1016,7 @@ public class Docs
             Column C = F._ParentView.getProxyColumn(s);
             if (C != null)
               {
-                M.appendReplacement(Str, "<A style=\"color:#00AA00; font-weight: bold;\" href=\"" + makeColumnHref(C, F.getParentView().getSchema()) + "\">" + s + "</A>");
+                M.appendReplacement(Str, "<A style=\"color:#00AA00; font-weight: bold;\" href=\"" + UrlMaker.makeColumnHref(C, F.getParentView().getSchema()) + "\">" + s + "</A>");
                 ColumnMatches.add(s);
               }
           }
@@ -1061,7 +1031,7 @@ public class Docs
                 Column C = F._ParentView.getProxyColumn(s);
                 if (C != null)
                   {
-                    M.appendReplacement(Str, "<A style=\"color:#0000AA; font-weight: bold;\" href=\"" + makeColumnHref(C, F.getParentView().getSchema()) + "\">" + s + "</A>");
+                    M.appendReplacement(Str, "<A style=\"color:#0000AA; font-weight: bold;\" href=\"" + UrlMaker.makeColumnHref(C, F.getParentView().getSchema()) + "\">" + s + "</A>");
                     FormulaMatches.add(s);
                   }
               }
@@ -1087,7 +1057,7 @@ public class Docs
             if (/* level == 0 || */ DW.getObj()._ParentSchema._Name.equals("TILDA") == true)
               return;
             View V = DW.getObj()._ParentSchema.getView(DW.getObj()._Name);
-            _Str.append("<TR><TD><PRE>").append(PaddingUtil.getPad(level * 4)).append(makeObjectLink(DW.getObj())).append("</PRE></TD><TD>");
+            _Str.append("<TR><TD><PRE>").append(PaddingUtil.getPad(level * 4)).append(UrlMaker.makeObjectLink(DW.getObj())).append("</PRE></TD><TD>");
             if (V != null)
               {
                 if (V._SubWhereX != null)
@@ -1202,7 +1172,7 @@ public class Docs
                   View V = DW.getObj()._ParentSchema.getView(DW.getObj()._Name);
                   String TName = V.getRealizedTableName(false);
                   Str1.append("select " + V._ParentSchema._Name + ".Refill_" + TName + "();<BR>\n");
-                  Str2.append(makeObjectLink(DW.getObj()) + "<BR>\n");
+                  Str2.append(UrlMaker.makeObjectLink(DW.getObj()) + "<BR>\n");
                   Set<View> A = V.getFirstAncestorRealizedViews();
                   if (A != null && A.isEmpty() == false)
                     AncestorViews.addAll(A);

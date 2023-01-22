@@ -155,6 +155,9 @@ public class Index
         if (_Cluster == true && _Db == false)
          PS.AddError("Object '" + _Parent.getFullName() + "' is defining a non-database index '" + _Name + "' as clustered. Only database indices can be made clustered.");
 
+        if (_Cluster == true && _SubQuery != null)
+          PS.AddError("Object '" + _Parent.getFullName() + "' is defining a cluster index '" + _Name + "' that is also partial: partial indices (i.e., with a where clause, cannot be clustered).");
+
         return Errs == PS.getErrorCount();
       }
 

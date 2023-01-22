@@ -92,6 +92,9 @@ public class ClonerHelper
         if (TextUtil.isNullOrEmpty(obj._Prefix) == true)
           obj._Prefix = obj._CloneFrom._SrcObjectObj._Prefix;
 
+        if (TextUtil.isNullOrEmpty(obj._EntityClass) == true)
+          obj._EntityClass = obj._CloneFrom._SrcObjectObj._EntityClass;
+        
         if (TextUtil.isNullOrEmpty(obj._Description) == true)
           obj._Description = "?{}";
         obj._Description = obj._Description.replace("?{}", obj._CloneFrom._SrcObjectObj._Description) + " (cloned from " + obj._CloneFrom._SrcObjectObj.getShortName() + ")";

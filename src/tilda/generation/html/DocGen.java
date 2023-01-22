@@ -3,6 +3,7 @@ package tilda.generation.html;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -83,17 +84,17 @@ public class DocGen
         writeHeader(writer, PS);
         writer.println("</HEAD>");
         writer.println("<BODY>");
-        writer.println("<TABLE width=\"100%\"><TR><TD><H1>Schema " + schema._Name + (exportPublish == true ? " (Publish Export Version)" : "") 
-                     + "</H1></TD><TD align=\"right\"><I>This documentation was generated on "+DateTimeUtil.printDateTimeFriendly(DateTimeUtil.nowLocal(), true, true)
-                     + "</I></TD></TR></TABLE>"
-                     );
+        writer.println("<TABLE width=\"100%\"><TR><TD><H1>Schema " + schema._Name + (exportPublish == true ? " (Publish Export Version)" : "")
+        + "</H1></TD><TD align=\"right\"><I>This documentation was generated on " + DateTimeUtil.printDateTimeFriendly(DateTimeUtil.nowLocal(), true, true)
+        + "</I></TD></TR></TABLE>");
         if (schema._Documentation != null && schema._Documentation._Description != null)
           for (String str : schema._Documentation._Description)
             writer.println(str);
         writer.println("<BR><BR>");
         writeSearchHTML(writer, true); // Add Search Box
-        writer.println("");
-
+        writer.println("<BR>");
+        writeMasterIndexHTML(writer);
+        writer.println("<BR><BR>");
         File f = new File(base64FileName);
         if (f.exists())
           {
@@ -110,6 +111,111 @@ public class DocGen
         writer.println("</HTML>");
         writer.close();
       }
+
+    protected static class NamedList<E>
+      {
+        String  _name;
+        List<E> _list;
+
+        public NamedList(String name, List<E> list)
+          {
+            _name = name;
+            _list = list;
+          }
+
+        public static <E> NamedList<E> getList(List<NamedList<E>> lists, String name)
+          {
+            for (NamedList<E> nl : lists)
+              if (nl._name.equals(name) == true)
+                return nl;
+            return null;
+          }
+
+        public static <E> void sortLists(List<NamedList<E>> lists, Comparator<E> comp)
+          {
+            for (NamedList<E> nl : lists)
+              nl._list.sort(comp);
+          }
+      }
+
+    protected static Comparator<Object> _ObjNameComparator = new Comparator<Object>()
+      {
+        @Override
+        public int compare(Object o1, Object o2)
+          {
+            return o1._Name.compareTo(o2._Name);
+          }
+      };
+
+    protected void writeMasterIndexHTML(PrintWriter writer)
+      {
+        writer.print("<DIV style=\"position: relative; overflow-x: auto; width: 98%; left: 1%; height: 300px;\">");
+        writer.print("<DIV style=\"columns:5;\">");
+
+        List<NamedList<Object>> lists = new ArrayList<NamedList<Object>>();
+        if (TextUtil.isNullOrEmpty(schema._EntityClasses) == true)
+          {
+            List<Object> objectBucket = new ArrayList<Object>();
+            List<Object> viewBucket = new ArrayList<Object>();
+            List<Object> realizedBucket = new ArrayList<Object>();
+            for (Object obj : schema._Objects)
+              if (obj != null)
+                {
+                  if (obj._FST == FrameworkSourcedType.NONE || obj._FST == FrameworkSourcedType.CLONED || obj._FST == FrameworkSourcedType.HISTORY)
+                    objectBucket.add(obj);
+                  else if (obj._FST == FrameworkSourcedType.VIEW)
+                    viewBucket.add(obj);
+                  else if (obj._FST == FrameworkSourcedType.REALIZED)
+                    realizedBucket.add(obj);
+                }
+            lists.add(new NamedList<Object>("Objects", objectBucket));
+            lists.add(new NamedList<Object>("Views", viewBucket));
+            lists.add(new NamedList<Object>("Realized Views", realizedBucket));
+          }
+        else
+          {
+            for (String ec : schema._EntityClasses)
+              if (TextUtil.isNullOrEmpty(ec) == false)
+                lists.add(new NamedList<Object>(ec, new ArrayList<Object>()));
+            for (Object obj : schema._Objects)
+              if (obj != null)
+                {
+                  NamedList<Object> nl = NamedList.getList(lists, obj._EntityClass);
+                  if (nl != null)
+                    nl._list.add(obj);
+                }
+          }
+
+        NamedList.sortLists(lists, _ObjNameComparator);
+
+        writeBucketList(writer, lists);
+
+        writer.println("</DIV></DIV>");
+      }
+
+    protected void writeBucketList(PrintWriter writer, List<NamedList<Object>> lists)
+      {
+        for (NamedList<Object> nl : lists)
+          {
+            if (nl._list.isEmpty() == false)
+              {
+                writer.print("<B>" + nl._name + "</B> ("+nl._list.size()+"):<BR>");
+                for (Object obj : nl._list)
+                  {
+                    writer.print("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+                    writer.print(UrlMaker.makeObjectLink(obj));
+                    if (obj._FST == FrameworkSourcedType.CLONED)
+                      writer.print(" <SUP><B>CLONE</B></SUP>");
+                    else if (obj._FST == FrameworkSourcedType.HISTORY)
+                      writer.print(" <SUP><B>History</B></SUP>");
+                    writer.println("<BR>");
+                  }
+                writer.print("<BR>");
+              }
+          }
+      }
+
+
 
 
     private void WriteRealizeSchedule(ParserSession PS, PrintWriter writer)
@@ -293,7 +399,7 @@ public class DocGen
                             writer.print(++c == 0 ? "            {" : "           ,{");
                             JSONUtil.print(writer, "name", true, C.getName());
                             JSONUtil.print(writer, "type", false, C._Size == null ? C._TypeStr : C._TypeStr + "(" + C._Size + ")");
-                            JSONUtil.print(writer, "nullable", false, C._Nullable==null?true:C._Nullable);
+                            JSONUtil.print(writer, "nullable", false, C._Nullable == null ? true : C._Nullable);
 
                             Formula F = O._ParentSchema.getSourceFormula(C);
                             if (F == null)
@@ -305,7 +411,7 @@ public class DocGen
                                 JSONUtil.print(writer, "formula", false, true);
                                 JSONUtil.print(writer, "docs", false, F._Title + (F._Measure == false ? "" : "&nbsp;<SUP class=\"Measure\"></SUP>") + "<BR><BR>" + String.join(" ", F._Description) + "<PRE style=\"padding-top: 3px;\">" + Docs.printFormulaCodeHTML(F, ColumnMatches, FormulaMatches, true) + "</PRE>");
                               }
-                            JSONUtil.print(writer, "url", false, Docs.makeColumnHref(C, O.getSchema()));
+                            JSONUtil.print(writer, "url", false, UrlMaker.makeColumnHref(C, O.getSchema()));
                             writer.println(" }");
                           }
                       writer.println("        ]}");
