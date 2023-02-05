@@ -75,30 +75,34 @@
         ,{ "name":"schemaName" , "type":"STRING(64)"    , "nullable":false, "description":"The name of the schema for the resource."   }
         ,{ "name":"objectName" , "type":"STRING(1024)"  , "nullable":true , "description":"The name of the resource."   }
         ,{ "name":"objectType" , "type":"STRING(128)"   , "nullable":true , "description":"The type of the resource."
-                               , "values": [ { "name":"Table"    , "description": "A table"     }
-                                            ,{ "name":"View"     , "description": "A view"      }
-                                            ,{ "name":"Column"   , "description": "A column"    }
-                                            ,{ "name":"Index"    , "description": "An index."   }
-                                            ,{ "name":"Function" , "description": "A function"  }
-                                            ,{ "name":"Procedure", "description": "A procedure" }
-                                            ,{ "name":"Script"   , "description": "A script"    }
+                               , "values": [ { "name":"Schema"    , "description": "A schema"        }
+                                            ,{ "name":"Table"     , "description": "A table"         }
+                                            ,{ "name":"View"      , "description": "A view"          }
+                                            ,{ "name":"Column"    , "description": "A column"        }
+                                            ,{ "name":"Index"     , "description": "An index."       }
+                                            ,{ "name":"ForeignKey", "description": "An foreign key." }
+                                            ,{ "name":"PrimaryKey", "description": "An primary key." }
+                                            ,{ "name":"Function"  , "description": "A function"      }
+                                            ,{ "name":"Procedure" , "description": "A procedure"     }
+                                            ,{ "name":"Script"    , "description": "A script"        }
                                            ]
          }
-        ,{ "name":"startTime"  , "type":"DATETIME"      , "nullable":false, "description":"The timestamp for when the refill started."        }
-        ,{ "name":"endTime"    , "type":"DATETIME"      , "nullable":true , "description":"The timestamp for when the refill ended."          }
-        ,{ "name":"statement"  , "type":"STRING(256000)", "nullable":true , "description":"The value of the maintenance resource to track."  }
         ,{ "name":"action"     , "type":"STRING(64)"    , "nullable":true , "description":"The name of the maintenance resource to track."
                                , "values": [ { "name":"Execute" , "description":"Execute" }
                                             ,{ "name":"Create"  , "description":"Create"  }
                                             ,{ "name":"Update"  , "description":"Update"  }
                                             ,{ "name":"Drop"    , "description":"Drop"    }
                                             ,{ "name":"Rename"  , "description":"Rename"  }
+                                            ,{ "name":"Comment" , "description":"Comment" }
                                             ,{ "name":"Optimize", "description":"Optimize"}
                                             ,{ "name":"Vacuum"  , "description":"Vacuum"  }
                                             ,{ "name":"Reorg"   , "description":"Reorg"   }
                                             ,{ "name":"Cluster" , "description":"Cluster" }
                                            ]
          }
+        ,{ "name":"startTime"  , "type":"DATETIME"      , "nullable":false, "description":"The timestamp for when the refill started."        }
+        ,{ "name":"endTime"    , "type":"DATETIME"      , "nullable":true , "description":"The timestamp for when the refill ended."          }
+        ,{ "name":"statement"  , "type":"STRING(256000)", "nullable":true , "description":"The value of the maintenance resource to track."  }
         ,{ "name":"descr"      , "type":"STRING(2048)"  , "nullable":true , "description":"The name of the maintenance resource to track."   }
        ]
      ,"primary": { "autogen": true }

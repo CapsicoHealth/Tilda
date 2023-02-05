@@ -16,6 +16,7 @@
 
 package tilda.migration.actions;
 
+import tilda.data.MaintenanceLog_Data;
 import tilda.db.Connection;
 import tilda.migration.MigrationAction;
 import tilda.parsing.parts.View;
@@ -24,7 +25,7 @@ public class ViewCreate extends MigrationAction
   {
     public ViewCreate(View V)
       {
-        super(V._ParentSchema._Name, V._Name, false);
+        super(V._ParentSchema._Name, V._Name, false, MaintenanceLog_Data._actionCreate, MaintenanceLog_Data._objectTypeView);
         _V = V;
       }
 

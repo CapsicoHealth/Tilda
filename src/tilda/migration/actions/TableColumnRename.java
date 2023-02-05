@@ -16,6 +16,7 @@
 
 package tilda.migration.actions;
 
+import tilda.data.MaintenanceLog_Data;
 import tilda.db.Connection;
 import tilda.migration.MigrationAction;
 
@@ -23,7 +24,7 @@ public class TableColumnRename extends MigrationAction
   {
     public TableColumnRename(tilda.parsing.parts.Column col, String oldName)
       {
-        super(col._ParentObject._ParentSchema._Name, col._ParentObject._Name, false);
+        super(col._ParentObject._ParentSchema._Name, col._ParentObject._Name, false, MaintenanceLog_Data._actionRename, MaintenanceLog_Data._objectTypeColumn);
         _col = col;
         _oldName = oldName;
       }

@@ -37,7 +37,7 @@ public class TildaHelpersAddStart extends MigrationAction
 
     public TildaHelpersAddStart()
       {
-        super(MaintenanceLog_Factory.SCHEMA_LABEL, TILDA_HELPERS_START, false);
+        super(MaintenanceLog_Factory.SCHEMA_LABEL, TILDA_HELPERS_START, false, MaintenanceLog_Data._actionExecute, MaintenanceLog_Data._objectTypeScript);
       }
 
     public boolean process(Connection C)

@@ -16,6 +16,7 @@
 
 package tilda.migration.actions;
 
+import tilda.data.MaintenanceLog_Data;
 import tilda.db.Connection;
 import tilda.migration.MigrationAction;
 import tilda.parsing.parts.Object;
@@ -24,7 +25,7 @@ public class ColumnDrop extends MigrationAction
   {
     public ColumnDrop(Object Obj, String ColumnName)
       {
-        super(Obj._ParentSchema._Name, Obj._Name, false);
+        super(Obj._ParentSchema._Name, Obj._Name, false, MaintenanceLog_Data._actionDrop, MaintenanceLog_Data._objectTypeColumn);
         _Obj = Obj;
         _ColumnName = ColumnName;
       }

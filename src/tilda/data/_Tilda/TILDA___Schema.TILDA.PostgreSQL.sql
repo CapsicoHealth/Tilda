@@ -59,12 +59,12 @@ create table if not exists TILDA.MaintenanceLog -- Maintenance information
   , "schemaName"   varchar(64)    not null   -- The name of the schema for the resource.
   , "objectName"   varchar(1024)             -- The name of the resource.
   , "objectType"   varchar(128)              -- The type of the resource.
+  , "action"       varchar(64)               -- The name of the maintenance resource to track.
   , "startTimeTZ"  character(5)   not null   -- Generated helper column to hold the time zone ID for 'startTime'.
   , "startTime"    timestamptz    not null   -- The timestamp for when the refill started.
   , "endTimeTZ"    character(5)              -- Generated helper column to hold the time zone ID for 'endTime'.
   , "endTime"      timestamptz               -- The timestamp for when the refill ended.
   , "statement"    text                      -- The value of the maintenance resource to track.
-  , "action"       varchar(64)               -- The name of the maintenance resource to track.
   , "descr"        varchar(2048)             -- The name of the maintenance resource to track.
   , "created"      timestamptz    not null DEFAULT statement_timestamp()   -- The timestamp for when the record was created. (TILDA.MaintenanceLog)
   , "lastUpdated"  timestamptz    not null DEFAULT statement_timestamp()   -- The timestamp for when the record was last updated. (TILDA.MaintenanceLog)
@@ -79,12 +79,12 @@ COMMENT ON COLUMN TILDA.MaintenanceLog."type" IS E'The type of maintenance, e.g.
 COMMENT ON COLUMN TILDA.MaintenanceLog."schemaName" IS E'The name of the schema for the resource.';
 COMMENT ON COLUMN TILDA.MaintenanceLog."objectName" IS E'The name of the resource.';
 COMMENT ON COLUMN TILDA.MaintenanceLog."objectType" IS E'The type of the resource.';
+COMMENT ON COLUMN TILDA.MaintenanceLog."action" IS E'The name of the maintenance resource to track.';
 COMMENT ON COLUMN TILDA.MaintenanceLog."startTimeTZ" IS E'Generated helper column to hold the time zone ID for ''startTime''.';
 COMMENT ON COLUMN TILDA.MaintenanceLog."startTime" IS E'The timestamp for when the refill started.';
 COMMENT ON COLUMN TILDA.MaintenanceLog."endTimeTZ" IS E'Generated helper column to hold the time zone ID for ''endTime''.';
 COMMENT ON COLUMN TILDA.MaintenanceLog."endTime" IS E'The timestamp for when the refill ended.';
 COMMENT ON COLUMN TILDA.MaintenanceLog."statement" IS E'The value of the maintenance resource to track.';
-COMMENT ON COLUMN TILDA.MaintenanceLog."action" IS E'The name of the maintenance resource to track.';
 COMMENT ON COLUMN TILDA.MaintenanceLog."descr" IS E'The name of the maintenance resource to track.';
 COMMENT ON COLUMN TILDA.MaintenanceLog."created" IS E'The timestamp for when the record was created. (TILDA.MaintenanceLog)';
 COMMENT ON COLUMN TILDA.MaintenanceLog."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.MaintenanceLog)';

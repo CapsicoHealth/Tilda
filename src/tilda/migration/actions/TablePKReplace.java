@@ -19,6 +19,7 @@ package tilda.migration.actions;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.data.MaintenanceLog_Data;
 import tilda.db.Connection;
 import tilda.db.metadata.TableMeta;
 import tilda.migration.MigrationAction;
@@ -30,7 +31,7 @@ public class TablePKReplace extends MigrationAction
 
     public TablePKReplace(tilda.parsing.parts.Object Obj, TableMeta TMeta)
       {
-        super(Obj._ParentSchema._Name, Obj._Name, false);
+        super(Obj._ParentSchema._Name, Obj._Name, false, MaintenanceLog_Data._actionUpdate, MaintenanceLog_Data._objectTypePrimaryKey);
         _Obj = Obj;
         _TMeta = TMeta;
         // LOG.debug("FK Out");

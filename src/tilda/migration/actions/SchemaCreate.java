@@ -16,6 +16,7 @@
 
 package tilda.migration.actions;
 
+import tilda.data.MaintenanceLog_Data;
 import tilda.db.Connection;
 import tilda.migration.MigrationAction;
 import tilda.parsing.parts.Schema;
@@ -24,7 +25,7 @@ public class SchemaCreate extends MigrationAction
   {
     public SchemaCreate(Schema S)
       {
-        super(S._Name, null, false);
+        super(S._Name, null, false, MaintenanceLog_Data._actionCreate, MaintenanceLog_Data._objectTypeSchema);
         _S = S;
       }
 

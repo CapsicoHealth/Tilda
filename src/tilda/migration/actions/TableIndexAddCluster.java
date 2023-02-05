@@ -19,6 +19,7 @@ package tilda.migration.actions;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.data.MaintenanceLog_Data;
 import tilda.db.Connection;
 import tilda.migration.MigrationAction;
 import tilda.parsing.parts.Index;
@@ -29,7 +30,7 @@ public class TableIndexAddCluster extends MigrationAction
 
     public TableIndexAddCluster(Index IX)
       {
-        super(IX._Parent._ParentSchema._Name, IX._Parent._Name, false);
+        super(IX._Parent._ParentSchema._Name, IX._Parent._Name, false, MaintenanceLog_Data._actionUpdate, MaintenanceLog_Data._objectTypeIndex);
         _IX = IX;
       }
 

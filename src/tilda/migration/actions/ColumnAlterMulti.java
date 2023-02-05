@@ -19,6 +19,7 @@ package tilda.migration.actions;
 import java.util.ArrayList;
 import java.util.List;
 
+import tilda.data.MaintenanceLog_Data;
 import tilda.data.ZoneInfo_Factory;
 import tilda.db.Connection;
 import tilda.db.metadata.ColumnMeta;
@@ -34,7 +35,7 @@ public class ColumnAlterMulti extends MigrationAction
 
     public ColumnAlterMulti(Connection C, Object ParentObject)
       {
-        super(ParentObject._ParentSchema._Name, ParentObject._Name, false);
+        super(ParentObject._ParentSchema._Name, ParentObject._Name, false, MaintenanceLog_Data._actionUpdate, MaintenanceLog_Data._objectTypeColumn);
         _C = C;
       }
 

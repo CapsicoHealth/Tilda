@@ -39,7 +39,7 @@ public class TildaHelpersAddEnd extends MigrationAction
 
     public TildaHelpersAddEnd()
       {
-        super(MaintenanceLog_Factory.SCHEMA_LABEL, TILDA_HELPERS_END, false);
+        super(MaintenanceLog_Factory.SCHEMA_LABEL, TILDA_HELPERS_END, false, MaintenanceLog_Data._actionExecute, MaintenanceLog_Data._objectTypeScript);
       }
 
     public boolean process(Connection C)

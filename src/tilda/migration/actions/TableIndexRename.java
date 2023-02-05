@@ -19,6 +19,7 @@ package tilda.migration.actions;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.data.MaintenanceLog_Data;
 import tilda.db.Connection;
 import tilda.migration.MigrationAction;
 
@@ -28,7 +29,7 @@ public class TableIndexRename extends MigrationAction
 
     public TableIndexRename(tilda.parsing.parts.Object Obj, String OldName, String NewName)
       {
-        super(Obj._ParentSchema._Name, Obj._Name, false);
+        super(Obj._ParentSchema._Name, Obj._Name, false, MaintenanceLog_Data._actionRename, MaintenanceLog_Data._objectTypeIndex);
         _Obj = Obj;
         _OldName = OldName;
         _NewName = NewName;

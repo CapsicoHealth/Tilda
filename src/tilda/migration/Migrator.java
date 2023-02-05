@@ -360,7 +360,7 @@ public class Migrator
                     if ("TILDATMP".equalsIgnoreCase(S._S._Name) == false && existsKeys == true && existsMaintenance == true)
                      MaintenanceLogList.add(MaintenanceLog_Factory.create(C, MaintenanceLog_Data._typeMigration, A._SchemaName, A._TableViewName
                                                                            , startZDT, DateTimeUtil.nowUTC()
-                                                                           , MaintenanceLog_Data._actionExecute, MaintenanceLog_Data._objectTypeScript
+                                                                           , A._maintenanceAction, A._maintenanceObjectType
                                                                            , QueryDetails.getLastQuery(), A.getDescription()
                                                                           ));
                     /*@formatter:on*/

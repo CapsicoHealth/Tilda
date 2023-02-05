@@ -19,6 +19,7 @@ package tilda.migration.actions;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.data.MaintenanceLog_Data;
 import tilda.db.Connection;
 import tilda.db.metadata.DatabaseMeta;
 import tilda.migration.DDLDependencyManager;
@@ -30,7 +31,7 @@ public class DDLDependencyPreManagement extends MigrationAction
 
     public DDLDependencyPreManagement(DDLDependencyManager DdlDepMan)
       {
-        super(DdlDepMan.getSchemaName(), DdlDepMan.getTableViewName(), true);
+        super(DdlDepMan.getSchemaName(), DdlDepMan.getTableViewName(), true, MaintenanceLog_Data._actionUpdate, MaintenanceLog_Data._objectTypeView);
         _DdlDepMan = DdlDepMan;
       }
 

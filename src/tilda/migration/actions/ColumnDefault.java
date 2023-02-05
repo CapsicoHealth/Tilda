@@ -16,6 +16,7 @@
 
 package tilda.migration.actions;
 
+import tilda.data.MaintenanceLog_Data;
 import tilda.db.Connection;
 import tilda.migration.MigrationAction;
 import tilda.parsing.parts.Column;
@@ -24,7 +25,7 @@ public class ColumnDefault extends MigrationAction
   {
     public ColumnDefault(Column Col)
       {
-        super(Col._ParentObject._ParentSchema._Name, Col._ParentObject._Name, false);
+        super(Col._ParentObject._ParentSchema._Name, Col._ParentObject._Name, false, MaintenanceLog_Data._actionUpdate, MaintenanceLog_Data._objectTypeColumn);
         _Col = Col;
       }
 

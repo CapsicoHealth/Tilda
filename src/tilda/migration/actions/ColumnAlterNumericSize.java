@@ -16,6 +16,7 @@
 
 package tilda.migration.actions;
 
+import tilda.data.MaintenanceLog_Data;
 import tilda.db.Connection;
 import tilda.db.metadata.ColumnMeta;
 import tilda.migration.MigrationAction;
@@ -25,7 +26,7 @@ public class ColumnAlterNumericSize extends MigrationAction
   {
     public ColumnAlterNumericSize(ColumnMeta ColMeta, Column Col)
       {
-        super(Col._ParentObject._ParentSchema._Name, Col._ParentObject._Name, false);
+        super(Col._ParentObject._ParentSchema._Name, Col._ParentObject._Name, false, MaintenanceLog_Data._actionUpdate, MaintenanceLog_Data._objectTypeColumn);
         _Col = Col;
         _ColMeta = ColMeta;
       }

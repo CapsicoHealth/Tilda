@@ -19,6 +19,7 @@ package tilda.migration.actions;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.data.MaintenanceLog_Data;
 import tilda.db.Connection;
 import tilda.db.metadata.FKMeta;
 import tilda.migration.MigrationAction;
@@ -29,7 +30,7 @@ public class TableFKDrop extends MigrationAction
 
     public TableFKDrop(tilda.parsing.parts.Object SrcObj, FKMeta FK)
       {
-        super(SrcObj._ParentSchema._Name, SrcObj._Name, false);
+        super(SrcObj._ParentSchema._Name, SrcObj._Name, false, MaintenanceLog_Data._actionDrop, MaintenanceLog_Data._objectTypeForeignKey);
         _SrcObj = SrcObj;
         _FK = FK;
       }

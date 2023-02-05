@@ -16,6 +16,7 @@
 
 package tilda.migration.actions;
 
+import tilda.data.MaintenanceLog_Data;
 import tilda.data.ZoneInfo_Factory;
 import tilda.db.Connection;
 import tilda.db.metadata.ColumnMeta;
@@ -27,7 +28,7 @@ public class ColumnAlterType extends MigrationAction
   {
     public ColumnAlterType(Connection C, ColumnMeta CMeta, Column Col)
       {
-        super(Col._ParentObject._ParentSchema._Name, Col._ParentObject._Name, false);
+        super(Col._ParentObject._ParentSchema._Name, Col._ParentObject._Name, false, MaintenanceLog_Data._actionUpdate, MaintenanceLog_Data._objectTypeColumn);
         _Col = Col;
         _CMeta = CMeta;
         StringBuilder Str = new StringBuilder();
