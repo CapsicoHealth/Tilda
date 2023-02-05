@@ -1493,7 +1493,10 @@ public class Sql extends PostgreSQL implements CodeGenSql
               }
             M.appendTail(Str);
           }
+        
         return Str.toString();
+        // LDH-NOTE: See note in rewriteExpressionColumnQuoting. Issues with formulas being cleaned up.
+//        return rewriteExpressionColumnQuoting(Str.toString());
       }
 
     private static String genRealizedColumnList(View V, String Lead)

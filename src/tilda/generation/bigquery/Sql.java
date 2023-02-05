@@ -30,8 +30,6 @@ import org.apache.commons.io.output.StringBuilderWriter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.google.re2j.Pattern;
-
 import tilda.db.stores.BigQuery;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
@@ -1167,6 +1165,10 @@ public class Sql extends BigQuery implements CodeGenSql
             M.appendTail(Str);
           }
         return Str.toString();
+        
+        // LDH-NOTE: See note in rewriteExpressionColumnQuoting. Issues with formulas being cleaned up.
+//      return rewriteExpressionColumnQuoting(Str.toString());
+        
       }
 
     private String genRealizedColumnList(View V, String Lead)

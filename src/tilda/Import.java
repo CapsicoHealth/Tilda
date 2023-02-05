@@ -145,7 +145,7 @@ public class Import
         LOG.error("");
       }
 
-    protected static int process(Importer I, Connection C)
+    public static int process(Importer I, Connection C)
     throws Exception
       {
         LOG.info("");
@@ -162,7 +162,7 @@ public class Import
         return Total;
       }
 
-    protected static Importer getFileImporter(String OverridePackageName, String ImportFileName)
+    public static Importer getFileImporter(String OverridePackageName, String ImportFileName)
     throws Exception
       {
         LOG.info("");
