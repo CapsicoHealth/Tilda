@@ -209,18 +209,20 @@ public class TildaFactory implements CodeGenTildaFactory
 
         if (O._TenantInit == false)
           {
-            Out.println("   private static Boolean  __INITIALIZED = false;");
+            Out.println("   // Short(short) is deprecated, but we do want a new instance here to avoid synchronizing over the same cached instance from valueOf.");
+            Out.println("   // @SuppressWarnings(\"deprecation\")");
+            Out.println("   private static Short __INITIALIZED = new Short(RandomUtil.pickNonZeroShort());");
             Out.println("   protected static void initObject(Connection C) throws Exception");
             Out.println("     {");
-            Out.println("       if (__INITIALIZED == false)");
+            Out.println("       if (__INITIALIZED != 0)");
             Out.println("        synchronized(__INITIALIZED)");
             Out.println("         {");
-            Out.println("           if (__INITIALIZED == false)");
+            Out.println("           if (__INITIALIZED != 0)");
             Out.println("            {");
             if (O._FST == FrameworkSourcedType.ENUMERATION || O._FST == FrameworkSourcedType.MAPPER)
               Out.println("              initMappings(C);");
             Out.println("              " + Helper.getFullAppFactoryClassName(O) + ".init(C);");
-            Out.println("              __INITIALIZED = true;");
+            Out.println("              __INITIALIZED = 0;");
             Out.println("            }");
             Out.println("         }");
             Out.println("     }");
