@@ -32,7 +32,7 @@ import java.math.*;
 <TR valign="top"><TD><H2>ZoneInfo&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 70%;"><SPAN class="BackToDetails"><A href="#ZoneInfo_CNT">details</A>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><A href="#">top</A></SUP></H2></TD><TD align="right"></TD></TR>
 </TABLE>
 <DIV id="ZoneInfo_CNT" class="content">
-The Table TILDA.ZoneInfo:<UL>
+The Table TILDA.ZoneInfo :<UL>
 <LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>ZoneInfo_Factory</B>, <B>ZoneInfo_Data</B> in the package <B>tilda.data</B>.
 <LI>Is configured for normal <B>read/write</B> access.</LI>
 <LI>Is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
@@ -45,7 +45,7 @@ The Table TILDA.ZoneInfo:<UL>
 <LI>Unique Index: id</LI>
 <LI>Unique Index: value</LI>
 </UL></LI>
-<LI>Has the following index:<UL><LI>id asc
+<LI>Has the following index:<UL><LI>, id asc
  <B><I>(Application-side Only)</I></B></LI>
 </UL></LI>
 </UL>
@@ -599,9 +599,9 @@ This is the null setter for:<BR>
     void setDeactivatedTZNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask);
        if (__Nulls.intersects(TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask);
        __Nulls.or(TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask);
        _deactivatedTZ=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -755,9 +755,9 @@ This is the null setter for:<BR>
    public void setDeactivatedNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask);
        if (__Nulls.intersects(TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask);
        __Nulls.or(TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask);
        _deactivated=null;
        setDeactivatedTZNull();
@@ -1392,9 +1392,9 @@ This is the null setter for:<BR>
    public final void setDeletedNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__ZONEINFO_Factory.COLS.DELETED._Mask);
        if (__Nulls.intersects(TILDA__ZONEINFO_Factory.COLS.DELETED._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__ZONEINFO_Factory.COLS.DELETED._Mask);
        __Nulls.or(TILDA__ZONEINFO_Factory.COLS.DELETED._Mask);
        _deleted=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);

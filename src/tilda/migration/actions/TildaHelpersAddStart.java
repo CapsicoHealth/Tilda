@@ -16,35 +16,39 @@
 
 package tilda.migration.actions;
 
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import tilda.data.Maintenance_Data;
-import tilda.data.Maintenance_Factory;
-import tilda.data._Tilda.TILDA__KEY_Factory;
+import tilda.data.MaintenanceLog_Data;
+import tilda.data.MaintenanceLog_Factory;
 import tilda.db.Connection;
 import tilda.db.metadata.DatabaseMeta;
 import tilda.migration.MigrationAction;
+import tilda.utils.TextUtil;
 
 public class TildaHelpersAddStart extends MigrationAction
   {
 
-    static final Logger LOG = LogManager.getLogger(TildaHelpersAddStart.class.getName());
+    private static final String TILDA_HELPERS_START = "TILDA_HELPERS_START";
+
+    static final Logger         LOG                 = LogManager.getLogger(TildaHelpersAddStart.class.getName());
 
     public TildaHelpersAddStart()
       {
-        super(Maintenance_Factory.SCHEMA_LABEL, Maintenance_Factory.TABLENAME_LABEL, false);
+        super(MaintenanceLog_Factory.SCHEMA_LABEL, TILDA_HELPERS_START, false);
       }
 
     public boolean process(Connection C)
     throws Exception
       {
         LOG.debug(getDescription());
+        String statement = C.getHelperFunctionsScript(true);
+        if (TextUtil.isNullOrEmpty(statement) == true)
+          return true;
 
-        String Str = C.getHelperFunctionsScript(true);
-        if (C.executeDDL(TILDA__KEY_Factory.SCHEMA_LABEL, "*", Str) == false)
-          return false;
-        return true;
+        return C.executeDDL(MaintenanceLog_Factory.SCHEMA_LABEL, TILDA_HELPERS_START, statement);
       }
 
     @Override
@@ -57,17 +61,19 @@ public class TildaHelpersAddStart extends MigrationAction
     public boolean isNeeded(Connection C, DatabaseMeta DBMeta)
     throws Exception
       {
-        if (DBMeta.getTableMeta(Maintenance_Factory.SCHEMA_LABEL, Maintenance_Factory.TABLENAME_LABEL) == null)
+        // When run for the first time, some tables may not exist yet.
+        if (DBMeta.getTableMeta(MaintenanceLog_Factory.SCHEMA_LABEL, MaintenanceLog_Factory.TABLENAME_LABEL) == null)
           return true;
-        String StartScript = C.getHelperFunctionsScript(true);
-        String EndScript = C.getHelperFunctionsScript(false);
-        if (StartScript == null)
-         throw new Exception("Cannot load Tilda helper start script.");
-        if (EndScript == null)
-          throw new Exception("Cannot load Tilda helper end script.");
-        String Str = StartScript+"\n"+EndScript;
-        Maintenance_Data M = Maintenance_Factory.lookupByPrimaryKey("TILDA_HELPERS", "TILDA_HELPERS");
-        return M.read(C) == false || M.getValue().equals(Str.trim()) == false;
+        String startScript = C.getHelperFunctionsScript(true);
+        if (startScript == null)
+          throw new Exception("Cannot load Tilda helper start script.");
+        // Get the most recent log for executing the script
+        List<MaintenanceLog_Data> L = MaintenanceLog_Factory.lookupWhereSchemaObjectStart(C, MaintenanceLog_Factory.SCHEMA_LABEL, TILDA_HELPERS_START, 0, 1);
+        if (L.isEmpty() == true)
+          return true;
+        MaintenanceLog_Data M = L.get(0);
+        boolean same = M.getStatement().trim().equals(startScript.trim());
+        return  !same;
       }
 
   }

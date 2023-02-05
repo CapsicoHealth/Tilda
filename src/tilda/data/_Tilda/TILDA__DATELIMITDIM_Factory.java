@@ -112,16 +112,18 @@ This is the column definition for:<BR>
 
    public static final ColumnDefinition[] COLUMNS_FIRST_IDENTITY = COLUMNS_UNIQUE_INDICES[0];
 
-   private static Boolean  __INITIALIZED = false;
+   // Short(short) is deprecated, but we do want a new instance here to avoid synchronizing over the same cached instance from valueOf.
+   // @SuppressWarnings("deprecation")
+   private static Short __INITIALIZED = new Short(RandomUtil.pickNonZeroShort());
    protected static void initObject(Connection C) throws Exception
      {
-       if (__INITIALIZED == false)
+       if (__INITIALIZED != 0)
         synchronized(__INITIALIZED)
          {
-           if (__INITIALIZED == false)
+           if (__INITIALIZED != 0)
             {
               tilda.data.DateLimitDim_Factory.init(C);
-              __INITIALIZED = true;
+              __INITIALIZED = 0;
             }
          }
      }

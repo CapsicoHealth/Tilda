@@ -99,7 +99,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        NAME        = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "name"        , 2/*2*/, "Job part name", null, null, null);
+     public final Type_StringPrimitive        NAME        = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "name"        , 2/*2*/, 250, "Job part name", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -120,7 +120,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    TYPE        = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "type"        , 3/*3*/, "Job part type", null, null, null);
+     public final Type_StringPrimitiveNull    TYPE        = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "type"        , 3/*3*/, 250, "Job part type", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -141,7 +141,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    DATASTARTTZ = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "dataStartTZ" , 4/*4*/, "Generated helper column to hold the time zone ID for 'dataStart'.", null, null, null);
+     public final Type_StringPrimitiveNull    DATASTARTTZ = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "dataStartTZ" , 4/*4*/, 5, "Generated helper column to hold the time zone ID for 'dataStart'.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -182,7 +182,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    DATAENDTZ   = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "dataEndTZ"   , 6/*6*/, "Generated helper column to hold the time zone ID for 'dataEnd'.", null, null, null);
+     public final Type_StringPrimitiveNull    DATAENDTZ   = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "dataEndTZ"   , 6/*6*/, 5, "Generated helper column to hold the time zone ID for 'dataEnd'.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -223,7 +223,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        STARTTZ     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "startTZ"     , 8/*8*/, "Generated helper column to hold the time zone ID for 'start'.", null, null, null);
+     public final Type_StringPrimitive        STARTTZ     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "startTZ"     , 8/*8*/, 5, "Generated helper column to hold the time zone ID for 'start'.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -264,7 +264,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    ENDTZ       = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "endTZ"       , 10/*10*/, "Generated helper column to hold the time zone ID for 'end'.", null, null, null);
+     public final Type_StringPrimitiveNull    ENDTZ       = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "endTZ"       , 10/*10*/, 5, "Generated helper column to hold the time zone ID for 'end'.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -411,16 +411,18 @@ This is the column definition for:<BR>
 
    public static final ColumnDefinition[] COLUMNS_FIRST_IDENTITY = {};
 
-   private static Boolean  __INITIALIZED = false;
+   // Short(short) is deprecated, but we do want a new instance here to avoid synchronizing over the same cached instance from valueOf.
+   // @SuppressWarnings("deprecation")
+   private static Short __INITIALIZED = new Short(RandomUtil.pickNonZeroShort());
    protected static void initObject(Connection C) throws Exception
      {
-       if (__INITIALIZED == false)
+       if (__INITIALIZED != 0)
         synchronized(__INITIALIZED)
          {
-           if (__INITIALIZED == false)
+           if (__INITIALIZED != 0)
             {
               tilda.data.JobPart_Factory.init(C);
-              __INITIALIZED = true;
+              __INITIALIZED = 0;
             }
          }
      }
@@ -666,6 +668,14 @@ object. The generic init method defaults to this general data structure as a gen
        // Default Create-time setters
        Obj.setCreatedNow       ();
        Obj.setLastUpdatedNow   ();
+
+       // Default Nullables
+       Obj.__Nulls.or(TILDA__JOBPART_Factory.COLS.TYPE._Mask);
+       Obj.__Nulls.or(TILDA__JOBPART_Factory.COLS.DATASTART._Mask);
+       Obj.__Nulls.or(TILDA__JOBPART_Factory.COLS.DATAEND._Mask);
+       Obj.__Nulls.or(TILDA__JOBPART_Factory.COLS.END._Mask);
+       Obj.__Nulls.or(TILDA__JOBPART_Factory.COLS.RECORDSCOUNT._Mask);
+       Obj.__Nulls.or(TILDA__JOBPART_Factory.COLS.STATUS._Mask);
 
        return (tilda.data.JobPart_Data) Obj;
      }

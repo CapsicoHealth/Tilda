@@ -53,75 +53,46 @@ CREATE UNIQUE INDEX IF NOT EXISTS Key_Name ON TILDA.Key ("name");
 
 
 
-create table if not exists TILDA.Mapping -- Generalized Mapping table
- (  "type"         varchar(10)    not null   -- The type this mapping is for
-  , "src"          varchar(1024)  not null   -- The source value for this mapping
-  , "dst"          varchar(1024)  not null   -- The the destination (mapped) value for this mapping.
-  , "created"      timestamptz    not null DEFAULT statement_timestamp()   -- The timestamp for when the record was created. (TILDA.Mapping)
-  , "lastUpdated"  timestamptz    not null DEFAULT statement_timestamp()   -- The timestamp for when the record was last updated. (TILDA.Mapping)
-  , "deleted"      timestamptz               -- The timestamp for when the record was deleted. (TILDA.Mapping)
+create table if not exists TILDA.MaintenanceLog -- Maintenance information
+ (  "refnum"       bigint         not null   -- The primary key for this record
+  , "type"         varchar(64)    not null   -- The type of maintenance, e.g., Migration, Reorg...
+  , "schemaName"   varchar(64)    not null   -- The name of the schema for the resource.
+  , "objectName"   varchar(1024)             -- The name of the resource.
+  , "objectType"   varchar(128)              -- The type of the resource.
+  , "startTimeTZ"  character(5)   not null   -- Generated helper column to hold the time zone ID for 'startTime'.
+  , "startTime"    timestamptz    not null   -- The timestamp for when the refill started.
+  , "endTimeTZ"    character(5)              -- Generated helper column to hold the time zone ID for 'endTime'.
+  , "endTime"      timestamptz               -- The timestamp for when the refill ended.
+  , "statement"    text                      -- The value of the maintenance resource to track.
+  , "action"       varchar(64)               -- The name of the maintenance resource to track.
+  , "descr"        varchar(2048)             -- The name of the maintenance resource to track.
+  , "created"      timestamptz    not null DEFAULT statement_timestamp()   -- The timestamp for when the record was created. (TILDA.MaintenanceLog)
+  , "lastUpdated"  timestamptz    not null DEFAULT statement_timestamp()   -- The timestamp for when the record was last updated. (TILDA.MaintenanceLog)
+  , "deleted"      timestamptz               -- The timestamp for when the record was deleted. (TILDA.MaintenanceLog)
+  , PRIMARY KEY("refnum")
+  , CONSTRAINT fk_MaintenanceLog_startTime FOREIGN KEY ("startTimeTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
+  , CONSTRAINT fk_MaintenanceLog_endTime FOREIGN KEY ("endTimeTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
  );
-COMMENT ON TABLE TILDA.Mapping IS E'Generalized Mapping table';
-COMMENT ON COLUMN TILDA.Mapping."type" IS E'The type this mapping is for';
-COMMENT ON COLUMN TILDA.Mapping."src" IS E'The source value for this mapping';
-COMMENT ON COLUMN TILDA.Mapping."dst" IS E'The the destination (mapped) value for this mapping.';
-COMMENT ON COLUMN TILDA.Mapping."created" IS E'The timestamp for when the record was created. (TILDA.Mapping)';
-COMMENT ON COLUMN TILDA.Mapping."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.Mapping)';
-COMMENT ON COLUMN TILDA.Mapping."deleted" IS E'The timestamp for when the record was deleted. (TILDA.Mapping)';
-CREATE UNIQUE INDEX IF NOT EXISTS Mapping_TypeSrcDst ON TILDA.Mapping ("type", "src", "dst");
-
-
-
-create table if not exists TILDA.ObjectPerf -- Performance logs for the Tilda framework
- (  "schemaName"     varchar(64)   not null   -- The name of the schema tracked
-  , "objectName"     varchar(64)   not null   -- The name of the table/object tracked
-  , "startPeriodTZ"  character(5)  not null   -- Generated helper column to hold the time zone ID for 'startPeriod'.
-  , "startPeriod"    timestamptz   not null   -- The timestamp for when the record was created.
-  , "endPeriodTZ"    character(5)  not null   -- Generated helper column to hold the time zone ID for 'endPeriod'.
-  , "endPeriod"      timestamptz   not null   -- The timestamp for when the record was created.
-  , "selectNano"     bigint        not null DEFAULT 0   -- Blah...
-  , "selectCount"    integer       not null DEFAULT 0   -- Blah...
-  , "selectRecords"  integer       not null DEFAULT 0   -- Blah...
-  , "insertNano"     bigint        not null DEFAULT 0   -- Blah...
-  , "insertCount"    integer       not null DEFAULT 0   -- Blah...
-  , "insertRecords"  integer       not null DEFAULT 0   -- Blah...
-  , "updateNano"     bigint        not null DEFAULT 0   -- Blah...
-  , "updateCount"    integer       not null DEFAULT 0   -- Blah...
-  , "updateRecords"  integer       not null DEFAULT 0   -- Blah...
-  , "deleteNano"     bigint        not null DEFAULT 0   -- Blah...
-  , "deleteCount"    integer       not null DEFAULT 0   -- Blah...
-  , "deleteRecords"  integer       not null DEFAULT 0   -- Blah...
-  , "created"        timestamptz   not null DEFAULT statement_timestamp()   -- The timestamp for when the record was created. (TILDA.ObjectPerf)
-  , "lastUpdated"    timestamptz   not null DEFAULT statement_timestamp()   -- The timestamp for when the record was last updated. (TILDA.ObjectPerf)
-  , "deleted"        timestamptz              -- The timestamp for when the record was deleted. (TILDA.ObjectPerf)
-  , PRIMARY KEY("schemaName", "objectName", "startPeriod")
-  , CONSTRAINT fk_ObjectPerf_startPeriod FOREIGN KEY ("startPeriodTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
-  , CONSTRAINT fk_ObjectPerf_endPeriod FOREIGN KEY ("endPeriodTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
- );
-COMMENT ON TABLE TILDA.ObjectPerf IS E'Performance logs for the Tilda framework';
-COMMENT ON COLUMN TILDA.ObjectPerf."schemaName" IS E'The name of the schema tracked';
-COMMENT ON COLUMN TILDA.ObjectPerf."objectName" IS E'The name of the table/object tracked';
-COMMENT ON COLUMN TILDA.ObjectPerf."startPeriodTZ" IS E'Generated helper column to hold the time zone ID for ''startPeriod''.';
-COMMENT ON COLUMN TILDA.ObjectPerf."startPeriod" IS E'The timestamp for when the record was created.';
-COMMENT ON COLUMN TILDA.ObjectPerf."endPeriodTZ" IS E'Generated helper column to hold the time zone ID for ''endPeriod''.';
-COMMENT ON COLUMN TILDA.ObjectPerf."endPeriod" IS E'The timestamp for when the record was created.';
-COMMENT ON COLUMN TILDA.ObjectPerf."selectNano" IS E'Blah...';
-COMMENT ON COLUMN TILDA.ObjectPerf."selectCount" IS E'Blah...';
-COMMENT ON COLUMN TILDA.ObjectPerf."selectRecords" IS E'Blah...';
-COMMENT ON COLUMN TILDA.ObjectPerf."insertNano" IS E'Blah...';
-COMMENT ON COLUMN TILDA.ObjectPerf."insertCount" IS E'Blah...';
-COMMENT ON COLUMN TILDA.ObjectPerf."insertRecords" IS E'Blah...';
-COMMENT ON COLUMN TILDA.ObjectPerf."updateNano" IS E'Blah...';
-COMMENT ON COLUMN TILDA.ObjectPerf."updateCount" IS E'Blah...';
-COMMENT ON COLUMN TILDA.ObjectPerf."updateRecords" IS E'Blah...';
-COMMENT ON COLUMN TILDA.ObjectPerf."deleteNano" IS E'Blah...';
-COMMENT ON COLUMN TILDA.ObjectPerf."deleteCount" IS E'Blah...';
-COMMENT ON COLUMN TILDA.ObjectPerf."deleteRecords" IS E'Blah...';
-COMMENT ON COLUMN TILDA.ObjectPerf."created" IS E'The timestamp for when the record was created. (TILDA.ObjectPerf)';
-COMMENT ON COLUMN TILDA.ObjectPerf."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.ObjectPerf)';
-COMMENT ON COLUMN TILDA.ObjectPerf."deleted" IS E'The timestamp for when the record was deleted. (TILDA.ObjectPerf)';
-CREATE INDEX IF NOT EXISTS ObjectPerf_SchemaByObjectStart ON TILDA.ObjectPerf ("schemaName", "objectName" ASC, "startPeriod" DESC);
--- app-level index only -- CREATE INDEX IF NOT EXISTS ObjectPerf_SchemaObjectByStart ON TILDA.ObjectPerf ("schemaName", "objectName", "startPeriod" DESC);
+COMMENT ON TABLE TILDA.MaintenanceLog IS E'Maintenance information';
+COMMENT ON COLUMN TILDA.MaintenanceLog."refnum" IS E'The primary key for this record';
+COMMENT ON COLUMN TILDA.MaintenanceLog."type" IS E'The type of maintenance, e.g., Migration, Reorg...';
+COMMENT ON COLUMN TILDA.MaintenanceLog."schemaName" IS E'The name of the schema for the resource.';
+COMMENT ON COLUMN TILDA.MaintenanceLog."objectName" IS E'The name of the resource.';
+COMMENT ON COLUMN TILDA.MaintenanceLog."objectType" IS E'The type of the resource.';
+COMMENT ON COLUMN TILDA.MaintenanceLog."startTimeTZ" IS E'Generated helper column to hold the time zone ID for ''startTime''.';
+COMMENT ON COLUMN TILDA.MaintenanceLog."startTime" IS E'The timestamp for when the refill started.';
+COMMENT ON COLUMN TILDA.MaintenanceLog."endTimeTZ" IS E'Generated helper column to hold the time zone ID for ''endTime''.';
+COMMENT ON COLUMN TILDA.MaintenanceLog."endTime" IS E'The timestamp for when the refill ended.';
+COMMENT ON COLUMN TILDA.MaintenanceLog."statement" IS E'The value of the maintenance resource to track.';
+COMMENT ON COLUMN TILDA.MaintenanceLog."action" IS E'The name of the maintenance resource to track.';
+COMMENT ON COLUMN TILDA.MaintenanceLog."descr" IS E'The name of the maintenance resource to track.';
+COMMENT ON COLUMN TILDA.MaintenanceLog."created" IS E'The timestamp for when the record was created. (TILDA.MaintenanceLog)';
+COMMENT ON COLUMN TILDA.MaintenanceLog."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.MaintenanceLog)';
+COMMENT ON COLUMN TILDA.MaintenanceLog."deleted" IS E'The timestamp for when the record was deleted. (TILDA.MaintenanceLog)';
+CREATE INDEX IF NOT EXISTS MaintenanceLog_SchemaObjectStart ON TILDA.MaintenanceLog ("schemaName", "objectName", "startTime" DESC);
+CREATE INDEX IF NOT EXISTS MaintenanceLog_TypeStart ON TILDA.MaintenanceLog ("type", "startTime" DESC);
+delete from TILDA.Key where "name" = 'TILDA.MAINTENANCELOG';
+insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated") values ((select COALESCE(max("refnum"),0)+1 from TILDA.Key), 'TILDA.MAINTENANCELOG',(select COALESCE(max("refnum"),0)+1 from TILDA.MaintenanceLog), 250, current_timestamp, current_timestamp);
 
 
 
@@ -196,7 +167,69 @@ COMMENT ON COLUMN TILDA.TransPerf."deleted" IS E'The timestamp for when the reco
 
 
 
-create table if not exists TILDA.Connection -- Tilda DB Connections Configurations
+create table if not exists TILDA.RefillPerf -- Performance logs for the Tilda Refills
+ (  "schemaName"      varchar(64)   not null   -- The name of the schema tracked
+  , "objectName"      varchar(64)   not null   -- The name of the table/object tracked
+  , "startDateIncr"   date                     -- The date passed in for incremental refills.
+  , "startTimeTZ"     character(5)  not null   -- Generated helper column to hold the time zone ID for 'startTime'.
+  , "startTime"       timestamptz   not null   -- The timestamp for when the refill started.
+  , "endTimeTZ"       character(5)  not null   -- Generated helper column to hold the time zone ID for 'endTime'.
+  , "endTime"         timestamptz   not null   -- The timestamp for when the refill ended.
+  , "timeInsertSec"   bigint        not null   -- The time, in seconds, the inserts took.
+  , "timeDeleteSec"   bigint        not null   -- The time, in seconds, the deletes took.
+  , "timeAnalyzeSec"  bigint        not null   -- The time, in seconds, the analyze took.
+  , "timeTotalSec"    bigint        not null DEFAULT 0   -- The time, in seconds, the analyze took.
+  , "insertCount"     bigint        not null   -- The count of inserted rows.
+  , "deleteCount"     bigint        not null   -- The count of rows deleted.
+  , "created"         timestamptz   not null DEFAULT statement_timestamp()   -- The timestamp for when the record was created. (TILDA.RefillPerf)
+  , "lastUpdated"     timestamptz   not null DEFAULT statement_timestamp()   -- The timestamp for when the record was last updated. (TILDA.RefillPerf)
+  , "deleted"         timestamptz              -- The timestamp for when the record was deleted. (TILDA.RefillPerf)
+  , PRIMARY KEY("schemaName", "objectName", "startTime")
+  , CONSTRAINT fk_RefillPerf_startTime FOREIGN KEY ("startTimeTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
+  , CONSTRAINT fk_RefillPerf_endTime FOREIGN KEY ("endTimeTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
+ );
+COMMENT ON TABLE TILDA.RefillPerf IS E'Performance logs for the Tilda Refills';
+COMMENT ON COLUMN TILDA.RefillPerf."schemaName" IS E'The name of the schema tracked';
+COMMENT ON COLUMN TILDA.RefillPerf."objectName" IS E'The name of the table/object tracked';
+COMMENT ON COLUMN TILDA.RefillPerf."startDateIncr" IS E'The date passed in for incremental refills.';
+COMMENT ON COLUMN TILDA.RefillPerf."startTimeTZ" IS E'Generated helper column to hold the time zone ID for ''startTime''.';
+COMMENT ON COLUMN TILDA.RefillPerf."startTime" IS E'The timestamp for when the refill started.';
+COMMENT ON COLUMN TILDA.RefillPerf."endTimeTZ" IS E'Generated helper column to hold the time zone ID for ''endTime''.';
+COMMENT ON COLUMN TILDA.RefillPerf."endTime" IS E'The timestamp for when the refill ended.';
+COMMENT ON COLUMN TILDA.RefillPerf."timeInsertSec" IS E'The time, in seconds, the inserts took.';
+COMMENT ON COLUMN TILDA.RefillPerf."timeDeleteSec" IS E'The time, in seconds, the deletes took.';
+COMMENT ON COLUMN TILDA.RefillPerf."timeAnalyzeSec" IS E'The time, in seconds, the analyze took.';
+COMMENT ON COLUMN TILDA.RefillPerf."timeTotalSec" IS E'The time, in seconds, the analyze took.';
+COMMENT ON COLUMN TILDA.RefillPerf."insertCount" IS E'The count of inserted rows.';
+COMMENT ON COLUMN TILDA.RefillPerf."deleteCount" IS E'The count of rows deleted.';
+COMMENT ON COLUMN TILDA.RefillPerf."created" IS E'The timestamp for when the record was created. (TILDA.RefillPerf)';
+COMMENT ON COLUMN TILDA.RefillPerf."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.RefillPerf)';
+COMMENT ON COLUMN TILDA.RefillPerf."deleted" IS E'The timestamp for when the record was deleted. (TILDA.RefillPerf)';
+CREATE INDEX IF NOT EXISTS RefillPerf_SchemaByObjectStart ON TILDA.RefillPerf ("schemaName", "objectName" ASC, "startTime" DESC);
+-- app-level index only -- CREATE INDEX IF NOT EXISTS RefillPerf_SchemaObjectByStart ON TILDA.RefillPerf ("schemaName", "objectName", "startTime" DESC);
+
+
+
+create table if not exists TILDA.Mapping -- Generalized Mapping table
+ (  "type"         varchar(10)    not null   -- The type this mapping is for
+  , "src"          varchar(1024)  not null   -- The source value for this mapping
+  , "dst"          varchar(1024)  not null   -- The the destination (mapped) value for this mapping.
+  , "created"      timestamptz    not null DEFAULT statement_timestamp()   -- The timestamp for when the record was created. (TILDA.Mapping)
+  , "lastUpdated"  timestamptz    not null DEFAULT statement_timestamp()   -- The timestamp for when the record was last updated. (TILDA.Mapping)
+  , "deleted"      timestamptz               -- The timestamp for when the record was deleted. (TILDA.Mapping)
+ );
+COMMENT ON TABLE TILDA.Mapping IS E'Generalized Mapping table';
+COMMENT ON COLUMN TILDA.Mapping."type" IS E'The type this mapping is for';
+COMMENT ON COLUMN TILDA.Mapping."src" IS E'The source value for this mapping';
+COMMENT ON COLUMN TILDA.Mapping."dst" IS E'The the destination (mapped) value for this mapping.';
+COMMENT ON COLUMN TILDA.Mapping."created" IS E'The timestamp for when the record was created. (TILDA.Mapping)';
+COMMENT ON COLUMN TILDA.Mapping."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.Mapping)';
+COMMENT ON COLUMN TILDA.Mapping."deleted" IS E'The timestamp for when the record was deleted. (TILDA.Mapping)';
+CREATE UNIQUE INDEX IF NOT EXISTS Mapping_TypeSrcDst ON TILDA.Mapping ("type", "src", "dst");
+
+
+
+create table if not exists TILDA.Connection -- Tilda DB Connections Configurations.
  (  "active"       boolean                  -- Status Flag
   , "id"           varchar(15)   not null   -- Connection ID
   , "driver"       varchar(100)  not null   -- DB Driver
@@ -211,7 +244,7 @@ create table if not exists TILDA.Connection -- Tilda DB Connections Configuratio
   , "deleted"      timestamptz              -- The timestamp for when the record was deleted. (TILDA.Connection)
   , PRIMARY KEY("id")
  );
-COMMENT ON TABLE TILDA.Connection IS E'Tilda DB Connections Configurations';
+COMMENT ON TABLE TILDA.Connection IS E'Tilda DB Connections Configurations.';
 COMMENT ON COLUMN TILDA.Connection."active" IS E'Status Flag';
 COMMENT ON COLUMN TILDA.Connection."id" IS E'Connection ID';
 COMMENT ON COLUMN TILDA.Connection."driver" IS E'DB Driver';
@@ -349,65 +382,56 @@ insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated
 
 
 
-create table if not exists TILDA.RefillPerf -- Performance logs for the Tilda Refills
- (  "schemaName"      varchar(64)   not null   -- The name of the schema tracked
-  , "objectName"      varchar(64)   not null   -- The name of the table/object tracked
-  , "startDateIncr"   date                     -- The date passed in for incremental refills.
-  , "startTimeTZ"     character(5)  not null   -- Generated helper column to hold the time zone ID for 'startTime'.
-  , "startTime"       timestamptz   not null   -- The timestamp for when the refill started.
-  , "endTimeTZ"       character(5)  not null   -- Generated helper column to hold the time zone ID for 'endTime'.
-  , "endTime"         timestamptz   not null   -- The timestamp for when the refill ended.
-  , "timeInsertSec"   bigint        not null   -- The time, in seconds, the inserts took.
-  , "timeDeleteSec"   bigint        not null   -- The time, in seconds, the deletes took.
-  , "timeAnalyzeSec"  bigint        not null   -- The time, in seconds, the analyze took.
-  , "timeTotalSec"    bigint        not null DEFAULT 0   -- The time, in seconds, the analyze took.
-  , "insertCount"     bigint        not null   -- The count of inserted rows.
-  , "deleteCount"     bigint        not null   -- The count of rows deleted.
-  , "created"         timestamptz   not null DEFAULT statement_timestamp()   -- The timestamp for when the record was created. (TILDA.RefillPerf)
-  , "lastUpdated"     timestamptz   not null DEFAULT statement_timestamp()   -- The timestamp for when the record was last updated. (TILDA.RefillPerf)
-  , "deleted"         timestamptz              -- The timestamp for when the record was deleted. (TILDA.RefillPerf)
-  , PRIMARY KEY("schemaName", "objectName", "startTime")
-  , CONSTRAINT fk_RefillPerf_startTime FOREIGN KEY ("startTimeTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
-  , CONSTRAINT fk_RefillPerf_endTime FOREIGN KEY ("endTimeTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
+create table if not exists TILDA.ObjectPerf -- Performance logs for the Tilda framework
+ (  "schemaName"     varchar(64)   not null   -- The name of the schema tracked
+  , "objectName"     varchar(64)   not null   -- The name of the table/object tracked
+  , "startPeriodTZ"  character(5)  not null   -- Generated helper column to hold the time zone ID for 'startPeriod'.
+  , "startPeriod"    timestamptz   not null   -- The timestamp for when the record was created.
+  , "endPeriodTZ"    character(5)  not null   -- Generated helper column to hold the time zone ID for 'endPeriod'.
+  , "endPeriod"      timestamptz   not null   -- The timestamp for when the record was created.
+  , "selectNano"     bigint        not null DEFAULT 0   -- Blah...
+  , "selectCount"    integer       not null DEFAULT 0   -- Blah...
+  , "selectRecords"  integer       not null DEFAULT 0   -- Blah...
+  , "insertNano"     bigint        not null DEFAULT 0   -- Blah...
+  , "insertCount"    integer       not null DEFAULT 0   -- Blah...
+  , "insertRecords"  integer       not null DEFAULT 0   -- Blah...
+  , "updateNano"     bigint        not null DEFAULT 0   -- Blah...
+  , "updateCount"    integer       not null DEFAULT 0   -- Blah...
+  , "updateRecords"  integer       not null DEFAULT 0   -- Blah...
+  , "deleteNano"     bigint        not null DEFAULT 0   -- Blah...
+  , "deleteCount"    integer       not null DEFAULT 0   -- Blah...
+  , "deleteRecords"  integer       not null DEFAULT 0   -- Blah...
+  , "created"        timestamptz   not null DEFAULT statement_timestamp()   -- The timestamp for when the record was created. (TILDA.ObjectPerf)
+  , "lastUpdated"    timestamptz   not null DEFAULT statement_timestamp()   -- The timestamp for when the record was last updated. (TILDA.ObjectPerf)
+  , "deleted"        timestamptz              -- The timestamp for when the record was deleted. (TILDA.ObjectPerf)
+  , PRIMARY KEY("schemaName", "objectName", "startPeriod")
+  , CONSTRAINT fk_ObjectPerf_startPeriod FOREIGN KEY ("startPeriodTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
+  , CONSTRAINT fk_ObjectPerf_endPeriod FOREIGN KEY ("endPeriodTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
  );
-COMMENT ON TABLE TILDA.RefillPerf IS E'Performance logs for the Tilda Refills';
-COMMENT ON COLUMN TILDA.RefillPerf."schemaName" IS E'The name of the schema tracked';
-COMMENT ON COLUMN TILDA.RefillPerf."objectName" IS E'The name of the table/object tracked';
-COMMENT ON COLUMN TILDA.RefillPerf."startDateIncr" IS E'The date passed in for incremental refills.';
-COMMENT ON COLUMN TILDA.RefillPerf."startTimeTZ" IS E'Generated helper column to hold the time zone ID for ''startTime''.';
-COMMENT ON COLUMN TILDA.RefillPerf."startTime" IS E'The timestamp for when the refill started.';
-COMMENT ON COLUMN TILDA.RefillPerf."endTimeTZ" IS E'Generated helper column to hold the time zone ID for ''endTime''.';
-COMMENT ON COLUMN TILDA.RefillPerf."endTime" IS E'The timestamp for when the refill ended.';
-COMMENT ON COLUMN TILDA.RefillPerf."timeInsertSec" IS E'The time, in seconds, the inserts took.';
-COMMENT ON COLUMN TILDA.RefillPerf."timeDeleteSec" IS E'The time, in seconds, the deletes took.';
-COMMENT ON COLUMN TILDA.RefillPerf."timeAnalyzeSec" IS E'The time, in seconds, the analyze took.';
-COMMENT ON COLUMN TILDA.RefillPerf."timeTotalSec" IS E'The time, in seconds, the analyze took.';
-COMMENT ON COLUMN TILDA.RefillPerf."insertCount" IS E'The count of inserted rows.';
-COMMENT ON COLUMN TILDA.RefillPerf."deleteCount" IS E'The count of rows deleted.';
-COMMENT ON COLUMN TILDA.RefillPerf."created" IS E'The timestamp for when the record was created. (TILDA.RefillPerf)';
-COMMENT ON COLUMN TILDA.RefillPerf."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.RefillPerf)';
-COMMENT ON COLUMN TILDA.RefillPerf."deleted" IS E'The timestamp for when the record was deleted. (TILDA.RefillPerf)';
-CREATE INDEX IF NOT EXISTS RefillPerf_SchemaByObjectStart ON TILDA.RefillPerf ("schemaName", "objectName" ASC, "startTime" DESC);
--- app-level index only -- CREATE INDEX IF NOT EXISTS RefillPerf_SchemaObjectByStart ON TILDA.RefillPerf ("schemaName", "objectName", "startTime" DESC);
-
-
-
-create table if not exists TILDA.Maintenance -- Maintenance information
- (  "type"         varchar(64)   not null   -- The type of maintenance resource to track
-  , "name"         varchar(512)  not null   -- The name of the maintenance resource to track.
-  , "value"        text                     -- The value of the maintenance resource to track.
-  , "created"      timestamptz   not null DEFAULT statement_timestamp()   -- The timestamp for when the record was created. (TILDA.Maintenance)
-  , "lastUpdated"  timestamptz   not null DEFAULT statement_timestamp()   -- The timestamp for when the record was last updated. (TILDA.Maintenance)
-  , "deleted"      timestamptz              -- The timestamp for when the record was deleted. (TILDA.Maintenance)
-  , PRIMARY KEY("type", "name")
- );
-COMMENT ON TABLE TILDA.Maintenance IS E'Maintenance information';
-COMMENT ON COLUMN TILDA.Maintenance."type" IS E'The type of maintenance resource to track';
-COMMENT ON COLUMN TILDA.Maintenance."name" IS E'The name of the maintenance resource to track.';
-COMMENT ON COLUMN TILDA.Maintenance."value" IS E'The value of the maintenance resource to track.';
-COMMENT ON COLUMN TILDA.Maintenance."created" IS E'The timestamp for when the record was created. (TILDA.Maintenance)';
-COMMENT ON COLUMN TILDA.Maintenance."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.Maintenance)';
-COMMENT ON COLUMN TILDA.Maintenance."deleted" IS E'The timestamp for when the record was deleted. (TILDA.Maintenance)';
+COMMENT ON TABLE TILDA.ObjectPerf IS E'Performance logs for the Tilda framework';
+COMMENT ON COLUMN TILDA.ObjectPerf."schemaName" IS E'The name of the schema tracked';
+COMMENT ON COLUMN TILDA.ObjectPerf."objectName" IS E'The name of the table/object tracked';
+COMMENT ON COLUMN TILDA.ObjectPerf."startPeriodTZ" IS E'Generated helper column to hold the time zone ID for ''startPeriod''.';
+COMMENT ON COLUMN TILDA.ObjectPerf."startPeriod" IS E'The timestamp for when the record was created.';
+COMMENT ON COLUMN TILDA.ObjectPerf."endPeriodTZ" IS E'Generated helper column to hold the time zone ID for ''endPeriod''.';
+COMMENT ON COLUMN TILDA.ObjectPerf."endPeriod" IS E'The timestamp for when the record was created.';
+COMMENT ON COLUMN TILDA.ObjectPerf."selectNano" IS E'Blah...';
+COMMENT ON COLUMN TILDA.ObjectPerf."selectCount" IS E'Blah...';
+COMMENT ON COLUMN TILDA.ObjectPerf."selectRecords" IS E'Blah...';
+COMMENT ON COLUMN TILDA.ObjectPerf."insertNano" IS E'Blah...';
+COMMENT ON COLUMN TILDA.ObjectPerf."insertCount" IS E'Blah...';
+COMMENT ON COLUMN TILDA.ObjectPerf."insertRecords" IS E'Blah...';
+COMMENT ON COLUMN TILDA.ObjectPerf."updateNano" IS E'Blah...';
+COMMENT ON COLUMN TILDA.ObjectPerf."updateCount" IS E'Blah...';
+COMMENT ON COLUMN TILDA.ObjectPerf."updateRecords" IS E'Blah...';
+COMMENT ON COLUMN TILDA.ObjectPerf."deleteNano" IS E'Blah...';
+COMMENT ON COLUMN TILDA.ObjectPerf."deleteCount" IS E'Blah...';
+COMMENT ON COLUMN TILDA.ObjectPerf."deleteRecords" IS E'Blah...';
+COMMENT ON COLUMN TILDA.ObjectPerf."created" IS E'The timestamp for when the record was created. (TILDA.ObjectPerf)';
+COMMENT ON COLUMN TILDA.ObjectPerf."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.ObjectPerf)';
+COMMENT ON COLUMN TILDA.ObjectPerf."deleted" IS E'The timestamp for when the record was deleted. (TILDA.ObjectPerf)';
+CREATE INDEX IF NOT EXISTS ObjectPerf_SchemaByObjectStart ON TILDA.ObjectPerf ("schemaName", "objectName" ASC, "startPeriod" DESC);
+-- app-level index only -- CREATE INDEX IF NOT EXISTS ObjectPerf_SchemaObjectByStart ON TILDA.ObjectPerf ("schemaName", "objectName", "startPeriod" DESC);
 
 
 

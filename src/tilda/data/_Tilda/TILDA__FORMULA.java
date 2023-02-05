@@ -32,14 +32,14 @@ import java.math.*;
 <TR valign="top"><TD><H2>Formula&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 70%;"><SPAN class="BackToDetails"><A href="#Formula_CNT">details</A>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><A href="#">top</A></SUP></H2></TD><TD align="right"></TD></TR>
 </TABLE>
 <DIV id="Formula_CNT" class="content">
-The Table TILDA.Formula:<UL>
+The Table TILDA.Formula :<UL>
 <LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>Formula_Factory</B>, <B>Formula_Data</B> in the package <B>tilda.data</B>.
 <LI>Is configured for normal <B>read/write</B> access.</LI>
 <LI>Is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
 <LI>Has the following identities:<UL><LI>Primary Key: refnum</LI>
 <LI>Unique Index: location, name</LI>
 </UL></LI>
-<LI>Has the following index:<UL><LI>referencedColumns asc
+<LI>Has the following index:<UL><LI>, referencedColumns asc
 </LI>
 </UL></LI>
 </UL>
@@ -1543,9 +1543,9 @@ This is the null setter for:<BR>
    public void setFormulaNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__FORMULA_Factory.COLS.FORMULA._Mask);
        if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.FORMULA._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__FORMULA_Factory.COLS.FORMULA._Mask);
        __Nulls.or(TILDA__FORMULA_Factory.COLS.FORMULA._Mask);
        _formula=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1698,9 +1698,9 @@ This is the null setter for:<BR>
    public void setHtmlDocNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__FORMULA_Factory.COLS.HTMLDOC._Mask);
        if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.HTMLDOC._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__FORMULA_Factory.COLS.HTMLDOC._Mask);
        __Nulls.or(TILDA__FORMULA_Factory.COLS.HTMLDOC._Mask);
        _htmlDoc=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1897,9 +1897,9 @@ This is the null setter for:<BR>
    public void setReferencedColumnsNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask);
        if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask);
        __Nulls.or(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask);
        _referencedColumns=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2468,9 +2468,9 @@ This is the null setter for:<BR>
    public final void setDeletedNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__FORMULA_Factory.COLS.DELETED._Mask);
        if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.DELETED._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__FORMULA_Factory.COLS.DELETED._Mask);
        __Nulls.or(TILDA__FORMULA_Factory.COLS.DELETED._Mask);
        _deleted=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);

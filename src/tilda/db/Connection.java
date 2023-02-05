@@ -640,6 +640,11 @@ public final class Connection
         return _DB.supportsSuperMetaDataQueries();
       }
 
+    public boolean supportsReorg()
+      {
+        return _DB.supportsReorg();
+      }
+
     /**
      * For String Columns, checks is the Database would type as a CHARACTER, VARCHAR, or TEXT
      * (or whatever the equivalents are across different databases).
@@ -907,6 +912,19 @@ public final class Connection
         _DB.cancel(this);
       }
 
+    public boolean getAutoCommit()
+    throws Exception
+      {
+        return _C.getAutoCommit();
+      }
+    
+    public void setAutoCommit(boolean val)
+    throws Exception
+      {
+        _C.setAutoCommit(val);
+      }
+    
+    
     /**
      * 
      * @param CL
@@ -994,6 +1012,12 @@ public final class Connection
     throws SQLException
       {
         _C.setReadOnly(readOnly);
+      }
+
+    public boolean reorgTable(String schemaName, String tableName, String clusterIndexName, boolean verbose, boolean full)
+    throws Exception
+      {
+        return _DB.reorgTable(this, schemaName, tableName, clusterIndexName, verbose, full);
       }
 
   }

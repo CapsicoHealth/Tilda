@@ -153,4 +153,6 @@ public interface DBType
     public boolean renameTableColumn(Connection con, Column col, String oldName) throws Exception;
     public ZonedDateTime getCurrentTimestamp(Connection con) throws Exception;
     public LocalDate getCurrentDate(Connection con) throws Exception;
+    public boolean supportsReorg();
+    public boolean reorgTable(Connection con, String schemaName, String tableName, String clusterIndexName, boolean verbose, boolean full) throws Exception;
   }

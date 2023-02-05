@@ -32,7 +32,7 @@ import java.math.*;
 <TR valign="top"><TD><H2>DateLimitDim&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 70%;"><SPAN class="BackToDetails"><A href="#DateLimitDim_CNT">details</A>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><A href="#">top</A></SUP></H2></TD><TD align="right"></TD></TR>
 </TABLE>
 <DIV id="DateLimitDim_CNT" class="content">
-The Table TILDA.DateLimitDim:<UL>
+The Table TILDA.DateLimitDim :<UL>
 <LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>DateLimitDim_Factory</B>, <B>DateLimitDim_Data</B> in the package <B>tilda.data</B>.
 <LI>Is configured for normal <B>read/write</B> access.</LI>
 <LI>Is not OCC-Enabled. No record lifecycle columns (created/updated/deleted) have been generated.</LI>

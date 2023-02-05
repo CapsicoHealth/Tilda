@@ -32,7 +32,7 @@ import java.math.*;
 <TR valign="top"><TD><H2>JobPartMessage&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 70%;"><SPAN class="BackToDetails"><A href="#JobPartMessage_CNT">details</A>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><A href="#">top</A></SUP></H2></TD><TD align="right"></TD></TR>
 </TABLE>
 <DIV id="JobPartMessage_CNT" class="content">
-The Table TILDA.JobPartMessage:<UL>
+The Table TILDA.JobPartMessage :<UL>
 <LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>JobPartMessage_Factory</B>, <B>JobPartMessage_Data</B> in the package <B>tilda.data</B>.
 <LI>Is configured for normal <B>read/write</B> access.</LI>
 <LI>Is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
@@ -44,9 +44,9 @@ The Table TILDA.JobPartMessage:<UL>
 </TABLE></LI>
 <LI>Has the following identity:<UL><LI>Primary Key: refnum</LI>
 </UL></LI>
-<LI>Has the following indices:<UL><LI>jobRefnum, created desc
+<LI>Has the following indices:<UL><LI>jobRefnumcreated desc
 </LI>
-<LI>jobPartRefnum, created desc
+<LI>jobPartRefnumcreated desc
 </LI>
 </UL></LI>
 </UL>
@@ -461,9 +461,9 @@ This is the null setter for:<BR>
    public void setJobPartRefnumNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask);
        if (__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask);
        __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask);
        _jobPartRefnum=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1229,9 +1229,9 @@ This is the null setter for:<BR>
    public final void setDeletedNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED._Mask);
        if (__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED._Mask);
        __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED._Mask);
        _deleted=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);

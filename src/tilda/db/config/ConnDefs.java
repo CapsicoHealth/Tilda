@@ -35,6 +35,11 @@ public class ConnDefs
     @SerializedName("skipValidation"   ) public boolean     _SkipValidation = false;
     @SerializedName("dependencySchemas") public String[]    _DependencySchemas = {};
     /*@formatter:on*/
+    
+    /**
+     * Can be set to true right before activating any connection to skip Tilda infrastructure initialization.
+     */
+    public static boolean _SKIP_TILDA_LOADING = false;
 
     static final Logger LOG             = LogManager.getLogger(ConnDefs.class.getName());
 

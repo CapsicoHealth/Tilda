@@ -45,6 +45,6 @@ public class TableIndexDropCluster extends MigrationAction
     @Override
     public String getDescription()
       {
-        return "Dropping cluster for Index "+_IX._Name+"("+_IX.getSignature()+") on table " + _IX._ParentTable.getName();
+        return "Dropping cluster for Index "+_IX._Name+"("+_IX.getSignature()+") on table " + _IX._ParentTable.getFullNameFormatted();
       }
   }

@@ -40,11 +40,14 @@ public class TableMeta
       {
         _SchemaName = SchemaName;
         _TableName = TableName;
+        updateFullNames();
         _Descr = Descr;
       }
 
     public String                  _SchemaName;
     public String                  _TableName;
+    protected String               _FullNameLowerCase;
+    protected String               _FullNameFormatted;
     public final String            _Descr;
     public Map<String, ColumnMeta> _ColumnsMap        = new HashMap<String, ColumnMeta>();
     public List<ColumnMeta>        _ColumnsList       = new ArrayList<ColumnMeta>();
@@ -81,9 +84,20 @@ public class TableMeta
         MetaPerformance._PKCount++;
       }
 
-    public String getName()
+    public void updateFullNames()
       {
-        return _SchemaName.toUpperCase() + "." + _TableName;
+        _FullNameFormatted = _SchemaName.toUpperCase() + "." + _TableName;
+        _FullNameLowerCase = _FullNameFormatted.toLowerCase();
+      }
+
+    public String getFullNameFormatted()
+      {
+        return _FullNameFormatted;
+      }
+
+    public String getFullNameLowerCase()
+      {
+        return _FullNameLowerCase;
       }
 
     private void loadIndices(ResultSet RS)
@@ -151,6 +165,19 @@ public class TableMeta
     public Collection<IndexMeta> getIndexMetas()
       {
         return _Indices.values();
+      }
+
+    /**
+     * Returns the cluster index, if any has been defined. If none are found, returns null.
+     * 
+     * @return
+     */
+    public IndexMeta getClusterIndex()
+      {
+        for (IndexMeta IM : _Indices.values())
+          if (IM._Cluster == true)
+            return IM;
+        return null;
       }
 
   }

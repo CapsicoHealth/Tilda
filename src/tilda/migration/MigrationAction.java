@@ -22,7 +22,7 @@ import tilda.db.metadata.DatabaseMeta;
 public abstract class MigrationAction
   {
 
-    protected MigrationAction(String SchemaName, String TableViewName, boolean isDependencyAction)
+    protected MigrationAction(String SchemaName, String TableViewName, boolean isDependencyAction/*, String maintenanceAction, String maintenanceObjectType*/)
       {
         _isDependencyAction = isDependencyAction;
         _SchemaName = SchemaName;

@@ -32,7 +32,7 @@ import java.math.*;
 <TR valign="top"><TD><H2>RefillPerf&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 70%;"><SPAN class="BackToDetails"><A href="#RefillPerf_CNT">details</A>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><A href="#">top</A></SUP></H2></TD><TD align="right"></TD></TR>
 </TABLE>
 <DIV id="RefillPerf_CNT" class="content">
-The Table TILDA.RefillPerf:<UL>
+The Table TILDA.RefillPerf :<UL>
 <LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>RefillPerf_Factory</B>, <B>RefillPerf_Data</B> in the package <B>tilda.data</B>.
 <LI>Is configured for normal <B>read/write</B> access.</LI>
 <LI>Is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
@@ -43,9 +43,9 @@ The Table TILDA.RefillPerf:<UL>
 </TABLE></LI>
 <LI>Has the following identity:<UL><LI>Primary Key: schemaName, objectName, startTime</LI>
 </UL></LI>
-<LI>Has the following indices:<UL><LI>schemaName, objectName asc, startTime desc
+<LI>Has the following indices:<UL><LI>schemaNameobjectName asc, startTime desc
 </LI>
-<LI>schemaName, objectName, startTime desc
+<LI>schemaName, objectNamestartTime desc
  <B><I>(Application-side Only)</I></B></LI>
 </UL></LI>
 </UL>
@@ -580,9 +580,9 @@ This is the null setter for:<BR>
    protected void setStartDateIncrNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__REFILLPERF_Factory.COLS.STARTDATEINCR._Mask);
        if (__Nulls.intersects(TILDA__REFILLPERF_Factory.COLS.STARTDATEINCR._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__REFILLPERF_Factory.COLS.STARTDATEINCR._Mask);
        __Nulls.or(TILDA__REFILLPERF_Factory.COLS.STARTDATEINCR._Mask);
        _startDateIncr=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2290,9 +2290,9 @@ This is the null setter for:<BR>
    public final void setDeletedNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__REFILLPERF_Factory.COLS.DELETED._Mask);
        if (__Nulls.intersects(TILDA__REFILLPERF_Factory.COLS.DELETED._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__REFILLPERF_Factory.COLS.DELETED._Mask);
        __Nulls.or(TILDA__REFILLPERF_Factory.COLS.DELETED._Mask);
        _deleted=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);

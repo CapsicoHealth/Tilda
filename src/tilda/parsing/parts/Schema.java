@@ -513,6 +513,14 @@ public class Schema
         return -1;
       }
 
+    public static Schema getSchema(List<Schema> L, String schemaName)
+      {
+        for (Schema s : L)
+          if (s._Name.equalsIgnoreCase(schemaName) == true)
+            return s;
+        return null;
+      }
+
 
     public static void ReorderTildaListWithDependencies(List<Schema> L)
       {

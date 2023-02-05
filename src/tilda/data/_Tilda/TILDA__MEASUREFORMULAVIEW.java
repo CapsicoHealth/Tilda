@@ -30,7 +30,7 @@ import java.math.*;
 <TR valign="top"><TD><H2>MeasureFormulaView&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 70%;"><SPAN class="BackToDetails"><A href="#MeasureFormulaView_CNT">details</A>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><A href="#">top</A></SUP></H2></TD><TD align="right"></TD></TR>
 </TABLE>
 <DIV id="MeasureFormulaView_CNT" class="content">
-The View TILDA.MeasureFormulaView:<UL>
+The View TILDA.MeasureFormulaView :<UL>
 <LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>MeasureFormulaView_Factory</B>, <B>MeasureFormulaView_Data</B> in the package <B>tilda.data</B>.
 <LI>Is not OCC-Enabled. No record lifecycle columns (created/updated/deleted) have been generated.</LI>
 </UL>
@@ -1477,9 +1477,9 @@ This is the null setter for:<BR>
     void setFormulaNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULA._Mask);
        if (__Nulls.intersects(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULA._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULA._Mask);
        __Nulls.or(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULA._Mask);
        _formula=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);

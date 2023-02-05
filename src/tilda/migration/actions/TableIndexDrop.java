@@ -46,6 +46,6 @@ public class TableIndexDrop extends MigrationAction
     @Override
     public String getDescription()
       {
-        return "Dropping Index " + _Obj.getShortName()+"." + _IX._Name + "("+_IX.getSignature()+") on table " + _IX._ParentTable.getName();
+        return "Dropping Index " + _Obj.getShortName()+"." + _IX._Name + "("+_IX.getSignature()+") on table " + _IX._ParentTable.getFullNameFormatted();
       }
   }

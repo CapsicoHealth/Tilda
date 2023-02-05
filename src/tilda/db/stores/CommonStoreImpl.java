@@ -539,7 +539,11 @@ public abstract class CommonStoreImpl implements DBType
         return getColumnQuotingStartChar() + C.getName() + getColumnQuotingEndChar();
       }
     
-    protected static Pattern REQUOTE1 = Pattern.compile("\\.(\\w+)([^\\w\\.\\(]|\\z)");
+    // LDH-NOTE: To use with formulas, we need to be able to handle cases such as "select count(*) from X.Y", in which
+    //          case Y would get quoted, incorrectly since it's a table name. The "from" negative lookahead is not working
+    //          as expected, so punting for now.
+//    protected static Pattern REQUOTE1 = Pattern.compile("(?<!from\\s*)(?:[a-z_A-Z]\\w+)\\.([a-z_A-Z]\\w+)([^\\w\\.\\(]|\\z)");
+    protected static Pattern REQUOTE1 = Pattern.compile("\\.([a-z_A-Z]\\w+)([^\\w\\.\\(]|\\z)");
     protected static Pattern REQUOTE2 = Pattern.compile("\\.\"([^\"]+)\"");
     @Override
     public String rewriteExpressionColumnQuoting(String expr)
@@ -701,7 +705,7 @@ public abstract class CommonStoreImpl implements DBType
         if (supportsIndices() == false)
           return true;
 
-        return Con.executeDDL(IX._ParentTable._SchemaName, IX._ParentTable._TableName, "ALTER TABLE " + IX._ParentTable.getName() + " SET WITHOUT CLUSTER;");
+        return Con.executeDDL(IX._ParentTable._SchemaName, IX._ParentTable._TableName, "ALTER TABLE " + IX._ParentTable.getFullNameFormatted() + " SET WITHOUT CLUSTER;");
       }
 
 

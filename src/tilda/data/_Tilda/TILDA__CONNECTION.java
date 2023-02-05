@@ -32,17 +32,17 @@ import java.math.*;
 <TR valign="top"><TD><H2>Connection&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 70%;"><SPAN class="BackToDetails"><A href="#Connection_CNT">details</A>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><A href="#">top</A></SUP></H2></TD><TD align="right"></TD></TR>
 </TABLE>
 <DIV id="Connection_CNT" class="content">
-The Table TILDA.Connection:<UL>
+The Table TILDA.Connection :<UL>
 <LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>Connection_Factory</B>, <B>Connection_Data</B> in the package <B>tilda.data</B>.
 <LI>Is configured for normal <B>read/write</B> access.</LI>
 <LI>Is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
 <LI>Has the following identity:<UL><LI>Primary Key: id</LI>
 </UL></LI>
-<LI>Has the following index:<UL><LI>id asc
+<LI>Has the following index:<UL><LI>, id asc
 </LI>
 </UL></LI>
 </UL>
-<B>Description</B>:<BLOCKQUOTE style="border-left: 1px solid #EEE;padding-left: 5px;">Tilda DB Connections Configurations</BLOCKQUOTE>
+<B>Description</B>:<BLOCKQUOTE style="border-left: 1px solid #EEE;padding-left: 5px;">Tilda DB Connections Configurations.</BLOCKQUOTE>
 <BR>
 This Table contains the following columns:<BLOCKQUOTE>
  <TABLE id="Connection_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid #BBB;">
@@ -317,9 +317,9 @@ This is the null setter for:<BR>
    public void setActiveNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask);
        if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask);
        __Nulls.or(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask);
        _active=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1731,9 +1731,9 @@ This is the null setter for:<BR>
    public final void setDeletedNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__CONNECTION_Factory.COLS.DELETED._Mask);
        if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.DELETED._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__CONNECTION_Factory.COLS.DELETED._Mask);
        __Nulls.or(TILDA__CONNECTION_Factory.COLS.DELETED._Mask);
        _deleted=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);

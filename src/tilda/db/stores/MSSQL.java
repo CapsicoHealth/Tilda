@@ -837,5 +837,18 @@ public class MSSQL implements DBType
       {
         throw new UnsupportedOperationException();
       }
+
+    @Override
+    public boolean supportsReorg()
+      {
+        return true;
+      }
+
+    @Override
+    public boolean reorgTable(Connection con, String schemaName, String tableName, String clusterIndexName, boolean verbose, boolean full)
+    throws Exception
+      {
+        return false;
+      }
     
   }

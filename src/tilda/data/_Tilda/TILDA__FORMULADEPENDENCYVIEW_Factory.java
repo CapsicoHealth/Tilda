@@ -79,7 +79,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        LOCATION                  = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "location"                  , 1/*1*/, "The name of the primary table/view this formula is defined in.", null, null, null);
+     public final Type_StringPrimitive        LOCATION                  = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "location"                  , 1/*1*/, 64, "The name of the primary table/view this formula is defined in.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -100,7 +100,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        NAME                      = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "name"                      , 2/*2*/, "The name of the formula/column.", null, null, null);
+     public final Type_StringPrimitive        NAME                      = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "name"                      , 2/*2*/, 64, "The name of the formula/column.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -162,7 +162,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        DEPENDENTFORMULANAME      = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "dependentFormulaName"      , 5/*5*/, "The name of the formula/column.", null, null, null);
+     public final Type_StringPrimitive        DEPENDENTFORMULANAME      = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "dependentFormulaName"      , 5/*5*/, 64, "The name of the formula/column.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -183,7 +183,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        DEPENDENTFORMULALOCATION  = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "dependentFormulaLocation"  , 6/*6*/, "The name of the primary table/view this formula is defined in.", null, null, null);
+     public final Type_StringPrimitive        DEPENDENTFORMULALOCATION  = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "dependentFormulaLocation"  , 6/*6*/, 64, "The name of the primary table/view this formula is defined in.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -217,16 +217,18 @@ This is the column definition for:<BR>
 
    public static final ColumnDefinition[] COLUMNS_FIRST_IDENTITY = {};
 
-   private static Boolean  __INITIALIZED = false;
+   // Short(short) is deprecated, but we do want a new instance here to avoid synchronizing over the same cached instance from valueOf.
+   // @SuppressWarnings("deprecation")
+   private static Short __INITIALIZED = new Short(RandomUtil.pickNonZeroShort());
    protected static void initObject(Connection C) throws Exception
      {
-       if (__INITIALIZED == false)
+       if (__INITIALIZED != 0)
         synchronized(__INITIALIZED)
          {
-           if (__INITIALIZED == false)
+           if (__INITIALIZED != 0)
             {
               tilda.data.FormulaDependencyView_Factory.init(C);
-              __INITIALIZED = true;
+              __INITIALIZED = 0;
             }
          }
      }

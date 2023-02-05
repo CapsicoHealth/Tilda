@@ -32,7 +32,7 @@ import java.math.*;
 <TR valign="top"><TD><H2>MeasureFormula&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 70%;"><SPAN class="BackToDetails"><A href="#MeasureFormula_CNT">details</A>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><A href="#">top</A></SUP></H2></TD><TD align="right"></TD></TR>
 </TABLE>
 <DIV id="MeasureFormula_CNT" class="content">
-The Table TILDA.MeasureFormula:<UL>
+The Table TILDA.MeasureFormula :<UL>
 <LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>MeasureFormula_Factory</B>, <B>MeasureFormula_Data</B> in the package <B>tilda.data</B>.
 <LI>Is configured for normal <B>read/write</B> access.</LI>
 <LI>Is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
@@ -857,9 +857,9 @@ This is the null setter for:<BR>
    public final void setDeletedNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__MEASUREFORMULA_Factory.COLS.DELETED._Mask);
        if (__Nulls.intersects(TILDA__MEASUREFORMULA_Factory.COLS.DELETED._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__MEASUREFORMULA_Factory.COLS.DELETED._Mask);
        __Nulls.or(TILDA__MEASUREFORMULA_Factory.COLS.DELETED._Mask);
        _deleted=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);

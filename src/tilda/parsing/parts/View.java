@@ -334,8 +334,6 @@ public class View extends Base
                 if (_SubQuery._OrderBy != null && _SubQuery._OrderBy.length > 0)
                   PS.AddError("View '" + getFullName() + "' is defining a subQuery with an orderBy: that is not allowed for views.");
 
-                if (_Name.equals("PatientView") == true)
-                  LOG.debug("XXX");
                 _SubQuery.validate(PS, this, "View " + getFullName() + "'s " + (TextUtil.isNullOrEmpty(_SubWhere) == false ? "subWhere" : "subQuery"), false);
 
                 if (_SubQuery._Attributes.isEmpty() == false)

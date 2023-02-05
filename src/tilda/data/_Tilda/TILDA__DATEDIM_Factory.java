@@ -99,7 +99,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    DAYNAME       = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "dayName"       , 2/*2*/, "Day name (i.e., Monday, Tuesday...) of the date", null, null, null);
+     public final Type_StringPrimitiveNull    DAYNAME       = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "dayName"       , 2/*2*/, 255, "Day name (i.e., Monday, Tuesday...) of the date", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -280,7 +280,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    MONTHNAME     = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "monthName"     , 11/*11*/, "Month name (i.e., January, February...) of the date.", null, null, null);
+     public final Type_StringPrimitiveNull    MONTHNAME     = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "monthName"     , 11/*11*/, 255, "Month name (i.e., January, February...) of the date.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -301,7 +301,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    MONTHNAMESHORT= new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "monthNameShort", 12/*12*/, "Monday short name (i.e., Jan, Feb...) of the date.", null, null, null);
+     public final Type_StringPrimitiveNull    MONTHNAMESHORT= new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "monthNameShort", 12/*12*/, 255, "Monday short name (i.e., Jan, Feb...) of the date.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -342,7 +342,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    QUARTERNAME   = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "quarterName"   , 14/*14*/, "Quarter name (i.e., Q1, Q2...) of the date.", null, null, null);
+     public final Type_StringPrimitiveNull    QUARTERNAME   = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "quarterName"   , 14/*14*/, 255, "Quarter name (i.e., Q1, Q2...) of the date.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -383,7 +383,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    MMYYYY        = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "mmyyyy"        , 16/*16*/, "The mmyyyy printable version of a date.", null, null, null);
+     public final Type_StringPrimitiveNull    MMYYYY        = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "mmyyyy"        , 16/*16*/, 6, "The mmyyyy printable version of a date.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -404,7 +404,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    MMDDYYYY      = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "mmddyyyy"      , 17/*17*/, "The mmddyyyy printable version of a date.", null, null, null);
+     public final Type_StringPrimitiveNull    MMDDYYYY      = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "mmddyyyy"      , 17/*17*/, 8, "The mmddyyyy printable version of a date.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -425,7 +425,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    YYYYMMDD      = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "yyyymmdd"      , 18/*18*/, "The yyyymmdd sortable printable version of a date.", null, null, null);
+     public final Type_StringPrimitiveNull    YYYYMMDD      = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "yyyymmdd"      , 18/*18*/, 8, "The yyyymmdd sortable printable version of a date.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -506,7 +506,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    HOLIDAYNAME   = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "holidayName"   , 22/*22*/, "The name of the holiday if applicable.", null, null, null);
+     public final Type_StringPrimitiveNull    HOLIDAYNAME   = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "holidayName"   , 22/*22*/, 255, "The name of the holiday if applicable.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -593,16 +593,18 @@ This is the column definition for:<BR>
 
    public static final ColumnDefinition[] COLUMNS_FIRST_IDENTITY = {};
 
-   private static Boolean  __INITIALIZED = false;
+   // Short(short) is deprecated, but we do want a new instance here to avoid synchronizing over the same cached instance from valueOf.
+   // @SuppressWarnings("deprecation")
+   private static Short __INITIALIZED = new Short(RandomUtil.pickNonZeroShort());
    protected static void initObject(Connection C) throws Exception
      {
-       if (__INITIALIZED == false)
+       if (__INITIALIZED != 0)
         synchronized(__INITIALIZED)
          {
-           if (__INITIALIZED == false)
+           if (__INITIALIZED != 0)
             {
               tilda.data.DateDim_Factory.init(C);
-              __INITIALIZED = true;
+              __INITIALIZED = 0;
             }
          }
      }
@@ -894,6 +896,29 @@ object. The generic init method defaults to this general data structure as a gen
        // Default Create-time setters
        Obj.setCreatedNow       ();
        Obj.setLastUpdatedNow   ();
+
+       // Default Nullables
+       Obj.__Nulls.or(TILDA__DATEDIM_Factory.COLS.DAYNAME._Mask);
+       Obj.__Nulls.or(TILDA__DATEDIM_Factory.COLS.DAYOFWEEK._Mask);
+       Obj.__Nulls.or(TILDA__DATEDIM_Factory.COLS.DAYOFMONTH._Mask);
+       Obj.__Nulls.or(TILDA__DATEDIM_Factory.COLS.DAYOFQUARTER._Mask);
+       Obj.__Nulls.or(TILDA__DATEDIM_Factory.COLS.DAYOFYEAR._Mask);
+       Obj.__Nulls.or(TILDA__DATEDIM_Factory.COLS.WEEKOFMONTH._Mask);
+       Obj.__Nulls.or(TILDA__DATEDIM_Factory.COLS.WEEKOFYEAR._Mask);
+       Obj.__Nulls.or(TILDA__DATEDIM_Factory.COLS.MONTH._Mask);
+       Obj.__Nulls.or(TILDA__DATEDIM_Factory.COLS.MONTHOFYEAR._Mask);
+       Obj.__Nulls.or(TILDA__DATEDIM_Factory.COLS.MONTHNAME._Mask);
+       Obj.__Nulls.or(TILDA__DATEDIM_Factory.COLS.MONTHNAMESHORT._Mask);
+       Obj.__Nulls.or(TILDA__DATEDIM_Factory.COLS.QUARTEROFYEAR._Mask);
+       Obj.__Nulls.or(TILDA__DATEDIM_Factory.COLS.QUARTERNAME._Mask);
+       Obj.__Nulls.or(TILDA__DATEDIM_Factory.COLS.YEAR._Mask);
+       Obj.__Nulls.or(TILDA__DATEDIM_Factory.COLS.MMYYYY._Mask);
+       Obj.__Nulls.or(TILDA__DATEDIM_Factory.COLS.MMDDYYYY._Mask);
+       Obj.__Nulls.or(TILDA__DATEDIM_Factory.COLS.YYYYMMDD._Mask);
+       Obj.__Nulls.or(TILDA__DATEDIM_Factory.COLS.ISWEEKEND._Mask);
+       Obj.__Nulls.or(TILDA__DATEDIM_Factory.COLS.ISBUSINESSDAY._Mask);
+       Obj.__Nulls.or(TILDA__DATEDIM_Factory.COLS.ISHOLIDAY._Mask);
+       Obj.__Nulls.or(TILDA__DATEDIM_Factory.COLS.HOLIDAYNAME._Mask);
 
        return (tilda.data.DateDim_Data) Obj;
      }

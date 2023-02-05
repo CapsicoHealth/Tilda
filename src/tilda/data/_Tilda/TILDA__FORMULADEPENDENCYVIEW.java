@@ -30,7 +30,7 @@ import java.math.*;
 <TR valign="top"><TD><H2>FormulaDependencyView&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 70%;"><SPAN class="BackToDetails"><A href="#FormulaDependencyView_CNT">details</A>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><A href="#">top</A></SUP></H2></TD><TD align="right"></TD></TR>
 </TABLE>
 <DIV id="FormulaDependencyView_CNT" class="content">
-The View TILDA.FormulaDependencyView:<UL>
+The View TILDA.FormulaDependencyView :<UL>
 <LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>FormulaDependencyView_Factory</B>, <B>FormulaDependencyView_Data</B> in the package <B>tilda.data</B>.
 <LI>Is not OCC-Enabled. No record lifecycle columns (created/updated/deleted) have been generated.</LI>
 </UL>
@@ -595,9 +595,9 @@ This is the null setter for:<BR>
     void setReferencedColumnsNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.REFERENCEDCOLUMNS._Mask);
        if (__Nulls.intersects(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.REFERENCEDCOLUMNS._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.REFERENCEDCOLUMNS._Mask);
        __Nulls.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.REFERENCEDCOLUMNS._Mask);
        _referencedColumns=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1042,9 +1042,9 @@ This is the null setter for:<BR>
     void setDependentReferencedColumnsNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENTREFERENCEDCOLUMNS._Mask);
        if (__Nulls.intersects(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENTREFERENCEDCOLUMNS._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENTREFERENCEDCOLUMNS._Mask);
        __Nulls.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENTREFERENCEDCOLUMNS._Mask);
        _dependentReferencedColumns=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);

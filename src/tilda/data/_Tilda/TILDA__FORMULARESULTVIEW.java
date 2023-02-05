@@ -30,7 +30,7 @@ import java.math.*;
 <TR valign="top"><TD><H2>FormulaResultView&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 70%;"><SPAN class="BackToDetails"><A href="#FormulaResultView_CNT">details</A>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><A href="#">top</A></SUP></H2></TD><TD align="right"></TD></TR>
 </TABLE>
 <DIV id="FormulaResultView_CNT" class="content">
-The View TILDA.FormulaResultView:<UL>
+The View TILDA.FormulaResultView :<UL>
 <LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>FormulaResultView_Factory</B>, <B>FormulaResultView_Data</B> in the package <B>tilda.data</B>.
 <LI>Is not OCC-Enabled. No record lifecycle columns (created/updated/deleted) have been generated.</LI>
 </UL>

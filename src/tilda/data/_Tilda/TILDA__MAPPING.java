@@ -32,7 +32,7 @@ import java.math.*;
 <TR valign="top"><TD><H2>Mapping&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 70%;"><SPAN class="BackToDetails"><A href="#Mapping_CNT">details</A>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><A href="#">top</A></SUP></H2></TD><TD align="right"></TD></TR>
 </TABLE>
 <DIV id="Mapping_CNT" class="content">
-The Table TILDA.Mapping:<UL>
+The Table TILDA.Mapping :<UL>
 <LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>Mapping_Factory</B>, <B>Mapping_Data</B> in the package <B>tilda.data</B>.
 <LI>Is configured for normal <B>read/write</B> access.</LI>
 <LI>Is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
@@ -1029,9 +1029,9 @@ This is the null setter for:<BR>
    public final void setDeletedNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__MAPPING_Factory.COLS.DELETED._Mask);
        if (__Nulls.intersects(TILDA__MAPPING_Factory.COLS.DELETED._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__MAPPING_Factory.COLS.DELETED._Mask);
        __Nulls.or(TILDA__MAPPING_Factory.COLS.DELETED._Mask);
        _deleted=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);

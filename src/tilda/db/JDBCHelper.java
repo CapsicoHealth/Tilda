@@ -20,6 +20,7 @@ package tilda.db;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLWarning;
 import java.sql.Statement;
 
 import org.apache.logging.log4j.LogManager;
@@ -103,7 +104,7 @@ public class JDBCHelper
             QueryDetails.setLastQuery(TableName, Query);
             S = C.createStatement(ResultSet.FETCH_FORWARD, ResultSet.CONCUR_READ_ONLY);
             if (size < 0 || size > 5000)
-             S.setFetchSize(5000);
+              S.setFetchSize(5000);
             ResultSet RS = S.executeQuery(Query);
             int count = JDBCHelper.process(RS, RP, Start, Offsetted, size, Limited, CountAll);
             PerfTracker.add(TableName, StatementType.SELECT, System.nanoTime() - T0, count);
@@ -171,7 +172,22 @@ public class JDBCHelper
             S.execute(Query);
             while (S.getMoreResults() == true || S.getUpdateCount() != -1)
               S.getResultSet();
-            PerfTracker.add(TableName, StatementType.UPDATE, System.nanoTime() - T0, 1);
+            if (QueryDetails.isWarningsCollection() == true)
+              {
+                StringBuilder str = new StringBuilder();
+                SQLWarning warn = S.getWarnings();
+                while (warn != null)
+                  {
+                    str.append("       ").append(warn.getMessage()).append("\r\n");
+                    warn = warn.getNextWarning();
+                  }
+                String s = str.toString();
+                if (s.isEmpty() == false)
+                  QueryDetails.setLastQueryWarning(s);
+                PerfTracker.add(TableName, StatementType.UPDATE, System.nanoTime() - T0, 1, s);
+              }
+            else
+             PerfTracker.add(TableName, StatementType.UPDATE, System.nanoTime() - T0, 1);
             return true;
           }
         finally
@@ -216,17 +232,17 @@ public class JDBCHelper
           }
         return Str.toString();
       }
-    
+
     public static int batchWriteDone(int[] results, int size)
     throws Exception
       {
-        if(results.length != size)
+        if (results.length != size)
           return 0;
-        
-        for(int i = 0 ; i < results.length ; i++)
-            if(results[i] != -2 && results[i] <= 0)
-              return i;
-    
+
+        for (int i = 0; i < results.length; i++)
+          if (results[i] != -2 && results[i] <= 0)
+            return i;
+
         return -1;
       }
   }

@@ -79,7 +79,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        MEASURESCHEMA   = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "measureSchema"   , 1/*1*/, "The Schema wher ethe measure is defined.", null, null, null);
+     public final Type_StringPrimitive        MEASURESCHEMA   = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "measureSchema"   , 1/*1*/, 64, "The Schema wher ethe measure is defined.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -100,7 +100,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        MEASURENAME     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "measureName"     , 2/*2*/, "The name of the measure.", null, null, null);
+     public final Type_StringPrimitive        MEASURENAME     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "measureName"     , 2/*2*/, 64, "The name of the measure.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -141,7 +141,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        FORMULALOCATION = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "formulaLocation" , 4/*4*/, "The name of the primary table/view this formula is defined in.", null, null, null);
+     public final Type_StringPrimitive        FORMULALOCATION = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "formulaLocation" , 4/*4*/, 64, "The name of the primary table/view this formula is defined in.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -162,7 +162,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        FORMULALOCATION2= new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "formulaLocation2", 5/*5*/, "The name of the secondary table/view (a derived view, a realized table), if appropriate.", null, null, null);
+     public final Type_StringPrimitive        FORMULALOCATION2= new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "formulaLocation2", 5/*5*/, 64, "The name of the secondary table/view (a derived view, a realized table), if appropriate.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -183,7 +183,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        FORMULANAME     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "formulaName"     , 6/*6*/, "The name of the formula/column.", null, null, null);
+     public final Type_StringPrimitive        FORMULANAME     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "formulaName"     , 6/*6*/, 64, "The name of the formula/column.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -204,7 +204,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        TITLE           = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "title"           , 7/*7*/, "The title of the formula/column.", null, null, null);
+     public final Type_StringPrimitive        TITLE           = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "title"           , 7/*7*/, 128, "The title of the formula/column.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -225,7 +225,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        DESCRIPTION     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "description"     , 8/*8*/, "The description of the formula/column.", null, null, null);
+     public final Type_StringPrimitive        DESCRIPTION     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "description"     , 8/*8*/, 32000, "The description of the formula/column.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -264,7 +264,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_StringPrimitive        TYPE            = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "type"            , 9/*9*/, "The type of the formula/column value/outcome.", null, null, new String[][] {{"STR","String"}, {"CHR","Character"}, {"BOL","Boolean"}, {"SHT","Short"}, {"INT","Integer"}, {"LNG","Long"}, {"FLT","Float"}, {"DBL","Double"}, {"DT","Date"}, {"DTM","DateTime"}, {"NUM","Numeric"}, {"UI","Uuid"}});
+     public final Type_StringPrimitive        TYPE            = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "type"            , 9/*9*/, 3, "The type of the formula/column value/outcome.", null, null, new String[][] {{"STR","String"}, {"CHR","Character"}, {"BOL","Boolean"}, {"SHT","Short"}, {"INT","Integer"}, {"LNG","Long"}, {"FLT","Float"}, {"DBL","Double"}, {"DT","Date"}, {"DTM","DateTime"}, {"NUM","Numeric"}, {"UI","Uuid"}});
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -285,7 +285,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    FORMULA         = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "formula"         , 10/*10*/, "The formula.", null, null, null);
+     public final Type_StringPrimitiveNull    FORMULA         = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "formula"         , 10/*10*/, 32000, "The formula.", null, null, null);
    }
 
    public static COLS_BASE COLS = new COLS_BASE();
@@ -298,16 +298,18 @@ This is the column definition for:<BR>
 
    public static final ColumnDefinition[] COLUMNS_FIRST_IDENTITY = {};
 
-   private static Boolean  __INITIALIZED = false;
+   // Short(short) is deprecated, but we do want a new instance here to avoid synchronizing over the same cached instance from valueOf.
+   // @SuppressWarnings("deprecation")
+   private static Short __INITIALIZED = new Short(RandomUtil.pickNonZeroShort());
    protected static void initObject(Connection C) throws Exception
      {
-       if (__INITIALIZED == false)
+       if (__INITIALIZED != 0)
         synchronized(__INITIALIZED)
          {
-           if (__INITIALIZED == false)
+           if (__INITIALIZED != 0)
             {
               tilda.data.MeasureFormulaView_Factory.init(C);
-              __INITIALIZED = true;
+              __INITIALIZED = 0;
             }
          }
      }

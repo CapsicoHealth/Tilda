@@ -32,14 +32,14 @@ import java.math.*;
 <TR valign="top"><TD><H2>Key&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 70%;"><SPAN class="BackToDetails"><A href="#Key_CNT">details</A>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><A href="#">top</A></SUP></H2></TD><TD align="right"></TD></TR>
 </TABLE>
 <DIV id="Key_CNT" class="content">
-The Table TILDA.Key:<UL>
+The Table TILDA.Key :<UL>
 <LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>Key_Factory</B>, <B>Key_Data</B> in the package <B>tilda.data</B>.
 <LI>Is configured for normal <B>read/write</B> access.</LI>
 <LI>Is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
 <LI>Has the following identities:<UL><LI>Primary Key: refnum</LI>
 <LI>Unique Index: name</LI>
 </UL></LI>
-<LI>Has the following index:<UL><LI>name asc
+<LI>Has the following index:<UL><LI>, name asc
  <B><I>(Application-side Only)</I></B></LI>
 </UL></LI>
 </UL>
@@ -1161,9 +1161,9 @@ This is the null setter for:<BR>
    public final void setDeletedNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__KEY_Factory.COLS.DELETED._Mask);
        if (__Nulls.intersects(TILDA__KEY_Factory.COLS.DELETED._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__KEY_Factory.COLS.DELETED._Mask);
        __Nulls.or(TILDA__KEY_Factory.COLS.DELETED._Mask);
        _deleted=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);

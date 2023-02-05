@@ -32,7 +32,7 @@ import java.math.*;
 <TR valign="top"><TD><H2>JobPart&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 70%;"><SPAN class="BackToDetails"><A href="#JobPart_CNT">details</A>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><A href="#">top</A></SUP></H2></TD><TD align="right"></TD></TR>
 </TABLE>
 <DIV id="JobPart_CNT" class="content">
-The Table TILDA.JobPart:<UL>
+The Table TILDA.JobPart :<UL>
 <LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>JobPart_Factory</B>, <B>JobPart_Data</B> in the package <B>tilda.data</B>.
 <LI>Is configured for normal <B>read/write</B> access.</LI>
 <LI>Is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
@@ -43,11 +43,11 @@ The Table TILDA.JobPart:<UL>
 </TABLE></LI>
 <LI>Has the following identity:<UL><LI>Primary Key: refnum</LI>
 </UL></LI>
-<LI>Has the following indices:<UL><LI>jobRefnum, start desc
+<LI>Has the following indices:<UL><LI>jobRefnumstart desc
 </LI>
-<LI>name, start desc
+<LI>namestart desc
 </LI>
-<LI>type, start desc
+<LI>typestart desc
 </LI>
 </UL></LI>
 </UL>
@@ -664,9 +664,9 @@ This is the null setter for:<BR>
    public void setTypeNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__JOBPART_Factory.COLS.TYPE._Mask);
        if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.TYPE._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__JOBPART_Factory.COLS.TYPE._Mask);
        __Nulls.or(TILDA__JOBPART_Factory.COLS.TYPE._Mask);
        _type=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -818,9 +818,9 @@ This is the null setter for:<BR>
     void setDataStartTZNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__JOBPART_Factory.COLS.DATASTARTTZ._Mask);
        if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.DATASTARTTZ._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__JOBPART_Factory.COLS.DATASTARTTZ._Mask);
        __Nulls.or(TILDA__JOBPART_Factory.COLS.DATASTARTTZ._Mask);
        _dataStartTZ=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -974,9 +974,9 @@ This is the null setter for:<BR>
    public void setDataStartNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__JOBPART_Factory.COLS.DATASTART._Mask);
        if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.DATASTART._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__JOBPART_Factory.COLS.DATASTART._Mask);
        __Nulls.or(TILDA__JOBPART_Factory.COLS.DATASTART._Mask);
        _dataStart=null;
        setDataStartTZNull();
@@ -1194,9 +1194,9 @@ This is the null setter for:<BR>
     void setDataEndTZNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__JOBPART_Factory.COLS.DATAENDTZ._Mask);
        if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.DATAENDTZ._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__JOBPART_Factory.COLS.DATAENDTZ._Mask);
        __Nulls.or(TILDA__JOBPART_Factory.COLS.DATAENDTZ._Mask);
        _dataEndTZ=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1350,9 +1350,9 @@ This is the null setter for:<BR>
    public void setDataEndNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__JOBPART_Factory.COLS.DATAEND._Mask);
        if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.DATAEND._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__JOBPART_Factory.COLS.DATAEND._Mask);
        __Nulls.or(TILDA__JOBPART_Factory.COLS.DATAEND._Mask);
        _dataEnd=null;
        setDataEndTZNull();
@@ -1843,9 +1843,9 @@ This is the null setter for:<BR>
     void setEndTZNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__JOBPART_Factory.COLS.ENDTZ._Mask);
        if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.ENDTZ._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__JOBPART_Factory.COLS.ENDTZ._Mask);
        __Nulls.or(TILDA__JOBPART_Factory.COLS.ENDTZ._Mask);
        _endTZ=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1999,9 +1999,9 @@ This is the null setter for:<BR>
    public void setEndNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__JOBPART_Factory.COLS.END._Mask);
        if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.END._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__JOBPART_Factory.COLS.END._Mask);
        __Nulls.or(TILDA__JOBPART_Factory.COLS.END._Mask);
        _end=null;
        setEndTZNull();
@@ -2209,9 +2209,9 @@ This is the null setter for:<BR>
    public void setRecordsCountNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__JOBPART_Factory.COLS.RECORDSCOUNT._Mask);
        if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.RECORDSCOUNT._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__JOBPART_Factory.COLS.RECORDSCOUNT._Mask);
        __Nulls.or(TILDA__JOBPART_Factory.COLS.RECORDSCOUNT._Mask);
        _recordsCount=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2352,9 +2352,9 @@ This is the null setter for:<BR>
    public void setStatusNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__JOBPART_Factory.COLS.STATUS._Mask);
        if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.STATUS._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__JOBPART_Factory.COLS.STATUS._Mask);
        __Nulls.or(TILDA__JOBPART_Factory.COLS.STATUS._Mask);
        _status=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2922,9 +2922,9 @@ This is the null setter for:<BR>
    public final void setDeletedNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__JOBPART_Factory.COLS.DELETED._Mask);
        if (__Nulls.intersects(TILDA__JOBPART_Factory.COLS.DELETED._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__JOBPART_Factory.COLS.DELETED._Mask);
        __Nulls.or(TILDA__JOBPART_Factory.COLS.DELETED._Mask);
        _deleted=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);

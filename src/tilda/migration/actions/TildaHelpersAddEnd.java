@@ -16,40 +16,38 @@
 
 package tilda.migration.actions;
 
+import java.time.ZonedDateTime;
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import tilda.data.Maintenance_Data;
-import tilda.data.Maintenance_Factory;
-import tilda.data._Tilda.TILDA__KEY_Factory;
+import tilda.data.MaintenanceLog_Data;
+import tilda.data.MaintenanceLog_Factory;
 import tilda.db.Connection;
+import tilda.db.QueryDetails;
+import tilda.db.metadata.DatabaseMeta;
 import tilda.migration.MigrationAction;
+import tilda.utils.DateTimeUtil;
 
 public class TildaHelpersAddEnd extends MigrationAction
   {
 
-    static final Logger LOG = LogManager.getLogger(TildaHelpersAddEnd.class.getName());
+    private static final String TILDA_HELPERS_END = "TILDA_HELPERS_END";
+
+    static final Logger         LOG               = LogManager.getLogger(TildaHelpersAddEnd.class.getName());
 
     public TildaHelpersAddEnd()
       {
-        super(Maintenance_Factory.SCHEMA_LABEL, Maintenance_Factory.TABLENAME_LABEL, false);
+        super(MaintenanceLog_Factory.SCHEMA_LABEL, TILDA_HELPERS_END, false);
       }
 
     public boolean process(Connection C)
     throws Exception
       {
         LOG.debug(getDescription());
-
-        String Str = C.getHelperFunctionsScript(false);
-        if (C.executeDDL(TILDA__KEY_Factory.SCHEMA_LABEL, "*", Str) == false)
-          return false;
-
-        Str = C.getHelperFunctionsScript(true)+"\n"+Str;
-        Maintenance_Data M = Maintenance_Factory.lookupByPrimaryKey("TILDA_HELPERS", "TILDA_HELPERS");
-        if (M.read(C) == false)
-          M = Maintenance_Factory.create("TILDA_HELPERS", "TILDA_HELPERS");
-        M.setValue(Str);
-        return M.write(C);
+        String statement = C.getHelperFunctionsScript(false);
+        return C.executeDDL(MaintenanceLog_Factory.SCHEMA_LABEL, TILDA_HELPERS_END, statement);
       }
 
     @Override
@@ -57,7 +55,23 @@ public class TildaHelpersAddEnd extends MigrationAction
       {
         return "Adding Tilda end-helper stored procedures";
       }
-    
-    // No need for isNeeded. The migrator code is responsible to add "end" if it added "start"
+
+    @Override
+    public boolean isNeeded(Connection C, DatabaseMeta DBMeta)
+    throws Exception
+      {
+        // When run for the first time, some tables may not exist yet.
+        if (DBMeta.getTableMeta(MaintenanceLog_Factory.SCHEMA_LABEL, MaintenanceLog_Factory.TABLENAME_LABEL) == null)
+          return true;
+        String endScript = C.getHelperFunctionsScript(true);
+        if (endScript == null)
+          throw new Exception("Cannot load Tilda helper end script.");
+        // Get the most recent log for executing the script
+        List<MaintenanceLog_Data> L = MaintenanceLog_Factory.lookupWhereSchemaObjectStart(C, MaintenanceLog_Factory.SCHEMA_LABEL, TILDA_HELPERS_END, 0, 1);
+        if (L.isEmpty() == true)
+          return true;
+        MaintenanceLog_Data M = L.get(0);
+        return M.getStatement().trim().equals(endScript.trim()) == false;
+      }
 
   }

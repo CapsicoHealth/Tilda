@@ -32,7 +32,7 @@ import java.math.*;
 <TR valign="top"><TD><H2>ObjectPerf&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 70%;"><SPAN class="BackToDetails"><A href="#ObjectPerf_CNT">details</A>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><A href="#">top</A></SUP></H2></TD><TD align="right"></TD></TR>
 </TABLE>
 <DIV id="ObjectPerf_CNT" class="content">
-The Table TILDA.ObjectPerf:<UL>
+The Table TILDA.ObjectPerf :<UL>
 <LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>ObjectPerf_Factory</B>, <B>ObjectPerf_Data</B> in the package <B>tilda.data</B>.
 <LI>Is configured for normal <B>read/write</B> access.</LI>
 <LI>Is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
@@ -43,9 +43,9 @@ The Table TILDA.ObjectPerf:<UL>
 </TABLE></LI>
 <LI>Has the following identity:<UL><LI>Primary Key: schemaName, objectName, startPeriod</LI>
 </UL></LI>
-<LI>Has the following indices:<UL><LI>schemaName, objectName asc, startPeriod desc
+<LI>Has the following indices:<UL><LI>schemaNameobjectName asc, startPeriod desc
 </LI>
-<LI>schemaName, objectName, startPeriod desc
+<LI>schemaName, objectNamestartPeriod desc
  <B><I>(Application-side Only)</I></B></LI>
 </UL></LI>
 </UL>
@@ -3694,9 +3694,9 @@ This is the null setter for:<BR>
    public final void setDeletedNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask);
        if (__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask);
        __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask);
        _deleted=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);

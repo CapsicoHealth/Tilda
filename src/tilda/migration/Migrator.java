@@ -19,6 +19,7 @@ package tilda.migration;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -29,8 +30,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.Migrate;
+import tilda.data.Key_Factory;
+import tilda.data.MaintenanceLog_Data;
+import tilda.data.MaintenanceLog_Factory;
+import tilda.data.ZoneInfo_Factory;
 import tilda.db.Connection;
+import tilda.db.ConnectionPool;
 import tilda.db.KeysManager;
+import tilda.db.QueryDetails;
 import tilda.db.metadata.ColumnMeta;
 import tilda.db.metadata.DatabaseMeta;
 import tilda.db.metadata.FKMeta;
@@ -86,6 +93,7 @@ import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
 import tilda.parsing.parts.helpers.ValueHelper;
 import tilda.utils.AsciiArt;
+import tilda.utils.DateTimeUtil;
 import tilda.utils.FileUtil;
 import tilda.utils.TextUtil;
 
@@ -96,8 +104,21 @@ public class Migrator
     public static void MigrateDatabase(Connection C, boolean CheckOnly, List<Schema> TildaList, DatabaseMeta DBMeta, boolean first, List<String> connectionUrls, String[] DependencySchemas)
     throws Exception
       {
-        MigrationDataModel migrationData = Migrator.AnalyzeDatabase(C, CheckOnly, TildaList, DBMeta);
+        // If ZoneInfo exists in the DB, make sure it's initialized. In migration mode, we don't prep anything. The only DB access is the maintenance log
+        // which requires this at a minimum. 
+        if (DBMeta.getTableMeta(ZoneInfo_Factory.SCHEMA_LABEL, ZoneInfo_Factory.TABLENAME_LABEL) != null)
+          {
+            Schema tildaSchema = Schema.getSchema(TildaList, "TILDA");
+            if (tildaSchema != null)
+              {
+                // Make sure the "TILDA" schema is properly registered to the Connection pool because the importer requires it.
+                ConnectionPool.registerSchema(tildaSchema);
+                // Reload (in this case load) the master init data
+                ZoneInfo_Factory.reloadInitData(C);
+              }
+          }
 
+        MigrationDataModel migrationData = Migrator.AnalyzeDatabase(C, CheckOnly, TildaList, DBMeta);
         if (migrationData.getActionCount() == 0)
           {
             if (CheckOnly == false)
@@ -122,7 +143,7 @@ public class Migrator
           {
             PrintDiscrepancies(C, migrationData, DependencySchemas);
             confirmMigration(C);
-            applyMigration(C, migrationData, DependencySchemas);
+            applyMigration(C, migrationData, DependencySchemas, DBMeta);
             doAcl(C, TildaList, DBMeta);
             if (Migrate.isTesting() == false)
               KeysManager.reloadAll();
@@ -205,6 +226,8 @@ public class Migrator
         for (Schema S : tildaList)
           {
             List<MigrationAction> L = Migrator.getMigrationActions(C, C.getSQlCodeGen(), S, tildaList, DBMeta);
+            // if (S._Name.equals("TILDA") == true && L!=null && L.isEmpty() == false)
+            // moveMaintenanceLogToTop(L);
             for (MigrationAction MA : L)
               if (MA.isDependencyAction() == false)
                 ++actionCount;
@@ -214,6 +237,25 @@ public class Migrator
         return new MigrationDataModel(actionCount, scripts, dropList);
       }
 
+
+    // /**
+    // * This method should be called exclusively for the TILDA schema. All migrations depend on logging to the MaintenanceLog table, so we have
+    // * to make sure it shows up first before anything else for the Tilda schema.
+    // * @param L
+    // */
+    // private static void moveMaintenanceLogToTop(List<MigrationAction> L)
+    // {
+    // int
+    // for (MigrationAction MA : L)
+    // if (MaintenanceLog_Factory.SCHEMA_LABEL.equalsIgnoreCase(MA._SchemaName) == true && MaintenanceLog_Factory.TABLENAME_LABEL.equalsIgnoreCase(MA._TableViewName) == true)
+    // {
+    // L.remove(MA);
+    // int pos = 0;
+    //
+    // L.add(0, MA);
+    // break;
+    // }
+    // }
 
     protected static void confirmMigration(Connection C)
     throws Exception
@@ -246,7 +288,7 @@ public class Migrator
           }
       }
 
-    protected static void applyMigration(Connection C, MigrationDataModel migrationData, String[] DependencySchemas)
+    protected static void applyMigration(Connection C, MigrationDataModel migrationData, String[] DependencySchemas, DatabaseMeta DBMeta)
     throws Exception
       {
         LOG.info("===> Migrating DB ( Url: " + C.getURL() + " )");
@@ -255,6 +297,21 @@ public class Migrator
         MigrationAction lastAction = null;
         try
           {
+            // Migration is complicated, specially for 2 specific scenarios:
+            // - First time run
+            // - Infrastructure-level changes in the TILDA schema
+            // This code will log migration actions to the MaintenanceLog table, and doing so when nothing exists yet is a challenge since
+            // writing any object to the database requires that:
+            // - the Keys table was created
+            // - if the table uses DATETIME attributes, that the ZoneInfo table was created and was populated with the standard values.
+            // . there is an additional wrinkle in that Schemas are not initialized during Migration. This means that ZoneInfo
+            // is not initialized either, which will cause errors when trying to write an object with a datetime.
+            // - that the table itself was created as well, including the key configuration
+            // When the database is created for the first time, we therefore expect none of this exists and need to track it.
+            boolean existsKeys = DBMeta.getTableMeta(Key_Factory.SCHEMA_LABEL, Key_Factory.TABLENAME_LABEL) != null;
+            boolean existsMaintenance = DBMeta.getTableMeta(MaintenanceLog_Factory.SCHEMA_LABEL, MaintenanceLog_Factory.TABLENAME_LABEL) != null;
+
+            List<MaintenanceLog_Data> MaintenanceLogList = new ArrayList<MaintenanceLog_Data>();
             for (MigrationScript S : migrationData.getMigrationScripts())
               {
                 if (S._Actions.isEmpty() == true)
@@ -266,23 +323,61 @@ public class Migrator
                   {
                     lastAction = A;
                     String currentEntityName = A._SchemaName + "." + A._TableViewName;
+                    if (Migrate.isTesting() == false && lastEntityName != null && currentEntityName.equals(lastEntityName) == false)
+                      {
+                        MaintenanceLog_Factory.writeBatch(C, MaintenanceLogList, 200, 1000);
+                        C.commit();
+                        MaintenanceLogList.clear();
+                      }
                     LOG.debug("Applying migration: " + A.getDescription());
+                    ZonedDateTime startZDT = DateTimeUtil.nowUTC();
                     if (A.process(C) == false)
                       throw new Exception("There was an error with the action '" + A.getDescription() + "'.");
-                    if (Migrate.isTesting() == false && lastEntityName != null && currentEntityName.equals(lastEntityName) == false)
-                      C.commit();
+                    if (ZoneInfo_Factory.SCHEMA_LABEL.equals(A._SchemaName) == true && ZoneInfo_Factory.TABLENAME_LABEL.equals(A._TableViewName) == true)
+                      {
+                        // If we are handling the ZoneInfo table we have to do those three things:
+                        // commit so that the table exists in the database
+                        C.commit();
+                        // Make sure the "TILDA" schema is properly registered to the Connection pool because the importer requires it.
+                        ConnectionPool.registerSchema(S._S);
+                        // Reload (in this case load) the master init data
+                        ZoneInfo_Factory.reloadInitData(C);
+                      }
+                    else if (Key_Factory.SCHEMA_LABEL.equals(A._SchemaName) == true && Key_Factory.TABLENAME_LABEL.equals(A._TableViewName) == true)
+                      {
+                        // If processed Key, commit and mark as existing.
+                        C.commit();
+                        existsKeys = true;
+                      }
+                    else if (MaintenanceLog_Factory.SCHEMA_LABEL.equals(A._SchemaName) == true && MaintenanceLog_Factory.TABLENAME_LABEL.equals(A._TableViewName) == true)
+                      {
+                        // If processed MaintenanceLog, commit and mark as existing.
+                        C.commit();
+                        existsMaintenance = true;
+                      }
+                    /*@formatter:off*/
+                    // We can't log maintenance until we have the Keys and MaintenanceLog table been processed.
+                    if ("TILDATMP".equalsIgnoreCase(S._S._Name) == false && existsKeys == true && existsMaintenance == true)
+                     MaintenanceLogList.add(MaintenanceLog_Factory.create(C, MaintenanceLog_Data._typeMigration, A._SchemaName, A._TableViewName
+                                                                           , startZDT, DateTimeUtil.nowUTC()
+                                                                           , MaintenanceLog_Data._actionExecute, MaintenanceLog_Data._objectTypeScript
+                                                                           , QueryDetails.getLastQuery(), A.getDescription()
+                                                                          ));
+                    /*@formatter:on*/
                     // if (A.getClass() == DDLDependencyPreManagement.class)
                     // DdlDepMan = ((DDLDependencyPreManagement) A)._DdlDepMan;
                     // else if (A.getClass() == DDLDependencyPostManagement.class)
                     // DdlDepMan = null;
                     lastEntityName = currentEntityName;
                   }
+                MaintenanceLog_Factory.writeBatch(C, MaintenanceLogList, 200, 1000);
                 C.commit();
+                MaintenanceLogList.clear();
               }
           }
         catch (Exception E)
           {
-            LOG.error("An exception occurred during migration: " + lastAction.getDescription());
+            LOG.error("An exception occurred during migration: " + (lastAction == null ? null : lastAction.getDescription()));
             LOG.catching(E);
             // if (DdlDepMan != null)
             // {
@@ -796,8 +891,8 @@ public class Migrator
         if (TIDC != null)
           Actions.add(TIDC);
         if (TIAC != null)
-         Actions.add(TIAC);
-         
+          Actions.add(TIAC);
+
 
         // Checking any Indices which are not in the DB, so they can be added.
         for (Index IX : Obj._Indices)

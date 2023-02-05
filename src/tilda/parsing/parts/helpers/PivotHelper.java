@@ -186,7 +186,7 @@ public class PivotHelper
 
     public static boolean isPivotColumn(ViewColumn VC)
       {
-        if (VC._ParentView._Pivots != null)
+        if (VC._ParentView != null && VC._ParentView._Pivots != null)
           for (ViewPivot P : VC._ParentView._Pivots)
             {
               if (P._VC == VC)

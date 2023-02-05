@@ -583,4 +583,21 @@ public class PostgreSQL extends CommonStoreImpl
         return null;
       }
 
+    @Override
+    public boolean supportsReorg()
+      {
+        return true;
+      }
+
+    @Override
+    public boolean reorgTable(Connection con, String schemaName, String tableName, String clusterIndexName, boolean verbose, boolean full)
+    throws Exception
+      {
+        String Q = TextUtil.isNullOrEmpty(clusterIndexName) == true
+                 ? "VACUUM "+(full?" FULL":"")+(verbose?" VERBOSE":"")+" ANALYZE " + schemaName + "." + tableName + ";"
+                 : "CLUSTER" + (verbose?" VERBOSE":"") + " " +schemaName + "." + tableName + " USING "+clusterIndexName+";"
+                 ;
+        return con.executeDDL(schemaName, tableName, Q);
+      }
+
   }

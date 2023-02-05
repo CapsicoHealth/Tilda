@@ -32,9 +32,10 @@
    ]
 
  ,"objects":[
-    { "name": "Key", "occ": false,
-      "description": "The table to keep track of unique keys across distributed objects/tables",
-      "columns":[
+    { "name": "Key"
+     ,"occ": false
+     ,"description": "The table to keep track of unique keys across distributed objects/tables"
+     ,"columns":[
         { "name": "refnum"        , "type": "LONG"       , "nullable": false,                          "invariant": true, "description": "The primary key for this record" },
         { "name": "name"          , "type": "STRING"     , "nullable": false, "size": 128,             "invariant": true, "description": "The name of the table/object tracked" },
         { "name": "max"           , "type": "LONG"       , "nullable": false,                                             "description": "The pre-allocated max RefNum for this table/object." },
@@ -55,56 +56,63 @@
       	{ "name": "Name"     , "columns": ["name"],                          "db": true },
       	{ "name": "AllByName"                     , "orderBy": ["name asc"], "db": false, "subWhere": "deleted is null" } 
       ]
-    },
+    }
 
 
 
-    { "name": "Mapping",
-      "description": "Generalized Mapping table",
-      "columns":[
-         { "name": "type"       , "type": "STRING", "nullable": false, "size":   10, "invariant": true, "description": "The type this mapping is for" }
-        ,{ "name": "src"        , "type": "STRING", "nullable": false, "size": 1024, "invariant": true, "description": "The source value for this mapping" }
-        ,{ "name": "dst"        , "type": "STRING", "nullable": false, "size": 1024, "invariant": true, "description": "The the destination (mapped) value for this mapping." }
-       ],
-      "indices":[ 
-         { "name": "TypeSrcDst", "columns": ["type", "src", "dst"], "db": true }
+
+
+   ,{ "name": "MaintenanceLog"
+     ,"occ": true
+     ,"lc":"WORM"
+     ,"description": "Maintenance information"
+     ,"columns":[
+         { "name":"type"       , "type":"STRING(64)"    , "nullable":false, "description":"The type of maintenance, e.g., Migration, Reorg..."
+                               , "values": [ { "name":"Migration", "description": "A migration operation" }
+                                            ,{ "name":"Optimize" , "description": "A vaccuum/reorg operation typically"   }
+                                           ]
+         }
+        ,{ "name":"schemaName" , "type":"STRING(64)"    , "nullable":false, "description":"The name of the schema for the resource."   }
+        ,{ "name":"objectName" , "type":"STRING(1024)"  , "nullable":true , "description":"The name of the resource."   }
+        ,{ "name":"objectType" , "type":"STRING(128)"   , "nullable":true , "description":"The type of the resource."
+                               , "values": [ { "name":"Table"    , "description": "A table"     }
+                                            ,{ "name":"View"     , "description": "A view"      }
+                                            ,{ "name":"Column"   , "description": "A column"    }
+                                            ,{ "name":"Index"    , "description": "An index."   }
+                                            ,{ "name":"Function" , "description": "A function"  }
+                                            ,{ "name":"Procedure", "description": "A procedure" }
+                                            ,{ "name":"Script"   , "description": "A script"    }
+                                           ]
+         }
+        ,{ "name":"startTime"  , "type":"DATETIME"      , "nullable":false, "description":"The timestamp for when the refill started."        }
+        ,{ "name":"endTime"    , "type":"DATETIME"      , "nullable":true , "description":"The timestamp for when the refill ended."          }
+        ,{ "name":"statement"  , "type":"STRING(256000)", "nullable":true , "description":"The value of the maintenance resource to track."  }
+        ,{ "name":"action"     , "type":"STRING(64)"    , "nullable":true , "description":"The name of the maintenance resource to track."
+                               , "values": [ { "name":"Execute" , "description":"Execute" }
+                                            ,{ "name":"Create"  , "description":"Create"  }
+                                            ,{ "name":"Update"  , "description":"Update"  }
+                                            ,{ "name":"Drop"    , "description":"Drop"    }
+                                            ,{ "name":"Rename"  , "description":"Rename"  }
+                                            ,{ "name":"Optimize", "description":"Optimize"}
+                                            ,{ "name":"Vacuum"  , "description":"Vacuum"  }
+                                            ,{ "name":"Reorg"   , "description":"Reorg"   }
+                                            ,{ "name":"Cluster" , "description":"Cluster" }
+                                           ]
+         }
+        ,{ "name":"descr"      , "type":"STRING(2048)"  , "nullable":true , "description":"The name of the maintenance resource to track."   }
        ]
-    },
+     ,"primary": { "autogen": true }
+     ,"indices":[
+         { "name": "SchemaObjectStart", "columns": ["schemaName", "objectName"], "orderBy": ["startTime desc"], "db": true }
+        ,{ "name": "TypeStart"        , "columns": ["type"], "orderBy": ["startTime desc"], "db": true }
+       ]
+    }
 
-
-    { "name":"ObjectPerf"
+   ,{ "name":"TransPerf"
      ,"occ":true
      ,"description":"Performance logs for the Tilda framework"
      ,"columns":[
-         { "name":"schemaName"   , "type":"STRING"  , "nullable":false, "size": 64, "invariant":true, "description":"The name of the schema tracked" }
-        ,{ "name":"objectName"   , "type":"STRING"  , "nullable":false, "size": 64, "invariant":true, "description":"The name of the table/object tracked" }
-        ,{ "name":"startPeriod"  , "type":"DATETIME", "nullable":false,             "invariant":true, "description":"The timestamp for when the record was created." }
-        ,{ "name":"endPeriod"    , "type":"DATETIME", "nullable":false,                               "description":"The timestamp for when the record was created." }
-        ,{ "name":"selectNano"   , "type":"LONG"    , "nullable":false, "default":"0",                "description":"Blah..." }
-        ,{ "name":"selectCount"  , "type":"INTEGER" , "nullable":false, "default":"0",                "description":"Blah..." }
-        ,{ "name":"selectRecords", "type":"INTEGER" , "nullable":false, "default":"0",                "description":"Blah..." }
-        ,{ "name":"insertNano"   , "type":"LONG"    , "nullable":false, "default":"0",                "description":"Blah..." }
-        ,{ "name":"insertCount"  , "type":"INTEGER" , "nullable":false, "default":"0",                "description":"Blah..." }
-        ,{ "name":"insertRecords", "type":"INTEGER" , "nullable":false, "default":"0",                "description":"Blah..." }
-        ,{ "name":"updateNano"   , "type":"LONG"    , "nullable":false, "default":"0",                "description":"Blah..." }
-        ,{ "name":"updateCount"  , "type":"INTEGER" , "nullable":false, "default":"0",                "description":"Blah..." }
-        ,{ "name":"updateRecords", "type":"INTEGER" , "nullable":false, "default":"0",                "description":"Blah..." }
-        ,{ "name":"deleteNano"   , "type":"LONG"    , "nullable":false, "default":"0",                "description":"Blah..." }
-        ,{ "name":"deleteCount"  , "type":"INTEGER" , "nullable":false, "default":"0",                "description":"Blah..." }
-        ,{ "name":"deleteRecords", "type":"INTEGER" , "nullable":false, "default":"0",                "description":"Blah..." }
-       ]
-     ,"primary":{ "columns":["schemaName", "objectName", "startPeriod"], "autogen":false }
-     ,"indices":[ 
-      	 { "name":"SchemaByObjectStart", "columns":["schemaName"              ], "orderBy":["objectName", "startPeriod desc"], "db":true  }
-      	,{ "name":"SchemaObjectByStart", "columns":["schemaName", "objectName"], "orderBy":["startPeriod desc"              ], "db":false }
-      ]
-    },
-    
-    { "name":"TransPerf"
-     ,"occ":true
-     ,"description":"Performance logs for the Tilda framework"
-     ,"columns":[
-	      { "name":"startPeriod"           , "type":"DATETIME"   , "nullable":false,             "invariant": true, "description":"The timestamp for when the record was created." }
+          { "name":"startPeriod"           , "type":"DATETIME"   , "nullable":false,             "invariant": true, "description":"The timestamp for when the record was created." }
          ,{ "name":"endPeriod"             , "type":"DATETIME"   , "nullable":false,                                "description":"The timestamp for when the record was created." }
          ,{ "name":"commitNano"            , "type":"LONG"       , "nullable":false, "default":"0",                 "description":"Blah..." }
          ,{ "name":"commitCount"           , "type":"INTEGER"    , "nullable":false, "default":"0",                 "description":"Blah..." }
@@ -134,8 +142,49 @@
       "primary": { "columns": ["startPeriod"], "autogen": false },
       "indices":[ 
        ]
-    },
-    {
+    }
+
+   ,{ "name": "RefillPerf", "occ": true,
+      "description": "Performance logs for the Tilda Refills",
+      "columns":[
+         { "name":"schemaName"    , "type":"STRING"  , "nullable":false, "size": 64, "invariant": true, "description":"The name of the schema tracked"                    }
+        ,{ "name":"objectName"    , "type":"STRING"  , "nullable":false, "size": 64, "invariant": true, "description":"The name of the table/object tracked"              }
+        ,{ "name":"startDateIncr" , "type":"DATE"    , "nullable":true ,             "invariant": true, "description":"The date passed in for incremental refills."       }
+        ,{ "name":"startTime"     , "type":"DATETIME", "nullable":false,             "invariant": true, "description":"The timestamp for when the refill started."        }
+        ,{ "name":"endTime"       , "type":"DATETIME", "nullable":false,             "invariant": true, "description":"The timestamp for when the refill ended."          }
+        ,{ "name":"timeInsertSec" , "type":"LONG"    , "nullable":false,                                "description":"The time, in seconds, the inserts took."       }
+        ,{ "name":"timeDeleteSec" , "type":"LONG"    , "nullable":false,                                "description":"The time, in seconds, the deletes took."       }
+        ,{ "name":"timeAnalyzeSec", "type":"LONG"    , "nullable":false,                                "description":"The time, in seconds, the analyze took."      }
+        ,{ "name":"timeTotalSec"  , "type":"LONG"    , "nullable":false, "default":"0",                 "description":"The time, in seconds, the analyze took."      }
+        ,{ "name":"insertCount"   , "type":"LONG"    , "nullable":false,                                "description":"The count of inserted rows."                       }
+        ,{ "name":"deleteCount"   , "type":"LONG"    , "nullable":false,                                "description":"The count of rows deleted."                        }
+       ]
+     ,"primary": { "columns": ["schemaName", "objectName", "startTime"], "autogen": false }
+     ,"indices":[ 
+        { "name": "SchemaByObjectStart", "columns": ["schemaName"], "orderBy": ["objectName", "startTime desc"], "db": true },
+        { "name": "SchemaObjectByStart", "columns": ["schemaName", "objectName"], "orderBy": ["startTime desc"], "db": false }
+      ]
+    }
+
+
+
+
+
+
+   ,{ "name": "Mapping",
+      "description": "Generalized Mapping table",
+      "columns":[
+         { "name": "type"       , "type": "STRING", "nullable": false, "size":   10, "invariant": true, "description": "The type this mapping is for" }
+        ,{ "name": "src"        , "type": "STRING", "nullable": false, "size": 1024, "invariant": true, "description": "The source value for this mapping" }
+        ,{ "name": "dst"        , "type": "STRING", "nullable": false, "size": 1024, "invariant": true, "description": "The the destination (mapped) value for this mapping." }
+       ],
+      "indices":[ 
+         { "name": "TypeSrcDst", "columns": ["type", "src", "dst"], "db": true }
+       ]
+    }
+
+
+   ,{
       "name": "Connection",
       "description": "Tilda DB Connections Configurations.",
       "columns": [
@@ -231,39 +280,42 @@
     }
     
     
-   ,{ "name": "RefillPerf", "occ": true,
-      "description": "Performance logs for the Tilda Refills",
-      "columns":[
-         { "name":"schemaName"    , "type":"STRING"  , "nullable":false, "size": 64, "invariant": true, "description":"The name of the schema tracked"                    }
-        ,{ "name":"objectName"    , "type":"STRING"  , "nullable":false, "size": 64, "invariant": true, "description":"The name of the table/object tracked"              }
-        ,{ "name":"startDateIncr" , "type":"DATE"    , "nullable":true ,             "invariant": true, "description":"The date passed in for incremental refills."       }
-        ,{ "name":"startTime"     , "type":"DATETIME", "nullable":false,             "invariant": true, "description":"The timestamp for when the refill started."        }
-        ,{ "name":"endTime"       , "type":"DATETIME", "nullable":false,             "invariant": true, "description":"The timestamp for when the refill ended."          }
-        ,{ "name":"timeInsertSec" , "type":"LONG"    , "nullable":false,                                "description":"The time, in seconds, the inserts took."       }
-        ,{ "name":"timeDeleteSec" , "type":"LONG"    , "nullable":false,                                "description":"The time, in seconds, the deletes took."       }
-        ,{ "name":"timeAnalyzeSec", "type":"LONG"    , "nullable":false,                                "description":"The time, in seconds, the analyze took."      }
-        ,{ "name":"timeTotalSec"  , "type":"LONG"    , "nullable":false, "default":"0",                 "description":"The time, in seconds, the analyze took."      }
-        ,{ "name":"insertCount"   , "type":"LONG"    , "nullable":false,                                "description":"The count of inserted rows."                       }
-        ,{ "name":"deleteCount"   , "type":"LONG"    , "nullable":false,                                "description":"The count of rows deleted."                        }
+    
+    
+    
+    
+   ,{ "name":"ObjectPerf"
+     ,"occ":true
+     ,"description":"Performance logs for the Tilda framework"
+     ,"columns":[
+         { "name":"schemaName"   , "type":"STRING"  , "nullable":false, "size": 64, "invariant":true, "description":"The name of the schema tracked" }
+        ,{ "name":"objectName"   , "type":"STRING"  , "nullable":false, "size": 64, "invariant":true, "description":"The name of the table/object tracked" }
+        ,{ "name":"startPeriod"  , "type":"DATETIME", "nullable":false,             "invariant":true, "description":"The timestamp for when the record was created." }
+        ,{ "name":"endPeriod"    , "type":"DATETIME", "nullable":false,                               "description":"The timestamp for when the record was created." }
+        ,{ "name":"selectNano"   , "type":"LONG"    , "nullable":false, "default":"0",                "description":"Blah..." }
+        ,{ "name":"selectCount"  , "type":"INTEGER" , "nullable":false, "default":"0",                "description":"Blah..." }
+        ,{ "name":"selectRecords", "type":"INTEGER" , "nullable":false, "default":"0",                "description":"Blah..." }
+        ,{ "name":"insertNano"   , "type":"LONG"    , "nullable":false, "default":"0",                "description":"Blah..." }
+        ,{ "name":"insertCount"  , "type":"INTEGER" , "nullable":false, "default":"0",                "description":"Blah..." }
+        ,{ "name":"insertRecords", "type":"INTEGER" , "nullable":false, "default":"0",                "description":"Blah..." }
+        ,{ "name":"updateNano"   , "type":"LONG"    , "nullable":false, "default":"0",                "description":"Blah..." }
+        ,{ "name":"updateCount"  , "type":"INTEGER" , "nullable":false, "default":"0",                "description":"Blah..." }
+        ,{ "name":"updateRecords", "type":"INTEGER" , "nullable":false, "default":"0",                "description":"Blah..." }
+        ,{ "name":"deleteNano"   , "type":"LONG"    , "nullable":false, "default":"0",                "description":"Blah..." }
+        ,{ "name":"deleteCount"  , "type":"INTEGER" , "nullable":false, "default":"0",                "description":"Blah..." }
+        ,{ "name":"deleteRecords", "type":"INTEGER" , "nullable":false, "default":"0",                "description":"Blah..." }
        ]
-     ,"primary": { "columns": ["schemaName", "objectName", "startTime"], "autogen": false }
+     ,"primary":{ "columns":["schemaName", "objectName", "startPeriod"], "autogen":false }
      ,"indices":[ 
-        { "name": "SchemaByObjectStart", "columns": ["schemaName"], "orderBy": ["objectName", "startTime desc"], "db": true },
-        { "name": "SchemaObjectByStart", "columns": ["schemaName", "objectName"], "orderBy": ["startTime desc"], "db": false }
+         { "name":"SchemaByObjectStart", "columns":["schemaName"              ], "orderBy":["objectName", "startPeriod desc"], "db":true  }
+        ,{ "name":"SchemaObjectByStart", "columns":["schemaName", "objectName"], "orderBy":["startPeriod desc"              ], "db":false }
       ]
     }
-                     
-   ,{ "name": "Maintenance", "occ": true,
-      "description": "Maintenance information",
-      "columns":[
-        { "name": "type" , "type": "STRING", "nullable": false, "size":    64, "invariant": true, "description":"The type of maintenance resource to track"        }
-       ,{ "name": "name" , "type": "STRING", "nullable": false, "size":   512, "invariant": true, "description":"The name of the maintenance resource to track."   }
-       ,{ "name": "value", "type": "STRING", "nullable": true , "size":500000,                    "description":"The value of the maintenance resource to track."  }
-      ]
-     ,"primary": { "columns": ["type", "name"], "autogen": false }
-     ,"indices":[
-      ]
-    }
+    
+
+
+    
+    
     
     
    ,{ "name":"Formula"

@@ -32,7 +32,7 @@ import java.math.*;
 <TR valign="top"><TD><H2>DateDim&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 70%;"><SPAN class="BackToDetails"><A href="#DateDim_CNT">details</A>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><A href="#">top</A></SUP></H2></TD><TD align="right"></TD></TR>
 </TABLE>
 <DIV id="DateDim_CNT" class="content">
-The Table TILDA.DateDim:<UL>
+The Table TILDA.DateDim :<UL>
 <LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>DateDim_Factory</B>, <B>DateDim_Data</B> in the package <B>tilda.data</B>.
 <LI>Is configured for normal <B>read/write</B> access.</LI>
 <LI>Is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
@@ -650,9 +650,9 @@ This is the null setter for:<BR>
    public void setDayNameNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.DAYNAME._Mask);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYNAME._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DATEDIM_Factory.COLS.DAYNAME._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.DAYNAME._Mask);
        _dayName=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -794,9 +794,9 @@ This is the null setter for:<BR>
    public void setDayOfWeekNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.DAYOFWEEK._Mask);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFWEEK._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DATEDIM_Factory.COLS.DAYOFWEEK._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.DAYOFWEEK._Mask);
        _dayOfWeek=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -937,9 +937,9 @@ This is the null setter for:<BR>
    public void setDayOfMonthNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.DAYOFMONTH._Mask);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFMONTH._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DATEDIM_Factory.COLS.DAYOFMONTH._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.DAYOFMONTH._Mask);
        _dayOfMonth=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1080,9 +1080,9 @@ This is the null setter for:<BR>
    public void setDayOfQuarterNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.DAYOFQUARTER._Mask);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFQUARTER._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DATEDIM_Factory.COLS.DAYOFQUARTER._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.DAYOFQUARTER._Mask);
        _dayOfQuarter=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1223,9 +1223,9 @@ This is the null setter for:<BR>
    public void setDayOfYearNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.DAYOFYEAR._Mask);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFYEAR._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DATEDIM_Factory.COLS.DAYOFYEAR._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.DAYOFYEAR._Mask);
        _dayOfYear=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1366,9 +1366,9 @@ This is the null setter for:<BR>
    public void setWeekOfMonthNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.WEEKOFMONTH._Mask);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.WEEKOFMONTH._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DATEDIM_Factory.COLS.WEEKOFMONTH._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.WEEKOFMONTH._Mask);
        _weekOfMonth=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1509,9 +1509,9 @@ This is the null setter for:<BR>
    public void setWeekOfYearNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.WEEKOFYEAR._Mask);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.WEEKOFYEAR._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DATEDIM_Factory.COLS.WEEKOFYEAR._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.WEEKOFYEAR._Mask);
        _weekOfYear=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1656,9 +1656,9 @@ This is the null setter for:<BR>
    public void setMonthNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.MONTH._Mask);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTH._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DATEDIM_Factory.COLS.MONTH._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.MONTH._Mask);
        _month=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1799,9 +1799,9 @@ This is the null setter for:<BR>
    public void setMonthOfYearNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.MONTHOFYEAR._Mask);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTHOFYEAR._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DATEDIM_Factory.COLS.MONTHOFYEAR._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.MONTHOFYEAR._Mask);
        _monthOfYear=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1953,9 +1953,9 @@ This is the null setter for:<BR>
    public void setMonthNameNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.MONTHNAME._Mask);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTHNAME._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DATEDIM_Factory.COLS.MONTHNAME._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.MONTHNAME._Mask);
        _monthName=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2108,9 +2108,9 @@ This is the null setter for:<BR>
    public void setMonthNameShortNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.MONTHNAMESHORT._Mask);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTHNAMESHORT._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DATEDIM_Factory.COLS.MONTHNAMESHORT._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.MONTHNAMESHORT._Mask);
        _monthNameShort=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2252,9 +2252,9 @@ This is the null setter for:<BR>
    public void setQuarterOfYearNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.QUARTEROFYEAR._Mask);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.QUARTEROFYEAR._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DATEDIM_Factory.COLS.QUARTEROFYEAR._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.QUARTEROFYEAR._Mask);
        _quarterOfYear=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2406,9 +2406,9 @@ This is the null setter for:<BR>
    public void setQuarterNameNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.QUARTERNAME._Mask);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.QUARTERNAME._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DATEDIM_Factory.COLS.QUARTERNAME._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.QUARTERNAME._Mask);
        _quarterName=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2550,9 +2550,9 @@ This is the null setter for:<BR>
    public void setYearNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.YEAR._Mask);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.YEAR._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DATEDIM_Factory.COLS.YEAR._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.YEAR._Mask);
        _year=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2704,9 +2704,9 @@ This is the null setter for:<BR>
    public void setMmyyyyNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.MMYYYY._Mask);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MMYYYY._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DATEDIM_Factory.COLS.MMYYYY._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.MMYYYY._Mask);
        _mmyyyy=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2859,9 +2859,9 @@ This is the null setter for:<BR>
    public void setMmddyyyyNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.MMDDYYYY._Mask);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MMDDYYYY._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DATEDIM_Factory.COLS.MMDDYYYY._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.MMDDYYYY._Mask);
        _mmddyyyy=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -3014,9 +3014,9 @@ This is the null setter for:<BR>
    public void setYyyymmddNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.YYYYMMDD._Mask);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.YYYYMMDD._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DATEDIM_Factory.COLS.YYYYMMDD._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.YYYYMMDD._Mask);
        _yyyymmdd=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -3158,9 +3158,9 @@ This is the null setter for:<BR>
    public void setIsWeekendNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.ISWEEKEND._Mask);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.ISWEEKEND._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DATEDIM_Factory.COLS.ISWEEKEND._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.ISWEEKEND._Mask);
        _isWeekend=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -3301,9 +3301,9 @@ This is the null setter for:<BR>
    public void setIsBusinessDayNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.ISBUSINESSDAY._Mask);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.ISBUSINESSDAY._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DATEDIM_Factory.COLS.ISBUSINESSDAY._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.ISBUSINESSDAY._Mask);
        _isBusinessDay=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -3444,9 +3444,9 @@ This is the null setter for:<BR>
    public void setIsHolidayNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.ISHOLIDAY._Mask);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.ISHOLIDAY._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DATEDIM_Factory.COLS.ISHOLIDAY._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.ISHOLIDAY._Mask);
        _isHoliday=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -3598,9 +3598,9 @@ This is the null setter for:<BR>
    public void setHolidayNameNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.HOLIDAYNAME._Mask);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.HOLIDAYNAME._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DATEDIM_Factory.COLS.HOLIDAYNAME._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.HOLIDAYNAME._Mask);
        _holidayName=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -4169,9 +4169,9 @@ This is the null setter for:<BR>
    public final void setDeletedNull()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.DELETED._Mask);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DELETED._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DATEDIM_Factory.COLS.DELETED._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.DELETED._Mask);
        _deleted=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
