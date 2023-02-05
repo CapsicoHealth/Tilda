@@ -105,19 +105,9 @@ public class Migrator
     throws Exception
       {
         // If ZoneInfo exists in the DB, make sure it's initialized. In migration mode, we don't prep anything. The only DB access is the maintenance log
-        // which requires this at a minimum. 
+        // which requires this at a minimum.
         if (DBMeta.getTableMeta(ZoneInfo_Factory.SCHEMA_LABEL, ZoneInfo_Factory.TABLENAME_LABEL) != null)
-          {
-            Schema tildaSchema = Schema.getSchema(TildaList, "TILDA");
-            if (tildaSchema != null)
-              {
-                // Make sure the "TILDA" schema is properly registered to the Connection pool because the importer requires it.
-                ConnectionPool.registerSchema(tildaSchema);
-                // Reload (in this case load) the master init data
-                ZoneInfo_Factory.reloadInitData(C);
-              }
-          }
-
+          checkZoneInfo(C, TildaList, DBMeta);
         MigrationDataModel migrationData = Migrator.AnalyzeDatabase(C, CheckOnly, TildaList, DBMeta);
         if (migrationData.getActionCount() == 0)
           {
@@ -156,6 +146,19 @@ public class Migrator
             + "\n"
             + "                 The database DOES NOT match the Application's data model. The application may NOT run properly!       \n"
             + "          =============================================================================================================\n");
+          }
+      }
+
+    protected static void checkZoneInfo(Connection C, List<Schema> TildaList, DatabaseMeta DBMeta)
+    throws Exception
+      {
+        Schema tildaSchema = Schema.getSchema(TildaList, "TILDA");
+        if (tildaSchema != null)
+          {
+            // Make sure the "TILDA" schema is properly registered to the Connection pool because the importer requires it.
+            ConnectionPool.registerSchema(tildaSchema);
+            // Reload (in this case load) the master init data
+            ZoneInfo_Factory.reloadInitData(C);
           }
       }
 
@@ -338,10 +341,13 @@ public class Migrator
                         // If we are handling the ZoneInfo table we have to do those three things:
                         // commit so that the table exists in the database
                         C.commit();
-                        // Make sure the "TILDA" schema is properly registered to the Connection pool because the importer requires it.
-                        ConnectionPool.registerSchema(S._S);
-                        // Reload (in this case load) the master init data
-                        ZoneInfo_Factory.reloadInitData(C);
+                        List<Schema> TildaList = new ArrayList<Schema>();
+                        TildaList.add(S._S);
+                        checkZoneInfo(C, TildaList, DBMeta);
+                        // // Make sure the "TILDA" schema is properly registered to the Connection pool because the importer requires it.
+                        // ConnectionPool.registerSchema(S._S);
+                        // // Reload (in this case load) the master init data
+                        // ZoneInfo_Factory.reloadInitData(C);
                       }
                     else if (Key_Factory.SCHEMA_LABEL.equals(A._SchemaName) == true && Key_Factory.TABLENAME_LABEL.equals(A._TableViewName) == true)
                       {
