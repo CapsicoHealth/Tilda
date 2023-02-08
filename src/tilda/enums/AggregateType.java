@@ -88,6 +88,7 @@ public enum AggregateType
                                            ,{"RANK_PCT"    , "PERCENT_RANK" }
                                            ,{"RANKPCT"     , "PERCENT_RANK" }
                                            ,{"NTH"         , "NTH_VALUE"    }
+                                           ,{"NTHVALUE"    , "NTH_VALUE"    }
                                            };
 //@formatter:on
 
@@ -109,7 +110,7 @@ public enum AggregateType
 
     public ColumnType getType(ColumnType T, boolean needsTZ)
       {
-        // This method needs to be kept in sync with
+        // This method needs to be kept in sync with the types defined
         switch (this)
           {
             case ARRAY:
