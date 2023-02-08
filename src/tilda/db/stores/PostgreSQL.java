@@ -594,8 +594,8 @@ public class PostgreSQL extends CommonStoreImpl
     throws Exception
       {
         String Q = TextUtil.isNullOrEmpty(clusterIndexName) == true
-                 ? "VACUUM "+(full?" FULL":"")+(verbose?" VERBOSE":"")+" ANALYZE " + schemaName + "." + tableName + ";"
-                 : "CLUSTER" + (verbose?" VERBOSE":"") + " " +schemaName + "." + tableName + " USING "+clusterIndexName+";"
+                 ? "VACUUM "+(full?" FULL":"")+(verbose?" VERBOSE":"")+" ANALYZE " + schemaName + ".\"" + tableName + "\";"
+                 : "CLUSTER" + (verbose?" VERBOSE":"") + " " +schemaName + ".\"" + tableName + "\" USING "+clusterIndexName+";"
                  ;
         return con.executeDDL(schemaName, tableName, Q);
       }
