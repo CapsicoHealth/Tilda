@@ -47,9 +47,14 @@ public class ViewColumnWrapper extends Column
             _Precision = SameAsCol._Precision;
             _Scale = SameAsCol._Scale;
             // If the aggregate is a list (e.g., ARRAY, ARRAY_CAT), or if the original type if a collection, we propagate as LIST.
-            if (VCol._Aggregate.isList() == true || SameAsCol.isCollection() == true)
+            if (VCol._Aggregate.isList() == true || SameAsCol.isList() == true)
               {
                 _TypeStr += "[]";
+                _Size = null;
+              }
+            else if (SameAsCol.isSet() == true)
+              {
+                _TypeStr += "{}";
                 _Size = null;
               }
             // If it's a non list aggregate (e.g., FIRST) and it's a string, we need to propagate the size too

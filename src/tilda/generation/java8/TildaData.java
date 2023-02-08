@@ -144,7 +144,7 @@ public class TildaData implements CodeGenTildaData
     throws Exception
       {
         // String Visibility = Helper.getVisibility(C, true);
-
+        
         if (C.getType() == ColumnType.JSON && C._JsonSchema != null)
           {
             Out.println("   transient String _" + C.getName() + ";");
