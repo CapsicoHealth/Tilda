@@ -30,7 +30,7 @@ import tilda.utils.TextUtil;
 
 public class ViewPivotAggregate
   {
-    static final Logger            LOG          = LogManager.getLogger(ViewPivotAggregate.class.getName());
+    static final Logger            LOG            = LogManager.getLogger(ViewPivotAggregate.class.getName());
 
     /*@formatter:off*/
 	@SerializedName("name"  )    public String   _Name;
@@ -45,8 +45,10 @@ public class ViewPivotAggregate
     public transient ViewPivot     _ParentPivot;
     // aggregate column from parent view.
     public transient ViewColumn    _VC;
+    public transient String        _CompositeName = null;
     public transient AggregateType _Aggregate;
-    public transient List<OrderBy> _OrderByObjs = new ArrayList<OrderBy>();
+    public transient String        _AggregateAttributes;
+    public transient List<OrderBy> _OrderByObjs   = new ArrayList<OrderBy>();
 
     public ViewPivotAggregate()
       {
@@ -79,15 +81,27 @@ public class ViewPivotAggregate
         _VC._FormulaOnly = true;
         if (_VC.needsTZ() == true)
           {
-            ViewColumn TZ = ParentPivot._ParentView.getViewColumn(_Name+"TZ");
+            ViewColumn TZ = ParentPivot._ParentView.getViewColumn(_Name + "TZ");
             if (TZ != null)
-             TZ._FormulaOnly = true;
+              TZ._FormulaOnly = true;
           }
-        
+
         if (_AggregateStr != null)
           {
             if ((_Aggregate = AggregateType.parse(_AggregateStr)) == null)
-              return PS.AddError("View '" + ParentPivot._ParentView.getFullName() + "' is defining a pivot on " + ParentPivot._ColumnName + " for an aggregate " + _Name + " using '" + _AggregateStr + "' which is not a valid aggregate.");
+              return PS.AddError("View '" + ParentPivot._ParentView.getFullName() + "' is defining a pivot on " + ParentPivot._ColumnName + " for an aggregate " + _Name + " using '" + _AggregateStr + "' which is not a valid aggregate or syntax: aggregates should be of the form \"ARRAY\" or \"STRING(',')\".");
+
+            if ((_AggregateAttributes = AggregateType.parseAttributes(_AggregateStr)) == null)
+              return PS.AddError("View '" + ParentPivot._ParentView.getFullName() + "' is defining a pivot on " + ParentPivot._ColumnName + " for a wrong aggregate '" + _AggregateStr + "' or syntax: aggregates should be of the form \"ARRAY\" or \"STRING(',')\".");
+
+            if (_AggregateAttributes.isEmpty() == true)
+              {
+                if (_Aggregate.getParameterSetting() == AggregateType.ParameterSetting.REQUIRED)
+                  return PS.AddError("View '" + ParentPivot._ParentView.getFullName() + "' is defining a pivot on " + ParentPivot._ColumnName + " for an 'aggregate' '" + _AggregateStr + "' without parameters: this aggregate requires parameters.");
+                _AggregateAttributes = null;
+              }
+            else if (_Aggregate.areParametersAllowed() == false)
+              return PS.AddError("View '" + ParentPivot._ParentView.getFullName() + "' is defining a pivot on " + ParentPivot._ColumnName + " for an 'aggregate' '" + _AggregateStr + "' with some parameters: this aggregate does not support parameters.");
 
             if (_VC._SameAsObj != null)
               {
@@ -102,13 +116,13 @@ public class ViewPivotAggregate
 
         if (_Aggregate == null)
           _Aggregate = _VC._Aggregate;
-        
+
         if (_Distinct == null)
           _Distinct = _VC._Distinct;
 
         if (_Coalesce == null)
           _Coalesce = _VC._Coalesce;
-        
+
         _OrderByObjs = OrderBy.processOrderBys(PS, "View Column '" + _VC.getFullName() + "' aggregate orderby's", ParentPivot._ParentView, _OrderByStr, true);
 
         if (_OrderByObjs == null || _OrderByObjs.isEmpty() == true)
@@ -116,6 +130,22 @@ public class ViewPivotAggregate
 
         return Errs == PS.getErrorCount();
       }
+
+    public String getCompositeName()
+      {
+        if (_CompositeName == null)
+          {
+            StringBuilder Str = new StringBuilder();
+            if (TextUtil.isNullOrEmpty(_Prefix) == false)
+              Str.append(_Prefix);
+            Str.append(_Name);
+            if (TextUtil.isNullOrEmpty(_Suffix) == false)
+              Str.append(_Suffix);
+            _CompositeName = Str.toString();
+          }
+        return _CompositeName;
+      }
+
 
     public String makeName(Value V)
       {
@@ -130,7 +160,7 @@ public class ViewPivotAggregate
 
     public String getTypeStr()
       {
-        return _VC.getType().name()+(_Aggregate != null && _Aggregate.isList() == true ? "[]": "");
+        return _VC.getType().name() + (_Aggregate != null && _Aggregate.isList() == true ? "[]" : "");
       }
 
   }

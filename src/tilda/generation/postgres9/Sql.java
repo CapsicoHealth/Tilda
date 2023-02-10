@@ -631,6 +631,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
 
                 // We have to be able to handle cases for joins with an "as". If so, we have to use that, otherwise
                 // we have to use the internal source of the column being ordered by.
+                if (TextUtil.isNullOrEmpty(VC._AggregateAttributes) == false)
+                 Str.append(", ").append(VC._AggregateAttributes);
                 if (VC._partitionByObjs.size() != 0 || TextUtil.isNullOrEmpty(VC._Range) == false || VC._Aggregate.isWindowOnly() == true)
                   Str.append(") OVER (");
                 printAggregatePartitionBy(Str, VC._partitionByObjs, TextUtil.isNullOrEmpty(TI._As) == false ? TI.getFullName() : null);
@@ -1096,6 +1098,10 @@ public class Sql extends PostgreSQL implements CodeGenSql
         if (VC._Distinct == true)
           Str.append("distinct ");
         Str.append("\"").append(VC._NameInner).append("\"");
+        
+        if (TextUtil.isNullOrEmpty(VC._AggregateAttributes) == false)
+          Str.append(", ").append(VC._AggregateAttributes);
+        
         // If there is a partition or a range, we gotta switch to an OVER statement.
         if (VC._partitionByObjs.size() != 0 || TextUtil.isNullOrEmpty(VC._Range) == false)
           Str.append(") OVER (");
@@ -1128,7 +1134,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         : VC._Aggregate.name();
 
         return VC._Aggregate.isWindowOnly() == true ? "\n     , " + aggr + "() over() as \"" + VC._Name + "\""
-        : "\n     , " + aggr + "(\"" + VC.getName() + "\") as \"" + VC._Name + "\"";
+        : "\n     , " + aggr + "(\"" + VC.getName() + "\""+(TextUtil.isNullOrEmpty(VC._AggregateAttributes) == true ? "" : ", "+VC._AggregateAttributes)+") as \"" + VC._Name + "\"";
       }
 
 

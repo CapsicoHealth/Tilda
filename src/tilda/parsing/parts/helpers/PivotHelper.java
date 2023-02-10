@@ -81,7 +81,7 @@ public class PivotHelper
         : TextUtil.isNullOrEmpty(VPV._Expression) == false ? VPV._Size
         : TextUtil.isNullOrEmpty(VC._Expression) == false ? VC._Size
         : null;
-        PVC._AggregateStr = A._Aggregate.name();
+        PVC._AggregateStr = TextUtil.print(A._AggregateStr, A._Aggregate.name());
         PVC._OrderBy = A._OrderByStr;
         PVC._Coalesce = A._Coalesce;
         PVC._Distinct = A._Distinct;

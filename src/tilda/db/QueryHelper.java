@@ -528,7 +528,6 @@ public abstract class QueryHelper
         else
           throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
       }
-
     protected final void opVal(Op O, boolean V)
     throws Exception
       {
@@ -1095,7 +1094,7 @@ public abstract class QueryHelper
       {
         return in(Col, V, false);
       }
-    
+
     public QueryHelper in(Type_ShortPrimitive Col, short[] V, boolean not)
     throws Exception
       {
@@ -1117,7 +1116,7 @@ public abstract class QueryHelper
         _QueryStr.append(")");
         return this;
       }
-    
+
     public QueryHelper in(Type_IntegerPrimitive Col, int[] V)
     throws Exception
       {
@@ -1452,13 +1451,13 @@ public abstract class QueryHelper
       {
         return compareBase(Col1, Col2, Op.EQUALS);
       }
-    
+
     public QueryHelper equals(Type_LongPrimitive Col1, Type_ShortPrimitive Col2)
     throws Exception
       {
         return compareBase(Col1, Col2, Op.EQUALS);
       }
-    
+
     public QueryHelper equals(Type_IntegerPrimitive Col1, Type_IntegerPrimitive Col2)
     throws Exception
       {
@@ -1642,7 +1641,7 @@ public abstract class QueryHelper
         opVal(Op.LT, ZDT);
         return this;
       }
-    
+
     public QueryHelper lt(Type_DatePrimitive Col, LocalDate LDT)
     throws Exception
       {
@@ -1650,7 +1649,7 @@ public abstract class QueryHelper
         opVal(Op.LT, LDT);
         return this;
       }
-    
+
 
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Col < Col
@@ -1672,7 +1671,7 @@ public abstract class QueryHelper
       {
         return compareBase(Col1, Col2, Op.LT);
       }
-    
+
     public QueryHelper lt(Type_CharPrimitive Col1, Type_CharPrimitive Col2)
     throws Exception
       {
@@ -1958,7 +1957,7 @@ public abstract class QueryHelper
         return this;
       }
 
-    
+
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Col > Col
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2116,7 +2115,7 @@ public abstract class QueryHelper
         return this;
       }
 
-    
+
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Col >= Col
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2265,7 +2264,7 @@ public abstract class QueryHelper
         opVal(Op.NOT_EQUALS, LDT);
         return this;
       }
-    
+
 
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Col <> Col
@@ -2287,7 +2286,7 @@ public abstract class QueryHelper
       {
         return compareBase(Col1, Col2, Op.NOT_EQUALS);
       }
-    
+
     public QueryHelper notEquals(Type_CharPrimitive Col1, Type_CharPrimitive Col2)
     throws Exception
       {
@@ -2398,6 +2397,7 @@ public abstract class QueryHelper
         opVal(Op.PLUS, ZDT);
         return this;
       }
+
     public QueryHelper plus(LocalDate LDT)
     throws Exception
       {
@@ -2474,7 +2474,7 @@ public abstract class QueryHelper
         opVal(Op.MINUS, LDT);
         return this;
       }
-    
+
     public QueryHelper multiply(ColumnDefinition Col)
     throws Exception
       {

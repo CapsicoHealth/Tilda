@@ -546,6 +546,8 @@ public class Sql extends BigQuery implements CodeGenSql
 
                 // We have to be able to handle cases for joins with an "as". If so, we have to use that, otherwise
                 // we have to use the internal source of the column being ordered by.
+                if (TextUtil.isNullOrEmpty(VC._AggregateAttributes) == false)
+                  Str.append(", ").append(VC._AggregateAttributes);
                 if (VC._partitionByObjs.size() != 0 || TextUtil.isNullOrEmpty(VC._Range) == false || VC._Aggregate.isWindowOnly() == true)
                   Str.append(") OVER (");
                 printAggregatePartitionBy(Str, VC._partitionByObjs, TextUtil.isNullOrEmpty(TI._As) == false ? TI.getFullName() : null);
@@ -1015,6 +1017,10 @@ public class Sql extends BigQuery implements CodeGenSql
         Str.append(getShortColumnVar(VC._NameInner));
         if (supportsFilterClause() == false)
           Str.append(" else null end");
+
+        if (TextUtil.isNullOrEmpty(VC._AggregateAttributes) == false)
+          Str.append(", ").append(VC._AggregateAttributes);
+        
         // If there is a partition or a range, we gotta switch to an OVER statement.
         if (VC._partitionByObjs.size() != 0 || TextUtil.isNullOrEmpty(VC._Range) == false)
           Str.append(") OVER (");

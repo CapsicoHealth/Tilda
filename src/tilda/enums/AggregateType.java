@@ -16,60 +16,86 @@
 
 package tilda.enums;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import tilda.parsing.parts.ViewColumn;
+import tilda.utils.TextUtil;
 
 public enum AggregateType
   {
 //@formatter:off
-     SUM         (false, true , OrderableType.NONE    , TargetColumnType.REQUIRED)
-    ,AVG         (false, false, OrderableType.NONE    , TargetColumnType.REQUIRED)
-    ,MIN         (false, true , OrderableType.NONE    , TargetColumnType.REQUIRED)
-    ,MAX         (false, true , OrderableType.NONE    , TargetColumnType.REQUIRED)
-    ,FIRST       (false, true , OrderableType.REQUIRED, TargetColumnType.REQUIRED)
-    ,LAST        (false, true , OrderableType.REQUIRED , TargetColumnType.REQUIRED)
-    ,DEV         (false, false, OrderableType.NONE    , TargetColumnType.REQUIRED)
-    ,VAR         (false, false, OrderableType.NONE    , TargetColumnType.REQUIRED)
-    ,COUNT       (false, true , OrderableType.NONE    , TargetColumnType.OPTIONAL)
-    ,ARRAY       (false, true , OrderableType.OPTIONAL, TargetColumnType.REQUIRED)
-    ,ARRAYCAT    (false, false, OrderableType.OPTIONAL, TargetColumnType.REQUIRED)
-    ,ROW_NUMBER  (true , false, OrderableType.REQUIRED, TargetColumnType.NONE    )
-    ,RANK        (true , false, OrderableType.REQUIRED, TargetColumnType.NONE    )
-    ,PERCENT_RANK(true , false, OrderableType.REQUIRED, TargetColumnType.NONE    )
-    ,LEAD        (true , false, OrderableType.REQUIRED, TargetColumnType.REQUIRED)
-    ,LAG         (true , false, OrderableType.REQUIRED, TargetColumnType.REQUIRED)
-    ,NTH_VALUE   (true , false, OrderableType.REQUIRED, TargetColumnType.REQUIRED)
+     SUM         (false, true , OrderableType.NONE    , TargetColumnType.REQUIRED, ParameterSetting.NONE)
+    ,AVG         (false, false, OrderableType.NONE    , TargetColumnType.REQUIRED, ParameterSetting.NONE)
+    ,MIN         (false, true , OrderableType.NONE    , TargetColumnType.REQUIRED, ParameterSetting.NONE)
+    ,MAX         (false, true , OrderableType.NONE    , TargetColumnType.REQUIRED, ParameterSetting.NONE)
+    ,FIRST       (false, true , OrderableType.REQUIRED, TargetColumnType.REQUIRED, ParameterSetting.NONE)
+    ,LAST        (false, true , OrderableType.REQUIRED, TargetColumnType.REQUIRED, ParameterSetting.NONE)
+    ,DEV         (false, false, OrderableType.NONE    , TargetColumnType.REQUIRED, ParameterSetting.NONE)
+    ,VAR         (false, false, OrderableType.NONE    , TargetColumnType.REQUIRED, ParameterSetting.NONE)
+    ,COUNT       (false, true , OrderableType.NONE    , TargetColumnType.OPTIONAL, ParameterSetting.NONE)
+    ,ARRAY       (false, true , OrderableType.OPTIONAL, TargetColumnType.REQUIRED, ParameterSetting.NONE)
+    ,STRING      (false, true , OrderableType.OPTIONAL, TargetColumnType.REQUIRED, ParameterSetting.REQUIRED)
+    ,ARRAYCAT    (false, false, OrderableType.OPTIONAL, TargetColumnType.REQUIRED, ParameterSetting.NONE)
+    ,ROW_NUMBER  (true , false, OrderableType.REQUIRED, TargetColumnType.NONE    , ParameterSetting.NONE)
+    ,RANK        (true , false, OrderableType.REQUIRED, TargetColumnType.NONE    , ParameterSetting.NONE)
+    ,PERCENT_RANK(true , false, OrderableType.REQUIRED, TargetColumnType.NONE    , ParameterSetting.NONE)
+    ,LEAD        (true , false, OrderableType.REQUIRED, TargetColumnType.REQUIRED, ParameterSetting.NONE)
+    ,LAG         (true , false, OrderableType.REQUIRED, TargetColumnType.REQUIRED, ParameterSetting.NONE)
+    ,NTH_VALUE   (true , false, OrderableType.REQUIRED, TargetColumnType.REQUIRED, ParameterSetting.NONE)
     ;
 //@formatter:on
-    
-    public static enum TargetColumnType { REQUIRED, OPTIONAL, NONE };
-    public static enum OrderableType { REQUIRED, OPTIONAL, NONE };
 
-    private AggregateType(boolean windowOnly, boolean composable, OrderableType orderable, TargetColumnType targetColumn)
+    public static enum TargetColumnType
+      {
+      REQUIRED, OPTIONAL, NONE
+      };
+
+    public static enum OrderableType
+      {
+      REQUIRED, OPTIONAL, NONE
+      };
+
+    public static enum ParameterSetting
+      {
+      REQUIRED, OPTIONAL, NONE
+      };
+
+    private AggregateType(boolean windowOnly, boolean composable, OrderableType orderable, TargetColumnType targetColumn, ParameterSetting paramSetting)
       {
         _windowOnly = windowOnly;
         _composable = composable;
         _orderable = orderable;
         _targetColumn = targetColumn;
+        _paramSetting = paramSetting;
       }
 
-    protected final boolean _windowOnly;
-    protected final boolean _composable;
-    protected final OrderableType _orderable;
+    protected final boolean          _windowOnly;
+    protected final boolean          _composable;
+    protected final OrderableType    _orderable;
     protected final TargetColumnType _targetColumn;
+    protected final ParameterSetting _paramSetting;
 
     public boolean isWindowOnly()
       {
         return _windowOnly;
       }
+
     public boolean isComposable()
       {
         return _composable;
       }
+
     public OrderableType getOrderable()
       {
         return _orderable;
       }
-    
+
+    public ParameterSetting getParameterSetting()
+      {
+        return _paramSetting;
+      }
+
     public TargetColumnType isTargetColumnRequired()
       {
         return _targetColumn;
@@ -79,7 +105,10 @@ public enum AggregateType
     protected static String[][] _ALIASES = {{"ROW_NUM"     , "ROW_NUMBER"   }
                                            ,{"ROWNUMBER"   , "ROW_NUMBER"   }
                                            ,{"ROWNUM"      , "ROW_NUMBER"   }
+                                           ,{"ARRAY_AGG"   , "ARRAY"        }
                                            ,{"ARRAY_CAT"   , "ARRAYCAT"     }
+                                           ,{"STRING_CAT"  , "STRING"       }
+                                           ,{"STRING_AGG"  , "STRING"       }
                                            ,{"PERCENTRANK" , "PERCENT_RANK" }
                                            ,{"PCT_RANK"    , "PERCENT_RANK" }
                                            ,{"PCTRANK"     , "PERCENT_RANK" }
@@ -92,20 +121,54 @@ public enum AggregateType
                                            };
 //@formatter:on
 
+
+    /**
+     * Pattern for an aggregate with params, e.g., "abced(param1, ...)".
+     */
+    protected final static Pattern _AGG_REGEX = Pattern.compile("\\s*(\\w+)\\s*(\\(([^\\)]+)\\))?\\s*");
+
     public static AggregateType parse(String str)
       {
-        if (str == null)
-         return null;
+        Matcher M = _AGG_REGEX.matcher(str);
+        if (M.matches() == false)
+          return null;
+
+        str = M.group(1);
+        if (TextUtil.isNullOrEmpty(str) == true)
+          return null;
+
+        str = str.trim().toUpperCase();
         for (String[] alias : _ALIASES)
           if (str.equals(alias[0]) == true)
             {
               str = alias[1];
               break;
             }
+
         for (AggregateType e : AggregateType.values())
-          if (str.equalsIgnoreCase(e.name()) == true)
+          if (str.equals(e.name()) == true)
             return e;
+
         return null;
+      }
+
+
+    /**
+     * Parses an attribute part of an aggregate, for example STRING(','). Minimum syntax check is performed, i.e., checks that
+     * there is an open and close parenthesis at the beginning and end, and that what's inside is a standard list of comma-separated parameters
+     * 
+     * @param aggregateStr
+     * @return null if an error occurred, otherwise, the emoty string if no attributes were found,
+     */
+    public static String parseAttributes(String aggregateStr)
+      {
+        Matcher M = _AGG_REGEX.matcher(aggregateStr);
+        if (M.matches() == false)
+          return null;
+        String params = M.group(3);
+        if (TextUtil.isNullOrEmpty(params) == true)
+          return "";
+        return params.trim();
       }
 
     public ColumnType getType(ColumnType T, boolean needsTZ)
@@ -124,6 +187,8 @@ public enum AggregateType
               if (T == ColumnType.NUMERIC)
                 return ColumnType.NUMERIC;
               break;
+            case STRING:
+              return ColumnType.STRING;
             case COUNT:
               return ColumnType.LONG;
             case MIN:
@@ -205,6 +270,11 @@ public enum AggregateType
     public boolean isList()
       {
         return this == ARRAY || this == ARRAYCAT;
+      }
+
+    public boolean areParametersAllowed()
+      {
+        return getParameterSetting() != ParameterSetting.NONE;
       }
 
   }
