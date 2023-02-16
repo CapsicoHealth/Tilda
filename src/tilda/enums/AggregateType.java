@@ -45,6 +45,13 @@ public enum AggregateType
     ,NTH_VALUE   (true , false, OrderableType.REQUIRED, TargetColumnType.REQUIRED, ParameterSetting.NONE)
     ;
 //@formatter:on
+    
+    /**
+     * For STRING aggregates, we can't reuse the size of the source column, so we set a default here of 10B which hopefully is enough
+     * 10MB = 10*1024*1024
+     */
+    public static final Integer _DEFAULT_STRING_AGG_SIZE = 10*1024*1024;
+
 
     public static enum TargetColumnType
       {

@@ -25,7 +25,8 @@ public abstract class SystemValues
   {
 
     /** Using -1 or 0 for an error value is so boring.... -666 is so much more attention-grabbing. */
-    public static final short           EVIL_VALUE      = -666;
+    public static final short         EVIL_VALUE      = -666;
+    public static final String        EMPTY_STR       = new String("");
 
     public static final ZonedDateTime STARTUP_DATE    = ZonedDateTime.now();
     public static final String        STARTUP_DATE_STR= DateTimeUtil.printDateTimeSuperCompact(STARTUP_DATE);

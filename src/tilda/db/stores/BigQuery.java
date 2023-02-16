@@ -203,6 +203,8 @@ public class BigQuery extends CommonStoreImpl
               return "stddev";
             case VAR:
               return "variance";
+            case STRING:
+              return "string";
             case ARRAY:
               return "array_agg";
             case ARRAYCAT:

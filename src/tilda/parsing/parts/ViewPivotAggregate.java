@@ -121,7 +121,7 @@ public class ViewPivotAggregate
           _Distinct = _VC._Distinct;
 
         if (_Coalesce == null)
-          _Coalesce = _VC._Coalesce;
+          _Coalesce = _VC._Coalesce; 
 
         _OrderByObjs = OrderBy.processOrderBys(PS, "View Column '" + _VC.getFullName() + "' aggregate orderby's", ParentPivot._ParentView, _OrderByStr, true);
 
@@ -160,7 +160,7 @@ public class ViewPivotAggregate
 
     public String getTypeStr()
       {
-        return _VC.getType().name() + (_Aggregate != null && _Aggregate.isList() == true ? "[]" : "");
+        return _VC.getType().name() + (_Aggregate != null && _Aggregate.isList() == true ? "[]" :_Aggregate != null && _Aggregate == AggregateType.STRING ? "("+AggregateType._DEFAULT_STRING_AGG_SIZE+")" :  "");
       }
 
   }
