@@ -69,6 +69,8 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("import java.math.*;");
         Out.println("import java.util.*;");
         Out.println("import java.time.*;");
+        Out.println("import java.util.concurrent.atomic.AtomicBoolean;");
+
         Out.println();
         Out.println("import org.apache.logging.log4j.*;");
         Out.println();
