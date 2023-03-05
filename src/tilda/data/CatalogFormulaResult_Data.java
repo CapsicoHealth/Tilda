@@ -1,5 +1,5 @@
 /*
- Tilda V1.0 template application class.
+ Tilda V2.3 template application class.
 */
 
 package tilda.data;
@@ -10,14 +10,14 @@ import org.apache.logging.log4j.Logger;
 import tilda.db.Connection;
 
 /**
-This is the application class <B>Data_MEASURE</B> mapped to the table <B>TILDA.MEASURE</B>.
-@see tilda.data._Tilda.TILDA__MEASURE
+This is the application class <B>Data_CatalogFormulaResult</B> mapped to the table <B>TILDA.CatalogFormulaResult</B>.
+@see tilda.data._Tilda.TILDA__CATALOGFORMULARESULT
 */
-public class Measure_Data extends tilda.data._Tilda.TILDA__MEASURE
+public class CatalogFormulaResult_Data extends tilda.data._Tilda.TILDA__CATALOGFORMULARESULT
  {
-   protected static final Logger LOG = LogManager.getLogger(Measure_Data.class.getName());
+   protected static final Logger LOG = LogManager.getLogger(CatalogFormulaResult_Data.class.getName());
 
-   public Measure_Data() { }
+   public CatalogFormulaResult_Data() { }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

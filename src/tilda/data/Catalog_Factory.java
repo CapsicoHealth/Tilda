@@ -1,5 +1,5 @@
 /*
- Tilda V1.0 template application class.
+ Tilda V2.3 template application class.
 */
 
 package tilda.data;
@@ -10,14 +10,14 @@ import org.apache.logging.log4j.Logger;
 import tilda.db.*;
 
 /**
-This is the application class <B>Data_FORMULADEPENDENCY</B> mapped to the table <B>TILDA.FORMULADEPENDENCY</B>.
-@see tilda.data._Tilda.TILDA__FORMULADEPENDENCY
+This is the application class <B>Data_Catalog</B> mapped to the table <B>TILDA.Catalog</B>.
+@see tilda.data._Tilda.TILDA__CATALOG
 */
-public class FormulaDependency_Factory extends tilda.data._Tilda.TILDA__FORMULADEPENDENCY_Factory
+public class Catalog_Factory extends tilda.data._Tilda.TILDA__CATALOG_Factory
  {
-   protected static final Logger LOG = LogManager.getLogger(FormulaDependency_Factory.class.getName());
+   protected static final Logger LOG = LogManager.getLogger(Catalog_Factory.class.getName());
 
-   protected FormulaDependency_Factory() { }
+   protected Catalog_Factory() { }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

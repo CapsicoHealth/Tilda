@@ -31,6 +31,7 @@ import tilda.enums.FrameworkSourcedType;
 import tilda.enums.MultiType;
 import tilda.enums.ObjectLifecycle;
 import tilda.enums.ObjectMode;
+import tilda.generation.helpers.CatalogHelper;
 import tilda.generation.interfaces.CodeGenAppData;
 import tilda.generation.interfaces.CodeGenAppFactory;
 import tilda.generation.interfaces.CodeGenDocs;
@@ -81,14 +82,16 @@ public class Generator
               genAppData(G, Res.getParentFile(), O);
               genAppFactory(G, Res.getParentFile(), O);
             }
-        
+
         genTildaBigQuerySchemas(G, GenFolder, S);
         genTildaSql(G, GenFolder, S);
         G.switchDBGenerator("bigquery", 0, 0);
         genTildaSql(G, GenFolder, S);
         G.switchDBGeneratorBack();
+        genCatalogCSV(G, GenFolder, S);
         return true;
       }
+
 
 
     protected static void genTildaSql(GeneratorSession G, File GenFolder, Schema S)
@@ -140,6 +143,32 @@ public class Generator
         Out.close();
       }
 
+    private static void genCatalogCSV(GeneratorSession G, File genFolder, Schema S)
+    throws Exception
+      {
+        CodeGenSql CG = G.getSql();
+
+        Base B = S._Objects.isEmpty() == false ? S._Objects.get(0)
+        : S._Views.isEmpty() == false ? S._Views.get(0)
+        : null;
+
+        // Some schemas may be empty, such as TILDA_TMP, so we have to fake a root object to get started.
+        if (B == null)
+          return;
+
+        File f = new File(genFolder.getAbsolutePath() + File.separator + "TILDA___Catalog" + "." + B.getSchema()._Name + ".csv");
+        PrintWriter out = new PrintWriter(f);
+        LOG.debug("  Generating the Catalog CSV file.");
+        
+        CatalogHelper CH = new CatalogHelper();
+        CH.addSchema(S);
+        CH.outputCSV(out);
+        out.println();
+
+        out.close();
+      }
+
+
 
     protected static void genTildaBigQuerySchemas(GeneratorSession G, File GenFolder, Schema S)
     throws Exception
@@ -169,10 +198,10 @@ public class Generator
               genTildaBigQuerySchema(V, Out);
               Out.close();
             }
-        
+
         LOG.debug("  Generating the BigQuery JSON Schema files.");
-        
-        
+
+
       }
 
 
@@ -210,7 +239,7 @@ public class Generator
           {
             CG.genDDL(Out, O);
             if (CG.supportsIndices() == false && O._Indices.isEmpty() == false)
-             Out.println("-- Indices are not supported for this database, so logical definition only");
+              Out.println("-- Indices are not supported for this database, so logical definition only");
 
             for (Index I : O._Indices)
               if (I != null)
@@ -223,6 +252,7 @@ public class Generator
           }
       }
 
+
     public static void getFullViewDDL(CodeGenSql CG, PrintWriter Out, View V)
     throws Exception
       {
@@ -230,7 +260,6 @@ public class Generator
         Out.append("\n");
         getViewCommentsDDL(CG, Out, V);
         Out.append("\n");
-        getViewMetadataDDL(CG, Out, V);
       }
 
     public static void getViewBaseDDL(CodeGenSql CG, PrintWriter Out, View V)
@@ -244,14 +273,6 @@ public class Generator
       {
         CG.genDDLComments(Out, V);
       }
-
-    public static void getViewMetadataDDL(CodeGenSql CG, PrintWriter Out, View V)
-    throws Exception
-      {
-        CG.genDDLMetadata(Out, V);
-      }
-
-
 
     protected static void genTildaSupport(GeneratorSession G, File GenFolder, Schema S)
     throws Exception
@@ -442,7 +463,7 @@ public class Generator
         Out.println();
         Out.println();
         DG.MustNotBeModified(Out, G);
-        
+
         if (O.hasMasking() == true)
           {
             DG.docMethodMask(Out, G, O);

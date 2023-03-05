@@ -40,7 +40,7 @@ public class TildaAclAdd extends MigrationAction
 
     public TildaAclAdd(List<Schema> TildaList)
       {
-        super(null, null, true, MaintenanceLog_Data._actionUpdate, MaintenanceLog_Data._objectTypeSchema);
+        super(null, null, true, MaintenanceLog_Data._actionAccess, MaintenanceLog_Data._objectTypeSchema);
         _TildaList = TildaList;
       }
 
@@ -102,7 +102,7 @@ public class TildaAclAdd extends MigrationAction
     @Override
     public String getDescription()
       {
-        return "Adding Tilda helper stored procedures";
+        return "Updating access control for all schemas, tables and views";
       }
 
     @Override

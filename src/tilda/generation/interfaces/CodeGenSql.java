@@ -62,9 +62,6 @@ public interface CodeGenSql extends DBType, CodeGenBase
 
     public String getDDLMetadataVersion();
 
-    public void genDDLMetadata(PrintWriter Out, View V)
-    throws Exception;
-
     public Query genViewJoin(StringBuilder Str, ViewJoin VJ)
     throws Exception;
 

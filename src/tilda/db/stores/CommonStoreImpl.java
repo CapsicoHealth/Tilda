@@ -157,16 +157,6 @@ public abstract class CommonStoreImpl implements DBType
             Out.close();
           }
 
-        Str = new StringBuilderWriter();
-        Out = new PrintWriter(Str);
-        Generator.getViewMetadataDDL(getSQlCodeGen(), Out, V);
-        if (Str.getBuilder().length() != 0)
-          {
-            if (Con.executeDDL(V._ParentSchema._Name, V.getBaseName(), Str.toString()) == false)
-              return false;
-            Out.close();
-          }
-
         return true;
       }
 

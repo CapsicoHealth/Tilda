@@ -122,7 +122,7 @@ CREATE OR REPLACE FUNCTION Tilda.isInvalidDate("dt" TIMESTAMP WITH TIME ZONE)
 -- Helper Formula dependency view
 --
 ---------------------------------------------------------------------------------------------------
-
+/*
 CREATE OR REPLACE VIEW Tilda.FormulaDependencyFullView as
 with recursive R("formulaRefnum", "formulaLocation", "formulaName", "formulaDependencies", "columnDependencies") as (
 select FormulaDependencyView."formulaRefnum", "location" as "formulaLocation", "name" as "formulaName", ARRAY["dependentFormulaLocation"||'.'||"dependentFormulaName"] as "formulaDependencies", "referencedColumns" as "columnDependencies"
@@ -135,12 +135,23 @@ select FormulaDependencyView."formulaRefnum", "location" as "formulaLocation", "
 select distinct * 
   from R
 ;
-
+*/
 
 ---------------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------------
 -- cleanup of old tables.
 --
 ---------------------------------------------------------------------------------------------------
-drop table if exists tilda.job_detail;
-drop table if exists tilda.jobs;
+DO $$
+BEGIN
+ PERFORM TILDA.retireTable('tilda','job_detail', 'retired');
+ drop view if exists Tilda.FormulaDependencyFullView;
+ drop view if exists Tilda.FormulaDependencyView;
+ drop view if exists Tilda.MeasureFormulaView;
+ PERFORM TILDA.retireTable('tilda','formuladependency', 'retired');
+ PERFORM TILDA.retireTable('tilda','formularesult', 'retired');
+ PERFORM TILDA.retireTable('tilda','measureformula', 'retired');
+ PERFORM TILDA.retireTable('tilda','measure', 'retired');
+ PERFORM TILDA.retireTable('tilda','formula', 'retired');
+END; $$
+

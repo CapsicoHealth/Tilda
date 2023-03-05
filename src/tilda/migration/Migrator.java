@@ -76,6 +76,7 @@ import tilda.migration.actions.TablePKReplace;
 import tilda.migration.actions.TableViewRename;
 import tilda.migration.actions.TableViewSchemaSet;
 import tilda.migration.actions.TildaAclAdd;
+import tilda.migration.actions.TildaCatalogAdd;
 import tilda.migration.actions.TildaExtraDDL;
 import tilda.migration.actions.TildaHelpersAddEnd;
 import tilda.migration.actions.TildaHelpersAddStart;
@@ -121,6 +122,7 @@ public class Migrator
                     C.commit();
                   }
                 doAcl(C, TildaList, DBMeta);
+                doCatalog(C, TildaList, DBMeta);
               }
             LOG.info("\n"
             + "          ==============================================================================\n"
@@ -135,6 +137,7 @@ public class Migrator
             confirmMigration(C);
             applyMigration(C, migrationData, DependencySchemas, DBMeta);
             doAcl(C, TildaList, DBMeta);
+            doCatalog(C, TildaList, DBMeta);
             if (Migrate.isTesting() == false)
               KeysManager.reloadAll();
           }
@@ -170,6 +173,15 @@ public class Migrator
           A.process(C);
       }
 
+    private static void doCatalog(Connection C, List<Schema> TildaList, DatabaseMeta DBMeta)
+    throws Exception
+      {
+        MigrationAction A = new TildaCatalogAdd(TildaList);
+        if (A.isNeeded(C, DBMeta) == true)
+          A.process(C);
+      }
+
+    
     public static void PrintDiscrepancies(Connection C, MigrationDataModel migrationData, String[] DependencySchemas)
     throws Exception
       {

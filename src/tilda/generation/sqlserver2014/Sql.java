@@ -368,22 +368,6 @@ public class Sql extends MSSQL implements CodeGenSql
         OutStr.close();
       }
 
-    @Override
-    public void genDDLComments(PrintWriter Out, View V)
-    throws Exception
-      {
-        // TODO Auto-generated method stub
-
-      }
-
-    @Override
-    public void genDDLMetadata(PrintWriter Out, View V)
-    throws Exception
-      {
-        // TODO Auto-generated method stub
-
-      }
-
     private boolean CheckFK(PrintWriter Out, Object Obj1, Object Obj2, ViewColumn C, int JoinIndex)
       {
         boolean Found = false;
@@ -499,6 +483,14 @@ public class Sql extends MSSQL implements CodeGenSql
     public String getDDLMetadataVersion()
       {
         throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public void genDDLComments(PrintWriter Out, View V)
+    throws Exception
+      {
+        // TODO Auto-generated method stub
+        
       }
 
   }

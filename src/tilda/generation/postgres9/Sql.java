@@ -50,7 +50,6 @@ import tilda.parsing.parts.Object;
 import tilda.parsing.parts.OrderBy;
 import tilda.parsing.parts.Query;
 import tilda.parsing.parts.Schema;
-import tilda.parsing.parts.Value;
 import tilda.parsing.parts.View;
 import tilda.parsing.parts.ViewColumn;
 import tilda.parsing.parts.ViewJoin;
@@ -1089,12 +1088,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
         if (VC._Aggregate.isWindowOnly() == true)
           throw new Error("Fuction genPivotColumnSQL called for '" + VC.getFullName() + "' with a window-only aggregate '" + VC._Aggregate.name() + "'.");
 
-        String aggr = VC._Aggregate == AggregateType.COUNT ? AggregateType.SUM.name()
-        : VC._Aggregate == AggregateType.ARRAY ? "array_agg"
-        : VC._Aggregate.name();
-
         StringBuilder Str = new StringBuilder();
-        Str.append(aggr).append("(");
+        Str.append(getAggregateStr(VC._Aggregate)).append("(");
         if (VC._Distinct == true)
           Str.append("distinct ");
         Str.append("\"").append(VC._NameInner).append("\"");
@@ -1183,19 +1178,38 @@ public class Sql extends PostgreSQL implements CodeGenSql
         return "DDL META DATA VERSION 2021-09-02";
       }
 
+/*
     @Override
-    public void genDDLMetadata(PrintWriter OutFinal, View V)
+    public void genDDLMetadata(PrintWriter out, Object O)
     throws Exception
       {
+        CatalogHelper CH = new CatalogHelper(O.getSchema().getShortName(), O.getBaseName());
+        CH.addColumns(O._Columns);
+        out.println(CH.outputSQLProc(this));
+      }
+    
+
+    @Override
+    public void genDDLMetadata(PrintWriter out, View V)
+    throws Exception
+      {
+        CatalogHelper CH = new CatalogHelper(V.getSchema().getShortName(), V.getBaseName());
+        CH.addViewColumns(V._ViewColumns);
+        CH.addViewColumns(V._PivotColumns);
+        CH.addFormulas(V._Formulas);
+        out.println(CH.outputSQLProc(this));
+
         if (V._Formulas == null || V._Formulas.isEmpty() == true)
           {
             OutFinal.println("DO $$");
-            OutFinal.println("-- This view doesn't have any formula, but just in case it used to and they were all repoved from the model, we still have to do some cleanup.");
+            OutFinal.println("-- This view doesn't have any formula, but just in case it used to and they were all removed from the model, we still have to do some cleanup.");
             OutFinal.println("DECLARE");
             OutFinal.println("  ts timestamp;");
             OutFinal.println("BEGIN");
             OutFinal.println("  select into ts current_timestamp;");
-            OutFinal.println("  UPDATE TILDA.Formula set deleted = current_timestamp where \"location\" = " + TextUtil.escapeSingleQuoteForSQL(V.getShortName()) + " AND \"lastUpdated\" < ts;");
+            OutFinal.println("  UPDATE TILDA.Catalog set deleted = current_timestamp where \"schemaName\" = " + TextUtil.escapeSingleQuoteForSQL(V.getSchema().getShortName())
+                                   +" AND \"tableViewName\" = " + TextUtil.escapeSingleQuoteForSQL(V.getBaseName())
+                                   +" AND \"lastUpdated\" < ts;");
             OutFinal.println("END; $$");
             OutFinal.println("LANGUAGE PLPGSQL;");
             return;
@@ -1212,7 +1226,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         OutFinal.println("  k bigint;");
         OutFinal.println("  ts timestamp;");
         OutFinal.println("BEGIN");
-        OutFinal.println("  select into k TILDA.getKeyBatchAsMaxExclusive('TILDA.FORMULA', " + V._Formulas.size() + ")-" + V._Formulas.size() + ";");
+        OutFinal.println("  select into k TILDA.getKeyBatchAsMaxExclusive('TILDA.CATALOG', " + V._Formulas.size() + ")-" + V._Formulas.size() + ";");
         OutFinal.println("  select into ts current_timestamp;");
         OutFinal.println();
 
@@ -1229,7 +1243,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
 
             if (++count == 0)
               {
-                OutFinal.println("INSERT INTO TILDA.Formula (\"refnum\", \"location\", \"location2\", \"name\", \"type\", \"title\", \"description\", \"formula\", \"htmlDoc\", \"referencedColumns\", \"created\", \"lastUpdated\", \"deleted\")");
+                OutFinal.println("INSERT INTO TILDA.Catalog (\"refnum\", \"schemaName\", \"tableViewName\", \"columnName\", \"tableViewName2\", \"type\", \"description\", \"aggregate\", \"title\", \"formula\", \"measure\", \"htmlDoc\", \"referencedColumns\", \"referencedFormulas\", \"created\", \"lastUpdated\", \"deleted\")");
                 OutFinal.print("    VALUES (");
               }
             else
@@ -1438,8 +1452,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
 
         OutFinal.println("END; $$");
         OutFinal.println("LANGUAGE PLPGSQL;");
-
       }
+*/
 
     private String genFormulaCode(View ParentView, Formula F)
       {
