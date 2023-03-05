@@ -214,7 +214,7 @@ public class PostgreSQL extends CommonStoreImpl
             case VAR:
               return "variance";
             case STRING:
-              return "string";
+              return "string_agg";
             case ARRAY:
               return "array_agg";
             case ARRAYCAT:
