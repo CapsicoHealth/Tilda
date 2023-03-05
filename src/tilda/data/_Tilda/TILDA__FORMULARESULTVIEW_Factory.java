@@ -4,6 +4,7 @@ package tilda.data._Tilda;
 import java.math.*;
 import java.util.*;
 import java.time.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.logging.log4j.*;
 
@@ -48,11 +49,12 @@ public class TILDA__FORMULARESULTVIEW_Factory
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FormulaResultView.formulaRefnum of type long</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>formulaRefnum of type long</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The parent formula.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FormulaResultView.formulaRefnum of type bigint</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.FormulaResultView.formulaRefnum</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The parent formula.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -68,12 +70,13 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FormulaResultView.value of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>value of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The result value.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FormulaResultView.value of type varchar(100)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.FormulaResultView.value</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>100</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The result value.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -89,12 +92,13 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FormulaResultView.description of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>description of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The description of the result value.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FormulaResultView.description of type text</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.FormulaResultView.description</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>32000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The description of the result value.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -105,48 +109,72 @@ This is the column definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FormulaResultView.location -> TILDA.FormulaResultView."location"
+//   Field tilda.data.TILDA.FormulaResultView.schemaName -> TILDA.FormulaResultView."schemaName"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FormulaResultView.location of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FormulaResultView.location of type varchar(64)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>schemaName of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The name of the schema this column is defined in.</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FormulaResultView.schemaName of type varchar(128)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.FormulaResultView.schemaName</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>128</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The name of the primary table/view this formula is defined in.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        LOCATION     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "location"     , 3/*3*/, 64, "The name of the primary table/view this formula is defined in.", null, null, null);
+     public final Type_StringPrimitive        SCHEMANAME   = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "schemaName"   , 3/*3*/, 128, "The name of the schema this column is defined in.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FormulaResultView.name -> TILDA.FormulaResultView."name"
+//   Field tilda.data.TILDA.FormulaResultView.tableViewName -> TILDA.FormulaResultView."tableViewName"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FormulaResultView.name of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FormulaResultView.name of type varchar(64)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tableViewName of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The name of the primary table/view this column is defined in.</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FormulaResultView.tableViewName of type varchar(128)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.FormulaResultView.tableViewName</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>128</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The name of the formula/column.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        NAME         = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "name"         , 4/*4*/, 64, "The name of the formula/column.", null, null, null);
+     public final Type_StringPrimitive        TABLEVIEWNAME= new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "tableViewName", 4/*4*/, 128, "The name of the primary table/view this column is defined in.", null, null, null);
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.FormulaResultView.columnName -> TILDA.FormulaResultView."columnName"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the column definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>columnName of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The name of the column.</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FormulaResultView.columnName of type varchar(128)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.FormulaResultView.columnName</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>128</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+     public final Type_StringPrimitive        COLUMNNAME   = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "columnName"   , 5/*5*/, 128, "The name of the column.", null, null, null);
    }
 
    public static COLS_BASE COLS = new COLS_BASE();
-   public static final ColumnDefinition[] COLUMNS = new ColumnDefinition[] { COLS.FORMULAREFNUM,COLS.VALUE,COLS.DESCRIPTION,COLS.LOCATION,COLS.NAME };
+   public static final ColumnDefinition[] COLUMNS = new ColumnDefinition[] { COLS.FORMULAREFNUM,COLS.VALUE,COLS.DESCRIPTION,COLS.SCHEMANAME,COLS.TABLEVIEWNAME,COLS.COLUMNNAME };
 
    public static final ColumnDefinition[] COLUMNS_PRIMARY = new ColumnDefinition[] {  };
 
@@ -157,18 +185,13 @@ This is the column definition for:<BR>
 
    // Short(short) is deprecated, but we do want a new instance here to avoid synchronizing over the same cached instance from valueOf.
    // @SuppressWarnings("deprecation")
-   private static Short __INITIALIZED = new Short(RandomUtil.pickNonZeroShort());
+   private static final AtomicBoolean __INITIALIZED = new AtomicBoolean(false);
    protected static void initObject(Connection C) throws Exception
      {
-       if (__INITIALIZED != 0)
-        synchronized(__INITIALIZED)
-         {
-           if (__INITIALIZED != 0)
-            {
-              tilda.data.FormulaResultView_Factory.init(C);
-              __INITIALIZED = 0;
-            }
-         }
+       if (__INITIALIZED.compareAndSet(false, true))
+        {
+           tilda.data.FormulaResultView_Factory.init(C);
+        }
      }
    private static class RecordProcessorInternal implements tilda.db.processors.RecordProcessor
      {
@@ -310,7 +333,7 @@ Lookup records by the query 'All' over
 
    public static String getCSVHeader()
     {
-      return "\"formulaRefnum\",\"value\",\"description\",\"location\",\"name\"";
+      return "\"formulaRefnum\",\"value\",\"description\",\"schemaName\",\"tableViewName\",\"columnName\"";
     }
 
    public static void toCSV(java.io.Writer out, List<tilda.data.FormulaResultView_Data> L, boolean includeHeader) throws java.io.IOException
@@ -339,9 +362,11 @@ Lookup records by the query 'All' over
       Str.append(",");
       TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getDescription());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getLocation());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getSchemaName());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getName());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getTableViewName());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getColumnName());
       out.write(Str.toString());
       PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);
     }
@@ -408,9 +433,11 @@ Lookup records by the query 'All' over
 
         JSONUtil.print(out, "description", ++i==0, Obj.getDescription());
 
-        JSONUtil.print(out, "location", ++i==0, Obj.getLocation());
+        JSONUtil.print(out, "schemaName", ++i==0, Obj.getSchemaName());
 
-        JSONUtil.print(out, "name", ++i==0, Obj.getName());
+        JSONUtil.print(out, "tableViewName", ++i==0, Obj.getTableViewName());
+
+        JSONUtil.print(out, "columnName", ++i==0, Obj.getColumnName());
 
         if (fullObject == true)
          out.write(" }\n");

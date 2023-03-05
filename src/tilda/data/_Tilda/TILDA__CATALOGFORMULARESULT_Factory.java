@@ -4,6 +4,7 @@ package tilda.data._Tilda;
 import java.math.*;
 import java.util.*;
 import java.time.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.logging.log4j.*;
 
@@ -23,17 +24,17 @@ import tilda.utils.pairs.*;
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @SuppressWarnings({ "unused" })
-public class TILDA__MEASUREFORMULA_Factory
+public class TILDA__CATALOGFORMULARESULT_Factory
  {
-   protected static final Logger LOG = LogManager.getLogger(TILDA__MEASUREFORMULA_Factory.class.getName());
+   protected static final Logger LOG = LogManager.getLogger(TILDA__CATALOGFORMULARESULT_Factory.class.getName());
 
-   protected TILDA__MEASUREFORMULA_Factory() { }
+   protected TILDA__CATALOGFORMULARESULT_Factory() { }
 
-   public static final Class<TILDA__MEASUREFORMULA> DATA_CLASS= TILDA__MEASUREFORMULA.class;
+   public static final Class<TILDA__CATALOGFORMULARESULT> DATA_CLASS= TILDA__CATALOGFORMULARESULT.class;
    public static final String SCHEMA_LABEL = TextUtil.print("TILDA", "");
-   public static final String TABLENAME_LABEL = TextUtil.print("MeasureFormula", "");
-   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.print("TILDA.MeasureFormula", "");
-   public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "MeasureFormula"); }
+   public static final String TABLENAME_LABEL = TextUtil.print("CatalogFormulaResult", "");
+   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.print("TILDA.CatalogFormulaResult", "");
+   public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "CatalogFormulaResult"); }
 
    public static final class COLS_BASE
     {
@@ -43,56 +44,82 @@ public class TILDA__MEASUREFORMULA_Factory
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.MeasureFormula.measureRefnum -> TILDA.MeasureFormula."measureRefnum"
+//   Field tilda.data.TILDA.CatalogFormulaResult.formulaRefnum -> TILDA.CatalogFormulaResult."formulaRefnum"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.MeasureFormula.measureRefnum of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MeasureFormula.measureRefnum of type bigint</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The measure.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-     public final Type_LongPrimitive          MEASUREREFNUM= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "measureRefnum", 0/*0*/, "The measure.", null, null, null);
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.MeasureFormula.formulaRefnum -> TILDA.MeasureFormula."formulaRefnum"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the column definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.MeasureFormula.formulaRefnum of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MeasureFormula.formulaRefnum of type bigint</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>formulaRefnum of type long</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The parent formula.</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CatalogFormulaResult.formulaRefnum of type bigint</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.CatalogFormulaResult.formulaRefnum</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_LongPrimitive          FORMULAREFNUM= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "formulaRefnum", 1/*1*/, "The parent formula.", null, null, null);
+     public final Type_LongPrimitive          FORMULAREFNUM= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "formulaRefnum", 0/*0*/, "The parent formula.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.MeasureFormula.created -> TILDA.MeasureFormula."created"
+//   Field tilda.data.TILDA.CatalogFormulaResult.value -> TILDA.CatalogFormulaResult."value"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.MeasureFormula.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MeasureFormula.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>value of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The result value.</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CatalogFormulaResult.value of type varchar(100)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.CatalogFormulaResult.value</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>100</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+     public final Type_StringPrimitive        VALUE        = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "value"        , 1/*1*/, 100, "The result value.", null, null, null);
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.CatalogFormulaResult.description -> TILDA.CatalogFormulaResult."description"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the column definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>description of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The description of the result value.</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CatalogFormulaResult.description of type text</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.CatalogFormulaResult.description</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>32000</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+     public final Type_StringPrimitive        DESCRIPTION  = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "description"  , 2/*2*/, 32000, "The description of the result value.", null, null, null);
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.CatalogFormulaResult.created -> TILDA.CatalogFormulaResult."created"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the column definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>created of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.CatalogFormulaResult)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CatalogFormulaResult.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.CatalogFormulaResult.created</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.MeasureFormula)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -105,21 +132,22 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_DatetimePrimitive      CREATED      = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"      , 2/*2*/, "The timestamp for when the record was created. (TILDA.MeasureFormula)", null, null);
+     public final Type_DatetimePrimitive      CREATED      = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"      , 3/*3*/, "The timestamp for when the record was created. (TILDA.CatalogFormulaResult)", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.MeasureFormula.lastUpdated -> TILDA.MeasureFormula."lastUpdated"
+//   Field tilda.data.TILDA.CatalogFormulaResult.lastUpdated -> TILDA.CatalogFormulaResult."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.MeasureFormula.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MeasureFormula.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>lastUpdated of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.CatalogFormulaResult)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CatalogFormulaResult.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.CatalogFormulaResult.lastUpdated</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.MeasureFormula)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -132,33 +160,34 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_DatetimePrimitive      LASTUPDATED  = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"  , 3/*3*/, "The timestamp for when the record was last updated. (TILDA.MeasureFormula)", null, null);
+     public final Type_DatetimePrimitive      LASTUPDATED  = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"  , 4/*4*/, "The timestamp for when the record was last updated. (TILDA.CatalogFormulaResult)", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.MeasureFormula.deleted -> TILDA.MeasureFormula."deleted"
+//   Field tilda.data.TILDA.CatalogFormulaResult.deleted -> TILDA.CatalogFormulaResult."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.MeasureFormula.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MeasureFormula.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>deleted of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.CatalogFormulaResult)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CatalogFormulaResult.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.CatalogFormulaResult.deleted</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.MeasureFormula)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull  DELETED      = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"      , 4/*4*/, "The timestamp for when the record was deleted. (TILDA.MeasureFormula)", null, null);
+     public final Type_DatetimePrimitiveNull  DELETED      = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"      , 5/*5*/, "The timestamp for when the record was deleted. (TILDA.CatalogFormulaResult)", null, null);
    }
 
    public static COLS_BASE COLS = new COLS_BASE();
-   public static final ColumnDefinition[] COLUMNS = new ColumnDefinition[] { COLS.MEASUREREFNUM,COLS.FORMULAREFNUM,COLS.CREATED,COLS.LASTUPDATED,COLS.DELETED };
+   public static final ColumnDefinition[] COLUMNS = new ColumnDefinition[] { COLS.FORMULAREFNUM,COLS.VALUE,COLS.DESCRIPTION,COLS.CREATED,COLS.LASTUPDATED,COLS.DELETED };
 
-   public static final ColumnDefinition[] COLUMNS_PRIMARY = new ColumnDefinition[] { COLS.MEASUREREFNUM,COLS.FORMULAREFNUM };
+   public static final ColumnDefinition[] COLUMNS_PRIMARY = new ColumnDefinition[] { COLS.FORMULAREFNUM,COLS.VALUE };
 
    public static final ColumnDefinition[][] COLUMNS_UNIQUE_INDICES = new ColumnDefinition[][]{ 
         };
@@ -167,40 +196,35 @@ This is the column definition for:<BR>
 
    // Short(short) is deprecated, but we do want a new instance here to avoid synchronizing over the same cached instance from valueOf.
    // @SuppressWarnings("deprecation")
-   private static Short __INITIALIZED = new Short(RandomUtil.pickNonZeroShort());
+   private static final AtomicBoolean __INITIALIZED = new AtomicBoolean(false);
    protected static void initObject(Connection C) throws Exception
      {
-       if (__INITIALIZED != 0)
-        synchronized(__INITIALIZED)
-         {
-           if (__INITIALIZED != 0)
-            {
-              tilda.data.MeasureFormula_Factory.init(C);
-              __INITIALIZED = 0;
-            }
-         }
+       if (__INITIALIZED.compareAndSet(false, true))
+        {
+           tilda.data.CatalogFormulaResult_Factory.init(C);
+        }
      }
    private static class RecordProcessorInternal implements tilda.db.processors.RecordProcessor
      {
        public RecordProcessorInternal(Connection C, int start)
          {
            _C = C;
-           _L = new ArrayListResults<tilda.data.MeasureFormula_Data>(start);
+           _L = new ArrayListResults<tilda.data.CatalogFormulaResult_Data>(start);
          }
-       public RecordProcessorInternal(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.MeasureFormula_Data> OP)
+       public RecordProcessorInternal(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.CatalogFormulaResult_Data> OP)
          {
            _C = C;
            _OP = OP;
          }
        protected Connection _C = null;
-       protected tilda.db.processors.ObjectProcessor<tilda.data.MeasureFormula_Data> _OP;
-       protected ArrayListResults<tilda.data.MeasureFormula_Data> _L = null;
+       protected tilda.db.processors.ObjectProcessor<tilda.data.CatalogFormulaResult_Data> _OP;
+       protected ArrayListResults<tilda.data.CatalogFormulaResult_Data> _L = null;
        public void    start  ()                              throws Exception { if (_OP != null) _OP.start(); }
        public void    end    (boolean hasMore, int maxCount) throws Exception { if (_OP == null) _L.wrapup(hasMore, maxCount); else _OP.end(hasMore, maxCount); }
        public boolean process(int count, java.sql.ResultSet RS) throws Exception
         {
-          tilda.data.MeasureFormula_Data Obj = new tilda.data.MeasureFormula_Data();
-          boolean OK = ((tilda.data._Tilda.TILDA__MEASUREFORMULA)Obj).init(_C, RS);
+          tilda.data.CatalogFormulaResult_Data Obj = new tilda.data.CatalogFormulaResult_Data();
+          boolean OK = ((tilda.data._Tilda.TILDA__CATALOGFORMULARESULT)Obj).init(_C, RS);
           if (OK == true)
            {
              if (_OP == null)
@@ -216,14 +240,14 @@ This is the column definition for:<BR>
      {
        readMany(C, -77, RP, null, fullSelectQuery, start, size);
      }
-   protected static final ListResults<tilda.data.MeasureFormula_Data> readMany(Connection C, String fullSelectQuery, int start, int size) throws Exception
+   protected static final ListResults<tilda.data.CatalogFormulaResult_Data> readMany(Connection C, String fullSelectQuery, int start, int size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
        readMany(C, -77, RPI, null, fullSelectQuery, start, size);
        return RPI._L;
      }
 
-   private static final void readMany(Connection C, int LookupId, tilda.db.processors.RecordProcessor RP, tilda.data._Tilda.TILDA__MEASUREFORMULA Obj, Object ExtraParams, int start, int size) throws Exception
+   private static final void readMany(Connection C, int LookupId, tilda.db.processors.RecordProcessor RP, tilda.data._Tilda.TILDA__CATALOGFORMULARESULT Obj, Object ExtraParams, int start, int size) throws Exception
      {
        long T0 = System.nanoTime();
        StringBuilder S = new StringBuilder(1024);
@@ -234,8 +258,8 @@ This is the column definition for:<BR>
        else
         {
           S.append("select ");
-          C.getFullColumnVarList(S, TILDA__MEASUREFORMULA_Factory.COLUMNS);
-          S.append(" from "); C.getFullTableVar(S, "TILDA", "MeasureFormula");
+          C.getFullColumnVarList(S, TILDA__CATALOGFORMULARESULT_Factory.COLUMNS);
+          S.append(" from "); C.getFullTableVar(S, "TILDA", "CatalogFormulaResult");
           switch (LookupId)
            {
              case -7:
@@ -244,7 +268,7 @@ This is the column definition for:<BR>
                 break;
              case 1: // Query 'All'
                 S.append(" where (");  S.append("1=1");  S.append(")");
-                S.append(" order by "); C.getFullColumnVar(S, "TILDA", "MeasureFormula", "measureRefnum"); S.append(" ASC");S.append(", "); C.getFullColumnVar(S, "TILDA", "MeasureFormula", "formulaRefnum"); S.append(" ASC");
+                S.append(" order by "); C.getFullColumnVar(S, "TILDA", "CatalogFormulaResult", "formulaRefnum"); S.append(" ASC");S.append(", "); C.getFullColumnVar(S, "TILDA", "CatalogFormulaResult", "value"); S.append(" ASC");
                 break;
              case -77: 
              case -666: break;
@@ -256,7 +280,7 @@ This is the column definition for:<BR>
        S.setLength(0);
        S = null;
        QueryDetails.setLastQuery(SCHEMA_TABLENAME_LABEL, Q);
-       QueryDetails.logQuery("TILDA.MeasureFormula", Q, null);
+       QueryDetails.logQuery("TILDA.CatalogFormulaResult", Q, null);
        java.sql.PreparedStatement PS=null;
        int count = 0;
        try
@@ -285,7 +309,7 @@ This is the column definition for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__MEASUREFORMULA_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__CATALOGFORMULARESULT_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
 
@@ -301,17 +325,11 @@ The generic init method is typically run when there is a general data structure 
 data file read in memory, or run from a servlet using a Map<String, String[]> object obtained from an ServletRequest
 object. The generic init method defaults to this general data structure as a genegic representation.
 */
-   static public tilda.data.MeasureFormula_Data init(Map<String, String[]> Values, List<StringStringPair> Errors)
+   static public tilda.data.CatalogFormulaResult_Data init(Map<String, String[]> Values, List<StringStringPair> Errors)
    throws Exception
      {
-       tilda.data._Tilda.TILDA__MEASUREFORMULA Obj = new tilda.data.MeasureFormula_Data();
+       tilda.data._Tilda.TILDA__CATALOGFORMULARESULT Obj = new tilda.data.CatalogFormulaResult_Data();
        String[] vals = null;
-
-       vals = Values.get("measureRefnum");
-       if (vals!=null && vals.length > 1)
-        Errors.add(new StringStringPair("measureRefnum", "Parameter is not a list or a set and yet received "+vals.length+" values"));
-       Long _measureRefnum = ParseUtil.parseLong("measureRefnum", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_measureRefnum != null) Obj.setMeasureRefnum(_measureRefnum);
 
        vals = Values.get("formulaRefnum");
        if (vals!=null && vals.length > 1)
@@ -319,34 +337,48 @@ object. The generic init method defaults to this general data structure as a gen
        Long _formulaRefnum = ParseUtil.parseLong("formulaRefnum", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
        if (_formulaRefnum != null) Obj.setFormulaRefnum(_formulaRefnum);
 
+       vals = Values.get("value");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("value", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _value = ParseUtil.parseString("value", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_value != null) Obj.setValue(_value);
 
-       return (tilda.data.MeasureFormula_Data) Obj;
+       vals = Values.get("description");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("description", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _description = ParseUtil.parseString("description", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_description != null) Obj.setDescription(_description);
+
+
+       return (tilda.data.CatalogFormulaResult_Data) Obj;
      }
 
 /**
  Creates a new object in memory, which you can subsequently {@link #write()} to the data store.
  current object to the destination. 
- @param measureRefnum The measure.
  @param formulaRefnum The parent formula.
+ @param value         (max size 100) The result value.
+ @param description   (max size 32000) The description of the result value.
 */
-   static public tilda.data.MeasureFormula_Data create(long measureRefnum, long formulaRefnum) throws Exception
+   static public tilda.data.CatalogFormulaResult_Data create(long formulaRefnum, String value, String description) throws Exception
      {
-       tilda.data._Tilda.TILDA__MEASUREFORMULA Obj = new tilda.data.MeasureFormula_Data();
+       tilda.data._Tilda.TILDA__CATALOGFORMULARESULT Obj = new tilda.data.CatalogFormulaResult_Data();
        Obj.initForCreate();
 
 
        // Explicit setters
-       Obj.setMeasureRefnum(measureRefnum);
        Obj.setFormulaRefnum(formulaRefnum);
+       Obj.setValue        (value        );
+       Obj.setDescription  (description  );
 
        // Default Create-time setters
        Obj.setCreatedNow       ();
        Obj.setLastUpdatedNow   ();
 
-       return (tilda.data.MeasureFormula_Data) Obj;
+       return (tilda.data.CatalogFormulaResult_Data) Obj;
      }
 
-   public static int writeBatch(Connection C, List<tilda.data.MeasureFormula_Data> L, int batchSize, int commitSize) throws Exception
+   public static int writeBatch(Connection C, List<tilda.data.CatalogFormulaResult_Data> L, int batchSize, int commitSize) throws Exception
      {
        long T0 = System.nanoTime();
 
@@ -357,9 +389,9 @@ object. The generic init method defaults to this general data structure as a gen
        List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
        int count = 0;
        int batchStart = 0;
-       TILDA__MEASUREFORMULA lastObj = null;
-       BitSet firstChangeList = (BitSet) ((TILDA__MEASUREFORMULA) L.get(0)).__Changes.clone();
-       String firstTimeStampSignature = ((TILDA__MEASUREFORMULA) L.get(0)).getTimeStampSignature();
+       TILDA__CATALOGFORMULARESULT lastObj = null;
+       BitSet firstChangeList = (BitSet) ((TILDA__CATALOGFORMULARESULT) L.get(0)).__Changes.clone();
+       String firstTimeStampSignature = ((TILDA__CATALOGFORMULARESULT) L.get(0)).getTimeStampSignature();
 
        try
          {
@@ -369,40 +401,40 @@ object. The generic init method defaults to this general data structure as a gen
            int insertCount = 0;
 
            int index = -1;
-           for (tilda.data.MeasureFormula_Data d : L)
+           for (tilda.data.CatalogFormulaResult_Data d : L)
              {
                ++index;
                if (d == null || d.hasChanged() == false)
                  continue;
 
-               lastObj = ((TILDA__MEASUREFORMULA) d);
+               lastObj = ((TILDA__CATALOGFORMULARESULT) d);
 
-               if (((TILDA__MEASUREFORMULA) d).__Init != InitMode.CREATE)
+               if (((TILDA__CATALOGFORMULARESULT) d).__Init != InitMode.CREATE)
                  {
-                   LOG.debug(QueryDetails._LOGGING_HEADER + "The 'tilda.data.MeasureFormula_Data' object at positon #" + index + " was not in an insertable state. Only inserts are allowed in batch writes (i.e., no updates).");
-                   QueryDetails.setLastQuery(TILDA__MEASUREFORMULA_Factory.SCHEMA_TABLENAME_LABEL, "");
+                   LOG.debug(QueryDetails._LOGGING_HEADER + "The 'tilda.data.CatalogFormulaResult_Data' object at positon #" + index + " was not in an insertable state. Only inserts are allowed in batch writes (i.e., no updates).");
+                   QueryDetails.setLastQuery(TILDA__CATALOGFORMULARESULT_Factory.SCHEMA_TABLENAME_LABEL, "");
                    return index;
                  }
 
 
-               if (((TILDA__MEASUREFORMULA) d).beforeWrite(C) == false)
+               if (((TILDA__CATALOGFORMULARESULT) d).beforeWrite(C) == false)
                  {
-                   LOG.debug(QueryDetails._LOGGING_HEADER + "The 'tilda.data.MeasureFormula_Data' object at positon #" + index + " failed in its beforeWrite() method.");
-                   QueryDetails.setLastQuery(TILDA__MEASUREFORMULA_Factory.SCHEMA_TABLENAME_LABEL, "");
+                   LOG.debug(QueryDetails._LOGGING_HEADER + "The 'tilda.data.CatalogFormulaResult_Data' object at positon #" + index + " failed in its beforeWrite() method.");
+                   QueryDetails.setLastQuery(TILDA__CATALOGFORMULARESULT_Factory.SCHEMA_TABLENAME_LABEL, "");
                    return index;
                  }
 
-               if (firstChangeList.equals(((TILDA__MEASUREFORMULA) d).__Changes) == false)
+               if (firstChangeList.equals(((TILDA__CATALOGFORMULARESULT) d).__Changes) == false)
                  {
-                   LOG.debug(QueryDetails._LOGGING_HEADER + "The 'tilda.data.MeasureFormula_Data' object at positon #" + index + " failed matching the list of columns being changed compared to the first object passed.");
-                   QueryDetails.setLastQuery(TILDA__MEASUREFORMULA_Factory.SCHEMA_TABLENAME_LABEL, "");
+                   LOG.debug(QueryDetails._LOGGING_HEADER + "The 'tilda.data.CatalogFormulaResult_Data' object at positon #" + index + " failed matching the list of columns being changed compared to the first object passed.");
+                   QueryDetails.setLastQuery(TILDA__CATALOGFORMULARESULT_Factory.SCHEMA_TABLENAME_LABEL, "");
                    return index;
                  }
 
-               if (firstTimeStampSignature.equals(((TILDA__MEASUREFORMULA) d).getTimeStampSignature()) == false)
+               if (firstTimeStampSignature.equals(((TILDA__CATALOGFORMULARESULT) d).getTimeStampSignature()) == false)
                  {
-                   LOG.debug(QueryDetails._LOGGING_HEADER + "The 'tilda.data.MeasureFormula_Data' object at positon #" + index + " failed matching the list of updated current vs value based timestamps.");
-                   QueryDetails.setLastQuery(TILDA__MEASUREFORMULA_Factory.SCHEMA_TABLENAME_LABEL, "");
+                   LOG.debug(QueryDetails._LOGGING_HEADER + "The 'tilda.data.CatalogFormulaResult_Data' object at positon #" + index + " failed matching the list of updated current vs value based timestamps.");
+                   QueryDetails.setLastQuery(TILDA__CATALOGFORMULARESULT_Factory.SCHEMA_TABLENAME_LABEL, "");
                    return index;
                  }
 
@@ -417,7 +449,7 @@ object. The generic init method defaults to this general data structure as a gen
                    int failedRec = JDBCHelper.batchWriteDone(results, batchSize);
                    if (failedRec != -1)
                      {
-                       LOG.debug(QueryDetails._LOGGING_HEADER + "A batch of tilda.data.MeasureFormula_Data objects between positions #" + batchStart + " and #" + index + " failed being written to the database.");
+                       LOG.debug(QueryDetails._LOGGING_HEADER + "A batch of tilda.data.CatalogFormulaResult_Data objects between positions #" + batchStart + " and #" + index + " failed being written to the database.");
                        return insertCount+failedRec;
                      }
                    for (int index2 = batchStart; index2 <= index; ++index2)
@@ -440,7 +472,7 @@ object. The generic init method defaults to this general data structure as a gen
                int failedRec = JDBCHelper.batchWriteDone(results, L.size() - insertCount);
                if (failedRec != -1)
                  {
-                   LOG.debug(QueryDetails._LOGGING_HEADER + "A batch of 'MeasureFormula_Data' objects ending at position #" + index + " failed being written to the database.");
+                   LOG.debug(QueryDetails._LOGGING_HEADER + "A batch of 'CatalogFormulaResult_Data' objects ending at position #" + index + " failed being written to the database.");
                    return L.size() - insertCount+failedRec;
                  }
                for (int index2 = batchStart; index2 <= index; ++index2)
@@ -464,33 +496,33 @@ object. The generic init method defaults to this general data structure as a gen
          }
        finally
          {
-           TILDA__2_3.handleFinally(PS, T0, TILDA__MEASUREFORMULA_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+           TILDA__2_3.handleFinally(PS, T0, TILDA__CATALOGFORMULARESULT_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
            PS = null;
            AllocatedArrays = null;
          }
        }
 
 /**
-Lookup one record by the primary key: measureRefnum, formulaRefnum.
+Lookup one record by the primary key: formulaRefnum, value.
 */
-   static public tilda.data.MeasureFormula_Data lookupByPrimaryKey(long measureRefnum, long formulaRefnum) throws Exception
+   static public tilda.data.CatalogFormulaResult_Data lookupByPrimaryKey(long formulaRefnum, String value) throws Exception
      {
-       tilda.data._Tilda.TILDA__MEASUREFORMULA Obj = new tilda.data.MeasureFormula_Data();
+       tilda.data._Tilda.TILDA__CATALOGFORMULARESULT Obj = new tilda.data.CatalogFormulaResult_Data();
        Obj.initForLookup(0);
 
-       Obj.setMeasureRefnum(measureRefnum); Obj.__Saved_measureRefnum = Obj._measureRefnum;
        Obj.setFormulaRefnum(formulaRefnum); Obj.__Saved_formulaRefnum = Obj._formulaRefnum;
+       Obj.setValue        (value        ); Obj.__Saved_value         = Obj._value        ;
 
-       return (tilda.data.MeasureFormula_Data) Obj;
+       return (tilda.data.CatalogFormulaResult_Data) Obj;
      }
 
 /**
 Lookup records by the query 'All' over 
 .<BR>
-The results are ordered by: measureRefnum asc, formulaRefnum asc
-*/   static public ListResults<tilda.data.MeasureFormula_Data> lookupWhereAll(Connection C, int start, int size) throws Exception
+The results are ordered by: formulaRefnum asc, value asc
+*/   static public ListResults<tilda.data.CatalogFormulaResult_Data> lookupWhereAll(Connection C, int start, int size) throws Exception
      {
-       tilda.data._Tilda.TILDA__MEASUREFORMULA Obj = new tilda.data.MeasureFormula_Data();
+       tilda.data._Tilda.TILDA__CATALOGFORMULARESULT Obj = new tilda.data.CatalogFormulaResult_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
 
 
@@ -503,10 +535,10 @@ The results are ordered by: measureRefnum asc, formulaRefnum asc
 /**
 Lookup records by the query 'All' over 
 .<BR>
-The results are ordered by: measureRefnum asc, formulaRefnum asc
-*/   static public void lookupWhereAll(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.MeasureFormula_Data> OP, int start, int size) throws Exception
+The results are ordered by: formulaRefnum asc, value asc
+*/   static public void lookupWhereAll(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.CatalogFormulaResult_Data> OP, int start, int size) throws Exception
      {
-       tilda.data._Tilda.TILDA__MEASUREFORMULA Obj = new tilda.data.MeasureFormula_Data();
+       tilda.data._Tilda.TILDA__CATALOGFORMULARESULT Obj = new tilda.data.CatalogFormulaResult_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
 
 
@@ -517,16 +549,15 @@ The results are ordered by: measureRefnum asc, formulaRefnum asc
 
 
 
-
    public static SelectQuery newSelectQuery(Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, true); }
    public static SelectQuery newWhereQuery (Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, false); }
-   public static ListResults<tilda.data.MeasureFormula_Data> runSelect(Connection C, SelectQuery Q, int start, int size) throws Exception
+   public static ListResults<tilda.data.CatalogFormulaResult_Data> runSelect(Connection C, SelectQuery Q, int start, int size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
        readMany(C, -7, RPI, null, Q, start, size);
        return RPI._L;
      }
-   public static void runSelect(Connection C, SelectQuery Q, tilda.db.processors.ObjectProcessor<tilda.data.MeasureFormula_Data> OP, int start, int size) throws Exception
+   public static void runSelect(Connection C, SelectQuery Q, tilda.db.processors.ObjectProcessor<tilda.data.CatalogFormulaResult_Data> OP, int start, int size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
        readMany(C, -7, RPI, null, Q, start, size);
@@ -537,15 +568,15 @@ The results are ordered by: measureRefnum asc, formulaRefnum asc
 
    public static String getCSVHeader()
     {
-      return "\"measureRefnum\",\"formulaRefnum\",\"created\",\"lastUpdated\",\"deleted\"";
+      return "\"formulaRefnum\",\"value\",\"description\",\"created\",\"lastUpdated\",\"deleted\"";
     }
 
-   public static void toCSV(java.io.Writer out, List<tilda.data.MeasureFormula_Data> L, boolean includeHeader) throws java.io.IOException
+   public static void toCSV(java.io.Writer out, List<tilda.data.CatalogFormulaResult_Data> L, boolean includeHeader) throws java.io.IOException
     {
       long T0 = System.nanoTime();
       if (includeHeader == true)
         out.write(getCSVHeader() + "\n");
-      for (tilda.data.MeasureFormula_Data O : L)
+      for (tilda.data.CatalogFormulaResult_Data O : L)
        if (O!=null)
         {
           toCSV(out, O);
@@ -554,15 +585,17 @@ The results are ordered by: measureRefnum asc, formulaRefnum asc
       PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);
     }
 
-   public static void toCSV(java.io.Writer out, tilda.data.MeasureFormula_Data obj) throws java.io.IOException
+   public static void toCSV(java.io.Writer out, tilda.data.CatalogFormulaResult_Data obj) throws java.io.IOException
     {
       long T0 = System.nanoTime();
-     tilda.data._Tilda.TILDA__MEASUREFORMULA Obj = (tilda.data._Tilda.TILDA__MEASUREFORMULA) obj;
+     tilda.data._Tilda.TILDA__CATALOGFORMULARESULT Obj = (tilda.data._Tilda.TILDA__CATALOGFORMULARESULT) obj;
       StringBuilder Str = new StringBuilder();
 
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getMeasureRefnum());
-      Str.append(",");
       TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getFormulaRefnum());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getValue());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getDescription());
       Str.append(",");
       TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getCreated()));
       Str.append(",");
@@ -572,7 +605,7 @@ The results are ordered by: measureRefnum asc, formulaRefnum asc
       out.write(Str.toString());
       PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);
     }
-   public static void toJSON(java.io.Writer out, List<tilda.data.MeasureFormula_Data> L, String lead, boolean fullList) throws java.io.IOException
+   public static void toJSON(java.io.Writer out, List<tilda.data.CatalogFormulaResult_Data> L, String lead, boolean fullList) throws java.io.IOException
     {
       long T0 = System.nanoTime();
       if (fullList == true)
@@ -590,7 +623,7 @@ The results are ordered by: measureRefnum asc, formulaRefnum asc
           out.write("[\n");
         }
       boolean First = true;
-      for (tilda.data.MeasureFormula_Data O : L)
+      for (tilda.data.CatalogFormulaResult_Data O : L)
        if (O!=null)
         {
           out.write(lead);
@@ -606,22 +639,22 @@ The results are ordered by: measureRefnum asc, formulaRefnum asc
       PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
     }
 
-   public static void toJSON(java.io.Writer out, tilda.data.MeasureFormula_Data obj, boolean fullObject) throws java.io.IOException
+   public static void toJSON(java.io.Writer out, tilda.data.CatalogFormulaResult_Data obj, boolean fullObject) throws java.io.IOException
     {
       toJSON(out, obj, "", fullObject, false);
     }
 
-   public static void toJSON(java.io.Writer out, tilda.data.MeasureFormula_Data obj, String lead, boolean fullObject) throws java.io.IOException
+   public static void toJSON(java.io.Writer out, tilda.data.CatalogFormulaResult_Data obj, String lead, boolean fullObject) throws java.io.IOException
     {
       toJSON(out, obj, lead, fullObject, false);
     }
 
-   public static void toJSON(java.io.Writer outWriter, tilda.data.MeasureFormula_Data obj, String lead, boolean fullObject, boolean noNullArrays) throws java.io.IOException
+   public static void toJSON(java.io.Writer outWriter, tilda.data.CatalogFormulaResult_Data obj, String lead, boolean fullObject, boolean noNullArrays) throws java.io.IOException
     {
       long T0 = System.nanoTime();
       try(org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter())
        {
-        tilda.data._Tilda.TILDA__MEASUREFORMULA Obj = (tilda.data._Tilda.TILDA__MEASUREFORMULA) obj;
+        tilda.data._Tilda.TILDA__CATALOGFORMULARESULT Obj = (tilda.data._Tilda.TILDA__CATALOGFORMULARESULT) obj;
         if (fullObject == true)
          {
            out.write(lead);
@@ -629,9 +662,11 @@ The results are ordered by: measureRefnum asc, formulaRefnum asc
          }
 
         int i = -1;
-        JSONUtil.print(out, "measureRefnum", ++i==0, Obj.getMeasureRefnum());
-
         JSONUtil.print(out, "formulaRefnum", ++i==0, Obj.getFormulaRefnum());
+
+        JSONUtil.print(out, "value", ++i==0, Obj.getValue());
+
+        JSONUtil.print(out, "description", ++i==0, Obj.getDescription());
 
         JSONUtil.print(out, "created", ++i==0, Obj.getCreated());
 

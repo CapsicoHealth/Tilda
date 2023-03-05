@@ -38,6 +38,8 @@ public final class TILDA__2_3
     {
       tilda.data._Tilda.TILDA__ZONEINFO_Factory.initObject(C);
       tilda.data._Tilda.TILDA__KEY_Factory.initObject(C);
+      tilda.data._Tilda.TILDA__CATALOG_Factory.initObject(C);
+      tilda.data._Tilda.TILDA__CATALOGFORMULARESULT_Factory.initObject(C);
       tilda.data._Tilda.TILDA__MAINTENANCELOG_Factory.initObject(C);
       tilda.data._Tilda.TILDA__TRANSPERF_Factory.initObject(C);
       tilda.data._Tilda.TILDA__REFILLPERF_Factory.initObject(C);
@@ -47,17 +49,10 @@ public final class TILDA__2_3
       tilda.data._Tilda.TILDA__JOBPART_Factory.initObject(C);
       tilda.data._Tilda.TILDA__JOBPARTMESSAGE_Factory.initObject(C);
       tilda.data._Tilda.TILDA__OBJECTPERF_Factory.initObject(C);
-      tilda.data._Tilda.TILDA__FORMULA_Factory.initObject(C);
-      tilda.data._Tilda.TILDA__MEASURE_Factory.initObject(C);
-      tilda.data._Tilda.TILDA__MEASUREFORMULA_Factory.initObject(C);
-      tilda.data._Tilda.TILDA__FORMULADEPENDENCY_Factory.initObject(C);
-      tilda.data._Tilda.TILDA__FORMULARESULT_Factory.initObject(C);
       tilda.data._Tilda.TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.initObject(C);
       tilda.data._Tilda.TILDA__DATEDIM_Factory.initObject(C);
       tilda.data._Tilda.TILDA__DATELIMITDIM_Factory.initObject(C);
       tilda.data._Tilda.TILDA__FORMULARESULTVIEW_Factory.initObject(C);
-      tilda.data._Tilda.TILDA__FORMULADEPENDENCYVIEW_Factory.initObject(C);
-      tilda.data._Tilda.TILDA__MEASUREFORMULAVIEW_Factory.initObject(C);
       tilda.data._Tilda.TILDA__JOBVIEW_Factory.initObject(C);
     }
 

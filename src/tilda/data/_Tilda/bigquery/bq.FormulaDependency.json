@@ -1,7 +1,0 @@
-[
-    { "name":"formulaRefnum", "type":"INT64", "mode":"REQUIRED", "description":"The parent formula." }
-   ,{ "name":"dependencyRefnum", "type":"INT64", "mode":"REQUIRED", "description":"The dependent formula." }
-   ,{ "name":"created", "type":"TIMESTAMP", "mode":"REQUIRED", "description":"The timestamp for when the record was created. (TILDA.FormulaDependency)" }
-   ,{ "name":"lastUpdated", "type":"TIMESTAMP", "mode":"REQUIRED", "description":"The timestamp for when the record was last updated. (TILDA.FormulaDependency)" }
-   ,{ "name":"deleted", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"The timestamp for when the record was deleted. (TILDA.FormulaDependency)" }
-]
