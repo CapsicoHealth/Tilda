@@ -1069,6 +1069,39 @@ END; $BODY$
   
   
   
+CREATE OR REPLACE FUNCTION tilda.RetireTable(schemaName varchar, tableName varchar, suffix varchar)
+-- When managing a schema, you sometimes need to retire tables. Instead of doing a drop, resulting in
+-- loss of data, this function helps by first making a copy of the table before droping it. The "saved"
+-- table is free of any foreign key or other dependencies such as indices, and is renamed with _YYYYMMDD_HHMM_<suffix>
+  RETURNS BOOLEAN AS
+$BODY$
+declare
+  v_query text;
+  v_exists boolean;
+BEGIN
+   IF NOT EXISTS (SELECT 1 FROM pg_catalog.pg_class c
+                              JOIN   pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+                          WHERE  n.nspname = schemaName
+                            AND  c.relname = tableName
+                            AND  c.relkind = 'r'    -- only tables
+                 ) then
+    RETURN false;
+   END IF;
+
+   v_query:='create table '||schemaName||'.'||tableName||'_'||to_char(now(), 'YYYYMMdd_HH24mm')||'_'||suffix||' as select * from '||schemaName||'.'||tableName||';';
+   EXECUTE v_query;
+  
+   v_query:='drop table '||schemaName||'.'||tableName||';';
+   EXECUTE v_query;
+
+   RETURN true;
+END; $BODY$
+  LANGUAGE plpgsql VOLATILE 
+  COST 1000;
+
+  
+  
+  
 ----------------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------------
 -- Sizing helpers
