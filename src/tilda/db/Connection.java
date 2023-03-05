@@ -42,6 +42,8 @@ import tilda.db.metadata.SchemaMeta;
 import tilda.db.metadata.TableMeta;
 import tilda.db.metadata.ViewMeta;
 import tilda.db.processors.RecordProcessor;
+import tilda.db.processors.ScalarRP;
+import tilda.db.processors.StringRP;
 import tilda.db.stores.DBType;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
@@ -455,6 +457,32 @@ public final class Connection
             throw E;
           }
       }
+    
+    
+    /**
+     * Executes a query expecting a single result of any integer, up to a Long.
+     */
+    public Long executeSelectLong(String SchemaName, String TableName, String Query)
+    throws Exception
+      {
+        ScalarRP RP = new ScalarRP();
+        if (executeSelect(SchemaName, TableName, Query, RP, 0, false, -1, false, false) > 0)
+         return RP.getResult();
+        return null;
+      }
+    
+    /**
+     * Executes a query expecting a single result of of a string.
+     */
+    public String executeSelectString(String SchemaName, String TableName, String Query)
+    throws Exception
+      {
+        StringRP RP = new StringRP();
+        if (executeSelect(SchemaName, TableName, Query, RP, 0, false, -1, false, false) > 0)
+         return RP.getResult();
+        return null;
+      }
+    
 
     public int executeMetaFullSelect(String schemaName, String tableViewName, RecordProcessor RP)
     throws Exception
