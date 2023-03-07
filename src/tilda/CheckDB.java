@@ -58,7 +58,7 @@ public class CheckDB
               {
                 if (e.getMessage().toLowerCase().contains("login") == true)
                   {
-                    LOG.debug("The database is online!");
+                    LOG.debug("The database is online! Exception was: "+e.getMessage());
                     return;
                   }
                 LOG.warn("The database is not online: SQLState="+e.getSQLState()+"; SQLState="+e.getErrorCode()+"\n", e);

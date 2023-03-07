@@ -397,7 +397,7 @@ public class DateTimeUtil
           }
         catch (Exception E)
           {
-            LOG.catching(E);
+            LOG.warn("Cannot parse as date: "+E.getMessage());
           }
         return null;
       }
@@ -842,4 +842,32 @@ public class DateTimeUtil
         return d1.isAfter(d2) ? d1 : d2;
       }
 
+    /**
+     * Takes a string paramameter which can be either a date in the format yyyy-MM-dd or a positive integers denoting the number of days back from
+     * the current day. If yyyy-MM-dd, returns a ZDT for 00:00:00 on that day for the current timezone. If an integer, will returns a ZDT for 
+     * 00:00:00 on that prior day.
+     * @param param
+     * @return
+     */
+    public static ZonedDateTime paramToZDT(String param)
+      {
+        ZonedDateTime ZDT = null;
+        LocalDate Dt = ParseUtil.parseLocalDate(param);
+        if (Dt == null) // Not a date
+          {
+            int daysLookback = ParseUtil.parseInteger(param, SystemValues.EVIL_VALUE);
+            if (daysLookback < 1)
+              {
+                LOG.error("The parameter value " + param + " couldn't be parsed: it muct either be a date in the format yyyy-MM-dd, or a positive integer denoting the numbers of days to look back.");
+                return null;
+              }
+            ZonedDateTime Now = DateTimeUtil.nowLocal();
+            ZDT = Now.minusDays(daysLookback).truncatedTo(ChronoUnit.DAYS);
+          }
+        else
+          {
+            ZDT = DateTimeUtil.toZonedDateTime(Dt, null); // convert the Date to a zoned date time for 00:00:00 of that day.
+          }
+        return ZDT;
+      }
   }
