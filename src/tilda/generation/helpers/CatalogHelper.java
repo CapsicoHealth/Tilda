@@ -201,7 +201,7 @@ public class CatalogHelper
     public void outputCSV(PrintWriter out)
     throws Exception
       {
-        Catalog_Factory.toCSV(out, _CL, true);
+        Catalog_Factory.toCSVSimple(out, _CL, true);
       }
     
 

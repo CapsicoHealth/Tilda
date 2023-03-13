@@ -87,6 +87,7 @@
       ]
      ,"outputMaps":[
           { "name": "", "columns": ["*"], "outTypes":["CSV","JSON"] }
+         ,{ "name": "Simple", "columns": ["schemaName", "tableViewName", "columnName", "type", "description", "aggregate", "collection", "measure", "formula", "referencedColumns", "referencedFormulas"], "outTypes":["CSV","JSON"] }
        ]       
     }
     
