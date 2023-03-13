@@ -1,5 +1,5 @@
 /* ===========================================================================
- * Copyright (C) 2017 CapsicoHealth Inc.
+ * Copyright (C) 2023 CapsicoHealth Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,19 +27,31 @@ import tilda.utils.ParseUtil;
 public class CheckDB
   {
     protected static final Logger LOG = LogManager.getLogger(CheckDB.class.getName());
-
+    
     public static void main(String args[])
     throws Exception
       {
+        LOG.debug("CheckDB <driverClassName> <dbUrl> <user> <retries> <delay> <postWait>\n"
+        +"    Checks a database connectivity by verifying that a user could log on (even though we don't specify a password),\n"
+        +"    vs another error. Takes 6 parameters. If a connection cannot be made, exits with a system code of -1.\n"
+        +" For example: CheckDB \"org.postgresql.Driver\" \"jdbc:postgresql://localhost:5432/MyDB\" postgres 10 15 30\n"
+        +"              Checks the DB up to 10 times, waiting 15 seconds in between retries, and waiting an additional \n"
+        +"              30s after a successful connection"
+        );
+
         String driverClassName = args[0];
         String dbUrl = args[1];
-        int retries = ParseUtil.parseInteger(args[2], 2);
-        int delay = ParseUtil.parseInteger(args[3], 10);
-        
+        String user = args[2];
+        int retries = ParseUtil.parseInteger(args[3], 3);
+        int delay = ParseUtil.parseInteger(args[4], 10);
+        int postWait = ParseUtil.parseInteger(args[5], 10);
+
         LOG.debug("driverClassName: "+driverClassName);
         LOG.debug("dbUrl          : "+dbUrl);
+        LOG.debug("user           : "+user);
         LOG.debug("retries        : "+retries);
         LOG.debug("delay          : "+delay);
+        LOG.debug("postWwait      : "+postWait);
 
         Class.forName(driverClassName);
 
@@ -50,15 +62,19 @@ public class CheckDB
               {
                 ++attempt;
                 LOG.debug("Connection attempt #"+attempt);
-                DriverManager.getConnection(dbUrl);
+                DriverManager.getConnection(dbUrl, user, "XXX");
                 LOG.debug("The database is online!");
                 return;
               }
             catch (SQLException e)
               {
-                if (e.getMessage().toLowerCase().contains("login") == true)
+                String msg = e.getMessage().toLowerCase();
+                if (msg.matches(".*(login|password).*(auth)?.*fail.*(user)?.*") == true)
                   {
-                    LOG.debug("The database is online! Exception was: "+e.getMessage());
+                    LOG.debug("The database is online! Expected exception was: "+e.getMessage()+" (State="+e.getSQLState()+")");
+                    LOG.debug("Waiting a bit more ("+postWait+" seconds)");
+                    Thread.sleep(postWait*1000);
+                    LOG.debug("SUCCESS!!!");
                     return;
                   }
                 LOG.warn("The database is not online: SQLState="+e.getSQLState()+"; SQLState="+e.getErrorCode()+"\n", e);
@@ -74,5 +90,4 @@ public class CheckDB
         LOG.error("Could not connect to the database.");
         System.exit(-1);
       }
-
   }
