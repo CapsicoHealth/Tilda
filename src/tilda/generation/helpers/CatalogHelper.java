@@ -60,7 +60,7 @@ public class CatalogHelper
             catalog.setCollection(col.isCollection());
             catalog.setTitle(null);
             catalog.setFormula(null);
-            catalog.setMeasureNull();
+            catalog.setNullMeasure();
             catalog.setHtmlDoc(null);
             catalog.setReferencedColumns(null);
             catalog.setReferencedFormulas(null);
@@ -81,7 +81,7 @@ public class CatalogHelper
             catalog.setCollection(vc.isCollection());
             catalog.setTitle(null);
             catalog.setFormula(vc._Expression == null ? null : vc._Expression);
-            catalog.setMeasureNull();
+            catalog.setNullMeasure();
             catalog.setHtmlDoc(null);
             catalog.setReferencedColumns(null);
             catalog.setReferencedFormulas(null);

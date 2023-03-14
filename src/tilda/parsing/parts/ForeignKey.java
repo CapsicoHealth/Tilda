@@ -154,9 +154,13 @@ public class ForeignKey
             && _SrcColumnObjs.get(0)._FCT != FrameworkColumnType.TZ                    // Automatically created and foreign-keyed TZ columns are excluded
             && _ParentObject._ParentSchema._Conventions != null                        // Must be a convention defined
             && _ParentObject._ParentSchema._Conventions._ForeignKeyNamePostfix != null // must be a FK postfix namin convention defined
-            && _SrcColumnObjs.get(0)._Name.endsWith(_ParentObject._ParentSchema._Conventions._ForeignKeyNamePostfix) == false // is it compliant?
            )
-          return PS.AddError("Object '" + _ParentObject.getFullName() + "' declares foreign key '" + _Name + "' with source column '" + _SrcColumns[0] + "' which doesn't follow the convention 'foreignKeyNamePostfix' requiring a postfix of '" + _ParentObject._ParentSchema._Conventions._ForeignKeyNamePostfix + "'.");
+          {
+            if (_SrcColumnObjs.get(0)._Name.endsWith(_ParentObject._ParentSchema._Conventions._ForeignKeyNamePostfix) == false) // is it compliant?
+             return PS.AddError("Object '" + _ParentObject.getFullName() + "' declares foreign key '" + _Name + "' with source column '" + _SrcColumns[0] + "' which doesn't follow the convention 'foreignKeyNamePostfix' requiring a postfix of '" + _ParentObject._ParentSchema._Conventions._ForeignKeyNamePostfix + "'.");
+            if (_SrcColumnObjs.get(0)._Name.endsWith("_"+_ParentObject._ParentSchema._Conventions._ForeignKeyNamePostfix) == true) // is it not preceded by an underscore?
+              return PS.AddError("Object '" + _ParentObject.getFullName() + "' declares foreign key '" + _Name + "' with source column '" + _SrcColumns[0] + "' which follows the convention 'foreignKeyNamePostfix' requiring a postfix of '" + _ParentObject._ParentSchema._Conventions._ForeignKeyNamePostfix + "', but which cannot be preceded by an underscore!");
+          }
         /*@formatter:on*/
 
         return true;

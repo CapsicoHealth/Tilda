@@ -242,7 +242,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
               {
                 if (FK._multi == true)
                  { 
-                   Out.println("  -- FK defined from an array column. FK won't me created on DB");
+                   Out.println("  -- FK defined from an array column. FK won't be created on DB");
                    Out.print  ("  -- , CONSTRAINT " + FK.getName() + " FOREIGN KEY (");
                  }
                 Out.print("  , CONSTRAINT " + FK.getName() + " FOREIGN KEY (");
