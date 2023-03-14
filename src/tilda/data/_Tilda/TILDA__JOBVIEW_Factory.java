@@ -955,71 +955,71 @@ Lookup records by the query 'All' over
 
         JSONUtil.print(out, "jobName", ++i==0, Obj.getJobName());
 
-      if (Obj.isJobTypeNull() == false && Obj.getJobType() != null)
+      if (Obj.isNullJobType() == false && Obj.getJobType() != null)
         JSONUtil.print(out, "jobType", ++i==0, Obj.getJobType());
 
-      if (Obj.isJobUserIdNull() == false && Obj.getJobUserId() != null)
+      if (Obj.isNullJobUserId() == false && Obj.getJobUserId() != null)
         JSONUtil.print(out, "jobUserId", ++i==0, Obj.getJobUserId());
 
-      if (Obj.isJobDataStartTZNull() == false && Obj.getJobDataStartTZ() != null)
+      if (Obj.isNullJobDataStartTZ() == false && Obj.getJobDataStartTZ() != null)
         JSONUtil.print(out, "jobDataStartTZ", ++i==0, Obj.getJobDataStartTZ());
 
-      if (Obj.isJobDataStartNull() == false && Obj.getJobDataStart() != null)
+      if (Obj.isNullJobDataStart() == false && Obj.getJobDataStart() != null)
         JSONUtil.print(out, "jobDataStart", ++i==0, Obj.getJobDataStart());
 
-      if (Obj.isJobDataEndTZNull() == false && Obj.getJobDataEndTZ() != null)
+      if (Obj.isNullJobDataEndTZ() == false && Obj.getJobDataEndTZ() != null)
         JSONUtil.print(out, "jobDataEndTZ", ++i==0, Obj.getJobDataEndTZ());
 
-      if (Obj.isJobDataEndNull() == false && Obj.getJobDataEnd() != null)
+      if (Obj.isNullJobDataEnd() == false && Obj.getJobDataEnd() != null)
         JSONUtil.print(out, "jobDataEnd", ++i==0, Obj.getJobDataEnd());
 
         JSONUtil.print(out, "jobStartTZ", ++i==0, Obj.getJobStartTZ());
 
         JSONUtil.print(out, "jobStart", ++i==0, Obj.getJobStart());
 
-      if (Obj.isJobEndTZNull() == false && Obj.getJobEndTZ() != null)
+      if (Obj.isNullJobEndTZ() == false && Obj.getJobEndTZ() != null)
         JSONUtil.print(out, "jobEndTZ", ++i==0, Obj.getJobEndTZ());
 
-      if (Obj.isJobEndNull() == false && Obj.getJobEnd() != null)
+      if (Obj.isNullJobEnd() == false && Obj.getJobEnd() != null)
         JSONUtil.print(out, "jobEnd", ++i==0, Obj.getJobEnd());
 
-      if (Obj.isJobStatusNull() == false)
+      if (Obj.isNullJobStatus() == false)
         JSONUtil.print(out, "jobStatus", ++i==0, Obj.getJobStatus());
 
-      if (Obj.isJobMsgNull() == false && Obj.getJobMsg() != null)
+      if (Obj.isNullJobMsg() == false && Obj.getJobMsg() != null)
         JSONUtil.print(out, "jobMsg", ++i==0, Obj.getJobMsg());
 
         JSONUtil.print(out, "jobPartName", ++i==0, Obj.getJobPartName());
 
-      if (Obj.isJobPartTypeNull() == false && Obj.getJobPartType() != null)
+      if (Obj.isNullJobPartType() == false && Obj.getJobPartType() != null)
         JSONUtil.print(out, "jobPartType", ++i==0, Obj.getJobPartType());
 
-      if (Obj.isJobPartDataStartTZNull() == false && Obj.getJobPartDataStartTZ() != null)
+      if (Obj.isNullJobPartDataStartTZ() == false && Obj.getJobPartDataStartTZ() != null)
         JSONUtil.print(out, "jobPartDataStartTZ", ++i==0, Obj.getJobPartDataStartTZ());
 
-      if (Obj.isJobPartDataStartNull() == false && Obj.getJobPartDataStart() != null)
+      if (Obj.isNullJobPartDataStart() == false && Obj.getJobPartDataStart() != null)
         JSONUtil.print(out, "jobPartDataStart", ++i==0, Obj.getJobPartDataStart());
 
-      if (Obj.isJobPartDataEndTZNull() == false && Obj.getJobPartDataEndTZ() != null)
+      if (Obj.isNullJobPartDataEndTZ() == false && Obj.getJobPartDataEndTZ() != null)
         JSONUtil.print(out, "jobPartDataEndTZ", ++i==0, Obj.getJobPartDataEndTZ());
 
-      if (Obj.isJobPartDataEndNull() == false && Obj.getJobPartDataEnd() != null)
+      if (Obj.isNullJobPartDataEnd() == false && Obj.getJobPartDataEnd() != null)
         JSONUtil.print(out, "jobPartDataEnd", ++i==0, Obj.getJobPartDataEnd());
 
         JSONUtil.print(out, "jobPartStartTZ", ++i==0, Obj.getJobPartStartTZ());
 
         JSONUtil.print(out, "jobPartStart", ++i==0, Obj.getJobPartStart());
 
-      if (Obj.isJobPartEndTZNull() == false && Obj.getJobPartEndTZ() != null)
+      if (Obj.isNullJobPartEndTZ() == false && Obj.getJobPartEndTZ() != null)
         JSONUtil.print(out, "jobPartEndTZ", ++i==0, Obj.getJobPartEndTZ());
 
-      if (Obj.isJobPartEndNull() == false && Obj.getJobPartEnd() != null)
+      if (Obj.isNullJobPartEnd() == false && Obj.getJobPartEnd() != null)
         JSONUtil.print(out, "jobPartEnd", ++i==0, Obj.getJobPartEnd());
 
-      if (Obj.isJobPartRecordsCountNull() == false)
+      if (Obj.isNullJobPartRecordsCount() == false)
         JSONUtil.print(out, "jobPartRecordsCount", ++i==0, Obj.getJobPartRecordsCount());
 
-      if (Obj.isJobPartStatusNull() == false)
+      if (Obj.isNullJobPartStatus() == false)
         JSONUtil.print(out, "jobPartStatus", ++i==0, Obj.getJobPartStatus());
 
         JSONUtil.print(out, "jobPartNotify", ++i==0, Obj.getJobPartNotify());

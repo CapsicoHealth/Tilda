@@ -348,7 +348,7 @@ This is the column definition for:<BR>
                break;
              }
              case 2: {  // Index 'JobPart'
-               if (Obj.isJobPartRefnumNull() == true) PS.setNull(++i, java.sql.Types.BIGINT    );  else PS.setLong      (++i, Obj._jobPartRefnum);
+               if (Obj.isNullJobPartRefnum() == true) PS.setNull(++i, java.sql.Types.BIGINT    );  else PS.setLong      (++i, Obj._jobPartRefnum);
                break;
              }
              case 3: { // Query 'All'
@@ -814,7 +814,7 @@ The results are ordered by: refnum asc
 
         JSONUtil.print(out, "jobRefnum", ++i==0, Obj.getJobRefnum());
 
-      if (Obj.isJobPartRefnumNull() == false)
+      if (Obj.isNullJobPartRefnum() == false)
         JSONUtil.print(out, "jobPartRefnum", ++i==0, Obj.getJobPartRefnum());
 
         JSONUtil.print(out, "notify", ++i==0, Obj.getNotify());
@@ -825,7 +825,7 @@ The results are ordered by: refnum asc
 
         JSONUtil.print(out, "lastUpdated", ++i==0, Obj.getLastUpdated());
 
-      if (Obj.isDeletedNull() == false && Obj.getDeleted() != null)
+      if (Obj.isNullDeleted() == false && Obj.getDeleted() != null)
         JSONUtil.print(out, "deleted", ++i==0, Obj.getDeleted());
 
         if (fullObject == true)

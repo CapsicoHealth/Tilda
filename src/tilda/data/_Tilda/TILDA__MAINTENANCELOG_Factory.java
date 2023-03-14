@@ -542,7 +542,7 @@ This is the column definition for:<BR>
                 break;
              case 1: {  // Index 'SchemaObjectStart'
                PS.setString    (++i, Obj._schemaName );
-               if (Obj.isObjectNameNull() == true) PS.setNull(++i, java.sql.Types.VARCHAR   );  else PS.setString    (++i, Obj._objectName );
+               if (Obj.isNullObjectName() == true) PS.setNull(++i, java.sql.Types.VARCHAR   );  else PS.setString    (++i, Obj._objectName );
                break;
              }
              case 2: {  // Index 'TypeStart'
@@ -1063,36 +1063,36 @@ The results are ordered by: refnum asc
 
         JSONUtil.print(out, "schemaName", ++i==0, Obj.getSchemaName());
 
-      if (Obj.isObjectNameNull() == false && Obj.getObjectName() != null)
+      if (Obj.isNullObjectName() == false && Obj.getObjectName() != null)
         JSONUtil.print(out, "objectName", ++i==0, Obj.getObjectName());
 
-      if (Obj.isObjectTypeNull() == false && Obj.getObjectType() != null)
+      if (Obj.isNullObjectType() == false && Obj.getObjectType() != null)
         JSONUtil.print(out, "objectType", ++i==0, Obj.getObjectType());
 
-      if (Obj.isActionNull() == false && Obj.getAction() != null)
+      if (Obj.isNullAction() == false && Obj.getAction() != null)
         JSONUtil.print(out, "action", ++i==0, Obj.getAction());
 
         JSONUtil.print(out, "startTimeTZ", ++i==0, Obj.getStartTimeTZ());
 
         JSONUtil.print(out, "startTime", ++i==0, Obj.getStartTime());
 
-      if (Obj.isEndTimeTZNull() == false && Obj.getEndTimeTZ() != null)
+      if (Obj.isNullEndTimeTZ() == false && Obj.getEndTimeTZ() != null)
         JSONUtil.print(out, "endTimeTZ", ++i==0, Obj.getEndTimeTZ());
 
-      if (Obj.isEndTimeNull() == false && Obj.getEndTime() != null)
+      if (Obj.isNullEndTime() == false && Obj.getEndTime() != null)
         JSONUtil.print(out, "endTime", ++i==0, Obj.getEndTime());
 
-      if (Obj.isStatementNull() == false && Obj.getStatement() != null)
+      if (Obj.isNullStatement() == false && Obj.getStatement() != null)
         JSONUtil.print(out, "statement", ++i==0, Obj.getStatement());
 
-      if (Obj.isDescrNull() == false && Obj.getDescr() != null)
+      if (Obj.isNullDescr() == false && Obj.getDescr() != null)
         JSONUtil.print(out, "descr", ++i==0, Obj.getDescr());
 
         JSONUtil.print(out, "created", ++i==0, Obj.getCreated());
 
         JSONUtil.print(out, "lastUpdated", ++i==0, Obj.getLastUpdated());
 
-      if (Obj.isDeletedNull() == false && Obj.getDeleted() != null)
+      if (Obj.isNullDeleted() == false && Obj.getDeleted() != null)
         JSONUtil.print(out, "deleted", ++i==0, Obj.getDeleted());
 
         if (fullObject == true)

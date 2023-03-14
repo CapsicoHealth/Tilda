@@ -775,17 +775,17 @@ Lookup records by the index 'All' over  .<BR>The results are ordered by: id asc
 
         JSONUtil.print(out, "label", ++i==0, Obj.getLabel());
 
-      if (Obj.isDeactivatedTZNull() == false && Obj.getDeactivatedTZ() != null)
+      if (Obj.isNullDeactivatedTZ() == false && Obj.getDeactivatedTZ() != null)
         JSONUtil.print(out, "deactivatedTZ", ++i==0, Obj.getDeactivatedTZ());
 
-      if (Obj.isDeactivatedNull() == false && Obj.getDeactivated() != null)
+      if (Obj.isNullDeactivated() == false && Obj.getDeactivated() != null)
         JSONUtil.print(out, "deactivated", ++i==0, Obj.getDeactivated());
 
         JSONUtil.print(out, "created", ++i==0, Obj.getCreated());
 
         JSONUtil.print(out, "lastUpdated", ++i==0, Obj.getLastUpdated());
 
-      if (Obj.isDeletedNull() == false && Obj.getDeleted() != null)
+      if (Obj.isNullDeleted() == false && Obj.getDeleted() != null)
         JSONUtil.print(out, "deleted", ++i==0, Obj.getDeleted());
 
         if (fullObject == true)

@@ -4,6 +4,7 @@ package tilda.data_test._Tilda;
 import java.math.*;
 import java.util.*;
 import java.time.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.logging.log4j.*;
 
@@ -48,18 +49,19 @@ public class TILDA__TESTINGVIEW_Factory
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.TestingView.name of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>name of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Medical system unique enterprise id</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.TestingView.name of type varchar(10)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.TestingView.name</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Medical system unique enterprise id</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        NAME   = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "name"   , 0/*0*/, "Medical system unique enterprise id", null, null, null);
+     public final Type_StringPrimitive        NAME   = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "name"   , 0/*0*/, 10, "Medical system unique enterprise id", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -69,11 +71,12 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.TestingView.refnum of type long</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>refnum of type long</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.TestingView.refnum of type bigint</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.TestingView.refnum</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -89,11 +92,12 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.TestingView.a2Min of type char</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>a2Min of type char</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.TestingView.a2Min of type character</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.TestingView.a2Min</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -109,11 +113,12 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.TestingView.a2Max of type char</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>a2Max of type char</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.TestingView.a2Max of type character</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.TestingView.a2Max</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -129,12 +134,13 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.TestingView.a9TZ of type List<String></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.TestingView.a9TZ of type text[]</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>0</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>a9TZ of type List&lt;String&gt; (ordered)</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a9'.</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.TestingView.a9TZ of type text[]</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.TestingView.a9TZ</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>Size not applicable for collections</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -150,11 +156,12 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.TestingView.a9 of type List<ZonedDateTime></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>a9 of type List&lt;ZonedDateTime&gt; (ordered)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.TestingView.a9 of type timestamptz[]</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.TestingView.a9</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -177,11 +184,12 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.TestingView.a9c of type List<LocalDate></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>a9c of type List&lt;LocalDate&gt; (ordered)</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.TestingView.a9c of type date[]</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.TestingView.a9c</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -197,11 +205,12 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.TestingView.a6First of type long</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>a6First of type long</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.TestingView.a6First of type bigint</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.TestingView.a6First</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -217,11 +226,12 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data_test.TILDATEST.TestingView.a6Last of type long</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>a6Last of type long</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.TestingView.a6Last of type bigint</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.TestingView.a6Last</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -240,18 +250,15 @@ This is the column definition for:<BR>
 
    public static final ColumnDefinition[] COLUMNS_FIRST_IDENTITY = {};
 
-   private static Boolean  __INITIALIZED = false;
+   // Short(short) is deprecated, but we do want a new instance here to avoid synchronizing over the same cached instance from valueOf.
+   // @SuppressWarnings("deprecation")
+   private static final AtomicBoolean __INITIALIZED = new AtomicBoolean(false);
    protected static void initObject(Connection C) throws Exception
      {
-       if (__INITIALIZED == false)
-        synchronized(__INITIALIZED)
-         {
-           if (__INITIALIZED == false)
-            {
-              tilda.data_test.TestingView_Factory.init(C);
-              __INITIALIZED = true;
-            }
-         }
+       if (__INITIALIZED.compareAndSet(false, true))
+        {
+           tilda.data_test.TestingView_Factory.init(C);
+        }
      }
    private static class RecordProcessorInternal implements tilda.db.processors.RecordProcessor
      {
@@ -352,7 +359,7 @@ This is the column definition for:<BR>
         }
        finally
         {
-          tilda.data_test._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__TESTINGVIEW_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, AllocatedArrays);
+          tilda.data_test._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__TESTINGVIEW_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, AllocatedArrays);
           PS = null;
           AllocatedArrays = null;
         }
@@ -499,13 +506,13 @@ Lookup records by the query 'All' over
 
         JSONUtil.print(out, "refnum", ++i==0, Obj.getRefnum());
 
-      if (Obj.isA2MinNull() == false)
+      if (Obj.isNullA2Min() == false)
         JSONUtil.print(out, "a2Min", ++i==0, Obj.getA2Min());
 
-      if (Obj.isA2MaxNull() == false)
+      if (Obj.isNullA2Max() == false)
         JSONUtil.print(out, "a2Max", ++i==0, Obj.getA2Max());
 
-      if (Obj.isA9TZNull() == false && Obj.getA9TZ() != null)
+      if (Obj.isNullA9TZ() == false && Obj.getA9TZ() != null)
         JSONUtil.print(out, "a9TZ", ++i==0, Obj.getA9TZAsArray());
       else if (noNullArrays == true)
         {
@@ -513,7 +520,7 @@ Lookup records by the query 'All' over
           out.write("[]");
         }
 
-      if (Obj.isA9Null() == false && Obj.getA9() != null)
+      if (Obj.isNullA9() == false && Obj.getA9() != null)
         JSONUtil.print(out, "a9", ++i==0, Obj.getA9AsArray());
       else if (noNullArrays == true)
         {
@@ -521,7 +528,7 @@ Lookup records by the query 'All' over
           out.write("[]");
         }
 
-      if (Obj.isA9cNull() == false && Obj.getA9c() != null)
+      if (Obj.isNullA9c() == false && Obj.getA9c() != null)
         JSONUtil.print(out, "a9c", ++i==0, Obj.getA9cAsArray());
       else if (noNullArrays == true)
         {
@@ -529,10 +536,10 @@ Lookup records by the query 'All' over
           out.write("[]");
         }
 
-      if (Obj.isA6FirstNull() == false)
+      if (Obj.isNullA6First() == false)
         JSONUtil.print(out, "a6First", ++i==0, Obj.getA6First());
 
-      if (Obj.isA6LastNull() == false)
+      if (Obj.isNullA6Last() == false)
         JSONUtil.print(out, "a6Last", ++i==0, Obj.getA6Last());
 
         if (fullObject == true)

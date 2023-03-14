@@ -1002,7 +1002,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isDeletedNull()
+   public final boolean isNullDeleted()
      { return __Nulls.intersects(TILDA__MAPPING_Factory.COLS.DELETED._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1028,7 +1028,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setDeletedNull();
+          setNullDeleted();
         }
        else if (v.equals(_deleted) == false)
         {
@@ -1057,7 +1057,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final void setDeletedNull()
+   public final void setNullDeleted()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__MAPPING_Factory.COLS.DELETED._Mask);
@@ -1180,7 +1180,7 @@ This is the hasChanged for:<BR>
        if (_lastUpdated != null)
         Dst.setLastUpdated(_lastUpdated);
        if (__Nulls.intersects(TILDA__MAPPING_Factory.COLS.DELETED._Mask) == true || _deleted    ==null)
-        Dst.setDeletedNull    ();
+        Dst.setNullDeleted    ();
        else
         Dst.setDeleted    (_deleted    );
      }

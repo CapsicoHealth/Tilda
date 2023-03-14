@@ -7,8 +7,8 @@ create table if not exists TILDATUTORIAL.User -- Users
  (  "refnum"       bigint        not null   -- The primary key for this record
   , "id"           varchar(40)   not null   -- The user's id
   , "email"        varchar(255)  not null   -- The user's email
-  , "created"      timestamptz   not null DEFAULT now()   -- The timestamp for when the record was created. (TILDATUTORIAL.User)
-  , "lastUpdated"  timestamptz   not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDATUTORIAL.User)
+  , "created"      timestamptz   not null DEFAULT statement_timestamp()   -- The timestamp for when the record was created. (TILDATUTORIAL.User)
+  , "lastUpdated"  timestamptz   not null DEFAULT statement_timestamp()   -- The timestamp for when the record was last updated. (TILDATUTORIAL.User)
   , "deleted"      timestamptz              -- The timestamp for when the record was deleted. (TILDATUTORIAL.User)
   , PRIMARY KEY("refnum")
  );
@@ -33,8 +33,8 @@ create table if not exists TILDATUTORIAL.Form -- User-entered forms
   , "type"         varchar(40)   not null   -- Form template type
   , "fillDateTZ"   character(5)             -- Generated helper column to hold the time zone ID for 'fillDate'.
   , "fillDate"     timestamptz              -- The date the form was filled
-  , "created"      timestamptz   not null DEFAULT now()   -- The timestamp for when the record was created. (TILDATUTORIAL.Form)
-  , "lastUpdated"  timestamptz   not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDATUTORIAL.Form)
+  , "created"      timestamptz   not null DEFAULT statement_timestamp()   -- The timestamp for when the record was created. (TILDATUTORIAL.Form)
+  , "lastUpdated"  timestamptz   not null DEFAULT statement_timestamp()   -- The timestamp for when the record was last updated. (TILDATUTORIAL.Form)
   , "deleted"      timestamptz              -- The timestamp for when the record was deleted. (TILDATUTORIAL.Form)
   , PRIMARY KEY("refnum")
   , CONSTRAINT fk_Form_User FOREIGN KEY ("userRefnum") REFERENCES TILDATUTORIAL.User ON DELETE restrict ON UPDATE cascade
@@ -61,8 +61,8 @@ create table if not exists TILDATUTORIAL.FormAnswer -- Form answers
   , "formRefnum"   bigint         not null   -- The form's refnum
   , "field"        varchar(60)    not null   -- question/field id
   , "value"        varchar(4000)             -- answer value
-  , "created"      timestamptz    not null DEFAULT now()   -- The timestamp for when the record was created. (TILDATUTORIAL.FormAnswer)
-  , "lastUpdated"  timestamptz    not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDATUTORIAL.FormAnswer)
+  , "created"      timestamptz    not null DEFAULT statement_timestamp()   -- The timestamp for when the record was created. (TILDATUTORIAL.FormAnswer)
+  , "lastUpdated"  timestamptz    not null DEFAULT statement_timestamp()   -- The timestamp for when the record was last updated. (TILDATUTORIAL.FormAnswer)
   , "deleted"      timestamptz               -- The timestamp for when the record was deleted. (TILDATUTORIAL.FormAnswer)
   , PRIMARY KEY("refnum")
   , CONSTRAINT fk_FormAnswer_Form FOREIGN KEY ("formRefnum") REFERENCES TILDATUTORIAL.Form ON DELETE restrict ON UPDATE cascade
@@ -92,8 +92,8 @@ create table if not exists TILDATUTORIAL.TestQuestionAnswer -- Questions and ans
   , "answerId"       varchar(60)   not null   -- Answer id
   , "answerLabel"    varchar(256)  not null   -- Answer label
   , "correct"        boolean       not null   -- Whether the answer is a correct one or not for that question (technically, there could be more than one)
-  , "created"        timestamptz   not null DEFAULT now()   -- The timestamp for when the record was created. (TILDATUTORIAL.TestQuestionAnswer)
-  , "lastUpdated"    timestamptz   not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDATUTORIAL.TestQuestionAnswer)
+  , "created"        timestamptz   not null DEFAULT statement_timestamp()   -- The timestamp for when the record was created. (TILDATUTORIAL.TestQuestionAnswer)
+  , "lastUpdated"    timestamptz   not null DEFAULT statement_timestamp()   -- The timestamp for when the record was last updated. (TILDATUTORIAL.TestQuestionAnswer)
   , "deleted"        timestamptz              -- The timestamp for when the record was deleted. (TILDATUTORIAL.TestQuestionAnswer)
   , PRIMARY KEY("refnum")
  );
@@ -124,8 +124,8 @@ create table if not exists TILDATUTORIAL.TestAnswer -- Test answers
   , "answerId"     varchar(60)             -- Answer value
   , "timeMillis"   integer      not null   -- Time in milliseconds for the time spent answering the question
   , "correct"      boolean      not null   -- Whether the answer is correct or not
-  , "created"      timestamptz  not null DEFAULT now()   -- The timestamp for when the record was created. (TILDATUTORIAL.TestAnswer)
-  , "lastUpdated"  timestamptz  not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDATUTORIAL.TestAnswer)
+  , "created"      timestamptz  not null DEFAULT statement_timestamp()   -- The timestamp for when the record was created. (TILDATUTORIAL.TestAnswer)
+  , "lastUpdated"  timestamptz  not null DEFAULT statement_timestamp()   -- The timestamp for when the record was last updated. (TILDATUTORIAL.TestAnswer)
   , "deleted"      timestamptz             -- The timestamp for when the record was deleted. (TILDATUTORIAL.TestAnswer)
   , PRIMARY KEY("refnum")
   , CONSTRAINT fk_TestAnswer_Form FOREIGN KEY ("formRefnum") REFERENCES TILDATUTORIAL.Form ON DELETE restrict ON UPDATE cascade
@@ -276,8 +276,8 @@ select TILDATUTORIAL.Form."refnum" as "formRefnum" -- The primary key for this r
      , TILDATUTORIAL.Form."fillDate" as "formFillDate" -- The date the form was filled
      , TILDATUTORIAL.User."refnum" as "formUserRefnum" -- The primary key for this record
      , TILDATUTORIAL.User."email" as "formUserEmail" -- The user's email
-     , TILDATUTORIAL.FormAnswer."field" as "field" -- question/field id
-     , max(TILDATUTORIAL.FormAnswer."value") as "value" -- answer value
+     , TILDATUTORIAL.FormAnswer."field" as "field" -- question/field id -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)
+     , max(TILDATUTORIAL.FormAnswer."value") as "value" -- answer value -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)
   from TILDATUTORIAL.Form
      inner join TILDATUTORIAL.User on TILDATUTORIAL.Form."userRefnum" = TILDATUTORIAL.User."refnum"
      left  join TILDATUTORIAL.FormAnswer on TILDATUTORIAL.FormAnswer."formRefnum" = TILDATUTORIAL.Form."refnum"
@@ -294,16 +294,16 @@ select TILDATUTORIAL.Form."refnum" as "formRefnum" -- The primary key for this r
        , "formUserRefnum" 
        , "formUserEmail" 
      , MAX("value") as "value"
-     , (Tilda.toInt(MAX("value") filter (where "field"= 'Q1') ,null))::integer as "Q1"
-     , (Tilda.toInt(MAX("value") filter (where "field"= 'Q2') ,null))::integer as "Q2"
-     , (Tilda.toInt(MAX("value") filter (where "field"= 'Q3') ,null))::integer as "Q3"
-     , MAX("value") filter (where "field"= 'Q4')  as "Q4"
+     , (Tilda.toInt(max("value") filter (where "field" = 'Q1') ,null))::integer as "Q1"
+     , (Tilda.toInt(max("value") filter (where "field" = 'Q2') ,null))::integer as "Q2"
+     , (Tilda.toInt(max("value") filter (where "field" = 'Q3') ,null))::integer as "Q3"
+     , max("value") filter (where "field" = 'Q4')  as "Q4"
 from T
      group by 1, 2, 3, 4, 5
 ;
 
 
-COMMENT ON VIEW TILDATUTORIAL.Form_SAT01_PivotView IS E'-- DDL META DATA VERSION 2021-09-02\ncreate or replace view TILDATUTORIAL.Form_SAT01_PivotView as \nwith T as (\n-- ''A pivoted view of SAT_01 forms''\nselect TILDATUTORIAL.Form."refnum" as "formRefnum" -- The primary key for this record\n     , trim(TILDATUTORIAL.Form."fillDateTZ") as "formFillDateTZ" -- Generated helper column to hold the time zone ID for ''fillDate''.\n     , TILDATUTORIAL.Form."fillDate" as "formFillDate" -- The date the form was filled\n     , TILDATUTORIAL.User."refnum" as "formUserRefnum" -- The primary key for this record\n     , TILDATUTORIAL.User."email" as "formUserEmail" -- The user''s email\n     , TILDATUTORIAL.FormAnswer."field" as "field" -- question/field id\n     , max(TILDATUTORIAL.FormAnswer."value") as "value" -- answer value\n  from TILDATUTORIAL.Form\n     inner join TILDATUTORIAL.User on TILDATUTORIAL.Form."userRefnum" = TILDATUTORIAL.User."refnum"\n     left  join TILDATUTORIAL.FormAnswer on TILDATUTORIAL.FormAnswer."formRefnum" = TILDATUTORIAL.Form."refnum"\n where (    TILDATUTORIAL.Form."type" = ''SAT_01''\n        and TILDATUTORIAL.Form."deleted" is null\n        and TILDATUTORIAL.FormAnswer."deleted" is null\n       )\n   and ( TILDATUTORIAL.FormAnswer."field" in (''Q1'', ''Q2'', ''Q3'', ''Q4'')\n       )\n group by 1, 2, 3, 4, 5, 6\n) select "formRefnum" \n       , "formFillDateTZ" \n       , "formFillDate" \n       , "formUserRefnum" \n       , "formUserEmail" \n     , MAX("value") as "value"\n     , (Tilda.toInt(MAX("value") filter (where "field"= ''Q1'') ,null))::integer as "Q1"\n     , (Tilda.toInt(MAX("value") filter (where "field"= ''Q2'') ,null))::integer as "Q2"\n     , (Tilda.toInt(MAX("value") filter (where "field"= ''Q3'') ,null))::integer as "Q3"\n     , MAX("value") filter (where "field"= ''Q4'')  as "Q4"\nfrom T\n     group by 1, 2, 3, 4, 5\n;\n\n';
+COMMENT ON VIEW TILDATUTORIAL.Form_SAT01_PivotView IS E'-- DDL META DATA VERSION 2021-09-02\ncreate or replace view TILDATUTORIAL.Form_SAT01_PivotView as \nwith T as (\n-- ''A pivoted view of SAT_01 forms''\nselect TILDATUTORIAL.Form."refnum" as "formRefnum" -- The primary key for this record\n     , trim(TILDATUTORIAL.Form."fillDateTZ") as "formFillDateTZ" -- Generated helper column to hold the time zone ID for ''fillDate''.\n     , TILDATUTORIAL.Form."fillDate" as "formFillDate" -- The date the form was filled\n     , TILDATUTORIAL.User."refnum" as "formUserRefnum" -- The primary key for this record\n     , TILDATUTORIAL.User."email" as "formUserEmail" -- The user''s email\n     , TILDATUTORIAL.FormAnswer."field" as "field" -- question/field id -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , max(TILDATUTORIAL.FormAnswer."value") as "value" -- answer value -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n  from TILDATUTORIAL.Form\n     inner join TILDATUTORIAL.User on TILDATUTORIAL.Form."userRefnum" = TILDATUTORIAL.User."refnum"\n     left  join TILDATUTORIAL.FormAnswer on TILDATUTORIAL.FormAnswer."formRefnum" = TILDATUTORIAL.Form."refnum"\n where (    TILDATUTORIAL.Form."type" = ''SAT_01''\n        and TILDATUTORIAL.Form."deleted" is null\n        and TILDATUTORIAL.FormAnswer."deleted" is null\n       )\n   and ( TILDATUTORIAL.FormAnswer."field" in (''Q1'', ''Q2'', ''Q3'', ''Q4'')\n       )\n group by 1, 2, 3, 4, 5, 6\n) select "formRefnum" \n       , "formFillDateTZ" \n       , "formFillDate" \n       , "formUserRefnum" \n       , "formUserEmail" \n     , MAX("value") as "value"\n     , (Tilda.toInt(max("value") filter (where "field" = ''Q1'') ,null))::integer as "Q1"\n     , (Tilda.toInt(max("value") filter (where "field" = ''Q2'') ,null))::integer as "Q2"\n     , (Tilda.toInt(max("value") filter (where "field" = ''Q3'') ,null))::integer as "Q3"\n     , max("value") filter (where "field" = ''Q4'')  as "Q4"\nfrom T\n     group by 1, 2, 3, 4, 5\n;\n\n';
 
 COMMENT ON COLUMN TILDATUTORIAL.Form_SAT01_PivotView."formRefnum" IS E'The primary key for this record';
 COMMENT ON COLUMN TILDATUTORIAL.Form_SAT01_PivotView."formFillDateTZ" IS E'Generated helper column to hold the time zone ID for ''fillDate''.';
@@ -315,15 +315,6 @@ COMMENT ON COLUMN TILDATUTORIAL.Form_SAT01_PivotView."Q2" IS E'Q2 (pivot of MAX(
 COMMENT ON COLUMN TILDATUTORIAL.Form_SAT01_PivotView."Q3" IS E'Q3 (pivot of MAX(TILDATUTORIAL.FormAnswer.value) on TILDATUTORIAL.FormAnswer.field=''Q3'')';
 COMMENT ON COLUMN TILDATUTORIAL.Form_SAT01_PivotView."Q4" IS E'Q4 (pivot of MAX(TILDATUTORIAL.FormAnswer.value) on TILDATUTORIAL.FormAnswer.field=''Q4'')';
 
-DO $$
--- This view doesn't have any formula, but just in case it used to and they were all repoved from the model, we still have to do some cleanup.
-DECLARE
-  ts timestamp;
-BEGIN
-  select into ts current_timestamp;
-  UPDATE TILDA.Formula set deleted = current_timestamp where "location" = 'TILDATUTORIAL.Form_SAT01_PivotView' AND "lastUpdated" < ts;
-END; $$
-LANGUAGE PLPGSQL;
 
 
 
@@ -337,13 +328,13 @@ select TILDATUTORIAL.Form."refnum" as "formRefnum" -- The primary key for this r
      , TILDATUTORIAL.Form."fillDate" as "formFillDate" -- The date the form was filled
      , TILDATUTORIAL.User."refnum" as "formUserRefnum" -- The primary key for this record
      , TILDATUTORIAL.User."email" as "formUserEmail" -- The user's email
-     , TILDATUTORIAL.TestAnswer."questionId" as "questionId" -- Question id
+     , TILDATUTORIAL.TestAnswer."questionId" as "questionId" -- Question id -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)
      , count(TILDATUTORIAL.TestAnswer."correct") filter(where correct = true) as "countCorrect" -- Whether the answer is correct or not
      , count(TILDATUTORIAL.TestAnswer."correct") filter(where correct = false) as "countIncorrect" -- Whether the answer is correct or not
      , sum(TILDATUTORIAL.TestAnswer."timeMillis") as "timeMillisTotal" -- Time in milliseconds for the time spent answering the question
      , avg(TILDATUTORIAL.TestAnswer."timeMillis") as "timeMillisAvg" -- Time in milliseconds for the time spent answering the question
      , min(TILDATUTORIAL.TestAnswer."timeMillis") as "timeMillisMin" -- Time in milliseconds for the time spent answering the question
-     , max(TILDATUTORIAL.TestAnswer."timeMillis") as "timeMillisMax" -- Time in milliseconds for the time spent answering the question
+     , max(TILDATUTORIAL.TestAnswer."timeMillis") as "timeMillisMax" -- Time in milliseconds for the time spent answering the question -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)
   from TILDATUTORIAL.Form
      inner join TILDATUTORIAL.User on TILDATUTORIAL.Form."userRefnum" = TILDATUTORIAL.User."refnum"
      left  join TILDATUTORIAL.TestAnswer on TILDATUTORIAL.TestAnswer."formRefnum" = TILDATUTORIAL.Form."refnum"
@@ -363,16 +354,15 @@ select TILDATUTORIAL.Form."refnum" as "formRefnum" -- The primary key for this r
      , SUM("countCorrect") as "countCorrect"
      , SUM("countIncorrect") as "countIncorrect"
      , SUM("timeMillisTotal") as "timeMillisTotal"
-     , AVG("timeMillisAvg") as "timeMillisAvg"
      , MIN("timeMillisMin") as "timeMillisMin"
      , MAX("timeMillisMax") as "timeMillisMax"
      , MIN("correct") as "correct"
-     , MIN("correct") filter (where "questionId"= 'QX')  as "QX_correct"
-     , MAX("timeMillisMax") filter (where "questionId"= 'QX')  as "QX_timeMillis"
-     , MIN("correct") filter (where "questionId"= 'QY')  as "QY_correct"
-     , MAX("timeMillisMax") filter (where "questionId"= 'QY')  as "QY_timeMillis"
-     , MIN("correct") filter (where "questionId"= 'QZ')  as "QZ_correct"
-     , MAX("timeMillisMax") filter (where "questionId"= 'QZ')  as "QZ_timeMillis"
+     , min("correct") filter (where "questionId" = 'QX')  as "QX_correct"
+     , max("timeMillisMax") filter (where "questionId" = 'QX')  as "QX_timeMillis"
+     , min("correct") filter (where "questionId" = 'QY')  as "QY_correct"
+     , max("timeMillisMax") filter (where "questionId" = 'QY')  as "QY_timeMillis"
+     , min("correct") filter (where "questionId" = 'QZ')  as "QZ_correct"
+     , max("timeMillisMax") filter (where "questionId" = 'QZ')  as "QZ_timeMillis"
 from T
      group by 1, 2, 3, 4, 5, 6
 ;
@@ -403,11 +393,14 @@ BEGIN
           ,"formFillDate" -- COLUMN
           ,"formUserRefnum" -- COLUMN
           ,"formUserEmail" -- COLUMN
+          -- "questionId" -- BLOCKED
           ,"countCorrect" -- COLUMN
           ,"countIncorrect" -- COLUMN
           ,"timeMillisTotal" -- COLUMN
           ,"timeMillisAvg" -- COLUMN
           ,"timeMillisMin" -- COLUMN
+          -- "timeMillisMax" -- BLOCKED
+          -- "correct" -- BLOCKED
           , "QX_correct" -- PIVOT COLUMN
           , "QX_timeMillis" -- PIVOT COLUMN
           , "QY_correct" -- PIVOT COLUMN
@@ -436,7 +429,7 @@ LANGUAGE PLPGSQL;
 
 -- SELECT TILDATUTORIAL.Refill_Test_XYZ_Realized(); -- !!! THIS MAY TAKE SEVERAL MINUTES !!!
 
-COMMENT ON VIEW TILDATUTORIAL.Test_XYZ_PivotView IS E'-- DDL META DATA VERSION 2021-09-02\ncreate or replace view TILDATUTORIAL.Test_XYZ_PivotView as \nwith T as (\n-- ''A pivoted view of XYZ forms''\nselect TILDATUTORIAL.Form."refnum" as "formRefnum" -- The primary key for this record\n     , TILDATUTORIAL.Form."type" as "formType" -- Form template type\n     , trim(TILDATUTORIAL.Form."fillDateTZ") as "formFillDateTZ" -- Generated helper column to hold the time zone ID for ''fillDate''.\n     , TILDATUTORIAL.Form."fillDate" as "formFillDate" -- The date the form was filled\n     , TILDATUTORIAL.User."refnum" as "formUserRefnum" -- The primary key for this record\n     , TILDATUTORIAL.User."email" as "formUserEmail" -- The user''s email\n     , TILDATUTORIAL.TestAnswer."questionId" as "questionId" -- Question id\n     , count(TILDATUTORIAL.TestAnswer."correct") filter(where correct = true) as "countCorrect" -- Whether the answer is correct or not\n     , count(TILDATUTORIAL.TestAnswer."correct") filter(where correct = false) as "countIncorrect" -- Whether the answer is correct or not\n     , sum(TILDATUTORIAL.TestAnswer."timeMillis") as "timeMillisTotal" -- Time in milliseconds for the time spent answering the question\n     , avg(TILDATUTORIAL.TestAnswer."timeMillis") as "timeMillisAvg" -- Time in milliseconds for the time spent answering the question\n     , min(TILDATUTORIAL.TestAnswer."timeMillis") as "timeMillisMin" -- Time in milliseconds for the time spent answering the question\n     , max(TILDATUTORIAL.TestAnswer."timeMillis") as "timeMillisMax" -- Time in milliseconds for the time spent answering the question\n  from TILDATUTORIAL.Form\n     inner join TILDATUTORIAL.User on TILDATUTORIAL.Form."userRefnum" = TILDATUTORIAL.User."refnum"\n     left  join TILDATUTORIAL.TestAnswer on TILDATUTORIAL.TestAnswer."formRefnum" = TILDATUTORIAL.Form."refnum"\n where (    TILDATUTORIAL.Form."type" = ''XYZ''\n        and TILDATUTORIAL.Form."deleted" is null\n        and TILDATUTORIAL.TestAnswer."deleted" is null\n       )\n   and ( TILDATUTORIAL.TestAnswer."questionId" in (''QX'', ''QY'', ''QZ'')\n       )\n group by 1, 2, 3, 4, 5, 6, 7\n) select "formRefnum" \n       , "formType" \n       , "formFillDateTZ" \n       , "formFillDate" \n       , "formUserRefnum" \n       , "formUserEmail" \n     , SUM("countCorrect") as "countCorrect"\n     , SUM("countIncorrect") as "countIncorrect"\n     , SUM("timeMillisTotal") as "timeMillisTotal"\n     , AVG("timeMillisAvg") as "timeMillisAvg"\n     , MIN("timeMillisMin") as "timeMillisMin"\n     , MAX("timeMillisMax") as "timeMillisMax"\n     , MIN("correct") as "correct"\n     , MIN("correct") filter (where "questionId"= ''QX'')  as "QX_correct"\n     , MAX("timeMillisMax") filter (where "questionId"= ''QX'')  as "QX_timeMillis"\n     , MIN("correct") filter (where "questionId"= ''QY'')  as "QY_correct"\n     , MAX("timeMillisMax") filter (where "questionId"= ''QY'')  as "QY_timeMillis"\n     , MIN("correct") filter (where "questionId"= ''QZ'')  as "QZ_correct"\n     , MAX("timeMillisMax") filter (where "questionId"= ''QZ'')  as "QZ_timeMillis"\nfrom T\n     group by 1, 2, 3, 4, 5, 6\n;\n\n\nDROP FUNCTION IF EXISTS TILDATUTORIAL.Refill_Test_XYZ_Realized();\nCREATE OR REPLACE FUNCTION TILDATUTORIAL.Refill_Test_XYZ_Realized()\n RETURNS boolean AS $$\ndeclare\n  startDt        timestamptz;\n  insertStartDt  timestamptz;\n  insertEndDt    timestamptz;\n  deleteStartDt  timestamptz;\n  deleteEndDt    timestamptz;\n  analyzeStartDt timestamptz;\n  analyzeEndDt   timestamptz;\n  endDt          timestamptz;\n  insertRowCount bigint;\n  deleteRowCount bigint;\nBEGIN\n  startDt:= clock_timestamp();\n  TRUNCATE TILDATUTORIAL.Test_XYZ_Realized;\n  insertStartDt:= clock_timestamp();\n  INSERT INTO TILDATUTORIAL.Test_XYZ_Realized ("formRefnum", "formType", "formFillDateTZ", "formFillDate", "formUserRefnum", "formUserEmail", "countCorrect", "countIncorrect", "timeMillisTotal", "timeMillisAvg", "timeMillisMin", "QX_correct", "QX_timeMillis", "QY_correct", "QY_timeMillis", "QZ_correct", "QZ_timeMillis")\n     SELECT /*genRealizedColumnList*/"formRefnum" -- COLUMN\n          ,"formType" -- COLUMN\n          ,"formFillDateTZ" -- COLUMN\n          ,"formFillDate" -- COLUMN\n          ,"formUserRefnum" -- COLUMN\n          ,"formUserEmail" -- COLUMN\n          ,"countCorrect" -- COLUMN\n          ,"countIncorrect" -- COLUMN\n          ,"timeMillisTotal" -- COLUMN\n          ,"timeMillisAvg" -- COLUMN\n          ,"timeMillisMin" -- COLUMN\n          , "QX_correct" -- PIVOT COLUMN\n          , "QX_timeMillis" -- PIVOT COLUMN\n          , "QY_correct" -- PIVOT COLUMN\n          , "QY_timeMillis" -- PIVOT COLUMN\n          , "QZ_correct" -- PIVOT COLUMN\n          , "QZ_timeMillis" -- PIVOT COLUMN\n     FROM TILDATUTORIAL.Test_XYZ_PivotView;\n  GET DIAGNOSTICS insertRowCount = ROW_COUNT;\n  insertEndDt:= clock_timestamp();\n  analyzeStartDt:= clock_timestamp();\n  ANALYZE TILDATUTORIAL.Test_XYZ_Realized;\n  analyzeEndDt:= clock_timestamp ( );\n  endDt:= clock_timestamp();\n\n  INSERT INTO TILDA.RefillPerf("schemaName", "objectName", "startTimeTZ", "startTime", "endTimeTZ", "endTime", "timeInsertSec", "timeDeleteSec", "timeAnalyzeSec", "timeTotalSec", "insertCount", "deleteCount")\n                        VALUES(''TILDATUTORIAL'', ''Test_XYZ_Realized'', ''UTC'', startDt, ''UTC'', endDt\n                                         , COALESCE(EXTRACT(EPOCH FROM insertEndDt-insertStartDt), 0)\n                                         , COALESCE(EXTRACT(EPOCH FROM deleteEndDt-deleteStartDt), 0)\n                                         , COALESCE(EXTRACT(EPOCH FROM analyzeEndDt-analyzeStartDt), 0)\n                                         , COALESCE(EXTRACT(EPOCH FROM endDt-startDt), 0)\n                                         , COALESCE(insertRowCount, 0)\n                                         , COALESCE(deleteRowCount, 0));\n  return true;\nEND; $$\nLANGUAGE PLPGSQL;\n\n-- SELECT TILDATUTORIAL.Refill_Test_XYZ_Realized(); -- !!! THIS MAY TAKE SEVERAL MINUTES !!!\n';
+COMMENT ON VIEW TILDATUTORIAL.Test_XYZ_PivotView IS E'-- DDL META DATA VERSION 2021-09-02\ncreate or replace view TILDATUTORIAL.Test_XYZ_PivotView as \nwith T as (\n-- ''A pivoted view of XYZ forms''\nselect TILDATUTORIAL.Form."refnum" as "formRefnum" -- The primary key for this record\n     , TILDATUTORIAL.Form."type" as "formType" -- Form template type\n     , trim(TILDATUTORIAL.Form."fillDateTZ") as "formFillDateTZ" -- Generated helper column to hold the time zone ID for ''fillDate''.\n     , TILDATUTORIAL.Form."fillDate" as "formFillDate" -- The date the form was filled\n     , TILDATUTORIAL.User."refnum" as "formUserRefnum" -- The primary key for this record\n     , TILDATUTORIAL.User."email" as "formUserEmail" -- The user''s email\n     , TILDATUTORIAL.TestAnswer."questionId" as "questionId" -- Question id -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , count(TILDATUTORIAL.TestAnswer."correct") filter(where correct = true) as "countCorrect" -- Whether the answer is correct or not\n     , count(TILDATUTORIAL.TestAnswer."correct") filter(where correct = false) as "countIncorrect" -- Whether the answer is correct or not\n     , sum(TILDATUTORIAL.TestAnswer."timeMillis") as "timeMillisTotal" -- Time in milliseconds for the time spent answering the question\n     , avg(TILDATUTORIAL.TestAnswer."timeMillis") as "timeMillisAvg" -- Time in milliseconds for the time spent answering the question\n     , min(TILDATUTORIAL.TestAnswer."timeMillis") as "timeMillisMin" -- Time in milliseconds for the time spent answering the question\n     , max(TILDATUTORIAL.TestAnswer."timeMillis") as "timeMillisMax" -- Time in milliseconds for the time spent answering the question -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n  from TILDATUTORIAL.Form\n     inner join TILDATUTORIAL.User on TILDATUTORIAL.Form."userRefnum" = TILDATUTORIAL.User."refnum"\n     left  join TILDATUTORIAL.TestAnswer on TILDATUTORIAL.TestAnswer."formRefnum" = TILDATUTORIAL.Form."refnum"\n where (    TILDATUTORIAL.Form."type" = ''XYZ''\n        and TILDATUTORIAL.Form."deleted" is null\n        and TILDATUTORIAL.TestAnswer."deleted" is null\n       )\n   and ( TILDATUTORIAL.TestAnswer."questionId" in (''QX'', ''QY'', ''QZ'')\n       )\n group by 1, 2, 3, 4, 5, 6, 7\n) select "formRefnum" \n       , "formType" \n       , "formFillDateTZ" \n       , "formFillDate" \n       , "formUserRefnum" \n       , "formUserEmail" \n     , SUM("countCorrect") as "countCorrect"\n     , SUM("countIncorrect") as "countIncorrect"\n     , SUM("timeMillisTotal") as "timeMillisTotal"\n     , MIN("timeMillisMin") as "timeMillisMin"\n     , MAX("timeMillisMax") as "timeMillisMax"\n     , MIN("correct") as "correct"\n     , min("correct") filter (where "questionId" = ''QX'')  as "QX_correct"\n     , max("timeMillisMax") filter (where "questionId" = ''QX'')  as "QX_timeMillis"\n     , min("correct") filter (where "questionId" = ''QY'')  as "QY_correct"\n     , max("timeMillisMax") filter (where "questionId" = ''QY'')  as "QY_timeMillis"\n     , min("correct") filter (where "questionId" = ''QZ'')  as "QZ_correct"\n     , max("timeMillisMax") filter (where "questionId" = ''QZ'')  as "QZ_timeMillis"\nfrom T\n     group by 1, 2, 3, 4, 5, 6\n;\n\n\nDROP FUNCTION IF EXISTS TILDATUTORIAL.Refill_Test_XYZ_Realized();\nCREATE OR REPLACE FUNCTION TILDATUTORIAL.Refill_Test_XYZ_Realized()\n RETURNS boolean AS $$\ndeclare\n  startDt        timestamptz;\n  insertStartDt  timestamptz;\n  insertEndDt    timestamptz;\n  deleteStartDt  timestamptz;\n  deleteEndDt    timestamptz;\n  analyzeStartDt timestamptz;\n  analyzeEndDt   timestamptz;\n  endDt          timestamptz;\n  insertRowCount bigint;\n  deleteRowCount bigint;\nBEGIN\n  startDt:= clock_timestamp();\n  TRUNCATE TILDATUTORIAL.Test_XYZ_Realized;\n  insertStartDt:= clock_timestamp();\n  INSERT INTO TILDATUTORIAL.Test_XYZ_Realized ("formRefnum", "formType", "formFillDateTZ", "formFillDate", "formUserRefnum", "formUserEmail", "countCorrect", "countIncorrect", "timeMillisTotal", "timeMillisAvg", "timeMillisMin", "QX_correct", "QX_timeMillis", "QY_correct", "QY_timeMillis", "QZ_correct", "QZ_timeMillis")\n     SELECT /*genRealizedColumnList*/"formRefnum" -- COLUMN\n          ,"formType" -- COLUMN\n          ,"formFillDateTZ" -- COLUMN\n          ,"formFillDate" -- COLUMN\n          ,"formUserRefnum" -- COLUMN\n          ,"formUserEmail" -- COLUMN\n          -- "questionId" -- BLOCKED\n          ,"countCorrect" -- COLUMN\n          ,"countIncorrect" -- COLUMN\n          ,"timeMillisTotal" -- COLUMN\n          ,"timeMillisAvg" -- COLUMN\n          ,"timeMillisMin" -- COLUMN\n          -- "timeMillisMax" -- BLOCKED\n          -- "correct" -- BLOCKED\n          , "QX_correct" -- PIVOT COLUMN\n          , "QX_timeMillis" -- PIVOT COLUMN\n          , "QY_correct" -- PIVOT COLUMN\n          , "QY_timeMillis" -- PIVOT COLUMN\n          , "QZ_correct" -- PIVOT COLUMN\n          , "QZ_timeMillis" -- PIVOT COLUMN\n     FROM TILDATUTORIAL.Test_XYZ_PivotView;\n  GET DIAGNOSTICS insertRowCount = ROW_COUNT;\n  insertEndDt:= clock_timestamp();\n  analyzeStartDt:= clock_timestamp();\n  ANALYZE TILDATUTORIAL.Test_XYZ_Realized;\n  analyzeEndDt:= clock_timestamp ( );\n  endDt:= clock_timestamp();\n\n  INSERT INTO TILDA.RefillPerf("schemaName", "objectName", "startTimeTZ", "startTime", "endTimeTZ", "endTime", "timeInsertSec", "timeDeleteSec", "timeAnalyzeSec", "timeTotalSec", "insertCount", "deleteCount")\n                        VALUES(''TILDATUTORIAL'', ''Test_XYZ_Realized'', ''UTC'', startDt, ''UTC'', endDt\n                                         , COALESCE(EXTRACT(EPOCH FROM insertEndDt-insertStartDt), 0)\n                                         , COALESCE(EXTRACT(EPOCH FROM deleteEndDt-deleteStartDt), 0)\n                                         , COALESCE(EXTRACT(EPOCH FROM analyzeEndDt-analyzeStartDt), 0)\n                                         , COALESCE(EXTRACT(EPOCH FROM endDt-startDt), 0)\n                                         , COALESCE(insertRowCount, 0)\n                                         , COALESCE(deleteRowCount, 0));\n  return true;\nEND; $$\nLANGUAGE PLPGSQL;\n\n-- SELECT TILDATUTORIAL.Refill_Test_XYZ_Realized(); -- !!! THIS MAY TAKE SEVERAL MINUTES !!!\n';
 
 COMMENT ON COLUMN TILDATUTORIAL.Test_XYZ_PivotView."formRefnum" IS E'The primary key for this record';
 COMMENT ON COLUMN TILDATUTORIAL.Test_XYZ_PivotView."formType" IS E'Form template type';
@@ -456,15 +449,6 @@ COMMENT ON COLUMN TILDATUTORIAL.Test_XYZ_PivotView."QX_timeMillis" IS E'Question
 COMMENT ON COLUMN TILDATUTORIAL.Test_XYZ_PivotView."QY_timeMillis" IS E'Question Y (pivot of MAX(TILDATUTORIAL.TestAnswer.timeMillis) on TILDATUTORIAL.TestAnswer.questionId=''QY'')';
 COMMENT ON COLUMN TILDATUTORIAL.Test_XYZ_PivotView."QZ_timeMillis" IS E'Question Z (pivot of MAX(TILDATUTORIAL.TestAnswer.timeMillis) on TILDATUTORIAL.TestAnswer.questionId=''QZ'')';
 
-DO $$
--- This view doesn't have any formula, but just in case it used to and they were all repoved from the model, we still have to do some cleanup.
-DECLARE
-  ts timestamp;
-BEGIN
-  select into ts current_timestamp;
-  UPDATE TILDA.Formula set deleted = current_timestamp where "location" = 'TILDATUTORIAL.Test_XYZ_PivotView' AND "lastUpdated" < ts;
-END; $$
-LANGUAGE PLPGSQL;
 
 
 
@@ -569,15 +553,6 @@ COMMENT ON COLUMN TILDATUTORIAL.Test_View."timeMillisAvg" IS E'Time in milliseco
 COMMENT ON COLUMN TILDATUTORIAL.Test_View."timeMillisMin" IS E'Time in milliseconds for the time spent answering the question';
 COMMENT ON COLUMN TILDATUTORIAL.Test_View."timeMillisMax" IS E'Time in milliseconds for the time spent answering the question';
 
-DO $$
--- This view doesn't have any formula, but just in case it used to and they were all repoved from the model, we still have to do some cleanup.
-DECLARE
-  ts timestamp;
-BEGIN
-  select into ts current_timestamp;
-  UPDATE TILDA.Formula set deleted = current_timestamp where "location" = 'TILDATUTORIAL.Test_View' AND "lastUpdated" < ts;
-END; $$
-LANGUAGE PLPGSQL;
 
 
 
@@ -741,84 +716,4 @@ COMMENT ON COLUMN TILDATUTORIAL.Test_XYZ_Analytics_View."isPassed" IS E'The calc
 COMMENT ON COLUMN TILDATUTORIAL.Test_XYZ_Analytics_View."tookLongerThanAverage" IS E'The calculated formula: Whether the test took longer that the average time spent across all tests.';
 COMMENT ON COLUMN TILDATUTORIAL.Test_XYZ_Analytics_View."wasChallenging" IS E'The calculated formula: Whether the test was challenging in that:<LI>\n  <LI>it was passed,</LI>\n  <LI>and overall, less than a third of answers across all tests were answered correctly.</LI>\n</UL>';
 
-DO $$
--- This view has formulas and we need to update all its meta-data.
-DECLARE
-  k bigint;
-  ts timestamp;
-BEGIN
-  select into k TILDA.getKeyBatchAsMaxExclusive('TILDA.FORMULA', 3)-3;
-  select into ts current_timestamp;
-
-INSERT INTO TILDA.Formula ("refnum", "location", "location2", "name", "type", "title", "description", "formula", "htmlDoc", "referencedColumns", "created", "lastUpdated", "deleted")
-    VALUES (k+0, 'TILDATUTORIAL.Test_XYZ_Analytics_View', 'TILDATUTORIAL.Test_XYZ_Analytics_Realized', 'isPassed', 'INT', 'Test Passed', 'Whether the test was passed or not by answering at least 2 out of the 3 questions.', 'formCountCorrect >= 2', '<B>N/A</B>', ARRAY['TILDATUTORIAL.Test_XYZ_Analytics_View.formCountCorrect'], current_timestamp, current_timestamp, null)
-          ,(k+1, 'TILDATUTORIAL.Test_XYZ_Analytics_View', 'TILDATUTORIAL.Test_XYZ_Analytics_Realized', 'tookLongerThanAverage', 'INT', 'Test Took Longer Than Average', 'Whether the test took longer that the average time spent across all tests.', 'formTimeMillisTotal > testTimeMillisAvg', '<B>N/A</B>', ARRAY['TILDATUTORIAL.Test_XYZ_Analytics_View.formTimeMillisTotal', 'TILDATUTORIAL.Test_XYZ_Analytics_View.testTimeMillisAvg'], current_timestamp, current_timestamp, null)
-          ,(k+2, 'TILDATUTORIAL.Test_XYZ_Analytics_View', 'TILDATUTORIAL.Test_XYZ_Analytics_Realized', 'wasChallenging', 'INT', 'Test Was Challenging', 'Whether the test was challenging in that:<LI>
-  <LI>it was passed,</LI>
-  <LI>and overall, less than a third of answers across all tests were answered correctly.</LI>
-</UL>', '    isPassed=1
-AND testAnswerCountCorrect < testCount*3/2', '<B>N/A</B>', ARRAY['TILDATUTORIAL.Test_XYZ_Analytics_View.testAnswerCountCorrect', 'TILDATUTORIAL.Test_XYZ_Analytics_View.testCount'], current_timestamp, current_timestamp, null)
-  ON CONFLICT("location", "name") DO UPDATE
-    SET "location2" = EXCLUDED."location2"
-      , "type" = EXCLUDED."type"
-      , "title" = EXCLUDED."title"
-      , "description" = EXCLUDED."description"
-      , "formula" = EXCLUDED."formula"
-      , "htmlDoc" = EXCLUDED."htmlDoc"
-      , "referencedColumns" = EXCLUDED."referencedColumns"
-      , "lastUpdated" = current_timestamp
-      , "deleted" = null
-   ;
-UPDATE TILDA.Formula set deleted = current_timestamp where "location" = 'TILDATUTORIAL.Test_XYZ_Analytics_View' AND "lastUpdated" < ts;
-
-INSERT INTO TILDA.FormulaResult ("formulaRefnum", "value", "description", "created", "lastUpdated", "deleted")
-    VALUES ((select refnum from TILDA.Formula where "location" = 'TILDATUTORIAL.Test_XYZ_Analytics_View' AND "name" = 'wasChallenging'), '0', 'The test was not challenging', current_timestamp, current_timestamp, null)
-          ,((select refnum from TILDA.Formula where "location" = 'TILDATUTORIAL.Test_XYZ_Analytics_View' AND "name" = 'wasChallenging'), '1', 'The test was challenging', current_timestamp, current_timestamp, null)
-  ON CONFLICT("formulaRefnum", "value") DO UPDATE
-    SET "description" = EXCLUDED."description"
-      , "lastUpdated" = current_timestamp
-      , "deleted" = null
-   ;
-UPDATE TILDA.FormulaResult
-   set deleted = current_timestamp
- where "formulaRefnum" in (select refnum
-                               from TILDA.Formula
-                              where "location" = 'TILDATUTORIAL.Test_XYZ_Analytics_View'
-                                and "deleted" is not null
-                            );
-
-INSERT INTO TILDA.FormulaDependency("formulaRefnum", "dependencyRefnum", "created", "lastUpdated", "deleted")
-    VALUES ( (select refnum from TILDA.Formula where "location" = 'TILDATUTORIAL.Test_XYZ_Analytics_View' AND "name" = 'wasChallenging')
-            ,(select refnum from TILDA.Formula where "location" = 'TILDATUTORIAL.Test_XYZ_Analytics_View' AND "name" = 'isPassed')
-            ,current_timestamp, current_timestamp, null
-           )
-  ON CONFLICT("formulaRefnum", "dependencyRefnum") DO UPDATE
-    SET "lastUpdated" = current_timestamp
-      , "deleted" = null
-   ;
-UPDATE TILDA.FormulaDependency
-   set deleted = current_timestamp
- where "formulaRefnum" in (select refnum
-                               from TILDA.Formula
-                              where "location" = 'TILDATUTORIAL.Test_XYZ_Analytics_View'
-                                and "deleted" is not null
-                            );
-
-select into k TILDA.getKeyBatchAsMaxExclusive('TILDA.MEASURE', 0)-0;
-
-
-DELETE FROM TILDA.MeasureFormula
- where "formulaRefnum" in (select refnum
-                               from TILDA.Formula
-                              where "location" = 'TILDATUTORIAL.Test_XYZ_Analytics_View'
-                                and "deleted" is not null
-                            );
-
-UPDATE TILDA.Measure
-   set deleted = current_timestamp
- where "refnum" not in (select "measureRefnum" from TILDA.MeasureFormula)
- ;
-
-END; $$
-LANGUAGE PLPGSQL;
 

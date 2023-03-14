@@ -553,7 +553,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isDeactivatedTZNull()
+   public final boolean isNullDeactivatedTZ()
      { return __Nulls.intersects(TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -580,7 +580,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setDeactivatedTZNull();
+          setNullDeactivatedTZ();
         }
        else if (v.length() > 5)
         throw new Exception("Cannot set tilda.data.TILDA.ZoneInfo.deactivatedTZ: the size "+v.length()+" is larger than the max allowed of 5: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -612,7 +612,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setDeactivatedTZNull()
+    void setNullDeactivatedTZ()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask);
@@ -715,7 +715,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isDeactivatedNull()
+   public final boolean isNullDeactivated()
      { return __Nulls.intersects(TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -741,7 +741,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setDeactivatedNull();
+          setNullDeactivated();
         }
        else if (v.equals(_deactivated) == false)
         {
@@ -774,7 +774,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setDeactivatedNull()
+   public void setNullDeactivated()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask);
@@ -782,7 +782,7 @@ This is the null setter for:<BR>
         return;
        __Nulls.or(TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask);
        _deactivated=null;
-       setDeactivatedTZNull();
+       setNullDeactivatedTZ();
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -1379,7 +1379,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isDeletedNull()
+   public final boolean isNullDeleted()
      { return __Nulls.intersects(TILDA__ZONEINFO_Factory.COLS.DELETED._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1405,7 +1405,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setDeletedNull();
+          setNullDeleted();
         }
        else if (v.equals(_deleted) == false)
         {
@@ -1434,7 +1434,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final void setDeletedNull()
+   public final void setNullDeleted()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__ZONEINFO_Factory.COLS.DELETED._Mask);
@@ -1551,11 +1551,11 @@ This is the hasChanged for:<BR>
        if (_label         != null)
         Dst.setLabel        (_label        );
        if (__Nulls.intersects(TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask) == true || _deactivatedTZ==null)
-        Dst.setDeactivatedTZNull();
+        Dst.setNullDeactivatedTZ();
        else
         Dst.setDeactivatedTZ(_deactivatedTZ);
        if (__Nulls.intersects(TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask) == true || _deactivated  ==null)
-        Dst.setDeactivatedNull  ();
+        Dst.setNullDeactivated  ();
        else
         Dst.setDeactivated  (_deactivated  );
        Dst.Str_deactivated = Str_deactivated;
@@ -1564,7 +1564,7 @@ This is the hasChanged for:<BR>
        if (_lastUpdated   != null)
         Dst.setLastUpdated  (_lastUpdated  );
        if (__Nulls.intersects(TILDA__ZONEINFO_Factory.COLS.DELETED._Mask) == true || _deleted      ==null)
-        Dst.setDeletedNull      ();
+        Dst.setNullDeleted      ();
        else
         Dst.setDeleted      (_deleted      );
      }

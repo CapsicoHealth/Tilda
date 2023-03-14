@@ -988,7 +988,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isTableViewName2Null()
+   public final boolean isNullTableViewName2()
      { return __Nulls.intersects(TILDA__CATALOG_Factory.COLS.TABLEVIEWNAME2._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1015,7 +1015,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setTableViewName2Null();
+          setNullTableViewName2();
         }
        else if (v.length() > 128)
         throw new Exception("Cannot set tilda.data.TILDA.Catalog.tableViewName2: the size "+v.length()+" is larger than the max allowed of 128: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -1047,7 +1047,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setTableViewName2Null()
+   public void setNullTableViewName2()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__CATALOG_Factory.COLS.TABLEVIEWNAME2._Mask);
@@ -1149,7 +1149,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isAggregateNull()
+   public final boolean isNullAggregate()
      { return __Nulls.intersects(TILDA__CATALOG_Factory.COLS.AGGREGATE._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1176,7 +1176,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setAggregateNull();
+          setNullAggregate();
         }
        else if (v.length() > 128)
         throw new Exception("Cannot set tilda.data.TILDA.Catalog.aggregate: the size "+v.length()+" is larger than the max allowed of 128: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -1208,7 +1208,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setAggregateNull()
+   public void setNullAggregate()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__CATALOG_Factory.COLS.AGGREGATE._Mask);
@@ -1307,7 +1307,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isCollectionNull()
+   public final boolean isNullCollection()
      { return __Nulls.intersects(TILDA__CATALOG_Factory.COLS.COLLECTION._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1358,7 +1358,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setCollectionNull()
+   public void setNullCollection()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__CATALOG_Factory.COLS.COLLECTION._Mask);
@@ -1459,7 +1459,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isTitleNull()
+   public final boolean isNullTitle()
      { return __Nulls.intersects(TILDA__CATALOG_Factory.COLS.TITLE._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1486,7 +1486,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setTitleNull();
+          setNullTitle();
         }
        else if (v.length() > 128)
         throw new Exception("Cannot set tilda.data.TILDA.Catalog.title: the size "+v.length()+" is larger than the max allowed of 128: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -1518,7 +1518,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setTitleNull()
+   public void setNullTitle()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__CATALOG_Factory.COLS.TITLE._Mask);
@@ -1620,7 +1620,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isFormulaNull()
+   public final boolean isNullFormula()
      { return __Nulls.intersects(TILDA__CATALOG_Factory.COLS.FORMULA._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1647,7 +1647,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setFormulaNull();
+          setNullFormula();
         }
        else if (v.length() > 32000)
         throw new Exception("Cannot set tilda.data.TILDA.Catalog.formula: the size "+v.length()+" is larger than the max allowed of 32000: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -1679,7 +1679,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setFormulaNull()
+   public void setNullFormula()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__CATALOG_Factory.COLS.FORMULA._Mask);
@@ -1778,7 +1778,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isMeasureNull()
+   public final boolean isNullMeasure()
      { return __Nulls.intersects(TILDA__CATALOG_Factory.COLS.MEASURE._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1829,7 +1829,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setMeasureNull()
+   public void setNullMeasure()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__CATALOG_Factory.COLS.MEASURE._Mask);
@@ -1930,7 +1930,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isHtmlDocNull()
+   public final boolean isNullHtmlDoc()
      { return __Nulls.intersects(TILDA__CATALOG_Factory.COLS.HTMLDOC._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1957,7 +1957,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setHtmlDocNull();
+          setNullHtmlDoc();
         }
        else if (v.length() > 32000)
         throw new Exception("Cannot set tilda.data.TILDA.Catalog.htmlDoc: the size "+v.length()+" is larger than the max allowed of 32000: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -1989,7 +1989,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setHtmlDocNull()
+   public void setNullHtmlDoc()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__CATALOG_Factory.COLS.HTMLDOC._Mask);
@@ -2095,7 +2095,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isReferencedColumnsNull()
+   public final boolean isNullReferencedColumns()
      { return __Nulls.intersects(TILDA__CATALOG_Factory.COLS.REFERENCEDCOLUMNS._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2121,7 +2121,7 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (v == null  || v.isEmpty() == true)
-        setReferencedColumnsNull();
+        setNullReferencedColumns();
        else if (CollectionUtil.equals(v, _referencedColumns) == false)
         {
           __Changes.or(TILDA__CATALOG_Factory.COLS.REFERENCEDCOLUMNS._Mask);
@@ -2148,7 +2148,7 @@ This is the setter for:<BR>
         _referencedColumns = new ArrayList<String>();
        if (v == null)
         {
-          setReferencedColumnsNull();
+          setNullReferencedColumns();
         }
        else if (pos >= _referencedColumns.size() || _referencedColumns.get(pos).equals(v) == false)
         {
@@ -2194,7 +2194,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setReferencedColumnsNull()
+   public void setNullReferencedColumns()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__CATALOG_Factory.COLS.REFERENCEDCOLUMNS._Mask);
@@ -2300,7 +2300,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isReferencedFormulasNull()
+   public final boolean isNullReferencedFormulas()
      { return __Nulls.intersects(TILDA__CATALOG_Factory.COLS.REFERENCEDFORMULAS._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2326,7 +2326,7 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (v == null  || v.isEmpty() == true)
-        setReferencedFormulasNull();
+        setNullReferencedFormulas();
        else if (CollectionUtil.equals(v, _referencedFormulas) == false)
         {
           __Changes.or(TILDA__CATALOG_Factory.COLS.REFERENCEDFORMULAS._Mask);
@@ -2353,7 +2353,7 @@ This is the setter for:<BR>
         _referencedFormulas = new ArrayList<String>();
        if (v == null)
         {
-          setReferencedFormulasNull();
+          setNullReferencedFormulas();
         }
        else if (pos >= _referencedFormulas.size() || _referencedFormulas.get(pos).equals(v) == false)
         {
@@ -2399,7 +2399,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setReferencedFormulasNull()
+   public void setNullReferencedFormulas()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__CATALOG_Factory.COLS.REFERENCEDFORMULAS._Mask);
@@ -2935,7 +2935,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isDeletedNull()
+   public final boolean isNullDeleted()
      { return __Nulls.intersects(TILDA__CATALOG_Factory.COLS.DELETED._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2961,7 +2961,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setDeletedNull();
+          setNullDeleted();
         }
        else if (v.equals(_deleted) == false)
         {
@@ -2990,7 +2990,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final void setDeletedNull()
+   public final void setNullDeleted()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__CATALOG_Factory.COLS.DELETED._Mask);
@@ -3113,39 +3113,39 @@ This is the hasChanged for:<BR>
        if (_description        != null)
         Dst.setDescription       (_description       );
        if (__Nulls.intersects(TILDA__CATALOG_Factory.COLS.TABLEVIEWNAME2._Mask) == true || _tableViewName2    ==null)
-        Dst.setTableViewName2Null    ();
+        Dst.setNullTableViewName2    ();
        else
         Dst.setTableViewName2    (_tableViewName2    );
        if (__Nulls.intersects(TILDA__CATALOG_Factory.COLS.AGGREGATE._Mask) == true || _aggregate         ==null)
-        Dst.setAggregateNull         ();
+        Dst.setNullAggregate         ();
        else
         Dst.setAggregate         (_aggregate         );
        if (__Nulls.intersects(TILDA__CATALOG_Factory.COLS.COLLECTION._Mask) == true || _collection        ==null)
-        Dst.setCollectionNull        ();
+        Dst.setNullCollection        ();
        else
         Dst.setCollection        (_collection        );
        if (__Nulls.intersects(TILDA__CATALOG_Factory.COLS.TITLE._Mask) == true || _title             ==null)
-        Dst.setTitleNull             ();
+        Dst.setNullTitle             ();
        else
         Dst.setTitle             (_title             );
        if (__Nulls.intersects(TILDA__CATALOG_Factory.COLS.FORMULA._Mask) == true || _formula           ==null)
-        Dst.setFormulaNull           ();
+        Dst.setNullFormula           ();
        else
         Dst.setFormula           (_formula           );
        if (__Nulls.intersects(TILDA__CATALOG_Factory.COLS.MEASURE._Mask) == true || _measure           ==null)
-        Dst.setMeasureNull           ();
+        Dst.setNullMeasure           ();
        else
         Dst.setMeasure           (_measure           );
        if (__Nulls.intersects(TILDA__CATALOG_Factory.COLS.HTMLDOC._Mask) == true || _htmlDoc           ==null)
-        Dst.setHtmlDocNull           ();
+        Dst.setNullHtmlDoc           ();
        else
         Dst.setHtmlDoc           (_htmlDoc           );
        if (__Nulls.intersects(TILDA__CATALOG_Factory.COLS.REFERENCEDCOLUMNS._Mask) == true || _referencedColumns ==null)
-        Dst.setReferencedColumnsNull ();
+        Dst.setNullReferencedColumns ();
        else
         Dst.setReferencedColumns (_referencedColumns );
        if (__Nulls.intersects(TILDA__CATALOG_Factory.COLS.REFERENCEDFORMULAS._Mask) == true || _referencedFormulas==null)
-        Dst.setReferencedFormulasNull();
+        Dst.setNullReferencedFormulas();
        else
         Dst.setReferencedFormulas(_referencedFormulas);
        if (__Init == InitMode.CREATE && _created            != null)
@@ -3153,7 +3153,7 @@ This is the hasChanged for:<BR>
        if (_lastUpdated        != null)
         Dst.setLastUpdated       (_lastUpdated       );
        if (__Nulls.intersects(TILDA__CATALOG_Factory.COLS.DELETED._Mask) == true || _deleted           ==null)
-        Dst.setDeletedNull           ();
+        Dst.setNullDeleted           ();
        else
         Dst.setDeleted           (_deleted           );
      }
@@ -3828,6 +3828,7 @@ This is the hasChanged for:<BR>
       switch (exportName)
         { 
           case "": tilda.data.Catalog_Factory.toJSON(out, (tilda.data.Catalog_Data) this, lead, fullObject, noNullArrays); break;
+          case "Simple": tilda.data.Catalog_Factory.toJSONSimple(out, (tilda.data.Catalog_Data) this, lead, fullObject, noNullArrays); break;
           default: throw new Exception("Unknown JSON exporter '"+exportName+"' for tilda.data.Catalog_Factory");
         } 
     }
@@ -3840,6 +3841,7 @@ This is the hasChanged for:<BR>
       switch (exportName)
         { 
           case "": tilda.data.Catalog_Factory.toCSV(out, (tilda.data.Catalog_Data) this); break;
+          case "Simple": tilda.data.Catalog_Factory.toCSVSimple(out, (tilda.data.Catalog_Data) this); break;
           default: throw new Exception("Unknown CSV exporter '"+exportName+"' for tilda.data.Catalog_Factory");
         } 
     }

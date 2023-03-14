@@ -609,7 +609,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isJobTypeNull()
+   public final boolean isNullJobType()
      { return __Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBTYPE._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -636,7 +636,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setJobTypeNull();
+          setNullJobType();
         }
        else if (v.length() > 250)
         throw new Exception("Cannot set tilda.data.TILDA.JobView.jobType: the size "+v.length()+" is larger than the max allowed of 250: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -670,7 +670,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setJobTypeNull()
+    void setNullJobType()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBTYPE._Mask);
@@ -750,7 +750,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isJobUserIdNull()
+   public final boolean isNullJobUserId()
      { return __Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBUSERID._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -777,7 +777,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setJobUserIdNull();
+          setNullJobUserId();
         }
        else if (v.length() > 250)
         throw new Exception("Cannot set tilda.data.TILDA.JobView.jobUserId: the size "+v.length()+" is larger than the max allowed of 250: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -811,7 +811,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setJobUserIdNull()
+    void setNullJobUserId()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBUSERID._Mask);
@@ -890,7 +890,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isJobDataStartTZNull()
+   public final boolean isNullJobDataStartTZ()
      { return __Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBDATASTARTTZ._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -917,7 +917,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setJobDataStartTZNull();
+          setNullJobDataStartTZ();
         }
        else if (v.length() > 5)
         throw new Exception("Cannot set tilda.data.TILDA.JobView.jobDataStartTZ: the size "+v.length()+" is larger than the max allowed of 5: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -951,7 +951,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setJobDataStartTZNull()
+    void setNullJobDataStartTZ()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBDATASTARTTZ._Mask);
@@ -1032,7 +1032,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isJobDataStartNull()
+   public final boolean isNullJobDataStart()
      { return __Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBDATASTART._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1058,7 +1058,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setJobDataStartNull();
+          setNullJobDataStart();
         }
        else if (v.equals(_jobDataStart) == false)
         {
@@ -1093,7 +1093,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setJobDataStartNull()
+    void setNullJobDataStart()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBDATASTART._Mask);
@@ -1101,7 +1101,7 @@ This is the null setter for:<BR>
         return;
        __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBDATASTART._Mask);
        _jobDataStart=null;
-       setJobDataStartTZNull();
+       setNullJobDataStartTZ();
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -1173,7 +1173,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isJobDataEndTZNull()
+   public final boolean isNullJobDataEndTZ()
      { return __Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBDATAENDTZ._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1200,7 +1200,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setJobDataEndTZNull();
+          setNullJobDataEndTZ();
         }
        else if (v.length() > 5)
         throw new Exception("Cannot set tilda.data.TILDA.JobView.jobDataEndTZ: the size "+v.length()+" is larger than the max allowed of 5: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -1234,7 +1234,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setJobDataEndTZNull()
+    void setNullJobDataEndTZ()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBDATAENDTZ._Mask);
@@ -1315,7 +1315,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isJobDataEndNull()
+   public final boolean isNullJobDataEnd()
      { return __Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBDATAEND._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1341,7 +1341,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setJobDataEndNull();
+          setNullJobDataEnd();
         }
        else if (v.equals(_jobDataEnd) == false)
         {
@@ -1376,7 +1376,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setJobDataEndNull()
+    void setNullJobDataEnd()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBDATAEND._Mask);
@@ -1384,7 +1384,7 @@ This is the null setter for:<BR>
         return;
        __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBDATAEND._Mask);
        _jobDataEnd=null;
-       setJobDataEndTZNull();
+       setNullJobDataEndTZ();
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -1632,7 +1632,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isJobEndTZNull()
+   public final boolean isNullJobEndTZ()
      { return __Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBENDTZ._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1659,7 +1659,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setJobEndTZNull();
+          setNullJobEndTZ();
         }
        else if (v.length() > 5)
         throw new Exception("Cannot set tilda.data.TILDA.JobView.jobEndTZ: the size "+v.length()+" is larger than the max allowed of 5: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -1693,7 +1693,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setJobEndTZNull()
+    void setNullJobEndTZ()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBENDTZ._Mask);
@@ -1774,7 +1774,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isJobEndNull()
+   public final boolean isNullJobEnd()
      { return __Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBEND._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1800,7 +1800,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setJobEndNull();
+          setNullJobEnd();
         }
        else if (v.equals(_jobEnd) == false)
         {
@@ -1835,7 +1835,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setJobEndNull()
+    void setNullJobEnd()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBEND._Mask);
@@ -1843,7 +1843,7 @@ This is the null setter for:<BR>
         return;
        __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBEND._Mask);
        _jobEnd=null;
-       setJobEndTZNull();
+       setNullJobEndTZ();
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -1913,7 +1913,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isJobStatusNull()
+   public final boolean isNullJobStatus()
      { return __Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBSTATUS._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1966,7 +1966,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setJobStatusNull()
+    void setNullJobStatus()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBSTATUS._Mask);
@@ -2046,7 +2046,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isJobMsgNull()
+   public final boolean isNullJobMsg()
      { return __Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBMSG._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2073,7 +2073,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setJobMsgNull();
+          setNullJobMsg();
         }
        else if (v.length() > 8192)
         throw new Exception("Cannot set tilda.data.TILDA.JobView.jobMsg: the size "+v.length()+" is larger than the max allowed of 8192: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -2107,7 +2107,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setJobMsgNull()
+    void setNullJobMsg()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBMSG._Mask);
@@ -2274,7 +2274,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isJobPartTypeNull()
+   public final boolean isNullJobPartType()
      { return __Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBPARTTYPE._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2301,7 +2301,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setJobPartTypeNull();
+          setNullJobPartType();
         }
        else if (v.length() > 250)
         throw new Exception("Cannot set tilda.data.TILDA.JobView.jobPartType: the size "+v.length()+" is larger than the max allowed of 250: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -2335,7 +2335,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setJobPartTypeNull()
+    void setNullJobPartType()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTTYPE._Mask);
@@ -2414,7 +2414,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isJobPartDataStartTZNull()
+   public final boolean isNullJobPartDataStartTZ()
      { return __Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBPARTDATASTARTTZ._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2441,7 +2441,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setJobPartDataStartTZNull();
+          setNullJobPartDataStartTZ();
         }
        else if (v.length() > 5)
         throw new Exception("Cannot set tilda.data.TILDA.JobView.jobPartDataStartTZ: the size "+v.length()+" is larger than the max allowed of 5: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -2475,7 +2475,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setJobPartDataStartTZNull()
+    void setNullJobPartDataStartTZ()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTDATASTARTTZ._Mask);
@@ -2556,7 +2556,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isJobPartDataStartNull()
+   public final boolean isNullJobPartDataStart()
      { return __Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBPARTDATASTART._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2582,7 +2582,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setJobPartDataStartNull();
+          setNullJobPartDataStart();
         }
        else if (v.equals(_jobPartDataStart) == false)
         {
@@ -2617,7 +2617,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setJobPartDataStartNull()
+    void setNullJobPartDataStart()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTDATASTART._Mask);
@@ -2625,7 +2625,7 @@ This is the null setter for:<BR>
         return;
        __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTDATASTART._Mask);
        _jobPartDataStart=null;
-       setJobPartDataStartTZNull();
+       setNullJobPartDataStartTZ();
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -2697,7 +2697,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isJobPartDataEndTZNull()
+   public final boolean isNullJobPartDataEndTZ()
      { return __Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBPARTDATAENDTZ._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2724,7 +2724,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setJobPartDataEndTZNull();
+          setNullJobPartDataEndTZ();
         }
        else if (v.length() > 5)
         throw new Exception("Cannot set tilda.data.TILDA.JobView.jobPartDataEndTZ: the size "+v.length()+" is larger than the max allowed of 5: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -2758,7 +2758,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setJobPartDataEndTZNull()
+    void setNullJobPartDataEndTZ()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTDATAENDTZ._Mask);
@@ -2839,7 +2839,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isJobPartDataEndNull()
+   public final boolean isNullJobPartDataEnd()
      { return __Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBPARTDATAEND._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2865,7 +2865,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setJobPartDataEndNull();
+          setNullJobPartDataEnd();
         }
        else if (v.equals(_jobPartDataEnd) == false)
         {
@@ -2900,7 +2900,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setJobPartDataEndNull()
+    void setNullJobPartDataEnd()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTDATAEND._Mask);
@@ -2908,7 +2908,7 @@ This is the null setter for:<BR>
         return;
        __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTDATAEND._Mask);
        _jobPartDataEnd=null;
-       setJobPartDataEndTZNull();
+       setNullJobPartDataEndTZ();
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -3156,7 +3156,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isJobPartEndTZNull()
+   public final boolean isNullJobPartEndTZ()
      { return __Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBPARTENDTZ._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3183,7 +3183,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setJobPartEndTZNull();
+          setNullJobPartEndTZ();
         }
        else if (v.length() > 5)
         throw new Exception("Cannot set tilda.data.TILDA.JobView.jobPartEndTZ: the size "+v.length()+" is larger than the max allowed of 5: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -3217,7 +3217,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setJobPartEndTZNull()
+    void setNullJobPartEndTZ()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTENDTZ._Mask);
@@ -3298,7 +3298,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isJobPartEndNull()
+   public final boolean isNullJobPartEnd()
      { return __Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBPARTEND._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3324,7 +3324,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setJobPartEndNull();
+          setNullJobPartEnd();
         }
        else if (v.equals(_jobPartEnd) == false)
         {
@@ -3359,7 +3359,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setJobPartEndNull()
+    void setNullJobPartEnd()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTEND._Mask);
@@ -3367,7 +3367,7 @@ This is the null setter for:<BR>
         return;
        __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTEND._Mask);
        _jobPartEnd=null;
-       setJobPartEndTZNull();
+       setNullJobPartEndTZ();
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -3437,7 +3437,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isJobPartRecordsCountNull()
+   public final boolean isNullJobPartRecordsCount()
      { return __Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBPARTRECORDSCOUNT._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3490,7 +3490,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setJobPartRecordsCountNull()
+    void setNullJobPartRecordsCount()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTRECORDSCOUNT._Mask);
@@ -3567,7 +3567,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isJobPartStatusNull()
+   public final boolean isNullJobPartStatus()
      { return __Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBPARTSTATUS._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3620,7 +3620,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setJobPartStatusNull()
+    void setNullJobPartStatus()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTSTATUS._Mask);

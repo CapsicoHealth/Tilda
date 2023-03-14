@@ -765,7 +765,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isObjectNameNull()
+   public final boolean isNullObjectName()
      { return __Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.OBJECTNAME._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -792,7 +792,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setObjectNameNull();
+          setNullObjectName();
         }
        else if (v.length() > 1024)
         throw new Exception("Cannot set tilda.data.TILDA.MaintenanceLog.objectName: the size "+v.length()+" is larger than the max allowed of 1024: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -826,7 +826,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setObjectNameNull()
+   public void setNullObjectName()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__MAINTENANCELOG_Factory.COLS.OBJECTNAME._Mask);
@@ -1168,7 +1168,7 @@ This is the isNull for:<BR>
 
 </TABLE>
 */
-   public final boolean isObjectTypeNull()
+   public final boolean isNullObjectType()
      { return __Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.OBJECTTYPE._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1211,7 +1211,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setObjectTypeNull();
+          setNullObjectType();
         }
        else if (v.length() > 128)
         throw new Exception("Cannot set tilda.data.TILDA.MaintenanceLog.objectType: the size "+v.length()+" is larger than the max allowed of 128: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -1261,7 +1261,7 @@ This is the null setter for:<BR>
 
 </TABLE>
 */
-   public void setObjectTypeNull()
+   public void setNullObjectType()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__MAINTENANCELOG_Factory.COLS.OBJECTTYPE._Mask);
@@ -1799,7 +1799,7 @@ This is the isNull for:<BR>
 
 </TABLE>
 */
-   public final boolean isActionNull()
+   public final boolean isNullAction()
      { return __Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.ACTION._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1844,7 +1844,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setActionNull();
+          setNullAction();
         }
        else if (v.length() > 64)
         throw new Exception("Cannot set tilda.data.TILDA.MaintenanceLog.action: the size "+v.length()+" is larger than the max allowed of 64: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -1896,7 +1896,7 @@ This is the null setter for:<BR>
 
 </TABLE>
 */
-   public void setActionNull()
+   public void setNullAction()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__MAINTENANCELOG_Factory.COLS.ACTION._Mask);
@@ -2471,7 +2471,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isEndTimeTZNull()
+   public final boolean isNullEndTimeTZ()
      { return __Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.ENDTIMETZ._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2498,7 +2498,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setEndTimeTZNull();
+          setNullEndTimeTZ();
         }
        else if (v.length() > 5)
         throw new Exception("Cannot set tilda.data.TILDA.MaintenanceLog.endTimeTZ: the size "+v.length()+" is larger than the max allowed of 5: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -2532,7 +2532,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setEndTimeTZNull()
+    void setNullEndTimeTZ()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__MAINTENANCELOG_Factory.COLS.ENDTIMETZ._Mask);
@@ -2635,7 +2635,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isEndTimeNull()
+   public final boolean isNullEndTime()
      { return __Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.ENDTIME._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2661,7 +2661,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setEndTimeNull();
+          setNullEndTime();
         }
        else if (v.equals(_endTime) == false)
         {
@@ -2696,7 +2696,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setEndTimeNull()
+   public void setNullEndTime()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__MAINTENANCELOG_Factory.COLS.ENDTIME._Mask);
@@ -2704,7 +2704,7 @@ This is the null setter for:<BR>
         return;
        __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.ENDTIME._Mask);
        _endTime=null;
-       setEndTimeTZNull();
+       setNullEndTimeTZ();
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -2867,7 +2867,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isStatementNull()
+   public final boolean isNullStatement()
      { return __Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.STATEMENT._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2894,7 +2894,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setStatementNull();
+          setNullStatement();
         }
        else if (v.length() > 4194304)
         throw new Exception("Cannot set tilda.data.TILDA.MaintenanceLog.statement: the size "+v.length()+" is larger than the max allowed of 4194304: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -2928,7 +2928,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setStatementNull()
+   public void setNullStatement()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__MAINTENANCELOG_Factory.COLS.STATEMENT._Mask);
@@ -3030,7 +3030,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isDescrNull()
+   public final boolean isNullDescr()
      { return __Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.DESCR._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3057,7 +3057,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setDescrNull();
+          setNullDescr();
         }
        else if (v.length() > 2048)
         throw new Exception("Cannot set tilda.data.TILDA.MaintenanceLog.descr: the size "+v.length()+" is larger than the max allowed of 2048: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -3091,7 +3091,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setDescrNull()
+   public void setNullDescr()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__MAINTENANCELOG_Factory.COLS.DESCR._Mask);
@@ -3629,7 +3629,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isDeletedNull()
+   public final boolean isNullDeleted()
      { return __Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.DELETED._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3655,7 +3655,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setDeletedNull();
+          setNullDeleted();
         }
        else if (v.equals(_deleted) == false)
         {
@@ -3686,7 +3686,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final void setDeletedNull()
+   public final void setNullDeleted()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__MAINTENANCELOG_Factory.COLS.DELETED._Mask);
@@ -3803,15 +3803,15 @@ This is the hasChanged for:<BR>
        if (_schemaName  != null)
         Dst.setSchemaName (_schemaName );
        if (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.OBJECTNAME._Mask) == true || _objectName ==null)
-        Dst.setObjectNameNull ();
+        Dst.setNullObjectName ();
        else
         Dst.setObjectName (_objectName );
        if (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.OBJECTTYPE._Mask) == true || _objectType ==null)
-        Dst.setObjectTypeNull ();
+        Dst.setNullObjectType ();
        else
         Dst.setObjectType (_objectType );
        if (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.ACTION._Mask) == true || _action     ==null)
-        Dst.setActionNull     ();
+        Dst.setNullAction     ();
        else
         Dst.setAction     (_action     );
        if (_startTimeTZ != null)
@@ -3820,20 +3820,20 @@ This is the hasChanged for:<BR>
         Dst.setStartTime  (_startTime  );
        Dst.Str_startTime = Str_startTime;
        if (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.ENDTIMETZ._Mask) == true || _endTimeTZ  ==null)
-        Dst.setEndTimeTZNull  ();
+        Dst.setNullEndTimeTZ  ();
        else
         Dst.setEndTimeTZ  (_endTimeTZ  );
        if (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.ENDTIME._Mask) == true || _endTime    ==null)
-        Dst.setEndTimeNull    ();
+        Dst.setNullEndTime    ();
        else
         Dst.setEndTime    (_endTime    );
        Dst.Str_endTime = Str_endTime;
        if (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.STATEMENT._Mask) == true || _statement  ==null)
-        Dst.setStatementNull  ();
+        Dst.setNullStatement  ();
        else
         Dst.setStatement  (_statement  );
        if (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.DESCR._Mask) == true || _descr      ==null)
-        Dst.setDescrNull      ();
+        Dst.setNullDescr      ();
        else
         Dst.setDescr      (_descr      );
        if (__Init == InitMode.CREATE && _created     != null)
@@ -3841,7 +3841,7 @@ This is the hasChanged for:<BR>
        if (_lastUpdated != null)
         Dst.setLastUpdated(_lastUpdated);
        if (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.DELETED._Mask) == true || _deleted    ==null)
-        Dst.setDeletedNull    ();
+        Dst.setNullDeleted    ();
        else
         Dst.setDeleted    (_deleted    );
      }

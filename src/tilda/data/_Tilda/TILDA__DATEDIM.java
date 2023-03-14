@@ -600,7 +600,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isDayNameNull()
+   public final boolean isNullDayName()
      { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYNAME._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -627,7 +627,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setDayNameNull();
+          setNullDayName();
         }
        else if (v.length() > 255)
         throw new Exception("Cannot set tilda.data.TILDA.DateDim.dayName: the size "+v.length()+" is larger than the max allowed of 255: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -659,7 +659,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setDayNameNull()
+   public void setNullDayName()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__DATEDIM_Factory.COLS.DAYNAME._Mask);
@@ -758,7 +758,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isDayOfWeekNull()
+   public final boolean isNullDayOfWeek()
      { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFWEEK._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -809,7 +809,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setDayOfWeekNull()
+   public void setNullDayOfWeek()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__DATEDIM_Factory.COLS.DAYOFWEEK._Mask);
@@ -907,7 +907,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isDayOfMonthNull()
+   public final boolean isNullDayOfMonth()
      { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFMONTH._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -958,7 +958,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setDayOfMonthNull()
+   public void setNullDayOfMonth()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__DATEDIM_Factory.COLS.DAYOFMONTH._Mask);
@@ -1056,7 +1056,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isDayOfQuarterNull()
+   public final boolean isNullDayOfQuarter()
      { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFQUARTER._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1107,7 +1107,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setDayOfQuarterNull()
+   public void setNullDayOfQuarter()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__DATEDIM_Factory.COLS.DAYOFQUARTER._Mask);
@@ -1205,7 +1205,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isDayOfYearNull()
+   public final boolean isNullDayOfYear()
      { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFYEAR._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1256,7 +1256,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setDayOfYearNull()
+   public void setNullDayOfYear()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__DATEDIM_Factory.COLS.DAYOFYEAR._Mask);
@@ -1354,7 +1354,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isWeekOfMonthNull()
+   public final boolean isNullWeekOfMonth()
      { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.WEEKOFMONTH._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1405,7 +1405,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setWeekOfMonthNull()
+   public void setNullWeekOfMonth()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__DATEDIM_Factory.COLS.WEEKOFMONTH._Mask);
@@ -1503,7 +1503,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isWeekOfYearNull()
+   public final boolean isNullWeekOfYear()
      { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.WEEKOFYEAR._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1554,7 +1554,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setWeekOfYearNull()
+   public void setNullWeekOfYear()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__DATEDIM_Factory.COLS.WEEKOFYEAR._Mask);
@@ -1652,7 +1652,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isMonthNull()
+   public final boolean isNullMonth()
      { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTH._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1678,7 +1678,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setMonthNull();
+          setNullMonth();
         }
        else if (v.equals(_month) == false)
         {
@@ -1707,7 +1707,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setMonthNull()
+   public void setNullMonth()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__DATEDIM_Factory.COLS.MONTH._Mask);
@@ -1805,7 +1805,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isMonthOfYearNull()
+   public final boolean isNullMonthOfYear()
      { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTHOFYEAR._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1856,7 +1856,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setMonthOfYearNull()
+   public void setNullMonthOfYear()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__DATEDIM_Factory.COLS.MONTHOFYEAR._Mask);
@@ -1957,7 +1957,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isMonthNameNull()
+   public final boolean isNullMonthName()
      { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTHNAME._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1984,7 +1984,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setMonthNameNull();
+          setNullMonthName();
         }
        else if (v.length() > 255)
         throw new Exception("Cannot set tilda.data.TILDA.DateDim.monthName: the size "+v.length()+" is larger than the max allowed of 255: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -2016,7 +2016,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setMonthNameNull()
+   public void setNullMonthName()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__DATEDIM_Factory.COLS.MONTHNAME._Mask);
@@ -2118,7 +2118,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isMonthNameShortNull()
+   public final boolean isNullMonthNameShort()
      { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTHNAMESHORT._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2145,7 +2145,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setMonthNameShortNull();
+          setNullMonthNameShort();
         }
        else if (v.length() > 255)
         throw new Exception("Cannot set tilda.data.TILDA.DateDim.monthNameShort: the size "+v.length()+" is larger than the max allowed of 255: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -2177,7 +2177,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setMonthNameShortNull()
+   public void setNullMonthNameShort()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__DATEDIM_Factory.COLS.MONTHNAMESHORT._Mask);
@@ -2276,7 +2276,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isQuarterOfYearNull()
+   public final boolean isNullQuarterOfYear()
      { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.QUARTEROFYEAR._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2327,7 +2327,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setQuarterOfYearNull()
+   public void setNullQuarterOfYear()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__DATEDIM_Factory.COLS.QUARTEROFYEAR._Mask);
@@ -2428,7 +2428,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isQuarterNameNull()
+   public final boolean isNullQuarterName()
      { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.QUARTERNAME._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2455,7 +2455,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setQuarterNameNull();
+          setNullQuarterName();
         }
        else if (v.length() > 255)
         throw new Exception("Cannot set tilda.data.TILDA.DateDim.quarterName: the size "+v.length()+" is larger than the max allowed of 255: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -2487,7 +2487,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setQuarterNameNull()
+   public void setNullQuarterName()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__DATEDIM_Factory.COLS.QUARTERNAME._Mask);
@@ -2586,7 +2586,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isYearNull()
+   public final boolean isNullYear()
      { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.YEAR._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2637,7 +2637,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setYearNull()
+   public void setNullYear()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__DATEDIM_Factory.COLS.YEAR._Mask);
@@ -2738,7 +2738,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isMmyyyyNull()
+   public final boolean isNullMmyyyy()
      { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MMYYYY._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2765,7 +2765,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setMmyyyyNull();
+          setNullMmyyyy();
         }
        else if (v.length() > 6)
         throw new Exception("Cannot set tilda.data.TILDA.DateDim.mmyyyy: the size "+v.length()+" is larger than the max allowed of 6: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -2797,7 +2797,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setMmyyyyNull()
+   public void setNullMmyyyy()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__DATEDIM_Factory.COLS.MMYYYY._Mask);
@@ -2899,7 +2899,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isMmddyyyyNull()
+   public final boolean isNullMmddyyyy()
      { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MMDDYYYY._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2926,7 +2926,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setMmddyyyyNull();
+          setNullMmddyyyy();
         }
        else if (v.length() > 8)
         throw new Exception("Cannot set tilda.data.TILDA.DateDim.mmddyyyy: the size "+v.length()+" is larger than the max allowed of 8: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -2958,7 +2958,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setMmddyyyyNull()
+   public void setNullMmddyyyy()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__DATEDIM_Factory.COLS.MMDDYYYY._Mask);
@@ -3060,7 +3060,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isYyyymmddNull()
+   public final boolean isNullYyyymmdd()
      { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.YYYYMMDD._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3087,7 +3087,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setYyyymmddNull();
+          setNullYyyymmdd();
         }
        else if (v.length() > 8)
         throw new Exception("Cannot set tilda.data.TILDA.DateDim.yyyymmdd: the size "+v.length()+" is larger than the max allowed of 8: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -3119,7 +3119,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setYyyymmddNull()
+   public void setNullYyyymmdd()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__DATEDIM_Factory.COLS.YYYYMMDD._Mask);
@@ -3218,7 +3218,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isIsWeekendNull()
+   public final boolean isNullIsWeekend()
      { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.ISWEEKEND._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3269,7 +3269,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setIsWeekendNull()
+   public void setNullIsWeekend()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__DATEDIM_Factory.COLS.ISWEEKEND._Mask);
@@ -3367,7 +3367,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isIsBusinessDayNull()
+   public final boolean isNullIsBusinessDay()
      { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.ISBUSINESSDAY._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3418,7 +3418,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setIsBusinessDayNull()
+   public void setNullIsBusinessDay()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__DATEDIM_Factory.COLS.ISBUSINESSDAY._Mask);
@@ -3516,7 +3516,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isIsHolidayNull()
+   public final boolean isNullIsHoliday()
      { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.ISHOLIDAY._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3567,7 +3567,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setIsHolidayNull()
+   public void setNullIsHoliday()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__DATEDIM_Factory.COLS.ISHOLIDAY._Mask);
@@ -3668,7 +3668,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isHolidayNameNull()
+   public final boolean isNullHolidayName()
      { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.HOLIDAYNAME._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3695,7 +3695,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setHolidayNameNull();
+          setNullHolidayName();
         }
        else if (v.length() > 255)
         throw new Exception("Cannot set tilda.data.TILDA.DateDim.holidayName: the size "+v.length()+" is larger than the max allowed of 255: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -3727,7 +3727,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setHolidayNameNull()
+   public void setNullHolidayName()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__DATEDIM_Factory.COLS.HOLIDAYNAME._Mask);
@@ -4263,7 +4263,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isDeletedNull()
+   public final boolean isNullDeleted()
      { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DELETED._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4289,7 +4289,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setDeletedNull();
+          setNullDeleted();
         }
        else if (v.equals(_deleted) == false)
         {
@@ -4318,7 +4318,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final void setDeletedNull()
+   public final void setNullDeleted()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__DATEDIM_Factory.COLS.DELETED._Mask);
@@ -4433,87 +4433,87 @@ This is the hasChanged for:<BR>
        if (_epoch          != null)
         Dst.setEpoch         (_epoch         );
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYNAME._Mask) == true || _dayName       ==null)
-        Dst.setDayNameNull       ();
+        Dst.setNullDayName       ();
        else
         Dst.setDayName       (_dayName       );
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFWEEK._Mask) == true || _dayOfWeek     ==null)
-        Dst.setDayOfWeekNull     ();
+        Dst.setNullDayOfWeek     ();
        else
         Dst.setDayOfWeek     (_dayOfWeek     );
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFMONTH._Mask) == true || _dayOfMonth    ==null)
-        Dst.setDayOfMonthNull    ();
+        Dst.setNullDayOfMonth    ();
        else
         Dst.setDayOfMonth    (_dayOfMonth    );
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFQUARTER._Mask) == true || _dayOfQuarter  ==null)
-        Dst.setDayOfQuarterNull  ();
+        Dst.setNullDayOfQuarter  ();
        else
         Dst.setDayOfQuarter  (_dayOfQuarter  );
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFYEAR._Mask) == true || _dayOfYear     ==null)
-        Dst.setDayOfYearNull     ();
+        Dst.setNullDayOfYear     ();
        else
         Dst.setDayOfYear     (_dayOfYear     );
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.WEEKOFMONTH._Mask) == true || _weekOfMonth   ==null)
-        Dst.setWeekOfMonthNull   ();
+        Dst.setNullWeekOfMonth   ();
        else
         Dst.setWeekOfMonth   (_weekOfMonth   );
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.WEEKOFYEAR._Mask) == true || _weekOfYear    ==null)
-        Dst.setWeekOfYearNull    ();
+        Dst.setNullWeekOfYear    ();
        else
         Dst.setWeekOfYear    (_weekOfYear    );
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTH._Mask) == true || _month         ==null)
-        Dst.setMonthNull         ();
+        Dst.setNullMonth         ();
        else
         Dst.setMonth         (_month         );
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTHOFYEAR._Mask) == true || _monthOfYear   ==null)
-        Dst.setMonthOfYearNull   ();
+        Dst.setNullMonthOfYear   ();
        else
         Dst.setMonthOfYear   (_monthOfYear   );
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTHNAME._Mask) == true || _monthName     ==null)
-        Dst.setMonthNameNull     ();
+        Dst.setNullMonthName     ();
        else
         Dst.setMonthName     (_monthName     );
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTHNAMESHORT._Mask) == true || _monthNameShort==null)
-        Dst.setMonthNameShortNull();
+        Dst.setNullMonthNameShort();
        else
         Dst.setMonthNameShort(_monthNameShort);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.QUARTEROFYEAR._Mask) == true || _quarterOfYear ==null)
-        Dst.setQuarterOfYearNull ();
+        Dst.setNullQuarterOfYear ();
        else
         Dst.setQuarterOfYear (_quarterOfYear );
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.QUARTERNAME._Mask) == true || _quarterName   ==null)
-        Dst.setQuarterNameNull   ();
+        Dst.setNullQuarterName   ();
        else
         Dst.setQuarterName   (_quarterName   );
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.YEAR._Mask) == true || _year          ==null)
-        Dst.setYearNull          ();
+        Dst.setNullYear          ();
        else
         Dst.setYear          (_year          );
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MMYYYY._Mask) == true || _mmyyyy        ==null)
-        Dst.setMmyyyyNull        ();
+        Dst.setNullMmyyyy        ();
        else
         Dst.setMmyyyy        (_mmyyyy        );
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MMDDYYYY._Mask) == true || _mmddyyyy      ==null)
-        Dst.setMmddyyyyNull      ();
+        Dst.setNullMmddyyyy      ();
        else
         Dst.setMmddyyyy      (_mmddyyyy      );
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.YYYYMMDD._Mask) == true || _yyyymmdd      ==null)
-        Dst.setYyyymmddNull      ();
+        Dst.setNullYyyymmdd      ();
        else
         Dst.setYyyymmdd      (_yyyymmdd      );
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.ISWEEKEND._Mask) == true || _isWeekend     ==null)
-        Dst.setIsWeekendNull     ();
+        Dst.setNullIsWeekend     ();
        else
         Dst.setIsWeekend     (_isWeekend     );
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.ISBUSINESSDAY._Mask) == true || _isBusinessDay ==null)
-        Dst.setIsBusinessDayNull ();
+        Dst.setNullIsBusinessDay ();
        else
         Dst.setIsBusinessDay (_isBusinessDay );
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.ISHOLIDAY._Mask) == true || _isHoliday     ==null)
-        Dst.setIsHolidayNull     ();
+        Dst.setNullIsHoliday     ();
        else
         Dst.setIsHoliday     (_isHoliday     );
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.HOLIDAYNAME._Mask) == true || _holidayName   ==null)
-        Dst.setHolidayNameNull   ();
+        Dst.setNullHolidayName   ();
        else
         Dst.setHolidayName   (_holidayName   );
        if (__Init == InitMode.CREATE && _created        != null)
@@ -4521,7 +4521,7 @@ This is the hasChanged for:<BR>
        if (_lastUpdated    != null)
         Dst.setLastUpdated   (_lastUpdated   );
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DELETED._Mask) == true || _deleted       ==null)
-        Dst.setDeletedNull       ();
+        Dst.setNullDeleted       ();
        else
         Dst.setDeleted       (_deleted       );
      }

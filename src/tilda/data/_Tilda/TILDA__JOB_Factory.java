@@ -544,7 +544,7 @@ This is the column definition for:<BR>
                break;
              }
              case 2: {  // Index 'JobType'
-               if (Obj.isTypeNull() == true) PS.setNull(++i, java.sql.Types.VARCHAR   );  else PS.setString    (++i, Obj._type       );
+               if (Obj.isNullType() == true) PS.setNull(++i, java.sql.Types.VARCHAR   );  else PS.setString    (++i, Obj._type       );
                break;
              }
              case 3: { // Query 'All'
@@ -1060,45 +1060,45 @@ The results are ordered by: refnum asc
 
         JSONUtil.print(out, "name", ++i==0, Obj.getName());
 
-      if (Obj.isTypeNull() == false && Obj.getType() != null)
+      if (Obj.isNullType() == false && Obj.getType() != null)
         JSONUtil.print(out, "type", ++i==0, Obj.getType());
 
-      if (Obj.isUserIdNull() == false && Obj.getUserId() != null)
+      if (Obj.isNullUserId() == false && Obj.getUserId() != null)
         JSONUtil.print(out, "userId", ++i==0, Obj.getUserId());
 
-      if (Obj.isDataStartTZNull() == false && Obj.getDataStartTZ() != null)
+      if (Obj.isNullDataStartTZ() == false && Obj.getDataStartTZ() != null)
         JSONUtil.print(out, "dataStartTZ", ++i==0, Obj.getDataStartTZ());
 
-      if (Obj.isDataStartNull() == false && Obj.getDataStart() != null)
+      if (Obj.isNullDataStart() == false && Obj.getDataStart() != null)
         JSONUtil.print(out, "dataStart", ++i==0, Obj.getDataStart());
 
-      if (Obj.isDataEndTZNull() == false && Obj.getDataEndTZ() != null)
+      if (Obj.isNullDataEndTZ() == false && Obj.getDataEndTZ() != null)
         JSONUtil.print(out, "dataEndTZ", ++i==0, Obj.getDataEndTZ());
 
-      if (Obj.isDataEndNull() == false && Obj.getDataEnd() != null)
+      if (Obj.isNullDataEnd() == false && Obj.getDataEnd() != null)
         JSONUtil.print(out, "dataEnd", ++i==0, Obj.getDataEnd());
 
         JSONUtil.print(out, "startTZ", ++i==0, Obj.getStartTZ());
 
         JSONUtil.print(out, "start", ++i==0, Obj.getStart());
 
-      if (Obj.isEndTZNull() == false && Obj.getEndTZ() != null)
+      if (Obj.isNullEndTZ() == false && Obj.getEndTZ() != null)
         JSONUtil.print(out, "endTZ", ++i==0, Obj.getEndTZ());
 
-      if (Obj.isEndNull() == false && Obj.getEnd() != null)
+      if (Obj.isNullEnd() == false && Obj.getEnd() != null)
         JSONUtil.print(out, "end", ++i==0, Obj.getEnd());
 
-      if (Obj.isStatusNull() == false)
+      if (Obj.isNullStatus() == false)
         JSONUtil.print(out, "status", ++i==0, Obj.getStatus());
 
-      if (Obj.isMsgNull() == false && Obj.getMsg() != null)
+      if (Obj.isNullMsg() == false && Obj.getMsg() != null)
         JSONUtil.print(out, "msg", ++i==0, Obj.getMsg());
 
         JSONUtil.print(out, "created", ++i==0, Obj.getCreated());
 
         JSONUtil.print(out, "lastUpdated", ++i==0, Obj.getLastUpdated());
 
-      if (Obj.isDeletedNull() == false && Obj.getDeleted() != null)
+      if (Obj.isNullDeleted() == false && Obj.getDeleted() != null)
         JSONUtil.print(out, "deleted", ++i==0, Obj.getDeleted());
 
         if (fullObject == true)

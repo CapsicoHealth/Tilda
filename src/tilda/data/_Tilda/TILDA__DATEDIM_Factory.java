@@ -1271,74 +1271,74 @@ The results are ordered by: dt asc
 
         JSONUtil.print(out, "epoch", ++i==0, Obj.getEpoch());
 
-      if (Obj.isDayNameNull() == false && Obj.getDayName() != null)
+      if (Obj.isNullDayName() == false && Obj.getDayName() != null)
         JSONUtil.print(out, "dayName", ++i==0, Obj.getDayName());
 
-      if (Obj.isDayOfWeekNull() == false)
+      if (Obj.isNullDayOfWeek() == false)
         JSONUtil.print(out, "dayOfWeek", ++i==0, Obj.getDayOfWeek());
 
-      if (Obj.isDayOfMonthNull() == false)
+      if (Obj.isNullDayOfMonth() == false)
         JSONUtil.print(out, "dayOfMonth", ++i==0, Obj.getDayOfMonth());
 
-      if (Obj.isDayOfQuarterNull() == false)
+      if (Obj.isNullDayOfQuarter() == false)
         JSONUtil.print(out, "dayOfQuarter", ++i==0, Obj.getDayOfQuarter());
 
-      if (Obj.isDayOfYearNull() == false)
+      if (Obj.isNullDayOfYear() == false)
         JSONUtil.print(out, "dayOfYear", ++i==0, Obj.getDayOfYear());
 
-      if (Obj.isWeekOfMonthNull() == false)
+      if (Obj.isNullWeekOfMonth() == false)
         JSONUtil.print(out, "weekOfMonth", ++i==0, Obj.getWeekOfMonth());
 
-      if (Obj.isWeekOfYearNull() == false)
+      if (Obj.isNullWeekOfYear() == false)
         JSONUtil.print(out, "weekOfYear", ++i==0, Obj.getWeekOfYear());
 
-      if (Obj.isMonthNull() == false && Obj.getMonth() != null)
+      if (Obj.isNullMonth() == false && Obj.getMonth() != null)
         JSONUtil.print(out, "month", ++i==0, Obj.getMonth());
 
-      if (Obj.isMonthOfYearNull() == false)
+      if (Obj.isNullMonthOfYear() == false)
         JSONUtil.print(out, "monthOfYear", ++i==0, Obj.getMonthOfYear());
 
-      if (Obj.isMonthNameNull() == false && Obj.getMonthName() != null)
+      if (Obj.isNullMonthName() == false && Obj.getMonthName() != null)
         JSONUtil.print(out, "monthName", ++i==0, Obj.getMonthName());
 
-      if (Obj.isMonthNameShortNull() == false && Obj.getMonthNameShort() != null)
+      if (Obj.isNullMonthNameShort() == false && Obj.getMonthNameShort() != null)
         JSONUtil.print(out, "monthNameShort", ++i==0, Obj.getMonthNameShort());
 
-      if (Obj.isQuarterOfYearNull() == false)
+      if (Obj.isNullQuarterOfYear() == false)
         JSONUtil.print(out, "quarterOfYear", ++i==0, Obj.getQuarterOfYear());
 
-      if (Obj.isQuarterNameNull() == false && Obj.getQuarterName() != null)
+      if (Obj.isNullQuarterName() == false && Obj.getQuarterName() != null)
         JSONUtil.print(out, "quarterName", ++i==0, Obj.getQuarterName());
 
-      if (Obj.isYearNull() == false)
+      if (Obj.isNullYear() == false)
         JSONUtil.print(out, "year", ++i==0, Obj.getYear());
 
-      if (Obj.isMmyyyyNull() == false && Obj.getMmyyyy() != null)
+      if (Obj.isNullMmyyyy() == false && Obj.getMmyyyy() != null)
         JSONUtil.print(out, "mmyyyy", ++i==0, Obj.getMmyyyy());
 
-      if (Obj.isMmddyyyyNull() == false && Obj.getMmddyyyy() != null)
+      if (Obj.isNullMmddyyyy() == false && Obj.getMmddyyyy() != null)
         JSONUtil.print(out, "mmddyyyy", ++i==0, Obj.getMmddyyyy());
 
-      if (Obj.isYyyymmddNull() == false && Obj.getYyyymmdd() != null)
+      if (Obj.isNullYyyymmdd() == false && Obj.getYyyymmdd() != null)
         JSONUtil.print(out, "yyyymmdd", ++i==0, Obj.getYyyymmdd());
 
-      if (Obj.isIsWeekendNull() == false)
+      if (Obj.isNullIsWeekend() == false)
         JSONUtil.print(out, "isWeekend", ++i==0, Obj.getIsWeekend());
 
-      if (Obj.isIsBusinessDayNull() == false)
+      if (Obj.isNullIsBusinessDay() == false)
         JSONUtil.print(out, "isBusinessDay", ++i==0, Obj.getIsBusinessDay());
 
-      if (Obj.isIsHolidayNull() == false)
+      if (Obj.isNullIsHoliday() == false)
         JSONUtil.print(out, "isHoliday", ++i==0, Obj.getIsHoliday());
 
-      if (Obj.isHolidayNameNull() == false && Obj.getHolidayName() != null)
+      if (Obj.isNullHolidayName() == false && Obj.getHolidayName() != null)
         JSONUtil.print(out, "holidayName", ++i==0, Obj.getHolidayName());
 
         JSONUtil.print(out, "created", ++i==0, Obj.getCreated());
 
         JSONUtil.print(out, "lastUpdated", ++i==0, Obj.getLastUpdated());
 
-      if (Obj.isDeletedNull() == false && Obj.getDeleted() != null)
+      if (Obj.isNullDeleted() == false && Obj.getDeleted() != null)
         JSONUtil.print(out, "deleted", ++i==0, Obj.getDeleted());
 
         if (fullObject == true)

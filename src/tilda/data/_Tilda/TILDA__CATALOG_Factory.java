@@ -1138,28 +1138,28 @@ The results are ordered by: schemaName asc, tableViewName asc, columnName asc
 
         JSONUtil.print(out, "description", ++i==0, Obj.getDescription());
 
-      if (Obj.isTableViewName2Null() == false && Obj.getTableViewName2() != null)
+      if (Obj.isNullTableViewName2() == false && Obj.getTableViewName2() != null)
         JSONUtil.print(out, "tableViewName2", ++i==0, Obj.getTableViewName2());
 
-      if (Obj.isAggregateNull() == false && Obj.getAggregate() != null)
+      if (Obj.isNullAggregate() == false && Obj.getAggregate() != null)
         JSONUtil.print(out, "aggregate", ++i==0, Obj.getAggregate());
 
-      if (Obj.isCollectionNull() == false)
+      if (Obj.isNullCollection() == false)
         JSONUtil.print(out, "collection", ++i==0, Obj.getCollection());
 
-      if (Obj.isTitleNull() == false && Obj.getTitle() != null)
+      if (Obj.isNullTitle() == false && Obj.getTitle() != null)
         JSONUtil.print(out, "title", ++i==0, Obj.getTitle());
 
-      if (Obj.isFormulaNull() == false && Obj.getFormula() != null)
+      if (Obj.isNullFormula() == false && Obj.getFormula() != null)
         JSONUtil.print(out, "formula", ++i==0, Obj.getFormula());
 
-      if (Obj.isMeasureNull() == false)
+      if (Obj.isNullMeasure() == false)
         JSONUtil.print(out, "measure", ++i==0, Obj.getMeasure());
 
-      if (Obj.isHtmlDocNull() == false && Obj.getHtmlDoc() != null)
+      if (Obj.isNullHtmlDoc() == false && Obj.getHtmlDoc() != null)
         JSONUtil.print(out, "htmlDoc", ++i==0, Obj.getHtmlDoc());
 
-      if (Obj.isReferencedColumnsNull() == false && Obj.getReferencedColumns() != null)
+      if (Obj.isNullReferencedColumns() == false && Obj.getReferencedColumns() != null)
         JSONUtil.print(out, "referencedColumns", ++i==0, Obj.getReferencedColumnsAsArray());
       else if (noNullArrays == true)
         {
@@ -1167,7 +1167,7 @@ The results are ordered by: schemaName asc, tableViewName asc, columnName asc
           out.write("[]");
         }
 
-      if (Obj.isReferencedFormulasNull() == false && Obj.getReferencedFormulas() != null)
+      if (Obj.isNullReferencedFormulas() == false && Obj.getReferencedFormulas() != null)
         JSONUtil.print(out, "referencedFormulas", ++i==0, Obj.getReferencedFormulasAsArray());
       else if (noNullArrays == true)
         {
@@ -1179,8 +1179,161 @@ The results are ordered by: schemaName asc, tableViewName asc, columnName asc
 
         JSONUtil.print(out, "lastUpdated", ++i==0, Obj.getLastUpdated());
 
-      if (Obj.isDeletedNull() == false && Obj.getDeleted() != null)
+      if (Obj.isNullDeleted() == false && Obj.getDeleted() != null)
         JSONUtil.print(out, "deleted", ++i==0, Obj.getDeleted());
+
+        if (fullObject == true)
+         out.write(" }\n");
+
+        outWriter.append(out.getBuilder().toString());
+       }
+
+      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
+    }
+
+   public static String getCSVHeaderSimple()
+    {
+      return "\"schemaName\",\"tableViewName\",\"columnName\",\"type\",\"description\",\"aggregate\",\"collection\",\"measure\",\"formula\",\"referencedColumns\",\"referencedFormulas\"";
+    }
+
+   public static void toCSVSimple(java.io.Writer out, List<tilda.data.Catalog_Data> L, boolean includeHeader) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      if (includeHeader == true)
+        out.write(getCSVHeaderSimple() + "\n");
+      for (tilda.data.Catalog_Data O : L)
+       if (O!=null)
+        {
+          toCSVSimple(out, O);
+          out.write("\n");
+        }
+      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);
+    }
+
+   public static void toCSVSimple(java.io.Writer out, tilda.data.Catalog_Data obj) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+     tilda.data._Tilda.TILDA__CATALOG Obj = (tilda.data._Tilda.TILDA__CATALOG) obj;
+      StringBuilder Str = new StringBuilder();
+
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getSchemaName());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getTableViewName());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getColumnName());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getType());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getDescription());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getAggregate());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getCollection());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getMeasure());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getFormula());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, TextUtil.print(Obj.getReferencedColumns(), ","));
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, TextUtil.print(Obj.getReferencedFormulas(), ","));
+      out.write(Str.toString());
+      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);
+    }
+   public static void toJSONSimple(java.io.Writer out, List<tilda.data.Catalog_Data> L, String lead, boolean fullList) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      if (fullList == true)
+        {
+          if (L == null)
+           {
+             out.write("null\n");
+             return;
+           }
+          if (L.isEmpty() == true)
+           {
+             out.write("[]\n");
+             return;
+           }
+          out.write("[\n");
+        }
+      boolean First = true;
+      for (tilda.data.Catalog_Data O : L)
+       if (O!=null)
+        {
+          out.write(lead);
+          toJSONSimple(out, O, First == true ? "   " : "  ,", true);
+          if (First == true)
+           First = false;
+        }
+      if (fullList == true)
+       { 
+          out.write(lead);
+          out.write("]\n");
+       } 
+      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
+    }
+
+   public static void toJSONSimple(java.io.Writer out, tilda.data.Catalog_Data obj, boolean fullObject) throws java.io.IOException
+    {
+      toJSONSimple(out, obj, "", fullObject, false);
+    }
+
+   public static void toJSONSimple(java.io.Writer out, tilda.data.Catalog_Data obj, String lead, boolean fullObject) throws java.io.IOException
+    {
+      toJSONSimple(out, obj, lead, fullObject, false);
+    }
+
+   public static void toJSONSimple(java.io.Writer outWriter, tilda.data.Catalog_Data obj, String lead, boolean fullObject, boolean noNullArrays) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      try(org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter())
+       {
+        tilda.data._Tilda.TILDA__CATALOG Obj = (tilda.data._Tilda.TILDA__CATALOG) obj;
+        if (fullObject == true)
+         {
+           out.write(lead);
+           out.write("{");
+         }
+
+        int i = -1;
+        JSONUtil.print(out, "schemaName", ++i==0, Obj.getSchemaName());
+
+        JSONUtil.print(out, "tableViewName", ++i==0, Obj.getTableViewName());
+
+        JSONUtil.print(out, "columnName", ++i==0, Obj.getColumnName());
+
+        JSONUtil.print(out, "type", ++i==0, Obj.getType());
+
+        JSONUtil.print(out, "description", ++i==0, Obj.getDescription());
+
+      if (Obj.isNullAggregate() == false && Obj.getAggregate() != null)
+        JSONUtil.print(out, "aggregate", ++i==0, Obj.getAggregate());
+
+      if (Obj.isNullCollection() == false)
+        JSONUtil.print(out, "collection", ++i==0, Obj.getCollection());
+
+      if (Obj.isNullMeasure() == false)
+        JSONUtil.print(out, "measure", ++i==0, Obj.getMeasure());
+
+      if (Obj.isNullFormula() == false && Obj.getFormula() != null)
+        JSONUtil.print(out, "formula", ++i==0, Obj.getFormula());
+
+      if (Obj.isNullReferencedColumns() == false && Obj.getReferencedColumns() != null)
+        JSONUtil.print(out, "referencedColumns", ++i==0, Obj.getReferencedColumnsAsArray());
+      else if (noNullArrays == true)
+        {
+          JSONUtil.print(out, "referencedColumns", ++i==0);
+          out.write("[]");
+        }
+
+      if (Obj.isNullReferencedFormulas() == false && Obj.getReferencedFormulas() != null)
+        JSONUtil.print(out, "referencedFormulas", ++i==0, Obj.getReferencedFormulasAsArray());
+      else if (noNullArrays == true)
+        {
+          JSONUtil.print(out, "referencedFormulas", ++i==0);
+          out.write("[]");
+        }
 
         if (fullObject == true)
          out.write(" }\n");

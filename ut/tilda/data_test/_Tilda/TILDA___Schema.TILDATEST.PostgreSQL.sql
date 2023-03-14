@@ -8,8 +8,8 @@ create table if not exists TILDATEST.Test -- The table to keep track tests amd o
   , "id"           varchar(128)  not null   -- The name of the test
   , "name"         varchar(128)  not null   -- The name of the test
   , "test_fk"      bigint        not null   -- The name of the test
-  , "created"      timestamptz   not null DEFAULT now()   -- The timestamp for when the record was created. (TILDATEST.Test)
-  , "lastUpdated"  timestamptz   not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDATEST.Test)
+  , "created"      timestamptz   not null DEFAULT statement_timestamp()   -- The timestamp for when the record was created. (TILDATEST.Test)
+  , "lastUpdated"  timestamptz   not null DEFAULT statement_timestamp()   -- The timestamp for when the record was last updated. (TILDATEST.Test)
   , "deleted"      timestamptz              -- The timestamp for when the record was deleted. (TILDATEST.Test)
   , PRIMARY KEY("refnum")
   , CONSTRAINT fk_Test_Test FOREIGN KEY ("test_fk") REFERENCES TILDATEST.Test ON DELETE restrict ON UPDATE cascade
@@ -32,8 +32,8 @@ create table if not exists TILDATEST.Test2 -- The table to keep track tests amd 
  (  "refnum"       bigint        not null   -- The primary key for this record
   , "name"         varchar(128)  not null   -- The name of the test
   , "test_fk"      bigint        not null   -- The name of the test
-  , "created"      timestamptz   not null DEFAULT now()   -- The timestamp for when the record was created. (TILDATEST.Test2)
-  , "lastUpdated"  timestamptz   not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDATEST.Test2)
+  , "created"      timestamptz   not null DEFAULT statement_timestamp()   -- The timestamp for when the record was created. (TILDATEST.Test2)
+  , "lastUpdated"  timestamptz   not null DEFAULT statement_timestamp()   -- The timestamp for when the record was last updated. (TILDATEST.Test2)
   , "deleted"      timestamptz              -- The timestamp for when the record was deleted. (TILDATEST.Test2)
   , PRIMARY KEY("refnum")
   , CONSTRAINT fk_Test2_Test FOREIGN KEY ("test_fk") REFERENCES TILDATEST.Test ON DELETE restrict ON UPDATE cascade
@@ -83,7 +83,7 @@ create table if not exists TILDATEST.Testing -- blah blah
   , "a8bTZ"        character(5)                   -- Generated helper column to hold the time zone ID for 'a8b'.
   , "a8b"          timestamptz                    -- The blah
   , "a9TZ"         character(5)                   -- Generated helper column to hold the time zone ID for 'a9'.
-  , "a9"           timestamptz                  DEFAULT now()   -- The blah
+  , "a9"           timestamptz                  DEFAULT statement_timestamp()   -- The blah
   , "a9a1TZ"       character(5)                   -- Generated helper column to hold the time zone ID for 'a9a1'.
   , "a9a1"         timestamptz                  DEFAULT '1111-11-11T00:00:00Z'   -- The blah
   , "a9bTZ"        text[]                         -- Generated helper column to hold the time zone ID for 'a9b'.
@@ -101,8 +101,8 @@ create table if not exists TILDATEST.Testing -- blah blah
   , "a13"          UUID                           -- The blah
   , "a13b"         UUID[]                         -- The blah
   , "a14"          jsonb                          -- The blah
-  , "created"      timestamptz         not null DEFAULT now()   -- The timestamp for when the record was created. (TILDATEST.Testing)
-  , "lastUpdated"  timestamptz         not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDATEST.Testing)
+  , "created"      timestamptz         not null DEFAULT statement_timestamp()   -- The timestamp for when the record was created. (TILDATEST.Testing)
+  , "lastUpdated"  timestamptz         not null DEFAULT statement_timestamp()   -- The timestamp for when the record was last updated. (TILDATEST.Testing)
   , "deleted"      timestamptz                    -- The timestamp for when the record was deleted. (TILDATEST.Testing)
   , PRIMARY KEY("refnum")
   , CONSTRAINT fk_Testing_a6d FOREIGN KEY ("a6dTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
@@ -204,7 +204,7 @@ create table if not exists TILDATEST.Testing_Cloned -- blah blah - Ready for pub
   , "a8bTZ"        character(5)                   -- Generated helper column to hold the time zone ID for 'a8b'.
   , "a8b"          timestamptz                    -- The blah
   , "a9TZ"         character(5)                   -- Generated helper column to hold the time zone ID for 'a9'.
-  , "a9"           timestamptz                  DEFAULT now()   -- The blah
+  , "a9"           timestamptz                  DEFAULT statement_timestamp()   -- The blah
   , "a9a1TZ"       character(5)                   -- Generated helper column to hold the time zone ID for 'a9a1'.
   , "a9a1"         timestamptz                  DEFAULT '1111-11-11T00:00:00Z'   -- The blah
   , "a9bTZ"        text[]                         -- Generated helper column to hold the time zone ID for 'a9b'.
@@ -222,8 +222,8 @@ create table if not exists TILDATEST.Testing_Cloned -- blah blah - Ready for pub
   , "a13"          UUID                           -- The blah
   , "a13b"         UUID[]                         -- The blah
   , "a14"          jsonb                          -- The blah
-  , "created"      timestamptz         not null DEFAULT now()   -- The timestamp for when the record was created. (TILDATEST.Testing_Cloned)
-  , "lastUpdated"  timestamptz         not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDATEST.Testing_Cloned)
+  , "created"      timestamptz         not null DEFAULT statement_timestamp()   -- The timestamp for when the record was created. (TILDATEST.Testing_Cloned)
+  , "lastUpdated"  timestamptz         not null DEFAULT statement_timestamp()   -- The timestamp for when the record was last updated. (TILDATEST.Testing_Cloned)
   , "deleted"      timestamptz                    -- The timestamp for when the record was deleted. (TILDATEST.Testing_Cloned)
   , PRIMARY KEY("refnum")
   , CONSTRAINT fk_Testing_Cloned_a6d FOREIGN KEY ("a6dTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
@@ -423,15 +423,6 @@ COMMENT ON VIEW TILDATEST.TestView IS E'-- DDL META DATA VERSION 2021-09-02\ncre
 COMMENT ON COLUMN TILDATEST.TestView."refnum" IS E'The primary key for this record';
 COMMENT ON COLUMN TILDATEST.TestView."name" IS E'The name of the test';
 
-DO $$
--- This view doesn't have any formula, but just in case it used to and they were all repoved from the model, we still have to do some cleanup.
-DECLARE
-  ts timestamp;
-BEGIN
-  select into ts current_timestamp;
-  UPDATE TILDA.Formula set deleted = current_timestamp where "location" = 'TILDATEST.TestView' AND "lastUpdated" < ts;
-END; $$
-LANGUAGE PLPGSQL;
 
 
 
@@ -465,15 +456,6 @@ COMMENT ON COLUMN TILDATEST.TestingView."a9c" IS E'The blah';
 COMMENT ON COLUMN TILDATEST.TestingView."a6First" IS E'The blah';
 COMMENT ON COLUMN TILDATEST.TestingView."a6Last" IS E'The blah';
 
-DO $$
--- This view doesn't have any formula, but just in case it used to and they were all repoved from the model, we still have to do some cleanup.
-DECLARE
-  ts timestamp;
-BEGIN
-  select into ts current_timestamp;
-  UPDATE TILDA.Formula set deleted = current_timestamp where "location" = 'TILDATEST.TestingView' AND "lastUpdated" < ts;
-END; $$
-LANGUAGE PLPGSQL;
 
 
 
@@ -620,88 +602,6 @@ COMMENT ON COLUMN TILDATEST.Testing2View."a5_null" IS E'The calculated formula: 
 COMMENT ON COLUMN TILDATEST.Testing2View."a6_null" IS E'The calculated formula: Whether a6 is null or not';
 COMMENT ON COLUMN TILDATEST.Testing2View."a7_null" IS E'The calculated formula: Whether a7 is null or not';
 
-DO $$
--- This view has formulas and we need to update all its meta-data.
-DECLARE
-  k bigint;
-  ts timestamp;
-BEGIN
-  select into k TILDA.getKeyBatchAsMaxExclusive('TILDA.FORMULA', 11)-11;
-  select into ts current_timestamp;
-
-INSERT INTO TILDA.Formula ("refnum", "location", "location2", "name", "type", "title", "description", "formula", "htmlDoc", "referencedColumns", "created", "lastUpdated", "deleted")
-    VALUES (k+0, 'TILDATEST.Testing2View', 'TILDATEST.Testing2Realized', 'a3', 'BOL', 'Not A3', 'Blah...', 'NOT a3', '<B>N/A</B>', null, current_timestamp, current_timestamp, null)
-          ,(k+1, 'TILDATEST.Testing2View', 'TILDATEST.Testing2Realized', 'bastille', 'DTM', 'Bastille Day', 'Blah...', '''1789-07-14''', '<B>N/A</B>', null, current_timestamp, current_timestamp, null)
-          ,(k+2, 'TILDATEST.Testing2View', 'TILDATEST.Testing2Realized', 'toto', 'DTM', 'Last Updated', 'Blah...', '''2018-08-10''', '<B>N/A</B>', null, current_timestamp, current_timestamp, null)
-          ,(k+3, 'TILDATEST.Testing2View', 'TILDATEST.Testing2Realized', 'desc2_Cat1', 'DBL', 'desc2_Cat1 Title', 'This formula checks whether the column ''desc2'' contains the values ''a'', ''b'', ''c'' for the View TILDATEST.Testing2View.', 'case when desc2  in (''a'', ''b'', ''c'') then 1 else 0 end', '<B>N/A</B>', ARRAY['TILDATEST.Testing2View.desc2'], current_timestamp, current_timestamp, null)
-          ,(k+4, 'TILDATEST.Testing2View', 'TILDATEST.Testing2Realized', 'desc2_Cat2', 'DBL', 'desc2_Cat2 Title', 'This formula checks whether the column ''desc2'' contains the values ''x'', ''y'', ''z'' for the View TILDATEST.Testing2View.', 'case when desc2  in (''x'', ''y'', ''z'') then 1 else 0 end', '<B>N/A</B>', ARRAY['TILDATEST.Testing2View.desc2'], current_timestamp, current_timestamp, null)
-          ,(k+5, 'TILDATEST.Testing2View', 'TILDATEST.Testing2Realized', 'desc2_Cat3', 'DBL', 'desc2_Cat3 Title', 'This formula checks whether the column ''desc2'' contains the values ''x'', ''y'', ''z'' for the View TILDATEST.Testing2View.', 'case when desc2  in (''x'', ''y'', ''z'') then 1 else 0 end', '<B>N/A</B>', ARRAY['TILDATEST.Testing2View.desc2'], current_timestamp, current_timestamp, null)
-          ,(k+6, 'TILDATEST.Testing2View', 'TILDATEST.Testing2Realized', 'a7_Cat4', 'DBL', 'a7_Cat4 Title', 'This formula checks whether the column ''a7'' value falls in the range of 0.0 and 10.0.', 'case when a7 >= 0.0 and a7 < 10.0 then 1 else 0 end', '<B>N/A</B>', null, current_timestamp, current_timestamp, null)
-          ,(k+7, 'TILDATEST.Testing2View', 'TILDATEST.Testing2Realized', 'a7_Cat5', 'DBL', 'a7_Cat5 Title', 'This formula checks whether the column ''a7'' value falls in the range of 10.0 and 20.0.', 'case when a7 >= 10.0 and a7 < 20.0 then 1 else 0 end', '<B>N/A</B>', null, current_timestamp, current_timestamp, null)
-          ,(k+8, 'TILDATEST.Testing2View', 'TILDATEST.Testing2Realized', 'a5_null', 'INT', 'Null a5', 'Whether a5 is null or not', 'case when a5 is null then 1
-     when a5 is not null then 0
-end', '<B>N/A</B>', null, current_timestamp, current_timestamp, null)
-          ,(k+9, 'TILDATEST.Testing2View', 'TILDATEST.Testing2Realized', 'a6_null', 'INT', 'Null a6', 'Whether a6 is null or not', 'case when a6 is null then 1
-     when a6 is not null then 0
-end', '<B>N/A</B>', null, current_timestamp, current_timestamp, null)
-          ,(k+10, 'TILDATEST.Testing2View', 'TILDATEST.Testing2Realized', 'a7_null', 'INT', 'Null a7', 'Whether a7 is null or not', 'case when a7 is null then 1
-     when a7 is not null then 0
-end', '<B>N/A</B>', null, current_timestamp, current_timestamp, null)
-  ON CONFLICT("location", "name") DO UPDATE
-    SET "location2" = EXCLUDED."location2"
-      , "type" = EXCLUDED."type"
-      , "title" = EXCLUDED."title"
-      , "description" = EXCLUDED."description"
-      , "formula" = EXCLUDED."formula"
-      , "htmlDoc" = EXCLUDED."htmlDoc"
-      , "referencedColumns" = EXCLUDED."referencedColumns"
-      , "lastUpdated" = current_timestamp
-      , "deleted" = null
-   ;
-UPDATE TILDA.Formula set deleted = current_timestamp where "location" = 'TILDATEST.Testing2View' AND "lastUpdated" < ts;
-
-UPDATE TILDA.FormulaResult
-   set deleted = current_timestamp
- where "formulaRefnum" in (select refnum
-                               from TILDA.Formula
-                              where "location" = 'TILDATEST.Testing2View'
-                                and "deleted" is not null
-                            );
-
-INSERT INTO TILDA.FormulaDependency("formulaRefnum", "dependencyRefnum", "created", "lastUpdated", "deleted")
-    VALUES ( (select refnum from TILDA.Formula where "location" = 'TILDATEST.Testing2View' AND "name" = 'a3')
-            ,(select refnum from TILDA.Formula where "location" = 'TILDATEST.Testing2View' AND "name" = 'a3')
-            ,current_timestamp, current_timestamp, null
-           )
-  ON CONFLICT("formulaRefnum", "dependencyRefnum") DO UPDATE
-    SET "lastUpdated" = current_timestamp
-      , "deleted" = null
-   ;
-UPDATE TILDA.FormulaDependency
-   set deleted = current_timestamp
- where "formulaRefnum" in (select refnum
-                               from TILDA.Formula
-                              where "location" = 'TILDATEST.Testing2View'
-                                and "deleted" is not null
-                            );
-
-select into k TILDA.getKeyBatchAsMaxExclusive('TILDA.MEASURE', 0)-0;
-
-
-DELETE FROM TILDA.MeasureFormula
- where "formulaRefnum" in (select refnum
-                               from TILDA.Formula
-                              where "location" = 'TILDATEST.Testing2View'
-                                and "deleted" is not null
-                            );
-
-UPDATE TILDA.Measure
-   set deleted = current_timestamp
- where "refnum" not in (select "measureRefnum" from TILDA.MeasureFormula)
- ;
-
-END; $$
-LANGUAGE PLPGSQL;
 
 
 
@@ -777,15 +677,6 @@ COMMENT ON COLUMN TILDATEST.Testing3View."name" IS E'Medical system unique enter
 COMMENT ON COLUMN TILDATEST.Testing3View."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDATEST.Testing)';
 COMMENT ON COLUMN TILDATEST.Testing3View."xxxLastUpdated" IS E'The timestamp for when the record was last updated. (TILDATEST.Testing)';
 
-DO $$
--- This view doesn't have any formula, but just in case it used to and they were all repoved from the model, we still have to do some cleanup.
-DECLARE
-  ts timestamp;
-BEGIN
-  select into ts current_timestamp;
-  UPDATE TILDA.Formula set deleted = current_timestamp where "location" = 'TILDATEST.Testing3View' AND "lastUpdated" < ts;
-END; $$
-LANGUAGE PLPGSQL;
 
 
 
@@ -992,62 +883,4 @@ COMMENT ON COLUMN TILDATEST.Testing4View."a7_null" IS E'<B>Null a7</B>: Whether 
 COMMENT ON COLUMN TILDATEST.Testing4View."a3" IS E'The calculated formula: Blah...';
 COMMENT ON COLUMN TILDATEST.Testing4View."lastUpdated" IS E'The calculated formula: Blah...';
 
-DO $$
--- This view has formulas and we need to update all its meta-data.
-DECLARE
-  k bigint;
-  ts timestamp;
-BEGIN
-  select into k TILDA.getKeyBatchAsMaxExclusive('TILDA.FORMULA', 2)-2;
-  select into ts current_timestamp;
-
-INSERT INTO TILDA.Formula ("refnum", "location", "location2", "name", "type", "title", "description", "formula", "htmlDoc", "referencedColumns", "created", "lastUpdated", "deleted")
-    VALUES (k+0, 'TILDATEST.Testing4View', 'TILDATEST.Testing4Realized', 'a3', 'BOL', 'Always True', 'Blah...', 'NOT a3 OR A3', '<B>N/A</B>', ARRAY['TILDATEST.Testing4View.a3'], current_timestamp, current_timestamp, null)
-          ,(k+1, 'TILDATEST.Testing4View', 'TILDATEST.Testing4Realized', 'lastUpdated', 'DTM', 'Always True', 'Blah...', 'GREATEST(lastUpdated, xxxLastUpdated)', '<B>N/A</B>', ARRAY['TILDATEST.Testing4View.lastUpdated', 'TILDATEST.Testing4View.xxxLastUpdated'], current_timestamp, current_timestamp, null)
-  ON CONFLICT("location", "name") DO UPDATE
-    SET "location2" = EXCLUDED."location2"
-      , "type" = EXCLUDED."type"
-      , "title" = EXCLUDED."title"
-      , "description" = EXCLUDED."description"
-      , "formula" = EXCLUDED."formula"
-      , "htmlDoc" = EXCLUDED."htmlDoc"
-      , "referencedColumns" = EXCLUDED."referencedColumns"
-      , "lastUpdated" = current_timestamp
-      , "deleted" = null
-   ;
-UPDATE TILDA.Formula set deleted = current_timestamp where "location" = 'TILDATEST.Testing4View' AND "lastUpdated" < ts;
-
-UPDATE TILDA.FormulaResult
-   set deleted = current_timestamp
- where "formulaRefnum" in (select refnum
-                               from TILDA.Formula
-                              where "location" = 'TILDATEST.Testing4View'
-                                and "deleted" is not null
-                            );
-
-UPDATE TILDA.FormulaDependency
-   set deleted = current_timestamp
- where "formulaRefnum" in (select refnum
-                               from TILDA.Formula
-                              where "location" = 'TILDATEST.Testing4View'
-                                and "deleted" is not null
-                            );
-
-select into k TILDA.getKeyBatchAsMaxExclusive('TILDA.MEASURE', 0)-0;
-
-
-DELETE FROM TILDA.MeasureFormula
- where "formulaRefnum" in (select refnum
-                               from TILDA.Formula
-                              where "location" = 'TILDATEST.Testing4View'
-                                and "deleted" is not null
-                            );
-
-UPDATE TILDA.Measure
-   set deleted = current_timestamp
- where "refnum" not in (select "measureRefnum" from TILDA.MeasureFormula)
- ;
-
-END; $$
-LANGUAGE PLPGSQL;
 

@@ -1056,7 +1056,7 @@ The results are ordered by: schemaName asc, objectName asc, startTime asc
 
         JSONUtil.print(out, "objectName", ++i==0, Obj.getObjectName());
 
-      if (Obj.isStartDateIncrNull() == false && Obj.getStartDateIncr() != null)
+      if (Obj.isNullStartDateIncr() == false && Obj.getStartDateIncr() != null)
         JSONUtil.print(out, "startDateIncr", ++i==0, Obj.getStartDateIncr());
 
         JSONUtil.print(out, "startTimeTZ", ++i==0, Obj.getStartTimeTZ());
@@ -1083,7 +1083,7 @@ The results are ordered by: schemaName asc, objectName asc, startTime asc
 
         JSONUtil.print(out, "lastUpdated", ++i==0, Obj.getLastUpdated());
 
-      if (Obj.isDeletedNull() == false && Obj.getDeleted() != null)
+      if (Obj.isNullDeleted() == false && Obj.getDeleted() != null)
         JSONUtil.print(out, "deleted", ++i==0, Obj.getDeleted());
 
         if (fullObject == true)

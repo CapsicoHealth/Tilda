@@ -927,7 +927,7 @@ The results are ordered by: id asc
          }
 
         int i = -1;
-      if (Obj.isActiveNull() == false)
+      if (Obj.isNullActive() == false)
         JSONUtil.print(out, "active", ++i==0, Obj.getActive());
 
         JSONUtil.print(out, "id", ++i==0, Obj.getId());
@@ -950,7 +950,7 @@ The results are ordered by: id asc
 
         JSONUtil.print(out, "lastUpdated", ++i==0, Obj.getLastUpdated());
 
-      if (Obj.isDeletedNull() == false && Obj.getDeleted() != null)
+      if (Obj.isNullDeleted() == false && Obj.getDeleted() != null)
         JSONUtil.print(out, "deleted", ++i==0, Obj.getDeleted());
 
         if (fullObject == true)

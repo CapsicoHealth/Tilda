@@ -510,7 +510,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isTypeNull()
+   public final boolean isNullType()
      { return __Nulls.intersects(TILDA__JOB_Factory.COLS.TYPE._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -537,7 +537,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setTypeNull();
+          setNullType();
         }
        else if (v.length() > 250)
         throw new Exception("Cannot set tilda.data.TILDA.Job.type: the size "+v.length()+" is larger than the max allowed of 250: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -569,7 +569,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setTypeNull()
+   public void setNullType()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__JOB_Factory.COLS.TYPE._Mask);
@@ -671,7 +671,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isUserIdNull()
+   public final boolean isNullUserId()
      { return __Nulls.intersects(TILDA__JOB_Factory.COLS.USERID._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -698,7 +698,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setUserIdNull();
+          setNullUserId();
         }
        else if (v.length() > 250)
         throw new Exception("Cannot set tilda.data.TILDA.Job.userId: the size "+v.length()+" is larger than the max allowed of 250: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -730,7 +730,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setUserIdNull()
+   public void setNullUserId()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__JOB_Factory.COLS.USERID._Mask);
@@ -831,7 +831,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isDataStartTZNull()
+   public final boolean isNullDataStartTZ()
      { return __Nulls.intersects(TILDA__JOB_Factory.COLS.DATASTARTTZ._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -858,7 +858,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setDataStartTZNull();
+          setNullDataStartTZ();
         }
        else if (v.length() > 5)
         throw new Exception("Cannot set tilda.data.TILDA.Job.dataStartTZ: the size "+v.length()+" is larger than the max allowed of 5: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -890,7 +890,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setDataStartTZNull()
+    void setNullDataStartTZ()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__JOB_Factory.COLS.DATASTARTTZ._Mask);
@@ -993,7 +993,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isDataStartNull()
+   public final boolean isNullDataStart()
      { return __Nulls.intersects(TILDA__JOB_Factory.COLS.DATASTART._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1019,7 +1019,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setDataStartNull();
+          setNullDataStart();
         }
        else if (v.equals(_dataStart) == false)
         {
@@ -1052,7 +1052,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setDataStartNull()
+   public void setNullDataStart()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__JOB_Factory.COLS.DATASTART._Mask);
@@ -1060,7 +1060,7 @@ This is the null setter for:<BR>
         return;
        __Nulls.or(TILDA__JOB_Factory.COLS.DATASTART._Mask);
        _dataStart=null;
-       setDataStartTZNull();
+       setNullDataStartTZ();
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -1222,7 +1222,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isDataEndTZNull()
+   public final boolean isNullDataEndTZ()
      { return __Nulls.intersects(TILDA__JOB_Factory.COLS.DATAENDTZ._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1249,7 +1249,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setDataEndTZNull();
+          setNullDataEndTZ();
         }
        else if (v.length() > 5)
         throw new Exception("Cannot set tilda.data.TILDA.Job.dataEndTZ: the size "+v.length()+" is larger than the max allowed of 5: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -1281,7 +1281,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setDataEndTZNull()
+    void setNullDataEndTZ()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__JOB_Factory.COLS.DATAENDTZ._Mask);
@@ -1384,7 +1384,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isDataEndNull()
+   public final boolean isNullDataEnd()
      { return __Nulls.intersects(TILDA__JOB_Factory.COLS.DATAEND._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1410,7 +1410,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setDataEndNull();
+          setNullDataEnd();
         }
        else if (v.equals(_dataEnd) == false)
         {
@@ -1443,7 +1443,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setDataEndNull()
+   public void setNullDataEnd()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__JOB_Factory.COLS.DATAEND._Mask);
@@ -1451,7 +1451,7 @@ This is the null setter for:<BR>
         return;
        __Nulls.or(TILDA__JOB_Factory.COLS.DATAEND._Mask);
        _dataEnd=null;
-       setDataEndTZNull();
+       setNullDataEndTZ();
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -1897,7 +1897,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isEndTZNull()
+   public final boolean isNullEndTZ()
      { return __Nulls.intersects(TILDA__JOB_Factory.COLS.ENDTZ._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1924,7 +1924,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setEndTZNull();
+          setNullEndTZ();
         }
        else if (v.length() > 5)
         throw new Exception("Cannot set tilda.data.TILDA.Job.endTZ: the size "+v.length()+" is larger than the max allowed of 5: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -1956,7 +1956,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setEndTZNull()
+    void setNullEndTZ()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__JOB_Factory.COLS.ENDTZ._Mask);
@@ -2059,7 +2059,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isEndNull()
+   public final boolean isNullEnd()
      { return __Nulls.intersects(TILDA__JOB_Factory.COLS.END._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2085,7 +2085,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setEndNull();
+          setNullEnd();
         }
        else if (v.equals(_end) == false)
         {
@@ -2118,7 +2118,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setEndNull()
+   public void setNullEnd()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__JOB_Factory.COLS.END._Mask);
@@ -2126,7 +2126,7 @@ This is the null setter for:<BR>
         return;
        __Nulls.or(TILDA__JOB_Factory.COLS.END._Mask);
        _end=null;
-       setEndTZNull();
+       setNullEndTZ();
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -2286,7 +2286,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isStatusNull()
+   public final boolean isNullStatus()
      { return __Nulls.intersects(TILDA__JOB_Factory.COLS.STATUS._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2337,7 +2337,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setStatusNull()
+   public void setNullStatus()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__JOB_Factory.COLS.STATUS._Mask);
@@ -2438,7 +2438,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isMsgNull()
+   public final boolean isNullMsg()
      { return __Nulls.intersects(TILDA__JOB_Factory.COLS.MSG._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2465,7 +2465,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setMsgNull();
+          setNullMsg();
         }
        else if (v.length() > 8192)
         throw new Exception("Cannot set tilda.data.TILDA.Job.msg: the size "+v.length()+" is larger than the max allowed of 8192: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -2497,7 +2497,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setMsgNull()
+   public void setNullMsg()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__JOB_Factory.COLS.MSG._Mask);
@@ -3033,7 +3033,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isDeletedNull()
+   public final boolean isNullDeleted()
      { return __Nulls.intersects(TILDA__JOB_Factory.COLS.DELETED._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3059,7 +3059,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setDeletedNull();
+          setNullDeleted();
         }
        else if (v.equals(_deleted) == false)
         {
@@ -3088,7 +3088,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final void setDeletedNull()
+   public final void setNullDeleted()
      {
        long T0 = System.nanoTime();
        __Changes.or(TILDA__JOB_Factory.COLS.DELETED._Mask);
@@ -3203,28 +3203,28 @@ This is the hasChanged for:<BR>
        if (_name        != null)
         Dst.setName       (_name       );
        if (__Nulls.intersects(TILDA__JOB_Factory.COLS.TYPE._Mask) == true || _type       ==null)
-        Dst.setTypeNull       ();
+        Dst.setNullType       ();
        else
         Dst.setType       (_type       );
        if (__Nulls.intersects(TILDA__JOB_Factory.COLS.USERID._Mask) == true || _userId     ==null)
-        Dst.setUserIdNull     ();
+        Dst.setNullUserId     ();
        else
         Dst.setUserId     (_userId     );
        if (__Nulls.intersects(TILDA__JOB_Factory.COLS.DATASTARTTZ._Mask) == true || _dataStartTZ==null)
-        Dst.setDataStartTZNull();
+        Dst.setNullDataStartTZ();
        else
         Dst.setDataStartTZ(_dataStartTZ);
        if (__Nulls.intersects(TILDA__JOB_Factory.COLS.DATASTART._Mask) == true || _dataStart  ==null)
-        Dst.setDataStartNull  ();
+        Dst.setNullDataStart  ();
        else
         Dst.setDataStart  (_dataStart  );
        Dst.Str_dataStart = Str_dataStart;
        if (__Nulls.intersects(TILDA__JOB_Factory.COLS.DATAENDTZ._Mask) == true || _dataEndTZ  ==null)
-        Dst.setDataEndTZNull  ();
+        Dst.setNullDataEndTZ  ();
        else
         Dst.setDataEndTZ  (_dataEndTZ  );
        if (__Nulls.intersects(TILDA__JOB_Factory.COLS.DATAEND._Mask) == true || _dataEnd    ==null)
-        Dst.setDataEndNull    ();
+        Dst.setNullDataEnd    ();
        else
         Dst.setDataEnd    (_dataEnd    );
        Dst.Str_dataEnd = Str_dataEnd;
@@ -3234,20 +3234,20 @@ This is the hasChanged for:<BR>
         Dst.setStart      (_start      );
        Dst.Str_start = Str_start;
        if (__Nulls.intersects(TILDA__JOB_Factory.COLS.ENDTZ._Mask) == true || _endTZ      ==null)
-        Dst.setEndTZNull      ();
+        Dst.setNullEndTZ      ();
        else
         Dst.setEndTZ      (_endTZ      );
        if (__Nulls.intersects(TILDA__JOB_Factory.COLS.END._Mask) == true || _end        ==null)
-        Dst.setEndNull        ();
+        Dst.setNullEnd        ();
        else
         Dst.setEnd        (_end        );
        Dst.Str_end = Str_end;
        if (__Nulls.intersects(TILDA__JOB_Factory.COLS.STATUS._Mask) == true || _status     ==null)
-        Dst.setStatusNull     ();
+        Dst.setNullStatus     ();
        else
         Dst.setStatus     (_status     );
        if (__Nulls.intersects(TILDA__JOB_Factory.COLS.MSG._Mask) == true || _msg        ==null)
-        Dst.setMsgNull        ();
+        Dst.setNullMsg        ();
        else
         Dst.setMsg        (_msg        );
        if (__Init == InitMode.CREATE && _created     != null)
@@ -3255,7 +3255,7 @@ This is the hasChanged for:<BR>
        if (_lastUpdated != null)
         Dst.setLastUpdated(_lastUpdated);
        if (__Nulls.intersects(TILDA__JOB_Factory.COLS.DELETED._Mask) == true || _deleted    ==null)
-        Dst.setDeletedNull    ();
+        Dst.setNullDeleted    ();
        else
         Dst.setDeleted    (_deleted    );
      }
