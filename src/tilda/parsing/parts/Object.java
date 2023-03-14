@@ -364,9 +364,9 @@ public class Object extends Base
           if (OM != null)
             {
               List<String> X = CollectionUtil.toList(_History._IncludedColumns);
-              X.add("created");
-              X.add("lastUpdated");
-              X.add("deleted");
+              X.add(ParentSchema.getConventionCreatedName());
+              X.add(ParentSchema.getConventionLastUpdatedName());
+              X.add(ParentSchema.getConventionDeletedName());
               OM._Columns = Column.cleanupColumnList(OM._Columns, X.toArray(new String[X.size()]));
             }
 
@@ -386,7 +386,7 @@ public class Object extends Base
                 I._Columns = new String[] { _ParentSchema.getConventionPrimaryKeyName()
                 };
               }
-            I._OrderBy = new String[] { "lastUpdated desc"
+            I._OrderBy = new String[] { ParentSchema.getConventionLastUpdatedName()+" desc"
             };
             I._Db = true;
             obj._Indices.add(I);
@@ -397,7 +397,7 @@ public class Object extends Base
           for (Index I : obj._Indices)
             if (I != null && (I._OrderBy == null || I._OrderBy.length == 0))
               {
-                I._OrderBy = new String[] { "lastUpdated desc"
+                I._OrderBy = new String[] { ParentSchema.getConventionLastUpdatedName()+" desc"
                 };
               }
 
@@ -405,7 +405,7 @@ public class Object extends Base
         // get pushed to the DB given that it'll overlap with the non-unique index created above from the original identity.
         Index I = new Index();
         I._Name = "FakeIdentity";
-        I._Columns = new String[] { "lastUpdated", "created"
+        I._Columns = new String[] { ParentSchema.getConventionLastUpdatedName(), ParentSchema.getConventionCreatedName()
         };
         I._Db = false;
         obj._Indices.add(I);
@@ -481,7 +481,13 @@ public class Object extends Base
               continue;
 
             String N = C.getLogicalName();
-            if (N != null && (N.equalsIgnoreCase("created") == true || N.equalsIgnoreCase("lastUpdated") == true || N.equalsIgnoreCase("createdETL") == true || N.equalsIgnoreCase("lastUpdatedETL") == true || N.equalsIgnoreCase("deleted") == true))
+            if (N != null && (   N.equalsIgnoreCase(_ParentSchema.getConventionCreatedName()) == true
+                              || N.equalsIgnoreCase(_ParentSchema.getConventionLastUpdatedName()) == true
+                              || N.equalsIgnoreCase(_ParentSchema.getConventionCreatedName()+"ETL") == true
+                              || N.equalsIgnoreCase(_ParentSchema.getConventionLastUpdatedName()+"ETL") == true
+                              || N.equalsIgnoreCase(_ParentSchema.getConventionDeletedName()) == true
+                             )
+               )
               return PS.AddError("Object '" + getFullName() + "' has defined OCC to be true but is also defining column '" + C.getName() + "', which is a reserved name.");
           }
 
@@ -497,29 +503,29 @@ public class Object extends Base
             throw new Error("There is a class-path issue here... This process cannot see the base Tilda object definitions.");
           }
 
-        Column C = new Column("created", null, 0, false, ColumnMode.AUTO, true, null, PS.getColumn("tilda.data", "TILDA", "Key", "created")._Description + " (" + getShortName() + ")", null, null, null);
+        Column C = new Column(_ParentSchema.getConventionCreatedName(), null, 0, false, ColumnMode.AUTO, true, null, PS.getColumn("tilda.data", "TILDA", "Key", "created")._Description + " (" + getShortName() + ")", null, null, null);
         C._SameAs = "tilda.data.TILDA.Key.created";
         C._FCT = FrameworkColumnType.OCC_CREATED;
         _Columns.add(C);
 
-        C = new Column("lastUpdated", null, 0, false, ColumnMode.AUTO, false, null, PS.getColumn("tilda.data", "TILDA", "Key", "lastUpdated")._Description + " (" + getShortName() + ")", null, null, null);
+        C = new Column(_ParentSchema.getConventionLastUpdatedName(), null, 0, false, ColumnMode.AUTO, false, null, PS.getColumn("tilda.data", "TILDA", "Key", "lastUpdated")._Description + " (" + getShortName() + ")", null, null, null);
         C._SameAs = "tilda.data.TILDA.Key.lastUpdated";
         C._FCT = FrameworkColumnType.OCC_LASTUPDATED;
         _Columns.add(C);
 
-        C = new Column("deleted", null, 0, true, ColumnMode.AUTO, false, null, PS.getColumn("tilda.data", "TILDA", "Key", "deleted")._Description + " (" + getShortName() + ")", null, null, null);
+        C = new Column(_ParentSchema.getConventionDeletedName(), null, 0, true, ColumnMode.AUTO, false, null, PS.getColumn("tilda.data", "TILDA", "Key", "deleted")._Description + " (" + getShortName() + ")", null, null, null);
         C._SameAs = "tilda.data.TILDA.Key.deleted";
         C._FCT = FrameworkColumnType.OCC_DELETED;
         _Columns.add(C);
 
         if (addETLLastUpdated == true)
           {
-            C = new Column("createdETL", null, 0, true, ColumnMode.AUTO, false, null, PS.getColumn("tilda.data", "TILDA", "Key", "createdETL")._Description + " (" + getShortName() + ")", null, null, null);
+            C = new Column(_ParentSchema.getConventionCreatedName()+"ETL", null, 0, true, ColumnMode.AUTO, false, null, PS.getColumn("tilda.data", "TILDA", "Key", "createdETL")._Description + " (" + getShortName() + ")", null, null, null);
             C._SameAs = "tilda.data.TILDA.Key.createdETL";
             C._FCT = FrameworkColumnType.OCC_CREATED;
             _Columns.add(C);
 
-            C = new Column("lastUpdatedETL", null, 0, true, ColumnMode.AUTO, false, null, PS.getColumn("tilda.data", "TILDA", "Key", "lastUpdatedETL")._Description + " (" + getShortName() + ")", null, null, null);
+            C = new Column(_ParentSchema.getConventionLastUpdatedName()+"ETL", null, 0, true, ColumnMode.AUTO, false, null, PS.getColumn("tilda.data", "TILDA", "Key", "lastUpdatedETL")._Description + " (" + getShortName() + ")", null, null, null);
             C._SameAs = "tilda.data.TILDA.Key.lastUpdatedETL";
             C._FCT = FrameworkColumnType.OCC_LASTUPDATED;
             _Columns.add(C);

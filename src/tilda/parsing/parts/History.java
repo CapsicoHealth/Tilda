@@ -69,12 +69,12 @@ public class History
 
         // validating included columns.
         List<String> X = CollectionUtil.toList(_ExcludedColumns);
-        if (TextUtil.contains(_ExcludedColumns, "created", true, 0) == false)
-          X.add("created");
-        if (TextUtil.contains(_ExcludedColumns, "lastUpdated", true, 0) == false)
-          X.add("lastUpdated");
-        if (TextUtil.contains(_ExcludedColumns, "deleted", true, 0) == false)
-          X.add("deleted");
+        if (TextUtil.contains(_ExcludedColumns, _ParentObject._ParentSchema.getConventionCreatedName(), true, 0) == false)
+          X.add(_ParentObject._ParentSchema.getConventionCreatedName());
+        if (TextUtil.contains(_ExcludedColumns, _ParentObject._ParentSchema.getConventionLastUpdatedName(), true, 0) == false)
+          X.add(_ParentObject._ParentSchema.getConventionLastUpdatedName());
+        if (TextUtil.contains(_ExcludedColumns, _ParentObject._ParentSchema.getConventionDeletedName(), true, 0) == false)
+          X.add(_ParentObject._ParentSchema.getConventionDeletedName());
         _ExcludedColumns = CollectionUtil.toStringArray(X);
         if (_IncludedColumns != null && _IncludedColumns.length > 0)
           _IncludedColumns = CollectionUtil.toStringArray(_ParentObject.expandColumnNames(_IncludedColumns, PS, "History '" + _ParentObject._Name + "'s included columns", _ParentObject._Name, _ExcludedColumns));
@@ -100,15 +100,15 @@ public class History
         if (TextUtil.contains(_SignatureColumnsExcluded, obj._ParentSchema.getConventionPrimaryKeyName(), true, 0) == false)
           X.add(obj._ParentSchema.getConventionPrimaryKeyName());
         // 'created' shouldn't be part of the signature.
-        if (TextUtil.contains(_SignatureColumnsExcluded, "created", true, 0) == false)
-          X.add("created");
+        if (TextUtil.contains(_SignatureColumnsExcluded, _ParentObject._ParentSchema.getConventionCreatedName(), true, 0) == false)
+          X.add(_ParentObject._ParentSchema.getConventionCreatedName());
         // It's redundant to have "lastUpdated" in the signature. If that's the only that changes and nothing else of importance does, then why?
-        if (TextUtil.contains(_SignatureColumnsExcluded, "lastUpdated", true, 0) == false)
-          X.add("lastUpdated");
+        if (TextUtil.contains(_SignatureColumnsExcluded, _ParentObject._ParentSchema.getConventionLastUpdatedName(), true, 0) == false)
+          X.add(_ParentObject._ParentSchema.getConventionLastUpdatedName());
         // LDH-NOTE: deleted is the inverse behavior compared to lastUpdated. It's possible that only that field changes and it's critical
         // to detect deletions. So we don't remove it. Actually we check it's never listed
-        if (TextUtil.contains(_SignatureColumnsExcluded, "deleted", true, 0) == true)
-          PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a History signature which excludes 'deleted', which is not allowed.");
+        if (TextUtil.contains(_SignatureColumnsExcluded, _ParentObject._ParentSchema.getConventionDeletedName(), true, 0) == true)
+          PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a History signature which excludes '"+_ParentObject._ParentSchema.getConventionDeletedName()+"', which is not allowed.");
         _SignatureColumnsExcluded = CollectionUtil.toStringArray(X);
 
         if (_SignatureColumns != null && _SignatureColumns.length > 0)
@@ -118,8 +118,8 @@ public class History
           PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a History with no listed signature column: maybe the definition is missing, or the combination of included and excluded columns yields no result.");
         // LDH-NOTE: deleted is the inverse behavior compared to lastUpdated. It's possible that only that field changes and it's critical
         // to detect deletions. So we don't remove it. Actually we check it's never listed
-        else if (TextUtil.contains(_SignatureColumns, "deleted", true, 0) == false)
-          PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a History signature which doesn't include, or excludes, 'deleted', which is not allowed.");
+        else if (TextUtil.contains(_SignatureColumns, _ParentObject._ParentSchema.getConventionDeletedName(), true, 0) == false)
+          PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a History signature which doesn't include, or excludes, '"+_ParentObject._ParentSchema.getConventionDeletedName()+"', which is not allowed.");
         else
           _SignatureColumnObjs = ValidationHelper.ProcessColumn(PS, _ParentObject, "History '" + _ParentObject._Name + "'s signature columns", _SignatureColumns, new ValidationHelper.Processor()
             {

@@ -1360,7 +1360,7 @@ public class TildaFactory implements CodeGenTildaFactory
             if (nameCol.getType() == ColumnType.STRING)
               Out.println("          if(TextUtil.isNullOrEmpty(D.get" + TextUtil.capitalizeFirstCharacter(nameCol.getName()) + "()) == false)");
             else if (nameCol._Nullable == true)
-              Out.println("          if(D.is" + TextUtil.capitalizeFirstCharacter(nameCol.getName()) + "Null() == false)");
+              Out.println("          if(D.isNull" + TextUtil.capitalizeFirstCharacter(nameCol.getName()) + "() == false)");
             else if (nameCol.getType().isPrimitive() == false)
               Out.println("          if(D.get" + TextUtil.capitalizeFirstCharacter(nameCol.getName()) + "() != null)");
             Out.println("            if (M.put(D.get" + TextUtil.capitalizeFirstCharacter(nameCol.getName()) + "(), D.get" + TextUtil.capitalizeFirstCharacter(valCol.getName()) + "()) != null)");

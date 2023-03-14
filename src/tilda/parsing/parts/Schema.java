@@ -667,6 +667,27 @@ public class Schema
      {
        return _Conventions._PrimaryKeyName;
      }
+    public String getConventionCreatedName()
+      {
+        return _Conventions._CreatedName;
+      }
+    public String getConventionLastUpdatedName()
+      {
+        return _Conventions._LastUpdatedName;
+      }
+    public String getConventionDeletedName()
+      {
+        return _Conventions._DeletedName;
+      }
+
+    public boolean isOCCColumnName(String name)
+      {
+        return name.equals(_Conventions._CreatedName) || name.equals(_Conventions._LastUpdatedName) || name.equals(_Conventions._DeletedName)
+        // || Name.equals("createdETL") || Name.equals("lastUpdatedETL") || Name.equals("deletedETL")
+        ;
+      }
+    
+    
 //    public boolean getConventionPrefix()
 //      {
 //        return _Conventions._Prefix;
@@ -679,5 +700,4 @@ public class Schema
 //      {
 //        return _Conventions._DBColumnNameTranslation;
 //      }
-
   }

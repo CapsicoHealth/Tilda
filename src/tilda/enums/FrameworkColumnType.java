@@ -63,11 +63,4 @@ public enum FrameworkColumnType
             return e;
         return null;
       }
-
-    public static boolean isOCCColumnName(String Name)
-      {
-        return Name.equals("created") || Name.equals("lastUpdated") || Name.equals("deleted")
-        // || Name.equals("createdETL") || Name.equals("lastUpdatedETL") || Name.equals("deletedETL")
-        ;
-      }
   }

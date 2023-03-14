@@ -436,9 +436,9 @@ public class Generator
 
             if (O._OCC == true)
               {
-                Column C = O.getColumn("lastUpdated");
+                Column C = O.getColumn(O._ParentSchema.getConventionLastUpdatedName());
                 if (C == null)
-                  throw new Error("The object " + O.getFullName() + " is marked as OCC yet doesn't have the 'lastUpdated' column");
+                  throw new Error("The object " + O.getFullName() + " is marked as OCC yet doesn't have the column '"+O._ParentSchema.getConventionLastUpdatedName()+"'");
                 Out.println();
                 DG.docMethodTouch(Out, G, C);
                 CG.genMethodTouch(Out, G, C);
