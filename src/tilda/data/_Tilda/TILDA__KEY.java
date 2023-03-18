@@ -1793,9 +1793,9 @@ This is the hasChanged for:<BR>
                + "; max: "                                                                                                +                                   getMax           ()
                + "; count: "                                                                                              +                                   getCount         ()
                + "; created: "                                                                                            + DateTimeUtil.printDateTimeForJSON(getCreated       ())
-               + "; createdETL: "                                                                                         + DateTimeUtil.printDateTimeForJSON(getCreated    ())
+               + "; createdETL: "                                                                                         + DateTimeUtil.printDateTimeForJSON(getCreatedETL    ())
                + "; lastUpdated: "                                                                                        + DateTimeUtil.printDateTimeForJSON(getLastUpdated   ())
-               + "; lastUpdatedETL: "                                                                                     + DateTimeUtil.printDateTimeForJSON(getLastUpdated())
+               + "; lastUpdatedETL: "                                                                                     + DateTimeUtil.printDateTimeForJSON(getLastUpdatedETL())
                + "; deleted"          + (__Nulls.intersects(TILDA__KEY_Factory.COLS.DELETED._Mask       ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDeleted       ()))
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);

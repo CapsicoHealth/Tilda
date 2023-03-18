@@ -679,11 +679,11 @@ The results are ordered by: refnum asc
       Str.append(",");
       TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getCreated()));
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getCreated()));
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getCreatedETL()));
       Str.append(",");
       TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getLastUpdated()));
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getLastUpdated()));
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getLastUpdatedETL()));
       Str.append(",");
       TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getDeleted()));
       out.write(Str.toString());
@@ -757,12 +757,12 @@ The results are ordered by: refnum asc
         JSONUtil.print(out, "created", ++i==0, Obj.getCreated());
 
       if (Obj.getCreatedETL() != null)
-        JSONUtil.print(out, "createdETL", ++i==0, Obj.getCreated());
+        JSONUtil.print(out, "createdETL", ++i==0, Obj.getCreatedETL());
 
         JSONUtil.print(out, "lastUpdated", ++i==0, Obj.getLastUpdated());
 
       if (Obj.getLastUpdatedETL() != null)
-        JSONUtil.print(out, "lastUpdatedETL", ++i==0, Obj.getLastUpdated());
+        JSONUtil.print(out, "lastUpdatedETL", ++i==0, Obj.getLastUpdatedETL());
 
       if (Obj.isNullDeleted() == false && Obj.getDeleted() != null)
         JSONUtil.print(out, "deleted", ++i==0, Obj.getDeleted());

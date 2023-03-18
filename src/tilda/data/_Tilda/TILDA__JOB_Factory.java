@@ -511,7 +511,11 @@ This is the column definition for:<BR>
                 S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Job", "type"); S.append("=?");  S.append(")");
                 S.append(" order by "); C.getFullColumnVar(S, "TILDA", "Job", "start"); S.append(" DESC");
                 break;
-             case 3: // Query 'All'
+             case 3: // Query 'MostRecent'
+                S.append(" where (");  S.append(""); C.getFullColumnVar(S, "TILDA", "Job", "name"); S.append("=").append("?").append("");  S.append(")");
+                S.append(" order by "); C.getFullColumnVar(S, "TILDA", "Job", "start"); S.append(" DESC");
+                break;
+             case 4: // Query 'All'
                 S.append(" where (");  S.append("1=1");  S.append(")");
                 S.append(" order by "); C.getFullColumnVar(S, "TILDA", "Job", "refnum"); S.append(" ASC");
                 break;
@@ -547,7 +551,13 @@ This is the column definition for:<BR>
                if (Obj.isNullType() == true) PS.setNull(++i, java.sql.Types.VARCHAR   );  else PS.setString    (++i, Obj._type       );
                break;
              }
-             case 3: { // Query 'All'
+             case 3: { // Query 'MostRecent'
+               lookupWhereMostRecentParams P = (lookupWhereMostRecentParams) ExtraParams;
+               LOG.debug(QueryDetails._LOGGING_HEADER + "  " + P.toString());
+               if (P._name==null) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, P._name       );
+               break;
+             }
+             case 4: { // Query 'All'
                break;
              }
              case -666: break;
@@ -890,6 +900,57 @@ Lookup records by the index 'JobType' over  type.<BR>The results are ordered by:
 
 
 /**
+Lookup records by the query 'MostRecent' over 
+name.<BR>
+The results are ordered by: start desc
+*/   static public ListResults<tilda.data.Job_Data> lookupWhereMostRecent(Connection C, String name, int start, int size) throws Exception
+     {
+       tilda.data._Tilda.TILDA__JOB Obj = new tilda.data.Job_Data();
+       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
+
+       lookupWhereMostRecentParams P = new lookupWhereMostRecentParams(name);
+
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
+       readMany(C, 3, RPI, Obj, P, start, size);
+       return RPI._L;
+     }
+
+
+/**
+Lookup records by the query 'MostRecent' over 
+name.<BR>
+The results are ordered by: start desc
+*/   static public void lookupWhereMostRecent(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Job_Data> OP, String name, int start, int size) throws Exception
+     {
+       tilda.data._Tilda.TILDA__JOB Obj = new tilda.data.Job_Data();
+       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
+
+       lookupWhereMostRecentParams P = new lookupWhereMostRecentParams(name);
+
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
+       readMany(C, 3, RPI, Obj, P, start, size);
+     }
+
+    private static class lookupWhereMostRecentParams
+     {
+       protected lookupWhereMostRecentParams(String name)
+         {
+           _name = name;
+         }
+        protected final String _name;
+       public String toString()
+        {
+          long T0 = System.nanoTime();
+          String Str = ""
+                  + "name: " + _name + ";"
+                 ; 
+          tilda.performance.PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
+          return Str;
+        }
+     }
+
+
+/**
 Lookup records by the query 'All' over 
 .<BR>
 The results are ordered by: refnum asc
@@ -900,7 +961,7 @@ The results are ordered by: refnum asc
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
-       readMany(C, 3, RPI, Obj, null, start, size);
+       readMany(C, 4, RPI, Obj, null, start, size);
        return RPI._L;
      }
 
@@ -916,7 +977,7 @@ The results are ordered by: refnum asc
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       readMany(C, 3, RPI, Obj, null, start, size);
+       readMany(C, 4, RPI, Obj, null, start, size);
      }
 
 
