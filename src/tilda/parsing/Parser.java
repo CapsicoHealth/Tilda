@@ -23,6 +23,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -41,17 +42,24 @@ public abstract class Parser
   {
     protected static final Logger LOG = LogManager.getLogger(Parser.class.getName());
 
-    public static ParserSession init(CodeGenSql CGSql, List<Schema> SchemaList) throws Exception
-     {
-       ParserSession PS = new ParserSession(SchemaList.get(SchemaList.size()-1), CGSql);;
-       for (Schema S : SchemaList)
-        PS.addDependencySchema(S);
-       for (Schema S : SchemaList)
-        S.Validate(PS);
-       return PS;
-     }
+    public static ParserSession init(CodeGenSql CGSql, List<Schema> SchemaList)
+    throws Exception
+      {
+        ParserSession PS = new ParserSession(SchemaList.get(SchemaList.size() - 1), CGSql);
+        Map<String, Schema> SchemaCache = new HashMap<String, Schema>();
+        for (Schema S : SchemaList)
+          {
+//            PS.addDependencySchema(S);
+            if (loadDependencies(PS, S, SchemaCache) == false)
+              return null;
+          }
+        for (Schema S : SchemaList)
+          S.Validate(PS);
+        return PS;
+      }
 
-    public static ParserSession parse(String FilePath, CodeGenSql CGSql, Map<String, Schema> SchemaCache, boolean allowResource) throws Exception
+    public static ParserSession parse(String FilePath, CodeGenSql CGSql, Map<String, Schema> SchemaCache, boolean allowResource)
+    throws Exception
       {
         LOG.info("\n\n\n-----------------------------------------------------------------------------------------------------------------------------------------------");
         LOG.info("Loading Tilda schema '" + FilePath + "'.");
@@ -60,7 +68,7 @@ public abstract class Parser
           return null;
         Schema CS = SchemaCache.get(S._ResourceNameShort);
         if (CS == null)
-         SchemaCache.put(S._ResourceNameShort, S);
+          SchemaCache.put(S._ResourceNameShort, S);
         else
           {
             // When we load files from the file system, we have a full path to work from.
@@ -76,7 +84,7 @@ public abstract class Parser
         ParserSession PS = new ParserSession(S, CGSql);
         if (loadDependencies(PS, S, SchemaCache) == false)
           return null;
-        
+
         return PS;
       }
 
@@ -144,7 +152,8 @@ public abstract class Parser
           }
       }
 
-    public static boolean loadDependencies(ParserSession PS, Schema BaseSchema, Map<String, Schema> SchemaCache) throws Exception
+    public static boolean loadDependencies(ParserSession PS, Schema BaseSchema, Map<String, Schema> SchemaCache)
+    throws Exception
       {
         Schema BaseTilda = null;
         if (BaseSchema._ResourceName.endsWith(Schema._BASE_TILDA_SCHEMA_RESOURCE) == false)
@@ -157,12 +166,12 @@ public abstract class Parser
               {
                 BaseTilda = fromResource(Schema._BASE_TILDA_SCHEMA_RESOURCE);
                 if (BaseTilda == null)
-                 return false;
+                  return false;
                 SchemaCache.put(Schema._BASE_TILDA_SCHEMA_RESOURCE, BaseTilda);
               }
             PS.addDependencySchema(BaseTilda);
             if (loadDependencies(BaseSchema, PS._Dependencies, SchemaCache) == false)
-             return false;
+              return false;
           }
         else
           BaseTilda = BaseSchema;
@@ -216,7 +225,7 @@ public abstract class Parser
               if (Pre != null)
                 {
                   if (cache == false)
-                   LOG.info("   Tilda dependency schema '" + Pre.getFullName() + "' has been validated already");
+                    LOG.info("   Tilda dependency schema '" + Pre.getFullName() + "' has been validated already");
                   S._DependencySchemas.add(Pre);
                 }
               else
@@ -229,5 +238,5 @@ public abstract class Parser
             }
         return true;
       }
-    
+
   }

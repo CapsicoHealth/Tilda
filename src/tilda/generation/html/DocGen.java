@@ -398,14 +398,14 @@ public class DocGen
                       JSONUtil.print(writer, "docs", false, O._Description == null ? null : O._Description);
                       writer.println(", \"cols\":[ ");
                       int c = -1;
-                      O._Columns.sort(new Comparator<Column>()
-                        {
-                          @Override
-                          public int compare(Column c1, Column c2)
-                            {
-                              return c1 == null || c2 == null ? 0 : c1.getName().compareTo(c2.getName());
-                            }
-                        });
+//                      O._Columns.sort(new Comparator<Column>()
+//                        {
+//                          @Override
+//                          public int compare(Column c1, Column c2)
+//                            {
+//                              return c1 == null || c2 == null ? 0 : c1.getName().compareTo(c2.getName());
+//                            }
+//                        });
                       for (Column C : O._Columns)
                         if (C != null)
                           {
@@ -424,7 +424,7 @@ public class DocGen
                                 JSONUtil.print(writer, "formula", false, true);
                                 JSONUtil.print(writer, "docs", false, F._Title + (F._Measure == false ? "" : "&nbsp;<SUP class=\"Measure\"></SUP>") + "<BR><BR>" + String.join(" ", F._Description) + "<PRE style=\"padding-top: 3px;\">" + Docs.printFormulaCodeHTML(F, ColumnMatches, FormulaMatches, true) + "</PRE>");
                               }
-                            JSONUtil.print(writer, "url", false, UrlMaker.makeColumnHref(C, O.getSchema()));
+                            JSONUtil.print(writer, "url", false, UrlMaker.makeColumnHref(C, null));
                             writer.println(" }");
                           }
                       writer.println("        ]}");
@@ -433,7 +433,7 @@ public class DocGen
               }
             writer.println("    ]}");
           }
-        writer.print("];");
+        writer.println("];");
         writer.println("MasterIndex._baseId='MI';");
         writer.println("MasterIndex.paintSchemas(dbMeta);");
         writer.println("eventListener = eventListener_master;");

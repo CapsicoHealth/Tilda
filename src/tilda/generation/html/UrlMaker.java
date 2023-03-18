@@ -53,7 +53,7 @@ public class UrlMaker
 
     public static String makeColumnHref(Column C, Schema parentSchema)
       {
-        boolean inSchema = C._ParentObject.getSchema().getShortName().equalsIgnoreCase(parentSchema.getShortName());
+        boolean inSchema = parentSchema != null && C._ParentObject.getSchema().getShortName().equalsIgnoreCase(parentSchema.getShortName());
         return inSchema == true ? "javascript:openDiv('" + C._ParentObject._Name + "-" + C.getName() + "_DIV', -50)"
         : "TILDA___Docs." + C._ParentObject.getSchema().getShortName() + ".html#" + C._ParentObject._Name + "-" + C.getName() + "_DIV";
       }

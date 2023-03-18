@@ -154,12 +154,14 @@ public class Generator
 
         // Some schemas may be empty, such as TILDA_TMP, so we have to fake a root object to get started.
         if (B == null)
-          return;
+          {
+            B = new Object();
+            B._ParentSchema = S;
+          }
 
         File f = new File(genFolder.getAbsolutePath() + File.separator + "TILDA___Catalog" + "." + B.getSchema()._Name + ".csv");
         PrintWriter out = new PrintWriter(f);
         LOG.debug("  Generating the Catalog CSV file.");
-        
         CatalogHelper CH = new CatalogHelper();
         CH.addSchema(S);
         CH.outputCSV(out);

@@ -242,9 +242,16 @@ public class Docs
                 if (S == null || SchemaFilter.isEmpty() == false && SchemaFilter.contains(S._Name) == false)
                   continue;
                 SelectedSchemas.add(S);
-                String Name = FileUtil.getBasePathFromFileOrResource(S._ResourceName) + "_Tilda/TILDA___Docs." + S._Name.toUpperCase() + ".html";
+
+                String Name = FileUtil.getBasePathFromFileOrResource(S._ResourceName) + "_Tilda/TILDA___Catalog." + S._Name.toUpperCase() + ".csv";
+                LOG.debug("Extracting Tilda Catalog " + Name);
+                PrintWriter Out = FileUtil.getBufferedPrintWriter(Args[0] + File.separator + "TILDA___Catalog." + S._Name.toUpperCase() + ".csv", false);
+                FileUtil.copyFileContentsIntoAnotherFile(Name, Out);
+                Out.close();
+
+                Name = FileUtil.getBasePathFromFileOrResource(S._ResourceName) + "_Tilda/TILDA___Docs." + S._Name.toUpperCase() + ".html";
                 LOG.debug("Extracting Tilda documentation " + Name);
-                PrintWriter Out = FileUtil.getBufferedPrintWriter(Args[0] + File.separator + "TILDA___Docs." + S._Name.toUpperCase() + ".html", false);
+                Out = FileUtil.getBufferedPrintWriter(Args[0] + File.separator + "TILDA___Docs." + S._Name.toUpperCase() + ".html", false);
                 FileUtil.copyFileContentsIntoAnotherFile(Name, Out);
                 Out.close();
                 if (S._Documentation != null && S._Documentation._ExportPublish == true)

@@ -335,6 +335,17 @@
           { "name":"JobName", "columns":["name"], "orderBy":["start desc"] }
          ,{ "name":"JobType", "columns":["type"], "orderBy":["start desc"] }
         ]         
+     ,"queries": [
+        {
+          "name": "MostRecent",
+          "description": "Most recent jobs, which may or may not have completed yet",
+          "from": [],
+          "wheres": [
+            { "db":"*", "clause":"name=?()" }
+          ],
+          "orderBy": ["start desc"]
+        }
+      ]
     }
    ,{ "name":"JobPart"
      ,"description":"Job part details"
