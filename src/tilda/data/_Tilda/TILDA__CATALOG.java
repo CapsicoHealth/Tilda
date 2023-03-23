@@ -102,36 +102,16 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
     <TD>6&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Catalog-description_DIV' class='columns'>description</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;/&nbsp;text&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Catalog-nullable_DIV' class='columns'>nullable</B>&nbsp;&nbsp;</TD>
+<TD>boolean&nbsp;/&nbsp;boolean&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The description of the column.</TD>
+<TD>Whether the collumn is a nullable or not null.</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>7&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Catalog-tableViewName2_DIV' class='columns'>tableViewName2</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;/&nbsp;varchar(128)&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The name of the secondary table/view (a derived view, a realized table), if applicable.</TD>
-</TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>8&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Catalog-aggregate_DIV' class='columns'>aggregate</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;/&nbsp;varchar(128)&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The aggregate type of the column, if any.</TD>
-</TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>9&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Catalog-collection_DIV' class='columns'>collection</B>&nbsp;&nbsp;</TD>
 <TD>boolean&nbsp;/&nbsp;boolean&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -141,7 +121,37 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD>Whether the collumn is a collection/array.</TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>8&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Catalog-description_DIV' class='columns'>description</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;text&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The description of the column.</TD>
+</TR>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>9&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Catalog-tableViewName2_DIV' class='columns'>tableViewName2</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(128)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The name of the secondary table/view (a derived view, a realized table), if applicable.</TD>
+</TR>
+  <TR valign="top" style="background-color:#FFFFFF;">
     <TD>10&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Catalog-aggregate_DIV' class='columns'>aggregate</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(128)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The aggregate type of the column, if any.</TD>
+</TR>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>11&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Catalog-title_DIV' class='columns'>title</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(128)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -150,8 +160,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The title of the formula/expression that may be associated with this column.</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>11&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>12&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Catalog-formula_DIV' class='columns'>formula</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;text&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -160,8 +170,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The expression/formula that may be associated with this column.</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>12&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>13&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Catalog-measure_DIV' class='columns'>measure</B>&nbsp;&nbsp;</TD>
 <TD>boolean&nbsp;/&nbsp;boolean&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -170,8 +180,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Whether this column is a formula defined as a measure or not.</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>13&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>14&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Catalog-htmlDoc_DIV' class='columns'>htmlDoc</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;text&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -180,19 +190,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Pre-rendered html fragment with the full documentation for this formula.</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>14&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Catalog-referencedColumns_DIV' class='columns'>referencedColumns</B>&nbsp;&nbsp;</TD>
-<TD>List<String> List<>&nbsp;/&nbsp;text[]&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The list of columns this formula depends on.</TD>
-</TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>15&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Catalog-referencedFormulas_DIV' class='columns'>referencedFormulas</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Catalog-referencedColumns_DIV' class='columns'>referencedColumns</B>&nbsp;&nbsp;</TD>
 <TD>List<String> List<>&nbsp;/&nbsp;text[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -202,6 +202,16 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
     <TD>16&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Catalog-referencedFormulas_DIV' class='columns'>referencedFormulas</B>&nbsp;&nbsp;</TD>
+<TD>List<String> List<>&nbsp;/&nbsp;text[]&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The list of columns this formula depends on.</TD>
+</TR>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>17&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Catalog-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -210,8 +220,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was created. (TILDA.Catalog)</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>17&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>18&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Catalog-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -220,8 +230,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was last updated. (TILDA.Catalog)</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>18&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>19&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Catalog-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -820,6 +830,304 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Catalog.nullable -> TILDA.Catalog."nullable"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>nullable of type boolean</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether the collumn is a nullable or not null.</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Catalog.nullable of type boolean</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.Catalog.nullable</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   @SerializedName("nullable")
+   Boolean _nullable=null;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Catalog.nullable -> TILDA.Catalog."nullable"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>nullable of type boolean</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether the collumn is a nullable or not null.</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Catalog.nullable of type boolean</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.Catalog.nullable</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final boolean getNullable()
+      { return _nullable==null?false:_nullable; }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Catalog.nullable -> TILDA.Catalog."nullable"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the isNull for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>nullable of type boolean</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether the collumn is a nullable or not null.</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Catalog.nullable of type boolean</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.Catalog.nullable</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final boolean isNullNullable()
+     { return __Nulls.intersects(TILDA__CATALOG_Factory.COLS.NULLABLE._Mask); }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Catalog.nullable -> TILDA.Catalog."nullable"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>nullable of type boolean</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether the collumn is a nullable or not null.</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Catalog.nullable of type boolean</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.Catalog.nullable</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public void setNullable(boolean v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (__Init == InitMode.CREATE || _nullable == null || v != _nullable)
+        {
+          __Changes.or(TILDA__CATALOG_Factory.COLS.NULLABLE._Mask);
+          __Nulls.andNot(TILDA__CATALOG_Factory.COLS.NULLABLE._Mask);
+       _nullable = v;
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Catalog.nullable -> TILDA.Catalog."nullable"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the null setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>nullable of type boolean</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether the collumn is a nullable or not null.</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Catalog.nullable of type boolean</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.Catalog.nullable</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public void setNullNullable()
+     {
+       long T0 = System.nanoTime();
+       __Changes.or(TILDA__CATALOG_Factory.COLS.NULLABLE._Mask);
+       if (__Nulls.intersects(TILDA__CATALOG_Factory.COLS.NULLABLE._Mask) == true) // already NULL
+        return;
+       __Nulls.or(TILDA__CATALOG_Factory.COLS.NULLABLE._Mask);
+       _nullable=null;
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Catalog.nullable -> TILDA.Catalog."nullable"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the hasChanged for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>nullable of type boolean</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether the collumn is a nullable or not null.</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Catalog.nullable of type boolean</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.Catalog.nullable</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public boolean hasChangedNullable()
+     { return __Changes.intersects(TILDA__CATALOG_Factory.COLS.NULLABLE._Mask); }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Catalog.collection -> TILDA.Catalog."collection"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>collection of type boolean</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether the collumn is a collection/array.</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Catalog.collection of type boolean</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.Catalog.collection</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   @SerializedName("collection")
+   Boolean _collection=null;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Catalog.collection -> TILDA.Catalog."collection"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>collection of type boolean</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether the collumn is a collection/array.</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Catalog.collection of type boolean</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.Catalog.collection</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final boolean getCollection()
+      { return _collection==null?false:_collection; }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Catalog.collection -> TILDA.Catalog."collection"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the isNull for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>collection of type boolean</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether the collumn is a collection/array.</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Catalog.collection of type boolean</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.Catalog.collection</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final boolean isNullCollection()
+     { return __Nulls.intersects(TILDA__CATALOG_Factory.COLS.COLLECTION._Mask); }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Catalog.collection -> TILDA.Catalog."collection"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>collection of type boolean</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether the collumn is a collection/array.</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Catalog.collection of type boolean</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.Catalog.collection</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public void setCollection(boolean v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (__Init == InitMode.CREATE || _collection == null || v != _collection)
+        {
+          __Changes.or(TILDA__CATALOG_Factory.COLS.COLLECTION._Mask);
+          __Nulls.andNot(TILDA__CATALOG_Factory.COLS.COLLECTION._Mask);
+       _collection = v;
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Catalog.collection -> TILDA.Catalog."collection"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the null setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>collection of type boolean</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether the collumn is a collection/array.</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Catalog.collection of type boolean</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.Catalog.collection</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public void setNullCollection()
+     {
+       long T0 = System.nanoTime();
+       __Changes.or(TILDA__CATALOG_Factory.COLS.COLLECTION._Mask);
+       if (__Nulls.intersects(TILDA__CATALOG_Factory.COLS.COLLECTION._Mask) == true) // already NULL
+        return;
+       __Nulls.or(TILDA__CATALOG_Factory.COLS.COLLECTION._Mask);
+       _collection=null;
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Catalog.collection -> TILDA.Catalog."collection"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the hasChanged for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>collection of type boolean</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether the collumn is a collection/array.</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Catalog.collection of type boolean</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.Catalog.collection</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public boolean hasChangedCollection()
+     { return __Changes.intersects(TILDA__CATALOG_Factory.COLS.COLLECTION._Mask); }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Catalog.description -> TILDA.Catalog."description"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
@@ -1240,155 +1548,6 @@ This is the hasChanged for:<BR>
 */
    public boolean hasChangedAggregate()
      { return __Changes.intersects(TILDA__CATALOG_Factory.COLS.AGGREGATE._Mask); }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Catalog.collection -> TILDA.Catalog."collection"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>collection of type boolean</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether the collumn is a collection/array.</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Catalog.collection of type boolean</TD></TR>
-  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.Catalog.collection</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   @SerializedName("collection")
-   Boolean _collection=null;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Catalog.collection -> TILDA.Catalog."collection"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>collection of type boolean</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether the collumn is a collection/array.</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Catalog.collection of type boolean</TD></TR>
-  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.Catalog.collection</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final boolean getCollection()
-      { return _collection==null?false:_collection; }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Catalog.collection -> TILDA.Catalog."collection"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the isNull for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>collection of type boolean</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether the collumn is a collection/array.</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Catalog.collection of type boolean</TD></TR>
-  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.Catalog.collection</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final boolean isNullCollection()
-     { return __Nulls.intersects(TILDA__CATALOG_Factory.COLS.COLLECTION._Mask); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Catalog.collection -> TILDA.Catalog."collection"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>collection of type boolean</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether the collumn is a collection/array.</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Catalog.collection of type boolean</TD></TR>
-  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.Catalog.collection</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setCollection(boolean v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || _collection == null || v != _collection)
-        {
-          __Changes.or(TILDA__CATALOG_Factory.COLS.COLLECTION._Mask);
-          __Nulls.andNot(TILDA__CATALOG_Factory.COLS.COLLECTION._Mask);
-       _collection = v;
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Catalog.collection -> TILDA.Catalog."collection"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the null setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>collection of type boolean</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether the collumn is a collection/array.</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Catalog.collection of type boolean</TD></TR>
-  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.Catalog.collection</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setNullCollection()
-     {
-       long T0 = System.nanoTime();
-       __Changes.or(TILDA__CATALOG_Factory.COLS.COLLECTION._Mask);
-       if (__Nulls.intersects(TILDA__CATALOG_Factory.COLS.COLLECTION._Mask) == true) // already NULL
-        return;
-       __Nulls.or(TILDA__CATALOG_Factory.COLS.COLLECTION._Mask);
-       _collection=null;
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Catalog.collection -> TILDA.Catalog."collection"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the hasChanged for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>collection of type boolean</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether the collumn is a collection/array.</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Catalog.collection of type boolean</TD></TR>
-  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.Catalog.collection</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public boolean hasChangedCollection()
-     { return __Changes.intersects(TILDA__CATALOG_Factory.COLS.COLLECTION._Mask); }
 
 
 
@@ -3110,6 +3269,14 @@ This is the hasChanged for:<BR>
         Dst.setColumnName        (_columnName        );
        if (_type               != null)
         Dst.setType              (_type              );
+       if (__Nulls.intersects(TILDA__CATALOG_Factory.COLS.NULLABLE._Mask) == true || _nullable          ==null)
+        Dst.setNullNullable          ();
+       else
+        Dst.setNullable          (_nullable          );
+       if (__Nulls.intersects(TILDA__CATALOG_Factory.COLS.COLLECTION._Mask) == true || _collection        ==null)
+        Dst.setNullCollection        ();
+       else
+        Dst.setCollection        (_collection        );
        if (_description        != null)
         Dst.setDescription       (_description       );
        if (__Nulls.intersects(TILDA__CATALOG_Factory.COLS.TABLEVIEWNAME2._Mask) == true || _tableViewName2    ==null)
@@ -3120,10 +3287,6 @@ This is the hasChanged for:<BR>
         Dst.setNullAggregate         ();
        else
         Dst.setAggregate         (_aggregate         );
-       if (__Nulls.intersects(TILDA__CATALOG_Factory.COLS.COLLECTION._Mask) == true || _collection        ==null)
-        Dst.setNullCollection        ();
-       else
-        Dst.setCollection        (_collection        );
        if (__Nulls.intersects(TILDA__CATALOG_Factory.COLS.TITLE._Mask) == true || _title             ==null)
         Dst.setNullTitle             ();
        else
@@ -3284,6 +3447,18 @@ This is the hasChanged for:<BR>
           __Changes.or(TILDA__CATALOG_Factory.COLS.TYPE._Mask);
           __Nulls.andNot(TILDA__CATALOG_Factory.COLS.TYPE._Mask);
 
+       if (_nullable != null)
+        {
+          __Changes.or(TILDA__CATALOG_Factory.COLS.NULLABLE._Mask);
+          __Nulls.andNot(TILDA__CATALOG_Factory.COLS.NULLABLE._Mask);
+        }
+
+       if (_collection != null)
+        {
+          __Changes.or(TILDA__CATALOG_Factory.COLS.COLLECTION._Mask);
+          __Nulls.andNot(TILDA__CATALOG_Factory.COLS.COLLECTION._Mask);
+        }
+
        if (TextUtil.isNullOrEmpty(_description) == true)
         throw new Exception("Incoming value for 'tilda.data.TILDA.Catalog.description' was null or empty. It's not nullable in the model.\n"+toString());
           __Changes.or(TILDA__CATALOG_Factory.COLS.DESCRIPTION._Mask);
@@ -3299,12 +3474,6 @@ This is the hasChanged for:<BR>
         {
           __Changes.or(TILDA__CATALOG_Factory.COLS.AGGREGATE._Mask);
           __Nulls.andNot(TILDA__CATALOG_Factory.COLS.AGGREGATE._Mask);
-        }
-
-       if (_collection != null)
-        {
-          __Changes.or(TILDA__CATALOG_Factory.COLS.COLLECTION._Mask);
-          __Nulls.andNot(TILDA__CATALOG_Factory.COLS.COLLECTION._Mask);
         }
 
        if (TextUtil.isNullOrEmpty(_title) == false)
@@ -3365,10 +3534,11 @@ This is the hasChanged for:<BR>
           if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.TABLEVIEWNAME._Mask) == true) { TILDA__CATALOG_Factory.COLS.TABLEVIEWNAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
           if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.COLUMNNAME._Mask) == true) { TILDA__CATALOG_Factory.COLS.COLUMNNAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
           if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.TYPE._Mask) == true) { TILDA__CATALOG_Factory.COLS.TYPE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.NULLABLE._Mask) == true) { TILDA__CATALOG_Factory.COLS.NULLABLE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.COLLECTION._Mask) == true) { TILDA__CATALOG_Factory.COLS.COLLECTION.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
           if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.DESCRIPTION._Mask) == true) { TILDA__CATALOG_Factory.COLS.DESCRIPTION.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
           if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.TABLEVIEWNAME2._Mask) == true) { TILDA__CATALOG_Factory.COLS.TABLEVIEWNAME2.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
           if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.AGGREGATE._Mask) == true) { TILDA__CATALOG_Factory.COLS.AGGREGATE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.COLLECTION._Mask) == true) { TILDA__CATALOG_Factory.COLS.COLLECTION.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
           if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.TITLE._Mask) == true) { TILDA__CATALOG_Factory.COLS.TITLE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
           if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.FORMULA._Mask) == true) { TILDA__CATALOG_Factory.COLS.FORMULA.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
           if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.MEASURE._Mask) == true) { TILDA__CATALOG_Factory.COLS.MEASURE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
@@ -3403,10 +3573,11 @@ This is the hasChanged for:<BR>
           if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.TABLEVIEWNAME._Mask) == true) TILDA__CATALOG_Factory.COLS.TABLEVIEWNAME.getFullColumnVarForUpdate(C, S);
           if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.COLUMNNAME._Mask) == true) TILDA__CATALOG_Factory.COLS.COLUMNNAME.getFullColumnVarForUpdate(C, S);
           if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.TYPE._Mask) == true) TILDA__CATALOG_Factory.COLS.TYPE.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.NULLABLE._Mask) == true) TILDA__CATALOG_Factory.COLS.NULLABLE.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.COLLECTION._Mask) == true) TILDA__CATALOG_Factory.COLS.COLLECTION.getFullColumnVarForUpdate(C, S);
           if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.DESCRIPTION._Mask) == true) TILDA__CATALOG_Factory.COLS.DESCRIPTION.getFullColumnVarForUpdate(C, S);
           if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.TABLEVIEWNAME2._Mask) == true) TILDA__CATALOG_Factory.COLS.TABLEVIEWNAME2.getFullColumnVarForUpdate(C, S);
           if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.AGGREGATE._Mask) == true) TILDA__CATALOG_Factory.COLS.AGGREGATE.getFullColumnVarForUpdate(C, S);
-          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.COLLECTION._Mask) == true) TILDA__CATALOG_Factory.COLS.COLLECTION.getFullColumnVarForUpdate(C, S);
           if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.TITLE._Mask) == true) TILDA__CATALOG_Factory.COLS.TITLE.getFullColumnVarForUpdate(C, S);
           if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.FORMULA._Mask) == true) TILDA__CATALOG_Factory.COLS.FORMULA.getFullColumnVarForUpdate(C, S);
           if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.MEASURE._Mask) == true) TILDA__CATALOG_Factory.COLS.MEASURE.getFullColumnVarForUpdate(C, S);
@@ -3489,6 +3660,14 @@ This is the hasChanged for:<BR>
         { 
           if (__Nulls.intersects(TILDA__CATALOG_Factory.COLS.TYPE._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _type);
         } 
+       if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.NULLABLE._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__CATALOG_Factory.COLS.NULLABLE._Mask) == true) PS.setNull(++i, java.sql.Types.BOOLEAN   ); else PS.setBoolean   (++i, _nullable);
+        } 
+       if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.COLLECTION._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__CATALOG_Factory.COLS.COLLECTION._Mask) == true) PS.setNull(++i, java.sql.Types.BOOLEAN   ); else PS.setBoolean   (++i, _collection);
+        } 
        if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.DESCRIPTION._Mask) == true) 
         { 
           if (__Nulls.intersects(TILDA__CATALOG_Factory.COLS.DESCRIPTION._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _description);
@@ -3500,10 +3679,6 @@ This is the hasChanged for:<BR>
        if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.AGGREGATE._Mask) == true) 
         { 
           if (__Nulls.intersects(TILDA__CATALOG_Factory.COLS.AGGREGATE._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _aggregate);
-        } 
-       if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.COLLECTION._Mask) == true) 
-        { 
-          if (__Nulls.intersects(TILDA__CATALOG_Factory.COLS.COLLECTION._Mask) == true) PS.setNull(++i, java.sql.Types.BOOLEAN   ); else PS.setBoolean   (++i, _collection);
         } 
        if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.TITLE._Mask) == true) 
         { 
@@ -3752,10 +3927,11 @@ This is the hasChanged for:<BR>
       __Saved_tableViewName      = _tableViewName      = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__CATALOG_Factory.COLS.TABLEVIEWNAME._Mask     ); _tableViewName = null; }
       __Saved_columnName         = _columnName         = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__CATALOG_Factory.COLS.COLUMNNAME._Mask        ); _columnName = null; }
                                    _type               = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__CATALOG_Factory.COLS.TYPE._Mask              ); _type = null; }
+                                   _nullable           =                              RS.getBoolean   (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__CATALOG_Factory.COLS.NULLABLE._Mask          ); _nullable = null; }
+                                   _collection         =                              RS.getBoolean   (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__CATALOG_Factory.COLS.COLLECTION._Mask        ); _collection = null; }
                                    _description        = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__CATALOG_Factory.COLS.DESCRIPTION._Mask       ); _description = null; }
                                    _tableViewName2     = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__CATALOG_Factory.COLS.TABLEVIEWNAME2._Mask    ); _tableViewName2 = null; }
                                    _aggregate          = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__CATALOG_Factory.COLS.AGGREGATE._Mask         ); _aggregate = null; }
-                                   _collection         =                              RS.getBoolean   (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__CATALOG_Factory.COLS.COLLECTION._Mask        ); _collection = null; }
                                    _title              = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__CATALOG_Factory.COLS.TITLE._Mask             ); _title = null; }
                                    _formula            = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__CATALOG_Factory.COLS.FORMULA._Mask           ); _formula = null; }
                                    _measure            =                              RS.getBoolean   (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__CATALOG_Factory.COLS.MEASURE._Mask           ); _measure = null; }
@@ -3797,10 +3973,11 @@ This is the hasChanged for:<BR>
                + "; tableViewName: "                                                                                                  + TextUtil.printVariableStr        (getTableViewName     ())
                + "; columnName: "                                                                                                     + TextUtil.printVariableStr        (getColumnName        ())
                + "; type: "                                                                                                           + TextUtil.printVariableStr        (getType              ())
+               + "; nullable"             + (__Nulls.intersects(TILDA__CATALOG_Factory.COLS.NULLABLE._Mask          ) == true ? ": NULL" : ": " +                                   getNullable          ())
+               + "; collection"           + (__Nulls.intersects(TILDA__CATALOG_Factory.COLS.COLLECTION._Mask        ) == true ? ": NULL" : ": " +                                   getCollection        ())
                + "; description: "                                                                                                    + TextUtil.printVariableStr        (getDescription       ())
                + "; tableViewName2"       + (__Nulls.intersects(TILDA__CATALOG_Factory.COLS.TABLEVIEWNAME2._Mask    ) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getTableViewName2    ()))
                + "; aggregate"            + (__Nulls.intersects(TILDA__CATALOG_Factory.COLS.AGGREGATE._Mask         ) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getAggregate         ()))
-               + "; collection"           + (__Nulls.intersects(TILDA__CATALOG_Factory.COLS.COLLECTION._Mask        ) == true ? ": NULL" : ": " +                                   getCollection        ())
                + "; title"                + (__Nulls.intersects(TILDA__CATALOG_Factory.COLS.TITLE._Mask             ) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getTitle             ()))
                + "; formula"              + (__Nulls.intersects(TILDA__CATALOG_Factory.COLS.FORMULA._Mask           ) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getFormula           ()))
                + "; measure"              + (__Nulls.intersects(TILDA__CATALOG_Factory.COLS.MEASURE._Mask           ) == true ? ": NULL" : ": " +                                   getMeasure           ())

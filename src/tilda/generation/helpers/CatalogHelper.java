@@ -57,6 +57,7 @@ public class CatalogHelper
             Catalog_Data catalog = new Catalog_Data(col._ParentObject.getSchema().getShortName(), col._ParentObject.getBaseName(), col.getName(), col.getType().name(), col._Description);
             catalog.setTableViewName2(null);
             catalog.setAggregate(null);
+            catalog.setNullable(col._Nullable);
             catalog.setCollection(col.isCollection());
             catalog.setTitle(null);
             catalog.setFormula(null);
@@ -78,6 +79,7 @@ public class CatalogHelper
             Catalog_Data catalog = new Catalog_Data(vc._ParentView.getSchema().getShortName(), vc._ParentView.getBaseName(), vc._Name, vc.getType().name(), vc._Description);
             catalog.setTableViewName2(vc._ParentView.getRealizedTableName(true));
             catalog.setAggregate(vc._Aggregate == null ? null : vc._Aggregate.name());
+            catalog.setNullable(vc.isNullable());
             catalog.setCollection(vc.isCollection());
             catalog.setTitle(null);
             catalog.setFormula(vc._Expression == null ? null : vc._Expression);
@@ -87,7 +89,6 @@ public class CatalogHelper
             catalog.setReferencedFormulas(null);
             _CL.add(catalog);
           }
-
       }
 
     public void addFormulas(List<Formula> FL)
@@ -123,7 +124,7 @@ public class CatalogHelper
       {
         StringBuilder str = new StringBuilder();
 
-        String[] cols = { "schemaName", "tableViewName", "columnName", "type", "description", "tableViewName2", "aggregate", "collection", "title", "formula", "measure", "htmlDoc", "referencedColumns", "referencedFormulas"
+        String[] cols = { "schemaName", "tableViewName", "columnName", "type", "nullable", "collection", "description", "tableViewName2", "aggregate", "title", "formula", "measure", "htmlDoc", "referencedColumns", "referencedFormulas"
         };
 
         str.append("  INSERT INTO TILDA.Catalog (\"refnum\"");
@@ -146,10 +147,11 @@ public class CatalogHelper
             str.append(", " + TextUtil.escapeSingleQuoteForSQL(cat.getTableViewName()));
             str.append(", " + TextUtil.escapeSingleQuoteForSQL(cat.getColumnName()));
             str.append(", " + TextUtil.escapeSingleQuoteForSQL(cat.getType()));
+            str.append(", " + cat.getNullable());
+            str.append(", " + cat.getCollection());
             str.append(", " + TextUtil.escapeSingleQuoteForSQL(cat.getDescription()));
             str.append(", " + TextUtil.escapeSingleQuoteForSQL(cat.getTableViewName2()));
             str.append(", " + TextUtil.escapeSingleQuoteForSQL(cat.getAggregate()));
-            str.append(", " + cat.getCollection());
             str.append(", " + TextUtil.escapeSingleQuoteForSQL(cat.getTitle()));
             str.append(", " + TextUtil.escapeSingleQuoteForSQL(cat.getFormula()));
             str.append(", " + cat.getMeasure());
@@ -165,7 +167,7 @@ public class CatalogHelper
 
         str.append("    SET ");
         first = true;
-        cols = new String[] { "type", "description", "tableViewName2", "aggregate", "collection", "title", "formula", "measure", "htmlDoc", "referencedColumns", "referencedFormulas"
+        cols = new String[] { "type", "nullable", "collection", "description", "tableViewName2", "aggregate", "title", "formula", "measure", "htmlDoc", "referencedColumns", "referencedFormulas"
         };
         for (String col : cols)
           {

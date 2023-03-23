@@ -4,10 +4,11 @@
    ,{ "name":"tableViewName", "type":"STRING", "mode":"REQUIRED", "description":"The name of the primary table/view this column is defined in." }
    ,{ "name":"columnName", "type":"STRING", "mode":"REQUIRED", "description":"The name of the column." }
    ,{ "name":"type", "type":"STRING", "mode":"REQUIRED", "description":"The type of the column." }
+   ,{ "name":"nullable", "type":"BOOL", "mode":"NULLABLE", "description":"Whether the collumn is a nullable or not null." }
+   ,{ "name":"collection", "type":"BOOL", "mode":"NULLABLE", "description":"Whether the collumn is a collection/array." }
    ,{ "name":"description", "type":"STRING", "mode":"REQUIRED", "description":"The description of the column." }
    ,{ "name":"tableViewName2", "type":"STRING", "mode":"NULLABLE", "description":"The name of the secondary table/view (a derived view, a realized table), if applicable." }
    ,{ "name":"aggregate", "type":"STRING", "mode":"NULLABLE", "description":"The aggregate type of the column, if any." }
-   ,{ "name":"collection", "type":"BOOL", "mode":"NULLABLE", "description":"Whether the collumn is a collection/array." }
    ,{ "name":"title", "type":"STRING", "mode":"NULLABLE", "description":"The title of the formula/expression that may be associated with this column." }
    ,{ "name":"formula", "type":"STRING", "mode":"NULLABLE", "description":"The expression/formula that may be associated with this column." }
    ,{ "name":"measure", "type":"BOOL", "mode":"NULLABLE", "description":"Whether this column is a formula defined as a measure or not." }

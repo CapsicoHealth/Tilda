@@ -59,10 +59,11 @@ create table if not exists TILDA.Catalog -- Master catalog information
   , "tableViewName"       varchar(128)  not null   -- The name of the primary table/view this column is defined in.
   , "columnName"          varchar(128)  not null   -- The name of the column.
   , "type"                varchar(128)  not null   -- The type of the column.
+  , "nullable"            boolean                  -- Whether the collumn is a nullable or not null.
+  , "collection"          boolean                  -- Whether the collumn is a collection/array.
   , "description"         text          not null   -- The description of the column.
   , "tableViewName2"      varchar(128)             -- The name of the secondary table/view (a derived view, a realized table), if applicable.
   , "aggregate"           varchar(128)             -- The aggregate type of the column, if any.
-  , "collection"          boolean                  -- Whether the collumn is a collection/array.
   , "title"               varchar(128)             -- The title of the formula/expression that may be associated with this column.
   , "formula"             text                     -- The expression/formula that may be associated with this column.
   , "measure"             boolean                  -- Whether this column is a formula defined as a measure or not.
@@ -80,10 +81,11 @@ COMMENT ON COLUMN TILDA.Catalog."schemaName" IS E'The name of the schema this co
 COMMENT ON COLUMN TILDA.Catalog."tableViewName" IS E'The name of the primary table/view this column is defined in.';
 COMMENT ON COLUMN TILDA.Catalog."columnName" IS E'The name of the column.';
 COMMENT ON COLUMN TILDA.Catalog."type" IS E'The type of the column.';
+COMMENT ON COLUMN TILDA.Catalog."nullable" IS E'Whether the collumn is a nullable or not null.';
+COMMENT ON COLUMN TILDA.Catalog."collection" IS E'Whether the collumn is a collection/array.';
 COMMENT ON COLUMN TILDA.Catalog."description" IS E'The description of the column.';
 COMMENT ON COLUMN TILDA.Catalog."tableViewName2" IS E'The name of the secondary table/view (a derived view, a realized table), if applicable.';
 COMMENT ON COLUMN TILDA.Catalog."aggregate" IS E'The aggregate type of the column, if any.';
-COMMENT ON COLUMN TILDA.Catalog."collection" IS E'Whether the collumn is a collection/array.';
 COMMENT ON COLUMN TILDA.Catalog."title" IS E'The title of the formula/expression that may be associated with this column.';
 COMMENT ON COLUMN TILDA.Catalog."formula" IS E'The expression/formula that may be associated with this column.';
 COMMENT ON COLUMN TILDA.Catalog."measure" IS E'Whether this column is a formula defined as a measure or not.';

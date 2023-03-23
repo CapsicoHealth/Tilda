@@ -1,2 +1,2 @@
-"schemaName","tableViewName","columnName","type","description","aggregate","collection","measure","formula","referencedColumns","referencedFormulas"
+"schemaName","tableViewName","columnName","type","nullable","collection","description","aggregate","measure","formula","referencedColumns","referencedFormulas"
 

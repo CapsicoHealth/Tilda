@@ -153,6 +153,48 @@ This is the column definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Catalog.nullable -> TILDA.Catalog."nullable"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the column definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>nullable of type boolean</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether the collumn is a nullable or not null.</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Catalog.nullable of type boolean</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.Catalog.nullable</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+     public final Type_BooleanPrimitiveNull   NULLABLE          = new Type_BooleanPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "nullable"          , 5/*5*/, "Whether the collumn is a nullable or not null.", null, null, null);
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Catalog.collection -> TILDA.Catalog."collection"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the column definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>collection of type boolean</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether the collumn is a collection/array.</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Catalog.collection of type boolean</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.Catalog.collection</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+     public final Type_BooleanPrimitiveNull   COLLECTION        = new Type_BooleanPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "collection"        , 6/*6*/, "Whether the collumn is a collection/array.", null, null, null);
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Catalog.description -> TILDA.Catalog."description"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
@@ -170,7 +212,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        DESCRIPTION       = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "description"       , 5/*5*/, 32000, "The description of the column.", null, null, null);
+     public final Type_StringPrimitive        DESCRIPTION       = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "description"       , 7/*7*/, 32000, "The description of the column.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -192,7 +234,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    TABLEVIEWNAME2    = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "tableViewName2"    , 6/*6*/, 128, "The name of the secondary table/view (a derived view, a realized table), if applicable.", null, null, null);
+     public final Type_StringPrimitiveNull    TABLEVIEWNAME2    = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "tableViewName2"    , 8/*8*/, 128, "The name of the secondary table/view (a derived view, a realized table), if applicable.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -214,28 +256,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    AGGREGATE         = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "aggregate"         , 7/*7*/, 128, "The aggregate type of the column, if any.", null, null, null);
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Catalog.collection -> TILDA.Catalog."collection"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the column definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>collection of type boolean</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether the collumn is a collection/array.</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Catalog.collection of type boolean</TD></TR>
-  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.Catalog.collection</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-     public final Type_BooleanPrimitiveNull   COLLECTION        = new Type_BooleanPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "collection"        , 8/*8*/, "Whether the collumn is a collection/array.", null, null, null);
+     public final Type_StringPrimitiveNull    AGGREGATE         = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "aggregate"         , 9/*9*/, 128, "The aggregate type of the column, if any.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -257,7 +278,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    TITLE             = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "title"             , 9/*9*/, 128, "The title of the formula/expression that may be associated with this column.", null, null, null);
+     public final Type_StringPrimitiveNull    TITLE             = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "title"             , 10/*10*/, 128, "The title of the formula/expression that may be associated with this column.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -279,7 +300,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    FORMULA           = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "formula"           , 10/*10*/, 32000, "The expression/formula that may be associated with this column.", null, null, null);
+     public final Type_StringPrimitiveNull    FORMULA           = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "formula"           , 11/*11*/, 32000, "The expression/formula that may be associated with this column.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -300,7 +321,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_BooleanPrimitiveNull   MEASURE           = new Type_BooleanPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "measure"           , 11/*11*/, "Whether this column is a formula defined as a measure or not.", null, null, null);
+     public final Type_BooleanPrimitiveNull   MEASURE           = new Type_BooleanPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "measure"           , 12/*12*/, "Whether this column is a formula defined as a measure or not.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -322,7 +343,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    HTMLDOC           = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "htmlDoc"           , 12/*12*/, 32000, "Pre-rendered html fragment with the full documentation for this formula.", null, null, null);
+     public final Type_StringPrimitiveNull    HTMLDOC           = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "htmlDoc"           , 13/*13*/, 32000, "Pre-rendered html fragment with the full documentation for this formula.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -344,7 +365,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringCollectionNull   REFERENCEDCOLUMNS = new Type_StringCollectionNull  (SCHEMA_LABEL, TABLENAME_LABEL, "referencedColumns" , 13/*13*/, "The list of columns this formula depends on.", null, null);
+     public final Type_StringCollectionNull   REFERENCEDCOLUMNS = new Type_StringCollectionNull  (SCHEMA_LABEL, TABLENAME_LABEL, "referencedColumns" , 14/*14*/, "The list of columns this formula depends on.", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -366,7 +387,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringCollectionNull   REFERENCEDFORMULAS= new Type_StringCollectionNull  (SCHEMA_LABEL, TABLENAME_LABEL, "referencedFormulas", 14/*14*/, "The list of columns this formula depends on.", null, null);
+     public final Type_StringCollectionNull   REFERENCEDFORMULAS= new Type_StringCollectionNull  (SCHEMA_LABEL, TABLENAME_LABEL, "referencedFormulas", 15/*15*/, "The list of columns this formula depends on.", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -394,7 +415,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_DatetimePrimitive      CREATED           = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"           , 15/*15*/, "The timestamp for when the record was created. (TILDA.Catalog)", null, null);
+     public final Type_DatetimePrimitive      CREATED           = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"           , 16/*16*/, "The timestamp for when the record was created. (TILDA.Catalog)", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -422,7 +443,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_DatetimePrimitive      LASTUPDATED       = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"       , 16/*16*/, "The timestamp for when the record was last updated. (TILDA.Catalog)", null, null);
+     public final Type_DatetimePrimitive      LASTUPDATED       = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"       , 17/*17*/, "The timestamp for when the record was last updated. (TILDA.Catalog)", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -443,11 +464,11 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull  DELETED           = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"           , 17/*17*/, "The timestamp for when the record was deleted. (TILDA.Catalog)", null, null);
+     public final Type_DatetimePrimitiveNull  DELETED           = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"           , 18/*18*/, "The timestamp for when the record was deleted. (TILDA.Catalog)", null, null);
    }
 
    public static COLS_BASE COLS = new COLS_BASE();
-   public static final ColumnDefinition[] COLUMNS = new ColumnDefinition[] { COLS.REFNUM,COLS.SCHEMANAME,COLS.TABLEVIEWNAME,COLS.COLUMNNAME,COLS.TYPE,COLS.DESCRIPTION,COLS.TABLEVIEWNAME2,COLS.AGGREGATE,COLS.COLLECTION,COLS.TITLE,COLS.FORMULA,COLS.MEASURE,COLS.HTMLDOC,COLS.REFERENCEDCOLUMNS,COLS.REFERENCEDFORMULAS,COLS.CREATED,COLS.LASTUPDATED,COLS.DELETED };
+   public static final ColumnDefinition[] COLUMNS = new ColumnDefinition[] { COLS.REFNUM,COLS.SCHEMANAME,COLS.TABLEVIEWNAME,COLS.COLUMNNAME,COLS.TYPE,COLS.NULLABLE,COLS.COLLECTION,COLS.DESCRIPTION,COLS.TABLEVIEWNAME2,COLS.AGGREGATE,COLS.TITLE,COLS.FORMULA,COLS.MEASURE,COLS.HTMLDOC,COLS.REFERENCEDCOLUMNS,COLS.REFERENCEDFORMULAS,COLS.CREATED,COLS.LASTUPDATED,COLS.DELETED };
 
    public static final ColumnDefinition[] COLUMNS_PRIMARY = new ColumnDefinition[] { COLS.REFNUM };
 
@@ -640,6 +661,18 @@ object. The generic init method defaults to this general data structure as a gen
        String _type = ParseUtil.parseString("type", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
        if (_type != null) Obj.setType(_type);
 
+       vals = Values.get("nullable");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("nullable", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Boolean _nullable = ParseUtil.parseBoolean("nullable", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_nullable != null) Obj.setNullable(_nullable);
+
+       vals = Values.get("collection");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("collection", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       Boolean _collection = ParseUtil.parseBoolean("collection", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_collection != null) Obj.setCollection(_collection);
+
        vals = Values.get("description");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("description", "Parameter is not a list or a set and yet received "+vals.length+" values"));
@@ -657,12 +690,6 @@ object. The generic init method defaults to this general data structure as a gen
         Errors.add(new StringStringPair("aggregate", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _aggregate = ParseUtil.parseString("aggregate", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
        if (_aggregate != null) Obj.setAggregate(_aggregate);
-
-       vals = Values.get("collection");
-       if (vals!=null && vals.length > 1)
-        Errors.add(new StringStringPair("collection", "Parameter is not a list or a set and yet received "+vals.length+" values"));
-       Boolean _collection = ParseUtil.parseBoolean("collection", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_collection != null) Obj.setCollection(_collection);
 
        vals = Values.get("title");
        if (vals!=null && vals.length > 1)
@@ -730,9 +757,10 @@ object. The generic init method defaults to this general data structure as a gen
        Obj.setLastUpdatedNow   ();
 
        // Default Nullables
+       Obj.__Nulls.or(TILDA__CATALOG_Factory.COLS.NULLABLE._Mask);
+       Obj.__Nulls.or(TILDA__CATALOG_Factory.COLS.COLLECTION._Mask);
        Obj.__Nulls.or(TILDA__CATALOG_Factory.COLS.TABLEVIEWNAME2._Mask);
        Obj.__Nulls.or(TILDA__CATALOG_Factory.COLS.AGGREGATE._Mask);
-       Obj.__Nulls.or(TILDA__CATALOG_Factory.COLS.COLLECTION._Mask);
        Obj.__Nulls.or(TILDA__CATALOG_Factory.COLS.TITLE._Mask);
        Obj.__Nulls.or(TILDA__CATALOG_Factory.COLS.FORMULA._Mask);
        Obj.__Nulls.or(TILDA__CATALOG_Factory.COLS.MEASURE._Mask);
@@ -1008,7 +1036,7 @@ The results are ordered by: schemaName asc, tableViewName asc, columnName asc
 
    public static String getCSVHeader()
     {
-      return "\"refnum\",\"schemaName\",\"tableViewName\",\"columnName\",\"type\",\"description\",\"tableViewName2\",\"aggregate\",\"collection\",\"title\",\"formula\",\"measure\",\"htmlDoc\",\"referencedColumns\",\"referencedFormulas\",\"created\",\"lastUpdated\",\"deleted\"";
+      return "\"refnum\",\"schemaName\",\"tableViewName\",\"columnName\",\"type\",\"nullable\",\"collection\",\"description\",\"tableViewName2\",\"aggregate\",\"title\",\"formula\",\"measure\",\"htmlDoc\",\"referencedColumns\",\"referencedFormulas\",\"created\",\"lastUpdated\",\"deleted\"";
     }
 
    public static void toCSV(java.io.Writer out, List<tilda.data.Catalog_Data> L, boolean includeHeader) throws java.io.IOException
@@ -1041,13 +1069,15 @@ The results are ordered by: schemaName asc, tableViewName asc, columnName asc
       Str.append(",");
       TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getType());
       Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getNullable());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getCollection());
+      Str.append(",");
       TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getDescription());
       Str.append(",");
       TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getTableViewName2());
       Str.append(",");
       TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getAggregate());
-      Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getCollection());
       Str.append(",");
       TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getTitle());
       Str.append(",");
@@ -1136,6 +1166,12 @@ The results are ordered by: schemaName asc, tableViewName asc, columnName asc
 
         JSONUtil.print(out, "type", ++i==0, Obj.getType());
 
+      if (Obj.isNullNullable() == false)
+        JSONUtil.print(out, "nullable", ++i==0, Obj.getNullable());
+
+      if (Obj.isNullCollection() == false)
+        JSONUtil.print(out, "collection", ++i==0, Obj.getCollection());
+
         JSONUtil.print(out, "description", ++i==0, Obj.getDescription());
 
       if (Obj.isNullTableViewName2() == false && Obj.getTableViewName2() != null)
@@ -1143,9 +1179,6 @@ The results are ordered by: schemaName asc, tableViewName asc, columnName asc
 
       if (Obj.isNullAggregate() == false && Obj.getAggregate() != null)
         JSONUtil.print(out, "aggregate", ++i==0, Obj.getAggregate());
-
-      if (Obj.isNullCollection() == false)
-        JSONUtil.print(out, "collection", ++i==0, Obj.getCollection());
 
       if (Obj.isNullTitle() == false && Obj.getTitle() != null)
         JSONUtil.print(out, "title", ++i==0, Obj.getTitle());
@@ -1193,7 +1226,7 @@ The results are ordered by: schemaName asc, tableViewName asc, columnName asc
 
    public static String getCSVHeaderSimple()
     {
-      return "\"schemaName\",\"tableViewName\",\"columnName\",\"type\",\"description\",\"aggregate\",\"collection\",\"measure\",\"formula\",\"referencedColumns\",\"referencedFormulas\"";
+      return "\"schemaName\",\"tableViewName\",\"columnName\",\"type\",\"nullable\",\"collection\",\"description\",\"aggregate\",\"measure\",\"formula\",\"referencedColumns\",\"referencedFormulas\"";
     }
 
    public static void toCSVSimple(java.io.Writer out, List<tilda.data.Catalog_Data> L, boolean includeHeader) throws java.io.IOException
@@ -1224,11 +1257,13 @@ The results are ordered by: schemaName asc, tableViewName asc, columnName asc
       Str.append(",");
       TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getType());
       Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getNullable());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getCollection());
+      Str.append(",");
       TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getDescription());
       Str.append(",");
       TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getAggregate());
-      Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getCollection());
       Str.append(",");
       TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getMeasure());
       Str.append(",");
@@ -1305,13 +1340,16 @@ The results are ordered by: schemaName asc, tableViewName asc, columnName asc
 
         JSONUtil.print(out, "type", ++i==0, Obj.getType());
 
+      if (Obj.isNullNullable() == false)
+        JSONUtil.print(out, "nullable", ++i==0, Obj.getNullable());
+
+      if (Obj.isNullCollection() == false)
+        JSONUtil.print(out, "collection", ++i==0, Obj.getCollection());
+
         JSONUtil.print(out, "description", ++i==0, Obj.getDescription());
 
       if (Obj.isNullAggregate() == false && Obj.getAggregate() != null)
         JSONUtil.print(out, "aggregate", ++i==0, Obj.getAggregate());
-
-      if (Obj.isNullCollection() == false)
-        JSONUtil.print(out, "collection", ++i==0, Obj.getCollection());
 
       if (Obj.isNullMeasure() == false)
         JSONUtil.print(out, "measure", ++i==0, Obj.getMeasure());
