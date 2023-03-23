@@ -25,6 +25,7 @@ insert into TILDA.ZoneInfo ("id", "label", "value", "deactivatedTZ", "deactivate
          ,('USAl' , 'US Alaska'          , 'US/Alaska'          , null, null, current_timestamp, current_timestamp)
          ,('USHa' , 'US Hawaii'          , 'US/Hawaii'          , null, null, current_timestamp, current_timestamp)
          ,('USSa' , 'US Samoa'           , 'US/Samoa'           , null, null, current_timestamp, current_timestamp)
+         ,('AsCa' , 'Asia Calcutta'      , 'Asia/Calcutta'      , null, null, current_timestamp, current_timestamp)
  on conflict("id") do update
  set "label"=EXCLUDED."label"
     ,"value"=EXCLUDED."value"

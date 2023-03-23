@@ -24,5 +24,6 @@
 	   ,{ "id":"USAl" , "label":"US Alaska"          , "value":"US/Alaska"           }
 	   ,{ "id":"USHa" , "label":"US Hawaii"          , "value":"US/Hawaii"           }
 	   ,{ "id":"USSa" , "label":"US Samoa"           , "value":"US/Samoa"            }
+       ,{ "id":"AsCa" , "label":"Asia Calcutta"      , "value":"Asia/Calcutta"       }
   ]
 }
