@@ -466,4 +466,9 @@ public class ViewColumn
         return _SameAsObj != null && _SameAsObj.isCollection() == true || _Aggregate != null && _Aggregate.isList() == true;
       }
 
+    public boolean isNullable()
+      {
+        return _SameAsObj == null || _SameAsObj._Nullable == true;
+      }
+
   }
