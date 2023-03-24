@@ -48,6 +48,7 @@ import tilda.db.TildaObjectMetaData;
 import tilda.db.metadata.ColumnMeta;
 import tilda.db.metadata.SchemaMeta;
 import tilda.db.metadata.TableMeta;
+import tilda.db.metadata.TableViewMeta;
 import tilda.types.ColumnDefinition;
 import tilda.utils.CollectionUtil;
 import tilda.utils.DurationUtil;
@@ -149,7 +150,7 @@ public class BQHelper
       {
         long T0 = System.nanoTime();
         Page<Table> L = bq.listTables(datasetName, TableListOption.pageSize(250));
-        LOG.debug("BQ: looked up tables in dataset '"+datasetName+"' (" + DurationUtil.printDurationMilliSeconds(System.nanoTime() - T0) + "ms)");
+        LOG.debug("BQ: looked up tables in dataset '" + datasetName + "' (" + DurationUtil.printDurationMilliSeconds(System.nanoTime() - T0) + "ms)");
         if (L == null)
           return new ArrayList<Table>();
         return (List<Table>) CollectionUtil.toList(L.iterateAll().iterator());
@@ -289,7 +290,7 @@ public class BQHelper
       {
         return getBQSchemaFromTilda(SchemaName, TableViewName, null);
       }
-    
+
     public static Schema getBQSchemaFromTilda(String SchemaName, String TableViewName, String outputMapName)
     throws Exception
       {
@@ -302,7 +303,7 @@ public class BQHelper
 
         // StringBuilder str = new StringBuilder();
         List<Field> fieldsList = new ArrayList<Field>();
-        List<ColumnDefinition> cols = outputMapName==null?Obj.getColumnDefinitions():Obj.getOutputMapColumns(outputMapName);
+        List<ColumnDefinition> cols = outputMapName == null ? Obj.getColumnDefinitions() : Obj.getOutputMapColumns(outputMapName);
         for (ColumnDefinition col : cols)
           {
             Field F = Field.newBuilder(col.getName(), StandardSQLTypeName.valueOf(col.getType().getBigQueryType()))
@@ -318,25 +319,34 @@ public class BQHelper
 
         return Schema.of(fieldsList);
       }
-    
+
     public static Schema getBQSchemaFromDB(Connection C, String SchemaName, String TableViewName)
     throws Exception
       {
         SchemaMeta S = new SchemaMeta(SchemaName);
         S.load(C, TableViewName);
-        TableMeta T = S.getTableMeta(TableViewName);
-        if (T == null)
+        TableViewMeta tvm = S.getTableMeta(TableViewName);
+        if (tvm == null)
           {
-            LOG.debug("Cannot load meta-data from the database about "+SchemaName+"."+TableViewName+".");
-            return null;
+            tvm = S.getViewMeta(TableViewName);
+            if (tvm == null)
+              {
+                LOG.debug("Cannot load meta-data from the database about " + SchemaName + "." + TableViewName + ".");
+                return null;
+              }
           }
+        return getBQSchemaFromMeta(tvm);
+      }
+
+    public static Schema getBQSchemaFromMeta(TableViewMeta tvm)
+      {
         // StringBuilder str = new StringBuilder();
         List<Field> fieldsList = new ArrayList<Field>();
-        List<ColumnMeta> cols = T.getColumnMetaList();
+        List<ColumnMeta> cols = tvm.getColumnMetaList();
         for (ColumnMeta col : cols)
           {
             Field F = Field.newBuilder(col._NameOriginal, StandardSQLTypeName.valueOf(col._TildaType.getBigQueryType()))
-            .setMode(col.isArray() == true ? Field.Mode.REPEATED : col._Nullable == 1 ? Field.Mode.REQUIRED : Field.Mode.NULLABLE)
+            .setMode(col.isArray() == true ? Field.Mode.REPEATED : col._Nullable == 1 ? Field.Mode.NULLABLE : Field.Mode.REQUIRED)
             .setDescription(col._Descr)
             .build();
             fieldsList.add(F);
@@ -348,20 +358,20 @@ public class BQHelper
 
         return Schema.of(fieldsList);
       }
-    
-    
+
+
     public static String getSchemaColumns(Schema schema)
       {
         StringBuilder str = new StringBuilder();
         for (Field f : schema.getFields())
           {
             if (str.length() > 0)
-             str.append(", ");
-            str.append(f.getName()+":"+f.getType().name());
+              str.append(", ");
+            str.append(f.getName() + ":" + f.getType().name());
           }
         return str.toString();
       }
-    
+
 
     public Schema getBQTableSchema(BigQuery bq, String datasetName, String tableName)
       {

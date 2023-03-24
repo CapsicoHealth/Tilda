@@ -15,6 +15,7 @@
  */
 package tilda;
 
+import java.io.FileWriter;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +29,13 @@ import com.google.cloud.bigquery.TableDataWriteChannel;
 
 import tilda.db.Connection;
 import tilda.db.ConnectionPool;
+import tilda.db.metadata.TableMeta;
+import tilda.db.metadata.TableViewMeta;
+import tilda.db.metadata.ViewMeta;
 import tilda.db.processors.ExporterObjectProcessor;
 import tilda.db.processors.ExporterObjectProcessorCSV;
 import tilda.db.processors.ExporterObjectProcessorJSON;
+import tilda.db.processors.ExporterRecordProcessorCSVJSON;
 import tilda.db.processors.ObjectProcessor;
 import tilda.utils.DurationUtil;
 import tilda.utils.ParseUtil;
@@ -46,6 +51,66 @@ public class Export
     protected static final Logger LOG = LogManager.getLogger(Export.class.getName());
 
     public static long export(Connection C, String mode, String fullName, String path, int logFrequency, int maxCount)
+    throws Exception
+      {
+        String[] parts = fullName.split("\\.");
+        if (parts.length == 2)
+          return exportGeneric(C, mode, parts[0], parts[1], path, logFrequency, maxCount);
+        else
+          return exportTilda(C, mode, fullName, path, logFrequency, maxCount);
+      }
+
+    public static long exportGeneric(Connection C, String mode, String schemaName, String tableViewName, String path, int logFrequency, int maxCount)
+    throws Exception
+      {
+        // Get the table meta-data
+        TableViewMeta TVM = new TableMeta(schemaName, tableViewName, "Table/View");
+        TVM.load(C);
+        if (TVM.getColumnMetaList().isEmpty() == true)
+          {
+            TVM = new ViewMeta(schemaName, tableViewName, "Table/View");
+            TVM.load(C);
+            if (TVM.getColumnMetaList().isEmpty() == true)
+              throw new Exception("Cannot find table/view '"+tableViewName+"'.");
+          }
+        
+        if (path.startsWith("bq`") == true)
+          {
+            if (path.endsWith("`") == false)
+              throw new Exception("The <export_path> parameter '" + path + "' must be of the form 'bq`project.dataset{.tablename}`'.");
+            String[] parts = path.substring("bq`".length(), path.length() - 1).split("\\.");
+            if (parts.length != 2 && parts.length != 3)
+              throw new Exception("The bq path '" + path + "' must be of the form 'bq`project.dataset`'.");
+            BigQuery bq = BQHelper.getBigQuery(parts[0]);
+            String bqSchemaName = parts[1];
+            String bqTableName = parts.length == 3 ? parts[2] : tableViewName;
+            LOG.debug("Destination table: " + parts[0] + "." + bqSchemaName + "." + bqTableName + ".");
+            Schema schema = BQHelper.getBQSchemaFromMeta(TVM);
+            LOG.debug("Source schema for " + schemaName + "." + tableViewName + ":\n " + BQHelper.getSchemaColumns(schema) + "\n");
+            TableDataWriteChannel Out = BQHelper.getTableWriterChannel(bq, bqSchemaName, bqTableName, mode, schema, false);
+            BQWriter writer = new BQWriter(Out);
+            ExporterRecordProcessorCSVJSON RP = new ExporterRecordProcessorCSVJSON(C, writer, path, logFrequency, TVM, mode, mode.equalsIgnoreCase("csv"));
+            C.executeMetaFullSelect(TVM, RP);
+            writer.close();
+            List<String> errMessages = new ArrayList<String>();
+            if (JobHelper.completeJob(Out.getJob(), errMessages) == null)
+              throw new Exception("Copying data to BQ failed.");
+            return RP.getTotalCount();
+          }
+        else
+          {
+            String outputFileName = mode.equalsIgnoreCase("csv") == true ? path + "\\" + tableViewName + ".csv"
+                                                                         : path + "\\" + tableViewName + (mode.equalsIgnoreCase("jsonl") ? ".jsonl" : ".json")
+                                                                         ;
+            FileWriter writer = new FileWriter(outputFileName);
+            ExporterRecordProcessorCSVJSON RP = new ExporterRecordProcessorCSVJSON(C, writer, path, logFrequency, TVM, mode, true);
+            C.executeMetaFullSelect(TVM, RP);
+            writer.close();
+            return RP.getTotalCount();
+          }
+      }
+
+    public static long exportTilda(Connection C, String mode, String fullName, String path, int logFrequency, int maxCount)
     throws Exception
       {
         int lastDot = fullName.lastIndexOf(".");
@@ -88,8 +153,8 @@ public class Export
               }
             else
               {
-//                OP = new ExporterRecordProcessorCSVJSON(C, writer, path, logFrequency, tvm, mode, true)
-//                C.executeMetaFullSelect(schemaName, tableName, OP);
+                // OP = new ExporterRecordProcessorCSVJSON(C, writer, path, logFrequency, tvm, mode, true)
+                // C.executeMetaFullSelect(schemaName, tableName, OP);
               }
           }
         else

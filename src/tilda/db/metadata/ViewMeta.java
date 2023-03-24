@@ -16,6 +16,9 @@
 
 package tilda.db.metadata;
 
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,9 +27,10 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.db.Connection;
 import tilda.utils.PaddingTracker;
 
-public class ViewMeta
+public class ViewMeta implements TableViewMeta
   {
     static final Logger LOG = LogManager.getLogger(ViewMeta.class.getName());
 
@@ -45,21 +49,51 @@ public class ViewMeta
     public List<ColumnMeta>           _ColumnsList       = new ArrayList<ColumnMeta>();
     public PaddingTracker             _PadderColumnNames = new PaddingTracker();
     
-    /*
-     * public void load(Connection C)
-     * throws Exception
-     * {
-     * long TS = System.nanoTime();
-     * // LOG.debug("View: " + _SchemaName + "." + _ViewName);
-     * DatabaseMetaData meta = C.getMetaData();
-     * ResultSet RS = meta.getColumns(null, _SchemaName.toLowerCase(), _ViewName.toLowerCase(), null);
-     * while (RS.next() != false)
-     * {
-     * ColumnMeta CI = new ColumnMeta(C, RS, null, this);
-     * _DBColumns.put(CI._Name, CI);
-     * ++MetaPerformance._ViewColumnCount;
-     * }
-     * MetaPerformance._ViewColumnNano+=(System.nanoTime()-TS);
-     * }
-     */
+    @Override
+    public String getSchemaName()
+      {
+        return _SchemaName;
+      }
+
+    @Override
+    public String getTableViewName()
+      {
+        return _ViewName;
+      }
+    
+    
+    @Override
+    public void load(Connection C)
+    throws Exception
+      {
+        DatabaseMetaData meta = C.getMetaData();
+
+        if (_ColumnsList.isEmpty() == true)
+          {
+            long TS = System.nanoTime();
+            ResultSet RS = meta.getColumns(null, _SchemaName.toLowerCase(), _ViewName.toLowerCase(), null);
+            loadColumns(C, RS);
+            RS.close();
+            MetaPerformance._ViewColumnNano += (System.nanoTime() - TS);
+            MetaPerformance._ViewColumnCount += _ColumnsList.size();
+          }
+      }
+    
+    protected void loadColumns(Connection C, ResultSet RS)
+    throws SQLException, Exception
+      {
+        while (RS.next() != false)
+          {
+            ColumnMeta CM = new ColumnMeta(C, RS);
+            _ColumnsList.add(CM);
+            _PadderColumnNames.track(CM._Name);
+          }
+      }
+    
+    @Override
+    public List<ColumnMeta> getColumnMetaList()
+      {
+        return _ColumnsList;
+      }
+    
   }

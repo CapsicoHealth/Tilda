@@ -32,7 +32,7 @@ import org.apache.logging.log4j.Logger;
 import tilda.db.Connection;
 import tilda.utils.PaddingTracker;
 
-public class TableMeta
+public class TableMeta implements TableViewMeta
   {
     static final Logger LOG = LogManager.getLogger(TableMeta.class.getName());
 
@@ -56,12 +56,34 @@ public class TableMeta
     public Map<String, FKMeta>     _ForeignKeysIn     = new HashMap<String, FKMeta>();
     public PKMeta                  _PrimaryKey;
     public PaddingTracker          _PadderColumnNames = new PaddingTracker();
+    
+    @Override
+    public String getSchemaName()
+      {
+        return _SchemaName;
+      }
+
+    @Override
+    public String getTableViewName()
+      {
+        return _TableName;
+      }
+   
 
     public void load(Connection C)
     throws Exception
       {
         DatabaseMetaData meta = C.getMetaData();
 
+        if (_ColumnsList.isEmpty() == true)
+          {
+            long TS = System.nanoTime();
+            ResultSet RS = meta.getColumns(null, _SchemaName.toLowerCase(), _TableName.toLowerCase(), null);
+            loadColumns(C, RS);
+            RS.close();
+            MetaPerformance._TableColumnNano += (System.nanoTime() - TS);
+            MetaPerformance._TableColumnCount += _ColumnsList.size();
+          }
         // Loading unique indices
         long TS = System.nanoTime();
         ResultSet RS = meta.getIndexInfo(null, _SchemaName.toLowerCase(), _TableName.toLowerCase(), true, true);
@@ -82,6 +104,18 @@ public class TableMeta
           _PrimaryKey = new PKMeta(RS);
         MetaPerformance._PKNano += (System.nanoTime() - TS);
         MetaPerformance._PKCount++;
+      }
+
+    protected void loadColumns(Connection C, ResultSet RS)
+    throws SQLException, Exception
+      {
+        while (RS.next() != false)
+          {
+            ColumnMeta CM = new ColumnMeta(C, RS);
+            _ColumnsList.add(CM);
+            _PadderColumnNames.track(CM._Name);
+            _ColumnsMap.put(CM._Name.toLowerCase(), CM);
+          }
       }
 
     public void updateFullNames()
@@ -129,6 +163,7 @@ public class TableMeta
         return cm;
       }
 
+    @Override
     public List<ColumnMeta> getColumnMetaList()
       {
         return _ColumnsList;
@@ -179,5 +214,4 @@ public class TableMeta
             return IM;
         return null;
       }
-
   }

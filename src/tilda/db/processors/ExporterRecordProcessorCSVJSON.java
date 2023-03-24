@@ -25,6 +25,7 @@ import org.apache.logging.log4j.Logger;
 import tilda.db.Connection;
 import tilda.db.metadata.ColumnMeta;
 import tilda.db.metadata.TableMeta;
+import tilda.db.metadata.TableViewMeta;
 import tilda.utils.TextUtil;
 import tilda.utils.json.JSONUtil;
 
@@ -32,7 +33,7 @@ public class ExporterRecordProcessorCSVJSON extends ExporterRecordProcessor
   {
     protected static final Logger LOG = LogManager.getLogger(ExporterRecordProcessorCSVJSON.class.getName());
 
-    public ExporterRecordProcessorCSVJSON(Connection C, Writer out, String outName, long logFreq, TableMeta tvm, String type, boolean CSVHeader)
+    public ExporterRecordProcessorCSVJSON(Connection C, Writer out, String outName, long logFreq, TableViewMeta tvm, String type, boolean CSVHeader)
       throws Exception
       {
         super(out, outName, logFreq);
@@ -46,7 +47,7 @@ public class ExporterRecordProcessorCSVJSON extends ExporterRecordProcessor
         init(C, tvm, type, CSVHeader);
       }
 
-    protected void init(Connection C, TableMeta tvm, String type, boolean CSVHeader)
+    protected void init(Connection C, TableViewMeta tvm, String type, boolean CSVHeader)
     throws Exception
       {
         _C = C;
@@ -65,19 +66,20 @@ public class ExporterRecordProcessorCSVJSON extends ExporterRecordProcessor
         _tvm = tvm;
       }
 
-    protected Connection _C;
-    protected int        _type;
-    protected boolean    _CSVHeader;
-    protected TableMeta  _tvm;
+    protected Connection    _C;
+    protected int           _type;
+    protected boolean       _CSVHeader;
+    protected TableViewMeta _tvm;
 
     @Override
     public void start()
     throws Exception
       {
+        super.start();
         if (_type == 1 && _CSVHeader == true)
           {
             boolean first = true;
-            for (ColumnMeta cm : _tvm._ColumnsList)
+            for (ColumnMeta cm : _tvm.getColumnMetaList())
               {
                 if (first == false)
                   _out.append(",");
@@ -93,11 +95,13 @@ public class ExporterRecordProcessorCSVJSON extends ExporterRecordProcessor
     public boolean process(int count, ResultSet RS)
     throws Exception
       {
+        super.process(count);
         if (_type == 2)
           _out.append("{");
-        int idx = 1;
-        for (ColumnMeta cm : _tvm._ColumnsList)
+        int idx = 0;
+        for (ColumnMeta cm : _tvm.getColumnMetaList())
           {
+            ++idx;
             if (_type == 1)
               {
                 if (idx > 1)

@@ -40,6 +40,7 @@ import tilda.db.metadata.IndexMeta;
 import tilda.db.metadata.PKMeta;
 import tilda.db.metadata.SchemaMeta;
 import tilda.db.metadata.TableMeta;
+import tilda.db.metadata.TableViewMeta;
 import tilda.db.metadata.ViewMeta;
 import tilda.db.processors.RecordProcessor;
 import tilda.db.processors.ScalarRP;
@@ -493,22 +494,22 @@ public final class Connection
         return executeMetaFullSelect(tvm, RP);
       }
 
-    public int executeMetaFullSelect(TableMeta tvm, RecordProcessor RP)
+    public int executeMetaFullSelect(TableViewMeta tvm, RecordProcessor RP)
     throws Exception
       {
         StringBuilder str = new StringBuilder();
         str.append("select ");
         boolean first = true;
-        for (ColumnMeta cm : tvm._ColumnsList)
+        for (ColumnMeta cm : tvm.getColumnMetaList())
           {
             if (first == false)
               str.append(", ");
             else
               first = false;
-            getFullColumnVar(str, tvm._SchemaName, tvm._TableName, cm._NameOriginal);
+            getFullColumnVar(str, tvm.getSchemaName(), tvm.getTableViewName(), cm._NameOriginal);
           }
-        str.append(" from " + tvm._SchemaName + "." + tvm._TableName);
-        return executeSelect(tvm._SchemaName, tvm._TableName, str.toString(), RP);
+        str.append(" from " + tvm.getSchemaName() + "." + tvm.getTableViewName());
+        return executeSelect(tvm.getSchemaName(), tvm.getTableViewName(), str.toString(), RP);
       }
 
 
