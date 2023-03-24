@@ -187,7 +187,7 @@ public class DDLTest
             str.append("       ").append(warn.getMessage()).append("\r\n");
             warn = warn.getNextWarning();
           }
-        if (str.isEmpty() == false)
+        if (str.length() == 0)
           System.out.println("Messages:\n" + str.toString());
         S.close();
         System.out.println("Closed Statement");
