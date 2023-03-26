@@ -2816,7 +2816,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MaintenanceLog.statement of type text</TD></TR>
   <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.MaintenanceLog.statement</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>4194304</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>8388608</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
@@ -2838,7 +2838,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MaintenanceLog.statement of type text</TD></TR>
   <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.MaintenanceLog.statement</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>4194304</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>8388608</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
@@ -2860,7 +2860,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MaintenanceLog.statement of type text</TD></TR>
   <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.MaintenanceLog.statement</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>4194304</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>8388608</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
@@ -2882,7 +2882,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MaintenanceLog.statement of type text</TD></TR>
   <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.MaintenanceLog.statement</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>4194304</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>8388608</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
@@ -2896,8 +2896,8 @@ This is the setter for:<BR>
         {
           setNullStatement();
         }
-       else if (v.length() > 4194304)
-        throw new Exception("Cannot set tilda.data.TILDA.MaintenanceLog.statement: the size "+v.length()+" is larger than the max allowed of 4194304: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
+       else if (v.length() > 8388608)
+        throw new Exception("Cannot set tilda.data.TILDA.MaintenanceLog.statement: the size "+v.length()+" is larger than the max allowed of 8388608: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_statement) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
@@ -2921,7 +2921,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MaintenanceLog.statement of type text</TD></TR>
   <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.MaintenanceLog.statement</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>4194304</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>8388608</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
@@ -2951,7 +2951,7 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MaintenanceLog.statement of type text</TD></TR>
   <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.MaintenanceLog.statement</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>4194304</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>8388608</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>

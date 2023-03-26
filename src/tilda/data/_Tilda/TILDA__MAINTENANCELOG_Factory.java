@@ -313,14 +313,14 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MaintenanceLog.statement of type text</TD></TR>
   <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.MaintenanceLog.statement</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>4194304</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>8388608</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    STATEMENT  = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "statement"  , 10/*10*/, 4194304, "The value of the maintenance resource to track.", null, null, null);
+     public final Type_StringPrimitiveNull    STATEMENT  = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "statement"  , 10/*10*/, 8388608, "The value of the maintenance resource to track.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
