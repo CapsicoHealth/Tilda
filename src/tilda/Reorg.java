@@ -42,8 +42,6 @@ import tilda.db.metadata.DatabaseMeta;
 import tilda.db.metadata.IndexMeta;
 import tilda.db.metadata.SchemaMeta;
 import tilda.db.metadata.TableMeta;
-import tilda.migration.Migrator;
-import tilda.parsing.parts.Schema;
 import tilda.utils.AsciiArt;
 import tilda.utils.DateTimeUtil;
 import tilda.utils.DurationUtil;

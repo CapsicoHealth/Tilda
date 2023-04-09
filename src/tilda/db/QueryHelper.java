@@ -1141,10 +1141,10 @@ public abstract class QueryHelper
         if (isWhereClause() == false)
           throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
 
-        if (coalesceVal != Character.UNASSIGNED)
+        if (coalesceVal != null)
           _QueryStr.append("coalesce(");
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != Character.UNASSIGNED)
+        if (coalesceVal != null)
           {
             _QueryStr.append(", ").append(coalesceVal).append(")");
           }
