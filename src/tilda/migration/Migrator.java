@@ -22,6 +22,7 @@ import java.io.PrintWriter;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -36,6 +37,7 @@ import tilda.data.MaintenanceLog_Factory;
 import tilda.data.ZoneInfo_Factory;
 import tilda.db.Connection;
 import tilda.db.ConnectionPool;
+import tilda.db.JDBCHelper;
 import tilda.db.KeysManager;
 import tilda.db.QueryDetails;
 import tilda.db.metadata.ColumnMeta;
@@ -181,7 +183,7 @@ public class Migrator
           A.process(C);
       }
 
-    
+
     public static void PrintDiscrepancies(Connection C, MigrationDataModel migrationData, String[] DependencySchemas)
     throws Exception
       {
@@ -208,17 +210,44 @@ public class Migrator
                     LOG.warn((included == true ? "       " : "       // ") + (++counter) + " - " + MA.getDescription());
                   }
                 else
-                  LOG.debug((included == true ? "       " : "       // ") + "(dependency) " + MA.getDescription());
+                  {
+                    LOG.debug((included == true ? "       " : "       // ") + "(dependency) " + MA.getDescription());
+                  }
               }
           }
         LOG.info("");
         LOG.info("A total of " + counterApplied + " migration steps will be applied.");
 
+
+        JDBCHelper.startRehearsal();
+        for (MigrationScript S : migrationData.getMigrationScripts())
+          {
+            for (MigrationAction MA : S._Actions)
+              {
+                boolean included = S._S == null || TextUtil.findElement(DependencySchemas, S._S._Name, true, 0) == -1;
+                if (included == true)
+                  MA.process(C);
+              }
+          }
+        File F = new File("tilda.migration." + DateTimeUtil.printDateTimeSuperCompact(DateTimeUtil.nowLocal()) + ".sql");
+        PrintWriter out = new PrintWriter(new FileOutputStream(F, false));
+        Iterator<String> I = JDBCHelper.getRehearsalIterator();
+        while (I.hasNext())
+          {
+            String q = I.next();
+            if (q.trim().endsWith(";") == false)
+              q = q.trim()+";";
+            out.println(q);
+          }
+        out.close();
+        JDBCHelper.endRehearsal();
+        LOG.info("    - Separately, all DDL queries related to migration have been saved to the file " + F.getCanonicalPath() + ".");
+
         List<MigrationDrops> drops = migrationData.getDropList();
         if (drops != null && drops.isEmpty() == false)
           {
-            File F = new File("tilda.migration.drops.sql");
-            PrintWriter out = new PrintWriter(new FileOutputStream(F, false));
+            F = new File("tilda.migration.drops.sql");
+            out = new PrintWriter(new FileOutputStream(F, false));
             for (MigrationDrops d : drops)
               out.println("-- " + d.process());
             out.close();
@@ -492,7 +521,7 @@ public class Migrator
                     else
                       {
                         // Check if it's just a change in case for the column name
-                        if (Col.getName().equals(CMeta._NameOriginal) == false)
+                        if (Col.getName().equalsIgnoreCase(CMeta._NameOriginal) == true && Col.getName().equals(CMeta._NameOriginal) == false)
                           Actions.add(new TableColumnRename(Col, CMeta._NameOriginal));
                         if (Col._Description.equalsIgnoreCase(CMeta._Descr) == false)
                           Actions.add(new ColumnComment(Col));

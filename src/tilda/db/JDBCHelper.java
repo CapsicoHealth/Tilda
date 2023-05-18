@@ -22,10 +22,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.Migrate;
 import tilda.db.processors.RecordProcessor;
 import tilda.enums.StatementType;
 import tilda.enums.TransactionType;
@@ -158,18 +162,47 @@ public class JDBCHelper
           }
       }
 
-    public static boolean executeDDL(Connection C, String SchemaName, String TableName, String Query)
+    protected static List<String> _REHEARSAL_DDL_QUERIES = null;
+
+    public static void startRehearsal()
+      {
+        if (_REHEARSAL_DDL_QUERIES == null)
+          _REHEARSAL_DDL_QUERIES = new ArrayList<String>();
+      }
+
+    public static void endRehearsal()
+      {
+        if (_REHEARSAL_DDL_QUERIES != null)
+          {
+            _REHEARSAL_DDL_QUERIES.clear();
+            _REHEARSAL_DDL_QUERIES = null;
+          }
+      }
+
+    public static Iterator<String> getRehearsalIterator()
+      {
+        return _REHEARSAL_DDL_QUERIES.iterator();
+      }
+
+    public static boolean executeDDL(Connection C, String schemaName, String tableName, String query)
     throws Exception
       {
-        TableName = SchemaName + "." + TableName;
-        QueryDetails.logQuery(TableName, Query, null);
+        tableName = schemaName + "." + tableName;
+        // If in rehearsal mode, we just capture the queries that would have normally been issues.
+        // This is mostly used by the Migrate utility wanting to capture migrations in a file.
+        if (_REHEARSAL_DDL_QUERIES != null)
+          {
+            _REHEARSAL_DDL_QUERIES.add(query);
+            return true;
+          }
+        QueryDetails.logQuery(tableName, query, null);
         Statement S = null;
         try
           {
             long T0 = System.nanoTime();
-            QueryDetails.setLastQuery(TableName, Query);
+            QueryDetails.setLastQuery(tableName, query);
             S = C.createStatement();
-            S.execute(Query);
+            S.execute(query);
             while (S.getMoreResults() == true || S.getUpdateCount() != -1)
               S.getResultSet();
             if (QueryDetails.isWarningsCollection() == true)
@@ -184,10 +217,10 @@ public class JDBCHelper
                 String s = str.toString();
                 if (s.isEmpty() == false)
                   QueryDetails.setLastQueryWarning(s);
-                PerfTracker.add(TableName, StatementType.UPDATE, System.nanoTime() - T0, 1, s);
+                PerfTracker.add(tableName, StatementType.UPDATE, System.nanoTime() - T0, 1, s);
               }
             else
-             PerfTracker.add(TableName, StatementType.UPDATE, System.nanoTime() - T0, 1);
+              PerfTracker.add(tableName, StatementType.UPDATE, System.nanoTime() - T0, 1);
             return true;
           }
         finally

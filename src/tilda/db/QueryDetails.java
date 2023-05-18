@@ -35,12 +35,12 @@ public class QueryDetails
 
     public final String                            _Table;
     public final String                            _Query;
-    public String                                  _Warnings = null;
+    public String                                  _Warnings           = null;
     public boolean                                 _WarningsCollection = false;
-    public boolean                                 _Deadlocked = false;
-    public boolean                                 _Canceled = false;
+    public boolean                                 _Deadlocked         = false;
+    public boolean                                 _Canceled           = false;
 
-    private static final ThreadLocal<QueryDetails> _LastQuery = new ThreadLocal<QueryDetails>();
+    private static final ThreadLocal<QueryDetails> _LastQuery          = new ThreadLocal<QueryDetails>();
 
     public static void setLastQuery(String TableName, String Query)
       {
@@ -90,7 +90,7 @@ public class QueryDetails
         QueryDetails LastQuery = _LastQuery.get();
         return LastQuery == null ? null : LastQuery._Query;
       }
-    
+
     public static String getLastQuerySecure()
       {
         QueryDetails LastQuery = _LastQuery.get();
@@ -120,12 +120,10 @@ public class QueryDetails
 
     public static final String _LOGGING_HEADER = TextUtil.identity("    ~~ ");
 
-    public static void logQuery(String TableName, String Query, String Values)
+    public static void logQuery(String tableName, String query, String values)
       {
-        LOG.debug(_LOGGING_HEADER + AnsiUtil.NEGATIVE + "[" + TableName + "]" + AnsiUtil.NEGATIVE_OFF + ": " + Query);
-        if (Values != null)
-          LOG.debug(_LOGGING_HEADER + "   " + Values);
+        LOG.debug(_LOGGING_HEADER + AnsiUtil.NEGATIVE + "[" + tableName + "]" + AnsiUtil.NEGATIVE_OFF + ": " + query);
+        if (values != null)
+          LOG.debug(_LOGGING_HEADER + "   " + values);
       }
-
-
   }
