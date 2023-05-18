@@ -483,7 +483,7 @@ public class Helper
               {
                 Out.println(Lead + "   case " + LookupId + ": // PK");
                 for (Column C : O._PrimaryKey._ColumnObjs)
-                  PrintColumnPreparedStatementSetter(Out, O, Lead, C, Static);
+                  PrintColumnPreparedStatementSetter(Out, O, Lead, C, Static, false);
                 Out.println(Lead + "     break;");
               }
           }
@@ -495,7 +495,7 @@ public class Helper
                 {
                   Out.println(Lead + "   case " + LookupId + ": // Unique Index '" + I._Name + "'");
                   for (Column C : I._ColumnObjs)
-                    PrintColumnPreparedStatementSetter(Out, O, Lead, C, Static);
+                    PrintColumnPreparedStatementSetter(Out, O, Lead, C, Static, false);
                   Out.println(Lead + "     break;");
                 }
             }
@@ -507,7 +507,7 @@ public class Helper
                 {
                   Out.println(Lead + "   case " + LookupId + ": {  // Index '" + I._Name + "'");
                   for (Column C : I._ColumnObjs)
-                    PrintColumnPreparedStatementSetter(Out, O, Lead, C, Static);
+                    PrintColumnPreparedStatementSetter(Out, O, Lead, C, Static, false);
                   if (I._SubQuery != null && I._SubQuery._Attributes.isEmpty() == false)
                     {
                       String MethodName = "lookupWhere" + I._Name;
@@ -521,7 +521,7 @@ public class Helper
                           String Pad = O._PadderColumnNames.getPad(C.getName());
                           Out.print(Lead + "     ");
                           if (C.getType().isPrimitive() == false)
-                            Out.print("if (P._" + V + "==null) PS.setNull(++i, java.sql.Types." + JavaJDBCType.get(C.getType())._JDBCSQLType + "); else ");
+                            Out.print("if (P._" + V + "==null) PS.setNull(++i, java.sql.Types." + (A._Multi==true?"ARRAY":JavaJDBCType.get(C.getType())._JDBCSQLType) + "); else ");
                           if (C.getType() == ColumnType.DATETIME)
                             Out.println("PS.setTimestamp(++i, new java.sql.Timestamp(P._" + V + ".toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);");
                           else if (C.getType() == ColumnType.DATE)
@@ -545,7 +545,7 @@ public class Helper
                 {
                   Out.println(Lead + "   case " + LookupId + ": // Unique Query '" + SWC._Name + "'");
                   for (Query.Attribute A : SWC._Attributes)
-                    PrintColumnPreparedStatementSetter(Out, O, Lead, A._Col, Static);
+                    PrintColumnPreparedStatementSetter(Out, O, Lead, A._Col, Static, A._Multi);
                   Out.println(Lead + "     break;");
                 }
             }
@@ -570,7 +570,7 @@ public class Helper
                       String Pad = O._PadderColumnNames.getPad(C.getName());
                       Out.print(Lead + "     ");
                       if (C.getType().isPrimitive() == false || A._Multi == true)
-                        Out.print("if (P._" + V + "==null) PS.setNull(++i, java.sql.Types." + JavaJDBCType.get(C.getType())._JDBCSQLType + "); else ");
+                        Out.print("if (P._" + V + "==null) PS.setNull(++i, java.sql.Types." + (A._Multi==true?"ARRAY":JavaJDBCType.get(C.getType())._JDBCSQLType) + "); else ");
                       if (C.getType() == ColumnType.DATETIME)
                         Out.println("PS.setTimestamp(++i, new java.sql.Timestamp(P._" + V + ".toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);");
                       else if (C.getType() == ColumnType.DATE)
@@ -593,7 +593,7 @@ public class Helper
         Out.println(Lead + " }");
       }
 
-    public static void PrintColumnPreparedStatementSetter(PrintWriter Out, Object O, String Lead, Column C, boolean Static)
+    public static void PrintColumnPreparedStatementSetter(PrintWriter Out, Object O, String Lead, Column C, boolean Static, boolean arrayOverride)
       {
         String Pred = Static == true ? "Obj." : "";
         if (C != null)
@@ -601,7 +601,7 @@ public class Helper
             String Pad = O._PadderColumnNames.getPad(C.getName());
             Out.print(Lead + "     ");
             if (C._Nullable == true)
-              Out.print("if (" + Pred + "isNull" + TextUtil.capitalizeFirstCharacter(C.getName()) + "() == true) PS.setNull(++i, java.sql.Types." + JavaJDBCType.get(C.getType())._JDBCSQLType + ");  else ");
+              Out.print("if (" + Pred + "isNull" + TextUtil.capitalizeFirstCharacter(C.getName()) + "() == true) PS.setNull(++i, java.sql.Types." + (C.isCollection()==true || arrayOverride == true ?"ARRAY":JavaJDBCType.get(C.getType())._JDBCSQLType) + ");  else ");
             if (C.getType() == ColumnType.DATETIME)
               Out.println("PS.setTimestamp(++i, new java.sql.Timestamp(" + Pred + "_" + C.getName() + ".toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);");
             else if (C.getType() == ColumnType.DATE)
