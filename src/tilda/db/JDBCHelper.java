@@ -179,9 +179,14 @@ public class JDBCHelper
           }
       }
 
+    public static boolean isRehearsal()
+      {
+        return _REHEARSAL_DDL_QUERIES != null;
+      }
+    
     public static Iterator<String> getRehearsalIterator()
       {
-        return _REHEARSAL_DDL_QUERIES.iterator();
+        return _REHEARSAL_DDL_QUERIES==null ? null : _REHEARSAL_DDL_QUERIES.iterator();
       }
 
     public static boolean executeDDL(Connection C, String schemaName, String tableName, String query)

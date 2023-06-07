@@ -34,6 +34,7 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
+import tilda.db.JDBCHelper;
 import tilda.db.metadata.ColumnMeta;
 import tilda.db.metadata.FKMeta;
 import tilda.db.metadata.IndexMeta;
@@ -166,11 +167,14 @@ public abstract class CommonStoreImpl implements DBType
       {
         if (Col._Nullable == false && DefaultValue == null)
           {
-            String Q = "SELECT count(*) from " + Col._ParentObject.getShortName();
-            ScalarRP RP = new ScalarRP();
-            Con.executeSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, RP);
-            if (RP.getResult() > 0)
-              throw new Exception("Cannot add new 'not null' column '" + Col.getFullName() + "' to a table without a default value. Add a default value in the model, or manually migrate your database.");
+            if (JDBCHelper.isRehearsal() == false)
+              {
+                String Q = "SELECT 1 from " + Col._ParentObject.getShortName() + " limit 1";
+                ScalarRP RP = new ScalarRP();
+                int rows = Con.executeSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, RP);
+                if (rows > 0)
+                  throw new Exception("Cannot add new 'not null' column '" + Col.getFullName() + "' to a table without a default value. Add a default value in the model, or manually migrate your database.");
+              }
           }
         String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ADD COLUMN \"" + Col.getName() + "\" " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection(), Col._Precision, Col._Scale);
         if (Col._Nullable == false && DefaultValue != null)
@@ -211,15 +215,18 @@ public abstract class CommonStoreImpl implements DBType
       {
         if (Col._Nullable == false)
           {
-            String Q = "SELECT count(*) from " + Col._ParentObject.getShortName() + " where \"" + Col.getName() + "\" IS NULL";
-            ScalarRP RP = new ScalarRP();
-            Con.executeSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, RP);
-            if (RP.getResult() > 0)
+            if (JDBCHelper.isRehearsal() == false)
               {
-                if (DefaultValue == null)
-                  throw new Exception("Cannot alter column '" + Col.getFullName() + "' to not null without a default value. Add a default value in the model, or manually migrate your database.");
-                Q = "UPDATE " + Col._ParentObject.getShortName() + " set \"" + Col.getName() + "\" = " + ValueHelper.printValueSQL(getSQlCodeGen(), Col.getName(), Col.getType(), Col.isCollection(), DefaultValue) + " where \"" + Col.getName() + "\" IS NULL";
-                Con.executeUpdate(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
+                String Q = "SELECT 1 from " + Col._ParentObject.getShortName() + " where \"" + Col.getName() + "\" IS NULL limit 1";
+                ScalarRP RP = new ScalarRP();
+                int rows = Con.executeSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, RP);
+                if (rows > 0)
+                  {
+                    if (DefaultValue == null)
+                      throw new Exception("Cannot alter column '" + Col.getFullName() + "' to not null without a default value. Add a default value in the model, or manually migrate your database.");
+                    Q = "UPDATE " + Col._ParentObject.getShortName() + " set \"" + Col.getName() + "\" = " + ValueHelper.printValueSQL(getSQlCodeGen(), Col.getName(), Col.getType(), Col.isCollection(), DefaultValue) + " where \"" + Col.getName() + "\" IS NULL";
+                    Con.executeUpdate(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
+                  }
               }
           }
 
@@ -247,7 +254,7 @@ public abstract class CommonStoreImpl implements DBType
 
     public abstract String getColumnType(ColumnType T, Integer S, ColumnMode M, boolean Collection, Integer Precision, Integer Scale);
 
-    
+
     @Override
     public String getColumnTypeRaw(Column C, boolean MultiOverride)
       {
@@ -261,7 +268,7 @@ public abstract class CommonStoreImpl implements DBType
       }
 
     public abstract String getColumnTypeRaw(ColumnType Type, int Size, boolean Calculated, boolean isCollection, boolean MultiOverride);
-    
+
     @Override
     public boolean alterTableAlterColumnStringSize(Connection Con, ColumnMeta ColMeta, Column Col)
     throws Exception
@@ -271,22 +278,25 @@ public abstract class CommonStoreImpl implements DBType
         // Is it shrinking?
         if (Col._Size < ColMeta._Size && ColT != DBStringType.TEXT)
           {
-            String Q = "SELECT max(length(\"" + Col.getName() + "\")) from " + Col._ParentObject.getShortName();
-            ScalarRP RP = new ScalarRP();
-            Con.executeSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, RP);
-            if (RP.getResult() > Col._Size)
+            if (JDBCHelper.isRehearsal() == false)
               {
-                Q = "select \"" + Col.getName() + "\" || '  (' || length(\"" + Col.getName() + "\") || ')' as _x from " + Col._ParentObject.getShortName()
-                + " group by \"" + Col.getName() + "\""
-                + " order by length(\"" + Col.getName() + "\") desc"
-                + " limit 10";
-                StringListRP SLRP = new StringListRP();
-                Con.executeSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, SLRP);
-                LOG.error("Column sample:");
-                for (String s : SLRP.getResult())
-                  LOG.error("   - " + s);
-                throw new Exception("Cannot alter String column '" + Col.getFullName() + "' from size " + ColMeta._Size + " down to " + Col._Size + " because there are values with sizes up to " + RP.getResult()
-                + " that would be truncated. You need to manually migrate your database.");
+                String Q = "SELECT max(length(\"" + Col.getName() + "\")) from " + Col._ParentObject.getShortName();
+                ScalarRP RP = new ScalarRP();
+                Con.executeSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, RP);
+                if (RP.getResult() > Col._Size)
+                  {
+                    Q = "select \"" + Col.getName() + "\" || '  (' || length(\"" + Col.getName() + "\") || ')' as _x from " + Col._ParentObject.getShortName()
+                    + " group by \"" + Col.getName() + "\""
+                    + " order by length(\"" + Col.getName() + "\") desc"
+                    + " limit 10";
+                    StringListRP SLRP = new StringListRP();
+                    Con.executeSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, SLRP);
+                    LOG.error("Column sample:");
+                    for (String s : SLRP.getResult())
+                      LOG.error("   - " + s);
+                    throw new Exception("Cannot alter String column '" + Col.getFullName() + "' from size " + ColMeta._Size + " down to " + Col._Size + " because there are values with sizes up to " + RP.getResult()
+                    + " that would be truncated. You need to manually migrate your database.");
+                  }
               }
           }
 
@@ -454,22 +464,25 @@ public abstract class CommonStoreImpl implements DBType
             // Is it shrinking?
             if (CMP._Col._Size < CMP._CMeta._Size && ColT != DBStringType.TEXT)
               {
-                String QS = "SELECT max(length(\"" + CMP._Col.getName() + "\")) from " + CMP._Col._ParentObject.getShortName();
-                ScalarRP RP = new ScalarRP();
-                Con.executeSelect(CMP._Col._ParentObject._ParentSchema._Name, CMP._Col._ParentObject.getBaseName(), QS, RP);
-                if (RP.getResult() > CMP._Col._Size)
+                if (JDBCHelper.isRehearsal() == false)
                   {
-                    Q = "select \"" + CMP._Col.getName() + "\" || '  (' || length(\"" + CMP._Col.getName() + "\") || ')' as _x from " + CMP._Col._ParentObject.getShortName()
-                    + " group by \"" + CMP._Col.getName() + "\""
-                    + " order by length(\"" + CMP._Col.getName() + "\") desc"
-                    + " limit 10";
-                    StringListRP SLRP = new StringListRP();
-                    Con.executeSelect(CMP._Col._ParentObject._ParentSchema._Name, CMP._Col._ParentObject.getBaseName(), Q, SLRP);
-                    LOG.error("Column sample:");
-                    for (String s : SLRP.getResult())
-                      LOG.error("   - " + s);
-                    throw new Exception("Cannot alter String column '" + CMP._Col.getFullName() + "' from size " + CMP._CMeta._Size + " down to " + CMP._Col._Size + " because there are values with sizes up to " + RP.getResult()
-                    + " that would be truncated. You need to manually migrate your database.");
+                    String QS = "SELECT max(length(\"" + CMP._Col.getName() + "\")) from " + CMP._Col._ParentObject.getShortName();
+                    ScalarRP RP = new ScalarRP();
+                    Con.executeSelect(CMP._Col._ParentObject._ParentSchema._Name, CMP._Col._ParentObject.getBaseName(), QS, RP);
+                    if (RP.getResult() > CMP._Col._Size)
+                      {
+                        Q = "select \"" + CMP._Col.getName() + "\" || '  (' || length(\"" + CMP._Col.getName() + "\") || ')' as _x from " + CMP._Col._ParentObject.getShortName()
+                        + " group by \"" + CMP._Col.getName() + "\""
+                        + " order by length(\"" + CMP._Col.getName() + "\") desc"
+                        + " limit 10";
+                        StringListRP SLRP = new StringListRP();
+                        Con.executeSelect(CMP._Col._ParentObject._ParentSchema._Name, CMP._Col._ParentObject.getBaseName(), Q, SLRP);
+                        LOG.error("Column sample:");
+                        for (String s : SLRP.getResult())
+                          LOG.error("   - " + s);
+                        throw new Exception("Cannot alter String column '" + CMP._Col.getFullName() + "' from size " + CMP._CMeta._Size + " down to " + CMP._Col._Size + " because there are values with sizes up to " + RP.getResult()
+                        + " that would be truncated. You need to manually migrate your database.");
+                      }
                   }
               }
 
@@ -528,21 +541,22 @@ public abstract class CommonStoreImpl implements DBType
       {
         return getColumnQuotingStartChar() + C.getName() + getColumnQuotingEndChar();
       }
-    
+
     // LDH-NOTE: To use with formulas, we need to be able to handle cases such as "select count(*) from X.Y", in which
-    //          case Y would get quoted, incorrectly since it's a table name. The "from" negative lookahead is not working
-    //          as expected, so punting for now.
-//    protected static Pattern REQUOTE1 = Pattern.compile("(?<!from\\s*)(?:[a-z_A-Z]\\w+)\\.([a-z_A-Z]\\w+)([^\\w\\.\\(]|\\z)");
+    // case Y would get quoted, incorrectly since it's a table name. The "from" negative lookahead is not working
+    // as expected, so punting for now.
+    // protected static Pattern REQUOTE1 = Pattern.compile("(?<!from\\s*)(?:[a-z_A-Z]\\w+)\\.([a-z_A-Z]\\w+)([^\\w\\.\\(]|\\z)");
     protected static Pattern REQUOTE1 = Pattern.compile("\\.([a-z_A-Z]\\w+)([^\\w\\.\\(]|\\z)");
     protected static Pattern REQUOTE2 = Pattern.compile("\\.\"([^\"]+)\"");
+
     @Override
     public String rewriteExpressionColumnQuoting(String expr)
-     {
-       return expr.replaceAll(REQUOTE1.pattern(), "."+getColumnQuotingStartChar()+"$1"+getColumnQuotingEndChar()+"$2")
-                  .replaceAll(REQUOTE2.pattern(), "."+getColumnQuotingStartChar()+"$1"+getColumnQuotingEndChar());
-     }
-    
-    
+      {
+        return expr.replaceAll(REQUOTE1.pattern(), "." + getColumnQuotingStartChar() + "$1" + getColumnQuotingEndChar() + "$2")
+        .replaceAll(REQUOTE2.pattern(), "." + getColumnQuotingStartChar() + "$1" + getColumnQuotingEndChar());
+      }
+
+
     @Override
     public String getFullColumnVar(Column C)
       {
@@ -556,7 +570,7 @@ public abstract class CommonStoreImpl implements DBType
       {
         return C._ParentObject.getSchema()._Name + (i >= 2 ? "_" : ".") + C._ParentObject.getBaseName() + (i >= 2 ? i : "") + ".`" + C.getName() + "`";
       }
-    
+
     @Override
     public void getFullColumnVar(StringBuilder Str, String SchemaName, String TableName, String ColumnName)
       {
@@ -636,8 +650,8 @@ public abstract class CommonStoreImpl implements DBType
     throws Exception
       {
         if (supportsForeignKeys() == false)
-         return true;
-        
+          return true;
+
         if (oldPK != null)
           {
             String Q = "ALTER TABLE " + Obj.getShortName() + " DROP CONSTRAINT \"" + oldPK._Name + "\";";
@@ -658,7 +672,7 @@ public abstract class CommonStoreImpl implements DBType
       {
         if (supportsForeignKeys() == false)
           return true;
-         
+
         String Q = "ALTER TABLE " + Obj.getShortName() + " DROP CONSTRAINT \"" + FK._Name + "\";";
         return Con.executeDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q);
       }
@@ -669,7 +683,7 @@ public abstract class CommonStoreImpl implements DBType
       {
         if (supportsForeignKeys() == false)
           return true;
-         
+
         String Q = "ALTER TABLE " + FK._ParentObject.getShortName() + " ADD CONSTRAINT \"" + FK._Name + "\""
         + " FOREIGN KEY (" + PrintColumnList(FK._SrcColumnObjs) + ") REFERENCES " + FK._DestObjectObj._ParentSchema._Name + "." + FK._DestObjectObj._Name
         + " ON DELETE restrict ON UPDATE cascade";
@@ -682,15 +696,16 @@ public abstract class CommonStoreImpl implements DBType
       {
         if (supportsIndices() == false)
           return true;
-         
+
         // If the DB Name comes in as all lower case, it's case-insensitive. Otherwise, we have to quote.
         String DropName = IX._Name.equals(IX._Name.toLowerCase()) == false ? "\"" + IX._Name + "\"" : IX._Name;
         String Q = "DROP INDEX " + Obj._ParentSchema._Name + "." + DropName + ";";
         return Con.executeDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q);
       }
-    
+
     @Override
-    public boolean alterTableIndexDropCluster(Connection Con, IndexMeta IX) throws Exception
+    public boolean alterTableIndexDropCluster(Connection Con, IndexMeta IX)
+    throws Exception
       {
         if (supportsIndices() == false)
           return true;
@@ -749,7 +764,7 @@ public abstract class CommonStoreImpl implements DBType
 
         if (IX._Cluster == true)
           Out.println("ALTER TABLE " + IX._Parent.getShortName() + " CLUSTER on " + IX.getName() + ";");
-         
+
         return OutStr.toString();
       }
 
@@ -759,7 +774,7 @@ public abstract class CommonStoreImpl implements DBType
       {
         if (supportsIndices() == false)
           return true;
-         
+
         return Con.executeDDL(IX._Parent._ParentSchema._Name, IX._Parent.getBaseName(), alterTableAddIndexDDL(IX));
       }
 
@@ -780,7 +795,7 @@ public abstract class CommonStoreImpl implements DBType
       {
         if (supportsIndices() == false)
           return true;
-         
+
         // If the DB Name comes in as all lower case, it's case-insensitive. Otherwise, we have to quote.
         if (OldName.equals(OldName.toLowerCase()) == false || OldName.equals(TextUtil.sanitizeName(OldName)) == false)
           OldName = "\"" + OldName + "\"";
@@ -850,5 +865,5 @@ public abstract class CommonStoreImpl implements DBType
         Con.executeSelect("TILDA", "CURRENT_DATE", "select " + getCurrentDateStr(), RP);
         return RP.getResult();
       }
-    
+
   }

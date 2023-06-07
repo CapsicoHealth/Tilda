@@ -24,6 +24,7 @@ import org.apache.logging.log4j.Logger;
 import tilda.data.MaintenanceLog_Data;
 import tilda.data.MaintenanceLog_Factory;
 import tilda.db.Connection;
+import tilda.db.JDBCHelper;
 import tilda.db.metadata.DatabaseMeta;
 import tilda.migration.MigrationAction;
 import tilda.parsing.parts.Schema;
@@ -44,7 +45,8 @@ public class TildaExtraDDL extends MigrationAction
     public boolean process(Connection C)
     throws Exception
       {
-        LOG.debug(getDescription());
+        if (JDBCHelper.isRehearsal() == false)
+         LOG.debug(getDescription());
 
         String statement = FileUtil.getFileOfResourceContents(_TableViewName);
         if (TextUtil.isNullOrEmpty(statement) == true)

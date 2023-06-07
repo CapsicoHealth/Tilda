@@ -6,6 +6,7 @@ package tilda.utils.gcp;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,10 +48,10 @@ import tilda.db.TildaMasterRuntimeMetaData;
 import tilda.db.TildaObjectMetaData;
 import tilda.db.metadata.ColumnMeta;
 import tilda.db.metadata.SchemaMeta;
-import tilda.db.metadata.TableMeta;
 import tilda.db.metadata.TableViewMeta;
 import tilda.types.ColumnDefinition;
 import tilda.utils.CollectionUtil;
+import tilda.utils.DateTimeUtil;
 import tilda.utils.DurationUtil;
 import tilda.utils.TextUtil;
 
@@ -563,5 +564,58 @@ public class BQHelper
         LOG.debug("Table '" + datasetName + "." + tableName + "' not found");
         return false;
       }
+
+    public static String[] getRepeatableFieldString(FieldValueList row, String fielName)
+    throws Exception
+      {
+        FieldValue f = row.get(fielName);
+        if (f == null)
+          throw new Exception("Field '" + fielName + "' cannot be found");
+        if (f.getAttribute() != FieldValue.Attribute.REPEATED)
+          throw new Exception("Field '" + fielName + "' is not a repeatable record");
+        if (f.isNull() == true)
+          return null;
+
+        List<FieldValue> values = f.getRepeatedValue();
+        String[] vals = new String[values.size()];
+        for (int i = 0; i < values.size(); ++i)
+          vals[i] = values.get(i).getStringValue();
+
+        return vals;
+      }
+
+    public static LocalDate[] getRepeatableFieldLocalDate(FieldValueList row, String fielName)
+    throws Exception
+      {
+        FieldValue f = row.get(fielName);
+        if (f == null)
+          throw new Exception("Field '" + fielName + "' cannot be found");
+        if (f.getAttribute() != FieldValue.Attribute.REPEATED)
+          throw new Exception("Field '" + fielName + "' is not a repeatable record");
+        if (f.isNull() == true)
+          return null;
+
+        List<FieldValue> values = f.getRepeatedValue();
+        LocalDate[] vals = new LocalDate[values.size()];
+        for (int i = 0; i < values.size(); ++i)
+          {
+            vals[i] = DateTimeUtil.parseDate(values.get(i).getStringValue());
+          }
+
+        return vals;
+      }
+
+    public static LocalDate getTimestampFieldAsLocalDate(FieldValueList row, String fielName)
+    throws Exception
+      {
+        FieldValue f = row.get(fielName);
+        if (f == null)
+          throw new Exception("Field '" + fielName + "' cannot be found");
+        if (f.isNull() == true)
+          return null;
+
+        return DateTimeUtil.parseDate(f.getStringValue());
+      }
+
 
   }
