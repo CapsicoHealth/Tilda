@@ -85,6 +85,7 @@ import tilda.migration.actions.TildaHelpersAddStart;
 import tilda.migration.actions.ViewCreate;
 import tilda.migration.actions.ViewDrop;
 import tilda.parsing.Parser;
+import tilda.parsing.parts.Cloner;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
@@ -187,6 +188,29 @@ public class Migrator
     public static void PrintDiscrepancies(Connection C, MigrationDataModel migrationData, String[] DependencySchemas)
     throws Exception
       {
+        JDBCHelper.startRehearsal();
+        for (MigrationScript S : migrationData.getMigrationScripts())
+          {
+            for (MigrationAction MA : S._Actions)
+              {
+                boolean included = S._S == null || TextUtil.findElement(DependencySchemas, S._S._Name, true, 0) == -1;
+                if (included == true)
+                  MA.process(C);
+              }
+          }
+        File F = new File("tilda.migration." + DateTimeUtil.printDateTimeSuperCompact(DateTimeUtil.nowLocal()) + ".sql");
+        PrintWriter out = new PrintWriter(new FileOutputStream(F, false));
+        Iterator<String> I = JDBCHelper.getRehearsalIterator();
+        while (I.hasNext())
+          {
+            String q = I.next();
+            if (q.trim().endsWith(";") == false)
+              q = q.trim()+";";
+            out.println(q);
+          }
+        out.close();
+        JDBCHelper.endRehearsal();
+
         LOG.info("");
         LOG.warn("There were " + migrationData.getActionCount() + " discrepencies found between the application's required data model and the database " + C.getPoolName() + ".");
         LOG.info("");
@@ -217,32 +241,7 @@ public class Migrator
           }
         LOG.info("");
         LOG.info("A total of " + counterApplied + " migration steps will be applied.");
-
-
-        JDBCHelper.startRehearsal();
-        for (MigrationScript S : migrationData.getMigrationScripts())
-          {
-            for (MigrationAction MA : S._Actions)
-              {
-                boolean included = S._S == null || TextUtil.findElement(DependencySchemas, S._S._Name, true, 0) == -1;
-                if (included == true)
-                  MA.process(C);
-              }
-          }
-        File F = new File("tilda.migration." + DateTimeUtil.printDateTimeSuperCompact(DateTimeUtil.nowLocal()) + ".sql");
-        PrintWriter out = new PrintWriter(new FileOutputStream(F, false));
-        Iterator<String> I = JDBCHelper.getRehearsalIterator();
-        while (I.hasNext())
-          {
-            String q = I.next();
-            if (q.trim().endsWith(";") == false)
-              q = q.trim()+";";
-            out.println(q);
-          }
-        out.close();
-        JDBCHelper.endRehearsal();
         LOG.info("    - Separately, all DDL queries related to migration have been saved to the file " + F.getCanonicalPath() + ".");
-
         List<MigrationDrops> drops = migrationData.getDropList();
         if (drops != null && drops.isEmpty() == false)
           {
@@ -664,27 +663,7 @@ public class Migrator
                   if (MR._Column != null) // renaming column
                     {
                       TableMeta TM = DBMeta.getTableMeta(MR._Schema._Name, MR._ObjectName);
-                      if (TM != null)
-                        {
-                          List<ColumnMeta> CMSrcs = new ArrayList<ColumnMeta>();
-                          for (String n : MR._OldNames)
-                            {
-                              ColumnMeta CMSrc = TM.getColumnMeta(n, false); // src column
-                              if (CMSrc != null)
-                                CMSrcs.add(CMSrc);
-                            }
-                          ColumnMeta CMDest = TM.getColumnMeta(MR._Column.getName(), true); // dst column
-                          // dst column must not exist and only one src column must be existing in the DB (i.e., if it doesn't, it's been migrated previously already).
-                          if (CMDest == null && CMSrcs.size() == 1)
-                            {
-                              // Add the migration action
-                              Actions.add(new TableColumnRename(MR._Column, CMSrcs.get(0)._NameOriginal));
-                              // Rename table to avoid double-creation later in this loop
-                              // i.e., the table didn't exist in this schema when the database was originally scanned (DBMeta).
-                              if (DBMeta.getSchemaMeta(MR._Object._ParentSchema._Name).renameTableColumn(DBMeta, TM, CMSrcs.get(0)._Name, MR._Column.getName()) == false)
-                                throw new Exception("An error occurred: Column '" + CMSrcs.get(0).getParentTable()._SchemaName + "." + CMSrcs.get(0).getParentTable()._TableName + "." + CMSrcs.get(0)._Name + "' is being renamed to '" + MR._ColumnName + "' but seems to already exist there even though we just tested that a second ago and found nothing!");
-                            }
-                        }
+                      handleColumnRename(DBMeta, Actions, MR, TM);
                     }
                   else // Only renaming an object
                     {
@@ -732,6 +711,32 @@ public class Migrator
             }
       }
 
+    protected static void handleColumnRename(DatabaseMeta DBMeta, List<MigrationAction> Actions, MigrationRename MR, TableMeta TM)
+    throws Exception
+      {
+        if (TM != null)
+          {
+            List<ColumnMeta> CMSrcs = new ArrayList<ColumnMeta>();
+            for (String n : MR._OldNames)
+              {
+                ColumnMeta CMSrc = TM.getColumnMeta(n, false); // src column
+                if (CMSrc != null)
+                  CMSrcs.add(CMSrc);
+              }
+            ColumnMeta CMDest = TM.getColumnMeta(MR._Column.getName(), true); // dst column
+            // dst column must not exist and only one src column must be existing in the DB (i.e., if it doesn't, it's been migrated previously already).
+            if (CMDest == null && CMSrcs.size() == 1)
+              {
+                // Add the migration action
+                Actions.add(new TableColumnRename(MR._Column, CMSrcs.get(0)._NameOriginal));
+                // Rename table to avoid double-creation later in this loop
+                // i.e., the table didn't exist in this schema when the database was originally scanned (DBMeta).
+                if (DBMeta.getSchemaMeta(MR._Object._ParentSchema._Name).renameTableColumn(DBMeta, TM, CMSrcs.get(0)._Name, MR._Column.getName()) == false)
+                  throw new Exception("An error occurred: Column '" + CMSrcs.get(0).getParentTable()._SchemaName + "." + CMSrcs.get(0).getParentTable()._TableName + "." + CMSrcs.get(0)._Name + "' is being renamed to '" + MR._ColumnName + "' but seems to already exist there even though we just tested that a second ago and found nothing!");
+              }
+          }
+      }
+
     protected static void handleMoves(Connection C, Schema S, DatabaseMeta DBMeta, List<MigrationAction> Actions)
     throws Exception
       {
@@ -743,18 +748,15 @@ public class Migrator
 
               for (Object obj : MM._Objects) // let's look at tables to transfer
                 {
-                  TableMeta TMSrc = DBMeta.getTableMeta(MM._Schema, obj._Name); // src table
-                  TableMeta TMDest = DBMeta.getTableMeta(S._Name, obj._Name); // dst table
-                  // src table must exist and dst table must not exist (i.e., if it doesn't, it's been migrated previously already).
-                  if (TMDest == null && TMSrc != null)
-                    {
-                      // Add the migration action
-                      Actions.add(new TableViewSchemaSet(obj, MM._Schema));
-                      // Transfer table to new schema to avoid double-creation later in this loop
-                      // i.e., the table didn't exist in this schema when the database was originally scanned (DBMeta).
-                      if (DBMeta.getSchemaMeta(obj._ParentSchema._Name).moveTableMetaFromOtherSchema(DBMeta, TMSrc) == false)
-                        throw new Exception("An error occurred: table '" + obj._Name + "' is being moved from schema '" + MM._Schema + "' to '" + obj._ParentSchema._Name + "' but seems to already exist there even though we just tested that a second ago and found nothing!");
-                    }
+                  handleTableMove(S, DBMeta, Actions, MM, obj);
+                  if (obj._CloneAs != null)
+                    for (Cloner cl : obj._CloneAs)
+                      {
+                        Object objCloned = S.getObject(cl._Name);
+                        if (objCloned == null)
+                         throw new Exception("Cannot locate cloned object '"+cl._Name+"' for migration move.");
+                        handleTableMove(S, DBMeta, Actions, MM, objCloned);                        
+                      }
                 }
               for (View v : MM._Views)
                 {
@@ -772,6 +774,23 @@ public class Migrator
                     }
                 }
             }
+      }
+
+    protected static void handleTableMove(Schema S, DatabaseMeta DBMeta, List<MigrationAction> Actions, MigrationMove MM, Object obj)
+    throws Exception
+      {
+        TableMeta TMSrc = DBMeta.getTableMeta(MM._Schema, obj._Name); // src table
+        TableMeta TMDest = DBMeta.getTableMeta(S._Name, obj._Name); // dst table
+        // src table must exist and dst table must not exist (i.e., if it doesn't, it's been migrated previously already).
+        if (TMDest == null && TMSrc != null)
+          {
+            // Add the migration action
+            Actions.add(new TableViewSchemaSet(obj, MM._Schema));
+            // Transfer table to new schema to avoid double-creation later in this loop
+            // i.e., the table didn't exist in this schema when the database was originally scanned (DBMeta).
+            if (DBMeta.getSchemaMeta(obj._ParentSchema._Name).moveTableMetaFromOtherSchema(DBMeta, TMSrc) == false)
+              throw new Exception("An error occurred: table '" + obj._Name + "' is being moved from schema '" + MM._Schema + "' to '" + obj._ParentSchema._Name + "' but seems to already exist there even though we just tested that a second ago and found nothing!");
+          }
       }
 
 

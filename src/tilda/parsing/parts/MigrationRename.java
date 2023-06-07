@@ -16,6 +16,8 @@
 
 package tilda.parsing.parts;
 
+import java.util.Arrays;
+
 import com.google.gson.annotations.SerializedName;
 
 import tilda.parsing.ParserSession;
@@ -35,22 +37,35 @@ public class MigrationRename
     public transient View   _View;
     public transient Column _Column;
 
+    public MigrationRename()
+      {
+
+      }
+
+    public MigrationRename(MigrationRename mr)
+      {
+        this._Object = mr._Object;
+        this._ViewName = mr._ViewName;
+        this._ColumnName = mr._ColumnName;
+        this._OldNames = mr._OldNames == null ? null : Arrays.copyOf(mr._OldNames, mr._OldNames.length);
+      }
+
     public boolean Validate(ParserSession PS, Schema Parent)
       {
         int Errs = PS.getErrorCount();
         _Schema = Parent;
 
         if (TextUtil.isNullOrEmpty(_ObjectName) == true && TextUtil.isNullOrEmpty(_ViewName) == true)
-          PS.AddError("A migration definition in schema '"+_Schema._Name+"' for renames is missing either an object or a view name: only one must be provided.");
+          PS.AddError("A migration definition in schema '" + _Schema._Name + "' for renames is missing either an object or a view name: only one must be provided.");
 
         if (TextUtil.isNullOrEmpty(_ObjectName) == false && TextUtil.isNullOrEmpty(_ViewName) == false)
-          PS.AddError("A migration definition in schema '"+_Schema._Name+"' for renames is including both an object and a view name: only one must be provided.");
-        
+          PS.AddError("A migration definition in schema '" + _Schema._Name + "' for renames is including both an object and a view name: only one must be provided.");
+
         if (TextUtil.isNullOrEmpty(_ViewName) == false && TextUtil.isNullOrEmpty(_ColumnName) == false)
-          PS.AddError("A migration definition in schema '"+_Schema._Name+"' for renames on view '"+_ViewName+"' is also defining a column name, which is not allowed.");
-        
+          PS.AddError("A migration definition in schema '" + _Schema._Name + "' for renames on view '" + _ViewName + "' is also defining a column name, which is not allowed.");
+
         if (TextUtil.isNullOrEmpty(_OldNames) == true)
-          PS.AddError("A migration definition in schema '"+_Schema._Name+"' for renames is not defining at least one value for 'oldNames'.");
+          PS.AddError("A migration definition in schema '" + _Schema._Name + "' for renames is not defining at least one value for 'oldNames'.");
 
         if (PS.getErrorCount() > Errs)
           return false;

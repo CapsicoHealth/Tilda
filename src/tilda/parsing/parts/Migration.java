@@ -39,8 +39,18 @@ public class Migration
         int Errs = PS.getErrorCount();
         _Parent = Parent;
 
-        for (MigrationRename M : _Renames)
-          M.Validate(PS, Parent);
+        for (int i = 0; i < _Renames.size(); ++i)
+          {
+            MigrationRename M = _Renames.get(i);
+            M.Validate(PS, Parent);
+            if (M._Object != null && M._Object._CloneAs != null)
+              for (Cloner cl : M._Object._CloneAs)
+                {
+                  MigrationRename M2 = new MigrationRename(M);
+                  M2._ObjectName = cl._Name;
+                  _Renames.add(M2);
+                }
+          }
 
         // DROP is currently being removed from feature list as per #58. Too complex with lots of issues.
 //        for (MigrationDrop M : _Drops)

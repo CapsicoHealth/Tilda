@@ -14,6 +14,7 @@ insert into TILDA.ZoneInfo ("id", "label", "value", "deactivatedTZ", "deactivate
          ,('AmNYC', 'New York City'      , 'America/New_York'   , null, null, current_timestamp, current_timestamp)
          ,('CaEa' , 'Canada Eastern'     , 'Canada/Eastern'     , null, null, current_timestamp, current_timestamp)
          ,('USCe' , 'US Central'         , 'US/Central'         , null, null, current_timestamp, current_timestamp)
+         ,('AmChi', 'Chicago'            , 'America/Chicago'    , null, null, current_timestamp, current_timestamp)
          ,('CaCe' , 'Canada Central'     , 'Canada/Central'     , null, null, current_timestamp, current_timestamp)
          ,('CaSa' , 'Canada Saskatchewan', 'Canada/Saskatchewan', null, null, current_timestamp, current_timestamp)
          ,('USAr' , 'US Arizona'         , 'US/Arizona'         , null, null, current_timestamp, current_timestamp)
