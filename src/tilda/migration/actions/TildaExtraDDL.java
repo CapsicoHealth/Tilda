@@ -16,12 +16,15 @@
 
 package tilda.migration.actions;
 
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import tilda.data.Maintenance_Data;
-import tilda.data.Maintenance_Factory;
+import tilda.data.MaintenanceLog_Data;
+import tilda.data.MaintenanceLog_Factory;
 import tilda.db.Connection;
+import tilda.db.JDBCHelper;
 import tilda.db.metadata.DatabaseMeta;
 import tilda.migration.MigrationAction;
 import tilda.parsing.parts.Schema;
@@ -33,52 +36,47 @@ public class TildaExtraDDL extends MigrationAction
 
     static final Logger LOG = LogManager.getLogger(TildaExtraDDL.class.getName());
 
-    public TildaExtraDDL(Schema S, String ResourceName)
+    public TildaExtraDDL(Schema S, String resourceName)
       throws Exception
       {
-        super(S._Name, null, false);
-        _ResourceName = FileUtil.getBasePathFromFileOrResource(S._ResourceName) + ResourceName;
-        _SchemaName = S._Name;
+        super(S._Name, FileUtil.getBasePathFromFileOrResource(S._ResourceName) + resourceName, false, MaintenanceLog_Data._actionExecute, MaintenanceLog_Data._objectTypeScript);
       }
-
-    protected String _ResourceName;
-    protected String _SchemaName;
-
+    
     public boolean process(Connection C)
     throws Exception
       {
-        LOG.debug(getDescription());
+        if (JDBCHelper.isRehearsal() == false)
+         LOG.debug(getDescription());
 
-        String Str = FileUtil.getFileOfResourceContents(_ResourceName);
-        if (TextUtil.isNullOrEmpty(Str) == true)
+        String statement = FileUtil.getFileOfResourceContents(_TableViewName);
+        if (TextUtil.isNullOrEmpty(statement) == true)
           return true;
 
-        if (C.executeDDL(_SchemaName, "*", Str) == false)
-          return false;
-
-        Maintenance_Data M = Maintenance_Factory.lookupByPrimaryKey("EXTERNAL_DDL", _ResourceName);
-        if (M.read(C) == false)
-          M = Maintenance_Factory.create("EXTERNAL_DDL", _ResourceName);
-        M.setValue(Str);
-        return M.write(C);
+        return C.executeDDL(_SchemaName, _TableViewName, statement);
       }
 
     @Override
     public String getDescription()
       {
-        return "Running an extra external DDL script '" + _ResourceName + "' on schema '" + _SchemaName + "'";
+        return "Running an extra external DDL script '" + _TableViewName + "' on schema '" + _SchemaName + "'";
       }
 
     @Override
     public boolean isNeeded(Connection C, DatabaseMeta DBMeta)
     throws Exception
       {
-        if (DBMeta.getTableMeta(Maintenance_Factory.SCHEMA_LABEL, Maintenance_Factory.TABLENAME_LABEL) == null)
+        // When run for the first time, some tables may not exist yet.
+        if (DBMeta.getTableMeta(MaintenanceLog_Factory.SCHEMA_LABEL, MaintenanceLog_Factory.TABLENAME_LABEL) == null)
           return true;
-        String Str = FileUtil.getFileOfResourceContents(_ResourceName);
-        if (TextUtil.isNullOrEmpty(Str) == true)
-          return false;
-        Maintenance_Data M = Maintenance_Factory.lookupByPrimaryKey("EXTERNAL_DDL", _ResourceName);
-        return M.read(C) == false || M.getValue().equals(Str.trim()) == false;
+        String statement = FileUtil.getFileOfResourceContents(_TableViewName);
+        if (TextUtil.isNullOrEmpty(statement) == true)
+          throw new Exception("Cannot find external DDL script '" + _TableViewName + "'.");
+        // Get the most recent log for executing the script
+        List<MaintenanceLog_Data> L = MaintenanceLog_Factory.lookupWhereSchemaObjectStart(C, _SchemaName, _TableViewName, 0, 1);
+        if (L.isEmpty() == true)
+          return true;
+        MaintenanceLog_Data M = L.get(0);
+        boolean same = M.getStatement().trim().equals(statement.trim());
+        return !same;
       }
   }

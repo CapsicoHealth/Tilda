@@ -4,6 +4,7 @@ package tilda.data._Tilda;
 import java.math.*;
 import java.util.*;
 import java.time.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.logging.log4j.*;
 
@@ -48,18 +49,19 @@ public class TILDA__REFILLPERF_Factory
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.schemaName of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>schemaName of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The name of the schema tracked</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.schemaName of type varchar(64)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.RefillPerf.schemaName</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The name of the schema tracked</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        SCHEMANAME    = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "schemaName"    , 0/*0*/, "The name of the schema tracked", null, null, null);
+     public final Type_StringPrimitive        SCHEMANAME    = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "schemaName"    , 0/*0*/, 64, "The name of the schema tracked", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -69,18 +71,19 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.objectName of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>objectName of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The name of the table/object tracked</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.objectName of type varchar(64)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.RefillPerf.objectName</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The name of the table/object tracked</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        OBJECTNAME    = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "objectName"    , 1/*1*/, "The name of the table/object tracked", null, null, null);
+     public final Type_StringPrimitive        OBJECTNAME    = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "objectName"    , 1/*1*/, 64, "The name of the table/object tracked", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -90,11 +93,12 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.startDateIncr of type LocalDate</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>startDateIncr of type LocalDate</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The date passed in for incremental refills.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.startDateIncr of type date</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.RefillPerf.startDateIncr</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The date passed in for incremental refills.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -110,18 +114,19 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.startTimeTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>startTimeTZ of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'startTime'.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.startTimeTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.RefillPerf.startTimeTZ</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'startTime'.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        STARTTIMETZ   = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "startTimeTZ"   , 3/*3*/, "Generated helper column to hold the time zone ID for 'startTime'.", null, null, null);
+     public final Type_StringPrimitive        STARTTIMETZ   = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "startTimeTZ"   , 3/*3*/, 5, "Generated helper column to hold the time zone ID for 'startTime'.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -131,11 +136,12 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.startTime of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>startTime of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the refill started.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.startTime of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.RefillPerf.startTime</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the refill started.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -151,18 +157,19 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.endTimeTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>endTimeTZ of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'endTime'.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.endTimeTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.RefillPerf.endTimeTZ</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'endTime'.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        ENDTIMETZ     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "endTimeTZ"     , 5/*5*/, "Generated helper column to hold the time zone ID for 'endTime'.", null, null, null);
+     public final Type_StringPrimitive        ENDTIMETZ     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "endTimeTZ"     , 5/*5*/, 5, "Generated helper column to hold the time zone ID for 'endTime'.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -172,11 +179,12 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.endTime of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>endTime of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the refill ended.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.endTime of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.RefillPerf.endTime</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the refill ended.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -192,11 +200,12 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeInsertSec of type long</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>timeInsertSec of type long</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in seconds, the inserts took.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeInsertSec of type bigint</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeInsertSec</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in seconds, the inserts took.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -212,11 +221,12 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeDeleteSec of type long</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>timeDeleteSec of type long</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in seconds, the deletes took.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeDeleteSec of type bigint</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeDeleteSec</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in seconds, the deletes took.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -232,11 +242,12 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeAnalyzeSec of type long</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>timeAnalyzeSec of type long</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in seconds, the analyze took.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeAnalyzeSec of type bigint</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeAnalyzeSec</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in seconds, the analyze took.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -252,11 +263,12 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeTotalSec of type long</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>timeTotalSec of type long</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in seconds, the analyze took.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeTotalSec of type bigint</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeTotalSec</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in seconds, the analyze took.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -279,11 +291,12 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.insertCount of type long</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>insertCount of type long</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The count of inserted rows.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.insertCount of type bigint</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.RefillPerf.insertCount</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The count of inserted rows.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -299,11 +312,12 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.deleteCount of type long</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>deleteCount of type long</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The count of rows deleted.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.deleteCount of type bigint</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.RefillPerf.deleteCount</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The count of rows deleted.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -319,11 +333,12 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>created of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.RefillPerf)</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.RefillPerf.created</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.RefillPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -346,11 +361,12 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>lastUpdated of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.RefillPerf)</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.RefillPerf.lastUpdated</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.RefillPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -373,11 +389,12 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>deleted of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.RefillPerf)</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.RefillPerf.deleted</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.RefillPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -396,18 +413,15 @@ This is the column definition for:<BR>
 
    public static final ColumnDefinition[] COLUMNS_FIRST_IDENTITY = COLUMNS_PRIMARY;
 
-   private static Boolean  __INITIALIZED = false;
+   // Short(short) is deprecated, but we do want a new instance here to avoid synchronizing over the same cached instance from valueOf.
+   // @SuppressWarnings("deprecation")
+   private static final AtomicBoolean __INITIALIZED = new AtomicBoolean(false);
    protected static void initObject(Connection C) throws Exception
      {
-       if (__INITIALIZED == false)
-        synchronized(__INITIALIZED)
-         {
-           if (__INITIALIZED == false)
-            {
-              tilda.data.RefillPerf_Factory.init(C);
-              __INITIALIZED = true;
-            }
-         }
+       if (__INITIALIZED.compareAndSet(false, true))
+        {
+           tilda.data.RefillPerf_Factory.init(C);
+        }
      }
    private static class RecordProcessorInternal implements tilda.db.processors.RecordProcessor
      {
@@ -1042,7 +1056,7 @@ The results are ordered by: schemaName asc, objectName asc, startTime asc
 
         JSONUtil.print(out, "objectName", ++i==0, Obj.getObjectName());
 
-      if (Obj.isStartDateIncrNull() == false && Obj.getStartDateIncr() != null)
+      if (Obj.isNullStartDateIncr() == false && Obj.getStartDateIncr() != null)
         JSONUtil.print(out, "startDateIncr", ++i==0, Obj.getStartDateIncr());
 
         JSONUtil.print(out, "startTimeTZ", ++i==0, Obj.getStartTimeTZ());
@@ -1069,7 +1083,7 @@ The results are ordered by: schemaName asc, objectName asc, startTime asc
 
         JSONUtil.print(out, "lastUpdated", ++i==0, Obj.getLastUpdated());
 
-      if (Obj.isDeletedNull() == false && Obj.getDeleted() != null)
+      if (Obj.isNullDeleted() == false && Obj.getDeleted() != null)
         JSONUtil.print(out, "deleted", ++i==0, Obj.getDeleted());
 
         if (fullObject == true)

@@ -38,8 +38,8 @@ public class Query
     protected static final Logger LOG = LogManager.getLogger(Query.class.getName());
 
     /*@formatter:off*/
-    @SerializedName("db"    ) public String   _DB    ;
-    @SerializedName("clause") public String   _Clause;
+    @SerializedName("db"    ) public final String   _DB    ;
+    @SerializedName("clause") public       String   _Clause;
     /*@formatter:on*/
 
     transient public Base         _ParentObject;
@@ -59,15 +59,19 @@ public class Query
       }
 
     public transient List<Attribute> _Attributes = new ArrayList<Attribute>();
+    public transient String          _ClauseStatic;
     public transient String          _ClauseDynamic;
 
     public Query()
       {
+        _DB = "*";
+        _Clause = null;
       }
 
-    public Query(String _SubWhere)
+    public Query(String subWhere)
       {
-        _Clause = _SubWhere;
+        _DB = "*";
+        _Clause = subWhere;
       }
 
 
@@ -115,7 +119,7 @@ public class Query
     private static final Pattern _ArrayPattern    = Pattern.compile("\\?\\[([a-z_A-Z]\\w*)?\\]");
     private static final Pattern _ComplexColRegex = Pattern.compile("\\b([a-zA-Z]\\w+(\\.[a-zA-Z]\\w+)+)(?!\\()\\b");
 
-    public boolean Validate(ParserSession PS, Base ParentObject, String OwnerObjName)
+    public boolean validate(ParserSession PS, Base ParentObject, String OwnerObjName)
       {
         int Errs = PS.getErrorCount();
         _ParentObject = ParentObject;
@@ -238,7 +242,7 @@ public class Query
             NewClauseDynamic.append(Sub.substring(clauseStrIndex == 0 ? 1 : 0, Sub.length() - 1));
           }
 
-        _Clause = NewClauseStatic.toString();
+        _ClauseStatic = NewClauseStatic.toString();
         _ClauseDynamic = NewClauseDynamic.toString();
 
         if (_ClauseDynamic.endsWith(".append(") == true)
@@ -246,8 +250,8 @@ public class Query
             _ClauseDynamic += "\"";
           }
 
-        if (TextUtil.isNullOrEmpty(_DB) == true)
-          _DB = "*";
+//        if (TextUtil.isNullOrEmpty(_DB) == true)
+//          _DB = "*";
 
         if (_DB.equals("*") == false)
           {

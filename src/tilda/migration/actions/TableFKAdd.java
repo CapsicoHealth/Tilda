@@ -19,6 +19,7 @@ package tilda.migration.actions;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.data.MaintenanceLog_Data;
 import tilda.db.Connection;
 import tilda.migration.MigrationAction;
 import tilda.parsing.parts.ForeignKey;
@@ -29,7 +30,7 @@ public class TableFKAdd extends MigrationAction
 
     public TableFKAdd(ForeignKey FK)
       {
-        super(FK._ParentObject._ParentSchema._Name, FK._ParentObject._Name, false);
+        super(FK._ParentObject._ParentSchema._Name, FK._ParentObject._Name, false, MaintenanceLog_Data._actionCreate, MaintenanceLog_Data._objectTypeForeignKey);
         _FK = FK;
       }
 

@@ -256,14 +256,14 @@ public class DBTest
         if (D.write(C) == false)
           throw new Exception("Bad stuff!");
 
-        D.setA1Null();
-        D.setA2Null();
+        D.setNullA1();
+        D.setNullA2();
         if (D.write(C) == false)
           throw new Exception("Bad stuff!");
 
         ZonedDateTime Now = DateTimeUtil.nowLocal();
         D.setA9(Now);
-        LOG.debug("A9 null?: " + D.isA9Null());
+        LOG.debug("A9 null?: " + D.isNullA9());
         List<ZonedDateTime> ZDTs = new ArrayList<ZonedDateTime>();
         ZDTs.add(DateTimeUtil.newUTC(2018, 1, 1, 0, 0, 0, 0));
         ZDTs.add(DateTimeUtil.newUTC(2018, 2, 1, 0, 0, 0, 0));
@@ -277,7 +277,7 @@ public class DBTest
 
         LocalDate Today = DateTimeUtil.nowLocalDate();
         D.setA9c(Today);
-        LOG.debug("A9c null?: " + D.isA9cNull());
+        LOG.debug("A9c null?: " + D.isNullA9c());
         List<LocalDate> LDs = new ArrayList<LocalDate>();
         LDs.add(DateTimeUtil.newYMD(2018, 4, 1));
         LDs.add(DateTimeUtil.newYMD(2018, 5, 1));
@@ -297,10 +297,10 @@ public class DBTest
         LOG.debug("A9c: " + D.getA9c());
         LOG.debug("A9d: " + TextUtil.print(D.getA9d()));
 
-        D.setA9Null();
-        D.setA9bNull();
-        D.setA9cNull();
-        D.setA9dNull();
+        D.setNullA9();
+        D.setNullA9b();
+        D.setNullA9c();
+        D.setNullA9d();
         if (D.write(C) == false)
           throw new Exception("Bad stuff!");
 
@@ -328,8 +328,8 @@ public class DBTest
         if (D.write(C) == false)
           throw new Exception("Bad stuff!");
               
-        D.setA12Null();
-        D.setA12bNull();
+        D.setNullA12();
+        D.setNullA12b();
         if (D.write(C) == false)
           throw new Exception("Bad stuff!");      
         
@@ -351,7 +351,7 @@ public class DBTest
         if (D.write(C) == false)
           throw new Exception("Bad stuff!");
         
-        D.setA13Null();
+        D.setNullA13();
         LOG.debug("A13: " + D.getA13());
         if (D.write(C) == false)
           throw new Exception("Bad stuff!");

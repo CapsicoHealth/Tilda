@@ -51,6 +51,7 @@ import tilda.db.metadata.DatabaseMeta;
 import tilda.db.metadata.MetaPerformance;
 import tilda.enums.TransactionType;
 import tilda.generation.interfaces.CodeGenSql;
+import tilda.migration.MigrationScript;
 import tilda.migration.Migrator;
 import tilda.parsing.Loader;
 import tilda.parsing.ParserSession;
@@ -84,6 +85,7 @@ public class ConnectionPool
     protected static Map<String, String>          _EmailConfigDetails  = null;
     protected static boolean                      _InitDebug           = false;
     protected static boolean                      _SkipValidation      = false;
+    protected static boolean                      _SkipTildaLoading    = false;
     protected static String[]                     _DependencySchemas   = {};
 
     public static void autoInit()
@@ -131,11 +133,11 @@ public class ConnectionPool
                       }
                     LOG.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                     LOG.info("\n");
-//                    LOG.info("Press 'y' followed by enter to continue.");
-//                    String answer = FileUtil.readlnFromStdIn(false);
-//                    if (answer.toLowerCase().equals("y") == false)
-//                      throw new Exception("User asked to exit.");
-//                    LOG.info("OK! Starting the database analysis...");
+                    // LOG.info("Press 'y' followed by enter to continue.");
+                    // String answer = FileUtil.readlnFromStdIn(false);
+                    // if (answer.toLowerCase().equals("y") == false)
+                    // throw new Exception("User asked to exit.");
+                    // LOG.info("OK! Starting the database analysis...");
                     LOG.info("\n");
                     LOG.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                     LOG.info("\n");
@@ -145,68 +147,68 @@ public class ConnectionPool
                 List<Schema> TildaList = null;
                 Iterator<String> connectionIds = getUniqueDataSourceIds().keySet().iterator();
                 List<String> connectionUrls = new ArrayList<>(getUniqueDataSourceIds().values());
-                while (connectionIds.hasNext())
-                  {
-                    String connectionId = connectionIds.next();
-                    conMain = get(connectionId);
-                    if (TildaList == null)
-                      TildaList = loadTildaResources(conMain);
-                    if (conMain.isSuperUser() == true)
-                      {
-                        LOG.warn("###################################################################################################################");
-                        LOG.warn("###                                                                                                             ###");
-                        LOG.warn("###  W A R N I N G :   T H I S   C O N N E C T I O N   U S E S   A   S U P E R U S E R   A C C O U N T   ! ! !  ###");
-                        LOG.warn("###  =========================================================================================================  ###");
-                        LOG.warn("###                                                                                                             ###");
-                        LOG.warn("###  _|    _|    _|    _|_|_|       _|         _|_|    _|      _|    _|_|       _|_|_|  _|_|    _|_|_|    _|    ###");
-                        LOG.warn("###  _|_|  _|  _|  _|    _|       _|  _|     _|      _|  _|  _|  _|  _|  _|       _|    _|  _|  _|      _|  _|  ###");
-                        LOG.warn("###  _|  _|_|  _|  _|    _|       _|_|_|     _|  _|  _|  _|  _|  _|  _|  _|       _|    _|  _|  _|_|    _|_|_|  ###");
-                        LOG.warn("###  _|    _|  _|  _|    _|       _|  _|     _|  _|  _|  _|  _|  _|  _|  _|       _|    _|  _|  _|      _|  _|  ###");
-                        LOG.warn("###  _|    _|    _|      _|       _|  _|       _|_|    _|      _|    _|_|       _|_|_|  _|_|    _|_|_|  _|  _|  ###");
-                        LOG.warn("###                                                                                                             ###");
-                        LOG.warn("###################################################################################################################");
-                      }
+                if (_SkipTildaLoading == false)
+                  while (connectionIds.hasNext())
+                    {
+                      String connectionId = connectionIds.next();
+                      conMain = get(connectionId);
+                      if (TildaList == null)
+                        TildaList = loadTildaResources(conMain);
+                      if (conMain.isSuperUser() == true)
+                        {
+                          LOG.warn("###################################################################################################################");
+                          LOG.warn("###                                                                                                             ###");
+                          LOG.warn("###  W A R N I N G :   T H I S   C O N N E C T I O N   U S E S   A   S U P E R U S E R   A C C O U N T   ! ! !  ###");
+                          LOG.warn("###  =========================================================================================================  ###");
+                          LOG.warn("###                                                                                                             ###");
+                          LOG.warn("###  _|    _|    _|    _|_|_|       _|         _|_|    _|      _|    _|_|       _|_|_|  _|_|    _|_|_|    _|    ###");
+                          LOG.warn("###  _|_|  _|  _|  _|    _|       _|  _|     _|      _|  _|  _|  _|  _|  _|       _|    _|  _|  _|      _|  _|  ###");
+                          LOG.warn("###  _|  _|_|  _|  _|    _|       _|_|_|     _|  _|  _|  _|  _|  _|  _|  _|       _|    _|  _|  _|_|    _|_|_|  ###");
+                          LOG.warn("###  _|    _|  _|  _|    _|       _|  _|     _|  _|  _|  _|  _|  _|  _|  _|       _|    _|  _|  _|      _|  _|  ###");
+                          LOG.warn("###  _|    _|    _|      _|       _|  _|       _|_|    _|      _|    _|_|       _|_|_|  _|_|    _|_|_|  _|  _|  ###");
+                          LOG.warn("###                                                                                                             ###");
+                          LOG.warn("###################################################################################################################");
+                        }
 
-                    if (Migrate.isMigrationActive() == true || _SkipValidation == false)
-                      {
-                        DatabaseMeta DBMeta = loadDatabaseMetaData(conMain, TildaList);
-                        Migrator.MigrateDatabase(conMain, Migrate.isMigrationActive() == false, TildaList, DBMeta, first, connectionUrls, _DependencySchemas);
-                      }
-                    if (/* first == true && */ Migrate.isMigrationActive() == false)
-                      {
-                        List<String> performanceMessages = new ArrayList<String>();
-                        LOG.info("Initializing Schemas for " + conMain._Url);
-                        long T0 = System.nanoTime();
-                        for (Schema S : TildaList)
-                          {
-                            LOG.info("  Initializing Schema " + S.getFullName());
-                            long T1 = System.nanoTime();
-                            Method M = Class.forName(tilda.generation.java8.Helper.getSupportClassFullName(S)).getMethod("initSchema", Connection.class);
-                            M.invoke(null, conMain);
-                            if (_Schemas.get(S._Name.toUpperCase()) == null)
-                              _Schemas.put(S._Name.toUpperCase(), S);
-                            performanceMessages.add("      - " + S.getFullName() +": "+DurationUtil.printDurationMilliSeconds(System.nanoTime()-T1)+".");
-                          }
-                        if (performanceMessages.isEmpty() == false)
-                          {
-                            LOG.info("  Initialized "+TildaList.size()+" Schemas in " + DurationUtil.printDurationMilliSeconds(System.nanoTime()-T0)+".");
-                            for (String msg : performanceMessages)
-                             LOG.info(msg);
-                          }
-                      }
-                    first = false;
-                    if (Migrate.isTesting() == false)
-                      conMain.commit();
-                    else
-                      LOG.warn("\n"
-                              +"*******************************************************************************\n"
-                              +"**   NO COMMIT SINCE WE ARE IN TESTING MODE!\n"
-                              +"*******************************************************************************\n"
-                              );
-                    conMain.close();
-                    conMain = null;
-                    LOG.info("\n\n\n\n\n\n\n");
-                  }
+                      if (Migrate.isMigrationActive() == true || _SkipValidation == false)
+                        {
+                          DatabaseMeta DBMeta = loadDatabaseMetaData(conMain, TildaList);
+                          Migrator.MigrateDatabase(conMain, Migrate.isMigrationActive() == false, TildaList, DBMeta, first, connectionUrls, _DependencySchemas);
+                        }
+                      if (/* first == true && */ Migrate.isMigrationActive() == false)
+                        {
+                          List<String> performanceMessages = new ArrayList<String>();
+                          LOG.info("Initializing Schemas for " + conMain._Url);
+                          long T0 = System.nanoTime();
+                          for (Schema S : TildaList)
+                            {
+                              LOG.info("  Initializing Schema " + S.getFullName());
+                              long T1 = System.nanoTime();
+                              Method M = Class.forName(tilda.generation.java8.Helper.getSupportClassFullName(S)).getMethod("initSchema", Connection.class);
+                              M.invoke(null, conMain);
+                              if (_Schemas.get(S._Name.toUpperCase()) == null)
+                                _Schemas.put(S._Name.toUpperCase(), S);
+                              performanceMessages.add("      - " + S.getFullName() + ": " + DurationUtil.printDurationMilliSeconds(System.nanoTime() - T1) + ".");
+                            }
+                          if (performanceMessages.isEmpty() == false)
+                            {
+                              LOG.info("  Initialized " + TildaList.size() + " Schemas in " + DurationUtil.printDurationMilliSeconds(System.nanoTime() - T0) + ".");
+                              for (String msg : performanceMessages)
+                                LOG.info(msg);
+                            }
+                        }
+                      first = false;
+                      if (Migrate.isTesting() == false)
+                        conMain.commit();
+                      else
+                        LOG.warn("\n"
+                        + "*******************************************************************************\n"
+                        + "**   NO COMMIT SINCE WE ARE IN TESTING MODE!\n"
+                        + "*******************************************************************************\n");
+                      conMain.close();
+                      conMain = null;
+                      LOG.info("\n\n\n\n\n\n\n");
+                    }
               }
           }
         catch (Throwable T)
@@ -285,6 +287,7 @@ public class ConnectionPool
               {
                 _InitDebug = Defs._InitDebug;
                 _SkipValidation = Defs._SkipValidation;
+                _SkipTildaLoading = Defs._SKIP_TILDA_LOADING;
                 _DependencySchemas = Defs._DependencySchemas;
                 for (Conn Co : Defs._Conns)
                   {
@@ -405,19 +408,19 @@ public class ConnectionPool
         DatabaseMeta DBMeta = new DatabaseMeta();
         LOG.info("Loading database metadata for found Schemas from " + C.getPoolName() + ".");
         long TS = System.nanoTime();
-//      Loading ALL schemas from the DB can be really a lot, especially in development environment where some orgs may
-//      have multiple sandbox schemas and other dev artifacts. So let's focus on loading what's defined in TILDA files.
-//      DBMeta.load(C, null);
+        // Loading ALL schemas from the DB can be really a lot, especially in development environment where some orgs may
+        // have multiple sandbox schemas and other dev artifacts. So let's focus on loading what's defined in TILDA files.
+        // DBMeta.load(C, null);
         for (Schema S : TildaList)
           {
             DBMeta.load(C, S._Name);
           }
         MetaPerformance.print();
-        LOG.debug("--> Metadata fetching took "+DurationUtil.printDurationMilliSeconds(System.nanoTime()-TS));
+        LOG.debug("--> Metadata fetching took " + DurationUtil.printDurationMilliSeconds(System.nanoTime() - TS));
         return DBMeta;
       }
-    
-    
+
+
     private static List<Schema> loadTildaResources(Connection C)
     throws Exception
       {
@@ -623,8 +626,9 @@ public class ConnectionPool
     /**
      * returns a list of connection IDs based on a command-line type of parameter containing a
      * comma-separated list of connextion IDs, of one (and only one) of the following values:
-     *   - ALL: returns all the connections active in the system
-     *   - ALL_TENANTS: returns the connections for all tenants in the system
+     * - ALL: returns all the connections active in the system
+     * - ALL_TENANTS: returns the connections for all tenants in the system
+     * 
      * @param cmdLineParam
      * @return
      */
@@ -633,11 +637,16 @@ public class ConnectionPool
         List<String> connectionIds = new ArrayList<>(Arrays.asList(cmdLineParam.split("\\s*,\\s*")));
 
         if ("ALL".equals(connectionIds.get(0)))
-         return getAllDataSourceIds().keySet().iterator();
-        
+          return getAllDataSourceIds().keySet().iterator();
+
         if ("ALL_TENANTS".equals(connectionIds.get(0)))
-         return getAllTenantDataSourceIds().keySet().iterator();
-        
+          return getAllTenantDataSourceIds().keySet().iterator();
+
         return connectionIds.iterator();
+      }
+
+    public static void registerSchema(Schema S)
+      {
+        _Schemas.put(S._Name.toUpperCase(), S);
       }
   }

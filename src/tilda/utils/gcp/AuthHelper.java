@@ -16,7 +16,6 @@ import com.google.api.services.healthcare.v1.CloudHealthcareScopes;
 import com.google.auth.oauth2.GoogleCredentials;
 
 import tilda.utils.FileUtil;
-import tilda.utils.TextUtil;
 
 public class AuthHelper
   {

@@ -17,6 +17,7 @@
 package tilda.utils;
 
 import java.util.List;
+import java.util.Random;
 
 
 public class RandomUtil
@@ -48,18 +49,26 @@ public class RandomUtil
     /**
      * picks a random number and returns true if that is < Odds, or false otherwise. So,
      * calling with 0.75 means a 75% chance true Vs. false
+     * 
      * @param Odds a number between 0 and 1
      * @return
      */
     public static boolean pick(double Odds)
-     {
-       return Math.random() < Odds;
-     }
-    
-    
+      {
+        return Math.random() < Odds;
+      }
+
+
     public static double pick(double Min, double Max)
       {
         return Math.random() * (Max - Min) + Min;
       }
-    
+
+    protected static Random _R = new Random();
+
+    public static short pickNonZeroShort()
+      {
+        short s = (short) _R.nextInt(1 << 16);
+        return s == 0 ? SystemValues.EVIL_VALUE : s;
+      }
   }

@@ -23,47 +23,67 @@ import java.util.Calendar;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.Import;
+import tilda.Importer;
 import tilda.db.*;
 
 /**
-This is the application class <B>Data_ZONEINFO</B> mapped to the table <B>TILDA.ZONEINFO</B>.
-@see tilda.data._Tilda.TILDA__ZONEINFO
-*/
+ * This is the application class <B>Data_ZONEINFO</B> mapped to the table <B>TILDA.ZONEINFO</B>.
+ * 
+ * @see tilda.data._Tilda.TILDA__ZONEINFO
+ */
 public class ZoneInfo_Factory extends tilda.data._Tilda.TILDA__ZONEINFO_Factory
- {
-   protected static final Logger LOG = LogManager.getLogger(ZoneInfo_Factory.class.getName());
+  {
+    protected static final Logger LOG = LogManager.getLogger(ZoneInfo_Factory.class.getName());
 
-   public ZoneInfo_Factory() { }
+    public ZoneInfo_Factory()
+      {
+      }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Implement your customizations, if any, below.
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Implement your customizations, if any, below.
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-   public static void init(Connection C) throws Exception
-     {
-       for (ZoneInfo_Data info : __ENUMERATIONS_BY_ID.values())
-        {
-          ZonedDateTime ZDT = ZonedDateTime.of(2015, 6, 21, 11, 0, 0, 0, ZoneId.of(info.getValue()));
-          if (ZDT.getZone().getId().equals(info.getValue()) == false)
-           {
-             LOG.info("ZoneInfo id="+info.getId()+" and value="+info.getValue()+" has an alternate value "+ZDT.getZone().getId());
-             __ENUMERATIONS_BY_VALUE.put(ZDT.getZone().getId(), info);
-           }
-          ZDT = ZonedDateTime.of(2014, 12, 22, 11, 0, 0, 0, ZoneId.of(info.getValue()));
-          if (ZDT.getZone().getId().equals(info.getValue()) == false)
-           {
-             LOG.info("ZoneInfo id="+info.getId()+" and value="+info.getValue()+" has an alternate value "+ZDT.getZone().getId());
-             __ENUMERATIONS_BY_VALUE.put(ZDT.getZone().getId(), info);
-           }
-        }
-     }
-   
-   
-   public static Calendar nowAsCalendar(String ZoneInfoId)
-     {
-       ZoneInfo_Data ZoneInfo = ZoneInfo_Factory.getEnumerationById(ZoneInfoId);
-       return Calendar.getInstance(java.util.TimeZone.getTimeZone(ZoneInfo.getValue()));
-     }
-   
- }
+    public static void init(Connection C)
+    throws Exception
+      {
+        for (ZoneInfo_Data info : __ENUMERATIONS_BY_ID.values())
+          {
+            ZonedDateTime ZDT = ZonedDateTime.of(2015, 6, 21, 11, 0, 0, 0, ZoneId.of(info.getValue()));
+            if (ZDT.getZone().getId().equals(info.getValue()) == false)
+              {
+                LOG.info("ZoneInfo id=" + info.getId() + " and value=" + info.getValue() + " has an alternate value " + ZDT.getZone().getId());
+                __ENUMERATIONS_BY_VALUE.put(ZDT.getZone().getId(), info);
+              }
+            ZDT = ZonedDateTime.of(2014, 12, 22, 11, 0, 0, 0, ZoneId.of(info.getValue()));
+            if (ZDT.getZone().getId().equals(info.getValue()) == false)
+              {
+                LOG.info("ZoneInfo id=" + info.getId() + " and value=" + info.getValue() + " has an alternate value " + ZDT.getZone().getId());
+                __ENUMERATIONS_BY_VALUE.put(ZDT.getZone().getId(), info);
+              }
+          }
+      }
+
+
+    public static Calendar nowAsCalendar(String ZoneInfoId)
+      {
+        ZoneInfo_Data ZoneInfo = ZoneInfo_Factory.getEnumerationById(ZoneInfoId);
+        return Calendar.getInstance(java.util.TimeZone.getTimeZone(ZoneInfo.getValue()));
+      }
+
+    /**
+     * This method imports the init data from "tilda/data/_tilda.Tilda.sampledata.zones.json" to populate
+     * the table and reloads the mappings in memory.
+     * @param C
+     * @throws Exception
+     */
+    public static void reloadInitData(Connection C)
+    throws Exception
+      {
+        Importer I = Import.getFileImporter(null, "tilda/data/_tilda.Tilda.sampledata.zones.json");
+        Import.process(I, C);
+        initMappings(C);
+      }
+
+  }

@@ -203,6 +203,8 @@ public class BigQuery extends CommonStoreImpl
               return "stddev";
             case VAR:
               return "variance";
+            case STRING:
+              return "string_agg";
             case ARRAY:
               return "array_agg";
             case ARRAYCAT:
@@ -585,6 +587,19 @@ public class BigQuery extends CommonStoreImpl
 
     @Override
     public boolean supportsSuperMetaDataQueries()
+      {
+        return false;
+      }
+
+    @Override
+    public boolean supportsReorg()
+      {
+        return false;
+      }
+
+    @Override
+    public boolean reorgTable(Connection con, String schemaName, String tableName, String clusterIndexName, boolean verbose, boolean full)
+    throws Exception
       {
         return false;
       }

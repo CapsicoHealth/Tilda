@@ -23,9 +23,10 @@
 -----------------------------------------------------------------------------------------------------------------
 create schema IF NOT EXISTS TILDA;
 
-SET search_path TO TILDA;
+SET search_path TO TILDA, public;
 
 CREATE EXTENSION if not exists pg_trgm;
+
 
 -----------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------
@@ -365,7 +366,6 @@ COMMENT ON FUNCTION TILDA.YearsBetween(timestamptz, timestamptz) IS 'Computes th
 
 
 
-
 -----------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------
 -- TILDA aggregates
@@ -377,15 +377,64 @@ CREATE OR REPLACE FUNCTION TILDA.first_agg (anyelement, anyelement)
 RETURNS anyelement LANGUAGE SQL COST 1 IMMUTABLE STRICT AS $$
         SELECT $1;
 $$;
-
+-- There are some issues across PG 11 through 15 (which Tilda currently supports) with aggregates using anyelement vs specific types. So this is a bit ugly but works.
 DO $$ BEGIN
-if not exists (SELECT 1 FROM pg_aggregate WHERE aggfnoid::TEXT = 'public.first') THEN
-CREATE AGGREGATE public.FIRST (
-        sfunc    = TILDA.first_agg,
-        basetype = anyelement,
-        stype    = anyelement
-);
-END IF;
+	if not exists (select p.oid::regprocedure from pg_proc p join pg_namespace n on p.pronamespace = n.oid  where p.oid::regprocedure::text='first(anyelement)' and n.nspname = 'public') THEN
+		CREATE AGGREGATE public.FIRST (
+		   sfunc    = TILDA.first_agg,
+		   basetype = anyelement,
+		   stype    = anyelement
+		);
+	END IF;
+    if not exists (select p.oid::regprocedure from pg_proc p join pg_namespace n on p.pronamespace = n.oid  where p.oid::regprocedure::text='first(real)' and n.nspname = 'public') THEN
+        CREATE AGGREGATE public.FIRST (
+           sfunc    = TILDA.first_agg,
+           basetype = real,
+           stype    = real
+        );
+    END IF;
+    if not exists (select p.oid::regprocedure from pg_proc p join pg_namespace n on p.pronamespace = n.oid  where p.oid::regprocedure::text='first(double precision)' and n.nspname = 'public') THEN
+        CREATE AGGREGATE public.FIRST (
+           sfunc    = TILDA.first_agg,
+           basetype = double precision,
+           stype    = double precision
+        );
+    END IF;
+    if not exists (select p.oid::regprocedure from pg_proc p join pg_namespace n on p.pronamespace = n.oid  where p.oid::regprocedure::text='first(text)' and n.nspname = 'public') THEN
+        CREATE AGGREGATE public.FIRST (
+           sfunc    = TILDA.first_agg,
+           basetype = text,
+           stype    = text
+        );
+    END IF;
+    if not exists (select p.oid::regprocedure from pg_proc p join pg_namespace n on p.pronamespace = n.oid  where p.oid::regprocedure::text='first(integer)' and n.nspname = 'public') THEN
+        CREATE AGGREGATE public.FIRST (
+           sfunc    = TILDA.first_agg,
+           basetype = integer,
+           stype    = integer
+        );
+    END IF;
+    if not exists (select p.oid::regprocedure from pg_proc p join pg_namespace n on p.pronamespace = n.oid  where p.oid::regprocedure::text='first(bigint)' and n.nspname = 'public') THEN
+        CREATE AGGREGATE public.FIRST (
+           sfunc    = TILDA.first_agg,
+           basetype = bigint,
+           stype    = bigint
+        );
+    END IF;
+    if not exists (select p.oid::regprocedure from pg_proc p join pg_namespace n on p.pronamespace = n.oid  where p.oid::regprocedure::text='first(date)' and n.nspname = 'public') THEN
+        CREATE AGGREGATE public.FIRST (
+           sfunc    = TILDA.first_agg,
+           basetype = date,
+           stype    = date
+        );
+    END IF;
+    if not exists (select p.oid::regprocedure from pg_proc p join pg_namespace n on p.pronamespace = n.oid  where p.oid::regprocedure::text='first(timestamp with time zone)' and n.nspname = 'public') THEN
+        CREATE AGGREGATE public.FIRST (
+           sfunc    = TILDA.first_agg,
+           basetype = timestamptz,
+           stype    = timestamptz
+        );
+    END IF;
 END $$;
 
 ---------------------
@@ -394,14 +443,64 @@ CREATE OR REPLACE FUNCTION TILDA.last_agg ( anyelement, anyelement )
 RETURNS anyelement LANGUAGE SQL COST 1 IMMUTABLE STRICT AS $$
         SELECT $2;
 $$;
+-- There are some issues across PG 11 through 15 (which Tilda currently supports) with aggregates using anyelement vs specific types. So this is a bit ugly but works.
 DO $$ BEGIN
-if not exists (SELECT 1 FROM pg_aggregate WHERE lower(aggfnoid::text) = 'public.last' or aggfnoid::TEXT = 'last') THEN
-CREATE AGGREGATE public.LAST (
-        sfunc    = TILDA.last_agg,
-        basetype = anyelement,
-        stype    = anyelement
-);
-END IF;
+    if not exists (select p.oid::regprocedure from pg_proc p join pg_namespace n on p.pronamespace = n.oid  where p.oid::regprocedure::text='last(anyelement)' and n.nspname = 'public') THEN
+        CREATE AGGREGATE public.LAST (
+           sfunc    = TILDA.last_agg,
+           basetype = anyelement,
+           stype    = anyelement
+        );
+    END IF;
+    if not exists (select p.oid::regprocedure from pg_proc p join pg_namespace n on p.pronamespace = n.oid  where p.oid::regprocedure::text='last(real)' and n.nspname = 'public') THEN
+        CREATE AGGREGATE public.LAST (
+           sfunc    = TILDA.last_agg,
+           basetype = real,
+           stype    = real
+        );
+    END IF;
+    if not exists (select p.oid::regprocedure from pg_proc p join pg_namespace n on p.pronamespace = n.oid  where p.oid::regprocedure::text='last(double precision)' and n.nspname = 'public') THEN
+        CREATE AGGREGATE public.LAST (
+           sfunc    = TILDA.last_agg,
+           basetype = double precision,
+           stype    = double precision
+        );
+    END IF;
+    if not exists (select p.oid::regprocedure from pg_proc p join pg_namespace n on p.pronamespace = n.oid  where p.oid::regprocedure::text='last(text)' and n.nspname = 'public') THEN
+        CREATE AGGREGATE public.LAST (
+           sfunc    = TILDA.last_agg,
+           basetype = text,
+           stype    = text
+        );
+    END IF;
+    if not exists (select p.oid::regprocedure from pg_proc p join pg_namespace n on p.pronamespace = n.oid  where p.oid::regprocedure::text='last(integer)' and n.nspname = 'public') THEN
+        CREATE AGGREGATE public.LAST (
+           sfunc    = TILDA.last_agg,
+           basetype = integer,
+           stype    = integer
+        );
+    END IF;
+    if not exists (select p.oid::regprocedure from pg_proc p join pg_namespace n on p.pronamespace = n.oid  where p.oid::regprocedure::text='last(bigint)' and n.nspname = 'public') THEN
+        CREATE AGGREGATE public.LAST (
+           sfunc    = TILDA.last_agg,
+           basetype = bigint,
+           stype    = bigint
+        );
+    END IF;
+    if not exists (select p.oid::regprocedure from pg_proc p join pg_namespace n on p.pronamespace = n.oid  where p.oid::regprocedure::text='last(date)' and n.nspname = 'public') THEN
+        CREATE AGGREGATE public.LAST (
+           sfunc    = TILDA.last_agg,
+           basetype = date,
+           stype    = date
+        );
+    END IF;
+    if not exists (select p.oid::regprocedure from pg_proc p join pg_namespace n on p.pronamespace = n.oid  where p.oid::regprocedure::text='last(timestamp with time zone)' and n.nspname = 'public') THEN
+        CREATE AGGREGATE public.LAST (
+           sfunc    = TILDA.last_agg,
+           basetype = timestamptz,
+           stype    = timestamptz
+        );
+    END IF;
 END $$;
 
 ---------------------
@@ -966,6 +1065,39 @@ END; $BODY$
   LANGUAGE plpgsql STABLE 
   COST 1000;
 
+
+  
+  
+  
+CREATE OR REPLACE FUNCTION tilda.RetireTable(schemaName varchar, tableName varchar, suffix varchar)
+-- When managing a schema, you sometimes need to retire tables. Instead of doing a drop, resulting in
+-- loss of data, this function helps by first making a copy of the table before droping it. The "saved"
+-- table is free of any foreign key or other dependencies such as indices, and is renamed with _YYYYMMDD_HHMM_<suffix>
+  RETURNS BOOLEAN AS
+$BODY$
+declare
+  v_query text;
+  v_exists boolean;
+BEGIN
+   IF NOT EXISTS (SELECT 1 FROM pg_catalog.pg_class c
+                              JOIN   pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+                          WHERE  n.nspname = schemaName
+                            AND  c.relname = tableName
+                            AND  c.relkind = 'r'    -- only tables
+                 ) then
+    RETURN false;
+   END IF;
+
+   v_query:='create table '||schemaName||'.'||tableName||'_'||to_char(now(), 'YYYYMMdd_HH24mm')||'_'||suffix||' as select * from '||schemaName||'.'||tableName||';';
+   EXECUTE v_query;
+  
+   v_query:='drop table '||schemaName||'.'||tableName||';';
+   EXECUTE v_query;
+
+   RETURN true;
+END; $BODY$
+  LANGUAGE plpgsql VOLATILE 
+  COST 1000;
 
   
   

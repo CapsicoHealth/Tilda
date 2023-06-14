@@ -4,6 +4,7 @@ package tilda.data._Tilda;
 import java.math.*;
 import java.util.*;
 import java.time.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.logging.log4j.*;
 
@@ -48,11 +49,12 @@ public class TILDA__CONNECTION_Factory
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Connection.active of type boolean</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>active of type boolean</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Status Flag</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Connection.active of type boolean</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.Connection.active</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Status Flag</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -68,18 +70,19 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Connection.id of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>id of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Connection ID</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Connection.id of type varchar(15)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.Connection.id</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>15</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Connection ID</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        ID         = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "id"         , 1/*1*/, "Connection ID", null, null, null);
+     public final Type_StringPrimitive        ID         = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "id"         , 1/*1*/, 15, "Connection ID", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -89,18 +92,19 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Connection.driver of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>driver of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>DB Driver</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Connection.driver of type varchar(100)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.Connection.driver</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>100</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>DB Driver</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        DRIVER     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "driver"     , 2/*2*/, "DB Driver", null, null, null);
+     public final Type_StringPrimitive        DRIVER     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "driver"     , 2/*2*/, 100, "DB Driver", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -110,18 +114,19 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Connection.db of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>db of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>DB Url</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Connection.db of type varchar(200)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.Connection.db</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>200</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>DB Url</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        DB         = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "db"         , 3/*3*/, "DB Url", null, null, null);
+     public final Type_StringPrimitive        DB         = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "db"         , 3/*3*/, 200, "DB Url", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -131,18 +136,19 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Connection.user of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>user of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>DB User</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Connection.user of type varchar(30)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.Connection.user</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>30</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>DB User</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        USER       = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "user"       , 4/*4*/, "DB User", null, null, null);
+     public final Type_StringPrimitive        USER       = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "user"       , 4/*4*/, 30, "DB User", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -152,18 +158,19 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Connection.pswd of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>pswd of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>DB Password</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Connection.pswd of type varchar(40)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.Connection.pswd</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>40</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>DB Password</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        PSWD       = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "pswd"       , 5/*5*/, "DB Password", null, null, null);
+     public final Type_StringPrimitive        PSWD       = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "pswd"       , 5/*5*/, 40, "DB Password", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -173,11 +180,12 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Connection.initial of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>initial of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Minimum Connections</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Connection.initial of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.Connection.initial</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Minimum Connections</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -193,11 +201,12 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Connection.max of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>max of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Maximum Connections</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Connection.max of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.Connection.max</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Maximum Connections</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -213,12 +222,13 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Connection.schemas of type List<String></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Connection.schemas of type text[]</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>null</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>schemas of type List&lt;String&gt; (ordered)</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Schemas</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Connection.schemas of type text[]</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.Connection.schemas</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>Size not applicable for collections</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -234,11 +244,12 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Connection.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>created of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.Connection)</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Connection.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.Connection.created</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.Connection)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -261,11 +272,12 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Connection.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>lastUpdated of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.Connection)</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Connection.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.Connection.lastUpdated</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.Connection)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -288,11 +300,12 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Connection.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>deleted of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.Connection)</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Connection.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.Connection.deleted</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.Connection)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -311,18 +324,15 @@ This is the column definition for:<BR>
 
    public static final ColumnDefinition[] COLUMNS_FIRST_IDENTITY = {};
 
-   private static Boolean  __INITIALIZED = false;
+   // Short(short) is deprecated, but we do want a new instance here to avoid synchronizing over the same cached instance from valueOf.
+   // @SuppressWarnings("deprecation")
+   private static final AtomicBoolean __INITIALIZED = new AtomicBoolean(false);
    protected static void initObject(Connection C) throws Exception
      {
-       if (__INITIALIZED == false)
-        synchronized(__INITIALIZED)
-         {
-           if (__INITIALIZED == false)
-            {
-              tilda.data.Connection_Factory.init(C);
-              __INITIALIZED = true;
-            }
-         }
+       if (__INITIALIZED.compareAndSet(false, true))
+        {
+           tilda.data.Connection_Factory.init(C);
+        }
      }
    private static class RecordProcessorInternal implements tilda.db.processors.RecordProcessor
      {
@@ -553,6 +563,9 @@ object. The generic init method defaults to this general data structure as a gen
        // Default Create-time setters
        Obj.setCreatedNow       ();
        Obj.setLastUpdatedNow   ();
+
+       // Default Nullables
+       Obj.__Nulls.or(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask);
 
        return (tilda.data.Connection_Data) Obj;
      }
@@ -914,7 +927,7 @@ The results are ordered by: id asc
          }
 
         int i = -1;
-      if (Obj.isActiveNull() == false)
+      if (Obj.isNullActive() == false)
         JSONUtil.print(out, "active", ++i==0, Obj.getActive());
 
         JSONUtil.print(out, "id", ++i==0, Obj.getId());
@@ -937,7 +950,7 @@ The results are ordered by: id asc
 
         JSONUtil.print(out, "lastUpdated", ++i==0, Obj.getLastUpdated());
 
-      if (Obj.isDeletedNull() == false && Obj.getDeleted() != null)
+      if (Obj.isNullDeleted() == false && Obj.getDeleted() != null)
         JSONUtil.print(out, "deleted", ++i==0, Obj.getDeleted());
 
         if (fullObject == true)

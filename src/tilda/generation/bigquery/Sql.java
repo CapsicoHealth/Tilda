@@ -30,8 +30,6 @@ import org.apache.commons.io.output.StringBuilderWriter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.google.re2j.Pattern;
-
 import tilda.db.stores.BigQuery;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
@@ -265,7 +263,7 @@ public class Sql extends BigQuery implements CodeGenSql
                                 {
                                   FromList.append("\n     " + JoinType.printJoinType(VC._Join) + " " + VJ._ObjectObj.getShortName());
                                   FromList.append(" as " + getFullTableVar(VC._SameAsObj._ParentObject, TI._V));
-                                  FromList.append(" on " + rewriteExpressionColumnQuoting(Q._Clause));
+                                  FromList.append(" on " + rewriteExpressionColumnQuoting(Q._ClauseStatic));
                                 }
                           }
                         else
@@ -399,9 +397,9 @@ public class Sql extends BigQuery implements CodeGenSql
             Query q = V._SubQuery.getQuery(this);
             if (q != null)
               {
-                boolean NewLine = q._Clause.indexOf("\n") >= 0;
+                boolean NewLine = q._ClauseStatic.indexOf("\n") >= 0;
                 Str.append(" where (");
-                Str.append(rewriteExpressionColumnQuoting(NewLine == true ? q._Clause.replaceAll("\n", "\n        ") : q._Clause));
+                Str.append(rewriteExpressionColumnQuoting(NewLine == true ? q._ClauseStatic.replaceAll("\n", "\n        ") : q._ClauseStatic));
                 Str.append(NewLine == true ? "\n       )" : ")");
               }
             Str.append("\n");
@@ -498,7 +496,7 @@ public class Sql extends BigQuery implements CodeGenSql
         Query Q = VJ.getQuery(this);
         if (Q == null)
           throw new Exception("Cannot generate the view because an 'on' clause matching the active database '" + this.getName() + "' is not available.");
-        Str.append(" on " + rewriteExpressionColumnQuoting(Q._Clause));
+        Str.append(" on " + rewriteExpressionColumnQuoting(Q._ClauseStatic));
         return Q;
       }
 
@@ -548,6 +546,8 @@ public class Sql extends BigQuery implements CodeGenSql
 
                 // We have to be able to handle cases for joins with an "as". If so, we have to use that, otherwise
                 // we have to use the internal source of the column being ordered by.
+                if (TextUtil.isNullOrEmpty(VC._AggregateAttributes) == false)
+                  Str.append(", ").append(VC._AggregateAttributes);
                 if (VC._partitionByObjs.size() != 0 || TextUtil.isNullOrEmpty(VC._Range) == false || VC._Aggregate.isWindowOnly() == true)
                   Str.append(") OVER (");
                 printAggregatePartitionBy(Str, VC._partitionByObjs, TextUtil.isNullOrEmpty(TI._As) == false ? TI.getFullName() : null);
@@ -1004,12 +1004,12 @@ public class Sql extends BigQuery implements CodeGenSql
         if (VC._Aggregate.isWindowOnly() == true)
           throw new Error("Fuction genPivotColumnSQL called for '" + VC.getFullName() + "' with a window-only aggregate '" + VC._Aggregate.name() + "'.");
 
-        String aggr = VC._Aggregate == AggregateType.COUNT ? AggregateType.SUM.name()
-        : VC._Aggregate == AggregateType.ARRAY ? "array_agg"
-        : VC._Aggregate.name();
+//        String aggr = VC._Aggregate == AggregateType.COUNT ? AggregateType.SUM.name()
+//        : VC._Aggregate == AggregateType.ARRAY ? "array_agg"
+//        : VC._Aggregate.name();
 
         StringBuilder Str = new StringBuilder();
-        Str.append(aggr).append("(");
+        Str.append(/*aggr*/getAggregateStr(VC._Aggregate)).append("(");
         if (VC._Distinct == true)
           Str.append("distinct ");
         if (supportsFilterClause() == false)
@@ -1017,6 +1017,10 @@ public class Sql extends BigQuery implements CodeGenSql
         Str.append(getShortColumnVar(VC._NameInner));
         if (supportsFilterClause() == false)
           Str.append(" else null end");
+
+        if (TextUtil.isNullOrEmpty(VC._AggregateAttributes) == false)
+          Str.append(", ").append(VC._AggregateAttributes);
+        
         // If there is a partition or a range, we gotta switch to an OVER statement.
         if (VC._partitionByObjs.size() != 0 || TextUtil.isNullOrEmpty(VC._Range) == false)
           Str.append(") OVER (");
@@ -1065,47 +1069,12 @@ public class Sql extends BigQuery implements CodeGenSql
 
         OutFinal.println("ALTER VIEW " + V._ParentSchema._Name + "." + V._Name + " set OPTIONS(description=" + TextUtil.escapeSingleQuoteForSQL(Str.toString().replace("\r\n", "\\n").replace("\n", "\\n")) + ");");
         OutFinal.println();
-/*
-        for (int i = 0; i < V._ViewColumns.size(); ++i)
-          {
-            ViewColumn VC = V._ViewColumns.get(i);
-            if (PivotHelper.getPivottedColumn(V, VC.getName()) != null) // V._Pivots.isEmpty() == false && (PivotHelper.isPivotColumn(VC) == true ||
-                                                                        // PivotHelper.isPivotAggregate(VC) == true))
-              continue;
-            if (VC != null && VC._SameAsObj != null && VC._SameAsObj._Mode != ColumnMode.CALCULATED && VC._JoinOnly == false && VC._FormulaOnly == false)
-              OutFinal.println("COMMENT ON COLUMN " + V.getShortName() + "." + getShortColumnVar(VC.getName()) + " IS E" + TextUtil.escapeSingleQuoteForSQL(VC._SameAsObj._Description) + ";");
-          }
-        for (ViewPivot P : V._Pivots)
-          if (P != null)
-            for (ViewPivotAggregate A : P._Aggregates)
-              {
-                ViewColumn VC = V.getViewColumn(A._Name);
-                for (ViewPivotValue VPV : P._Values)
-                  if (VPV != null)
-                    OutFinal.println("COMMENT ON COLUMN " + V.getShortName() + ".\"" + A.makeName(VPV) + "\" IS E"
-                    + TextUtil.escapeSingleQuoteForSQL(VPV._Description + " (pivot of " + VC.getAggregateName() + " on " + P._VC._SameAsObj.getShortName() + "='" + VPV._Value + "')")
-                    // + TextUtil.escapeSingleQuoteForSQL("The pivoted column count from '" + P._ColumnName + "'='" + P._Values[i]._Value + "', " + P._Values[i]._Description)
-                    + ";");
-              }
-        if (V._Formulas != null)
-          for (Formula F : V._Formulas)
-            if (F != null)
-              OutFinal.println("COMMENT ON COLUMN " + V.getShortName() + ".\"" + F._Name + "\" IS E"
-              + TextUtil.escapeSingleQuoteForSQL("The calculated formula: " + String.join("\\n", F._Description))
-              + ";");
-*/
       }
 
     @Override
     public String getDDLMetadataVersion()
       {
         return "DDL META DATA VERSION 2021-09-02";
-      }
-
-    @Override
-    public void genDDLMetadata(PrintWriter OutFinal, View V)
-    throws Exception
-      {
       }
 
     private String genFormulaCode(View ParentView, Formula F)
@@ -1167,6 +1136,10 @@ public class Sql extends BigQuery implements CodeGenSql
             M.appendTail(Str);
           }
         return Str.toString();
+        
+        // LDH-NOTE: See note in rewriteExpressionColumnQuoting. Issues with formulas being cleaned up.
+//      return rewriteExpressionColumnQuoting(Str.toString());
+        
       }
 
     private String genRealizedColumnList(View V, String Lead)
@@ -1383,4 +1356,5 @@ public class Sql extends BigQuery implements CodeGenSql
     throws Exception
       {
       }
+
   }

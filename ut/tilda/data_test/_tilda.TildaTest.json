@@ -175,7 +175,7 @@
     ,{ "name": "TestingView"
       ,"description": "A test view to test aggregates."
       ,"columns":[
-          { "sameas": "Testing.name"                       }
+          { "sameas": "Testing.name"                         }
          ,{ "sameas": "Testing.lastUpdated", "joinOnly":true }
          ,{ "sameas": "Testing.refnum"   ,                   "aggregate":"COUNT"  }
          ,{ "sameas": "Testing.a2"       , "name":"a2Min"  , "aggregate":"MIN"    , "filter":"a2 is not null" , "coalesce":"AAA" }

@@ -154,7 +154,7 @@ public class ViewRealize
                   I._SubQuery = IT._SubQuery;
                   if (I._SubQuery != null && I._SubQuery._Wheres != null)
                     for (Query Q : I._SubQuery._Wheres)
-                      Q._Clause = Q._Clause.replace("?", col);
+                      Q._ClauseStatic = Q._Clause.replace("?", col);
                   I._Columns = new String[] { col
                   };
                   O._Indices.add(I);

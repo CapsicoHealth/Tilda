@@ -57,8 +57,8 @@ public class View extends Base
     @SerializedName("joins"           ) public List<ViewJoin>        _Joins      = new ArrayList<ViewJoin  >();
     @SerializedName("subWhere"        ) public String                _SubWhere;
     @SerializedName("subWhereX"       ) public SubWhereX             _SubWhereX;
-    @SerializedName("countStar"       ) public String                _CountStarDeprecated;  // Deprecated
     @SerializedName("subQuery"        ) public SubWhereClause        _SubQuery;
+    @SerializedName("countStar"       ) public String                _CountStarDeprecated;  // Deprecated
     @SerializedName("pivot"           ) public ViewPivot             _PivotSingle;
     @SerializedName("pivots"          ) public List<ViewPivot>       _Pivots = new ArrayList<ViewPivot>();
     @SerializedName("timeSeries"      ) public ViewTimeSeries        _TimeSeries;
@@ -334,7 +334,7 @@ public class View extends Base
                 if (_SubQuery._OrderBy != null && _SubQuery._OrderBy.length > 0)
                   PS.AddError("View '" + getFullName() + "' is defining a subQuery with an orderBy: that is not allowed for views.");
 
-                _SubQuery.Validate(PS, this, "View " + getFullName() + "'s " + (TextUtil.isNullOrEmpty(_SubWhere) == false ? "subWhere" : "subQuery"), false);
+                _SubQuery.validate(PS, this, "View " + getFullName() + "'s " + (TextUtil.isNullOrEmpty(_SubWhere) == false ? "subWhere" : "subQuery"), false);
 
                 if (_SubQuery._Attributes.isEmpty() == false)
                   PS.AddError("View '" + getFullName() + "' is defining a subWhere with parameters: that is not allowed for views.");

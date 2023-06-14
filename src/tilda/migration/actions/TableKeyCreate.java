@@ -16,6 +16,7 @@
 
 package tilda.migration.actions;
 
+import tilda.data.MaintenanceLog_Data;
 import tilda.db.Connection;
 import tilda.migration.MigrationAction;
 
@@ -23,7 +24,7 @@ public class TableKeyCreate extends MigrationAction
   {
     public TableKeyCreate(tilda.parsing.parts.Object Obj)
       {
-        super(Obj._ParentSchema._Name, Obj._Name, false);
+        super(Obj._ParentSchema._Name, Obj._Name, false, MaintenanceLog_Data._actionUpdate, MaintenanceLog_Data._objectTypeTable);
         _Obj = Obj;
       }
 

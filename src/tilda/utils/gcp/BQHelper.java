@@ -6,6 +6,7 @@ package tilda.utils.gcp;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,9 +48,10 @@ import tilda.db.TildaMasterRuntimeMetaData;
 import tilda.db.TildaObjectMetaData;
 import tilda.db.metadata.ColumnMeta;
 import tilda.db.metadata.SchemaMeta;
-import tilda.db.metadata.TableMeta;
+import tilda.db.metadata.TableViewMeta;
 import tilda.types.ColumnDefinition;
 import tilda.utils.CollectionUtil;
+import tilda.utils.DateTimeUtil;
 import tilda.utils.DurationUtil;
 import tilda.utils.TextUtil;
 
@@ -149,7 +151,7 @@ public class BQHelper
       {
         long T0 = System.nanoTime();
         Page<Table> L = bq.listTables(datasetName, TableListOption.pageSize(250));
-        LOG.debug("BQ: looked up tables in dataset '"+datasetName+"' (" + DurationUtil.printDurationMilliSeconds(System.nanoTime() - T0) + "ms)");
+        LOG.debug("BQ: looked up tables in dataset '" + datasetName + "' (" + DurationUtil.printDurationMilliSeconds(System.nanoTime() - T0) + "ms)");
         if (L == null)
           return new ArrayList<Table>();
         return (List<Table>) CollectionUtil.toList(L.iterateAll().iterator());
@@ -289,7 +291,7 @@ public class BQHelper
       {
         return getBQSchemaFromTilda(SchemaName, TableViewName, null);
       }
-    
+
     public static Schema getBQSchemaFromTilda(String SchemaName, String TableViewName, String outputMapName)
     throws Exception
       {
@@ -302,7 +304,7 @@ public class BQHelper
 
         // StringBuilder str = new StringBuilder();
         List<Field> fieldsList = new ArrayList<Field>();
-        List<ColumnDefinition> cols = outputMapName==null?Obj.getColumnDefinitions():Obj.getOutputMapColumns(outputMapName);
+        List<ColumnDefinition> cols = outputMapName == null ? Obj.getColumnDefinitions() : Obj.getOutputMapColumns(outputMapName);
         for (ColumnDefinition col : cols)
           {
             Field F = Field.newBuilder(col.getName(), StandardSQLTypeName.valueOf(col.getType().getBigQueryType()))
@@ -318,25 +320,34 @@ public class BQHelper
 
         return Schema.of(fieldsList);
       }
-    
+
     public static Schema getBQSchemaFromDB(Connection C, String SchemaName, String TableViewName)
     throws Exception
       {
         SchemaMeta S = new SchemaMeta(SchemaName);
         S.load(C, TableViewName);
-        TableMeta T = S.getTableMeta(TableViewName);
-        if (T == null)
+        TableViewMeta tvm = S.getTableMeta(TableViewName);
+        if (tvm == null)
           {
-            LOG.debug("Cannot load meta-data from the database about "+SchemaName+"."+TableViewName+".");
-            return null;
+            tvm = S.getViewMeta(TableViewName);
+            if (tvm == null)
+              {
+                LOG.debug("Cannot load meta-data from the database about " + SchemaName + "." + TableViewName + ".");
+                return null;
+              }
           }
+        return getBQSchemaFromMeta(tvm);
+      }
+
+    public static Schema getBQSchemaFromMeta(TableViewMeta tvm)
+      {
         // StringBuilder str = new StringBuilder();
         List<Field> fieldsList = new ArrayList<Field>();
-        List<ColumnMeta> cols = T.getColumnMetaList();
+        List<ColumnMeta> cols = tvm.getColumnMetaList();
         for (ColumnMeta col : cols)
           {
             Field F = Field.newBuilder(col._NameOriginal, StandardSQLTypeName.valueOf(col._TildaType.getBigQueryType()))
-            .setMode(col.isArray() == true ? Field.Mode.REPEATED : col._Nullable == 1 ? Field.Mode.REQUIRED : Field.Mode.NULLABLE)
+            .setMode(col.isArray() == true ? Field.Mode.REPEATED : col._Nullable == 1 ? Field.Mode.NULLABLE : Field.Mode.REQUIRED)
             .setDescription(col._Descr)
             .build();
             fieldsList.add(F);
@@ -348,20 +359,20 @@ public class BQHelper
 
         return Schema.of(fieldsList);
       }
-    
-    
+
+
     public static String getSchemaColumns(Schema schema)
       {
         StringBuilder str = new StringBuilder();
         for (Field f : schema.getFields())
           {
             if (str.length() > 0)
-             str.append(", ");
-            str.append(f.getName()+":"+f.getType().name());
+              str.append(", ");
+            str.append(f.getName() + ":" + f.getType().name());
           }
         return str.toString();
       }
-    
+
 
     public Schema getBQTableSchema(BigQuery bq, String datasetName, String tableName)
       {
@@ -553,5 +564,58 @@ public class BQHelper
         LOG.debug("Table '" + datasetName + "." + tableName + "' not found");
         return false;
       }
+
+    public static String[] getRepeatableFieldString(FieldValueList row, String fielName)
+    throws Exception
+      {
+        FieldValue f = row.get(fielName);
+        if (f == null)
+          throw new Exception("Field '" + fielName + "' cannot be found");
+        if (f.getAttribute() != FieldValue.Attribute.REPEATED)
+          throw new Exception("Field '" + fielName + "' is not a repeatable record");
+        if (f.isNull() == true)
+          return null;
+
+        List<FieldValue> values = f.getRepeatedValue();
+        String[] vals = new String[values.size()];
+        for (int i = 0; i < values.size(); ++i)
+          vals[i] = values.get(i).getStringValue();
+
+        return vals;
+      }
+
+    public static LocalDate[] getRepeatableFieldLocalDate(FieldValueList row, String fielName)
+    throws Exception
+      {
+        FieldValue f = row.get(fielName);
+        if (f == null)
+          throw new Exception("Field '" + fielName + "' cannot be found");
+        if (f.getAttribute() != FieldValue.Attribute.REPEATED)
+          throw new Exception("Field '" + fielName + "' is not a repeatable record");
+        if (f.isNull() == true)
+          return null;
+
+        List<FieldValue> values = f.getRepeatedValue();
+        LocalDate[] vals = new LocalDate[values.size()];
+        for (int i = 0; i < values.size(); ++i)
+          {
+            vals[i] = DateTimeUtil.parseDate(values.get(i).getStringValue());
+          }
+
+        return vals;
+      }
+
+    public static LocalDate getTimestampFieldAsLocalDate(FieldValueList row, String fielName)
+    throws Exception
+      {
+        FieldValue f = row.get(fielName);
+        if (f == null)
+          throw new Exception("Field '" + fielName + "' cannot be found");
+        if (f.isNull() == true)
+          return null;
+
+        return DateTimeUtil.parseDate(f.getStringValue());
+      }
+
 
   }

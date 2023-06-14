@@ -32,6 +32,7 @@ public class Index
     /*@formatter:off*/
     @SerializedName("name"    ) public String         _Name   ;
     @SerializedName("columns" ) public String[]       _Columns;
+    @SerializedName("cluster" ) public boolean        _Cluster = false;
     @SerializedName("orderBy" ) public String[]       _OrderBy;
     @SerializedName("db"      ) public boolean        _Db     = true;
     @SerializedName("subWhere") public String         _SubWhere;
@@ -139,7 +140,7 @@ public class Index
                         if (SubWhere._Clause.contains("?"))
                           PS.AddError("Object '" + _Parent.getFullName() + "' defines index '" + _Name + "' with a subQuery that contains a \"?\" variable placeholder: this is not allowed in an Index SubQuery.");
                       }
-                    _SubQuery.Validate(PS, _Parent, "Object " + _Parent.getFullName() + "'s index '" + _Name + "'", false);
+                    _SubQuery.validate(PS, _Parent, "Object " + _Parent.getFullName() + "'s index '" + _Name + "'", false);
                   }
               }
           }
@@ -150,7 +151,12 @@ public class Index
             if (TextUtil.isNullOrEmpty(_SubWhere) == false)
               PS.AddError("Object '" + _Parent.getFullName() + "' is defining unique index '" + _Name + "' with a subWhere, which is not allowed.");
           }
+        
+        if (_Cluster == true && _Db == false)
+         PS.AddError("Object '" + _Parent.getFullName() + "' is defining a non-database index '" + _Name + "' as clustered. Only database indices can be made clustered.");
 
+        if (_Cluster == true && _SubQuery != null)
+          PS.AddError("Object '" + _Parent.getFullName() + "' is defining a cluster index '" + _Name + "' that is also partial: partial indices (i.e., with a where clause, cannot be clustered).");
 
         return Errs == PS.getErrorCount();
       }

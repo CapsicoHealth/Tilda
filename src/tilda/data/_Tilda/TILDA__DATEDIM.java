@@ -32,7 +32,7 @@ import java.math.*;
 <TR valign="top"><TD><H2>DateDim&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 70%;"><SPAN class="BackToDetails"><A href="#DateDim_CNT">details</A>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><A href="#">top</A></SUP></H2></TD><TD align="right"></TD></TR>
 </TABLE>
 <DIV id="DateDim_CNT" class="content">
-The Table TILDA.DateDim:<UL>
+The Table TILDA.DateDim :<UL>
 <LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>DateDim_Factory</B>, <B>DateDim_Data</B> in the package <B>tilda.data</B>.
 <LI>Is configured for normal <B>read/write</B> access.</LI>
 <LI>Is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
@@ -352,11 +352,12 @@ public abstract class TILDA__DATEDIM implements tilda.interfaces.WriterObject, t
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.dt of type LocalDate</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>dt of type LocalDate</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The Date date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.dt of type date</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.dt</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The Date date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -373,11 +374,12 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.dt of type LocalDate</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>dt of type LocalDate</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The Date date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.dt of type date</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.dt</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The Date date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -393,11 +395,12 @@ This is the getter for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.dt of type LocalDate</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>dt of type LocalDate</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The Date date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.dt of type date</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.dt</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The Date date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -442,11 +445,12 @@ This is the setter for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.epoch of type long</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>epoch of type long</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The epoch date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.epoch of type bigint</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.epoch</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The epoch date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -462,11 +466,12 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.epoch of type long</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>epoch of type long</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The epoch date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.epoch of type bigint</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.epoch</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The epoch date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -482,11 +487,12 @@ This is the getter for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.epoch of type long</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>epoch of type long</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The epoch date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.epoch of type bigint</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.epoch</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The epoch date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -511,11 +517,12 @@ This is the setter for:<BR>
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.epoch of type long</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>epoch of type long</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The epoch date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.epoch of type bigint</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.epoch</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The epoch date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -537,12 +544,13 @@ This is the hasChanged for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.dayName of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>dayName of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Day name (i.e., Monday, Tuesday...) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.dayName of type varchar(255)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.dayName</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>255</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Day name (i.e., Monday, Tuesday...) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -558,12 +566,13 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.dayName of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>dayName of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Day name (i.e., Monday, Tuesday...) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.dayName of type varchar(255)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.dayName</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>255</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Day name (i.e., Monday, Tuesday...) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -579,18 +588,19 @@ This is the getter for:<BR>
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.dayName of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>dayName of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Day name (i.e., Monday, Tuesday...) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.dayName of type varchar(255)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.dayName</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>255</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Day name (i.e., Monday, Tuesday...) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isDayNameNull()
+   public final boolean isNullDayName()
      { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYNAME._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -600,12 +610,13 @@ This is the isNull for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.dayName of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>dayName of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Day name (i.e., Monday, Tuesday...) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.dayName of type varchar(255)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.dayName</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>255</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Day name (i.e., Monday, Tuesday...) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -616,7 +627,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setDayNameNull();
+          setNullDayName();
         }
        else if (v.length() > 255)
         throw new Exception("Cannot set tilda.data.TILDA.DateDim.dayName: the size "+v.length()+" is larger than the max allowed of 255: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -636,23 +647,24 @@ This is the setter for:<BR>
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.dayName of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>dayName of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Day name (i.e., Monday, Tuesday...) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.dayName of type varchar(255)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.dayName</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>255</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Day name (i.e., Monday, Tuesday...) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setDayNameNull()
+   public void setNullDayName()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.DAYNAME._Mask);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYNAME._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DATEDIM_Factory.COLS.DAYNAME._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.DAYNAME._Mask);
        _dayName=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -665,12 +677,13 @@ This is the null setter for:<BR>
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.dayName of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>dayName of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Day name (i.e., Monday, Tuesday...) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.dayName of type varchar(255)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.dayName</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>255</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Day name (i.e., Monday, Tuesday...) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -692,11 +705,12 @@ This is the hasChanged for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfWeek of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>dayOfWeek of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the week (Monday=1 to Sunday=7) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.dayOfWeek of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfWeek</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the week (Monday=1 to Sunday=7) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -712,11 +726,12 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfWeek of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>dayOfWeek of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the week (Monday=1 to Sunday=7) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.dayOfWeek of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfWeek</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the week (Monday=1 to Sunday=7) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -732,17 +747,18 @@ This is the getter for:<BR>
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfWeek of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>dayOfWeek of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the week (Monday=1 to Sunday=7) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.dayOfWeek of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfWeek</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the week (Monday=1 to Sunday=7) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isDayOfWeekNull()
+   public final boolean isNullDayOfWeek()
      { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFWEEK._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -752,11 +768,12 @@ This is the isNull for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfWeek of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>dayOfWeek of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the week (Monday=1 to Sunday=7) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.dayOfWeek of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfWeek</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the week (Monday=1 to Sunday=7) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -781,22 +798,23 @@ This is the setter for:<BR>
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfWeek of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>dayOfWeek of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the week (Monday=1 to Sunday=7) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.dayOfWeek of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfWeek</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the week (Monday=1 to Sunday=7) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setDayOfWeekNull()
+   public void setNullDayOfWeek()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.DAYOFWEEK._Mask);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFWEEK._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DATEDIM_Factory.COLS.DAYOFWEEK._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.DAYOFWEEK._Mask);
        _dayOfWeek=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -809,11 +827,12 @@ This is the null setter for:<BR>
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfWeek of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>dayOfWeek of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the week (Monday=1 to Sunday=7) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.dayOfWeek of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfWeek</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the week (Monday=1 to Sunday=7) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -835,11 +854,12 @@ This is the hasChanged for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfMonth of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>dayOfMonth of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the month (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.dayOfMonth of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfMonth</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the month (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -855,11 +875,12 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfMonth of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>dayOfMonth of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the month (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.dayOfMonth of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfMonth</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the month (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -875,17 +896,18 @@ This is the getter for:<BR>
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfMonth of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>dayOfMonth of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the month (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.dayOfMonth of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfMonth</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the month (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isDayOfMonthNull()
+   public final boolean isNullDayOfMonth()
      { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFMONTH._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -895,11 +917,12 @@ This is the isNull for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfMonth of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>dayOfMonth of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the month (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.dayOfMonth of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfMonth</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the month (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -924,22 +947,23 @@ This is the setter for:<BR>
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfMonth of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>dayOfMonth of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the month (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.dayOfMonth of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfMonth</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the month (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setDayOfMonthNull()
+   public void setNullDayOfMonth()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.DAYOFMONTH._Mask);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFMONTH._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DATEDIM_Factory.COLS.DAYOFMONTH._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.DAYOFMONTH._Mask);
        _dayOfMonth=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -952,11 +976,12 @@ This is the null setter for:<BR>
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfMonth of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>dayOfMonth of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the month (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.dayOfMonth of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfMonth</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the month (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -978,11 +1003,12 @@ This is the hasChanged for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfQuarter of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>dayOfQuarter of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the quarter (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.dayOfQuarter of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfQuarter</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the quarter (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -998,11 +1024,12 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfQuarter of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>dayOfQuarter of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the quarter (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.dayOfQuarter of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfQuarter</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the quarter (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1018,17 +1045,18 @@ This is the getter for:<BR>
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfQuarter of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>dayOfQuarter of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the quarter (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.dayOfQuarter of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfQuarter</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the quarter (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isDayOfQuarterNull()
+   public final boolean isNullDayOfQuarter()
      { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFQUARTER._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1038,11 +1066,12 @@ This is the isNull for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfQuarter of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>dayOfQuarter of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the quarter (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.dayOfQuarter of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfQuarter</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the quarter (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1067,22 +1096,23 @@ This is the setter for:<BR>
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfQuarter of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>dayOfQuarter of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the quarter (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.dayOfQuarter of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfQuarter</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the quarter (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setDayOfQuarterNull()
+   public void setNullDayOfQuarter()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.DAYOFQUARTER._Mask);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFQUARTER._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DATEDIM_Factory.COLS.DAYOFQUARTER._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.DAYOFQUARTER._Mask);
        _dayOfQuarter=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1095,11 +1125,12 @@ This is the null setter for:<BR>
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfQuarter of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>dayOfQuarter of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the quarter (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.dayOfQuarter of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfQuarter</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the quarter (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1121,11 +1152,12 @@ This is the hasChanged for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfYear of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>dayOfYear of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the year (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.dayOfYear of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfYear</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the year (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1141,11 +1173,12 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfYear of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>dayOfYear of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the year (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.dayOfYear of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfYear</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the year (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1161,17 +1194,18 @@ This is the getter for:<BR>
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfYear of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>dayOfYear of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the year (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.dayOfYear of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfYear</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the year (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isDayOfYearNull()
+   public final boolean isNullDayOfYear()
      { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFYEAR._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1181,11 +1215,12 @@ This is the isNull for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfYear of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>dayOfYear of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the year (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.dayOfYear of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfYear</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the year (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1210,22 +1245,23 @@ This is the setter for:<BR>
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfYear of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>dayOfYear of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the year (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.dayOfYear of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfYear</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the year (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setDayOfYearNull()
+   public void setNullDayOfYear()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.DAYOFYEAR._Mask);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFYEAR._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DATEDIM_Factory.COLS.DAYOFYEAR._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.DAYOFYEAR._Mask);
        _dayOfYear=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1238,11 +1274,12 @@ This is the null setter for:<BR>
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfYear of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>dayOfYear of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the year (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.dayOfYear of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.dayOfYear</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 day of the year (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1264,11 +1301,12 @@ This is the hasChanged for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.weekOfMonth of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>weekOfMonth of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 week of the month (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.weekOfMonth of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.weekOfMonth</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 week of the month (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1284,11 +1322,12 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.weekOfMonth of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>weekOfMonth of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 week of the month (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.weekOfMonth of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.weekOfMonth</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 week of the month (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1304,17 +1343,18 @@ This is the getter for:<BR>
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.weekOfMonth of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>weekOfMonth of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 week of the month (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.weekOfMonth of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.weekOfMonth</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 week of the month (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isWeekOfMonthNull()
+   public final boolean isNullWeekOfMonth()
      { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.WEEKOFMONTH._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1324,11 +1364,12 @@ This is the isNull for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.weekOfMonth of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>weekOfMonth of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 week of the month (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.weekOfMonth of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.weekOfMonth</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 week of the month (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1353,22 +1394,23 @@ This is the setter for:<BR>
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.weekOfMonth of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>weekOfMonth of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 week of the month (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.weekOfMonth of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.weekOfMonth</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 week of the month (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setWeekOfMonthNull()
+   public void setNullWeekOfMonth()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.WEEKOFMONTH._Mask);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.WEEKOFMONTH._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DATEDIM_Factory.COLS.WEEKOFMONTH._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.WEEKOFMONTH._Mask);
        _weekOfMonth=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1381,11 +1423,12 @@ This is the null setter for:<BR>
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.weekOfMonth of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>weekOfMonth of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 week of the month (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.weekOfMonth of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.weekOfMonth</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 week of the month (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1407,11 +1450,12 @@ This is the hasChanged for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.weekOfYear of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>weekOfYear of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 week of the year (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.weekOfYear of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.weekOfYear</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 week of the year (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1427,11 +1471,12 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.weekOfYear of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>weekOfYear of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 week of the year (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.weekOfYear of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.weekOfYear</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 week of the year (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1447,17 +1492,18 @@ This is the getter for:<BR>
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.weekOfYear of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>weekOfYear of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 week of the year (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.weekOfYear of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.weekOfYear</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 week of the year (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isWeekOfYearNull()
+   public final boolean isNullWeekOfYear()
      { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.WEEKOFYEAR._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1467,11 +1513,12 @@ This is the isNull for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.weekOfYear of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>weekOfYear of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 week of the year (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.weekOfYear of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.weekOfYear</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 week of the year (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1496,22 +1543,23 @@ This is the setter for:<BR>
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.weekOfYear of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>weekOfYear of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 week of the year (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.weekOfYear of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.weekOfYear</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 week of the year (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setWeekOfYearNull()
+   public void setNullWeekOfYear()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.WEEKOFYEAR._Mask);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.WEEKOFYEAR._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DATEDIM_Factory.COLS.WEEKOFYEAR._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.WEEKOFYEAR._Mask);
        _weekOfYear=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1524,11 +1572,12 @@ This is the null setter for:<BR>
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.weekOfYear of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>weekOfYear of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 week of the year (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.weekOfYear of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.weekOfYear</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 week of the year (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1550,11 +1599,12 @@ This is the hasChanged for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.month of type LocalDate</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>month of type LocalDate</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Month-truncated date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.month of type date</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.month</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Month-truncated date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1570,11 +1620,12 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.month of type LocalDate</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>month of type LocalDate</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Month-truncated date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.month of type date</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.month</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Month-truncated date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1590,17 +1641,18 @@ This is the getter for:<BR>
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.month of type LocalDate</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>month of type LocalDate</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Month-truncated date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.month of type date</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.month</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Month-truncated date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isMonthNull()
+   public final boolean isNullMonth()
      { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTH._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1610,11 +1662,12 @@ This is the isNull for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.month of type LocalDate</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>month of type LocalDate</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Month-truncated date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.month of type date</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.month</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Month-truncated date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1625,7 +1678,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setMonthNull();
+          setNullMonth();
         }
        else if (v.equals(_month) == false)
         {
@@ -1643,22 +1696,23 @@ This is the setter for:<BR>
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.month of type LocalDate</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>month of type LocalDate</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Month-truncated date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.month of type date</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.month</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Month-truncated date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setMonthNull()
+   public void setNullMonth()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.MONTH._Mask);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTH._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DATEDIM_Factory.COLS.MONTH._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.MONTH._Mask);
        _month=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1671,11 +1725,12 @@ This is the null setter for:<BR>
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.month of type LocalDate</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>month of type LocalDate</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Month-truncated date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.month of type date</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.month</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Month-truncated date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1697,11 +1752,12 @@ This is the hasChanged for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.monthOfYear of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>monthOfYear of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 month of the year (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.monthOfYear of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.monthOfYear</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 month of the year (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1717,11 +1773,12 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.monthOfYear of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>monthOfYear of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 month of the year (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.monthOfYear of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.monthOfYear</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 month of the year (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1737,17 +1794,18 @@ This is the getter for:<BR>
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.monthOfYear of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>monthOfYear of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 month of the year (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.monthOfYear of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.monthOfYear</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 month of the year (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isMonthOfYearNull()
+   public final boolean isNullMonthOfYear()
      { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTHOFYEAR._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1757,11 +1815,12 @@ This is the isNull for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.monthOfYear of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>monthOfYear of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 month of the year (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.monthOfYear of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.monthOfYear</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 month of the year (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1786,22 +1845,23 @@ This is the setter for:<BR>
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.monthOfYear of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>monthOfYear of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 month of the year (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.monthOfYear of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.monthOfYear</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 month of the year (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setMonthOfYearNull()
+   public void setNullMonthOfYear()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.MONTHOFYEAR._Mask);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTHOFYEAR._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DATEDIM_Factory.COLS.MONTHOFYEAR._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.MONTHOFYEAR._Mask);
        _monthOfYear=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1814,11 +1874,12 @@ This is the null setter for:<BR>
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.monthOfYear of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>monthOfYear of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 month of the year (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.monthOfYear of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.monthOfYear</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 month of the year (starting with 1) of the date</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1840,12 +1901,13 @@ This is the hasChanged for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.monthName of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>monthName of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Month name (i.e., January, February...) of the date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.monthName of type varchar(255)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.monthName</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>255</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Month name (i.e., January, February...) of the date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1861,12 +1923,13 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.monthName of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>monthName of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Month name (i.e., January, February...) of the date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.monthName of type varchar(255)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.monthName</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>255</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Month name (i.e., January, February...) of the date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1882,18 +1945,19 @@ This is the getter for:<BR>
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.monthName of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>monthName of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Month name (i.e., January, February...) of the date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.monthName of type varchar(255)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.monthName</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>255</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Month name (i.e., January, February...) of the date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isMonthNameNull()
+   public final boolean isNullMonthName()
      { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTHNAME._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1903,12 +1967,13 @@ This is the isNull for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.monthName of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>monthName of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Month name (i.e., January, February...) of the date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.monthName of type varchar(255)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.monthName</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>255</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Month name (i.e., January, February...) of the date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1919,7 +1984,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setMonthNameNull();
+          setNullMonthName();
         }
        else if (v.length() > 255)
         throw new Exception("Cannot set tilda.data.TILDA.DateDim.monthName: the size "+v.length()+" is larger than the max allowed of 255: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -1939,23 +2004,24 @@ This is the setter for:<BR>
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.monthName of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>monthName of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Month name (i.e., January, February...) of the date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.monthName of type varchar(255)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.monthName</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>255</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Month name (i.e., January, February...) of the date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setMonthNameNull()
+   public void setNullMonthName()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.MONTHNAME._Mask);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTHNAME._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DATEDIM_Factory.COLS.MONTHNAME._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.MONTHNAME._Mask);
        _monthName=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1968,12 +2034,13 @@ This is the null setter for:<BR>
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.monthName of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>monthName of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Month name (i.e., January, February...) of the date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.monthName of type varchar(255)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.monthName</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>255</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Month name (i.e., January, February...) of the date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1995,12 +2062,13 @@ This is the hasChanged for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.monthNameShort of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>monthNameShort of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Monday short name (i.e., Jan, Feb...) of the date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.monthNameShort of type varchar(255)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.monthNameShort</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>255</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Monday short name (i.e., Jan, Feb...) of the date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2016,12 +2084,13 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.monthNameShort of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>monthNameShort of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Monday short name (i.e., Jan, Feb...) of the date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.monthNameShort of type varchar(255)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.monthNameShort</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>255</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Monday short name (i.e., Jan, Feb...) of the date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2037,18 +2106,19 @@ This is the getter for:<BR>
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.monthNameShort of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>monthNameShort of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Monday short name (i.e., Jan, Feb...) of the date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.monthNameShort of type varchar(255)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.monthNameShort</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>255</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Monday short name (i.e., Jan, Feb...) of the date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isMonthNameShortNull()
+   public final boolean isNullMonthNameShort()
      { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTHNAMESHORT._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2058,12 +2128,13 @@ This is the isNull for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.monthNameShort of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>monthNameShort of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Monday short name (i.e., Jan, Feb...) of the date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.monthNameShort of type varchar(255)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.monthNameShort</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>255</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Monday short name (i.e., Jan, Feb...) of the date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2074,7 +2145,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setMonthNameShortNull();
+          setNullMonthNameShort();
         }
        else if (v.length() > 255)
         throw new Exception("Cannot set tilda.data.TILDA.DateDim.monthNameShort: the size "+v.length()+" is larger than the max allowed of 255: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -2094,23 +2165,24 @@ This is the setter for:<BR>
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.monthNameShort of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>monthNameShort of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Monday short name (i.e., Jan, Feb...) of the date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.monthNameShort of type varchar(255)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.monthNameShort</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>255</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Monday short name (i.e., Jan, Feb...) of the date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setMonthNameShortNull()
+   public void setNullMonthNameShort()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.MONTHNAMESHORT._Mask);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTHNAMESHORT._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DATEDIM_Factory.COLS.MONTHNAMESHORT._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.MONTHNAMESHORT._Mask);
        _monthNameShort=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2123,12 +2195,13 @@ This is the null setter for:<BR>
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.monthNameShort of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>monthNameShort of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Monday short name (i.e., Jan, Feb...) of the date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.monthNameShort of type varchar(255)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.monthNameShort</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>255</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Monday short name (i.e., Jan, Feb...) of the date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2150,11 +2223,12 @@ This is the hasChanged for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.quarterOfYear of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>quarterOfYear of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 quarter of the year (starting with 1) of the date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.quarterOfYear of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.quarterOfYear</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 quarter of the year (starting with 1) of the date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2170,11 +2244,12 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.quarterOfYear of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>quarterOfYear of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 quarter of the year (starting with 1) of the date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.quarterOfYear of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.quarterOfYear</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 quarter of the year (starting with 1) of the date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2190,17 +2265,18 @@ This is the getter for:<BR>
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.quarterOfYear of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>quarterOfYear of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 quarter of the year (starting with 1) of the date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.quarterOfYear of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.quarterOfYear</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 quarter of the year (starting with 1) of the date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isQuarterOfYearNull()
+   public final boolean isNullQuarterOfYear()
      { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.QUARTEROFYEAR._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2210,11 +2286,12 @@ This is the isNull for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.quarterOfYear of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>quarterOfYear of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 quarter of the year (starting with 1) of the date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.quarterOfYear of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.quarterOfYear</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 quarter of the year (starting with 1) of the date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2239,22 +2316,23 @@ This is the setter for:<BR>
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.quarterOfYear of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>quarterOfYear of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 quarter of the year (starting with 1) of the date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.quarterOfYear of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.quarterOfYear</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 quarter of the year (starting with 1) of the date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setQuarterOfYearNull()
+   public void setNullQuarterOfYear()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.QUARTEROFYEAR._Mask);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.QUARTEROFYEAR._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DATEDIM_Factory.COLS.QUARTEROFYEAR._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.QUARTEROFYEAR._Mask);
        _quarterOfYear=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2267,11 +2345,12 @@ This is the null setter for:<BR>
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.quarterOfYear of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>quarterOfYear of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 quarter of the year (starting with 1) of the date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.quarterOfYear of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.quarterOfYear</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 quarter of the year (starting with 1) of the date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2293,12 +2372,13 @@ This is the hasChanged for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.quarterName of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>quarterName of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Quarter name (i.e., Q1, Q2...) of the date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.quarterName of type varchar(255)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.quarterName</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>255</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Quarter name (i.e., Q1, Q2...) of the date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2314,12 +2394,13 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.quarterName of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>quarterName of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Quarter name (i.e., Q1, Q2...) of the date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.quarterName of type varchar(255)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.quarterName</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>255</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Quarter name (i.e., Q1, Q2...) of the date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2335,18 +2416,19 @@ This is the getter for:<BR>
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.quarterName of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>quarterName of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Quarter name (i.e., Q1, Q2...) of the date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.quarterName of type varchar(255)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.quarterName</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>255</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Quarter name (i.e., Q1, Q2...) of the date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isQuarterNameNull()
+   public final boolean isNullQuarterName()
      { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.QUARTERNAME._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2356,12 +2438,13 @@ This is the isNull for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.quarterName of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>quarterName of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Quarter name (i.e., Q1, Q2...) of the date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.quarterName of type varchar(255)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.quarterName</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>255</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Quarter name (i.e., Q1, Q2...) of the date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2372,7 +2455,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setQuarterNameNull();
+          setNullQuarterName();
         }
        else if (v.length() > 255)
         throw new Exception("Cannot set tilda.data.TILDA.DateDim.quarterName: the size "+v.length()+" is larger than the max allowed of 255: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -2392,23 +2475,24 @@ This is the setter for:<BR>
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.quarterName of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>quarterName of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Quarter name (i.e., Q1, Q2...) of the date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.quarterName of type varchar(255)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.quarterName</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>255</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Quarter name (i.e., Q1, Q2...) of the date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setQuarterNameNull()
+   public void setNullQuarterName()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.QUARTERNAME._Mask);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.QUARTERNAME._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DATEDIM_Factory.COLS.QUARTERNAME._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.QUARTERNAME._Mask);
        _quarterName=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2421,12 +2505,13 @@ This is the null setter for:<BR>
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.quarterName of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>quarterName of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Quarter name (i.e., Q1, Q2...) of the date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.quarterName of type varchar(255)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.quarterName</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>255</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Quarter name (i.e., Q1, Q2...) of the date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2448,11 +2533,12 @@ This is the hasChanged for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.year of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>year of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 year (1.e., 2018) of the date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.year of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.year</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 year (1.e., 2018) of the date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2468,11 +2554,12 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.year of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>year of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 year (1.e., 2018) of the date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.year of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.year</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 year (1.e., 2018) of the date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2488,17 +2575,18 @@ This is the getter for:<BR>
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.year of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>year of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 year (1.e., 2018) of the date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.year of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.year</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 year (1.e., 2018) of the date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isYearNull()
+   public final boolean isNullYear()
      { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.YEAR._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2508,11 +2596,12 @@ This is the isNull for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.year of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>year of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 year (1.e., 2018) of the date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.year of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.year</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 year (1.e., 2018) of the date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2537,22 +2626,23 @@ This is the setter for:<BR>
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.year of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>year of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 year (1.e., 2018) of the date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.year of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.year</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 year (1.e., 2018) of the date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setYearNull()
+   public void setNullYear()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.YEAR._Mask);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.YEAR._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DATEDIM_Factory.COLS.YEAR._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.YEAR._Mask);
        _year=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2565,11 +2655,12 @@ This is the null setter for:<BR>
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.year of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>year of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 year (1.e., 2018) of the date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.year of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.year</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ISO 8601 year (1.e., 2018) of the date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2591,12 +2682,13 @@ This is the hasChanged for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.mmyyyy of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>mmyyyy of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The mmyyyy printable version of a date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.mmyyyy of type character(6)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.mmyyyy</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>6</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The mmyyyy printable version of a date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2612,12 +2704,13 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.mmyyyy of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>mmyyyy of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The mmyyyy printable version of a date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.mmyyyy of type character(6)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.mmyyyy</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>6</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The mmyyyy printable version of a date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2633,18 +2726,19 @@ This is the getter for:<BR>
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.mmyyyy of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>mmyyyy of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The mmyyyy printable version of a date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.mmyyyy of type character(6)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.mmyyyy</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>6</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The mmyyyy printable version of a date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isMmyyyyNull()
+   public final boolean isNullMmyyyy()
      { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MMYYYY._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2654,12 +2748,13 @@ This is the isNull for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.mmyyyy of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>mmyyyy of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The mmyyyy printable version of a date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.mmyyyy of type character(6)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.mmyyyy</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>6</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The mmyyyy printable version of a date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2670,7 +2765,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setMmyyyyNull();
+          setNullMmyyyy();
         }
        else if (v.length() > 6)
         throw new Exception("Cannot set tilda.data.TILDA.DateDim.mmyyyy: the size "+v.length()+" is larger than the max allowed of 6: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -2690,23 +2785,24 @@ This is the setter for:<BR>
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.mmyyyy of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>mmyyyy of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The mmyyyy printable version of a date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.mmyyyy of type character(6)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.mmyyyy</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>6</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The mmyyyy printable version of a date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setMmyyyyNull()
+   public void setNullMmyyyy()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.MMYYYY._Mask);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MMYYYY._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DATEDIM_Factory.COLS.MMYYYY._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.MMYYYY._Mask);
        _mmyyyy=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2719,12 +2815,13 @@ This is the null setter for:<BR>
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.mmyyyy of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>mmyyyy of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The mmyyyy printable version of a date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.mmyyyy of type character(6)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.mmyyyy</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>6</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The mmyyyy printable version of a date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2746,12 +2843,13 @@ This is the hasChanged for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.mmddyyyy of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>mmddyyyy of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The mmddyyyy printable version of a date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.mmddyyyy of type character(8)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.mmddyyyy</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>8</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The mmddyyyy printable version of a date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2767,12 +2865,13 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.mmddyyyy of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>mmddyyyy of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The mmddyyyy printable version of a date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.mmddyyyy of type character(8)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.mmddyyyy</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>8</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The mmddyyyy printable version of a date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2788,18 +2887,19 @@ This is the getter for:<BR>
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.mmddyyyy of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>mmddyyyy of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The mmddyyyy printable version of a date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.mmddyyyy of type character(8)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.mmddyyyy</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>8</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The mmddyyyy printable version of a date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isMmddyyyyNull()
+   public final boolean isNullMmddyyyy()
      { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MMDDYYYY._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2809,12 +2909,13 @@ This is the isNull for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.mmddyyyy of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>mmddyyyy of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The mmddyyyy printable version of a date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.mmddyyyy of type character(8)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.mmddyyyy</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>8</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The mmddyyyy printable version of a date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2825,7 +2926,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setMmddyyyyNull();
+          setNullMmddyyyy();
         }
        else if (v.length() > 8)
         throw new Exception("Cannot set tilda.data.TILDA.DateDim.mmddyyyy: the size "+v.length()+" is larger than the max allowed of 8: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -2845,23 +2946,24 @@ This is the setter for:<BR>
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.mmddyyyy of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>mmddyyyy of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The mmddyyyy printable version of a date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.mmddyyyy of type character(8)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.mmddyyyy</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>8</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The mmddyyyy printable version of a date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setMmddyyyyNull()
+   public void setNullMmddyyyy()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.MMDDYYYY._Mask);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MMDDYYYY._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DATEDIM_Factory.COLS.MMDDYYYY._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.MMDDYYYY._Mask);
        _mmddyyyy=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2874,12 +2976,13 @@ This is the null setter for:<BR>
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.mmddyyyy of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>mmddyyyy of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The mmddyyyy printable version of a date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.mmddyyyy of type character(8)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.mmddyyyy</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>8</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The mmddyyyy printable version of a date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2901,12 +3004,13 @@ This is the hasChanged for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.yyyymmdd of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>yyyymmdd of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The yyyymmdd sortable printable version of a date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.yyyymmdd of type character(8)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.yyyymmdd</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>8</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The yyyymmdd sortable printable version of a date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2922,12 +3026,13 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.yyyymmdd of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>yyyymmdd of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The yyyymmdd sortable printable version of a date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.yyyymmdd of type character(8)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.yyyymmdd</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>8</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The yyyymmdd sortable printable version of a date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2943,18 +3048,19 @@ This is the getter for:<BR>
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.yyyymmdd of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>yyyymmdd of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The yyyymmdd sortable printable version of a date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.yyyymmdd of type character(8)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.yyyymmdd</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>8</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The yyyymmdd sortable printable version of a date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isYyyymmddNull()
+   public final boolean isNullYyyymmdd()
      { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.YYYYMMDD._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2964,12 +3070,13 @@ This is the isNull for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.yyyymmdd of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>yyyymmdd of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The yyyymmdd sortable printable version of a date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.yyyymmdd of type character(8)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.yyyymmdd</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>8</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The yyyymmdd sortable printable version of a date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2980,7 +3087,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setYyyymmddNull();
+          setNullYyyymmdd();
         }
        else if (v.length() > 8)
         throw new Exception("Cannot set tilda.data.TILDA.DateDim.yyyymmdd: the size "+v.length()+" is larger than the max allowed of 8: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -3000,23 +3107,24 @@ This is the setter for:<BR>
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.yyyymmdd of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>yyyymmdd of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The yyyymmdd sortable printable version of a date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.yyyymmdd of type character(8)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.yyyymmdd</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>8</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The yyyymmdd sortable printable version of a date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setYyyymmddNull()
+   public void setNullYyyymmdd()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.YYYYMMDD._Mask);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.YYYYMMDD._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DATEDIM_Factory.COLS.YYYYMMDD._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.YYYYMMDD._Mask);
        _yyyymmdd=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -3029,12 +3137,13 @@ This is the null setter for:<BR>
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.yyyymmdd of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>yyyymmdd of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The yyyymmdd sortable printable version of a date.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.yyyymmdd of type character(8)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.yyyymmdd</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>8</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The yyyymmdd sortable printable version of a date.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -3056,11 +3165,12 @@ This is the hasChanged for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.isWeekend of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>isWeekend of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>1 if this is a weekend day, 0 otherwise.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.isWeekend of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.isWeekend</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>1 if this is a weekend day, 0 otherwise.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -3076,11 +3186,12 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.isWeekend of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>isWeekend of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>1 if this is a weekend day, 0 otherwise.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.isWeekend of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.isWeekend</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>1 if this is a weekend day, 0 otherwise.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -3096,17 +3207,18 @@ This is the getter for:<BR>
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.isWeekend of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>isWeekend of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>1 if this is a weekend day, 0 otherwise.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.isWeekend of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.isWeekend</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>1 if this is a weekend day, 0 otherwise.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isIsWeekendNull()
+   public final boolean isNullIsWeekend()
      { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.ISWEEKEND._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3116,11 +3228,12 @@ This is the isNull for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.isWeekend of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>isWeekend of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>1 if this is a weekend day, 0 otherwise.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.isWeekend of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.isWeekend</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>1 if this is a weekend day, 0 otherwise.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -3145,22 +3258,23 @@ This is the setter for:<BR>
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.isWeekend of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>isWeekend of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>1 if this is a weekend day, 0 otherwise.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.isWeekend of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.isWeekend</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>1 if this is a weekend day, 0 otherwise.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setIsWeekendNull()
+   public void setNullIsWeekend()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.ISWEEKEND._Mask);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.ISWEEKEND._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DATEDIM_Factory.COLS.ISWEEKEND._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.ISWEEKEND._Mask);
        _isWeekend=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -3173,11 +3287,12 @@ This is the null setter for:<BR>
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.isWeekend of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>isWeekend of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>1 if this is a weekend day, 0 otherwise.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.isWeekend of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.isWeekend</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>1 if this is a weekend day, 0 otherwise.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -3199,11 +3314,12 @@ This is the hasChanged for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.isBusinessDay of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>isBusinessDay of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>1 if this is a business day, 0 otherwise.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.isBusinessDay of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.isBusinessDay</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>1 if this is a business day, 0 otherwise.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -3219,11 +3335,12 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.isBusinessDay of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>isBusinessDay of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>1 if this is a business day, 0 otherwise.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.isBusinessDay of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.isBusinessDay</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>1 if this is a business day, 0 otherwise.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -3239,17 +3356,18 @@ This is the getter for:<BR>
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.isBusinessDay of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>isBusinessDay of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>1 if this is a business day, 0 otherwise.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.isBusinessDay of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.isBusinessDay</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>1 if this is a business day, 0 otherwise.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isIsBusinessDayNull()
+   public final boolean isNullIsBusinessDay()
      { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.ISBUSINESSDAY._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3259,11 +3377,12 @@ This is the isNull for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.isBusinessDay of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>isBusinessDay of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>1 if this is a business day, 0 otherwise.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.isBusinessDay of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.isBusinessDay</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>1 if this is a business day, 0 otherwise.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -3288,22 +3407,23 @@ This is the setter for:<BR>
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.isBusinessDay of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>isBusinessDay of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>1 if this is a business day, 0 otherwise.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.isBusinessDay of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.isBusinessDay</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>1 if this is a business day, 0 otherwise.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setIsBusinessDayNull()
+   public void setNullIsBusinessDay()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.ISBUSINESSDAY._Mask);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.ISBUSINESSDAY._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DATEDIM_Factory.COLS.ISBUSINESSDAY._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.ISBUSINESSDAY._Mask);
        _isBusinessDay=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -3316,11 +3436,12 @@ This is the null setter for:<BR>
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.isBusinessDay of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>isBusinessDay of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>1 if this is a business day, 0 otherwise.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.isBusinessDay of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.isBusinessDay</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>1 if this is a business day, 0 otherwise.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -3342,11 +3463,12 @@ This is the hasChanged for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.isHoliday of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>isHoliday of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>1 if this is a holiday, 0 otherwise.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.isHoliday of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.isHoliday</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>1 if this is a holiday, 0 otherwise.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -3362,11 +3484,12 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.isHoliday of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>isHoliday of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>1 if this is a holiday, 0 otherwise.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.isHoliday of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.isHoliday</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>1 if this is a holiday, 0 otherwise.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -3382,17 +3505,18 @@ This is the getter for:<BR>
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.isHoliday of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>isHoliday of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>1 if this is a holiday, 0 otherwise.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.isHoliday of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.isHoliday</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>1 if this is a holiday, 0 otherwise.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isIsHolidayNull()
+   public final boolean isNullIsHoliday()
      { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.ISHOLIDAY._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3402,11 +3526,12 @@ This is the isNull for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.isHoliday of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>isHoliday of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>1 if this is a holiday, 0 otherwise.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.isHoliday of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.isHoliday</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>1 if this is a holiday, 0 otherwise.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -3431,22 +3556,23 @@ This is the setter for:<BR>
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.isHoliday of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>isHoliday of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>1 if this is a holiday, 0 otherwise.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.isHoliday of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.isHoliday</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>1 if this is a holiday, 0 otherwise.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setIsHolidayNull()
+   public void setNullIsHoliday()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.ISHOLIDAY._Mask);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.ISHOLIDAY._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DATEDIM_Factory.COLS.ISHOLIDAY._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.ISHOLIDAY._Mask);
        _isHoliday=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -3459,11 +3585,12 @@ This is the null setter for:<BR>
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.isHoliday of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>isHoliday of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>1 if this is a holiday, 0 otherwise.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.isHoliday of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.isHoliday</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>1 if this is a holiday, 0 otherwise.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -3485,12 +3612,13 @@ This is the hasChanged for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.holidayName of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>holidayName of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The name of the holiday if applicable.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.holidayName of type varchar(255)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.holidayName</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>255</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The name of the holiday if applicable.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -3506,12 +3634,13 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.holidayName of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>holidayName of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The name of the holiday if applicable.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.holidayName of type varchar(255)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.holidayName</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>255</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The name of the holiday if applicable.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -3527,18 +3656,19 @@ This is the getter for:<BR>
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.holidayName of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>holidayName of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The name of the holiday if applicable.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.holidayName of type varchar(255)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.holidayName</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>255</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The name of the holiday if applicable.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isHolidayNameNull()
+   public final boolean isNullHolidayName()
      { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.HOLIDAYNAME._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3548,12 +3678,13 @@ This is the isNull for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.holidayName of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>holidayName of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The name of the holiday if applicable.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.holidayName of type varchar(255)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.holidayName</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>255</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The name of the holiday if applicable.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -3564,7 +3695,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setHolidayNameNull();
+          setNullHolidayName();
         }
        else if (v.length() > 255)
         throw new Exception("Cannot set tilda.data.TILDA.DateDim.holidayName: the size "+v.length()+" is larger than the max allowed of 255: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -3584,23 +3715,24 @@ This is the setter for:<BR>
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.holidayName of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>holidayName of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The name of the holiday if applicable.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.holidayName of type varchar(255)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.holidayName</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>255</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The name of the holiday if applicable.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setHolidayNameNull()
+   public void setNullHolidayName()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.HOLIDAYNAME._Mask);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.HOLIDAYNAME._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DATEDIM_Factory.COLS.HOLIDAYNAME._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.HOLIDAYNAME._Mask);
        _holidayName=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -3613,12 +3745,13 @@ This is the null setter for:<BR>
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.holidayName of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>holidayName of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The name of the holiday if applicable.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.holidayName of type varchar(255)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.holidayName</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>255</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The name of the holiday if applicable.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -3640,11 +3773,12 @@ This is the hasChanged for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>created of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.created</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -3666,11 +3800,12 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>created of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.created</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -3693,11 +3828,12 @@ This is the getter for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>created of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.created</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -3733,11 +3869,12 @@ This is the setter for:<BR>
 /**
 This is the NOW setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>created of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.created</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -3762,11 +3899,12 @@ This is the NOW setter for:<BR>
 /**
 This is the UNDEFINED setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>created of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.created</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -3791,11 +3929,12 @@ This is the UNDEFINED setter for:<BR>
 /**
 This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>created of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.created</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -3820,11 +3959,12 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>created of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.created</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -3853,11 +3993,12 @@ This is the hasChanged for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>lastUpdated of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.lastUpdated</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -3879,11 +4020,12 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>lastUpdated of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.lastUpdated</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -3906,11 +4048,12 @@ This is the getter for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>lastUpdated of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.lastUpdated</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -3944,11 +4087,12 @@ This is the setter for:<BR>
 /**
 This is the NOW setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>lastUpdated of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.lastUpdated</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -3973,11 +4117,12 @@ This is the NOW setter for:<BR>
 /**
 This is the UNDEFINED setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>lastUpdated of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.lastUpdated</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -4002,11 +4147,12 @@ This is the UNDEFINED setter for:<BR>
 /**
 This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>lastUpdated of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.lastUpdated</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -4031,11 +4177,12 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>lastUpdated of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.lastUpdated</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -4064,11 +4211,12 @@ This is the hasChanged for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>deleted of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.deleted</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -4083,11 +4231,12 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>deleted of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.deleted</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -4103,17 +4252,18 @@ This is the getter for:<BR>
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>deleted of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.deleted</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isDeletedNull()
+   public final boolean isNullDeleted()
      { return __Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DELETED._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4123,11 +4273,12 @@ This is the isNull for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>deleted of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.deleted</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -4138,7 +4289,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setDeletedNull();
+          setNullDeleted();
         }
        else if (v.equals(_deleted) == false)
         {
@@ -4156,22 +4307,23 @@ This is the setter for:<BR>
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>deleted of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.deleted</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final void setDeletedNull()
+   public final void setNullDeleted()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__DATEDIM_Factory.COLS.DELETED._Mask);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DELETED._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__DATEDIM_Factory.COLS.DELETED._Mask);
        __Nulls.or(TILDA__DATEDIM_Factory.COLS.DELETED._Mask);
        _deleted=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -4184,11 +4336,12 @@ This is the null setter for:<BR>
 /**
 This is the NOW setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>deleted of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.deleted</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -4206,11 +4359,12 @@ This is the NOW setter for:<BR>
 /**
 This is the UNDEFINED setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>deleted of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.deleted</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -4228,11 +4382,12 @@ This is the UNDEFINED setter for:<BR>
 /**
 This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>deleted of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.deleted</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -4250,11 +4405,12 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.DateDim.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>deleted of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateDim.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateDim.deleted</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.DateDim)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -4277,87 +4433,87 @@ This is the hasChanged for:<BR>
        if (_epoch          != null)
         Dst.setEpoch         (_epoch         );
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYNAME._Mask) == true || _dayName       ==null)
-        Dst.setDayNameNull       ();
+        Dst.setNullDayName       ();
        else
         Dst.setDayName       (_dayName       );
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFWEEK._Mask) == true || _dayOfWeek     ==null)
-        Dst.setDayOfWeekNull     ();
+        Dst.setNullDayOfWeek     ();
        else
         Dst.setDayOfWeek     (_dayOfWeek     );
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFMONTH._Mask) == true || _dayOfMonth    ==null)
-        Dst.setDayOfMonthNull    ();
+        Dst.setNullDayOfMonth    ();
        else
         Dst.setDayOfMonth    (_dayOfMonth    );
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFQUARTER._Mask) == true || _dayOfQuarter  ==null)
-        Dst.setDayOfQuarterNull  ();
+        Dst.setNullDayOfQuarter  ();
        else
         Dst.setDayOfQuarter  (_dayOfQuarter  );
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DAYOFYEAR._Mask) == true || _dayOfYear     ==null)
-        Dst.setDayOfYearNull     ();
+        Dst.setNullDayOfYear     ();
        else
         Dst.setDayOfYear     (_dayOfYear     );
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.WEEKOFMONTH._Mask) == true || _weekOfMonth   ==null)
-        Dst.setWeekOfMonthNull   ();
+        Dst.setNullWeekOfMonth   ();
        else
         Dst.setWeekOfMonth   (_weekOfMonth   );
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.WEEKOFYEAR._Mask) == true || _weekOfYear    ==null)
-        Dst.setWeekOfYearNull    ();
+        Dst.setNullWeekOfYear    ();
        else
         Dst.setWeekOfYear    (_weekOfYear    );
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTH._Mask) == true || _month         ==null)
-        Dst.setMonthNull         ();
+        Dst.setNullMonth         ();
        else
         Dst.setMonth         (_month         );
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTHOFYEAR._Mask) == true || _monthOfYear   ==null)
-        Dst.setMonthOfYearNull   ();
+        Dst.setNullMonthOfYear   ();
        else
         Dst.setMonthOfYear   (_monthOfYear   );
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTHNAME._Mask) == true || _monthName     ==null)
-        Dst.setMonthNameNull     ();
+        Dst.setNullMonthName     ();
        else
         Dst.setMonthName     (_monthName     );
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTHNAMESHORT._Mask) == true || _monthNameShort==null)
-        Dst.setMonthNameShortNull();
+        Dst.setNullMonthNameShort();
        else
         Dst.setMonthNameShort(_monthNameShort);
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.QUARTEROFYEAR._Mask) == true || _quarterOfYear ==null)
-        Dst.setQuarterOfYearNull ();
+        Dst.setNullQuarterOfYear ();
        else
         Dst.setQuarterOfYear (_quarterOfYear );
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.QUARTERNAME._Mask) == true || _quarterName   ==null)
-        Dst.setQuarterNameNull   ();
+        Dst.setNullQuarterName   ();
        else
         Dst.setQuarterName   (_quarterName   );
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.YEAR._Mask) == true || _year          ==null)
-        Dst.setYearNull          ();
+        Dst.setNullYear          ();
        else
         Dst.setYear          (_year          );
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MMYYYY._Mask) == true || _mmyyyy        ==null)
-        Dst.setMmyyyyNull        ();
+        Dst.setNullMmyyyy        ();
        else
         Dst.setMmyyyy        (_mmyyyy        );
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MMDDYYYY._Mask) == true || _mmddyyyy      ==null)
-        Dst.setMmddyyyyNull      ();
+        Dst.setNullMmddyyyy      ();
        else
         Dst.setMmddyyyy      (_mmddyyyy      );
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.YYYYMMDD._Mask) == true || _yyyymmdd      ==null)
-        Dst.setYyyymmddNull      ();
+        Dst.setNullYyyymmdd      ();
        else
         Dst.setYyyymmdd      (_yyyymmdd      );
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.ISWEEKEND._Mask) == true || _isWeekend     ==null)
-        Dst.setIsWeekendNull     ();
+        Dst.setNullIsWeekend     ();
        else
         Dst.setIsWeekend     (_isWeekend     );
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.ISBUSINESSDAY._Mask) == true || _isBusinessDay ==null)
-        Dst.setIsBusinessDayNull ();
+        Dst.setNullIsBusinessDay ();
        else
         Dst.setIsBusinessDay (_isBusinessDay );
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.ISHOLIDAY._Mask) == true || _isHoliday     ==null)
-        Dst.setIsHolidayNull     ();
+        Dst.setNullIsHoliday     ();
        else
         Dst.setIsHoliday     (_isHoliday     );
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.HOLIDAYNAME._Mask) == true || _holidayName   ==null)
-        Dst.setHolidayNameNull   ();
+        Dst.setNullHolidayName   ();
        else
         Dst.setHolidayName   (_holidayName   );
        if (__Init == InitMode.CREATE && _created        != null)
@@ -4365,7 +4521,7 @@ This is the hasChanged for:<BR>
        if (_lastUpdated    != null)
         Dst.setLastUpdated   (_lastUpdated   );
        if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DELETED._Mask) == true || _deleted       ==null)
-        Dst.setDeletedNull       ();
+        Dst.setNullDeleted       ();
        else
         Dst.setDeleted       (_deleted       );
      }

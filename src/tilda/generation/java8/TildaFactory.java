@@ -69,6 +69,8 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("import java.math.*;");
         Out.println("import java.util.*;");
         Out.println("import java.time.*;");
+        Out.println("import java.util.concurrent.atomic.AtomicBoolean;");
+
         Out.println();
         Out.println("import org.apache.logging.log4j.*;");
         Out.println();
@@ -206,23 +208,20 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println();
         Out.println("   public static final ColumnDefinition[] COLUMNS_FIRST_IDENTITY = " + (FirstIdentityColumns == null ? "{}" : FirstIdentityColumns) + ";");
         Out.println();
-
+        
         if (O._TenantInit == false)
           {
-            Out.println("   private static Boolean  __INITIALIZED = false;");
+            Out.println("   // Short(short) is deprecated, but we do want a new instance here to avoid synchronizing over the same cached instance from valueOf.");
+            Out.println("   // @SuppressWarnings(\"deprecation\")");
+            Out.println("   private static final AtomicBoolean __INITIALIZED = new AtomicBoolean(false);");
             Out.println("   protected static void initObject(Connection C) throws Exception");
             Out.println("     {");
-            Out.println("       if (__INITIALIZED == false)");
-            Out.println("        synchronized(__INITIALIZED)");
-            Out.println("         {");
-            Out.println("           if (__INITIALIZED == false)");
-            Out.println("            {");
+            Out.println("       if (__INITIALIZED.compareAndSet(false, true))");
+            Out.println("        {");
             if (O._FST == FrameworkSourcedType.ENUMERATION || O._FST == FrameworkSourcedType.MAPPER)
-              Out.println("              initMappings(C);");
-            Out.println("              " + Helper.getFullAppFactoryClassName(O) + ".init(C);");
-            Out.println("              __INITIALIZED = true;");
-            Out.println("            }");
-            Out.println("         }");
+              Out.println("           initMappings(C);");
+            Out.println("           " + Helper.getFullAppFactoryClassName(O) + ".init(C);");
+            Out.println("        }");
             Out.println("     }");
           }
         else
@@ -1361,7 +1360,7 @@ public class TildaFactory implements CodeGenTildaFactory
             if (nameCol.getType() == ColumnType.STRING)
               Out.println("          if(TextUtil.isNullOrEmpty(D.get" + TextUtil.capitalizeFirstCharacter(nameCol.getName()) + "()) == false)");
             else if (nameCol._Nullable == true)
-              Out.println("          if(D.is" + TextUtil.capitalizeFirstCharacter(nameCol.getName()) + "Null() == false)");
+              Out.println("          if(D.isNull" + TextUtil.capitalizeFirstCharacter(nameCol.getName()) + "() == false)");
             else if (nameCol.getType().isPrimitive() == false)
               Out.println("          if(D.get" + TextUtil.capitalizeFirstCharacter(nameCol.getName()) + "() != null)");
             Out.println("            if (M.put(D.get" + TextUtil.capitalizeFirstCharacter(nameCol.getName()) + "(), D.get" + TextUtil.capitalizeFirstCharacter(valCol.getName()) + "()) != null)");

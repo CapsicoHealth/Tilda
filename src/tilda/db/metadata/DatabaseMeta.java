@@ -18,13 +18,17 @@ package tilda.db.metadata;
 
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.db.Connection;
+import tilda.utils.TextUtil;
 
 public class DatabaseMeta
   {
@@ -40,6 +44,11 @@ public class DatabaseMeta
     public void load(Connection C, String SchemaPattern, String TablePattern)
     throws Exception
       {
+        load(C, SchemaPattern, TablePattern, null);
+      }
+    public void load(Connection C, String SchemaPattern, String TablePattern, String[] excludedSchemas)
+    throws Exception
+      {
         DatabaseMetaData meta = C.getMetaData();
 
         long TS = System.nanoTime();
@@ -47,6 +56,8 @@ public class DatabaseMeta
         while (RS.next() != false)
           {
             String SchemaName = RS.getString("TABLE_SCHEM").toLowerCase();
+            if (excludedSchemas != null && TextUtil.contains(excludedSchemas, SchemaName, true, 0) == true)
+             continue;
             LOG.debug("Reading metadata for schema '" + SchemaName + "'.");
             SchemaMeta S = _DBSchemas.get(SchemaName);
             if (S == null)
@@ -70,6 +81,21 @@ public class DatabaseMeta
     public SchemaMeta getSchemaMeta(String SchemaName)
       {
         return _DBSchemas.get(SchemaName.toLowerCase());
+      }
+    public Collection<SchemaMeta> getSchemaMetas()
+      {
+        return _DBSchemas.values();
+      }
+    /**
+     * This method returns the sorted list of schema names. Since it sorts that list each time this method is called
+     * the caller should cache the results if needed multiple times.
+     * @return
+     */
+    public String[] getSchemaNamesSorted()
+      {
+        String[] names = (String[])_DBSchemas.keySet().toArray();
+        Arrays.sort(names);
+        return names;
       }
 
     public TableMeta getTableMeta(String SchemaName, String TableName)
@@ -97,4 +123,5 @@ public class DatabaseMeta
       {
         return _DBSchemas.put(SchemaName.toLowerCase(), new SchemaMeta(SchemaName)) == null;
       }
+
   }

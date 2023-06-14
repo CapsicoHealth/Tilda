@@ -197,5 +197,28 @@ public class ReferenceHelper
 
         return col;
       }
+    
+    public static Object resolveObjectReference(ParserSession PS, Object parentObject, String destObject, String what)
+      {
+        Object obj = null;
+        ReferenceHelper R = ReferenceHelper.parseObjectReference(destObject, parentObject._ParentSchema);
+        if (TextUtil.isNullOrEmpty(R._S) == true || TextUtil.isNullOrEmpty(R._O) == true)
+          PS.AddError("Object '" + parentObject.getFullName() + "' declares " + what + " with an incorrect syntax for the object reference. It should be '((package\\.)?schema\\.)?object'.");
+        else
+          {
+            obj = PS.getObject(R._P, R._S, R._O);
+            if (obj == null)
+             PS.AddError("Object '" + parentObject.getFullName() + "' declares " + what + " with destination Object '" + destObject + "' resolving to '" + R.getFullName() + "' which cannot be found.");
+            else if (parentObject != obj && obj._Validated == false)
+              {
+                if (parentObject.getSchema().isDefinedInOrder(obj, parentObject) == false)
+                 PS.AddError("Object '" + parentObject.getFullName() + "' declares " + what + " to destination Object '" + destObject + "', but is defined before. Dependent object must be defined first.");
+                else
+                 PS.AddError("Object '" + parentObject.getFullName() + "' declares " + what + " to destination Object '" + destObject + "' which has failed validation.");
+              }
+          }
+        return obj;
+      }
+    
 
   }

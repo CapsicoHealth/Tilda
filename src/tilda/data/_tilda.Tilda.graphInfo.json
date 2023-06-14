@@ -161,5 +161,620 @@
         "12": "t"
       }
     }
+  },
+  "canvases": [
+    {
+      "name": "object",
+      "title": "Tables Graph",
+      "package": "tilda.data",
+      "viewOnly": false,
+      "scale": 0.96
+    },
+    {
+      "name": "view",
+      "title": "Views Graph",
+      "package": "tilda.data",
+      "viewOnly": true,
+      "scale": 0.96
+    }
+  ],
+  "tilda.data.object#key": {
+    "type": "basic.Rect",
+    "position": {
+      "x": 70,
+      "y": 190
+    },
+    "size": {
+      "width": 108,
+      "height": 30
+    },
+    "angle": 0,
+    "id": "53903718-e2e2-461e-ac74-a75b076c50f4",
+    "customId": "key",
+    "z": 15,
+    "attrs": {
+      "rect": {
+        "fill": "rgb(46,117,182)",
+        "stroke": "rgb(65,113,156)",
+        "stroke-width": 2
+      },
+      "text": {
+        "fill": "white",
+        "text": "Tilda.Key"
+      }
+    }
+  },
+  "tilda.data.object#catalog": {
+    "type": "basic.Rect",
+    "position": {
+      "x": 310,
+      "y": 180
+    },
+    "size": {
+      "width": 156,
+      "height": 30
+    },
+    "angle": 0,
+    "id": "e5941505-6613-432c-911d-069ab4d5eed4",
+    "customId": "catalog",
+    "z": 1,
+    "attrs": {
+      "rect": {
+        "fill": "rgb(46,117,182)",
+        "stroke": "rgb(65,113,156)",
+        "stroke-width": 2
+      },
+      "text": {
+        "fill": "white",
+        "text": "Tilda.Catalog"
+      }
+    }
+  },
+  "tilda.data.object#catalogformularesult": {
+    "type": "basic.Rect",
+    "position": {
+      "x": 510,
+      "y": 180
+    },
+    "size": {
+      "width": 312,
+      "height": 30
+    },
+    "angle": 0,
+    "id": "ca5391be-9d30-4cea-bc07-bd70d77e0679",
+    "customId": "catalogformularesult",
+    "z": 4,
+    "attrs": {
+      "rect": {
+        "fill": "rgb(46,117,182)",
+        "stroke": "rgb(65,113,156)",
+        "stroke-width": 2
+      },
+      "text": {
+        "fill": "white",
+        "text": "Tilda.CatalogFormulaResult"
+      }
+    }
+  },
+  "tilda.data.object#maintenancelog": {
+    "type": "basic.Rect",
+    "position": {
+      "x": 70,
+      "y": 430
+    },
+    "size": {
+      "width": 240,
+      "height": 30
+    },
+    "angle": 0,
+    "id": "e7e9b63a-cadd-4d76-86e9-e212a77bbe05",
+    "customId": "maintenancelog",
+    "z": 16,
+    "attrs": {
+      "rect": {
+        "fill": "rgb(46,117,182)",
+        "stroke": "rgb(65,113,156)",
+        "stroke-width": 2
+      },
+      "text": {
+        "fill": "white",
+        "text": "Tilda.MaintenanceLog"
+      }
+    }
+  },
+  "tilda.data.object#transperf": {
+    "type": "basic.Rect",
+    "position": {
+      "x": 70,
+      "y": 350
+    },
+    "size": {
+      "width": 180,
+      "height": 30
+    },
+    "angle": 0,
+    "id": "b05fbf78-6e88-42e4-961b-aad09cf614c5",
+    "customId": "transperf",
+    "z": 19,
+    "attrs": {
+      "rect": {
+        "fill": "rgb(46,117,182)",
+        "stroke": "rgb(65,113,156)",
+        "stroke-width": 2
+      },
+      "text": {
+        "fill": "white",
+        "text": "Tilda.TransPerf"
+      }
+    }
+  },
+  "tilda.data.object#refillperf": {
+    "type": "basic.Rect",
+    "position": {
+      "x": 70,
+      "y": 390
+    },
+    "size": {
+      "width": 192,
+      "height": 30
+    },
+    "angle": 0,
+    "id": "5785803e-8d5b-4738-9524-82292c6ee549",
+    "customId": "refillperf",
+    "z": 20,
+    "attrs": {
+      "rect": {
+        "fill": "rgb(46,117,182)",
+        "stroke": "rgb(65,113,156)",
+        "stroke-width": 2
+      },
+      "text": {
+        "fill": "white",
+        "text": "Tilda.RefillPerf"
+      }
+    }
+  },
+  "tilda.data.object#mapping": {
+    "type": "basic.Rect",
+    "position": {
+      "x": 70,
+      "y": 270
+    },
+    "size": {
+      "width": 156,
+      "height": 30
+    },
+    "angle": 0,
+    "id": "dfd5c7f0-ad9f-4279-9113-8e60d8adc1c0",
+    "customId": "mapping",
+    "z": 17,
+    "attrs": {
+      "rect": {
+        "fill": "rgb(46,117,182)",
+        "stroke": "rgb(65,113,156)",
+        "stroke-width": 2
+      },
+      "text": {
+        "fill": "white",
+        "text": "Tilda.Mapping"
+      }
+    }
+  },
+  "tilda.data.object#connection": {
+    "type": "basic.Rect",
+    "position": {
+      "x": 70,
+      "y": 230
+    },
+    "size": {
+      "width": 192,
+      "height": 30
+    },
+    "angle": 0,
+    "id": "a48e2a17-5028-4e06-a2e2-4b5497688c17",
+    "customId": "connection",
+    "z": 2,
+    "attrs": {
+      "rect": {
+        "fill": "rgb(46,117,182)",
+        "stroke": "rgb(65,113,156)",
+        "stroke-width": 2
+      },
+      "text": {
+        "fill": "white",
+        "text": "Tilda.Connection"
+      }
+    }
+  },
+  "tilda.data.object#job": {
+    "type": "basic.Rect",
+    "position": {
+      "x": 320,
+      "y": 240
+    },
+    "size": {
+      "width": 108,
+      "height": 30
+    },
+    "angle": 0,
+    "id": "5993db7a-56f8-42ba-9938-a8de0e0e804d",
+    "customId": "job",
+    "z": 8,
+    "attrs": {
+      "rect": {
+        "fill": "rgb(46,117,182)",
+        "stroke": "rgb(65,113,156)",
+        "stroke-width": 2
+      },
+      "text": {
+        "fill": "white",
+        "text": "Tilda.Job"
+      }
+    }
+  },
+  "tilda.data.object#jobpart": {
+    "type": "basic.Rect",
+    "position": {
+      "x": 440,
+      "y": 340
+    },
+    "size": {
+      "width": 156,
+      "height": 30
+    },
+    "angle": 0,
+    "id": "d037a72d-7f6f-4447-8d38-8f4a14abc849",
+    "customId": "jobpart",
+    "z": 10,
+    "attrs": {
+      "rect": {
+        "fill": "rgb(46,117,182)",
+        "stroke": "rgb(65,113,156)",
+        "stroke-width": 2
+      },
+      "text": {
+        "fill": "white",
+        "text": "Tilda.JobPart"
+      }
+    }
+  },
+  "tilda.data.object#jobpartmessage": {
+    "type": "basic.Rect",
+    "position": {
+      "x": 530,
+      "y": 240
+    },
+    "size": {
+      "width": 240,
+      "height": 30
+    },
+    "angle": 0,
+    "id": "0e1755e0-ab2f-4619-a4f0-eb18474da5eb",
+    "customId": "jobpartmessage",
+    "z": 12,
+    "attrs": {
+      "rect": {
+        "fill": "rgb(46,117,182)",
+        "stroke": "rgb(65,113,156)",
+        "stroke-width": 2
+      },
+      "text": {
+        "fill": "white",
+        "text": "Tilda.JobPartMessage"
+      }
+    }
+  },
+  "tilda.data.object#objectperf": {
+    "type": "basic.Rect",
+    "position": {
+      "x": 70,
+      "y": 470
+    },
+    "size": {
+      "width": 192,
+      "height": 30
+    },
+    "angle": 0,
+    "id": "860b3085-8394-4ebf-a9cb-425d4f198f3c",
+    "customId": "objectperf",
+    "z": 18,
+    "attrs": {
+      "rect": {
+        "fill": "rgb(46,117,182)",
+        "stroke": "rgb(65,113,156)",
+        "stroke-width": 2
+      },
+      "text": {
+        "fill": "white",
+        "text": "Tilda.ObjectPerf"
+      }
+    }
+  },
+  "tilda.data.object#faileddependencyddlscripts": {
+    "type": "basic.Rect",
+    "position": {
+      "x": 70,
+      "y": 520
+    },
+    "size": {
+      "width": 384,
+      "height": 30
+    },
+    "angle": 0,
+    "id": "919a3a1f-eef4-4bba-9cd6-969f34890d82",
+    "customId": "faileddependencyddlscripts",
+    "z": 9,
+    "attrs": {
+      "rect": {
+        "fill": "rgb(46,117,182)",
+        "stroke": "rgb(65,113,156)",
+        "stroke-width": 2
+      },
+      "text": {
+        "fill": "white",
+        "text": "Tilda.FailedDependencyDDLScripts"
+      }
+    }
+  },
+  "tilda.data.object#datedim": {
+    "type": "basic.Rect",
+    "position": {
+      "x": 630,
+      "y": 410
+    },
+    "size": {
+      "width": 156,
+      "height": 30
+    },
+    "angle": 0,
+    "id": "37538fe2-cdfb-41e9-9320-77085dd97d37",
+    "customId": "datedim",
+    "z": 3,
+    "attrs": {
+      "rect": {
+        "fill": "rgb(46,117,182)",
+        "stroke": "rgb(65,113,156)",
+        "stroke-width": 2
+      },
+      "text": {
+        "fill": "white",
+        "text": "Tilda.DateDim"
+      }
+    }
+  },
+  "tilda.data.object#datelimitdim": {
+    "type": "basic.Rect",
+    "position": {
+      "x": 600,
+      "y": 490
+    },
+    "size": {
+      "width": 216,
+      "height": 30
+    },
+    "angle": 0,
+    "id": "1486205c-a98b-47cc-952a-57302a764191",
+    "customId": "datelimitdim",
+    "z": 6,
+    "attrs": {
+      "rect": {
+        "fill": "rgb(46,117,182)",
+        "stroke": "rgb(65,113,156)",
+        "stroke-width": 2
+      },
+      "text": {
+        "fill": "white",
+        "text": "Tilda.DateLimitDim"
+      }
+    }
+  },
+  "tilda.data.object#zoneinfo": {
+    "type": "basic.Rect",
+    "position": {
+      "x": 440,
+      "y": 410
+    },
+    "size": {
+      "width": 168,
+      "height": 30
+    },
+    "angle": 0,
+    "id": "6f843d32-18e7-40a8-94fd-4d109aa6ffb8",
+    "customId": "zoneinfo",
+    "z": 21,
+    "attrs": {
+      "rect": {
+        "fill": "rgb(251,229,214)",
+        "stroke": "rgb(248,203,173)",
+        "stroke-width": 1
+      },
+      "text": {
+        "fill": "black",
+        "text": "Tilda.ZoneInfo"
+      }
+    }
+  },
+  "tilda.data.view#formularesultview": {
+    "type": "basic.Rect",
+    "position": {
+      "x": 150,
+      "y": 150
+    },
+    "size": {
+      "width": 276,
+      "height": 30
+    },
+    "angle": 0,
+    "id": "a4c5f23a-4b18-42b2-a854-d0ec138b185d",
+    "customId": "formularesultview",
+    "attrs": {
+      "rect": {
+        "fill": "rgb(169,209,142)",
+        "stroke": "rgb(0,176,80)",
+        "stroke-width": 1,
+        "stroke-dasharray": "3,3"
+      },
+      "text": {
+        "fill": "black",
+        "text": "Tilda.FormulaResultView"
+      }
+    }
+  },
+  "tilda.data.view#catalogformularesult": {
+    "type": "basic.Rect",
+    "position": {
+      "x": 130,
+      "y": 300
+    },
+    "size": {
+      "width": 312,
+      "height": 30
+    },
+    "angle": 0,
+    "id": "c9f4f74c-ab03-4ca2-9311-eed75c42e442",
+    "customId": "catalogformularesult",
+    "z": 4,
+    "attrs": {
+      "rect": {
+        "fill": "rgb(46,117,182)",
+        "stroke": "rgb(65,113,156)",
+        "stroke-width": 2
+      },
+      "text": {
+        "fill": "white",
+        "text": "Tilda.CatalogFormulaResult"
+      }
+    }
+  },
+  "tilda.data.view#catalog": {
+    "type": "basic.Rect",
+    "position": {
+      "x": 50,
+      "y": 220
+    },
+    "size": {
+      "width": 156,
+      "height": 30
+    },
+    "angle": 0,
+    "id": "61a2a5b4-49cc-42bb-b0cd-e8b29c3b139e",
+    "customId": "catalog",
+    "z": 1,
+    "attrs": {
+      "rect": {
+        "fill": "rgb(46,117,182)",
+        "stroke": "rgb(65,113,156)",
+        "stroke-width": 2
+      },
+      "text": {
+        "fill": "white",
+        "text": "Tilda.Catalog"
+      }
+    }
+  },
+  "tilda.data.view#jobview": {
+    "type": "basic.Rect",
+    "position": {
+      "x": 620,
+      "y": 140
+    },
+    "size": {
+      "width": 156,
+      "height": 30
+    },
+    "angle": 0,
+    "id": "75e50e20-3f03-4625-ad88-1a1b28cf2238",
+    "customId": "jobview",
+    "z": 5,
+    "attrs": {
+      "rect": {
+        "fill": "rgb(169,209,142)",
+        "stroke": "rgb(0,176,80)",
+        "stroke-width": 1,
+        "stroke-dasharray": "3,3"
+      },
+      "text": {
+        "fill": "black",
+        "text": "Tilda.JobView"
+      }
+    }
+  },
+  "tilda.data.view#job": {
+    "type": "basic.Rect",
+    "position": {
+      "x": 480,
+      "y": 300
+    },
+    "size": {
+      "width": 108,
+      "height": 30
+    },
+    "angle": 0,
+    "id": "7f0f086f-a4e0-4018-9ff0-c7885def7d1a",
+    "customId": "job",
+    "z": 7,
+    "attrs": {
+      "rect": {
+        "fill": "rgb(46,117,182)",
+        "stroke": "rgb(65,113,156)",
+        "stroke-width": 2
+      },
+      "text": {
+        "fill": "white",
+        "text": "Tilda.Job"
+      }
+    }
+  },
+  "tilda.data.view#jobpart": {
+    "type": "basic.Rect",
+    "position": {
+      "x": 620,
+      "y": 250
+    },
+    "size": {
+      "width": 156,
+      "height": 30
+    },
+    "angle": 0,
+    "id": "d7dd3c0a-01de-4426-a922-55d573a5f37d",
+    "customId": "jobpart",
+    "z": 8,
+    "attrs": {
+      "rect": {
+        "fill": "rgb(46,117,182)",
+        "stroke": "rgb(65,113,156)",
+        "stroke-width": 2
+      },
+      "text": {
+        "fill": "white",
+        "text": "Tilda.JobPart"
+      }
+    }
+  },
+  "tilda.data.view#jobpartmessage": {
+    "type": "basic.Rect",
+    "position": {
+      "x": 770,
+      "y": 300
+    },
+    "size": {
+      "width": 240,
+      "height": 30
+    },
+    "angle": 0,
+    "id": "37da5119-5101-44a0-9b01-ff6078c57d38",
+    "customId": "jobpartmessage",
+    "z": 10,
+    "attrs": {
+      "rect": {
+        "fill": "rgb(46,117,182)",
+        "stroke": "rgb(65,113,156)",
+        "stroke-width": 2
+      },
+      "text": {
+        "fill": "white",
+        "text": "Tilda.JobPartMessage"
+      }
+    }
   }
 }

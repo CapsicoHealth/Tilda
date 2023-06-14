@@ -4,6 +4,7 @@ package tilda.tutorial.data._Tilda;
 import java.math.*;
 import java.util.*;
 import java.time.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.logging.log4j.*;
 
@@ -35,7 +36,12 @@ public class TILDA__FORMANSWER_Factory
    public static final String SCHEMA_TABLENAME_LABEL = TextUtil.print("TILDATUTORIAL.FormAnswer", "");
    public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDATUTORIAL", "FormAnswer"); }
 
-   public static abstract class COLS {
+   public static final class COLS_BASE
+    {
+      private COLS_BASE() { }
+
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.FormAnswer.refnum -> TILDATUTORIAL.FormAnswer."refnum"
@@ -43,17 +49,20 @@ public class TILDA__FORMANSWER_Factory
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.FormAnswer.refnum of type long</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>refnum of type long</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.FormAnswer.refnum of type bigint</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.FormAnswer.refnum</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          REFNUM     = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"     , 0/*0*/, "The primary key for this record", null, null, null);
+     public final Type_LongPrimitive          REFNUM     = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"     , 0/*0*/, "The primary key for this record", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.FormAnswer.formRefnum -> TILDATUTORIAL.FormAnswer."formRefnum"
@@ -61,17 +70,20 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.FormAnswer.formRefnum of type long</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>formRefnum of type long</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The form's refnum</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.FormAnswer.formRefnum of type bigint</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.FormAnswer.formRefnum</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The form's refnum</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          FORMREFNUM = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "formRefnum" , 1/*1*/, "The form's refnum", null, null, null);
+     public final Type_LongPrimitive          FORMREFNUM = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "formRefnum" , 1/*1*/, "The form's refnum", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.FormAnswer.field -> TILDATUTORIAL.FormAnswer."field"
@@ -79,18 +91,21 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.FormAnswer.field of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>field of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>question/field id</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.FormAnswer.field of type varchar(60)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.FormAnswer.field</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>60</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>question/field id</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        FIELD      = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "field"      , 2/*2*/, "question/field id", null, null, null);
+     public final Type_StringPrimitive        FIELD      = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "field"      , 2/*2*/, 60, "question/field id", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.FormAnswer.value -> TILDATUTORIAL.FormAnswer."value"
@@ -98,18 +113,21 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.FormAnswer.value of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>value of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>answer value</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.FormAnswer.value of type varchar(4000)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.FormAnswer.value</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>4000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>answer value</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    VALUE      = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "value"      , 3/*3*/, "answer value", null, null, null);
+     public final Type_StringPrimitiveNull    VALUE      = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "value"      , 3/*3*/, 4000, "answer value", null, null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.FormAnswer.created -> TILDATUTORIAL.FormAnswer."created"
@@ -117,11 +135,12 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.FormAnswer.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>created of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDATUTORIAL.FormAnswer)</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.FormAnswer.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.FormAnswer.created</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDATUTORIAL.FormAnswer)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -134,7 +153,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      CREATED    = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"    , 4/*4*/, "The timestamp for when the record was created. (TILDATUTORIAL.FormAnswer)", null, null);
+     public final Type_DatetimePrimitive      CREATED    = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"    , 4/*4*/, "The timestamp for when the record was created. (TILDATUTORIAL.FormAnswer)", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.FormAnswer.lastUpdated -> TILDATUTORIAL.FormAnswer."lastUpdated"
@@ -142,11 +163,12 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.FormAnswer.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>lastUpdated of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATUTORIAL.FormAnswer)</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.FormAnswer.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.FormAnswer.lastUpdated</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDATUTORIAL.FormAnswer)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -159,7 +181,9 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      LASTUPDATED= new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated", 5/*5*/, "The timestamp for when the record was last updated. (TILDATUTORIAL.FormAnswer)", null, null);
+     public final Type_DatetimePrimitive      LASTUPDATED= new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated", 5/*5*/, "The timestamp for when the record was last updated. (TILDATUTORIAL.FormAnswer)", null, null);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.tutorial.data.TILDATUTORIAL.FormAnswer.deleted -> TILDATUTORIAL.FormAnswer."deleted"
@@ -167,42 +191,40 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.FormAnswer.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>deleted of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDATUTORIAL.FormAnswer)</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.FormAnswer.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.FormAnswer.deleted</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDATUTORIAL.FormAnswer)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  DELETED    = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"    , 6/*6*/, "The timestamp for when the record was deleted. (TILDATUTORIAL.FormAnswer)", null, null);
-;
+     public final Type_DatetimePrimitiveNull  DELETED    = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"    , 6/*6*/, "The timestamp for when the record was deleted. (TILDATUTORIAL.FormAnswer)", null, null);
    }
 
-   public static final ColumnDefinition[] COLUMNS = { COLS.REFNUM,COLS.FORMREFNUM,COLS.FIELD,COLS.VALUE,COLS.CREATED,COLS.LASTUPDATED,COLS.DELETED };
+   public static COLS_BASE COLS = new COLS_BASE();
+   public static final ColumnDefinition[] COLUMNS = new ColumnDefinition[] { COLS.REFNUM,COLS.FORMREFNUM,COLS.FIELD,COLS.VALUE,COLS.CREATED,COLS.LASTUPDATED,COLS.DELETED };
 
-   public static final ColumnDefinition[] COLUMNS_PRIMARY = { COLS.REFNUM };
+   public static final ColumnDefinition[] COLUMNS_PRIMARY = new ColumnDefinition[] { COLS.REFNUM };
 
-   public static final ColumnDefinition[][] COLUMNS_UNIQUE_INDICES = { 
+   public static final ColumnDefinition[][] COLUMNS_UNIQUE_INDICES = new ColumnDefinition[][]{ 
                    {COLS.FORMREFNUM,COLS.FIELD}
         };
 
    public static final ColumnDefinition[] COLUMNS_FIRST_IDENTITY = COLUMNS_UNIQUE_INDICES[0];
 
-   private static Boolean  __INITIALIZED = false;
+   // Short(short) is deprecated, but we do want a new instance here to avoid synchronizing over the same cached instance from valueOf.
+   // @SuppressWarnings("deprecation")
+   private static final AtomicBoolean __INITIALIZED = new AtomicBoolean(false);
    protected static void initObject(Connection C) throws Exception
      {
-       if (__INITIALIZED == false)
-        synchronized(__INITIALIZED)
-         {
-           if (__INITIALIZED == false)
-            {
-              tilda.tutorial.data.FormAnswer_Factory.init(C);
-              __INITIALIZED = true;
-            }
-         }
+       if (__INITIALIZED.compareAndSet(false, true))
+        {
+           tilda.tutorial.data.FormAnswer_Factory.init(C);
+        }
      }
    private static class RecordProcessorInternal implements tilda.db.processors.RecordProcessor
      {
@@ -258,13 +280,7 @@ This is the column definition for:<BR>
        else
         {
           S.append("select ");
-          S.append(" "); C.getFullColumnVar(S, "TILDATUTORIAL", "FormAnswer", "refnum");
-          S.append(", "); C.getFullColumnVar(S, "TILDATUTORIAL", "FormAnswer", "formRefnum");
-          S.append(", "); C.getFullColumnVar(S, "TILDATUTORIAL", "FormAnswer", "field");
-          S.append(", "); C.getFullColumnVar(S, "TILDATUTORIAL", "FormAnswer", "value");
-          S.append(", "); C.getFullColumnVar(S, "TILDATUTORIAL", "FormAnswer", "created");
-          S.append(", "); C.getFullColumnVar(S, "TILDATUTORIAL", "FormAnswer", "lastUpdated");
-          S.append(", "); C.getFullColumnVar(S, "TILDATUTORIAL", "FormAnswer", "deleted");
+          C.getFullColumnVarList(S, TILDA__FORMANSWER_Factory.COLUMNS);
           S.append(" from "); C.getFullTableVar(S, "TILDATUTORIAL", "FormAnswer");
           switch (LookupId)
            {
@@ -314,7 +330,7 @@ This is the column definition for:<BR>
         }
        finally
         {
-          tilda.tutorial.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__FORMANSWER_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.tutorial.data._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__FORMANSWER_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
 
@@ -389,6 +405,9 @@ object. The generic init method defaults to this general data structure as a gen
        Obj.setCreatedNow       ();
        Obj.setLastUpdatedNow   ();
 
+       // Default Nullables
+       Obj.__Nulls.or(TILDA__FORMANSWER_Factory.COLS.VALUE._Mask);
+
        return (tilda.tutorial.data.FormAnswer_Data) Obj;
      }
 
@@ -455,6 +474,8 @@ object. The generic init method defaults to this general data structure as a gen
                int i = d.populatePreparedStatement(C, PS, AllocatedArrays);
 
                PS.addBatch();
+               ++count;
+
                if (index != 0 && (index + 1) % batchSize == 0)
                  {
                    int[] results = PS.executeBatch();
@@ -493,7 +514,6 @@ object. The generic init method defaults to this general data structure as a gen
                if(commitSize > 0)
                  {
                    C.commit();
-                   LOG.debug("Commited " + insertCount + " batch records.");
                  }
                LOG.debug("Final Batch-inserted objects between positions #" + insertCount + " and #" + index + ".");
              }
@@ -509,12 +529,15 @@ object. The generic init method defaults to this general data structure as a gen
          }
        finally
          {
-           TILDA__1_0.handleFinally(PS, T0, TILDA__FORMANSWER_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+           TILDA__2_3.handleFinally(PS, T0, TILDA__FORMANSWER_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
            PS = null;
            AllocatedArrays = null;
          }
        }
 
+/**
+Lookup one record by the primary key: refnum.
+*/
    static public tilda.tutorial.data.FormAnswer_Data lookupByPrimaryKey(long refnum) throws Exception
      {
        tilda.tutorial.data._Tilda.TILDA__FORMANSWER Obj = new tilda.tutorial.data.FormAnswer_Data();
@@ -525,6 +548,9 @@ object. The generic init method defaults to this general data structure as a gen
        return (tilda.tutorial.data.FormAnswer_Data) Obj;
      }
 
+/**
+Lookup one record by the unique index 'FormAnswer': formRefnum, field.
+*/
    static public tilda.tutorial.data.FormAnswer_Data lookupByFormAnswer(long formRefnum, String field) throws Exception
      {
        tilda.tutorial.data._Tilda.TILDA__FORMANSWER Obj = new tilda.tutorial.data.FormAnswer_Data();
@@ -536,7 +562,9 @@ object. The generic init method defaults to this general data structure as a gen
        return (tilda.tutorial.data.FormAnswer_Data) Obj;
      }
 
-
+/**
+Lookup records by the index 'All' over  .<BR>The results are ordered by: lastUpdated asc
+*/
    static public ListResults<tilda.tutorial.data.FormAnswer_Data> lookupWhereAll(Connection C, int start, int size) throws Exception
      {
        tilda.tutorial.data._Tilda.TILDA__FORMANSWER Obj = new tilda.tutorial.data.FormAnswer_Data();
@@ -549,6 +577,9 @@ object. The generic init method defaults to this general data structure as a gen
        return RPI._L;
      }
 
+/**
+Lookup records by the index 'All' over  .<BR>The results are ordered by: lastUpdated asc
+*/
    static public void lookupWhereAll(Connection C, tilda.db.processors.ObjectProcessor<tilda.tutorial.data.FormAnswer_Data> OP, int start, int size) throws Exception
      {
        tilda.tutorial.data._Tilda.TILDA__FORMANSWER Obj = new tilda.tutorial.data.FormAnswer_Data();
@@ -559,6 +590,7 @@ object. The generic init method defaults to this general data structure as a gen
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
        readMany(C, 2, RPI, Obj, null, start, size);
      }
+
 
 
 
@@ -601,21 +633,22 @@ object. The generic init method defaults to this general data structure as a gen
    public static void toCSV(java.io.Writer out, tilda.tutorial.data.FormAnswer_Data obj) throws java.io.IOException
     {
       long T0 = System.nanoTime();
+     tilda.tutorial.data._Tilda.TILDA__FORMANSWER Obj = (tilda.tutorial.data._Tilda.TILDA__FORMANSWER) obj;
       StringBuilder Str = new StringBuilder();
 
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getRefnum());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getRefnum());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + obj.getFormRefnum());
+      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getFormRefnum());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getField());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getField());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, obj.getValue());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getValue());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getCreated()));
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getCreated()));
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getLastUpdated()));
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getLastUpdated()));
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(obj.getDeleted()));
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getDeleted()));
       out.write(Str.toString());
       PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);
     }
@@ -666,36 +699,37 @@ object. The generic init method defaults to this general data structure as a gen
    public static void toJSON(java.io.Writer outWriter, tilda.tutorial.data.FormAnswer_Data obj, String lead, boolean fullObject, boolean noNullArrays) throws java.io.IOException
     {
       long T0 = System.nanoTime();
-      org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter();
-      tilda.tutorial.data._Tilda.TILDA__FORMANSWER Obj = (tilda.tutorial.data._Tilda.TILDA__FORMANSWER) obj;
-      if (fullObject == true)
+      try(org.apache.commons.io.output.StringBuilderWriter out = new org.apache.commons.io.output.StringBuilderWriter())
        {
-          out.write(lead);
-          out.write("{");
-       }
+        tilda.tutorial.data._Tilda.TILDA__FORMANSWER Obj = (tilda.tutorial.data._Tilda.TILDA__FORMANSWER) obj;
+        if (fullObject == true)
+         {
+           out.write(lead);
+           out.write("{");
+         }
 
-      int i = -1;
+        int i = -1;
         JSONUtil.print(out, "refnum", ++i==0, Obj.getRefnum());
 
         JSONUtil.print(out, "formRefnum", ++i==0, Obj.getFormRefnum());
 
         JSONUtil.print(out, "field", ++i==0, Obj.getField());
 
-      if (Obj.isValueNull() == false && Obj.getValue() != null)
+      if (Obj.isNullValue() == false && Obj.getValue() != null)
         JSONUtil.print(out, "value", ++i==0, Obj.getValue());
 
         JSONUtil.print(out, "created", ++i==0, Obj.getCreated());
 
         JSONUtil.print(out, "lastUpdated", ++i==0, Obj.getLastUpdated());
 
-      if (Obj.isDeletedNull() == false && Obj.getDeleted() != null)
+      if (Obj.isNullDeleted() == false && Obj.getDeleted() != null)
         JSONUtil.print(out, "deleted", ++i==0, Obj.getDeleted());
 
-      if (fullObject == true)
-       out.write(" }\n");
+        if (fullObject == true)
+         out.write(" }\n");
 
-      outWriter.append(out.getBuilder().toString());
-      out.close();
+        outWriter.append(out.getBuilder().toString());
+       }
 
       PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
     }

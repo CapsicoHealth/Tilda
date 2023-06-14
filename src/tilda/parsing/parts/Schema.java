@@ -43,6 +43,7 @@ public class Schema
     @SerializedName("package"      ) public String            _Package;
     @SerializedName("dynamic"      ) public boolean           _Dynamic = false;
     @SerializedName("conventions"  ) public Convention        _Conventions   = new Convention();
+    @SerializedName("entityClasses") public String[]          _EntityClasses = new String[] { };
     @SerializedName("documentation") public Documentation     _Documentation = new Documentation();
     @SerializedName("extraDDL"     ) public ExtraDDL          _ExtraDDL      = new ExtraDDL();
     @SerializedName("dependencies" ) public String[]          _Dependencies  = new String[] { };
@@ -121,6 +122,29 @@ public class Schema
         return null;
       }
 
+    public Object getObjectByClonedFrom(String fullName)
+      {
+//        LOG.debug("Looking for an object cloned from "+fullName);
+        for (Object O : _Objects)
+         {
+           if (O == null)
+            continue;
+//           LOG.debug("     "+O._Name+" - "+(O._CloneFrom != null ? "CLONED FROM "+O._CloneFrom._SrcObject : " NOT CLONED FROM ANYTHING"));
+//           if (O._CloneFrom == null)
+//             LOG.debug("          - Not a cloned resource.");
+//           else if (O._CloneFrom._SrcObjectObj == null)
+//            LOG.debug("          - Clone definition was not fully validated as O._CloneFrom._SrcObjectObj is null.");
+           if (O._CloneFrom != null && O._CloneFrom._SrcObjectObj != null && O._CloneFrom._SrcObjectObj.getFullName().equalsIgnoreCase(fullName) == true)
+             {
+//               LOG.debug("          - Found match to object "+O.getFullName()+".");
+               return O;
+             }
+         }
+//        LOG.debug("          - Did not find a object cloned from "+fullName+".");
+        return null;
+      }
+
+    
     public String getObjectList()
       {
         StringBuilder Str = new StringBuilder();
@@ -243,6 +267,14 @@ public class Schema
 
         if (_Conventions != null)
          _Conventions.Validate(PS, this);
+        
+        if (_EntityClasses != null && _EntityClasses.length > 0)
+          {
+            Set<String> set = new HashSet<String>();
+            for (String str : _EntityClasses)
+              if (set.add(str.toLowerCase()) == false)
+                PS.AddError("The Schema '" + _Name + "' has a duplicate entity class '"+str+"'. Note that entity classes are considered case-insensitive.");
+          }
 
         for (Enumeration E : _Enumerations)
           if (E != null)
@@ -481,6 +513,14 @@ public class Schema
         return -1;
       }
 
+    public static Schema getSchema(List<Schema> L, String schemaName)
+      {
+        for (Schema s : L)
+          if (s._Name.equalsIgnoreCase(schemaName) == true)
+            return s;
+        return null;
+      }
+
 
     public static void ReorderTildaListWithDependencies(List<Schema> L)
       {
@@ -627,6 +667,27 @@ public class Schema
      {
        return _Conventions._PrimaryKeyName;
      }
+    public String getConventionCreatedName()
+      {
+        return _Conventions._CreatedName;
+      }
+    public String getConventionLastUpdatedName()
+      {
+        return _Conventions._LastUpdatedName;
+      }
+    public String getConventionDeletedName()
+      {
+        return _Conventions._DeletedName;
+      }
+
+    public boolean isOCCColumnName(String name)
+      {
+        return name.equals(_Conventions._CreatedName) || name.equals(_Conventions._LastUpdatedName) || name.equals(_Conventions._DeletedName)
+        // || Name.equals("createdETL") || Name.equals("lastUpdatedETL") || Name.equals("deletedETL")
+        ;
+      }
+    
+    
 //    public boolean getConventionPrefix()
 //      {
 //        return _Conventions._Prefix;
@@ -639,5 +700,4 @@ public class Schema
 //      {
 //        return _Conventions._DBColumnNameTranslation;
 //      }
-
   }

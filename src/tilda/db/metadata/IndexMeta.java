@@ -23,6 +23,8 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.db.JDBCHelper;
+
 public class IndexMeta
   {
     
@@ -31,18 +33,18 @@ public class IndexMeta
     protected IndexMeta(ResultSet RS, TableMeta parentTable/*, int indexPos*/)
     throws Exception
       {
-//        LOG.debug(JDBCHelper.printResultSet(RS));
+        // see https://learn.microsoft.com/en-us/sql/connect/jdbc/reference/getindexinfo-method-sqlserverdatabasemetadata?view=sql-server-ver16
+        // LOG.debug(JDBCHelper.printResultSet(RS));
         _Name = RS.getString("INDEX_NAME" );
         _Unique = RS.getBoolean("NON_UNIQUE") == false;
+        _Cluster = RS.getInt("TYPE") == 1;
         _ParentTable = parentTable;
-//        _indexPos = indexPos;
-//        _Name = name != null ? name : (_Unique ? "ui_":"i_")+_indexPos;
       }
 
     public final String     _Name  ;
     public final boolean    _Unique;
     public final TableMeta  _ParentTable;    
-//    public final int        _indexPos ;
+    public final boolean    _Cluster;
     public final List<IndexColumnMeta> _Columns = new ArrayList<IndexColumnMeta>();
     
     public String getCleanName()

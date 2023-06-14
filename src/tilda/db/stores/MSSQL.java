@@ -604,6 +604,20 @@ public class MSSQL implements DBType
       {
         throw new UnsupportedOperationException();
       }
+
+    @Override
+    public boolean alterTableIndexDropCluster(Connection Con, IndexMeta IX)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public boolean alterTableIndexAddCluster(Connection Con, Index IX)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
     
     @Override
     public boolean alterTableRenameIndex(Connection Con, Object Obj, String OldName, String NewName)
@@ -822,6 +836,19 @@ public class MSSQL implements DBType
     public String rewriteExpressionColumnQuoting(String expr)
       {
         throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public boolean supportsReorg()
+      {
+        return true;
+      }
+
+    @Override
+    public boolean reorgTable(Connection con, String schemaName, String tableName, String clusterIndexName, boolean verbose, boolean full)
+    throws Exception
+      {
+        return false;
       }
     
   }

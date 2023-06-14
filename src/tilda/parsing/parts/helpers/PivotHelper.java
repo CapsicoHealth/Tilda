@@ -22,6 +22,7 @@ import java.util.Set;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.enums.AggregateType;
 import tilda.enums.FrameworkColumnType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.Column;
@@ -53,7 +54,7 @@ public class PivotHelper
           }
         return VC;
       }
-
+    
     public static ViewColumn handlePivotColumn(ParserSession PS, ViewColumn VC, ViewPivot P, ViewPivotAggregate A, ViewPivotValue VPV, Object O)
       {
         // ColumnType AggregateType = VC.getType();
@@ -78,10 +79,11 @@ public class PivotHelper
         : TextUtil.isNullOrEmpty(VC._Expression) == false ? VC._Scale
         : null;
         PVC._Size = A._Aggregate != null && A._Aggregate.isList() == true ? null
+        : A._Aggregate == AggregateType.STRING ? AggregateType._DEFAULT_STRING_AGG_SIZE
         : TextUtil.isNullOrEmpty(VPV._Expression) == false ? VPV._Size
         : TextUtil.isNullOrEmpty(VC._Expression) == false ? VC._Size
         : null;
-        PVC._AggregateStr = A._Aggregate.name();
+        PVC._AggregateStr = TextUtil.print(A._AggregateStr, A._Aggregate.name());
         PVC._OrderBy = A._OrderByStr;
         PVC._Coalesce = A._Coalesce;
         PVC._Distinct = A._Distinct;
@@ -186,7 +188,7 @@ public class PivotHelper
 
     public static boolean isPivotColumn(ViewColumn VC)
       {
-        if (VC._ParentView._Pivots != null)
+        if (VC._ParentView != null && VC._ParentView._Pivots != null)
           for (ViewPivot P : VC._ParentView._Pivots)
             {
               if (P._VC == VC)

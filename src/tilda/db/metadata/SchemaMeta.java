@@ -19,6 +19,7 @@ package tilda.db.metadata;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -250,26 +251,52 @@ public class SchemaMeta
             }
       }
 
-
     public TableMeta getTableMeta(String TableName)
       {
         return _DBTables.get(TableName.toLowerCase());
       }
-
     public Collection<TableMeta> getTableMetas()
       {
         return _DBTables.values();
+      }
+    /**
+     * This method returns the sorted list of schema names. Since it sorts that list each time this method is called
+     * the caller should cache the results if needed multiple times.
+     * @return
+     */
+    public String[] getTableNamesSorted()
+      {
+        String[] names = (String[])_DBTables.keySet().toArray();
+        Arrays.sort(names);
+        return names;
       }
 
     public ViewMeta getViewMeta(String ViewName)
       {
         return _DBViews.get(ViewName.toLowerCase());
       }
+    public Collection<ViewMeta> getViewMetas()
+      {
+        return _DBViews.values();
+      }
+    /**
+     * This method returns the sorted list of schema names. Since it sorts that list each time this method is called
+     * the caller should cache the results if needed multiple times.
+     * @return
+     */
+    public String[] getViewNamesSorted()
+      {
+        String[] names = (String[])_DBViews.keySet().toArray();
+        Arrays.sort(names);
+        return names;
+      }
 
+    
     public boolean moveTableMetaFromOtherSchema(DatabaseMeta DBMeta, TableMeta src)
       {
         DBMeta.getSchemaMeta(src._SchemaName)._DBTables.remove(src._TableName.toLowerCase());
         src._SchemaName = _SchemaName;
+        src.updateFullNames();
         return _DBTables.put(src._TableName.toLowerCase(), src) == null;
       }
 
@@ -277,6 +304,7 @@ public class SchemaMeta
       {
         DBMeta.getSchemaMeta(_SchemaName)._DBTables.remove(src._TableName.toLowerCase());
         src._TableName = newName;
+        src.updateFullNames();
         return _DBTables.put(src._TableName.toLowerCase(), src) == null;
       }
 
@@ -302,10 +330,6 @@ public class SchemaMeta
         return _DBViews.put(src._ViewName.toLowerCase(), src) == null;
       }
 
-    public Collection<ViewMeta> getViewMetas()
-      {
-        return _DBViews.values();
-      }
   }
 
 

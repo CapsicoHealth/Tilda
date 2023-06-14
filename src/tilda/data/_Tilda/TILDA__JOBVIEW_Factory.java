@@ -4,6 +4,7 @@ package tilda.data._Tilda;
 import java.math.*;
 import java.util.*;
 import java.time.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.logging.log4j.*;
 
@@ -48,11 +49,12 @@ public class TILDA__JOBVIEW_Factory
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobView.jobRefnum of type long</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>jobRefnum of type long</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobView.jobRefnum of type bigint</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.JobView.jobRefnum</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -68,18 +70,19 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobView.jobName of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>jobName of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Name</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobView.jobName of type varchar(250)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.JobView.jobName</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>250</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Name</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        JOBNAME            = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "jobName"            , 1/*1*/, "Name", null, null, null);
+     public final Type_StringPrimitive        JOBNAME            = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "jobName"            , 1/*1*/, 250, "Name", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -89,18 +92,19 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobView.jobType of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>jobType of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Job type</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobView.jobType of type varchar(250)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.JobView.jobType</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>250</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Job type</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    JOBTYPE            = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobType"            , 2/*2*/, "Job type", null, null, null);
+     public final Type_StringPrimitiveNull    JOBTYPE            = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobType"            , 2/*2*/, 250, "Job type", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -110,18 +114,19 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobView.jobUserId of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>jobUserId of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Job user Id</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobView.jobUserId of type varchar(250)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.JobView.jobUserId</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>250</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Job user Id</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    JOBUSERID          = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobUserId"          , 3/*3*/, "Job user Id", null, null, null);
+     public final Type_StringPrimitiveNull    JOBUSERID          = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobUserId"          , 3/*3*/, 250, "Job user Id", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -131,18 +136,19 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobView.jobDataStartTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>jobDataStartTZ of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'jobDataStart'.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobView.jobDataStartTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.JobView.jobDataStartTZ</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'jobDataStart'.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    JOBDATASTARTTZ     = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobDataStartTZ"     , 4/*4*/, "Generated helper column to hold the time zone ID for 'jobDataStart'.", null, null, null);
+     public final Type_StringPrimitiveNull    JOBDATASTARTTZ     = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobDataStartTZ"     , 4/*4*/, 5, "Generated helper column to hold the time zone ID for 'jobDataStart'.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -152,11 +158,12 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobView.jobDataStart of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>jobDataStart of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>StartTime</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobView.jobDataStart of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.JobView.jobDataStart</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>StartTime</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -172,18 +179,19 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobView.jobDataEndTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>jobDataEndTZ of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'jobDataEnd'.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobView.jobDataEndTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.JobView.jobDataEndTZ</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'jobDataEnd'.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    JOBDATAENDTZ       = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobDataEndTZ"       , 6/*6*/, "Generated helper column to hold the time zone ID for 'jobDataEnd'.", null, null, null);
+     public final Type_StringPrimitiveNull    JOBDATAENDTZ       = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobDataEndTZ"       , 6/*6*/, 5, "Generated helper column to hold the time zone ID for 'jobDataEnd'.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -193,11 +201,12 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobView.jobDataEnd of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>jobDataEnd of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>StartTime</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobView.jobDataEnd of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.JobView.jobDataEnd</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>StartTime</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -213,18 +222,19 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobView.jobStartTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>jobStartTZ of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'jobStart'.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobView.jobStartTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.JobView.jobStartTZ</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'jobStart'.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        JOBSTARTTZ         = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "jobStartTZ"         , 8/*8*/, "Generated helper column to hold the time zone ID for 'jobStart'.", null, null, null);
+     public final Type_StringPrimitive        JOBSTARTTZ         = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "jobStartTZ"         , 8/*8*/, 5, "Generated helper column to hold the time zone ID for 'jobStart'.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -234,11 +244,12 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobView.jobStart of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>jobStart of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>StartTime</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobView.jobStart of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.JobView.jobStart</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>StartTime</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -254,18 +265,19 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobView.jobEndTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>jobEndTZ of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'jobEnd'.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobView.jobEndTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.JobView.jobEndTZ</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'jobEnd'.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    JOBENDTZ           = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobEndTZ"           , 10/*10*/, "Generated helper column to hold the time zone ID for 'jobEnd'.", null, null, null);
+     public final Type_StringPrimitiveNull    JOBENDTZ           = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobEndTZ"           , 10/*10*/, 5, "Generated helper column to hold the time zone ID for 'jobEnd'.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -275,11 +287,12 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobView.jobEnd of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>jobEnd of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>EndTime</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobView.jobEnd of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.JobView.jobEnd</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>EndTime</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -295,11 +308,12 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobView.jobStatus of type boolean</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>jobStatus of type boolean</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Status</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobView.jobStatus of type boolean</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.JobView.jobStatus</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Status</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -315,18 +329,19 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobView.jobMsg of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>jobMsg of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Message details</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobView.jobMsg of type text</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.JobView.jobMsg</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>8192</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Message details</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    JOBMSG             = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobMsg"             , 13/*13*/, "Message details", null, null, null);
+     public final Type_StringPrimitiveNull    JOBMSG             = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobMsg"             , 13/*13*/, 8192, "Message details", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -336,18 +351,19 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobView.jobPartName of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>jobPartName of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Job part name</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobView.jobPartName of type varchar(250)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.JobView.jobPartName</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>250</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Job part name</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        JOBPARTNAME        = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartName"        , 14/*14*/, "Job part name", null, null, null);
+     public final Type_StringPrimitive        JOBPARTNAME        = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartName"        , 14/*14*/, 250, "Job part name", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -357,18 +373,19 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobView.jobPartType of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>jobPartType of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Job part type</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobView.jobPartType of type varchar(250)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.JobView.jobPartType</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>250</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Job part type</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    JOBPARTTYPE        = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartType"        , 15/*15*/, "Job part type", null, null, null);
+     public final Type_StringPrimitiveNull    JOBPARTTYPE        = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartType"        , 15/*15*/, 250, "Job part type", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -378,18 +395,19 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobView.jobPartDataStartTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>jobPartDataStartTZ of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'jobPartDataStart'.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobView.jobPartDataStartTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.JobView.jobPartDataStartTZ</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'jobPartDataStart'.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    JOBPARTDATASTARTTZ = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartDataStartTZ" , 16/*16*/, "Generated helper column to hold the time zone ID for 'jobPartDataStart'.", null, null, null);
+     public final Type_StringPrimitiveNull    JOBPARTDATASTARTTZ = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartDataStartTZ" , 16/*16*/, 5, "Generated helper column to hold the time zone ID for 'jobPartDataStart'.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -399,11 +417,12 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobView.jobPartDataStart of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>jobPartDataStart of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Job part data start</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobView.jobPartDataStart of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.JobView.jobPartDataStart</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Job part data start</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -419,18 +438,19 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobView.jobPartDataEndTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>jobPartDataEndTZ of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'jobPartDataEnd'.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobView.jobPartDataEndTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.JobView.jobPartDataEndTZ</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'jobPartDataEnd'.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    JOBPARTDATAENDTZ   = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartDataEndTZ"   , 18/*18*/, "Generated helper column to hold the time zone ID for 'jobPartDataEnd'.", null, null, null);
+     public final Type_StringPrimitiveNull    JOBPARTDATAENDTZ   = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartDataEndTZ"   , 18/*18*/, 5, "Generated helper column to hold the time zone ID for 'jobPartDataEnd'.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -440,11 +460,12 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobView.jobPartDataEnd of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>jobPartDataEnd of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Job part data end</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobView.jobPartDataEnd of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.JobView.jobPartDataEnd</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Job part data end</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -460,18 +481,19 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobView.jobPartStartTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>jobPartStartTZ of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'jobPartStart'.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobView.jobPartStartTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.JobView.jobPartStartTZ</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'jobPartStart'.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        JOBPARTSTARTTZ     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartStartTZ"     , 20/*20*/, "Generated helper column to hold the time zone ID for 'jobPartStart'.", null, null, null);
+     public final Type_StringPrimitive        JOBPARTSTARTTZ     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartStartTZ"     , 20/*20*/, 5, "Generated helper column to hold the time zone ID for 'jobPartStart'.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -481,11 +503,12 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobView.jobPartStart of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>jobPartStart of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Job part execution start</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobView.jobPartStart of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.JobView.jobPartStart</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Job part execution start</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -501,18 +524,19 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobView.jobPartEndTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>jobPartEndTZ of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'jobPartEnd'.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobView.jobPartEndTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.JobView.jobPartEndTZ</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'jobPartEnd'.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    JOBPARTENDTZ       = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartEndTZ"       , 22/*22*/, "Generated helper column to hold the time zone ID for 'jobPartEnd'.", null, null, null);
+     public final Type_StringPrimitiveNull    JOBPARTENDTZ       = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartEndTZ"       , 22/*22*/, 5, "Generated helper column to hold the time zone ID for 'jobPartEnd'.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -522,11 +546,12 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobView.jobPartEnd of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>jobPartEnd of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Job part execution end</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobView.jobPartEnd of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.JobView.jobPartEnd</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Job part execution end</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -542,11 +567,12 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobView.jobPartRecordsCount of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>jobPartRecordsCount of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>count of database or file or ... records.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobView.jobPartRecordsCount of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.JobView.jobPartRecordsCount</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>count of database or file or ... records.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -562,11 +588,12 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobView.jobPartStatus of type boolean</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>jobPartStatus of type boolean</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Status flag, i.e., success=true and failure-false</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobView.jobPartStatus of type boolean</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.JobView.jobPartStatus</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Status flag, i.e., success=true and failure-false</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -582,11 +609,12 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobView.jobPartNotify of type boolean</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>jobPartNotify of type boolean</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Notification flag</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobView.jobPartNotify of type boolean</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.JobView.jobPartNotify</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Notification flag</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -602,18 +630,19 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobView.jobPartMessage of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>jobPartMessage of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Message details</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobView.jobPartMessage of type text</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.JobView.jobPartMessage</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>8192</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Message details</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        JOBPARTMESSAGE     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartMessage"     , 27/*27*/, "Message details", null, null, null);
+     public final Type_StringPrimitive        JOBPARTMESSAGE     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartMessage"     , 27/*27*/, 8192, "Message details", null, null, null);
    }
 
    public static COLS_BASE COLS = new COLS_BASE();
@@ -626,18 +655,15 @@ This is the column definition for:<BR>
 
    public static final ColumnDefinition[] COLUMNS_FIRST_IDENTITY = {};
 
-   private static Boolean  __INITIALIZED = false;
+   // Short(short) is deprecated, but we do want a new instance here to avoid synchronizing over the same cached instance from valueOf.
+   // @SuppressWarnings("deprecation")
+   private static final AtomicBoolean __INITIALIZED = new AtomicBoolean(false);
    protected static void initObject(Connection C) throws Exception
      {
-       if (__INITIALIZED == false)
-        synchronized(__INITIALIZED)
-         {
-           if (__INITIALIZED == false)
-            {
-              tilda.data.JobView_Factory.init(C);
-              __INITIALIZED = true;
-            }
-         }
+       if (__INITIALIZED.compareAndSet(false, true))
+        {
+           tilda.data.JobView_Factory.init(C);
+        }
      }
    private static class RecordProcessorInternal implements tilda.db.processors.RecordProcessor
      {
@@ -929,71 +955,71 @@ Lookup records by the query 'All' over
 
         JSONUtil.print(out, "jobName", ++i==0, Obj.getJobName());
 
-      if (Obj.isJobTypeNull() == false && Obj.getJobType() != null)
+      if (Obj.isNullJobType() == false && Obj.getJobType() != null)
         JSONUtil.print(out, "jobType", ++i==0, Obj.getJobType());
 
-      if (Obj.isJobUserIdNull() == false && Obj.getJobUserId() != null)
+      if (Obj.isNullJobUserId() == false && Obj.getJobUserId() != null)
         JSONUtil.print(out, "jobUserId", ++i==0, Obj.getJobUserId());
 
-      if (Obj.isJobDataStartTZNull() == false && Obj.getJobDataStartTZ() != null)
+      if (Obj.isNullJobDataStartTZ() == false && Obj.getJobDataStartTZ() != null)
         JSONUtil.print(out, "jobDataStartTZ", ++i==0, Obj.getJobDataStartTZ());
 
-      if (Obj.isJobDataStartNull() == false && Obj.getJobDataStart() != null)
+      if (Obj.isNullJobDataStart() == false && Obj.getJobDataStart() != null)
         JSONUtil.print(out, "jobDataStart", ++i==0, Obj.getJobDataStart());
 
-      if (Obj.isJobDataEndTZNull() == false && Obj.getJobDataEndTZ() != null)
+      if (Obj.isNullJobDataEndTZ() == false && Obj.getJobDataEndTZ() != null)
         JSONUtil.print(out, "jobDataEndTZ", ++i==0, Obj.getJobDataEndTZ());
 
-      if (Obj.isJobDataEndNull() == false && Obj.getJobDataEnd() != null)
+      if (Obj.isNullJobDataEnd() == false && Obj.getJobDataEnd() != null)
         JSONUtil.print(out, "jobDataEnd", ++i==0, Obj.getJobDataEnd());
 
         JSONUtil.print(out, "jobStartTZ", ++i==0, Obj.getJobStartTZ());
 
         JSONUtil.print(out, "jobStart", ++i==0, Obj.getJobStart());
 
-      if (Obj.isJobEndTZNull() == false && Obj.getJobEndTZ() != null)
+      if (Obj.isNullJobEndTZ() == false && Obj.getJobEndTZ() != null)
         JSONUtil.print(out, "jobEndTZ", ++i==0, Obj.getJobEndTZ());
 
-      if (Obj.isJobEndNull() == false && Obj.getJobEnd() != null)
+      if (Obj.isNullJobEnd() == false && Obj.getJobEnd() != null)
         JSONUtil.print(out, "jobEnd", ++i==0, Obj.getJobEnd());
 
-      if (Obj.isJobStatusNull() == false)
+      if (Obj.isNullJobStatus() == false)
         JSONUtil.print(out, "jobStatus", ++i==0, Obj.getJobStatus());
 
-      if (Obj.isJobMsgNull() == false && Obj.getJobMsg() != null)
+      if (Obj.isNullJobMsg() == false && Obj.getJobMsg() != null)
         JSONUtil.print(out, "jobMsg", ++i==0, Obj.getJobMsg());
 
         JSONUtil.print(out, "jobPartName", ++i==0, Obj.getJobPartName());
 
-      if (Obj.isJobPartTypeNull() == false && Obj.getJobPartType() != null)
+      if (Obj.isNullJobPartType() == false && Obj.getJobPartType() != null)
         JSONUtil.print(out, "jobPartType", ++i==0, Obj.getJobPartType());
 
-      if (Obj.isJobPartDataStartTZNull() == false && Obj.getJobPartDataStartTZ() != null)
+      if (Obj.isNullJobPartDataStartTZ() == false && Obj.getJobPartDataStartTZ() != null)
         JSONUtil.print(out, "jobPartDataStartTZ", ++i==0, Obj.getJobPartDataStartTZ());
 
-      if (Obj.isJobPartDataStartNull() == false && Obj.getJobPartDataStart() != null)
+      if (Obj.isNullJobPartDataStart() == false && Obj.getJobPartDataStart() != null)
         JSONUtil.print(out, "jobPartDataStart", ++i==0, Obj.getJobPartDataStart());
 
-      if (Obj.isJobPartDataEndTZNull() == false && Obj.getJobPartDataEndTZ() != null)
+      if (Obj.isNullJobPartDataEndTZ() == false && Obj.getJobPartDataEndTZ() != null)
         JSONUtil.print(out, "jobPartDataEndTZ", ++i==0, Obj.getJobPartDataEndTZ());
 
-      if (Obj.isJobPartDataEndNull() == false && Obj.getJobPartDataEnd() != null)
+      if (Obj.isNullJobPartDataEnd() == false && Obj.getJobPartDataEnd() != null)
         JSONUtil.print(out, "jobPartDataEnd", ++i==0, Obj.getJobPartDataEnd());
 
         JSONUtil.print(out, "jobPartStartTZ", ++i==0, Obj.getJobPartStartTZ());
 
         JSONUtil.print(out, "jobPartStart", ++i==0, Obj.getJobPartStart());
 
-      if (Obj.isJobPartEndTZNull() == false && Obj.getJobPartEndTZ() != null)
+      if (Obj.isNullJobPartEndTZ() == false && Obj.getJobPartEndTZ() != null)
         JSONUtil.print(out, "jobPartEndTZ", ++i==0, Obj.getJobPartEndTZ());
 
-      if (Obj.isJobPartEndNull() == false && Obj.getJobPartEnd() != null)
+      if (Obj.isNullJobPartEnd() == false && Obj.getJobPartEnd() != null)
         JSONUtil.print(out, "jobPartEnd", ++i==0, Obj.getJobPartEnd());
 
-      if (Obj.isJobPartRecordsCountNull() == false)
+      if (Obj.isNullJobPartRecordsCount() == false)
         JSONUtil.print(out, "jobPartRecordsCount", ++i==0, Obj.getJobPartRecordsCount());
 
-      if (Obj.isJobPartStatusNull() == false)
+      if (Obj.isNullJobPartStatus() == false)
         JSONUtil.print(out, "jobPartStatus", ++i==0, Obj.getJobPartStatus());
 
         JSONUtil.print(out, "jobPartNotify", ++i==0, Obj.getJobPartNotify());

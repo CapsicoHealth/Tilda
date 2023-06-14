@@ -31,6 +31,7 @@ import tilda.enums.FrameworkSourcedType;
 import tilda.enums.MultiType;
 import tilda.enums.ObjectLifecycle;
 import tilda.enums.ObjectMode;
+import tilda.generation.helpers.CatalogHelper;
 import tilda.generation.interfaces.CodeGenAppData;
 import tilda.generation.interfaces.CodeGenAppFactory;
 import tilda.generation.interfaces.CodeGenDocs;
@@ -81,14 +82,16 @@ public class Generator
               genAppData(G, Res.getParentFile(), O);
               genAppFactory(G, Res.getParentFile(), O);
             }
-        
+
         genTildaBigQuerySchemas(G, GenFolder, S);
         genTildaSql(G, GenFolder, S);
         G.switchDBGenerator("bigquery", 0, 0);
         genTildaSql(G, GenFolder, S);
         G.switchDBGeneratorBack();
+        genCatalogCSV(G, GenFolder, S);
         return true;
       }
+
 
 
     protected static void genTildaSql(GeneratorSession G, File GenFolder, Schema S)
@@ -140,6 +143,34 @@ public class Generator
         Out.close();
       }
 
+    private static void genCatalogCSV(GeneratorSession G, File genFolder, Schema S)
+    throws Exception
+      {
+        CodeGenSql CG = G.getSql();
+
+        Base B = S._Objects.isEmpty() == false ? S._Objects.get(0)
+        : S._Views.isEmpty() == false ? S._Views.get(0)
+        : null;
+
+        // Some schemas may be empty, such as TILDA_TMP, so we have to fake a root object to get started.
+        if (B == null)
+          {
+            B = new Object();
+            B._ParentSchema = S;
+          }
+
+        File f = new File(genFolder.getAbsolutePath() + File.separator + "TILDA___Catalog" + "." + B.getSchema()._Name + ".csv");
+        PrintWriter out = new PrintWriter(f);
+        LOG.debug("  Generating the Catalog CSV file.");
+        CatalogHelper CH = new CatalogHelper();
+        CH.addSchema(S);
+        CH.outputCSV(out);
+        out.println();
+
+        out.close();
+      }
+
+
 
     protected static void genTildaBigQuerySchemas(GeneratorSession G, File GenFolder, Schema S)
     throws Exception
@@ -169,10 +200,10 @@ public class Generator
               genTildaBigQuerySchema(V, Out);
               Out.close();
             }
-        
+
         LOG.debug("  Generating the BigQuery JSON Schema files.");
-        
-        
+
+
       }
 
 
@@ -210,7 +241,7 @@ public class Generator
           {
             CG.genDDL(Out, O);
             if (CG.supportsIndices() == false && O._Indices.isEmpty() == false)
-             Out.println("-- Indices are not supported for this database, so logical definition only");
+              Out.println("-- Indices are not supported for this database, so logical definition only");
 
             for (Index I : O._Indices)
               if (I != null)
@@ -223,6 +254,7 @@ public class Generator
           }
       }
 
+
     public static void getFullViewDDL(CodeGenSql CG, PrintWriter Out, View V)
     throws Exception
       {
@@ -230,7 +262,6 @@ public class Generator
         Out.append("\n");
         getViewCommentsDDL(CG, Out, V);
         Out.append("\n");
-        getViewMetadataDDL(CG, Out, V);
       }
 
     public static void getViewBaseDDL(CodeGenSql CG, PrintWriter Out, View V)
@@ -245,23 +276,23 @@ public class Generator
         CG.genDDLComments(Out, V);
       }
 
-    public static void getViewMetadataDDL(CodeGenSql CG, PrintWriter Out, View V)
+    public static void genTildaSupport(GeneratorSession G, File GenFolder, Schema S)
     throws Exception
       {
-        CG.genDDLMetadata(Out, V);
+        CodeGenTildaSupport CG = G.getGenTildaSupport();
+        File f = new File(GenFolder.getAbsolutePath() + File.separator + CG.getFileName(null));
+        PrintWriter Out = new PrintWriter(f);
+        LOG.debug("  Generating base generic Tilda support class.");
+        genTildaSupport(G, S, Out);
+        Out.close();
       }
 
-
-
-    protected static void genTildaSupport(GeneratorSession G, File GenFolder, Schema S)
+    public static void genTildaSupport(GeneratorSession G, Schema S, PrintWriter Out)
     throws Exception
       {
         CodeGenTildaSupport CG = G.getGenTildaSupport();
         CodeGenDocs DG = G.getGenDocs();
-        File f = new File(GenFolder.getAbsolutePath() + File.separator + CG.getFileName(null));
-        PrintWriter Out = new PrintWriter(f);
-        LOG.debug("  Generating base generic Tilda support class.");
-        // LOG.debug(" -> " + f.getCanonicalPath());
+
         CG.genFileStart(Out, S);
         Out.println();
         DG.SupportClassDocs(Out, G);
@@ -273,17 +304,23 @@ public class Generator
         CG.genInitMethod(Out, G, S);
         Out.println();
         CG.genClassEnd(Out, G);
-        Out.close();
       }
 
-    protected static void genTildaData(GeneratorSession G, File GenFolder, Object O)
+    public static void genTildaData(GeneratorSession G, File GenFolder, Object O)
     throws Exception
       {
         CodeGenTildaData CG = G.getGenTildaData();
-        CodeGenDocs DG = G.getGenDocs();
-
         File f = new File(GenFolder.getAbsolutePath() + File.separator + CG.getFileName(O));
         PrintWriter Out = new PrintWriter(f);
+        genTildaData(G, O, Out);
+        Out.close();
+      }
+
+    public static void genTildaData(GeneratorSession G, Object O, PrintWriter Out)
+    throws Exception, Error
+      {
+        CodeGenTildaData CG = G.getGenTildaData();
+        CodeGenDocs DG = G.getGenDocs();
 
         DG.DataFileDocs(Out, G);
         Out.println();
@@ -415,9 +452,9 @@ public class Generator
 
             if (O._OCC == true)
               {
-                Column C = O.getColumn("lastUpdated");
+                Column C = O.getColumn(O._ParentSchema.getConventionLastUpdatedName());
                 if (C == null)
-                  throw new Error("The object " + O.getFullName() + " is marked as OCC yet doesn't have the 'lastUpdated' column");
+                  throw new Error("The object " + O.getFullName() + " is marked as OCC yet doesn't have the column '"+O._ParentSchema.getConventionLastUpdatedName()+"'");
                 Out.println();
                 DG.docMethodTouch(Out, G, C);
                 CG.genMethodTouch(Out, G, C);
@@ -442,7 +479,7 @@ public class Generator
         Out.println();
         Out.println();
         DG.MustNotBeModified(Out, G);
-        
+
         if (O.hasMasking() == true)
           {
             DG.docMethodMask(Out, G, O);
@@ -466,17 +503,23 @@ public class Generator
         CG.genMethodOutput(Out, G, O);
 
         CG.genClassEnd(Out, G);
+      }
+
+    public static void genTildaFactory(GeneratorSession G, File GenFolder, Object O)
+    throws Exception
+      {
+        CodeGenTildaFactory CG = G.getGenTildaFactory();
+        File f = new File(GenFolder.getAbsolutePath() + File.separator + CG.getFileName(O));
+        PrintWriter Out = new PrintWriter(f);
+        genTildaFactory(G, O, Out);
         Out.close();
       }
 
-    protected static void genTildaFactory(GeneratorSession G, File GenFolder, Object O)
+    public static void genTildaFactory(GeneratorSession G, Object O, PrintWriter Out)
     throws Exception
       {
         CodeGenTildaFactory CG = G.getGenTildaFactory();
         CodeGenDocs DG = G.getGenDocs();
-
-        File f = new File(GenFolder.getAbsolutePath() + File.separator + CG.getFileName(O));
-        PrintWriter Out = new PrintWriter(f);
 
         DG.FactoryFileDocs(Out, G);
         Out.println();
@@ -583,119 +626,73 @@ public class Generator
 
         Out.println();
         CG.genClassEnd(Out, G);
-        Out.close();
       }
-    /*
-     * protected static void genTildaJson(GeneratorSession G, File GenFolder, Object O)
-     * throws Exception
-     * {
-     * CodeGenTildaJson CG = G.getGenTildaJson();
-     * CodeGenDocs DG = G.getGenDocs();
-     * 
-     * File f = new File(GenFolder.getAbsolutePath() + File.separator + CG.getFileName(O));
-     * PrintWriter Out = new PrintWriter(f);
-     * 
-     * DG.JsonFileDocs(Out, G, O);
-     * Out.println();
-     * CG.genFileStart(Out, O);
-     * Out.println();
-     * DG.JsonClassDocs(Out, G, O);
-     * CG.genClassStart(Out, G, O);
-     * Out.println();
-     * 
-     * if (O._LC != ObjectLifecycle.READONLY)
-     * {
-     * List<Column> CreateColumns = O.getCreateColumns();
-     * List<Column> JsonColumns = O.getJsonColumns();
-     * CG.genJsonSerializableField(Out, G, JsonColumns);
-     * Out.println();
-     * CG.genMethodWrite(Out, G, O, CreateColumns, JsonColumns);
-     * Out.println();
-     * CG.genMethodToString(Out, G, O);
-     * }
-     * Out.println();
-     * CG.genClassEnd(Out, G);
-     * Out.close();
-     * }
-     */
 
-    protected static File genAppData(GeneratorSession G, File GenFolder, Object O)
+    public static File genAppData(GeneratorSession G, File GenFolder, Object O)
+    throws Exception
+      {
+        CodeGenAppData CG = G.getGenAppData();
+        File f = new File(GenFolder.getAbsolutePath() + File.separator + CG.getFileName(O));
+        if (f.exists() == false)
+          {
+            PrintWriter Out = new PrintWriter(f);
+            genAppData(G, O, Out);
+            Out.close();
+          }
+        return f;
+      }
+
+    public static void genAppData(GeneratorSession G, Object O, PrintWriter Out)
     throws Exception
       {
         CodeGenAppData CG = G.getGenAppData();
         CodeGenDocs DG = G.getGenDocs();
+
+        DG.AppFileDocs(Out, G);
+        Out.println();
+        CG.genFileStart(Out, O);
+        Out.println();
+        DG.AppClassDocs(Out, G, O);
+        CG.genClassStart(Out, G, O);
+        Out.println();
+        DG.AppCustomizeHere(Out, G, O);
+        Out.println();
+        CG.genClassCustomizations(Out, G, O);
+        Out.println();
+        CG.genClassEnd(Out, G);
+      }
+
+    public static File genAppFactory(GeneratorSession G, File GenFolder, Object O)
+    throws Exception
+      {
+        CodeGenAppFactory CG = G.getGenAppFactory();
         File f = new File(GenFolder.getAbsolutePath() + File.separator + CG.getFileName(O));
         if (f.exists() == false)
           {
             PrintWriter Out = new PrintWriter(f);
-
-            DG.AppFileDocs(Out, G);
-            Out.println();
-            CG.genFileStart(Out, O);
-            Out.println();
-            DG.AppClassDocs(Out, G, O);
-            CG.genClassStart(Out, G, O);
-            Out.println();
-            DG.AppCustomizeHere(Out, G, O);
-            Out.println();
-            CG.genClassCustomizations(Out, G, O);
-            Out.println();
-            CG.genClassEnd(Out, G);
+            genAppFactory(G, O, Out);
             Out.close();
           }
         return f;
       }
 
-    protected static File genAppFactory(GeneratorSession G, File GenFolder, Object O)
+    public static void genAppFactory(GeneratorSession G, Object O, PrintWriter Out)
     throws Exception
       {
         CodeGenAppFactory CG = G.getGenAppFactory();
         CodeGenDocs DG = G.getGenDocs();
-        File f = new File(GenFolder.getAbsolutePath() + File.separator + CG.getFileName(O));
-        if (f.exists() == false)
-          {
-            PrintWriter Out = new PrintWriter(f);
 
-            DG.AppFileDocs(Out, G);
-            Out.println();
-            CG.genFileStart(Out, O);
-            Out.println();
-            DG.AppClassDocs(Out, G, O);
-            CG.genClassStart(Out, G, O);
-            Out.println();
-            DG.AppCustomizeHere(Out, G, O);
-            Out.println();
-            CG.genClassCustomizations(Out, G, O);
-            Out.println();
-            CG.genClassEnd(Out, G);
-            Out.close();
-          }
-        return f;
+        DG.AppFileDocs(Out, G);
+        Out.println();
+        CG.genFileStart(Out, O);
+        Out.println();
+        DG.AppClassDocs(Out, G, O);
+        CG.genClassStart(Out, G, O);
+        Out.println();
+        DG.AppCustomizeHere(Out, G, O);
+        Out.println();
+        CG.genClassCustomizations(Out, G, O);
+        Out.println();
+        CG.genClassEnd(Out, G);
       }
-    /*
-     * protected static File genAppJson(GeneratorSession G, File GenFolder, Object O)
-     * throws Exception
-     * {
-     * CodeGenAppJson CG = G.getGenAppJson();
-     * CodeGenDocs DG = G.getGenDocs();
-     * File f = new File(GenFolder.getAbsolutePath() + File.separator + CG.getFileName(O));
-     * if (f.exists() == false)
-     * {
-     * PrintWriter Out = new PrintWriter(f);
-     * 
-     * DG.AppFileDocs(Out, G);
-     * Out.println();
-     * CG.genFileStart(Out, O);
-     * Out.println();
-     * DG.AppClassDocs(Out, G, O);
-     * CG.genClassStart(Out, G, O);
-     * Out.println();
-     * DG.AppCustomizeHere(Out, G, O);
-     * Out.println();
-     * CG.genClassEnd(Out, G);
-     * Out.close();
-     * }
-     * return f;
-     * }
-     */
   }

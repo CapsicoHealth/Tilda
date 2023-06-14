@@ -32,7 +32,7 @@ public class Cloner
     @SerializedName("fullName"    ) public boolean _FullName   = false;
     @SerializedName("referenceUrl") public String  _ReferenceUrl;
     @SerializedName("description" ) public String  _Description;
-    @SerializedName("tag"         ) public String  _Tag;
+    @SerializedName("referenceTag") public String  _ReferenceTag;
     /*@formatter:on*/
 
     public transient Object _ParentObject;
@@ -54,11 +54,9 @@ public class Cloner
         if (_FullName == false)
          _Name = parentObject._Name + "_" + _Name;
         
-
         if (TextUtil.isNullOrEmpty(_Description) == true)
-          PS.AddError("Object '" + parentObject.getFullName() + "' defined a cloneAs without a description.");
-        else
-          _Description = _Description.replace("?{}", parentObject._OriginalDescription) + " (cloned from "+parentObject.getShortName()+")";
+          _Description = "?{}";
+        _Description = _Description.replace("?{}", parentObject._OriginalDescription) + " (cloned from "+parentObject.getShortName()+")";
 
         return true;
       }

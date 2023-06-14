@@ -95,6 +95,7 @@ public class ViewColumn
                                                                                       // _SameAsObj._ParentObject is the source object.
     public transient JoinType            _Join;
     public transient AggregateType       _Aggregate;
+    public transient String              _AggregateAttributes;
     public transient List<OrderBy>       _OrderByObjs      = new ArrayList<OrderBy>();
     public transient List<Column>        _partitionByObjs  = new ArrayList<Column>();
     public transient TypeDef             _Type;
@@ -227,7 +228,19 @@ public class ViewColumn
         if (_AggregateStr != null)
           {
             if ((_Aggregate = AggregateType.parse(_AggregateStr)) == null)
-              return PS.AddError("View Column '" + getFullName() + "' defined an invalid 'aggregate' '" + _AggregateStr + "'.");
+              return PS.AddError("View Column '" + getFullName() + "' defined an invalid aggregate '" + _AggregateStr + "' or syntax: aggregates should be of the form \"ARRAY\" or \"STRING(',')\".");
+
+            if ((_AggregateAttributes = AggregateType.parseAttributes(_AggregateStr)) == null)
+             return PS.AddError("View Column '" + getFullName() + "' defined an invalid aggregate '" + _AggregateStr + "' or syntax: aggregates should be of the form \"ARRAY\" or \"STRING(',')\".");
+
+            if (_AggregateAttributes.isEmpty() == true)
+              {
+                if (_Aggregate.getParameterSetting() == AggregateType.ParameterSetting.REQUIRED)
+                  return PS.AddError("View Column '" + getFullName() + "' defined an aggregate '" + _AggregateStr + "' without parameters: this aggregate requires parameters.");
+                _AggregateAttributes = null;
+              }
+            else if (_Aggregate.areParametersAllowed() == false)
+              return PS.AddError("View Column '" + getFullName() + "' defined an aggregate '" + _AggregateStr + "' with some parameters: this aggregate does not support parameters.");
 
             if (_SameAsObj != null)
               {
@@ -235,6 +248,7 @@ public class ViewColumn
                 if (Str != null)
                   PS.AddError(Str.toString());
               }
+            _AggregateAttributes = AggregateType.parseAttributes(_AggregateStr);
           }
 
         if (_Aggregate == null)
@@ -450,6 +464,11 @@ public class ViewColumn
     public boolean isCollection()
       {
         return _SameAsObj != null && _SameAsObj.isCollection() == true || _Aggregate != null && _Aggregate.isList() == true;
+      }
+
+    public boolean isNullable()
+      {
+        return _SameAsObj == null || _SameAsObj._Nullable == true;
       }
 
   }

@@ -1,5 +1,5 @@
 /*
- Tilda V1.0 data object.
+ Tilda V2.3 data object.
 
  Code is generated: do not modify! Instead, create a derived class and override desired functionality
 */
@@ -32,13 +32,17 @@ import java.math.*;
 <TR valign="top"><TD><H2>Test_XYZ_Analytics_View&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 70%;"><SPAN class="BackToDetails"><A href="#Test_XYZ_Analytics_View_CNT">details</A>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><A href="#">top</A></SUP></H2></TD><TD align="right"></TD></TR>
 </TABLE>
 <DIV id="Test_XYZ_Analytics_View_CNT" class="content">
-The View TILDATUTORIAL.Test_XYZ_Analytics_View:<UL>
+The View TILDATUTORIAL.Test_XYZ_Analytics_View :<UL>
 <LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>Test_XYZ_Analytics_View_Factory</B>, <B>Test_XYZ_Analytics_View_Data</B> in the package <B>tilda.tutorial.data</B>.
 <LI>Configured to be Realized to <B><A href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_Analytics_Realized_CNT">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_XYZ_Analytics_Realized</A></B> through DB function <B>TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Refill_Test_XYZ_Analytics_Realized()</B>.</LI>
 <LI>Is not OCC-Enabled. No record lifecycle columns (created/updated/deleted) have been generated.</LI>
-<LI>Defines a foreign key to <A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A> </LI>
+<LI>Defines a foreign key:<BR>
+<TABLE style="margin-left: 25px; border:1px solid #BBB;" cellspacing="0px" cellpadding="5px" border="0px">
+<TR style="background-color:#DDD; font-weight:bold;"><TD></TD><TD>Source Columns</TD><TD>Destination Object</TD><TD>Destination Columns</TD><TD>Notes</TD></TR>
+<TR ><TD>1</TD><TD>formFillDateTZ</TD><TD><A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A></TD><TD>id</TD><TD>&nbsp;</TD></TR>
+</TABLE></LI>
 </UL>
-<B>Description</B>: A view of XYZ forms with analytics<BR>
+<B>Description</B>:<BLOCKQUOTE style="border-left: 1px solid #EEE;padding-left: 5px;">A view of XYZ forms with analytics</BLOCKQUOTE>
 <BR>
 This view depends on the following filter(s), sub-view(s), and/or root table(s):
 <BLOCKQUOTE><TABLE class="TreeTable Rowed" border="0px" cellspacing="0px" cellpadding="2px"><TR><TD><PRE><A href="TILDA___Docs.TILDATUTORIAL.html#Test_XYZ_Analytics_View_CNT">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Test_XYZ_Analytics_View</A></PRE></TD><TD><PRE>Unfiltered</PRE></TD></TR>
@@ -54,7 +58,7 @@ and TestAnswer.deleted is null</PRE></TD></TR>
 <TR><TD><PRE>        <A href="TILDA___Docs.TILDATUTORIAL.html#TestAnswer_CNT">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>TestAnswer</A></PRE></TD><TD><PRE>Standard join</PRE></TD></TR>
 </TABLE></BLOCKQUOTE>
 This View contains the following columns:<BLOCKQUOTE>
- <TABLE id="Test_XYZ_Analytics_View_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
+ <TABLE id="Test_XYZ_Analytics_View_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid #BBB;">
    <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left" nowrap><label>Realized<input type="checkbox" onchange="filterTable('Test_XYZ_Analytics_View_TBL', 'R')", id="Test_XYZ_Analytics_View_TBL_R"></label>&nbsp;</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description/<label>Formula<input type="checkbox" onchange="filterTable('Test_XYZ_Analytics_View_TBL', 'F')", id="Test_XYZ_Analytics_View_TBL_F"></label></TH></TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>1&nbsp;&nbsp;</TD>
@@ -306,7 +310,6 @@ public abstract class TILDA__TEST_XYZ_ANALYTICS_VIEW implements tilda.interfaces
    transient BitSet   __Nulls       = new BitSet(64);
    transient BitSet   __Changes     = new BitSet(64);
    transient boolean  __NewlyCreated= false;
-
    transient int      __LookupId;
 
    public  boolean hasChanged    () { return __Changes.isEmpty() == false; }
@@ -337,11 +340,12 @@ public abstract class TILDA__TEST_XYZ_ANALYTICS_VIEW implements tilda.interfaces
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formRefnum of type long</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>formRefnum of type long</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.formRefnum of type bigint</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formRefnum</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -357,11 +361,12 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formRefnum of type long</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>formRefnum of type long</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.formRefnum of type bigint</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formRefnum</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -377,11 +382,12 @@ This is the getter for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formRefnum of type long</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>formRefnum of type long</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.formRefnum of type bigint</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formRefnum</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -424,12 +430,13 @@ This is the setter for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formType of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>formType of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Form template type</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.formType of type varchar(40)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formType</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>40</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Form template type</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -445,12 +452,13 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formType of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>formType of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Form template type</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.formType of type varchar(40)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formType</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>40</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Form template type</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -466,12 +474,13 @@ This is the getter for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formType of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>formType of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Form template type</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.formType of type varchar(40)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formType</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>40</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Form template type</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -508,12 +517,13 @@ This is the setter for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formFillDateTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>formFillDateTZ of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'formFillDate'.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.formFillDateTZ of type varchar(10)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formFillDateTZ</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'formFillDate'.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -528,12 +538,13 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formFillDateTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>formFillDateTZ of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'formFillDate'.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.formFillDateTZ of type varchar(10)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formFillDateTZ</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'formFillDate'.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -549,18 +560,19 @@ This is the getter for:<BR>
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formFillDateTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>formFillDateTZ of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'formFillDate'.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.formFillDateTZ of type varchar(10)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formFillDateTZ</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'formFillDate'.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isFormFillDateTZNull()
+   public final boolean isNullFormFillDateTZ()
      { return __Nulls.intersects(TILDA__TEST_XYZ_ANALYTICS_VIEW_Factory.COLS.FORMFILLDATETZ._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -570,12 +582,13 @@ This is the isNull for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formFillDateTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>formFillDateTZ of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'formFillDate'.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.formFillDateTZ of type varchar(10)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formFillDateTZ</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'formFillDate'.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -586,7 +599,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setFormFillDateTZNull();
+          setNullFormFillDateTZ();
         }
        else if (v.length() > 10)
         throw new Exception("Cannot set tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formFillDateTZ: the size "+v.length()+" is larger than the max allowed of 10: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
@@ -608,23 +621,24 @@ This is the setter for:<BR>
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formFillDateTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>formFillDateTZ of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'formFillDate'.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.formFillDateTZ of type varchar(10)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formFillDateTZ</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'formFillDate'.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setFormFillDateTZNull()
+    void setNullFormFillDateTZ()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__TEST_XYZ_ANALYTICS_VIEW_Factory.COLS.FORMFILLDATETZ._Mask);
        if (__Nulls.intersects(TILDA__TEST_XYZ_ANALYTICS_VIEW_Factory.COLS.FORMFILLDATETZ._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__TEST_XYZ_ANALYTICS_VIEW_Factory.COLS.FORMFILLDATETZ._Mask);
        __Nulls.or(TILDA__TEST_XYZ_ANALYTICS_VIEW_Factory.COLS.FORMFILLDATETZ._Mask);
        _formFillDateTZ=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -643,11 +657,12 @@ This is the null setter for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formFillDate of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>formFillDate of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The date the form was filled</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.formFillDate of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formFillDate</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The date the form was filled</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -655,7 +670,8 @@ This is the definition for:<BR>
 */
    @SerializedName("formFillDate")
    String  Str_formFillDate;
-   public void initFormFillDate(String v) { Str_formFillDate = v; }
+   /** Pre-init the field as it would come from a JSON stream, in text form, e.g., timestamps. */
+   public void initJson_FormFillDate(String v) { Str_formFillDate = v; }
    public String initFormFillDateVal() { return Str_formFillDate; }
    transient ZonedDateTime _formFillDate = null;
 
@@ -666,11 +682,12 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formFillDate of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>formFillDate of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The date the form was filled</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.formFillDate of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formFillDate</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The date the form was filled</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -686,17 +703,18 @@ This is the getter for:<BR>
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formFillDate of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>formFillDate of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The date the form was filled</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.formFillDate of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formFillDate</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The date the form was filled</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isFormFillDateNull()
+   public final boolean isNullFormFillDate()
      { return __Nulls.intersects(TILDA__TEST_XYZ_ANALYTICS_VIEW_Factory.COLS.FORMFILLDATE._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -706,11 +724,12 @@ This is the isNull for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formFillDate of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>formFillDate of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The date the form was filled</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.formFillDate of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formFillDate</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The date the form was filled</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -721,7 +740,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         {
-          setFormFillDateNull();
+          setNullFormFillDate();
         }
        else if (v.equals(_formFillDate) == false)
         {
@@ -745,25 +764,26 @@ This is the setter for:<BR>
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formFillDate of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>formFillDate of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The date the form was filled</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.formFillDate of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formFillDate</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The date the form was filled</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setFormFillDateNull()
+    void setNullFormFillDate()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__TEST_XYZ_ANALYTICS_VIEW_Factory.COLS.FORMFILLDATE._Mask);
        if (__Nulls.intersects(TILDA__TEST_XYZ_ANALYTICS_VIEW_Factory.COLS.FORMFILLDATE._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__TEST_XYZ_ANALYTICS_VIEW_Factory.COLS.FORMFILLDATE._Mask);
        __Nulls.or(TILDA__TEST_XYZ_ANALYTICS_VIEW_Factory.COLS.FORMFILLDATE._Mask);
        _formFillDate=null;
-       setFormFillDateTZNull();
+       setNullFormFillDateTZ();
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -780,11 +800,12 @@ This is the null setter for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formUserRefnum of type long</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>formUserRefnum of type long</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.formUserRefnum of type bigint</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formUserRefnum</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -800,11 +821,12 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formUserRefnum of type long</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>formUserRefnum of type long</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.formUserRefnum of type bigint</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formUserRefnum</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -820,11 +842,12 @@ This is the getter for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formUserRefnum of type long</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>formUserRefnum of type long</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.formUserRefnum of type bigint</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formUserRefnum</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -867,12 +890,13 @@ This is the setter for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formUserEmail of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>formUserEmail of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The user's email</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.formUserEmail of type varchar(255)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formUserEmail</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>255</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The user's email</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -888,12 +912,13 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formUserEmail of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>formUserEmail of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The user's email</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.formUserEmail of type varchar(255)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formUserEmail</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>255</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The user's email</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -909,12 +934,13 @@ This is the getter for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formUserEmail of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>formUserEmail of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The user's email</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.formUserEmail of type varchar(255)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formUserEmail</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>255</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The user's email</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -951,11 +977,12 @@ This is the setter for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formCountCorrect of type long</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>formCountCorrect of type long</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether the answer is correct or not</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.formCountCorrect of type bigint</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formCountCorrect</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether the answer is correct or not</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -971,11 +998,12 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formCountCorrect of type long</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>formCountCorrect of type long</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether the answer is correct or not</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.formCountCorrect of type bigint</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formCountCorrect</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether the answer is correct or not</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -991,11 +1019,12 @@ This is the getter for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formCountCorrect of type long</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>formCountCorrect of type long</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether the answer is correct or not</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.formCountCorrect of type bigint</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formCountCorrect</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether the answer is correct or not</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1028,11 +1057,12 @@ This is the setter for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formTimeMillisTotal of type long</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>formTimeMillisTotal of type long</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Time in milliseconds for the time spent answering the question</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.formTimeMillisTotal of type bigint</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formTimeMillisTotal</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Time in milliseconds for the time spent answering the question</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1048,11 +1078,12 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formTimeMillisTotal of type long</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>formTimeMillisTotal of type long</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Time in milliseconds for the time spent answering the question</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.formTimeMillisTotal of type bigint</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formTimeMillisTotal</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Time in milliseconds for the time spent answering the question</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1068,11 +1099,12 @@ This is the getter for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formTimeMillisTotal of type long</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>formTimeMillisTotal of type long</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Time in milliseconds for the time spent answering the question</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.formTimeMillisTotal of type bigint</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.formTimeMillisTotal</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Time in milliseconds for the time spent answering the question</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1105,11 +1137,12 @@ This is the setter for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.testCount of type long</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>testCount of type long</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.testCount of type bigint</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.testCount</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1125,11 +1158,12 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.testCount of type long</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>testCount of type long</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.testCount of type bigint</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.testCount</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1145,11 +1179,12 @@ This is the getter for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.testCount of type long</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>testCount of type long</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.testCount of type bigint</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.testCount</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1192,11 +1227,12 @@ This is the setter for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.testAnswerCountCorrect of type long</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>testAnswerCountCorrect of type long</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether the answer is correct or not</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.testAnswerCountCorrect of type bigint</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.testAnswerCountCorrect</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether the answer is correct or not</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1212,11 +1248,12 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.testAnswerCountCorrect of type long</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>testAnswerCountCorrect of type long</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether the answer is correct or not</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.testAnswerCountCorrect of type bigint</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.testAnswerCountCorrect</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether the answer is correct or not</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1232,11 +1269,12 @@ This is the getter for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.testAnswerCountCorrect of type long</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>testAnswerCountCorrect of type long</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether the answer is correct or not</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.testAnswerCountCorrect of type bigint</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.testAnswerCountCorrect</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether the answer is correct or not</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1269,11 +1307,12 @@ This is the setter for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.testTimeMillisAvg of type double</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>testTimeMillisAvg of type double</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Time in milliseconds for the time spent answering the question</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.testTimeMillisAvg of type double precision</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.testTimeMillisAvg</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Time in milliseconds for the time spent answering the question</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1289,11 +1328,12 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.testTimeMillisAvg of type double</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>testTimeMillisAvg of type double</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Time in milliseconds for the time spent answering the question</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.testTimeMillisAvg of type double precision</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.testTimeMillisAvg</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Time in milliseconds for the time spent answering the question</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1309,11 +1349,12 @@ This is the getter for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.testTimeMillisAvg of type double</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>testTimeMillisAvg of type double</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Time in milliseconds for the time spent answering the question</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.testTimeMillisAvg of type double precision</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.testTimeMillisAvg</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Time in milliseconds for the time spent answering the question</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1346,11 +1387,12 @@ This is the setter for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.isPassed of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>isPassed of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Passed</B>: Whether the test was passed or not by answering at least 2 out of the 3 questions.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.isPassed of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.isPassed</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Passed</B>: Whether the test was passed or not by answering at least 2 out of the 3 questions.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1370,11 +1412,12 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.isPassed of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>isPassed of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Passed</B>: Whether the test was passed or not by answering at least 2 out of the 3 questions.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.isPassed of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.isPassed</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Passed</B>: Whether the test was passed or not by answering at least 2 out of the 3 questions.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1395,11 +1438,12 @@ This is the getter for:<BR>
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.isPassed of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>isPassed of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Passed</B>: Whether the test was passed or not by answering at least 2 out of the 3 questions.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.isPassed of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.isPassed</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Passed</B>: Whether the test was passed or not by answering at least 2 out of the 3 questions.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1410,7 +1454,7 @@ This is the isNull for:<BR>
 
 </TABLE>
 */
-   public final boolean isIsPassedNull()
+   public final boolean isNullIsPassed()
      { return __Nulls.intersects(TILDA__TEST_XYZ_ANALYTICS_VIEW_Factory.COLS.ISPASSED._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1420,11 +1464,12 @@ This is the isNull for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.isPassed of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>isPassed of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Passed</B>: Whether the test was passed or not by answering at least 2 out of the 3 questions.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.isPassed of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.isPassed</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Passed</B>: Whether the test was passed or not by answering at least 2 out of the 3 questions.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1456,11 +1501,12 @@ This is the setter for:<BR>
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.isPassed of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>isPassed of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Passed</B>: Whether the test was passed or not by answering at least 2 out of the 3 questions.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.isPassed of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.isPassed</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Passed</B>: Whether the test was passed or not by answering at least 2 out of the 3 questions.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1471,12 +1517,12 @@ This is the null setter for:<BR>
 
 </TABLE>
 */
-    void setIsPassedNull()
+    void setNullIsPassed()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__TEST_XYZ_ANALYTICS_VIEW_Factory.COLS.ISPASSED._Mask);
        if (__Nulls.intersects(TILDA__TEST_XYZ_ANALYTICS_VIEW_Factory.COLS.ISPASSED._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__TEST_XYZ_ANALYTICS_VIEW_Factory.COLS.ISPASSED._Mask);
        __Nulls.or(TILDA__TEST_XYZ_ANALYTICS_VIEW_Factory.COLS.ISPASSED._Mask);
        _isPassed=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1495,11 +1541,12 @@ This is the null setter for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.tookLongerThanAverage of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tookLongerThanAverage of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Took Longer Than Average</B>: Whether the test took longer that the average time spent across all tests.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.tookLongerThanAverage of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.tookLongerThanAverage</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Took Longer Than Average</B>: Whether the test took longer that the average time spent across all tests.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1519,11 +1566,12 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.tookLongerThanAverage of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tookLongerThanAverage of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Took Longer Than Average</B>: Whether the test took longer that the average time spent across all tests.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.tookLongerThanAverage of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.tookLongerThanAverage</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Took Longer Than Average</B>: Whether the test took longer that the average time spent across all tests.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1544,11 +1592,12 @@ This is the getter for:<BR>
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.tookLongerThanAverage of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tookLongerThanAverage of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Took Longer Than Average</B>: Whether the test took longer that the average time spent across all tests.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.tookLongerThanAverage of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.tookLongerThanAverage</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Took Longer Than Average</B>: Whether the test took longer that the average time spent across all tests.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1559,7 +1608,7 @@ This is the isNull for:<BR>
 
 </TABLE>
 */
-   public final boolean isTookLongerThanAverageNull()
+   public final boolean isNullTookLongerThanAverage()
      { return __Nulls.intersects(TILDA__TEST_XYZ_ANALYTICS_VIEW_Factory.COLS.TOOKLONGERTHANAVERAGE._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1569,11 +1618,12 @@ This is the isNull for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.tookLongerThanAverage of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tookLongerThanAverage of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Took Longer Than Average</B>: Whether the test took longer that the average time spent across all tests.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.tookLongerThanAverage of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.tookLongerThanAverage</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Took Longer Than Average</B>: Whether the test took longer that the average time spent across all tests.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1605,11 +1655,12 @@ This is the setter for:<BR>
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.tookLongerThanAverage of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tookLongerThanAverage of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Took Longer Than Average</B>: Whether the test took longer that the average time spent across all tests.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.tookLongerThanAverage of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.tookLongerThanAverage</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Took Longer Than Average</B>: Whether the test took longer that the average time spent across all tests.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1620,12 +1671,12 @@ This is the null setter for:<BR>
 
 </TABLE>
 */
-    void setTookLongerThanAverageNull()
+    void setNullTookLongerThanAverage()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__TEST_XYZ_ANALYTICS_VIEW_Factory.COLS.TOOKLONGERTHANAVERAGE._Mask);
        if (__Nulls.intersects(TILDA__TEST_XYZ_ANALYTICS_VIEW_Factory.COLS.TOOKLONGERTHANAVERAGE._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__TEST_XYZ_ANALYTICS_VIEW_Factory.COLS.TOOKLONGERTHANAVERAGE._Mask);
        __Nulls.or(TILDA__TEST_XYZ_ANALYTICS_VIEW_Factory.COLS.TOOKLONGERTHANAVERAGE._Mask);
        _tookLongerThanAverage=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1644,11 +1695,12 @@ This is the null setter for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.wasChallenging of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>wasChallenging of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Was Challenging</B>: Whether the test was challenging in that:<LI>   <LI>it was passed,</LI>   <LI>and overall, less than a third of answers across all tests were answered correctly.</LI> </UL></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.wasChallenging of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.wasChallenging</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Was Challenging</B>: Whether the test was challenging in that:<LI>   <LI>it was passed,</LI>   <LI>and overall, less than a third of answers across all tests were answered correctly.</LI> </UL></TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1669,11 +1721,12 @@ AND testAnswerCountCorrect < testCount*3/2</PRE>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.wasChallenging of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>wasChallenging of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Was Challenging</B>: Whether the test was challenging in that:<LI>   <LI>it was passed,</LI>   <LI>and overall, less than a third of answers across all tests were answered correctly.</LI> </UL></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.wasChallenging of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.wasChallenging</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Was Challenging</B>: Whether the test was challenging in that:<LI>   <LI>it was passed,</LI>   <LI>and overall, less than a third of answers across all tests were answered correctly.</LI> </UL></TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1695,11 +1748,12 @@ AND testAnswerCountCorrect < testCount*3/2</PRE>
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.wasChallenging of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>wasChallenging of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Was Challenging</B>: Whether the test was challenging in that:<LI>   <LI>it was passed,</LI>   <LI>and overall, less than a third of answers across all tests were answered correctly.</LI> </UL></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.wasChallenging of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.wasChallenging</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Was Challenging</B>: Whether the test was challenging in that:<LI>   <LI>it was passed,</LI>   <LI>and overall, less than a third of answers across all tests were answered correctly.</LI> </UL></TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1711,7 +1765,7 @@ AND testAnswerCountCorrect < testCount*3/2</PRE>
 
 </TABLE>
 */
-   public final boolean isWasChallengingNull()
+   public final boolean isNullWasChallenging()
      { return __Nulls.intersects(TILDA__TEST_XYZ_ANALYTICS_VIEW_Factory.COLS.WASCHALLENGING._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1721,11 +1775,12 @@ AND testAnswerCountCorrect < testCount*3/2</PRE>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.wasChallenging of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>wasChallenging of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Was Challenging</B>: Whether the test was challenging in that:<LI>   <LI>it was passed,</LI>   <LI>and overall, less than a third of answers across all tests were answered correctly.</LI> </UL></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.wasChallenging of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.wasChallenging</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Was Challenging</B>: Whether the test was challenging in that:<LI>   <LI>it was passed,</LI>   <LI>and overall, less than a third of answers across all tests were answered correctly.</LI> </UL></TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1758,11 +1813,12 @@ AND testAnswerCountCorrect < testCount*3/2</PRE>
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.wasChallenging of type int</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>wasChallenging of type int</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Was Challenging</B>: Whether the test was challenging in that:<LI>   <LI>it was passed,</LI>   <LI>and overall, less than a third of answers across all tests were answered correctly.</LI> </UL></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.Test_XYZ_Analytics_View.wasChallenging of type integer</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.Test_XYZ_Analytics_View.wasChallenging</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Test Was Challenging</B>: Whether the test was challenging in that:<LI>   <LI>it was passed,</LI>   <LI>and overall, less than a third of answers across all tests were answered correctly.</LI> </UL></TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1774,12 +1830,12 @@ AND testAnswerCountCorrect < testCount*3/2</PRE>
 
 </TABLE>
 */
-    void setWasChallengingNull()
+    void setNullWasChallenging()
      {
        long T0 = System.nanoTime();
+       __Changes.or(TILDA__TEST_XYZ_ANALYTICS_VIEW_Factory.COLS.WASCHALLENGING._Mask);
        if (__Nulls.intersects(TILDA__TEST_XYZ_ANALYTICS_VIEW_Factory.COLS.WASCHALLENGING._Mask) == true) // already NULL
         return;
-       __Changes.or(TILDA__TEST_XYZ_ANALYTICS_VIEW_Factory.COLS.WASCHALLENGING._Mask);
        __Nulls.or(TILDA__TEST_XYZ_ANALYTICS_VIEW_Factory.COLS.WASCHALLENGING._Mask);
        _wasChallenging=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1818,20 +1874,7 @@ AND testAnswerCountCorrect < testCount*3/2</PRE>
         }
        StringBuilder S = new StringBuilder(1024);
           S.append("select ");
-          S.append(" "); C.getFullColumnVar(S, "TILDATUTORIAL", "Test_XYZ_Analytics_View", "formRefnum");
-          S.append(", "); C.getFullColumnVar(S, "TILDATUTORIAL", "Test_XYZ_Analytics_View", "formType");
-          S.append(", "); C.getFullColumnVar(S, "TILDATUTORIAL", "Test_XYZ_Analytics_View", "formFillDateTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDATUTORIAL", "Test_XYZ_Analytics_View", "formFillDate");
-          S.append(", "); C.getFullColumnVar(S, "TILDATUTORIAL", "Test_XYZ_Analytics_View", "formUserRefnum");
-          S.append(", "); C.getFullColumnVar(S, "TILDATUTORIAL", "Test_XYZ_Analytics_View", "formUserEmail");
-          S.append(", "); C.getFullColumnVar(S, "TILDATUTORIAL", "Test_XYZ_Analytics_View", "formCountCorrect");
-          S.append(", "); C.getFullColumnVar(S, "TILDATUTORIAL", "Test_XYZ_Analytics_View", "formTimeMillisTotal");
-          S.append(", "); C.getFullColumnVar(S, "TILDATUTORIAL", "Test_XYZ_Analytics_View", "testCount");
-          S.append(", "); C.getFullColumnVar(S, "TILDATUTORIAL", "Test_XYZ_Analytics_View", "testAnswerCountCorrect");
-          S.append(", "); C.getFullColumnVar(S, "TILDATUTORIAL", "Test_XYZ_Analytics_View", "testTimeMillisAvg");
-          S.append(", "); C.getFullColumnVar(S, "TILDATUTORIAL", "Test_XYZ_Analytics_View", "isPassed");
-          S.append(", "); C.getFullColumnVar(S, "TILDATUTORIAL", "Test_XYZ_Analytics_View", "tookLongerThanAverage");
-          S.append(", "); C.getFullColumnVar(S, "TILDATUTORIAL", "Test_XYZ_Analytics_View", "wasChallenging");
+          C.getFullColumnVarList(S, TILDA__TEST_XYZ_ANALYTICS_VIEW_Factory.COLUMNS);
           S.append(" from "); C.getFullTableVar(S, "TILDATUTORIAL", "Test_XYZ_Analytics_View");
        switch (__LookupId)
         {
@@ -1878,7 +1921,7 @@ AND testAnswerCountCorrect < testCount*3/2</PRE>
         }
        finally
         {
-          tilda.tutorial.data._Tilda.TILDA__1_0.handleFinally(PS, T0, TILDA__TEST_XYZ_ANALYTICS_VIEW_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.tutorial.data._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__TEST_XYZ_ANALYTICS_VIEW_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
     }
@@ -1933,19 +1976,19 @@ AND testAnswerCountCorrect < testCount*3/2</PRE>
     {
       long T0 = System.nanoTime();
       String Str = 
-                   "formRefnum: "                                                                                                                             +                                   getFormRefnum            () 
+                   "formRefnum: "                                                                                                                             +                                   getFormRefnum            ()
                + "; formType: "                                                                                                                               + TextUtil.printVariableStr        (getFormType              ())
-               + "; formFillDate"             + (__Nulls.intersects(TILDA__TEST_XYZ_ANALYTICS_VIEW_Factory.COLS.FORMFILLDATE._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getFormFillDate          ()))
-               + "; formUserRefnum: "                                                                                                                         +                                   getFormUserRefnum        () 
+               + "; formFillDate"             + (__Nulls.intersects(TILDA__TEST_XYZ_ANALYTICS_VIEW_Factory.COLS.FORMFILLDATE._Mask          ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getFormFillDate          ()))
+               + "; formUserRefnum: "                                                                                                                         +                                   getFormUserRefnum        ()
                + "; formUserEmail: "                                                                                                                          + TextUtil.printVariableStr        (getFormUserEmail         ())
-               + "; formCountCorrect: "                                                                                                                       +                                   getFormCountCorrect      () 
-               + "; formTimeMillisTotal: "                                                                                                                    +                                   getFormTimeMillisTotal   () 
-               + "; testCount: "                                                                                                                              +                                   getTestCount             () 
-               + "; testAnswerCountCorrect: "                                                                                                                 +                                   getTestAnswerCountCorrect() 
-               + "; testTimeMillisAvg: "                                                                                                                      +                                   getTestTimeMillisAvg     () 
-               + "; isPassed"                 + (__Nulls.intersects(TILDA__TEST_XYZ_ANALYTICS_VIEW_Factory.COLS.ISPASSED._Mask) == true ? ": NULL" : ": " +                                   getIsPassed              () )
-               + "; tookLongerThanAverage"    + (__Nulls.intersects(TILDA__TEST_XYZ_ANALYTICS_VIEW_Factory.COLS.TOOKLONGERTHANAVERAGE._Mask) == true ? ": NULL" : ": " +                                   getTookLongerThanAverage () )
-               + "; wasChallenging"           + (__Nulls.intersects(TILDA__TEST_XYZ_ANALYTICS_VIEW_Factory.COLS.WASCHALLENGING._Mask) == true ? ": NULL" : ": " +                                   getWasChallenging        () )
+               + "; formCountCorrect: "                                                                                                                       +                                   getFormCountCorrect      ()
+               + "; formTimeMillisTotal: "                                                                                                                    +                                   getFormTimeMillisTotal   ()
+               + "; testCount: "                                                                                                                              +                                   getTestCount             ()
+               + "; testAnswerCountCorrect: "                                                                                                                 +                                   getTestAnswerCountCorrect()
+               + "; testTimeMillisAvg: "                                                                                                                      +                                   getTestTimeMillisAvg     ()
+               + "; isPassed"                 + (__Nulls.intersects(TILDA__TEST_XYZ_ANALYTICS_VIEW_Factory.COLS.ISPASSED._Mask              ) == true ? ": NULL" : ": " +                                   getIsPassed              ())
+               + "; tookLongerThanAverage"    + (__Nulls.intersects(TILDA__TEST_XYZ_ANALYTICS_VIEW_Factory.COLS.TOOKLONGERTHANAVERAGE._Mask ) == true ? ": NULL" : ": " +                                   getTookLongerThanAverage ())
+               + "; wasChallenging"           + (__Nulls.intersects(TILDA__TEST_XYZ_ANALYTICS_VIEW_Factory.COLS.WASCHALLENGING._Mask        ) == true ? ": NULL" : ": " +                                   getWasChallenging        ())
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;

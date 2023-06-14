@@ -24,4 +24,5 @@ public interface OCCObject
     public ZonedDateTime getCreated    ();
     public ZonedDateTime getLastUpdated();
     public ZonedDateTime getDeleted    ();
+    public boolean       isNullDeleted ();
   }

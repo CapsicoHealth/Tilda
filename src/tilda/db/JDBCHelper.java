@@ -20,11 +20,16 @@ package tilda.db;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLWarning;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.Migrate;
 import tilda.db.processors.RecordProcessor;
 import tilda.enums.StatementType;
 import tilda.enums.TransactionType;
@@ -103,7 +108,7 @@ public class JDBCHelper
             QueryDetails.setLastQuery(TableName, Query);
             S = C.createStatement(ResultSet.FETCH_FORWARD, ResultSet.CONCUR_READ_ONLY);
             if (size < 0 || size > 5000)
-             S.setFetchSize(5000);
+              S.setFetchSize(5000);
             ResultSet RS = S.executeQuery(Query);
             int count = JDBCHelper.process(RS, RP, Start, Offsetted, size, Limited, CountAll);
             PerfTracker.add(TableName, StatementType.SELECT, System.nanoTime() - T0, count);
@@ -157,21 +162,70 @@ public class JDBCHelper
           }
       }
 
-    public static boolean executeDDL(Connection C, String SchemaName, String TableName, String Query)
+    protected static List<String> _REHEARSAL_DDL_QUERIES = null;
+
+    public static void startRehearsal()
+      {
+        if (_REHEARSAL_DDL_QUERIES == null)
+          _REHEARSAL_DDL_QUERIES = new ArrayList<String>();
+      }
+
+    public static void endRehearsal()
+      {
+        if (_REHEARSAL_DDL_QUERIES != null)
+          {
+            _REHEARSAL_DDL_QUERIES.clear();
+            _REHEARSAL_DDL_QUERIES = null;
+          }
+      }
+
+    public static boolean isRehearsal()
+      {
+        return _REHEARSAL_DDL_QUERIES != null;
+      }
+    
+    public static Iterator<String> getRehearsalIterator()
+      {
+        return _REHEARSAL_DDL_QUERIES==null ? null : _REHEARSAL_DDL_QUERIES.iterator();
+      }
+
+    public static boolean executeDDL(Connection C, String schemaName, String tableName, String query)
     throws Exception
       {
-        TableName = SchemaName + "." + TableName;
-        QueryDetails.logQuery(TableName, Query, null);
+        tableName = schemaName + "." + tableName;
+        // If in rehearsal mode, we just capture the queries that would have normally been issues.
+        // This is mostly used by the Migrate utility wanting to capture migrations in a file.
+        if (_REHEARSAL_DDL_QUERIES != null)
+          {
+            _REHEARSAL_DDL_QUERIES.add(query);
+            return true;
+          }
+        QueryDetails.logQuery(tableName, query, null);
         Statement S = null;
         try
           {
             long T0 = System.nanoTime();
-            QueryDetails.setLastQuery(TableName, Query);
+            QueryDetails.setLastQuery(tableName, query);
             S = C.createStatement();
-            S.execute(Query);
+            S.execute(query);
             while (S.getMoreResults() == true || S.getUpdateCount() != -1)
               S.getResultSet();
-            PerfTracker.add(TableName, StatementType.UPDATE, System.nanoTime() - T0, 1);
+            if (QueryDetails.isWarningsCollection() == true)
+              {
+                StringBuilder str = new StringBuilder();
+                SQLWarning warn = S.getWarnings();
+                while (warn != null)
+                  {
+                    str.append("       ").append(warn.getMessage()).append("\r\n");
+                    warn = warn.getNextWarning();
+                  }
+                String s = str.toString();
+                if (s.isEmpty() == false)
+                  QueryDetails.setLastQueryWarning(s);
+                PerfTracker.add(tableName, StatementType.UPDATE, System.nanoTime() - T0, 1, s);
+              }
+            else
+              PerfTracker.add(tableName, StatementType.UPDATE, System.nanoTime() - T0, 1);
             return true;
           }
         finally
@@ -216,17 +270,17 @@ public class JDBCHelper
           }
         return Str.toString();
       }
-    
+
     public static int batchWriteDone(int[] results, int size)
     throws Exception
       {
-        if(results.length != size)
+        if (results.length != size)
           return 0;
-        
-        for(int i = 0 ; i < results.length ; i++)
-            if(results[i] != -2 && results[i] <= 0)
-              return i;
-    
+
+        for (int i = 0; i < results.length; i++)
+          if (results[i] != -2 && results[i] <= 0)
+            return i;
+
         return -1;
       }
   }

@@ -22,7 +22,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +35,7 @@ import org.apache.logging.log4j.Logger;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Schema;
 import tilda.utils.FileUtil;
+import tilda.utils.TextUtil;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -41,26 +44,47 @@ public abstract class Parser
   {
     protected static final Logger LOG = LogManager.getLogger(Parser.class.getName());
 
-    public static ParserSession init(CodeGenSql CGSql, List<Schema> SchemaList) throws Exception
-     {
-       ParserSession PS = new ParserSession(SchemaList.get(SchemaList.size()-1), CGSql);;
-       for (Schema S : SchemaList)
-        PS.addDependencySchema(S);
-       for (Schema S : SchemaList)
-        S.Validate(PS);
-       return PS;
-     }
+    public static ParserSession init(CodeGenSql CGSql, List<Schema> SchemaList)
+    throws Exception
+      {
+        ParserSession PS = new ParserSession(SchemaList.get(SchemaList.size() - 1), CGSql);
+        Map<String, Schema> SchemaCache = new HashMap<String, Schema>();
+        for (Schema S : SchemaList)
+          {
+            // PS.addDependencySchema(S);
+            if (loadDependencies(PS, S, SchemaCache) == false)
+              return null;
+          }
+        for (Schema S : SchemaList)
+          S.Validate(PS);
+        return PS;
+      }
 
-    public static ParserSession parse(String FilePath, CodeGenSql CGSql, Map<String, Schema> SchemaCache, boolean allowResource) throws Exception
+    public static Schema parseSchemaFromFile(String FilePath, boolean allowResource)
+    throws Exception
       {
         LOG.info("\n\n\n-----------------------------------------------------------------------------------------------------------------------------------------------");
         LOG.info("Loading Tilda schema '" + FilePath + "'.");
-        Schema S = fromFile(FilePath, allowResource);
+        return fromFileOrResource(FilePath, allowResource);
+      }
+
+    public static ParserSession parse(String FilePath, CodeGenSql CGSql, Map<String, Schema> SchemaCache, boolean allowResource)
+    throws Exception
+      {  
+        return parse(FilePath, CGSql, SchemaCache, allowResource, null);
+      }
+    
+    public static ParserSession parse(String filePath, CodeGenSql CGSql, Map<String, Schema> SchemaCache, boolean allowResource, String contents)
+    throws Exception
+      {
+        LOG.info("\n\n\n-----------------------------------------------------------------------------------------------------------------------------------------------");
+        LOG.info("Loading Tilda schema '" + filePath + "'.");
+        Schema S = TextUtil.isNullOrEmpty(contents)==false ? fromContents(contents, filePath) : fromFileOrResource(filePath, allowResource);
         if (S == null)
           return null;
-        Schema CS = SchemaCache.get(S._ResourceNameShort);
-        if (CS == null)
-         SchemaCache.put(S._ResourceNameShort, S);
+        Schema SCached = SchemaCache.get(S._ResourceNameShort);
+        if (SCached == null)
+          SchemaCache.put(S._ResourceNameShort, S);
         else
           {
             // When we load files from the file system, we have a full path to work from.
@@ -68,83 +92,56 @@ public abstract class Parser
             // the classpath as a resource. As such, its origin is not clear. If that schema
             // shows up later in the processing pipeline, then we have to "fix" the previous
             // instance's origin path.
-            if (CS._ProjectRoot.isEmpty() == true)
-              CS.setOrigin(FilePath);
-            S = CS;
+            if (SCached._ProjectRoot.isEmpty() == true)
+              SCached.setOrigin(filePath);
+            S = SCached;
           }
 
         ParserSession PS = new ParserSession(S, CGSql);
         if (loadDependencies(PS, S, SchemaCache) == false)
           return null;
-        
+
         return PS;
       }
 
-    protected static Schema fromFile(String FilePath, boolean allowResource)
+    protected static Schema fromFileOrResource(String FilePath, boolean allowResource)
       {
-        Reader R = null;
-        try
+        try (Reader R = allowResource == true ? FileUtil.getReaderFromFileOrResource(FilePath) : new FileReader(FilePath))
           {
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            R = allowResource == true ? FileUtil.getReaderFromFileOrResource(FilePath) : new FileReader(FilePath);
-            Schema S = gson.fromJson(R, tilda.parsing.parts.Schema.class);
-            S.setOrigin(FilePath);
-            return S;
+            return fromReader(R, FilePath);
           }
         catch (Throwable T)
           {
-            LOG.error("Cannot load Tilda schema from file '" + FilePath + "'.\n", T);
+            LOG.error("Cannot load Tilda schema from file/resource '" + FilePath + "'.\n", T);
             return null;
-          }
-        finally
-          {
-            if (R != null)
-              try
-                {
-                  R.close();
-                }
-              catch (IOException e)
-                {
-                }
           }
       }
 
-    protected static Schema fromResource(String ResourceName)
+    protected static Schema fromContents(String contents, String filePath)
       {
-        Reader R = null;
-        try
+        try (Reader R = new StringReader(contents))
           {
-            InputStream In = FileUtil.getResourceAsStream(ResourceName);
-            if (In == null)
-              {
-                LOG.error("Cannot find Tilda resource '" + ResourceName + "'.");
-                return null;
-              }
-            R = new BufferedReader(new InputStreamReader(In));
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            Schema S = gson.fromJson(R, tilda.parsing.parts.Schema.class);
-            S.setOrigin(ResourceName);
-            return S;
+            return fromReader(R, filePath);
           }
         catch (Throwable T)
           {
-            LOG.error("Cannot load Tilda schema from resource '" + ResourceName + "'.\n", T);
+            LOG.error("Cannot load Tilda schema from contents.\n", T);
             return null;
           }
-        finally
-          {
-            if (R != null)
-              try
-                {
-                  R.close();
-                }
-              catch (IOException e)
-                {
-                }
-          }
+      }
+    
+    protected static Schema fromReader(Reader R, String filePath)
+    throws Exception
+      {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        Schema S = gson.fromJson(R, tilda.parsing.parts.Schema.class);
+        S.setOrigin(filePath);
+        return S;
       }
 
-    public static boolean loadDependencies(ParserSession PS, Schema BaseSchema, Map<String, Schema> SchemaCache) throws Exception
+
+    public static boolean loadDependencies(ParserSession PS, Schema BaseSchema, Map<String, Schema> SchemaCache)
+    throws Exception
       {
         Schema BaseTilda = null;
         if (BaseSchema._ResourceName.endsWith(Schema._BASE_TILDA_SCHEMA_RESOURCE) == false)
@@ -155,14 +152,14 @@ public abstract class Parser
               LOG.info("Tilda schema from '" + Schema._BASE_TILDA_SCHEMA_RESOURCE + "' has already been loaded previously and has been fetched from the cache.");
             else
               {
-                BaseTilda = fromResource(Schema._BASE_TILDA_SCHEMA_RESOURCE);
+                BaseTilda = fromFileOrResource(Schema._BASE_TILDA_SCHEMA_RESOURCE, true);
                 if (BaseTilda == null)
-                 return false;
+                  return false;
                 SchemaCache.put(Schema._BASE_TILDA_SCHEMA_RESOURCE, BaseTilda);
               }
             PS.addDependencySchema(BaseTilda);
             if (loadDependencies(BaseSchema, PS._Dependencies, SchemaCache) == false)
-             return false;
+              return false;
           }
         else
           BaseTilda = BaseSchema;
@@ -202,7 +199,7 @@ public abstract class Parser
               if (D == null)
                 {
                   LOG.info("Loading dependency schema from '" + d + "'.");
-                  D = fromResource(d);
+                  D = fromFileOrResource(d, true);
                   if (D == null)
                     return false;
                   SchemaCache.put(d, D);
@@ -216,7 +213,7 @@ public abstract class Parser
               if (Pre != null)
                 {
                   if (cache == false)
-                   LOG.info("   Tilda dependency schema '" + Pre.getFullName() + "' has been validated already");
+                    LOG.info("   Tilda dependency schema '" + Pre.getFullName() + "' has been validated already");
                   S._DependencySchemas.add(Pre);
                 }
               else
@@ -229,5 +226,5 @@ public abstract class Parser
             }
         return true;
       }
-    
+
   }

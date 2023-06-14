@@ -31,6 +31,7 @@ import tilda.enums.TransactionType;
 import tilda.utils.AnsiUtil;
 import tilda.utils.DurationUtil;
 import tilda.utils.NumberFormatUtil;
+import tilda.utils.TextUtil;
 
 public abstract class PerfTracker
   {
@@ -49,6 +50,20 @@ public abstract class PerfTracker
      */
     public static void add(String TableName, StatementType Type, long DurationNano, int Count)
       {
+        add(TableName, Type, DurationNano, Count, null);
+      }
+    
+   /**
+     * Adds new perf information for the named table.
+     * 
+     * @param TableName
+     * @param Query
+     * @param Type
+     * @param DurationNano
+     * @param Records
+     */
+    public static void add(String TableName, StatementType Type, long DurationNano, int Count, String warnings)
+      {
         TableInfo I = (TableInfo) _M.get(TableName);
         if (I == null)
           synchronized (_M)
@@ -61,10 +76,18 @@ public abstract class PerfTracker
                 }
             }
         I.add(Type, DurationNano, Count);
-        if (Count == 0)
-          LOG.debug(QueryDetails._LOGGING_HEADER + "   " + AnsiUtil.UNDERLINE + "No record " + Type._PP + " " + AnsiUtil.UNDERLINE_OFF + " in " + DurationUtil.printDurationMilliSeconds(DurationNano));
+        if (TextUtil.isNullOrEmpty(warnings) == true)
+          warnings = "";
         else
-          LOG.debug(QueryDetails._LOGGING_HEADER + "   " + Type._PP + " " + Count + " records in " + DurationUtil.printDurationMilliSeconds(DurationNano));
+          {
+            QueryDetails.setLastQueryWarning(warnings);
+            warnings = "\n"+warnings;
+          }
+        
+        if (Count == 0)
+          LOG.debug(QueryDetails._LOGGING_HEADER + "   " + AnsiUtil.UNDERLINE + "No record " + Type._PP + " " + AnsiUtil.UNDERLINE_OFF + " in " + DurationUtil.printDurationMilliSeconds(DurationNano)+warnings);
+        else
+          LOG.debug(QueryDetails._LOGGING_HEADER + "   " + Type._PP + " " + Count + " records in " + DurationUtil.printDurationMilliSeconds(DurationNano)+warnings);
       }
 
     /**

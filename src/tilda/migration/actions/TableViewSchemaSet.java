@@ -16,6 +16,7 @@
 
 package tilda.migration.actions;
 
+import tilda.data.MaintenanceLog_Data;
 import tilda.db.Connection;
 import tilda.migration.MigrationAction;
 
@@ -23,7 +24,7 @@ public class TableViewSchemaSet extends MigrationAction
   {
     public TableViewSchemaSet(tilda.parsing.parts.Base Base, String OldSchemaName)
       {
-        super(Base._ParentSchema._Name, Base._Name, false);
+        super(Base._ParentSchema._Name, Base._Name, false, MaintenanceLog_Data._actionRename, MaintenanceLog_Data._objectTypeView);
         _Base = Base;
         _OldSchemaName = OldSchemaName;
       }

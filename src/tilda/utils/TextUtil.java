@@ -45,6 +45,7 @@ import javax.swing.text.rtf.RTFEditorKit;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jsoup.Jsoup;
 
 public class TextUtil
   {
@@ -1371,6 +1372,17 @@ public class TextUtil
     protected static final Pattern HTML_NEWLINE_PATTERN = Pattern.compile("<\\s*(TD|BR|DIV|P)\\s*[^>]*>", Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
     protected static final Pattern HTML_TAG_PATTERN     = Pattern.compile("(</?[^>]+>)+", Pattern.DOTALL);
 
+    /**
+     * This method used a reg-ex based poor-man's version of parsing out text from an HTML document by removing
+     * some tags and replacing things like TD, DIV, BR , P etc... with new lines. This worked 8y ago when we did this
+     * but today, with more modern HTML, this is insufficient.<BR>
+     * <BR>
+     * Instead, use the JSoup API, or the passthrough {@link #HTML2TXT(String, boolean)} method.
+     * 
+     * @param Str
+     * @return
+     */
+    @Deprecated
     public static final String HTML2TXT(String Str)
       {
         if (isNullOrEmpty(Str) == false)
@@ -1381,6 +1393,16 @@ public class TextUtil
         return Str;
       }
 
+    /**
+     * Passthrough method that uses the JSoup API to extract the Text from an HTML document
+     * @param html the html document
+     * @param normalized whether normalized or non-normalized text content should be returned (as per the JSoup API)
+     * @return the text contents from the HTML documentation.
+     */
+    public static final String HTML2TXT(String html, boolean normalized)
+      {
+        return isNullOrEmpty(html) == true ? html : normalized ? Jsoup.parse(html).text() : Jsoup.parse(html).wholeText();
+      }
 
     public static final String streamToString(InputStream In)
     throws IOException

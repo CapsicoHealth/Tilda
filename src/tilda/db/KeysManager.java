@@ -40,7 +40,15 @@ public class KeysManager
         init(false);
         Key_Data k = _M.get(ObjectName);
         if (k == null)
-          throw new Exception("Requested a key for unknown object '" + ObjectName + "'.");
+          {
+            // When creating new databases from scratch, we may be creating tables as we need them.
+            // This should only happen in that scenario or due to a bug, so the extra check shouldn't
+            // get in the way of general performance.
+            retryKeyInit(ObjectName);
+            k = _M.get(ObjectName);
+            if (k == null)
+             throw new Exception("Requested a key for unknown object '" + ObjectName + "'.");
+          }
 
         return k.nextKey();
       }
@@ -58,13 +66,13 @@ public class KeysManager
         init(true);
       }
 
-    protected static final String _SEM = "KEYS";
+    protected static final String _KEYS_POOL = "KEYS";
 
     protected static void init(boolean reinit)
     throws SQLException
       {
         if (_M == null || _M.isEmpty() == true || reinit == true)
-          synchronized (_SEM)
+          synchronized (_KEYS_POOL)
             {
               if (_M == null || _M.isEmpty() == true || reinit == true)
                 {
@@ -76,7 +84,7 @@ public class KeysManager
                       else
                         LOG.info("Reloading the tilda key definitions.");
                       _M = new HashMap<String, Key_Data>();
-                      C = ConnectionPool.get(_SEM);
+                      C = ConnectionPool.get(_KEYS_POOL);
                       ListResults<Key_Data> L = Key_Factory.lookupWhereAllByName(C, 0, -1);
                       for (Key_Data k : L)
                         {
@@ -99,4 +107,34 @@ public class KeysManager
                 }
             }
       }
+
+    protected static void retryKeyInit(String objectName)
+    throws SQLException
+      {
+        synchronized (_KEYS_POOL)
+          {
+            Connection C = null;
+            try
+              {
+                LOG.info("Rechecking key definition for " + objectName + ".");
+                C = ConnectionPool.get(_KEYS_POOL);
+                Key_Data k = Key_Factory.lookupByName(objectName);
+                if (k.read(C) == true)
+                  _M.put(k.getName(), k);
+              }
+            catch (Throwable T)
+              {
+                LOG.warn("Cannot load Keys definition for " + objectName + " from the database.");
+              }
+            finally
+              {
+                if (C != null)
+                  {
+                    C.rollback();
+                    C.close();
+                  }
+              }
+          }
+      }
+
   }

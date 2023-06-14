@@ -14,6 +14,7 @@ insert into TILDA.ZoneInfo ("id", "label", "value", "deactivatedTZ", "deactivate
          ,('AmNYC', 'New York City'      , 'America/New_York'   , null, null, current_timestamp, current_timestamp)
          ,('CaEa' , 'Canada Eastern'     , 'Canada/Eastern'     , null, null, current_timestamp, current_timestamp)
          ,('USCe' , 'US Central'         , 'US/Central'         , null, null, current_timestamp, current_timestamp)
+         ,('AmChi', 'Chicago'            , 'America/Chicago'    , null, null, current_timestamp, current_timestamp)
          ,('CaCe' , 'Canada Central'     , 'Canada/Central'     , null, null, current_timestamp, current_timestamp)
          ,('CaSa' , 'Canada Saskatchewan', 'Canada/Saskatchewan', null, null, current_timestamp, current_timestamp)
          ,('USAr' , 'US Arizona'         , 'US/Arizona'         , null, null, current_timestamp, current_timestamp)
@@ -25,6 +26,7 @@ insert into TILDA.ZoneInfo ("id", "label", "value", "deactivatedTZ", "deactivate
          ,('USAl' , 'US Alaska'          , 'US/Alaska'          , null, null, current_timestamp, current_timestamp)
          ,('USHa' , 'US Hawaii'          , 'US/Hawaii'          , null, null, current_timestamp, current_timestamp)
          ,('USSa' , 'US Samoa'           , 'US/Samoa'           , null, null, current_timestamp, current_timestamp)
+         ,('AsCa' , 'Asia Calcutta'      , 'Asia/Calcutta'      , null, null, current_timestamp, current_timestamp)
  on conflict("id") do update
  set "label"=EXCLUDED."label"
     ,"value"=EXCLUDED."value"
@@ -122,7 +124,7 @@ CREATE OR REPLACE FUNCTION Tilda.isInvalidDate("dt" TIMESTAMP WITH TIME ZONE)
 -- Helper Formula dependency view
 --
 ---------------------------------------------------------------------------------------------------
-
+/*
 CREATE OR REPLACE VIEW Tilda.FormulaDependencyFullView as
 with recursive R("formulaRefnum", "formulaLocation", "formulaName", "formulaDependencies", "columnDependencies") as (
 select FormulaDependencyView."formulaRefnum", "location" as "formulaLocation", "name" as "formulaName", ARRAY["dependentFormulaLocation"||'.'||"dependentFormulaName"] as "formulaDependencies", "referencedColumns" as "columnDependencies"
@@ -135,12 +137,23 @@ select FormulaDependencyView."formulaRefnum", "location" as "formulaLocation", "
 select distinct * 
   from R
 ;
-
+*/
 
 ---------------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------------
 -- cleanup of old tables.
 --
 ---------------------------------------------------------------------------------------------------
-drop table if exists tilda.job_detail;
-drop table if exists tilda.jobs;
+DO $$
+BEGIN
+ PERFORM TILDA.retireTable('tilda','job_detail', 'retired');
+ drop view if exists Tilda.FormulaDependencyFullView;
+ drop view if exists Tilda.FormulaDependencyView;
+ drop view if exists Tilda.MeasureFormulaView;
+ PERFORM TILDA.retireTable('tilda','formuladependency', 'retired');
+ PERFORM TILDA.retireTable('tilda','formularesult', 'retired');
+ PERFORM TILDA.retireTable('tilda','measureformula', 'retired');
+ PERFORM TILDA.retireTable('tilda','measure', 'retired');
+ PERFORM TILDA.retireTable('tilda','formula', 'retired');
+END; $$
+

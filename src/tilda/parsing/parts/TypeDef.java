@@ -18,6 +18,8 @@ package tilda.parsing.parts;
 
 import java.math.BigDecimal;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -80,6 +82,8 @@ public class TypeDef
         return _Validation == ValidationStatus.SUCCESS;
       }
 
+    protected static Pattern _P = Pattern.compile("STRING\\s*\\(\\s*(\\d+)\\s*\\)");
+    
     private void ValidateBase(ParserSession PS, String What, boolean AllowArrays, boolean StringSizeOptional)
       {
         if (_TypeStr == null)
@@ -101,7 +105,9 @@ public class TypeDef
           }
         else if (_TypeStr.startsWith("STRING(") == true)
           {
-            _Size = ParseUtil.parseInteger(_TypeStr.substring("STRING(".length(), _TypeStr.length()-1), SystemValues.EVIL_VALUE);
+            Matcher m = _P.matcher(_TypeStr);
+            if (m.find() == true)
+             _Size = ParseUtil.parseInteger(m.group(1), SystemValues.EVIL_VALUE);
             if (_Size == SystemValues.EVIL_VALUE)
              {
                PS.AddError(What + " defined an invalid 'type' '" + _TypeStr + "' which was thought to be a String+size, e.g. STRING(250), but cannot parse the size value as an integer.");

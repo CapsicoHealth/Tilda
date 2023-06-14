@@ -38,9 +38,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import tilda.data._Tilda.TILDA__CONNECTION_Factory;
-import tilda.data._Tilda.TILDA__JOBVIEW_Factory;
-import tilda.data_test._Tilda.TILDA__TESTING_Factory;
 import tilda.db.Connection;
 import tilda.db.JDBCHelper;
 import tilda.db.metadata.ColumnMeta;
@@ -68,7 +65,7 @@ public class JSONUtil
         for (int i = 0; i < v.length(); ++i)
           {
             char c = v.charAt(i);
-            Out.write(c == '\n' ? "\\n" : c == '\r' ? "\\r" : c == '"' ? "\\\"" : c == '\\' ? "\\\\" : "" + c);
+            Out.write(c == '\n' ? "\\n" : c == '\r' ? "\\r" : c == '\t' ? "\\t" : c == '"' ? "\\\"" : c == '\\' ? "\\\\" : "" + c);
           }
         Out.write("\"");
       }

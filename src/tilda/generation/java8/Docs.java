@@ -20,6 +20,7 @@ import java.io.PrintWriter;
 import java.util.List;
 
 import tilda.enums.ColumnType;
+import tilda.enums.MultiType;
 import tilda.generation.Generator;
 import tilda.generation.GeneratorSession;
 import tilda.generation.interfaces.CodeGenDocs;
@@ -193,14 +194,16 @@ public class Docs implements CodeGenDocs
         Helper.getMultiLineDocCommentStart() + SystemValues.NEWLINE
         + "This is the " + DocsHeader + " for:<BR>" + SystemValues.NEWLINE
         + "<TABLE border=\"0px\" cellpadding=\"3px\" cellspacing=\"0px\">" + SystemValues.NEWLINE
-        + "  <TR><TD align=\"right\"><B>Name</B></TD><TD>" + C.getFullName() + " of type " + JavaJDBCType.getFieldType(C) + "</TD></TR>" + SystemValues.NEWLINE
-        + "  <TR><TD align=\"right\"><B>Column</B></TD><TD>" + C.getShortName() + " of type " + G.getSql().getColumnType(C) + "</TD></TR>" + SystemValues.NEWLINE);
+        + "  <TR><TD align=\"right\"><B>Name</B></TD><TD>" + C.getName() + " of type " + printTypeForHTML(C) +"</TD></TR>" + SystemValues.NEWLINE
+        + "  <TR valign=\"top\"><TD align=\"right\"><B>Description</B></TD><TD>" + C._Description + "</TD></TR>" + SystemValues.NEWLINE
+        + "  <TR><TD align=\"right\"><B>Column</B></TD><TD>" + C.getShortName() + " of type " + G.getSql().getColumnType(C) + "</TD></TR>" + SystemValues.NEWLINE
+        + "  <TR><TD align=\"right\"><B>Full Name</B></TD><TD>" + C.getFullName() + "</TD></TR>" + SystemValues.NEWLINE
+        );
         if (C.getType() == ColumnType.STRING)
-          Out.println("  <TR><TD align=\"right\"><B>Size</B></TD><TD>" + (C.getType() == ColumnType.STRING ? C._Size : "&nbsp;") + "</TD></TR>");
+         Out.println("  <TR><TD align=\"right\"><B>Size</B></TD><TD>" + (C.isCollection() == false ? C._Size : "Size not applicable for collections") + "</TD></TR>");
 
         Out.println(
         "  <TR><TD align=\"right\"><B>Nullable</B></TD><TD>" + C._Nullable + "</TD></TR>" + SystemValues.NEWLINE
-        + "  <TR valign=\"top\"><TD align=\"right\"><B>Description</B></TD><TD>" + C._Description + "</TD></TR>" + SystemValues.NEWLINE
         + "  <TR><TD align=\"right\"><B>Mode</B></TD><TD>" + C._Mode + "</TD></TR>" + SystemValues.NEWLINE
         + "  <TR><TD align=\"right\"><B>Invariant</B></TD><TD>" + C._Invariant + "</TD></TR>" + SystemValues.NEWLINE
         + "  <TR><TD align=\"right\"><B>Protect</B></TD><TD>" + (C._Protect == null ? "NONE" : C._Protect) + "</TD></TR>");
@@ -221,6 +224,11 @@ public class Docs implements CodeGenDocs
         + Helper.getMultiLineCommentEnd());
       }
 
+
+    private static String printTypeForHTML(Column C)
+      {
+        return TextUtil.escapeXML(JavaJDBCType.getFieldType(C)) + (C.getTypeCollection() == MultiType.LIST ? " (ordered)" : C.getTypeCollection() == MultiType.SET ? " (unordered)": "");
+      }
 
     @Override
     public void docFieldValues(PrintWriter Out, GeneratorSession G, Column C)

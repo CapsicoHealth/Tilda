@@ -60,7 +60,7 @@ public class OrderBy
         if (TextUtil.isNullOrEmpty(_OrderByStr) == true)
           return false;
 
-        String[] parts = _OrderByStr.split("\\s");
+        String[] parts = _OrderByStr.split("\\s+");
         if (parts.length != 1 && parts.length != 2 && parts.length != 4)
           {
             PS.AddError(what + " with an orderBy '" + _OrderByStr + "' that is formatted incorrectly: expecting <col_name> (asc|desc (nulls first|last)?)?.");

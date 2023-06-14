@@ -50,7 +50,6 @@ import tilda.parsing.parts.Object;
 import tilda.parsing.parts.OrderBy;
 import tilda.parsing.parts.Query;
 import tilda.parsing.parts.Schema;
-import tilda.parsing.parts.Value;
 import tilda.parsing.parts.View;
 import tilda.parsing.parts.ViewColumn;
 import tilda.parsing.parts.ViewJoin;
@@ -243,7 +242,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
               {
                 if (FK._multi == true)
                  { 
-                   Out.println("  -- FK defined from an array column. FK won't me created on DB");
+                   Out.println("  -- FK defined from an array column. FK won't be created on DB");
                    Out.print  ("  -- , CONSTRAINT " + FK.getName() + " FOREIGN KEY (");
                  }
                 Out.print("  , CONSTRAINT " + FK.getName() + " FOREIGN KEY (");
@@ -353,7 +352,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                                 {
                                   FromList.append("\n     " + JoinType.printJoinType(VC._Join) + " " + VJ._ObjectObj.getShortName());
                                   FromList.append(" as " + getFullTableVar(VC._SameAsObj._ParentObject, TI._V));
-                                  FromList.append(" on " + rewriteExpressionColumnQuoting(Q._Clause));
+                                  FromList.append(" on " + rewriteExpressionColumnQuoting(Q._ClauseStatic));
                                 }
                           }
                         else
@@ -487,9 +486,9 @@ public class Sql extends PostgreSQL implements CodeGenSql
             Query q = V._SubQuery.getQuery(this);
             if (q != null)
               {
-                boolean NewLine = q._Clause.indexOf("\n") >= 0;
+                boolean NewLine = q._ClauseStatic.indexOf("\n") >= 0;
                 Str.append(" where (");
-                Str.append(NewLine == true ? q._Clause.replaceAll("\n", "\n        ") : q._Clause);
+                Str.append(NewLine == true ? q._ClauseStatic.replaceAll("\n", "\n        ") : q._ClauseStatic);
                 Str.append(NewLine == true ? "\n       )" : ")");
               }
             Str.append("\n");
@@ -586,7 +585,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         Query Q = VJ.getQuery(this);
         if (Q == null)
           throw new Exception("Cannot generate the view because an 'on' clause matching the active database '" + this.getName() + "' is not available.");
-        Str.append(" on " + rewriteExpressionColumnQuoting(Q._Clause));
+        Str.append(" on " + rewriteExpressionColumnQuoting(Q._ClauseStatic));
         return Q;
       }
 
@@ -631,6 +630,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
 
                 // We have to be able to handle cases for joins with an "as". If so, we have to use that, otherwise
                 // we have to use the internal source of the column being ordered by.
+                if (TextUtil.isNullOrEmpty(VC._AggregateAttributes) == false)
+                 Str.append(", ").append(VC._AggregateAttributes);
                 if (VC._partitionByObjs.size() != 0 || TextUtil.isNullOrEmpty(VC._Range) == false || VC._Aggregate.isWindowOnly() == true)
                   Str.append(") OVER (");
                 printAggregatePartitionBy(Str, VC._partitionByObjs, TextUtil.isNullOrEmpty(TI._As) == false ? TI.getFullName() : null);
@@ -1087,15 +1088,15 @@ public class Sql extends PostgreSQL implements CodeGenSql
         if (VC._Aggregate.isWindowOnly() == true)
           throw new Error("Fuction genPivotColumnSQL called for '" + VC.getFullName() + "' with a window-only aggregate '" + VC._Aggregate.name() + "'.");
 
-        String aggr = VC._Aggregate == AggregateType.COUNT ? AggregateType.SUM.name()
-        : VC._Aggregate == AggregateType.ARRAY ? "array_agg"
-        : VC._Aggregate.name();
-
         StringBuilder Str = new StringBuilder();
-        Str.append(aggr).append("(");
+        Str.append(getAggregateStr(VC._Aggregate)).append("(");
         if (VC._Distinct == true)
           Str.append("distinct ");
         Str.append("\"").append(VC._NameInner).append("\"");
+        
+        if (TextUtil.isNullOrEmpty(VC._AggregateAttributes) == false)
+          Str.append(", ").append(VC._AggregateAttributes);
+        
         // If there is a partition or a range, we gotta switch to an OVER statement.
         if (VC._partitionByObjs.size() != 0 || TextUtil.isNullOrEmpty(VC._Range) == false)
           Str.append(") OVER (");
@@ -1128,7 +1129,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         : VC._Aggregate.name();
 
         return VC._Aggregate.isWindowOnly() == true ? "\n     , " + aggr + "() over() as \"" + VC._Name + "\""
-        : "\n     , " + aggr + "(\"" + VC.getName() + "\") as \"" + VC._Name + "\"";
+        : "\n     , " + aggr + "(\"" + VC.getName() + "\""+(TextUtil.isNullOrEmpty(VC._AggregateAttributes) == true ? "" : ", "+VC._AggregateAttributes)+") as \"" + VC._Name + "\"";
       }
 
 
@@ -1177,19 +1178,38 @@ public class Sql extends PostgreSQL implements CodeGenSql
         return "DDL META DATA VERSION 2021-09-02";
       }
 
+/*
     @Override
-    public void genDDLMetadata(PrintWriter OutFinal, View V)
+    public void genDDLMetadata(PrintWriter out, Object O)
     throws Exception
       {
+        CatalogHelper CH = new CatalogHelper(O.getSchema().getShortName(), O.getBaseName());
+        CH.addColumns(O._Columns);
+        out.println(CH.outputSQLProc(this));
+      }
+    
+
+    @Override
+    public void genDDLMetadata(PrintWriter out, View V)
+    throws Exception
+      {
+        CatalogHelper CH = new CatalogHelper(V.getSchema().getShortName(), V.getBaseName());
+        CH.addViewColumns(V._ViewColumns);
+        CH.addViewColumns(V._PivotColumns);
+        CH.addFormulas(V._Formulas);
+        out.println(CH.outputSQLProc(this));
+
         if (V._Formulas == null || V._Formulas.isEmpty() == true)
           {
             OutFinal.println("DO $$");
-            OutFinal.println("-- This view doesn't have any formula, but just in case it used to and they were all repoved from the model, we still have to do some cleanup.");
+            OutFinal.println("-- This view doesn't have any formula, but just in case it used to and they were all removed from the model, we still have to do some cleanup.");
             OutFinal.println("DECLARE");
             OutFinal.println("  ts timestamp;");
             OutFinal.println("BEGIN");
             OutFinal.println("  select into ts current_timestamp;");
-            OutFinal.println("  UPDATE TILDA.Formula set deleted = current_timestamp where \"location\" = " + TextUtil.escapeSingleQuoteForSQL(V.getShortName()) + " AND \"lastUpdated\" < ts;");
+            OutFinal.println("  UPDATE TILDA.Catalog set deleted = current_timestamp where \"schemaName\" = " + TextUtil.escapeSingleQuoteForSQL(V.getSchema().getShortName())
+                                   +" AND \"tableViewName\" = " + TextUtil.escapeSingleQuoteForSQL(V.getBaseName())
+                                   +" AND \"lastUpdated\" < ts;");
             OutFinal.println("END; $$");
             OutFinal.println("LANGUAGE PLPGSQL;");
             return;
@@ -1206,7 +1226,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         OutFinal.println("  k bigint;");
         OutFinal.println("  ts timestamp;");
         OutFinal.println("BEGIN");
-        OutFinal.println("  select into k TILDA.getKeyBatchAsMaxExclusive('TILDA.FORMULA', " + V._Formulas.size() + ")-" + V._Formulas.size() + ";");
+        OutFinal.println("  select into k TILDA.getKeyBatchAsMaxExclusive('TILDA.CATALOG', " + V._Formulas.size() + ")-" + V._Formulas.size() + ";");
         OutFinal.println("  select into ts current_timestamp;");
         OutFinal.println();
 
@@ -1223,7 +1243,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
 
             if (++count == 0)
               {
-                OutFinal.println("INSERT INTO TILDA.Formula (\"refnum\", \"location\", \"location2\", \"name\", \"type\", \"title\", \"description\", \"formula\", \"htmlDoc\", \"referencedColumns\", \"created\", \"lastUpdated\", \"deleted\")");
+                OutFinal.println("INSERT INTO TILDA.Catalog (\"refnum\", \"schemaName\", \"tableViewName\", \"columnName\", \"tableViewName2\", \"type\", \"description\", \"aggregate\", \"title\", \"formula\", \"measure\", \"htmlDoc\", \"referencedColumns\", \"referencedFormulas\", \"created\", \"lastUpdated\", \"deleted\")");
                 OutFinal.print("    VALUES (");
               }
             else
@@ -1432,8 +1452,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
 
         OutFinal.println("END; $$");
         OutFinal.println("LANGUAGE PLPGSQL;");
-
       }
+*/
 
     private String genFormulaCode(View ParentView, Formula F)
       {
@@ -1493,7 +1513,10 @@ public class Sql extends PostgreSQL implements CodeGenSql
               }
             M.appendTail(Str);
           }
+        
         return Str.toString();
+        // LDH-NOTE: See note in rewriteExpressionColumnQuoting. Issues with formulas being cleaned up.
+//        return rewriteExpressionColumnQuoting(Str.toString());
       }
 
     private static String genRealizedColumnList(View V, String Lead)

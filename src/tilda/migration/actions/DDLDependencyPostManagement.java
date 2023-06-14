@@ -16,6 +16,7 @@
 
 package tilda.migration.actions;
 
+import tilda.data.MaintenanceLog_Data;
 import tilda.db.Connection;
 import tilda.migration.DDLDependencyManager;
 import tilda.migration.MigrationAction;
@@ -24,7 +25,7 @@ public class DDLDependencyPostManagement extends MigrationAction
   {
     public DDLDependencyPostManagement(DDLDependencyManager DdlDepMan)
       {
-        super(DdlDepMan.getSchemaName(), DdlDepMan.getTableViewName(), true);
+        super(DdlDepMan.getSchemaName(), DdlDepMan.getTableViewName(), true, MaintenanceLog_Data._actionUpdate, MaintenanceLog_Data._objectTypeView);
         _DdlDepMan = DdlDepMan;
       }
 

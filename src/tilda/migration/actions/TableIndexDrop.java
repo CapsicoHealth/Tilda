@@ -19,6 +19,7 @@ package tilda.migration.actions;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.data.MaintenanceLog_Data;
 import tilda.db.Connection;
 import tilda.db.metadata.IndexMeta;
 import tilda.migration.MigrationAction;
@@ -29,7 +30,7 @@ public class TableIndexDrop extends MigrationAction
 
     public TableIndexDrop(tilda.parsing.parts.Object Obj, IndexMeta IX)
       {
-        super(Obj._ParentSchema._Name, Obj._Name, false);
+        super(Obj._ParentSchema._Name, Obj._Name, false, MaintenanceLog_Data._actionDrop, MaintenanceLog_Data._objectTypeIndex);
         _Obj = Obj;
         _IX = IX;
       }
@@ -46,6 +47,6 @@ public class TableIndexDrop extends MigrationAction
     @Override
     public String getDescription()
       {
-        return "Dropping Index " + _Obj.getShortName()+"." + _IX._Name + "("+_IX.getSignature()+")";
+        return "Dropping Index " + _Obj.getShortName()+"." + _IX._Name + "("+_IX.getSignature()+") on table " + _IX._ParentTable.getFullNameFormatted();
       }
   }

@@ -55,4 +55,12 @@ public enum ConventionNaming
         return _p == null ? true : _p.matcher(name).matches();
       }
 
+    /*
+    public static String toCamelCase(String str)
+      {
+        CaseUtils.class x =  CaseUtils();
+        
+        return str;
+      }
+    */
   }

@@ -40,8 +40,11 @@ import tilda.db.metadata.IndexMeta;
 import tilda.db.metadata.PKMeta;
 import tilda.db.metadata.SchemaMeta;
 import tilda.db.metadata.TableMeta;
+import tilda.db.metadata.TableViewMeta;
 import tilda.db.metadata.ViewMeta;
 import tilda.db.processors.RecordProcessor;
+import tilda.db.processors.ScalarRP;
+import tilda.db.processors.StringRP;
 import tilda.db.stores.DBType;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
@@ -89,7 +92,7 @@ public final class Connection
         _DB = _Url.startsWith("jdbc:postgresql:") ? DBType.Postgres
         : _Url.startsWith("jdbc:datadirect:googlebigquery:") ? DBType.BigQuery
         : _Url.startsWith("jdbc:sqlserver:") ? DBType.SQLServer
-//        : _Url.startsWith("jdbc:db2:") ? DBType.DB2
+        // : _Url.startsWith("jdbc:db2:") ? DBType.DB2
         : null;
         if (_DB == null)
           throw new Exception("Can't find the DBType based on URL " + _Url);
@@ -250,7 +253,7 @@ public final class Connection
       }
 
     /**
-     * Wrapper to {@link #commitNoThrow()} or {@link #rollbackNoThrow()} based on parameter. 
+     * Wrapper to {@link #commitNoThrow()} or {@link #rollbackNoThrow()} based on parameter.
      * This should be typically used in a catch block when managing exceptions.
      * 
      * @param Commit true if commit is needed, or false if rollback
@@ -385,25 +388,25 @@ public final class Connection
     public boolean isErrNoData(Throwable T)
     throws SQLException
       {
-        return isSQLExcception(T) == false 
-                     ? false 
-                     : TextUtil.indexOf(((SQLException)T).getSQLState(), _DB.getConnectionNoDataStates());
+        return isSQLExcception(T) == false
+        ? false
+        : TextUtil.indexOf(((SQLException) T).getSQLState(), _DB.getConnectionNoDataStates());
       }
 
     public boolean isLockOrConnectionError(Throwable T)
     throws SQLException
       {
-        return isSQLExcception(T) == false 
-                     ? false 
-                     : TextUtil.indexOf(((SQLException)T).getMessage(), _DB.getConnectionLockMsgs());
+        return isSQLExcception(T) == false
+        ? false
+        : TextUtil.indexOf(((SQLException) T).getMessage(), _DB.getConnectionLockMsgs());
       }
 
     public boolean isCanceledError(Throwable T)
     throws SQLException
       {
-        return isSQLExcception(T) == false 
-                     ? false 
-                     : TextUtil.indexOf(((SQLException)T).getSQLState(), _DB.getConnectionCancelStates());
+        return isSQLExcception(T) == false
+        ? false
+        : TextUtil.indexOf(((SQLException) T).getSQLState(), _DB.getConnectionCancelStates());
       }
 
     private static boolean isSQLExcception(Throwable T)
@@ -456,6 +459,32 @@ public final class Connection
           }
       }
     
+    
+    /**
+     * Executes a query expecting a single result of any integer, up to a Long.
+     */
+    public Long executeSelectLong(String SchemaName, String TableName, String Query)
+    throws Exception
+      {
+        ScalarRP RP = new ScalarRP();
+        if (executeSelect(SchemaName, TableName, Query, RP, 0, false, -1, false, false) > 0)
+         return RP.getResult();
+        return null;
+      }
+    
+    /**
+     * Executes a query expecting a single result of of a string.
+     */
+    public String executeSelectString(String SchemaName, String TableName, String Query)
+    throws Exception
+      {
+        StringRP RP = new StringRP();
+        if (executeSelect(SchemaName, TableName, Query, RP, 0, false, -1, false, false) > 0)
+         return RP.getResult();
+        return null;
+      }
+    
+
     public int executeMetaFullSelect(String schemaName, String tableViewName, RecordProcessor RP)
     throws Exception
       {
@@ -464,25 +493,25 @@ public final class Connection
         TableMeta tvm = S.getTableMeta(tableViewName);
         return executeMetaFullSelect(tvm, RP);
       }
-    
-    public int executeMetaFullSelect(TableMeta tvm, RecordProcessor RP)
+
+    public int executeMetaFullSelect(TableViewMeta tvm, RecordProcessor RP)
     throws Exception
       {
         StringBuilder str = new StringBuilder();
         str.append("select ");
         boolean first = true;
-        for (ColumnMeta cm : tvm._ColumnsList)
+        for (ColumnMeta cm : tvm.getColumnMetaList())
           {
             if (first == false)
-             str.append(", ");
+              str.append(", ");
             else
-             first = false;
-            getFullColumnVar(str, tvm._SchemaName, tvm._TableName, cm._NameOriginal);
+              first = false;
+            getFullColumnVar(str, tvm.getSchemaName(), tvm.getTableViewName(), cm._NameOriginal);
           }
-        str.append(" from "+tvm._SchemaName+"."+tvm._TableName);
-        return executeSelect(tvm._SchemaName, tvm._TableName, str.toString(), RP);
-      }    
-    
+        str.append(" from " + tvm.getSchemaName() + "." + tvm.getTableViewName());
+        return executeSelect(tvm.getSchemaName(), tvm.getTableViewName(), str.toString(), RP);
+      }
+
 
 
     public int executeUpdate(String SchemaName, String TableName, String Query)
@@ -640,6 +669,11 @@ public final class Connection
         return _DB.supportsSuperMetaDataQueries();
       }
 
+    public boolean supportsReorg()
+      {
+        return _DB.supportsReorg();
+      }
+
     /**
      * For String Columns, checks is the Database would type as a CHARACTER, VARCHAR, or TEXT
      * (or whatever the equivalents are across different databases).
@@ -759,12 +793,13 @@ public final class Connection
       {
         return _DB.getArray(RS, i, Type, isSet);
       }
+
     public Collection<?> getArray(ResultSet RS, String colName, ColumnType Type, boolean isSet)
     throws Exception
       {
         return _DB.getArray(RS, colName, Type, isSet);
       }
-    
+
 
     public String getJsonParametrizedQueryPlaceHolder()
       {
@@ -858,10 +893,22 @@ public final class Connection
         return _DB.alterTableDropIndex(this, Obj, IX);
       }
 
+    public boolean alterTableIndexDropCluster(IndexMeta IX)
+    throws Exception
+      {
+        return _DB.alterTableIndexDropCluster(this, IX);
+      }
+
     public boolean alterTableAddIndex(Index IX)
     throws Exception
       {
         return _DB.alterTableAddIndex(this, IX);
+      }
+
+    public boolean alterTableIndexAddCluster(Index IX)
+    throws Exception
+      {
+        return _DB.alterTableIndexAddCluster(this, IX);
       }
 
     public boolean alterTableRenameIndex(Object Obj, String OldName, String NewName)
@@ -894,6 +941,19 @@ public final class Connection
         _DB.cancel(this);
       }
 
+    public boolean getAutoCommit()
+    throws Exception
+      {
+        return _C.getAutoCommit();
+      }
+    
+    public void setAutoCommit(boolean val)
+    throws Exception
+      {
+        _C.setAutoCommit(val);
+      }
+    
+    
     /**
      * 
      * @param CL
@@ -981,6 +1041,12 @@ public final class Connection
     throws SQLException
       {
         _C.setReadOnly(readOnly);
+      }
+
+    public boolean reorgTable(String schemaName, String tableName, String clusterIndexName, boolean verbose, boolean full)
+    throws Exception
+      {
+        return _DB.reorgTable(this, schemaName, tableName, clusterIndexName, verbose, full);
       }
 
   }

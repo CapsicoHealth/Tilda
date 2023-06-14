@@ -19,6 +19,7 @@ package tilda.parsing.parts;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.enums.AggregateType;
 import tilda.enums.ColumnType;
 import tilda.utils.TextUtil;
 
@@ -47,10 +48,21 @@ public class ViewColumnWrapper extends Column
             _Precision = SameAsCol._Precision;
             _Scale = SameAsCol._Scale;
             // If the aggregate is a list (e.g., ARRAY, ARRAY_CAT), or if the original type if a collection, we propagate as LIST.
-            if (VCol._Aggregate.isList() == true || SameAsCol.isCollection() == true)
+            if (VCol._Aggregate.isList() == true || SameAsCol.isList() == true)
               {
                 _TypeStr += "[]";
                 _Size = null;
+              }
+            else if (SameAsCol.isSet() == true)
+              {
+                _TypeStr += "{}";
+                _Size = null;
+              }
+            // If it is a String aggregate, we can't reuse the size of the source column. We set the value to a default large value (10MB).
+            else if (VCol._Aggregate == AggregateType.STRING)
+              {
+                _TypeStr+="("+AggregateType._DEFAULT_STRING_AGG_SIZE+")";
+                _Size = AggregateType._DEFAULT_STRING_AGG_SIZE;
               }
             // If it's a non list aggregate (e.g., FIRST) and it's a string, we need to propagate the size too
             else if (_TypeStr.equals(ColumnType.STRING.name()) == true)

@@ -85,7 +85,8 @@ public class PrimaryKey
                 if (C._Nullable == true)
                   PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a primary key with column '" + C.getName() + "' which is nullable.");
                 if (C._Invariant == false)
-                  PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a primary key with column '" + C.getName() + "' which is not an invariant.");
+                 C._Invariant = true;
+//                  PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a primary key with column '" + C.getName() + "' which is not an invariant.");
                 if (C._Mode == ColumnMode.CALCULATED)
                   PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a primary key with column '" + C.getName() + "' which is calculated.");
                 C._PrimaryKey = true;

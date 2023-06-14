@@ -31,19 +31,32 @@ public class QueryDetails
       {
         _Table = Table;
         _Query = Query;
-        _Deadlocked = false;
       }
 
     public final String                            _Table;
     public final String                            _Query;
-    public boolean                                 _Deadlocked;
-    public boolean                                 _Canceled;
+    public String                                  _Warnings           = null;
+    public boolean                                 _WarningsCollection = false;
+    public boolean                                 _Deadlocked         = false;
+    public boolean                                 _Canceled           = false;
 
-    private static final ThreadLocal<QueryDetails> _LastQuery = new ThreadLocal<QueryDetails>();
+    private static final ThreadLocal<QueryDetails> _LastQuery          = new ThreadLocal<QueryDetails>();
 
     public static void setLastQuery(String TableName, String Query)
       {
-        _LastQuery.set(new QueryDetails(TableName, Query));
+        // Creates a whole new QueryDetail, but most pass on the _WarningsCollection flag.
+        QueryDetails lastQuery = _LastQuery.get();
+        boolean warningsCollection = lastQuery != null ? lastQuery._WarningsCollection : false;
+        lastQuery = new QueryDetails(TableName, Query);
+        lastQuery._WarningsCollection = warningsCollection;
+        _LastQuery.set(lastQuery);
+      }
+
+    public static void setLastQueryWarning(String str)
+      {
+        QueryDetails LastQuery = _LastQuery.get();
+        if (LastQuery != null && TextUtil.isNullOrEmpty(str) == false)
+          LastQuery._Warnings = str;
       }
 
     public static void setLastQueryDeadlocked()
@@ -59,7 +72,7 @@ public class QueryDetails
         if (LastQuery != null)
           LastQuery._Canceled = true;
       }
-    
+
     public static boolean isLastQueryDeadlocked()
       {
         QueryDetails LastQuery = _LastQuery.get();
@@ -71,19 +84,46 @@ public class QueryDetails
         QueryDetails LastQuery = _LastQuery.get();
         return LastQuery != null ? LastQuery._Canceled : false;
       }
-    
+
+    public static String getLastQuery()
+      {
+        QueryDetails LastQuery = _LastQuery.get();
+        return LastQuery == null ? null : LastQuery._Query;
+      }
+
     public static String getLastQuerySecure()
       {
         QueryDetails LastQuery = _LastQuery.get();
         return LastQuery == null ? null : LastQuery._Query.replaceAll("\'[^\']*\'", "'****'");
       }
 
-    public static final String _LOGGING_HEADER = TextUtil.identity("    ~~ ");
-    
-    public static void logQuery(String TableName, String Query, String Values)
+    public static String getLastQueryWarnings()
       {
-        LOG.debug(_LOGGING_HEADER + AnsiUtil.NEGATIVE + "["+TableName+"]" + AnsiUtil.NEGATIVE_OFF + ": "+Query);
-        if (Values != null)
-         LOG.debug(_LOGGING_HEADER + "   " + Values);
+        QueryDetails LastQuery = _LastQuery.get();
+        return LastQuery != null ? LastQuery._Warnings : null;
+      }
+
+    public static void setWarningsCollection(boolean val)
+      {
+        QueryDetails LastQuery = _LastQuery.get();
+        if (LastQuery != null)
+          LastQuery._WarningsCollection = val;
+      }
+
+    public static boolean isWarningsCollection()
+      {
+        QueryDetails LastQuery = _LastQuery.get();
+        return LastQuery != null ? LastQuery._WarningsCollection : false;
+
+      }
+
+
+    public static final String _LOGGING_HEADER = TextUtil.identity("    ~~ ");
+
+    public static void logQuery(String tableName, String query, String values)
+      {
+        LOG.debug(_LOGGING_HEADER + AnsiUtil.NEGATIVE + "[" + tableName + "]" + AnsiUtil.NEGATIVE_OFF + ": " + query);
+        if (values != null)
+          LOG.debug(_LOGGING_HEADER + "   " + values);
       }
   }

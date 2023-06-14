@@ -32,7 +32,7 @@ import org.apache.logging.log4j.Logger;
 import tilda.db.Connection;
 import tilda.utils.PaddingTracker;
 
-public class TableMeta
+public class TableMeta implements TableViewMeta
   {
     static final Logger LOG = LogManager.getLogger(TableMeta.class.getName());
 
@@ -40,11 +40,14 @@ public class TableMeta
       {
         _SchemaName = SchemaName;
         _TableName = TableName;
+        updateFullNames();
         _Descr = Descr;
       }
 
     public String                  _SchemaName;
     public String                  _TableName;
+    protected String               _FullNameLowerCase;
+    protected String               _FullNameFormatted;
     public final String            _Descr;
     public Map<String, ColumnMeta> _ColumnsMap        = new HashMap<String, ColumnMeta>();
     public List<ColumnMeta>        _ColumnsList       = new ArrayList<ColumnMeta>();
@@ -53,12 +56,34 @@ public class TableMeta
     public Map<String, FKMeta>     _ForeignKeysIn     = new HashMap<String, FKMeta>();
     public PKMeta                  _PrimaryKey;
     public PaddingTracker          _PadderColumnNames = new PaddingTracker();
+    
+    @Override
+    public String getSchemaName()
+      {
+        return _SchemaName;
+      }
+
+    @Override
+    public String getTableViewName()
+      {
+        return _TableName;
+      }
+   
 
     public void load(Connection C)
     throws Exception
       {
         DatabaseMetaData meta = C.getMetaData();
-        
+
+        if (_ColumnsList.isEmpty() == true)
+          {
+            long TS = System.nanoTime();
+            ResultSet RS = meta.getColumns(null, _SchemaName.toLowerCase(), _TableName.toLowerCase(), null);
+            loadColumns(C, RS);
+            RS.close();
+            MetaPerformance._TableColumnNano += (System.nanoTime() - TS);
+            MetaPerformance._TableColumnCount += _ColumnsList.size();
+          }
         // Loading unique indices
         long TS = System.nanoTime();
         ResultSet RS = meta.getIndexInfo(null, _SchemaName.toLowerCase(), _TableName.toLowerCase(), true, true);
@@ -69,16 +94,44 @@ public class TableMeta
         RS = meta.getIndexInfo(null, _SchemaName.toLowerCase(), _TableName.toLowerCase(), false, true);
         loadIndices(RS);
         RS.close();
-        MetaPerformance._IndexNano+=(System.nanoTime()-TS);
+        MetaPerformance._IndexNano += (System.nanoTime() - TS);
         MetaPerformance._IndexCount += _Indices.size();
-        
+
         // Loading primary keys
         TS = System.nanoTime();
         RS = meta.getPrimaryKeys(null, _SchemaName.toLowerCase(), _TableName.toLowerCase());
         if (RS.next() == true)
           _PrimaryKey = new PKMeta(RS);
-        MetaPerformance._PKNano+=(System.nanoTime()-TS);
+        MetaPerformance._PKNano += (System.nanoTime() - TS);
         MetaPerformance._PKCount++;
+      }
+
+    protected void loadColumns(Connection C, ResultSet RS)
+    throws SQLException, Exception
+      {
+        while (RS.next() != false)
+          {
+            ColumnMeta CM = new ColumnMeta(C, RS);
+            _ColumnsList.add(CM);
+            _PadderColumnNames.track(CM._Name);
+            _ColumnsMap.put(CM._Name.toLowerCase(), CM);
+          }
+      }
+
+    public void updateFullNames()
+      {
+        _FullNameFormatted = _SchemaName.toUpperCase() + "." + _TableName;
+        _FullNameLowerCase = _FullNameFormatted.toLowerCase();
+      }
+
+    public String getFullNameFormatted()
+      {
+        return _FullNameFormatted;
+      }
+
+    public String getFullNameLowerCase()
+      {
+        return _FullNameLowerCase;
       }
 
     private void loadIndices(ResultSet RS)
@@ -87,9 +140,9 @@ public class TableMeta
         int indexCount = 0;
         while (RS.next() != false)
           {
-            IndexMeta IM = new IndexMeta(RS, this/*, indexCount*/);
+            IndexMeta IM = new IndexMeta(RS, this/* , indexCount */);
             if (IM._Name == null)
-             continue;
+              continue;
             IndexMeta prevIM = _Indices.get(IM._Name);
             if (prevIM == null)
               {
@@ -106,10 +159,11 @@ public class TableMeta
       {
         ColumnMeta cm = _ColumnsMap.get(ColumnName.toLowerCase());
         if (cm == null || caseSensitive == true && cm._NameOriginal.equals(ColumnName) == false)
-         return null;
+          return null;
         return cm;
       }
 
+    @Override
     public List<ColumnMeta> getColumnMetaList()
       {
         return _ColumnsList;
@@ -142,10 +196,22 @@ public class TableMeta
       {
         return _Indices.get(Name);
       }
-    
+
     public Collection<IndexMeta> getIndexMetas()
       {
         return _Indices.values();
       }
-    
+
+    /**
+     * Returns the cluster index, if any has been defined. If none are found, returns null.
+     * 
+     * @return
+     */
+    public IndexMeta getClusterIndex()
+      {
+        for (IndexMeta IM : _Indices.values())
+          if (IM._Cluster == true)
+            return IM;
+        return null;
+      }
   }
