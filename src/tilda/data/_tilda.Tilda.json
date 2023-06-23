@@ -481,9 +481,9 @@
      ,"occ":false
      ,"description": "A single row for min, max and invalid dates for the Date_Dim"
      ,"columns":[
-          { "name":"invalidDate", "sameas":"DateDim.dt", "nullable":false, "description":"The invalid date"  }
-         ,{ "name":"minDate"    , "sameas":"DateDim.dt", "nullable":false, "description":"The min date"  }
-         ,{ "name":"maxDate"    , "sameas":"DateDim.dt", "nullable":false, "description":"The max date"  }
+          { "name":"invalidDate", "sameas":"DateDim.dt", "nullable":false, "description":"The invalid date, e.g., '1111-11-11'."  }
+         ,{ "name":"minDate"    , "sameas":"DateDim.dt", "nullable":false, "description":"The min date included in the DIM"  }
+         ,{ "name":"maxDate"    , "sameas":"DateDim.dt", "nullable":false, "description":"The max date included in the DIM"  }
       ]
      ,"foreign": [
           { "name":"InvalidDt" , "srcColumns":["invalidDate" ], "destObject": "DateDim" }
