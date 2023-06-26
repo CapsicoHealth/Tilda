@@ -1105,7 +1105,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_JsonPrimitiveNull      A14        = new Type_JsonPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a14"        , 48/*48*/, "The blah", null, null);
+     public final Type_JsonPrimitiveNull      A14        = new Type_JsonPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a14"        , 48/*48*/, "The blah", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

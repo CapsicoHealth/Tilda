@@ -24,6 +24,11 @@ public enum DefaultType
   NONE,
 
   /**
+   * A masking value
+   */
+  MASK,
+
+  /**
    * A default value only at create time
    */
   CREATE,

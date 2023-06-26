@@ -16,6 +16,8 @@
 
 package tilda.parsing.parts.helpers;
 
+import java.util.Map;
+
 import tilda.enums.ColumnType;
 import tilda.enums.DefaultType;
 import tilda.generation.interfaces.CodeGenSql;
@@ -26,6 +28,7 @@ import tilda.utils.DateTimeUtil;
 import tilda.utils.ParseUtil;
 import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
+import tilda.utils.json.JSONUtil;
 
 public class ValueHelper
   {
@@ -89,20 +92,42 @@ public class ValueHelper
                 PS.AddError(Label+" '" + ColFullName + "' defines Value '" + Name + "' with value '" + Value + "' larger than the defined size=" + ColSize + ".");
               break;
             case DATETIME:
-              if (Value.equalsIgnoreCase("NOW") == false && Value.equalsIgnoreCase("UNDEFINED") == false)
-                PS.AddError(Label+" '" + ColFullName + "' defines Value '" + Name + "->" + Value + "' which is not a default NOW or UNDEFINED value. Only these pre-defined values are allowed for timestamps.");
+              if (   Value.equalsIgnoreCase("NOW") == false
+                  && Value.equalsIgnoreCase("UNDEFINED") == false
+                  && DateTimeUtil.parseDate(Value, "yyyy-MM-dd") == null
+                  && (Default == DefaultType.MASK && Value.equals("Y") == false 
+                                                  && Value.equals("Q") == false 
+                                                  && Value.equals("M") == false)
+                 )
+                PS.AddError(Label+" '" + ColFullName + "' defines Value '" + Name + "->" + Value + "' which is not a default NOW, UNDEFINED, valid YYYY-MM-DD value, or, in the case of a mask, Y/Q/M to truncate dates to Year, Quarter or Month.");
               if (Default == DefaultType.NONE)
                 PS.AddError(Label+" '" + ColFullName + "' defines Value '" + Name + "' which is not set as a default. Only default values are allowed for timestamps.");
               break;
             case DATE:
-              if (Value.equalsIgnoreCase("NOW") == false && Value.equalsIgnoreCase("UNDEFINED") == false && DateTimeUtil.parseDate(Value, "yyyy-MM-dd") == null)
-                PS.AddError(Label+" '" + ColFullName + "' defines Value '" + Name + "->" + Value + "' which is not a default NOW or UNDEFINED, or valid yyyy-MM-dd value. Only these pre-defined values or date format are allowed for dates.");
+              if (   Value.equalsIgnoreCase("NOW") == false 
+                  && Value.equalsIgnoreCase("UNDEFINED") == false 
+                  && DateTimeUtil.parseDate(Value, "yyyy-MM-dd") == null
+                  && (Default == DefaultType.MASK && Value.equals("Y") == false 
+                                                  && Value.equals("Q") == false 
+                                                  && Value.equals("M") == false)
+                 )
+                PS.AddError(Label+" '" + ColFullName + "' defines Value '" + Name + "->" + Value + "' which is not a default NOW or UNDEFINED, valid yyyy-MM-dd value, or, in the case of a mask, Y/Q/M to truncate dates to Year, Quarter or Month.");
               if (Default == DefaultType.NONE)
                 PS.AddError(Label+" '" + ColFullName + "' defines Value '" + Name + "' which is not set as a default. Only default values are allowed for Dates.");
               break;
+            case JSON:
+              Map<String, Object> M = null;
+              try {
+                 M = JSONUtil.fromJSON(Value);
+               }
+              catch (Exception X)
+                {
+                }
+              if (M == null)
+               PS.AddError(Label+" '" + ColFullName + "' defines Value '" + Name + "' with value '" + Value + "' which is not a JSON object.");
+              break; 
             case BINARY:
             case BITFIELD:
-            case JSON:
             case UUID:
             default:
               throw new Error("Unhandled switch case for type '" + ColType + "'.");
@@ -141,16 +166,17 @@ public class ValueHelper
                 return "'" + DateTimeUtil.printDateTimeForSQL(DateTimeUtil.UNDEFINED_PLACEHOLDER_ZDT) + "'";
               else
                 return TextUtil.escapeSingleQuoteForSQL(val);
+            case JSON:
+              return TextUtil.escapeSingleQuoteForSQL(val);
             case BINARY:
             case BITFIELD:
-            case JSON:
             case UUID:
             default:
               throw new Error("Unhandled switch case for type '" + colType + "'.");
           }
       }
     
-    public static String printValueJava(String colName, ColumnType colType, boolean isCollection, String val)
+    public static String printValueJava(String colName, ColumnType colType, boolean isCollection, String val, String getterStr)
     throws Error
       {
         switch (colType)
@@ -174,15 +200,27 @@ public class ValueHelper
                 return "DateTimeUtil.NOW_PLACEHOLDER_ZDT";
               else if (val.equalsIgnoreCase("UNDEFINED") == true)
                 return "DateTimeUtil.UNDEFINED_PLACEHOLDER_ZDT";
-              return "DateTimeUtil.toCalendarNoThrow(" + TextUtil.escapeDoubleQuoteWithSlash(val) + ")";
+              else if (val.equalsIgnoreCase("Y") == true)
+                return "DateTimeUtil.truncateTo(" + getterStr + ", TimeSeriesType.YEARLY)";
+              else if (val.equalsIgnoreCase("Q") == true)
+                return "DateTimeUtil.truncateTo(" + getterStr + ", TimeSeriesType.QUARTERLY)";
+              else if (val.equalsIgnoreCase("M") == true)
+                return "DateTimeUtil.truncateTo(" + getterStr + ", TimeSeriesType.MONTHLY)";
+              return "DateTimeUtil.parseWithoutZone(" + TextUtil.escapeDoubleQuoteWithSlash(val) + ")";
             case DATE:
               if (val.equalsIgnoreCase("NOW") == true)
                 return "DateTimeUtil.NOW_PLACEHOLDER_D";
               else if (val.equalsIgnoreCase("UNDEFINED") == true)
                 return "DateTimeUtil.UNDEFINED_PLACEHOLDER_D";
+              else if (val.equalsIgnoreCase("Y") == true)
+                return "DateTimeUtil.truncateTo(" + getterStr + ", TimeSeriesType.YEARLY)";
+              else if (val.equalsIgnoreCase("Q") == true)
+                return "DateTimeUtil.truncateTo(" + getterStr + ", TimeSeriesType.QUARTERLY)";
+              else if (val.equalsIgnoreCase("M") == true)
+                return "DateTimeUtil.truncateTo(" + getterStr + ", TimeSeriesType.MONTHLY)";
               return "DateTimeUtil.parseDate(" + TextUtil.escapeDoubleQuoteWithSlash(val) + ", \"yyyy-MM-dd\")";
-            case STRING:
             case JSON:
+            case STRING:
             case UUID:
               return TextUtil.escapeDoubleQuoteWithSlash(val);
             case BINARY:
@@ -200,9 +238,9 @@ public class ValueHelper
           {
             case BINARY:
             case BITFIELD:
-            case JSON:
             case UUID:
               return false;
+            case JSON:
             case NUMERIC:
             case BOOLEAN:
             case SHORT:
