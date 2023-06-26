@@ -670,6 +670,10 @@ public class Helper
         Out.println("     }");
       }
 
+    public static String getGetterCode(String colName, String prefix)
+     {
+       return (prefix==null?"":prefix)+"get" + TextUtil.capitalizeFirstCharacter(colName) + "()";
+     }
     public static void JSONExport(PrintWriter Out, Column C)
       {
         boolean nullableCollection = false;
@@ -678,7 +682,7 @@ public class Helper
             if (C._Mode == ColumnMode.CALCULATED)
               {
                 if (C.isCollection() == true || C.getType().isPrimitive() == false)
-                  Out.println("      if (Obj.get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "() != null)");
+                  Out.println("      if (" + getGetterCode(C.getName(), "Obj.") + " != null)");
               }
             else
               {
@@ -801,7 +805,7 @@ public class Helper
       {
         return maskDef == null
         ? prefix+getterStr
-        : "("+prefix+"__MaskMode==true ? " + ValueHelper.printValueJava(colName, type, collection, maskDef) + " : "+prefix+getterStr+")";
+        : "("+prefix+"__MaskMode==true ? " + ValueHelper.printValueJava(colName, type, collection, maskDef, prefix+getterStr) + " : "+prefix+getterStr+")";
       }
 
     protected static String getSystemMappedColumnName(Column col)

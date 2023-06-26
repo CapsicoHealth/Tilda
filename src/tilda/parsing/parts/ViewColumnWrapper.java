@@ -33,6 +33,7 @@ public class ViewColumnWrapper extends Column
 
         _VCol = VCol;
         _SequenceOrder = SequenceOrder;
+        _MaskDef = SameAsCol!=null ? SameAsCol._MaskDef : null;
         _Invariant = SameAsCol!=null?SameAsCol._Invariant : false;
         _FCT = SameAsCol != null ? SameAsCol._FCT : VCol._FCT;
         if (SameAsCol != null && VCol._UseMapper == true && SameAsCol._Mapper != null)

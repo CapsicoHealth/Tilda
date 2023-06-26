@@ -120,6 +120,7 @@ public class Column extends TypeDef
         _Default = c._Default;
         if (c._JsonSchema != null)
           _JsonSchema = new JsonSchema(c._JsonSchema);
+        _MaskDef = c._MaskDef;
       }
 
     public Column(String Name, String TypeStr, Integer Size, String Description, Integer Precision, Integer Scale)
@@ -130,7 +131,7 @@ public class Column extends TypeDef
 
       }
 
-    public Column(String Name, String TypeStr, Integer Size, boolean Nullable, ColumnMode Mode, boolean Invariant, ProtectionType Protect, String Description, Integer Precision, Integer Scale, String Mask)
+    public Column(String Name, String TypeStr, Integer Size, boolean Nullable, ColumnMode Mode, boolean Invariant, ProtectionType Protect, String Description, Integer Precision, Integer Scale, String MaskDef)
       {
         super(TypeStr, Size, Precision, Scale);
         _Name = Name;
@@ -138,7 +139,7 @@ public class Column extends TypeDef
         _ModeStr = Mode == null ? null : Mode.name();
         _Invariant = Invariant;
         _ProtectStr = Protect == null ? null : Protect.name();
-        // _Mask = Mask;
+        _MaskDef = MaskDef;
         _Description = Description;
         _Precision = Precision;
         _Scale = Scale;
@@ -705,6 +706,11 @@ public class Column extends TypeDef
               }
           }
         return null;
+      }
+
+    public boolean isMasked()
+      {
+        return _MaskDef != null;
       }
 
   }

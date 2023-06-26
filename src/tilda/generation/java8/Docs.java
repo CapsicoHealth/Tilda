@@ -296,7 +296,7 @@ public class Docs implements CodeGenDocs
         for (Column c : O._Columns)
           if (TextUtil.isNullOrEmpty(c._MaskDef) == false)
             {
-              Out.println("     <TR><TD align=\"right\"><B>"+c.getName()+"</B>:&nbsp;</TD><TD>"+ValueHelper.printValueJava(c.getName(), c.getType(), c.isCollection(), c._MaskDef)+"</TD></TR>");
+              Out.println("     <TR><TD align=\"right\"><B>"+c.getName()+"</B>:&nbsp;</TD><TD>"+ValueHelper.printValueJava(c.getName(), c.getType(), c.isCollection(), c._MaskDef,c.getName())+"</TD></TR>");
             }
         Out.println("</TABLE><BR>Note that the internal state of the object doesn't change, so the getters return the actual field values irrespective of the masking status." + SystemValues.NEWLINE
              +Helper.getMultiLineCommentEnd());

@@ -372,7 +372,7 @@ public abstract class Base
        for (String colName : getColumnNames())
          {
            Column c = getColumn(colName);
-           if (c != null && c._MaskDef != null)
+           if (c != null && c.isMasked() == true)
             return true;
          }
        return false;
