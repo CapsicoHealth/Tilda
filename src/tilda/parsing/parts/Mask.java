@@ -28,6 +28,7 @@ import tilda.enums.DefaultType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ValidationHelper;
 import tilda.parsing.parts.helpers.ValueHelper;
+import tilda.utils.CollectionUtil;
 import tilda.utils.TextUtil;
 
 public class Mask
@@ -65,12 +66,13 @@ public class Mask
           PS.AddError(ParentObject._TildaType.name() + " '" + _ParentObject.getFullName() + "' is defining a mask with no listed column.");
         else
           {
+            _Columns = CollectionUtil.toStringArray(_ParentObject.expandColumnNames(_Columns, PS, "mask", "", null));
             _ColumnObjs = ValidationHelper.ProcessColumn(PS, ParentObject, "Mask", _Columns, new ValidationHelper.Processor()
               {
                 @Override
                 public boolean process(ParserSession PS, Base ParentObject, String What, Column C)
                   {
-                    ValueHelper.CheckColumnValue(PS, C, C._Name, _Mask, DefaultType.NONE);
+                    ValueHelper.CheckColumnValue(PS, C, C._Name, _Mask, DefaultType.MASK);
                     C._MaskDef = _Mask;
                     return true;
                   }

@@ -397,7 +397,7 @@ public class DateTimeUtil
           }
         catch (Exception E)
           {
-            LOG.warn("Cannot parse as date: "+E.getMessage());
+            LOG.warn("Cannot parse as date: " + E.getMessage());
           }
         return null;
       }
@@ -844,8 +844,9 @@ public class DateTimeUtil
 
     /**
      * Takes a string paramameter which can be either a date in the format yyyy-MM-dd or a positive integers denoting the number of days back from
-     * the current day. If yyyy-MM-dd, returns a ZDT for 00:00:00 on that day for the current timezone. If an integer, will returns a ZDT for 
+     * the current day. If yyyy-MM-dd, returns a ZDT for 00:00:00 on that day for the current timezone. If an integer, will returns a ZDT for
      * 00:00:00 on that prior day.
+     * 
      * @param param
      * @return
      */
@@ -869,5 +870,42 @@ public class DateTimeUtil
             ZDT = DateTimeUtil.toZonedDateTime(Dt, null); // convert the Date to a zoned date time for 00:00:00 of that day.
           }
         return ZDT;
+      }
+
+    public static LocalDate truncateTo(LocalDate LD, TimeSeriesType t)
+      {
+        if (LD != null)
+          switch (t)
+            {
+              case YEARLY:
+                return LD.withMonth(1).withDayOfMonth(1);
+              case QUARTERLY:
+                int m = LD.getMonthValue();
+                return LD.withMonth(m < 4 ? 1 : m < 7 ? 4 : m < 10 ? 7 : 10).withDayOfMonth(1);
+              case MONTHLY:
+                return LD.withDayOfMonth(1);
+              case DAILY:
+                return LD;
+            }
+        return null;
+      }
+
+    public static ZonedDateTime truncateTo(ZonedDateTime ZDT, TimeSeriesType t)
+      {
+        if (ZDT != null)
+          switch (t)
+            {
+              case YEARLY:
+                return ZDT.with(TemporalAdjusters.firstDayOfYear()).truncatedTo(ChronoUnit.DAYS);
+              case QUARTERLY:
+                ZDT = ZDT.with(TemporalAdjusters.firstDayOfMonth()).truncatedTo(ChronoUnit.DAYS);
+                int m = ZDT.getMonthValue();
+                return ZDT.withMonth(m < 4 ? 1 : m < 7 ? 4 : m < 10 ? 7 : 10);
+              case MONTHLY:
+                return ZDT.with(TemporalAdjusters.firstDayOfMonth()).truncatedTo(ChronoUnit.DAYS);
+              case DAILY:
+                return ZDT.truncatedTo(ChronoUnit.DAYS);
+            }
+        return null;
       }
   }
