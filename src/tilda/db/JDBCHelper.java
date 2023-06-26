@@ -29,7 +29,6 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import tilda.Migrate;
 import tilda.db.processors.RecordProcessor;
 import tilda.enums.StatementType;
 import tilda.enums.TransactionType;

@@ -23,6 +23,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.util.StringBuilderWriter;
 
+import tilda.db.QueryDetails;
 import tilda.enums.ColumnMapperMode;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
@@ -121,7 +122,7 @@ public class TildaData implements CodeGenTildaData
         Out.println("   transient boolean  __NewlyCreated= false;");
         Out.println("   transient int      __LookupId;");
         if (O.hasMasking() == true)
-          Out.println("   transient boolean  __MaskMode = false;");
+          Out.println("   transient boolean  __MaskMode = QueryDetails.getThreadMaskMode();");
         Out.println();
         Out.println("   public  boolean hasChanged    () { return __Changes.isEmpty() == false; }");
         Out.println("   public  boolean isNewlyCreated() { return __NewlyCreated; }");
@@ -282,7 +283,7 @@ public class TildaData implements CodeGenTildaData
               else
                 {
                   Out.print("   public static final " + JavaJDBCType.getFieldTypeBase(C) + " _" + C.getName() + TextUtil.capitalizeFirstCharacter(V._Name) + C._PadderValueNames.getPad(V._Name) + " = ");
-                  Out.print(ValueHelper.printValueJava(V._ParentColumn.getName(), V._ParentColumn.getType(), V._ParentColumn.isCollection(), V._Value));
+                  Out.print(ValueHelper.printValueJava(V._ParentColumn.getName(), V._ParentColumn.getType(), V._ParentColumn.isCollection(), V._Value, V._ParentColumn.getName()));
                   Out.println(";");
                 }
             }
@@ -1188,7 +1189,7 @@ public class TildaData implements CodeGenTildaData
                 if (C._DefaultCreateValue == null)
                   Out.println("        throw new Exception(\"Incoming value for '" + C.getFullName() + "' was null or empty. It's not nullable in the model.\\n\"+toString());");
                 else
-                  Out.println("        _" + C.getName() + "=" + ValueHelper.printValueJava(C.getName(), C.getType(), C.isCollection(), C._DefaultCreateValue._Value) + ";");
+                  Out.println("        _" + C.getName() + "=" + ValueHelper.printValueJava(C.getName(), C.getType(), C.isCollection(), C._DefaultCreateValue._Value, C.getName()) + ";");
                 validateHousekeeping(Out, C, Mask);
               }
 

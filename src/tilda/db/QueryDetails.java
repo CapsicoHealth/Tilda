@@ -126,4 +126,21 @@ public class QueryDetails
         if (values != null)
           LOG.debug(_LOGGING_HEADER + "   " + values);
       }
+
+    private static final ThreadLocal<Boolean> _SessionMaskMode          = new ThreadLocal<Boolean>();
+    public static boolean getThreadMaskMode()
+      {
+        Boolean sessionMaskMode = _SessionMaskMode.get();
+        return sessionMaskMode==null?false:sessionMaskMode;
+      }
+
+    /**
+     * This method sets the masking mode for the current thread. Any Tilda object created in the thread
+     * will be marked as masked by default. This method should typically be used in the context of setting up a session and
+     * Connections. This shouldn't be used in application-level code to "disable" masking mode for instance.
+     */
+    public static void setThreadMaskMode_DO_NOT_USE_IN_GENERAL_APP_CODE(boolean maskingMode)
+      {
+        _SessionMaskMode.set(maskingMode);
+      }
   }

@@ -51,7 +51,6 @@ import tilda.db.metadata.DatabaseMeta;
 import tilda.db.metadata.MetaPerformance;
 import tilda.enums.TransactionType;
 import tilda.generation.interfaces.CodeGenSql;
-import tilda.migration.MigrationScript;
 import tilda.migration.Migrator;
 import tilda.parsing.Loader;
 import tilda.parsing.ParserSession;
@@ -556,7 +555,7 @@ public class ConnectionPool
         LOG.info(QueryDetails._LOGGING_HEADER + "G O T           C O N N E C T I O N  -----  " + Conn._PoolId + ", " + BDS.getNumActive() + "/" + BDS.getNumIdle() + "/" + BDS.getMaxTotal());
         return Conn;
       }
-
+    
     public static String getDBDetails(String Id)
       {
         BasicDataSource BDS = _DataSourcesById.get(Id);
