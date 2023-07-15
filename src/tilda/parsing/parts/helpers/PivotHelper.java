@@ -91,7 +91,7 @@ public class PivotHelper
         PVC._UseMapper = VC._UseMapper;
         PVC._UseEnum = VC._UseEnum;
         PVC._Description = VPV._Description + " (pivot of " + VC.getAggregateName() + " on " + P._VC._SameAsObj.getShortName() + "='" + VPV._Value + "')";
-        PVC.Validate(PS, VC._ParentView);
+        PVC.validate(PS, VC._ParentView);
 
         VC._ParentView._PivotColumns.add(PVC);
         Column C = new ViewColumnWrapper(PVC._SameAsObj, PVC, O._Columns.size());
@@ -234,7 +234,7 @@ public class PivotHelper
         // Let's validate
         for (ViewPivot P : V._Pivots)
           {
-            P.Validate(PS, V);
+            P.validate(PS, V);
             if (PivotNames.add(P._VC.getShortName()) == false)
               PS.AddError("View '" + V.getFullName() + "' is defining a duplicate Pivot on column " + P._VC.getShortName() + ".");
             for (ViewPivotAggregate F : P._Aggregates)

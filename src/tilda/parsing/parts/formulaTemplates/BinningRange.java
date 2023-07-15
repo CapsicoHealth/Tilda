@@ -52,7 +52,7 @@ public class BinningRange
       }
     
 
-    public void Validate(ParserSession PS, View ParentView, Binning B)
+    public void validate(ParserSession PS, View ParentView, Binning B)
       {        
         _ParentView = ParentView;
         

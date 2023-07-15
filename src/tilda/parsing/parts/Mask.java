@@ -53,7 +53,7 @@ public class Mask
     public transient Base                   _ParentObject;
     public transient List<Column>           _ColumnObjs;
 
-    public boolean Validate(ParserSession PS, Base ParentObject)
+    public boolean validate(ParserSession PS, Base ParentObject)
       {
         int Errs = PS.getErrorCount();
         _ParentObject = ParentObject;

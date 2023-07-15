@@ -46,7 +46,7 @@ public class ViewDistinctOn
 
     public transient View _ParentView;
 
-    public boolean Validate(ParserSession PS, View ParentView)
+    public boolean validate(ParserSession PS, View ParentView)
       {
         int Errs = PS.getErrorCount();
         _ParentView = ParentView;

@@ -463,7 +463,7 @@ public class ConnectionPool
                 S.setDefaultDependencies(PS);
               }
 
-            if (S.Validate(PS) == false)
+            if (S.validate(PS) == false)
               {
                 PS.printErrors();
                 throw new Exception("Schema " + S._Name + " from resource " + S._ResourceName + " failed validation.");

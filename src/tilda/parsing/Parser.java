@@ -56,7 +56,7 @@ public abstract class Parser
               return null;
           }
         for (Schema S : SchemaList)
-          S.Validate(PS);
+          S.validate(PS);
         return PS;
       }
 
@@ -175,7 +175,7 @@ public abstract class Parser
 
         I = Schemas.iterator();
         while (I.hasNext() == true)
-          if (I.next().Validate(PS) == false)
+          if (I.next().validate(PS) == false)
             break;
         if (PS.getErrorCount() == 0)
           {
@@ -183,7 +183,7 @@ public abstract class Parser
               {
                 PS.addDependencySchema(BaseSchema);
               }
-            BaseSchema.Validate(PS);
+            BaseSchema.validate(PS);
           }
 
         return true;

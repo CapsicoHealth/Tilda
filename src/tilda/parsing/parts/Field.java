@@ -53,7 +53,7 @@ public class Field extends TypeDef
 
     protected static final Pattern P = Pattern.compile(".*\\[(.+)\\]");
 
-    public boolean Validate(ParserSession PS, Interface I)
+    public boolean validate(ParserSession PS, Interface I)
       {
         int Errs = PS.getErrorCount();
         _ParentInterface = I;
@@ -66,7 +66,7 @@ public class Field extends TypeDef
         if (_Name.length() > PS._CGSql.getMaxColumnNameSize())
           return PS.AddError("Field '" + getFullName() + "' has a name that's too long: max allowed by your database is " + PS._CGSql.getMaxColumnNameSize() + " vs " + _Name.length() + " for this identifier.");
 
-        if (super.Validate(PS, "Column '" + getFullName() + "'", true, false) == false)
+        if (super.validate(PS, "Column '" + getFullName() + "'", true, false) == false)
           return false;
 
         if (_Nullable == null)

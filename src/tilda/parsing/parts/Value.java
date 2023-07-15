@@ -47,7 +47,7 @@ public class Value
     
     public transient View _ParentView;
 
-    public boolean Validate(ParserSession PS, View ParentView, String What)
+    public boolean validate(ParserSession PS, View ParentView, String What)
       {
         int Errs = PS.getErrorCount();
         _ParentView = ParentView;

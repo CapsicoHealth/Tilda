@@ -19,6 +19,7 @@ package tilda.generation.postgres9;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
@@ -241,10 +242,10 @@ public class Sql extends PostgreSQL implements CodeGenSql
             if (FK != null)
               {
                 if (FK._multi == true)
-                 { 
-                   Out.println("  -- FK defined from an array column. FK won't be created on DB");
-                   Out.print  ("  -- , CONSTRAINT " + FK.getName() + " FOREIGN KEY (");
-                 }
+                  {
+                    Out.println("  -- FK defined from an array column. FK won't be created on DB");
+                    Out.print("  -- , CONSTRAINT " + FK.getName() + " FOREIGN KEY (");
+                  }
                 Out.print("  , CONSTRAINT " + FK.getName() + " FOREIGN KEY (");
                 PrintColumnList(Out, FK._SrcColumnObjs);
                 Out.println(") REFERENCES " + FK._DestObjectObj._ParentSchema._Name + "." + FK._DestObjectObj._Name + " ON DELETE restrict ON UPDATE cascade");
@@ -289,8 +290,6 @@ public class Sql extends PostgreSQL implements CodeGenSql
     private String PrintBaseView(View V, boolean OmmitTZs)
     throws Exception
       {
-        List<TotalMess> FuckList = TotalMess.ScanView(V); // Sorry for the expletives here, but this code is really messed up in very impolite ways!!!
-
         StringBuilder Str = new StringBuilder();
         Str.append("-- " + TextUtil.escapeSingleQuoteForSQL(V._Description) + "\n");
         Str.append("select ");
@@ -313,93 +312,15 @@ public class Sql extends PostgreSQL implements CodeGenSql
               }
             Str.append(")\n       ");
           }
+
+        if (V._Name.equals("PatientVisitVitals_PivotView") == true)
+          LOG.debug("SSS");
+
         StringBuilder FromList = new StringBuilder();
-        boolean hasAggregates = false;
-
-        Map<String, TableRankTracker> TableMap = new HashMap<String, TableRankTracker>();
-        Deque<TableRankTracker> TableStack = new ArrayDeque<TableRankTracker>();
-        int columnCount = -1;
-        boolean First = true;
-        for (ViewColumn VC : V._ViewColumns)
-          {
-            ++columnCount;
-            TableRankTracker TI = null;
-            if (VC._SameAsObj != null && VC._SameAsObj._Mode == ColumnMode.CALCULATED)
-              continue;
-            if (VC._SameAs != null && VC._SameAsObj != null)
-              {
-                Object T = VC._SameAsObj._ParentObject;
-                TI = TableRankTracker.getElementFromLast(TableStack, T, VC._As);
-                if (TI == null)
-                  {
-                    TableRankTracker MappedTI = TableMap.remove(T.getShortName());
-                    TI = new TableRankTracker(T, MappedTI == null ? 1 : MappedTI._V + 1, VC._As);
-                    TableStack.add(TI);
-                    TableMap.put(TI._N, TI);
-                    if (TableMap.size() != 1)
-                      {
-                        ViewJoin VJ = V.getViewjoin(T.getBaseName(), VC._As);
-                        if (VJ != null)
-                          {
-                            Query Q = genViewJoin(FromList, VJ);
-                            TableRankTracker TI2 = TableRankTracker.getElementFromLast(TableStack, VJ._ObjectObj, VJ._As);
-                            if (TI2 == null)
-                              {
-                                throw new Exception("View " + V.getFullName() + " is using " + T.getShortName() + " but cannot find any any valid join definitions.");
-                              }
-                            if (TextUtil.isNullOrEmpty(VC._As) == true)
-                              for (int i = 2; i <= TI._V; ++i)
-                                {
-                                  FromList.append("\n     " + JoinType.printJoinType(VC._Join) + " " + VJ._ObjectObj.getShortName());
-                                  FromList.append(" as " + getFullTableVar(VC._SameAsObj._ParentObject, TI._V));
-                                  FromList.append(" on " + rewriteExpressionColumnQuoting(Q._ClauseStatic));
-                                }
-                          }
-                        else
-                          {
-                            // ForeignKey FK = TableRankTracker.getClosestFKTable(TableStack, T, V, columnCount);
-                            ForeignKey FK = TotalMess.getClosestFKTable(FuckList, V, T, columnCount);
-                            if (FK == null)
-                              {
-                                throw new Exception("View " + V.getFullName() + " is using " + T.getShortName() + " but cannot find any foreign keys in any tables used so far: " + TableRankTracker.PrintTableNames(TableStack));
-                              }
-                            else
-                              {
-                                String JT = VC._Join != null ? JoinType.printJoinType(VC._Join)
-                                : FK._DestObjectObj.getFullName().equals(T.getFullName()) == false || FK._SrcColumnObjs.get(0)._Nullable == true ? "left  join" : "inner join";
-                                FromList.append("     " + JT + " " + TI._N);
-                                if (TI._V > 1 || TextUtil.isNullOrEmpty(TI._As) == false)
-                                  FromList.append(" as " + TI.getFullName());
-                                FromList.append(" on " + rewriteExpressionColumnQuoting(getFKStatement(FK, TableStack)));
-                              }
-                          }
-                      }
-                    else
-                      FromList.append(TI._N);
-                    FromList.append("\n");
-                  }
-                else
-                  {
-                    if (TI != TableStack.peekLast())
-                      do
-                        {
-                          TableStack.pollLast();
-                        } while (TI != TableStack.peekLast());
-                  }
-              }
-
-            // LDH-NOTE: Cannot remember why OmitTZs was created, but it prevents the time-series field "p" from getting output properly.
-            // For now, we hard-code that field so it gets output.
-            if (VC._JoinOnly == false && (VC._SameAs.equals("_TS.p") == true || OmmitTZs == false || OmmitTZs == true && VC._SameAsObj != null && VC._SameAsObj._Mode == ColumnMode.NORMAL))
-              {
-                if (First == true)
-                  First = false;
-                else
-                  Str.append("\n     , ");
-                if (PrintViewColumn(Str, VC, TI, false) == true) // V._Pivot != null && V._ViewColumns.size() > 3 && columnCount <= V._ViewColumns.size() - 3) == true)
-                  hasAggregates = true;
-              }
-          }
+        boolean[] vals = getFromList(V, FromList, Str, OmmitTZs);
+//        boolean[] vals = getFromList2(V, FromList, Str, OmmitTZs);
+        boolean hasAggregates = vals[0];
+        boolean First = vals[1];
 
         Str.append("\n  from ").append(FromList);
 
@@ -575,6 +496,163 @@ public class Sql extends PostgreSQL implements CodeGenSql
         return Str.toString();
       }
 
+    private boolean[] getFromList(View V, StringBuilder FromList, StringBuilder Str, boolean OmmitTZs)
+    throws Exception
+      {
+        List<TotalMess> FuckList = TotalMess.ScanView(V); // Sorry for the expletives here, but this code is really messed up in very impolite ways!!!
+        Map<String, TableRankTracker> TableMap = new HashMap<String, TableRankTracker>();
+        Deque<TableRankTracker> TableStack = new ArrayDeque<TableRankTracker>();
+        int columnCount = -1;
+        boolean First = true;
+        boolean hasAggregates = false;
+        for (ViewColumn VC : V._ViewColumns)
+          {
+            ++columnCount;
+            TableRankTracker TI = null;
+            if (VC._SameAsObj != null && VC._SameAsObj._Mode == ColumnMode.CALCULATED)
+              continue;
+            if (VC._SameAs != null && VC._SameAsObj != null)
+              {
+                Object T = VC._SameAsObj._ParentObject;
+                TI = TableRankTracker.getElementFromLast(TableStack, T, VC._As);
+                if (TI == null)
+                  {
+                    TableRankTracker MappedTI = TableMap.remove(T.getShortName());
+                    TI = new TableRankTracker(T, MappedTI == null ? 1 : MappedTI._V + 1, VC._As);
+                    TableStack.add(TI);
+                    TableMap.put(TI._N, TI);
+                    if (TableMap.size() != 1)
+                      {
+                        ViewJoin VJ = V.getViewjoin(T.getBaseName(), VC._As);
+                        if (VJ != null)
+                          {
+                            Query Q = genViewJoin(FromList, VJ);
+                            TableRankTracker TI2 = TableRankTracker.getElementFromLast(TableStack, VJ._ObjectObj, VJ._As);
+                            if (TI2 == null)
+                              {
+                                throw new Exception("View " + V.getFullName() + " is using " + T.getShortName() + " but cannot find any any valid join definitions.");
+                              }
+                            if (TextUtil.isNullOrEmpty(VC._As) == true)
+                              for (int i = 2; i <= TI._V; ++i)
+                                {
+                                  FromList.append("\n     " + JoinType.printJoinType(VC._Join) + " " + VJ._ObjectObj.getShortName());
+                                  FromList.append(" as " + getFullTableVar(VC._SameAsObj._ParentObject, TI._V));
+                                  FromList.append(" on " + rewriteExpressionColumnQuoting(Q._ClauseStatic));
+                                }
+                          }
+                        else
+                          {
+                            // ForeignKey FK = TableRankTracker.getClosestFKTable(TableStack, T, V, columnCount);
+                            ForeignKey FK = TotalMess.getClosestFKTable(FuckList, V, T, columnCount);
+                            if (FK == null)
+                              {
+                                throw new Exception("View " + V.getFullName() + " is using " + T.getShortName() + " but cannot find any foreign keys in any tables used so far: " + TableRankTracker.PrintTableNames(TableStack));
+                              }
+                            else
+                              {
+                                String JT = VC._Join != null ? JoinType.printJoinType(VC._Join)
+                                : FK._DestObjectObj.getFullName().equals(T.getFullName()) == false || FK._SrcColumnObjs.get(0)._Nullable == true ? "left  join" : "inner join";
+                                FromList.append("     " + JT + " " + TI._N);
+                                if (TI._V > 1 || TextUtil.isNullOrEmpty(TI._As) == false)
+                                  FromList.append(" as " + TI.getFullName());
+                                FromList.append(" on " + rewriteExpressionColumnQuoting(getFKStatement(FK, TableStack)));
+                              }
+                          }
+                      }
+                    else
+                      FromList.append(TI._N);
+                    FromList.append("\n");
+                  }
+                else
+                  {
+                    if (TI != TableStack.peekLast())
+                      do
+                        {
+                          TableStack.pollLast();
+                        } while (TI != TableStack.peekLast());
+                  }
+              }
+
+            // LDH-NOTE: Cannot remember why OmitTZs was created, but it prevents the time-series field "p" from getting output properly.
+            // For now, we hard-code that field so it gets output.
+            if (VC._JoinOnly == false && (VC._SameAs.equals("_TS.p") == true || OmmitTZs == false || OmmitTZs == true && VC._SameAsObj != null && VC._SameAsObj._Mode == ColumnMode.NORMAL))
+              {
+                if (First == true)
+                  First = false;
+                else
+                  Str.append("\n     , ");
+                if (PrintViewColumn(Str, VC, TI, false) == true) // V._Pivot != null && V._ViewColumns.size() > 3 && columnCount <= V._ViewColumns.size() - 3) == true)
+                  hasAggregates = true;
+              }
+          }
+        return new boolean[] { hasAggregates, First
+        };
+      }
+
+
+
+    private boolean[] getFromList2(View V, StringBuilder FromList, StringBuilder Str, boolean OmmitTZs)
+    throws Exception
+      {
+        List<ViewJoin> joins = new ArrayList<ViewJoin>();
+        int columnCount = -1;
+        boolean First = true;
+        boolean hasAggregates = false;
+        Object From = null;
+        for (ViewColumn VC : V._ViewColumns)
+          {
+            ++columnCount;
+            if (VC._SameAsObj != null && VC._SameAsObj._Mode == ColumnMode.CALCULATED)
+              continue;
+            if (VC._SameAs != null && VC._SameAsObj != null)
+              {
+                if (First == true)
+                  {
+                    FromList.append(VC._SameAsObj._ParentObject.getShortName());
+                    From = VC._SameAsObj._ParentObject;
+                  }
+                else if (VC._SameAsObj._ParentObject != From)
+                  {
+                    Object T = VC._SameAsObj._ParentObject;
+                    ViewJoin VJ = V.getViewjoin(T.getBaseName(), VC._As);
+                    if (VJ == null)
+                      throw new Exception("Cannot find a join for " + VC.getFullName() + " off of " + T.getBaseName() + "/" + VC._As);
+                    if (findJoin(joins, VJ) == false)
+                      {
+                        genViewJoin(FromList, VJ);
+                        joins.add(VJ);
+                      }
+                  }
+                FromList.append("\n");
+              }
+
+            // LDH-NOTE: Cannot remember why OmitTZs was created, but it prevents the time-series field "p" from getting output properly.
+            // For now, we hard-code that field so it gets output.
+            if (VC._JoinOnly == false && (VC._SameAs.equals("_TS.p") == true || OmmitTZs == false || OmmitTZs == true && VC._SameAsObj != null && VC._SameAsObj._Mode == ColumnMode.NORMAL))
+              {
+                if (First == true)
+                  First = false;
+                else
+                  Str.append("\n     , ");
+                TableRankTracker TI = new TableRankTracker(VC._SameAsObj._ParentObject, 1, VC._As);
+                if (PrintViewColumn(Str, VC, TI, false) == true) // V._Pivot != null && V._ViewColumns.size() > 3 && columnCount <= V._ViewColumns.size() - 3) == true)
+                  hasAggregates = true;
+              }
+          }
+        return new boolean[] { hasAggregates, First
+        };
+      }
+
+
+
+    private static boolean findJoin(List<ViewJoin> joins, ViewJoin VJ)
+      {
+        for (ViewJoin vj : joins)
+          if (vj.getSignature().equals(VJ.getSignature()) == true)
+            return true;
+        return false;
+      }
+
     @Override
     public Query genViewJoin(StringBuilder Str, ViewJoin VJ)
     throws Exception
@@ -631,7 +709,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 // We have to be able to handle cases for joins with an "as". If so, we have to use that, otherwise
                 // we have to use the internal source of the column being ordered by.
                 if (TextUtil.isNullOrEmpty(VC._AggregateAttributes) == false)
-                 Str.append(", ").append(VC._AggregateAttributes);
+                  Str.append(", ").append(VC._AggregateAttributes);
                 if (VC._partitionByObjs.size() != 0 || TextUtil.isNullOrEmpty(VC._Range) == false || VC._Aggregate.isWindowOnly() == true)
                   Str.append(") OVER (");
                 printAggregatePartitionBy(Str, VC._partitionByObjs, TextUtil.isNullOrEmpty(TI._As) == false ? TI.getFullName() : null);
@@ -1093,10 +1171,10 @@ public class Sql extends PostgreSQL implements CodeGenSql
         if (VC._Distinct == true)
           Str.append("distinct ");
         Str.append("\"").append(VC._NameInner).append("\"");
-        
+
         if (TextUtil.isNullOrEmpty(VC._AggregateAttributes) == false)
           Str.append(", ").append(VC._AggregateAttributes);
-        
+
         // If there is a partition or a range, we gotta switch to an OVER statement.
         if (VC._partitionByObjs.size() != 0 || TextUtil.isNullOrEmpty(VC._Range) == false)
           Str.append(") OVER (");
@@ -1129,7 +1207,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         : VC._Aggregate.name();
 
         return VC._Aggregate.isWindowOnly() == true ? "\n     , " + aggr + "() over() as \"" + VC._Name + "\""
-        : "\n     , " + aggr + "(\"" + VC.getName() + "\""+(TextUtil.isNullOrEmpty(VC._AggregateAttributes) == true ? "" : ", "+VC._AggregateAttributes)+") as \"" + VC._Name + "\"";
+        : "\n     , " + aggr + "(\"" + VC.getName() + "\"" + (TextUtil.isNullOrEmpty(VC._AggregateAttributes) == true ? "" : ", " + VC._AggregateAttributes) + ") as \"" + VC._Name + "\"";
       }
 
 
@@ -1178,282 +1256,290 @@ public class Sql extends PostgreSQL implements CodeGenSql
         return "DDL META DATA VERSION 2021-09-02";
       }
 
-/*
-    @Override
-    public void genDDLMetadata(PrintWriter out, Object O)
-    throws Exception
-      {
-        CatalogHelper CH = new CatalogHelper(O.getSchema().getShortName(), O.getBaseName());
-        CH.addColumns(O._Columns);
-        out.println(CH.outputSQLProc(this));
-      }
-    
-
-    @Override
-    public void genDDLMetadata(PrintWriter out, View V)
-    throws Exception
-      {
-        CatalogHelper CH = new CatalogHelper(V.getSchema().getShortName(), V.getBaseName());
-        CH.addViewColumns(V._ViewColumns);
-        CH.addViewColumns(V._PivotColumns);
-        CH.addFormulas(V._Formulas);
-        out.println(CH.outputSQLProc(this));
-
-        if (V._Formulas == null || V._Formulas.isEmpty() == true)
-          {
-            OutFinal.println("DO $$");
-            OutFinal.println("-- This view doesn't have any formula, but just in case it used to and they were all removed from the model, we still have to do some cleanup.");
-            OutFinal.println("DECLARE");
-            OutFinal.println("  ts timestamp;");
-            OutFinal.println("BEGIN");
-            OutFinal.println("  select into ts current_timestamp;");
-            OutFinal.println("  UPDATE TILDA.Catalog set deleted = current_timestamp where \"schemaName\" = " + TextUtil.escapeSingleQuoteForSQL(V.getSchema().getShortName())
-                                   +" AND \"tableViewName\" = " + TextUtil.escapeSingleQuoteForSQL(V.getBaseName())
-                                   +" AND \"lastUpdated\" < ts;");
-            OutFinal.println("END; $$");
-            OutFinal.println("LANGUAGE PLPGSQL;");
-            return;
-          }
-
-        // OutFinal.println("DROP TABLE IF EXISTS " + V._ParentSchema._Name + ".TildaFormulaValue;");
-        // OutFinal.println("DROP TABLE IF EXISTS " + V._ParentSchema._Name + ".TildaFormulaReference;");
-        // OutFinal.println("DROP TABLE IF EXISTS " + V._ParentSchema._Name + ".TildaFormula;");
-
-
-        OutFinal.println("DO $$");
-        OutFinal.println("-- This view has formulas and we need to update all its meta-data.");
-        OutFinal.println("DECLARE");
-        OutFinal.println("  k bigint;");
-        OutFinal.println("  ts timestamp;");
-        OutFinal.println("BEGIN");
-        OutFinal.println("  select into k TILDA.getKeyBatchAsMaxExclusive('TILDA.CATALOG', " + V._Formulas.size() + ")-" + V._Formulas.size() + ";");
-        OutFinal.println("  select into ts current_timestamp;");
-        OutFinal.println();
-
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // Formulas
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        String RealizedTable = V.getRealizedTableName(true);
-        int count = -1;
-        int MeasureCount = 0;
-        for (Formula F : V._Formulas)
-          {
-            if (F == null)
-              continue;
-
-            if (++count == 0)
-              {
-                OutFinal.println("INSERT INTO TILDA.Catalog (\"refnum\", \"schemaName\", \"tableViewName\", \"columnName\", \"tableViewName2\", \"type\", \"description\", \"aggregate\", \"title\", \"formula\", \"measure\", \"htmlDoc\", \"referencedColumns\", \"referencedFormulas\", \"created\", \"lastUpdated\", \"deleted\")");
-                OutFinal.print("    VALUES (");
-              }
-            else
-              {
-                OutFinal.print("          ,(");
-              }
-            if (F._Measure == true)
-              ++MeasureCount;
-            OutFinal.print("k+" + count);
-            OutFinal.print(", " + TextUtil.escapeSingleQuoteForSQL(V.getShortName()));
-            OutFinal.print(", " + TextUtil.escapeSingleQuoteForSQL(RealizedTable));
-            OutFinal.print(", " + TextUtil.escapeSingleQuoteForSQL(F._Name));
-            OutFinal.print(", " + TextUtil.escapeSingleQuoteForSQL(F.getType()._ShortName));
-            OutFinal.print(", " + TextUtil.escapeSingleQuoteForSQL(F._Title));
-            OutFinal.print(", " + TextUtil.escapeSingleQuoteForSQL(String.join("\n", F._Description)));
-            OutFinal.print(", " + TextUtil.escapeSingleQuoteForSQL(String.join("\n", F._FormulaStrs)));
-            OutFinal.print(", " + TextUtil.escapeSingleQuoteForSQL("<B>N/A</B>"));
-            List<ViewColumn> L = F.getDependencyColumns();
-            if (L.isEmpty() == false)
-              {
-                String[] VCNames = new String[L.size()];
-                for (int i = 0; i < L.size(); ++i)
-                  {
-                    VCNames[i] = L.get(i)._ParentView.getShortName() + "." + L.get(i)._Name;
-                  }
-                OutFinal.print(", ARRAY[" + TextUtil.escapeSingleQuoteForSQL(VCNames, true) + "]");
-              }
-            else
-              {
-                OutFinal.print(", null");
-              }
-            OutFinal.println(", current_timestamp, current_timestamp, null)");
-          }
-        if (count >= 0)
-          {
-            OutFinal.println("  ON CONFLICT(\"location\", \"name\") DO UPDATE");
-            OutFinal.println("    SET \"location2\" = EXCLUDED.\"location2\"");
-            OutFinal.println("      , \"type\" = EXCLUDED.\"type\"");
-            OutFinal.println("      , \"title\" = EXCLUDED.\"title\"");
-            OutFinal.println("      , \"description\" = EXCLUDED.\"description\"");
-            OutFinal.println("      , \"formula\" = EXCLUDED.\"formula\"");
-            OutFinal.println("      , \"htmlDoc\" = EXCLUDED.\"htmlDoc\"");
-            OutFinal.println("      , \"referencedColumns\" = EXCLUDED.\"referencedColumns\"");
-            OutFinal.println("      , \"lastUpdated\" = current_timestamp");
-            OutFinal.println("      , \"deleted\" = null");
-            OutFinal.println("   ;");
-          }
-        OutFinal.println("UPDATE TILDA.Formula set deleted = current_timestamp where \"location\" = " + TextUtil.escapeSingleQuoteForSQL(V.getShortName()) + " AND \"lastUpdated\" < ts;");
-        OutFinal.println();
-
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // FormulaResult
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        count = -1;
-        for (Formula F : V._Formulas)
-          {
-            if (F != null && F._Values != null && F._Values.length > 0)
-              for (Value Val : F._Values)
-                {
-                  if (++count == 0)
-                    {
-                      OutFinal.println("INSERT INTO TILDA.FormulaResult (\"formulaRefnum\", \"value\", \"description\", \"created\", \"lastUpdated\", \"deleted\")");
-                      OutFinal.print("    VALUES (");
-                    }
-                  else
-                    {
-                      OutFinal.print("          ,(");
-                    }
-                  OutFinal.print("(select refnum from TILDA.Formula where \"location\" = " + TextUtil.escapeSingleQuoteForSQL(V.getShortName()) + " AND \"name\" = " + TextUtil.escapeSingleQuoteForSQL(F._Name) + ")");
-                  OutFinal.print(", " + TextUtil.escapeSingleQuoteForSQL(Val._Value));
-                  OutFinal.print(", " + TextUtil.escapeSingleQuoteForSQL(Val._Description));
-                  OutFinal.println(", current_timestamp, current_timestamp, null)");
-                }
-          }
-        if (count >= 0)
-          {
-            OutFinal.println("  ON CONFLICT(\"formulaRefnum\", \"value\") DO UPDATE");
-            OutFinal.println("    SET \"description\" = EXCLUDED.\"description\"");
-            OutFinal.println("      , \"lastUpdated\" = current_timestamp");
-            OutFinal.println("      , \"deleted\" = null");
-            OutFinal.println("   ;");
-          }
-        OutFinal.println("UPDATE TILDA.FormulaResult");
-        OutFinal.println("   set deleted = current_timestamp");
-        OutFinal.println(" where \"formulaRefnum\" in (select refnum");
-        OutFinal.println("                               from TILDA.Formula");
-        OutFinal.println("                              where \"location\" = " + TextUtil.escapeSingleQuoteForSQL(V.getShortName()));
-        OutFinal.println("                                and \"deleted\" is not null");
-        OutFinal.println("                            );");
-        OutFinal.println();
-
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // FormulaDependency
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        count = -1;
-        for (Formula F : V._Formulas)
-          {
-            if (F == null)
-              continue;
-            for (Formula F2 : F.getDependencyFormulas())
-              if (F2 != null)
-                {
-                  if (++count == 0)
-                    {
-                      OutFinal.println("INSERT INTO TILDA.FormulaDependency(\"formulaRefnum\", \"dependencyRefnum\", \"created\", \"lastUpdated\", \"deleted\")");
-                      OutFinal.print("    VALUES (");
-                    }
-                  else
-                    {
-                      OutFinal.print("          ,(");
-                    }
-                  OutFinal.println(" (select refnum from TILDA.Formula where \"location\" = " + TextUtil.escapeSingleQuoteForSQL(V.getShortName()) + " AND \"name\" = " + TextUtil.escapeSingleQuoteForSQL(F._Name) + ")");
-                  OutFinal.println("            ,(select refnum from TILDA.Formula where \"location\" = " + TextUtil.escapeSingleQuoteForSQL(V.getShortName()) + " AND \"name\" = " + TextUtil.escapeSingleQuoteForSQL(F2._Name) + ")");
-                  OutFinal.println("            ,current_timestamp, current_timestamp, null");
-                  OutFinal.println("           )");
-                }
-          }
-        if (count >= 0)
-          {
-            OutFinal.println("  ON CONFLICT(\"formulaRefnum\", \"dependencyRefnum\") DO UPDATE");
-            OutFinal.println("    SET \"lastUpdated\" = current_timestamp");
-            OutFinal.println("      , \"deleted\" = null");
-            OutFinal.println("   ;");
-          }
-        OutFinal.println("UPDATE TILDA.FormulaDependency");
-        OutFinal.println("   set deleted = current_timestamp");
-        OutFinal.println(" where \"formulaRefnum\" in (select refnum");
-        OutFinal.println("                               from TILDA.Formula");
-        OutFinal.println("                              where \"location\" = " + TextUtil.escapeSingleQuoteForSQL(V.getShortName()));
-        OutFinal.println("                                and \"deleted\" is not null");
-        OutFinal.println("                            );");
-        OutFinal.println();
-
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // Measures
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        OutFinal.println("select into k TILDA.getKeyBatchAsMaxExclusive('TILDA.MEASURE', " + MeasureCount + ")-" + MeasureCount + ";");
-        count = -1;
-        for (Formula F : V._Formulas)
-          if (F != null && F._Measure == true)
-            {
-              if (++count == 0)
-                {
-                  OutFinal.println("INSERT INTO TILDA.Measure (\"refnum\", \"schema\", \"name\", \"created\", \"lastUpdated\", \"deleted\")");
-                  OutFinal.print("    VALUES (");
-                }
-              else
-                {
-                  OutFinal.print("          ,(");
-                }
-              OutFinal.print("k+" + count);
-              OutFinal.print(", " + TextUtil.escapeSingleQuoteForSQL(V._ParentSchema._Name));
-              OutFinal.print(", " + TextUtil.escapeSingleQuoteForSQL(F._Title));
-              OutFinal.println(", current_timestamp, current_timestamp, null)");
-            }
-        if (count >= 0)
-          {
-            OutFinal.println("  ON CONFLICT(\"schema\", \"name\") DO UPDATE");
-            OutFinal.println("    SET \"lastUpdated\" = current_timestamp");
-            OutFinal.println("      , \"deleted\" = null");
-            OutFinal.println("  ;");
-          }
-        OutFinal.println();
-
-
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // Measure formulas
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        count = -1;
-        for (Formula F : V._Formulas)
-          if (F != null && F._Measure == true)
-            {
-              if (++count == 0)
-                {
-                  OutFinal.println("INSERT INTO TILDA.MeasureFormula (\"measureRefnum\", \"formulaRefnum\", \"created\", \"lastUpdated\", \"deleted\")");
-                  OutFinal.print("    VALUES (");
-                }
-              else
-                {
-                  OutFinal.print("          ,(");
-                }
-              OutFinal.println(" (select refnum from TILDA.Measure where \"name\" = " + TextUtil.escapeSingleQuoteForSQL(F._Title) + " and \"schema\" = " + TextUtil.escapeSingleQuoteForSQL(V._ParentSchema._Name) + ")");
-              OutFinal.println("            ,(select refnum from TILDA.Formula where \"location\" = " + TextUtil.escapeSingleQuoteForSQL(V.getShortName()) + " AND \"name\" = " + TextUtil.escapeSingleQuoteForSQL(F._Name) + ")");
-              OutFinal.println(", current_timestamp, current_timestamp, null)");
-            }
-        if (count >= 0)
-          {
-            OutFinal.println("  ON CONFLICT(\"measureRefnum\", \"formulaRefnum\") DO UPDATE");
-            OutFinal.println("    SET \"lastUpdated\" = current_timestamp");
-            OutFinal.println("      , \"deleted\" = null");
-            OutFinal.println("  ;");
-          }
-        OutFinal.println();
-        OutFinal.println("DELETE FROM TILDA.MeasureFormula");
-        OutFinal.println(" where \"formulaRefnum\" in (select refnum");
-        OutFinal.println("                               from TILDA.Formula");
-        OutFinal.println("                              where \"location\" = " + TextUtil.escapeSingleQuoteForSQL(V.getShortName()));
-        OutFinal.println("                                and \"deleted\" is not null");
-        OutFinal.println("                            );");
-        OutFinal.println();
-        OutFinal.println("UPDATE TILDA.Measure");
-        OutFinal.println("   set deleted = current_timestamp");
-        OutFinal.println(" where \"refnum\" not in (select \"measureRefnum\" from TILDA.MeasureFormula)");
-        OutFinal.println(" ;");
-        OutFinal.println();
-
-        OutFinal.println("END; $$");
-        OutFinal.println("LANGUAGE PLPGSQL;");
-      }
-*/
+    /*
+     * @Override
+     * public void genDDLMetadata(PrintWriter out, Object O)
+     * throws Exception
+     * {
+     * CatalogHelper CH = new CatalogHelper(O.getSchema().getShortName(), O.getBaseName());
+     * CH.addColumns(O._Columns);
+     * out.println(CH.outputSQLProc(this));
+     * }
+     * 
+     * 
+     * @Override
+     * public void genDDLMetadata(PrintWriter out, View V)
+     * throws Exception
+     * {
+     * CatalogHelper CH = new CatalogHelper(V.getSchema().getShortName(), V.getBaseName());
+     * CH.addViewColumns(V._ViewColumns);
+     * CH.addViewColumns(V._PivotColumns);
+     * CH.addFormulas(V._Formulas);
+     * out.println(CH.outputSQLProc(this));
+     * 
+     * if (V._Formulas == null || V._Formulas.isEmpty() == true)
+     * {
+     * OutFinal.println("DO $$");
+     * OutFinal.println("-- This view doesn't have any formula, but just in case it used to and they were all removed from the model, we still have to do some cleanup.");
+     * OutFinal.println("DECLARE");
+     * OutFinal.println("  ts timestamp;");
+     * OutFinal.println("BEGIN");
+     * OutFinal.println("  select into ts current_timestamp;");
+     * OutFinal.println("  UPDATE TILDA.Catalog set deleted = current_timestamp where \"schemaName\" = " + TextUtil.escapeSingleQuoteForSQL(V.getSchema().getShortName())
+     * +" AND \"tableViewName\" = " + TextUtil.escapeSingleQuoteForSQL(V.getBaseName())
+     * +" AND \"lastUpdated\" < ts;");
+     * OutFinal.println("END; $$");
+     * OutFinal.println("LANGUAGE PLPGSQL;");
+     * return;
+     * }
+     * 
+     * // OutFinal.println("DROP TABLE IF EXISTS " + V._ParentSchema._Name + ".TildaFormulaValue;");
+     * // OutFinal.println("DROP TABLE IF EXISTS " + V._ParentSchema._Name + ".TildaFormulaReference;");
+     * // OutFinal.println("DROP TABLE IF EXISTS " + V._ParentSchema._Name + ".TildaFormula;");
+     * 
+     * 
+     * OutFinal.println("DO $$");
+     * OutFinal.println("-- This view has formulas and we need to update all its meta-data.");
+     * OutFinal.println("DECLARE");
+     * OutFinal.println("  k bigint;");
+     * OutFinal.println("  ts timestamp;");
+     * OutFinal.println("BEGIN");
+     * OutFinal.println("  select into k TILDA.getKeyBatchAsMaxExclusive('TILDA.CATALOG', " + V._Formulas.size() + ")-" + V._Formulas.size() + ";");
+     * OutFinal.println("  select into ts current_timestamp;");
+     * OutFinal.println();
+     * 
+     * //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     * // Formulas
+     * //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     * String RealizedTable = V.getRealizedTableName(true);
+     * int count = -1;
+     * int MeasureCount = 0;
+     * for (Formula F : V._Formulas)
+     * {
+     * if (F == null)
+     * continue;
+     * 
+     * if (++count == 0)
+     * {
+     * OutFinal.
+     * println("INSERT INTO TILDA.Catalog (\"refnum\", \"schemaName\", \"tableViewName\", \"columnName\", \"tableViewName2\", \"type\", \"description\", \"aggregate\", \"title\", \"formula\", \"measure\", \"htmlDoc\", \"referencedColumns\", \"referencedFormulas\", \"created\", \"lastUpdated\", \"deleted\")"
+     * );
+     * OutFinal.print("    VALUES (");
+     * }
+     * else
+     * {
+     * OutFinal.print("          ,(");
+     * }
+     * if (F._Measure == true)
+     * ++MeasureCount;
+     * OutFinal.print("k+" + count);
+     * OutFinal.print(", " + TextUtil.escapeSingleQuoteForSQL(V.getShortName()));
+     * OutFinal.print(", " + TextUtil.escapeSingleQuoteForSQL(RealizedTable));
+     * OutFinal.print(", " + TextUtil.escapeSingleQuoteForSQL(F._Name));
+     * OutFinal.print(", " + TextUtil.escapeSingleQuoteForSQL(F.getType()._ShortName));
+     * OutFinal.print(", " + TextUtil.escapeSingleQuoteForSQL(F._Title));
+     * OutFinal.print(", " + TextUtil.escapeSingleQuoteForSQL(String.join("\n", F._Description)));
+     * OutFinal.print(", " + TextUtil.escapeSingleQuoteForSQL(String.join("\n", F._FormulaStrs)));
+     * OutFinal.print(", " + TextUtil.escapeSingleQuoteForSQL("<B>N/A</B>"));
+     * List<ViewColumn> L = F.getDependencyColumns();
+     * if (L.isEmpty() == false)
+     * {
+     * String[] VCNames = new String[L.size()];
+     * for (int i = 0; i < L.size(); ++i)
+     * {
+     * VCNames[i] = L.get(i)._ParentView.getShortName() + "." + L.get(i)._Name;
+     * }
+     * OutFinal.print(", ARRAY[" + TextUtil.escapeSingleQuoteForSQL(VCNames, true) + "]");
+     * }
+     * else
+     * {
+     * OutFinal.print(", null");
+     * }
+     * OutFinal.println(", current_timestamp, current_timestamp, null)");
+     * }
+     * if (count >= 0)
+     * {
+     * OutFinal.println("  ON CONFLICT(\"location\", \"name\") DO UPDATE");
+     * OutFinal.println("    SET \"location2\" = EXCLUDED.\"location2\"");
+     * OutFinal.println("      , \"type\" = EXCLUDED.\"type\"");
+     * OutFinal.println("      , \"title\" = EXCLUDED.\"title\"");
+     * OutFinal.println("      , \"description\" = EXCLUDED.\"description\"");
+     * OutFinal.println("      , \"formula\" = EXCLUDED.\"formula\"");
+     * OutFinal.println("      , \"htmlDoc\" = EXCLUDED.\"htmlDoc\"");
+     * OutFinal.println("      , \"referencedColumns\" = EXCLUDED.\"referencedColumns\"");
+     * OutFinal.println("      , \"lastUpdated\" = current_timestamp");
+     * OutFinal.println("      , \"deleted\" = null");
+     * OutFinal.println("   ;");
+     * }
+     * OutFinal.println("UPDATE TILDA.Formula set deleted = current_timestamp where \"location\" = " + TextUtil.escapeSingleQuoteForSQL(V.getShortName()) +
+     * " AND \"lastUpdated\" < ts;");
+     * OutFinal.println();
+     * 
+     * //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     * // FormulaResult
+     * //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     * count = -1;
+     * for (Formula F : V._Formulas)
+     * {
+     * if (F != null && F._Values != null && F._Values.length > 0)
+     * for (Value Val : F._Values)
+     * {
+     * if (++count == 0)
+     * {
+     * OutFinal.println("INSERT INTO TILDA.FormulaResult (\"formulaRefnum\", \"value\", \"description\", \"created\", \"lastUpdated\", \"deleted\")");
+     * OutFinal.print("    VALUES (");
+     * }
+     * else
+     * {
+     * OutFinal.print("          ,(");
+     * }
+     * OutFinal.print("(select refnum from TILDA.Formula where \"location\" = " + TextUtil.escapeSingleQuoteForSQL(V.getShortName()) + " AND \"name\" = " +
+     * TextUtil.escapeSingleQuoteForSQL(F._Name) + ")");
+     * OutFinal.print(", " + TextUtil.escapeSingleQuoteForSQL(Val._Value));
+     * OutFinal.print(", " + TextUtil.escapeSingleQuoteForSQL(Val._Description));
+     * OutFinal.println(", current_timestamp, current_timestamp, null)");
+     * }
+     * }
+     * if (count >= 0)
+     * {
+     * OutFinal.println("  ON CONFLICT(\"formulaRefnum\", \"value\") DO UPDATE");
+     * OutFinal.println("    SET \"description\" = EXCLUDED.\"description\"");
+     * OutFinal.println("      , \"lastUpdated\" = current_timestamp");
+     * OutFinal.println("      , \"deleted\" = null");
+     * OutFinal.println("   ;");
+     * }
+     * OutFinal.println("UPDATE TILDA.FormulaResult");
+     * OutFinal.println("   set deleted = current_timestamp");
+     * OutFinal.println(" where \"formulaRefnum\" in (select refnum");
+     * OutFinal.println("                               from TILDA.Formula");
+     * OutFinal.println("                              where \"location\" = " + TextUtil.escapeSingleQuoteForSQL(V.getShortName()));
+     * OutFinal.println("                                and \"deleted\" is not null");
+     * OutFinal.println("                            );");
+     * OutFinal.println();
+     * 
+     * //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     * // FormulaDependency
+     * //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     * count = -1;
+     * for (Formula F : V._Formulas)
+     * {
+     * if (F == null)
+     * continue;
+     * for (Formula F2 : F.getDependencyFormulas())
+     * if (F2 != null)
+     * {
+     * if (++count == 0)
+     * {
+     * OutFinal.println("INSERT INTO TILDA.FormulaDependency(\"formulaRefnum\", \"dependencyRefnum\", \"created\", \"lastUpdated\", \"deleted\")");
+     * OutFinal.print("    VALUES (");
+     * }
+     * else
+     * {
+     * OutFinal.print("          ,(");
+     * }
+     * OutFinal.println(" (select refnum from TILDA.Formula where \"location\" = " + TextUtil.escapeSingleQuoteForSQL(V.getShortName()) + " AND \"name\" = " +
+     * TextUtil.escapeSingleQuoteForSQL(F._Name) + ")");
+     * OutFinal.println("            ,(select refnum from TILDA.Formula where \"location\" = " + TextUtil.escapeSingleQuoteForSQL(V.getShortName()) + " AND \"name\" = " +
+     * TextUtil.escapeSingleQuoteForSQL(F2._Name) + ")");
+     * OutFinal.println("            ,current_timestamp, current_timestamp, null");
+     * OutFinal.println("           )");
+     * }
+     * }
+     * if (count >= 0)
+     * {
+     * OutFinal.println("  ON CONFLICT(\"formulaRefnum\", \"dependencyRefnum\") DO UPDATE");
+     * OutFinal.println("    SET \"lastUpdated\" = current_timestamp");
+     * OutFinal.println("      , \"deleted\" = null");
+     * OutFinal.println("   ;");
+     * }
+     * OutFinal.println("UPDATE TILDA.FormulaDependency");
+     * OutFinal.println("   set deleted = current_timestamp");
+     * OutFinal.println(" where \"formulaRefnum\" in (select refnum");
+     * OutFinal.println("                               from TILDA.Formula");
+     * OutFinal.println("                              where \"location\" = " + TextUtil.escapeSingleQuoteForSQL(V.getShortName()));
+     * OutFinal.println("                                and \"deleted\" is not null");
+     * OutFinal.println("                            );");
+     * OutFinal.println();
+     * 
+     * //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     * // Measures
+     * //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     * OutFinal.println("select into k TILDA.getKeyBatchAsMaxExclusive('TILDA.MEASURE', " + MeasureCount + ")-" + MeasureCount + ";");
+     * count = -1;
+     * for (Formula F : V._Formulas)
+     * if (F != null && F._Measure == true)
+     * {
+     * if (++count == 0)
+     * {
+     * OutFinal.println("INSERT INTO TILDA.Measure (\"refnum\", \"schema\", \"name\", \"created\", \"lastUpdated\", \"deleted\")");
+     * OutFinal.print("    VALUES (");
+     * }
+     * else
+     * {
+     * OutFinal.print("          ,(");
+     * }
+     * OutFinal.print("k+" + count);
+     * OutFinal.print(", " + TextUtil.escapeSingleQuoteForSQL(V._ParentSchema._Name));
+     * OutFinal.print(", " + TextUtil.escapeSingleQuoteForSQL(F._Title));
+     * OutFinal.println(", current_timestamp, current_timestamp, null)");
+     * }
+     * if (count >= 0)
+     * {
+     * OutFinal.println("  ON CONFLICT(\"schema\", \"name\") DO UPDATE");
+     * OutFinal.println("    SET \"lastUpdated\" = current_timestamp");
+     * OutFinal.println("      , \"deleted\" = null");
+     * OutFinal.println("  ;");
+     * }
+     * OutFinal.println();
+     * 
+     * 
+     * //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     * // Measure formulas
+     * //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     * count = -1;
+     * for (Formula F : V._Formulas)
+     * if (F != null && F._Measure == true)
+     * {
+     * if (++count == 0)
+     * {
+     * OutFinal.println("INSERT INTO TILDA.MeasureFormula (\"measureRefnum\", \"formulaRefnum\", \"created\", \"lastUpdated\", \"deleted\")");
+     * OutFinal.print("    VALUES (");
+     * }
+     * else
+     * {
+     * OutFinal.print("          ,(");
+     * }
+     * OutFinal.println(" (select refnum from TILDA.Measure where \"name\" = " + TextUtil.escapeSingleQuoteForSQL(F._Title) + " and \"schema\" = " +
+     * TextUtil.escapeSingleQuoteForSQL(V._ParentSchema._Name) + ")");
+     * OutFinal.println("            ,(select refnum from TILDA.Formula where \"location\" = " + TextUtil.escapeSingleQuoteForSQL(V.getShortName()) + " AND \"name\" = " +
+     * TextUtil.escapeSingleQuoteForSQL(F._Name) + ")");
+     * OutFinal.println(", current_timestamp, current_timestamp, null)");
+     * }
+     * if (count >= 0)
+     * {
+     * OutFinal.println("  ON CONFLICT(\"measureRefnum\", \"formulaRefnum\") DO UPDATE");
+     * OutFinal.println("    SET \"lastUpdated\" = current_timestamp");
+     * OutFinal.println("      , \"deleted\" = null");
+     * OutFinal.println("  ;");
+     * }
+     * OutFinal.println();
+     * OutFinal.println("DELETE FROM TILDA.MeasureFormula");
+     * OutFinal.println(" where \"formulaRefnum\" in (select refnum");
+     * OutFinal.println("                               from TILDA.Formula");
+     * OutFinal.println("                              where \"location\" = " + TextUtil.escapeSingleQuoteForSQL(V.getShortName()));
+     * OutFinal.println("                                and \"deleted\" is not null");
+     * OutFinal.println("                            );");
+     * OutFinal.println();
+     * OutFinal.println("UPDATE TILDA.Measure");
+     * OutFinal.println("   set deleted = current_timestamp");
+     * OutFinal.println(" where \"refnum\" not in (select \"measureRefnum\" from TILDA.MeasureFormula)");
+     * OutFinal.println(" ;");
+     * OutFinal.println();
+     * 
+     * OutFinal.println("END; $$");
+     * OutFinal.println("LANGUAGE PLPGSQL;");
+     * }
+     */
 
     private String genFormulaCode(View ParentView, Formula F)
       {
@@ -1513,10 +1599,10 @@ public class Sql extends PostgreSQL implements CodeGenSql
               }
             M.appendTail(Str);
           }
-        
+
         return Str.toString();
         // LDH-NOTE: See note in rewriteExpressionColumnQuoting. Issues with formulas being cleaned up.
-//        return rewriteExpressionColumnQuoting(Str.toString());
+        // return rewriteExpressionColumnQuoting(Str.toString());
       }
 
     private static String genRealizedColumnList(View V, String Lead)
@@ -1689,7 +1775,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
       {
         Out.println("delete from TILDA.Key where \"name\" = '" + O._ParentSchema._Name + "." + O._Name.toUpperCase() + "';");
         Out.println("insert into TILDA.Key (\"refnum\", \"name\", \"max\", \"count\", \"created\", \"lastUpdated\") values ((select COALESCE(max(\"refnum\"),0)+1 from TILDA.Key), '"
-        + O._ParentSchema._Name + "." + O._Name.toUpperCase() + "',(select COALESCE(max(\""+O._ParentSchema.getConventionPrimaryKeyName()+"\"),0)+1 from " + O._ParentSchema._Name + "." + O._Name
+        + O._ParentSchema._Name + "." + O._Name.toUpperCase() + "',(select COALESCE(max(\"" + O._ParentSchema.getConventionPrimaryKeyName() + "\"),0)+1 from " + O._ParentSchema._Name + "." + O._Name
         + "), " + O._PrimaryKey._KeyBatch + ", current_timestamp, current_timestamp);");
       }
 

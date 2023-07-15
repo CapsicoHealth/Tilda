@@ -48,7 +48,7 @@ public class PrimaryKey
     public transient List<Column> _ColumnObjs = new ArrayList<Column>();
     public transient Object       _ParentObject;
 
-    public boolean Validate(ParserSession PS, Object obj)
+    public boolean validate(ParserSession PS, Object obj)
       {
         int Errs = PS.getErrorCount();
         _ParentObject = obj;

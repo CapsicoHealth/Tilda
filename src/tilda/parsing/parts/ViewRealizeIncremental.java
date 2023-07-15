@@ -49,7 +49,7 @@ public class ViewRealizeIncremental
     public transient boolean          _FailedValidation = false;
     public transient SubWhereClause   _SubQuery;
 
-    public boolean Validate(ParserSession PS, View ParentView, Base ParentRealized, List<Column> FirstIdentity)
+    public boolean validate(ParserSession PS, View ParentView, Base ParentRealized, List<Column> FirstIdentity)
       {
         int Errs = PS.getErrorCount();
         _ParentView = ParentView;

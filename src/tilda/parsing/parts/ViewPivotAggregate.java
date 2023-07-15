@@ -65,7 +65,7 @@ public class ViewPivotAggregate
         _Coalesce = from._Coalesce;
       }
 
-    public boolean Validate(ParserSession PS, ViewPivot ParentPivot)
+    public boolean validate(ParserSession PS, ViewPivot ParentPivot)
       {
         int Errs = PS.getErrorCount();
         _ParentPivot = ParentPivot;

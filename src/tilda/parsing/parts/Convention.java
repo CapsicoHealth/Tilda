@@ -44,7 +44,7 @@ public class Convention
     public static final String _DEFAULT_LASTUPDATED = "lastUpdated";
     public static final String _DEFAULT_DELETED = "deleted";
 
-    public boolean Validate(ParserSession PS, Schema parentSchema)
+    public boolean validate(ParserSession PS, Schema parentSchema)
     throws Exception
       {
         _ParentSchema = parentSchema;

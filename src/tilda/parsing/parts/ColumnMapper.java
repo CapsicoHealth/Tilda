@@ -66,23 +66,23 @@ public class ColumnMapper
         _Multi = Multi;
       }
 
-    public boolean Validate(ParserSession PS, Column ParentColumn)
+    public boolean validate(ParserSession PS, Column ParentColumn)
       {
         if (_Validation != ValidationStatus.NONE)
           return _Validation == ValidationStatus.SUCCESS;
         int Errs = PS.getErrorCount();
-        ValidateBase(PS, ParentColumn);
+        validateBase(PS, ParentColumn);
         _Validation = Errs == PS.getErrorCount() ? ValidationStatus.SUCCESS : ValidationStatus.FAIL;
         return _Validation == ValidationStatus.SUCCESS;
       }
 
-    private void ValidateBase(ParserSession PS, Column ParentColumn)
+    private void validateBase(ParserSession PS, Column ParentColumn)
       {
         _ParentColumn = ParentColumn;
 
-        if (ValidateDestinationObject(PS) == false)
+        if (validateDestinationObject(PS) == false)
           return;
-        if (ValidateSourceColumns(PS) == false)
+        if (validateSourceColumns(PS) == false)
           return;
         _SrcColumnObjs.add(_ParentColumn);
 
@@ -147,7 +147,7 @@ public class ColumnMapper
 
       }
 
-    private boolean ValidateSourceColumns(ParserSession PS)
+    private boolean validateSourceColumns(ParserSession PS)
       {
         if (_SrcColumns == null || _SrcColumns.length == 0)
           return PS.AddError("Column '" + _ParentColumn.getFullName() + "' is defining a mapper without any source column.");
@@ -157,7 +157,7 @@ public class ColumnMapper
         return true;
       }
 
-    private boolean ValidateDestinationObject(ParserSession PS)
+    private boolean validateDestinationObject(ParserSession PS)
       {
         if (TextUtil.isNullOrEmpty(_DestObject) == true)
           return PS.AddError("Column '" + _ParentColumn.getFullName() + "' is defining a mapper without a destination object.");

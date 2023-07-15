@@ -51,7 +51,7 @@ public class ViewTimeSeries
     public transient boolean    _FailedValidation = false;
 
 
-    public boolean Validate(ParserSession PS, View ParentView)
+    public boolean validate(ParserSession PS, View ParentView)
       {
         int Errs = PS.getErrorCount();
         _ParentView = ParentView;
@@ -101,7 +101,7 @@ public class ViewTimeSeries
         if (_Join == null)
           PS.AddError("View '" + ParentView.getFullName() + "' is defining a time Series without specifying a join.");
         else
-          _Join.Validate(PS, ParentView);
+          _Join.validate(PS, ParentView);
 
         return Errs == PS.getErrorCount();
       }

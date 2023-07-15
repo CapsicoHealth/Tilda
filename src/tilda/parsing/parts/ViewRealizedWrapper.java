@@ -41,9 +41,9 @@ public class ViewRealizedWrapper extends Base
 
     public transient boolean         _Validated         = false;
     
-    protected boolean Validate(ParserSession PS, Schema ParentSchema)
+    protected boolean validate(ParserSession PS, Schema ParentSchema)
       {
-        return super.Validate(PS, ParentSchema);
+        return super.validate(PS, ParentSchema);
       }
 
 

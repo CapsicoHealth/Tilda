@@ -45,17 +45,17 @@ public class ViewPivotValue extends Value
       {
       }
     
-    public boolean Validate(ParserSession PS, View ParentView, ViewPivot pivots, List<ViewPivotAggregate> aggregates)
+    public boolean validate(ParserSession PS, View ParentView, ViewPivot pivots, List<ViewPivotAggregate> aggregates)
       {
         int Errs = PS.getErrorCount();
         
         String what = "pivot value '"+_Value+"'";
-        super.Validate(PS, ParentView, what);
+        super.validate(PS, ParentView, what);
         
         if (_TypeStr != null)
           {
             _Type = new TypeDef(_TypeStr, _Size, _Scale, _Precision);
-            _Type.Validate(PS, what, true, false);
+            _Type.validate(PS, what, true, false);
           }
 
         if (TextUtil.isNullOrEmpty(_Expression) == true)

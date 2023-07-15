@@ -45,7 +45,7 @@ public class Enumeration
     public transient Schema _ParentSchema;
 
 
-    public boolean Validate(ParserSession PS, Schema ParentSchema, int pos)
+    public boolean validate(ParserSession PS, Schema ParentSchema, int pos)
       {
         int Errs = PS.getErrorCount();
         _ParentSchema = ParentSchema;

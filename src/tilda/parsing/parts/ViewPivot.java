@@ -51,7 +51,7 @@ public class ViewPivot
     public transient boolean    _FailedValidation = false;
 
 
-    public boolean Validate(ParserSession PS, View ParentView)
+    public boolean validate(ParserSession PS, View ParentView)
       {
         int Errs = PS.getErrorCount();
         _ParentView = ParentView;
@@ -66,7 +66,7 @@ public class ViewPivot
         _VC = new ViewColumn();
         _VC._FormulaOnly = true; // the folded pivot columns shouldn't not be output in the final result.
         _VC._SameAs = _ColumnName;
-        _VC.Validate(PS, _ParentView);
+        _VC.validate(PS, _ParentView);
 
         Set<String> AggregateNames = new HashSet<String>();
         for (int i = 0; i < _Aggregates.size(); ++i)
@@ -74,7 +74,7 @@ public class ViewPivot
             ViewPivotAggregate A = _Aggregates.get(i);
             if (A == null)
               continue;
-            if (A.Validate(PS, this) == false)
+            if (A.validate(PS, this) == false)
               continue;
             if (AggregateNames.add(A.getCompositeName()) == false)
               PS.AddError("View '" + ParentView.getFullName() + "' is defining a Pivot on column " + _VC.getShortName() + " with a duplicate aggregate named '" + A.getCompositeName() + "'.");
@@ -85,7 +85,7 @@ public class ViewPivot
 
         for (ViewPivotValue VPV : _Values)
           if (VPV != null)
-            VPV.Validate(PS, ParentView, this, _Aggregates);
+            VPV.validate(PS, ParentView, this, _Aggregates);
 
         return Errs == PS.getErrorCount();
       }

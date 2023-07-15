@@ -222,7 +222,7 @@ public class ClonerHelper
       {
         for (Cloner C : obj._CloneAs)
           {
-            if (C.Validate(PS, obj) == false)
+            if (C.validate(PS, obj) == false)
               return false;
             Object newObj = new Object(obj);
             newObj._Name = C._Name;

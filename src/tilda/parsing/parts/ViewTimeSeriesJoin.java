@@ -49,7 +49,7 @@ public class ViewTimeSeriesJoin
     public transient boolean      _FailedValidation = false;
 
 
-    public boolean Validate(ParserSession PS, View ParentView)
+    public boolean validate(ParserSession PS, View ParentView)
       {
         int Errs = PS.getErrorCount();
         _ParentView = ParentView;

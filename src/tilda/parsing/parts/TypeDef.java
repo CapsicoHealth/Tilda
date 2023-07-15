@@ -72,19 +72,19 @@ public class TypeDef
       }
 
 
-    public boolean Validate(ParserSession PS, String What, boolean AllowArrays, boolean StringSizeOptional)
+    public boolean validate(ParserSession PS, String What, boolean AllowArrays, boolean StringSizeOptional)
       {
         if (_Validation != ValidationStatus.NONE)
           return _Validation == ValidationStatus.SUCCESS;
         int Errs = PS.getErrorCount();
-        ValidateBase(PS, What, AllowArrays, StringSizeOptional);
+        validateBase(PS, What, AllowArrays, StringSizeOptional);
         _Validation = Errs == PS.getErrorCount() ? ValidationStatus.SUCCESS : ValidationStatus.FAIL;
         return _Validation == ValidationStatus.SUCCESS;
       }
 
     protected static Pattern _P = Pattern.compile("STRING\\s*\\(\\s*(\\d+)\\s*\\)");
     
-    private void ValidateBase(ParserSession PS, String What, boolean AllowArrays, boolean StringSizeOptional)
+    private void validateBase(ParserSession PS, String What, boolean AllowArrays, boolean StringSizeOptional)
       {
         if (_TypeStr == null)
           {
@@ -204,7 +204,7 @@ public class TypeDef
         return _TypeCollection == MultiType.LIST;
       }
 
-    public boolean CheckValueType(ParserSession PS, String What, String Value, boolean DateTimeAllowed, DefaultType Default)
+    public boolean checkValueType(ParserSession PS, String What, String Value, boolean DateTimeAllowed, DefaultType Default)
     throws Error
       {
         switch (_Type)

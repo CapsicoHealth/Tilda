@@ -42,6 +42,7 @@ import tilda.enums.ObjectLifecycle;
 import tilda.enums.TildaType;
 import tilda.interfaces.PatternObject;
 import tilda.parsing.ParserSession;
+import tilda.parsing.parts.helpers.JoinHelper;
 import tilda.parsing.parts.helpers.PivotHelper;
 import tilda.parsing.parts.helpers.ReferenceHelper;
 import tilda.parsing.parts.helpers.SameAsHelper;
@@ -167,9 +168,9 @@ public class View extends Base
         return _Name.substring(0, _Name.length() - (_Name.endsWith("PivotView") == true ? "PivotView" : "View").length());
       }
 
-    public boolean Validate(ParserSession PS, Schema ParentSchema)
+    public boolean validate(ParserSession PS, Schema ParentSchema)
       {
-        if (super.Validate(PS, ParentSchema) == false)
+        if (super.validate(PS, ParentSchema) == false)
           return false;
 
         int Errs = PS.getErrorCount();
@@ -228,7 +229,7 @@ public class View extends Base
             else if (TextUtil.isNullOrEmpty(VC._Postfix) == false)
               PS.AddError("Column '" + VC._Name + "' from view '"+getShortName()+"' defined a postfix but is not a .* column.");
 
-            if (VC.Validate(PS, this) == false)
+            if (VC.validate(PS, this) == false)
               {
                 err = true;
                 continue;
@@ -295,7 +296,7 @@ public class View extends Base
 
         if (_DistinctOn != null)
           {
-            _DistinctOn.Validate(PS, this);
+            _DistinctOn.validate(PS, this);
             for (ViewColumn VC : _ViewColumns)
               if (VC._Aggregate != null)
                 {
@@ -311,10 +312,23 @@ public class View extends Base
             else
               LOG.warn("The view " + getFullName() + " defined the three OCC columns 'created', 'lastUpdated', and 'deleted' but they came from different objects ('" + CreatedColObjName + "', '" + LastUpdatedColObjName + "', and '" + DeletedColObjName + "' respectively) so the view will not be considered an OCC view.");
           }
+        
+        Set<String> JoinObjectNames = new HashSet<String>();
+        if (_Joins != null)
+          for (ViewJoin VJ : _Joins)
+            {
+              if (VJ == null)
+                continue;
+              VJ.validate(PS, this);
+              if (VJ._ObjectObj != null && JoinObjectNames.add(VJ._ObjectObj.getShortName() + " on " + VJ.getQuery(DBType.Postgres)) == false)
+                PS.AddError("View '" + getFullName() + "' is defining a duplicate join with object " + VJ._ObjectObj.getShortName() + ".");
+            }
+        
+//        JoinHelper.autoFillImpliedViewJoins(PS, this);
 
         if (_SubWhereX != null)
           {
-            _SubWhereX.Validate(PS, this, "View");
+            _SubWhereX.validate(PS, this, "View");
             if (TextUtil.isNullOrEmpty(_SubWhere) == false)
               return PS.AddError("View '" + getFullName() + "' is defining both a subWhere AND a subWhereX: only one is allowed.");
             _SubWhere = _SubWhereX.getWhereClause();
@@ -341,16 +355,6 @@ public class View extends Base
               }
           }
 
-        Set<String> JoinObjectNames = new HashSet<String>();
-        if (_Joins != null)
-          for (ViewJoin VJ : _Joins)
-            {
-              if (VJ == null)
-                continue;
-              VJ.Validate(PS, this);
-              if (VJ._ObjectObj != null && JoinObjectNames.add(VJ._ObjectObj.getShortName() + " on " + VJ.getQuery(DBType.Postgres)) == false)
-                PS.AddError("View '" + getFullName() + "' is defining a duplicate join with object " + VJ._ObjectObj.getShortName() + ".");
-            }
 
         // Let's do the pivot(s).
         if (_Pivots.isEmpty() == false)
@@ -373,7 +377,7 @@ public class View extends Base
 //        LOG.debug("OBJECT - "+O.getFullName()+": "+TextUtil.print(O.getColumnNames()));
         
         if (_Realize != null)
-          _Realize.Validate(PS, this, new ViewRealizedWrapper(O, this));
+          _Realize.validate(PS, this, new ViewRealizedWrapper(O, this));
 
         _Validated = Errs == PS.getErrorCount();
         return _Validated;
@@ -417,7 +421,7 @@ public class View extends Base
 
     private void HandleTimeSeries(ParserSession PS)
       {
-        if (_TimeSeries.Validate(PS, this) == true)
+        if (_TimeSeries.validate(PS, this) == true)
           {
             int firstAgg = -1;
             if (_DistinctOn == null)
@@ -463,7 +467,7 @@ public class View extends Base
                 VC._TypeStr = ColumnType.DATE.name();
                 VC._FCT = FrameworkColumnType.TS;
                 VC._Description = "Framework-generated Timeseries column";
-                VC.Validate(PS, this);
+                VC.validate(PS, this);
                 _ViewColumns.add(firstAgg, VC);
               }
           }
@@ -512,7 +516,7 @@ public class View extends Base
             ColumnType Type = ColumnType.DATE;
             Column C = new Column(_TimeSeries._Name, Type.name(), null, true, ColumnMode.NORMAL, true, null, "Timeseries period", null, null, null);
             C._FCT = FrameworkColumnType.TS;
-            C.Validate(PS, O);
+            C.validate(PS, O);
             O._Columns.add(C);
           }
 
@@ -539,7 +543,7 @@ public class View extends Base
                   else
                     {
                       F = new Formula(F);
-                      F.Validate(PS, this);
+                      F.validate(PS, this);
                       _Formulas.add(0, F);
                     }
                 }
@@ -549,7 +553,7 @@ public class View extends Base
           for (FormulaTemplate FT : _FormulaTemplates)
             if (FT != null)
               {
-                if (FT.Validate(PS, this) == false)
+                if (FT.validate(PS, this) == false)
                   continue;
                 try
                   {
@@ -576,7 +580,7 @@ public class View extends Base
                   PS.AddError("View '" + getFullName() + "' is defining formula '" + F._Name + "' more than once.");
                 else
                   {
-                    F.Validate(PS, this);
+                    F.validate(PS, this);
                     Column C = new Column(F._Name, F._TypeStr, F._Size, true, ColumnMode.NORMAL, true, null, "<B>" + F._Title + "</B>: " + String.join(" ", F._Description), F._Precision, F._Scale, null);
                     if (F.getType() == ColumnType.DATETIME)
                       C._FCT = FrameworkColumnType.FORMULA_DT;
@@ -599,7 +603,7 @@ public class View extends Base
 
         O._ModeStr = _Mode.toString();
         _ParentSchema._Objects.add(O);
-        O.Validate(PS, _ParentSchema);
+        O.validate(PS, _ParentSchema);
 
         return O;
       }
@@ -679,7 +683,7 @@ public class View extends Base
         TZCol._FormulaOnly = VC._FormulaOnly;
         TZCol._JoinOnly = VC._JoinOnly;
 
-        TZCol.Validate(PS, VC._ParentView);
+        TZCol.validate(PS, VC._ParentView);
         return TZCol;
       }
 
@@ -882,7 +886,7 @@ public class View extends Base
         ViewColumn VC = new ViewColumn();
         VC._SameAs = C._SameAs + "Mapped" + ExtraName;
         VC._FCT = FrameworkColumnType.MAPPER_NAME;
-        VC.Validate(PS, this);
+        VC.validate(PS, this);
         if (ColumnNames.add(VC.getName().toUpperCase()) == false)
           PS.AddError("Generated column '" + VC.getFullName() + "' conflicts with another column already named the same in view '" + getFullName() + "'.");
         _ViewColumns.add(i, VC);

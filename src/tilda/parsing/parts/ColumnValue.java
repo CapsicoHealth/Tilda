@@ -66,17 +66,17 @@ public class ColumnValue
         _Default     = Default;
       }
 
-    public boolean Validate(ParserSession PS, Column C)
+    public boolean validate(ParserSession PS, Column C)
       {
         if (_Validation != ValidationStatus.NONE)
           return _Validation == ValidationStatus.SUCCESS;
         int Errs = PS.getErrorCount();
-        ValidateBase(PS, C);
+        validateBase(PS, C);
         _Validation = Errs == PS.getErrorCount() ? ValidationStatus.SUCCESS : ValidationStatus.FAIL;
         return _Validation == ValidationStatus.SUCCESS;
       }
 
-    private void ValidateBase(ParserSession PS, Column ParentColumn)
+    private void validateBase(ParserSession PS, Column ParentColumn)
       {
         _ParentColumn = ParentColumn;
 

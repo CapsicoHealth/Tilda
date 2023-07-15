@@ -44,7 +44,7 @@ public class TemplateExpansion
       {
       }
     
-    public void Validate(ParserSession PS, View ParentView, Template GT)
+    public void validate(ParserSession PS, View ParentView, Template GT)
       {        
         _ParentView = ParentView;
         

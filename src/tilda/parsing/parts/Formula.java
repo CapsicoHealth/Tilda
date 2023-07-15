@@ -82,7 +82,7 @@ public class Formula extends TypeDef
         return this._ParentView.getShortName() + "." + this._Name;
       }
 
-    public boolean Validate(ParserSession PS, View ParentView)
+    public boolean validate(ParserSession PS, View ParentView)
       {
         int Errs = PS.getErrorCount();
 
@@ -112,9 +112,9 @@ public class Formula extends TypeDef
 
         if (_Values != null)
           for (Value VPV : _Values)
-            VPV.Validate(PS, ParentView, "value for formula '" + _Name + "'");
+            VPV.validate(PS, ParentView, "value for formula '" + _Name + "'");
 
-        super.Validate(PS, "Formula '" + _Name + "' in View " + ParentView.getShortName() + "", true, false);
+        super.validate(PS, "Formula '" + _Name + "' in View " + ParentView.getShortName() + "", true, false);
 
         return PS.getErrorCount() == Errs;
       }

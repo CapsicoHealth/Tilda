@@ -56,7 +56,7 @@ public class JsonValidation
     
     public transient String _JavaCodeGenStr = null;
 
-    public boolean Validate(ParserSession PS, Column C)
+    public boolean validate(ParserSession PS, Column C)
       {
         if (_Rule == null || _Rule.length == 0)
           {

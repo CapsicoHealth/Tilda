@@ -48,7 +48,7 @@ public class DBAnalyzer
         DB.loadTablesAndViews(C, Data);
         
         
-        DB.ValidateAndLoadRules(C, Data);
+        DB.validateAndLoadRules(C, Data);
         
 
         LOG.debug("Initializing the status tracker object.");

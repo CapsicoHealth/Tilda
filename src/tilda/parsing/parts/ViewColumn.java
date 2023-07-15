@@ -193,7 +193,7 @@ public class ViewColumn
 
     static protected final Pattern _RANGEREGEX = Pattern.compile("((UNBOUNDED|\\d+|CURRENT)\\s+(PRECEDING|FOLLOWING|ROW))\\s+AND\\s+((UNBOUNDED|\\d+|CURRENT)\\s+(PRECEDING|FOLLOWING|ROW))", Pattern.CASE_INSENSITIVE);
 
-    public boolean Validate(ParserSession PS, View ParentView)
+    public boolean validate(ParserSession PS, View ParentView)
       {
         int Errs = PS.getErrorCount();
         _ParentView = ParentView;
@@ -327,7 +327,7 @@ public class ViewColumn
         if (_TypeStr != null)
           {
             _Type = new TypeDef(_TypeStr, _Size, _Precision, _Scale);
-            _Type.Validate(PS, "View Column '" + getFullName() + "'", true, false);
+            _Type.validate(PS, "View Column '" + getFullName() + "'", true, false);
           }
         // Checking that type information is only present when expression is specified and vice-versa.
         if (TextUtil.isNullOrEmpty(_Expression) == false && _Type == null)

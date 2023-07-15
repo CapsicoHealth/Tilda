@@ -204,9 +204,10 @@ public class Column extends TypeDef
       {
         return _Name;
       }
-    
+
     /**
      * Changes the column's name. Must only be called before any validation has occurred.
+     * 
      * @param newName
      */
     public void renameTo(String newName)
@@ -214,18 +215,18 @@ public class Column extends TypeDef
         _Name = newName;
       }
 
-    public boolean Validate(ParserSession PS, Object ParentObject)
+    public boolean validate(ParserSession PS, Object ParentObject)
       {
         _ParentObject = ParentObject;
         if (_Validation != ValidationStatus.NONE)
           return _Validation == ValidationStatus.SUCCESS;
         int Errs = PS.getErrorCount();
-        ValidateBase(PS, ParentObject);
+        validateBase(PS, ParentObject);
         _Validation = Errs == PS.getErrorCount() ? ValidationStatus.SUCCESS : ValidationStatus.FAIL;
         return _Validation == ValidationStatus.SUCCESS;
       }
 
-    private void ValidateBase(ParserSession PS, Object ParentObject)
+    private void validateBase(ParserSession PS, Object ParentObject)
       {
         String N = getLogicalName();
         if (TextUtil.isNullOrEmpty(N) == true)
@@ -236,7 +237,7 @@ public class Column extends TypeDef
 
         ValidationHelper.validateColumnName(PS, "Object", N, getFullName(), _ParentObject._ParentSchema._Conventions);
 
-        if (ValidateSameAs(PS) == false)
+        if (validateSameAs(PS) == false)
           return;
 
         // Checking values
@@ -256,7 +257,7 @@ public class Column extends TypeDef
 
         setDefaults();
 
-        if (super.Validate(PS, "Column '" + getFullName() + "'", true, _SameAsObj != null || _Mode == ColumnMode.CALCULATED) == false)
+        if (super.validate(PS, "Column '" + getFullName() + "'", true, _SameAsObj != null || _Mode == ColumnMode.CALCULATED) == false)
           return;
 
         if (TextUtil.isNullOrEmpty(_Description) == true)
@@ -272,19 +273,19 @@ public class Column extends TypeDef
         if (_Protect != null && _Type != ColumnType.STRING)
           PS.AddError("Column '" + getFullName() + "' is defined as a '" + _Type + "' with a '_Protect'. Only String columns should have a '_Protect' defined.");
 
-        ValidateValues(PS);
+        validateValues(PS);
 
         if (_Mapper != null && _Enum != null)
           PS.AddError("Column '" + getFullName() + "' is defining both a mapper and an enum, which is not allowed: only one can be defined at a time.");
         else if (_Mapper != null)
-          _Mapper.Validate(PS, this);
+          _Mapper.validate(PS, this);
         else if (_Enum != null)
-          _Enum.Validate(PS, this);
+          _Enum.validate(PS, this);
 
         if (_JsonSchema != null && _Type != ColumnType.JSON)
           PS.AddError("Column '" + getFullName() + "' is defining a jsonSchema, but is not of type JSON.");
         if (_JsonSchema != null)
-          _JsonSchema.Validate(PS, this);
+          _JsonSchema.validate(PS, this);
 
         // if ((_Nullable == null || _Nullable == true)
         // && _Values != null
@@ -299,7 +300,7 @@ public class Column extends TypeDef
       }
 
 
-    private boolean ValidateSameAs(ParserSession PS)
+    private boolean validateSameAs(ParserSession PS)
       {
         if (TextUtil.isNullOrEmpty(_SameAs) == true && TextUtil.isNullOrEmpty(_SameAs__DEPRECATED) == true)
           return true;
@@ -448,14 +449,17 @@ public class Column extends TypeDef
           _Protect = ProtectionType.ABSOLUTE;
       }
 
-    private boolean ValidateValues(ParserSession PS)
+    private boolean validateValues(ParserSession PS)
       {
         if (_Values != null && _Values.length > 0 && TextUtil.isNullOrEmpty(_Default) == false)
           return PS.AddError("Column '" + getFullName() + "' defines a 'default' and 'values' attributes. Only one or the other is alowed.");
 
         if (TextUtil.isNullOrEmpty(_Default) == false)
-          _Values = new ColumnValue[] { new ColumnValue(_Name + "_CreateDefault", _Default, null, null, null, DefaultType.CREATE)
-          };
+          {
+            _Values = new ColumnValue[] { new ColumnValue(_Name + "_CreateDefault", _Default, null, null, null, DefaultType.CREATE)
+            };
+            _Default = null; 
+          }
 
         if (_Values == null || _Values.length == 0)
           return true;
@@ -471,7 +475,7 @@ public class Column extends TypeDef
             if (V == null)
               continue;
 
-            V.Validate(PS, this);
+            V.validate(PS, this);
 
             _PadderValueNames.track(V._Name);
             _PadderValueValues.track(V._Value);

@@ -67,7 +67,7 @@ public class OutputMap
 
     public transient Base                   _ParentObject;
 
-    public boolean Validate(ParserSession PS, Base ParentObject)
+    public boolean validate(ParserSession PS, Base ParentObject)
       {
         int Errs = PS.getErrorCount();
         _ParentObject = ParentObject;

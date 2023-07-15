@@ -31,7 +31,7 @@ public class MigrationDrop
 
     public transient Schema _Parent;
 
-    public boolean Validate(ParserSession PS, Schema Parent)
+    public boolean validate(ParserSession PS, Schema Parent)
       {
         int Errs = PS.getErrorCount();
         _Parent = Parent;

@@ -167,7 +167,7 @@ public abstract class Base
         return _PadderColumnNames.getPad(Name);
       }
 
-    protected boolean Validate(ParserSession PS, Schema parentSchema)
+    protected boolean validate(ParserSession PS, Schema parentSchema)
       {
         if (_Validated == true)
           return true;
@@ -288,7 +288,7 @@ public abstract class Base
             {
               if (Names.add(OM._Name) == false)
                 PS.AddError(_TildaType.name() + " '" + getFullName() + "' is defining a duplicate Output mapping named '" + OM._Name + "'.");
-              OM.Validate(PS, this);
+              OM.validate(PS, this);
             }
       }
 
@@ -298,7 +298,7 @@ public abstract class Base
         for (Mask M : _Masks)
           if (M != null)
             {
-              M.Validate(PS, this);
+              M.validate(PS, this);
               for (Column C : M._ColumnObjs)
                 if (C != null && colNames.add(C._Name) == false)
                   PS.AddError(_TildaType.name() + " '" + getFullName() + "' is defining a mask with a duplicate column '" + C._Name + "'.");
@@ -384,7 +384,7 @@ public abstract class Base
      * will be returned. Null is returned otherwise, that that should never happen because all Objects are required
      * to have at least one identity.<BR>
      * <BR>
-     * This method should only be called <B>AFTER</B> {@link Object#Validate(ParserSession, Schema)} has been called first.
+     * This method should only be called <B>AFTER</B> {@link Object#validate(ParserSession, Schema)} has been called first.
      * 
      * @return
      */

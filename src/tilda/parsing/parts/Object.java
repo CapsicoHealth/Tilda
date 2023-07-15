@@ -138,7 +138,7 @@ public class Object extends Base
         return _OCC;
       }
 
-    public boolean Validate(ParserSession PS, Schema parentSchema)
+    public boolean validate(ParserSession PS, Schema parentSchema)
       {
         if (_Validated == true)
           return true;
@@ -156,7 +156,7 @@ public class Object extends Base
             _OriginalName = null;
           }
 
-        if (super.Validate(PS, parentSchema) == false)
+        if (super.validate(PS, parentSchema) == false)
           return false;
 
         if (_CloneAs != null)
@@ -216,7 +216,7 @@ public class Object extends Base
                   }
 
                 _PadderColumnNames.track(C.getLogicalName());
-                if (C.Validate(PS, this) == true)
+                if (C.validate(PS, this) == true)
                   {
                     if (ColumnNames.add(C.getName().toUpperCase()) == false)
                       PS.AddError("Column '" + C.getFullName() + "' is defined more than once in Object '" + getFullName() + "'. Note that column names are checked in a case-insensitive way, so 'id' is the same as 'ID'.");
@@ -231,7 +231,7 @@ public class Object extends Base
                         _Columns.add(i, TZCol);
                         ++i;
                         _PadderColumnNames.track(TZCol.getName());
-                        TZCol.Validate(PS, this);
+                        TZCol.validate(PS, this);
                         if (ColumnNames.add(TZCol.getName().toUpperCase()) == false)
                           PS.AddError("Generated column '" + TZCol.getFullName() + "' conflicts with another column already named the same in Object '" + getFullName() + "'.");
                         if (C.isCollection() == false && _TZFK == true)
@@ -267,7 +267,7 @@ public class Object extends Base
           {
             if (I == null)
               continue;
-            if (I.Validate(PS, this) == true)
+            if (I.validate(PS, this) == true)
               if (Names.add(I._Name.toUpperCase()) == false)
                 PS.AddError("Object '" + getFullName() + "' is defining a duplicate index named '" + I._Name + "'.");
             if (I._Db == true && Signatures.add(I.getSignature()) == false)
@@ -303,14 +303,14 @@ public class Object extends Base
           return PS.AddError("Object '" + getFullName() + "' defined an invalid 'lc' '" + _LCStr + "'.");
 
         if (_PrimaryKey != null)
-          _PrimaryKey.Validate(PS, this);
+          _PrimaryKey.validate(PS, this);
 
         Set<String> FKNames = new HashSet<String>();
         for (ForeignKey FK : _ForeignKeys)
           {
             if (FK == null)
               continue;
-            if (FK.Validate(PS, this) == true)
+            if (FK.validate(PS, this) == true)
               if (FKNames.add(FK._Name.toUpperCase()) == false)
                 PS.AddError("Object '" + getFullName() + "' is defining a duplicate foreignKey named '" + FK._Name + "'.");
           }
@@ -326,7 +326,7 @@ public class Object extends Base
         super.validateOutputMaps(PS);
         super.validateMasks(PS);
 
-        if (_History != null && _History.Validate(PS, this) == true)
+        if (_History != null && _History.validate(PS, this) == true)
           {
             setupHistory(PS, parentSchema);
           }
@@ -698,7 +698,7 @@ public class Object extends Base
      * be returned only if there are no natural identities.<BR>
      * A natural identity is defined as a unique index, of a non-autogen primary key.
      * <BR>
-     * This method should only be called <B>AFTER</B> {@link Object#Validate(ParserSession, Schema)} has been called first.
+     * This method should only be called <B>AFTER</B> {@link Object#validate(ParserSession, Schema)} has been called first.
      * 
      * @return
      */

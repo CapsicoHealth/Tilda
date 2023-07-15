@@ -66,13 +66,13 @@ public class ViewRealize
     public transient boolean _FailedValidation = false;
 
 
-    public boolean Validate(ParserSession PS, View ParentView, ViewRealizedWrapper ParentRealized)
+    public boolean validate(ParserSession PS, View ParentView, ViewRealizedWrapper ParentRealized)
       {
         int Errs = PS.getErrorCount();
         _ParentView = ParentView;
         _ParentRealized = ParentRealized;
 
-        if (_ParentRealized.Validate(PS, ParentView._ParentSchema) == false)
+        if (_ParentRealized.validate(PS, ParentView._ParentSchema) == false)
           return false;
 
         if (TextUtil.isNullOrEmpty(_SubRealized_DEPRECATED) == false)
@@ -141,7 +141,7 @@ public class ViewRealize
         O._Indices = _Indices;
         if (_IndexTemplates != null)
           for (IndexTemplate IT : _IndexTemplates)
-            if (IT.Validate(PS, ParentRealized._O) == true)
+            if (IT.validate(PS, ParentRealized._O) == true)
               for (String col : IT._Columns)
                 {
                   Index I = new Index();
@@ -208,20 +208,20 @@ public class ViewRealize
         O._RealizedView = ParentView;
 
         // default target schema is the current schema, i.e., the parent view's schema.);
-        O.Validate(PS, targetSchema != null ? targetSchema : ParentView._ParentSchema);
+        O.validate(PS, targetSchema != null ? targetSchema : ParentView._ParentSchema);
 
         Set<String> Names = new HashSet<String>();
         for (Index I : _Indices)
           if (I != null)
             {
-              // if (I.Validate(PS, ParentRealized) == false)
+              // if (I.validate(PS, ParentRealized) == false)
               // continue;
               if (Names.add(I._Name) == false)
                 PS.AddError("Index '" + I._Name + "' is duplicated in the realize section for view '" + ParentView.getFullName() + "'.");
             }
 
         if (_Incremental != null)
-          _Incremental.Validate(PS, ParentView, ParentRealized, O.getFirstIdentityColumns(false));
+          _Incremental.validate(PS, ParentView, ParentRealized, O.getFirstIdentityColumns(false));
 
         // if (O._Name.equals("Testing2Realized") == true)
         // LOG.debug("yyyyy");
