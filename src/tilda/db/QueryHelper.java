@@ -977,11 +977,13 @@ public abstract class QueryHelper
       {
         return in(Col, null, V, false);
       }
+
     public QueryHelper in(Type_StringPrimitive Col, String[] V, boolean not)
     throws Exception
       {
         return in(Col, null, V, not);
       }
+
     public QueryHelper in(Type_StringPrimitive Col, String coalesceVal, String[] V, boolean not)
     throws Exception
       {
@@ -1012,11 +1014,13 @@ public abstract class QueryHelper
       {
         return in(Col, null, V, false);
       }
+
     public QueryHelper in(Type_StringPrimitive Col, Collection<String> V, boolean not)
     throws Exception
       {
         return in(Col, null, V, not);
       }
+
     public QueryHelper in(Type_StringPrimitive Col, String coalesceVal, Collection<String> V, boolean not)
     throws Exception
       {
@@ -1047,6 +1051,7 @@ public abstract class QueryHelper
       {
         return in(Col, V, false);
       }
+
     public QueryHelper in(Type_StringCollection Col, String[] V, boolean not)
     throws Exception
       {
@@ -1070,6 +1075,7 @@ public abstract class QueryHelper
       {
         return in(Col, V, false);
       }
+
     public QueryHelper in(Type_StringCollection Col, Collection<String> V, boolean not)
     throws Exception
       {
@@ -1094,11 +1100,13 @@ public abstract class QueryHelper
       {
         return in(Col, (char) Character.UNASSIGNED, V, false);
       }
+
     public QueryHelper in(Type_CharPrimitive Col, char[] V, boolean not)
     throws Exception
       {
-        return in(Col, (char) Character.UNASSIGNED, V, not);        
+        return in(Col, (char) Character.UNASSIGNED, V, not);
       }
+
     public QueryHelper in(Type_CharPrimitive Col, char coalesceVal, char[] V, boolean not)
     throws Exception
       {
@@ -1128,11 +1136,13 @@ public abstract class QueryHelper
       {
         return in(Col, null, V, false);
       }
+
     public QueryHelper in(Type_ShortPrimitive Col, short[] V, boolean not)
     throws Exception
       {
         return in(Col, null, V, not);
       }
+
     public QueryHelper in(Type_ShortPrimitive Col, Short coalesceVal, short[] V, boolean not)
     throws Exception
       {
@@ -1166,11 +1176,13 @@ public abstract class QueryHelper
       {
         return in(Col, null, V, false);
       }
+
     public QueryHelper in(Type_IntegerPrimitive Col, int[] V, boolean not)
     throws Exception
       {
         return in(Col, null, V, not);
       }
+
     public QueryHelper in(Type_IntegerPrimitive Col, Integer coalesceVal, int[] V, boolean not)
     throws Exception
       {
@@ -1204,11 +1216,13 @@ public abstract class QueryHelper
       {
         return in(Col, null, V, false);
       }
+
     public QueryHelper in(Type_LongPrimitive Col, long[] V, boolean not)
     throws Exception
       {
         return in(Col, null, V, not);
       }
+
     public QueryHelper in(Type_LongPrimitive Col, Long coalesceVal, long[] V, boolean not)
     throws Exception
       {
@@ -1242,11 +1256,13 @@ public abstract class QueryHelper
       {
         return in(Col, null, V, false);
       }
+
     public QueryHelper in(Type_FloatPrimitive Col, float[] V, boolean not)
     throws Exception
       {
         return in(Col, null, V, not);
       }
+
     public QueryHelper in(Type_FloatPrimitive Col, Float coalesceVal, float[] V, boolean not)
     throws Exception
       {
@@ -1280,11 +1296,13 @@ public abstract class QueryHelper
       {
         return in(Col, null, V, false);
       }
+
     public QueryHelper in(Type_DoublePrimitive Col, double[] V, boolean not)
     throws Exception
       {
         return in(Col, null, V, false);
       }
+
     public QueryHelper in(Type_DoublePrimitive Col, Double coalesceVal, double[] V, boolean not)
     throws Exception
       {
@@ -1318,11 +1336,13 @@ public abstract class QueryHelper
       {
         return in(Col, null, V, false);
       }
+
     public QueryHelper in(Type_DatetimePrimitive Col, ZonedDateTime[] V, boolean not)
     throws Exception
       {
         return in(Col, null, V, not);
       }
+
     public QueryHelper in(Type_DatetimePrimitive Col, ZonedDateTime coalesceVal, ZonedDateTime[] V, boolean not)
     throws Exception
       {
@@ -1363,11 +1383,13 @@ public abstract class QueryHelper
       {
         return in(Col, null, V, false);
       }
+
     public QueryHelper in(Type_DatePrimitive Col, Collection<LocalDate> V, boolean not)
     throws Exception
       {
         return in(Col, null, V, not);
       }
+
     public QueryHelper in(Type_DatePrimitive Col, LocalDate coalesceVal, Collection<LocalDate> V, boolean not)
     throws Exception
       {
@@ -1408,17 +1430,19 @@ public abstract class QueryHelper
         return this;
       }
 
-    
+
     public QueryHelper in(Type_DatePrimitive Col, LocalDate[] V)
     throws Exception
       {
         return in(Col, null, V, false);
       }
+
     public QueryHelper in(Type_DatePrimitive Col, LocalDate[] V, boolean not)
     throws Exception
       {
         return in(Col, null, V, not);
       }
+
     public QueryHelper in(Type_DatePrimitive Col, LocalDate coalesceVal, LocalDate[] V, boolean not)
     throws Exception
       {
@@ -1460,11 +1484,13 @@ public abstract class QueryHelper
       {
         return in(Col, null, V, false);
       }
+
     public QueryHelper in(Type_DatetimePrimitive Col, Collection<ZonedDateTime> V, boolean not)
     throws Exception
       {
         return in(Col, null, V, not);
       }
+
     public QueryHelper in(Type_DatetimePrimitive Col, ZonedDateTime coalesceVal, Collection<ZonedDateTime> V, boolean not)
     throws Exception
       {
@@ -1504,9 +1530,9 @@ public abstract class QueryHelper
         _QueryStr.append(")");
         return this;
       }
-    
-    
-    
+
+
+
     public QueryHelper in(ColumnDefinition Col, SelectQuery Q)
     throws Exception
       {
@@ -1699,6 +1725,7 @@ public abstract class QueryHelper
       {
         return equals(Col, null, V);
       }
+
     public QueryHelper equals(Type_StringPrimitive Col, String coalesceVal, String V)
     throws Exception
       {
@@ -1720,6 +1747,7 @@ public abstract class QueryHelper
       {
         return equals(Col, (char) Character.UNASSIGNED, V);
       }
+
     public QueryHelper equals(Type_CharPrimitive Col, char coalesceVal, char V)
     throws Exception
       {
@@ -1739,6 +1767,7 @@ public abstract class QueryHelper
       {
         return equals(Col, null, V);
       }
+
     public QueryHelper equals(Type_BooleanPrimitive Col, Boolean coalesceVal, boolean V)
     throws Exception
       {
@@ -1758,6 +1787,7 @@ public abstract class QueryHelper
       {
         return equals(Col, null, V);
       }
+
     public QueryHelper equals(Type_ShortPrimitive Col, Short coalesceVal, short V)
     throws Exception
       {
@@ -1777,6 +1807,7 @@ public abstract class QueryHelper
       {
         return equals(Col, null, V);
       }
+
     public QueryHelper equals(Type_IntegerPrimitive Col, Integer coalesceVal, int V)
     throws Exception
       {
@@ -1796,7 +1827,8 @@ public abstract class QueryHelper
       {
         return equals(Col, null, V);
       }
-    public QueryHelper equals(Type_LongPrimitive Col, Long coalesceVal,  long V)
+
+    public QueryHelper equals(Type_LongPrimitive Col, Long coalesceVal, long V)
     throws Exception
       {
         if (coalesceVal != null)
@@ -1815,6 +1847,7 @@ public abstract class QueryHelper
       {
         return equals(Col, null, V);
       }
+
     public QueryHelper equals(Type_FloatPrimitive Col, Float coalesceVal, float V)
     throws Exception
       {
@@ -1834,6 +1867,7 @@ public abstract class QueryHelper
       {
         return equals(Col, null, V);
       }
+
     public QueryHelper equals(Type_DoublePrimitive Col, Double coalesceVal, double V)
     throws Exception
       {
@@ -1853,6 +1887,7 @@ public abstract class QueryHelper
       {
         return equals(Col, null, ZDT);
       }
+
     public QueryHelper equals(Type_DatetimePrimitive Col, ZonedDateTime coalesceVal, ZonedDateTime ZDT)
     throws Exception
       {
@@ -1872,6 +1907,7 @@ public abstract class QueryHelper
       {
         return equals(Col, null, LDT);
       }
+
     public QueryHelper equals(Type_DatePrimitive Col, LocalDate coalesceVal, LocalDate LDT)
     throws Exception
       {
@@ -1894,6 +1930,7 @@ public abstract class QueryHelper
       {
         return lt(Col, null, V);
       }
+
     public QueryHelper lt(Type_StringPrimitive Col, String coalesceVal, String V)
     throws Exception
       {
@@ -1915,6 +1952,7 @@ public abstract class QueryHelper
       {
         return lt(Col, (char) Character.UNASSIGNED, V);
       }
+
     public QueryHelper lt(Type_CharPrimitive Col, char coalesceVal, char V)
     throws Exception
       {
@@ -1934,6 +1972,7 @@ public abstract class QueryHelper
       {
         return lt(Col, null, V);
       }
+
     public QueryHelper lt(Type_BooleanPrimitive Col, Boolean coalesceVal, boolean V)
     throws Exception
       {
@@ -1953,6 +1992,7 @@ public abstract class QueryHelper
       {
         return lt(Col, null, V);
       }
+
     public QueryHelper lt(Type_ShortPrimitive Col, Short coalesceVal, short V)
     throws Exception
       {
@@ -1972,6 +2012,7 @@ public abstract class QueryHelper
       {
         return lt(Col, null, V);
       }
+
     public QueryHelper lt(Type_IntegerPrimitive Col, Integer coalesceVal, int V)
     throws Exception
       {
@@ -1991,6 +2032,7 @@ public abstract class QueryHelper
       {
         return lt(Col, null, V);
       }
+
     public QueryHelper lt(Type_LongPrimitive Col, Long coalesceVal, long V)
     throws Exception
       {
@@ -2010,6 +2052,7 @@ public abstract class QueryHelper
       {
         return lt(Col, null, V);
       }
+
     public QueryHelper lt(Type_FloatPrimitive Col, Float coalesceVal, float V)
     throws Exception
       {
@@ -2029,6 +2072,7 @@ public abstract class QueryHelper
       {
         return lt(Col, null, V);
       }
+
     public QueryHelper lt(Type_DoublePrimitive Col, Double coalesceVal, double V)
     throws Exception
       {
@@ -2048,6 +2092,7 @@ public abstract class QueryHelper
       {
         return lt(Col, null, V);
       }
+
     public QueryHelper lt(Type_DatetimePrimitive Col, ZonedDateTime coalesceVal, ZonedDateTime ZDT)
     throws Exception
       {
@@ -2067,6 +2112,7 @@ public abstract class QueryHelper
       {
         return lt(Col, null, V);
       }
+
     public QueryHelper lt(Type_DatePrimitive Col, LocalDate coalesceVal, LocalDate LDT)
     throws Exception
       {
@@ -2166,6 +2212,7 @@ public abstract class QueryHelper
       {
         return lte(Col, null, V);
       }
+
     public QueryHelper lte(Type_StringPrimitive Col, String coalesceVal, String V)
     throws Exception
       {
@@ -2187,6 +2234,7 @@ public abstract class QueryHelper
       {
         return lte(Col, (char) Character.UNASSIGNED, V);
       }
+
     public QueryHelper lte(Type_CharPrimitive Col, char coalesceVal, char V)
     throws Exception
       {
@@ -2206,6 +2254,7 @@ public abstract class QueryHelper
       {
         return lte(Col, null, V);
       }
+
     public QueryHelper lte(Type_BooleanPrimitive Col, Boolean coalesceVal, boolean V)
     throws Exception
       {
@@ -2225,6 +2274,7 @@ public abstract class QueryHelper
       {
         return lte(Col, null, V);
       }
+
     public QueryHelper lte(Type_ShortPrimitive Col, Short coalesceVal, short V)
     throws Exception
       {
@@ -2244,6 +2294,7 @@ public abstract class QueryHelper
       {
         return lte(Col, null, V);
       }
+
     public QueryHelper lte(Type_IntegerPrimitive Col, Integer coalesceVal, int V)
     throws Exception
       {
@@ -2263,6 +2314,7 @@ public abstract class QueryHelper
       {
         return lte(Col, null, V);
       }
+
     public QueryHelper lte(Type_LongPrimitive Col, Long coalesceVal, long V)
     throws Exception
       {
@@ -2282,6 +2334,7 @@ public abstract class QueryHelper
       {
         return lte(Col, null, V);
       }
+
     public QueryHelper lte(Type_FloatPrimitive Col, Float coalesceVal, float V)
     throws Exception
       {
@@ -2301,6 +2354,7 @@ public abstract class QueryHelper
       {
         return lte(Col, null, V);
       }
+
     public QueryHelper lte(Type_DoublePrimitive Col, Double coalesceVal, double V)
     throws Exception
       {
@@ -2320,6 +2374,7 @@ public abstract class QueryHelper
       {
         return lte(Col, null, V);
       }
+
     public QueryHelper lte(Type_DatetimePrimitive Col, ZonedDateTime coalesceVal, ZonedDateTime V)
     throws Exception
       {
@@ -2339,6 +2394,7 @@ public abstract class QueryHelper
       {
         return lte(Col, null, V);
       }
+
     public QueryHelper lte(Type_DatePrimitive Col, LocalDate coalesceVal, LocalDate V)
     throws Exception
       {
@@ -2425,6 +2481,7 @@ public abstract class QueryHelper
       {
         return gt(Col, null, V);
       }
+
     public QueryHelper gt(Type_StringPrimitive Col, String coalesceVal, String V)
     throws Exception
       {
@@ -2446,6 +2503,7 @@ public abstract class QueryHelper
       {
         return gt(Col, (char) Character.UNASSIGNED, V);
       }
+
     public QueryHelper gt(Type_CharPrimitive Col, char coalesceVal, char V)
     throws Exception
       {
@@ -2465,6 +2523,7 @@ public abstract class QueryHelper
       {
         return gt(Col, null, V);
       }
+
     public QueryHelper gt(Type_BooleanPrimitive Col, Boolean coalesceVal, boolean V)
     throws Exception
       {
@@ -2484,6 +2543,7 @@ public abstract class QueryHelper
       {
         return gt(Col, null, V);
       }
+
     public QueryHelper gt(Type_ShortPrimitive Col, Short coalesceVal, short V)
     throws Exception
       {
@@ -2503,6 +2563,7 @@ public abstract class QueryHelper
       {
         return gt(Col, null, V);
       }
+
     public QueryHelper gt(Type_IntegerPrimitive Col, Integer coalesceVal, int V)
     throws Exception
       {
@@ -2522,6 +2583,7 @@ public abstract class QueryHelper
       {
         return gt(Col, null, V);
       }
+
     public QueryHelper gt(Type_LongPrimitive Col, Long coalesceVal, long V)
     throws Exception
       {
@@ -2541,6 +2603,7 @@ public abstract class QueryHelper
       {
         return gt(Col, null, V);
       }
+
     public QueryHelper gt(Type_FloatPrimitive Col, Float coalesceVal, float V)
     throws Exception
       {
@@ -2560,6 +2623,7 @@ public abstract class QueryHelper
       {
         return gt(Col, null, V);
       }
+
     public QueryHelper gt(Type_DoublePrimitive Col, Double coalesceVal, double V)
     throws Exception
       {
@@ -2579,6 +2643,7 @@ public abstract class QueryHelper
       {
         return gt(Col, null, V);
       }
+
     public QueryHelper gt(Type_DatetimePrimitive Col, ZonedDateTime coalesceVal, ZonedDateTime V)
     throws Exception
       {
@@ -2598,6 +2663,7 @@ public abstract class QueryHelper
       {
         return gt(Col, null, V);
       }
+
     public QueryHelper gt(Type_DatePrimitive Col, LocalDate coalesceVal, LocalDate V)
     throws Exception
       {
@@ -2695,6 +2761,7 @@ public abstract class QueryHelper
       {
         return gte(Col, null, V);
       }
+
     public QueryHelper gte(Type_StringPrimitive Col, String coalesceVal, String V)
     throws Exception
       {
@@ -2716,6 +2783,7 @@ public abstract class QueryHelper
       {
         return gte(Col, (char) Character.UNASSIGNED, V);
       }
+
     public QueryHelper gte(Type_CharPrimitive Col, char coalesceVal, char V)
     throws Exception
       {
@@ -2735,6 +2803,7 @@ public abstract class QueryHelper
       {
         return gte(Col, null, V);
       }
+
     public QueryHelper gte(Type_BooleanPrimitive Col, Boolean coalesceVal, boolean V)
     throws Exception
       {
@@ -2754,6 +2823,7 @@ public abstract class QueryHelper
       {
         return gte(Col, null, V);
       }
+
     public QueryHelper gte(Type_ShortPrimitive Col, Short coalesceVal, short V)
     throws Exception
       {
@@ -2773,6 +2843,7 @@ public abstract class QueryHelper
       {
         return gte(Col, null, V);
       }
+
     public QueryHelper gte(Type_IntegerPrimitive Col, Integer coalesceVal, int V)
     throws Exception
       {
@@ -2792,6 +2863,7 @@ public abstract class QueryHelper
       {
         return gte(Col, null, V);
       }
+
     public QueryHelper gte(Type_LongPrimitive Col, Long coalesceVal, long V)
     throws Exception
       {
@@ -2811,6 +2883,7 @@ public abstract class QueryHelper
       {
         return gte(Col, null, V);
       }
+
     public QueryHelper gte(Type_FloatPrimitive Col, Float coalesceVal, float V)
     throws Exception
       {
@@ -2830,6 +2903,7 @@ public abstract class QueryHelper
       {
         return gte(Col, null, V);
       }
+
     public QueryHelper gte(Type_DoublePrimitive Col, Double coalesceVal, double V)
     throws Exception
       {
@@ -2849,6 +2923,7 @@ public abstract class QueryHelper
       {
         return gte(Col, null, V);
       }
+
     public QueryHelper gte(Type_DatetimePrimitive Col, ZonedDateTime coalesceVal, ZonedDateTime V)
     throws Exception
       {
@@ -2868,6 +2943,7 @@ public abstract class QueryHelper
       {
         return gte(Col, null, V);
       }
+
     public QueryHelper gte(Type_DatePrimitive Col, LocalDate coalesceVal, LocalDate V)
     throws Exception
       {
@@ -2957,6 +3033,7 @@ public abstract class QueryHelper
       {
         return notEquals(Col, null, V);
       }
+
     public QueryHelper notEquals(Type_StringPrimitive Col, String coalesceVal, String V)
     throws Exception
       {
@@ -2978,6 +3055,7 @@ public abstract class QueryHelper
       {
         return notEquals(Col, (char) Character.UNASSIGNED, V);
       }
+
     public QueryHelper notEquals(Type_CharPrimitive Col, char coalesceVal, char V)
     throws Exception
       {
@@ -2997,6 +3075,7 @@ public abstract class QueryHelper
       {
         return notEquals(Col, null, V);
       }
+
     public QueryHelper notEquals(Type_BooleanPrimitive Col, Boolean coalesceVal, boolean V)
     throws Exception
       {
@@ -3016,6 +3095,7 @@ public abstract class QueryHelper
       {
         return notEquals(Col, null, V);
       }
+
     public QueryHelper notEquals(Type_ShortPrimitive Col, Short coalesceVal, short V)
     throws Exception
       {
@@ -3035,6 +3115,7 @@ public abstract class QueryHelper
       {
         return notEquals(Col, null, V);
       }
+
     public QueryHelper notEquals(Type_IntegerPrimitive Col, Integer coalesceVal, int V)
     throws Exception
       {
@@ -3054,6 +3135,7 @@ public abstract class QueryHelper
       {
         return notEquals(Col, null, V);
       }
+
     public QueryHelper notEquals(Type_LongPrimitive Col, Long coalesceVal, long V)
     throws Exception
       {
@@ -3073,6 +3155,7 @@ public abstract class QueryHelper
       {
         return notEquals(Col, null, V);
       }
+
     public QueryHelper notEquals(Type_FloatPrimitive Col, Float coalesceVal, float V)
     throws Exception
       {
@@ -3092,6 +3175,7 @@ public abstract class QueryHelper
       {
         return notEquals(Col, null, V);
       }
+
     public QueryHelper notEquals(Type_DoublePrimitive Col, Double coalesceVal, double V)
     throws Exception
       {
@@ -3111,6 +3195,7 @@ public abstract class QueryHelper
       {
         return notEquals(Col, null, V);
       }
+
     public QueryHelper notEquals(Type_DatetimePrimitive Col, ZonedDateTime coalesceVal, ZonedDateTime V)
     throws Exception
       {
@@ -3130,6 +3215,7 @@ public abstract class QueryHelper
       {
         return notEquals(Col, null, V);
       }
+
     public QueryHelper notEquals(Type_DatePrimitive Col, LocalDate coalesceVal, LocalDate V)
     throws Exception
       {
@@ -4024,16 +4110,22 @@ public abstract class QueryHelper
     public QueryHelper newLine(String NextHeader)
     throws Exception
       {
+        boolean begin = _QueryStr.length() == _WherePos;
         _QueryStr.append("\n");
         if (NextHeader != null)
           _QueryStr.append(NextHeader);
+        if (begin == true)
+          _WherePos = _QueryStr.length();
         return this;
       }
 
     public QueryHelper padding(int spaces)
     throws Exception
       {
+        boolean begin = _QueryStr.length() == _WherePos;
         _QueryStr.append(PaddingUtil.getPad(spaces));
+        if (begin == true)
+          _WherePos = _QueryStr.length();
         return this;
       }
 
