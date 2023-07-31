@@ -23,7 +23,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.util.StringBuilderWriter;
 
-import tilda.db.QueryDetails;
 import tilda.enums.ColumnMapperMode;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
@@ -258,14 +257,20 @@ public class TildaData implements CodeGenTildaData
             Out.println("   public static final boolean check" + TextUtil.capitalizeFirstCharacter(C.getName()) + "(" + JavaJDBCType.getFieldType(C) + " v)");
             Out.println("    {");
             Out.println("      for (String[] a : _" + C.getName() + "_Values)");
-            Out.println("       if (a[0].equals(v) == true)");
+            if (C.getType() == ColumnType.CHAR == true)
+              Out.println("       if (a[0].charAt(0) == v)");
+            else
+              Out.println("       if (a[0].equals(v) == true)");
             Out.println("        return true;");
             Out.println("      return false;");
             Out.println("    }");
             Out.println("   public static final String map" + TextUtil.capitalizeFirstCharacter(C.getName()) + "(" + JavaJDBCType.getFieldType(C) + " v)");
             Out.println("    {");
             Out.println("      for (String[] a : _" + C.getName() + "_Values)");
-            Out.println("       if (a[0].equals(v) == true)");
+            if (C.getType() == ColumnType.CHAR == true)
+              Out.println("       if (a[0].charAt(0) == v)");
+            else
+              Out.println("       if (a[0].equals(v) == true)");
             Out.println("        return a[2];");
             Out.println("      return null;");
             Out.println("    }");
