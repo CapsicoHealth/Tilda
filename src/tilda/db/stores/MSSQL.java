@@ -260,7 +260,7 @@ public class MSSQL implements DBType
       }
 
     @Override
-    public boolean alterTableAddColumn(Connection Con, Column Col, String DefaultValue)
+    public boolean alterTableAddColumn(Connection Con, Column Col, String DefaultValue, String temporaryDefaultValue)
     throws Exception
       {
         if (Col._Nullable == false && DefaultValue == null)

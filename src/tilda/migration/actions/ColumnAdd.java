@@ -23,24 +23,26 @@ import tilda.parsing.parts.Column;
 
 public class ColumnAdd extends MigrationAction
   {
-    public ColumnAdd(Column Col)
+    public ColumnAdd(Column col, String temporaryDefaultValue)
       {
-        super(Col._ParentObject._ParentSchema._Name, Col._ParentObject._Name, false, MaintenanceLog_Data._actionCreate, MaintenanceLog_Data._objectTypeColumn);
-        _Col = Col;
+        super(col._ParentObject._ParentSchema._Name, col._ParentObject._Name, false, MaintenanceLog_Data._actionCreate, MaintenanceLog_Data._objectTypeColumn);
+        _col = col;
+        _temporaryDefaultValue = temporaryDefaultValue;
       }
 
-    protected Column _Col;
+    protected Column _col;
+    protected String _temporaryDefaultValue;
 
     public boolean process(Connection C)
     throws Exception
       {
-        return C.alterTableAddColumn(_Col, _Col._DefaultCreateValue == null ? null : _Col._DefaultCreateValue._Value);
+        return C.alterTableAddColumn(_col, _col._DefaultCreateValue == null ? null : _col._DefaultCreateValue._Value, _temporaryDefaultValue);
       }
     
 
     @Override
     public String getDescription()
       {
-        return "Alter table "+_Col._ParentObject.getFullName()+" add column "+_Col.getName();
+        return "Alter table "+_col._ParentObject.getFullName()+" add column "+_col.getName()+(_col._Nullable == false ? " SET NOT NULL" : "");
       }
   }

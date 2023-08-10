@@ -590,10 +590,10 @@ public final class Connection
         return _C.getMetaData();
       }
 
-    public boolean alterTableAddColumn(Column Col, String DefaultValue)
+    public boolean alterTableAddColumn(Column Col, String DefaultValue, String temporaryDefaultValue)
     throws Exception
       {
-        return _DB.alterTableAddColumn(this, Col, DefaultValue);
+        return _DB.alterTableAddColumn(this, Col, DefaultValue, temporaryDefaultValue);
       }
 
     public boolean alterTableDropColumn(Object Obj, String ColumnName)

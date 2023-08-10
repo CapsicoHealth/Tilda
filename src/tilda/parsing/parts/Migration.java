@@ -26,10 +26,11 @@ import tilda.parsing.ParserSession;
 public class Migration
   {
     /*@formatter:off*/
-    @SerializedName("renames") public List<MigrationRename> _Renames = new ArrayList<MigrationRename>();
-// DROP is currently being removed from feature list as per #58. Too complex with lots of issues.
-//    @SerializedName("drops"  ) public List<MigrationDrop>   _Drops   = new ArrayList<MigrationDrop  >();
-    @SerializedName("moves"  ) public List<MigrationMove>   _Moves   = new ArrayList<MigrationMove  >();
+    @SerializedName("renames" ) public List<MigrationRename>   _Renames  = new ArrayList<MigrationRename >();
+    @SerializedName("moves"   ) public List<MigrationMove>     _Moves    = new ArrayList<MigrationMove   >();
+    @SerializedName("notNulls") public List<MigrationNotNull>  _NotNulls = new ArrayList<MigrationNotNull>();
+//  DROP is currently being removed from feature list as per #58. Too complex with lots of issues.
+//  @SerializedName("drops"  ) public List<MigrationDrop>   _Drops   = new ArrayList<MigrationDrop  >();
     /*@formatter:on*/
 
     public transient Schema              _Parent;
@@ -59,7 +60,19 @@ public class Migration
         for (MigrationMove M : _Moves)
           M.validate(PS, Parent);
 
+        for (MigrationNotNull M : _NotNulls)
+          M.validate(PS, Parent);
+
         return Errs == PS.getErrorCount();
+      }
+
+    public MigrationNotNull getNotNull(Column col)
+      {
+        for (MigrationNotNull mnn : _NotNulls)
+          for (Column c : mnn._Columns)
+            if (col.getFullName().equals(c.getFullName()) == true)
+             return mnn;
+        return null;
       }
 
   }

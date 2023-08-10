@@ -275,9 +275,9 @@ public class Docs
                 {
                   Out.print("<LI>");
                   if (I._ColumnObjs.isEmpty() == false)
-                  Out.print(Column.printColumnList(I._ColumnObjs, true));
+                   Out.print(Column.printColumnList(I._ColumnObjs, true));
                   if (I._OrderByObjs != null && I._OrderByObjs.isEmpty() == false)
-                   Out.println((I._ColumnObjs.isEmpty() == false ? "" : ", ") + OrderBy.printOrderByList(I._OrderByObjs));
+                   Out.println((I._ColumnObjs.isEmpty() == false ? ", " : "") + OrderBy.printOrderByList(I._OrderByObjs));
                   if (I._Db != true)
                     Out.print(" <B><I>(Application-side Only)</I></B>");
                   else if (I._Cluster == true)

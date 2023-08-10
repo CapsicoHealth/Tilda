@@ -90,6 +90,7 @@ import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
 import tilda.parsing.parts.MigrationMove;
+import tilda.parsing.parts.MigrationNotNull;
 import tilda.parsing.parts.MigrationRename;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.PrimaryKey;
@@ -516,7 +517,10 @@ public class Migrator
 
                     ColumnMeta CMeta = TMeta.getColumnMeta(Col.getName(), false);
                     if (CMeta == null)
-                      Actions.add(new ColumnAdd(Col));
+                      {
+                        MigrationNotNull mnn = S._Migration.getNotNull(Col);
+                        Actions.add(new ColumnAdd(Col, mnn==null?null:mnn._Default));
+                      }
                     else
                       {
                         // Check if it's just a change in case for the column name

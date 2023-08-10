@@ -40,9 +40,33 @@ public class TextUtilTest
 //        Test4();
 //        Test_Perf_toString_type_vs_cast();
 //          Test_FindLikeElement();
-          Test_Perf_endsWith_vs_charAt();
+//          Test_Perf_endsWith_vs_charAt();
 //          Test_isNullOrEmpty();
+          testcharAt();
       }
+    
+    private static void testcharAt()
+     {
+       final int rounds = 10_000_000;
+       char c = 'a';
+       String[] blah = {"a", "aaaaa", "aaaaaaa"};
+       int x = 0;
+
+       long TS = System.nanoTime();
+       for (int i = 0; i < rounds; ++i)
+         if (blah[0].equals(""+c) == true)
+          ++x;
+       TS = System.nanoTime() - TS;
+       LOG.debug("equals-1: "+DurationUtil.printDuration(TS) +" with "+DurationUtil.printPerformancePerSecond(TS, x)+" calls/s");
+       
+       x = 0;
+       TS = System.nanoTime();
+       for (int i = 0; i < rounds; ++i)
+         if (blah[0].charAt(0) == c)
+          ++x;
+       TS = System.nanoTime() - TS;
+       LOG.debug("equals-2: "+DurationUtil.printDuration(TS) +" with "+DurationUtil.printPerformancePerSecond(TS, x)+" calls/s");
+     }
 
     private static void test_EscapeXML()
      {

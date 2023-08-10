@@ -54,6 +54,7 @@ import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
+import tilda.parsing.parts.MigrationNotNull;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.OrderBy;
 import tilda.parsing.parts.Query;
@@ -162,29 +163,44 @@ public abstract class CommonStoreImpl implements DBType
       }
 
     @Override
-    public boolean alterTableAddColumn(Connection Con, Column Col, String DefaultValue)
+    public boolean alterTableAddColumn(Connection com, Column col, String defaultValue, String temporaryDefaultValue)
     throws Exception
       {
-        if (Col._Nullable == false && DefaultValue == null)
+        if (col._Nullable == false && defaultValue == null && temporaryDefaultValue == null)
           {
             if (JDBCHelper.isRehearsal() == false)
               {
-                String Q = "SELECT 1 from " + Col._ParentObject.getShortName() + " limit 1";
-                ScalarRP RP = new ScalarRP();
-                int rows = Con.executeSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, RP);
+                String Q = "SELECT 1 from " + col._ParentObject.getShortName() + " limit 1";
+                long rows = com.executeSelectLong(col._ParentObject._ParentSchema._Name, col._ParentObject.getBaseName(), Q);
                 if (rows > 0)
-                  throw new Exception("Cannot add new 'not null' column '" + Col.getFullName() + "' to a table without a default value. Add a default value in the model, or manually migrate your database.");
+                  throw new Exception("Cannot add new 'not null' column '" + col.getFullName() + "' to a table without a default value. Add a default value in the model, or manually migrate your database.");
               }
           }
-        String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ADD COLUMN \"" + Col.getName() + "\" " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection(), Col._Precision, Col._Scale);
-        if (Col._Nullable == false && DefaultValue != null)
+        String Q = "ALTER TABLE " + col._ParentObject.getShortName() + " ADD COLUMN \"" + col.getName() + "\" " + getColumnType(col.getType(), col._Size, col._Mode, col.isCollection(), col._Precision, col._Scale);
+        if (col._Nullable == false && temporaryDefaultValue == null)
           {
-            Q += " not null DEFAULT " + ValueHelper.printValueSQL(getSQlCodeGen(), Col.getName(), Col.getType(), Col.isCollection(), DefaultValue);
+            Q += " not null";
           }
-        if (Con.executeDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) == false)
+        if (defaultValue != null)
+          {
+            Q += "  DEFAULT " + ValueHelper.printValueSQL(getSQlCodeGen(), col.getName(), col.getType(), col.isCollection(), defaultValue);
+          }
+        if (com.executeDDL(col._ParentObject._ParentSchema._Name, col._ParentObject.getBaseName(), Q) == false)
           return false;
+        
+        if (col._Nullable == false && temporaryDefaultValue != null)
+          {
+            String colName = MigrationNotNull.getColumnName(temporaryDefaultValue);
+            Q = "UPDATE "+col._ParentObject.getShortName()+" set \""+col.getName()+"\"="+(colName!=null?"\""+colName+"\"":ValueHelper.printValueSQL(getSQlCodeGen(), col.getName(), col.getType(), col.isCollection(), temporaryDefaultValue))+";";
+            if (com.executeDDL(col._ParentObject._ParentSchema._Name, col._ParentObject.getBaseName(), Q) == false)
+              return false;
+            Q = "ALTER TABLE " + col._ParentObject.getShortName() + " ALTER COLUMN \"" + col.getName() + "\" SET NOT NULL;";
+            if (com.executeDDL(col._ParentObject._ParentSchema._Name, col._ParentObject.getBaseName(), Q) == false)
+              return false;
+            
+          }
 
-        return alterTableAlterColumnComment(Con, Col);
+        return alterTableAlterColumnComment(com, col);
       }
 
     @Override

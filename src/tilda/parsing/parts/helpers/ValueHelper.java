@@ -43,7 +43,13 @@ public class ValueHelper
       {
         CheckColumnValue(PS, "Column", Col.getFullName(), Col.getType(), Col.isCollection(), Col._Size==null?0:Col._Size, Name, Value, Default);
       }
-    
+
+    public static void CheckColumnValue(ParserSession PS, String Label, Column Col, String Name, String Value, DefaultType Default)
+    throws Error
+      {
+        CheckColumnValue(PS, Label, Col.getFullName(), Col.getType(), Col.isCollection(), Col._Size==null?0:Col._Size, Name, Value, Default);
+      }
+
     protected static void CheckColumnValue(ParserSession PS, String Label, String ColFullName, ColumnType ColType, boolean ColCollection, int ColSize, String Name, String Value, DefaultType Default)
     throws Error
       {
@@ -53,39 +59,40 @@ public class ValueHelper
             return;
           }
 
+        String defaultErr = Label+" '" + ColFullName + "' defines Value '" + (TextUtil.isNullOrEmpty(Name)==true ? "" : Name+"' with value '") + Value + "' which is incompatible with type '" + ColType + "'.";
         switch (ColType)
           {
             case BOOLEAN:
               if (ParseUtil.parseBoolean(Value, null) == null)
-                PS.AddError(Label+" '" + ColFullName + "' defines Value '" + Name + "' with value '" + Value + "' which is incompatible with type '" + ColType + "'.");
+                PS.AddError(defaultErr);
               break;
             case SHORT:
               if (ParseUtil.parseShort(Value, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
-                PS.AddError(Label+" '" + ColFullName + "' defines Value '" + Name + "' with value '" + Value + "' which is incompatible with type '" + ColType + "'.");
+                PS.AddError(defaultErr);
               break;
             case INTEGER:
               if (ParseUtil.parseInteger(Value, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
-                PS.AddError(Label+" '" + ColFullName + "' defines Value '" + Name + "' with value '" + Value + "' which is incompatible with type '" + ColType + "'.");
+                PS.AddError(defaultErr);
               break;
             case LONG:
               if (ParseUtil.parseLong(Value, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
-                PS.AddError(Label+" '" + ColFullName + "' defines Value '" + Name + "' with value '" + Value + "' which is incompatible with type '" + ColType + "'.");
+                PS.AddError(defaultErr);
               break;
             case FLOAT:
               if (ParseUtil.parseFloat(Value, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
-                PS.AddError(Label+" '" + ColFullName + "' defines Value '" + Name + "' with value '" + Value + "' which is incompatible with type '" + ColType + "'.");
+                PS.AddError(defaultErr);
               break;
             case DOUBLE:
               if (ParseUtil.parseDouble(Value, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
-                PS.AddError(Label+" '" + ColFullName + "' defines Value '" + Name + "' with value '" + Value + "' which is incompatible with type '" + ColType + "'.");
+                PS.AddError(defaultErr);
               break;
             case NUMERIC:
               if (ParseUtil.parseBigDecimal(Value, null) == null)
-                PS.AddError(Label+" '" + ColFullName + "' defines Value '" + Name + "' with value '" + Value + "' which is incompatible with type '" + ColType + "'.");
+                PS.AddError(defaultErr);
               break;
             case CHAR:
               if (Value.length() != 1)
-                PS.AddError(Label+" '" + ColFullName + "' defines Value '" + Name + "' with value '" + Value + "' which is incompatible with type '" + ColType + "'.");
+                PS.AddError(defaultErr);
               break;
             case STRING:
               if (ColCollection == false && Value.length() > ColSize)
@@ -94,10 +101,10 @@ public class ValueHelper
             case DATETIME:
               if (   Value.equalsIgnoreCase("NOW") == false
                   && Value.equalsIgnoreCase("UNDEFINED") == false
-                  && DateTimeUtil.parseDate(Value, "yyyy-MM-dd") == null
                   && (Default == DefaultType.MASK && Value.equals("Y") == false 
                                                   && Value.equals("Q") == false 
                                                   && Value.equals("M") == false)
+                  && DateTimeUtil.parseDate(Value, "yyyy-MM-dd") == null
                  )
                 PS.AddError(Label+" '" + ColFullName + "' defines Value '" + Name + "->" + Value + "' which is not a default NOW, UNDEFINED, valid YYYY-MM-DD value, or, in the case of a mask, Y/Q/M to truncate dates to Year, Quarter or Month.");
               if (Default == DefaultType.NONE)
@@ -106,10 +113,10 @@ public class ValueHelper
             case DATE:
               if (   Value.equalsIgnoreCase("NOW") == false 
                   && Value.equalsIgnoreCase("UNDEFINED") == false 
-                  && DateTimeUtil.parseDate(Value, "yyyy-MM-dd") == null
                   && (Default == DefaultType.MASK && Value.equals("Y") == false 
                                                   && Value.equals("Q") == false 
                                                   && Value.equals("M") == false)
+                  && DateTimeUtil.parseDate(Value, "yyyy-MM-dd") == null
                  )
                 PS.AddError(Label+" '" + ColFullName + "' defines Value '" + Name + "->" + Value + "' which is not a default NOW or UNDEFINED, valid yyyy-MM-dd value, or, in the case of a mask, Y/Q/M to truncate dates to Year, Quarter or Month.");
               if (Default == DefaultType.NONE)

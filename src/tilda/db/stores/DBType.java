@@ -86,7 +86,7 @@ public interface DBType
     public boolean dropView                        (Connection Con, View V) throws Exception;
     public boolean dropView                        (Connection con, ViewMeta v, boolean cascade) throws Exception;
     public boolean createView                      (Connection Con, View V) throws Exception;
-    public boolean alterTableAddColumn             (Connection Con, Column Col, String DefaultValue) throws Exception;
+    public boolean alterTableAddColumn             (Connection Con, Column Col, String DefaultValue, String temporaryDefaultValue) throws Exception;
     public boolean alterTableAlterColumnDefault    (Connection Con, Column Col) throws Exception;
     public boolean alterTableAlterColumnNumericSize(Connection connection, ColumnMeta colMeta, Column col) throws Exception;
     public boolean alterTableDropColumn            (Connection Con, Object Obj, String ColumnName) throws Exception;   
