@@ -171,7 +171,8 @@ public abstract class CommonStoreImpl implements DBType
             if (JDBCHelper.isRehearsal() == false)
               {
                 String Q = "SELECT 1 from " + col._ParentObject.getShortName() + " limit 1";
-                long rows = com.executeSelectLong(col._ParentObject._ParentSchema._Name, col._ParentObject.getBaseName(), Q);
+                ScalarRP RP = new ScalarRP();
+                int rows = com.executeSelect(col._ParentObject._ParentSchema._Name, col._ParentObject.getBaseName(), Q, RP);
                 if (rows > 0)
                   throw new Exception("Cannot add new 'not null' column '" + col.getFullName() + "' to a table without a default value. Add a default value in the model, or manually migrate your database.");
               }
@@ -198,6 +199,9 @@ public abstract class CommonStoreImpl implements DBType
             if (com.executeDDL(col._ParentObject._ParentSchema._Name, col._ParentObject.getBaseName(), Q) == false)
               return false;
             
+            // LDH-NOTE: Alternative implementation would have been to set the column default to set the values
+            //          in the existing rows, and then drop the default. Unsure if this would have been better
+            //          performance-wise vs the update/alter solution implemented currently.
           }
 
         return alterTableAlterColumnComment(com, col);
