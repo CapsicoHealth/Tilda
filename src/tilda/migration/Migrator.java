@@ -518,7 +518,7 @@ public class Migrator
                     ColumnMeta CMeta = TMeta.getColumnMeta(Col.getName(), false);
                     if (CMeta == null)
                       {
-                        MigrationNotNull mnn = S._Migration.getNotNull(Col);
+                        MigrationNotNull mnn = S._Migration==null ? null : S._Migration.getNotNull(Col);
                         Actions.add(new ColumnAdd(Col, mnn==null?null:mnn._Default));
                       }
                     else
