@@ -1150,8 +1150,8 @@ public class JSONUtil
                 }
               break;
             case DATETIME:
-              // most Tilda tables have a "TZ" column accompanying a datetime column, but not all. Also,
-              // if this is used for a plain table, we have to assume that the TX info is not there and
+              // most Tilda tables have a 'TZ' column accompanying a datetime column, but not all. Also,
+              // if this is used for a plain table, we have to assume that the Tz info is not there and
               // use UTC as a default.
               if (cm.isArray() == true)
                 {

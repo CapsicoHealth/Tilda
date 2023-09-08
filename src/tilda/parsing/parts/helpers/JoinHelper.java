@@ -55,6 +55,11 @@ public class JoinHelper
             return _signature.equals(rhs._signature);
           }
 
+        public String toString()
+          {
+            return _signature;
+          }
+
         protected static String signature(Base ref, String as)
           {
             return ref.getShortName() + (TextUtil.isNullOrEmpty(as) == true ? "" : " as " + as);
@@ -134,7 +139,7 @@ public class JoinHelper
 
     public static void autoFillImpliedViewJoins(ParserSession PS, View V)
       {
-        if (V._Name.equals("PatientVisitVitals_PivotView") == true)
+        if (V._Name.equals("VisitView") == true)
           LOG.debug("SSS");
 
         List<RefDef> refs = getReferences(V);
@@ -236,6 +241,7 @@ public class JoinHelper
         List<RefDef> L = new ArrayList<RefDef>();
         Set<String> S = new HashSet<String>();
         RefDef lastRef = null;
+
         for (ViewColumn VC : V._ViewColumns)
           {
             // is this real view column or not?

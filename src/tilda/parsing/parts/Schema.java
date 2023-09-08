@@ -679,7 +679,16 @@ public class Schema
       {
         return _Conventions._DeletedName;
       }
+    public String getConventionTzColPostfix()
+      {
+        return _Conventions.getDefaultTzColPostfix();
+      }
+    public String getConventionTzRowName()
+      {
+        return _Conventions._TzRowName;
+      }
 
+    
     public boolean isOCCColumnName(String name)
       {
         return name.equals(_Conventions._CreatedName) || name.equals(_Conventions._LastUpdatedName) || name.equals(_Conventions._DeletedName)

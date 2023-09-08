@@ -34,6 +34,7 @@ import tilda.enums.FrameworkColumnType;
 import tilda.enums.MultiType;
 import tilda.enums.ObjectLifecycle;
 import tilda.enums.ProtectionType;
+import tilda.enums.TZMode;
 import tilda.enums.TildaType;
 import tilda.enums.ValidationStatus;
 import tilda.enums.VisibilityType;
@@ -62,6 +63,7 @@ public class Column extends TypeDef
     @SerializedName("values"     ) public ColumnValue[]  _Values     ;
     @SerializedName("default"    ) public String         _Default    ;
     @SerializedName("jsonSchema" ) public JsonSchema     _JsonSchema ;
+    @SerializedName("tzMode"     ) public String         _TzModeStr  ;    
     /*@formatter:on*/
 
     public transient FrameworkColumnType _FCT               = FrameworkColumnType.NONE;
@@ -72,6 +74,7 @@ public class Column extends TypeDef
 
     public transient ColumnMode          _Mode;
     public transient ProtectionType      _Protect;
+    public transient TZMode              _TzMode;
     public transient Column              _SameAsObj;
     public transient Object              _ParentObject;
     public transient PaddingTracker      _PadderValueNames  = new PaddingTracker();
@@ -105,6 +108,7 @@ public class Column extends TypeDef
         _ModeStr = c._ModeStr;
         _Invariant = c._Invariant;
         _ProtectStr = c._ProtectStr;
+        _TzModeStr = c._TzModeStr;
         // _Mask = c._Mask;
         _Description = c._Description;
         if (c._Mapper != null)
@@ -131,18 +135,19 @@ public class Column extends TypeDef
 
       }
 
-    public Column(String Name, String TypeStr, Integer Size, boolean Nullable, ColumnMode Mode, boolean Invariant, ProtectionType Protect, String Description, Integer Precision, Integer Scale, String MaskDef)
+    public Column(String name, String typeStr, Integer size, boolean nullable, ColumnMode mode, boolean invariant, ProtectionType protect, String Description, Integer Precision, Integer Scale, String maskDef, TZMode tzMode)
       {
-        super(TypeStr, Size, Precision, Scale);
-        _Name = Name;
-        _Nullable = Nullable;
-        _ModeStr = Mode == null ? null : Mode.name();
-        _Invariant = Invariant;
-        _ProtectStr = Protect == null ? null : Protect.name();
-        _MaskDef = MaskDef;
+        super(typeStr, size, Precision, Scale);
+        _Name = name;
+        _Nullable = nullable;
+        _ModeStr = mode == null ? null : mode.name();
+        _Invariant = invariant;
+        _ProtectStr = protect == null ? null : protect.name();
+        _MaskDef = maskDef;
         _Description = Description;
         _Precision = Precision;
         _Scale = Scale;
+        _TzMode = tzMode;
       }
 
     public Column(String Name, ColumnType Type, String Description)
@@ -259,6 +264,21 @@ public class Column extends TypeDef
 
         if (super.validate(PS, "Column '" + getFullName() + "'", true, _SameAsObj != null || _Mode == ColumnMode.CALCULATED) == false)
           return;
+
+        if (_Type != ColumnType.DATETIME)
+          {
+            if (TextUtil.isNullOrEmpty(_TzModeStr) == false)
+              PS.AddError("Column '" + getFullName() + "' defined tzMode value '" + _TzModeStr + "' when the column is not a DATETIME.");
+          }
+        else
+          {
+            if (TextUtil.isNullOrEmpty(_TzModeStr) == true)
+              _TzModeStr = ParentObject._TzModeStr;
+            if ((_TzMode = TZMode.parse(_TzModeStr)) == null)
+              PS.AddError("Column '" + getFullName() + "' defined an invalid 'tzMode' '" + _TzModeStr + "'.");
+            if (isCollection() == true && _TzMode == TZMode.ROW)
+              PS.AddError("Column '" + getFullName() + "' is a datetime collection with tzMode='" + _TzModeStr + "': datetime collections cannot have row-level tzMode.");
+          }
 
         if (TextUtil.isNullOrEmpty(_Description) == true)
           {
@@ -458,7 +478,7 @@ public class Column extends TypeDef
           {
             _Values = new ColumnValue[] { new ColumnValue(_Name + "_CreateDefault", _Default, null, null, null, DefaultType.CREATE)
             };
-            _Default = null; 
+            _Default = null;
           }
 
         if (_Values == null || _Values.length == 0)
@@ -685,6 +705,13 @@ public class Column extends TypeDef
     public boolean needsTZ()
       {
         return getType() == ColumnType.DATETIME && (_FCT == FrameworkColumnType.NONE || _FCT == FrameworkColumnType.PIVOT);
+      }
+
+    public String getTZName()
+      {
+        if (needsTZ() == false)
+          return null;
+        return _TzMode == TZMode.COLUMN ? getName() + _ParentObject._ParentSchema.getConventionTzColPostfix() : _ParentObject._ParentSchema.getConventionTzRowName();
       }
 
     protected static Column deepColumnSearch(ParserSession PS, Base parent, String colName)

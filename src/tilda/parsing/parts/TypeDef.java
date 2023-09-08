@@ -131,7 +131,7 @@ public class TypeDef
               }
             if (_Type.isCollectionCompatible(_TypeCollection) == false)
               {
-                PS.AddError(What + "is defined as a 'type' '" + _Type + "' which is not supported as an Array.");
+                PS.AddError(What + "is defined as a '" + _Type + "' which is not supported as a "+_TypeCollection.name()+".");
                 return;
               }
           }

@@ -33,6 +33,7 @@ import tilda.enums.ColumnType;
 import tilda.enums.FrameworkColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.enums.JoinType;
+import tilda.enums.TZMode;
 import tilda.enums.TildaType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ReferenceHelper;
@@ -469,6 +470,19 @@ public class ViewColumn
     public boolean isNullable()
       {
         return _SameAsObj == null || _SameAsObj._Nullable == true;
+      }
+
+    public String getTzName(boolean sameAs)
+      {
+        String name = TextUtil.isNullOrEmpty(_Name) == false && sameAs == false? _Name : _SameAsObj != null ? _SameAsObj._Name : null;
+        if (name == null)
+          return null;
+        
+        return _SameAsObj._TzMode == TZMode.COLUMN
+             ? name + _SameAsObj._ParentObject._ParentSchema.getConventionTzColPostfix()
+             : sameAs == false ? _SameAsObj._ParentObject._Name+"_"+_SameAsObj._ParentObject._ParentSchema.getConventionTzRowName()
+                               : _SameAsObj.getTZName()
+             ;
       }
 
   }

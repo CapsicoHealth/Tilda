@@ -99,10 +99,10 @@ public class PivotHelper
 
         if (PVC.needsTZ() == true)
           {
-            PVC.needsTZ();
+//            PVC.needsTZ();
             ViewColumn TZViewCol = View.createTZ(PS, PVC);
             TZViewCol._Filter = PS._CGSql.getShortColumnVar(P._VC.getName()) + " = " + TextUtil.escapeSingleQuoteForSQL(VPV._Value);
-            TZViewCol._NameInner = VC._Name + "TZ";
+            TZViewCol._NameInner = VC.getTzName(false);
             VC._ParentView._PivotColumns.add(TZViewCol);
             // LDH-NOTE: No need to add the column to O because TZ handling is automated in the Object's Validation logic.
           }
@@ -199,7 +199,7 @@ public class PivotHelper
                   if (VPA._VC == VC && P._Globals == true)
                     return true;
                   // Is it a TZ companion to a column that needs TZ?
-                  if (VPA._VC != null && VPA._VC.needsTZ() == true && VC._FCT == FrameworkColumnType.TZ && VC._Name.equals(VPA._VC._Name + "TZ") == true)
+                  if (VPA._VC != null && VPA._VC.needsTZ() == true && VC._FCT == FrameworkColumnType.TZ && VC._Name.equals(VPA._VC.getTzName(false)) == true)
                     return true;
                 }
             }

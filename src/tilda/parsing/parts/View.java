@@ -39,6 +39,7 @@ import tilda.enums.ColumnType;
 import tilda.enums.FrameworkColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.enums.ObjectLifecycle;
+import tilda.enums.TZMode;
 import tilda.enums.TildaType;
 import tilda.interfaces.PatternObject;
 import tilda.parsing.ParserSession;
@@ -225,9 +226,9 @@ public class View extends Base
                 continue;
               }
             else if (TextUtil.isNullOrEmpty(VC._Prefix) == false)
-              PS.AddError("Column '" + VC._Name + "' from view '"+getShortName()+"' defined a prefix but is not a .* column.");
+              PS.AddError("Column '" + VC._Name + "' from view '" + getShortName() + "' defined a prefix but is not a .* column.");
             else if (TextUtil.isNullOrEmpty(VC._Postfix) == false)
-              PS.AddError("Column '" + VC._Name + "' from view '"+getShortName()+"' defined a postfix but is not a .* column.");
+              PS.AddError("Column '" + VC._Name + "' from view '" + getShortName() + "' defined a postfix but is not a .* column.");
 
             if (VC.validate(PS, this) == false)
               {
@@ -269,6 +270,8 @@ public class View extends Base
             // The column must need such a timezone and not be an aggregate, and not have an expression unless it's of type datetime.
             if (VC.needsTZ() == true)
               {
+                if (VC._SameAsObj._TzMode == TZMode.ROW && getColumn(VC.getTzName(false)) != null)
+                 continue;
                 ViewColumn TZCol = createTZ(PS, VC);
                 _ViewColumns.add(i, TZCol);
                 ++i;
@@ -312,7 +315,7 @@ public class View extends Base
             else
               LOG.warn("The view " + getFullName() + " defined the three OCC columns 'created', 'lastUpdated', and 'deleted' but they came from different objects ('" + CreatedColObjName + "', '" + LastUpdatedColObjName + "', and '" + DeletedColObjName + "' respectively) so the view will not be considered an OCC view.");
           }
-        
+
         Set<String> JoinObjectNames = new HashSet<String>();
         if (_Joins != null)
           for (ViewJoin VJ : _Joins)
@@ -323,8 +326,19 @@ public class View extends Base
               if (VJ._ObjectObj != null && JoinObjectNames.add(VJ._ObjectObj.getShortName() + " on " + VJ.getQuery(DBType.Postgres)) == false)
                 PS.AddError("View '" + getFullName() + "' is defining a duplicate join with object " + VJ._ObjectObj.getShortName() + ".");
             }
-        
-//        JoinHelper.autoFillImpliedViewJoins(PS, this);
+
+        // Let's do the pivot(s) to make sure extra (aggregate) columns are processed.
+        if (_Pivots.isEmpty() == false)
+          PivotHelper.HandlePivots(PS, this, ColumnNames);
+
+        // Deprecations
+        if (_PivotColumnsDeprecated != null)
+          PS.AddError("The View '" + _Name + "' is defining a 'pivotColumns' element which is deprecated. Please use the new 'pivots' constructs instead.");
+        if (TextUtil.isNullOrEmpty(_CountStarDeprecated) == false)
+          PS.AddError("View '" + getFullName() + "' is defining a 'countStar' element which is deprecated. Please use a standard column definition with an aggregate of 'COUNT'.");
+
+        // LDH-NOTE: Cleanup auto-joins
+        // JoinHelper.autoFillImpliedViewJoins(PS, this);
 
         if (_SubWhereX != null)
           {
@@ -356,26 +370,16 @@ public class View extends Base
           }
 
 
-        // Let's do the pivot(s).
-        if (_Pivots.isEmpty() == false)
-          PivotHelper.HandlePivots(PS, this, ColumnNames);
+        // super.validateOutputMaps(PS); // We do not need to do this. The ObjectProxy is the driver of the code-gen and so the additional validation needed will occur there.
 
-        // Deprecations
-        if (_PivotColumnsDeprecated != null)
-          PS.AddError("The View '" + _Name + "' is defining a 'pivotColumns' element which is deprecated. Please use the new 'pivots' constructs instead.");
-        if (TextUtil.isNullOrEmpty(_CountStarDeprecated) == false)
-          PS.AddError("View '" + getFullName() + "' is defining a 'countStar' element which is deprecated. Please use a standard column definition with an aggregate of 'COUNT'.");
-        
-//        super.validateOutputMaps(PS); // We do not need to do this. The ObjectProxy is the driver of the code-gen and so the additional validation needed will occur there.
-        
         // gotta construct a shadow Object for code-gen.
         // LOG.debug("View " + _Name + ": " + TextUtil.print(getColumnNames()));
         Object O = MakeObjectProxy(PS);
         // LOG.debug("Object " + O._Name + ": " + TextUtil.print(O.getColumnNames()));
 
-//        LOG.debug("VIEW - "+this.getFullName()+": "+TextUtil.print(this.getColumnNames()));
-//        LOG.debug("OBJECT - "+O.getFullName()+": "+TextUtil.print(O.getColumnNames()));
-        
+        // LOG.debug("VIEW - "+this.getFullName()+": "+TextUtil.print(this.getColumnNames()));
+        // LOG.debug("OBJECT - "+O.getFullName()+": "+TextUtil.print(O.getColumnNames()));
+
         if (_Realize != null)
           _Realize.validate(PS, this, new ViewRealizedWrapper(O, this));
 
@@ -514,7 +518,7 @@ public class View extends Base
         if (_TimeSeries != null)
           {
             ColumnType Type = ColumnType.DATE;
-            Column C = new Column(_TimeSeries._Name, Type.name(), null, true, ColumnMode.NORMAL, true, null, "Timeseries period", null, null, null);
+            Column C = new Column(_TimeSeries._Name, Type.name(), null, true, ColumnMode.NORMAL, true, null, "Timeseries period", null, null, null, null);
             C._FCT = FrameworkColumnType.TS;
             C.validate(PS, O);
             O._Columns.add(C);
@@ -581,7 +585,7 @@ public class View extends Base
                 else
                   {
                     F.validate(PS, this);
-                    Column C = new Column(F._Name, F._TypeStr, F._Size, true, ColumnMode.NORMAL, true, null, "<B>" + F._Title + "</B>: " + String.join(" ", F._Description), F._Precision, F._Scale, null);
+                    Column C = new Column(F._Name, F._TypeStr, F._Size, true, ColumnMode.NORMAL, true, null, "<B>" + F._Title + "</B>: " + String.join(" ", F._Description), F._Precision, F._Scale, null, null);
                     if (F.getType() == ColumnType.DATETIME)
                       C._FCT = FrameworkColumnType.FORMULA_DT;
                     else
@@ -624,7 +628,8 @@ public class View extends Base
             ViewColumn VC = getViewColumn(C.getName());
             if (VC != null && TextUtil.isNullOrEmpty(VC._Expression) == false)
               {
-                C._expressionStrs = new String[] { VC._Expression };
+                C._expressionStrs = new String[] { VC._Expression
+                };
                 C._expressionDependencyColumnNames = Formula.getDependencyColumnNames(VC._Expression, obj, _ViewColumnsRegEx, _FormulasRegEx);
                 continue;
               }
@@ -671,8 +676,8 @@ public class View extends Base
     public static ViewColumn createTZ(ParserSession PS, ViewColumn VC)
       {
         ViewColumn TZCol = new ViewColumn();
-        TZCol._SameAs = VC._SameAs + "TZ";
-        TZCol._Name = VC._Name == null ? null : VC._Name + "TZ";
+        TZCol._SameAs = VC._SameAsObj._ParentObject.getFullName()+"."+VC.getTzName(true); // VC._SameAsObj + Convention.getDefaultTzColPostfix();
+        TZCol._Name = VC._Name == null ? null : VC.getTzName(false); // VC._Name + Convention.getDefaultTzColPostfix();
         TZCol._As = VC._As;
         TZCol._AggregateStr = VC._AggregateStr;
         TZCol._OrderBy = VC._OrderBy;
@@ -752,10 +757,10 @@ public class View extends Base
     private void CopyDependentViewFields(int i, ViewColumn VC, String Prefix, String Postfix, View V, String startingWith)
       {
         int j = 0;
-//        LOG.debug("VIEWCOLUMN * - "+VC._SameAs+" -> "+ V.getFullName()+": "+TextUtil.print(V.getColumnNames()));
+        // LOG.debug("VIEWCOLUMN * - "+VC._SameAs+" -> "+ V.getFullName()+": "+TextUtil.print(V.getColumnNames()));
         for (ViewColumn col : V._ViewColumns)
           {
-//            LOG.debug("   - Looking at "+col.getFullName()+"; startingWith: "+startingWith+"; _FCT: "+col._FCT+";");
+            // LOG.debug(" - Looking at "+col.getFullName()+"; startingWith: "+startingWith+"; _FCT: "+col._FCT+";");
             if (col._FCT == FrameworkColumnType.TZ
             || col._FCT != FrameworkColumnType.NONE && col._FCT != FrameworkColumnType.FORMULA && col._FCT != FrameworkColumnType.FORMULA_DT && col._FCT != FrameworkColumnType.TS && col._FCT.isOCC() == false)
               continue;
@@ -846,7 +851,7 @@ public class View extends Base
             NewVC._Name = Prefix + F._Name + Postfix;
             NewVC._As = VC._As;
             // When copying a formula from a prior view, the column type should become NONE as it no longer has the properties of a formula.
-            NewVC._FCT = FrameworkColumnType.NONE;//VC._FCT;
+            NewVC._FCT = FrameworkColumnType.NONE;// VC._FCT;
             copyAdvancedViewColumnFields(VC, NewVC);
             if (TextUtil.findStarElement(VC._Block, F._Name, true, 0) != -1)
               NewVC._FormulaOnly = true;
@@ -859,6 +864,7 @@ public class View extends Base
     /**
      * Copies field values from VC to NewVC. Handles _AggregateStr, _FormulaOnly, _JoinOnly, _Coalesce, _Distinct
      * _OrderBy, _Filter, _Expression, _TypeStr, _Size, _Scale, _Precision.
+     * 
      * @param VC
      * @param NewVC
      */
@@ -1177,23 +1183,23 @@ public class View extends Base
       {
         return getViewSubRealizeSchemaName() + "." + getViewSubRealizeViewName();
       }
-    
+
     @Override
     public String[] getFirstIdentityColumnNames(boolean naturalIdentitiesFirst)
       {
         return null;
-        
-/*        
-        Graph<DepWrapper> G = getDependencyGraph(false);
-        Set<DepWrapper> deps = G.getLeaves(false);
-        for (DepWrapper dw : deps)
-          {
-            List<Column> cols = dw._Obj.getFirstIdentityColumns();
-            boolean valid = false;
-            for (Column c : cols)
-              
-          }
- */
+
+        /*
+         * Graph<DepWrapper> G = getDependencyGraph(false);
+         * Set<DepWrapper> deps = G.getLeaves(false);
+         * for (DepWrapper dw : deps)
+         * {
+         * List<Column> cols = dw._Obj.getFirstIdentityColumns();
+         * boolean valid = false;
+         * for (Column c : cols)
+         * 
+         * }
+         */
 
         /*
          * PrimaryKey PK = _ViewColumns.get(0)._SameAsObj._ParentObject._PrimaryKey;

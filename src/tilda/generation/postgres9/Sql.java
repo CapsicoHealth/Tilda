@@ -313,16 +313,13 @@ public class Sql extends PostgreSQL implements CodeGenSql
             Str.append(")\n       ");
           }
 
-        if (V._Name.equals("PatientVisitVitals_PivotView") == true)
-          LOG.debug("SSS");
-
         StringBuilder FromList = new StringBuilder();
         boolean[] vals = getFromList(V, FromList, Str, OmmitTZs);
 //        boolean[] vals = getFromList2(V, FromList, Str, OmmitTZs);
         boolean hasAggregates = vals[0];
         boolean First = vals[1];
 
-        Str.append("\n  from ").append(FromList);
+        Str.append("\n  from ").append(FromList); //.append("\n");
 
         if (V._TimeSeries != null)
           {
@@ -619,11 +616,11 @@ public class Sql extends PostgreSQL implements CodeGenSql
                       throw new Exception("Cannot find a join for " + VC.getFullName() + " off of " + T.getBaseName() + "/" + VC._As);
                     if (findJoin(joins, VJ) == false)
                       {
+                        FromList.append("\n");
                         genViewJoin(FromList, VJ);
                         joins.add(VJ);
                       }
                   }
-                FromList.append("\n");
               }
 
             // LDH-NOTE: Cannot remember why OmitTZs was created, but it prevents the time-series field "p" from getting output properly.
@@ -634,9 +631,12 @@ public class Sql extends PostgreSQL implements CodeGenSql
                   First = false;
                 else
                   Str.append("\n     , ");
-                TableRankTracker TI = new TableRankTracker(VC._SameAsObj._ParentObject, 1, VC._As);
-                if (PrintViewColumn(Str, VC, TI, false) == true) // V._Pivot != null && V._ViewColumns.size() > 3 && columnCount <= V._ViewColumns.size() - 3) == true)
-                  hasAggregates = true;
+                if (VC._SameAsObj != null)
+                  {
+                    TableRankTracker TI = new TableRankTracker(VC._SameAsObj._ParentObject, 1, VC._As);
+                    if (PrintViewColumn(Str, VC, TI, false) == true) // V._Pivot != null && V._ViewColumns.size() > 3 && columnCount <= V._ViewColumns.size() - 3) == true)
+                     hasAggregates = true;
+                  }
               }
           }
         return new boolean[] { hasAggregates, First

@@ -361,7 +361,7 @@ public abstract class CommonStoreImpl implements DBType
                 if (Col.getType() != ColumnType.DATETIME || res == false)
                   return res;
 
-                Col = Col._ParentObject.getColumn(Col.getName() + "TZ");
+                Col = Col._ParentObject.getColumn(Col.getTZName());
                 Q = "UPDATE " + Col._ParentObject.getShortName() + " SET \"" + Col.getName() + "\" = 'UTC' WHERE \"" + Col.getName() + "\" IS NULL";
 
                 return Con.executeUpdate(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) >= 0;
@@ -446,7 +446,7 @@ public abstract class CommonStoreImpl implements DBType
                     // For datetime columns, we have to deal with the TZ column as well.
                     if (CMP._Col.getType() == ColumnType.DATETIME && CMP._Col.needsTZ() == true)
                       {
-                        Column ColTZ = CMP._Col._ParentObject.getColumn(CMP._Col.getName() + "TZ");
+                        Column ColTZ = CMP._Col._ParentObject.getColumn(CMP._Col.getTZName());
                         QU.add("UPDATE " + CMP._Col._ParentObject.getShortName() + " SET \"" + ColTZ.getName() + "\" = 'UTC' WHERE \"" + ColTZ.getName() + "\" IS NULL;");
                       }
                   }

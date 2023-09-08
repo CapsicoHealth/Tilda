@@ -810,11 +810,12 @@ public class Helper
 
     protected static String getSystemMappedColumnName(Column col)
       {
+        Schema S = col._ParentObject._ParentSchema;
         /*@formatter:off*/
         return col._ParentObject._FST == FrameworkSourcedType.VIEW == true || col._ParentObject._FST == FrameworkSourcedType.REALIZED == true ? col.getName()
-             : col._FCT == FrameworkColumnType.OCC_CREATED     ? Convention._DEFAULT_CREATED+(col.getName().endsWith("ETL")==true?"ETL":"")
-             : col._FCT == FrameworkColumnType.OCC_LASTUPDATED ? Convention._DEFAULT_LASTUPDATED+(col.getName().endsWith("ETL")==true?"ETL":"")
-             : col._FCT == FrameworkColumnType.OCC_DELETED     ? Convention._DEFAULT_DELETED+(col.getName().endsWith("ETL")==true?"ETL":"")
+             : col._FCT == FrameworkColumnType.OCC_CREATED     ? S.getConventionCreatedName()    +(col.getName().endsWith("ETL")==true?"ETL":"")
+             : col._FCT == FrameworkColumnType.OCC_LASTUPDATED ? S.getConventionLastUpdatedName()+(col.getName().endsWith("ETL")==true?"ETL":"")
+             : col._FCT == FrameworkColumnType.OCC_DELETED     ? S.getConventionDeletedName()    +(col.getName().endsWith("ETL")==true?"ETL":"")
              : col.getName();
         /*@formatter:on*/
       }

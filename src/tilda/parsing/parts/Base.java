@@ -78,7 +78,6 @@ public abstract class Base
     public abstract String[] getColumnNames();
 
     public abstract ObjectLifecycle getLifecycle();
-
     public abstract boolean isOCC();
 
     public Base(TildaType Type)

@@ -505,7 +505,7 @@ END $$;
 
 ---------------------
 -- array_cat_agg
--- With Postgres 14, there was a major Type change, and array functions were change from working with ANYARRAY
+-- With Postgres 14, there was a major Type change, and array functions were changed from working with ANYARRAY
 -- to ANYCOMPATIBLEARRAY. We use 'array_cat' in this aggregate and so we have to create this convoluted piece
 -- of code to try to create the "anyarray" version (the default), but catch the exception that should occur on V14
 -- and do the "anycompatiblearray" version instead.

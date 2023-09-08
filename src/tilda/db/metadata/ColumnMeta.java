@@ -20,6 +20,7 @@ import java.sql.ResultSet;
 
 import tilda.db.Connection;
 import tilda.enums.ColumnType;
+import tilda.parsing.parts.Convention;
 import tilda.utils.pairs.StringStringPair;
 
 public class ColumnMeta
@@ -111,6 +112,6 @@ public class ColumnMeta
 
     public ColumnMeta getTZCol()
       {
-        return _ParentTable!=null?_ParentTable.getColumnMeta(_NameOriginal+"TZ", false) : null; // : _ParentView.getColumnMeta(_NameOriginal+"TZ");
+        return _ParentTable!=null?_ParentTable.getColumnMeta(_NameOriginal+Convention.getDefaultTzColPostfix(), false) : null;
       }
   }
