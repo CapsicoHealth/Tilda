@@ -32,6 +32,7 @@ import tilda.enums.FrameworkSourcedType;
 import tilda.enums.NVPSourceType;
 import tilda.enums.ObjectLifecycle;
 import tilda.enums.OutputFormatType;
+import tilda.enums.TZMode;
 import tilda.enums.TildaType;
 import tilda.generation.Generator;
 import tilda.generation.GeneratorSession;
@@ -147,6 +148,11 @@ public class TildaFactory implements CodeGenTildaFactory
                 {
                   Out.print(", " + C.getName().toUpperCase() + "TZ");
                 }
+
+//              if (C.getType() == ColumnType.DATETIME && C.needsTZ() == true && O.getColumn(C.getTZName()) != null)
+//                {
+//                  Out.print(", " + C.getTZName().toUpperCase());
+//                }
               // Although DATE and DATETIME do support values, we don't want them here because they are always markers and default values, not enumerations per se.
               if (C.isCollection() == false && C.getType() != ColumnType.DATE && C.getType() != ColumnType.DATETIME && ValueHelper.isSuported(C.getType()) == true)
                 Out.print(", " + ColumnValue.toJavaStringDoubleArray(C._Values));
@@ -546,7 +552,7 @@ public class TildaFactory implements CodeGenTildaFactory
                 Out.print(", " + JavaJDBCType.getFieldTypeParam(A._Col, A._Multi) + " " + A._VarName);
               }
           }
-        Out.println(", int start, int size) throws Exception");
+        Out.println(", int __start__, int __size__) throws Exception");
 
       }
 
@@ -597,8 +603,8 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("     {");
         genMethodLookupWhereIndexPreamble(Out, I, q, MethodName);
         Out.println();
-        Out.println("       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);");
-        Out.println("       readMany(C, " + LookupId + ", RPI, Obj, " + (q != null && q._Attributes.isEmpty() == false ? "P" : "null") + ", start, size);");
+        Out.println("       RecordProcessorInternal RPI = new RecordProcessorInternal(C, __start__);");
+        Out.println("       readMany(C, " + LookupId + ", RPI, Obj, " + (q != null && q._Attributes.isEmpty() == false ? "P" : "null") + ", __start__, __size__);");
         Out.println("       return RPI._L;");
         Out.println("     }");
         Out.println();
@@ -609,7 +615,7 @@ public class TildaFactory implements CodeGenTildaFactory
         genMethodLookupWhereIndexPreamble(Out, I, q, MethodName);
         Out.println();
         Out.println("       RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);");
-        Out.println("       readMany(C, " + LookupId + ", RPI, Obj, " + (q != null && q._Attributes.isEmpty() == false ? "P" : "null") + ", start, size);");
+        Out.println("       readMany(C, " + LookupId + ", RPI, Obj, " + (q != null && q._Attributes.isEmpty() == false ? "P" : "null") + ", __start__, __size__);");
         Out.println("     }");
         Out.println();
         if (q != null && q._Attributes.isEmpty() == false)
