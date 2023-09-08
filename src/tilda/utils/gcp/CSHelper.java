@@ -22,10 +22,11 @@ import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 
-public class CSHelper {
+public class CSHelper
+  {
 
     protected static final Logger LOG = LogManager.getLogger(CSHelper.class.getName());
-    
+
     /**
      * Given the environment variable name passed in (default is {@link tilda.utils.FileUtil#_DEFAULT_ENV_VAR_NAME}),
      * looks up the value which points to a path, and then based on the project name, lookup the file
@@ -39,81 +40,86 @@ public class CSHelper {
      * @throws FileNotFoundException
      * @throws IOException
      */
-    public static Storage getStorage(String dataProjectName) throws FileNotFoundException, IOException
-    {
+    public static Storage getStorage(String dataProjectName)
+    throws FileNotFoundException, IOException
+      {
         return StorageOptions.newBuilder().setCredentials(AuthHelper.getCredentials(dataProjectName, "cs")).setProjectId(dataProjectName).build().getService();
-    }
-    
-    public static Storage getStorage(String envVariable, String dataProjectName) throws FileNotFoundException, IOException
-    {
-    	return StorageOptions.newBuilder().setCredentials(AuthHelper.getCredentials(envVariable, dataProjectName, "cs")).setProjectId(dataProjectName).build().getService();
-    }
-    
-    public static List<String> getSubDirectories(Storage cs, String bucketName, String dir)
-    {
-    	List<String> directories = new ArrayList<String>();
-		Page<Blob> blobs = cs.list(bucketName, Storage.BlobListOption.prefix(dir), Storage.BlobListOption.currentDirectory());
-		
-		//LOG.debug("Printing remote folder names in " + dir);
-		for (Blob blob : blobs.iterateAll()) 
-		{
-			if(blob.getName().endsWith("/"))
-			{
-				String [] parts = blob.getName().split("/");
-				String folderName = parts[parts.length - 1];
-				
-				//LOG.debug(folderName);
-				directories.add(folderName);
-			}
-		}
-		return directories;
-    }
-    
-    public static List<String> getObjectsinRemoteFolder(Storage cs, String bucketName, String dir)
-    {
-    	List<String> blobObjects = new ArrayList<String>();
-		Page<Blob> blobs = cs.list(bucketName, Storage.BlobListOption.prefix(dir), Storage.BlobListOption.currentDirectory());
-		
-		//LOG.debug("Printing remote objects in directory: " + dir);
-		for (Blob blob : blobs.iterateAll()) 
-		{
-			if(!blob.getName().endsWith("/"))
-			{				
-				//LOG.debug(blob.getName());
-				blobObjects.add(blob.getName());
-			}
-		}
-		return blobObjects;
-    }
-    
-    public static long getRemoteFolderSize(Storage cs, String bucketName, List<String> allObjects) throws IOException
-	{
-    	long length = 0;
-		for(String objectName : allObjects)
-		{
-			Blob blob = cs.get(BlobId.of(bucketName, objectName));
-			length += blob.getSize();
-		}
-		return length;
-	}
-    
-    public static void downloadBlobsToLocalStorage(Storage cs, String bucketName, List<String> allBlobs, String localDestPath) throws IOException
-	{
-		for(String objectName : allBlobs)
-		{
-			byte[] content= cs.readAllBytes(bucketName, objectName);
-			
-			String [] parts = objectName.split("/");
-			String fileName = parts[parts.length - 1];
-	    	Path path = Paths.get(localDestPath + fileName);
-	    	
-	    	if(!Files.exists(path))
-	    	{
-	    		LOG.debug("Downloading " + objectName + " to local filesystem.....");
-	    		Files.write(path, content);
-	    		LOG.debug("Sucessfully downloaded " + objectName);
-	    	}
-		}
-	}
+      }
 
-}
+    public static Storage getStorage(String envVariable, String dataProjectName)
+    throws FileNotFoundException, IOException
+      {
+        return StorageOptions.newBuilder().setCredentials(AuthHelper.getCredentials(envVariable, dataProjectName, "cs")).setProjectId(dataProjectName).build().getService();
+      }
+
+    public static List<String> getSubDirectories(Storage cs, String bucketName, String dir)
+      {
+        List<String> directories = new ArrayList<String>();
+        Page<Blob> blobs = cs.list(bucketName, Storage.BlobListOption.prefix(dir), Storage.BlobListOption.currentDirectory());
+
+        // LOG.debug("Printing remote folder names in " + dir);
+        for (Blob blob : blobs.iterateAll())
+          {
+            if (blob.getName().endsWith("/"))
+              {
+                String[] parts = blob.getName().split("/");
+                String folderName = parts[parts.length - 1];
+
+                // LOG.debug(folderName);
+                directories.add(folderName);
+              }
+          }
+        return directories;
+      }
+
+    public static List<String> getObjectsinRemoteFolder(Storage cs, String bucketName, String dir)
+      {
+        List<String> blobObjects = new ArrayList<String>();
+        Page<Blob> blobs = cs.list(bucketName, Storage.BlobListOption.prefix(dir), Storage.BlobListOption.currentDirectory());
+
+        // LOG.debug("Printing remote objects in directory: " + dir);
+        for (Blob blob : blobs.iterateAll())
+          {
+            if (!blob.getName().endsWith("/"))
+              {
+                // LOG.debug(blob.getName());
+                blobObjects.add(blob.getName());
+              }
+          }
+        return blobObjects;
+      }
+
+    public static long getRemoteFolderSize(Storage cs, String bucketName, List<String> allObjects)
+    throws IOException
+      {
+        long length = 0;
+        for (String objectName : allObjects)
+          {
+            Blob blob = cs.get(BlobId.of(bucketName, objectName));
+            length += blob.getSize();
+          }
+        return length;
+      }
+
+    public static void downloadBlobsToLocalStorage(Storage cs, String bucketName, List<String> allBlobs, String localDestPath, boolean override)
+    throws IOException
+      {
+        for (String objectName : allBlobs)
+          {
+            String[] parts = objectName.split("/");
+            String fileName = parts[parts.length - 1];
+            Path path = Paths.get(localDestPath + fileName);
+
+            if (Files.exists(path) == false || override == true)
+              {
+                LOG.debug("Downloading " + objectName + " to local file system...");
+                byte[] content = cs.readAllBytes(bucketName, objectName);
+                Files.write(path, content);
+                LOG.debug("Sucessfully downloaded " + objectName);
+              }
+            else
+              LOG.debug("File " + objectName + " already on the local file system.");
+          }
+      }
+
+  }
