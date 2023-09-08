@@ -27,7 +27,7 @@ import tilda.utils.ParseUtil;
 public class CheckDB
   {
     protected static final Logger LOG = LogManager.getLogger(CheckDB.class.getName());
-    
+
     public static void main(String args[])
     throws Exception
       {
@@ -63,8 +63,8 @@ public class CheckDB
                 ++attempt;
                 LOG.debug("Connection attempt #"+attempt);
                 DriverManager.getConnection(dbUrl, user, "XXX");
-                LOG.debug("The database is online!");
-                return;
+                LOG.error("Something is not right: this connection shouldn't have succeeded since we didn't pass in a password. You must specify an account that requires a password.");
+                System.exit(-1);
               }
             catch (SQLException e)
               {
@@ -74,8 +74,24 @@ public class CheckDB
                     LOG.debug("The database is online! Expected exception was: "+e.getMessage()+" (State="+e.getSQLState()+")");
                     LOG.debug("Waiting a bit more ("+postWait+" seconds)");
                     Thread.sleep(postWait*1000);
-                    LOG.debug("SUCCESS!!!");
-                    return;
+                    LOG.debug("Let's check one more time!");
+                    try 
+                      {
+                        ++attempt;
+                        LOG.debug("Connection attempt #"+attempt);
+                        DriverManager.getConnection(dbUrl, user, "XXX");
+                        LOG.error("Something is not right: this connection shouldn't have succeeded since we didn't pass in a password. You must specify an account that requires a password.");
+                        System.exit(-1);
+                      }
+                    catch (SQLException e2)
+                      {
+                        msg = e2.getMessage().toLowerCase();
+                        if (msg.matches(".*(login|password).*(auth)?.*fail.*(user)?.*") == true)
+                          {
+                            LOG.debug("SUCCESS!!!");
+                            return;
+                          }
+                      }
                   }
                 LOG.warn("The database is not online: SQLState="+e.getSQLState()+"; SQLState="+e.getErrorCode()+"\n", e);
                 if (--retries > 0)
