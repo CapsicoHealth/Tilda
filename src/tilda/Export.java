@@ -71,7 +71,7 @@ public class Export
             TVM = new ViewMeta(schemaName, tableViewName, "Table/View");
             TVM.load(C);
             if (TVM.getColumnMetaList().isEmpty() == true)
-              throw new Exception("Cannot find table/view '"+tableViewName+"'.");
+              throw new Exception("Cannot find table/view '"+schemaName+"."+tableViewName+"'.");
           }
         
         if (path.startsWith("bq`") == true)
@@ -103,7 +103,7 @@ public class Export
                                                                          : path + "\\" + tableViewName + (mode.equalsIgnoreCase("jsonl") ? ".jsonl" : ".json")
                                                                          ;
             FileWriter writer = new FileWriter(outputFileName);
-            ExporterRecordProcessorCSVJSON RP = new ExporterRecordProcessorCSVJSON(C, writer, path, logFrequency, TVM, mode, true);
+            ExporterRecordProcessorCSVJSON RP = new ExporterRecordProcessorCSVJSON(C, writer, path, logFrequency, TVM, mode, mode.equalsIgnoreCase("csv"));
             C.executeMetaFullSelect(TVM, RP);
             writer.close();
             return RP.getTotalCount();

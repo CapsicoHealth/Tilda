@@ -60,6 +60,7 @@ public class ValueHelper
           }
 
         String defaultErr = Label+" '" + ColFullName + "' defines Value '" + (TextUtil.isNullOrEmpty(Name)==true ? "" : Name+"' with value '") + Value + "' which is incompatible with type '" + ColType + "'.";
+        boolean isEvil = Value != null && Value.trim().equals("-666") == true;
         switch (ColType)
           {
             case BOOLEAN:
@@ -67,27 +68,27 @@ public class ValueHelper
                 PS.AddError(defaultErr);
               break;
             case SHORT:
-              if (ParseUtil.parseShort(Value, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
+              if (isEvil == false && ParseUtil.parseShort(Value, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
                 PS.AddError(defaultErr);
               break;
             case INTEGER:
-              if (ParseUtil.parseInteger(Value, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
+              if (isEvil == false && ParseUtil.parseInteger(Value, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
                 PS.AddError(defaultErr);
               break;
             case LONG:
-              if (ParseUtil.parseLong(Value, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
+              if (isEvil == false && ParseUtil.parseLong(Value, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
                 PS.AddError(defaultErr);
               break;
             case FLOAT:
-              if (ParseUtil.parseFloat(Value, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
+              if (isEvil == false && ParseUtil.parseFloat(Value, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
                 PS.AddError(defaultErr);
               break;
             case DOUBLE:
-              if (ParseUtil.parseDouble(Value, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
+              if (isEvil == false && ParseUtil.parseDouble(Value, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
                 PS.AddError(defaultErr);
               break;
             case NUMERIC:
-              if (ParseUtil.parseBigDecimal(Value, null) == null)
+              if (isEvil == false && ParseUtil.parseBigDecimal(Value, null) == null)
                 PS.AddError(defaultErr);
               break;
             case CHAR:

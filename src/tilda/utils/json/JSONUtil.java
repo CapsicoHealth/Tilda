@@ -1108,7 +1108,7 @@ public class JSONUtil
                   List<Boolean> v_bool = (List<Boolean>) C.getArray(RS, idx, cm._TildaType, false);
                   if (RS.wasNull() == true)
                     v_bool = null;
-                  print(out, elementName, idx == 1, (Boolean[]) CollectionUtil.toObjectArray(v_bool));
+                  print(out, elementName, idx == 1, CollectionUtil.toObjectArray(Boolean.class, v_bool));
                 }
               else
                 {
@@ -1141,7 +1141,7 @@ public class JSONUtil
                   List<LocalDate> v_ld = DateTimeUtil.toLocalDates((List<java.sql.Date>) C.getArray(RS, idx, cm._TildaType, false));
                   if (RS.wasNull() == true)
                     v_ld = null;
-                  print(out, elementName, idx == 1, (LocalDate[]) CollectionUtil.toObjectArray(v_ld));
+                  print(out, elementName, idx == 1, CollectionUtil.toObjectArray(LocalDate.class, v_ld));
                 }
               else
                 {
@@ -1178,7 +1178,7 @@ public class JSONUtil
                       ZonedDateTime ZDT = DateTimeUtil.toZonedDateTime(v_ts.get(i), ZI.getValue());
                       v_zdt.add(ZDT);
                     }
-                  print(out, elementName, idx == 1, (ZonedDateTime[]) CollectionUtil.toObjectArray(v_zdt));
+                  print(out, elementName, idx == 1, CollectionUtil.toObjectArray(ZonedDateTime.class, v_zdt));
                 }
               else
                 {
@@ -1191,7 +1191,8 @@ public class JSONUtil
                        v_tz = null;
                     }
                   tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationById(v_tz);
-                  if (ZI == null && TextUtil.isNullOrEmpty(v_tz) == false)
+                  // No timezone and v_tz was also null
+                  if (ZI == null && TextUtil.isNullOrEmpty(v_tz) == true)
                     ZI = tilda.data.ZoneInfo_Factory.getEnumerationById("UTC"); // assume UTC
                   ZonedDateTime v_zdt = DateTimeUtil.toZonedDateTime(RS.getTimestamp(idx, DateTimeUtil._UTC_CALENDAR), ZI == null ? "null" : ZI.getValue());
                   if (RS.wasNull() == true)
@@ -1205,12 +1206,15 @@ public class JSONUtil
                   List<Double> v = (List<Double>) C.getArray(RS, idx, cm._TildaType, false);
                   if (RS.wasNull() == true)
                     v = null;
-                  print(out, elementName, idx == 1, (Double[]) CollectionUtil.toObjectArray(v));
+                  print(out, elementName, idx == 1, CollectionUtil.toObjectArray(Double.class, v));
                 }
               else
                 {
                   double v = RS.getDouble(idx);
-                  print(out, elementName, idx == 1, RS.wasNull() == true ? null : v);
+                  if (RS.wasNull() == true)
+                    print(out, elementName, idx == 1, (String) null);
+                   else
+                    print(out, elementName, idx == 1, v);
                 }
               break;
             case FLOAT:
@@ -1219,12 +1223,15 @@ public class JSONUtil
                   List<Float> v = (List<Float>) C.getArray(RS, idx, cm._TildaType, false);
                   if (RS.wasNull() == true)
                     v = null;
-                  print(out, elementName, idx == 1, (Float[]) CollectionUtil.toObjectArray(v));
+                  print(out, elementName, idx == 1, CollectionUtil.toObjectArray(Float.class, v));
                 }
               else
                 {
                   float v = RS.getFloat(idx);
-                  print(out, elementName, idx == 1, RS.wasNull() == true ? null : v);
+                  if (RS.wasNull() == true)
+                    print(out, elementName, idx == 1, (String) null);
+                   else
+                    print(out, elementName, idx == 1, v);
                 }
               break;
             case INTEGER:
@@ -1233,12 +1240,15 @@ public class JSONUtil
                   List<Integer> v = (List<Integer>) C.getArray(RS, idx, cm._TildaType, false);
                   if (RS.wasNull() == true)
                     v = null;
-                  print(out, elementName, idx == 1, (Integer[]) CollectionUtil.toObjectArray(v));
+                  print(out, elementName, idx == 1, CollectionUtil.toObjectArray(Integer.class, v));
                 }
               else
                 {
                   int v = RS.getInt(idx);
-                  print(out, elementName, idx == 1, RS.wasNull() == true ? null : v);
+                  if (RS.wasNull() == true)
+                    print(out, elementName, idx == 1, (String) null);
+                   else
+                    print(out, elementName, idx == 1, v);
                 }
               break;
             case LONG:
@@ -1247,12 +1257,15 @@ public class JSONUtil
                   List<Long> v = (List<Long>) C.getArray(RS, idx, cm._TildaType, false);
                   if (RS.wasNull() == true)
                     v = null;
-                  print(out, elementName, idx == 1, (Integer[]) CollectionUtil.toObjectArray(v));
+                  print(out, elementName, idx == 1, CollectionUtil.toObjectArray(Long.class, v));
                 }
               else
                 {
                   long v = RS.getLong(idx);
-                  print(out, elementName, idx == 1, RS.wasNull() == true ? null : v);
+                  if (RS.wasNull() == true)
+                    print(out, elementName, idx == 1, (String) null);
+                   else
+                    print(out, elementName, idx == 1, v);
                 }
               break;
             case SHORT:
@@ -1261,12 +1274,16 @@ public class JSONUtil
                   List<Short> v = (List<Short>) C.getArray(RS, idx, cm._TildaType, false);
                   if (RS.wasNull() == true)
                     v = null;
-                  print(out, elementName, idx == 1, (Short[]) CollectionUtil.toObjectArray(v));
+                  print(out, elementName, idx == 1, CollectionUtil.toObjectArray(Short.class, v));
                 }
               else
                 {
                   short v = RS.getShort(idx);
-                  print(out, elementName, idx == 1, RS.wasNull() == true ? null : v);
+                  if (RS.wasNull() == true)
+                   print(out, elementName, idx == 1, (String) null);
+                  else
+                   print(out, elementName, idx == 1, v);
+                    
                 }
               break;
             case NUMERIC:
@@ -1275,7 +1292,7 @@ public class JSONUtil
                   List<BigDecimal> v = (List<BigDecimal>) C.getArray(RS, idx, cm._TildaType, false);
                   if (RS.wasNull() == true)
                     v = null;
-                  print(out, elementName, idx == 1, (BigDecimal[]) CollectionUtil.toObjectArray(v));
+                  print(out, elementName, idx == 1, CollectionUtil.toObjectArray(BigDecimal.class, v));
                 }
               else
                 {
@@ -1289,7 +1306,7 @@ public class JSONUtil
                   List<UUID> v = (List<UUID>) C.getArray(RS, idx, cm._TildaType, false);
                   if (RS.wasNull() == true)
                     v = null;
-                  print(out, elementName, idx == 1, (UUID[]) CollectionUtil.toObjectArray(v));
+                  print(out, elementName, idx == 1, CollectionUtil.toObjectArray(UUID.class, v));
                 }
               else
                 {

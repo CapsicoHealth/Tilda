@@ -16,6 +16,7 @@
 
 package tilda.utils;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -182,17 +183,19 @@ public class CollectionUtil
 
     protected static final Object[] EMPTY_OBJECT_O = {};
 
-    public static Object[] toObjectArray(List<?> L)
+    public static <T> T[] toObjectArray(Class<T> c, List<T> L)
       {
         // LDH-NOTE: tried the implementation with a loop and it's about 30% slower. So, keeping the native impl.
         // See CollectionUtilTest.
 
         if (L == null)
-          return EMPTY_OBJECT_O;
-        return L.toArray(new Object[L.size()]);
+          return (T[]) EMPTY_OBJECT_O;
+//        return L.toArray(new Object[L.size()]);
+        return  L.toArray((T[]) Array.newInstance(c, L.size()));
+
       }
 
-    public static Object[] toObjectArray(Set<?> S)
+    public static <T> T[] toObjectArray(Set<T> S)
       {
         // LDH-NOTE: tried the implementation using "return S.toArray(new Object[S.size()]);".
         // Looping manually is over 100% faster!!! Sick and tired of native Java impl slower than hand-coded!
@@ -200,10 +203,10 @@ public class CollectionUtil
         // See CollectionUtilTest.
 
         if (S == null)
-          return EMPTY_OBJECT_O;
-        Object[] A = new Object[S.size()];
+          return (T[]) EMPTY_OBJECT_O;
+        T[] A = (T[]) new Object[S.size()];
         int i = -1;
-        for (Object o : S)
+        for (T o : S)
           A[++i] = o;
         return A;
       }
@@ -624,12 +627,12 @@ public class CollectionUtil
 
     public static String[] toStringArray(Collection<String> L)
       {
-        return L.toArray(new String[L.size()]);
+        return L==null ? null : L.toArray(new String[L.size()]);
       }
 
     public static String[][] toDoubleStringArray(Collection<String[]> L)
       {
-        return L.toArray(new String[L.size()][]);
+        return L==null ? null : L.toArray(new String[L.size()][]);
       }
     
     public static void append(List<String> L, Iterator<String> I)

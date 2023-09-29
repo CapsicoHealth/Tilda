@@ -64,11 +64,11 @@ public class CollectionUtilTest
 
         Object[] A = new Object[0];
         LOG.debug(L1.getClass().getCanonicalName() + " -> " + A.getClass().getCanonicalName());
-        A = CollectionUtil.toObjectArray(L1);
+        A = CollectionUtil.toObjectArray(String.class, L1);
         for (Object o : A)
           LOG.debug("   " + o.toString());
         LOG.debug(L2.getClass().getCanonicalName() + " -> " + A.getClass().getCanonicalName());
-        A = CollectionUtil.toObjectArray(L2);
+        A = CollectionUtil.toObjectArray(Object.class, L2);
         for (Object o : A)
           LOG.debug("   " + o.toString());
       }
