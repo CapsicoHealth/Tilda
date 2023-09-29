@@ -105,10 +105,13 @@ public class JDBCHelper
           {
             long T0 = System.nanoTime();
             QueryDetails.setLastQuery(TableName, Query);
-            S = C.createStatement(ResultSet.FETCH_FORWARD, ResultSet.CONCUR_READ_ONLY);
-            if (size < 0 || size > 5000)
-              S.setFetchSize(5000);
+//            LOG.debug("CREATE STATEMENT: size="+size+"; autocommit="+C.getAutoCommit()+"; defaultRowFetchSize: "+C.getClientInfo("defaultRowFetchSize"));            
+            S = C.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY, ResultSet.CLOSE_CURSORS_AT_COMMIT);
+            S.setFetchDirection(ResultSet.FETCH_FORWARD);
+            S.setFetchSize(10000);
+//            LOG.debug("EXECUTE QUERY: fetchSize="+S.getFetchSize()+"; fetchDirection="+S.getFetchDirection()+";");
             ResultSet RS = S.executeQuery(Query);
+//            LOG.debug("LET'S ROLL!!!");
             int count = JDBCHelper.process(RS, RP, Start, Offsetted, size, Limited, CountAll);
             PerfTracker.add(TableName, StatementType.SELECT, System.nanoTime() - T0, count);
             return count;

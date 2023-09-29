@@ -528,10 +528,10 @@ public class ConnectionPool
                   {
                     Class.forName(BDS.getDriverClassName());
                     C = DriverManager.getConnection(BDS.getUrl(), userId, userPswd);
-                    C.setAutoCommit(false);
-                    C.setTransactionIsolation(java.sql.Connection.TRANSACTION_READ_COMMITTED);
-                    C.setClientInfo("defaultRowFetchSize", "5000");
                   }
+                C.setAutoCommit(false);
+                C.setTransactionIsolation(java.sql.Connection.TRANSACTION_READ_COMMITTED);
+                C.setClientInfo("defaultRowFetchSize", "10000");
                 PerfTracker.add(TransactionType.CONNECTION_GET, System.nanoTime() - T0);
                 break;
               }
