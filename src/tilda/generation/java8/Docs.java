@@ -275,7 +275,7 @@ public class Docs implements CodeGenDocs
       {
         Out.println(
         Helper.getMultiLineDocCommentStart() + SystemValues.NEWLINE
-        + " If any of the 'signature' columns have changed, creates a new instance of '"+O.getHistoryObjectName()+"' and " + SystemValues.NEWLINE
+        + " If any of the 'signature' columns have changed, creates a new instance of '"+O.getHistoryObject()+"' and " + SystemValues.NEWLINE
         + "copies all columns included for history over." + SystemValues.NEWLINE
         + "<BR>" + SystemValues.NEWLINE
         + "<B>Signature</B>:<UL><LI>"+Column.printColumnList(O._History._SignatureColumnObjs, true)+"</LI></UL>" + SystemValues.NEWLINE

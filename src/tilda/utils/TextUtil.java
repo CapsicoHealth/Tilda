@@ -1068,17 +1068,22 @@ public class TextUtil
         return set.toArray(new String[0]);
       }
 
-    public static void print(String[] StrArray, StringBuilder s)
+    public static void print(String[] strArray, StringBuilder s)
       {
-        if (StrArray == null)
+        print(strArray, ", ", s);
+      }
+    
+    public static void print(String[] strArray, String separator, StringBuilder s)
+      {
+        if (strArray == null)
           return;
         boolean First = true;
-        for (String str : StrArray)
+        for (String str : strArray)
           {
             if (First == true)
               First = false;
             else
-              s.append(", ");
+              s.append(separator);
             s.append(str);
           }
       }
@@ -1207,11 +1212,16 @@ public class TextUtil
           }
       }
 
-    public static final String print(String[] StrArray)
+    public static final String print(String[] strArray)
       {
-        StringBuilder Str = new StringBuilder();
-        print(StrArray, Str);
-        return Str.toString();
+        return print(strArray, ", ");
+      }
+
+    public static final String print(String[] strArray, String separator)
+      {
+        StringBuilder str = new StringBuilder();
+        print(strArray, separator, str);
+        return str.toString();
       }
 
 

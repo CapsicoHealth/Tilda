@@ -16,11 +16,7 @@
 
 package tilda.parsing;
 
-import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -32,13 +28,13 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Schema;
 import tilda.utils.FileUtil;
 import tilda.utils.TextUtil;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 public abstract class Parser
   {

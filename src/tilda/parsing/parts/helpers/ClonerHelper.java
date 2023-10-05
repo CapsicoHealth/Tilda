@@ -234,6 +234,7 @@ public class ClonerHelper
             newObj._FST = FrameworkSourcedType.CLONED;
             newObj._SourceObject = obj;
             obj._ParentSchema._Objects.add(newObj);
+            obj._Clones.add(newObj);
           }
         return true;
       }

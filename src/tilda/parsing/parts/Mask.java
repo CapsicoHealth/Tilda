@@ -51,7 +51,7 @@ public class Mask
       }
     
     public transient Base                   _ParentObject;
-    public transient List<Column>           _ColumnObjs;
+    public transient List<Column>           _ColumnObjs = new ArrayList<Column>();
 
     public boolean validate(ParserSession PS, Base ParentObject)
       {

@@ -72,7 +72,7 @@ public class Object extends Base
     public transient ObjectLifecycle      _LC;
     public transient TZMode               _TzMode;
     public transient Object               _HistoryObj   = null;                                        // For tables with history settings
-
+    public transient List<Object>         _Clones       = new ArrayList<Object>();
 
     public Object()
       {
@@ -155,7 +155,10 @@ public class Object extends Base
             _ParentSchema = parentSchema;
             _OriginalName = _Name;
             if (_CloneFrom.validate(PS, this) == true)
-              ClonerHelper.handleClonefrom(PS, this);
+              {
+                ClonerHelper.handleClonefrom(PS, this);
+                _CloneFrom._SrcObjectObj._Clones.add(this);
+              }
             _ParentSchema = null;
             _OriginalName = null;
           }
@@ -228,10 +231,10 @@ public class Object extends Base
 
                 _PadderColumnNames.track(C.getLogicalName());
                 if (C.validate(PS, this) == true)
-                 if (ColumnNames.add(C.getName().toUpperCase()) == false)
-                  PS.AddError("Column '" + C.getFullName() + "' is defined more than once in Object '" + getFullName() + "'. Note that column names are checked in a case-insensitive way, so 'id' is the same as 'ID' even though they are treated in a case-sensitive way in the database if the database allows.");
+                  if (ColumnNames.add(C.getName().toUpperCase()) == false)
+                    PS.AddError("Column '" + C.getFullName() + "' is defined more than once in Object '" + getFullName() + "'. Note that column names are checked in a case-insensitive way, so 'id' is the same as 'ID' even though they are treated in a case-sensitive way in the database if the database allows.");
               }
-            //Let's take care of TZ columns
+            // Let's take care of TZ columns
             for (int i = 0; i < _Columns.size(); ++i)
               {
                 Column C = _Columns.get(i);
@@ -240,7 +243,7 @@ public class Object extends Base
                     String ColZName = C.getTZName();
                     Column TZCol = null;
                     if (C._TzMode == TZMode.COLUMN || getColumn(ColZName) == null)
-                      TZCol = new Column(ColZName, null, 0, C._Nullable, ColumnMode.AUTO, C._Invariant, null, "Generated helper column to hold the time zone ID for "+getTzColumnNames(C)+".", null, null, null, C._TzMode);
+                      TZCol = new Column(ColZName, null, 0, C._Nullable, ColumnMode.AUTO, C._Invariant, null, "Generated helper column to hold the time zone ID for " + getTzColumnNames(C) + ".", null, null, null, C._TzMode);
                     if (TZCol != null)
                       {
                         if (C.isCollection() == false || C._TzMode == TZMode.ROW) // Row-level means one for all timestamps, including if they are arrays.
@@ -272,7 +275,7 @@ public class Object extends Base
                   continue;
                 C.setSequenceOrder(++Counter);
                 if (Counter >= ColumnDefinition._MAX_COL_COUNT)
-                 PS.AddError("Object '" + getFullName() + "' has declared " + (i + 1) + " columns. Max allowed is " + ColumnDefinition._MAX_COL_COUNT + "!");
+                  PS.AddError("Object '" + getFullName() + "' has declared " + (i + 1) + " columns. Max allowed is " + ColumnDefinition._MAX_COL_COUNT + "!");
               }
           }
 
@@ -358,17 +361,17 @@ public class Object extends Base
     private String getTzColumnNames(Column col)
       {
         if (col._TzMode == TZMode.COLUMN)
-         return "'"+col._Name+"'";
+          return "'" + col._Name + "'";
 
-        StringBuilder str = new StringBuilder("1 or more columns at the "+col._ParentObject.getShortName()+" row level: ");
+        StringBuilder str = new StringBuilder("1 or more columns at the " + col._ParentObject.getShortName() + " row level: ");
         boolean first = true;
         for (Column c : _Columns)
           if (c.needsTZ() == true && c._TzMode == TZMode.ROW)
             {
               if (first == true)
                 first = false;
-                else
-                  str.append(", ");
+              else
+                str.append(", ");
               str.append(c._Name);
             }
         return str.toString();
@@ -452,7 +455,7 @@ public class Object extends Base
         ParentSchema._Objects.add(obj);
       }
 
-    public Object getHistoryObjectName()
+    public Object getHistoryObject()
       {
         return _HistoryObj;
       }

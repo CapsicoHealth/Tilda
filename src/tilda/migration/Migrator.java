@@ -662,12 +662,24 @@ public class Migrator
         for (MigrationRename MR : S._Migration._Renames)
           if (MR != null)
             {
-              if (MR._Object != null) // Renaming object of column
+              if (MR._Object != null) // Renaming object or column
                 {
                   if (MR._Column != null) // renaming column
                     {
                       TableMeta TM = DBMeta.getTableMeta(MR._Schema._Name, MR._ObjectName);
                       handleColumnRename(DBMeta, Actions, MR, TM);
+                      Object hist = MR._Object.getHistoryObject();
+                      if (hist != null)
+                        {
+                          TM = DBMeta.getTableMeta(hist._ParentSchema._Name, hist._Name);
+                          handleColumnRename(DBMeta, Actions, MR, TM);
+                        }
+                      if (MR._Object._Clones != null)
+                        for (Object obj : MR._Object._Clones)
+                          {
+                            TM = DBMeta.getTableMeta(obj._ParentSchema._Name, obj._Name);
+                            handleColumnRename(DBMeta, Actions, MR, TM);
+                          }
                     }
                   else // Only renaming an object
                     {
@@ -727,15 +739,16 @@ public class Migrator
                 if (CMSrc != null)
                   CMSrcs.add(CMSrc);
               }
-            ColumnMeta CMDest = TM.getColumnMeta(MR._Column.getName(), true); // dst column
+            Column colSrc = MR._Schema.getColumn(TM._TableName, MR._Column.getName());
+            ColumnMeta CMDest = TM.getColumnMeta(colSrc.getName(), true); // dst column
             // dst column must not exist and only one src column must be existing in the DB (i.e., if it doesn't, it's been migrated previously already).
             if (CMDest == null && CMSrcs.size() == 1)
               {
                 // Add the migration action
-                Actions.add(new TableColumnRename(MR._Column, CMSrcs.get(0)._NameOriginal));
+                Actions.add(new TableColumnRename(colSrc, CMSrcs.get(0)._NameOriginal));
                 // Rename table to avoid double-creation later in this loop
                 // i.e., the table didn't exist in this schema when the database was originally scanned (DBMeta).
-                if (DBMeta.getSchemaMeta(MR._Object._ParentSchema._Name).renameTableColumn(DBMeta, TM, CMSrcs.get(0)._Name, MR._Column.getName()) == false)
+                if (DBMeta.getSchemaMeta(TM._SchemaName).renameTableColumn(DBMeta, TM, CMSrcs.get(0)._Name, colSrc.getName()) == false)
                   throw new Exception("An error occurred: Column '" + CMSrcs.get(0).getParentTable()._SchemaName + "." + CMSrcs.get(0).getParentTable()._TableName + "." + CMSrcs.get(0)._Name + "' is being renamed to '" + MR._ColumnName + "' but seems to already exist there even though we just tested that a second ago and found nothing!");
               }
           }
@@ -753,14 +766,8 @@ public class Migrator
               for (Object obj : MM._Objects) // let's look at tables to transfer
                 {
                   handleTableMove(S, DBMeta, Actions, MM, obj);
-                  if (obj._CloneAs != null)
-                    for (Cloner cl : obj._CloneAs)
-                      {
-                        Object objCloned = S.getObject(cl._Name);
-                        if (objCloned == null)
-                         throw new Exception("Cannot locate cloned object '"+cl._Name+"' for migration move.");
-                        handleTableMove(S, DBMeta, Actions, MM, objCloned);                        
-                      }
+                  for (Object objCloned : obj._Clones)
+                   handleTableMove(S, DBMeta, Actions, MM, objCloned);                        
                 }
               for (View v : MM._Views)
                 {
