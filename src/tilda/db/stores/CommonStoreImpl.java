@@ -436,6 +436,7 @@ public abstract class CommonStoreImpl implements DBType
                     || CMP._Col.getType() == ColumnType.NUMERIC 
                     || CMP._Col.getType() == ColumnType.JSON 
                     || CMP._Col.getType() == ColumnType.STRING && CMP._Col._Size != CMP._CMeta._Size
+                    || CMP._Col.getType() == ColumnType.CHAR   && CMP._CMeta._TildaType == ColumnType.STRING
                    )
                 //@formatter:on
                   {
@@ -451,7 +452,7 @@ public abstract class CommonStoreImpl implements DBType
                       }
                   }
                 else
-                  throw new Exception("Cannot alter a column from " + CMP._CMeta._TildaType + " to " + CMP._Col.getType() + ".");
+                  throw new Exception("Cannot alter a column '"+CMP._Col.getShortName()+"' from " + CMP._CMeta._TildaType + " to " + CMP._Col.getType() + ".");
               }
             else
               {
