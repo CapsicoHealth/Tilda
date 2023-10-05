@@ -510,7 +510,7 @@ public class Sql extends BigQuery implements CodeGenSql
         // If the column has a sameAs string, but no sameAsObj and is managed, then we print the sameAs as is.
         if (VC.isSameAsLitteral() == true)
           {
-            Str.append(TextUtil.isNullOrEmpty(VC._Expression) == true ? VC._SameAs : VC._Expression.replaceAll("\\?", VC._SameAs));
+            Str.append(TextUtil.isNullOrEmpty(VC._Expression) == true ? VC._SameAs : rewriteExpressionColumnQuoting(VC._Expression.replaceAll("\\?", VC._SameAs)));
           }
         else
           {
@@ -530,7 +530,7 @@ public class Sql extends BigQuery implements CodeGenSql
               Str.append("trim(");
             String ColExpr = VC._Aggregate != null && VC._Aggregate.isWindowOnly() == true ? "" : (textConversionNeeded ? "CAST(" : "") + TI.getFullName() + "." + getShortColumnVar(VC._SameAsObj.getName()) + (textConversionNeeded ? " AS STRING)" : "");
             if (TextUtil.isNullOrEmpty(VC._Expression) == false)
-              ColExpr = VC._Expression.replaceAll("\\?", ColExpr);
+              ColExpr = rewriteExpressionColumnQuoting(VC._Expression.replaceAll("\\?", ColExpr));
             boolean filteredAggregate = VC._Aggregate != null &&  TextUtil.isNullOrEmpty(VC._Filter) == false;
             if (filteredAggregate == true && supportsFilterClause() == false)
              Str.append("case when ").append(rewriteExpressionColumnQuoting(VC._Filter)).append(" then ");
@@ -1032,7 +1032,7 @@ public class Sql extends BigQuery implements CodeGenSql
 
         String Expr = Str.toString();
         if (TextUtil.isNullOrEmpty(VC._Expression) == false)
-          Expr = VC._Expression.replaceAll("\\?", Expr);
+          Expr = rewriteExpressionColumnQuoting(VC._Expression.replaceAll("\\?", Expr));
 
         if (TextUtil.isNullOrEmpty(VC._Coalesce) == false)
           Expr = "coalesce(" + Expr + ", " + ValueHelper.printValueSQL(getSQlCodeGen(), VC.getName(), VC.getType(), VC.isCollection(), VC._Coalesce) + ")";
