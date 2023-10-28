@@ -36,7 +36,7 @@ public enum ObjectMode
     CODE_ONLY,
 
     /**
-     * No code is generated at all. The object exists purely as meta-data, for example, to map to a custom table/view not defined in Tilda per se.
+     * No code or database assets is generated at all. The object exists purely as meta-data, for example, to map to a custom table/view not defined in Tilda per se.
      */
     NONE;
     

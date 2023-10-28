@@ -85,7 +85,6 @@ import tilda.migration.actions.TildaHelpersAddStart;
 import tilda.migration.actions.ViewCreate;
 import tilda.migration.actions.ViewDrop;
 import tilda.parsing.Parser;
-import tilda.parsing.parts.Cloner;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
@@ -577,7 +576,10 @@ public class Migrator
           {
             if (V == null)
               continue;
-
+            // No need to migrate unless there is a DB artifact
+            if (V._Mode == ObjectMode.CODE_ONLY || V._Mode == ObjectMode.NONE)
+              continue;
+            
             ViewMeta VMeta = DBMeta.getViewMeta(V._ParentSchema._Name, V._Name);
             if (VMeta == null)
               {
