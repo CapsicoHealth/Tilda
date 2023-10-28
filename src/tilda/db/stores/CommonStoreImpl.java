@@ -188,20 +188,20 @@ public abstract class CommonStoreImpl implements DBType
           }
         if (com.executeDDL(col._ParentObject._ParentSchema._Name, col._ParentObject.getBaseName(), Q) == false)
           return false;
-        
+
         if (col._Nullable == false && temporaryDefaultValue != null)
           {
             String colName = MigrationNotNull.getColumnName(temporaryDefaultValue);
-            Q = "UPDATE "+col._ParentObject.getShortName()+" set \""+col.getName()+"\"="+(colName!=null?"\""+colName+"\"":ValueHelper.printValueSQL(getSQlCodeGen(), col.getName(), col.getType(), col.isCollection(), temporaryDefaultValue))+";";
+            Q = "UPDATE " + col._ParentObject.getShortName() + " set \"" + col.getName() + "\"=" + (colName != null ? "\"" + colName + "\"" : ValueHelper.printValueSQL(getSQlCodeGen(), col.getName(), col.getType(), col.isCollection(), temporaryDefaultValue)) + ";";
             if (com.executeDDL(col._ParentObject._ParentSchema._Name, col._ParentObject.getBaseName(), Q) == false)
               return false;
             Q = "ALTER TABLE " + col._ParentObject.getShortName() + " ALTER COLUMN \"" + col.getName() + "\" SET NOT NULL;";
             if (com.executeDDL(col._ParentObject._ParentSchema._Name, col._ParentObject.getBaseName(), Q) == false)
               return false;
-            
+
             // LDH-NOTE: Alternative implementation would have been to set the column default to set the values
-            //          in the existing rows, and then drop the default. Unsure if this would have been better
-            //          performance-wise vs the update/alter solution implemented currently.
+            // in the existing rows, and then drop the default. Unsure if this would have been better
+            // performance-wise vs the update/alter solution implemented currently.
           }
 
         return alterTableAlterColumnComment(com, col);
@@ -452,7 +452,7 @@ public abstract class CommonStoreImpl implements DBType
                       }
                   }
                 else
-                  throw new Exception("Cannot alter a column '"+CMP._Col.getShortName()+"' from " + CMP._CMeta._TildaType + " to " + CMP._Col.getType() + ".");
+                  throw new Exception("Cannot alter a column '" + CMP._Col.getShortName() + "' from " + CMP._CMeta._TildaType + " to " + CMP._Col.getType() + ".");
               }
             else
               {
@@ -567,13 +567,20 @@ public abstract class CommonStoreImpl implements DBType
     // case Y would get quoted, incorrectly since it's a table name. The "from" negative lookahead is not working
     // as expected, so punting for now.
     // protected static Pattern REQUOTE1 = Pattern.compile("(?<!from\\s*)(?:[a-z_A-Z]\\w+)\\.([a-z_A-Z]\\w+)([^\\w\\.\\(]|\\z)");
-    protected static Pattern REQUOTE1 = Pattern.compile("\\.([a-z_A-Z]\\w+)([^\\w\\.\\(]|\\z)");
+
+    // It is hard to find patterns such as "schema.func(" or "schema.func   (" to eliminate from the quoting logic
+    // So let's first clean that up by removing spaces between  word character and a '.' or a '('.
+    protected static Pattern REQUOTE0 = Pattern.compile("\\.(\\w+)\\s+([\\.|\\(])");
+    // Then we look to quote tokens preceded by a '.' but not followed by a '.' or a '('.
+    protected static Pattern REQUOTE1 = Pattern.compile("\\.\\s*([a-z_A-Z]\\w*\\b)([^\\.\\(]|\\z)");
+    // Then we have one last pass to correct code that quotes using default double-quote characters
     protected static Pattern REQUOTE2 = Pattern.compile("\\.\"([^\"]+)\"");
 
     @Override
     public String rewriteExpressionColumnQuoting(String expr)
       {
-        return expr.replaceAll(REQUOTE1.pattern(), "." + getColumnQuotingStartChar() + "$1" + getColumnQuotingEndChar() + "$2")
+        return expr.replaceAll(REQUOTE0.pattern(), ".$1$2")
+        .replaceAll(REQUOTE1.pattern(), "." + getColumnQuotingStartChar() + "$1" + getColumnQuotingEndChar() + "$2")
         .replaceAll(REQUOTE2.pattern(), "." + getColumnQuotingStartChar() + "$1" + getColumnQuotingEndChar());
       }
 
