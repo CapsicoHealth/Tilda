@@ -19,6 +19,7 @@ package tilda.migration.actions;
 import java.time.ZonedDateTime;
 import java.util.List;
 
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -27,15 +28,12 @@ import tilda.data.Key_Factory;
 import tilda.data.MaintenanceLog_Data;
 import tilda.data.MaintenanceLog_Factory;
 import tilda.db.Connection;
-import tilda.db.QueryDetails;
 import tilda.db.metadata.DatabaseMeta;
-import tilda.enums.FrameworkSourcedType;
 import tilda.generation.helpers.CatalogHelper;
 import tilda.migration.MigrationAction;
-import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
-import tilda.parsing.parts.View;
 import tilda.utils.DateTimeUtil;
+import tilda.utils.LogUtil;
 
 public class TildaCatalogAdd extends MigrationAction
   {
@@ -61,19 +59,29 @@ public class TildaCatalogAdd extends MigrationAction
         for (Schema s : _TildaList)
           CH.addSchema(s);
 
-        String statement = "select TILDA.getKeyBatchAsMaxExclusive('" + Catalog_Factory.SCHEMA_TABLENAME_LABEL.toUpperCase() + "', " + CH._CL.size() + ")-" + CH._CL.size() + ";";
-        long firstKey = C.executeSelectLong(Key_Factory.SCHEMA_LABEL, Key_Factory.TABLENAME_LABEL, statement);
+        LOG.debug("Updating the catalog information");
+        LogUtil.setLogLevel(Level.ERROR);
 
-        final int size = 10000;
-        int start = 0;
         StringBuilder str = new StringBuilder();
-        while (start < CH._CL.size())
+        try
           {
-            statement = CH.outputSQLProc(C.getSQlCodeGen(), firstKey, start, size);
-            str.append(statement);
-            if (C.executeDDL(MaintenanceLog_Factory.SCHEMA_LABEL, TILDA_HELPERS_CATALOG, statement) == false)
-             return false;
-            start+=size;
+            String statement = "select TILDA.getKeyBatchAsMaxExclusive('" + Catalog_Factory.SCHEMA_TABLENAME_LABEL.toUpperCase() + "', " + CH._CL.size() + ")-" + CH._CL.size() + ";";
+            long firstKey = C.executeSelectLong(Key_Factory.SCHEMA_LABEL, Key_Factory.TABLENAME_LABEL, statement);
+
+            final int size = 10000;
+            int start = 0;
+            while (start < CH._CL.size())
+              {
+                statement = CH.outputSQLProc(C.getSQlCodeGen(), firstKey, start, size);
+                str.append(statement);
+                if (C.executeDDL(MaintenanceLog_Factory.SCHEMA_LABEL, TILDA_HELPERS_CATALOG, statement) == false)
+                  return false;
+                start += size;
+              }
+          }
+        finally
+          {
+            LogUtil.resetLogLevel();
           }
 
         /*@formatter:off*/
@@ -85,10 +93,10 @@ public class TildaCatalogAdd extends MigrationAction
                                                              );
         /*@formatter:on*/
 
-        statement = "UPDATE " + Catalog_Factory.SCHEMA_TABLENAME_LABEL + " set deleted = current_timestamp where \"lastUpdated\" < '" + DateTimeUtil.printDateTimeForSQL(startZDT) + "';\n";
+        String statement = "UPDATE " + Catalog_Factory.SCHEMA_TABLENAME_LABEL + " set deleted = current_timestamp where \"lastUpdated\" < '" + DateTimeUtil.printDateTimeForSQL(startZDT) + "';\n";
         if (C.executeDDL(MaintenanceLog_Factory.SCHEMA_LABEL, TILDA_HELPERS_CATALOG, statement) == false)
           return false;
-        
+
         return true;
       }
 
