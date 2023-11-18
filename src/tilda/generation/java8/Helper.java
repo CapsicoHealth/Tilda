@@ -805,7 +805,10 @@ public class Helper
       {
         return maskDef == null
         ? prefix+getterStr
-        : "("+prefix+"__MaskMode==true ? " + ValueHelper.printValueJava(colName, type, collection, maskDef, prefix+getterStr) + " : "+prefix+getterStr+")";
+        : collection == true && type!=ColumnType.DATE && type!=ColumnType.DATETIME
+        ? "("+prefix+"__MaskMode==true ? TextUtil.mask(" + prefix+getterStr+", "+ValueHelper.printValueJava(colName, type, collection, maskDef, prefix+getterStr) + ") : "+prefix+getterStr+")"
+        : "("+prefix+"__MaskMode==true ? " + ValueHelper.printValueJava(colName, type, collection, maskDef, prefix+getterStr) + " : "+prefix+getterStr+")"
+        ;
       }
 
     protected static String getSystemMappedColumnName(Column col)

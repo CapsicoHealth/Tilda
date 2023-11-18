@@ -2053,4 +2053,26 @@ public class TextUtil
             parts[i] = '%' + parts[i] + '%';
       }
 
+    /**
+     * Returns a new Iterator on a list where all incoming values have been replaced by the mask
+     * @param <T>
+     * @param I
+     * @param val
+     * @return
+     */
+    public static <T> Iterator<T> mask(Iterator<T> I, T val)
+      {
+        List<T> L = new ArrayList<T>();
+        while (I.hasNext() == true)
+          L.add(val);
+        return L.iterator();
+      }
+
+    public static <T> T[] mask(T[] A, T val)
+      {
+        T[] arr = (T[]) new Object[A.length];
+        for (int i = 0; i < A.length; ++i)
+          arr[i] = val;
+        return arr;
+      }
   }
