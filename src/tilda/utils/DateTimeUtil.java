@@ -30,6 +30,7 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -560,7 +561,46 @@ public class DateTimeUtil
           }
         return ZDT.withZoneSameInstant(_UTC);
       }
+    
+    public static List<ZonedDateTime> toZonedDateTimes(List<java.sql.Timestamp> D, String zoneStr)
+      {
+        List<ZonedDateTime> L = new ArrayList<ZonedDateTime>();
+        for (int i = 0; i < D.size(); ++i)
+          {
+            ZonedDateTime ZDT = ZonedDateTime.of(D.get(i).toLocalDateTime(), ZoneId.systemDefault());
+            try
+              {
+                ZDT = ZDT.withZoneSameInstant(zoneStr == null ? _UTC : ZoneId.of(zoneStr));
+              }
+            catch (Exception E)
+              {
+                LOG.warn("Invalid zone id '" + zoneStr + "'. Used zone offset instead");
+                ZDT = ZDT.withZoneSameInstant(_UTC);
+              }
+            L.add(ZDT);
+          }
+        return L;
+      }
 
+    public static List<ZonedDateTime> toZonedDateTimes(List<LocalDate> D, List<String> zoneStr)
+      {
+        List<ZonedDateTime> L = new ArrayList<ZonedDateTime>();
+        for (int i = 0; i < D.size(); ++i)
+          {
+            ZonedDateTime ZDT = ZonedDateTime.of(D.get(i).atStartOfDay(), ZoneId.systemDefault());
+            try
+              {
+                ZDT = ZDT.withZoneSameInstant(zoneStr.get(i) == null ? _UTC : ZoneId.of(zoneStr.get(i)));
+              }
+            catch (Exception E)
+              {
+                LOG.warn("Invalid zone id '" + zoneStr.get(i) + "'. Used zone offset instead");
+                ZDT = ZDT.withZoneSameInstant(_UTC);
+              }
+            L.add(ZDT);
+          }
+        return L;
+      }
 
     public static LocalDate toLocalDate(java.sql.Date D)
       {
@@ -908,4 +948,35 @@ public class DateTimeUtil
             }
         return null;
       }
+
+    public static Iterator<ZonedDateTime> truncateToZDT(Iterator<ZonedDateTime> I, TimeSeriesType tst)
+      {
+        List<ZonedDateTime> L = new ArrayList<ZonedDateTime>();
+        while (I.hasNext())
+          L.add(truncateTo(I.next(), tst));
+        return L.iterator();
+      }
+    public static ZonedDateTime[] truncateToZDT(ZonedDateTime[] A, TimeSeriesType tst)
+      {
+        ZonedDateTime[] arr = new ZonedDateTime[A.length];
+        for (int i = 0; i < A.length; ++i)
+          arr[i] = truncateTo(A[i], tst);
+        return arr;
+      }
+    
+    public static Iterator<LocalDate> truncateToLD(Iterator<LocalDate> I, TimeSeriesType tst)
+      {
+        List<LocalDate> L = new ArrayList<LocalDate>();
+        while (I.hasNext())
+          L.add(truncateTo(I.next(), tst));
+        return L.iterator();
+      }
+    public static LocalDate[] truncateToZDT(LocalDate[] A, TimeSeriesType tst)
+      {
+        LocalDate[] arr = new LocalDate[A.length];
+        for (int i = 0; i < A.length; ++i)
+          arr[i] = truncateTo(A[i], tst);
+        return arr;
+      }
+    
   }

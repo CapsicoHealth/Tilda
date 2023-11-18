@@ -257,24 +257,71 @@ public class TildaData implements CodeGenTildaData
 
             Out.println("   public static final boolean check" + TextUtil.capitalizeFirstCharacter(C.getName()) + "(" + JavaJDBCType.getFieldType(C) + " v)");
             Out.println("    {");
-            Out.println("      for (String[] a : _" + C.getName() + "_Values)");
-            if (C.getType() == ColumnType.CHAR == true)
-              Out.println("       if (a[0].charAt(0) == v)");
+            if (C.isCollection() == true)
+              {
+                Out.println("      for (int i = 0; i < v.size(); ++ i)");
+                Out.println("        for (String[] val : _" + C.getName() + "_Values)");
+                if (C.getType() == ColumnType.CHAR)
+                  Out.println("         if (val[0].charAt(0) != v.get(i))");
+                else
+                  Out.println("         if (val[0].equals(v.get(i).toString()) == false)");
+                Out.println("          return false;");
+                Out.println("      return true;");
+              }
             else
-              Out.println("       if (a[0].equals(v) == true)");
-            Out.println("        return true;");
-            Out.println("      return false;");
+              {
+                Out.println("      for (String[] a : _" + C.getName() + "_Values)");
+                if (C.getType() == ColumnType.CHAR)
+                  Out.println("       if (a[0].charAt(0) == v)");
+                else
+                  Out.println("       if (a[0].equals(v) == true)");
+                Out.println("        return true;");
+                Out.println("      return false;");
+              }
             Out.println("    }");
-            Out.println("   public static final String map" + TextUtil.capitalizeFirstCharacter(C.getName()) + "(" + JavaJDBCType.getFieldType(C) + " v)");
-            Out.println("    {");
-            Out.println("      for (String[] a : _" + C.getName() + "_Values)");
-            if (C.getType() == ColumnType.CHAR == true)
-              Out.println("       if (a[0].charAt(0) == v)");
+            String type = C.getType() == ColumnType.CHAR ? "Character" : "String";
+            if (C.isCollection() == true)
+              {
+                Out.println("   public static final List<" + type + "> map" + TextUtil.capitalizeFirstCharacter(C.getName()) + "(" + JavaJDBCType.getFieldType(C) + " v)");
+                Out.println("    {");
+                Out.println("      List<" + type + "> descriptions = new ArrayList<" + type + ">();");
+                Out.println("      for (int i = 0; i < v.size(); ++ i)");
+                Out.println("        for (String[] a : _" + C.getName() + "_Values)");
+                if (C.getType() == ColumnType.CHAR)
+                  {
+                    Out.println("          if (a[0].charAt(0) == v.get(i))");
+                    Out.println("           descriptions.add(a[2].charAt(0));");
+                    Out.println("          else");
+                    Out.println("           descriptions.add(v.get(i));");
+                  }
+                else
+                  {
+                    Out.println("          if (a[0].equals(v.get(i).toString()) == true)");
+                    Out.println("           descriptions.add(a[2]);");
+                    Out.println("          else");
+                    Out.println("           descriptions.add(v.get(i).toString());");
+                  }
+                Out.println("      return descriptions;");
+                Out.println("    }");
+              }
             else
-              Out.println("       if (a[0].equals(v) == true)");
-            Out.println("        return a[2];");
-            Out.println("      return null;");
-            Out.println("    }");
+              {
+                Out.println("   public static final " + type + " map" + TextUtil.capitalizeFirstCharacter(C.getName()) + "(" + JavaJDBCType.getFieldType(C) + " v)");
+                Out.println("    {");
+                Out.println("      for (String[] a : _" + C.getName() + "_Values)");
+                if (C.getType() == ColumnType.CHAR)
+                  {
+                    Out.println("       if (a[0].charAt(0) == v)");
+                    Out.println("        return a[2].charAt(0);");
+                  }
+                else
+                  {
+                    Out.println("       if (a[0].equals(v) == true)");
+                    Out.println("        return a[2];");
+                  }
+                Out.println("      return null;");
+                Out.println("    }");
+              }
           }
 
         for (ColumnValue V : C._Values)
@@ -881,10 +928,10 @@ public class TildaData implements CodeGenTildaData
         // else
         // Out.println(" _" + C.getName() + "=" + C.getType().getDefaultNullValue() + ";");
         if (C.needsTZ() == true)
-         if (C._TzMode == TZMode.COLUMN)
-           Out.println("       setNull" + TextUtil.capitalizeFirstCharacter(C.getTZName()) + "();");
-         else
-           Out.println("    // setNull" + TextUtil.capitalizeFirstCharacter(C.getTZName()) + "(); // row TZs are shared, so can't just null it!");
+          if (C._TzMode == TZMode.COLUMN)
+            Out.println("       setNull" + TextUtil.capitalizeFirstCharacter(C.getTZName()) + "();");
+          else
+            Out.println("    // setNull" + TextUtil.capitalizeFirstCharacter(C.getTZName()) + "(); // row TZs are shared, so can't just null it!");
         Out.println("       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);");
         Out.println("     }");
       }
@@ -1862,7 +1909,12 @@ public class TildaData implements CodeGenTildaData
                           Out.print("_" + C.getName() + Pad + " = processZDT(_" + ColName + Pad + ", \"" + C.getFullName() + "\"" + Pad + ", RS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + Pad + ", " + O._BaseClassName + "_Factory.COLS." + COLSName + Pad + ");");
                       }
                     else
-                      Out.print("_" + C.getName() + Pad + " = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), " + (C._FCT.isManaged() == true ? "null" : "_" + C.getName()) + ");");
+                      {
+                        if (C.isCollection() == true)
+                          Out.print("_" + C.getName() + Pad + " = DateTimeUtil.toZonedDateTimes((" + (C.isSet() == true ? "Set<" : "List<") + "java.sql.Timestamp>) C.getArray(RS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + ".getType(), " + C.isSet() + "), null);");
+                        else
+                          Out.print("_" + C.getName() + Pad + " = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), " + (C._FCT.isManaged() == true ? "null" : "_" + C.getName()) + ");");
+                      }
                     break;
                   default:
                     throw new Error("ERROR! Cannot match ColumnType " + C.getType() + " when generating the Read method");

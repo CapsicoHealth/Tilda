@@ -204,28 +204,30 @@ public class ValueHelper
             case CHAR:
               return TextUtil.escapeSingleQuoteForSQL(val);
             case DATETIME:
+              String truncateToFuncName = isCollection == true ? "truncateToZDT" : "truncateTo";
               if (val.equalsIgnoreCase("NOW") == true)
                 return "DateTimeUtil.NOW_PLACEHOLDER_ZDT";
               else if (val.equalsIgnoreCase("UNDEFINED") == true)
                 return "DateTimeUtil.UNDEFINED_PLACEHOLDER_ZDT";
               else if (val.equalsIgnoreCase("Y") == true)
-                return "DateTimeUtil.truncateTo(" + getterStr + ", TimeSeriesType.YEARLY)";
+                return "DateTimeUtil."+truncateToFuncName+"(" + getterStr + ", TimeSeriesType.YEARLY)";
               else if (val.equalsIgnoreCase("Q") == true)
-                return "DateTimeUtil.truncateTo(" + getterStr + ", TimeSeriesType.QUARTERLY)";
+                return "DateTimeUtil."+truncateToFuncName+"(" + getterStr + ", TimeSeriesType.QUARTERLY)";
               else if (val.equalsIgnoreCase("M") == true)
-                return "DateTimeUtil.truncateTo(" + getterStr + ", TimeSeriesType.MONTHLY)";
+                return "DateTimeUtil."+truncateToFuncName+"(" + getterStr + ", TimeSeriesType.MONTHLY)";
               return "DateTimeUtil.parseWithoutZone(" + TextUtil.escapeDoubleQuoteWithSlash(val) + ")";
             case DATE:
+              truncateToFuncName = isCollection == true ? "truncateToLD" : "truncateTo";
               if (val.equalsIgnoreCase("NOW") == true)
                 return "DateTimeUtil.NOW_PLACEHOLDER_D";
               else if (val.equalsIgnoreCase("UNDEFINED") == true)
                 return "DateTimeUtil.UNDEFINED_PLACEHOLDER_D";
               else if (val.equalsIgnoreCase("Y") == true)
-                return "DateTimeUtil.truncateTo(" + getterStr + ", TimeSeriesType.YEARLY)";
+                return "DateTimeUtil."+truncateToFuncName+"(" + getterStr + ", TimeSeriesType.YEARLY)";
               else if (val.equalsIgnoreCase("Q") == true)
-                return "DateTimeUtil.truncateTo(" + getterStr + ", TimeSeriesType.QUARTERLY)";
+                return "DateTimeUtil."+truncateToFuncName+"(" + getterStr + ", TimeSeriesType.QUARTERLY)";
               else if (val.equalsIgnoreCase("M") == true)
-                return "DateTimeUtil.truncateTo(" + getterStr + ", TimeSeriesType.MONTHLY)";
+                return "DateTimeUtil."+truncateToFuncName+"(" + getterStr + ", TimeSeriesType.MONTHLY)";
               return "DateTimeUtil.parseDate(" + TextUtil.escapeDoubleQuoteWithSlash(val) + ", \"yyyy-MM-dd\")";
             case JSON:
             case STRING:
