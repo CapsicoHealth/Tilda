@@ -272,7 +272,7 @@ public class Sql extends BigQuery implements CodeGenSql
                             ForeignKey FK = TotalMess.getClosestFKTable(FuckList, V, T, columnCount);
                             if (FK == null)
                               {
-                                throw new Exception("View " + V.getFullName() + " is using " + T.getShortName() + " but cannot find any foreign keys in any tables used so far: " + TableRankTracker.PrintTableNames(TableStack));
+                                throw new Exception("View " + V.getFullName() + " is using " + T.getShortName() + " but cannot find any foreign keys in any tables used so far (or found multiple ones, causing ambiguity): " + TableRankTracker.PrintTableNames(TableStack));
                               }
                             else
                               {
