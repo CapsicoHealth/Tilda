@@ -602,4 +602,10 @@ public class PostgreSQL extends CommonStoreImpl
         return con.executeDDL(schemaName, tableName, Q);
       }
 
+    @Override
+    public boolean isCaseSentitiveSchemaTableViewNames()
+      {
+        return false;
+      }
+
   }

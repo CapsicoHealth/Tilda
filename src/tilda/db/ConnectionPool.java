@@ -290,7 +290,14 @@ public class ConnectionPool
                 _DependencySchemas = Defs._DependencySchemas;
                 for (Conn Co : Defs._Conns)
                   {
-                    addDatasource(Co._Id, Co._Driver, Co._DB, Co._User, Co._Pswd, Co._Initial, Co._Max);
+                    boolean user = Co._DB.indexOf("${user}") > 0;
+                    boolean pswd = Co._DB.indexOf("${pswd}") > 0;
+                    if (user != pswd)
+                     throw new Error("Invalid jdbc connection string for '"+Co._Id+"': must have either both ${user} and ${pswd} markers or none and only one was found (" + Co._DB + ")");
+                    if (user == true)
+                     addDatasource(Co._Id, Co._Driver, Co._DB.replace("${user}", Co._User).replace("${pswd}", Co._Pswd), null, null, Co._Initial, Co._Max);
+                    else
+                     addDatasource(Co._Id, Co._Driver, Co._DB, Co._User, Co._Pswd, Co._Initial, Co._Max);
                   }
                 if (Defs._EmailConfig != null)
                   {
@@ -525,13 +532,10 @@ public class ConnectionPool
                 if (userId == null)
                   C = BDS.getConnection();
                 else
-                  {
-                    Class.forName(BDS.getDriverClassName());
-                    C = DriverManager.getConnection(BDS.getUrl(), userId, userPswd);
-                  }
+                  C = DriverManager.getConnection(BDS.getUrl(), userId, userPswd);
                 C.setAutoCommit(false);
                 C.setTransactionIsolation(java.sql.Connection.TRANSACTION_READ_COMMITTED);
-                C.setClientInfo("defaultRowFetchSize", "10000");
+//                C.setClientInfo("defaultRowFetchSize", "10000");
                 PerfTracker.add(TransactionType.CONNECTION_GET, System.nanoTime() - T0);
                 break;
               }
@@ -555,7 +559,7 @@ public class ConnectionPool
         LOG.info(QueryDetails._LOGGING_HEADER + "G O T           C O N N E C T I O N  -----  " + Conn._PoolId + ", " + BDS.getNumActive() + "/" + BDS.getNumIdle() + "/" + BDS.getMaxTotal());
         return Conn;
       }
-    
+
     public static String getDBDetails(String Id)
       {
         BasicDataSource BDS = _DataSourcesById.get(Id);

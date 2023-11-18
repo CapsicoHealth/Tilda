@@ -76,6 +76,7 @@ public interface DBType
     public String[] getConnectionCancelStates();
     public String   getCurrentTimestampStr();
     public String   getCurrentDateStr();
+    public boolean  isCaseSentitiveSchemaTableViewNames();
     
     public CodeGenSql getSQlCodeGen();
 

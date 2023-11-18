@@ -27,8 +27,6 @@ import org.postgresql.core.BaseConnection;
 
 import tilda.db.Connection;
 import tilda.db.processors.LocalDateRP;
-import tilda.db.processors.ScalarRP;
-import tilda.db.processors.StringRP;
 import tilda.db.processors.ZonedDateTimeRP;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
@@ -76,7 +74,7 @@ public class BigQuery extends CommonStoreImpl
     @Override
     public String[] getConnectionNoDataStates()
       {
-        LOG.error(AsciiArt.printError(AsciiArt._DEFAULT_LEAD, "UNIMPLEMENTED LOGIC!!!!!"));
+//        LOG.error(AsciiArt.printError(AsciiArt._DEFAULT_LEAD, "UNIMPLEMENTED LOGIC!!!!!"));
         return _NODATA_SQL_STATES; // "23505".equals(E.getSQLState());
       }
 
@@ -87,7 +85,7 @@ public class BigQuery extends CommonStoreImpl
     @Override
     public String[] getConnectionLockMsgs()
       {
-        LOG.error(AsciiArt.printError(AsciiArt._DEFAULT_LEAD, "UNIMPLEMENTED LOGIC!!!!!"));
+//        LOG.error(AsciiArt.printError(AsciiArt._DEFAULT_LEAD, "UNIMPLEMENTED LOGIC!!!!!"));
         return _LOCK_CONN_ERROR_SUBSTR;
       }
 
@@ -110,7 +108,7 @@ public class BigQuery extends CommonStoreImpl
     @Override
     public String[] getConnectionCancelStates()
       {
-        LOG.error(AsciiArt.printError(AsciiArt._DEFAULT_LEAD, "UNIMPLEMENTED LOGIC!!!!!"));
+//        LOG.error(AsciiArt.printError(AsciiArt._DEFAULT_LEAD, "UNIMPLEMENTED LOGIC!!!!!"));
         return _CANCEL_SQL_STATES;
       }
 
@@ -494,25 +492,7 @@ public class BigQuery extends CommonStoreImpl
     public boolean isSuperUser(Connection C)
     throws Exception
       {
-        // First, let's check if the user has a "superuser" role
-        // We make the assumption here that any role with "superuser" in the name has enough access rights to perform migration actions.
-        String Q = "WITH RECURSIVE cte AS (\n"
-        + "  SELECT oid FROM pg_roles WHERE rolname = (SELECT current_role)\n"
-        + "  UNION ALL\n"
-        + "  SELECT m.roleid\n"
-        + "    FROM cte\n"
-        + "       JOIN pg_auth_members m ON m.member = cte.oid\n"
-        + ")\n"
-        + "SELECT count(*) FROM cte WHERE oid::regrole::TEXT ILIKE '%superuser%'";
-        ScalarRP SRP = new ScalarRP();
-        C.executeSelect("SYSTEM", "CURRENT_SETTING", Q, SRP);
-        if (SRP.getResult() > 0)
-          return true;
-
-        Q = "select current_setting('is_superuser');";
-        StringRP RP = new StringRP();
-        C.executeSelect("SYSTEM", "CURRENT_SETTING", Q, RP);
-        return "on".equals(RP.getResult()) == true;
+        return true;
       }
 
 
@@ -602,6 +582,12 @@ public class BigQuery extends CommonStoreImpl
     throws Exception
       {
         return false;
+      }
+    
+    @Override
+    public boolean isCaseSentitiveSchemaTableViewNames()
+      {
+        return true;
       }
 
   }

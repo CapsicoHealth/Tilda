@@ -850,5 +850,11 @@ public class MSSQL implements DBType
       {
         return false;
       }
+
+    @Override
+    public boolean isCaseSentitiveSchemaTableViewNames()
+      {
+        return false;
+      }
     
   }

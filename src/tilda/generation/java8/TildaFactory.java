@@ -32,7 +32,6 @@ import tilda.enums.FrameworkSourcedType;
 import tilda.enums.NVPSourceType;
 import tilda.enums.ObjectLifecycle;
 import tilda.enums.OutputFormatType;
-import tilda.enums.TZMode;
 import tilda.enums.TildaType;
 import tilda.generation.Generator;
 import tilda.generation.GeneratorSession;
