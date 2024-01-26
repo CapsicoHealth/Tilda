@@ -16,6 +16,7 @@
 
 package tilda.utils.json;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Writer;
 import java.math.BigDecimal;
@@ -35,8 +36,10 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 
 import tilda.db.Connection;
 import tilda.db.JDBCHelper;
@@ -45,6 +48,7 @@ import tilda.interfaces.JSONable;
 import tilda.utils.CollectionUtil;
 import tilda.utils.DateTimeUtil;
 import tilda.utils.HttpStatus;
+import tilda.utils.PaddingUtil;
 import tilda.utils.ParseUtil;
 import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
@@ -137,7 +141,7 @@ public class JSONUtil
     public static void print(Writer Out, String Name, boolean FirstElement)
     throws IOException
       {
-        Out.write(FirstElement == false ? ", " : " ");
+        Out.write(FirstElement == false ? "," : " ");
         if (Name != null)
           {
             Out.write("\"");
@@ -579,7 +583,13 @@ public class JSONUtil
         Out.write("]");
       }
 
-    public static void print(Writer Out, String Name, boolean FirstElement, String[] a)
+    public static void print(Writer out, String name, boolean first, String[] a)
+    throws IOException
+      {
+        print(out, name, first, a, 0, true);
+      }
+
+    public static void print(Writer Out, String Name, boolean FirstElement, String[] a, int padding, boolean flatPrint)
     throws IOException
       {
         print(Out, Name, FirstElement);
@@ -592,12 +602,20 @@ public class JSONUtil
         boolean First = true;
         for (String i : a)
           {
+            if (flatPrint == false)
+              Out.write("\n"+PaddingUtil.getPad(padding+3));
             if (First == true)
-              First = false;
+              {
+                First = false;
+                if (flatPrint == false)
+                  Out.write(" ");
+              }
             else
-              Out.write(", ");
+              Out.write(",");
             printString(Out, i);
           }
+        if (flatPrint == false)
+          Out.write("\n"+PaddingUtil.getPad(padding+2));
         Out.write("]");
       }
 
@@ -718,6 +736,65 @@ public class JSONUtil
             Out.write("]");
           }
         Out.write("]");
+      }
+
+    public static void print(Writer out, int padding, String name, boolean first, JsonArray val, Class type, boolean flatPrint)
+    throws IOException
+      {
+        out.write(PaddingUtil.getPad(padding));
+        if (val == null || val.isJsonNull() == true)
+          {
+            print(out, name, first);
+            out.write("null");
+            return;
+          }
+        if (val.size() == 0)
+          {
+            print(out, name, first);
+            out.write("[]");
+            return;
+
+          }
+        JsonElement e = val.get(0);
+        if (e.isJsonPrimitive() == false)
+          throw new IOException("Element array '" + name + "' not of primitive types");
+        JsonPrimitive p = e.getAsJsonPrimitive();
+        if (p.isBoolean() == true)
+          {
+            boolean[] arr = new boolean[val.size()];
+            for (int i = 0; i < val.size(); ++i)
+              arr[i] = val.get(i).getAsJsonPrimitive().getAsBoolean();
+            print(out, name, first, arr);
+          }
+        else if (p.isString() == true)
+          {
+            String[] arr = new String[val.size()];
+            for (int i = 0; i < val.size(); ++i)
+              arr[i] = val.get(i).getAsJsonPrimitive().getAsString();
+            print(out, name, first, arr, padding, flatPrint);
+          }
+        else if (p.isNumber() == true)
+          {
+            if (type.isAssignableFrom(Short.class) == true)
+              {
+                Long[] arr = new Long[val.size()];
+                for (int i = 0; i < val.size(); ++i)
+                  arr[i] = val.get(i).getAsJsonPrimitive().getAsLong();
+                print(out, name, first, arr);
+              }
+            else if (type.isAssignableFrom(Float.class) == true)
+              {
+                Double[] arr = new Double[val.size()];
+                for (int i = 0; i < val.size(); ++i)
+                  arr[i] = val.get(i).getAsJsonPrimitive().getAsDouble();
+                print(out, name, first, arr);
+              }
+            else
+              throw new IOException("Invalid json array number type '" + type + "': must be of interger or float types");
+          }
+        else
+          throw new IOException("Invalid json array type with values '" + p + "': must be of json primitives");
+
       }
 
 
@@ -877,6 +954,11 @@ public class JSONUtil
     public static JsonObject fromJSONObj(String JsonStr)
       {
         return new Gson().fromJson(JsonStr.toString(), JsonObject.class);
+      }
+
+    public static JsonObject fromJSONObj(BufferedReader R)
+      {
+        return new Gson().fromJson(R, JsonObject.class);
       }
 
     public static void print(Writer Out, String elementName, String JsonExportName, boolean firstElement, List<? extends JSONable> L, String Header)
@@ -1161,23 +1243,23 @@ public class JSONUtil
                     {
                       v_tz = (List<String>) C.getArray(RS, tzCol._NameOriginal, tzCol._TildaType, false);
                       if (RS.wasNull() == true)
-                       v_tz = null;
+                        v_tz = null;
                     }
-                  
+
                   List<Timestamp> v_ts = (List<Timestamp>) C.getArray(RS, idx, cm._TildaType, false);
                   if (RS.wasNull() == true)
-                   v_ts = null;
+                    v_ts = null;
 
-                  
+
                   List<ZonedDateTime> v_zdt = new ArrayList<ZonedDateTime>();
                   if (v_ts != null)
-                  for (int i = 0; i < v_ts.size(); ++i)
-                    {
-                      String TimezoneId = v_tz!=null && i < v_tz.size() && v_tz.get(i) != v_tz.get(i) ? v_tz.get(i) : "UTC";
-                      tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationById(TimezoneId);
-                      ZonedDateTime ZDT = DateTimeUtil.toZonedDateTime(v_ts.get(i), ZI.getValue());
-                      v_zdt.add(ZDT);
-                    }
+                    for (int i = 0; i < v_ts.size(); ++i)
+                      {
+                        String TimezoneId = v_tz != null && i < v_tz.size() && v_tz.get(i) != v_tz.get(i) ? v_tz.get(i) : "UTC";
+                        tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationById(TimezoneId);
+                        ZonedDateTime ZDT = DateTimeUtil.toZonedDateTime(v_ts.get(i), ZI.getValue());
+                        v_zdt.add(ZDT);
+                      }
                   print(out, elementName, idx == 1, CollectionUtil.toObjectArray(ZonedDateTime.class, v_zdt));
                 }
               else
@@ -1188,7 +1270,7 @@ public class JSONUtil
                     {
                       v_tz = RS.getString(tzCol._NameOriginal);
                       if (RS.wasNull() == true)
-                       v_tz = null;
+                        v_tz = null;
                     }
                   tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationById(v_tz);
                   // No timezone and v_tz was also null
@@ -1213,7 +1295,7 @@ public class JSONUtil
                   double v = RS.getDouble(idx);
                   if (RS.wasNull() == true)
                     print(out, elementName, idx == 1, (String) null);
-                   else
+                  else
                     print(out, elementName, idx == 1, v);
                 }
               break;
@@ -1230,7 +1312,7 @@ public class JSONUtil
                   float v = RS.getFloat(idx);
                   if (RS.wasNull() == true)
                     print(out, elementName, idx == 1, (String) null);
-                   else
+                  else
                     print(out, elementName, idx == 1, v);
                 }
               break;
@@ -1247,7 +1329,7 @@ public class JSONUtil
                   int v = RS.getInt(idx);
                   if (RS.wasNull() == true)
                     print(out, elementName, idx == 1, (String) null);
-                   else
+                  else
                     print(out, elementName, idx == 1, v);
                 }
               break;
@@ -1264,7 +1346,7 @@ public class JSONUtil
                   long v = RS.getLong(idx);
                   if (RS.wasNull() == true)
                     print(out, elementName, idx == 1, (String) null);
-                   else
+                  else
                     print(out, elementName, idx == 1, v);
                 }
               break;
@@ -1280,10 +1362,10 @@ public class JSONUtil
                 {
                   short v = RS.getShort(idx);
                   if (RS.wasNull() == true)
-                   print(out, elementName, idx == 1, (String) null);
+                    print(out, elementName, idx == 1, (String) null);
                   else
-                   print(out, elementName, idx == 1, v);
-                    
+                    print(out, elementName, idx == 1, v);
+
                 }
               break;
             case NUMERIC:

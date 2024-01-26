@@ -16,14 +16,14 @@
 
 package tilda.parsing.parts;
 
+import com.google.gson.annotations.SerializedName;
+
 import tilda.enums.DefaultType;
 import tilda.enums.ValidationStatus;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ValidationHelper;
 import tilda.parsing.parts.helpers.ValueHelper;
 import tilda.utils.TextUtil;
-
-import com.google.gson.annotations.SerializedName;
 
 public class ColumnValue
   {
@@ -35,7 +35,6 @@ public class ColumnValue
     @SerializedName("description") public String      _Description;
     @SerializedName("groupings"  ) public String[]    _Groupings;
     @SerializedName("default"    ) public DefaultType _Default = DefaultType.NONE;
-//    @SerializedName("raw"        ) public boolean     _Raw     = false;
     /*@formatter:on*/
 
     public transient Column            _ParentColumn;

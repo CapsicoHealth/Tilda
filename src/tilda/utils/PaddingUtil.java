@@ -71,4 +71,25 @@ public class PaddingUtil
         return sb.toString();
       }
     
+    public static String autoPad(String[][] values)
+     {
+       StringBuilder str = new StringBuilder();
+       int[] maxWidths = new int[values[0].length];
+       for (int i = 0; i < values.length; ++i)
+         for (int j = 0; j < values[i].length; ++j)
+           {
+             int len = values[i][j].length();
+             if (maxWidths[j] < len)
+               maxWidths[j] = len;
+           }
+
+       for (int i = 0; i < values.length; ++i)
+         {
+           for (int j = 0; j < values[i].length; ++j)
+             pad(str, values[i][j], maxWidths[j]+4);
+           str.append(SystemValues.NEWLINE);
+         }
+       return str.toString();
+     }
   }
+

@@ -39,8 +39,8 @@ import tilda.enums.TildaType;
 import tilda.enums.ValidationStatus;
 import tilda.enums.VisibilityType;
 import tilda.parsing.ParserSession;
-import tilda.parsing.parts.helpers.ReferenceHelper;
 import tilda.parsing.parts.helpers.DescriptionRewritingHelper;
+import tilda.parsing.parts.helpers.ReferenceHelper;
 import tilda.parsing.parts.helpers.ValidationHelper;
 import tilda.utils.PaddingTracker;
 import tilda.utils.TextUtil;
@@ -54,16 +54,16 @@ public class Column extends TypeDef
 	@SerializedName("sameas"     ) public String         _SameAs__DEPRECATED;
     @SerializedName("sameAs"     ) public String         _SameAs     ;
     @SerializedName("nullable"   ) public Boolean        _Nullable   ;
-    @SerializedName("mode"       ) public String         _ModeStr    ;
     @SerializedName("invariant"  ) public Boolean        _Invariant  ;
+    @SerializedName("mode"       ) public String         _ModeStr    ;
     @SerializedName("protect"    ) public String         _ProtectStr ;
+    @SerializedName("tzMode"     ) public String         _TzModeStr  ;    
+    @SerializedName("default"    ) public String         _Default    ;
     @SerializedName("description") public String         _Description;
     @SerializedName("mapper"     ) public ColumnMapper   _Mapper     ;
     @SerializedName("enum"       ) public ColumnEnum     _Enum       ;
     @SerializedName("values"     ) public ColumnValue[]  _Values     ;
-    @SerializedName("default"    ) public String         _Default    ;
     @SerializedName("jsonSchema" ) public JsonSchema     _JsonSchema ;
-    @SerializedName("tzMode"     ) public String         _TzModeStr  ;    
     /*@formatter:on*/
 
     public transient FrameworkColumnType _FCT               = FrameworkColumnType.NONE;

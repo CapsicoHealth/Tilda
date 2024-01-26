@@ -53,7 +53,6 @@ public class Object extends Base
     @SerializedName("lc"            ) public String               _LCStr      ;
     @SerializedName("cloneFrom"     ) public ClonerFrom           _CloneFrom  ;
     @SerializedName("cloneAs"       ) public Cloner[]             _CloneAs    ;
-
     @SerializedName("columns"       ) public List<Column>         _Columns    = new ArrayList<Column    >();
 
     @SerializedName("primary"       ) public PrimaryKey           _PrimaryKey = null;

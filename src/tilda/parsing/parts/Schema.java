@@ -42,12 +42,12 @@ public class Schema
     /*@formatter:off*/
     @SerializedName("package"      ) public String            _Package;
     @SerializedName("dynamic"      ) public boolean           _Dynamic = false;
-    @SerializedName("conventions"  ) public Convention        _Conventions   = new Convention();
-    @SerializedName("entityClasses") public String[]          _EntityClasses = new String[] { };
+    @SerializedName("dependencies" ) public String[]          _Dependencies  = new String[] { };
     @SerializedName("documentation") public Documentation     _Documentation = new Documentation();
     @SerializedName("extraDDL"     ) public ExtraDDL          _ExtraDDL      = new ExtraDDL();
-    @SerializedName("dependencies" ) public String[]          _Dependencies  = new String[] { };
-    @SerializedName("interfaces"   ) public List<Interface  > _Interfaces    = new ArrayList<Interface  >();
+    @SerializedName("conventions"  ) public Convention        _Conventions   = new Convention();
+    @SerializedName("entityClasses") public String[]          _EntityClasses = new String[] { };
+//    @SerializedName("interfaces"   ) public List<Interface  > _Interfaces    = new ArrayList<Interface  >();
     @SerializedName("enumerations" ) public List<Enumeration> _Enumerations  = new ArrayList<Enumeration>();
     @SerializedName("mappers"      ) public List<Mapper     > _Mappers       = new ArrayList<Mapper     >();
     @SerializedName("objects"      ) public List<Object     > _Objects       = new ArrayList<Object     >();
