@@ -75,8 +75,18 @@ public class JDBCHelper
       {
         RP.start();
         int count = 0;
-        if (Offsetted == false && Start > 0 && RS.absolute(Start) == false)
-          return -1;
+        if (Offsetted == false && Start > 0)
+          {
+            try
+              {
+                if (RS.absolute(Start) == false)
+                  return -1;
+              }
+            catch (Exception X)
+              {
+                return -1;
+              }
+          }
         while (Size <= -1 || count < Size)
           {
             if (RS.next() == false)
@@ -105,13 +115,13 @@ public class JDBCHelper
           {
             long T0 = System.nanoTime();
             QueryDetails.setLastQuery(TableName, Query);
-//            LOG.debug("CREATE STATEMENT: size="+size+"; autocommit="+C.getAutoCommit()+"; defaultRowFetchSize: "+C.getClientInfo("defaultRowFetchSize"));            
+            // LOG.debug("CREATE STATEMENT: size="+size+"; autocommit="+C.getAutoCommit()+"; defaultRowFetchSize: "+C.getClientInfo("defaultRowFetchSize"));
             S = C.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY, ResultSet.CLOSE_CURSORS_AT_COMMIT);
             S.setFetchDirection(ResultSet.FETCH_FORWARD);
             S.setFetchSize(10000);
-//            LOG.debug("EXECUTE QUERY: fetchSize="+S.getFetchSize()+"; fetchDirection="+S.getFetchDirection()+";");
+            // LOG.debug("EXECUTE QUERY: fetchSize="+S.getFetchSize()+"; fetchDirection="+S.getFetchDirection()+";");
             ResultSet RS = S.executeQuery(Query);
-//            LOG.debug("LET'S ROLL!!!");
+            // LOG.debug("LET'S ROLL!!!");
             int count = JDBCHelper.process(RS, RP, Start, Offsetted, size, Limited, CountAll);
             PerfTracker.add(TableName, StatementType.SELECT, System.nanoTime() - T0, count);
             return count;
@@ -185,10 +195,10 @@ public class JDBCHelper
       {
         return _REHEARSAL_DDL_QUERIES != null;
       }
-    
+
     public static Iterator<String> getRehearsalIterator()
       {
-        return _REHEARSAL_DDL_QUERIES==null ? null : _REHEARSAL_DDL_QUERIES.iterator();
+        return _REHEARSAL_DDL_QUERIES == null ? null : _REHEARSAL_DDL_QUERIES.iterator();
       }
 
     public static boolean executeDDL(Connection C, String schemaName, String tableName, String query)
