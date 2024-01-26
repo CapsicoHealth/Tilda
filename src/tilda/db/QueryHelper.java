@@ -2127,6 +2127,25 @@ public abstract class QueryHelper
         return this;
       }
 
+    public QueryHelper lt(Type_DatetimePrimitive Col, LocalDate V)
+    throws Exception
+      {
+        return lt(Col, null, V);
+      }
+
+    public QueryHelper lt(Type_DatetimePrimitive Col, LocalDate coalesceVal, LocalDate LDT)
+    throws Exception
+      {
+        if (coalesceVal != null)
+          _QueryStr.append("coalesce(");
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        if (coalesceVal != null)
+          {
+            _QueryStr.append(", ").append(DateTimeUtil.printDateForSQL(coalesceVal)).append(")");
+          }
+        opVal(Op.LT, LDT);
+        return this;
+      }
 
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Col < Col
@@ -2958,6 +2977,25 @@ public abstract class QueryHelper
         return this;
       }
 
+    public QueryHelper gte(Type_DatetimePrimitive Col, LocalDate V)
+    throws Exception
+      {
+        return gte(Col, null, V);
+      }
+
+    public QueryHelper gte(Type_DatetimePrimitive Col, LocalDate coalesceVal, LocalDate V)
+    throws Exception
+      {
+        if (coalesceVal != null)
+          _QueryStr.append("coalesce(");
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        if (coalesceVal != null)
+          {
+            _QueryStr.append(", ").append(DateTimeUtil.printDateForSQL(coalesceVal)).append(")");
+          }
+        opVal(Op.GTE, V);
+        return this;
+      }
 
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Col >= Col
@@ -3639,10 +3677,10 @@ public abstract class QueryHelper
          * TextUtil.escapeSingleQuoteForSQL(_QueryStr, V);
          * _QueryStr.append(")");
          */
-        if (not == true)
-          _QueryStr.append("=0");
-        else
-          _QueryStr.append(">0");
+//        if (not == true)
+//          _QueryStr.append("=0");
+//        else
+//          _QueryStr.append(">0");
         return this;
       }
 
