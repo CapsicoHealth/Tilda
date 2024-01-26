@@ -58,7 +58,7 @@ import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.performance.PerfTracker;
 import tilda.utils.AsciiArt;
-import tilda.utils.ClassStaticInit;
+import tilda.utils.ClassUtils;
 import tilda.utils.DurationUtil;
 import tilda.utils.FileUtil;
 import tilda.utils.LogUtil;
@@ -330,7 +330,7 @@ public class ConnectionPool
                 Bootstrappers Bs = gson.fromJson(R, Bootstrappers.class);
                 if (Bs._classNames != null)
                   for (String className : Bs._classNames)
-                    ClassStaticInit.initClass(className);
+                    ClassUtils.initClass(className);
               }
           }
         finally

@@ -16,6 +16,10 @@
 
 package tilda.utils;
 
+import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,15 +29,15 @@ import org.apache.logging.log4j.Logger;
  * @author ldh
  *
  */
-public class ClassStaticInit
+public class ClassUtils
   {
-    protected static final Logger LOG = LogManager.getLogger(ClassStaticInit.class.getName());
+    protected static final Logger LOG = LogManager.getLogger(ClassUtils.class.getName());
 
     public static void initClass(String className)
       {
         try
           {
-            LOG.debug("   Initializing class "+className);
+            LOG.debug("   Initializing class " + className);
             Class.forName(className);
           }
         catch (ClassNotFoundException e)
@@ -41,4 +45,13 @@ public class ClassStaticInit
             LOG.catching(e);
           }
       }
+
+    public static void getAllDeclaredFields(List<Field> fields, Class<?> type)
+      {
+        if (type == null)
+          return;
+        fields.addAll(Arrays.asList(type.getDeclaredFields()));
+        getAllDeclaredFields(fields, type.getSuperclass());
+      }
+
   }
