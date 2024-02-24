@@ -139,6 +139,11 @@ public abstract class QueryHelper
     Set<String>                   _Froms          = new HashSet<String>();
     protected int                 _SubSelectCount = 0;
 
+    public boolean isFullSelectQuery()
+      {
+        return _FullSelect;
+      }
+
     public void clear()
     throws Exception
       {
@@ -416,6 +421,8 @@ public abstract class QueryHelper
       {
         if (_Section != S.WHERE && _Section != S.FROM)
           throw new Exception("Invalid query syntax: Calling and() after a " + _Section + ": " + _QueryStr.toString());
+        if (_WherePos == -1)
+          where();
         if (_QueryStr.length() != _WherePos)
           _QueryStr.append(" and ");
         _Section = S.WHERE;
@@ -427,6 +434,8 @@ public abstract class QueryHelper
       {
         if (_Section != S.WHERE && _Section != S.FROM)
           throw new Exception("Invalid query syntax: Calling and() after a " + _Section + ": " + _QueryStr.toString());
+        if (_WherePos == -1)
+          where();
         if (_QueryStr.length() != _WherePos)
           _QueryStr.append(" or ");
         _Section = S.WHERE;
@@ -438,6 +447,8 @@ public abstract class QueryHelper
       {
         if (_Section != S.WHERE && _Section != S.FROM)
           throw new Exception("Invalid query syntax: Calling and() after a " + _Section + ": " + _QueryStr.toString());
+        if (_WherePos == -1)
+          where();
         _QueryStr.append(" not ");
         _Section = S.WHERE;
         return this;
@@ -449,9 +460,11 @@ public abstract class QueryHelper
       {
         if (_Section != S.WHERE && _Section != S.FROM)
           throw new Exception("Invalid query syntax: Calling openPar() after a " + _Section + ": " + _QueryStr.toString());
+        if (_WherePos == -1)
+          where();
         _QueryStr.append(" (");
         _Section = S.WHERE;
-        _WherePos = _QueryStr.length();
+        _WherePos = _QueryStr.length(); // reset wherePos so that opening a parenthesis interacts properly with the next and/or etc...
         return this;
       }
 
@@ -461,7 +474,7 @@ public abstract class QueryHelper
         if (_Section != S.WHERE)
           throw new Exception("Invalid query syntax: Calling closePar() after a " + _Section + " (Outside of a where clause): " + _QueryStr.toString());
         _QueryStr.append(" )");
-        _Section = S.WHERE;
+        // _Section = S.WHERE;
         return this;
       }
 
@@ -498,12 +511,13 @@ public abstract class QueryHelper
         || st == StatementType.UPDATE && (s == S.WHERE || s == S.SET);
       }
 
-    protected final void opVal(Op O, String V)
+
+    protected final void opValBase(Op O, String ValStr)
     throws Exception
       {
         if (opOK(_ST, _Section) == true)
           {
-            if (V == null)
+            if (ValStr == null)
               {
                 if (_Section == S.WHERE || _Section == S.FROM)
                   {
@@ -514,175 +528,83 @@ public abstract class QueryHelper
                     else
                       throw new Exception("Invalid query syntax: cannot use the operator " + O + " with a NULL value: " + _QueryStr.toString());
                   }
-                else
+                else // must be SET
                   _QueryStr.append(" = NULL ");
               }
             else
-              {
-                _QueryStr.append(O._Str);
-                TextUtil.escapeSingleQuoteForSQL(_QueryStr, V);
-              }
+              _QueryStr.append(O._Str).append(ValStr);
             if (_Section != S.SET)
               _Section = S.WHERE;
           }
         else
-          throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
+          throw new Exception("Invalid query syntax: Calling operator '" + O._Str + "' after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
+      }
+
+    protected final void opVal(Op O, String V)
+    throws Exception
+      {
+        opValBase(O, V == null ? null : TextUtil.escapeSingleQuoteForSQL(V));
       }
 
     protected final void opVal(Op O, boolean V)
     throws Exception
       {
-        if (opOK(_ST, _Section) == true)
-          {
-            _QueryStr.append(O._Str).append(V);
-            if (_Section != S.SET)
-              _Section = S.WHERE;
-          }
-        else
-          throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
+        opValBase(O, Boolean.toString(V));
       }
 
     protected final void opVal(Op O, double V)
     throws Exception
       {
-        if (opOK(_ST, _Section) == true)
-          {
-            _QueryStr.append(O._Str).append(V);
-            if (_Section != S.SET)
-              _Section = S.WHERE;
-          }
-        else
-          throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
+        opValBase(O, Double.toString(V));
       }
 
     protected final void opVal(Op O, float V)
     throws Exception
       {
-        if (opOK(_ST, _Section) == true)
-          {
-            _QueryStr.append(O._Str).append(V);
-            if (_Section != S.SET)
-              _Section = S.WHERE;
-          }
-        else
-          throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
+        opValBase(O, Float.toString(V));
       }
 
     protected final void opVal(Op O, short V)
     throws Exception
       {
-        if (opOK(_ST, _Section) == true)
-          {
-            _QueryStr.append(O._Str).append(V);
-            if (_Section != S.SET)
-              _Section = S.WHERE;
-          }
-        else
-          throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
+        opValBase(O, Short.toString(V));
       }
 
     protected final void opVal(Op O, int V)
     throws Exception
       {
-        if (opOK(_ST, _Section) == true)
-          {
-            _QueryStr.append(O._Str).append(V);
-            if (_Section != S.SET)
-              _Section = S.WHERE;
-          }
-        else
-          throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
+        opValBase(O, Integer.toString(V));
       }
 
     protected final void opVal(Op O, long V)
     throws Exception
       {
-        if (opOK(_ST, _Section) == true)
-          {
-            _QueryStr.append(O._Str).append(V);
-            if (_Section != S.SET)
-              _Section = S.WHERE;
-          }
-        else
-          throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
+        opValBase(O, Long.toString(V));
       }
 
     protected final void opVal(Op O, char V)
     throws Exception
       {
-        if (opOK(_ST, _Section) == true)
-          {
-            _QueryStr.append(O._Str).append('\'').append(V).append('\'');
-            if (_Section != S.SET)
-              _Section = S.WHERE;
-          }
-        else
-          throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
+        opValBase(O, V == Character.UNASSIGNED ? null : "'" + V + "'");
       }
 
     protected final void opVal(Op O, ZonedDateTime V)
     throws Exception
       {
-        if (opOK(_ST, _Section) == true)
-          {
-            if (DateTimeUtil.isNowPlaceholder(V) == true)
-              _QueryStr.append(O._Str).append(_C.getCurrentTimestampStr());
-            else if (V == null)
-              {
-                if (_Section == S.WHERE || _Section == S.FROM)
-                  {
-                    if (O == Op.EQUALS)
-                      _QueryStr.append(" IS NULL ");
-                    else if (O == Op.NOT_EQUALS)
-                      _QueryStr.append(" IS NOT NULL ");
-                    else
-                      throw new Exception("Invalid query syntax: cannot use the operator " + O + " with a NULL value: " + _QueryStr.toString());
-                  }
-                else
-                  _QueryStr.append(" = NULL ");
-              }
-            else
-              {
-                _QueryStr.append(O._Str).append("'").append(DateTimeUtil.printDateTimeForSQL(V)).append("'");
-              }
-            if (_Section != S.SET)
-              _Section = S.WHERE;
-          }
-        else
-          throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
+        String valStr = V == null ? null
+        : DateTimeUtil.isNowPlaceholder(V) == true ? _C.getCurrentTimestampStr()
+        : DateTimeUtil.printDateTimeForSQLQuoted(V);
+        opValBase(O, valStr);
       }
 
 
     protected final void opVal(Op O, LocalDate V)
     throws Exception
       {
-        if (opOK(_ST, _Section) == true)
-          {
-            if (DateTimeUtil.isNowPlaceholder(V) == true)
-              _QueryStr.append(O._Str).append(_C.getCurrentDateStr());
-            else if (V == null)
-              {
-                if (_Section == S.WHERE || _Section == S.FROM)
-                  {
-                    if (O == Op.EQUALS)
-                      _QueryStr.append(" IS NULL ");
-                    else if (O == Op.NOT_EQUALS)
-                      _QueryStr.append(" IS NOT NULL ");
-                    else
-                      throw new Exception("Invalid query syntax: cannot use the operator " + O + " with a NULL value: " + _QueryStr.toString());
-                  }
-                else
-                  _QueryStr.append(" = NULL ");
-              }
-            else
-              {
-                _QueryStr.append(O._Str).append("'").append(DateTimeUtil.printDateForSQL(V)).append("'");
-              }
-            if (_Section != S.SET)
-              _Section = S.WHERE;
-          }
-        else
-          throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
+        String valStr = V == null ? null
+        : DateTimeUtil.isNowPlaceholder(V) == true ? _C.getCurrentDateStr()
+        : DateTimeUtil.printDateForSQLQuoted(V);
+        opValBase(O, valStr);
       }
 
 
@@ -992,6 +914,9 @@ public abstract class QueryHelper
         if (isWhereClause() == false)
           throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
 
+        if (_WherePos == -1)
+          where();
+
         if (coalesceVal != null)
           _QueryStr.append("coalesce(");
         Col.getFullColumnVarForSelect(_C, _QueryStr);
@@ -1029,6 +954,9 @@ public abstract class QueryHelper
         if (isWhereClause() == false)
           throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
 
+        if (_WherePos == -1)
+          where();
+
         if (coalesceVal != null)
           _QueryStr.append("coalesce(");
         Col.getFullColumnVarForSelect(_C, _QueryStr);
@@ -1060,6 +988,9 @@ public abstract class QueryHelper
         if (isWhereClause() == false)
           throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
 
+        if (_WherePos == -1)
+          where();
+
         if (not == true)
           _QueryStr.append(" not ");
         _QueryStr.append(" TILDA.In(");
@@ -1083,6 +1014,9 @@ public abstract class QueryHelper
           throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty value array.");
         if (isWhereClause() == false)
           throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
+
+        if (_WherePos == -1)
+          where();
 
         if (not == true)
           _QueryStr.append(" not ");
@@ -1114,6 +1048,9 @@ public abstract class QueryHelper
           throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty value array.");
         if (isWhereClause() == false)
           throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
+
+        if (_WherePos == -1)
+          where();
 
         if (coalesceVal != Character.UNASSIGNED)
           _QueryStr.append("coalesce(");
@@ -1151,6 +1088,9 @@ public abstract class QueryHelper
         if (isWhereClause() == false)
           throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
 
+        if (_WherePos == -1)
+          where();
+
         if (coalesceVal != null)
           _QueryStr.append("coalesce(");
         Col.getFullColumnVarForSelect(_C, _QueryStr);
@@ -1186,6 +1126,9 @@ public abstract class QueryHelper
     public QueryHelper in(Type_IntegerPrimitive Col, Integer coalesceVal, int[] V, boolean not)
     throws Exception
       {
+        if (_WherePos == -1)
+          where();
+
         if (V == null || V.length == 0)
           throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty value array.");
         if (isWhereClause() == false)
@@ -1231,6 +1174,9 @@ public abstract class QueryHelper
         if (isWhereClause() == false)
           throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
 
+        if (_WherePos == -1)
+          where();
+
         if (coalesceVal != null)
           _QueryStr.append("coalesce(");
         Col.getFullColumnVarForSelect(_C, _QueryStr);
@@ -1270,6 +1216,9 @@ public abstract class QueryHelper
           throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty value array.");
         if (isWhereClause() == false)
           throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
+
+        if (_WherePos == -1)
+          where();
 
         if (coalesceVal != null)
           _QueryStr.append("coalesce(");
@@ -1311,6 +1260,9 @@ public abstract class QueryHelper
         if (isWhereClause() == false)
           throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
 
+        if (_WherePos == -1)
+          where();
+
         if (coalesceVal != null)
           _QueryStr.append("coalesce(");
         Col.getFullColumnVarForSelect(_C, _QueryStr);
@@ -1350,6 +1302,9 @@ public abstract class QueryHelper
           throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty value array.");
         if (isWhereClause() == false)
           throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
+
+        if (_WherePos == -1)
+          where();
 
         if (coalesceVal != null)
           _QueryStr.append("coalesce(");
@@ -1397,6 +1352,9 @@ public abstract class QueryHelper
           throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty value collection.");
         if (isWhereClause() == false)
           throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
+
+        if (_WherePos == -1)
+          where();
 
         if (coalesceVal != null)
           _QueryStr.append("coalesce(");
@@ -1451,6 +1409,9 @@ public abstract class QueryHelper
         if (isWhereClause() == false)
           throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
 
+        if (_WherePos == -1)
+          where();
+
         if (coalesceVal != null)
           _QueryStr.append("coalesce(");
         Col.getFullColumnVarForSelect(_C, _QueryStr);
@@ -1499,6 +1460,9 @@ public abstract class QueryHelper
         if (isWhereClause() == false)
           throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
 
+        if (_WherePos == -1)
+          where();
+
         if (coalesceVal != null)
           _QueryStr.append("coalesce(");
         Col.getFullColumnVarForSelect(_C, _QueryStr);
@@ -1546,6 +1510,9 @@ public abstract class QueryHelper
           throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
         if (Q._Cardinality != 1)
           throw new Exception("Invalid query syntax: Calling the operator 'in' with a subquery that has a column cardinality " + Q._Cardinality + ": " + _QueryStr.toString());
+
+        if (_WherePos == -1)
+          where();
 
         Col.getFullColumnVarForSelect(_C, _QueryStr);
         if (not == true)
@@ -1631,6 +1598,8 @@ public abstract class QueryHelper
     protected QueryHelper compareBase(ColumnDefinition Col1, ColumnDefinition Col2, Op O)
     throws Exception
       {
+        if (_WherePos == -1)
+          where();
         Col1.getFullColumnVarForSelect(_C, _QueryStr);
         opCol(O, Col2);
         return this;
@@ -1717,29 +1686,46 @@ public abstract class QueryHelper
 
 
 
-    // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Col OP value Base
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    protected QueryHelper colOpBase(ColumnDefinition Col, String coalesceValStr, Op O, String ValStr)
+    throws Exception
+      {
+        if (_WherePos == -1)
+          where();
+
+        if (coalesceValStr != null)
+          _QueryStr.append("coalesce(");
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        if (coalesceValStr != null)
+          _QueryStr.append(", ").append(coalesceValStr).append(")");
+        opValBase(O, ValStr);
+        return this;
+      }
+
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Col EQUALS value
-    // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public QueryHelper equals(Type_StringPrimitive Col, String coalesceVal, String V)
+    throws Exception
+      {
+        return colOpBase(Col, coalesceVal == null ? null : TextUtil.escapeSingleQuoteForSQL(coalesceVal), Op.EQUALS, V == null ? V : TextUtil.escapeSingleQuoteForSQL(V));
+      }
+
     public QueryHelper equals(Type_StringPrimitive Col, String V)
     throws Exception
       {
         return equals(Col, null, V);
       }
 
-    public QueryHelper equals(Type_StringPrimitive Col, String coalesceVal, String V)
+    public QueryHelper equals(Type_CharPrimitive Col, char coalesceVal, char V)
     throws Exception
       {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ");
-            TextUtil.escapeSingleQuoteForSQL(_QueryStr, coalesceVal);
-            _QueryStr.append(")");
-          }
-        opVal(Op.EQUALS, V);
-        return this;
+        return colOpBase(Col, coalesceVal == Character.UNASSIGNED ? null : "'" + coalesceVal + "'", Op.EQUALS, V == Character.UNASSIGNED ? null : "'" + V + "'");
       }
 
     public QueryHelper equals(Type_CharPrimitive Col, char V)
@@ -1748,18 +1734,10 @@ public abstract class QueryHelper
         return equals(Col, (char) Character.UNASSIGNED, V);
       }
 
-    public QueryHelper equals(Type_CharPrimitive Col, char coalesceVal, char V)
+    public QueryHelper equals(Type_BooleanPrimitive Col, Boolean coalesceVal, boolean V)
     throws Exception
       {
-        if (coalesceVal != Character.UNASSIGNED)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != Character.UNASSIGNED)
-          {
-            _QueryStr.append(", '").append(coalesceVal).append("')");
-          }
-        opVal(Op.EQUALS, V);
-        return this;
+        return colOpBase(Col, coalesceVal == null ? null : coalesceVal.toString(), Op.EQUALS, Boolean.toString(V));
       }
 
     public QueryHelper equals(Type_BooleanPrimitive Col, boolean V)
@@ -1768,18 +1746,10 @@ public abstract class QueryHelper
         return equals(Col, null, V);
       }
 
-    public QueryHelper equals(Type_BooleanPrimitive Col, Boolean coalesceVal, boolean V)
+    public QueryHelper equals(Type_ShortPrimitive Col, Short coalesceVal, short V)
     throws Exception
       {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(coalesceVal).append(")");
-          }
-        opVal(Op.EQUALS, V);
-        return this;
+        return colOpBase(Col, coalesceVal == null ? null : coalesceVal.toString(), Op.EQUALS, Short.toString(V));
       }
 
     public QueryHelper equals(Type_ShortPrimitive Col, short V)
@@ -1788,18 +1758,10 @@ public abstract class QueryHelper
         return equals(Col, null, V);
       }
 
-    public QueryHelper equals(Type_ShortPrimitive Col, Short coalesceVal, short V)
+    public QueryHelper equals(Type_IntegerPrimitive Col, Integer coalesceVal, int V)
     throws Exception
       {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(coalesceVal).append(")");
-          }
-        opVal(Op.EQUALS, V);
-        return this;
+        return colOpBase(Col, coalesceVal == null ? null : coalesceVal.toString(), Op.EQUALS, Integer.toString(V));
       }
 
     public QueryHelper equals(Type_IntegerPrimitive Col, int V)
@@ -1808,18 +1770,10 @@ public abstract class QueryHelper
         return equals(Col, null, V);
       }
 
-    public QueryHelper equals(Type_IntegerPrimitive Col, Integer coalesceVal, int V)
+    public QueryHelper equals(Type_LongPrimitive Col, Long coalesceVal, long V)
     throws Exception
       {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(coalesceVal).append(")");
-          }
-        opVal(Op.EQUALS, V);
-        return this;
+        return colOpBase(Col, coalesceVal == null ? null : coalesceVal.toString(), Op.EQUALS, Long.toString(V));
       }
 
     public QueryHelper equals(Type_LongPrimitive Col, long V)
@@ -1828,18 +1782,10 @@ public abstract class QueryHelper
         return equals(Col, null, V);
       }
 
-    public QueryHelper equals(Type_LongPrimitive Col, Long coalesceVal, long V)
+    public QueryHelper equals(Type_FloatPrimitive Col, Float coalesceVal, float V)
     throws Exception
       {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(coalesceVal).append(")");
-          }
-        opVal(Op.EQUALS, V);
-        return this;
+        return colOpBase(Col, coalesceVal == null ? null : coalesceVal.toString(), Op.EQUALS, Float.toString(V));
       }
 
     public QueryHelper equals(Type_FloatPrimitive Col, float V)
@@ -1848,103 +1794,64 @@ public abstract class QueryHelper
         return equals(Col, null, V);
       }
 
-    public QueryHelper equals(Type_FloatPrimitive Col, Float coalesceVal, float V)
+    public QueryHelper equals(Type_DoublePrimitive Col, Double coalesceVal, double V)
     throws Exception
       {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(coalesceVal).append(")");
-          }
-        opVal(Op.EQUALS, V);
-        return this;
+        return colOpBase(Col, coalesceVal == null ? null : coalesceVal.toString(), Op.EQUALS, Double.toString(V));
       }
-
     public QueryHelper equals(Type_DoublePrimitive Col, double V)
     throws Exception
       {
         return equals(Col, null, V);
       }
 
-    public QueryHelper equals(Type_DoublePrimitive Col, Double coalesceVal, double V)
+    public QueryHelper equals(Type_DatetimePrimitive Col, ZonedDateTime coalesceVal, ZonedDateTime V)
     throws Exception
       {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(coalesceVal).append(")");
-          }
-        opVal(Op.EQUALS, V);
-        return this;
+        return colOpBase(Col, DateTimeUtil.printDateTimeForSQLQuoted(coalesceVal), Op.EQUALS, DateTimeUtil.printDateTimeForSQLQuoted(V));
       }
-
     public QueryHelper equals(Type_DatetimePrimitive Col, ZonedDateTime ZDT)
     throws Exception
       {
         return equals(Col, null, ZDT);
       }
 
-    public QueryHelper equals(Type_DatetimePrimitive Col, ZonedDateTime coalesceVal, ZonedDateTime ZDT)
+
+    public QueryHelper equals(Type_DatePrimitive Col, LocalDate coalesceVal, LocalDate V)
     throws Exception
       {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(DateTimeUtil.printDateTimeForSQL(coalesceVal)).append(")");
-          }
-        opVal(Op.EQUALS, ZDT);
-        return this;
+        return colOpBase(Col, DateTimeUtil.printDateForSQLQuoted(coalesceVal), Op.EQUALS, DateTimeUtil.printDateForSQLQuoted(V));
       }
-
     public QueryHelper equals(Type_DatePrimitive Col, LocalDate LDT)
     throws Exception
       {
         return equals(Col, null, LDT);
       }
 
-    public QueryHelper equals(Type_DatePrimitive Col, LocalDate coalesceVal, LocalDate LDT)
-    throws Exception
-      {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(DateTimeUtil.printDateForSQL(coalesceVal)).append(")");
-          }
-        opVal(Op.EQUALS, LDT);
-        return this;
-      }
+
+
+
+
 
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Col < value
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public QueryHelper lt(Type_StringPrimitive Col, String coalesceVal, String V)
+    throws Exception
+      {
+        return colOpBase(Col, coalesceVal == null ? null : TextUtil.escapeSingleQuoteForSQL(coalesceVal), Op.LT, V == null ? V : TextUtil.escapeSingleQuoteForSQL(V));
+      }
+
     public QueryHelper lt(Type_StringPrimitive Col, String V)
     throws Exception
       {
         return lt(Col, null, V);
       }
 
-    public QueryHelper lt(Type_StringPrimitive Col, String coalesceVal, String V)
+    public QueryHelper lt(Type_CharPrimitive Col, char coalesceVal, char V)
     throws Exception
       {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ");
-            TextUtil.escapeSingleQuoteForSQL(_QueryStr, coalesceVal);
-            _QueryStr.append(")");
-          }
-        opVal(Op.LT, V);
-        return this;
+        return colOpBase(Col, coalesceVal == Character.UNASSIGNED ? null : "'" + coalesceVal + "'", Op.LT, V == Character.UNASSIGNED ? null : "'" + V + "'");
       }
 
     public QueryHelper lt(Type_CharPrimitive Col, char V)
@@ -1953,18 +1860,10 @@ public abstract class QueryHelper
         return lt(Col, (char) Character.UNASSIGNED, V);
       }
 
-    public QueryHelper lt(Type_CharPrimitive Col, char coalesceVal, char V)
+    public QueryHelper lt(Type_BooleanPrimitive Col, Boolean coalesceVal, boolean V)
     throws Exception
       {
-        if (coalesceVal != Character.UNASSIGNED)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != Character.UNASSIGNED)
-          {
-            _QueryStr.append(", '").append(coalesceVal).append("')");
-          }
-        opVal(Op.LT, V);
-        return this;
+        return colOpBase(Col, coalesceVal == null ? null : coalesceVal.toString(), Op.LT, Boolean.toString(V));
       }
 
     public QueryHelper lt(Type_BooleanPrimitive Col, boolean V)
@@ -1973,18 +1872,10 @@ public abstract class QueryHelper
         return lt(Col, null, V);
       }
 
-    public QueryHelper lt(Type_BooleanPrimitive Col, Boolean coalesceVal, boolean V)
+    public QueryHelper lt(Type_ShortPrimitive Col, Short coalesceVal, short V)
     throws Exception
       {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(coalesceVal).append(")");
-          }
-        opVal(Op.LT, V);
-        return this;
+        return colOpBase(Col, coalesceVal == null ? null : coalesceVal.toString(), Op.LT, Short.toString(V));
       }
 
     public QueryHelper lt(Type_ShortPrimitive Col, short V)
@@ -1993,18 +1884,10 @@ public abstract class QueryHelper
         return lt(Col, null, V);
       }
 
-    public QueryHelper lt(Type_ShortPrimitive Col, Short coalesceVal, short V)
+    public QueryHelper lt(Type_IntegerPrimitive Col, Integer coalesceVal, int V)
     throws Exception
       {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(coalesceVal).append(")");
-          }
-        opVal(Op.LT, V);
-        return this;
+        return colOpBase(Col, coalesceVal == null ? null : coalesceVal.toString(), Op.LT, Integer.toString(V));
       }
 
     public QueryHelper lt(Type_IntegerPrimitive Col, int V)
@@ -2013,18 +1896,10 @@ public abstract class QueryHelper
         return lt(Col, null, V);
       }
 
-    public QueryHelper lt(Type_IntegerPrimitive Col, Integer coalesceVal, int V)
+    public QueryHelper lt(Type_LongPrimitive Col, Long coalesceVal, long V)
     throws Exception
       {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(coalesceVal).append(")");
-          }
-        opVal(Op.LT, V);
-        return this;
+        return colOpBase(Col, coalesceVal == null ? null : coalesceVal.toString(), Op.LT, Long.toString(V));
       }
 
     public QueryHelper lt(Type_LongPrimitive Col, long V)
@@ -2033,18 +1908,10 @@ public abstract class QueryHelper
         return lt(Col, null, V);
       }
 
-    public QueryHelper lt(Type_LongPrimitive Col, Long coalesceVal, long V)
+    public QueryHelper lt(Type_FloatPrimitive Col, Float coalesceVal, float V)
     throws Exception
       {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(coalesceVal).append(")");
-          }
-        opVal(Op.LT, V);
-        return this;
+        return colOpBase(Col, coalesceVal == null ? null : coalesceVal.toString(), Op.LT, Float.toString(V));
       }
 
     public QueryHelper lt(Type_FloatPrimitive Col, float V)
@@ -2053,18 +1920,10 @@ public abstract class QueryHelper
         return lt(Col, null, V);
       }
 
-    public QueryHelper lt(Type_FloatPrimitive Col, Float coalesceVal, float V)
+    public QueryHelper lt(Type_DoublePrimitive Col, Double coalesceVal, double V)
     throws Exception
       {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(coalesceVal).append(")");
-          }
-        opVal(Op.LT, V);
-        return this;
+        return colOpBase(Col, coalesceVal == null ? null : coalesceVal.toString(), Op.LT, Double.toString(V));
       }
 
     public QueryHelper lt(Type_DoublePrimitive Col, double V)
@@ -2073,79 +1932,583 @@ public abstract class QueryHelper
         return lt(Col, null, V);
       }
 
-    public QueryHelper lt(Type_DoublePrimitive Col, Double coalesceVal, double V)
+    public QueryHelper lt(Type_DatetimePrimitive Col, ZonedDateTime coalesceVal, ZonedDateTime V)
     throws Exception
       {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(coalesceVal).append(")");
-          }
-        opVal(Op.LT, V);
-        return this;
+        return colOpBase(Col, DateTimeUtil.printDateTimeForSQLQuoted(coalesceVal), Op.LT, DateTimeUtil.printDateTimeForSQLQuoted(V));
       }
 
-    public QueryHelper lt(Type_DatetimePrimitive Col, ZonedDateTime V)
+    public QueryHelper lt(Type_DatetimePrimitive Col, ZonedDateTime ZDT)
     throws Exception
       {
-        return lt(Col, null, V);
+        return lt(Col, null, ZDT);
       }
 
-    public QueryHelper lt(Type_DatetimePrimitive Col, ZonedDateTime coalesceVal, ZonedDateTime ZDT)
+    public QueryHelper lt(Type_DatetimePrimitive Col, LocalDate coalesceVal, LocalDate V)
     throws Exception
       {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(DateTimeUtil.printDateTimeForSQL(coalesceVal)).append(")");
-          }
-        opVal(Op.LT, ZDT);
-        return this;
+        return colOpBase(Col, DateTimeUtil.printDateForSQLQuoted(coalesceVal), Op.LT, DateTimeUtil.printDateForSQLQuoted(V));
       }
 
-    public QueryHelper lt(Type_DatePrimitive Col, LocalDate V)
+    public QueryHelper lt(Type_DatetimePrimitive Col, LocalDate ZDT)
     throws Exception
       {
-        return lt(Col, null, V);
+        return lt(Col, null, ZDT);
       }
 
-    public QueryHelper lt(Type_DatePrimitive Col, LocalDate coalesceVal, LocalDate LDT)
+    public QueryHelper lt(Type_DatePrimitive Col, LocalDate coalesceVal, LocalDate V)
     throws Exception
       {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(DateTimeUtil.printDateForSQL(coalesceVal)).append(")");
-          }
-        opVal(Op.LT, LDT);
-        return this;
+        return colOpBase(Col, DateTimeUtil.printDateForSQLQuoted(coalesceVal), Op.LT, DateTimeUtil.printDateForSQLQuoted(V));
       }
 
-    public QueryHelper lt(Type_DatetimePrimitive Col, LocalDate V)
+    public QueryHelper lt(Type_DatePrimitive Col, LocalDate LDT)
     throws Exception
       {
-        return lt(Col, null, V);
+        return lt(Col, null, LDT);
       }
 
-    public QueryHelper lt(Type_DatetimePrimitive Col, LocalDate coalesceVal, LocalDate LDT)
+
+    
+
+    // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Col <= value
+    // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public QueryHelper lte(Type_StringPrimitive Col, String coalesceVal, String V)
     throws Exception
       {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(DateTimeUtil.printDateForSQL(coalesceVal)).append(")");
-          }
-        opVal(Op.LT, LDT);
-        return this;
+        return colOpBase(Col, coalesceVal == null ? null : TextUtil.escapeSingleQuoteForSQL(coalesceVal), Op.LTE, V == null ? V : TextUtil.escapeSingleQuoteForSQL(V));
       }
+
+    public QueryHelper lte(Type_StringPrimitive Col, String V)
+    throws Exception
+      {
+        return lte(Col, null, V);
+      }
+
+    public QueryHelper lte(Type_CharPrimitive Col, char coalesceVal, char V)
+    throws Exception
+      {
+        return colOpBase(Col, coalesceVal == Character.UNASSIGNED ? null : "'" + coalesceVal + "'", Op.LTE, V == Character.UNASSIGNED ? null : "'" + V + "'");
+      }
+
+    public QueryHelper lte(Type_CharPrimitive Col, char V)
+    throws Exception
+      {
+        return lte(Col, (char) Character.UNASSIGNED, V);
+      }
+
+    public QueryHelper lte(Type_BooleanPrimitive Col, Boolean coalesceVal, boolean V)
+    throws Exception
+      {
+        return colOpBase(Col, coalesceVal == null ? null : coalesceVal.toString(), Op.LTE, Boolean.toString(V));
+      }
+
+    public QueryHelper lte(Type_BooleanPrimitive Col, boolean V)
+    throws Exception
+      {
+        return lte(Col, null, V);
+      }
+
+    public QueryHelper lte(Type_ShortPrimitive Col, Short coalesceVal, short V)
+    throws Exception
+      {
+        return colOpBase(Col, coalesceVal == null ? null : coalesceVal.toString(), Op.LTE, Short.toString(V));
+      }
+
+    public QueryHelper lte(Type_ShortPrimitive Col, short V)
+    throws Exception
+      {
+        return lte(Col, null, V);
+      }
+
+    public QueryHelper lte(Type_IntegerPrimitive Col, Integer coalesceVal, int V)
+    throws Exception
+      {
+        return colOpBase(Col, coalesceVal == null ? null : coalesceVal.toString(), Op.LTE, Integer.toString(V));
+      }
+
+    public QueryHelper lte(Type_IntegerPrimitive Col, int V)
+    throws Exception
+      {
+        return lte(Col, null, V);
+      }
+
+    public QueryHelper lte(Type_LongPrimitive Col, Long coalesceVal, long V)
+    throws Exception
+      {
+        return colOpBase(Col, coalesceVal == null ? null : coalesceVal.toString(), Op.LTE, Long.toString(V));
+      }
+
+    public QueryHelper lte(Type_LongPrimitive Col, long V)
+    throws Exception
+      {
+        return lte(Col, null, V);
+      }
+
+    public QueryHelper lte(Type_FloatPrimitive Col, Float coalesceVal, float V)
+    throws Exception
+      {
+        return colOpBase(Col, coalesceVal == null ? null : coalesceVal.toString(), Op.LTE, Float.toString(V));
+      }
+
+    public QueryHelper lte(Type_FloatPrimitive Col, float V)
+    throws Exception
+      {
+        return lte(Col, null, V);
+      }
+
+    public QueryHelper lte(Type_DoublePrimitive Col, Double coalesceVal, double V)
+    throws Exception
+      {
+        return colOpBase(Col, coalesceVal == null ? null : coalesceVal.toString(), Op.LTE, Double.toString(V));
+      }
+
+    public QueryHelper lte(Type_DoublePrimitive Col, double V)
+    throws Exception
+      {
+        return lte(Col, null, V);
+      }
+
+    public QueryHelper lte(Type_DatetimePrimitive Col, ZonedDateTime coalesceVal, ZonedDateTime V)
+    throws Exception
+      {
+        return colOpBase(Col, DateTimeUtil.printDateTimeForSQLQuoted(coalesceVal), Op.LTE, DateTimeUtil.printDateTimeForSQLQuoted(V));
+      }
+
+    public QueryHelper lte(Type_DatetimePrimitive Col, ZonedDateTime ZDT)
+    throws Exception
+      {
+        return lte(Col, null, ZDT);
+      }
+
+    public QueryHelper lte(Type_DatetimePrimitive Col, LocalDate coalesceVal, LocalDate V)
+    throws Exception
+      {
+        return colOpBase(Col, DateTimeUtil.printDateForSQLQuoted(coalesceVal), Op.LTE, DateTimeUtil.printDateForSQLQuoted(V));
+      }
+
+    public QueryHelper lte(Type_DatetimePrimitive Col, LocalDate ZDT)
+    throws Exception
+      {
+        return lte(Col, null, ZDT);
+      }
+
+    public QueryHelper lte(Type_DatePrimitive Col, LocalDate coalesceVal, LocalDate V)
+    throws Exception
+      {
+        return colOpBase(Col, DateTimeUtil.printDateForSQLQuoted(coalesceVal), Op.LTE, DateTimeUtil.printDateForSQLQuoted(V));
+      }
+
+    public QueryHelper lte(Type_DatePrimitive Col, LocalDate LDT)
+    throws Exception
+      {
+        return lte(Col, null, LDT);
+      }
+    
+    
+    
+    // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Col > value
+    // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public QueryHelper gt(Type_StringPrimitive Col, String coalesceVal, String V)
+    throws Exception
+      {
+        return colOpBase(Col, coalesceVal == null ? null : TextUtil.escapeSingleQuoteForSQL(coalesceVal), Op.GT, V == null ? V : TextUtil.escapeSingleQuoteForSQL(V));
+      }
+
+    public QueryHelper gt(Type_StringPrimitive Col, String V)
+    throws Exception
+      {
+        return gt(Col, null, V);
+      }
+
+    public QueryHelper gt(Type_CharPrimitive Col, char coalesceVal, char V)
+    throws Exception
+      {
+        return colOpBase(Col, coalesceVal == Character.UNASSIGNED ? null : "'" + coalesceVal + "'", Op.GT, V == Character.UNASSIGNED ? null : "'" + V + "'");
+      }
+
+    public QueryHelper gt(Type_CharPrimitive Col, char V)
+    throws Exception
+      {
+        return gt(Col, (char) Character.UNASSIGNED, V);
+      }
+
+    public QueryHelper gt(Type_BooleanPrimitive Col, Boolean coalesceVal, boolean V)
+    throws Exception
+      {
+        return colOpBase(Col, coalesceVal == null ? null : coalesceVal.toString(), Op.GT, Boolean.toString(V));
+      }
+
+    public QueryHelper gt(Type_BooleanPrimitive Col, boolean V)
+    throws Exception
+      {
+        return gt(Col, null, V);
+      }
+
+    public QueryHelper gt(Type_ShortPrimitive Col, Short coalesceVal, short V)
+    throws Exception
+      {
+        return colOpBase(Col, coalesceVal == null ? null : coalesceVal.toString(), Op.GT, Short.toString(V));
+      }
+
+    public QueryHelper gt(Type_ShortPrimitive Col, short V)
+    throws Exception
+      {
+        return gt(Col, null, V);
+      }
+
+    public QueryHelper gt(Type_IntegerPrimitive Col, Integer coalesceVal, int V)
+    throws Exception
+      {
+        return colOpBase(Col, coalesceVal == null ? null : coalesceVal.toString(), Op.GT, Integer.toString(V));
+      }
+
+    public QueryHelper gt(Type_IntegerPrimitive Col, int V)
+    throws Exception
+      {
+        return gt(Col, null, V);
+      }
+
+    public QueryHelper gt(Type_LongPrimitive Col, Long coalesceVal, long V)
+    throws Exception
+      {
+        return colOpBase(Col, coalesceVal == null ? null : coalesceVal.toString(), Op.GT, Long.toString(V));
+      }
+
+    public QueryHelper gt(Type_LongPrimitive Col, long V)
+    throws Exception
+      {
+        return gt(Col, null, V);
+      }
+
+    public QueryHelper gt(Type_FloatPrimitive Col, Float coalesceVal, float V)
+    throws Exception
+      {
+        return colOpBase(Col, coalesceVal == null ? null : coalesceVal.toString(), Op.GT, Float.toString(V));
+      }
+
+    public QueryHelper gt(Type_FloatPrimitive Col, float V)
+    throws Exception
+      {
+        return gt(Col, null, V);
+      }
+
+    public QueryHelper gt(Type_DoublePrimitive Col, Double coalesceVal, double V)
+    throws Exception
+      {
+        return colOpBase(Col, coalesceVal == null ? null : coalesceVal.toString(), Op.GT, Double.toString(V));
+      }
+
+    public QueryHelper gt(Type_DoublePrimitive Col, double V)
+    throws Exception
+      {
+        return gt(Col, null, V);
+      }
+
+    public QueryHelper gt(Type_DatetimePrimitive Col, ZonedDateTime coalesceVal, ZonedDateTime V)
+    throws Exception
+      {
+        return colOpBase(Col, DateTimeUtil.printDateTimeForSQLQuoted(coalesceVal), Op.GT, DateTimeUtil.printDateTimeForSQLQuoted(V));
+      }
+
+    public QueryHelper gt(Type_DatetimePrimitive Col, ZonedDateTime ZDT)
+    throws Exception
+      {
+        return gt(Col, null, ZDT);
+      }
+
+    public QueryHelper gt(Type_DatetimePrimitive Col, LocalDate coalesceVal, LocalDate V)
+    throws Exception
+      {
+        return colOpBase(Col, DateTimeUtil.printDateForSQLQuoted(coalesceVal), Op.GT, DateTimeUtil.printDateForSQLQuoted(V));
+      }
+
+    public QueryHelper gt(Type_DatetimePrimitive Col, LocalDate ZDT)
+    throws Exception
+      {
+        return gt(Col, null, ZDT);
+      }
+
+    public QueryHelper gt(Type_DatePrimitive Col, LocalDate coalesceVal, LocalDate V)
+    throws Exception
+      {
+        return colOpBase(Col, DateTimeUtil.printDateForSQLQuoted(coalesceVal), Op.GT, DateTimeUtil.printDateForSQLQuoted(V));
+      }
+
+    public QueryHelper gt(Type_DatePrimitive Col, LocalDate LDT)
+    throws Exception
+      {
+        return gt(Col, null, LDT);
+      }
+    
+    
+    
+    // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Col >= value
+    // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public QueryHelper gte(Type_StringPrimitive Col, String coalesceVal, String V)
+    throws Exception
+      {
+        return colOpBase(Col, coalesceVal == null ? null : TextUtil.escapeSingleQuoteForSQL(coalesceVal), Op.GTE, V == null ? V : TextUtil.escapeSingleQuoteForSQL(V));
+      }
+
+    public QueryHelper gte(Type_StringPrimitive Col, String V)
+    throws Exception
+      {
+        return gte(Col, null, V);
+      }
+
+    public QueryHelper gte(Type_CharPrimitive Col, char coalesceVal, char V)
+    throws Exception
+      {
+        return colOpBase(Col, coalesceVal == Character.UNASSIGNED ? null : "'" + coalesceVal + "'", Op.GTE, V == Character.UNASSIGNED ? null : "'" + V + "'");
+      }
+
+    public QueryHelper gte(Type_CharPrimitive Col, char V)
+    throws Exception
+      {
+        return gte(Col, (char) Character.UNASSIGNED, V);
+      }
+
+    public QueryHelper gte(Type_BooleanPrimitive Col, Boolean coalesceVal, boolean V)
+    throws Exception
+      {
+        return colOpBase(Col, coalesceVal == null ? null : coalesceVal.toString(), Op.GTE, Boolean.toString(V));
+      }
+
+    public QueryHelper gte(Type_BooleanPrimitive Col, boolean V)
+    throws Exception
+      {
+        return gte(Col, null, V);
+      }
+
+    public QueryHelper gte(Type_ShortPrimitive Col, Short coalesceVal, short V)
+    throws Exception
+      {
+        return colOpBase(Col, coalesceVal == null ? null : coalesceVal.toString(), Op.GTE, Short.toString(V));
+      }
+
+    public QueryHelper gte(Type_ShortPrimitive Col, short V)
+    throws Exception
+      {
+        return gte(Col, null, V);
+      }
+
+    public QueryHelper gte(Type_IntegerPrimitive Col, Integer coalesceVal, int V)
+    throws Exception
+      {
+        return colOpBase(Col, coalesceVal == null ? null : coalesceVal.toString(), Op.GTE, Integer.toString(V));
+      }
+
+    public QueryHelper gte(Type_IntegerPrimitive Col, int V)
+    throws Exception
+      {
+        return gte(Col, null, V);
+      }
+
+    public QueryHelper gte(Type_LongPrimitive Col, Long coalesceVal, long V)
+    throws Exception
+      {
+        return colOpBase(Col, coalesceVal == null ? null : coalesceVal.toString(), Op.GTE, Long.toString(V));
+      }
+
+    public QueryHelper gte(Type_LongPrimitive Col, long V)
+    throws Exception
+      {
+        return gte(Col, null, V);
+      }
+
+    public QueryHelper gte(Type_FloatPrimitive Col, Float coalesceVal, float V)
+    throws Exception
+      {
+        return colOpBase(Col, coalesceVal == null ? null : coalesceVal.toString(), Op.GTE, Float.toString(V));
+      }
+
+    public QueryHelper gte(Type_FloatPrimitive Col, float V)
+    throws Exception
+      {
+        return gte(Col, null, V);
+      }
+
+    public QueryHelper gte(Type_DoublePrimitive Col, Double coalesceVal, double V)
+    throws Exception
+      {
+        return colOpBase(Col, coalesceVal == null ? null : coalesceVal.toString(), Op.GTE, Double.toString(V));
+      }
+
+    public QueryHelper gte(Type_DoublePrimitive Col, double V)
+    throws Exception
+      {
+        return gte(Col, null, V);
+      }
+
+    public QueryHelper gte(Type_DatetimePrimitive Col, ZonedDateTime coalesceVal, ZonedDateTime V)
+    throws Exception
+      {
+        return colOpBase(Col, DateTimeUtil.printDateTimeForSQLQuoted(coalesceVal), Op.GTE, DateTimeUtil.printDateTimeForSQLQuoted(V));
+      }
+
+    public QueryHelper gte(Type_DatetimePrimitive Col, ZonedDateTime ZDT)
+    throws Exception
+      {
+        return gte(Col, null, ZDT);
+      }
+
+    public QueryHelper gte(Type_DatetimePrimitive Col, LocalDate coalesceVal, LocalDate V)
+    throws Exception
+      {
+        return colOpBase(Col, DateTimeUtil.printDateForSQLQuoted(coalesceVal), Op.GTE, DateTimeUtil.printDateForSQLQuoted(V));
+      }
+
+    public QueryHelper gte(Type_DatetimePrimitive Col, LocalDate ZDT)
+    throws Exception
+      {
+        return gte(Col, null, ZDT);
+      }
+    
+    public QueryHelper gte(Type_DatePrimitive Col, LocalDate coalesceVal, LocalDate V)
+    throws Exception
+      {
+        return colOpBase(Col, DateTimeUtil.printDateForSQLQuoted(coalesceVal), Op.GTE, DateTimeUtil.printDateForSQLQuoted(V));
+      }
+
+    public QueryHelper gte(Type_DatePrimitive Col, LocalDate LDT)
+    throws Exception
+      {
+        return gte(Col, null, LDT);
+      }
+  
+    
+    
+    // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Col <> value
+    // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public QueryHelper notEquals(Type_StringPrimitive Col, String coalesceVal, String V)
+    throws Exception
+      {
+        return colOpBase(Col, coalesceVal == null ? null : TextUtil.escapeSingleQuoteForSQL(coalesceVal), Op.NOT_EQUALS, V == null ? V : TextUtil.escapeSingleQuoteForSQL(V));
+      }
+
+    public QueryHelper notEquals(Type_StringPrimitive Col, String V)
+    throws Exception
+      {
+        return notEquals(Col, null, V);
+      }
+
+    public QueryHelper notEquals(Type_CharPrimitive Col, char coalesceVal, char V)
+    throws Exception
+      {
+        return colOpBase(Col, coalesceVal == Character.UNASSIGNED ? null : "'" + coalesceVal + "'", Op.NOT_EQUALS, V == Character.UNASSIGNED ? null : "'" + V + "'");
+      }
+
+    public QueryHelper notEquals(Type_CharPrimitive Col, char V)
+    throws Exception
+      {
+        return notEquals(Col, (char) Character.UNASSIGNED, V);
+      }
+
+    public QueryHelper notEquals(Type_BooleanPrimitive Col, Boolean coalesceVal, boolean V)
+    throws Exception
+      {
+        return colOpBase(Col, coalesceVal == null ? null : coalesceVal.toString(), Op.NOT_EQUALS, Boolean.toString(V));
+      }
+
+    public QueryHelper notEquals(Type_BooleanPrimitive Col, boolean V)
+    throws Exception
+      {
+        return notEquals(Col, null, V);
+      }
+
+    public QueryHelper notEquals(Type_ShortPrimitive Col, Short coalesceVal, short V)
+    throws Exception
+      {
+        return colOpBase(Col, coalesceVal == null ? null : coalesceVal.toString(), Op.NOT_EQUALS, Short.toString(V));
+      }
+
+    public QueryHelper notEquals(Type_ShortPrimitive Col, short V)
+    throws Exception
+      {
+        return notEquals(Col, null, V);
+      }
+
+    public QueryHelper notEquals(Type_IntegerPrimitive Col, Integer coalesceVal, int V)
+    throws Exception
+      {
+        return colOpBase(Col, coalesceVal == null ? null : coalesceVal.toString(), Op.NOT_EQUALS, Integer.toString(V));
+      }
+
+    public QueryHelper notEquals(Type_IntegerPrimitive Col, int V)
+    throws Exception
+      {
+        return notEquals(Col, null, V);
+      }
+
+    public QueryHelper notEquals(Type_LongPrimitive Col, Long coalesceVal, long V)
+    throws Exception
+      {
+        return colOpBase(Col, coalesceVal == null ? null : coalesceVal.toString(), Op.NOT_EQUALS, Long.toString(V));
+      }
+
+    public QueryHelper notEquals(Type_LongPrimitive Col, long V)
+    throws Exception
+      {
+        return notEquals(Col, null, V);
+      }
+
+    public QueryHelper notEquals(Type_FloatPrimitive Col, Float coalesceVal, float V)
+    throws Exception
+      {
+        return colOpBase(Col, coalesceVal == null ? null : coalesceVal.toString(), Op.NOT_EQUALS, Float.toString(V));
+      }
+
+    public QueryHelper notEquals(Type_FloatPrimitive Col, float V)
+    throws Exception
+      {
+        return notEquals(Col, null, V);
+      }
+
+    public QueryHelper notEquals(Type_DoublePrimitive Col, Double coalesceVal, double V)
+    throws Exception
+      {
+        return colOpBase(Col, coalesceVal == null ? null : coalesceVal.toString(), Op.NOT_EQUALS, Double.toString(V));
+      }
+
+    public QueryHelper notEquals(Type_DoublePrimitive Col, double V)
+    throws Exception
+      {
+        return notEquals(Col, null, V);
+      }
+
+    public QueryHelper notEquals(Type_DatetimePrimitive Col, ZonedDateTime coalesceVal, ZonedDateTime V)
+    throws Exception
+      {
+        return colOpBase(Col, DateTimeUtil.printDateTimeForSQLQuoted(coalesceVal), Op.NOT_EQUALS, DateTimeUtil.printDateTimeForSQLQuoted(V));
+      }
+
+    public QueryHelper notEquals(Type_DatetimePrimitive Col, ZonedDateTime ZDT)
+    throws Exception
+      {
+        return notEquals(Col, null, ZDT);
+      }
+
+    public QueryHelper notEquals(Type_DatePrimitive Col, LocalDate coalesceVal, LocalDate V)
+    throws Exception
+      {
+        return colOpBase(Col, DateTimeUtil.printDateForSQLQuoted(coalesceVal), Op.NOT_EQUALS, DateTimeUtil.printDateForSQLQuoted(V));
+      }
+
+    public QueryHelper notEquals(Type_DatePrimitive Col, LocalDate LDT)
+    throws Exception
+      {
+        return notEquals(Col, null, LDT);
+      }
+  
+    
+    
+
+
 
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Col < Col
@@ -2222,212 +2585,6 @@ public abstract class QueryHelper
         return compareBase(Col1, Col2, Op.LT);
       }
 
-
-    // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Col <= value
-    // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public QueryHelper lte(Type_StringPrimitive Col, String V)
-    throws Exception
-      {
-        return lte(Col, null, V);
-      }
-
-    public QueryHelper lte(Type_StringPrimitive Col, String coalesceVal, String V)
-    throws Exception
-      {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ");
-            TextUtil.escapeSingleQuoteForSQL(_QueryStr, coalesceVal);
-            _QueryStr.append(")");
-          }
-        opVal(Op.LTE, V);
-        return this;
-      }
-
-    public QueryHelper lte(Type_CharPrimitive Col, char V)
-    throws Exception
-      {
-        return lte(Col, (char) Character.UNASSIGNED, V);
-      }
-
-    public QueryHelper lte(Type_CharPrimitive Col, char coalesceVal, char V)
-    throws Exception
-      {
-        if (coalesceVal != Character.UNASSIGNED)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != Character.UNASSIGNED)
-          {
-            _QueryStr.append(", '").append(coalesceVal).append("')");
-          }
-        opVal(Op.LTE, V);
-        return this;
-      }
-
-    public QueryHelper lte(Type_BooleanPrimitive Col, boolean V)
-    throws Exception
-      {
-        return lte(Col, null, V);
-      }
-
-    public QueryHelper lte(Type_BooleanPrimitive Col, Boolean coalesceVal, boolean V)
-    throws Exception
-      {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(coalesceVal).append(")");
-          }
-        opVal(Op.LTE, V);
-        return this;
-      }
-
-    public QueryHelper lte(Type_ShortPrimitive Col, short V)
-    throws Exception
-      {
-        return lte(Col, null, V);
-      }
-
-    public QueryHelper lte(Type_ShortPrimitive Col, Short coalesceVal, short V)
-    throws Exception
-      {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(coalesceVal).append(")");
-          }
-        opVal(Op.LTE, V);
-        return this;
-      }
-
-    public QueryHelper lte(Type_IntegerPrimitive Col, int V)
-    throws Exception
-      {
-        return lte(Col, null, V);
-      }
-
-    public QueryHelper lte(Type_IntegerPrimitive Col, Integer coalesceVal, int V)
-    throws Exception
-      {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(coalesceVal).append(")");
-          }
-        opVal(Op.LTE, V);
-        return this;
-      }
-
-    public QueryHelper lte(Type_LongPrimitive Col, long V)
-    throws Exception
-      {
-        return lte(Col, null, V);
-      }
-
-    public QueryHelper lte(Type_LongPrimitive Col, Long coalesceVal, long V)
-    throws Exception
-      {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(coalesceVal).append(")");
-          }
-        opVal(Op.LTE, V);
-        return this;
-      }
-
-    public QueryHelper lte(Type_FloatPrimitive Col, float V)
-    throws Exception
-      {
-        return lte(Col, null, V);
-      }
-
-    public QueryHelper lte(Type_FloatPrimitive Col, Float coalesceVal, float V)
-    throws Exception
-      {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(coalesceVal).append(")");
-          }
-        opVal(Op.LTE, V);
-        return this;
-      }
-
-    public QueryHelper lte(Type_DoublePrimitive Col, double V)
-    throws Exception
-      {
-        return lte(Col, null, V);
-      }
-
-    public QueryHelper lte(Type_DoublePrimitive Col, Double coalesceVal, double V)
-    throws Exception
-      {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(coalesceVal).append(")");
-          }
-        opVal(Op.LTE, V);
-        return this;
-      }
-
-    public QueryHelper lte(Type_DatetimePrimitive Col, ZonedDateTime V)
-    throws Exception
-      {
-        return lte(Col, null, V);
-      }
-
-    public QueryHelper lte(Type_DatetimePrimitive Col, ZonedDateTime coalesceVal, ZonedDateTime V)
-    throws Exception
-      {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(DateTimeUtil.printDateTimeForSQL(coalesceVal)).append(")");
-          }
-        opVal(Op.LTE, V);
-        return this;
-      }
-
-    public QueryHelper lte(Type_DatePrimitive Col, LocalDate V)
-    throws Exception
-      {
-        return lte(Col, null, V);
-      }
-
-    public QueryHelper lte(Type_DatePrimitive Col, LocalDate coalesceVal, LocalDate V)
-    throws Exception
-      {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(DateTimeUtil.printDateForSQL(coalesceVal)).append(")");
-          }
-        opVal(Op.LTE, V);
-        return this;
-      }
-
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Col <= Col
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2490,213 +2647,6 @@ public abstract class QueryHelper
       {
         return compareBase(Col1, Col2, Op.LTE);
       }
-
-
-    // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Col > value
-    // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public QueryHelper gt(Type_StringPrimitive Col, String V)
-    throws Exception
-      {
-        return gt(Col, null, V);
-      }
-
-    public QueryHelper gt(Type_StringPrimitive Col, String coalesceVal, String V)
-    throws Exception
-      {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ");
-            TextUtil.escapeSingleQuoteForSQL(_QueryStr, coalesceVal);
-            _QueryStr.append(")");
-          }
-        opVal(Op.GT, V);
-        return this;
-      }
-
-    public QueryHelper gt(Type_CharPrimitive Col, char V)
-    throws Exception
-      {
-        return gt(Col, (char) Character.UNASSIGNED, V);
-      }
-
-    public QueryHelper gt(Type_CharPrimitive Col, char coalesceVal, char V)
-    throws Exception
-      {
-        if (coalesceVal != Character.UNASSIGNED)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != Character.UNASSIGNED)
-          {
-            _QueryStr.append(", '").append(coalesceVal).append("')");
-          }
-        opVal(Op.GT, V);
-        return this;
-      }
-
-    public QueryHelper gt(Type_BooleanPrimitive Col, boolean V)
-    throws Exception
-      {
-        return gt(Col, null, V);
-      }
-
-    public QueryHelper gt(Type_BooleanPrimitive Col, Boolean coalesceVal, boolean V)
-    throws Exception
-      {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(coalesceVal).append(")");
-          }
-        opVal(Op.GT, V);
-        return this;
-      }
-
-    public QueryHelper gt(Type_ShortPrimitive Col, short V)
-    throws Exception
-      {
-        return gt(Col, null, V);
-      }
-
-    public QueryHelper gt(Type_ShortPrimitive Col, Short coalesceVal, short V)
-    throws Exception
-      {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(coalesceVal).append(")");
-          }
-        opVal(Op.GT, V);
-        return this;
-      }
-
-    public QueryHelper gt(Type_IntegerPrimitive Col, int V)
-    throws Exception
-      {
-        return gt(Col, null, V);
-      }
-
-    public QueryHelper gt(Type_IntegerPrimitive Col, Integer coalesceVal, int V)
-    throws Exception
-      {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(coalesceVal).append(")");
-          }
-        opVal(Op.GT, V);
-        return this;
-      }
-
-    public QueryHelper gt(Type_LongPrimitive Col, long V)
-    throws Exception
-      {
-        return gt(Col, null, V);
-      }
-
-    public QueryHelper gt(Type_LongPrimitive Col, Long coalesceVal, long V)
-    throws Exception
-      {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(coalesceVal).append(")");
-          }
-        opVal(Op.GT, V);
-        return this;
-      }
-
-    public QueryHelper gt(Type_FloatPrimitive Col, float V)
-    throws Exception
-      {
-        return gt(Col, null, V);
-      }
-
-    public QueryHelper gt(Type_FloatPrimitive Col, Float coalesceVal, float V)
-    throws Exception
-      {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(coalesceVal).append(")");
-          }
-        opVal(Op.GT, V);
-        return this;
-      }
-
-    public QueryHelper gt(Type_DoublePrimitive Col, double V)
-    throws Exception
-      {
-        return gt(Col, null, V);
-      }
-
-    public QueryHelper gt(Type_DoublePrimitive Col, Double coalesceVal, double V)
-    throws Exception
-      {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(coalesceVal).append(")");
-          }
-        opVal(Op.GT, V);
-        return this;
-      }
-
-    public QueryHelper gt(Type_DatetimePrimitive Col, ZonedDateTime V)
-    throws Exception
-      {
-        return gt(Col, null, V);
-      }
-
-    public QueryHelper gt(Type_DatetimePrimitive Col, ZonedDateTime coalesceVal, ZonedDateTime V)
-    throws Exception
-      {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(DateTimeUtil.printDateTimeForSQL(coalesceVal)).append(")");
-          }
-        opVal(Op.GT, V);
-        return this;
-      }
-
-    public QueryHelper gt(Type_DatePrimitive Col, LocalDate V)
-    throws Exception
-      {
-        return gt(Col, null, V);
-      }
-
-    public QueryHelper gt(Type_DatePrimitive Col, LocalDate coalesceVal, LocalDate V)
-    throws Exception
-      {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(DateTimeUtil.printDateForSQL(coalesceVal)).append(")");
-          }
-        opVal(Op.GT, V);
-        return this;
-      }
-
 
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Col > Col
@@ -2761,242 +2711,6 @@ public abstract class QueryHelper
         return compareBase(Col1, Col2, Op.GT);
       }
 
-
-
-
-    // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Col >= value
-    // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public QueryHelper gte(ColumnDefinition Col)
-    throws Exception
-      {
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        opCol(Op.GTE, Col);
-        return this;
-      }
-
-    public QueryHelper gte(Type_StringPrimitive Col, String V)
-    throws Exception
-      {
-        return gte(Col, null, V);
-      }
-
-    public QueryHelper gte(Type_StringPrimitive Col, String coalesceVal, String V)
-    throws Exception
-      {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ");
-            TextUtil.escapeSingleQuoteForSQL(_QueryStr, coalesceVal);
-            _QueryStr.append(")");
-          }
-        opVal(Op.GTE, V);
-        return this;
-      }
-
-    public QueryHelper gte(Type_CharPrimitive Col, char V)
-    throws Exception
-      {
-        return gte(Col, (char) Character.UNASSIGNED, V);
-      }
-
-    public QueryHelper gte(Type_CharPrimitive Col, char coalesceVal, char V)
-    throws Exception
-      {
-        if (coalesceVal != Character.UNASSIGNED)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != Character.UNASSIGNED)
-          {
-            _QueryStr.append(", '").append(coalesceVal).append("')");
-          }
-        opVal(Op.GTE, V);
-        return this;
-      }
-
-    public QueryHelper gte(Type_BooleanPrimitive Col, boolean V)
-    throws Exception
-      {
-        return gte(Col, null, V);
-      }
-
-    public QueryHelper gte(Type_BooleanPrimitive Col, Boolean coalesceVal, boolean V)
-    throws Exception
-      {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(coalesceVal).append(")");
-          }
-        opVal(Op.GTE, V);
-        return this;
-      }
-
-    public QueryHelper gte(Type_ShortPrimitive Col, short V)
-    throws Exception
-      {
-        return gte(Col, null, V);
-      }
-
-    public QueryHelper gte(Type_ShortPrimitive Col, Short coalesceVal, short V)
-    throws Exception
-      {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(coalesceVal).append(")");
-          }
-        opVal(Op.GTE, V);
-        return this;
-      }
-
-    public QueryHelper gte(Type_IntegerPrimitive Col, int V)
-    throws Exception
-      {
-        return gte(Col, null, V);
-      }
-
-    public QueryHelper gte(Type_IntegerPrimitive Col, Integer coalesceVal, int V)
-    throws Exception
-      {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(coalesceVal).append(")");
-          }
-        opVal(Op.GTE, V);
-        return this;
-      }
-
-    public QueryHelper gte(Type_LongPrimitive Col, long V)
-    throws Exception
-      {
-        return gte(Col, null, V);
-      }
-
-    public QueryHelper gte(Type_LongPrimitive Col, Long coalesceVal, long V)
-    throws Exception
-      {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(coalesceVal).append(")");
-          }
-        opVal(Op.GTE, V);
-        return this;
-      }
-
-    public QueryHelper gte(Type_FloatPrimitive Col, float V)
-    throws Exception
-      {
-        return gte(Col, null, V);
-      }
-
-    public QueryHelper gte(Type_FloatPrimitive Col, Float coalesceVal, float V)
-    throws Exception
-      {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(coalesceVal).append(")");
-          }
-        opVal(Op.GTE, V);
-        return this;
-      }
-
-    public QueryHelper gte(Type_DoublePrimitive Col, double V)
-    throws Exception
-      {
-        return gte(Col, null, V);
-      }
-
-    public QueryHelper gte(Type_DoublePrimitive Col, Double coalesceVal, double V)
-    throws Exception
-      {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(coalesceVal).append(")");
-          }
-        opVal(Op.GTE, V);
-        return this;
-      }
-
-    public QueryHelper gte(Type_DatetimePrimitive Col, ZonedDateTime V)
-    throws Exception
-      {
-        return gte(Col, null, V);
-      }
-
-    public QueryHelper gte(Type_DatetimePrimitive Col, ZonedDateTime coalesceVal, ZonedDateTime V)
-    throws Exception
-      {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(DateTimeUtil.printDateTimeForSQL(coalesceVal)).append(")");
-          }
-        opVal(Op.GTE, V);
-        return this;
-      }
-
-    public QueryHelper gte(Type_DatePrimitive Col, LocalDate V)
-    throws Exception
-      {
-        return gte(Col, null, V);
-      }
-
-    public QueryHelper gte(Type_DatePrimitive Col, LocalDate coalesceVal, LocalDate V)
-    throws Exception
-      {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(DateTimeUtil.printDateForSQL(coalesceVal)).append(")");
-          }
-        opVal(Op.GTE, V);
-        return this;
-      }
-
-    public QueryHelper gte(Type_DatetimePrimitive Col, LocalDate V)
-    throws Exception
-      {
-        return gte(Col, null, V);
-      }
-
-    public QueryHelper gte(Type_DatetimePrimitive Col, LocalDate coalesceVal, LocalDate V)
-    throws Exception
-      {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(DateTimeUtil.printDateForSQL(coalesceVal)).append(")");
-          }
-        opVal(Op.GTE, V);
-        return this;
-      }
-
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Col >= Col
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3059,215 +2773,6 @@ public abstract class QueryHelper
       {
         return compareBase(Col1, Col2, Op.GTE);
       }
-
-
-
-
-    // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Col <> value
-    // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public QueryHelper notEquals(Type_StringPrimitive Col, String V)
-    throws Exception
-      {
-        return notEquals(Col, null, V);
-      }
-
-    public QueryHelper notEquals(Type_StringPrimitive Col, String coalesceVal, String V)
-    throws Exception
-      {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ");
-            TextUtil.escapeSingleQuoteForSQL(_QueryStr, coalesceVal);
-            _QueryStr.append(")");
-          }
-        opVal(Op.NOT_EQUALS, V);
-        return this;
-      }
-
-    public QueryHelper notEquals(Type_CharPrimitive Col, char V)
-    throws Exception
-      {
-        return notEquals(Col, (char) Character.UNASSIGNED, V);
-      }
-
-    public QueryHelper notEquals(Type_CharPrimitive Col, char coalesceVal, char V)
-    throws Exception
-      {
-        if (coalesceVal != Character.UNASSIGNED)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != Character.UNASSIGNED)
-          {
-            _QueryStr.append(", '").append(coalesceVal).append("')");
-          }
-        opVal(Op.NOT_EQUALS, V);
-        return this;
-      }
-
-    public QueryHelper notEquals(Type_BooleanPrimitive Col, boolean V)
-    throws Exception
-      {
-        return notEquals(Col, null, V);
-      }
-
-    public QueryHelper notEquals(Type_BooleanPrimitive Col, Boolean coalesceVal, boolean V)
-    throws Exception
-      {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(coalesceVal).append(")");
-          }
-        opVal(Op.NOT_EQUALS, V);
-        return this;
-      }
-
-    public QueryHelper notEquals(Type_ShortPrimitive Col, short V)
-    throws Exception
-      {
-        return notEquals(Col, null, V);
-      }
-
-    public QueryHelper notEquals(Type_ShortPrimitive Col, Short coalesceVal, short V)
-    throws Exception
-      {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(coalesceVal).append(")");
-          }
-        opVal(Op.NOT_EQUALS, V);
-        return this;
-      }
-
-    public QueryHelper notEquals(Type_IntegerPrimitive Col, int V)
-    throws Exception
-      {
-        return notEquals(Col, null, V);
-      }
-
-    public QueryHelper notEquals(Type_IntegerPrimitive Col, Integer coalesceVal, int V)
-    throws Exception
-      {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(coalesceVal).append(")");
-          }
-        opVal(Op.NOT_EQUALS, V);
-        return this;
-      }
-
-    public QueryHelper notEquals(Type_LongPrimitive Col, long V)
-    throws Exception
-      {
-        return notEquals(Col, null, V);
-      }
-
-    public QueryHelper notEquals(Type_LongPrimitive Col, Long coalesceVal, long V)
-    throws Exception
-      {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(coalesceVal).append(")");
-          }
-        opVal(Op.NOT_EQUALS, V);
-        return this;
-      }
-
-    public QueryHelper notEquals(Type_FloatPrimitive Col, float V)
-    throws Exception
-      {
-        return notEquals(Col, null, V);
-      }
-
-    public QueryHelper notEquals(Type_FloatPrimitive Col, Float coalesceVal, float V)
-    throws Exception
-      {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(coalesceVal).append(")");
-          }
-        opVal(Op.NOT_EQUALS, V);
-        return this;
-      }
-
-    public QueryHelper notEquals(Type_DoublePrimitive Col, double V)
-    throws Exception
-      {
-        return notEquals(Col, null, V);
-      }
-
-    public QueryHelper notEquals(Type_DoublePrimitive Col, Double coalesceVal, double V)
-    throws Exception
-      {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(coalesceVal).append(")");
-          }
-        opVal(Op.NOT_EQUALS, V);
-        return this;
-      }
-
-    public QueryHelper notEquals(Type_DatetimePrimitive Col, ZonedDateTime V)
-    throws Exception
-      {
-        return notEquals(Col, null, V);
-      }
-
-    public QueryHelper notEquals(Type_DatetimePrimitive Col, ZonedDateTime coalesceVal, ZonedDateTime V)
-    throws Exception
-      {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(DateTimeUtil.printDateTimeForSQL(coalesceVal)).append(")");
-          }
-        opVal(Op.NOT_EQUALS, V);
-        return this;
-      }
-
-    public QueryHelper notEquals(Type_DatePrimitive Col, LocalDate V)
-    throws Exception
-      {
-        return notEquals(Col, null, V);
-      }
-
-    public QueryHelper notEquals(Type_DatePrimitive Col, LocalDate coalesceVal, LocalDate V)
-    throws Exception
-      {
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(DateTimeUtil.printDateForSQL(coalesceVal)).append(")");
-          }
-        opVal(Op.NOT_EQUALS, V);
-        return this;
-      }
-
 
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Col <> Col
@@ -3677,10 +3182,10 @@ public abstract class QueryHelper
          * TextUtil.escapeSingleQuoteForSQL(_QueryStr, V);
          * _QueryStr.append(")");
          */
-//        if (not == true)
-//          _QueryStr.append("=0");
-//        else
-//          _QueryStr.append(">0");
+        // if (not == true)
+        // _QueryStr.append("=0");
+        // else
+        // _QueryStr.append(">0");
         return this;
       }
 

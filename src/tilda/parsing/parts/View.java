@@ -43,7 +43,6 @@ import tilda.enums.TZMode;
 import tilda.enums.TildaType;
 import tilda.interfaces.PatternObject;
 import tilda.parsing.ParserSession;
-import tilda.parsing.parts.helpers.JoinHelper;
 import tilda.parsing.parts.helpers.PivotHelper;
 import tilda.parsing.parts.helpers.ReferenceHelper;
 import tilda.parsing.parts.helpers.SameAsHelper;

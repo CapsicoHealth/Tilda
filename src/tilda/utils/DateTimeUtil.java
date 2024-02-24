@@ -269,6 +269,10 @@ public class DateTimeUtil
       {
         return ZDT == null ? null : ZDT.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
       }
+    public static String printDateTimeForSQLQuoted(ZonedDateTime ZDT)
+      {
+        return ZDT == null ? null : "'"+ZDT.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME)+"'";
+      }
 
     public static void printDateForSQL(StringBuilder str, LocalDate DT, boolean printNull)
       {
@@ -290,6 +294,10 @@ public class DateTimeUtil
     public static String printDateForSQL(LocalDate DT)
       {
         return DT == null ? null : DT.format(DateTimeFormatter.ISO_DATE);
+      }
+    public static String printDateForSQLQuoted(LocalDate DT)
+      {
+        return DT == null ? null : "'"+DT.format(DateTimeFormatter.ISO_DATE)+"'";
       }
 
     public static List<String> printDateTimeForSQL(List<ZonedDateTime> ZDTs)
