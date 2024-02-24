@@ -749,13 +749,19 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("   public static ListResults<" + Helper.getFullAppDataClassName(O) + "> runSelect(Connection C, SelectQuery Q, int start, int size) throws Exception");
         Out.println("     {");
         Out.println("       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);");
-        Out.println("       readMany(C, -7, RPI, null, Q, start, size);");
+        Out.println("       if (Q.isFullSelectQuery() == true)");
+        Out.println("        readMany(C, -77, RPI, null, Q.toString(), start, size);");
+        Out.println("       else");
+        Out.println("        readMany(C, -7, RPI, null, Q, start, size);");
         Out.println("       return RPI._L;");
         Out.println("     }");
         Out.println("   public static void runSelect(Connection C, SelectQuery Q, tilda.db.processors.ObjectProcessor<" + Helper.getFullAppDataClassName(O) + "> OP, int start, int size) throws Exception");
         Out.println("     {");
         Out.println("       RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);");
-        Out.println("       readMany(C, -7, RPI, null, Q, start, size);");
+        Out.println("       if (Q.isFullSelectQuery() == true)");
+        Out.println("        readMany(C, -77, RPI, null, Q.toString(), start, size);");
+        Out.println("       else");
+        Out.println("        readMany(C, -7, RPI, null, Q, start, size);");
         Out.println("     }");
         if (O._LC == ObjectLifecycle.NORMAL)
           {
